@@ -26,12 +26,12 @@ protocol HealthKitManager: GlucoseSource {
     /// Delete glucose with syncID
     func deleteGlucose(syncID: String)
     /// delete carbs with syncID
-    func deleteCarbs(syncID: String, isFPU: Bool?, fpuID: String?)
+    func deleteCarbs(syncID: String, fpuID: String)
     /// delete insulin with syncID
     func deleteInsulin(syncID: String)
 }
 
-final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
+final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, PumpHistoryObserver {
     private enum Config {
         // unwraped HKObjects
         static var readPermissions: Set<HKSampleType> {
@@ -46,7 +46,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
         static let healthInsulinObject = HKObjectType.quantityType(forIdentifier: .insulinDelivery)
 
         // Meta-data key of FreeASPX data in HealthStore
-        static let freeAPSMetaKey = "fromFreeAPSX"
+        static let freeAPSMetaKey = "From iAPS"
     }
 
     @Injected() private var glucoseStorage: GlucoseStorage!
@@ -68,7 +68,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
         }
         get {
             guard let data = persistedBGAnchor else { return nil }
-            return try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? HKQueryAnchor
+            return try? NSKeyedUnarchiver.unarchivedObject(ofClass: HKQueryAnchor.self, from: data)
         }
     }
 
@@ -115,6 +115,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
         enableBackgroundDelivery()
 
         broadcaster.register(CarbsObserver.self, observer: self)
+        broadcaster.register(PumpHistoryObserver.self, observer: self)
 
         debug(.service, "HealthKitManager did create")
     }
@@ -193,7 +194,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             let sampleIDs = samples.compactMap(\.syncIdentifier)
             let sampleDates = samples.map(\.startDate)
             let samplesToSave = carbsWithId
-                .filter { !sampleIDs.contains($0.id!) } // id existing in AH
+                .filter { !sampleIDs.contains($0.id ?? "") } // id existing in AH
                 .filter { !sampleDates.contains($0.createdAt) } // not id but exaclty the same datetime
                 .map {
                     HKQuantitySample(
@@ -202,7 +203,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                         start: $0.createdAt,
                         end: $0.createdAt,
                         metadata: [
-                            HKMetadataKeyExternalUUID: $0.id ?? "_id",
                             HKMetadataKeySyncIdentifier: $0.id ?? "_id",
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
@@ -226,8 +226,22 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
               events.isNotEmpty
         else { return }
 
-        func save(bolus: [InsulinBolus], basal: [InsulinBasal]) {
-            let bolusSamples = bolus
+        func save(bolusToModify: [InsulinBolus], bolus: [InsulinBolus], basal: [InsulinBasal]) {
+            // first step : delete the HK value
+            // second step : recreate with the new value !
+            bolusToModify.forEach { syncID in
+                let predicate = HKQuery.predicateForObjects(
+                    withMetadataKey: HKMetadataKeySyncIdentifier,
+                    operatorType: .equalTo,
+                    value: syncID
+                )
+                self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                    guard let error = error else { return }
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                }
+            }
+            let bolusTotal = bolus + bolusToModify
+            let bolusSamples = bolusTotal
                 .map {
                     HKQuantitySample(
                         type: sampleType,
@@ -266,8 +280,19 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
 
         loadSamplesFromHealth(sampleType: sampleType, withIDs: events.map(\.id))
             .receive(on: processQueue)
-            .compactMap { samples -> ([InsulinBolus], [InsulinBasal]) in
+            .compactMap { samples -> ([InsulinBolus], [InsulinBolus], [InsulinBasal]) in
                 let sampleIDs = samples.compactMap(\.syncIdentifier)
+                let bolusToModify = events
+                    .filter { $0.type == .bolus && sampleIDs.contains($0.id) }
+                    .compactMap { event -> InsulinBolus? in
+                        guard let amount = event.amount else { return nil }
+                        guard let sampleAmount = samples.first(where: { $0.syncIdentifier == event.id }) as? HKQuantitySample
+                        else { return nil }
+                        if Double(amount) != sampleAmount.quantity.doubleValue(for: .internationalUnit()) {
+                            return InsulinBolus(id: sampleAmount.syncIdentifier!, amount: amount, date: event.timestamp)
+                        } else { return nil }
+                    }
+
                 let bolus = events
                     .filter { $0.type == .bolus && !sampleIDs.contains($0.id) }
                     .compactMap { event -> InsulinBolus? in
@@ -276,6 +301,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                     }
                 let basalEvents = events
                     .filter { $0.type == .tempBasal && !sampleIDs.contains($0.id) }
+                    .sorted(by: { $0.timestamp < $1.timestamp })
                 let basal = basalEvents.enumerated()
                     .compactMap { item -> InsulinBasal? in
                         let nextElementEventIndex = item.offset + 1
@@ -300,7 +326,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                         }
 
                         let id = String(item.element.id.dropFirst())
-                        guard amountRounded >= 0,
+                        guard amountRounded > 0,
                               id != ""
                         else { return nil }
 
@@ -311,10 +337,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
                             endDelivery: nextBasalEvent.timestamp
                         )
                     }
-                return (bolus, basal)
+                return (bolusToModify, bolus, basal)
             }
             .sink(receiveValue: save)
             .store(in: &lifetime)
+    }
+
+    func pumpHistoryDidUpdate(_ events: [PumpHistoryEvent]) {
+        saveIfNeeded(pumpEvents: events)
     }
 
     func createBGObserver() {
@@ -366,13 +396,14 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
 
     /// Try to load samples from Health store
     private func loadSamplesFromHealth(
-        sampleType: HKQuantityType
+        sampleType: HKQuantityType,
+        limit: Int = 100
     ) -> Future<[HKSample], Never> {
         Future { promise in
             let query = HKSampleQuery(
                 sampleType: sampleType,
                 predicate: nil,
-                limit: 1000,
+                limit: limit,
                 sortDescriptors: nil
             ) { _, results, _ in
                 promise(.success((results as? [HKQuantitySample]) ?? []))
@@ -384,7 +415,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
     /// Try to load samples from Health store with id and do some work
     private func loadSamplesFromHealth(
         sampleType: HKQuantityType,
-        withIDs ids: [String]
+        withIDs ids: [String],
+        limit: Int = 100
     ) -> Future<[HKSample], Never> {
         Future { promise in
             let predicate = HKQuery.predicateForObjects(
@@ -395,7 +427,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             let query = HKSampleQuery(
                 sampleType: sampleType,
                 predicate: predicate,
-                limit: 1000,
+                limit: limit,
                 sortDescriptors: nil
             ) { _, results, _ in
                 promise(.success((results as? [HKQuantitySample]) ?? []))
@@ -535,41 +567,41 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
 
     // - MARK Carbs function
 
-    func deleteCarbs(syncID: String, isFPU: Bool?, fpuID: String?) {
+    func deleteCarbs(syncID: String, fpuID: String) {
         guard settingsManager.settings.useAppleHealth,
               let sampleType = Config.healthCarbObject,
               checkAvailabilitySave(objectTypeToHealthStore: sampleType)
         else { return }
 
-        if let isFPU = isFPU, !isFPU {
-            processQueue.async {
-                let predicate = HKQuery.predicateForObjects(
-                    withMetadataKey: HKMetadataKeySyncIdentifier,
-                    operatorType: .equalTo,
-                    value: syncID
-                )
-                self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                    guard let error = error else { return }
-                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
-                }
-            }
-        } else {
-            // need to find all syncID
-            guard let fpuID = fpuID else { return }
+        print("meals 4: ID: " + syncID + " FPU ID: " + fpuID)
 
-            processQueue.async {
-                let recentCarbs: [CarbsEntry] = self.carbsStorage.recent()
-                let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.id)
-                let predicate = HKQuery.predicateForObjects(
-                    withMetadataKey: HKMetadataKeySyncIdentifier,
-                    allowedValues: ids
-                )
+        if syncID != "" {
+            let predicate = HKQuery.predicateForObjects(
+                withMetadataKey: HKMetadataKeySyncIdentifier,
+                operatorType: .equalTo,
+                value: syncID
+            )
 
-                self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                    guard let error = error else { return }
-                    warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
-                }
+            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                guard let error = error else { return }
+                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
             }
+        }
+
+        if fpuID != "" {
+            // processQueue.async {
+            let recentCarbs: [CarbsEntry] = carbsStorage.recent()
+            let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.id)
+            let predicate = HKQuery.predicateForObjects(
+                withMetadataKey: HKMetadataKeySyncIdentifier,
+                allowedValues: ids
+            )
+            print("found IDs: " + ids.description)
+            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
+                guard let error = error else { return }
+                warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
+            }
+            // }
         }
     }
 

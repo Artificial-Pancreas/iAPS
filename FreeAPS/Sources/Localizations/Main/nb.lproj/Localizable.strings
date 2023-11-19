@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsett uten å gi bolus";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nMengden er høyere enn din Maks bolus-innstilling! \nEr du sikker på at du vil legge til ";
+
 /* Header */
 "Enact Bolus" = "Gi bolus";
 
@@ -52,6 +55,42 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Feil kl.";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Oppsummering av måltid";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Endre måltid";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Legg til måltid";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Bolus-sammendrag";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Beregninger";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Fett måltid";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Full Bolus";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Brøkdel";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Brøkdel for fett måltid";
+
+/* For the  Bolus View pop-up */
+"Result" = "Resultat";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Mengden du la inn ble begrenset av innstillingen for Maks Bolus på %d%@";
+
+/* Bolus View Continue Button */
+"Continue" = "Fortsett";
+
 /* Home title */
 "Home" = "Hjem";
 
@@ -81,6 +120,9 @@
 
 /*  */
 "Carbs required" = "Karbo nødvendig";
+
+/* Saved Food Presets */
+"Saved Food" = "Lagre måltid";
 
 /* */
 "Are you sure?" = "Er du sikker?";
@@ -311,6 +353,45 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Fjernstyring";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nGå nøye gjennom alle de nye innstillingene:\n\n* Basalprofil\n * Karbohydratforhold\n * Blodsukkermål\n * Insulinfølsomhet\n\n i iAPS Innstillinger > Oppsett.\n\nFeil eller ugyldige profilinnstillinger kan ha katastrofale følger.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Dette vil erstatte alle eller deler av dine nåværende pumpeinnstillinger. Er du sikker på at du vil importere profilinnstillinger fra Nightscout?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nUgyldig Basalprofil fra Nightscout. \n\nImport avbrutt. Sjekk Basalprofil i Nightscout!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nInnstillinger ble importert men Basalprofilen kunne ikke lagres til pumpen (ingen pumpe). Sjekk din Basalprofil og trykk ´Lagre på pumpen´ for å sende den nye basalprofilen til pumpen.";
+
+/* Import Error Headline */
+"Import Error" = "Feil ved import";
+
+/* */
+"Yes, Import" = "Ja, importer";
+
+/* */
+"Import settings from Nightscout" = "Importer innstillinger fra Nightscout";
+
+/* */
+"Import settings?" = "Importere innstillinger?";
+
+/* */
+"Import from Nightscout" = "Import fra Nightscout";
+
+/* */
+"Settings imported" = "Innstillinger importert";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nBlodsukkerenhet i Nightscout samsvarer ikke med blodsukkerenhet i Pumpeinnstillinger. Import av innstillinger er avbrutt.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Finner ikke standard profil i Nightscout.";
+
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Blodsukkermåling";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Legge til Medtronic";
 
@@ -495,10 +576,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige mål";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Slette karbohydrater?";
+"Delete Carbs?" = "Slette karbohydrater?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Slette insulin?";
+"Delete Insulin?" = "Slette insulin?";
 
 /* Treatments list */
 "Treatments" = "Behandlinger";
@@ -519,10 +600,16 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibreringer";
 
 /* */
-"Create events in calendar" = "Opprett hendelser i kalenderen";
+"Create Events in Calendar" = "Opprett hendelser i kalenderen";
 
 /* */
 "Calendar" = "Kalender";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatisk";
+
+/* External insulin treatments */
+"External" = "Ekstern";
 
 /* */
 "Other" = "Annet";
@@ -945,7 +1032,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS ikke aktiv";
 
 /* */
-"Last loop was more then %d min ago" = "Siste loop var mer enn %d min siden";
+"Last loop was more than %d min ago" = "Siste loop var mer enn %d min siden";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Vis blodsukker på app-ikonet";
@@ -958,6 +1045,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Bolus mislyktes";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Max Bolus overskredet!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus mislyktes eller var upresis. Kontroller bolus-historikken før du gjentar.";
@@ -1049,6 +1139,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Bare bruk Autotune på basalinsulin";
 
+/* */
+"Save as your Normal Basal Rates" = "Lagre som standard basalprofil";
+
+/* */
+"Save on Pump" = "Lagre på pumpen";
+
 /* Debug option view Pump History */
 "Pump History" = "Pumpehistorikk";
 
@@ -1113,6 +1209,12 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manuell";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "Eksternt insulin";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuell basal";
@@ -1266,7 +1368,7 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistikk og startskjerm";
 
 /* Alert text */
-"Delete carb equivalents?" = "Slette karboekvivalenter?";
+"Delete Carb Equivalents?" = "Slette karboekvivalenter?";
 
 /* */
 "Meal Presets" = "Forvalg av måltid";
@@ -1289,6 +1391,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Preset" = "Lagre som forvalg";
 
+/* */
+"Predictions" = "Prediksjoner";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Vis protein og fett";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1299,6 +1407,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "Beregnet blodsukker";
+
+/* */
+"Please wait" = "Vennligst vent";
+
+/* */
+"Glucose, " = "Blodsukker, ";
 
 /* */
 "Target Glucose" = "Blodsukkermål";
@@ -1366,7 +1480,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekreftelseslyder";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bekreftelseslyder er pipelyder fra pod som kan brukes som kvittering for utførte kommandoer.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påminnelser er pipelyder fra Pod'en som kan brukes som bekreftelse for bestemte kommandoer når Pod'en ikke er satt i stille-modus.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Lagrer...";
@@ -1396,10 +1510,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Påminnelser vil høres for kommandoer du starter, slik som bolus, stopp bolus, pause, gjenoppta, osv. Når appen automatisk justerer insulintilførsel, lages det ingen lyd.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Påminnelser vil høres når appen automatisk justerer insulintilførsel og for kommandoer du starter.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Utløpspåminnelse";
@@ -1913,7 +2027,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Headline "Use Sigmoid Function" */
-"Use Sigmoid Function" = "Bruk signmoid-funksjon";
+"Use Sigmoid Function" = "Bruk sigmoid-funksjon";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.";

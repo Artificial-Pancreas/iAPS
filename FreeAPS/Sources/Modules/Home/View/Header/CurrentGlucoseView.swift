@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
+    @Binding var timerDate: Date
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
     @Binding var alarm: GlucoseAlarm?
@@ -47,7 +48,7 @@ struct CurrentGlucoseView: View {
         VStack(alignment: .center) {
             HStack {
                 Text(
-                    recentGlucose?.glucose
+                    (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
                         .map {
                             glucoseFormatter
                                 .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
@@ -59,10 +60,10 @@ struct CurrentGlucoseView: View {
                 image
             }
             HStack {
-                let minutes = (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
-                let text = timaAgoFormatter.string(for: Double(minutes)) ?? ""
+                let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
+                let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
                 Text(
-                    text == "0" ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
+                    minutesAgo <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
                         text + " " +
                             NSLocalizedString("min", comment: "Short form for minutes") + " "
                     )

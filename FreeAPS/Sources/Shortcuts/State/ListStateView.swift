@@ -76,10 +76,10 @@ struct ListStateView: View {
                 image
             }
             HStack {
-                let minutes = state.date.timeIntervalSinceNow / 60
+                let minutes = -1 * state.date.timeIntervalSinceNow / 60
                 let text = timaAgoFormatter.string(for: Double(minutes)) ?? ""
                 Text(
-                    text == "0" ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
+                    minutes <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
                         text + " " +
                             NSLocalizedString("min", comment: "Short form for minutes") + " "
                     )

@@ -4,10 +4,10 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Insulin ohne tatsächliche Bolusabgabe erfassen";
+"Add insulin without actually bolusing" = "Insulin ohne Bolusabgabe erfassen";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Hinzufügen von %@ ohne tatsächliche Bolusabgabe";
+"Add %@ without bolusing" = "Hinzufügen von %@ ohne Bolusabgabe";
 
 "Bolus" = "Bolus";
 
@@ -15,6 +15,9 @@
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Ohne Bolusabgabe fortfahren";
+
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nEingegebener Bolus ist größer als Max Bolus Einstellung! Sind Sie sicher, dass er hinzugefügt werden soll ";
 
 /* Header */
 "Enact Bolus" = "Bolus abgeben";
@@ -52,6 +55,42 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Fehler um";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Mahlzeitenübersicht";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Mahlzeit bearbeiten";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Mahlzeit hinzufügen";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Bolusübersicht";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Berechnungen";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Fette Mahlzeit";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Voller Bolus";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Fraktion";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Fettspeise Faktor";
+
+/* For the  Bolus View pop-up */
+"Result" = "Ergebnis";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Dein eingegebener Wert wurde durch deine maximale Bolus-Einstellung von %d%@ begrenzt";
+
+/* Bolus View Continue Button */
+"Continue" = "Fortsetzen";
+
 /* Home title */
 "Home" = "Hauptseite";
 
@@ -74,13 +113,16 @@
 "Add Carbs " = "Kohlenhydrate hinzufügen ";
 
 /*  */
-"Amount Carbs" = "Kohlenhydratmenge";
+"Amount Carbs" = "Menge Kohlenhydrate";
 
 /* Grams unit */
 "grams" = "Gramm";
 
 /*  */
 "Carbs required" = "Kohlenhydrate erforderlich";
+
+/* Saved Food Presets */
+"Saved Food" = "Gespeichertes Essen";
 
 /* */
 "Are you sure?" = "Sind Sie sicher?";
@@ -311,6 +353,45 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Fernbedienung";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nBitte überprüfen Sie jetzt alle Ihre neuen Einstellungen gründlich:\n\n* Basaleinstellungen\n * Carb Ratios\n * Glukose-Ziele\n * Insulinempfindlichkeiten\n * DIA\n\n in iAPS-Einstellungen > Konfiguration.\n\nSchlechte oder ungültige Profileinstellungen können abscheuliche Effekte haben.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Dies wird einige oder alle deine aktuellen Pumpeneinstellungen ersetzen. Bist du sicher, dass du die Profileinstellungen von Nightscout importieren möchtest?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nUngültige Nightcsout Basal-Einstellungen. \n\nImport abgebrochen. Bitte überprüfen Sie Ihre Nightscout Profil Basal-Einstellungen!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nEinstellungen wurden importiert, aber die Basalen konnten nicht in Pumpe gespeichert werden (keine Pump). Überprüfen Sie Ihre Basiseinstellungen und tippen Sie auf <unk> Speichern auf Pump, um die neuen Basiseinstellungen zu synchronisieren";
+
+/* Import Error Headline */
+"Import Error" = "Fehler beim Import";
+
+/* */
+"Yes, Import" = "Ja, importieren";
+
+/* */
+"Import settings from Nightscout" = "Einstellungen von Nightscout importieren";
+
+/* */
+"Import settings?" = "Einstellungen importieren?";
+
+/* */
+"Import from Nightscout" = "Einstellungen von Nightscout importieren";
+
+/* */
+"Settings imported" = "Einstellungen importiert";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nFalsch übereinstimmende Glukoseeinheiten in Nightscout und Pump-Einstellungen. Import abgebrochen.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Kann das Standard-Nightscout-Profil nicht finden.";
+
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Blutzucker Einheit";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Medtronic-Pumpe hinzufügen";
 
@@ -495,10 +576,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temporäre Ziele";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Kohlenhydrate löschen?";
+"Delete Carbs?" = "Kohlenhydrate löschen?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Insulin löschen?";
+"Delete Insulin?" = "Insulin löschen?";
 
 /* Treatments list */
 "Treatments" = "Behandlungen";
@@ -519,10 +600,16 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Kalibrierungen";
 
 /* */
-"Create events in calendar" = "Kalendereintrag erstellen";
+"Create Events in Calendar" = "Ereignisse im Kalender erstellen";
 
 /* */
 "Calendar" = "Kalender";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatisch";
+
+/* External insulin treatments */
+"External" = "Externe";
 
 /* */
 "Other" = "Sonstiges";
@@ -945,7 +1032,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS ist nicht aktiv";
 
 /* */
-"Last loop was more then %d min ago" = "Letzter Loop vor mehr als %d Minuten";
+"Last loop was more than %d min ago" = "Letzter Loop vor mehr als %d Minuten";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Zeige Glucosewert auf dem App Symbol";
@@ -958,6 +1045,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Bolus fehlgeschlagen";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Maximaler Bolus überschritten!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolus ist fehlgeschlagen oder ungenau. Prüfe den Pumpenverlauf vor einer erneuten Abgabe.";
@@ -1049,6 +1139,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Nur Autotune Basalinsulin";
 
+/* */
+"Save as your Normal Basal Rates" = "Als deine normalen Basalraten speichern";
+
+/* */
+"Save on Pump" = "Auf Pumpe speichern";
+
 /* Debug option view Pump History */
 "Pump History" = "Insulinpumpen-Speicher";
 
@@ -1113,6 +1209,12 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "manuell";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "Externes Insulin";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuelle Temporäre Basalrate";
@@ -1266,7 +1368,7 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistiken und Home-Ansicht";
 
 /* Alert text */
-"Delete carb equivalents?" = "Kohlenhydratäquivalente löschen?";
+"Delete Carb Equivalents?" = "Kohlenhydratäquivalente löschen?";
 
 /* */
 "Meal Presets" = "Mahlzeit Voreinstellungen";
@@ -1289,6 +1391,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Preset" = "Speichern als Voreinstellung";
 
+/* */
+"Predictions" = "Prognosen";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Display Protein & Fat";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1299,6 +1407,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "Prognostizierte Glukose";
+
+/* */
+"Please wait" = "Bitte warten";
+
+/* */
+"Glucose, " = "Blutzucker, ";
 
 /* */
 "Target Glucose" = "Ziel Glukose";
@@ -1366,7 +1480,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Pumpe Bestätigungstöne";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bestätigungshinweise sind Pieptöne des Pods, die zur Quittierung ausgewählter Befehle aktiviert werden können.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Speichern...";
@@ -1396,10 +1510,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standard Ablauf-Erinnerung";

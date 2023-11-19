@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Продовжити без болюсу";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nКількість перевищує ваш максимальний болюс! \nВи впевнені, що хочете додати";
+
 /* Header */
 "Enact Bolus" = "Подати Болюс";
 
@@ -52,6 +55,42 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Помилка в";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Резюме харчування";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Редагувати їжу";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Додати прийом їжі";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Підсумок болюсу";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Розрахунки";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Жирна їжа";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Повний болюс";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Частка";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Фактор жирної їжі";
+
+/* For the  Bolus View pop-up */
+"Result" = "Результат";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Введена вами сума була обмежена налаштуванням максимального болюсу %d%@";
+
+/* Bolus View Continue Button */
+"Continue" = "Продовжити";
+
 /* Home title */
 "Home" = "Головна";
 
@@ -81,6 +120,9 @@
 
 /*  */
 "Carbs required" = "Введіть кількість вуглеводів";
+
+/* Saved Food Presets */
+"Saved Food" = "Збережена їжа";
 
 /* */
 "Are you sure?" = "Ви впевнені?";
@@ -311,6 +353,45 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Віддалене керування";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nТепер уважно перевірте всі ваші нові налаштування:\n\n* Базальні параметри\n * Вуглеводні співвідношення\n * Цільові показники глюкози\n * Чутливість до інсуліну\n\n у меню «Налаштування iAPS» > «Конфігурація».\n\nПоганий або недійсний профіль налаштування можуть мати згубні наслідки.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Це замінить деякі або всі поточні налаштування Помпи. Ви впевнені, що бажаєте імпортувати налаштування профілю з Nightscout?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nНедійсні базальні налаштування Nightcsout. \n\nІмпорт перервано. Будь ласка, перевірте базальні налаштування свого профілю Nightscout!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nНалаштування було імпортовано, але Базал не вдалося зберегти для помпи (немає помпи). Перевірте свої базальні налаштування та натисніть «Зберегти на помпі», щоб синхронізувати нові базальні налаштування";
+
+/* Import Error Headline */
+"Import Error" = "Помилка імпорту";
+
+/* */
+"Yes, Import" = "Так, імпортувати";
+
+/* */
+"Import settings from Nightscout" = "Імпортуйте налаштування з Nightscout";
+
+/* */
+"Import settings?" = "Імпортувати налаштування?";
+
+/* */
+"Import from Nightscout" = "ІМПОРТ З NIGHTSCOUT";
+
+/* */
+"Settings imported" = "Налаштування імпортовано";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nНевідповідність одиниць глюкози в налаштуваннях Nightscout та Помпи. Імпорт налаштувань скасовано.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Не вдається знайти профіль Nightscout за замовчуванням.";
+
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Тест на глюкозу у крові";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Додати Medtronic";
 
@@ -495,10 +576,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Тимчасові цілі";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Видалити вуглеводи?";
+"Delete Carbs?" = "Видалити вуглеводи?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Видалити інсулін?";
+"Delete Insulin?" = "Видалити інсулін?";
 
 /* Treatments list */
 "Treatments" = "Події";
@@ -519,10 +600,16 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Калібрування";
 
 /* */
-"Create events in calendar" = "Створити подію в календарі";
+"Create Events in Calendar" = "Створення подій у календарі";
 
 /* */
 "Calendar" = "Календар";
+
+/* Automatic delivered treatments */
+"Automatic" = "Автоматично";
+
+/* External insulin treatments */
+"External" = "Зовнішній";
 
 /* */
 "Other" = "Інше";
@@ -945,7 +1032,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS не активний";
 
 /* */
-"Last loop was more then %d min ago" = "Останній цикл був більше, ніж %d хв тому";
+"Last loop was more than %d min ago" = "Останній цикл був більше, ніж %d хв тому";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Показувати глюкозу на значку додатку";
@@ -958,6 +1045,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Болюс не вдався";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Максимальний болюс перевищено!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Болюс не пройшов або неточний. Перевір історію помпи, перш ніж повторити.";
@@ -1049,6 +1139,12 @@ Enact a temp Basal or a temp target */
 /* Autotune config */
 "Only Autotune Basal Insulin" = "Тільки Autotune Базал Інсулін";
 
+/* */
+"Save as your Normal Basal Rates" = "Зберегти як  Нормальний Базальний Профіль";
+
+/* */
+"Save on Pump" = "Зберегти на Помпі";
+
 /* Debug option view Pump History */
 "Pump History" = "Історія Помпи";
 
@@ -1113,6 +1209,12 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Інструкція";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "Зовнішній інсулін";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Ручна тимчасова базальна швидкість (ТБШ)";
@@ -1266,7 +1368,7 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Статистика та Домашня сторінка";
 
 /* Alert text */
-"Delete carb equivalents?" = "Видалити вуглеводні еквіваленти?";
+"Delete Carb Equivalents?" = "Видалити вуглеводні еквіваленти?";
 
 /* */
 "Meal Presets" = "Попередні Налаштування Їжі";
@@ -1289,6 +1391,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Preset" = "Зберегти як Шаблон";
 
+/* */
+"Predictions" = "Прогнози";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Показати білок і жир";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1299,6 +1407,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "Можлива глюкоза";
+
+/* */
+"Please wait" = "Будь ласка, зачекайте";
+
+/* */
+"Glucose, " = "Глюкоза, ";
 
 /* */
 "Target Glucose" = "Цільова Глюкоза";
@@ -1366,7 +1480,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Нагадування про Впевненість";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Нагадування про довіру — це звукові сигнали Pod, які можна використовувати для підтвердження вибраних команд.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Збереження...";
@@ -1396,10 +1510,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Нагадування про довіру не використовуються.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Довірені звукові сигнали спрацюють для операцій, які Ви ініціюєте - Болюс, Скасування Болюса, Припинення подачі, Відновлення подачі, Збереження нагадувань тощо. Коли петля автоматично змінює подачу інсуліну – звукові сигнали не використовуються.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Нагадування про достовірність лунатимуть для команд, які ви ініціюєте, як-от болюс, скасування болюсу, призупинення, відновлення, збереження сповіщень тощо. Коли Loop автоматично регулює доставку, нагадування про довіру не використовуються.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Довірені звукові сигнали спрацюють навіть тоді, коли петля автоматично змінить подачу інсуліну, а також команд, які Ви ініціюєте.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Нагадування про довіру лунатимуть, коли Loop автоматично регулює доставку, а також для команд, які ви ініціюєте.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Нагадування про закінчення терміну";
@@ -1885,7 +1999,7 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Налаштувати онстанту Динамічного ISF";
+"Adjust Dynamic ISF constant" = "Налаштувати константу Динамічного ISF";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ISF constant" = "Налаштувати константу Динамічного ISF";
@@ -1906,7 +2020,7 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Використовувати Dynamic CR. Dynamic ratio також впливатиме на CR:\n\n Коли ratio > 1: dynCR = (newRatio - 1) / 2 + 1.\nКоли ratio <1: dynCR = CR/dynCR.\n\nНе використовуйте спільно з високим Insulin Fraction (> 2)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Налаштувати онстанту Динамічного ISF";
+"Adjust Dynamic ISF constant" = "Налаштувати константу Динамічного ISF";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Налаштуйте динамічні коефіцієнти за константою. За замовчуванням 0,5. Чим вище значення, тим більшою буде корекція вашого ISF для високого або низького рівня ГК. Максимальна корекція визначається параметрами min/max Автосенс. Для сигмоподібної функції спочатку рекомендується коригуючий коефіцієнт 0,4 - 0,5. Для логарифмічної формули threre є менш узгодженим, але починати з 0,5 - 0,8 є більш прийнятним для більшості користувачів";

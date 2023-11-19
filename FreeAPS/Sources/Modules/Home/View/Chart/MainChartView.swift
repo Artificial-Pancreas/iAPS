@@ -14,6 +14,12 @@ struct DotInfo {
     let value: Decimal
 }
 
+struct AnnouncementDot {
+    let rect: CGRect
+    let value: Decimal
+    let note: String
+}
+
 typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CGFloat)
 
 struct MainChartView: View {
@@ -30,14 +36,31 @@ struct MainChartView: View {
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
         static let carbsSize: CGFloat = 10
+        static let fpuSize: CGFloat = 5
         static let carbsScale: CGFloat = 0.3
+        static let fpuScale: CGFloat = 1
+        static let announcementSize: CGFloat = 8
+        static let announcementScale: CGFloat = 2.5
+        static let owlSeize: CGFloat = 25
+        static let owlOffset: CGFloat = 80
+    }
+
+    private enum Command {
+        static let open = "🔴"
+        static let closed = "🟢"
+        static let suspend = "❌"
+        static let resume = "✅"
+        static let tempbasal = "basal"
+        static let bolus = "💧"
     }
 
     @Binding var glucose: [BloodGlucose]
+    @Binding var isManual: [BloodGlucose]
     @Binding var suggestion: Suggestion?
     @Binding var tempBasals: [PumpHistoryEvent]
     @Binding var boluses: [PumpHistoryEvent]
     @Binding var suspensions: [PumpHistoryEvent]
+    @Binding var announcement: [Announcement]
     @Binding var hours: Int
     @Binding var maxBasal: Decimal
     @Binding var autotunedBasalProfile: [BasalProfileEntry]
@@ -49,13 +72,17 @@ struct MainChartView: View {
     @Binding var smooth: Bool
     @Binding var highGlucose: Decimal
     @Binding var lowGlucose: Decimal
-    @Binding var screenHours: Int
+    @Binding var screenHours: Int16
     @Binding var displayXgridLines: Bool
     @Binding var displayYgridLines: Bool
     @Binding var thresholdLines: Bool
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
+    @State private var manualGlucoseDots: [CGRect] = []
+    @State private var announcementDots: [AnnouncementDot] = []
+    @State private var announcementPath = Path()
+    @State private var manualGlucoseDotsCenter: [CGRect] = []
     @State private var unSmoothedGlucoseDots: [CGRect] = []
     @State private var predictionDots: [PredictionType: [CGRect]] = [:]
     @State private var bolusDots: [DotInfo] = []
@@ -168,6 +195,10 @@ struct MainChartView: View {
                         .onChange(of: tempBasals) { _ in
                             scroll.scrollTo(Config.endID, anchor: .trailing)
                         }
+                        .onChange(of: screenHours) { _ in
+                            scroll.scrollTo(Config.endID, anchor: .trailing)
+                        }
+
                         .onAppear {
                             // add trigger to the end of main queue
                             DispatchQueue.main.async {
@@ -270,6 +301,9 @@ struct MainChartView: View {
                     bolusView(fullSize: fullSize)
                     if smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
+                    manualGlucoseView(fullSize: fullSize)
+                    manualGlucoseCenterView(fullSize: fullSize)
+                    announcementView(fullSize: fullSize)
                     predictionsView(fullSize: fullSize)
                 }
                 timeLabelsView(fullSize: fullSize)
@@ -342,6 +376,75 @@ struct MainChartView: View {
         }
     }
 
+    private func manualGlucoseView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in manualGlucoseDots {
+                path.addEllipse(in: rect)
+            }
+        }
+        .fill(Color.gray)
+        .onChange(of: isManual) { _ in
+            update(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            update(fullSize: fullSize)
+        }
+        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            update(fullSize: fullSize)
+        }
+    }
+
+    private func announcementView(fullSize: CGSize) -> some View {
+        ZStack {
+            ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
+                let position = CGPoint(x: info.rect.midX + 5, y: info.rect.maxY - Config.owlOffset)
+                let type: String =
+                    info.note.contains("true") ?
+                    Command.open :
+                    info.note.contains("false") ?
+                    Command.closed :
+                    info.note.contains("suspend") ?
+                    Command.suspend :
+                    info.note.contains("resume") ?
+                    Command.resume :
+                    info.note.contains("tempbasal") ?
+                    Command.tempbasal : Command.bolus
+                VStack {
+                    Text(type).font(.caption2).foregroundStyle(.orange)
+                    Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
+                }.position(position).asAny()
+            }
+        }
+        .onChange(of: announcement) { _ in
+            calculateAnnouncementDots(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateAnnouncementDots(fullSize: fullSize)
+        }
+    }
+
+    private func manualGlucoseCenterView(fullSize: CGSize) -> some View {
+        Path { path in
+            for rect in manualGlucoseDotsCenter {
+                path.addEllipse(in: rect)
+            }
+        }
+        .fill(Color.red)
+
+        .onChange(of: isManual) { _ in
+            update(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            update(fullSize: fullSize)
+        }
+        .onReceive(
+            Foundation.NotificationCenter.default
+                .publisher(for: UIApplication.willEnterForegroundNotification)
+        ) { _ in
+            update(fullSize: fullSize)
+        }
+    }
+
     private func unSmoothedGlucoseView(fullSize: CGSize) -> some View {
         Path { path in
             var lines: [CGPoint] = []
@@ -410,16 +513,9 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(Color.red)
+                .fill(.orange.opacity(0.5))
             fpuPath
-                .stroke(Color.primary, lineWidth: 0.5)
-
-            ForEach(fpuDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX, y: info.rect.minY - 8)
-                return Text(fpuFormatter.string(from: info.value as NSNumber)!).font(.caption2)
-                    .position(position)
-                    .asAny()
-            }
+                .stroke(Color.primary, lineWidth: 0.2)
         }
         .onChange(of: carbs) { _ in
             calculateFPUsDots(fullSize: fullSize)
@@ -488,6 +584,9 @@ extension MainChartView {
         calculatePredictionDots(fullSize: fullSize, type: .zt)
         calculatePredictionDots(fullSize: fullSize, type: .uam)
         calculateGlucoseDots(fullSize: fullSize)
+        calculateManualGlucoseDots(fullSize: fullSize)
+        calculateManualGlucoseDotsCenter(fullSize: fullSize)
+        calculateAnnouncementDots(fullSize: fullSize)
         calculateUnSmoothedGlucoseDots(fullSize: fullSize)
         calculateBolusDots(fullSize: fullSize)
         calculateCarbsDots(fullSize: fullSize)
@@ -509,6 +608,62 @@ extension MainChartView {
             DispatchQueue.main.async {
                 glucoseYRange = range
                 glucoseDots = dots
+            }
+        }
+    }
+
+    private func calculateManualGlucoseDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = isManual.concurrentMap { value -> CGRect in
+                let position = glucoseToCoordinate(value, fullSize: fullSize)
+                return CGRect(x: position.x - 2, y: position.y - 2, width: 14, height: 14)
+            }
+
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
+            DispatchQueue.main.async {
+                glucoseYRange = range
+                manualGlucoseDots = dots
+            }
+        }
+    }
+
+    private func calculateManualGlucoseDotsCenter(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = isManual.concurrentMap { value -> CGRect in
+                let position = glucoseToCoordinate(value, fullSize: fullSize)
+                return CGRect(x: position.x, y: position.y, width: 10, height: 10)
+            }
+
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
+            DispatchQueue.main.async {
+                glucoseYRange = range
+                manualGlucoseDotsCenter = dots
+            }
+        }
+    }
+
+    private func calculateAnnouncementDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = announcement.map { value -> AnnouncementDot in
+                let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
+                let size = Config.announcementSize * Config.announcementScale
+                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                let note = value.notes
+                return AnnouncementDot(rect: rect, value: 10, note: note)
+            }
+            let path = Path { path in
+                for dot in dots {
+                    path.addEllipse(in: dot.rect)
+                }
+            }
+            let range = self.getGlucoseYRange(fullSize: fullSize)
+
+            DispatchQueue.main.async {
+                glucoseYRange = range
+                announcementDots = dots
+                announcementPath = path
             }
         }
     }
@@ -579,7 +734,7 @@ extension MainChartView {
             let fpus = carbs.filter { $0.isFPU ?? false }
             let dots = fpus.map { value -> DotInfo in
                 let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
-                let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
+                let size = Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
                 let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
                 return DotInfo(rect: rect, value: value.carbs)
             }
@@ -668,8 +823,8 @@ extension MainChartView {
                 path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
             }
             let adjustForOptionalExtraHours = screenHours > 12 ? screenHours - 12 : 0
-            let endDateTime = dayAgoTime + min(max(screenHours - adjustForOptionalExtraHours, 12), 24).hours
-                .timeInterval + min(max(screenHours - adjustForOptionalExtraHours, 12), 24).hours
+            let endDateTime = dayAgoTime + min(max(Int(screenHours - adjustForOptionalExtraHours), 12), 24).hours
+                .timeInterval + min(max(Int(screenHours - adjustForOptionalExtraHours), 12), 24).hours
                 .timeInterval
             let autotunedBasalPoints = findRegularBasalPoints(
                 timeBegin: dayAgoTime,

@@ -169,7 +169,7 @@ jobs:
         )
     steps:
       - name: Select Xcode version
-        run: "sudo xcode-select --switch /Applications/Xcode_14.3.1.app/Contents/Developer"
+        run: "sudo xcode-select --switch /Applications/Xcode_15.0.1.app/Contents/Developer"
       
       - name: Checkout Repo for syncing
         if: |

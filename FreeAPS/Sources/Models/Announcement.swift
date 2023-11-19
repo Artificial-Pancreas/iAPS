@@ -1,11 +1,11 @@
 import Foundation
 
-struct Announcement: JSON {
+struct Announcement: JSON, Equatable, Hashable {
     let createdAt: Date
     let enteredBy: String
     let notes: String
 
-    static let remote = "freeaps-x-remote"
+    static let remote = "remote"
 
     var action: AnnouncementAction? {
         let components = notes.replacingOccurrences(of: " ", with: "").split(separator: ":")

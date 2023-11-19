@@ -5,16 +5,16 @@
 "%@/min" = "%@/min";
 
 /* No comment provided by engineer. */
-"Are you sure you want to delete this CGM?" = "Er du sikker på at du vil slette CGM?";
+"Are you sure you want to delete this CGM?" = "Sikker på at du vil slette denne CGM?";
 
 /* No comment provided by engineer. */
-"Bluetooth" = "blåtann";
+"Bluetooth" = "Bluetooth";
 
 /* Button text to cancel G7 setup */
 "Cancel" = "Avbryt";
 
 /* No comment provided by engineer. */
-"Configuration" = "Konfigurasjon";
+"Configuration" = "Oppsett";
 
 /* title for g7 settings connection status when connected */
 "Connected" = "Tilkoblet";
@@ -39,34 +39,34 @@
 "Glucose" = "Blodsukker";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Oppvarming ferdig";
+"Grace Period End" = "Slutt på utsettelsesperiode";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Gjenstående oppvarmingsperiode";
+"Grace period remaining" = "Utsettelsesperiode som gjenstår";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "HØY";
+"HIGH" = "HØYT";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Siste tilkobling";
 
 /* No comment provided by engineer. */
-"Last Reading" = "Forrige avlesning";
+"Last Reading" = "Siste måling";
 
 /* Descriptive text on G7StartupView */
-"Loop can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "Loop kan lese G7 CGM data, men du må fortsatt bruke Dexcom G7-appen for sammenkobling, kalibrering, og annen sensoradministrasjon.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS kan lese data fra Dexcom G7, men du må fremdeles bruke Dexcom G7-appen for å koble til sender, kalibrere og andre innstillinger for sensoren.";
 
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "LAV";
+"LOW" = "LAVT";
 
 /* title for g7 settings row showing BLE Name */
 "Name" = "Navn";
 
 /* No comment provided by engineer. */
-"Scan for new sensor" = "Skann etter ny sensor";
+"Scan for new sensor" = "Søk etter ny sensor";
 
 /* title for g7 settings connection status when scanning */
-"Scanning" = "Søker";
+"Scanning" = "Skanner";
 
 /* G7 Status highlight text for searching for sensor */
 "Searching for\nSensor" = "Søker etter\nSensor";
@@ -81,31 +81,31 @@
 "Sensor\nFailed" = "Sensor\nFeilet";
 
 /* G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Sensor\nProblem";
+"Sensor\nIssue" = "Sensor\nFeil";
 
 /* G7 Status highlight text for sensor warmup */
 "Sensor\nWarmup" = "Sensor\nOppvarming";
 
 /* title for g7 settings row showing sensor expiration time */
-"Sensor Expiration" = "Sensor utløpsdato";
+"Sensor Expiration" = "Sensor utløper";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Sensor utløpt";
+"Sensor expired" = "Sensoren er utløpt";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
 "Sensor expires" = "Sensor utløper";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Sensor feilet";
+"Sensor failed" = "Sensoren feilet";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Sensorstart";
+"Sensor Start" = "Start sensor";
 
 /* G7 Status highlight text for signal loss */
-"Signal\nLoss" = "Signal\nTap";
+"Signal\nLoss" = "Signal\nTapt";
 
 /* Field label */
-"Time" = "Tid";
+"Time" = "Tidspunkt";
 
 /* Field label */
 "Trend" = "Trend";
@@ -114,5 +114,4 @@
 "Upload Readings" = "Last opp avlesninger";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Fullfører oppvarming";
-
+"Warmup completes" = "Oppvarming fullført";

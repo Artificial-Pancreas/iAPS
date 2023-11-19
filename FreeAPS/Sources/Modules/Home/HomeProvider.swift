@@ -9,6 +9,7 @@ extension Home {
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
         @Injected() var tempTargetsStorage: TempTargetsStorage!
         @Injected() var carbsStorage: CarbsStorage!
+        @Injected() var announcementStorage: AnnouncementsStorage!
 
         var suggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -18,6 +19,10 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
 
+        func pumpTimeZone() -> TimeZone? {
+            apsManager.pumpManager?.status.timeZone
+        }
+
         func heartbeatNow() {
             apsManager.heartbeat(date: Date())
         }
@@ -25,6 +30,13 @@ extension Home {
         func filteredGlucose(hours: Int) -> [BloodGlucose] {
             glucoseStorage.recent().filter {
                 $0.dateString.addingTimeInterval(hours.hours.timeInterval) > Date()
+            }
+        }
+
+        func manualGlucose(hours: Int) -> [BloodGlucose] {
+            glucoseStorage.recent().filter {
+                $0.type == GlucoseType.manual.rawValue &&
+                    $0.dateString.addingTimeInterval(hours.hours.timeInterval) > Date()
             }
         }
 
@@ -46,6 +58,12 @@ extension Home {
 
         func carbs(hours: Int) -> [CarbsEntry] {
             carbsStorage.recent().filter {
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+            }
+        }
+
+        func announcement(_ hours: Int) -> [Announcement] {
+            announcementStorage.validate().filter {
                 $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
             }
         }

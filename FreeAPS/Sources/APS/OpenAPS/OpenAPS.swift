@@ -120,7 +120,6 @@ final class OpenAPS {
 
     func oref2() -> RawJSON {
         coredataContext.performAndWait {
-            let now = Date()
             let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
@@ -267,7 +266,6 @@ final class OpenAPS {
                     uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal
                 )
                 storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
-                print("Test time for oref2_variables: \(-now.timeIntervalSinceNow) seconds")
                 return self.loadFileFromStorage(name: Monitor.oref2_variables)
 
             } else {

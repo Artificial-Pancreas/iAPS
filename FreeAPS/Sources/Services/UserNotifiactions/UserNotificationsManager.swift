@@ -127,7 +127,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     private func scheduleMissingLoopNotifiactions(date _: Date) {
         ensureCanSendNotification {
             let title = NSLocalizedString("iAPS not active", comment: "iAPS not active")
-            let body = NSLocalizedString("Last loop was more then %d min ago", comment: "Last loop was more then %d min ago")
+            let body = NSLocalizedString("Last loop was more than %d min ago", comment: "Last loop was more than %d min ago")
 
             let firstInterval = 20 // min
             let secondInterval = 40 // min
@@ -232,6 +232,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             }
         }
     }
+
     private func glucoseText(glucoseValue: Int, delta: Int?, direction: BloodGlucose.Direction?) -> String {
         let units = settingsManager.settings.units
         let glucoseText = glucoseFormatter
