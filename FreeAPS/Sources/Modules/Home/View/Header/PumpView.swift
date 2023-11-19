@@ -126,30 +126,6 @@ struct PumpView: View {
         return "\(roundedTotalBolus) U"
     }
 
-//    MARK: THIS CRAP DOES NOT WORK
-    
-    
-//    func calculateTINS() -> String {
-//        let date = Date()
-//        let calendar = Calendar.current
-//        let offset = state.scale
-//
-//    //        let hour = calendar.component(.hour, from: date)
-//    //
-//    //        let minutes = calendar.component(.minute, from: date)
-//
-//        let startTime = calendar.startOfDay(for: date).addingTimeInterval(-Double(offset.rawValue))
-//        print("******************")
-//        print(startTime)
-//
-//        let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
-//
-//        let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
-//        let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
-//
-//        return "\(roundedTotalBolus) U"
-//    }
-
     private func remainingTimeString(time: TimeInterval) -> String {
         guard time > 0 else {
             return NSLocalizedString("Replace pod", comment: "View/Header when pod expired")
