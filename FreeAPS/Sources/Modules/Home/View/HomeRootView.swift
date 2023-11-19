@@ -12,6 +12,23 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
 
+        let buttonFont: Font = .footnote
+
+        private struct Buttons: Identifiable {
+            let label: String
+            let number: String
+            var active: Bool
+            var id: String { label }
+        }
+
+        @State private var timeButtons: [Buttons] = [
+            Buttons(label: "2 hours", number: "2", active: false),
+            Buttons(label: "4 hours", number: "4", active: false),
+            Buttons(label: "6 hours", number: "6", active: true),
+            Buttons(label: "12 hours", number: "12", active: false),
+            Buttons(label: "24 hours", number: "24", active: false)
+        ]
+
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
 
@@ -330,6 +347,35 @@ extension Home {
             .frame(maxWidth: .infinity, maxHeight: 30)
         }
 
+        var timeInterval: some View {
+            HStack(alignment: .center) {
+                ForEach(timeButtons) { button in
+                    Text(button.active ? button.label : button.number).onTapGesture {
+                        let index = timeButtons.firstIndex(where: { $0.label == button.label }) ?? 0
+                        timeButtons[index].active = true
+                        disableButtons(index)
+                    }
+                    .foregroundStyle(button.active ? .primary : .secondary)
+                    .frame(maxHeight: 20).padding(.horizontal)
+                    .background(button.active ? Color(.systemGray4) : .clear, in: .capsule(style: .circular))
+                }
+            }
+            .font(buttonFont)
+            .frame(maxWidth: .infinity)
+            .padding(.top, 10)
+            .padding(.bottom, 20)
+        }
+
+        func disableButtons(_ int: Int) {
+            var index = 0
+            repeat {
+                if index != int {
+                    timeButtons[index].active = false
+                }
+                index += 1
+            } while index < timeButtons.count
+        }
+
         var legendPanel: some View {
             ZStack {
                 HStack(alignment: .center) {
@@ -410,7 +456,7 @@ extension Home {
                     thresholdLines: $state.thresholdLines
                 )
             }
-            .padding(.bottom)
+            // .padding(.bottom)
             .modal(for: .dataTable, from: self)
         }
 
@@ -577,6 +623,7 @@ extension Home {
                     header(geo)
                     infoPanel
                     mainChart
+                    timeInterval
                     legendPanel
                     profiles(geo)
                     bottomPanel(geo)
