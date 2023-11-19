@@ -368,6 +368,8 @@ extension Home {
         var legendPanel: some View {
             ZStack {
                 HStack(alignment: .center) {
+                    Spacer()
+
                     Group {
                         Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
                         Text("BG")
@@ -385,6 +387,13 @@ extension Home {
                         Text("ZT")
                             .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
                     }
+
+                    Spacer()
+
+                    loopView.padding(.top, 16)
+
+                    Spacer()
+
                     Group {
                         Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
                             .padding(.leading, 8)
@@ -406,9 +415,9 @@ extension Home {
                         )
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
                     }
+                    Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .padding([.bottom], 20)
             }
         }
 
@@ -660,15 +669,15 @@ extension Home {
                 VStack(spacing: 0) {
                     Spacer()
 
-                    ZStack {
-                        glucoseView
+//                    ZStack {
+                    glucoseView.padding(.top, 75)
 
-                        loopView
-                            /// circles width is 110, loops width is 35 -> (110/2) - (35/2) = 55 - 17.5 = 37.5
-                            .offset(x: UIScreen.main.bounds.width * 0.43, y: -37.5)
-                            .padding(.trailing, 10)
-                    }
-                    .padding(.top, 75)
+//                        loopView
+//                            /// circles width is 110, loops width is 35 -> (110/2) - (35/2) = 55 - 17.5 = 37.5
+//                            .offset(x: UIScreen.main.bounds.width * 0.43, y: -37.5)
+//                            .padding(.trailing, 10)
+//                    }
+//                    .padding(.top, 75)
 
                     Spacer()
 
@@ -696,8 +705,6 @@ extension Home {
                     Spacer()
 
                     timeInterval
-
-                    Spacer()
 
                     legendPanel
 

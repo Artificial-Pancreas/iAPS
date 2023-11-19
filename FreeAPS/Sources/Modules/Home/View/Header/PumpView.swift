@@ -84,8 +84,6 @@ struct PumpView: View {
                         .foregroundColor(batteryColor)
                     Text("\(Int(battery.percent ?? 100)) %").font(.callout)
                         .fontWeight(.bold)
-                    Text(calculateTINS())
-                        .font(.callout).fontWeight(.bold)
                 }
             }
 
@@ -102,31 +100,6 @@ struct PumpView: View {
                 }
             }
         }
-    }
-
-    // MARK: WORKS....BUT MAYBE TIMEZONE PROBLEMS COULD OCCUR
-
-    // DEFINETELY SOMETHING FOR OUR TIMEZONE EXPERT.....
-
-    func calculateTINS() -> String {
-        let date = Date()
-        let calendar = Calendar.current
-        let offset = screenHours
-
-        var offsetComponents = DateComponents()
-//        offsetComponents.hour = -offset.rawValue
-        offsetComponents.hour = -Int(offset)
-
-        let startTime = calendar.date(byAdding: offsetComponents, to: date)!
-        print("******************")
-        print("die voll krasse start time ist: \(startTime)")
-
-        let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
-
-        let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
-        let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
-
-        return "\(roundedTotalBolus) U"
     }
 
     private func remainingTimeString(time: TimeInterval) -> String {

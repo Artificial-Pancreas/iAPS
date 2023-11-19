@@ -182,7 +182,12 @@ struct MainChartView: View {
             ScrollViewReader { scroll in
                 ZStack(alignment: .top) {
                     tempTargetsView(fullSize: fullSize).drawingGroup()
-                    basalView(fullSize: fullSize).drawingGroup()
+
+                    ZStack {
+                        basalView(fullSize: fullSize).drawingGroup()
+                        Text(calculateTINS())
+                            .font(.callout).fontWeight(.bold)
+                    }
 
                     mainView(fullSize: fullSize).id(Config.endID)
                         .drawingGroup()
@@ -273,7 +278,7 @@ struct MainChartView: View {
         .scaleEffect(x: 1, y: -1)
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
-        .background(Color.secondary.opacity(0.1))
+        .background(colorScheme == .dark ? Color.black.opacity(0.8) : Color.clear)
         .onChange(of: tempBasals) { _ in
             calculateBasalPoints(fullSize: fullSize)
         }
@@ -1211,5 +1216,30 @@ extension MainChartView {
         let lastDeltaTime = firstHour.timeIntervalSince(firstDate)
         let oneSecondWidth = oneSecondStep(viewWidth: viewWidth)
         return oneSecondWidth * CGFloat(lastDeltaTime)
+    }
+
+    // MARK: WORKS....BUT MAYBE TIMEZONE PROBLEMS COULD OCCUR
+
+    // DEFINETELY SOMETHING FOR OUR TIMEZONE EXPERT.....
+
+    private func calculateTINS() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let offset = screenHours
+
+        var offsetComponents = DateComponents()
+        //        offsetComponents.hour = -offset.rawValue
+        offsetComponents.hour = -Int(offset)
+
+        let startTime = calendar.date(byAdding: offsetComponents, to: date)!
+        print("******************")
+        print("die voll krasse start time ist: \(startTime)")
+
+        let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
+
+        let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
+        let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
+
+        return "\(roundedTotalBolus) U"
     }
 }
