@@ -50,7 +50,8 @@ struct CurrentGlucoseView: View {
     }
 
     var body: some View {
-        let triangleColor = Color(red: 0.729, green: 0.337, blue: 1)
+//        let triangleColor = Color(red: 0.729, green: 0.337, blue: 1)
+        let triangleColor = Color(red: 0.263, green: 0.733, blue: 0.914)
 
         ZStack {
             TrendShape(gradient: angularGradient, color: triangleColor)
@@ -96,35 +97,35 @@ struct CurrentGlucoseView: View {
                      .singleUp,
                      .tripleUp:
                     rotationDegrees = -90
-                    setupAngularGradient(startAngle: 135, endAngle: -45)
+                    setupAngularGradient(startAngle: -135, endAngle: 45)
 
                 case .fortyFiveUp:
                     rotationDegrees = -45
-                    setupAngularGradient(startAngle: 180, endAngle: 0)
+                    setupAngularGradient(startAngle: 0, endAngle: 90)
 
                 case .flat:
                     rotationDegrees = 0
-                    setupAngularGradient(startAngle: 225, endAngle: 45)
+                    setupAngularGradient(startAngle: -45, endAngle: 135)
 
                 case .fortyFiveDown:
                     rotationDegrees = 45
-                    setupAngularGradient(startAngle: 270, endAngle: 90)
+                    setupAngularGradient(startAngle: 0, endAngle: 180)
 
                 case .doubleDown,
                      .singleDown,
                      .tripleDown:
                     rotationDegrees = 90
-                    setupAngularGradient(startAngle: -45, endAngle: 135)
+                    setupAngularGradient(startAngle: 45, endAngle: 225)
 
                 case .none,
                      .notComputable,
                      .rateOutOfRange:
                     rotationDegrees = 0
-                    setupAngularGradient(startAngle: 225, endAngle: 45)
+                    setupAngularGradient(startAngle: -45, endAngle: 135)
 
                 @unknown default:
                     rotationDegrees = 0
-                    setupAngularGradient(startAngle: 225, endAngle: 45)
+                    setupAngularGradient(startAngle: -45, endAngle: 135)
                 }
             }
         }
@@ -141,7 +142,7 @@ struct CurrentGlucoseView: View {
         ], center: .center, startAngle: .degrees(startAngle), endAngle: .degrees(endAngle))
     }
 
-    private static func defaultGradient(startAngle: Double = 180, endAngle: Double = 0) -> AngularGradient {
+    private static func defaultGradient(startAngle: Double = -45, endAngle: Double = 135) -> AngularGradient {
         AngularGradient(colors: [
             Color(red: 0.729, green: 0.337, blue: 1),
             Color(red: 0.263, green: 0.733, blue: 0.914),
