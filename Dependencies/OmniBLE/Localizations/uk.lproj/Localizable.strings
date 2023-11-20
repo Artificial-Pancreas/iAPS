@@ -827,4 +827,13 @@
 "Retrieving Pump Manager Details..." = "Отримання деталей менеджера помп...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Оновити відомості про керування помпами";
+<<<<<<< HEAD
 >>>>>>> 7f4d47c8 (Crowdin (#334))
+=======
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Діагностика";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "Отримати статус Pod'у";
+>>>>>>> 420dc4ed (Crowdin (#362))

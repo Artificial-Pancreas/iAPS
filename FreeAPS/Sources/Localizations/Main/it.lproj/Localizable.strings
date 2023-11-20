@@ -495,10 +495,17 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Obiettivi Temporanei";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete carbs?" = "Cancella carboidrati?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete insulin?" = "Cancella l'insulina?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Delete Insulin?";
+>>>>>>> 420dc4ed (Crowdin (#362))
 
 /* Treatments list */
 "Treatments" = "Trattamenti";
@@ -1266,7 +1273,17 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistiche e Vista Iniziale";
 
 /* Alert text */
+<<<<<<< HEAD
 "Delete carb equivalents?" = "Cancella i carb equivalenti?";
+=======
+"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+
+/* */
+"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+
+/* */
+"Delete Glucose?" = "Delete Glucose?";
+>>>>>>> 420dc4ed (Crowdin (#362))
 
 /* */
 "Meal Presets" = "Pasto Predefinito";
@@ -1543,6 +1560,21 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Hours X-Axis (6 default)" = "Ore X-Axis (6 predefinito)";
+
+/* */
+"2 hours" = "2 ore";
+
+/* */
+"4 hours" = "4 hours";
+
+/* */
+"6 hours" = "6 hours";
+
+/* */
+"12 hours" = "12 hours";
+
+/* */
+"24 hours" = "24 hours";
 
 /* Average BG = */
 "Average" = "Media";
