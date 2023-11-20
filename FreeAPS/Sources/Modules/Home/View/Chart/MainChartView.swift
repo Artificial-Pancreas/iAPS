@@ -342,6 +342,7 @@ struct MainChartView: View {
             )
         }
     }
+
     // MARK: TO DO: CHANGE TIME LABELS TO ONLY DISPLAY EVERY SECOND LABEL WHEN SCREENHOURS IS TOO BIG
 
 //    private func timeLabelsView(fullSize: CGSize) -> some View {
