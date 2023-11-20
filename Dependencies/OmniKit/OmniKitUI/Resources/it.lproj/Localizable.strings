@@ -766,7 +766,7 @@
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Il tuo Pod potrebbe ancora erogare insulina.\n Rimuovilo dal tuo corpo, e poi tocca \"Continua\".";
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Silenced";
+"Silenced" = "Silenziato";
 
 /* Description for SilencePodPreference.disabled */
 "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
