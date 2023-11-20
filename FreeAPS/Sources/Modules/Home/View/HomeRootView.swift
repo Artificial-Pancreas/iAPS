@@ -189,8 +189,6 @@ extension Home {
                 name: $state.pumpName,
                 expiresAtDate: $state.pumpExpiresAtDate,
                 timerDate: $state.timerDate,
-                boluses: $state.boluses,
-                screenHours: $state.hours,
                 state: state
             )
             .onTapGesture {
@@ -231,7 +229,7 @@ extension Home {
                     comment: "Manual Temp basal"
                 )
             }
-            return rateString + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
+            return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
         }
 
         var tempTargetString: String? {
@@ -330,6 +328,12 @@ extension Home {
                         .font(.system(size: 12, weight: .bold))
                         .foregroundColor(.insulin)
                         .padding(.leading, 8)
+                    Text(
+                        "TINS: \(state.calculateTINS())" +
+                            NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
+                    )
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundColor(.insulin)
                 }
 
                 if let tempTargetString = tempTargetString {
