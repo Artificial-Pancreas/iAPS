@@ -21,12 +21,12 @@ struct LoopView: View {
         return formatter
     }
 
-    private let rect = CGRect(x: 0, y: 0, width: 24, height: 24)
+    private let rect = CGRect(x: 0, y: 0, width: 18, height: 18)
     var body: some View {
-        VStack(alignment: .center) {
+        HStack(alignment: .center) {
             ZStack {
                 Circle()
-                    .strokeBorder(color, lineWidth: 4)
+                    .strokeBorder(color, lineWidth: 2)
                     .frame(width: rect.width, height: rect.height, alignment: .center)
                     .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
                 if isLooping {

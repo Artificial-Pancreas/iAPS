@@ -163,23 +163,29 @@ extension Home {
                 alarm: $state.alarm,
                 lowGlucose: $state.lowGlucose,
                 highGlucose: $state.highGlucose
-            )
-            .onTapGesture {
-                if state.alarm == nil {
-                    state.openCGM()
-                } else {
-                    state.showModal(for: .snooze)
-                }
-            }
-            .onLongPressGesture {
+            ).onTapGesture {
+                isStatusPopupPresented = true
+            }.onLongPressGesture {
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                 impactHeavy.impactOccurred()
-                if state.alarm == nil {
-                    state.showModal(for: .snooze)
-                } else {
-                    state.openCGM()
-                }
+                state.runLoop()
             }
+//            .onTapGesture {
+//                if state.alarm == nil {
+//                    state.openCGM()
+//                } else {
+//                    state.showModal(for: .snooze)
+//                }
+//            }
+//            .onLongPressGesture {
+//                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+//                impactHeavy.impactOccurred()
+//                if state.alarm == nil {
+//                    state.showModal(for: .snooze)
+//                } else {
+//                    state.openCGM()
+//                }
+//            }
         }
 
         var pumpView: some View {
@@ -392,11 +398,11 @@ extension Home {
                             .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
                     }
 
-                    Spacer()
-
-                    loopView.padding(.top, 16)
-
-                    Spacer()
+//                    Spacer()
+//
+//                    loopView.padding(.top, 16)
+//
+//                    Spacer()
 
                     Group {
                         Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
@@ -452,13 +458,8 @@ extension Home {
                 }
             }
             .shadow(
-                color: colorScheme == .dark ? Color(
-                    red: 0.02745098039,
-                    green: 0.1098039216,
-                    blue: 0.1411764706
-                ) : Color
-                    .black.opacity(0.33),
-                radius: 3
+                color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
+                radius: colorScheme == .dark ? 5 : 3
             )
             .font(buttonFont)
         }
@@ -552,72 +553,53 @@ extension Home {
         }
 
         @ViewBuilder private func bottomPanel(_: GeometryProxy) -> some View {
-            let colorRectangle: Color = colorScheme == .dark ? Color.black.opacity(0.8) : Color.white
+            let colorRectangle: Color = colorScheme == .dark ? Color(
+                red: 0.05490196078,
+                green: 0.05490196078,
+                blue: 0.05490196078
+            ) : Color.white
             let colorIcon: Color = (colorScheme == .dark ? Color.white : Color.black).opacity(0.9)
 
-            ZStack {
-                Rectangle()
-                    .fill(colorRectangle)
-                    .frame(height: UIScreen.main.bounds.height / 13)
-                    .cornerRadius(15)
-                    .shadow(
-                        color: colorScheme == .dark ? Color(red: 0.02745098039, green: 0.1098039216, blue: 0.1411764706) : Color
-                            .black.opacity(0.33),
-                        radius: 3
-                    )
-                    .padding([.leading, .trailing], 10)
-
+            VStack {
                 HStack {
-                    Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(colorIcon)
-                                .padding(8)
-                            if let carbsReq = state.carbsRequired {
-                                Text(numberFormatter.string(from: carbsReq as NSNumber)!)
-                                    .font(.caption)
-                                    .foregroundColor(.white)
-                                    .padding(4)
-                                    .background(Capsule().fill(Color.red))
-                            }
-                        }
-                    }.buttonStyle(.borderless)
-                    Spacer()
-                    Button { state.showModal(for: .addTempTarget) }
-                    label: {
-                        Image("target")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(colorIcon)
-                    .buttonStyle(.borderless)
-                    Spacer()
-                    Button {
-                        state.showModal(for: .bolus(
-                            waitForSuggestion: true,
-                            fetch: false
-                        ))
-                    }
-                    label: {
-                        Image("bolus")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(colorIcon)
-                    .buttonStyle(.borderless)
-                    Spacer()
-                    if state.allowManualTemp {
-                        Button { state.showModal(for: .manualTempBasal) }
+                    Rectangle().fill(Color.loopGreen).frame(height: 2)
+                    Text("1 min").font(.caption).foregroundColor(Color.loopGreen)
+                    Rectangle().fill(Color.loopGreen).frame(height: 2)
+                }.padding(.horizontal, 10)
+                ZStack {
+                    Rectangle()
+                        .fill(colorRectangle)
+                        .frame(height: UIScreen.main.bounds.height / 13)
+                        .cornerRadius(15)
+                        .shadow(
+                            color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
+                            radius: colorScheme == .dark ? 5 : 3
+                        )
+                        .padding([.leading, .trailing], 10)
+
+                    HStack {
+                        Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                         label: {
-                            Image("bolus1")
+                            ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                                Image("carbs")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .foregroundColor(colorIcon)
+                                    .padding(8)
+                                if let carbsReq = state.carbsRequired {
+                                    Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .padding(4)
+                                        .background(Capsule().fill(Color.red))
+                                }
+                            }
+                        }.buttonStyle(.borderless)
+                        Spacer()
+                        Button { state.showModal(for: .addTempTarget) }
+                        label: {
+                            Image("target")
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)
@@ -626,48 +608,77 @@ extension Home {
                         .foregroundColor(colorIcon)
                         .buttonStyle(.borderless)
                         Spacer()
-                    }
+                        Button {
+                            state.showModal(for: .bolus(
+                                waitForSuggestion: true,
+                                fetch: false
+                            ))
+                        }
+                        label: {
+                            Image("bolus")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding(8)
+                        }
+                        .foregroundColor(colorIcon)
+                        .buttonStyle(.borderless)
+                        Spacer()
+                        if state.allowManualTemp {
+                            Button { state.showModal(for: .manualTempBasal) }
+                            label: {
+                                Image("bolus1")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .padding(8)
+                            }
+                            .foregroundColor(colorIcon)
+                            .buttonStyle(.borderless)
+                            Spacer()
+                        }
 
-                    // MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
+                        // MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
 
-                    // MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
-                    Button {
-                        state.showModal(for: .overrideProfilesConfig)
-                    } label: {
-                        Image(systemName: "person")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
+                        // MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
+                        Button {
+                            state.showModal(for: .overrideProfilesConfig)
+                        } label: {
+                            Image(systemName: "person")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding(8)
+                        }
+                        .foregroundColor(colorIcon)
+                        .buttonStyle(.borderless)
+                        Spacer()
+                        Button { state.showModal(for: .statistics)
+                        }
+                        label: {
+                            Image(systemName: "chart.xyaxis.line")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding(8)
+                        }
+                        .foregroundColor(colorIcon)
+                        .buttonStyle(.borderless)
+                        Spacer()
+                        Button { state.showModal(for: .settings) }
+                        label: {
+                            Image("settings1")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding(8)
+                        }
+                        .foregroundColor(colorIcon)
+                        .buttonStyle(.borderless)
                     }
-                    .foregroundColor(colorIcon)
-                    .buttonStyle(.borderless)
-                    Spacer()
-                    Button { state.showModal(for: .statistics)
-                    }
-                    label: {
-                        Image(systemName: "chart.xyaxis.line")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(colorIcon)
-                    .buttonStyle(.borderless)
-                    Spacer()
-                    Button { state.showModal(for: .settings) }
-                    label: {
-                        Image("settings1")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(colorIcon)
-                    .buttonStyle(.borderless)
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 16)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 16)
             }
         }
 
@@ -676,30 +687,26 @@ extension Home {
                 gradient: Gradient(colors: [
                     // RGB(3, 15, 28)
                     Color(red: 0.011, green: 0.058, blue: 0.109),
-                    Color(red: 0.011, green: 0.058, blue: 0.109),
-                    // RGB(1, 3, 8)
-                    Color(red: 0.003, green: 0.011, blue: 0.031)
+                    // RGB(10, 34, 55)
+                    Color(red: 0.03921568627, green: 0.1333333333, blue: 0.2156862745)
                 ]),
                 startPoint: .bottom,
                 endPoint: .top
             )
                 :
                 LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-            let colourChart: Color = colorScheme == .dark ? .black.opacity(0.8) : .white
+            let colourChart: Color = colorScheme == .dark ? Color(
+                red: 0.05490196078,
+                green: 0.05490196078,
+                blue: 0.05490196078
+            ) : .white
 
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     Spacer()
 
-//                    ZStack {
-                    glucoseView.padding(.top, 75)
-
-//                        loopView
-//                            /// circles width is 110, loops width is 35 -> (110/2) - (35/2) = 55 - 17.5 = 37.5
-//                            .offset(x: UIScreen.main.bounds.width * 0.43, y: -37.5)
-//                            .padding(.trailing, 10)
-//                    }
-//                    .padding(.top, 75)
+                    glucoseView
+                        .padding(.top, 75)
 
                     Spacer()
 
@@ -717,9 +724,8 @@ extension Home {
                         .overlay(mainChart)
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(
-                            color: colorScheme == .dark ? Color(red: 0.02745098039, green: 0.1098039216, blue: 0.1411764706) :
-                                Color.black.opacity(0.33),
-                            radius: 3
+                            color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
+                            radius: colorScheme == .dark ? 5 : 3
                         )
                         .padding(.horizontal, 10)
                         .frame(maxHeight: UIScreen.main.bounds.height / 2.2)
@@ -727,6 +733,8 @@ extension Home {
                     Spacer()
 
                     timeInterval
+
+                    Spacer()
 
                     legendPanel
 
@@ -747,7 +755,11 @@ extension Home {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(UIColor.darkGray))
+                            .fill(colorScheme == .dark ? Color(
+                                red: 0.05490196078,
+                                green: 0.05490196078,
+                                blue: 0.05490196078
+                            ) : Color(UIColor.darkGray))
                     )
                     .onTapGesture {
                         isStatusPopupPresented = false
