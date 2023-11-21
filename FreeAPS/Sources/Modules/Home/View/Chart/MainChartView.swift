@@ -26,23 +26,28 @@ struct MainChartView: View {
     private enum Config {
         static let endID = "End"
         static let basalHeight: CGFloat = 80
+        static let bolusHeight: CGFloat = 80 // 100
         static let topYPadding: CGFloat = 20
         static let bottomYPadding: CGFloat = 80
         static let minAdditionalWidth: CGFloat = 150
         static let maxGlucose = 270
-        static let minGlucose = 45
+        static let minGlucose = 0 // 45
         static let yLinesCount = 5
         static let glucoseScale: CGFloat = 2 // default 2
         static let bolusSize: CGFloat = 8
         static let bolusScale: CGFloat = 2.5
-        static let carbsSize: CGFloat = 10
+        static let carbsSize: CGFloat = 8
         static let fpuSize: CGFloat = 5
-        static let carbsScale: CGFloat = 0.3
+        static let carbsScale: CGFloat = 0.2
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
         static let announcementScale: CGFloat = 2.5
         static let owlSeize: CGFloat = 25
         static let owlOffset: CGFloat = 80
+        static let bolusOffSet: CGFloat = 80
+        static let carbsOffSet: CGFloat = -20
+        static let carbMaxSize: CGFloat = 80
+        static let bolusMaxSize: CGFloat = 16
     }
 
     private enum Command {
@@ -125,7 +130,7 @@ struct MainChartView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.minimumIntegerDigits = 0
-        formatter.maximumFractionDigits = 2
+        formatter.maximumFractionDigits = 1
         formatter.decimalSeparator = "."
         return formatter
     }
@@ -174,6 +179,7 @@ struct MainChartView: View {
             ) { _ in
                 update(fullSize: geo.size)
             }
+            .background(colorScheme == .dark ? Color(.black) : .white)
         }
     }
 
@@ -183,6 +189,8 @@ struct MainChartView: View {
                 ZStack(alignment: .top) {
                     tempTargetsView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
+
+                    bolusView(fullSize: fullSize).drawingGroup()
 
                     mainView(fullSize: fullSize).id(Config.endID)
                         .drawingGroup()
@@ -291,14 +299,26 @@ struct MainChartView: View {
         }
     }
 
+    private func bolusView(fullSize: CGSize) -> some View {
+        ZStack {
+            bolusPath.stroke(Color.blue, lineWidth: 5).opacity(1)
+        }
+        .scaleEffect(x: 1, y: -1)
+        .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
+        .frame(maxHeight: Config.bolusHeight)
+        .background(Color.secondary.opacity(0.1))
+        .onChange(of: boluses) { _ in
+            calculateBolusPoints(fullSize: fullSize)
+        }
+    }
+
     private func mainView(fullSize: CGSize) -> some View {
         Group {
             VStack {
                 ZStack {
                     xGridView(fullSize: fullSize)
                     carbsView(fullSize: fullSize)
-                    fpuView(fullSize: fullSize)
-                    bolusView(fullSize: fullSize)
+                    // fpuView(fullSize: fullSize)
                     if smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
                     manualGlucoseView(fullSize: fullSize)
@@ -466,28 +486,6 @@ struct MainChartView: View {
         }
     }
 
-    private func bolusView(fullSize: CGSize) -> some View {
-        ZStack {
-            bolusPath
-                .fill(Color.insulin)
-            bolusPath
-                .stroke(Color.primary, lineWidth: 0.5)
-
-            ForEach(bolusDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
-                return Text(bolusFormatter.string(from: info.value as NSNumber)!).font(.caption2)
-                    .position(position)
-                    .asAny()
-            }
-        }
-        .onChange(of: boluses) { _ in
-            calculateBolusDots(fullSize: fullSize)
-        }
-        .onChange(of: didAppearTrigger) { _ in
-            calculateBolusDots(fullSize: fullSize)
-        }
-    }
-
     private func carbsView(fullSize: CGSize) -> some View {
         ZStack {
             carbsPath
@@ -588,11 +586,10 @@ extension MainChartView {
         calculateManualGlucoseDotsCenter(fullSize: fullSize)
         calculateAnnouncementDots(fullSize: fullSize)
         calculateUnSmoothedGlucoseDots(fullSize: fullSize)
-        calculateBolusDots(fullSize: fullSize)
         calculateCarbsDots(fullSize: fullSize)
-        calculateFPUsDots(fullSize: fullSize)
         calculateTempTargetsRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
+        calculateBolusPoints(fullSize: fullSize)
         calculateSuspensions(fullSize: fullSize)
     }
 
@@ -600,7 +597,12 @@ extension MainChartView {
         calculationQueue.async {
             let dots = glucose.concurrentMap { value -> CGRect in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
-                return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+                return CGRect(
+                    x: position.x - 2,
+                    y: position.y - 2,
+                    width: 4 * Config.glucoseScale,
+                    height: 4 * Config.glucoseScale
+                )
             }
 
             let range = self.getGlucoseYRange(fullSize: fullSize)
@@ -684,28 +686,6 @@ extension MainChartView {
         }
     }
 
-    private func calculateBolusDots(fullSize: CGSize) {
-        calculationQueue.async {
-            let dots = boluses.map { value -> DotInfo in
-                let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, fullSize: fullSize)
-                let size = Config.bolusSize + CGFloat(value.amount ?? 0) * Config.bolusScale
-                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
-                return DotInfo(rect: rect, value: value.amount ?? 0)
-            }
-
-            let path = Path { path in
-                for dot in dots {
-                    path.addEllipse(in: dot.rect)
-                }
-            }
-
-            DispatchQueue.main.async {
-                bolusDots = dots
-                bolusPath = path
-            }
-        }
-    }
-
     private func calculateCarbsDots(fullSize: CGSize) {
         calculationQueue.async {
             let realCarbs = carbs.filter { !($0.isFPU ?? false) }
@@ -715,8 +695,13 @@ extension MainChartView {
                         .timeIntervalSince1970,
                     fullSize: fullSize
                 )
-                let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
-                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
+                let size = min(Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale, Config.carbMaxSize)
+                let rect = CGRect(
+                    x: center.x - size / 2,
+                    y: center.y - (size / 2) + Config.carbsOffSet,
+                    width: size,
+                    height: size
+                )
                 return DotInfo(rect: rect, value: value.carbs)
             }
 
@@ -729,33 +714,6 @@ extension MainChartView {
             DispatchQueue.main.async {
                 carbsDots = dots
                 carbsPath = path
-            }
-        }
-    }
-
-    private func calculateFPUsDots(fullSize: CGSize) {
-        calculationQueue.async {
-            let fpus = carbs.filter { $0.isFPU ?? false }
-            let dots = fpus.map { value -> DotInfo in
-                let center = timeToInterpolatedPoint(
-                    value.actualDate != nil ? (value.actualDate ?? Date()).timeIntervalSince1970 : value.createdAt
-                        .timeIntervalSince1970,
-                    fullSize: fullSize
-                )
-                let size = Config.fpuSize + CGFloat(value.carbs) * Config.fpuScale
-                let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
-                return DotInfo(rect: rect, value: value.carbs)
-            }
-
-            let path = Path { path in
-                for dot in dots {
-                    path.addEllipse(in: dot.rect)
-                }
-            }
-
-            DispatchQueue.main.async {
-                fpuDots = dots
-                fpuPath = path
             }
         }
     }
@@ -856,6 +814,32 @@ extension MainChartView {
             DispatchQueue.main.async {
                 self.tempBasalPath = tempBasalPath
                 self.regularBasalPath = autotunedBasalPath
+            }
+        }
+    }
+
+    private func calculateBolusPoints(fullSize: CGSize) {
+        calculationQueue.async {
+            let bolusPoints = boluses.map { each -> [CGPoint] in
+                let timeBegin = each.timestamp.timeIntervalSince1970
+                var minutes: Double = 1
+                let amount = each.amount ?? 0
+                if amount > 0 {
+                    minutes *= Double(amount)
+                }
+                let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
+                let y0 = min(Double(amount) * 6, Config.bolusHeight)
+                return [CGPoint(x: x0, y: y0)]
+            }.flatMap { $0 }
+            let bolusPath = Path { path in
+                for point in bolusPoints {
+                    path.move(to: CGPoint(x: point.x, y: 0))
+                    path.addLine(to: CGPoint(x: point.x, y: point.y))
+                }
+            }
+
+            DispatchQueue.main.async {
+                self.bolusPath = bolusPath
             }
         }
     }
@@ -1035,6 +1019,13 @@ extension MainChartView {
         let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
         let x = timeToXCoordinate(endBasalTime, fullSize: fullSize)
         let y = Config.basalHeight - CGFloat(lastBasal[0].rate ?? 0) * rateCost
+        return CGPoint(x: x, y: y)
+    }
+
+    private func lastBolusPoint(fullSize: CGSize) -> CGPoint {
+        let endBolusTime = (boluses.first?.timestamp ?? Date()).timeIntervalSince1970
+        let x = timeToXCoordinate(endBolusTime, fullSize: fullSize)
+        let y = Config.bolusHeight - CGFloat(boluses.first?.amount ?? 0)
         return CGPoint(x: x, y: y)
     }
 
