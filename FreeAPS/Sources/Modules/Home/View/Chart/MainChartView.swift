@@ -508,21 +508,6 @@ struct MainChartView: View {
         }
     }
 
-    private func fpuView(fullSize: CGSize) -> some View {
-        ZStack {
-            fpuPath
-                .fill(.orange.opacity(0.5))
-            fpuPath
-                .stroke(Color.primary, lineWidth: 0.2)
-        }
-        .onChange(of: carbs) { _ in
-            calculateFPUsDots(fullSize: fullSize)
-        }
-        .onChange(of: didAppearTrigger) { _ in
-            calculateFPUsDots(fullSize: fullSize)
-        }
-    }
-
     private func tempTargetsView(fullSize: CGSize) -> some View {
         ZStack {
             tempTargetsPath
