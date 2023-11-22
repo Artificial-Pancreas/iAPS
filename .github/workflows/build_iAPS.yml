@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   
   ## Remove the "#" sign from the beginning of the line below to get automated builds on push (code changes in your repository)
-  #push:
+  push:
+    branches:
+      - 'fastlane'
   
   schedule:
     #- cron: '30 04 1 * *' # Runs at 04:30 UTC on the 1st every month
