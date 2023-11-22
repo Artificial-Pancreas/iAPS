@@ -55,14 +55,14 @@ platform :ios do
       type: "appstore",
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
-        "com.jon.$(TEAMID).aps",
-        "com.jon.$(TEAMID).aps.watchkitapp",
-        "com.jon.$(TEAMID).aps.watchkitapp.watchkitextension"
+        "com.jon.#(TEAMID).aps",
+        "com.jon.#(TEAMID).aps.watchkitapp",
+        "com.jon.#(TEAMID).aps.watchkitapp.watchkitextension"
       ]
     )
 
     previous_build_number = latest_testflight_build_number(
-      app_identifier: "com.jon.$(TEAMID).aps",
+      app_identifier: "com.jon.#(TEAMID).aps",
       api_key: api_key,
     )
 
@@ -79,21 +79,21 @@ platform :ios do
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["com.jon.$(TEAMID).aps"],
+      profile_name: mapping["com.jon.#(TEAMID).aps"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPS"]
     )
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["com.jon.$(TEAMID).aps.watchkitapp.watchkitextension"],
+      profile_name: mapping["com.jon.#(TEAMID).aps.watchkitapp.watchkitextension"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch WatchKit Extension"]
     )
     
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["com.jon.$(TEAMID).aps.watchkitapp"],
+      profile_name: mapping["com.jon.#(TEAMID).aps.watchkitapp"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch"]
     )
@@ -154,12 +154,12 @@ platform :ios do
       Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING
     ])
 
-    configure_bundle_id("FreeAPSWatch WatchKit Extension", "com.jon.$(TEAMID).aps.watchkitapp.watchkitextension", [
+    configure_bundle_id("FreeAPSWatch WatchKit Extension", "com.jon.#(TEAMID).aps.watchkitapp.watchkitextension", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT
     ])
     
-    configure_bundle_id("FreeAPSWatch", "com.jon.$(TEAMID).aps.watchkitapp", [
+    configure_bundle_id("FreeAPSWatch", "com.jon.#(TEAMID).aps.watchkitapp", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
     
