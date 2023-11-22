@@ -452,13 +452,8 @@ extension Home {
                 }
             }
             .shadow(
-                color: colorScheme == .dark ? Color(
-                    red: 0.02745098039,
-                    green: 0.1098039216,
-                    blue: 0.1411764706
-                ) : Color
-                    .black.opacity(0.33),
-                radius: 3
+                color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
+                radius: colorScheme == .dark ? 5 : 3
             )
             .font(buttonFont)
         }
@@ -747,7 +742,11 @@ extension Home {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(UIColor.darkGray))
+                            .fill(colorScheme == .dark ? Color(
+                                red: 0.05490196078,
+                                green: 0.05490196078,
+                                blue: 0.05490196078
+                            ) : Color(UIColor.darkGray))
                     )
                     .onTapGesture {
                         isStatusPopupPresented = false
