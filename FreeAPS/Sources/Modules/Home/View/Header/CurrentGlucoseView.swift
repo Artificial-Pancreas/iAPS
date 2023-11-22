@@ -48,7 +48,7 @@ struct CurrentGlucoseView: View {
         VStack(alignment: .center) {
             HStack {
                 Text(
-                    recentGlucose?.glucose
+                    (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
                         .map {
                             glucoseFormatter
                                 .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
