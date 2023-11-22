@@ -37,15 +37,13 @@ extension Bolus {
 
         var body: some View {
             Form {
-                if state.displayPredictions {
-                    Section {
-                        if state.waitForSuggestion {
-                            Text("Please wait")
-                        } else {
-                            predictionChart
-                        }
-                    } header: { Text("Predictions") }
-                }
+                Section {
+                    if state.waitForSuggestion {
+                        Text("Please wait")
+                    } else {
+                        predictionChart
+                    }
+                } header: { Text("Predictions") }
 
                 if fetch {
                     Section {
@@ -145,9 +143,9 @@ extension Bolus {
 
             .onDisappear {
                 if fetch, hasFatOrProtein, !keepForNextWiew, !state.useCalc {
-                    state.delete(deleteTwice: true, id: meal.first?.id ?? "")
+                    state.delete(deleteTwice: true, meal: meal)
                 } else if fetch, !keepForNextWiew, !state.useCalc {
-                    state.delete(deleteTwice: false, id: meal.first?.id ?? "")
+                    state.delete(deleteTwice: false, meal: meal)
                 }
             }
 
@@ -178,7 +176,8 @@ extension Bolus {
         var predictionChart: some View {
             ZStack {
                 PredictionView(
-                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target
+                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target,
+                    displayPredictions: $state.displayPredictions
                 )
             }
         }
@@ -192,12 +191,11 @@ extension Bolus {
         }
 
         func carbsView() {
-            let id_ = meal.first?.id ?? ""
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: fetch, id_, override: false)
+                state.backToCarbsView(complexEntry: fetch, meal, override: false)
             } else {
-                state.backToCarbsView(complexEntry: false, id_, override: true)
+                state.backToCarbsView(complexEntry: false, meal, override: true)
             }
         }
 

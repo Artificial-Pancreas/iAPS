@@ -12,6 +12,24 @@ extension Home {
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
 
+        struct Buttons: Identifiable {
+            let label: String
+            let number: String
+            var active: Bool
+            let hours: Int16
+            var id: String { label }
+        }
+
+        @State var timeButtons: [Buttons] = [
+            Buttons(label: "2 hours", number: "2", active: false, hours: 2),
+            Buttons(label: "4 hours", number: "4", active: false, hours: 4),
+            Buttons(label: "6 hours", number: "6", active: true, hours: 6),
+            Buttons(label: "12 hours", number: "12", active: false, hours: 12),
+            Buttons(label: "24 hours", number: "24", active: false, hours: 24)
+        ]
+
+        let buttonFont = Font.custom("TimeButtonFont", size: 14)
+
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
 
@@ -153,7 +171,8 @@ extension Home {
                 battery: $state.battery,
                 name: $state.pumpName,
                 expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.timerDate
+                timerDate: $state.timerDate,
+                timeZone: $state.timeZone
             )
             .onTapGesture {
                 if state.pumpDisplayState != nil {
@@ -314,17 +333,43 @@ extension Home {
                 }
 
                 if let progress = state.bolusProgress {
-                    Text("Bolusing")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            state.cancelBolus()
-                        }
+                    HStack {
+                        Text("Bolusing")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        ProgressView(value: Double(progress))
+                            .progressViewStyle(BolusProgressViewStyle())
+                            .padding(.trailing, 8)
+                    }
+                    .onTapGesture {
+                        state.cancelBolus()
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
+        }
+
+        var timeInterval: some View {
+            HStack {
+                ForEach(timeButtons) { button in
+                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
+                        let index = timeButtons.firstIndex(where: { $0.label == button.label }) ?? 0
+                        highlightButtons(index)
+                        state.hours = button.hours
+                    }
+                    .foregroundStyle(button.active ? .primary : .secondary)
+                    .frame(maxHeight: 20).padding(.horizontal, button.active ? 20 : 10)
+                    .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
+                }
+                Image(systemName: "ellipsis.circle.fill")
+                    .foregroundStyle(.secondary)
+                    .padding(.leading)
+                    .onTapGesture {
+                        state.showModal(for: .statisticsConfig)
+                    }
+            }
+            .font(buttonFont)
+            .padding(.top, 20)
+            .padding(.bottom, 40)
         }
 
         var legendPanel: some View {
@@ -401,13 +446,13 @@ extension Home {
                     smooth: $state.smooth,
                     highGlucose: $state.highGlucose,
                     lowGlucose: $state.lowGlucose,
-                    screenHours: $state.screenHours,
+                    screenHours: $state.hours,
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
                     thresholdLines: $state.thresholdLines
                 )
             }
-            .padding(.bottom)
+            // .padding(.bottom)
             .modal(for: .dataTable, from: self)
         }
 
@@ -474,6 +519,18 @@ extension Home {
                 }
             }
             return (name: profileString, isOn: display)
+        }
+
+        func highlightButtons(_ int: Int) {
+            var index = 0
+            repeat {
+                if index == int {
+                    timeButtons[index].active = true
+                } else {
+                    timeButtons[index].active = false
+                }
+                index += 1
+            } while index < timeButtons.count
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
@@ -574,6 +631,7 @@ extension Home {
                     header(geo)
                     infoPanel
                     mainChart
+                    timeInterval
                     legendPanel
                     profiles(geo)
                     bottomPanel(geo)
