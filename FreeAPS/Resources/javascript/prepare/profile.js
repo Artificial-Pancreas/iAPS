@@ -13,7 +13,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             return { "error" : 'BG Target data is expected to be expressed in mg/dL or mmol/L. Found '+ bgtargets_data.units };
         }
     }
-
+    
     if (isf_data.units !== 'mg/dL') {
         if (isf_data.units === 'mmol/L') {
             for (var i = 0, len = isf_data.sensitivities.length; i < len; i++) {
@@ -63,6 +63,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     var preferences = { };
     if (preferences_input) {
         preferences = preferences_input;
+        preferences.insulinPeakTime = Math.max(preferences.insulinPeakTime, 55);
     }
 
     var inputs = { };
