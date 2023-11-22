@@ -8,8 +8,6 @@
 	<array>
 		<string>com.freeapsx.background-task.critical-event-log</string>
 	</array>
-	<key>BuildBranch</key>
-	<string></string>
 	<key>CBBundleDisplayName</key>
 	<string>$(APP_DISPLAY_NAME)</string>
 	<key>CFBundleDevelopmentRegion</key>

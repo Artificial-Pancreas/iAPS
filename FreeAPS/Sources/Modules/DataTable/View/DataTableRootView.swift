@@ -76,7 +76,7 @@ extension DataTable {
                         }
                         label: { Text("Save") }
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                            .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
+                        // .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
 
                     }.padding(20)
                 }
