@@ -24,26 +24,52 @@ struct LoopView: View {
     private let rect = CGRect(x: 0, y: 0, width: 18, height: 18)
     var body: some View {
         HStack(alignment: .center) {
-            ZStack {
-                Circle()
-                    .strokeBorder(color, lineWidth: 2)
-                    .frame(width: rect.width, height: rect.height, alignment: .center)
-                    .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
-                if isLooping {
-                    ProgressView()
-                }
-            }
             if isLooping {
-                Text("looping").font(.caption2)
+                Rectangle().fill(color).frame(height: 2)
+                ProgressView()
+                Rectangle().fill(color).frame(height: 2)
+
             } else if manualTempBasal {
-                Text("Manual").font(.caption2)
+                Rectangle().fill(color).frame(height: 2)
+                Text("Manual").font(.caption2).foregroundColor(color)
+                Rectangle().fill(color).frame(height: 2)
+
             } else if actualSuggestion?.timestamp != nil {
-                Text(timeString).font(.caption2)
-                    .foregroundColor(.secondary)
+                Rectangle().fill(color).frame(height: 2)
+                Text(timeString).font(.caption2).foregroundColor(color)
+                Rectangle().fill(color).frame(height: 2)
+            } else if !closedLoop {
+                Rectangle().fill(color).frame(height: 2)
+                Text("--").font(.caption2).foregroundColor(color)
+                Rectangle().fill(color).frame(height: 2)
             } else {
-                Text("--").font(.caption2).foregroundColor(.secondary)
+                Rectangle().fill(color).frame(height: 2)
+                Text("--").font(.caption2).foregroundColor(color)
+                Rectangle().fill(color).frame(height: 2)
             }
         }
+
+//        HStack(alignment: .center) {
+//            ZStack {
+//                Circle()
+//                    .strokeBorder(color, lineWidth: 2)
+//                    .frame(width: rect.width, height: rect.height, alignment: .center)
+//                    .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
+//                if isLooping {
+//                    ProgressView()
+//                }
+//            }
+//            if isLooping {
+//                Text("looping").font(.caption2)
+//            } else if manualTempBasal {
+//                Text("Manual").font(.caption2)
+//            } else if actualSuggestion?.timestamp != nil {
+//                Text(timeString).font(.caption2)
+//                    .foregroundColor(.secondary)
+//            } else {
+//                Text("--").font(.caption2).foregroundColor(.secondary)
+//            }
+//        }
     }
 
     private var timeString: String {

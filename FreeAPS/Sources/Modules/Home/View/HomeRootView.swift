@@ -213,13 +213,14 @@ extension Home {
                 isLooping: $state.isLooping,
                 lastLoopDate: $state.lastLoopDate,
                 manualTempBasal: $state.manualTempBasal
-            ).onTapGesture {
-                isStatusPopupPresented = true
-            }.onLongPressGesture {
-                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                impactHeavy.impactOccurred()
-                state.runLoop()
-            }
+            )
+//            .onTapGesture {
+//                isStatusPopupPresented = true
+//            }.onLongPressGesture {
+//                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+//                impactHeavy.impactOccurred()
+//                state.runLoop()
+//            }
         }
 
         var tempBasalString: String? {
@@ -561,11 +562,8 @@ extension Home {
             let colorIcon: Color = (colorScheme == .dark ? Color.white : Color.black).opacity(0.9)
 
             VStack {
-                HStack {
-                    Rectangle().fill(Color.loopGreen).frame(height: 2)
-                    Text("1 min").font(.caption).foregroundColor(Color.loopGreen)
-                    Rectangle().fill(Color.loopGreen).frame(height: 2)
-                }.padding(.horizontal, 10)
+                loopView.padding(.horizontal, 10)
+
                 ZStack {
                     Rectangle()
                         .fill(colorRectangle)
