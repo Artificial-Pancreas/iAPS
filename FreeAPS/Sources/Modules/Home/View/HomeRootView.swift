@@ -671,17 +671,19 @@ extension Home {
                 gradient: Gradient(colors: [
                     // RGB(3, 15, 28)
                     Color(red: 0.011, green: 0.058, blue: 0.109),
-                    Color(red: 0.011, green: 0.058, blue: 0.109),
-                    // RGB(1, 3, 8)
-                    Color(red: 0.003, green: 0.011, blue: 0.031)
+                    // RGB(10, 34, 55)
+                    Color(red: 0.03921568627, green: 0.1333333333, blue: 0.2156862745)
                 ]),
                 startPoint: .bottom,
                 endPoint: .top
             )
                 :
                 LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-            let colourChart: Color = colorScheme == .dark ? .black.opacity(0.8) : .white
-
+            let colourChart: Color = colorScheme == .dark ? Color(
+                red: 0.05490196078,
+                green: 0.05490196078,
+                blue: 0.05490196078
+            ) : .white
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     Spacer()
