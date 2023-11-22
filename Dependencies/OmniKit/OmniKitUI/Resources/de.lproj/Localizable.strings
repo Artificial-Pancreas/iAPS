@@ -547,7 +547,15 @@
 "Remove Pump" = "Pumpe löschen";
 
 /* Label text for step two of attach pod instructions */
+<<<<<<< HEAD
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Entfernen Sie die Pod-Nadel Kappe und prüfen Sie die Kanüle. Danach die Klebefolien auf der Rückseite entfernen.";
+=======
+<<<<<<< HEAD
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Entferne die Nadelkappe des Pods und überprüfe die Kanüle. Dann entferne die Papierträger.";
+=======
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Entfernen Sie die Pod-Nadel Kappe und prüfen Sie die Kanüle. Danach die Klebefolien auf der Rückseite entfernen.";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -764,6 +772,11 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ihr Pod gibt möglicherweise immer noch Insulin ab.\nEntfernen Sie ihn vom Körper und tippen dann auf „Weiter“.";
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Stille";
@@ -802,3 +815,7 @@ Silence Pod" = "Stille Pod";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Pod-Status ablesen";
+<<<<<<< HEAD
+=======
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main

@@ -576,10 +576,24 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Obiettivi Temporanei";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
+=======
+<<<<<<< HEAD
+"Delete carbs?" = "Cancella carboidrati?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Cancella l'insulina?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Delete Insulin?";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Treatments list */
 "Treatments" = "Trattamenti";
@@ -1368,6 +1382,12 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistiche e Vista Iniziale";
 
 /* Alert text */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+"Delete carb equivalents?" = "Cancella i carb equivalenti?";
+=======
+>>>>>>> main
 "Delete Carb Equivalents?" = "Delete Carb Equivalents?";
 
 /* */
@@ -1375,6 +1395,10 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete Glucose?" = "Delete Glucose?";
+<<<<<<< HEAD
+=======
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* */
 "Meal Presets" = "Pasto Predefinito";
@@ -1486,7 +1510,11 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Promemoria Di Sicurezza";
 
+<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "I promemoria di fiducia sono segnali acustici emessi dal Pod che possono essere utilizzati per confermare i comandi selezionati.";
+>>>>>>> main
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Sto salvando...";
@@ -1516,10 +1544,17 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Non vengono utilizzati promemoria di fiducia.";
 
 /* Description for BeepPreference.manualCommands */
+<<<<<<< HEAD
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+=======
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "I promemoria di fiducia suoneranno per i comandi inoltrati, come boli, cancellazione boli, sospensioni, ripristini erogazione, salvataggi di promemoria, etc. Quando Loop invece regola in automatico l'erogazione allora non userà alcun promemoria di fiducia.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "I promemoria di fiducia suonano quando Loop regola automaticamente l'erogazione e per i comandi avviati dall'utente.";
+>>>>>>> main
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Promemoria scadenza predefinito";

@@ -121,9 +121,18 @@
 /*  */
 "Carbs required" = "Karbo nødvendig";
 
+<<<<<<< HEAD
 /* Saved Food Presets */
 "Saved Food" = "Lagre måltid";
 
+=======
+<<<<<<< HEAD
+=======
+/* Saved Food Presets */
+"Saved Food" = "Lagre måltid";
+
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+>>>>>>> main
 /* */
 "Are you sure?" = "Er du sikker?";
 
@@ -576,10 +585,24 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige mål";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
+=======
+<<<<<<< HEAD
+"Delete carbs?" = "Slette karbohydrater?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Slette insulin?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Delete Insulin?";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Treatments list */
 "Treatments" = "Behandlinger";
@@ -1368,6 +1391,12 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistikk og startskjerm";
 
 /* Alert text */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+"Delete carb equivalents?" = "Slette karboekvivalenter?";
+=======
+>>>>>>> main
 "Delete Carb Equivalents?" = "Delete Carb Equivalents?";
 
 /* */
@@ -1375,6 +1404,10 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete Glucose?" = "Delete Glucose?";
+<<<<<<< HEAD
+=======
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* */
 "Meal Presets" = "Forvalg av måltid";
@@ -1415,12 +1448,21 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Beregnet blodsukker";
 
 /* */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> main
 "Please wait" = "Vennligst vent";
 
 /* */
 "Glucose, " = "Blodsukker, ";
 
 /* */
+<<<<<<< HEAD
+=======
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+>>>>>>> main
 "Target Glucose" = "Blodsukkermål";
 
 /* */
@@ -1486,7 +1528,15 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekreftelseslyder";
 
+<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påminnelser er pipelyder fra Pod'en som kan brukes som bekreftelse for bestemte kommandoer når Pod'en ikke er satt i stille-modus.";
+=======
+<<<<<<< HEAD
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekreftelseslyder er pipelyder fra pod som kan brukes som kvittering for utførte kommandoer.";
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påminnelser er pipelyder fra Pod'en som kan brukes som bekreftelse for bestemte kommandoer når Pod'en ikke er satt i stille-modus.";
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+>>>>>>> main
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Lagrer...";
@@ -1516,10 +1566,23 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
 
 /* Description for BeepPreference.manualCommands */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
+=======
+>>>>>>> main
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Påminnelser vil høres for kommandoer du starter, slik som bolus, stopp bolus, pause, gjenoppta, osv. Når appen automatisk justerer insulintilførsel, lages det ingen lyd.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Påminnelser vil høres når appen automatisk justerer insulintilførsel og for kommandoer du starter.";
+<<<<<<< HEAD
+=======
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+>>>>>>> main
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Utløpspåminnelse";

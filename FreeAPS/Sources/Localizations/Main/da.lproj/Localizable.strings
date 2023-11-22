@@ -576,10 +576,24 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige Mål";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
+=======
+<<<<<<< HEAD
+"Delete carbs?" = "Delete carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Delete insulin?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Delete Insulin?";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Treatments list */
 "Treatments" = "Behandlinger";
@@ -1377,6 +1391,12 @@ Enact a temp Basal or a temp target */
 "Delete Glucose?" = "Delete Glucose?";
 
 /* */
+"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+
+/* */
+"Delete Glucose?" = "Delete Glucose?";
+
+/* */
 "Meal Presets" = "Meal Presets";
 
 /* */
@@ -1396,6 +1416,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Gem som forudindstilling";
+
+/* */
+"Predictions" = "Predictions";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Display Protein & Fat";
 
 /* */
 "Predictions" = "Predictions";

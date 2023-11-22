@@ -10,7 +10,15 @@ extension Settings {
 
         var body: some View {
             Form {
+<<<<<<< HEAD
                 Section {
+=======
+                Section(
+                    header: Text(
+                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "
+                    ).textCase(nil)
+                ) {
+>>>>>>> main
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 } header: {
                     Text(

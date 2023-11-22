@@ -602,10 +602,24 @@
 "No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
 
 /* Description for BeepPreference.manualCommands */
+<<<<<<< HEAD
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Vertrauenserinnerungen ertönen für von Ihnen initiierte Befehle, wie Bolus, Bolus abbrechen, Unterbrechen, Fortsetzen, Benachrichtigungserinnerungen speichern usw. Wenn Loop die Abgabe automatisch anpasst, werden keine Vertrauenserinnerungen verwendet.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Vertrauenserinnerungen ertönen, wenn Loop die Lieferung automatisch anpasst, sowie für von Ihnen initiierte Befehle.";
+=======
+<<<<<<< HEAD
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
+=======
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Vertrauenserinnerungen ertönen für von Ihnen initiierte Befehle, wie Bolus, Bolus abbrechen, Unterbrechen, Fortsetzen, Benachrichtigungserinnerungen speichern usw. Wenn Loop die Abgabe automatisch anpasst, werden keine Vertrauenserinnerungen verwendet.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Vertrauenserinnerungen ertönen, wenn Loop die Lieferung automatisch anpasst, sowie für von Ihnen initiierte Befehle.";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Label text for temporary basal rate summary */
 "Rate" = "BR";
@@ -785,6 +799,11 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ vor";
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Stille";
@@ -813,6 +832,13 @@
 /* button title when retrieving pump manager details */
 "Retrieving Pump Manager Details..." = "Pumpenmanager Details abrufen...";
 /* button title to refresh pump manager details */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+=======
+>>>>>>> main
 "Refresh Pump Manager Details" = "Pumpmanager Details aktualisieren";
 
 /* Section header for diagnostic section */
@@ -820,3 +846,7 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Pod-Status ablesen";
+<<<<<<< HEAD
+=======
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main

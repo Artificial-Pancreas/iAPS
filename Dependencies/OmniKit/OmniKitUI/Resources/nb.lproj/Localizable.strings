@@ -153,7 +153,11 @@
 "Confidence Reminders" = "Bekreftelser";
 
 /* Help text for BeepPreferenceSelectionView */
+<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Tillitspåminnelser er pip fra pod som kan brukes til å bekrefte valgte kommandoer.";
+>>>>>>> main
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfigurasjon";
@@ -547,7 +551,11 @@
 "Remove Pump" = "Fjern pumpen";
 
 /* Label text for step two of attach pod instructions */
+<<<<<<< HEAD
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
+=======
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Fjern kanylehetten til pod og sjekk kanylen. Fjern deretter plasterbeskyttelsen.";
+>>>>>>> main
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */

@@ -576,10 +576,24 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Geçici Hedefler";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
+=======
+<<<<<<< HEAD
+"Delete carbs?" = "Karbonhidratları sil?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "İnsülin silinsin mi?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Delete Insulin?";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Treatments list */
 "Treatments" = "Tedaviler";
@@ -1377,6 +1391,12 @@ Enact a temp Basal or a temp target */
 "Delete Glucose?" = "Delete Glucose?";
 
 /* */
+"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+
+/* */
+"Delete Glucose?" = "Delete Glucose?";
+
+/* */
 "Meal Presets" = "Meal Presets";
 
 /* */
@@ -1486,7 +1506,11 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Onay sesi";
 
+<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Onay sesleri, seçili komutları onaylamak için kullanılabilen pod'tan gelen bip sesleridir.";
+>>>>>>> main
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Kaydediliyor...";
@@ -1516,10 +1540,17 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Onay sesi kullanılmaz.";
 
 /* Description for BeepPreference.manualCommands */
+<<<<<<< HEAD
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+=======
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bolus, bolusu iptal et, askıya al, devam ettir, bildirim hatırlatıcılarını kaydet vb. gibi başlattığınız komutlar için Onay sesleri çalacaktır. Döngü, iletimi otomatik olarak ayarladığında, hiçbir onay sesi kullanılmaz.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
+>>>>>>> main
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Varsayılan Süre Sonu Hatırlatıcı";

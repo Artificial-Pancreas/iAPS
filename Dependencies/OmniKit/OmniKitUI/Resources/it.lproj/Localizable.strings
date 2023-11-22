@@ -153,7 +153,11 @@
 "Confidence Reminders" = "Promemoria di fiducia";
 
 /* Help text for BeepPreferenceSelectionView */
+<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "I promemoria di fiducia sono segnali acustici emessi dal Pod che possono essere utilizzati per confermare i comandi selezionati.";
+>>>>>>> main
 
 /* The title of the configuration section in settings */
 "Configuration" = "Configurazione";
@@ -547,7 +551,11 @@
 "Remove Pump" = "Rimuovere microinfusore";
 
 /* Label text for step two of attach pod instructions */
+<<<<<<< HEAD
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
+=======
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Rimuovere il cappuccio dell'ago del Pod e controllare la cannula. Quindi rimuovere le due coperture di carta.";
+>>>>>>> main
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */

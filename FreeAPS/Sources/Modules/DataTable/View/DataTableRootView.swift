@@ -62,6 +62,7 @@ extension DataTable {
             }
             .onAppear(perform: configureView)
             .navigationTitle("History")
+<<<<<<< HEAD
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
             .sheet(isPresented: $showManualGlucose) {
@@ -70,6 +71,41 @@ extension DataTable {
             .sheet(isPresented: $showExternalInsulin, onDismiss: { if isAmountUnconfirmed { state.externalInsulinAmount = 0
                 state.externalInsulinDate = Date() } }) {
                 addExternalInsulinView
+=======
+            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarItems(
+                leading: Button("Close", action: state.hideModal),
+                trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
+            )
+            .popup(isPresented: newGlucose, alignment: .top, direction: .bottom) {
+                VStack(spacing: 20) {
+                    HStack {
+                        Text("New Glucose")
+                        DecimalTextField(" ... ", value: $state.manualGlcuose, formatter: glucoseFormatter)
+                        Text(state.units.rawValue)
+                    }.padding(.horizontal, 20)
+                    HStack {
+                        let limitLow: Decimal = state.units == .mmolL ? 2.2 : 40
+                        let limitHigh: Decimal = state.units == .mmolL ? 21 : 380
+                        Button { newGlucose = false }
+                        label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .leading)
+
+                        Button {
+                            state.addManualGlucose()
+                            newGlucose = false
+                        }
+                        label: { Text("Save") }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                        // .disabled(state.manualGlcuose < limitLow || state.manualGlcuose > limitHigh)
+
+                    }.padding(20)
+                }
+                .frame(maxHeight: 140)
+                .background(
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(Color(colorScheme == .dark ? UIColor.systemGray2 : UIColor.systemGray6))
+                )
+>>>>>>> main
             }
         }
 

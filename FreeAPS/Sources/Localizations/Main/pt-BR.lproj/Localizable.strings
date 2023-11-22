@@ -576,7 +576,15 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Alvos Temporários";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete Carbs?" = "Delete Carbs?";
+=======
+<<<<<<< HEAD
+"Delete carbs?" = "Deletar carboidratos?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
@@ -1369,6 +1377,12 @@ Enact a temp Basal or a temp target */
 
 /* Alert text */
 "Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+
+/* */
+"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+
+/* */
+"Delete Glucose?" = "Delete Glucose?";
 
 /* */
 "All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";

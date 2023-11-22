@@ -2573,7 +2573,7 @@
 		B9CAAEFA2AE6FDE6000F68BC /* Run Script: get branch name and commit ID */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (

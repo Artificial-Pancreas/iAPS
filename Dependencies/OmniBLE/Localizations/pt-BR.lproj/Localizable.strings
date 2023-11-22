@@ -433,7 +433,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Listen for 2 beeps.";
@@ -785,6 +785,11 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ atrás";
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -814,9 +819,13 @@
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+<<<<<<< HEAD
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
+=======
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+>>>>>>> main

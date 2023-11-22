@@ -433,7 +433,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Skift Pod nu. Insulintilførsel stopper 8 timer efter, at Pod'en er udløbet, eller når der ikke er mere insulin tilbage.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyld et nyt bælg med U-100 Insulin (efterlad den blå nålehætte på).";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Lyt efter 2 bip.";
@@ -602,10 +602,17 @@
 "No confidence reminders are used." = "Der anvendes ingen tillidspåmindelser.";
 
 /* Description for BeepPreference.manualCommands */
+<<<<<<< HEAD
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+=======
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Påmindelser om succesfulde handlinger vil lyde for de kommandoer du sætter igang, annulleret, suspenderet, genoptaget bolus, gemme notifikationspåmindelser etc. Når iAPS automatisk justerer tilførslen, bliver påmindelser om succesfulde handlinger ikke benyttet.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Påmindelser om succesfulde handlinger vil lyde, når iAPS automatisk justerer tilførslen og de kommandoer, du sætter igang.";
+>>>>>>> main
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Værdi";
@@ -785,6 +792,11 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ siden";
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -814,9 +826,13 @@
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+<<<<<<< HEAD
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
+=======
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+>>>>>>> main

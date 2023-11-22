@@ -1377,6 +1377,12 @@ Enact a temp Basal or a temp target */
 "Delete Glucose?" = "Delete Glucose?";
 
 /* */
+"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+
+/* */
+"Delete Glucose?" = "Delete Glucose?";
+
+/* */
 "Meal Presets" = "Meal Presets";
 
 /* */

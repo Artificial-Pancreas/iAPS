@@ -576,10 +576,24 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Tijdelijk streefdoel";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
+=======
+<<<<<<< HEAD
+"Delete carbs?" = "Koolhydraten verwijderen?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete insulin?" = "Insuline verwijderen?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Delete Insulin?";
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* Treatments list */
 "Treatments" = "Behandelingen";
@@ -1368,6 +1382,12 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistieken en Home View";
 
 /* Alert text */
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+"Delete carb equivalents?" = "Verwijder koolhydraten?";
+=======
+>>>>>>> main
 "Delete Carb Equivalents?" = "Delete Carb Equivalents?";
 
 /* */
@@ -1375,6 +1395,10 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete Glucose?" = "Delete Glucose?";
+<<<<<<< HEAD
+=======
+>>>>>>> 420dc4ed (Crowdin (#362))
+>>>>>>> main
 
 /* */
 "Meal Presets" = "Maaltijd voorinstellingen";
@@ -1398,10 +1422,17 @@ Enact a temp Basal or a temp target */
 "Save as Preset" = "Bewaar als voorinstelling";
 
 /* */
+<<<<<<< HEAD
 "Predictions" = "Voorspellingen";
 
 /* Watch Config Option */
 "Display Protein & Fat" = "Toon vet en eiwit";
+=======
+"Predictions" = "Predictions";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Display Protein & Fat";
+>>>>>>> main
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1486,7 +1517,11 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Meldingen met piepjes vanuit de Pod";
 
+<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Dit zijn meldingen die met piepjes uit de Pod komen en kunnen worden gebruikt ter bevestiging van geselecteerde opdrachten.";
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Dit zijn meldingen die met piepjes uit de pod komen en kunnen worden gebruikt om geselecteerde opdrachten te erkennen.";
+>>>>>>> main
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Opslaan...";
