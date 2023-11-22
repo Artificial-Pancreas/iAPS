@@ -52,7 +52,7 @@ struct LoopView: View {
             loopStatusBar("Manual")
         } else if actualSuggestion?.timestamp != nil {
             loopStatusBar(timeString)
-        } else if !closedLoop {
+        } else if closedLoop {
             loopStatusBar("--")
         } else {
             loopStatusBar("--")
@@ -96,6 +96,10 @@ struct LoopView: View {
         guard manualTempBasal == false else {
             return .loopManualTemp
         }
+        guard closedLoop == true else {
+            return .loopGray
+        }
+
         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
         if delta <= 5.minutes.timeInterval {
