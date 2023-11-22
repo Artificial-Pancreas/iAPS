@@ -803,7 +803,7 @@
 /* Help text for Silence Pod view */
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
 
-/* navigation title for Silnce Pod" */
+/* navigation title for Silnce Pod */
 "Silence Pod" = "Silence Pod";
 
 /* title for pod details page */
