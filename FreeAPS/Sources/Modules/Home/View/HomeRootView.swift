@@ -560,123 +560,118 @@ extension Home {
                 blue: 0.05490196078
             ) : Color.white
             let colorIcon: Color = (colorScheme == .dark ? Color.white : Color.black).opacity(0.9)
+            ZStack {
+                Rectangle()
+                    .fill(colorRectangle)
+                    .frame(height: UIScreen.main.bounds.height / 13)
+                    .cornerRadius(15)
+                    .shadow(
+                        color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
+                        radius: colorScheme == .dark ? 5 : 3
+                    )
+                    .padding([.leading, .trailing], 10)
 
-            VStack {
-                loopView.padding(.horizontal, 10)
-
-                ZStack {
-                    Rectangle()
-                        .fill(colorRectangle)
-                        .frame(height: UIScreen.main.bounds.height / 13)
-                        .cornerRadius(15)
-                        .shadow(
-                            color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
-                            radius: colorScheme == .dark ? 5 : 3
-                        )
-                        .padding([.leading, .trailing], 10)
-
-                    HStack {
-                        Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
-                        label: {
-                            ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                                Image("carbs")
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundColor(colorIcon)
-                                    .padding(8)
-                                if let carbsReq = state.carbsRequired {
-                                    Text(numberFormatter.string(from: carbsReq as NSNumber)!)
-                                        .font(.caption)
-                                        .foregroundColor(.white)
-                                        .padding(4)
-                                        .background(Capsule().fill(Color.red))
-                                }
+                HStack {
+                    Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
+                    label: {
+                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                            Image("carbs")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(colorIcon)
+                                .padding(8)
+                            if let carbsReq = state.carbsRequired {
+                                Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .padding(4)
+                                    .background(Capsule().fill(Color.red))
                             }
-                        }.buttonStyle(.borderless)
-                        Spacer()
-                        Button { state.showModal(for: .addTempTarget) }
-                        label: {
-                            Image("target")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
                         }
-                        .foregroundColor(colorIcon)
-                        .buttonStyle(.borderless)
-                        Spacer()
-                        Button {
-                            state.showModal(for: .bolus(
-                                waitForSuggestion: true,
-                                fetch: false
-                            ))
-                        }
-                        label: {
-                            Image("bolus")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                        }
-                        .foregroundColor(colorIcon)
-                        .buttonStyle(.borderless)
-                        Spacer()
-                        if state.allowManualTemp {
-                            Button { state.showModal(for: .manualTempBasal) }
-                            label: {
-                                Image("bolus1")
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                                    .padding(8)
-                            }
-                            .foregroundColor(colorIcon)
-                            .buttonStyle(.borderless)
-                            Spacer()
-                        }
-
-                        // MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
-
-                        // MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
-                        Button {
-                            state.showModal(for: .overrideProfilesConfig)
-                        } label: {
-                            Image(systemName: "person")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                        }
-                        .foregroundColor(colorIcon)
-                        .buttonStyle(.borderless)
-                        Spacer()
-                        Button { state.showModal(for: .statistics)
-                        }
-                        label: {
-                            Image(systemName: "chart.xyaxis.line")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                        }
-                        .foregroundColor(colorIcon)
-                        .buttonStyle(.borderless)
-                        Spacer()
-                        Button { state.showModal(for: .settings) }
-                        label: {
-                            Image("settings1")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                        }
-                        .foregroundColor(colorIcon)
-                        .buttonStyle(.borderless)
+                    }.buttonStyle(.borderless)
+                    Spacer()
+                    Button { state.showModal(for: .addTempTarget) }
+                    label: {
+                        Image("target")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 16)
+                    .foregroundColor(colorIcon)
+                    .buttonStyle(.borderless)
+                    Spacer()
+                    Button {
+                        state.showModal(for: .bolus(
+                            waitForSuggestion: true,
+                            fetch: false
+                        ))
+                    }
+                    label: {
+                        Image("bolus")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }
+                    .foregroundColor(colorIcon)
+                    .buttonStyle(.borderless)
+                    Spacer()
+                    if state.allowManualTemp {
+                        Button { state.showModal(for: .manualTempBasal) }
+                        label: {
+                            Image("bolus1")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding(8)
+                        }
+                        .foregroundColor(colorIcon)
+                        .buttonStyle(.borderless)
+                        Spacer()
+                    }
+
+                    // MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
+
+                    // MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
+                    Button {
+                        state.showModal(for: .overrideProfilesConfig)
+                    } label: {
+                        Image(systemName: "person")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }
+                    .foregroundColor(colorIcon)
+                    .buttonStyle(.borderless)
+                    Spacer()
+                    Button { state.showModal(for: .statistics)
+                    }
+                    label: {
+                        Image(systemName: "chart.xyaxis.line")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }
+                    .foregroundColor(colorIcon)
+                    .buttonStyle(.borderless)
+                    Spacer()
+                    Button { state.showModal(for: .settings) }
+                    label: {
+                        Image("settings1")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(8)
+                    }
+                    .foregroundColor(colorIcon)
+                    .buttonStyle(.borderless)
                 }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 16)
             }
         }
 
@@ -701,10 +696,11 @@ extension Home {
 
             GeometryReader { geo in
                 VStack(spacing: 0) {
+                    loopView.padding(.horizontal, 10)
+
                     Spacer()
 
-                    glucoseView
-                        .padding(.top, 75)
+                    glucoseView.padding(.top, 10)
 
                     Spacer()
 
@@ -741,7 +737,7 @@ extension Home {
                     bottomPanel(geo)
                 }
                 .background(colorBackground)
-                .edgesIgnoringSafeArea(.all)
+                .edgesIgnoringSafeArea([.horizontal, .bottom])
             }
             .onAppear(perform: configureView)
             .navigationTitle("Home")

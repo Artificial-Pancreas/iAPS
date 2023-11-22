@@ -22,31 +22,40 @@ struct LoopView: View {
     }
 
     private let rect = CGRect(x: 0, y: 0, width: 18, height: 18)
-    var body: some View {
-        HStack(alignment: .center) {
+
+    @ViewBuilder private func loopStatusBar(_ text: String) -> some View {
+        HStack(alignment: .center, spacing: 0) {
+            Rectangle()
+                .fill(color)
+                .frame(height: 2)
+
             if isLooping {
-                Rectangle().fill(color).frame(height: 2)
                 ProgressView()
-                Rectangle().fill(color).frame(height: 2)
-
-            } else if manualTempBasal {
-                Rectangle().fill(color).frame(height: 2)
-                Text("Manual").font(.caption2).foregroundColor(color)
-                Rectangle().fill(color).frame(height: 2)
-
-            } else if actualSuggestion?.timestamp != nil {
-                Rectangle().fill(color).frame(height: 2)
-                Text(timeString).font(.caption2).foregroundColor(color)
-                Rectangle().fill(color).frame(height: 2)
-            } else if !closedLoop {
-                Rectangle().fill(color).frame(height: 2)
-                Text("--").font(.caption2).foregroundColor(color)
-                Rectangle().fill(color).frame(height: 2)
             } else {
-                Rectangle().fill(color).frame(height: 2)
-                Text("--").font(.caption2).foregroundColor(color)
-                Rectangle().fill(color).frame(height: 2)
+                Text(text)
+                    .padding(4)
+                    .font(.caption2)
+                    .bold()
+                    .foregroundColor(color)
             }
+
+            Rectangle()
+                .fill(color)
+                .frame(height: 2)
+        }
+    }
+
+    var body: some View {
+        if isLooping {
+            loopStatusBar("")
+        } else if manualTempBasal {
+            loopStatusBar("Manual")
+        } else if actualSuggestion?.timestamp != nil {
+            loopStatusBar(timeString)
+        } else if !closedLoop {
+            loopStatusBar("--")
+        } else {
+            loopStatusBar("--")
         }
 
 //        HStack(alignment: .center) {
