@@ -158,29 +158,23 @@ extension Home {
                 alarm: $state.alarm,
                 lowGlucose: $state.lowGlucose,
                 highGlucose: $state.highGlucose
-            ).onTapGesture {
-                isStatusPopupPresented = true
-            }.onLongPressGesture {
+            )
+            .onTapGesture {
+                if state.alarm == nil {
+                    state.openCGM()
+                } else {
+                    state.showModal(for: .snooze)
+                }
+            }
+            .onLongPressGesture {
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                 impactHeavy.impactOccurred()
-                state.runLoop()
+                if state.alarm == nil {
+                    state.showModal(for: .snooze)
+                } else {
+                    state.openCGM()
+                }
             }
-//            .onTapGesture {
-//                if state.alarm == nil {
-//                    state.openCGM()
-//                } else {
-//                    state.showModal(for: .snooze)
-//                }
-//            }
-//            .onLongPressGesture {
-//                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-//                impactHeavy.impactOccurred()
-//                if state.alarm == nil {
-//                    state.showModal(for: .snooze)
-//                } else {
-//                    state.openCGM()
-//                }
-//            }
         }
 
         var pumpView: some View {
@@ -209,13 +203,13 @@ extension Home {
                 lastLoopDate: $state.lastLoopDate,
                 manualTempBasal: $state.manualTempBasal
             )
-//            .onTapGesture {
-//                isStatusPopupPresented = true
-//            }.onLongPressGesture {
-//                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-//                impactHeavy.impactOccurred()
-//                state.runLoop()
-//            }
+            .onTapGesture {
+                isStatusPopupPresented = true
+            }.onLongPressGesture {
+                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                impactHeavy.impactOccurred()
+                state.runLoop()
+            }
         }
 
         var tempBasalString: String? {
@@ -347,10 +341,26 @@ extension Home {
                 Spacer()
 
                 if let overrideString = overrideString {
-                    Text("👤 " + overrideString)
-                        .font(.system(size: 12))
-                        .foregroundColor(.secondary)
-                        .padding(.trailing, 8)
+                    HStack {
+                        Text("👤 " + overrideString)
+                            .font(.system(size: 12))
+                            .foregroundColor(.secondary)
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.secondary)
+                    }
+                    .alert(
+                        "Return to Normal?", isPresented: $showCancelAlert,
+                        actions: {
+                            Button("No", role: .cancel) {}
+                            Button("Yes", role: .destructive) {
+                                state.cancelProfile()
+                            }
+                        }, message: { Text("This will change settings back to your normal profile.") }
+                    )
+                    .padding(.trailing, 8)
+                    .onTapGesture {
+                        showCancelAlert = true
+                    }
                 }
 
                 if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
@@ -358,14 +368,16 @@ extension Home {
                 }
 
                 if let progress = state.bolusProgress {
-                    Text("Bolusing")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            state.cancelBolus()
-                        }
+                    HStack {
+                        Text("Bolusing")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        ProgressView(value: Double(progress))
+                            .progressViewStyle(BolusProgressViewStyle())
+                            .padding(.trailing, 8)
+                    }
+                    .onTapGesture {
+                        state.cancelBolus()
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
