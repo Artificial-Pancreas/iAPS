@@ -602,10 +602,10 @@
 "No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Ratio";

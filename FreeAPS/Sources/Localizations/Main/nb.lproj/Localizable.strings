@@ -1372,7 +1372,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekreftelseslyder";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Bekreftelseslyder er pipelyder fra pod som kan brukes som kvittering for utførte kommandoer.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekreftelseslyder er pipelyder fra pod som kan brukes som kvittering for utførte kommandoer.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Lagrer...";
@@ -1402,10 +1402,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Utløpspåminnelse";
