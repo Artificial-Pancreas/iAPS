@@ -495,7 +495,11 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Cibles temporaires";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete carbs?" = "Supprimer les glucides ?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+>>>>>>> 420dc4ed (Crowdin (#362))
 
 /* Delete insulin from pump history and Nightscout */
 "Delete insulin?" = "Delete insulin?";
@@ -1269,6 +1273,12 @@ Enact a temp Basal or a temp target */
 "Delete carb equivalents?" = "Delete carb equivalents?";
 
 /* */
+"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+
+/* */
+"Delete Glucose?" = "Delete Glucose?";
+
+/* */
 "Meal Presets" = "Meal Presets";
 
 /* */
@@ -1288,6 +1298,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Save as Preset";
+
+/* */
+"Predictions" = "Predictions";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Display Protein & Fat";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1366,7 +1382,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Confidence Reminders";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Les rappels de confiance sont des bips du pod qui peuvent être utilisés pour reconnaître les commandes sélectionnées.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Les rappels de confiance sont des bips du pod qui peuvent être utilisés pour reconnaître les commandes sélectionnées.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Sauvegarde...";
@@ -1396,10 +1412,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Aucun rappel de confiance n'est utilisé.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Les rappels de confiance sonneront pour les commandes que vous initiez, comme les bolus, l'annulation de bolus, la suspension, la reprise, les rappels de notification d'enregistrement, etc. Lorsque la boucle ajuste automatiquement la dose, aucun rappel de confiance n'est utilisé.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Les rappels de confiance sonneront pour les commandes que vous initiez, comme les bolus, l'annulation de bolus, la suspension, la reprise, les rappels de notification d'enregistrement, etc. Lorsque la boucle ajuste automatiquement la dose, aucun rappel de confiance n'est utilisé.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Les rappels de confiance sonneront lorsque la boucle ajuste automatiquement la dose délivrée ainsi que les commandes que vous initiez.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Les rappels de confiance sonneront lorsque la boucle ajuste automatiquement la dose délivrée ainsi que les commandes que vous initiez.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Rappel d'expiration activé";
@@ -1537,6 +1553,21 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+
+/* */
+"2 hours" = "2 hours";
+
+/* */
+"4 hours" = "4 hours";
+
+/* */
+"6 hours" = "6 hours";
+
+/* */
+"12 hours" = "12 hours";
+
+/* */
+"24 hours" = "24 hours";
 
 /* Average BG = */
 "Average" = "Average";

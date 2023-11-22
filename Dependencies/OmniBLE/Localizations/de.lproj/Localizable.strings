@@ -602,10 +602,17 @@
 "No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
+<<<<<<< HEAD
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
+=======
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Vertrauenserinnerungen ertönen für von Ihnen initiierte Befehle, wie Bolus, Bolus abbrechen, Unterbrechen, Fortsetzen, Benachrichtigungserinnerungen speichern usw. Wenn Loop die Abgabe automatisch anpasst, werden keine Vertrauenserinnerungen verwendet.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Vertrauenserinnerungen ertönen, wenn Loop die Lieferung automatisch anpasst, sowie für von Ihnen initiierte Befehle.";
+>>>>>>> 420dc4ed (Crowdin (#362))
 
 /* Label text for temporary basal rate summary */
 "Rate" = "BR";
@@ -785,3 +792,45 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ vor";
+<<<<<<< HEAD
+=======
+
+/* Title string for SilencePodPreference.enabled */
+"Silenced" = "Stille";
+
+/* Description for SilencePodPreference.disabled */
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normaler Operationsmodus, in dem hörbare Pod Signale für alle Pod Alarme verwendet werden und wenn Vertrauenserinnerungen aktiviert sind.";
+
+/* Description for SilencePodPreference.enabled */
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod Alarme verwenden keine Signale und Bestätigungssignale werden unterdrückt. Der Pod springt nur bei tödlichen Pod-Fehlern und beim Abspielen von Testsignalen.\n\nWarnung: Warnung - Wann immer der Pod zum Schweigen gebracht wird, muss er innerhalb des Bluetooth-Bereichs dieses Geräts gehalten werden, um Benachrichtigungen für Pod-Benachrichtigungen zu erhalten.";
+
+/* Help text for Silence Pod view */
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Stille Pod Modus unterdrückt alle Pod Warnungen und Bestätigungs-Erinnerung.";
+
+/* navigation title for Silnce Pod */
+"Silence Pod" = "Stille Pod";
+
+/* title for pod details page */
+"Pod Details" = "Pod-Details";
+
+/* Text for previous pod details row" */
+"Previous Pod Details" = "Vorherige Pod-Details";
+
+/* Text for pump manager details navigation link */
+"Pump Manager Details" = "Pump-Manager Details";
+
+/* button title when retrieving pump manager details */
+"Retrieving Pump Manager Details..." = "Pumpenmanager Details abrufen...";
+/* button title to refresh pump manager details */
+<<<<<<< HEAD
+"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+>>>>>>> 7f4d47c8 (Crowdin (#334))
+=======
+"Refresh Pump Manager Details" = "Pumpmanager Details aktualisieren";
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnose-Infos";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "Pod-Status ablesen";
+>>>>>>> 420dc4ed (Crowdin (#362))

@@ -56,7 +56,7 @@
 "Home" = "Hoofdmenu";
 
 /* Looping in progress */
-"looping" = "Loopen";
+"looping" = "Updaten";
 
 /* min ago since last loop */
 "min ago" = "Min. terug";
@@ -390,7 +390,7 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Gesloten loop";
+"Closed loop" = "Actieve loop";
 
 /* */
 "Configuration" = "Instellingen";
@@ -495,10 +495,17 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Tijdelijk streefdoel";
 
 /* Delete carbs from data table and Nightscout */
+<<<<<<< HEAD
 "Delete carbs?" = "Koolhydraten verwijderen?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete insulin?" = "Insuline verwijderen?";
+=======
+"Delete Carbs?" = "Delete Carbs?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Delete Insulin?";
+>>>>>>> 420dc4ed (Crowdin (#362))
 
 /* Treatments list */
 "Treatments" = "Behandelingen";
@@ -1266,7 +1273,17 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistieken en Home View";
 
 /* Alert text */
+<<<<<<< HEAD
 "Delete carb equivalents?" = "Verwijder koolhydraten?";
+=======
+"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+
+/* */
+"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+
+/* */
+"Delete Glucose?" = "Delete Glucose?";
+>>>>>>> 420dc4ed (Crowdin (#362))
 
 /* */
 "Meal Presets" = "Maaltijd voorinstellingen";
@@ -1288,6 +1305,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Preset" = "Bewaar als voorinstelling";
+
+/* */
+"Predictions" = "Predictions";
+
+/* Watch Config Option */
+"Display Protein & Fat" = "Display Protein & Fat";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1366,7 +1389,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Meldingen met piepjes vanuit de Pod";
 
-"Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Dit zijn meldingen die met piepjes uit de pod komen en kunnen worden gebruikt om geselecteerde opdrachten te erkennen.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Dit zijn meldingen die met piepjes uit de pod komen en kunnen worden gebruikt om geselecteerde opdrachten te erkennen.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Opslaan...";
@@ -1396,10 +1419,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Er worden geen meldingen met piepjes gebruikt.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die je hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die je hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die je initieert.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die je initieert.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Herinnering vervaldatum ingeschakeld";
@@ -1537,6 +1560,21 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Hours X-Axis (6 default)" = "Uren X-as (standaard 6)";
+
+/* */
+"2 hours" = "2 uur";
+
+/* */
+"4 hours" = "4 hours";
+
+/* */
+"6 hours" = "6 hours";
+
+/* */
+"12 hours" = "12 hours";
+
+/* */
+"24 hours" = "24 hours";
 
 /* Average BG = */
 "Average" = "Gemiddeld";
@@ -1766,7 +1804,7 @@ Enact a temp Basal or a temp target */
 "Max IOB" = "Max IOB";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "De Max IOB is de maximale hoeveelheid insuline aan boord van alle bronnen - zowel basaal (of SMB correcties) en bolus insuline die door iAPS gegeven mag worden om alles hoger dan de streefwaarde te behandelen. Anders dan de andere twee veiligheid instelingen (max_daily_safety_multiplier and current_basal_safety_multiplier) wordt bij deze instelling een vaste aantal eenheden insuline opgegeven. Voorlopig worden handmatige bolussen NIET beperkt door deze instelling. \n\n Om je basaal waarden te testen gedurende de nacht kun je deze instelling op 0 zetten tijdens een gesloten Loop. Dit zorgt er voor dat stop voor laag geactiveerd worden wanneer je je instelling aan het testen bent. \n\n(Tip van https://www.loopandlearn.org/freeaps-x/#open-loop).";
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "De Max IOB is de maximale hoeveelheid insuline aan boord van alle bronnen - zowel basaal (of SMB correcties) en bolus insuline die door iAPS gegeven mag worden om alles hoger dan de streefwaarde te behandelen. Anders dan de andere twee veiligheid instelingen (max_daily_safety_multiplier and current_basal_safety_multiplier) wordt bij deze instelling een vaste aantal eenheden insuline opgegeven. Voorlopig worden handmatige bolussen NIET beperkt door deze instelling. \n\n Om je basaal waarden te testen gedurende de nacht kun je deze instelling op 0 zetten tijdens een actieve Loop. Dit zorgt er voor dat stop voor laag geactiveerd worden wanneer je je instelling aan het testen bent. \n\n(Tip van https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
 "Max Daily Safety Multiplier" = "Maximale dagelijkse veiligheidsvermenigvuldiger";
