@@ -39,6 +39,22 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                 promise(.success(false))
             case .authorized:
                 promise(.success(true))
+
+            #if swift(>=5.9)
+                case .fullAccess:
+                    promise(.success(true))
+                case .writeOnly:
+                    if #available(iOS 17.0, *) {
+                        EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
+                            if let error = error {
+                                print("Calendar access not upgraded")
+                                warning(.service, "Calendar access not upgraded", error: error)
+                            }
+                            promise(.success(granted))
+                        })
+                    }
+            #endif
+
             @unknown default:
                 warning(.service, "Unknown calendar access status")
                 promise(.success(false))
