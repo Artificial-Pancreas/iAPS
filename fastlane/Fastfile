@@ -55,14 +55,14 @@ platform :ios do
       type: "appstore",
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
-        "ru.artpancreas.#{TEAMID}.FreeAPS",
+        "com.jon.$(TEAMID).aps",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension"
       ]
     )
 
     previous_build_number = latest_testflight_build_number(
-      app_identifier: "ru.artpancreas.#{TEAMID}.FreeAPS",
+      app_identifier: "com.jon.$(TEAMID).aps",
       api_key: api_key,
     )
 
@@ -79,7 +79,7 @@ platform :ios do
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS"],
+      profile_name: mapping["com.jon.$(TEAMID).aps"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPS"]
     )
@@ -148,7 +148,7 @@ platform :ios do
       }
     end
 
-    configure_bundle_id("FreeAPS", "ru.artpancreas.#{TEAMID}.FreeAPS", [
+    configure_bundle_id("FreeAPS", "com.jon.$(TEAMID).aps", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
       Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING
@@ -181,9 +181,9 @@ platform :ios do
       force: true,
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
-        "ru.artpancreas.#{TEAMID}.FreeAPS",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
+        "com.jon.$(TEAMID).aps",
+        "com.jon.#{TEAMID}.aps.watchkitapp.watchkitextension",
+        "com.jon.#{TEAMID}.aps.watchkitapp",
       ]
     )
   end
@@ -203,7 +203,7 @@ platform :ios do
       bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier)
     end
 
-    find_bundle_id("ru.artpancreas.#{TEAMID}.FreeAPS")
+    find_bundle_id("com.jon.#{TEAMID}.aps")
 
     match(
       type: "appstore",
