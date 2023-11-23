@@ -15,7 +15,7 @@
 "Pod Expired" = "Pod verlopen";
 
 /* Alert content title for lowReservoir pod alert */
-"Low Reservoir" = "Laag reservoir niveau";
+"Low Reservoir" = "Reservoir bijna leeg";
 
 /* Alert content title for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Onderbreek in voortgang herinnering";
@@ -24,7 +24,7 @@
 "Resume Insulin" = "Insuline hervatten";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Pod koppeling onvolledig";
+"Pod Pairing Incomplete" = "Koppeling Pod onvolledig";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
 "Time Change Detected" = "Wijziging in tijd gedetecteerd";
@@ -36,10 +36,10 @@
 "Pod expires in %1$@." = "Pod verloopt in %1$@.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Vervang nu de Pod. Pod is actief geweest gedurende 72 uur.";
+"Change Pod now. Pod has been active for 72 hours." = "Vervang Pod nu. Pod is 72 uur in gebruik geweest.";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Vervang Pod nu. De insuline levering stopt over 1 uur.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Vervang Pod nu. Insulinetoediening stopt over 1 uur.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insuline of minder resterend in Pod. Vervang binnenkort Pod.";
@@ -132,7 +132,7 @@
 "minutes" = "minuten";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insuline toediening";
+"Insulin Delivery" = "Insulinetoediening";
 
 /* */
 "Scheduled Basal" = "Gepland basaal";
@@ -144,7 +144,7 @@
 "Activity" = "Activiteit";
 
 /* title for device details page */
-"Device Details" = "Apparaat details";
+"Device Details" = "Apparaatdetails";
 
 /* Section header for configuration section */
 "Configuration" = "Instellingen";
@@ -177,7 +177,7 @@
 "Fault" = "Fout";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod leeftijd";
+"Pod Age" = "Podleeftijd";
 
 /* Label describing time remaining view */
 "Remaining" = "Resterend";
