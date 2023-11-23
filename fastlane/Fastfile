@@ -40,7 +40,7 @@ platform :ios do
     )
 
     previous_build_number = latest_testflight_build_number(
-      app_identifier: "com.jon.$(TEAMID).aps",
+      app_identifier: "com.jon.#(TEAMID).aps",
       api_key: api_key,
     )
 
