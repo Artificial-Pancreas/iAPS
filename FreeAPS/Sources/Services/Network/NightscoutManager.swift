@@ -490,6 +490,30 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
               let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self),
               let settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
         else {
+            if storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self) == nil {
+                debug(.nightscout, "NightscoutManager uploadProfile: error loading settings")
+            }
+
+            if storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self) == nil {
+                debug(.nightscout, "NightscoutManager uploadProfile: error loading preferences")
+            }
+
+            if storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self) == nil {
+                debug(.nightscout, "NightscoutManager uploadProfile: error loading bgTargets")
+            }
+
+            if storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self) == nil {
+                debug(.nightscout, "NightscoutManager uploadProfile: error loading carbRatios")
+            }
+
+            if storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self) == nil {
+                debug(.nightscout, "NightscoutManager uploadProfile: error loading basalProfile")
+            }
+
+            if storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self) == nil {
+                debug(.nightscout, "NightscoutManager uploadProfile: error loading insulinSensitivities")
+            }
+
             debug(.nightscout, "NightscoutManager uploadProfile Not all settings found to build profile!")
             return
         }
