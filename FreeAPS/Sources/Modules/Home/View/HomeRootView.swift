@@ -193,24 +193,6 @@ extension Home {
             }
         }
 
-//        var loopView: some View {
-//            LoopView(
-//                suggestion: $state.suggestion,
-//                enactedSuggestion: $state.enactedSuggestion,
-//                closedLoop: $state.closedLoop,
-//                timerDate: $state.timerDate,
-//                isLooping: $state.isLooping,
-//                lastLoopDate: $state.lastLoopDate,
-//                manualTempBasal: $state.manualTempBasal
-//            ).onTapGesture {
-//                isStatusPopupPresented = true
-//            }.onLongPressGesture {
-//                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-//                impactHeavy.impactOccurred()
-//                state.runLoop()
-//            }
-//        }
-
         var tempBasalString: String? {
             guard let tempRate = state.tempRate else {
                 return nil
@@ -340,10 +322,26 @@ extension Home {
                 Spacer()
 
                 if let overrideString = overrideString {
-                    Text("👤 " + overrideString)
-                        .font(.system(size: 12))
-                        .foregroundColor(.secondary)
-                        .padding(.trailing, 8)
+                    HStack {
+                        Text("👤 " + overrideString)
+                            .font(.system(size: 12))
+                            .foregroundColor(.secondary)
+                        Image(systemName: "xmark")
+                            .foregroundStyle(.secondary)
+                    }
+                    .alert(
+                        "Return to Normal?", isPresented: $showCancelAlert,
+                        actions: {
+                            Button("No", role: .cancel) {}
+                            Button("Yes", role: .destructive) {
+                                state.cancelProfile()
+                            }
+                        }, message: { Text("This will change settings back to your normal profile.") }
+                    )
+                    .padding(.trailing, 8)
+                    .onTapGesture {
+                        showCancelAlert = true
+                    }
                 }
 
                 if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
@@ -351,14 +349,16 @@ extension Home {
                 }
 
                 if let progress = state.bolusProgress {
-                    Text("Bolusing")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
-                        .padding(.trailing, 8)
-                        .onTapGesture {
-                            state.cancelBolus()
-                        }
+                    HStack {
+                        Text("Bolusing")
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                        ProgressView(value: Double(progress))
+                            .progressViewStyle(BolusProgressViewStyle())
+                            .padding(.trailing, 8)
+                    }
+                    .onTapGesture {
+                        state.cancelBolus()
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)
