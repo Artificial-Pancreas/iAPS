@@ -498,32 +498,30 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             NightscoutTimevalue(
                 time: String(item.start.prefix(5)),
                 value: item.sensitivity,
-                timeAsSeconds: item.offset
+                timeAsSeconds: item.offset * 60
             )
         }
-
         let target_low = targets.targets.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(
                 time: String(item.start.prefix(5)),
                 value: item.low,
-                timeAsSeconds: item.offset
+                timeAsSeconds: item.offset * 60
             )
         }
         let target_high = targets.targets.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(
                 time: String(item.start.prefix(5)),
                 value: item.high,
-                timeAsSeconds: item.offset
+                timeAsSeconds: item.offset * 60
             )
         }
         let cr = carbRatios.schedule.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(
                 time: String(item.start.prefix(5)),
                 value: item.ratio,
-                timeAsSeconds: item.offset
+                timeAsSeconds: item.offset * 60
             )
         }
-
         let basal = basalProfile.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(
                 time: String(item.start.prefix(5)),
