@@ -596,7 +596,7 @@
 "Enabled" = "Ingeschakeld";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Verlengd";
+"Extended" = "Uitgebreid";
 
 /* Description for BeepPreference.silent */
 "No confidence reminders are used." = "Er worden geen bevestigingsmeldingen gebruikt.";
@@ -793,30 +793,30 @@
 "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normale modus waarbij hoorbare piepjes worden gebruikt voor alle Podwaarschuwingen en wanneer bevestigingsmeldingen zijn ingeschakeld.";
 
 /* Description for SilencePodPreference.enabled */
-"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod alarmen gebruiken geen piepjes en herinneringen worden gedempt. De Pod zal alleen piepen bij fatale Pod fouten en bij testpiepen.\n\n⚠️Waarschuwing - Wanneer de Pod is gedempt, moet het binnen het Bluetooth-bereik van dit apparaat worden gehouden om meldingen voor Pod te ontvangen.";
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Podalarmen gebruiken geen piepjes en bevestigingsmeldingen worden gedempt. De Pod zal alleen piepen bij fatale Podfouten en bij testpiepjes.\n\n⚠️Waarschuwing - Als de Pod is gedempt, moet deze binnen het Bluetooth-bereik van dit apparaat zijn om meldingen voor Pod te ontvangen.";
 
 /* Help text for Silence Pod view */
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Pod modus dempt alle Pod alarmen en herinnering meldingen.";
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Stille Podmodus dempt alle Podalarmen en bevestigingsmeldingen.";
 
 /* navigation title for Silnce Pod */
-"Silence Pod" = "Gedempt";
+"Silence Pod" = "Podgeluiden dempen";
 
 /* title for pod details page */
-"Pod Details" = "Pod details";
+"Pod Details" = "Poddetails";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Vorige Pod details";
+"Previous Pod Details" = "Details vorige Pod";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pomp manager details";
+"Pump Manager Details" = "Details pompmanager";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Pomp manager gegevens ophalen...";
+"Retrieving Pump Manager Details..." = "Gegevens pompmanager ophalen...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Pomp manager details verversen";
+"Refresh Pump Manager Details" = "Verversen details pompmanager";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostische gegevens";
 
 /* Text for read pod status navigation link */
-"Read Pod Status" = "";
+"Read Pod Status" = "Lees pompstatus";
