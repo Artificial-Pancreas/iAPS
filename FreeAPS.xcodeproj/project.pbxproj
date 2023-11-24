@@ -3326,9 +3326,9 @@
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "iAPS WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Bla bla Record Health";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Bla bla Update Health";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3366,9 +3366,9 @@
 				INFOPLIST_FILE = "FreeAPSWatch WatchKit Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "iAPS WatchKit Extension";
 				INFOPLIST_KEY_CLKComplicationPrincipalClass = FreeAPSWatch_WatchKit_Extension.ComplicationController;
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Bla bla Record Health";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Bla bla Share Health";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Bla bla Update Health";
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
