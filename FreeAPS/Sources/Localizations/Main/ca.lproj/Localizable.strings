@@ -490,10 +490,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temp Targets";
 
 /* Delete carbs from data table and Nightscout */
-"Delete carbs?" = "Delete carbs?";
+"Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Delete insulin?";
+"Delete Insulin?" = "Delete Insulin?";
 
 /* Treatments list */
 "Treatments" = "Treatments";
@@ -514,7 +514,7 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Calibrations";
 
 /* */
-"Create events in calendar" = "Create events in calendar";
+"Create Events in Calendar" = "Create Events in Calendar";
 
 /* */
 "Calendar" = "Calendar";
@@ -940,7 +940,7 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS not active";
 
 /* */
-"Last loop was more then %d min ago" = "Last loop was more then %d min ago";
+"Last loop was more than %d min ago" = "Last loop was more than %d min ago";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Show glucose on the app badge";
@@ -1250,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistics and Home View";
 
 /* Alert text */
-"Delete carb equivalents?" = "Delete carb equivalents?";
+"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
 
 /* */
 "Meal Presets" = "Meal Presets";

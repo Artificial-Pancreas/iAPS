@@ -433,7 +433,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Pod'u şimdi değiştirin. İnsülin iletimi, Pod'un süresi dolduktan 8 saat sonra veya daha fazla insülin kalmadığında duracaktır.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Yeni bir Pod'u 100 Ü İnsülin ile doldurun (mavi iğne kapağı Pod üzerinde kalsın).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "2 bip sesini dinleyin.";
@@ -602,10 +602,10 @@
 "No confidence reminders are used." = "Onay sesi kullanılmaz.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bolus, bolusu iptal et, askıya al, devam ettir, bildirim hatırlatıcılarını kaydet vb. gibi başlattığınız komutlar için Onay sesleri çalacaktır. Döngü, iletimi otomatik olarak ayarladığında, hiçbir onay sesi kullanılmaz.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Oran";
@@ -785,8 +785,6 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ önce";
-<<<<<<< HEAD
-=======
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -816,4 +814,9 @@
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
->>>>>>> 7f4d47c8 (Crowdin (#334))
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnostics";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "Read Pod Status";

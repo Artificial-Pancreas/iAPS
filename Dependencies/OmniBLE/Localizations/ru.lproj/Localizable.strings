@@ -602,11 +602,7 @@
 "No confidence reminders are used." = "Доверенные звуковые сигналы не используются.";
 
 /* Description for BeepPreference.manualCommands */
-<<<<<<< HEAD
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Доверенные звуковые сигналы сработают для операций, которые Вы инициируете - Болюс, Отмена Болюса, Приостановка подачи, Возобновление подачи, Сохранение напоминаний и т.д. Когда петля автоматически меняет подачу инсулина - звуковые сигналы не используются.";
-=======
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Доверенные звуковые сигналы сработают для операций, которые Вы инициируете - Болюс, Отмена Болюса, Приостановка подачи, Возобновление подачи, Сохранение напоминаний и т. д. Когда петля автоматически меняет подачу инсулина - звуковые сигналы не используются.";
->>>>>>> 420dc4ed (Crowdin (#362))
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Доверенные звуковые сигналы сработают даже тогда, когда петля автоматически изменит подачу инсулина, а также для команд, которые Вы инициируете.";
@@ -789,8 +785,6 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ назад";
-<<<<<<< HEAD
-=======
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Беззвучно";
@@ -819,10 +813,6 @@
 /* button title when retrieving pump manager details */
 "Retrieving Pump Manager Details..." = "Получение сведений о помпе...";
 /* button title to refresh pump manager details */
-<<<<<<< HEAD
-"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
->>>>>>> 7f4d47c8 (Crowdin (#334))
-=======
 "Refresh Pump Manager Details" = "Обновить сведения о помпе";
 
 /* Section header for diagnostic section */
@@ -830,4 +820,3 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Получить статус Пода";
->>>>>>> 420dc4ed (Crowdin (#362))
