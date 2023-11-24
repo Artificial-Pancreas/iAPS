@@ -576,24 +576,13 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Временные цели";
 
 /* Delete carbs from data table and Nightscout */
-<<<<<<< HEAD
-<<<<<<< HEAD
 "Delete carbs?" = "Удалить углеводы?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete insulin?" = "Удалить инсулин?";
-=======
-"Delete Carbs?" = "Delete Carbs?";
 
-/* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
+/* */
 "Delete Carbs?" = "Delete Carbs?";
-
-/* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
->>>>>>> Crowdin
 
 /* Treatments list */
 "Treatments" = "События";
@@ -1382,23 +1371,13 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Статистика и экран";
 
 /* Alert text */
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Delete carb equivalents?" = "Удалить эквиваленты углеводов?";
-=======
-=======
->>>>>>> Crowdin
-"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+"Delete Carb Equivalents?" = "Удалить эквиваленты углеводов?";
 
 /* */
 "All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
 
 /* */
 "Delete Glucose?" = "Delete Glucose?";
-<<<<<<< HEAD
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
->>>>>>> Crowdin
 
 /* */
 "Meal Presets" = "Шаблоны";
@@ -1422,17 +1401,10 @@ Enact a temp Basal or a temp target */
 "Save as Preset" = "Сохранить как шаблон";
 
 /* */
-<<<<<<< HEAD
-"Predictions" = "Predictions";
-
-/* Watch Config Option */
-"Display Protein & Fat" = "Display Protein & Fat";
-=======
 "Predictions" = "Прогноз";
 
 /* Watch Config Option */
 "Display Protein & Fat" = "Отображать белки и жиры";
->>>>>>> Crowdin
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1517,15 +1489,8 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Напоминания о верификации";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Доверенные звуковые сигналы от Пода, которые позволяют распознать выбранные команды.";
-=======
+/* */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Доверенные звуковые сигналы от Пода, которые позволяют распознать выбранные команды, когда Под не заглушен.";
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Доверенные звуковые сигналы от Пода, которые позволяют распознать выбранные команды, когда Под не заглушен.";
->>>>>>> Crowdin
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Сохранение...";
@@ -1555,15 +1520,7 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Доверенные звуковые сигналы не используются.";
 
 /* Description for BeepPreference.manualCommands */
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Доверенные звуковые сигналы сработают для операций, которые Вы инициируете - Болюс, Отмена Болюса, Приостановка подачи, Возобновление подачи, Сохранение напоминаний и т.д. Когда петля автоматически меняет подачу инсулина - звуковые сигналы не используются.";
-=======
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Доверенные звуковые сигналы сработают для операций, которые Вы инициируете - Болюс, Отмена Болюса, Приостановка подачи, Возобновление подачи, Сохранение напоминаний и т. д. Когда петля автоматически меняет подачу инсулина - звуковые сигналы не используются.";
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Доверенные звуковые сигналы сработают для операций, которые Вы инициируете - Болюс, Отмена Болюса, Приостановка подачи, Возобновление подачи, Сохранение напоминаний и т. д. Когда петля автоматически меняет подачу инсулина - звуковые сигналы не используются.";
->>>>>>> Crowdin
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Доверенные звуковые сигналы сработают даже тогда, когда петля автоматически изменит подачу инсулина, а также для команд, которые Вы инициируете.";

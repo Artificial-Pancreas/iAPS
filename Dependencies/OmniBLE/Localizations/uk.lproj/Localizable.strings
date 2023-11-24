@@ -789,8 +789,6 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ тому";
-<<<<<<< HEAD
-=======
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Сповіщення вимкнено";

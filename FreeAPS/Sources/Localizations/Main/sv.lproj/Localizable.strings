@@ -1368,12 +1368,6 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistik och Diagram";
 
 /* Alert text */
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Delete carb equivalents?" = "Radera dessa poster?";
-=======
-=======
->>>>>>> Crowdin
 "Delete Carb Equivalents?" = "Ta bort dessa fett/protein-poster?";
 
 /* */
@@ -1381,10 +1375,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Delete Glucose?" = "Ta bort blodsockervärde?";
-<<<<<<< HEAD
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
->>>>>>> Crowdin
 
 /* */
 "Meal Presets" = "Förval";
@@ -1496,11 +1486,8 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bekräftelseljud";
 
-<<<<<<< HEAD
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden som kan användas som bekräftelser på utförda kommandon";
-=======
+/* */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden (när den inte är tystad) som kan användas som bekräftelser på utförda kommandon";
->>>>>>> Crowdin
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Sparar...";

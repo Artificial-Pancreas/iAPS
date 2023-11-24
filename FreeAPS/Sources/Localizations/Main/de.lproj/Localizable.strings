@@ -576,24 +576,13 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Temporäre Ziele";
 
 /* Delete carbs from data table and Nightscout */
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Delete carbs?" = "Kohlenhydrate löschen?";
+"Delete Carbs?" = "Kohlenhydrate löschen?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Insulin löschen?";
-=======
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Insulin?" = "Insulin löschen?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
-"Delete Carbs?" = "Delete Carbs?";
-
-/* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
->>>>>>> Crowdin
 
 /* Treatments list */
 "Treatments" = "Behandlungen";
@@ -1382,23 +1371,14 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistiken und Home-Ansicht";
 
 /* Alert text */
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Delete carb equivalents?" = "Kohlenhydratäquivalente löschen?";
-=======
-=======
->>>>>>> Crowdin
-"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+"Delete Carb Equivalents?" = "Kohlenhydratäquivalente löschen?";
 
 /* */
 "All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
 
 /* */
 "Delete Glucose?" = "Delete Glucose?";
-<<<<<<< HEAD
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
->>>>>>> Crowdin
+
 
 /* */
 "Meal Presets" = "Mahlzeit Voreinstellungen";
@@ -1510,15 +1490,8 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Pumpe Bestätigungstöne";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bestätigungshinweise sind Pieptöne des Pods, die zur Quittierung ausgewählter Befehle aktiviert werden können.";
-=======
+/* */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Vertrauenserinnerungen sind Pieptöne vom Pod, die verwendet werden können, um ausgewählte Befehle zu bestätigen.";
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Vertrauenserinnerungen sind Pieptöne vom Pod, die verwendet werden können, um ausgewählte Befehle zu bestätigen.";
->>>>>>> Crowdin
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Speichern...";
@@ -1548,23 +1521,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Keine Erinnerungseinstellungen in Verwendung.";
 
 /* Description for BeepPreference.manualCommands */
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Erinnerungssignale ertönen gemäß deiner Einstellungen, wie Bolusabgabe, Bolus abbrechen, Unterbrechung, Wiederaufnahme, Speicherung von Benachrichtigungen usw. Wenn Loop automatisch Insulin abgibt, ertönen keine Erinnerungssignale.";
-
-/* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Erinnerungssignale ertönen, wenn Loop die Abgabe automatisch anpasst sowie bei Befehlen, die von dir ausgelöst werden.";
-=======
-=======
->>>>>>> Crowdin
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Vertrauenserinnerungen ertönen für von Ihnen initiierte Befehle, wie Bolus, Bolus abbrechen, Unterbrechen, Fortsetzen, Benachrichtigungserinnerungen speichern usw. Wenn Loop die Abgabe automatisch anpasst, werden keine Vertrauenserinnerungen verwendet.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Vertrauenserinnerungen ertönen, wenn Loop die Lieferung automatisch anpasst, sowie für von Ihnen initiierte Befehle.";
-<<<<<<< HEAD
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
->>>>>>> Crowdin
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Standard Ablauf-Erinnerung";

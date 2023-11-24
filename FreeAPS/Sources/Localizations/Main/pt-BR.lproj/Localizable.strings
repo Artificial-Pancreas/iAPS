@@ -576,15 +576,7 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Alvos Temporários";
 
 /* Delete carbs from data table and Nightscout */
-<<<<<<< HEAD
-<<<<<<< HEAD
-"Delete carbs?" = "Deletar carboidratos?";
-=======
-"Delete Carbs?" = "Delete Carbs?";
->>>>>>> 420dc4ed (Crowdin (#362))
-=======
-"Delete Carbs?" = "Delete Carbs?";
->>>>>>> Crowdin
+"Delete Carbs?" = "Deletar carboidratos?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";

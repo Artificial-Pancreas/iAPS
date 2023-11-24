@@ -153,11 +153,7 @@
 "Confidence Reminders" = "Bekräftelseljud";
 
 /* Help text for BeepPreferenceSelectionView */
-<<<<<<< HEAD
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden som kan användas som bekräftelser på utförda kommandon";
-=======
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Bekräftelseljud är pip från podden (när den inte är tystad) som kan användas som bekräftelser på utförda kommandon.";
->>>>>>> Crowdin
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfiguration";
@@ -551,11 +547,7 @@
 "Remove Pump" = "Ta bort podd";
 
 /* Label text for step two of attach pod instructions */
-<<<<<<< HEAD
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Ta bort kanylskyddet och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
-=======
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Ta bort poddens kanylskydd och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
->>>>>>> Crowdin
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -772,11 +764,6 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Din podd kan eventuellt fortfarande ge Insulin.\nTa bort den från din kropp och tryck sedan på ”Fortsätt.”";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Crowdin
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Tystad";
@@ -809,9 +796,6 @@ Silence Pod" = "Tysta podden";
 
 /* Alert title for error when updating silence pod preference */
 "Failed to update silence pod preference." = "Misslyckades att uppdatera inställning för tystad podd.";
-<<<<<<< HEAD
->>>>>>> 7f4d47c8 (Crowdin (#334))
-=======
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostik";

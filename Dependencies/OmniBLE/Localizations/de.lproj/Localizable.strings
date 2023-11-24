@@ -789,8 +789,6 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ vor";
-<<<<<<< HEAD
-=======
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Stille";

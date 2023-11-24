@@ -153,11 +153,7 @@
 "Confidence Reminders" = "Przypomnienia (sygnały dźwiękowe) z POD'a";
 
 /* Help text for BeepPreferenceSelectionView */
-<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Przypomnienia potwierdzające to sygnały dźwiękowe, z których można korzystać w celu potwierdzania wybranych poleceń.";
-=======
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
->>>>>>> Crowdin
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfiguracja";
@@ -551,11 +547,7 @@
 "Remove Pump" = "Usuń pompę";
 
 /* Label text for step two of attach pod instructions */
-<<<<<<< HEAD
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Usuń osłonę igły i sprawdź kaniulę. Następnie usuń papierowe zabezpieczenie kleju.";
-=======
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
->>>>>>> Crowdin
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
