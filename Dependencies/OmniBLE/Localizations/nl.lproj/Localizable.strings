@@ -369,7 +369,7 @@
 "Suspend Delivery" = "Onderbreek toediening";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "De insulinetoediening wordt gestopt totdat u de toediening handmatig hervat. Wanneer wilt u dat Loop u eraan herinnert om de toediening te hervatten?";
+"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "De insulinetoediening wordt gestopt totdat je de toediening handmatig hervat. Wanneer wil je dat iAPS je eraan herinnert om de toediening te hervatten?";
 
 /* Button text for 30 minute suspend duration */
 "30 minutes" = "30 minuten";
@@ -571,7 +571,7 @@
 "Critical Alerts" = "Kritieke waarschuwingen";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "De bovenstaande meldingen waarschuwen zonder geluid als je apparaat in de modus Stil of Niet storen staat.\n\nEr zijn andere belangrijke Pod waarschuwingen en -alarmen die wel klinken, zelfs als je apparaat in de modus Stil of Niet storen staat.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "De bovenstaande meldingen waarschuwen zonder geluid als je apparaat in de modus 'Stil' of 'Niet storen' staat.\n\nEr zijn andere belangrijke Pod waarschuwingen en -alarmen die wel klinken, zelfs als je apparaat in de modus 'Stil' of 'Niet storen' staat.";
 /* navigation title for notification settings */
 "Notification Settings" = "Instellingen voor meldingen";
 
@@ -602,10 +602,10 @@
 "No confidence reminders are used." = "Er worden geen meldingen met piepjes gebruikt.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die u hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Piepjes uit de Pod zullen klinken voor commando's die je hebt geïnitieerd, zoals bolus, annulering, geschorst, hervatten, opslaan van meldingen etc. Als iAPS automatisch de levering wijzigt, worden er geen piepjes gebruikt.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die u initieert.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Piepjes zullen klinken als iAPS de levering automatisch aanpast evenals voor commando's die je initieert.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Waarde";
@@ -789,31 +789,36 @@
 =======
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Silenced";
+"Silenced" = "Gedempt";
 
 /* Description for SilencePodPreference.disabled */
-"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normale bewerkingsmodus waarbij hoorbare puepjes worden gebruikt voor alle Pod waarschuwingen en wanneer meldingen zijn ingeschakeld.";
 
 /* Description for SilencePodPreference.enabled */
-"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod alarmen gebruiken geen piepjes en herinneringen worden gedempt. De Pod zal alleen piepen bij fatale Pod fouten en bij testpiepen.\n\n⚠️Waarschuwing - Wanneer de Pod is gedempt, moet het binnen het Bluetooth-bereik van dit apparaat worden gehouden om meldingen voor Pod te ontvangen.";
 
 /* Help text for Silence Pod view */
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Pod modus dempt alle Pod alarmen en herinnering meldingen.";
 
 /* navigation title for Silnce Pod */
-"Silence Pod" = "Silence Pod";
+"Silence Pod" = "Gedempt";
 
 /* title for pod details page */
-"Pod Details" = "Pod Details";
+"Pod Details" = "Pod details";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Previous Pod Details";
+"Previous Pod Details" = "Vorige Pod details";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "Pomp manager details";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+"Retrieving Pump Manager Details..." = "Pomp manager gegevens ophalen...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
->>>>>>> 7f4d47c8 (Crowdin (#334))
+"Refresh Pump Manager Details" = "Pomp manager details verversen";
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnostische gegevens";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "";

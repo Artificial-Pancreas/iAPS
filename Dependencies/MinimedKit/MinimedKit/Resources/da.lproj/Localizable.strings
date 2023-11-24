@@ -5,7 +5,7 @@
 "AlarmClockReminder" = "AlarmUrPåmindelse";
 
 /* The description of AlarmSensorPumpEvent */
-"AlarmSensor" = "AlarmSensor";
+"AlarmSensor" = "Alarm Sensor";
 
 /* Describing the battery chemistry as Alkaline */
 "Alkaline" = "Alkaline";
@@ -38,7 +38,7 @@
 "Invalid response during %1$@: %2$@" = "Fejlagtigt svar ved %1$@: %2$@";
 
 /* Describing the battery chemistry as Lithium */
-"Lithium" = "Lithium";
+"Lithium" = "Litium";
 
 /* Recovery suggestion */
 "Make sure your RileyLink is nearby and powered on" = "Sørg for, at din RileyLink er i nærheden og tændt";
@@ -95,4 +95,4 @@
 "Unknown response during %1$@: %2$@" = "Ukendt svar under %1$@: %2$@";
 
 /* Describing the worldwide pump region */
-"World-Wide" = "World-Wide";
+"World-Wide" = "Verdensomspændende";

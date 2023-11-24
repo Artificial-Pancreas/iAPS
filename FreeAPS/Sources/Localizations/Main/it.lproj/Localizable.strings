@@ -16,6 +16,9 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continua senza eseguire un bolo";
 
+/* Alert when adding large amount without bolusing */
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nLa quantità è superiore all'impostazione del bolo massimo! \nSei sicuro di voler aggiungere?";
+
 /* Header */
 "Enact Bolus" = "Esegui bolo";
 
@@ -52,6 +55,42 @@
 /* Headline in enacted pop up (at: at what time) */
 "Error at" = "Errore a";
 
+/* Bolus View Meal Summary Header */
+"Meal Summary" = "Riepilogo Pasti";
+
+/* Bolus View Meal Edit Meal Button */
+"Edit Meal" = "Modifica pasto";
+
+/* Bolus View Meal Add Meal Button */
+"Add Meal" = "Aggiungi Pasto";
+
+/* Bolus View Bolus Summary Header */
+"Bolus Summary" = "Riepilogo boli";
+
+/* For the  Bolus View pop-up */
+"Calculations" = "Calcolo in corso";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal" = "Pasto Grasso";
+
+/* For the  Bolus View pop-up */
+"Full Bolus" = "Bolo Completo";
+
+/* For the  Bolus View pop-up */
+"Fraction" = "Frazione";
+
+/* For the  Bolus View pop-up */
+"Fatty Meal Factor" = "Fattore Pasto Grasso";
+
+/* For the  Bolus View pop-up */
+"Result" = "Risultato";
+
+/* For the  Bolus View pop-up */
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Il tuo importo inserito è stato limitato dalla tua impostazione del Bolo massimo di %d%@";
+
+/* Bolus View Continue Button */
+"Continue" = "Continua";
+
 /* Home title */
 "Home" = "Home";
 
@@ -59,7 +98,7 @@
 "looping" = "in loop";
 
 /* min ago since last loop */
-"min ago" = "minuti fa";
+"min ago" = "min fa";
 
 /* Status Title */
 "No suggestion" = "Nessun suggerimento";
@@ -81,6 +120,9 @@
 
 /*  */
 "Carbs required" = "Carboidrati necessari";
+
+/* Saved Food Presets */
+"Saved Food" = "Cibo Salvato";
 
 /* */
 "Are you sure?" = "Sei sicuro?";
@@ -311,6 +353,45 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Controllo remoto";
 
+/* Imported Profiles Alert */
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nOra verifica attentamente tutte le nuove impostazioni:\n\n* Impostazioni basali\n * Rapporti carboidrati\n * Obiettivi glucosio\n * Sensibilità insulinica\n * DIA\n\n in Impostazioni iAPS > Configurazione.\n\nImpostazioni del profilo errate o non valide potrebbero avere effetti disastrosi.";
+
+/* Profile Import Alert */
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Questo sostituirà alcune o tutte le impostazioni attuali del microinfusore. Sei sicuro di voler importare le impostazioni del profilo da Nightscout?";
+
+/* Import Error */
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nImpostazioni Basali Nightscout non valide. \n\nImportazione annullata. Si prega di controllare le impostazioni Basali del profilo Nightscout!";
+
+/* Import Error */
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nLe impostazioni sono state importate ma non è stato possibile salvare le basali nel microinfusore (nessun microinfusore). Controlla le impostazioni basali e tocca \"Salva sul microinfusore\" per sincronizzare le nuove impostazioni basali";
+
+/* Import Error Headline */
+"Import Error" = "Errore d'importazione";
+
+/* */
+"Yes, Import" = "Sì, Importa";
+
+/* */
+"Import settings from Nightscout" = "Importa impostazioni da Nightscout";
+
+/* */
+"Import settings?" = "Importa impostazioni?";
+
+/* */
+"Import from Nightscout" = "Importa da Nightscout";
+
+/* */
+"Settings imported" = "Impostazioni importate";
+
+/* Import Error */
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nUnità di glicemie non corrispondenti nelle impostazioni di Nightscout e della Pompa. Importa impostazioni interrotte.";
+
+/* Import Error */
+"Can't find the default Nightscout Profile." = "Impossibile trovare il profilo predefinito di Nightscout.";
+
+/* Add Blood Glucose Test, header */
+"Blood Glucose Test" = "Prova Glicemia";
+
 /* Add Medtronic pump */
 "Add Medtronic" = "Aggiungi microinfusore Medtronic";
 
@@ -402,19 +483,19 @@ Enact a temp Basal or a temp target */
 "Pump" = "Microinfusore";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Orologio";
 
 /* */
-"Watch Configuration" = "Watch";
+"Watch Configuration" = "Orologio";
 
 /* */
-"Apple Watch" = "Apple Watch";
+"Apple Watch" = "Orologio Apple";
 
 /* */
-"Display on Watch" = "Mostra sul Watch";
+"Display on Watch" = "Mostra sull'orologio";
 
 /* */
-"Garmin Watch" = "Garmin Watch";
+"Garmin Watch" = "Orologio Garmin";
 
 /* */
 "Add devices" = "Aggiungi dispositivi";
@@ -468,10 +549,10 @@ Enact a temp Basal or a temp target */
 "History" = "Storia";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Carica";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Consenti caricamenti";
 
 /* Type of CGM or glucose source */
 "Type" = "Tipo";
@@ -496,6 +577,7 @@ Enact a temp Basal or a temp target */
 
 /* Delete carbs from data table and Nightscout */
 <<<<<<< HEAD
+<<<<<<< HEAD
 "Delete carbs?" = "Cancella carboidrati?";
 
 /* Delete insulin from pump history and Nightscout */
@@ -506,6 +588,12 @@ Enact a temp Basal or a temp target */
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
 >>>>>>> 420dc4ed (Crowdin (#362))
+=======
+"Delete Carbs?" = "Cancella carboidrati?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "Cancella l'insulina?";
+>>>>>>> Crowdin
 
 /* Treatments list */
 "Treatments" = "Trattamenti";
@@ -526,10 +614,16 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Calibrazioni";
 
 /* */
-"Create events in calendar" = "Crea eventi nel calendario";
+"Create Events in Calendar" = "Crea eventi nel calendario";
 
 /* */
 "Calendar" = "Calendario";
+
+/* Automatic delivered treatments */
+"Automatic" = "Automatico";
+
+/* External insulin treatments */
+"External" = "Esterno";
 
 /* */
 "Other" = "Altro";
@@ -952,10 +1046,10 @@ Enact a temp Basal or a temp target */
 "iAPS not active" = "iAPS non attivo";
 
 /* */
-"Last loop was more then %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
+"Last loop was more than %d min ago" = "L'ultimo ciclo è stato più di %d min fa";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Mostra il glicemie sul badge dell'app";
+"Show glucose on the app badge" = "Mostra le glicemie sull'icona dell'app";
 
 /* */
 "Backfill glucose" = "Riempi glicemia";
@@ -965,6 +1059,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Bolus failed" = "Bolo fallito";
+
+/* "Max Bolus Exceeded label" */
+"Max Bolus exceeded!" = "Bolo massimo superato!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Bolo fallito o impreciso. Controlla la cronologia del microinfusore prima di ripetere.";
@@ -994,7 +1091,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = " giorno/i";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Mostra FC su Watch";
+"Display HR on Watch" = "Mostra FC sull'orologio";
 
 
 /* Headers for settings ----------------------- */
@@ -1051,10 +1148,16 @@ Enact a temp Basal or a temp target */
 "Autosense" = "Autosensibilità";
 
 /* Insulin sensitivity config header */
-"Dynamic Sensitivity" = "Dynamic Sensitivity";
+"Dynamic Sensitivity" = "Sensibilità Dinamica";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+"Only Autotune Basal Insulin" = "Solo Insulina Basale Autotune";
+
+/* */
+"Save as your Normal Basal Rates" = "Salva come Profilo Basale Normale";
+
+/* */
+"Save on Pump" = "Salva sul microinfusore";
 
 /* Debug option view Pump History */
 "Pump History" = "Cronologia Micro";
@@ -1100,13 +1203,13 @@ Enact a temp Basal or a temp target */
 "Apple Health" = "Apple Salute";
 
 /* */
-"Connect to Apple Health" = "Connetti con Apple Health";
+"Connect to Apple Health" = "Connetti con Apple Salute";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Per scrivere dati su Apple Health devi dare il permesso in Impostazioni > Salute > Accesso dati";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Questo permette a iAPS di leggere e scrivere su Apple Salute. È necessario anche dare i permessi in Impostazioni > Salute > Accesso dati. Se immetti un valore di glucosio in Apple Salute apri iAPS per confermarlo.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1120,6 +1223,12 @@ Enact a temp Basal or a temp target */
 
 /* Manual temp basal mode */
 "Manual" = "Manuale";
+
+/* An Automatic delivered bolus (SMB) */
+"SMB" = "SMB";
+
+/* A manually entered dose of external insulin */
+"External Insulin" = "Insulina Esterna";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Basale manuale temporanea";
@@ -1274,6 +1383,7 @@ Enact a temp Basal or a temp target */
 
 /* Alert text */
 <<<<<<< HEAD
+<<<<<<< HEAD
 "Delete carb equivalents?" = "Cancella i carb equivalenti?";
 =======
 "Delete Carb Equivalents?" = "Delete Carb Equivalents?";
@@ -1284,6 +1394,15 @@ Enact a temp Basal or a temp target */
 /* */
 "Delete Glucose?" = "Delete Glucose?";
 >>>>>>> 420dc4ed (Crowdin (#362))
+=======
+"Delete Carb Equivalents?" = "Cancella i carb equivalenti?";
+
+/* */
+"All FPUs of the meal will be deleted." = "Tutti gli indici insulinici del pasto verranno eliminati.";
+
+/* */
+"Delete Glucose?" = "Cancella Glicemie?";
+>>>>>>> Crowdin
 
 /* */
 "Meal Presets" = "Pasto Predefinito";
@@ -1310,7 +1429,11 @@ Enact a temp Basal or a temp target */
 "Predictions" = "Previsione";
 
 /* Watch Config Option */
+<<<<<<< HEAD
 "Display Protein & Fat" = "Display Protein & Fat";
+=======
+"Display Protein & Fat" = "Mostra Proteine & Grassi";
+>>>>>>> Crowdin
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1322,6 +1445,12 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "previsione glicemica";
+
+/* */
+"Please wait" = "Attendere prego";
+
+/* */
+"Glucose, " = "Glicemie, ";
 
 /* */
 "Target Glucose" = "Target Glicemia";
@@ -1389,7 +1518,11 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Promemoria Di Sicurezza";
 
+<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "I promemoria di fiducia sono segnali acustici emessi dal Pod che possono essere utilizzati per confermare i comandi selezionati.";
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "I promemoria di fiducia sono segnali acustici emessi dal Pod che possono essere utilizzati per confermare i comandi selezionati quando il Pod non è silenziato.";
+>>>>>>> Crowdin
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Sto salvando...";
@@ -1419,10 +1552,17 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Non vengono utilizzati promemoria di fiducia.";
 
 /* Description for BeepPreference.manualCommands */
+<<<<<<< HEAD
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "I promemoria di fiducia suoneranno per i comandi inoltrati, come boli, cancellazione boli, sospensioni, ripristini erogazione, salvataggi di promemoria, etc. Quando Loop invece regola in automatico l'erogazione allora non userà alcun promemoria di fiducia.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "I promemoria di fiducia suonano quando Loop regola automaticamente l'erogazione e per i comandi avviati dall'utente.";
+=======
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "I promemoria di fiducia suoneranno per i comandi inoltrati, come boli, cancellazione boli, sospensioni, ripristini erogazione, salvataggi di promemoria, etc. Quando iAPS invece regolerà in automatico l'erogazione allora non userà alcun promemoria di fiducia.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "I promemoria di fiducia suonano quando iAPS regola automaticamente l'erogazione e per i comandi avviati dall'utente.";
+>>>>>>> Crowdin
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Promemoria scadenza predefinito";
@@ -1483,7 +1623,7 @@ Enact a temp Basal or a temp target */
 "Total Delivery" = "Totale Consegnata";
 
 /* */
-"Add Omnipod Dash" = "Agg Omnipod Dash";
+"Add Omnipod Dash" = "Aggiungi Omnipod Dash";
 
 /* */
 "Insert Cannula" = "Inserisci cannula";
@@ -1565,6 +1705,7 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 ore";
 
 /* */
+<<<<<<< HEAD
 "4 hours" = "4 hours";
 
 /* */
@@ -1575,6 +1716,18 @@ Enact a temp Basal or a temp target */
 
 /* */
 "24 hours" = "24 hours";
+=======
+"4 hours" = "4 ore";
+
+/* */
+"6 hours" = "6 ore";
+
+/* */
+"12 hours" = "12 ore";
+
+/* */
+"24 hours" = "24 ore";
+>>>>>>> Crowdin
 
 /* Average BG = */
 "Average" = "Media";
@@ -1840,7 +1993,7 @@ Enact a temp Basal or a temp target */
 "Max COB" = "Max COB";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Il valore predefinito di maxCOB è di 120. (Se qualcuno inserisce più carboidrati in una o più voci, iAPS limiterà il COB a maxCOB e lo manterrà a maxCOB fino a quando i carboidrati entrati sopra il maxCOB non avranno mostrato di essere assorbiti. Essenzialmente, questo limita solo UAM come un cappuccio di sicurezza contro calcoli COB strani a causa di dati fluidi.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolo posticipato - Divisore DIA";
