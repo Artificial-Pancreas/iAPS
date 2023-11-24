@@ -23,7 +23,7 @@ extension Home {
         @State var timeButtons: [Buttons] = [
             Buttons(label: "2 hours", number: "2", active: false, hours: 2),
             Buttons(label: "4 hours", number: "4", active: false, hours: 4),
-            Buttons(label: "6 hours", number: "6", active: true, hours: 6),
+            Buttons(label: "6 hours", number: "6", active: false, hours: 6),
             Buttons(label: "12 hours", number: "12", active: false, hours: 12),
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
@@ -324,6 +324,8 @@ extension Home {
                         .font(.system(size: 12, weight: .bold))
                         .foregroundColor(.insulin)
                         .padding(.leading, 8)
+                }
+                if state.tins {
                     Text(
                         "TINS: \(state.calculateTINS())" +
                             NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
@@ -383,6 +385,35 @@ extension Home {
             .frame(maxWidth: .infinity, maxHeight: 30)
         }
 
+        var timeInterval: some View {
+            HStack {
+                ForEach(timeButtons) { button in
+                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
+                        state.hours = button.hours
+                        highlightButtons()
+                    }
+                    .foregroundStyle(button.active ? (colorScheme == .dark ? Color.white : Color.black).opacity(0.9) : .secondary)
+                    .frame(maxHeight: 30).padding(.horizontal, 8)
+                    .background(
+                        button.active ?
+                            // RGB(30, 60, 95)
+                            (
+                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                    Color.white
+                            ) :
+                            Color
+                            .clear
+                    )
+                    .cornerRadius(20)
+                }
+            }
+            .shadow(
+                color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
+                radius: colorScheme == .dark ? 5 : 3
+            )
+            .font(buttonFont)
+        }
+
         var legendPanel: some View {
             ZStack {
                 HStack(alignment: .center) {
@@ -405,15 +436,9 @@ extension Home {
                         Text("ZT")
                             .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
                     }
-
-//                    Spacer()
-//
-//                    loopView.padding(.top, 16)
-//
-//                    Spacer()
-
                     Group {
                         Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                            .padding(.leading, 8)
                         Text("COB")
                             .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
                     }
@@ -436,36 +461,6 @@ extension Home {
                 }
                 .frame(maxWidth: .infinity)
             }
-        }
-
-        var timeInterval: some View {
-            HStack {
-                ForEach(timeButtons) { button in
-                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
-                        let index = timeButtons.firstIndex(where: { $0.label == button.label }) ?? 0
-                        highlightButtons(index)
-                        state.hours = button.hours
-                    }
-                    .foregroundStyle(button.active ? (colorScheme == .dark ? Color.white : Color.black).opacity(0.9) : .secondary)
-                    .frame(maxHeight: 30).padding(.horizontal, 8)
-                    .background(
-                        button.active ?
-                            // RGB(30, 60, 95)
-                            (
-                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                    Color.white
-                            ) :
-                            Color
-                            .clear
-                    )
-                    .cornerRadius(20)
-                }
-            }
-            .shadow(
-                color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                radius: colorScheme == .dark ? 5 : 3
-            )
-            .font(buttonFont)
         }
 
         var mainChart: some View {
@@ -531,16 +526,10 @@ extension Home {
             return (name: profileString, isOn: display)
         }
 
-        func highlightButtons(_ int: Int) {
-            var index = 0
-            repeat {
-                if index == int {
-                    timeButtons[index].active = true
-                } else {
-                    timeButtons[index].active = false
-                }
-                index += 1
-            } while index < timeButtons.count
+        func highlightButtons() {
+            for i in 0 ..< timeButtons.count {
+                timeButtons[i].active = timeButtons[i].hours == state.hours
+            }
         }
 
         @ViewBuilder private func bottomPanel(_: GeometryProxy) -> some View {
@@ -729,11 +718,15 @@ extension Home {
                 .background(colorBackground)
                 .edgesIgnoringSafeArea([.horizontal, .bottom])
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView {
+                    highlightButtons()
+                }
+            }
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
-            .popup(isPresented: isStatusPopupPresented, alignment: .top, direction: .top) {
+            .popup(isPresented: state.isStatusPopupPresented, alignment: .top, direction: .top) {
                 popup
                     .padding()
                     .background(
@@ -745,13 +738,13 @@ extension Home {
                             ) : Color(UIColor.darkGray))
                     )
                     .onTapGesture {
-                        isStatusPopupPresented = false
+                        state.isStatusPopupPresented = false
                     }
                     .gesture(
                         DragGesture(minimumDistance: 10, coordinateSpace: .local)
                             .onEnded { value in
                                 if value.translation.height < 0 {
-                                    isStatusPopupPresented = false
+                                    state.isStatusPopupPresented = false
                                 }
                             }
                     )

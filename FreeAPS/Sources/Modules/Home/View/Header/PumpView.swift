@@ -9,6 +9,8 @@ struct PumpView: View {
 
     @State var state: Home.StateModel
 
+    @Environment(\.colorScheme) var colorScheme
+
     private var reservoirFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -27,6 +29,12 @@ struct PumpView: View {
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 2
         return formatter
+    }
+
+    private var dateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        return dateFormatter
     }
 
     var body: some View {
@@ -57,8 +65,7 @@ struct PumpView: View {
                         .frame(maxHeight: 15)
                         .foregroundColor(reservoirColor)
                     if reservoir == 0xDEAD_BEEF {
-                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.callout)
-                            .fontWeight(.bold)
+                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.callout).fontWeight(.bold)
                     } else {
                         Text(
                             reservoirFormatter
@@ -91,8 +98,7 @@ struct PumpView: View {
                         .frame(maxHeight: 15)
                         .foregroundColor(timerColor)
 
-                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.callout)
-                        .fontWeight(.bold)
+                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.callout).fontWeight(.bold)
                 }
             }
         }
