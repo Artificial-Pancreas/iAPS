@@ -2,11 +2,8 @@ APP_DISPLAY_NAME = iAPS
 APP_VERSION = 2.2.7
 APP_BUILD_NUMBER = 1
 COPYRIGHT_NOTICE =
-DEVELOPER_TEAM = ##TEAM_ID##
-BUNDLE_IDENTIFIER = ru.artpancreas.$(DEVELOPMENT_TEAM).FreeAPS
+DEVELOPER_TEAM = T7VZ6LU6H3
+BUNDLE_IDENTIFIER = com.jon.$(DEVELOPMENT_TEAM).aps
 APP_GROUP_ID = group.com.$(DEVELOPMENT_TEAM).loopkit.LoopGroup
 APP_ICON = pod_colorful
-APP_URL_SCHEME = freeaps-x
-
-#include? "ConfigOverride.xcconfig"
-//#include? "../../ConfigOverride.xcconfig"
+APP_URL_SCHEME = iaps
