@@ -483,40 +483,56 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func uploadProfileAndSettings(_ force: Bool) {
         // These should be modified anyways and not the defaults
-        guard let sensitivities = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self),
-              let basalProfile = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self),
-              let carbRatios = storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self),
-              let targets = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self),
-              let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self),
-              let settings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
-        else {
-            if storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self) == nil {
-                debug(.nightscout, "NightscoutManager uploadProfile: error loading settings")
-            }
 
-            if storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self) == nil {
-                debug(.nightscout, "NightscoutManager uploadProfile: error loading preferences")
-            }
+        var jsonIsLoaded = true
 
-            if storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self) == nil {
-                debug(.nightscout, "NightscoutManager uploadProfile: error loading bgTargets")
-            }
+        var fileLoadSens = storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self)
+        if fileLoadSens == nil {
+            debug(.nightscout, "NightscoutManager uploadProfile: error loading insulinSensitivities")
+            jsonIsLoaded = false
+        }
 
-            if storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self) == nil {
-                debug(.nightscout, "NightscoutManager uploadProfile: error loading carbRatios")
-            }
+        var fileLoadSettings = storage.retrieve(OpenAPS.FreeAPS.settings, as: FreeAPSSettings.self)
+        if fileLoadSettings == nil {
+            debug(.nightscout, "NightscoutManager uploadProfile: error loading settings")
+            jsonIsLoaded = false
+        }
 
-            if storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self) == nil {
-                debug(.nightscout, "NightscoutManager uploadProfile: error loading basalProfile")
-            }
+        var fileLoadPrefs = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
+        if fileLoadPrefs == nil {
+            debug(.nightscout, "NightscoutManager uploadProfile: error loading preferences")
+            jsonIsLoaded = false
+        }
 
-            if storage.retrieve(OpenAPS.Settings.insulinSensitivities, as: InsulinSensitivities.self) == nil {
-                debug(.nightscout, "NightscoutManager uploadProfile: error loading insulinSensitivities")
-            }
+        var fileLoadTargets = storage.retrieve(OpenAPS.Settings.bgTargets, as: BGTargets.self)
+        if fileLoadTargets == nil {
+            debug(.nightscout, "NightscoutManager uploadProfile: error loading bgTargets")
+            jsonIsLoaded = false
+        }
 
+        var fileLoadCarb = storage.retrieve(OpenAPS.Settings.carbRatios, as: CarbRatios.self)
+        if fileLoadCarb == nil {
+            debug(.nightscout, "NightscoutManager uploadProfile: error loading carbRatios")
+            jsonIsLoaded = false
+        }
+
+        var fileLoadBasal = storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
+        if fileLoadBasal == nil {
+            debug(.nightscout, "NightscoutManager uploadProfile: error loading basalProfile")
+            jsonIsLoaded = false
+        }
+
+        if jsonIsLoaded == false {
             debug(.nightscout, "NightscoutManager uploadProfile Not all settings found to build profile!")
             return
         }
+
+        let sensitivities = fileLoadSens!
+        let settings = fileLoadSettings!
+        let preferences = fileLoadPrefs!
+        let targets = fileLoadTargets!
+        let carbRatios = fileLoadCarb!
+        let basalProfile = fileLoadBasal!
 
         let sens = sensitivities.sensitivities.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(

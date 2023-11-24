@@ -308,7 +308,7 @@ extension NightscoutConfig {
         func offset(_ string: String) -> Int {
             let hours = Int(string.prefix(2)) ?? 0
             let minutes = Int(string.suffix(2)) ?? 0
-            return ( ( hours * 60 ) + minutes ) * 60
+            return ((hours * 60) + minutes) * 60
         }
 
         func saveError(_ string: String) {
