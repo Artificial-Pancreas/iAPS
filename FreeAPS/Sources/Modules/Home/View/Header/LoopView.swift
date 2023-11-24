@@ -30,13 +30,12 @@ struct LoopView: View {
                 .frame(height: 3)
 
             if isLooping {
-                ProgressView()
+                ProgressView().foregroundColor(Color.loopGreen)
             } else {
                 Text(text)
                     .padding(4)
                     .font(.callout)
                     .fontWeight(.bold)
-                    .bold()
                     .foregroundColor(color)
             }
 

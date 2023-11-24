@@ -204,7 +204,7 @@ extension Home {
                 manualTempBasal: $state.manualTempBasal
             )
             .onTapGesture {
-                isStatusPopupPresented = true
+                state.isStatusPopupPresented = true
             }.onLongPressGesture {
                 let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                 impactHeavy.impactOccurred()
