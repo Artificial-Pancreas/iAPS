@@ -27,21 +27,22 @@ struct LoopView: View {
         HStack(alignment: .center, spacing: 0) {
             Rectangle()
                 .fill(color)
-                .frame(height: 2)
+                .frame(height: 3)
 
             if isLooping {
                 ProgressView()
             } else {
                 Text(text)
                     .padding(4)
-                    .font(.caption2)
+                    .font(.callout)
+                    .fontWeight(.bold)
                     .bold()
                     .foregroundColor(color)
             }
 
             Rectangle()
                 .fill(color)
-                .frame(height: 2)
+                .frame(height: 3)
         }
     }
 
