@@ -352,7 +352,6 @@ extension Home {
             HStack(alignment: .center) {
                 ForEach(timeButtons) { button in
                     Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
-                        let index = timeButtons.firstIndex(where: { $0.label == button.label }) ?? 0
                         state.hours = button.hours
                     }
                     .foregroundStyle(button.active ? .primary : .secondary)
