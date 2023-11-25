@@ -433,15 +433,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Bytt pod nå. Insulintilførsel stopper 8 timer etter at den er utgått eller når det ikke er mer insulin igjen.";
 
 /* Label text for step 1 of pair pod instructions */
-<<<<<<< HEAD
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyll en ny Pod med U-100 insulin (la den blå hetten være på).";
-=======
-<<<<<<< HEAD
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyll en ny pod med U-100 insulin (la blått beskyttelsesdeksel være på).";
-=======
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyll en ny Pod med U-100 insulin (la den blå hetten være på).";
->>>>>>> 7f4d47c8 (Crowdin (#334))
->>>>>>> main
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Lytt etter 2 pip.";
@@ -610,17 +602,10 @@
 "No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
 
 /* Description for BeepPreference.manualCommands */
-<<<<<<< HEAD
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
-=======
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bekreftelseslyder vil høres ved manuelle kommandoer som bolus, avbryt bolus, pause leveranse, gjenoppta leveranse, lagre varsler, etc. Det er ikke bekreftelseslyder når appen endrer insulintiførsel automatisk.";
-
-/* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Bekreftelseslyder vil høres ved endret insulintiførsel, både fra automatiske justeringer og manuelle kommandoer.";
->>>>>>> main
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Ratio";
@@ -800,11 +785,6 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ siden";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -834,13 +814,9 @@
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
-<<<<<<< HEAD
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
-=======
->>>>>>> 7f4d47c8 (Crowdin (#334))
->>>>>>> main

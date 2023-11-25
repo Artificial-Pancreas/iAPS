@@ -153,15 +153,7 @@
 "Confidence Reminders" = "Напоминания об уверенности";
 
 /* Help text for BeepPreferenceSelectionView */
-<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Доверенные звуковые сигналы от Пода, которые позволяют распознать выбранные команды, когда Под не заглушен.";
-=======
-<<<<<<< HEAD
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Напоминания об уверенности - это звуковые сигналы, подаваемые подом, которые можно использовать для подтверждения выбранных команд.";
-=======
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Доверенные звуковые сигналы от Пода, которые позволяют распознать выбранные команды, когда Под не заглушен.";
->>>>>>> 420dc4ed (Crowdin (#362))
->>>>>>> main
 
 /* The title of the configuration section in settings */
 "Configuration" = "Конфигурация";
@@ -772,11 +764,6 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ваш под может по-прежнему доставлять инсулин.\n Удалите его с тела, затем нажмите «Продолжить».";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Беззвучно";
@@ -815,7 +802,3 @@ Silence Pod" = "Беззвучный Под";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Получить статус Пода";
-<<<<<<< HEAD
-=======
->>>>>>> 420dc4ed (Crowdin (#362))
->>>>>>> main

@@ -602,17 +602,10 @@
 "No confidence reminders are used." = "Onay sesi kullanılmaz.";
 
 /* Description for BeepPreference.manualCommands */
-<<<<<<< HEAD
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
-=======
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Bolus, bolusu iptal et, askıya al, devam ettir, bildirim hatırlatıcılarını kaydet vb. gibi başlattığınız komutlar için Onay sesleri çalacaktır. Döngü, iletimi otomatik olarak ayarladığında, hiçbir onay sesi kullanılmaz.";
-
-/* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
->>>>>>> main
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Oran";
@@ -792,11 +785,6 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ önce";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -826,13 +814,9 @@
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
-<<<<<<< HEAD
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
-=======
->>>>>>> 7f4d47c8 (Crowdin (#334))
->>>>>>> main

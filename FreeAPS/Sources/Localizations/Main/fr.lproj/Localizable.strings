@@ -576,15 +576,7 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Cibles temporaires";
 
 /* Delete carbs from data table and Nightscout */
-<<<<<<< HEAD
-"Delete Carbs?" = "Delete Carbs?";
-=======
-<<<<<<< HEAD
-"Delete carbs?" = "Supprimer les glucides ?";
-=======
-"Delete Carbs?" = "Delete Carbs?";
->>>>>>> 420dc4ed (Crowdin (#362))
->>>>>>> main
+"Delete Carbs?" = "Supprimer les glucides ?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
@@ -1500,11 +1492,8 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Confidence Reminders";
 
-<<<<<<< HEAD
+/* */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
-=======
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Les rappels de confiance sont des bips du pod qui peuvent être utilisés pour reconnaître les commandes sélectionnées.";
->>>>>>> main
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Sauvegarde...";

@@ -154,14 +154,14 @@
 
 /* Help text for BeepPreferenceSelectionView */
 <<<<<<< HEAD
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
-=======
 <<<<<<< HEAD
 "Confidence reminders are beeps from the pod which can be used to acknowledge selected commands." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
 =======
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
 >>>>>>> 7f4d47c8 (Crowdin (#334))
->>>>>>> main
+=======
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
+>>>>>>> Crowdin
 
 /* The title of the configuration section in settings */
 "Configuration" = "Налаштування";
@@ -556,14 +556,14 @@
 
 /* Label text for step two of attach pod instructions */
 <<<<<<< HEAD
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Видаліть синю кришку голки Podʼа та перевірте канюлю. Потім зніміть паперову підкладку.";
-=======
 <<<<<<< HEAD
 "Remove the pod's needle cap and check cannula. Then remove paper backing." = "Зніміть захисну кришку канюлі та перевірте канюлю. Потім зніміть захисні стікери.";
 =======
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Видаліть синю кришку голки Podʼа та перевірте канюлю. Потім зніміть паперову підкладку.";
 >>>>>>> 7f4d47c8 (Crowdin (#334))
->>>>>>> main
+=======
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Видаліть синю кришку голки Podʼа та перевірте канюлю. Потім зніміть паперову підкладку.";
+>>>>>>> Crowdin
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -781,10 +781,10 @@
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ваш Pod може все ще подавати інсулін.\nЗніміть його зі свого тіла, а потім натисніть «Продовжити»";
 <<<<<<< HEAD
-=======
 <<<<<<< HEAD
 =======
->>>>>>> main
+=======
+>>>>>>> Crowdin
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Сповіщення вимкнено";
@@ -818,11 +818,11 @@ Silence Pod" = "Silence Pod";
 /* Alert title for error when updating silence pod preference */
 "Failed to update silence pod preference." = "Не вдалося оновити налаштування сигналів підтвердження.";
 <<<<<<< HEAD
-=======
 <<<<<<< HEAD
 >>>>>>> 7f4d47c8 (Crowdin (#334))
 =======
->>>>>>> main
+=======
+>>>>>>> Crowdin
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Діагностика";
@@ -830,6 +830,6 @@ Silence Pod" = "Silence Pod";
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Отримати статус Pod'у";
 <<<<<<< HEAD
-=======
 >>>>>>> 420dc4ed (Crowdin (#362))
->>>>>>> main
+=======
+>>>>>>> Crowdin

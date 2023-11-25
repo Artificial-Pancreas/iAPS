@@ -63,7 +63,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     var preferences = { };
     if (preferences_input) {
         preferences = preferences_input;
-<<<<<<< HEAD
         if (preferences.curve === "rapid-acting") {
             if (preferences.useCustomPeakTime) {
                 preferences.insulinPeakTime =
@@ -76,9 +75,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
                 Math.max(35, Math.min(preferences.insulinPeakTime, 100));
             } else { preferences.insulinPeakTime = 55; }
         }
-=======
-        preferences.insulinPeakTime = Math.max(preferences.insulinPeakTime, 55);
->>>>>>> main
     }
 
     var inputs = { };

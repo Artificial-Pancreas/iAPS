@@ -576,24 +576,14 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Geçici Hedefler";
 
 /* Delete carbs from data table and Nightscout */
-<<<<<<< HEAD
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "Karbonhidratları sil?";
+
+/* Delete insulin from pump history and Nightscout */
+"Delete Insulin?" = "İnsülin silinsin mi?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
-=======
-<<<<<<< HEAD
-"Delete carbs?" = "Karbonhidratları sil?";
-
-/* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "İnsülin silinsin mi?";
-=======
-"Delete Carbs?" = "Delete Carbs?";
-
-/* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
->>>>>>> 420dc4ed (Crowdin (#362))
->>>>>>> main
+>>>>>>> Crowdin
 
 /* Treatments list */
 "Treatments" = "Tedaviler";
@@ -1506,9 +1496,7 @@ Enact a temp Basal or a temp target */
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Onay sesi";
 
-<<<<<<< HEAD
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
-=======
+/* */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Onay sesleri, seçili komutları onaylamak için kullanılabilen pod'tan gelen bip sesleridir.";
 >>>>>>> main
 

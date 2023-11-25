@@ -576,24 +576,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige Mål";
 
 /* Delete carbs from data table and Nightscout */
-<<<<<<< HEAD
 "Delete Carbs?" = "Delete Carbs?";
 
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
-=======
-<<<<<<< HEAD
-"Delete carbs?" = "Delete carbs?";
-
-/* Delete insulin from pump history and Nightscout */
-"Delete insulin?" = "Delete insulin?";
-=======
-"Delete Carbs?" = "Delete Carbs?";
-
-/* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
->>>>>>> 420dc4ed (Crowdin (#362))
->>>>>>> main
 
 /* Treatments list */
 "Treatments" = "Behandlinger";

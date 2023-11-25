@@ -785,11 +785,6 @@
 
 /* DASH Pod time ago since last status */
 "%@ ago" = "%@ temu";
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> main
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -819,13 +814,9 @@
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
-<<<<<<< HEAD
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
-=======
->>>>>>> 7f4d47c8 (Crowdin (#334))
->>>>>>> main
