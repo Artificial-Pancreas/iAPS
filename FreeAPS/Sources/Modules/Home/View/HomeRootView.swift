@@ -705,11 +705,11 @@ extension Home {
 
                     Spacer()
 
-                    timeInterval
+                    legendPanel
 
                     Spacer()
 
-                    legendPanel
+                    timeInterval.padding(.bottom, 20)
 
                     Spacer()
 

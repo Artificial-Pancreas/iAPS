@@ -59,11 +59,11 @@ struct PumpView: View {
 
             if let reservoir = reservoir {
                 HStack {
-                    Image(systemName: "drop.fill")
+                    Image("vial")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 15)
-                        .foregroundColor(reservoirColor)
+                    // .foregroundColor(reservoirColor)
                     if reservoir == 0xDEAD_BEEF {
                         Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.callout).fontWeight(.bold)
                     } else {
@@ -92,13 +92,15 @@ struct PumpView: View {
 
             if let date = expiresAtDate {
                 HStack {
-                    Image(systemName: "stopwatch.fill")
+                    Image(systemName: "timer")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 15)
-                        .foregroundColor(timerColor)
+                    // .foregroundColor(timerColor)
 
+                    let timeLeft = date.timeIntervalSince(timerDate)
                     Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.callout).fontWeight(.bold)
+                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
                 }
             }
         }

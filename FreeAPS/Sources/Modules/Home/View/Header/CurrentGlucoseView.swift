@@ -78,7 +78,7 @@ struct CurrentGlucoseView: View {
                             ?? "--"
                     )
                     .font(.system(size: 40, weight: .bold))
-                    .foregroundColor(alarm == nil ? colourGlucoseText : .loopRed)
+                    // .foregroundColor(alarm == nil ? colourGlucoseText : .loopRed)
                 }
                 HStack {
                     let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
@@ -136,21 +136,24 @@ struct CurrentGlucoseView: View {
     }
 
     var colourGlucoseText: Color {
-        let whichGlucose = recentGlucose?.glucose ?? 0
-        let defaultColor: Color = colorScheme == .dark ? .white : .black
+        /*
+         let whichGlucose = recentGlucose?.glucose ?? 0
+         let defaultColor: Color = colorScheme == .dark ? .white : .black
 
-        guard lowGlucose < highGlucose else { return .primary }
+         guard lowGlucose < highGlucose else { return .primary }
 
-        switch whichGlucose {
-        case 0 ..< Int(lowGlucose):
-            return .loopRed
-        case Int(lowGlucose) ..< Int(highGlucose):
-            return defaultColor
-        case Int(highGlucose)...:
-            return .loopYellow
-        default:
-            return defaultColor
-        }
+         switch whichGlucose {
+         case 0 ..< Int(lowGlucose):
+             return .loopRed
+         case Int(lowGlucose) ..< Int(highGlucose):
+             return defaultColor
+         case Int(highGlucose)...:
+             return .loopYellow
+         default:
+             return defaultColor
+         }
+          */
+        .primary
     }
 }
 
@@ -201,9 +204,9 @@ struct CircleShape: View {
         ) : .white
 
         Circle()
-            .stroke(gradient, lineWidth: 6)
+            .stroke(gradient, lineWidth: 5)
             .background(Circle().fill(colorBackground))
-            .frame(width: 130, height: 130)
+            .frame(width: 135, height: 135)
     }
 }
 
@@ -213,8 +216,8 @@ struct TriangleShape: View {
     var body: some View {
         Triangle()
             .fill(color)
-            .frame(width: 35, height: 35)
+            .frame(width: 38, height: 38)
             .rotationEffect(.degrees(90))
-            .offset(x: 70)
+            .offset(x: 78)
     }
 }

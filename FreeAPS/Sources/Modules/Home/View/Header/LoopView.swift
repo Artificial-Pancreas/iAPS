@@ -49,13 +49,13 @@ struct LoopView: View {
         if isLooping {
             loopStatusBar("")
         } else if manualTempBasal {
-            loopStatusBar("Manual")
+            // loopStatusBar("Manual")
         } else if actualSuggestion?.timestamp != nil {
-            loopStatusBar(timeString)
+            // loopStatusBar(timeString)
         } else if closedLoop {
-            loopStatusBar("--")
+            // loopStatusBar("--")
         } else {
-            loopStatusBar("--")
+            // loopStatusBar("--")
         }
 
 //        HStack(alignment: .center) {
@@ -90,28 +90,31 @@ struct LoopView: View {
     }
 
     private var color: Color {
-        guard actualSuggestion?.timestamp != nil else {
-            return .loopGray
-        }
-        guard manualTempBasal == false else {
-            return .loopManualTemp
-        }
-        guard closedLoop == true else {
-            return .loopGray
-        }
+        /*
+         guard actualSuggestion?.timestamp != nil else {
+             return .loopGray
+         }
+         guard manualTempBasal == false else {
+             return .loopManualTemp
+         }
+         guard closedLoop == true else {
+             return .loopGray
+         }
 
-        let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
+         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
-        if delta <= 5.minutes.timeInterval {
-            guard actualSuggestion?.deliverAt != nil else {
-                return .loopYellow
-            }
-            return .loopGreen
-        } else if delta <= 10.minutes.timeInterval {
-            return .loopYellow
-        } else {
-            return .loopRed
-        }
+         if delta <= 5.minutes.timeInterval {
+             guard actualSuggestion?.deliverAt != nil else {
+                 return .loopYellow
+             }
+             return .loopGreen
+         } else if delta <= 10.minutes.timeInterval {
+             return .loopYellow
+         } else {
+             return .loopRed
+         }
+          */
+        .primary
     }
 
     func mask(in rect: CGRect) -> Path {
