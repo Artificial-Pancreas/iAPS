@@ -216,7 +216,7 @@
 "Discard Pod" = "Gooi pod weg";
 
 /* No comment provided by engineer. */
-"Done" = "Gereed";
+"Done" = "OK";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Boluspiepjes inschakelen";
