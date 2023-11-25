@@ -78,7 +78,7 @@
 "Notification Settings" = "Instellingen voor meldingen";
 
 /* */
-"Confidence Reminders" = "Bevestigingsmeldingen";
+"Confidence Reminders" = "Bevestigingsmeldingen met piepjes vanuit de Pod";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Onderbreken van insulinetoediening";
@@ -556,7 +556,7 @@
 "Omnipod Reminders" = "Omnipod herinneringen";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "iAPS configureert een herinnering op de Pod om je vooraf op de hoogte te stellen van het verlopen van de Pod. Stel het aantal uren vooraf in dat je wilt instellen voor het koppelen van een nieuwe Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "iAPS configureert melding op de Pod om je op de hoogte te stellen wanneer de Pod verloopt. Stel het aantal uren vooraf in dat je standaard wilt instellen als je een nieuwe Pod koppelt.";
 
 /* Footer text for scheduled reminder area */
 "This is a reminder that you scheduled when you paired your current Pod." = "Dit is een herinnering die je hebt gepland toen je je huidige Pod koppelde.";
@@ -565,13 +565,13 @@
 "Scheduled Reminder" = "Geplande herinnering";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "iAPS meldt u wanneer de hoeveelheid insuline in de Pod dit niveau bereikt.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt.";
 
 /* Description text for critical alerts */
 "Critical Alerts" = "Kritieke waarschuwingen";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "De bovenstaande meldingen waarschuwen zonder geluid als je apparaat in de modus 'Stil' of 'Niet storen' staat.\n\nEr zijn andere belangrijke Pod waarschuwingen en -alarmen die wel klinken, zelfs als je apparaat in de modus 'Stil' of 'Niet storen' staat.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Als je apparaat stil is of in de Niet storen-modus staat, hoor je de bovenstaande herinneringen niet in de app. Er zijn echter andere belangrijke waarschuwingen voor de Pod die nog steeds in de app verschijnen, zelfs als je apparaat stil is of in de Niet storen-modus staat. De Pod maakt ook geluid met piepjes voor alle herinneringen en waarschuwingen, behalve als de Pod is uitgeschakeld.";
 /* navigation title for notification settings */
 "Notification Settings" = "Instellingen voor meldingen";
 
@@ -697,7 +697,7 @@
 "Skip Omnipod Onboarding?" = "Omnipod onboarding overslaan?";
 
 /* Description text on ExpirationReminderSetupView */
-"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "iAPS informeert je voordat de Pod vervalt.\n\nScroll om in te stellen hoeveel uren, voordat de Pod verloopt, je een kennisgeving wilt hebben.";
+"The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "iAPS geeft een melding voordat de Pod vervalt.\n\nScroll om in te stellen hoeveel uren, voordat de Pod verloopt, je een kennisgeving wilt hebben.";
 
 /* Text of continue button on ExpirationReminderSetupView" */
 "Next" = "Volgende";
@@ -706,7 +706,7 @@
 "Expiration Reminder" = "Let op je Pod vervalt";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS waarschuwt als de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om in te stellen bij welk aantal eenheden je wilt worden herinnerd.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om in te stellen bij welk aantal eenheden je wilt worden herinnerd.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Laag reservoir niveau";
@@ -813,7 +813,7 @@
 /* button title when retrieving pump manager details */
 "Retrieving Pump Manager Details..." = "Gegevens pompmanager ophalen...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Verversen details pompmanager";
+"Refresh Pump Manager Details" = "Ververs details pompmanager";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostische gegevens";
