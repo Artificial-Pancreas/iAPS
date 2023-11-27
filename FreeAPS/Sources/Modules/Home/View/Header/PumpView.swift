@@ -103,8 +103,7 @@ struct PumpView: View {
                         .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
                 }
             }
-        }
-    }
+        }.padding(.horizontal) }
 
     private func remainingTimeString(time: TimeInterval) -> String {
         guard time > 0 else {

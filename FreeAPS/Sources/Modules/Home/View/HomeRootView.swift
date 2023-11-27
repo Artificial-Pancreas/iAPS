@@ -98,12 +98,10 @@ extension Home {
             return scene
         }
 
-        @ViewBuilder func header(_: GeometryProxy) -> some View {
-            HStack {
-                Spacer()
-                pumpView
-                Spacer()
-            }
+        @ViewBuilder func status(_: GeometryProxy) -> some View {
+            // HStack {
+            pumpView
+            // }
         }
 
         var cobIobView: some View {
@@ -679,13 +677,20 @@ extension Home {
 
                     Spacer()
 
-                    glucoseView.padding(.top, 10)
+                    glucoseView.padding(.top, 10).padding(.bottom, 20)
 
                     Spacer()
 
-                    header(geo)
-                        .padding(.top, 15)
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(colourChart)
+                        .overlay(status(geo))
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .shadow(
+                            color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
+                            radius: colorScheme == .dark ? 5 : 3
+                        )
                         .padding(.horizontal, 10)
+                        .frame(maxHeight: 40)
 
                     Spacer()
 
