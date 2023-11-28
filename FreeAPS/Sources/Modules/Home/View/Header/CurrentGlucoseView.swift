@@ -198,10 +198,11 @@ struct CircleShape: View {
 
     var body: some View {
         let colorBackground: Color = colorScheme == .dark ? Color(
-            red: 0.05490196078,
-            green: 0.05490196078,
-            blue: 0.05490196078
-        ) : .white
+            red: 0.1176470588,
+            green: 0.2352941176,
+            blue: 0.3725490196
+        ) :
+            Color.white
 
         Circle()
             .stroke(gradient, lineWidth: 5)

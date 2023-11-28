@@ -25,12 +25,12 @@ typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CG
 struct MainChartView: View {
     private enum Config {
         static let endID = "End"
-        static let basalHeight: CGFloat = 80
+        static let basalHeight: CGFloat = 60
         static let topYPadding: CGFloat = 20
-        static let bottomYPadding: CGFloat = 80
+        static let bottomYPadding: CGFloat = 20
         static let minAdditionalWidth: CGFloat = 150
         static let maxGlucose = 270
-        static let minGlucose = 45
+        static let minGlucose = 0 // 45
         static let yLinesCount = 5
         static let glucoseScale: CGFloat = 2 // default 2
         static let bolusSize: CGFloat = 8

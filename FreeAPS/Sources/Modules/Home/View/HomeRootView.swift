@@ -530,24 +530,29 @@ extension Home {
             }
         }
 
-        @ViewBuilder private func bottomPanel(_: GeometryProxy) -> some View {
-            let colorRectangle: Color = colorScheme == .dark ? Color(
-                red: 0.05490196078,
-                green: 0.05490196078,
-                blue: 0.05490196078
-            ) : Color.white
-            let colorIcon: Color = (colorScheme == .dark ? Color.white : Color.black).opacity(0.9)
+        @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
-                Rectangle()
-                    .fill(colorRectangle)
-                    .frame(height: UIScreen.main.bounds.height / 13)
-                    .cornerRadius(15)
-                    .shadow(
-                        color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
-                        radius: colorScheme == .dark ? 5 : 3
-                    )
-                    .padding([.leading, .trailing], 10)
+                Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 50 + geo.safeAreaInsets.bottom)
 
+                /*
+                 let colorRectangle: Color = colorScheme == .dark ? Color(
+                     red: 0.05490196078,
+                     green: 0.05490196078,
+                     blue: 0.05490196078
+                 ) : Color.white
+                 let colorIcon: Color = (colorScheme == .dark ? Color.white : Color.black).opacity(0.9)
+
+                  ZStack {
+                     Rectangle()
+                         .fill(colorRectangle)
+                         .frame(height: UIScreen.main.bounds.height / 13)
+                         .cornerRadius(15)
+                         .shadow(
+                             color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
+                             radius: colorScheme == .dark ? 5 : 3
+                         )
+                         .padding([.leading, .trailing], 10)
+                     */
                 HStack {
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
@@ -556,7 +561,7 @@ extension Home {
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                                .foregroundColor(colorIcon)
+                                .foregroundColor(.loopYellow)
                                 .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
@@ -576,7 +581,7 @@ extension Home {
                             .frame(width: 24, height: 24)
                             .padding(8)
                     }
-                    .foregroundColor(colorIcon)
+                    .foregroundColor(.loopGreen)
                     .buttonStyle(.borderless)
                     Spacer()
                     Button {
@@ -592,7 +597,7 @@ extension Home {
                             .frame(width: 24, height: 24)
                             .padding(8)
                     }
-                    .foregroundColor(colorIcon)
+                    .foregroundColor(.insulin)
                     .buttonStyle(.borderless)
                     Spacer()
                     if state.allowManualTemp {
@@ -604,7 +609,7 @@ extension Home {
                                 .frame(width: 24, height: 24)
                                 .padding(8)
                         }
-                        .foregroundColor(colorIcon)
+                        .foregroundColor(.insulin)
                         .buttonStyle(.borderless)
                         Spacer()
                     }
@@ -621,7 +626,7 @@ extension Home {
                             .frame(width: 24, height: 24)
                             .padding(8)
                     }
-                    .foregroundColor(colorIcon)
+                    .foregroundColor(.green)
                     .buttonStyle(.borderless)
                     Spacer()
                     Button { state.showModal(for: .statistics)
@@ -633,7 +638,7 @@ extension Home {
                             .frame(width: 24, height: 24)
                             .padding(8)
                     }
-                    .foregroundColor(colorIcon)
+                    .foregroundColor(.purple)
                     .buttonStyle(.borderless)
                     Spacer()
                     Button { state.showModal(for: .settings) }
@@ -644,11 +649,17 @@ extension Home {
                             .frame(width: 24, height: 24)
                             .padding(8)
                     }
-                    .foregroundColor(colorIcon)
+                    .foregroundColor(.loopGray)
                     .buttonStyle(.borderless)
                 }
+
                 .padding(.horizontal, 24)
-                .padding(.bottom, 16)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
+
+                /*
+                 .padding(.horizontal, 24)
+                 .padding(.bottom, 16)
+                   */
             }
         }
 
@@ -671,58 +682,70 @@ extension Home {
                 blue: 0.05490196078
             ) : .white
 
+            // ScrollView {
             GeometryReader { geo in
-                VStack(spacing: 0) {
-                    loopView.padding(.horizontal, 10)
-
-                    Spacer()
+                VStack(spacing: 20) {
+                    // Spacer()
 
                     glucoseView.padding(.top, 10).padding(.bottom, 20)
 
-                    Spacer()
+                    // Spacer()
+
+                    HStack {
+                        timeInterval // .padding(.bottom, 20)
+                        loopView.padding(.leading)
+                    }
+
+                    // Spacer()
+
+                    // infoPanel
+                    //   .padding(.horizontal, 10)
 
                     RoundedRectangle(cornerRadius: 15)
-                        .fill(colourChart)
+                        .fill(
+                            colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                Color.white
+                        )
+                        .overlay {
+                            VStack {
+                                infoPanel
+                                mainChart
+                                legendPanel // .padding(.bottom, 20)
+                            }
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .shadow(
+                            color: colorScheme == .dark ? Color.white.opacity(0.33) : Color.black.opacity(0.33),
+                            radius: colorScheme == .dark ? 5 : 3
+                        )
+                        .padding(.horizontal, 10)
+                        .frame(maxHeight: UIScreen.main.bounds.height / 2.3)
+
+                    // Spacer()
+
+                    RoundedRectangle(cornerRadius: 15)
+                        .fill(
+                            colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                Color.white
+                        )
+                        .cornerRadius(20)
                         .overlay(status(geo))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(
                             color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
                             radius: colorScheme == .dark ? 5 : 3
                         )
-                        .padding(.horizontal, 10)
-                        .frame(maxHeight: 40)
+                        .padding(.horizontal, 10).padding(.bottom, 20)
+                        .frame(maxHeight: 50)
 
-                    Spacer()
-
-                    infoPanel
-                        .padding(.horizontal, 10)
-
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(colourChart)
-                        .overlay(mainChart)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .shadow(
-                            color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
-                            radius: colorScheme == .dark ? 5 : 3
-                        )
-                        .padding(.horizontal, 10)
-                        .frame(maxHeight: UIScreen.main.bounds.height / 2.2)
-
-                    Spacer()
-
-                    legendPanel
-
-                    Spacer()
-
-                    timeInterval.padding(.bottom, 20)
-
-                    Spacer()
-
+                    // Spacer()
                     bottomPanel(geo)
                 }
                 .background(colorBackground)
-                .edgesIgnoringSafeArea([.horizontal, .bottom])
+                .edgesIgnoringSafeArea([.bottom])
             }
+            // }
+
             .onAppear {
                 configureView {
                     highlightButtons()

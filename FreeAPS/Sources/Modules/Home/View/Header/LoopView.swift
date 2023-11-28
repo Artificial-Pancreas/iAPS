@@ -22,63 +22,28 @@ struct LoopView: View {
     }
 
     private let rect = CGRect(x: 0, y: 0, width: 18, height: 18)
-
-    @ViewBuilder private func loopStatusBar(_ text: String) -> some View {
-        HStack(alignment: .center, spacing: 0) {
-            Rectangle()
-                .fill(color)
-                .frame(height: 3)
-
-            if isLooping {
-                ProgressView().foregroundColor(Color.loopGreen)
-            } else {
-                Text(text)
-                    .padding(4)
-                    .font(.callout)
-                    .fontWeight(.bold)
-                    .foregroundColor(color)
-            }
-
-            Rectangle()
-                .fill(color)
-                .frame(height: 3)
-        }
-    }
-
     var body: some View {
-        if isLooping {
-            loopStatusBar("")
-        } else if manualTempBasal {
-            // loopStatusBar("Manual")
-        } else if actualSuggestion?.timestamp != nil {
-            // loopStatusBar(timeString)
-        } else if closedLoop {
-            // loopStatusBar("--")
-        } else {
-            // loopStatusBar("--")
+        HStack {
+            ZStack {
+                Circle()
+                    .strokeBorder(color, lineWidth: 2)
+                    .frame(width: rect.width, height: rect.height, alignment: .bottom)
+                    .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
+                if isLooping {
+                    ProgressView()
+                }
+            }
+            if isLooping {
+                Text("looping").font(.caption2)
+            } else if manualTempBasal {
+                Text("Manual").font(.caption2)
+            } else if actualSuggestion?.timestamp != nil {
+                Text(timeString).font(.caption2)
+                    .foregroundColor(.secondary)
+            } else {
+                Text("--").font(.caption2).foregroundColor(.secondary)
+            }
         }
-
-//        HStack(alignment: .center) {
-//            ZStack {
-//                Circle()
-//                    .strokeBorder(color, lineWidth: 2)
-//                    .frame(width: rect.width, height: rect.height, alignment: .center)
-//                    .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
-//                if isLooping {
-//                    ProgressView()
-//                }
-//            }
-//            if isLooping {
-//                Text("looping").font(.caption2)
-//            } else if manualTempBasal {
-//                Text("Manual").font(.caption2)
-//            } else if actualSuggestion?.timestamp != nil {
-//                Text(timeString).font(.caption2)
-//                    .foregroundColor(.secondary)
-//            } else {
-//                Text("--").font(.caption2).foregroundColor(.secondary)
-//            }
-//        }
     }
 
     private var timeString: String {
@@ -90,31 +55,24 @@ struct LoopView: View {
     }
 
     private var color: Color {
-        /*
-         guard actualSuggestion?.timestamp != nil else {
-             return .loopGray
-         }
-         guard manualTempBasal == false else {
-             return .loopManualTemp
-         }
-         guard closedLoop == true else {
-             return .loopGray
-         }
+        guard actualSuggestion?.timestamp != nil else {
+            return .loopGray
+        }
+        guard manualTempBasal == false else {
+            return .loopManualTemp
+        }
+        let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
-         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
-
-         if delta <= 5.minutes.timeInterval {
-             guard actualSuggestion?.deliverAt != nil else {
-                 return .loopYellow
-             }
-             return .loopGreen
-         } else if delta <= 10.minutes.timeInterval {
-             return .loopYellow
-         } else {
-             return .loopRed
-         }
-          */
-        .primary
+        if delta <= 5.minutes.timeInterval {
+            guard actualSuggestion?.deliverAt != nil else {
+                return .loopYellow
+            }
+            return .loopGreen
+        } else if delta <= 10.minutes.timeInterval {
+            return .loopYellow
+        } else {
+            return .loopRed
+        }
     }
 
     func mask(in rect: CGRect) -> Path {
