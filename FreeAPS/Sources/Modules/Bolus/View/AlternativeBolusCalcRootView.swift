@@ -356,7 +356,7 @@ extension Bolus {
                 HStack {
                     Text("Carb Ratio")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     Text(state.carbRatio.formatted())
                         .frame(minWidth: 40, alignment: .trailing)
@@ -368,7 +368,7 @@ extension Bolus {
                 HStack {
                     Text("ISF")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let isf = state.isf
                     Text(isf.formatted())
@@ -381,7 +381,7 @@ extension Bolus {
                 HStack {
                     Text("Target Glucose")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let target = state.units == .mmolL ? state.target.asMmolL : state.target
 
@@ -397,7 +397,7 @@ extension Bolus {
                 HStack {
                     Text("Basal")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let basal = state.basal
                     Text(basal.formatted())
@@ -410,7 +410,7 @@ extension Bolus {
                 HStack {
                     Text("Fraction")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let fraction = state.fraction
                     Text(fraction.formatted())
@@ -422,7 +422,7 @@ extension Bolus {
                     HStack {
                         Text("Fatty Meal Factor")
                             .foregroundColor(.orange)
-                            .frame(minWidth: 120, alignment: .leading)
+                            .frame(minWidth: 115, alignment: .leading)
 //                        Spacer()
                         let fraction = state.fattyMealFactor
                         Text(fraction.formatted())
@@ -440,14 +440,14 @@ extension Bolus {
                 HStack(alignment: .center, spacing: nil) {
                     Text("Glucose")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let glucose = state.units == .mmolL ? state.currentBG.asMmolL : state.currentBG
                     Text(glucose.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                         .frame(minWidth: 40, alignment: .trailing)
                     Text(state.units.rawValue)
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 80, alignment: .leading)
+                        .frame(minWidth: 70, alignment: .leading)
 //                    Spacer()
                     Image(systemName: "arrow.right")
                         .frame(minWidth: 20, alignment: .trailing)
@@ -464,7 +464,7 @@ extension Bolus {
                 HStack(alignment: .center, spacing: nil) {
                     Text("IOB")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let iob = state.iob
                     // rounding
@@ -474,7 +474,7 @@ extension Bolus {
                         .frame(minWidth: 40, alignment: .trailing)
                     Text("U")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 80, alignment: .leading)
+                        .frame(minWidth: 70, alignment: .leading)
 //                    Spacer()
 
                     Image(systemName: "arrow.right")
@@ -491,13 +491,13 @@ extension Bolus {
                 HStack(alignment: .center, spacing: nil) {
                     Text("Trend")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let trend = state.units == .mmolL ? state.deltaBG.asMmolL : state.deltaBG
                     Text(trend.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                         .frame(minWidth: 40, alignment: .trailing)
                     Text(state.units.rawValue).foregroundColor(.secondary)
-                        .frame(minWidth: 80, alignment: .leading)
+                        .frame(minWidth: 70, alignment: .leading)
 //                    Spacer()
 
                     Image(systemName: "arrow.right")
@@ -515,7 +515,7 @@ extension Bolus {
                 HStack(alignment: .center, spacing: nil) {
                     Text("COB")
                         .foregroundColor(.secondary)
-                        .frame(minWidth: 120, alignment: .leading)
+                        .frame(minWidth: 115, alignment: .leading)
 //                    Spacer()
                     let cob = state.cob
                     Text(cob.formatted())
@@ -523,7 +523,7 @@ extension Bolus {
 
                     let unitGrams = NSLocalizedString("g", comment: "grams")
                     Text(unitGrams).foregroundColor(.secondary)
-                        .frame(minWidth: 80, alignment: .leading)
+                        .frame(minWidth: 70, alignment: .leading)
 
 //                    Spacer()
 
