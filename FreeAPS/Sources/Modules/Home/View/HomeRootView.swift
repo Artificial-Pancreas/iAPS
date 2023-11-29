@@ -23,7 +23,7 @@ extension Home {
         @State var timeButtons: [Buttons] = [
             Buttons(label: "2 hours", number: "2", active: false, hours: 2),
             Buttons(label: "4 hours", number: "4", active: false, hours: 4),
-            Buttons(label: "6 hours", number: "6", active: true, hours: 6),
+            Buttons(label: "6 hours", number: "6", active: false, hours: 6),
             Buttons(label: "12 hours", number: "12", active: false, hours: 12),
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
@@ -349,15 +349,13 @@ extension Home {
         }
 
         var timeInterval: some View {
-            HStack {
+            HStack(alignment: .center) {
                 ForEach(timeButtons) { button in
                     Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
-                        let index = timeButtons.firstIndex(where: { $0.label == button.label }) ?? 0
-                        highlightButtons(index)
                         state.hours = button.hours
                     }
                     .foregroundStyle(button.active ? .primary : .secondary)
-                    .frame(maxHeight: 20).padding(.horizontal, button.active ? 20 : 10)
+                    .frame(maxHeight: 20).padding(.horizontal)
                     .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
                 }
                 Image(systemName: "ellipsis.circle.fill")
@@ -521,16 +519,10 @@ extension Home {
             return (name: profileString, isOn: display)
         }
 
-        func highlightButtons(_ int: Int) {
-            var index = 0
-            repeat {
-                if index == int {
-                    timeButtons[index].active = true
-                } else {
-                    timeButtons[index].active = false
-                }
-                index += 1
-            } while index < timeButtons.count
+        func highlightButtons() {
+            for i in 0 ..< timeButtons.count {
+                timeButtons[i].active = timeButtons[i].hours == state.hours
+            }
         }
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
@@ -638,7 +630,14 @@ extension Home {
                 }
                 .edgesIgnoringSafeArea(.vertical)
             }
-            .onAppear(perform: configureView)
+            .onChange(of: state.hours) { _ in
+                highlightButtons()
+            }
+            .onAppear {
+                configureView {
+                    highlightButtons()
+                }
+            }
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
