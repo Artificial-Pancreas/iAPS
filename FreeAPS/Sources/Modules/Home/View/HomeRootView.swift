@@ -532,27 +532,8 @@ extension Home {
 
         @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(Color.gray.opacity(0.3)).frame(height: 50 + geo.safeAreaInsets.bottom)
+                Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
 
-                /*
-                 let colorRectangle: Color = colorScheme == .dark ? Color(
-                     red: 0.05490196078,
-                     green: 0.05490196078,
-                     blue: 0.05490196078
-                 ) : Color.white
-                 let colorIcon: Color = (colorScheme == .dark ? Color.white : Color.black).opacity(0.9)
-
-                  ZStack {
-                     Rectangle()
-                         .fill(colorRectangle)
-                         .frame(height: UIScreen.main.bounds.height / 13)
-                         .cornerRadius(15)
-                         .shadow(
-                             color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
-                             radius: colorScheme == .dark ? 5 : 3
-                         )
-                         .padding([.leading, .trailing], 10)
-                     */
                 HStack {
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
@@ -573,9 +554,9 @@ extension Home {
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
-                    Button { state.showModal(for: .addTempTarget) }
+                    Button { state.showModal(for: .overrideProfilesConfig) }
                     label: {
-                        Image("target")
+                        Image(systemName: "person")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: 24, height: 24)
@@ -613,22 +594,6 @@ extension Home {
                         .buttonStyle(.borderless)
                         Spacer()
                     }
-
-                    // MARK: CANCEL OF PROFILE HAS TO BE IMPLEMENTED
-
-                    // MAYBE WITH A SMALL INDICATOR AT THE SYMBOL
-                    Button {
-                        state.showModal(for: .overrideProfilesConfig)
-                    } label: {
-                        Image(systemName: "person")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(.green)
-                    .buttonStyle(.borderless)
-                    Spacer()
                     Button { state.showModal(for: .statistics)
                     }
                     label: {
@@ -652,14 +617,8 @@ extension Home {
                     .foregroundColor(.loopGray)
                     .buttonStyle(.borderless)
                 }
-
                 .padding(.horizontal, 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
-
-                /*
-                 .padding(.horizontal, 24)
-                 .padding(.bottom, 16)
-                   */
             }
         }
 
@@ -691,10 +650,13 @@ extension Home {
 
                     // Spacer()
 
-                    HStack {
-                        timeInterval // .padding(.bottom, 20)
-                        loopView.padding(.leading)
-                    }
+                    loopView.padding(.bottom, 20)
+                    // .padding(.leading)
+
+                    // HStack {
+                    timeInterval // .padding(.bottom, 20)
+                    // loopView.padding(.leading)
+                    // }
 
                     // Spacer()
 
@@ -715,7 +677,7 @@ extension Home {
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(
-                            color: colorScheme == .dark ? Color.white.opacity(0.33) : Color.black.opacity(0.33),
+                            color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
                             radius: colorScheme == .dark ? 5 : 3
                         )
                         .padding(.horizontal, 10)
@@ -732,7 +694,7 @@ extension Home {
                         .overlay(status(geo))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                         .shadow(
-                            color: colorScheme == .dark ? Color.black.opacity(0.75) : Color.black.opacity(0.33),
+                            color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
                             radius: colorScheme == .dark ? 5 : 3
                         )
                         .padding(.horizontal, 10).padding(.bottom, 20)
@@ -742,10 +704,9 @@ extension Home {
                     bottomPanel(geo)
                 }
                 .background(colorBackground)
-                .edgesIgnoringSafeArea([.bottom])
             }
+            .edgesIgnoringSafeArea(.bottom)
             // }
-
             .onAppear {
                 configureView {
                     highlightButtons()

@@ -21,7 +21,7 @@ struct LoopView: View {
         return formatter
     }
 
-    private let rect = CGRect(x: 0, y: 0, width: 18, height: 18)
+    private let rect = CGRect(x: 0, y: 0, width: 20, height: 20)
     var body: some View {
         HStack {
             ZStack {
@@ -34,11 +34,11 @@ struct LoopView: View {
                 }
             }
             if isLooping {
-                Text("looping").font(.caption2)
+                Text("looping").font(.caption2).padding(.leading, 5)
             } else if manualTempBasal {
-                Text("Manual").font(.caption2)
+                Text("Manual").font(.caption2).padding(.leading, 5)
             } else if actualSuggestion?.timestamp != nil {
-                Text(timeString).font(.caption2)
+                Text(timeString) // .font(.caption2)
                     .foregroundColor(.secondary)
             } else {
                 Text("--").font(.caption2).foregroundColor(.secondary)
