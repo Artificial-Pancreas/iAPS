@@ -102,7 +102,7 @@ platform :ios do
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
       profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"],
       code_sign_identity: "iPhone Distribution",
-      targets: ["FreeAPSWatch"]
+      targets: ["LiveActivityExtension"]
     )
 
     gym(
@@ -191,7 +191,7 @@ platform :ios do
         "ru.artpancreas.#{TEAMID}.FreeAPS",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
-        "ru.artpancreas.KB8QRKKQKH.FreeAPS.LiveActivity"
+        "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"
       ]
     )
   end
