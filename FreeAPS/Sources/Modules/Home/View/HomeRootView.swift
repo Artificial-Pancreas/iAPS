@@ -349,11 +349,10 @@ extension Home {
         }
 
         var timeInterval: some View {
-            HStack {
+            HStack(alignment: .center) {
                 ForEach(timeButtons) { button in
                     Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
                         state.hours = button.hours
-                        highlightButtons()
                     }
                     .foregroundStyle(button.active ? .primary : .secondary)
                     .frame(maxHeight: 20).padding(.horizontal)
@@ -630,6 +629,9 @@ extension Home {
                     bottomPanel(geo)
                 }
                 .edgesIgnoringSafeArea(.vertical)
+            }
+            .onChange(of: state.hours) { _ in
+                highlightButtons()
             }
             .onAppear {
                 configureView {
