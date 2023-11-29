@@ -4,13 +4,16 @@ import Swinject
 import UIKit
 
 extension LiveActivityAttributes.ContentState {
-    static func formatGlucose(_ value: Int, mmol: Bool) -> String {
+    static func formatGlucose(_ value: Int, mmol: Bool, force_sign: Bool) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         if mmol {
             formatter.minimumFractionDigits = 1
             formatter.maximumFractionDigits = 1
+        }
+        if force_sign {
+            formatter.positivePrefix = formatter.plusSign
         }
         formatter.roundingMode = .halfUp
 
@@ -25,45 +28,62 @@ extension LiveActivityAttributes.ContentState {
             return nil
         }
 
-        let formattedBG = Self.formatGlucose(glucose, mmol: mmol)
+        let formattedBG = Self.formatGlucose(glucose, mmol: mmol, force_sign: false)
 
-        let trentString: String?
+        let trendString: String?
         switch bg.direction {
         case .doubleUp,
              .singleUp,
              .tripleUp:
-            trentString = "arrow.up"
+            trendString = "arrow.up"
 
         case .fortyFiveUp:
-            trentString = "arrow.up.right"
+            trendString = "arrow.up.right"
 
         case .flat:
-            trentString = "arrow.right"
+            trendString = "arrow.right"
 
         case .fortyFiveDown:
-            trentString = "arrow.down.right"
+            trendString = "arrow.down.right"
 
         case .doubleDown,
              .singleDown,
              .tripleDown:
-            trentString = "arrow.down"
+            trendString = "arrow.down"
 
         case .notComputable,
              Optional.none,
              .rateOutOfRange,
              .some(.none):
-            trentString = nil
+            trendString = nil
         }
 
-        let change = prev?.glucose.map({ glucose - $0 })
+        let change = prev?.glucose.map({
+            Self.formatGlucose(glucose - $0, mmol: mmol, force_sign: true)
+        }) ?? ""
 
-        self.init(bg: formattedBG, trendSystemImage: trentString, change: change, date: bg.dateString)
+        self.init(bg: formattedBG, trendSystemImage: trendString, change: change, date: bg.dateString)
     }
 }
 
 @available(iOS 16.2, *) private struct ActiveActivity {
     let activity: Activity<LiveActivityAttributes>
     let startDate: Date
+
+    func needsRecreation() -> Bool {
+        switch activity.activityState {
+        case .dismissed,
+             .ended:
+            return true
+        case .active,
+             .stale: break
+        @unknown default:
+            return true
+        }
+
+        return -startDate.timeIntervalSinceNow >
+            TimeInterval(60 * 60)
+    }
 }
 
 @available(iOS 16.2, *) final class LiveActivityBridge: Injectable {
@@ -90,8 +110,7 @@ extension LiveActivityAttributes.ContentState {
             // just before app resigns active, show a new activity
             // only do this if there is no current activity or the current activity is older than 1h
             if self.settings.useLiveActivity {
-                if (self.currentActivity?.startDate).map({ -$0.timeIntervalSinceNow >
-                        TimeInterval(60 * 60) }) ?? true
+                if self.currentActivity?.needsRecreation() ?? true
                 {
                     self.forceActivityUpdate()
                 }
@@ -120,18 +139,13 @@ extension LiveActivityAttributes.ContentState {
         let content = ActivityContent(state: state, staleDate: state.date.addingTimeInterval(TimeInterval(6 * 60)))
 
         if let currentActivity {
-            switch currentActivity.activity.activityState {
-            case .dismissed,
-                 .ended:
-                // activity is no longer visible. End it and try to push the update again
+            if currentActivity.needsRecreation() {
+                // activity is no longer visible or old. End it and try to push the update again
                 await endActivity()
                 await pushUpdate(state)
-            case .active,
-                 .stale: await currentActivity.activity.update(content)
-            @unknown default:
+            } else {
                 await currentActivity.activity.update(content)
             }
-
         } else {
             do {
                 let activity = try Activity.request(
