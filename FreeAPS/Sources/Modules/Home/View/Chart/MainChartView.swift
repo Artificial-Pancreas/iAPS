@@ -54,12 +54,6 @@ struct MainChartView: View {
         static let bolus = "💧"
     }
 
-    private struct ZoomState {
-        let scale: Double
-        let anchorTime: TimeInterval
-        let anchor: UnitPoint
-    }
-
     @Binding var glucose: [BloodGlucose]
     @Binding var isManual: [BloodGlucose]
     @Binding var suggestion: Suggestion?
@@ -100,30 +94,8 @@ struct MainChartView: View {
     @State private var fpuDots: [DotInfo] = []
     @State private var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
     @State private var cachedMaxBasalRate: Decimal?
-    /// updated while pinch to zoom gesture is in progress
-    /// this gets automatically reset when the gesture ends or is cancelled
-    /// on cancellation the result is that the `effectiveScreenHours`  just jumps back to the pre-gesture state
-    /// on end the `screenHours` are updated, `additionalZoomState` is set temporarily to have a smooth transition to the final `screenHours` state
-    @GestureState private var zoomGestureState: ZoomState? = nil
-    /// caches the last non-nil `zoomGestureState` which allows the pinch gesture to transition smoothly to the final `screenHours` on gesture end, when `zoomGestureState` has already been reset to nil
-    @State private var lastZoomGestureState: ZoomState? = nil
-
-    /// zoom state that outlives a pinch gesture.
-    /// used to smoothly transition to the final quantized zoom scale (`screenHours`) on gesture end
-    @State private var additionalZoomState: ZoomState? = nil
-
-    /// the effective zoom state
-    private var zoomState: ZoomState? {
-        additionalZoomState ?? zoomGestureState
-    }
-
     private var zoomScale: Double {
-        (1.0 / Double(screenHours)) * (zoomState?.scale ?? 1)
-    }
-
-    /// currently displayed screen hours. Includes currently applied scaling from in-progress pinch to zoom gesture
-    private var effectiveScreenHours: Double {
-        Double(screenHours) / (zoomState?.scale ?? 1)
+        1.0 / Double(screenHours)
     }
 
     private let calculationQueue = DispatchQueue(
@@ -204,158 +176,34 @@ struct MainChartView: View {
         }
     }
 
-    @Namespace var zoomAnchorId
-    @State private var offset = CGFloat.zero
-
-    struct ViewOffsetKey: PreferenceKey {
-        typealias Value = CGFloat
-        static var defaultValue = CGFloat.zero
-        static func reduce(value: inout Value, nextValue: () -> Value) {
-            value += nextValue()
-        }
-    }
-
-    @State var scrollPosition: Namespace.ID?
-
     private func mainScrollView(fullSize: CGSize) -> some View {
         ScrollViewReader { scroll in
-            let sv = ScrollView(.horizontal, showsIndicators: false) {
+            ScrollView(.horizontal, showsIndicators: false) {
                 ZStack(alignment: .top) {
-                    if #available(iOS 17.0, *) {
-                        if let zoomState {
-                            let zoomAnchorPositionX = min(
-                                timeToXCoordinate(zoomState.anchorTime, fullSize: fullSize) * zoomScale,
-                                glucoseAndAdditionalWidth(fullSize: fullSize)
-                            )
-
-                            // this stack places an empty view with id `zoomAnchorId` at zoomAnchorPositionX
-                            // this is used to anchor the scroll view to that position during pinch to zoom
-                            // we use a stack with dummy views to place the anchor view at the right place instead of placing a single view and using `.position`, `.offset` or similar.
-                            // This is necessary because `scrollTo` calls on the scroll view behaves incorrectly on views that have `.position` or `.offset` set
-                            // `scrollTargetLayout` for use with `ScrollView.scrollPosition`
-                            HStack(spacing: 0) {
-                                Rectangle().frame(width: zoomAnchorPositionX, height: 0)
-                                Rectangle().frame(width: 0, height: 0).id(zoomAnchorId)
-                                Rectangle()
-                                    .frame(width: glucoseAndAdditionalWidth(fullSize: fullSize) - zoomAnchorPositionX, height: 0)
-                            }.frame(height: 0).scrollTargetLayout()
-                        }
-                    }
-
                     tempTargetsView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
                     mainView(fullSize: fullSize).id(Config.endID)
                         .drawingGroup()
                 }
-                .background(GeometryReader { reader in
-                    Color.clear.preference(
-                        key: ViewOffsetKey.self,
-                        value: -reader.frame(in: .named("scroll")).origin.x
-                    )
-                })
-                .onPreferenceChange(ViewOffsetKey.self) { offset = $0 }
-            }.coordinateSpace(name: "scroll")
-                .onChange(of: glucose) { _ in
+            }
+            .onChange(of: glucose) { _ in
+                scroll.scrollTo(Config.endID, anchor: .trailing)
+            }
+            .onChange(of: suggestion) { _ in
+                scroll.scrollTo(Config.endID, anchor: .trailing)
+            }
+            .onChange(of: tempBasals) { _ in
+                scroll.scrollTo(Config.endID, anchor: .trailing)
+            }
+            .onChange(of: screenHours) { _ in
+                scroll.scrollTo(Config.endID, anchor: .trailing)
+            }
+            .onAppear {
+                // add trigger to the end of main queue
+                DispatchQueue.main.async {
                     scroll.scrollTo(Config.endID, anchor: .trailing)
+                    didAppearTrigger = true
                 }
-                .onChange(of: suggestion) { _ in
-                    scroll.scrollTo(Config.endID, anchor: .trailing)
-                }
-                .onChange(of: tempBasals) { _ in
-                    scroll.scrollTo(Config.endID, anchor: .trailing)
-                }
-                .onChange(of: screenHours) { _ in
-                    if additionalZoomState == nil, zoomState == nil {
-                        // this change in screenHours did not come from pinch to zoom
-                        // just scroll to the end of the view for the lack of anchoring during this screen hour change
-                        scroll.scrollTo(Config.endID, anchor: .trailing)
-                    }
-                }
-                .onAppear {
-                    // add trigger to the end of main queue
-                    DispatchQueue.main.async {
-                        scroll.scrollTo(Config.endID, anchor: .trailing)
-                        didAppearTrigger = true
-                    }
-                }
-
-            if #available(iOS 17.0, *) {
-                let minScreenHours: Int16 = 2
-                let maxScreenHours: Int16 = 24
-
-                sv
-                    // `scrollPosition` is necessary to avoid some random jerking of the scroll view related to calling `scrollTo`. On iOS 17.
-                    // this will not alone be enough to fix the scroll position at zoomAnchorId, so calling `scrollTo` is still necessary
-                    .scrollPosition(id: $scrollPosition, anchor: zoomState.map(\.anchor))
-                    .simultaneousGesture(
-                        MagnifyGesture(minimumScaleDelta: 0)
-                            .updating($zoomGestureState, body: { value, state, _ in
-                                let maxMagnification = Double(screenHours) / Double(minScreenHours)
-                                let minMagnification = Double(screenHours) / Double(maxScreenHours)
-
-                                let clampedMagnification = value.magnification.clamped(minMagnification ... maxMagnification)
-
-                                let nextState: ZoomState
-                                if let currentState = state {
-                                    nextState = ZoomState(
-                                        scale: clampedMagnification,
-                                        anchorTime: currentState.anchorTime,
-                                        anchor: currentState.anchor
-                                    )
-                                } else {
-                                    let gestureCenter = offset + value.startLocation.x
-                                    let anchorTime = xCoordinateToTime(x: gestureCenter / zoomScale, fullSize: fullSize)
-                                    nextState = ZoomState(
-                                        scale: clampedMagnification,
-                                        anchorTime: anchorTime,
-                                        anchor: value.startAnchor
-                                    )
-                                }
-
-                                state = nextState
-                            })
-                            .onChanged({ _ in
-                                if let currentState = zoomGestureState {
-                                    lastZoomGestureState = currentState
-                                    // make sure the scroll view stays anchored at the pinch location after changing the scale
-                                    scrollPosition = zoomAnchorId
-                                    scroll.scrollTo(zoomAnchorId, anchor: currentState.anchor)
-                                }
-                            })
-                            .onEnded { value in
-                                let scale = value.magnification
-
-                                var newScreenHours = Int16((Double(screenHours) / scale).rounded())
-                                newScreenHours = min(max(newScreenHours, minScreenHours), maxScreenHours)
-
-                                if let lastZoomGestureState {
-                                    // set a final zoom state that represents the final scale of `newScreenHours`
-                                    // this might cause a little visible jump to the final scale.
-                                    // Animating this transition is not possible, as a lot of the content is drawn as a `Path` which doesn't animate
-                                    additionalZoomState = ZoomState(
-                                        scale: 1.0,
-                                        anchorTime: lastZoomGestureState.anchorTime,
-                                        anchor: lastZoomGestureState.anchor
-                                    )
-                                    screenHours = newScreenHours
-
-                                    // make sure the scroll view stays anchored at the pinch location after changing the scale
-                                    scrollPosition = zoomAnchorId
-                                    scroll.scrollTo(zoomAnchorId, anchor: additionalZoomState!.anchor)
-                                }
-
-                                // enqueue async to ensure the onChange(of: screenHours) callback correctly recognizes that this change of `screenHours` is triggered by pinch to zoom
-                                DispatchQueue.main.async {
-                                    // reset the zoom state to remove the anchor view
-                                    additionalZoomState = nil
-                                    // reset the scrollPosition to ensure the scroll view doesn't do any jerking on subsequent interactions with the scroll view
-                                    scrollPosition = nil
-                                }
-                            },
-                        including: .all
-                    )
-            } else {
-                sv
             }
         }
     }
@@ -464,7 +312,7 @@ struct MainChartView: View {
     /// returns the width of the full chart view including predictions for the current `effectiveScreenHours`
     private func glucoseAndAdditionalWidth(fullSize: CGSize) -> CGFloat {
         // fullGlucoseWidth returns the width scaled to 1h screen hours. Scale it down to effectiveScreenHours
-        fullGlucoseWidth(viewWidth: fullSize.width) / effectiveScreenHours
+        fullGlucoseWidth(viewWidth: fullSize.width) / CGFloat(screenHours)
             + additionalWidthScaled(viewWidth: fullSize.width)
     }
 
@@ -485,7 +333,7 @@ struct MainChartView: View {
 
         let lastDeltaTime = last.dateString.timeIntervalSince(deliveredAt)
         let additionalTime = CGFloat(TimeInterval(max) * 5.minutes.timeInterval - lastDeltaTime)
-        let oneSecondWidth = oneSecondStep(viewWidth: viewWidth) / effectiveScreenHours
+        let oneSecondWidth = oneSecondStep(viewWidth: viewWidth) / CGFloat(screenHours)
 
         return Swift.min(Swift.max(additionalTime * oneSecondWidth, Config.minAdditionalWidth), 275)
     }
@@ -521,7 +369,7 @@ struct MainChartView: View {
     }
 
     private func timeLabelsView(fullSize: CGSize) -> some View {
-        let format = effectiveScreenHours > 6 ? date24Formatter : dateFormatter
+        let format = screenHours > 6 ? date24Formatter : dateFormatter
         return ZStack {
             // X time labels
             ForEach(0 ..< hours + hours, id: \.self) { hour in
