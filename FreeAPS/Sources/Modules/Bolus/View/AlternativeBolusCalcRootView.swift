@@ -201,9 +201,6 @@ extension Bolus {
                         selection: $calculatorDetent
                     )
             }
-//            .popup(isPresented: showInfo) {
-//                bolusInfoAlternativeCalculator
-//            }
         }
 
         var predictionChart: some View {
@@ -221,19 +218,12 @@ extension Bolus {
                 VStack {
                     VStack {
                         VStack(spacing: Config.spacing) {
-                            //                        HStack {
-                            //                        Text("Calculations")
-                            //                            .font(.title3).frame(maxWidth: .infinity, alignment: .center)
-                            //                        }
-                            //                            .padding(10)
-
-                            settings.padding()
-
                             if fetch {
-                                Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
                                 mealEntries.padding()
-//                                Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
+                                Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
                             }
+                            
+                            settings.padding()
                         }
                         Divider().frame(height: Config.dividerHeight) // .overlay(Config.overlayColour)
                         insulinParts.padding()
@@ -264,18 +254,6 @@ extension Bolus {
                             .foregroundStyle(Color.loopRed)
                         }
                     }
-//                    .padding(.top, 10)
-//                    .padding(.bottom, 15)
-                    // Hide pop-up
-//                    VStack {
-//                        Button { showInfo = false }
-//                        label: { Text("OK") }
-//                            .frame(maxWidth: .infinity, alignment: .center)
-//                            .font(.system(size: 16))
-//                            .fontWeight(.semibold)
-//                            .foregroundColor(.blue)
-//                    }
-//                    .padding(.bottom, 20)
 
                     Spacer()
                 }
@@ -287,11 +265,6 @@ extension Bolus {
                     }
                 }
             }
-            //            .font(.footnote)
-            //            .background(
-            //                RoundedRectangle(cornerRadius: 10, style: .continuous)
-            //                    .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray6))
-            //            )
         }
 
         private var disabled: Bool {
@@ -357,7 +330,6 @@ extension Bolus {
                     Text("Carb Ratio")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     Text(state.carbRatio.formatted())
                         .frame(minWidth: 40, alignment: .trailing)
                     Text(NSLocalizedString("g/U", comment: " grams per Unit"))
@@ -369,7 +341,6 @@ extension Bolus {
                     Text("ISF")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let isf = state.isf
                     Text(isf.formatted())
                         .frame(minWidth: 40, alignment: .trailing)
@@ -382,7 +353,6 @@ extension Bolus {
                     Text("Target Glucose")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let target = state.units == .mmolL ? state.target.asMmolL : state.target
 
                     Text(
@@ -398,7 +368,6 @@ extension Bolus {
                     Text("Basal")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let basal = state.basal
                     Text(basal.formatted())
                         .frame(minWidth: 40, alignment: .trailing)
@@ -411,7 +380,6 @@ extension Bolus {
                     Text("Fraction")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let fraction = state.fraction
                     Text(fraction.formatted())
                         .frame(minWidth: 40, alignment: .trailing)
@@ -423,7 +391,6 @@ extension Bolus {
                         Text("Fatty Meal Factor")
                             .foregroundColor(.orange)
                             .frame(minWidth: 115, alignment: .leading)
-//                        Spacer()
                         let fraction = state.fattyMealFactor
                         Text(fraction.formatted())
                         foregroundColor(.orange)
@@ -441,14 +408,12 @@ extension Bolus {
                     Text("Glucose")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let glucose = state.units == .mmolL ? state.currentBG.asMmolL : state.currentBG
                     Text(glucose.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                         .frame(minWidth: 40, alignment: .trailing)
                     Text(state.units.rawValue)
                         .foregroundColor(.secondary)
                         .frame(minWidth: 70, alignment: .leading)
-//                    Spacer()
                     Image(systemName: "arrow.right")
                         .frame(minWidth: 20, alignment: .trailing)
                     Spacer()
@@ -465,7 +430,6 @@ extension Bolus {
                     Text("IOB")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let iob = state.iob
                     // rounding
                     let iobAsDouble = NSDecimalNumber(decimal: iob).doubleValue
@@ -475,7 +439,6 @@ extension Bolus {
                     Text("U")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 70, alignment: .leading)
-//                    Spacer()
 
                     Image(systemName: "arrow.right")
                         .frame(minWidth: 20, alignment: .trailing)
@@ -492,13 +455,11 @@ extension Bolus {
                     Text("Trend")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let trend = state.units == .mmolL ? state.deltaBG.asMmolL : state.deltaBG
                     Text(trend.formatted(.number.grouping(.never).rounded().precision(.fractionLength(fractionDigits))))
                         .frame(minWidth: 40, alignment: .trailing)
                     Text(state.units.rawValue).foregroundColor(.secondary)
                         .frame(minWidth: 70, alignment: .leading)
-//                    Spacer()
 
                     Image(systemName: "arrow.right")
                         .frame(minWidth: 20, alignment: .trailing)
@@ -516,7 +477,6 @@ extension Bolus {
                     Text("COB")
                         .foregroundColor(.secondary)
                         .frame(minWidth: 115, alignment: .leading)
-//                    Spacer()
                     let cob = state.cob
                     Text(cob.formatted())
                         .frame(minWidth: 40, alignment: .trailing)
@@ -524,8 +484,6 @@ extension Bolus {
                     let unitGrams = NSLocalizedString("g", comment: "grams")
                     Text(unitGrams).foregroundColor(.secondary)
                         .frame(minWidth: 70, alignment: .leading)
-
-//                    Spacer()
 
                     Image(systemName: "arrow.right")
                         .frame(minWidth: 20, alignment: .trailing)
