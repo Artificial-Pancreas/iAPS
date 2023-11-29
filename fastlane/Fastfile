@@ -57,7 +57,8 @@ platform :ios do
       app_identifier: [
         "ru.artpancreas.#{TEAMID}.FreeAPS",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension"
+        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
+        "ru.artpancreas.KB8QRKKQKH.FreeAPS.LiveActivity"
       ]
     )
 
@@ -94,6 +95,12 @@ platform :ios do
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
       profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp"],
+      code_sign_identity: "iPhone Distribution",
+      targets: ["FreeAPSWatch"]
+    )
+    update_code_signing_settings(
+      path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
+      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch"]
     )
@@ -184,6 +191,7 @@ platform :ios do
         "ru.artpancreas.#{TEAMID}.FreeAPS",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
+        "ru.artpancreas.KB8QRKKQKH.FreeAPS.LiveActivity"
       ]
     )
   end
