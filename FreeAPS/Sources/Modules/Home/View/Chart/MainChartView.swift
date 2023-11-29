@@ -309,14 +309,14 @@ struct MainChartView: View {
         .frame(width: glucoseAndAdditionalWidth(fullSize: fullSize))
     }
 
-    /// returns the width of the full chart view including predictions for the current `effectiveScreenHours`
+    /// returns the width of the full chart view including predictions for the current `screenHours`
     private func glucoseAndAdditionalWidth(fullSize: CGSize) -> CGFloat {
-        // fullGlucoseWidth returns the width scaled to 1h screen hours. Scale it down to effectiveScreenHours
+        // fullGlucoseWidth returns the width scaled to 1h screen hours. Scale it down to screenHours
         fullGlucoseWidth(viewWidth: fullSize.width) / CGFloat(screenHours)
             + additionalWidthScaled(viewWidth: fullSize.width)
     }
 
-    /// returns the additional width for predictions, scaled to `effectiveScreenHours`
+    /// returns the additional width for predictions, scaled to `screenHours`
     private func additionalWidthScaled(viewWidth: CGFloat) -> CGFloat {
         guard let predictions = suggestion?.predictions,
               let deliveredAt = suggestion?.deliverAt,
@@ -643,7 +643,7 @@ struct MainChartView: View {
 // MARK: - Calculations
 
 /// some of the calculations done here can take quite long (100ms+) and are not able to update data at a fast rate
-/// therefore we stick to the 1h screen window for these calculations and scale the results as needed to `effectiveScreenHours` which has little extra overhead and enables changing the screen hours with no lag
+/// therefore we stick to the 1h screen window for these calculations and scale the results as needed to `screenHours` which has little extra overhead and enables changing the screen hours with no lag
 extension MainChartView {
     private func update(fullSize: CGSize) {
         calculatePredictionDots(fullSize: fullSize, type: .iob)
