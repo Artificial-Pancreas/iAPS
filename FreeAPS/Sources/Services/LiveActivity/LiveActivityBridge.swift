@@ -4,7 +4,7 @@ import Swinject
 import UIKit
 
 extension LiveActivityAttributes.ContentState {
-    static func formatGlucose(_ value: Int, mmol: Bool, force_sign: Bool) -> String {
+    static func formatGlucose(_ value: Int, mmol: Bool, forceSign: Bool) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
@@ -12,7 +12,7 @@ extension LiveActivityAttributes.ContentState {
             formatter.minimumFractionDigits = 1
             formatter.maximumFractionDigits = 1
         }
-        if force_sign {
+        if forceSign {
             formatter.positivePrefix = formatter.plusSign
         }
         formatter.roundingMode = .halfUp
@@ -28,7 +28,7 @@ extension LiveActivityAttributes.ContentState {
             return nil
         }
 
-        let formattedBG = Self.formatGlucose(glucose, mmol: mmol, force_sign: false)
+        let formattedBG = Self.formatGlucose(glucose, mmol: mmol, forceSign: false)
 
         let trendString: String?
         switch bg.direction {
@@ -59,7 +59,7 @@ extension LiveActivityAttributes.ContentState {
         }
 
         let change = prev?.glucose.map({
-            Self.formatGlucose(glucose - $0, mmol: mmol, force_sign: true)
+            Self.formatGlucose(glucose - $0, mmol: mmol, forceSign: true)
         }) ?? ""
 
         self.init(bg: formattedBG, trendSystemImage: trendString, change: change, date: bg.dateString)
