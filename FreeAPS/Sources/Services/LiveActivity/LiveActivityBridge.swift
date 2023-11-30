@@ -107,24 +107,33 @@ extension LiveActivityAttributes.ContentState {
             object: nil,
             queue: nil
         ) { _ in
-            // just before app resigns active, show a new activity
-            // only do this if there is no current activity or the current activity is older than 1h
-            if self.settings.useLiveActivity {
-                if self.currentActivity?.needsRecreation() ?? true
-                {
-                    self.forceActivityUpdate()
-                }
-            } else {
-                Task {
-                    await self.endActivity()
-                }
-            }
+            self.forceActivityUpdate()
+        }
+
+        Foundation.NotificationCenter.default.addObserver(
+            forName: UIApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: nil
+        ) { _ in
+            self.forceActivityUpdate()
         }
     }
 
-    /// creates and tries to present a new activity update from the current GlucoseStorage values
+    /// creates and tries to present a new activity update from the current GlucoseStorage values if live activities are enabled in settings
+    /// Ends existing live activities if live activities are not enabled in settings
     private func forceActivityUpdate() {
-        glucoseDidUpdate(glucoseStorage.recent())
+        // just before app resigns active, show a new activity
+        // only do this if there is no current activity or the current activity is older than 1h
+        if settings.useLiveActivity {
+            if currentActivity?.needsRecreation() ?? true
+            {
+                glucoseDidUpdate(glucoseStorage.recent())
+            }
+        } else {
+            Task {
+                await self.endActivity()
+            }
+        }
     }
 
     /// attempts to present this live activity state, creating a new activity if none exists yet

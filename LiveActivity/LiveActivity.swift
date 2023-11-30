@@ -54,8 +54,7 @@ struct LiveActivity: Widget {
                 }
             }
             .imageScale(.small)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
+            .padding(.all, 15)
             .background(Color.white.opacity(0.2))
             .foregroundColor(Color.black)
             .activityBackgroundTint(Color.cyan.opacity(0.2))
@@ -79,9 +78,9 @@ struct LiveActivity: Widget {
             } compactLeading: {
                 HStack(spacing: 1) {
                     bgAndTrend(context: context)
-                }.bold().imageScale(.small)
+                }.bold().imageScale(.small).padding(.leading, 7)
             } compactTrailing: {
-                changeLabel(context: context)
+                changeLabel(context: context).padding(.trailing, 7)
             } minimal: {
                 bgLabel(context: context).bold()
             }
