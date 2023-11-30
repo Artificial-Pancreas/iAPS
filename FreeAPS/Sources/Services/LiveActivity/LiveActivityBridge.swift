@@ -137,7 +137,7 @@ extension LiveActivityAttributes.ContentState {
     }
 
     /// attempts to present this live activity state, creating a new activity if none exists yet
-    private func pushUpdate(_ state: LiveActivityAttributes.ContentState) async {
+    @MainActor private func pushUpdate(_ state: LiveActivityAttributes.ContentState) async {
         // hide duplicate/unknown activities
         for unknownActivity in Activity<LiveActivityAttributes>.activities
             .filter({ self.currentActivity?.activity.id != $0.id })
@@ -148,7 +148,7 @@ extension LiveActivityAttributes.ContentState {
         let content = ActivityContent(state: state, staleDate: state.date.addingTimeInterval(TimeInterval(6 * 60)))
 
         if let currentActivity {
-            if currentActivity.needsRecreation() {
+            if currentActivity.needsRecreation(), UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
                 await endActivity()
                 await pushUpdate(state)

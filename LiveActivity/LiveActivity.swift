@@ -53,6 +53,7 @@ struct LiveActivity: Widget {
                     updatedLabel(context: context).font(.caption)
                 }
             }
+            .privacySensitive()
             .imageScale(.small)
             .padding(.all, 15)
             .background(Color.white.opacity(0.2))
@@ -78,9 +79,9 @@ struct LiveActivity: Widget {
             } compactLeading: {
                 HStack(spacing: 1) {
                     bgAndTrend(context: context)
-                }.bold().imageScale(.small).padding(.leading, 7)
+                }.bold().imageScale(.small).padding(.leading, 5)
             } compactTrailing: {
-                changeLabel(context: context).padding(.trailing, 7)
+                changeLabel(context: context).padding(.trailing, 5)
             } minimal: {
                 bgLabel(context: context).bold()
             }
