@@ -45,10 +45,8 @@ struct LiveActivity: Widget {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
 
-            HStack(alignment: .top) {
-                HStack(alignment: .center, spacing: 3) {
-                    bgAndTrend(context: context).font(.title)
-                }
+            HStack(spacing: 3) {
+                bgAndTrend(context: context).font(.title)
                 Spacer()
                 VStack(alignment: .trailing, spacing: 5) {
                     changeLabel(context: context).font(.title3)
