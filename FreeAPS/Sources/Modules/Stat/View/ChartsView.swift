@@ -17,6 +17,12 @@ struct ChartsView: View {
 
     private let conversionFactor = 0.0555
 
+    private var tirFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        return formatter
+    }
+
     var body: some View {
         if preview { previewTIRchart } else {
             glucoseChart
@@ -212,60 +218,179 @@ struct ChartsView: View {
 
     var previewTIRchart: some View {
         let fetched = tir()
-        let low = lowLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
-        let high = highLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
-        let fraction = units == .mmolL ? 1 : 0
-        let data: [ShapeModel] = [
-            .init(
-                type: NSLocalizedString(
+
+        struct TIRinPercent: Identifiable {
+            let type: String
+            let group: String
+            let percentage: Decimal
+            let id: UUID
+        }
+
+        let separator: Decimal = 4
+
+        var data: [TIRinPercent] = [
+            TIRinPercent(
+                type: "TIR",
+                group: NSLocalizedString(
                     "Low",
                     comment: ""
-                ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
-                percent: fetched[0].decimal
+                ),
+                percentage: fetched[0].decimal,
+                id: UUID()
             ),
-            .init(
-                type: "> \(low.formatted(.number.precision(.fractionLength(fraction)))) - < \(high.formatted(.number.precision(.fractionLength(fraction))))",
-                percent: fetched[1].decimal
+            TIRinPercent(
+                type: "TIR",
+                group: "Separator",
+                percentage: separator,
+                id: UUID()
             ),
-            .init(
-                type: NSLocalizedString(
+            TIRinPercent(
+                type: "TIR",
+                group: NSLocalizedString("In Range", comment: ""),
+                percentage: fetched[1].decimal,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: "Separator",
+                percentage: separator,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: NSLocalizedString(
                     "High",
                     comment: ""
-                ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
-                percent: fetched[2].decimal
+                ),
+                percentage: fetched[2].decimal,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: "Separator",
+                percentage: separator,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: NSLocalizedString(
+                    "Very High",
+                    comment: ""
+                ),
+                percentage: fetched[3].decimal,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: "Separator",
+                percentage: separator,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: NSLocalizedString(
+                    "Very Low",
+                    comment: ""
+                ),
+                percentage: fetched[4].decimal,
+                id: UUID()
             )
         ]
 
-        return ZStack {
-            Chart(data) { shape in
-                BarMark(
-                    x: .value("Shape", shape.type),
-                    y: .value("Percentage", shape.percent)
-                )
-                .foregroundStyle(by: .value("Group", shape.type))
-                .annotation(position: shape.percent > 19 ? .overlay : .automatic, alignment: .center) {
-                    Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0)))")
-                }
+        for index in 0 ..< 3 {
+            if data[index].percentage == 0 {
+                data.remove(at: index + 1)
             }
-            .frame(maxWidth: UIScreen.main.bounds.width - 40, maxHeight: 200)
-            .chartXAxis(.hidden)
-            .chartYAxis {
-                AxisMarks(
-                    format: Decimal.FormatStyle.Percent.percent.scale(1)
-                )
-            }
-            .chartForegroundStyleScale([
-                NSLocalizedString(
-                    "Low",
-                    comment: ""
-                ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .red,
-                "> \(low.formatted(.number.precision(.fractionLength(fraction)))) - < \(high.formatted(.number.precision(.fractionLength(fraction))))": .green,
-                NSLocalizedString(
-                    "High",
-                    comment: ""
-                ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
-            ])
         }
+
+        return
+            VStack {
+                Text("Time In Range today").padding(10)
+                Chart(data) { item in
+                    BarMark(
+                        x: .value("TIR", item.type),
+                        y: .value("Percentage", item.percentage),
+                        width: .fixed(60),
+                        height: .fixed(80)
+                    )
+                    .foregroundStyle(by: .value("Group", item.group))
+                    .annotation(position: .trailing) {
+                        if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
+                            HStack {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                Text(item.group)
+                            }
+                            .padding(.leading, 10)
+
+                        } else if item.group == NSLocalizedString(
+                            "Low",
+                            comment: ""
+                        ), item.percentage > 0 {
+                            HStack {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                Text(item.group)
+                            }
+                            .font(.caption)
+                            .padding(.leading, 10)
+                        } else if item.group == NSLocalizedString(
+                            "High",
+                            comment: ""
+                        ), item.percentage > 0 {
+                            HStack {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                Text(item.group)
+                            }
+                            .font(.caption)
+                            .padding(.leading, 10)
+                        } else if item.group == NSLocalizedString(
+                            "Very High",
+                            comment: ""
+                        ), item.percentage > 0 {
+                            HStack {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                Text(item.group)
+                            }
+                            .font(.caption)
+                            .padding(.leading, 10)
+                        } else if item.group == NSLocalizedString(
+                            "Very Low",
+                            comment: ""
+                        ), item.percentage > 0 {
+                            HStack {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                Text(item.group)
+                            }
+                            .font(.caption)
+                            .padding(.leading, 10)
+                        }
+                    }
+                }
+                .chartForegroundStyleScale([
+                    NSLocalizedString(
+                        "Low",
+                        comment: ""
+                    ): .red,
+                    NSLocalizedString("In Range", comment: ""): .green,
+                    NSLocalizedString(
+                        "High",
+                        comment: ""
+                    ): .yellow,
+                    NSLocalizedString(
+                        "Very High",
+                        comment: ""
+                    ): .red,
+                    NSLocalizedString(
+                        "Very Low",
+                        comment: ""
+                    ): .darkRed,
+                    "Separator": .white
+                ])
+                .chartXAxis(.hidden)
+                .chartYAxis(.hidden)
+                .chartLegend(.hidden)
+                .padding(.bottom, 10)
+                .frame(maxWidth: UIScreen.main.bounds.width / 2.7)
+            }
     }
 
     var groupedGlucose: some View {
@@ -347,12 +472,22 @@ struct ChartsView: View {
         let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
         let hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
 
+        let veryHighArray = glucose.filter({ $0.glucose > 198 })
+        let veryHighReadings = veryHighArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryHighPercentage = Double(veryHighReadings) / Double(totalReadings) * 100
+
+        let veryLowArray = glucose.filter({ $0.glucose < 59 })
+        let veryLowReadings = veryLowArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
+
         let tir = 100 - (hypoPercentage + hyperPercentage)
 
         var array: [(decimal: Decimal, string: String)] = []
         array.append((decimal: Decimal(hypoPercentage), string: "Low"))
         array.append((decimal: Decimal(tir), string: "NormaL"))
         array.append((decimal: Decimal(hyperPercentage), string: "High"))
+        array.append((decimal: Decimal(veryHighPercentage), string: "Very High"))
+        array.append((decimal: Decimal(veryLowPercentage), string: "Very Low"))
 
         return array
     }

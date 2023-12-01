@@ -99,10 +99,42 @@ extension Home {
         }
 
         @ViewBuilder func status(_: GeometryProxy) -> some View {
-            // HStack {
-            pumpView
-            // }
+            HStack {
+                pumpView
+                loopView
+            }
         }
+        
+        var status2: some View {
+            HStack {
+                Text("IOB").font(.callout).foregroundColor(.secondary)
+                Text(
+                    (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                    NSLocalizedString(" U", comment: "Insulin unit")
+                )
+                .font(.callout).fontWeight(.bold)
+                
+                Spacer()
+                
+                Text("COB").font(.callout).foregroundColor(.secondary)
+                Text(
+                    (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                    NSLocalizedString(" g", comment: "gram of carbs")
+                )
+                .font(.callout).fontWeight(.bold)
+                
+                Spacer()
+                
+                Text("ISF")
+                
+                Text(
+                    (targetFormatter.string(from: (state.suggestion?.isf ?? 0) as NSNumber) ?? "0")
+                )
+                .font(.callout).fontWeight(.bold)
+            }
+        }
+        
+        
 
         var cobIobView: some View {
             VStack(alignment: .leading, spacing: 12) {
@@ -495,7 +527,7 @@ extension Home {
                     thresholdLines: $state.thresholdLines
                 )
             }
-            .padding(.bottom, 10)
+            .padding(.bottom, 5)
             .modal(for: .dataTable, from: self)
         }
 
@@ -660,7 +692,7 @@ extension Home {
                                     colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
                                         Color.white
                                 )
-                                .frame(minHeight: 40)
+                                .frame(minHeight: 35)
                                 .overlay(status(geo))
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
                                 .shadow(
@@ -674,8 +706,8 @@ extension Home {
                                     colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
                                         Color.white
                                 )
-                                .frame(minHeight: 220)
-                                .overlay(
+                                .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
+                                .overlay(alignment: .topLeading) {
                                     ChartsView(
                                         filter: DateFilter().day,
                                         $state.highGlucose,
@@ -685,7 +717,7 @@ extension Home {
                                         $state.standing,
                                         $state.preview
                                     )
-                                )
+                                }
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
                                 .shadow(
                                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),

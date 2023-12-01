@@ -1111,6 +1111,7 @@
 		195D80B22AF696EE00D25097 /* Dynamic */ = {
 			isa = PBXGroup;
 			children = (
+				190EBCC229FF134900BA767D /* StatConfig */,
 				195D80B62AF697B800D25097 /* DynamicDataFlow.swift */,
 				195D80B82AF697F700D25097 /* DynamicProvider.swift */,
 				195D80BA2AF6980B00D25097 /* DynamicStateModel.swift */,
@@ -1247,7 +1248,6 @@
 			children = (
 				195D80B22AF696EE00D25097 /* Dynamic */,
 				BD7DA9A32AE06DBA00601B20 /* BolusCalculatorConfig */,
-				190EBCC229FF134900BA767D /* StatConfig */,
 				19F95FF129F10F9C00314DDC /* Stat */,
 				CE94597C29E9E1CD0047C9C6 /* WatchConfig */,
 				19E1F7E629D0828B005C8D20 /* IconConfig */,
