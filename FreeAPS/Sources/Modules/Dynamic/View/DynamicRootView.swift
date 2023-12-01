@@ -49,20 +49,20 @@ extension Dynamic {
                             Toggle("Use Sigmoid Formula", isOn: $state.sigmoid)
                         }
                     } header: { Text("Formula") }
-                    
+
                     Section {
                         HStack {
                             Text("Adjustment Factor")
                             Spacer()
                             DecimalTextField("0", value: $state.adjustmentFactor, formatter: formatter)
                         }
-                        
+
                         HStack {
                             Text("Weighted Average of TDD. Weight of past 24 hours:")
                             Spacer()
                             DecimalTextField("0", value: $state.weightPercentage, formatter: formatter)
                         }
-                        
+
                         HStack {
                             Toggle("Adjust basal", isOn: $state.tddAdjBasal)
                         }
@@ -77,7 +77,6 @@ extension Dynamic {
                         Text(state.unit.rawValue)
                     }
                 } header: { Text("Safety") }
-                
             }
             .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")

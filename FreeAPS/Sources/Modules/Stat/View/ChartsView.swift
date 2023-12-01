@@ -11,24 +11,27 @@ struct ChartsView: View {
     @Binding var units: GlucoseUnits
     @Binding var overrideUnit: Bool
     @Binding var standing: Bool
+    @Binding var preview: Bool
 
     @State var headline: Color = .secondary
 
     private let conversionFactor = 0.0555
 
     var body: some View {
-        glucoseChart
-        Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
-        if standing {
-            VStack {
-                tirChart
-                Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
-                groupedGlucoseStatsLaying
-            }
-        } else {
-            HStack(spacing: 20) {
-                standingTIRchart
-                groupedGlucose
+        if preview { previewTIRchart } else {
+            glucoseChart
+            Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
+            if standing {
+                VStack {
+                    tirChart
+                    Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
+                    groupedGlucoseStatsLaying
+                }
+            } else {
+                HStack(spacing: 20) {
+                    standingTIRchart
+                    groupedGlucose
+                }
             }
         }
     }
@@ -39,7 +42,8 @@ struct ChartsView: View {
         _ lowLimit: Binding<Decimal>,
         _ units: Binding<GlucoseUnits>,
         _ overrideUnit: Binding<Bool>,
-        _ standing: Binding<Bool>
+        _ standing: Binding<Bool>,
+        _ preview: Binding<Bool>
     ) { _fetchRequest = FetchRequest<Readings>(
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
         predicate: NSPredicate(format: "glucose > 0 AND date > %@", filter)
@@ -49,6 +53,7 @@ struct ChartsView: View {
     _units = units
     _overrideUnit = overrideUnit
     _standing = standing
+    _preview = preview
     }
 
     var glucoseChart: some View {
@@ -203,6 +208,64 @@ struct ChartsView: View {
                 comment: ""
             ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
         ])
+    }
+
+    var previewTIRchart: some View {
+        let fetched = tir()
+        let low = lowLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
+        let high = highLimit * (units == .mmolL ? Decimal(conversionFactor) : 1)
+        let fraction = units == .mmolL ? 1 : 0
+        let data: [ShapeModel] = [
+            .init(
+                type: NSLocalizedString(
+                    "Low",
+                    comment: ""
+                ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                percent: fetched[0].decimal
+            ),
+            .init(
+                type: "> \(low.formatted(.number.precision(.fractionLength(fraction)))) - < \(high.formatted(.number.precision(.fractionLength(fraction))))",
+                percent: fetched[1].decimal
+            ),
+            .init(
+                type: NSLocalizedString(
+                    "High",
+                    comment: ""
+                ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))",
+                percent: fetched[2].decimal
+            )
+        ]
+
+        return ZStack {
+            Chart(data) { shape in
+                BarMark(
+                    x: .value("Shape", shape.type),
+                    y: .value("Percentage", shape.percent)
+                )
+                .foregroundStyle(by: .value("Group", shape.type))
+                .annotation(position: shape.percent > 19 ? .overlay : .automatic, alignment: .center) {
+                    Text(shape.percent == 0 ? "" : "\(shape.percent, format: .number.precision(.fractionLength(0)))")
+                }
+            }
+            .frame(maxWidth: UIScreen.main.bounds.width - 40, maxHeight: 200)
+            .chartXAxis(.hidden)
+            .chartYAxis {
+                AxisMarks(
+                    format: Decimal.FormatStyle.Percent.percent.scale(1)
+                )
+            }
+            .chartForegroundStyleScale([
+                NSLocalizedString(
+                    "Low",
+                    comment: ""
+                ) + " (≤ \(low.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .red,
+                "> \(low.formatted(.number.precision(.fractionLength(fraction)))) - < \(high.formatted(.number.precision(.fractionLength(fraction))))": .green,
+                NSLocalizedString(
+                    "High",
+                    comment: ""
+                ) + " (≥ \(high.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1)))))": .orange
+            ])
+        }
     }
 
     var groupedGlucose: some View {

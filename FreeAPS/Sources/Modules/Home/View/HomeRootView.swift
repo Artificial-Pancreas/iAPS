@@ -380,7 +380,7 @@ extension Home {
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: 30)
+            .frame(maxWidth: .infinity, maxHeight: 20)
         }
 
         var timeInterval: some View {
@@ -388,13 +388,11 @@ extension Home {
                 ForEach(timeButtons) { button in
                     Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
                         state.hours = button.hours
-                        highlightButtons()
                     }
                     .foregroundStyle(button.active ? (colorScheme == .dark ? Color.white : Color.black).opacity(0.9) : .secondary)
-                    .frame(maxHeight: 30).padding(.horizontal, 8)
+                    .frame(maxHeight: 40).padding(8)
                     .background(
                         button.active ?
-                            // RGB(30, 60, 95)
                             (
                                 colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
                                     Color.white
@@ -410,6 +408,9 @@ extension Home {
                 radius: colorScheme == .dark ? 5 : 3
             )
             .font(buttonFont)
+            .onChange(of: state.hours) { _ in
+                highlightButtons()
+            }
         }
 
         var legendPanel: some View {
@@ -449,7 +450,7 @@ extension Home {
 
                     if let eventualBG = state.eventualBG {
                         Text(
-                            "⇢ " + numberFormatter.string(
+                            "⇢ " + fetchedTargetFormatter.string(
                                 from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
                             )!
                         )
@@ -494,7 +495,7 @@ extension Home {
                     thresholdLines: $state.thresholdLines
                 )
             }
-            .padding(.bottom)
+            .padding(.bottom, 10)
             .modal(for: .dataTable, from: self)
         }
 
@@ -530,7 +531,7 @@ extension Home {
             }
         }
 
-        @ViewBuilder private func bottomPanel(_: GeometryProxy) -> some View {
+        @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
             HStack {
                 Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                 label: {
@@ -599,7 +600,7 @@ extension Home {
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
-            .frame(height: 60) // + geo.safeAreaInsets.bottom)
+            .frame(height: 20 + geo.safeAreaInsets.bottom)
             .background(
                 colorScheme == .dark ?
                     Color(.darkerBlue)
@@ -626,88 +627,111 @@ extension Home {
                 :
                 LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
 
-            ScrollView {
-                // VStack(spacing: 20) {
-                GeometryReader { geo in
-                    VStack(spacing: 20) {
-                        // VStack {
-                        glucoseView.padding(.top, 10).padding(.bottom, 20)
-                        loopView.padding(.bottom, 20)
-                        timeInterval
+            GeometryReader { geo in
+                VStack {
+                    ScrollView {
+                        VStack(spacing: 15) {
+                            glucoseView.padding(.top, 10).padding(.bottom, 20)
+                            loopView.padding(.bottom, 20)
+                            timeInterval
 
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(
-                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                    Color.white
-                            )
-                            .overlay {
-                                VStack {
-                                    infoPanel
-                                    mainChart
-                                    legendPanel // .padding(.bottom, 20)
-                                }
-                            }
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                            .shadow(
-                                color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                                radius: colorScheme == .dark ? 5 : 3
-                            )
-                            .padding(.horizontal, 10)
-                            .frame(maxHeight: UIScreen.main.bounds.height / 2.3)
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(
-                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                    Color.white
-                            )
-                            .cornerRadius(20)
-                            .overlay(status(geo))
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-                            .shadow(
-                                color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                                radius: colorScheme == .dark ? 5 : 3
-                            )
-                            .padding(.horizontal, 10).padding(.bottom, 20)
-                            .frame(maxHeight: 50)
-                        bottomPanel(geo)
-                    }
-                }
-
-                testView
-                // }
-
-            }.background(colorBackground)
-                // .edgesIgnoringSafeArea(.bottom)
-                .onAppear {
-                    configureView {
-                        highlightButtons()
-                    }
-                }
-                .navigationTitle("Home")
-                .navigationBarHidden(true)
-                .ignoresSafeArea(.keyboard)
-                .popup(isPresented: state.isStatusPopupPresented, alignment: .top, direction: .top) {
-                    popup
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(colorScheme == .dark ? Color(
-                                    red: 0.05490196078,
-                                    green: 0.05490196078,
-                                    blue: 0.05490196078
-                                ) : Color(UIColor.darkGray))
-                        )
-                        .onTapGesture {
-                            state.isStatusPopupPresented = false
-                        }
-                        .gesture(
-                            DragGesture(minimumDistance: 10, coordinateSpace: .local)
-                                .onEnded { value in
-                                    if value.translation.height < 0 {
-                                        state.isStatusPopupPresented = false
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(
+                                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                        Color.white
+                                )
+                                .overlay {
+                                    VStack {
+                                        infoPanel
+                                        mainChart
+                                        legendPanel // .padding(.bottom, 20)
                                     }
                                 }
-                        )
+                                .frame(minHeight: UIScreen.main.bounds.height / 2.5)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(
+                                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                                    radius: colorScheme == .dark ? 5 : 3
+                                )
+                                .padding(.horizontal, 10)
+
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(
+                                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                        Color.white
+                                )
+                                .frame(minHeight: 40)
+                                .overlay(status(geo))
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(
+                                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                                    radius: colorScheme == .dark ? 5 : 3
+                                )
+                                .padding(.horizontal, 10)
+
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(
+                                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                        Color.white
+                                )
+                                .frame(minHeight: 220)
+                                .overlay(
+                                    ChartsView(
+                                        filter: DateFilter().day,
+                                        $state.highGlucose,
+                                        $state.lowGlucose,
+                                        $state.units,
+                                        $state.overrideUnit,
+                                        $state.standing,
+                                        $state.preview
+                                    )
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(
+                                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                                    radius: colorScheme == .dark ? 5 : 3
+                                )
+                                .padding(.horizontal, 10)
+                                .onTapGesture {
+                                    state.showModal(for: .statistics)
+                                }
+                        }
+                    }.background(colorBackground)
+
+                    buttonPanel(geo)
                 }
+            }
+            .onAppear {
+                configureView {
+                    highlightButtons()
+                }
+            }
+            .navigationTitle("Home")
+            .navigationBarHidden(true)
+            .ignoresSafeArea(.keyboard)
+            .popup(isPresented: state.isStatusPopupPresented, alignment: .top, direction: .top) {
+                popup
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(colorScheme == .dark ? Color(
+                                red: 0.05490196078,
+                                green: 0.05490196078,
+                                blue: 0.05490196078
+                            ) : Color(UIColor.darkGray))
+                    )
+                    .onTapGesture {
+                        state.isStatusPopupPresented = false
+                    }
+                    .gesture(
+                        DragGesture(minimumDistance: 10, coordinateSpace: .local)
+                            .onEnded { value in
+                                if value.translation.height < 0 {
+                                    state.isStatusPopupPresented = false
+                                }
+                            }
+                    )
+            }
         }
 
         private var popup: some View {

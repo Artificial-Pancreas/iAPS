@@ -65,6 +65,9 @@ extension Home {
         @Published var isStatusPopupPresented: Bool = false
         @Published var tins: Bool = false
 
+        @Published var standing: Bool = false
+        @Published var preview: Bool = true
+
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         override func subscribe() {

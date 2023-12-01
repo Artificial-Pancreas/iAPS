@@ -250,7 +250,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         end: $0.date,
                         metadata: [
                             HKMetadataKeyInsulinDeliveryReason: NSNumber(2),
-                            HKMetadataKeyExternalUUID: $0.id,
+                            // HKMetadataKeyExternalUUID: $0.id,
                             HKMetadataKeySyncIdentifier: $0.id,
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
@@ -267,7 +267,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         end: $0.endDelivery,
                         metadata: [
                             HKMetadataKeyInsulinDeliveryReason: NSNumber(1),
-                            HKMetadataKeyExternalUUID: $0.id,
+                            // HKMetadataKeyExternalUUID: $0.id,
                             HKMetadataKeySyncIdentifier: $0.id,
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
