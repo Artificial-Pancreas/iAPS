@@ -11,7 +11,7 @@ struct LiveActivity: Widget {
     }()
 
     func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        if !context.state.change.isEmpty {
+        if !context.isStale && !context.state.change.isEmpty {
             Text(context.state.change)
         } else {
             Text("--")
