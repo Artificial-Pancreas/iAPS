@@ -530,104 +530,94 @@ extension Home {
             }
         }
 
-        @ViewBuilder private func bottomPanel(_ geo: GeometryProxy) -> some View {
-            ZStack {
-                Rectangle().fill(Color.gray.opacity(0.2)).frame(height: 50 + geo.safeAreaInsets.bottom)
-
-                HStack {
-                    Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(.loopYellow)
-                                .padding(8)
-                            if let carbsReq = state.carbsRequired {
-                                Text(numberFormatter.string(from: carbsReq as NSNumber)!)
-                                    .font(.caption)
-                                    .foregroundColor(.white)
-                                    .padding(4)
-                                    .background(Capsule().fill(Color.red))
-                            }
-                        }
-                    }.buttonStyle(.borderless)
-                    Spacer()
-                    Button { state.showModal(for: .overrideProfilesConfig) }
-                    label: {
-                        Image(systemName: "person")
+        @ViewBuilder private func bottomPanel(_: GeometryProxy) -> some View {
+            HStack {
+                Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
+                label: {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image("carbs")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: 24, height: 24)
+                            .foregroundColor(.loopYellow)
                             .padding(8)
+                        if let carbsReq = state.carbsRequired {
+                            Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                .font(.caption)
+                                .foregroundColor(.white)
+                                .padding(4)
+                                .background(Capsule().fill(Color.red))
+                        }
                     }
-                    .foregroundColor(.loopGreen)
-                    .buttonStyle(.borderless)
-                    Spacer()
-                    Button {
-                        state.showModal(for: .bolus(
-                            waitForSuggestion: true,
-                            fetch: false
-                        ))
-                    }
+                }
+                Spacer()
+                Button { state.showModal(for: .overrideProfilesConfig) }
+                label: {
+                    Image(systemName: "person")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding(8)
+                }
+                .foregroundColor(.loopGreen)
+                Spacer()
+                Button {
+                    state.showModal(for: .bolus(
+                        waitForSuggestion: true,
+                        fetch: false
+                    ))
+                }
+                label: {
+                    Image("bolus")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding(8)
+                }
+                .foregroundColor(.insulin)
+                Spacer()
+                if state.allowManualTemp {
+                    Button { state.showModal(for: .manualTempBasal) }
                     label: {
-                        Image("bolus")
+                        Image("bolus1")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: 24, height: 24)
                             .padding(8)
                     }
                     .foregroundColor(.insulin)
-                    .buttonStyle(.borderless)
                     Spacer()
-                    if state.allowManualTemp {
-                        Button { state.showModal(for: .manualTempBasal) }
-                        label: {
-                            Image("bolus1")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                                .padding(8)
-                        }
-                        .foregroundColor(.insulin)
-                        .buttonStyle(.borderless)
-                        Spacer()
-                    }
-                    Button { state.showModal(for: .statistics)
-                    }
-                    label: {
-                        Image(systemName: "chart.xyaxis.line")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(.purple)
-                    .buttonStyle(.borderless)
-                    Spacer()
-                    Button { state.showModal(for: .settings) }
-                    label: {
-                        Image("settings1")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                    }
-                    .foregroundColor(.loopGray)
-                    .buttonStyle(.borderless)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
+                Button { state.showModal(for: .settings) }
+                label: {
+                    Image("settings1")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding(8)
+                }
+                .foregroundColor(.gray)
+            }
+            .padding(.horizontal, 24)
+            .frame(height: 60) // + geo.safeAreaInsets.bottom)
+            .background(
+                colorScheme == .dark ?
+                    Color(.darkerBlue)
+                    : .gray.opacity(0.25)
+            )
+        }
+
+        var testView: some View {
+            HStack {
+                Text("Test somethibng new")
+                Image(systemName: "testtube.2")
             }
         }
 
         var body: some View {
             let colorBackground = colorScheme == .dark ? LinearGradient(
                 gradient: Gradient(colors: [
-                    // RGB(3, 15, 28)
                     Color(red: 0.011, green: 0.058, blue: 0.109),
-                    // RGB(10, 34, 55)
                     Color(red: 0.03921568627, green: 0.1333333333, blue: 0.2156862745)
                 ]),
                 startPoint: .bottom,
@@ -635,109 +625,89 @@ extension Home {
             )
                 :
                 LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-            let colourChart: Color = colorScheme == .dark ? Color(
-                red: 0.05490196078,
-                green: 0.05490196078,
-                blue: 0.05490196078
-            ) : .white
 
-            // ScrollView {
-            GeometryReader { geo in
-                VStack(spacing: 20) {
-                    // Spacer()
+            ScrollView {
+                // VStack(spacing: 20) {
+                GeometryReader { geo in
+                    VStack(spacing: 20) {
+                        // VStack {
+                        glucoseView.padding(.top, 10).padding(.bottom, 20)
+                        loopView.padding(.bottom, 20)
+                        timeInterval
 
-                    glucoseView.padding(.top, 10).padding(.bottom, 20)
-
-                    // Spacer()
-
-                    loopView.padding(.bottom, 20)
-                    // .padding(.leading)
-
-                    // HStack {
-                    timeInterval // .padding(.bottom, 20)
-                    // loopView.padding(.leading)
-                    // }
-
-                    // Spacer()
-
-                    // infoPanel
-                    //   .padding(.horizontal, 10)
-
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(
-                            colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                Color.white
-                        )
-                        .overlay {
-                            VStack {
-                                infoPanel
-                                mainChart
-                                legendPanel // .padding(.bottom, 20)
-                            }
-                        }
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .shadow(
-                            color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                            radius: colorScheme == .dark ? 5 : 3
-                        )
-                        .padding(.horizontal, 10)
-                        .frame(maxHeight: UIScreen.main.bounds.height / 2.3)
-
-                    // Spacer()
-
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(
-                            colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                Color.white
-                        )
-                        .cornerRadius(20)
-                        .overlay(status(geo))
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .shadow(
-                            color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                            radius: colorScheme == .dark ? 5 : 3
-                        )
-                        .padding(.horizontal, 10).padding(.bottom, 20)
-                        .frame(maxHeight: 50)
-
-                    // Spacer()
-                    bottomPanel(geo)
-                }
-                .background(colorBackground)
-            }
-            .edgesIgnoringSafeArea(.bottom)
-            // }
-            .onAppear {
-                configureView {
-                    highlightButtons()
-                }
-            }
-            .navigationTitle("Home")
-            .navigationBarHidden(true)
-            .ignoresSafeArea(.keyboard)
-            .popup(isPresented: state.isStatusPopupPresented, alignment: .top, direction: .top) {
-                popup
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(colorScheme == .dark ? Color(
-                                red: 0.05490196078,
-                                green: 0.05490196078,
-                                blue: 0.05490196078
-                            ) : Color(UIColor.darkGray))
-                    )
-                    .onTapGesture {
-                        state.isStatusPopupPresented = false
-                    }
-                    .gesture(
-                        DragGesture(minimumDistance: 10, coordinateSpace: .local)
-                            .onEnded { value in
-                                if value.translation.height < 0 {
-                                    state.isStatusPopupPresented = false
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(
+                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                    Color.white
+                            )
+                            .overlay {
+                                VStack {
+                                    infoPanel
+                                    mainChart
+                                    legendPanel // .padding(.bottom, 20)
                                 }
                             }
-                    )
-            }
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .shadow(
+                                color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                                radius: colorScheme == .dark ? 5 : 3
+                            )
+                            .padding(.horizontal, 10)
+                            .frame(maxHeight: UIScreen.main.bounds.height / 2.3)
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(
+                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                                    Color.white
+                            )
+                            .cornerRadius(20)
+                            .overlay(status(geo))
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .shadow(
+                                color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                                radius: colorScheme == .dark ? 5 : 3
+                            )
+                            .padding(.horizontal, 10).padding(.bottom, 20)
+                            .frame(maxHeight: 50)
+                        bottomPanel(geo)
+                    }
+                }
+
+                testView
+                // }
+
+            }.background(colorBackground)
+                // .edgesIgnoringSafeArea(.bottom)
+                .onAppear {
+                    configureView {
+                        highlightButtons()
+                    }
+                }
+                .navigationTitle("Home")
+                .navigationBarHidden(true)
+                .ignoresSafeArea(.keyboard)
+                .popup(isPresented: state.isStatusPopupPresented, alignment: .top, direction: .top) {
+                    popup
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(colorScheme == .dark ? Color(
+                                    red: 0.05490196078,
+                                    green: 0.05490196078,
+                                    blue: 0.05490196078
+                                ) : Color(UIColor.darkGray))
+                        )
+                        .onTapGesture {
+                            state.isStatusPopupPresented = false
+                        }
+                        .gesture(
+                            DragGesture(minimumDistance: 10, coordinateSpace: .local)
+                                .onEnded { value in
+                                    if value.translation.height < 0 {
+                                        state.isStatusPopupPresented = false
+                                    }
+                                }
+                        )
+                }
         }
 
         private var popup: some View {
