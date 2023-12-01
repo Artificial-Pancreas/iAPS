@@ -50,7 +50,7 @@ struct LiveActivity: Widget {
                 Spacer()
                 VStack(alignment: .trailing, spacing: 5) {
                     changeLabel(context: context).font(.title3)
-                    updatedLabel(context: context).font(.caption)
+                    updatedLabel(context: context).font(.caption).foregroundStyle(.black.opacity(0.7))
                 }
             }
             .privacySensitive()
@@ -74,7 +74,8 @@ struct LiveActivity: Widget {
                     changeLabel(context: context).font(.title).padding(.trailing, 5)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    updatedLabel(context: context).font(.caption)
+                    updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
+                        .padding(.bottom, 5)
                 }
             } compactLeading: {
                 HStack(spacing: 1) {
