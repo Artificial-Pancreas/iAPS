@@ -31,6 +31,10 @@
         <attribute name="hba1c_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="hba1c_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
+    <entity name="ImportError" representedClassName="ImportError" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="error" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="InsulinDistribution" representedClassName="InsulinDistribution" syncable="YES" codeGenerationType="class">
         <attribute name="bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

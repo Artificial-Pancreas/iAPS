@@ -1,6 +1,8 @@
 import Combine
 import CommonCrypto
 import Foundation
+import JavaScriptCore
+import Swinject
 
 class NightscoutAPI {
     init(url: URL, secret: String? = nil) {
@@ -27,6 +29,8 @@ class NightscoutAPI {
     let secret: String?
 
     private let service = NetworkService()
+
+    @Injected() private var settingsManager: SettingsManager!
 }
 
 extension NightscoutAPI {

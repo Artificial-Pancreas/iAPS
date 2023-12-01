@@ -12,9 +12,9 @@ protocol NightscoutManager: GlucoseSource {
     func deleteCarbs(at date: Date, isFPU: Bool?, fpuID: String?, syncID: String)
     func deleteInsulin(at date: Date)
     func uploadStatus()
+    func uploadGlucose()
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences()
-    func uploadGlucose()
     func uploadProfile()
     var cgmURL: URL? { get }
 }
@@ -560,6 +560,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         self.storage.save(glucose, as: fileToSave)
+                        debug(.nightscout, "Glucose uploaded")
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
@@ -589,6 +590,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         self.storage.save(treatments, as: fileToSave)
+                        debug(.nightscout, "Treatments uploaded")
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
                     }
