@@ -308,7 +308,7 @@ extension Bolus {
             GridRow(alignment: .top) {
                 Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
 
-                Text("(Current - Target) / ISF").foregroundColor(.secondary.opacity(0.65)).gridColumnAlignment(.leading)
+                Text("(Current - Target) / ISF").foregroundColor(.secondary.opacity(colorScheme == .dark ? 0.65 : 0.8)).gridColumnAlignment(.leading)
                     .gridCellColumns(2)
             }
             .font(.caption)
@@ -323,7 +323,7 @@ extension Bolus {
                     )
                 }
 
-                Text("Subtract IOB").foregroundColor(.secondary.opacity(0.65)).font(.footnote)
+                Text("Subtract IOB").foregroundColor(.secondary.opacity(colorScheme == .dark ? 0.65 : 0.8)).font(.footnote)
 
                 HStack {
                     Text(
@@ -371,7 +371,7 @@ extension Bolus {
             GridRow(alignment: .center) {
                 Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
 
-                Text("COB / Carb Ratio").foregroundColor(.secondary.opacity(0.65)).gridColumnAlignment(.leading)
+                Text("COB / Carb Ratio").foregroundColor(.secondary.opacity(colorScheme == .dark ? 0.65 : 0.8)).gridColumnAlignment(.leading)
                     .gridCellColumns(2)
             }
             .font(.caption)
@@ -418,7 +418,7 @@ extension Bolus {
                         state.units.rawValue
                 )
 
-                Text("15min Delta / ISF").font(.caption).foregroundColor(.secondary.opacity(0.65)).gridColumnAlignment(.leading)
+                Text("15min Delta / ISF").font(.caption).foregroundColor(.secondary.opacity(colorScheme == .dark ? 0.65 : 0.8)).gridColumnAlignment(.leading)
                     .gridCellColumns(2).padding(.top, 5)
             }
         }
@@ -480,14 +480,14 @@ extension Bolus {
             GridRow(alignment: .bottom) {
                 if state.useFattyMealCorrectionFactor {
                     Text("Factor x Fatty Meal Factor x Full Bolus")
-                        .foregroundColor(.secondary.opacity(0.65))
+                        .foregroundColor(.secondary.opacity(colorScheme == .dark ? 0.65 : 0.8))
                         .font(.caption)
                         .gridCellAnchor(.center)
                         .gridCellColumns(3)
                 } else {
                     Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
                     Text("Factor x Full Bolus")
-                        .foregroundColor(.secondary.opacity(0.65))
+                        .foregroundColor(.secondary.opacity(colorScheme == .dark ? 0.65 : 0.8))
                         .font(.caption)
                         .padding(.top, 5)
                         .gridCellAnchor(.leading)
