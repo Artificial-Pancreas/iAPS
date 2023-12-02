@@ -1,5 +1,5 @@
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@min";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "Voulez-vous vraiment supprimer ce CGM?";
