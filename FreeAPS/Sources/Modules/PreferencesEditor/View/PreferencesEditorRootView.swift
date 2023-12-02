@@ -28,7 +28,6 @@ extension PreferencesEditor {
                         Text("mmol/L").tag(1)
                     }
                 }
-
                 ForEach(state.sections.indexed(), id: \.1.id) { sectionIndex, section in
                     Section(header: Text(section.displayName)) {
                         ForEach(section.fields.indexed(), id: \.1.id) { fieldIndex, field in

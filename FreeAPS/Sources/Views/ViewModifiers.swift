@@ -37,6 +37,47 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
+struct AddShadow: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .shadow(
+                color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
+                radius: colorScheme == .dark ? 5 : 3
+            )
+    }
+}
+
+struct ColouredRoundedBackground: View {
+    @Environment(\.colorScheme) var colorScheme
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(
+                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                    Color.white
+            )
+    }
+}
+
+struct LinearGradientBackGround: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        let colorBackground = colorScheme == .dark ? LinearGradient(
+            gradient: Gradient(colors: [
+                Color(red: 0.011, green: 0.058, blue: 0.109),
+                Color(red: 0.03921568627, green: 0.1333333333, blue: 0.2156862745)
+            ]),
+            startPoint: .bottom,
+            endPoint: .top
+        )
+            :
+            LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
+        return colorBackground
+    }
+}
+
 private let navigationCache = LRUCache<Screen.ID, AnyView>(capacity: 10)
 
 struct NavigationLazyView: View {
@@ -128,6 +169,18 @@ extension View {
 
     func buttonBackground() -> some View {
         modifier(RoundedBackground(color: .accentColor))
+    }
+
+    func addShadows() -> some View {
+        modifier(AddShadow())
+    }
+
+    func addBackground() -> some View {
+        ColouredRoundedBackground()
+    }
+
+    func linearColour() -> some View {
+        LinearGradientBackGround()
     }
 
     func navigationLink<V: BaseView>(to screen: Screen, from view: V) -> some View {

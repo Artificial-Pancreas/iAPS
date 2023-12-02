@@ -12,9 +12,11 @@ extension Bolus {
             if state.useCalc {
                 // show alternative bolus calc based on toggle in bolus calc settings
                 AlternativeBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch, state: state)
+                    .padding(.top, 30)
             } else {
                 // show iAPS standard bolus calc
                 DefaultBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch, state: state)
+                    .padding(.top, 30)
             }
         }
     }

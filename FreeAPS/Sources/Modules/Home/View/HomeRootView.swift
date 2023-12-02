@@ -558,7 +558,7 @@ extension Home {
             }
         }
 
-        @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
+        @ViewBuilder private func buttonPanel() -> some View {
             HStack {
                 Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                 label: {
@@ -566,7 +566,7 @@ extension Home {
                         Image("carbs")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24, alignment: .bottom)
+                            .frame(width: 30, height: 30, alignment: .bottom)
                             .foregroundColor(.loopYellow)
                             .padding(8)
                         if let carbsReq = state.carbsRequired {
@@ -589,7 +589,7 @@ extension Home {
                     Image("bolus")
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 24, height: 24, alignment: .bottom)
+                        .frame(width: 30, height: 30, alignment: .bottom)
                         .padding(8)
                 }
                 .foregroundColor(.insulin)
@@ -600,7 +600,7 @@ extension Home {
                         Image("bolus1")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24, alignment: .bottom)
+                            .frame(width: 30, height: 30, alignment: .bottom)
                             .padding(8)
                     }
                     .foregroundColor(.insulin)
@@ -611,13 +611,13 @@ extension Home {
                     Image("settings1")
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 24, height: 24, alignment: .bottom)
+                        .frame(width: 30, height: 30, alignment: .bottom)
                         .padding(8)
                 }
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
-            .frame(height: 30 + geo.safeAreaInsets.bottom)
+            .frame(height: UIScreen.main.bounds.height / 11)
             .background(
                 colorScheme == .dark ?
                     Color(.darkerBlue)
@@ -626,26 +626,11 @@ extension Home {
         }
 
         var loop: some View {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(
-                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                        Color.white
-                )
+            addBackground()
                 .frame(maxWidth: UIScreen.main.bounds.width / 4, maxHeight: 35)
                 .overlay(loopView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-
-                .shadow(
-                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                    radius: colorScheme == .dark ? 5 : 3
-                )
-
-                /*
-                 .shadow(
-                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                     radius: colorScheme == .dark ? 5 : 3
-                 )
-                  */
+                .addShadows()
                 .padding(.bottom, 10)
                 .onTapGesture {
                     state.isStatusPopupPresented = true
@@ -657,26 +642,11 @@ extension Home {
         }
 
         var currentProfile: some View {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(
-                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                        Color.white
-                )
+            addBackground()
                 .frame(maxWidth: UIScreen.main.bounds.width / 4, maxHeight: 35)
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-
-                .shadow(
-                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                    radius: colorScheme == .dark ? 5 : 3
-                )
-
-                /*
-                 .shadow(
-                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                     radius: colorScheme == .dark ? 5 : 3
-                 )
-                  */
+                .addShadows()
                 .padding(.bottom, 10)
                 .onTapGesture {
                     state.showModal(for: .overrideProfilesConfig)
@@ -684,11 +654,7 @@ extension Home {
         }
 
         var chart: some View {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(
-                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                        Color.white
-                )
+            addBackground()
                 .overlay {
                     VStack {
                         infoPanel
@@ -698,50 +664,21 @@ extension Home {
                 }
                 .frame(minHeight: UIScreen.main.bounds.height / 2.5)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-
-                .shadow(
-                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                    radius: colorScheme == .dark ? 5 : 3
-                )
-
-                /*
-                 .shadow(
-                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                     radius: colorScheme == .dark ? 5 : 3
-                 )
-                  */
+                .addShadows()
                 .padding(.horizontal, 10)
         }
 
         @ViewBuilder private func pumpStatus(_ geo: GeometryProxy) -> some View {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(
-                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                        Color.white
-                )
+            addBackground()
                 .frame(minHeight: 35)
                 .overlay(status(geo))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-
-                .shadow(
-                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                    radius: colorScheme == .dark ? 5 : 3
-                )
-                /*
-                 .shadow(
-                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                     radius: colorScheme == .dark ? 5 : 3
-                 )
-                  */
+                .addShadows()
                 .padding(.horizontal, 10)
         }
 
         var preview: some View {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(
-                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                        Color.white
-                )
+            addBackground()
                 .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
                 .overlay(alignment: .topLeading) {
                     ChartsView(
@@ -755,17 +692,7 @@ extension Home {
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
-
-                .shadow(
-                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                    radius: colorScheme == .dark ? 5 : 3
-                )
-                /*
-                 .shadow(
-                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                     radius: colorScheme == .dark ? 5 : 3
-                 )
-                  */
+                .addShadows()
                 .padding(.horizontal, 10)
                 .onTapGesture {
                     state.showModal(for: .statistics)
@@ -773,16 +700,6 @@ extension Home {
         }
 
         var body: some View {
-            let colorBackground = colorScheme == .dark ? LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(red: 0.011, green: 0.058, blue: 0.109),
-                    Color(red: 0.03921568627, green: 0.1333333333, blue: 0.2156862745)
-                ]),
-                startPoint: .bottom,
-                endPoint: .top
-            )
-                :
-                LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
             GeometryReader { geo in
                 VStack {
                     ScrollView {
@@ -793,7 +710,7 @@ extension Home {
                                 glucoseView.padding(.top, 10).padding(.bottom, 40).frame(maxWidth: .infinity, alignment: .center)
                                 currentProfile.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                     .padding(.trailing, 10)
-                            }
+                            }.padding(.top, 60)
                             if state.displayTimeButtons {
                                 timeInterval
                             }
@@ -801,9 +718,10 @@ extension Home {
                             pumpStatus(geo)
                             preview
                         }
-                    }.background(colorBackground)
-                    buttonPanel(geo)
+                    }
+                    buttonPanel()
                 }
+                .padding(.bottom, 30)
             }
             .onAppear {
                 configureView {
