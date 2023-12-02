@@ -39,10 +39,7 @@ struct LoopView: View {
             } else if manualTempBasal {
                 Text("Manual").font(.caption2).padding(.leading, 5)
             } else if actualSuggestion?.timestamp != nil {
-                HStack(spacing: 10) {
-                    Text(timeString)
-                        .foregroundColor(.secondary).padding(.leading, 5)
-                }
+                Text(timeString).foregroundColor(.secondary).padding(.leading, 5)
             } else {
                 Text("--").font(.caption2).foregroundColor(.secondary).padding(.leading, 5)
             }
