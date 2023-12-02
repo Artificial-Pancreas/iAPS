@@ -111,17 +111,6 @@ extension Home {
             pumpView
         }
 
-        var looping: some View {
-            HStack(spacing: 10) {
-                if state.closedLoop {
-                    Text("Loop")
-                } else {
-                    Text("Open")
-                }
-                loopView
-            }.font(.callout).foregroundColor(.secondary)
-        }
-
         var cobIobView: some View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack {
@@ -219,6 +208,33 @@ extension Home {
                 lastLoopDate: $state.lastLoopDate,
                 manualTempBasal: $state.manualTempBasal
             )
+        }
+
+        var profileView: some View {
+            HStack {
+                if let override = fetchedPercent.first {
+                    if override.enabled {
+                        if override.isPreset {
+                            let profile = fetchedProfiles.first(where: { $0.id == override.id })
+                            if let currentProfile = profile {
+                                Image(systemName: "person.fill")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.purple)
+                                Text(currentProfile.name ?? "")
+                            }
+                        } else {
+                            Image(systemName: "person.fill")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.purple)
+                            Text(override.percentage.formatted() + " %")
+                        }
+                    } else {
+                        Image(systemName: "person.fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.green)
+                    }
+                }
+            }
         }
 
         var tempBasalString: String? {
@@ -331,7 +347,7 @@ extension Home {
                 } else if let tempBasalString = tempBasalString {
                     Text(tempBasalString)
                         .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.insulin)
+                        .foregroundColor(colorScheme == .dark ? .primary : .insulin)
                         .padding(.leading, 8)
                 }
                 if state.tins {
@@ -340,7 +356,7 @@ extension Home {
                             NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
                     )
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(.insulin)
+                    foregroundColor(colorScheme == .dark ? .primary : .insulin)
                 }
 
                 if let tempTargetString = tempTargetString {
@@ -381,7 +397,7 @@ extension Home {
                 if let progress = state.bolusProgress {
                     HStack {
                         Text("Bolusing")
-                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                            .font(.system(size: 12, weight: .bold)).foregroundColor(colorScheme == .dark ? .primary : .insulin)
                         ProgressView(value: Double(progress))
                             .progressViewStyle(BolusProgressViewStyle())
                             .padding(.trailing, 8)
@@ -391,7 +407,7 @@ extension Home {
                     }
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: 20)
+            .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
         }
 
         var timeInterval: some View {
@@ -563,16 +579,6 @@ extension Home {
                     }
                 }
                 Spacer()
-                Button { state.showModal(for: .overrideProfilesConfig) }
-                label: {
-                    Image(systemName: "person")
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: 24, height: 24, alignment: .bottom)
-                        .padding(8)
-                }
-                .foregroundColor(.loopGreen)
-                Spacer()
                 Button {
                     state.showModal(for: .bolus(
                         waitForSuggestion: true,
@@ -625,13 +631,21 @@ extension Home {
                     colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
                         Color.white
                 )
-                .frame(maxWidth: UIScreen.main.bounds.width / 2, minHeight: 35)
-                .overlay(looping)
+                .frame(maxWidth: UIScreen.main.bounds.width / 4, maxHeight: 35)
+                .overlay(loopView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+
                 .shadow(
-                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
                     radius: colorScheme == .dark ? 5 : 3
                 )
+
+                /*
+                 .shadow(
+                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                     radius: colorScheme == .dark ? 5 : 3
+                 )
+                  */
                 .padding(.bottom, 10)
                 .onTapGesture {
                     state.isStatusPopupPresented = true
@@ -639,6 +653,33 @@ extension Home {
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
                     state.runLoop()
+                }
+        }
+
+        var currentProfile: some View {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(
+                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                        Color.white
+                )
+                .frame(maxWidth: UIScreen.main.bounds.width / 4, maxHeight: 35)
+                .overlay(profileView)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+
+                .shadow(
+                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
+                    radius: colorScheme == .dark ? 5 : 3
+                )
+
+                /*
+                 .shadow(
+                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                     radius: colorScheme == .dark ? 5 : 3
+                 )
+                  */
+                .padding(.bottom, 10)
+                .onTapGesture {
+                    state.showModal(for: .overrideProfilesConfig)
                 }
         }
 
@@ -657,10 +698,18 @@ extension Home {
                 }
                 .frame(minHeight: UIScreen.main.bounds.height / 2.5)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+
                 .shadow(
-                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
                     radius: colorScheme == .dark ? 5 : 3
                 )
+
+                /*
+                 .shadow(
+                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                     radius: colorScheme == .dark ? 5 : 3
+                 )
+                  */
                 .padding(.horizontal, 10)
         }
 
@@ -673,10 +722,17 @@ extension Home {
                 .frame(minHeight: 35)
                 .overlay(status(geo))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+
                 .shadow(
-                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
                     radius: colorScheme == .dark ? 5 : 3
                 )
+                /*
+                 .shadow(
+                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                     radius: colorScheme == .dark ? 5 : 3
+                 )
+                  */
                 .padding(.horizontal, 10)
         }
 
@@ -699,10 +755,17 @@ extension Home {
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
+
                 .shadow(
-                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
                     radius: colorScheme == .dark ? 5 : 3
                 )
+                /*
+                 .shadow(
+                     color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                     radius: colorScheme == .dark ? 5 : 3
+                 )
+                  */
                 .padding(.horizontal, 10)
                 .onTapGesture {
                     state.showModal(for: .statistics)
@@ -724,9 +787,16 @@ extension Home {
                 VStack {
                     ScrollView {
                         VStack(spacing: 10) {
-                            glucoseView.padding(.top, 10).padding(.bottom, 20)
-                            loop
-                            timeInterval
+                            ZStack {
+                                loop.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                                    .padding(.leading, 10)
+                                glucoseView.padding(.top, 10).padding(.bottom, 40).frame(maxWidth: .infinity, alignment: .center)
+                                currentProfile.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                                    .padding(.trailing, 10)
+                            }
+                            if state.displayTimeButtons {
+                                timeInterval
+                            }
                             chart
                             pumpStatus(geo)
                             preview

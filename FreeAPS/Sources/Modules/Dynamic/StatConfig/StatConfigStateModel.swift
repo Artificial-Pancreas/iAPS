@@ -12,6 +12,8 @@ extension StatConfig {
         @Published var skipBolusScreenAfterCarbs: Bool = false
         @Published var useFPUconversion: Bool = true
         @Published var tins: Bool = false
+        @Published var displayTimeButtons: Bool = false
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -24,6 +26,7 @@ extension StatConfig {
             subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             subscribeSetting(\.tins, on: $tins) { tins = $0 }
+            subscribeSetting(\.displayTimeButtons, on: $displayTimeButtons) { displayTimeButtons = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
 

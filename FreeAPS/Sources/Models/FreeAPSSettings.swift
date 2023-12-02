@@ -52,6 +52,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = true
+    var displayTimeButtons: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -267,6 +268,10 @@ extension FreeAPSSettings: Decodable {
 
         if let useLiveActivity = try? container.decode(Bool.self, forKey: .useLiveActivity) {
             settings.useLiveActivity = useLiveActivity
+        }
+
+        if let displayTimeButtons = try? container.decode(Bool.self, forKey: .displayTimeButtons) {
+            settings.displayTimeButtons = displayTimeButtons
         }
 
         self = settings

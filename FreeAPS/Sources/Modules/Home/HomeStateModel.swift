@@ -67,6 +67,7 @@ extension Home {
 
         @Published var standing: Bool = false
         @Published var preview: Bool = true
+        @Published var displayTimeButtons: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
