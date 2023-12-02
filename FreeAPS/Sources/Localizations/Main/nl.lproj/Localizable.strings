@@ -1481,7 +1481,7 @@ Enact a temp Basal or a temp target */
 "Pair Pod" = "Koppel Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Vorige Pod informatie";
+"Previous Pod Information" = "Informatie vorige Pod";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Bevestigingsmeldingen";
