@@ -31,9 +31,10 @@ extension DataTable {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             if state.units == .mmolL {
+                formatter.minimumFractionDigits = 1
                 formatter.maximumFractionDigits = 1
-                formatter.roundingMode = .ceiling
             }
+            formatter.roundingMode = .halfUp
             return formatter
         }
 
