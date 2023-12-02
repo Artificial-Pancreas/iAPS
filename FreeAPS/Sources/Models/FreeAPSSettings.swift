@@ -50,7 +50,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var fattyMeals: Bool = false
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
-    var useLiveActivity: Bool = true
+    var useLiveActivity: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
