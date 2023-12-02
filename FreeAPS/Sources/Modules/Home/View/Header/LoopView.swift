@@ -33,15 +33,18 @@ struct LoopView: View {
                     ProgressView()
                 }
             }
+
             if isLooping {
                 Text("looping").font(.caption2).padding(.leading, 5)
             } else if manualTempBasal {
                 Text("Manual").font(.caption2).padding(.leading, 5)
             } else if actualSuggestion?.timestamp != nil {
-                Text(timeString) // .font(.caption2)
-                    .foregroundColor(.secondary)
+                HStack(spacing: 10) {
+                    Text(timeString)
+                        .foregroundColor(.secondary).padding(.leading, 5)
+                }
             } else {
-                Text("--").font(.caption2).foregroundColor(.secondary)
+                Text("--").font(.caption2).foregroundColor(.secondary).padding(.leading, 5)
             }
         }
     }

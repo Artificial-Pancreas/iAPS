@@ -39,6 +39,24 @@ struct PumpView: View {
 
     var body: some View {
         HStack {
+            Text("IOB").font(.callout).foregroundColor(.secondary)
+            Text(
+                (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                    NSLocalizedString(" U", comment: "Insulin unit")
+            )
+            .font(.callout).fontWeight(.bold)
+
+            Spacer()
+
+            Text("COB").font(.callout).foregroundColor(.secondary)
+            Text(
+                (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                    NSLocalizedString(" g", comment: "gram of carbs")
+            )
+            .font(.callout).fontWeight(.bold)
+
+            Spacer()
+
             if let reservoir = reservoir {
                 HStack {
                     Image("vial")
@@ -56,7 +74,7 @@ struct PumpView: View {
                         .font(.callout).fontWeight(.bold)
                     }
                 }
-                
+
                 Spacer()
             }
 

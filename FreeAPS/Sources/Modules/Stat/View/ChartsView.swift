@@ -232,6 +232,21 @@ struct ChartsView: View {
             TIRinPercent(
                 type: "TIR",
                 group: NSLocalizedString(
+                    "Very Low",
+                    comment: ""
+                ),
+                percentage: fetched[4].decimal,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: "Separator",
+                percentage: separator,
+                id: UUID()
+            ),
+            TIRinPercent(
+                type: "TIR",
+                group: NSLocalizedString(
                     "Low",
                     comment: ""
                 ),
@@ -279,21 +294,6 @@ struct ChartsView: View {
                 ),
                 percentage: fetched[3].decimal,
                 id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: "Separator",
-                percentage: separator,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: NSLocalizedString(
-                    "Very Low",
-                    comment: ""
-                ),
-                percentage: fetched[4].decimal,
-                id: UUID()
             )
         ]
 
@@ -305,13 +305,13 @@ struct ChartsView: View {
 
         return
             VStack {
-                Text("Time In Range today").padding(10)
+                Text("Time In Range").fontWeight(.thin).padding(10)
                 Chart(data) { item in
                     BarMark(
                         x: .value("TIR", item.type),
                         y: .value("Percentage", item.percentage),
-                        width: .fixed(60),
-                        height: .fixed(80)
+                        width: .fixed(60) // ,
+                        // height: .fixed(100)
                     )
                     .foregroundStyle(by: .value("Group", item.group))
                     .annotation(position: .trailing) {
@@ -319,8 +319,8 @@ struct ChartsView: View {
                             HStack {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
-                            }
-                            .padding(.leading, 10)
+                            }.font(.callout)
+                                .padding(.leading, 20)
 
                         } else if item.group == NSLocalizedString(
                             "Low",
@@ -330,8 +330,8 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
-                            .font(.caption)
-                            .padding(.leading, 10)
+                            .font(.footnote)
+                            .padding(.leading, 20)
                         } else if item.group == NSLocalizedString(
                             "High",
                             comment: ""
@@ -340,8 +340,8 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
-                            .font(.caption)
-                            .padding(.leading, 10)
+                            .font(.footnote)
+                            .padding(.leading, 20)
                         } else if item.group == NSLocalizedString(
                             "Very High",
                             comment: ""
@@ -350,8 +350,8 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
-                            .font(.caption)
-                            .padding(.leading, 10)
+                            .font(.footnote)
+                            .padding(.leading, 20)
                         } else if item.group == NSLocalizedString(
                             "Very Low",
                             comment: ""
@@ -360,8 +360,8 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
-                            .font(.caption)
-                            .padding(.leading, 10)
+                            .font(.footnote)
+                            .padding(.leading, 20)
                         }
                     }
                 }
@@ -370,7 +370,7 @@ struct ChartsView: View {
                         "Low",
                         comment: ""
                     ): .red,
-                    NSLocalizedString("In Range", comment: ""): .green,
+                    NSLocalizedString("In Range", comment: ""): .darkGreen,
                     NSLocalizedString(
                         "High",
                         comment: ""

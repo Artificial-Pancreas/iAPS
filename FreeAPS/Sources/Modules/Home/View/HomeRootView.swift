@@ -98,43 +98,29 @@ extension Home {
             return scene
         }
 
+        @State private var angularGradient = AngularGradient(colors: [
+            Color(red: 0.7215686275, green: 0.3411764706, blue: 1),
+            Color(red: 0.6235294118, green: 0.4235294118, blue: 0.9803921569),
+            Color(red: 0.4862745098, green: 0.5450980392, blue: 0.9529411765),
+            Color(red: 0.3411764706, green: 0.6666666667, blue: 0.9254901961),
+            Color(red: 0.262745098, green: 0.7333333333, blue: 0.9137254902),
+            Color(red: 0.7215686275, green: 0.3411764706, blue: 1)
+        ], center: .center, startAngle: .degrees(270), endAngle: .degrees(-90))
+
         @ViewBuilder func status(_: GeometryProxy) -> some View {
-            HStack {
-                pumpView
+            pumpView
+        }
+
+        var looping: some View {
+            HStack(spacing: 10) {
+                if state.closedLoop {
+                    Text("Loop")
+                } else {
+                    Text("Open")
+                }
                 loopView
-            }
+            }.font(.callout).foregroundColor(.secondary)
         }
-        
-        var status2: some View {
-            HStack {
-                Text("IOB").font(.callout).foregroundColor(.secondary)
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                    NSLocalizedString(" U", comment: "Insulin unit")
-                )
-                .font(.callout).fontWeight(.bold)
-                
-                Spacer()
-                
-                Text("COB").font(.callout).foregroundColor(.secondary)
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                    NSLocalizedString(" g", comment: "gram of carbs")
-                )
-                .font(.callout).fontWeight(.bold)
-                
-                Spacer()
-                
-                Text("ISF")
-                
-                Text(
-                    (targetFormatter.string(from: (state.suggestion?.isf ?? 0) as NSNumber) ?? "0")
-                )
-                .font(.callout).fontWeight(.bold)
-            }
-        }
-        
-        
 
         var cobIobView: some View {
             VStack(alignment: .leading, spacing: 12) {
@@ -233,13 +219,6 @@ extension Home {
                 lastLoopDate: $state.lastLoopDate,
                 manualTempBasal: $state.manualTempBasal
             )
-            .onTapGesture {
-                state.isStatusPopupPresented = true
-            }.onLongPressGesture {
-                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                impactHeavy.impactOccurred()
-                state.runLoop()
-            }
         }
 
         var tempBasalString: String? {
@@ -571,7 +550,7 @@ extension Home {
                         Image("carbs")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 24, height: 24, alignment: .bottom)
                             .foregroundColor(.loopYellow)
                             .padding(8)
                         if let carbsReq = state.carbsRequired {
@@ -589,7 +568,7 @@ extension Home {
                     Image(systemName: "person")
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 24, height: 24, alignment: .bottom)
                         .padding(8)
                 }
                 .foregroundColor(.loopGreen)
@@ -604,7 +583,7 @@ extension Home {
                     Image("bolus")
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 24, height: 24, alignment: .bottom)
                         .padding(8)
                 }
                 .foregroundColor(.insulin)
@@ -615,7 +594,7 @@ extension Home {
                         Image("bolus1")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 24, height: 24, alignment: .bottom)
                             .padding(8)
                     }
                     .foregroundColor(.insulin)
@@ -626,13 +605,13 @@ extension Home {
                     Image("settings1")
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 24, height: 24, alignment: .bottom)
                         .padding(8)
                 }
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
-            .frame(height: 20 + geo.safeAreaInsets.bottom)
+            .frame(height: 30 + geo.safeAreaInsets.bottom)
             .background(
                 colorScheme == .dark ?
                     Color(.darkerBlue)
@@ -640,11 +619,94 @@ extension Home {
             )
         }
 
-        var testView: some View {
-            HStack {
-                Text("Test somethibng new")
-                Image(systemName: "testtube.2")
-            }
+        var loop: some View {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(
+                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                        Color.white
+                )
+                .frame(maxWidth: UIScreen.main.bounds.width / 2, minHeight: 35)
+                .overlay(looping)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .shadow(
+                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    radius: colorScheme == .dark ? 5 : 3
+                )
+                .padding(.bottom, 10)
+                .onTapGesture {
+                    state.isStatusPopupPresented = true
+                }.onLongPressGesture {
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
+                    state.runLoop()
+                }
+        }
+
+        var chart: some View {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(
+                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                        Color.white
+                )
+                .overlay {
+                    VStack {
+                        infoPanel
+                        mainChart
+                        legendPanel
+                    }
+                }
+                .frame(minHeight: UIScreen.main.bounds.height / 2.5)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .shadow(
+                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    radius: colorScheme == .dark ? 5 : 3
+                )
+                .padding(.horizontal, 10)
+        }
+
+        @ViewBuilder private func pumpStatus(_ geo: GeometryProxy) -> some View {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(
+                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                        Color.white
+                )
+                .frame(minHeight: 35)
+                .overlay(status(geo))
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .shadow(
+                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    radius: colorScheme == .dark ? 5 : 3
+                )
+                .padding(.horizontal, 10)
+        }
+
+        var preview: some View {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(
+                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                        Color.white
+                )
+                .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
+                .overlay(alignment: .topLeading) {
+                    ChartsView(
+                        filter: DateFilter().day,
+                        $state.highGlucose,
+                        $state.lowGlucose,
+                        $state.units,
+                        $state.overrideUnit,
+                        $state.standing,
+                        $state.preview
+                    )
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .shadow(
+                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
+                    radius: colorScheme == .dark ? 5 : 3
+                )
+                .padding(.horizontal, 10)
+                .onTapGesture {
+                    state.showModal(for: .statistics)
+                }
         }
 
         var body: some View {
@@ -658,78 +720,18 @@ extension Home {
             )
                 :
                 LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-
             GeometryReader { geo in
                 VStack {
                     ScrollView {
-                        VStack(spacing: 15) {
+                        VStack(spacing: 10) {
                             glucoseView.padding(.top, 10).padding(.bottom, 20)
-                            loopView.padding(.bottom, 20)
+                            loop
                             timeInterval
-
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(
-                                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                        Color.white
-                                )
-                                .overlay {
-                                    VStack {
-                                        infoPanel
-                                        mainChart
-                                        legendPanel // .padding(.bottom, 20)
-                                    }
-                                }
-                                .frame(minHeight: UIScreen.main.bounds.height / 2.5)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(
-                                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                                    radius: colorScheme == .dark ? 5 : 3
-                                )
-                                .padding(.horizontal, 10)
-
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(
-                                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                        Color.white
-                                )
-                                .frame(minHeight: 35)
-                                .overlay(status(geo))
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(
-                                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                                    radius: colorScheme == .dark ? 5 : 3
-                                )
-                                .padding(.horizontal, 10)
-
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(
-                                    colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                        Color.white
-                                )
-                                .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
-                                .overlay(alignment: .topLeading) {
-                                    ChartsView(
-                                        filter: DateFilter().day,
-                                        $state.highGlucose,
-                                        $state.lowGlucose,
-                                        $state.units,
-                                        $state.overrideUnit,
-                                        $state.standing,
-                                        $state.preview
-                                    )
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(
-                                    color: colorScheme == .dark ? Color.blue.opacity(0.33) : Color.black.opacity(0.33),
-                                    radius: colorScheme == .dark ? 5 : 3
-                                )
-                                .padding(.horizontal, 10)
-                                .onTapGesture {
-                                    state.showModal(for: .statistics)
-                                }
+                            chart
+                            pumpStatus(geo)
+                            preview
                         }
                     }.background(colorBackground)
-
                     buttonPanel(geo)
                 }
             }
@@ -741,16 +743,12 @@ extension Home {
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
-            .popup(isPresented: state.isStatusPopupPresented, alignment: .top, direction: .top) {
+            .popup(isPresented: state.isStatusPopupPresented, alignment: .center, direction: .bottom) {
                 popup
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(colorScheme == .dark ? Color(
-                                red: 0.05490196078,
-                                green: 0.05490196078,
-                                blue: 0.05490196078
-                            ) : Color(UIColor.darkGray))
+                            .fill(Color(UIColor.darkGray))
                     )
                     .onTapGesture {
                         state.isStatusPopupPresented = false
