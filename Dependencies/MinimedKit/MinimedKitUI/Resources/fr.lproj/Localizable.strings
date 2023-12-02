@@ -123,7 +123,13 @@
 "No, Keep Pump As Is" = "Non, garder la pompe telle quelle";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "User
+vertaal naar Frans inclusief codes: Key: On your pump, go to the Find Device screen and select \\\"Find Device\\\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device
+On your pump, go to the Find Device screen and select \\\"Find Device\\\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device
+Pump find device instruction
+
+ChatGPT
+Clé : Sur votre pompe, allez à l'écran Rechercher un appareil et sélectionnez\\ \"Rechercher un appareil\\\".\n\nMenu principal >\nUtilitaires >\nConnecter les appareils >\nAutres appareils >\nActivé >\nRechercher un appareil\n\nSur votre pompe, allez à l'écran Rechercher un appareil et sélectionnez \\ \"Rechercher un appareil\\\".\n\nMenu principal >\nUtilitaires >\nConnecter les appareils >\nAutres appareils >\nActivé >\nRechercher un appareil\n\nInstructions de recherche d'appareil de la pompe";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
@@ -203,7 +209,7 @@
 "U/hr" = "U/h";
 
 /* Text to indicate battery percentage is unknown */
-"unknown" = "unknown";
+"unknown" = "inconnu";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Inconnu";
