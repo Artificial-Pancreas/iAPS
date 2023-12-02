@@ -175,7 +175,7 @@
 
 /* Alert content body for multiCommand pod alert
    Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Melding meerdere commando's";
+"Multiple Command Alert" = "Waarschuwing voor meerdere commando's";
 
 /* Pod alert state when no alerts are active */
 "No alerts" = "Geen waarschuwingen";
