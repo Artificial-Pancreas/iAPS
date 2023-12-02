@@ -130,7 +130,7 @@
 "Preferred Data Source" = "Source de données préférée";
 
 /* Text for medtronic pump battery percent remaining */
-"Pump Battery Remaining" = "Pump Battery Remaining";
+"Pump Battery Remaining" = "Batterie Pompe restante";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump battery type */
