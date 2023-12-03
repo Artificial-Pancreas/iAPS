@@ -574,7 +574,7 @@ extension Home {
                 Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                 label: {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image("carbs")
+                        Image(systemName: "fork.knife")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: 30, height: 30, alignment: .bottom)
@@ -597,7 +597,7 @@ extension Home {
                     ))
                 }
                 label: {
-                    Image("bolus")
+                    Image(systemName: "syringe.fill")
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 30, height: 30, alignment: .bottom)
@@ -619,7 +619,7 @@ extension Home {
                 }
                 Button { state.showModal(for: .settings) }
                 label: {
-                    Image("settings1")
+                    Image(systemName: "slider.horizontal.3")
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 30, height: 30, alignment: .bottom)
@@ -628,7 +628,7 @@ extension Home {
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
-            .frame(height: UIScreen.main.bounds.height / 11)
+            .frame(height: UIScreen.main.bounds.height / 11.5)
             .background(
                 colorScheme == .dark ?
                     Color(.darkerBlue)
@@ -742,7 +742,7 @@ extension Home {
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
-            .popup(isPresented: state.isStatusPopupPresented, alignment: .center, direction: .bottom) {
+            .popup(isPresented: state.isStatusPopupPresented, alignment: .bottom, direction: .bottom) {
                 popup
                     .padding()
                     .background(

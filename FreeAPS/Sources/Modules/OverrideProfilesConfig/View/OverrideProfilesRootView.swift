@@ -42,18 +42,19 @@ extension OverrideProfilesConfig {
         }
 
         var presetPopover: some View {
-            Form {
+            let test = LinearGradientBackGround()
+            return Form {
                 Section {
                     TextField("Identifier", text: $state.emoji)
                 } header: {
                     Text(
-                        "Enter an identifier of uo to 6 characters. Use emojis or or short name. This identifier will be used in Home View"
-                    )
+                        "Identifier. 6 characters. Use emojis / short name."
+                    ).foregroundStyle(.primary)
                 }
 
                 Section {
                     TextField("Description", text: $state.profileName)
-                } header: { Text("Description") }
+                } header: { Text("Description").foregroundStyle(.primary) }
 
                 Section {
                     Button("Save") {
@@ -70,6 +71,8 @@ extension OverrideProfilesConfig {
                     }
                 }
             }
+            .padding(.top, IAPSconfig.padding)
+            .background(test).ignoresSafeArea()
         }
 
         var body: some View {
@@ -281,8 +284,10 @@ extension OverrideProfilesConfig {
             .onAppear(perform: configureView)
             .onAppear { state.savedSettings() }
             .navigationBarTitle("Profiles")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+            .padding(.top, 30)
+            .useCustomBackGround()
         }
 
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {

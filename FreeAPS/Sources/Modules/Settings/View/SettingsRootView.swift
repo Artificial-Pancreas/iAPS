@@ -16,7 +16,7 @@ extension Settings {
                     Text(
                         "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "
                     ).textCase(nil)
-                }.padding(.top, 30)
+                }
 
                 Section {
                     Text("Pump").navigationLink(to: .pumpConfig, from: self)

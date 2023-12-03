@@ -16,6 +16,7 @@ extension Main {
                     state.secondaryModalView ?? EmptyView().asAny()
                 }
                 .onAppear(perform: configureView)
+                .useCustomBackGround()
         }
     }
 }

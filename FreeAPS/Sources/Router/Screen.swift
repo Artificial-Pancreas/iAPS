@@ -56,102 +56,128 @@ extension View {
 
 extension Screen {
     @ViewBuilder func view(resolver: Resolver) -> some View {
-        let test = LinearGradientBackGround()
-
         switch self {
         case .loading:
             ProgressView()
         case .home:
             Home.RootView(resolver: resolver)
-                .useCustomBackGround()
         case .settings:
             Settings.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case let .configEditor(file):
             ConfigEditor.RootView(resolver: resolver, file: file)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .nighscoutConfig:
             NightscoutConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .pumpConfig:
             PumpConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .pumpSettingsEditor:
             PumpSettingsEditor.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .basalProfileEditor:
             BasalProfileEditor.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .isfEditor:
             ISFEditor.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .crEditor:
             CREditor.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .targetsEditor:
             TargetsEditor.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .preferencesEditor:
             PreferencesEditor.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case let .addCarbs(editMode, override):
             AddCarbs.RootView(resolver: resolver, editMode: editMode, override: override)
+                .padding(.top, IAPSconfig.padding - 20)
                 .useCustomBackGround()
         case .addTempTarget:
             AddTempTarget.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case let .bolus(waitForSuggestion, fetch):
             Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch)
+                .padding(.top, IAPSconfig.padding - 20)
                 .useCustomBackGround()
         case .manualTempBasal:
             ManualTempBasal.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .autotuneConfig:
             AutotuneConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .dataTable:
             DataTable.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .cgm:
             CGM.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .healthkit:
             AppleHealthKit.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .libreConfig:
             LibreConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .calibrations:
             Calibrations.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .notificationsConfig:
             NotificationsConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .fpuConfig:
             FPUConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .iconConfig:
             IconConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .overrideProfilesConfig:
             OverrideProfilesConfig.RootView(resolver: resolver)
         case .snooze:
             Snooze.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .watch:
             WatchConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .statistics:
             Stat.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .statisticsConfig:
             StatConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .bolusCalculatorConfig:
             BolusCalculatorConfig.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         case .dynamicISF:
             Dynamic.RootView(resolver: resolver)
+                .padding(.top, IAPSconfig.padding)
                 .useCustomBackGround()
         }
     }

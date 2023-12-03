@@ -1,6 +1,8 @@
 import SwiftUI
 
 public struct BolusProgressViewStyle: ProgressViewStyle {
+    @Environment(\.colorScheme) var colorScheme
+
     public func makeBody(configuration: LinearProgressViewStyle.Configuration) -> some View {
         ZStack {
             Circle()
@@ -15,7 +17,7 @@ public struct BolusProgressViewStyle: ProgressViewStyle {
             Circle()
                 .trim(from: 0.0, to: CGFloat(configuration.fractionCompleted ?? 0))
                 .stroke(style: StrokeStyle(lineWidth: 4.0, lineCap: .butt, lineJoin: .round))
-                .foregroundColor(.insulin)
+                .foregroundColor(colorScheme == .dark ? .primary : .insulin)
                 .rotationEffect(Angle(degrees: -90))
                 .frame(width: 22, height: 22)
         }.frame(width: 30, height: 30)

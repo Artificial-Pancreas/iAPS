@@ -9,3 +9,7 @@ struct DateFilter {
     var month = Date().addingTimeInterval(-30.days.timeInterval) as NSDate
     var total = Date().addingTimeInterval(-90.days.timeInterval) as NSDate
 }
+
+public enum IAPSconfig {
+    static let padding: CGFloat = 60
+}

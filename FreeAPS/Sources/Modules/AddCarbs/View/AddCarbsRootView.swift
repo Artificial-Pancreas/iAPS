@@ -132,7 +132,6 @@ extension AddCarbs {
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
-            .padding(.top, 30)
         }
 
         private var presetPopover: some View {

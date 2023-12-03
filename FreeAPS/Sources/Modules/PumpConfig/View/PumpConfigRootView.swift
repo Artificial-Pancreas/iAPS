@@ -8,6 +8,7 @@ extension PumpConfig {
 
         var body: some View {
             NavigationView {
+                let test = LinearGradientBackGround()
                 Form {
                     Section(header: Text("Model")) {
                         if let pumpState = state.pumpState {
@@ -30,28 +31,30 @@ extension PumpConfig {
                             Button("Add Simulator") { state.addPump(.simulator) }
                         }
                     }
-                }
-                .onAppear(perform: configureView)
-                .navigationTitle("Pump config")
-                .navigationBarTitleDisplayMode(.automatic)
-                .sheet(isPresented: $state.setupPump) {
-                    if let pumpManager = state.provider.apsManager.pumpManager {
-                        PumpSettingsView(
-                            pumpManager: pumpManager,
-                            bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                            completionDelegate: state,
-                            setupDelegate: state
-                        )
-                    } else {
-                        PumpSetupView(
-                            pumpType: state.setupPumpType,
-                            pumpInitialSettings: state.initialSettings,
-                            bluetoothManager: state.provider.apsManager.bluetoothManager!,
-                            completionDelegate: state,
-                            setupDelegate: state
-                        )
+                }.padding(.top, 100)
+                    .useCustomBackGround()
+                    .onAppear(perform: configureView)
+                    .navigationTitle("Pump config")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .background(test).ignoresSafeArea()
+                    .sheet(isPresented: $state.setupPump) {
+                        if let pumpManager = state.provider.apsManager.pumpManager {
+                            PumpSettingsView(
+                                pumpManager: pumpManager,
+                                bluetoothManager: state.provider.apsManager.bluetoothManager!,
+                                completionDelegate: state,
+                                setupDelegate: state
+                            )
+                        } else {
+                            PumpSetupView(
+                                pumpType: state.setupPumpType,
+                                pumpInitialSettings: state.initialSettings,
+                                bluetoothManager: state.provider.apsManager.bluetoothManager!,
+                                completionDelegate: state,
+                                setupDelegate: state
+                            )
+                        }
                     }
-                }
             }
         }
     }
