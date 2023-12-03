@@ -219,7 +219,7 @@ struct ChartsView: View {
     }
 
     var previewTIRchart: some View {
-        let fetched = tir()
+        let fetched = previewTir()
 
         struct TIRinPercent: Identifiable {
             let type: String
@@ -485,6 +485,46 @@ struct ChartsView: View {
         let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
 
         let tir = 100 - (hypoPercentage + hyperPercentage)
+
+        var array: [(decimal: Decimal, string: String)] = []
+        array.append((decimal: Decimal(hypoPercentage), string: "Low"))
+        array.append((decimal: Decimal(tir), string: "NormaL"))
+        array.append((decimal: Decimal(hyperPercentage), string: "High"))
+        array.append((decimal: Decimal(veryHighPercentage), string: "Very High"))
+        array.append((decimal: Decimal(veryLowPercentage), string: "Very Low"))
+
+        return array
+    }
+
+    private func previewTir() -> [(decimal: Decimal, string: String)] {
+        let hypoLimit = Int(lowLimit)
+        let hyperLimit = Int(highLimit)
+
+        let glucose = fetchRequest
+
+        let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
+        let totalReadings = justGlucoseArray.count
+
+        let hyperArray = glucose.filter({ $0.glucose >= hyperLimit })
+        let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
+        var hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
+
+        let hypoArray = glucose.filter({ $0.glucose <= hypoLimit })
+        let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
+        var hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
+
+        let veryHighArray = glucose.filter({ $0.glucose > 197 })
+        let veryHighReadings = veryHighArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryHighPercentage = Double(veryHighReadings) / Double(totalReadings) * 100
+
+        let veryLowArray = glucose.filter({ $0.glucose < 60 })
+        let veryLowReadings = veryLowArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
+
+        hypoPercentage -= veryLowPercentage
+        hyperPercentage -= veryHighPercentage
+
+        let tir = 100 - (hypoPercentage + hyperPercentage + veryHighPercentage + veryLowPercentage)
 
         var array: [(decimal: Decimal, string: String)] = []
         array.append((decimal: Decimal(hypoPercentage), string: "Low"))

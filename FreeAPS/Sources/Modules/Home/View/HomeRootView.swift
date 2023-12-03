@@ -693,7 +693,7 @@ extension Home {
                 .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
                 .overlay(alignment: .topLeading) {
                     ChartsView(
-                        filter: DateFilter().day,
+                        filter: DateFilter().today,
                         $state.highGlucose,
                         $state.lowGlucose,
                         $state.units,
