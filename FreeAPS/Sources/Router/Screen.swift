@@ -54,6 +54,20 @@ extension View {
     }
 }
 
+struct UseCustomBackGroundForPumpManagers: ViewModifier {
+    let test = LinearGradientBackGround()
+    func body(content: Content) -> some View {
+        content
+            .background(test).ignoresSafeArea()
+    }
+}
+
+extension View {
+    func useCustomBackGroundForPumpManagers() -> some View {
+        modifier(UseCustomBackGround())
+    }
+}
+
 extension Screen {
     @ViewBuilder func view(resolver: Resolver) -> some View {
         switch self {
@@ -61,6 +75,7 @@ extension Screen {
             ProgressView()
         case .home:
             Home.RootView(resolver: resolver)
+                .useCustomBackGround()
         case .settings:
             Settings.RootView(resolver: resolver)
                 .padding(.top, IAPSconfig.padding)
@@ -75,8 +90,6 @@ extension Screen {
                 .useCustomBackGround()
         case .pumpConfig:
             PumpConfig.RootView(resolver: resolver)
-                .padding(.top, IAPSconfig.padding)
-                .useCustomBackGround()
         case .pumpSettingsEditor:
             PumpSettingsEditor.RootView(resolver: resolver)
                 .padding(.top, IAPSconfig.padding)
@@ -103,7 +116,7 @@ extension Screen {
                 .useCustomBackGround()
         case let .addCarbs(editMode, override):
             AddCarbs.RootView(resolver: resolver, editMode: editMode, override: override)
-                .padding(.top, IAPSconfig.padding - 20)
+                .padding(.top, IAPSconfig.padding - 30)
                 .useCustomBackGround()
         case .addTempTarget:
             AddTempTarget.RootView(resolver: resolver)
@@ -127,8 +140,6 @@ extension Screen {
                 .useCustomBackGround()
         case .cgm:
             CGM.RootView(resolver: resolver)
-                .padding(.top, IAPSconfig.padding)
-                .useCustomBackGround()
         case .healthkit:
             AppleHealthKit.RootView(resolver: resolver)
                 .padding(.top, IAPSconfig.padding)
