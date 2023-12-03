@@ -23,6 +23,8 @@ struct ChartsView: View {
         return formatter
     }
 
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         if preview { previewTIRchart } else {
             glucoseChart
@@ -350,6 +352,7 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
+                            .offset(x: 0, y: -5)
                             .font(.footnote)
                             .padding(.leading, 20)
                         } else if item.group == NSLocalizedString(
@@ -360,6 +363,7 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
+                            .offset(x: 0, y: 5)
                             .font(.footnote)
                             .padding(.leading, 20)
                         }
@@ -383,12 +387,12 @@ struct ChartsView: View {
                         "Very Low",
                         comment: ""
                     ): .darkRed,
-                    "Separator": .white
+                    "Separator": colorScheme == .dark ? Color.blueComplicationBackground : .white
                 ])
                 .chartXAxis(.hidden)
                 .chartYAxis(.hidden)
                 .chartLegend(.hidden)
-                .padding(.bottom, 10)
+                .padding(.bottom, 15)
                 .frame(maxWidth: UIScreen.main.bounds.width / 2.7)
             }
     }

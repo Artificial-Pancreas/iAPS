@@ -55,7 +55,7 @@ struct ColouredRoundedBackground: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(
-                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
+                colorScheme == .dark ? Color.blueComplicationBackground :
                     Color.white
             )
     }

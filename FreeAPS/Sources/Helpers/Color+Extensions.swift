@@ -65,4 +65,5 @@ extension Color {
     static let darkGray = Color("darkGray")
     static let darkRed = Color("DarkRed")
     static let darkGreen = Color("DarkGreen")
+    static let blueComplicationBackground = Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196)
 }
