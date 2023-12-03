@@ -26,6 +26,7 @@ extension OverrideProfilesConfig {
         @Published var uamMinutes: Decimal = 0
         @Published var defaultSmbMinutes: Decimal = 0
         @Published var defaultUamMinutes: Decimal = 0
+        @Published var emoji: String = ""
 
         var units: GlucoseUnits = .mmolL
 
@@ -87,6 +88,7 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.smbIsOff = self.smbIsOff
                 saveOverride.name = self.profileName
+                saveOverride.emoji = self.emoji
                 id = UUID().uuidString
                 self.isPreset.toggle()
                 saveOverride.id = id

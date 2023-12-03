@@ -135,7 +135,6 @@ extension Screen {
                 .useCustomBackGround()
         case .overrideProfilesConfig:
             OverrideProfilesConfig.RootView(resolver: resolver)
-                .useCustomBackGround()
         case .snooze:
             Snooze.RootView(resolver: resolver)
                 .useCustomBackGround()

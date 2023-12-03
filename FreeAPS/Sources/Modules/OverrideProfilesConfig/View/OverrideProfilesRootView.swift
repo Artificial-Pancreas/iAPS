@@ -44,15 +44,26 @@ extension OverrideProfilesConfig {
         var presetPopover: some View {
             Form {
                 Section {
-                    TextField("Name Of Profile", text: $state.profileName)
-                } header: { Text("Enter Name of Profile") }
+                    TextField("Identifier", text: $state.emoji)
+                } header: {
+                    Text(
+                        "Enter an identifier of uo to 6 characters. Use emojis or or short name. This identifier will be used in Home View"
+                    )
+                }
+
+                Section {
+                    TextField("Description", text: $state.profileName)
+                } header: { Text("Description") }
 
                 Section {
                     Button("Save") {
                         state.savePreset()
                         isSheetPresented = false
                     }
-                    .disabled(state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName }).isNotEmpty)
+                    .disabled(
+                        state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
+                            .isNotEmpty || state.emoji.isEmpty
+                    )
 
                     Button("Cancel") {
                         isSheetPresented = false
@@ -279,6 +290,9 @@ extension OverrideProfilesConfig {
                 .asMmolL : (preset.target ?? 0) as Decimal
             let duration = (preset.duration ?? 0) as Decimal
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
+            let identifier = ((preset.emoji ?? "") == "") || (preset.emoji?.isEmpty ?? true) || (preset.emoji ?? "") == "EMPTY" ||
+                (preset.emoji ?? "") == "\u{0022}\u{0022}" ?
+                "" : preset.emoji!
             let percent = preset.percentage / 100
             let perpetual = preset.indefinite
             let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
@@ -296,6 +310,8 @@ extension OverrideProfilesConfig {
                 HStack {
                     VStack {
                         HStack {
+                            Text(identifier)
+                            Spacer()
                             Text(name)
                             Spacer()
                         }

@@ -220,7 +220,18 @@ extension Home {
                                 Image(systemName: "person.fill")
                                     .symbolRenderingMode(.palette)
                                     .foregroundStyle(.purple)
-                                Text(currentProfile.name ?? "")
+                                if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
+                                   name != "\u{0022}\u{0022}"
+                                {
+                                    Text(name)
+                                } else {
+                                    let lenght = (currentProfile.name ?? "").count
+                                    if lenght < 6 {
+                                        Text(currentProfile.name ?? "")
+                                    } else {
+                                        Text((currentProfile.name ?? "").prefix(5))
+                                    }
+                                }
                             }
                         } else {
                             Image(systemName: "person.fill")
