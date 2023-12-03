@@ -98,6 +98,7 @@ struct MainChartView: View {
     @State private var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
+    @State private var legendVisible: Bool = false
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -146,10 +147,17 @@ struct MainChartView: View {
         return formatter
     }
 
+    private var fetchedTargetFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        if units == .mmolL {
+            formatter.maximumFractionDigits = 1
+        } else { formatter.maximumFractionDigits = 0 }
+        return formatter
+    }
+
     @Environment(\.horizontalSizeClass) var hSizeClass
     @Environment(\.verticalSizeClass) var vSizeClass
-
-    // MARK: - Views
 
     var body: some View {
         GeometryReader { geo in
@@ -157,6 +165,14 @@ struct MainChartView: View {
                 yGridView(fullSize: geo.size)
                 mainScrollView(fullSize: geo.size)
                 glucoseLabelsView(fullSize: geo.size)
+                if legendVisible {
+                    legendPanel.padding(.bottom, 120)
+                }
+            }
+            .onTapGesture {
+                withAnimation {
+                    legendVisible.toggle()
+                }
             }
             .onChange(of: hSizeClass) { _ in
                 update(fullSize: geo.size)
@@ -174,6 +190,46 @@ struct MainChartView: View {
             ) { _ in
                 update(fullSize: geo.size)
             }
+        }
+    }
+
+    var legendPanel: some View {
+        ZStack {
+            HStack(alignment: .center) {
+                Spacer()
+
+                Group {
+                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
+                    Text("BG")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
+                }
+                Group {
+                    Circle().fill(Color.insulin).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("IOB")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
+                }
+                Group {
+                    Circle().fill(Color.zt).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("ZT")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
+                }
+                Group {
+                    Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("COB")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
+                }
+                Group {
+                    Circle().fill(Color.uam).frame(width: 8, height: 8)
+                        .padding(.leading, 8)
+                    Text("UAM")
+                        .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
+                }
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
         }
     }
 

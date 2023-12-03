@@ -111,49 +111,6 @@ extension Home {
             pumpView
         }
 
-        var cobIobView: some View {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Text("IOB").font(.footnote).foregroundColor(.secondary)
-                    Text(
-                        (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                            NSLocalizedString(" U", comment: "Insulin unit")
-                    )
-                    .font(.footnote).fontWeight(.bold)
-                }.frame(alignment: .top)
-                HStack {
-                    Text("COB").font(.footnote).foregroundColor(.secondary)
-                    Text(
-                        (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                            NSLocalizedString(" g", comment: "gram of carbs")
-                    )
-                    .font(.footnote).fontWeight(.bold)
-                }.frame(alignment: .bottom)
-            }
-        }
-
-        var cobIobView2: some View {
-            HStack {
-                Text("IOB").font(.callout).foregroundColor(.secondary)
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                        NSLocalizedString(" U", comment: "Insulin unit")
-                )
-                .font(.callout).fontWeight(.bold)
-
-                Spacer()
-
-                Text("COB").font(.callout).foregroundColor(.secondary)
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                        NSLocalizedString(" g", comment: "gram of carbs")
-                )
-                .font(.callout).fontWeight(.bold)
-
-                Spacer()
-            }
-        }
-
         var glucoseView: some View {
             CurrentGlucoseView(
                 recentGlucose: $state.recentGlucose,
@@ -413,11 +370,23 @@ extension Home {
                             .font(.system(size: 12, weight: .bold)).foregroundColor(colorScheme == .dark ? .primary : .insulin)
                         ProgressView(value: Double(progress))
                             .progressViewStyle(BolusProgressViewStyle())
-                            .padding(.trailing, 8)
                     }
                     .onTapGesture {
                         state.cancelBolus()
                     }
+                }
+
+                if let eventualBG = state.eventualBG {
+                    Image(systemName: "arrow.forward")
+                    HStack {
+                        Text(
+                            fetchedTargetFormatter.string(
+                                from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                            )!
+                        ).font(.system(size: 14)).foregroundColor(colorScheme == .dark ? .white : .black)
+                        Text(state.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
+                    }
+                    .padding(.trailing, 8)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
@@ -486,15 +455,6 @@ extension Home {
                             .padding(.leading, 8)
                         Text("UAM")
                             .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
-                    }
-
-                    if let eventualBG = state.eventualBG {
-                        Text(
-                            "⇢ " + fetchedTargetFormatter.string(
-                                from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
-                            )!
-                        )
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
                     }
                     Spacer()
                 }
@@ -672,7 +632,7 @@ extension Home {
                     VStack {
                         infoPanel
                         mainChart
-                        legendPanel
+                        // legendPanel
                     }
                 }
                 .frame(minHeight: UIScreen.main.bounds.height / 2.5)
@@ -688,6 +648,36 @@ extension Home {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
+        }
+
+        var carbAndInsulinStatusView: some View {
+            HStack {
+                HStack {
+                    Text("IOB").font(.callout).foregroundColor(.secondary)
+                    Text(
+                        (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                            NSLocalizedString(" U", comment: "Insulin unit")
+                    )
+                    .font(.callout).fontWeight(.bold)
+                }
+                HStack {
+                    Text("COB").font(.callout).foregroundColor(.secondary)
+                    Text(
+                        (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                            NSLocalizedString(" g", comment: "gram of carbs")
+                    )
+                    .font(.callout).fontWeight(.bold)
+                }
+            }
+        }
+
+        @ViewBuilder private func carbAndInsulinStatus() -> some View {
+            addBackground()
+                .frame(minHeight: 35)
+                .overlay(carbAndInsulinStatusView)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.leading, 10)
         }
 
         var preview: some View {
@@ -728,7 +718,22 @@ extension Home {
                                 timeInterval
                             }
                             chart
-                            pumpStatus(geo)
+                            HStack {
+                                carbAndInsulinStatus()
+                                pumpStatus(geo)
+                                /* .position(location)
+                                     .gesture(
+                                         simpleDrag.simultaneously(with: fingerDrag)
+                                     )
+                                 if let fingerLocation = fingerLocation {
+                                     Circle()
+                                         .stroke(Color.green, lineWidth: 2)
+                                         .frame(width: 44, height: 44)
+                                         .position(fingerLocation)
+                                 }
+                                     */
+                            }
+
                             preview
                         }
                     }

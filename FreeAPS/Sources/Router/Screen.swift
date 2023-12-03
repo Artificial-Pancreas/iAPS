@@ -124,7 +124,7 @@ extension Screen {
                 .useCustomBackGround()
         case let .bolus(waitForSuggestion, fetch):
             Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch)
-                .padding(.top, IAPSconfig.padding - 20)
+                .padding(.top, IAPSconfig.padding - 30)
                 .useCustomBackGround()
         case .manualTempBasal:
             ManualTempBasal.RootView(resolver: resolver)

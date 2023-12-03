@@ -39,31 +39,14 @@ struct PumpView: View {
 
     var body: some View {
         HStack {
-            Text("IOB").font(.callout).foregroundColor(.secondary)
-            Text(
-                (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                    NSLocalizedString(" U", comment: "Insulin unit")
-            )
-            .font(.callout).fontWeight(.bold)
-
-            Spacer()
-
-            Text("COB").font(.callout).foregroundColor(.secondary)
-            Text(
-                (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                    NSLocalizedString(" g", comment: "gram of carbs")
-            )
-            .font(.callout).fontWeight(.bold)
-
-            Spacer()
-
             if let reservoir = reservoir {
                 HStack {
-                    Image("vial")
+                    Image(systemName: "cross.vial")
+                        // Image("vial")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 15)
-                    // .foregroundColor(reservoirColor)
+                        .frame(maxHeight: 18)
+                        .foregroundColor(reservoirColor)
                     if reservoir == 0xDEAD_BEEF {
                         Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.callout).fontWeight(.bold)
                     } else {
@@ -74,36 +57,36 @@ struct PumpView: View {
                         .font(.callout).fontWeight(.bold)
                     }
                 }
-
-                Spacer()
             }
 
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
+                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 && (battery.percent ?? 100) >
+                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
                 HStack {
-                    Image(systemName: "battery.100")
+                    Image(systemName: "battery.\(percent)")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 15)
                         .foregroundColor(batteryColor)
-                    Text("\(Int(battery.percent ?? 100)) %").font(.callout)
-                        .fontWeight(.bold)
                 }
             }
 
             if let date = expiresAtDate {
                 HStack {
                     Image(systemName: "timer")
-                        .resizable()
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.primary, timerColor)
+                        // .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 15)
-                    // .foregroundColor(timerColor)
+                        .frame(maxHeight: 18)
 
                     let timeLeft = date.timeIntervalSince(timerDate)
                     Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.callout).fontWeight(.bold)
                         .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
                 }
             }
-        }.padding(.horizontal) }
+        } // .padding(.horizontal)
+    }
 
     private func remainingTimeString(time: TimeInterval) -> String {
         guard time > 0 else {
