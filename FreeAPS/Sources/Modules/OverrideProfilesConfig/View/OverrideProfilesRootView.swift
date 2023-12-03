@@ -290,7 +290,7 @@ extension OverrideProfilesConfig {
                 .asMmolL : (preset.target ?? 0) as Decimal
             let duration = (preset.duration ?? 0) as Decimal
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
-            let identifier = ((preset.emoji ?? "") == "") || (preset.emoji?.isEmpty ?? true) || (preset.emoji ?? "") == "EMPTY" ||
+            let identifier = ((preset.emoji ?? "") == "") || (preset.emoji?.isEmpty ?? true) ||
                 (preset.emoji ?? "") == "\u{0022}\u{0022}" ?
                 "" : preset.emoji!
             let percent = preset.percentage / 100
@@ -311,7 +311,7 @@ extension OverrideProfilesConfig {
                     VStack {
                         HStack {
                             Text(identifier)
-                            Spacer()
+                            if identifier != "" { Spacer() }
                             Text(name)
                             Spacer()
                         }

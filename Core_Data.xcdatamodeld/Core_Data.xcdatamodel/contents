@@ -105,7 +105,7 @@
         <attribute name="cr" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="emoji" attributeType="String" defaultValueString=""/>
+        <attribute name="emoji" optional="YES" attributeType="String"/>
         <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>

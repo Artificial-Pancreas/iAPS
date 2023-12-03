@@ -226,7 +226,7 @@ extension Home {
                                     Text(name)
                                 } else {
                                     let lenght = (currentProfile.name ?? "").count
-                                    if lenght < 6 {
+                                    if lenght < 7 {
                                         Text(currentProfile.name ?? "")
                                     } else {
                                         Text((currentProfile.name ?? "").prefix(5))
