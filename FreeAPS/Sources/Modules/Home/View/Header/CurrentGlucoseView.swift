@@ -73,7 +73,7 @@ struct CurrentGlucoseView: View {
                             ?? "--"
                     )
                     .font(.system(size: 40, weight: .bold))
-                    // .foregroundColor(alarm == nil ? colourGlucoseText : .loopRed)
+                    .foregroundColor(alarm == nil ? .primary : .loopRed)
                 }
                 HStack {
                     let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60

@@ -1,5 +1,5 @@
-
 import Foundation
+import SwiftUI
 
 struct DateFilter {
     var twoHours = Date().addingTimeInterval(-2.hours.timeInterval) as NSDate
@@ -12,4 +12,10 @@ struct DateFilter {
 
 public enum IAPSconfig {
     static let padding: CGFloat = 60
+}
+
+extension Font {
+    static let buttonFont = Font.custom("TimeButtonFont", size: 14)
+    static let loopFont = Font.custom("LoopFont", size: 18)
+    static let statusFont = Font.custom("StatusFont", size: 18)
 }

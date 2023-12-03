@@ -307,7 +307,7 @@ struct ChartsView: View {
 
         return
             VStack {
-                Text("Time In Range").fontWeight(.thin).padding(10)
+                Text("Time In Range").font(.title3).padding(10)
                 Chart(data) { item in
                     BarMark(
                         x: .value("TIR", item.type),

@@ -72,7 +72,7 @@ extension Home {
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         override func subscribe() {
-            calculateTINS()
+            // calculateTINS()
             setupGlucose()
             setupBasals()
             setupBoluses()
@@ -107,6 +107,7 @@ extension Home {
             displayYgridLines = settingsManager.settings.yGridLines
             thresholdLines = settingsManager.settings.rulerMarks
             tins = settingsManager.settings.tins
+            displayTimeButtons = settingsManager.settings.displayTimeButtons
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -276,28 +277,29 @@ extension Home {
             }
         }
 
-        // MARK: WORKS....BUT MAYBE TIMEZONE PROBLEMS COULD OCCUR
+        /*
+         // MARK: Below function is crap. Mkakes app unresponsive
+         func calculateTINS() -> String {
+             let date = Date()
+             let calendar = Calendar.current
+             let offset = hours
 
-        func calculateTINS() -> String {
-            let date = Date()
-            let calendar = Calendar.current
-            let offset = hours
+             var offsetComponents = DateComponents()
+             //        offsetComponents.hour = -offset.rawValue
+             offsetComponents.hour = -Int(offset)
 
-            var offsetComponents = DateComponents()
-            //        offsetComponents.hour = -offset.rawValue
-            offsetComponents.hour = -Int(offset)
+             let startTime = calendar.date(byAdding: offsetComponents, to: date)!
+             print("******************")
+             print("die voll krasse start time ist: \(startTime)")
 
-            let startTime = calendar.date(byAdding: offsetComponents, to: date)!
-            print("******************")
-            print("die voll krasse start time ist: \(startTime)")
+             let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
 
-            let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
+             let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
+             let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
 
-            let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
-            let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
-
-            return "\(roundedTotalBolus)"
-        }
+             return "\(roundedTotalBolus)"
+         }
+         */
 
         private func setupSuspensions() {
             DispatchQueue.main.async { [weak self] in
@@ -462,6 +464,7 @@ extension Home.StateModel:
         displayYgridLines = settingsManager.settings.yGridLines
         thresholdLines = settingsManager.settings.rulerMarks
         tins = settingsManager.settings.tins
+        displayTimeButtons = settingsManager.settings.displayTimeButtons
 
         setupGlucose()
     }

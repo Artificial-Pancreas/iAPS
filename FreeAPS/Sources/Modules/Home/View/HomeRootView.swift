@@ -361,14 +361,16 @@ extension Home {
                         .foregroundColor(colorScheme == .dark ? .primary : .insulin)
                         .padding(.leading, 8)
                 }
-                if state.tins {
-                    Text(
-                        "TINS: \(state.calculateTINS())" +
-                            NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
-                    )
-                    .font(.system(size: 12, weight: .bold))
-                    foregroundColor(colorScheme == .dark ? .primary : .insulin)
-                }
+                /*
+                 if state.tins {
+                     Text(
+                         "TINS: \(state.calculateTINS())" +
+                             NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
+                     )
+                     .font(.system(size: 12, weight: .bold))
+                     foregroundColor(colorScheme == .dark ? .primary : .insulin)
+                 }
+                  */
 
                 if let tempTargetString = tempTargetString {
                     Text(tempTargetString)
