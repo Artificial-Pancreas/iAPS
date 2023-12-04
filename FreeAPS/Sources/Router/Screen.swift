@@ -35,7 +35,6 @@ enum Screen: Identifiable, Hashable {
     case statisticsConfig
     case bolusCalculatorConfig
     case dynamicISF
-
     var id: Int { String(reflecting: self).hashValue }
 }
 
