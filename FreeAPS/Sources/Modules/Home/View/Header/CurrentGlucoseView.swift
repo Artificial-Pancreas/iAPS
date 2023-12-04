@@ -10,14 +10,6 @@ struct CurrentGlucoseView: View {
     @Binding var highGlucose: Decimal
 
     @State private var rotationDegrees: Double = 0.0
-    @State private var angularGradient = AngularGradient(colors: [
-        Color(red: 0.7215686275, green: 0.3411764706, blue: 1),
-        Color(red: 0.6235294118, green: 0.4235294118, blue: 0.9803921569),
-        Color(red: 0.4862745098, green: 0.5450980392, blue: 0.9529411765),
-        Color(red: 0.3411764706, green: 0.6666666667, blue: 0.9254901961),
-        Color(red: 0.262745098, green: 0.7333333333, blue: 0.9137254902),
-        Color(red: 0.7215686275, green: 0.3411764706, blue: 1)
-    ], center: .center, startAngle: .degrees(270), endAngle: .degrees(-90))
 
     @Environment(\.colorScheme) var colorScheme
 
@@ -60,7 +52,7 @@ struct CurrentGlucoseView: View {
         let triangleColor = Color(red: 0.262745098, green: 0.7333333333, blue: 0.9137254902)
 
         ZStack {
-            TrendShape(gradient: angularGradient, color: triangleColor)
+            TrendShape(gradient: .angularGradientIAPS, color: triangleColor)
                 .rotationEffect(.degrees(rotationDegrees))
 
             VStack(alignment: .center) {
@@ -129,27 +121,6 @@ struct CurrentGlucoseView: View {
             }
         }
     }
-
-    var colourGlucoseText: Color {
-        /*
-         let whichGlucose = recentGlucose?.glucose ?? 0
-         let defaultColor: Color = colorScheme == .dark ? .white : .black
-
-         guard lowGlucose < highGlucose else { return .primary }
-
-         switch whichGlucose {
-         case 0 ..< Int(lowGlucose):
-             return .loopRed
-         case Int(lowGlucose) ..< Int(highGlucose):
-             return defaultColor
-         case Int(highGlucose)...:
-             return .loopYellow
-         default:
-             return defaultColor
-         }
-          */
-        .primary
-    }
 }
 
 struct Triangle: Shape {
@@ -188,16 +159,10 @@ struct TrendShape: View {
 
 struct CircleShape: View {
     @Environment(\.colorScheme) var colorScheme
-
     let gradient: AngularGradient
 
     var body: some View {
-        let colorBackground: Color = colorScheme == .dark ? Color(
-            red: 0.1176470588,
-            green: 0.2352941176,
-            blue: 0.3725490196
-        ) :
-            Color.white
+        let colorBackground: Color = colorScheme == .dark ? .blueComplicationBackground : Color.white
 
         Circle()
             .stroke(gradient, lineWidth: 6)

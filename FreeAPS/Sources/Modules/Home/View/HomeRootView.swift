@@ -96,15 +96,6 @@ extension Home {
             return scene
         }
 
-        @State private var angularGradient = AngularGradient(colors: [
-            Color(red: 0.7215686275, green: 0.3411764706, blue: 1),
-            Color(red: 0.6235294118, green: 0.4235294118, blue: 0.9803921569),
-            Color(red: 0.4862745098, green: 0.5450980392, blue: 0.9529411765),
-            Color(red: 0.3411764706, green: 0.6666666667, blue: 0.9254901961),
-            Color(red: 0.262745098, green: 0.7333333333, blue: 0.9137254902),
-            Color(red: 0.7215686275, green: 0.3411764706, blue: 1)
-        ], center: .center, startAngle: .degrees(270), endAngle: .degrees(-90))
-
         @ViewBuilder func status(_: GeometryProxy) -> some View {
             pumpView
         }
@@ -319,16 +310,6 @@ extension Home {
                         .foregroundColor(colorScheme == .dark ? .primary : .insulin)
                         .padding(.leading, 8)
                 }
-                /*
-                 if state.tins {
-                     Text(
-                         "TINS: \(state.calculateTINS())" +
-                             NSLocalizedString(" U", comment: "Unit in number of units delivered (keep the space character!)")
-                     )
-                     .font(.system(size: 12, weight: .bold))
-                     foregroundColor(colorScheme == .dark ? .primary : .insulin)
-                 }
-                  */
 
                 if let tempTargetString = tempTargetString {
                     Text(tempTargetString)
@@ -420,46 +401,6 @@ extension Home {
             .font(.buttonFont)
             .onChange(of: state.hours) { _ in
                 highlightButtons()
-            }
-        }
-
-        var legendPanel: some View {
-            ZStack {
-                HStack(alignment: .center) {
-                    Spacer()
-
-                    Group {
-                        Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                        Text("BG")
-                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
-                    }
-                    Group {
-                        Circle().fill(Color.insulin).frame(width: 8, height: 8)
-                            .padding(.leading, 8)
-                        Text("IOB")
-                            .font(.system(size: 12, weight: .bold)).foregroundColor(.insulin)
-                    }
-                    Group {
-                        Circle().fill(Color.zt).frame(width: 8, height: 8)
-                            .padding(.leading, 8)
-                        Text("ZT")
-                            .font(.system(size: 12, weight: .bold)).foregroundColor(.zt)
-                    }
-                    Group {
-                        Circle().fill(Color.loopYellow).frame(width: 8, height: 8)
-                            .padding(.leading, 8)
-                        Text("COB")
-                            .font(.system(size: 12, weight: .bold)).foregroundColor(.loopYellow)
-                    }
-                    Group {
-                        Circle().fill(Color.uam).frame(width: 8, height: 8)
-                            .padding(.leading, 8)
-                        Text("UAM")
-                            .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
-                    }
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
             }
         }
 
@@ -633,7 +574,6 @@ extension Home {
                     VStack {
                         infoPanel
                         mainChart
-                        // legendPanel
                     }
                 }
                 .onLongPressGesture {
@@ -727,19 +667,7 @@ extension Home {
                             HStack {
                                 carbAndInsulinStatus()
                                 pumpStatus(geo)
-                                /* .position(location)
-                                     .gesture(
-                                         simpleDrag.simultaneously(with: fingerDrag)
-                                     )
-                                 if let fingerLocation = fingerLocation {
-                                     Circle()
-                                         .stroke(Color.green, lineWidth: 2)
-                                         .frame(width: 44, height: 44)
-                                         .position(fingerLocation)
-                                 }
-                                     */
                             }
-
                             preview
                         }
                     }
@@ -785,11 +713,9 @@ extension Home {
 
                     Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.suggestionSmallParts)
                         .foregroundColor(.white)
-
                 } else {
                     Text("No sugestion found").font(.suggestionHeadline).foregroundColor(.white)
                 }
-
                 if let errorMessage = state.errorMessage, let date = state.errorDate {
                     Text(NSLocalizedString("Error at", comment: "") + " " + dateFormatter.string(from: date))
                         .foregroundColor(.white)
