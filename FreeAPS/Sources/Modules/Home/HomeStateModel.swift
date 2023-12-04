@@ -277,30 +277,6 @@ extension Home {
             }
         }
 
-        /*
-         // MARK: Below function is crap. Mkakes app unresponsive
-         func calculateTINS() -> String {
-             let date = Date()
-             let calendar = Calendar.current
-             let offset = hours
-
-             var offsetComponents = DateComponents()
-             //        offsetComponents.hour = -offset.rawValue
-             offsetComponents.hour = -Int(offset)
-
-             let startTime = calendar.date(byAdding: offsetComponents, to: date)!
-             print("******************")
-             print("die voll krasse start time ist: \(startTime)")
-
-             let bolusesForCurrentDay = boluses.filter { $0.timestamp >= startTime && $0.type == .bolus }
-
-             let totalBolus = bolusesForCurrentDay.map { $0.amount ?? 0 }.reduce(0, +)
-             let roundedTotalBolus = Decimal(round(100 * Double(totalBolus)) / 100)
-
-             return "\(roundedTotalBolus)"
-         }
-         */
-
         private func setupSuspensions() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }

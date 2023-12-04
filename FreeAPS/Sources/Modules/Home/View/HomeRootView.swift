@@ -193,6 +193,11 @@ extension Home {
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.green)
                     }
+                } else {
+                    Image(systemName: "person.fill")
+                        .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.green)
                 }
             }
         }
