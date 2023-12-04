@@ -164,7 +164,8 @@ extension Home {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
                             if let currentProfile = profile {
                                 Image(systemName: "person.fill")
-                                    .frame(maxHeight: IAPSconfig.iconSize)
+                                    .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                                    .fixedSize()
                                     .symbolRenderingMode(.palette)
                                     .foregroundStyle(.purple)
                                 if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
@@ -182,14 +183,16 @@ extension Home {
                             }
                         } else {
                             Image(systemName: "person.fill")
-                                .frame(maxHeight: IAPSconfig.iconSize)
+                                .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                                .fixedSize()
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.purple)
                             Text(override.percentage.formatted() + " %")
                         }
                     } else {
                         Image(systemName: "person.fill")
-                            .frame(maxHeight: IAPSconfig.iconSize)
+                            .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                            .fixedSize()
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.green)
                     }
@@ -475,6 +478,18 @@ extension Home {
 
         @ViewBuilder private func buttonPanel() -> some View {
             HStack {
+                Button { state.showModal(for: .dataTable) }
+                label: {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image(systemName: "book.pages")
+                            .symbolRenderingMode(.hierarchical)
+                            .resizable()
+                            .frame(width: 30, height: 30, alignment: .bottom)
+                            .foregroundColor(.secondary)
+                            .padding(8)
+                    }
+                }
+                Spacer()
                 Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                 label: {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
@@ -532,7 +547,7 @@ extension Home {
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
-            .frame(height: UIScreen.main.bounds.height / 11.5)
+            .frame(height: UIScreen.main.bounds.height / 12)
             .background(
                 colorScheme == .dark ?
                     Color(.darkerBlue)
@@ -575,11 +590,6 @@ extension Home {
                         infoPanel
                         mainChart
                     }
-                }
-                .onLongPressGesture {
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    state.showModal(for: .dataTable)
                 }
                 .frame(minHeight: UIScreen.main.bounds.height / 2.5)
                 .clipShape(RoundedRectangle(cornerRadius: 15))

@@ -309,7 +309,9 @@ struct ChartsView: View {
             VStack {
                 HStack {
                     Text("Time In Range")
-                    Text((tirFormatter.string(from: fetched[1].decimal as NSNumber) ?? "") + "%")
+                    if let percent = tirFormatter.string(from: fetched[1].decimal as NSNumber), !percent.contains("NaN") {
+                        Text(percent + "%")
+                    }
                 }.font(.previewHeadline).padding(10)
                 Chart(data) { item in
                     BarMark(
