@@ -121,22 +121,11 @@ extension Bolus {
 
                     HStack {
                         Text("Bolus")
-                        if isFocused {
-                            Button { isFocused = false } label: {
-                                HStack {
-                                    Text("Hide").foregroundStyle(.gray)
-                                    Image(systemName: "keyboard")
-                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
-                                }.padding(.leading)
-                            }
-                            .controlSize(.mini)
-                        }
                         Spacer()
                         DecimalTextField(
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            // autofocus: true,
                             cleanInput: true
                         )
                         Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
@@ -150,7 +139,21 @@ extension Bolus {
                         }
                     }
 
-                } header: { Text("Bolus") }
+                } header: {
+                    HStack {
+                        Text("Bolus")
+                        if isFocused {
+                            Button { isFocused = false } label: {
+                                HStack {
+                                    Text("Hide").foregroundStyle(.gray)
+                                    Image(systemName: "keyboard")
+                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
+                                }.padding(.leading)
+                            }
+                            .controlSize(.mini)
+                        }
+                    }
+                }
 
                 if state.amount > 0 {
                     Section {

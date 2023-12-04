@@ -84,16 +84,6 @@ extension Bolus {
                     }
                     HStack {
                         Text("Amount")
-                        if isFocused {
-                            Button { isFocused = false } label: {
-                                HStack {
-                                    Text("Hide").foregroundStyle(.gray)
-                                    Image(systemName: "keyboard")
-                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
-                                }.padding(.leading)
-                            }
-                            .controlSize(.mini)
-                        }
                         Spacer()
                         DecimalTextField(
                             "0",
@@ -105,7 +95,21 @@ extension Bolus {
                     }
                     .focused($isFocused)
 
-                } header: { Text("Bolus") }
+                } header: {
+                    HStack {
+                        Text("Bolus")
+                        if isFocused {
+                            Button { isFocused = false } label: {
+                                HStack {
+                                    Text("Hide").foregroundStyle(.gray)
+                                    Image(systemName: "keyboard")
+                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
+                                }.padding(.leading)
+                            }
+                            .controlSize(.mini)
+                        }
+                    }
+                }
 
                 if state.amount > 0 {
                     Section {
