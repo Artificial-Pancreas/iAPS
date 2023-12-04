@@ -20,6 +20,7 @@ extension Bolus {
         }
 
         @Environment(\.colorScheme) var colorScheme
+        @FocusState private var isFocused: Bool
 
         @FetchRequest(
             entity: Meals.entity(),
@@ -120,16 +121,27 @@ extension Bolus {
 
                     HStack {
                         Text("Bolus")
+                        if isFocused {
+                            Button { isFocused = false } label: {
+                                HStack {
+                                    Text("Hide").foregroundStyle(.gray)
+                                    Image(systemName: "keyboard")
+                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
+                                }.padding(.leading)
+                            }
+                            .controlSize(.mini)
+                        }
                         Spacer()
                         DecimalTextField(
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            autofocus: false,
+                            // autofocus: true,
                             cleanInput: true
                         )
                         Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
                     }
+                    .focused($isFocused)
                     .onChange(of: state.amount) { newValue in
                         if newValue > state.maxBolus {
                             exceededMaxBolus = true
