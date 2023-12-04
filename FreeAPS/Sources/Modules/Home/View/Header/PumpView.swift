@@ -42,19 +42,18 @@ struct PumpView: View {
             if let reservoir = reservoir {
                 HStack {
                     Image(systemName: "cross.vial")
-                        // Image("vial")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 18)
                         .foregroundColor(reservoirColor)
                     if reservoir == 0xDEAD_BEEF {
-                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).fontWeight(.bold)
+                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).bold()
                     } else {
                         Text(
                             reservoirFormatter
                                 .string(from: reservoir as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
                         )
-                        .font(.callout).fontWeight(.bold)
+                        .font(.statusFont).bold()
                     }
                 }
             }
@@ -74,9 +73,9 @@ struct PumpView: View {
             if let date = expiresAtDate {
                 HStack {
                     Image(systemName: "timer")
+                        .resizable()
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.primary, timerColor)
-                        // .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 18)
 

@@ -165,7 +165,6 @@ extension Home {
                             if let currentProfile = profile {
                                 Image(systemName: "person.fill")
                                     .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
-                                    .fixedSize()
                                     .symbolRenderingMode(.palette)
                                     .foregroundStyle(.purple)
                                 if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
@@ -184,7 +183,6 @@ extension Home {
                         } else {
                             Image(systemName: "person.fill")
                                 .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
-                                .fixedSize()
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.purple)
                             Text(override.percentage.formatted() + " %")
@@ -192,7 +190,6 @@ extension Home {
                     } else {
                         Image(systemName: "person.fill")
                             .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
-                            .fixedSize()
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.green)
                     }
@@ -614,7 +611,6 @@ extension Home {
                         (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" U", comment: "Insulin unit")
                     )
-                    .font(.callout).fontWeight(.bold)
                 }
                 HStack {
                     Text("COB").font(.statusFont).foregroundColor(.secondary)
@@ -622,9 +618,8 @@ extension Home {
                         (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" g", comment: "gram of carbs")
                     )
-                    .font(.callout).fontWeight(.bold)
                 }
-            }
+            }.font(.statusFont).bold()
         }
 
         @ViewBuilder private func carbAndInsulinStatus() -> some View {

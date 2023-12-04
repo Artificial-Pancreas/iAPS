@@ -182,7 +182,6 @@ struct MainChartView: View {
             }
             .onChange(of: screenHours) { _ in
                 update(fullSize: geo.size)
-                // scroll.scrollTo(Config.endID, anchor: .trailing)
             }
             .onReceive(
                 Foundation.NotificationCenter.default

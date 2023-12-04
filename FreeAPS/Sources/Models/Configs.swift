@@ -12,14 +12,14 @@ struct DateFilter {
 
 public enum IAPSconfig {
     static let padding: CGFloat = 60
-    static let iconSize: CGFloat = 18
+    static let iconSize: CGFloat = 16
 }
 
 extension Font {
     static let buttonFont = Font.custom("TimeButtonFont", fixedSize: 14) // Same as Eventual BG size
     static let loopFont = Font.custom("LoopFont", fixedSize: 18) // Loop min ago
-    static let statusFont = Font.custom("StatusFont", fixedSize: 18) // IOB, COB etc.
-    static let previewSmall = Font.custom("PreviewSmallFont", fixedSize: 10)
+    static let statusFont = Font.custom("StatusFont", fixedSize: 16) // IOB, COB etc.
+    static let previewSmall = Font.custom("PreviewSmallFont", fixedSize: 12)
     static let previewNormal = Font.custom("PreviewNormalFont", fixedSize: 18)
     static let previewHeadline = Font.custom("PreviewHeadlineFont", fixedSize: 20)
     static let extraSmall = Font.custom("ExtraSmallFont", fixedSize: 14)
