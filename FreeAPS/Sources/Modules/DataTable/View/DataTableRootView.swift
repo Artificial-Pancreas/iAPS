@@ -43,23 +43,6 @@ extension DataTable {
             return formatter
         }
 
-        private var gradient: LinearGradient {
-            let colorBackground = colorScheme == .dark ?
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        // RGB(3, 15, 28)
-                        Color(red: 0.011, green: 0.058, blue: 0.109),
-                        // RGB(10, 34, 55)
-                        Color(red: 0.03921568627, green: 0.1333333333, blue: 0.2156862745)
-                    ]),
-                    startPoint: .bottom,
-                    endPoint: .top
-                )
-                :
-                LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-            return colorBackground
-        }
-
         var body: some View {
             VStack {
                 Picker("Mode", selection: $state.mode) {
@@ -160,7 +143,8 @@ extension DataTable {
         }
 
         var addGlucoseView: some View {
-            NavigationView {
+            let gradient = LinearGradientBackGround()
+            return NavigationView {
                 VStack {
                     Form {
                         Section {
@@ -195,8 +179,10 @@ extension DataTable {
                 }
                 .onAppear(perform: configureView)
                 .navigationTitle("Add Glucose")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showManualGlucose = false }))
+                .padding(.top, IAPSconfig.padding)
+                .useCustomBackGround()
             }
         }
 
@@ -270,7 +256,8 @@ extension DataTable {
         }
 
         var addExternalInsulinView: some View {
-            NavigationView {
+            let gradient = LinearGradientBackGround()
+            return NavigationView {
                 VStack {
                     Form {
                         Section {
@@ -328,9 +315,9 @@ extension DataTable {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showExternalInsulin = false
                     state.externalInsulinAmount = 0 }))
-                .background(gradient)
+                .padding(.top, IAPSconfig.padding)
+                .useCustomBackGround()
             }
-            .background(gradient)
         }
 
         @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
