@@ -28,8 +28,6 @@ extension Home {
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
 
-        let buttonFont = Font.custom("TimeButtonFont", size: 14)
-
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
 
@@ -175,29 +173,32 @@ extension Home {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
                             if let currentProfile = profile {
                                 Image(systemName: "person.fill")
+                                    .frame(maxHeight: IAPSconfig.iconSize)
                                     .symbolRenderingMode(.palette)
                                     .foregroundStyle(.purple)
                                 if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
-                                    Text(name)
+                                    Text(name).font(.statusFont)
                                 } else {
                                     let lenght = (currentProfile.name ?? "").count
                                     if lenght < 7 {
-                                        Text(currentProfile.name ?? "")
+                                        Text(currentProfile.name ?? "").font(.statusFont)
                                     } else {
-                                        Text((currentProfile.name ?? "").prefix(5))
+                                        Text((currentProfile.name ?? "").prefix(5)).font(.statusFont)
                                     }
                                 }
                             }
                         } else {
                             Image(systemName: "person.fill")
+                                .frame(maxHeight: IAPSconfig.iconSize)
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.purple)
                             Text(override.percentage.formatted() + " %")
                         }
                     } else {
                         Image(systemName: "person.fill")
+                            .frame(maxHeight: IAPSconfig.iconSize)
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.green)
                     }
@@ -331,7 +332,7 @@ extension Home {
 
                 if let tempTargetString = tempTargetString {
                     Text(tempTargetString)
-                        .font(.caption)
+                        .font(.buttonFont)
                         .foregroundColor(.secondary)
                 }
 
@@ -361,7 +362,7 @@ extension Home {
                 }
 
                 if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
-                    Text("Max IOB: 0").font(.callout).foregroundColor(.orange).padding(.trailing, 20)
+                    Text("Max IOB: 0").font(.statusFont).foregroundColor(.orange).padding(.trailing, 20)
                 }
 
                 if let progress = state.bolusProgress {
@@ -383,7 +384,7 @@ extension Home {
                             fetchedTargetFormatter.string(
                                 from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
                             )!
-                        ).font(.system(size: 14)).foregroundColor(colorScheme == .dark ? .white : .black)
+                        ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
                         Text(state.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
                     }
                     .padding(.trailing, 8)
@@ -416,7 +417,7 @@ extension Home {
                 color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
                 radius: colorScheme == .dark ? 5 : 3
             )
-            .font(buttonFont)
+            .font(.buttonFont)
             .onChange(of: state.hours) { _ in
                 highlightButtons()
             }
@@ -635,6 +636,11 @@ extension Home {
                         // legendPanel
                     }
                 }
+                .onLongPressGesture {
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
+                    state.showModal(for: .dataTable)
+                }
                 .frame(minHeight: UIScreen.main.bounds.height / 2.5)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -653,7 +659,7 @@ extension Home {
         var carbAndInsulinStatusView: some View {
             HStack {
                 HStack {
-                    Text("IOB").font(.callout).foregroundColor(.secondary)
+                    Text("IOB").font(.statusFont).foregroundColor(.secondary)
                     Text(
                         (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" U", comment: "Insulin unit")
@@ -661,7 +667,7 @@ extension Home {
                     .font(.callout).fontWeight(.bold)
                 }
                 HStack {
-                    Text("COB").font(.callout).foregroundColor(.secondary)
+                    Text("COB").font(.statusFont).foregroundColor(.secondary)
                     Text(
                         (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
                             NSLocalizedString(" g", comment: "gram of carbs")
@@ -772,27 +778,28 @@ extension Home {
 
         private var popup: some View {
             VStack(alignment: .leading, spacing: 4) {
-                Text(state.statusTitle).font(.headline).foregroundColor(.white)
+                Text(state.statusTitle).font(.suggestionHeadline).foregroundColor(.white)
                     .padding(.bottom, 4)
                 if let suggestion = state.suggestion {
                     TagCloudView(tags: suggestion.reasonParts).animation(.none, value: false)
 
-                    Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.caption).foregroundColor(.white)
+                    Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.suggestionSmallParts)
+                        .foregroundColor(.white)
 
                 } else {
-                    Text("No sugestion found").font(.body).foregroundColor(.white)
+                    Text("No sugestion found").font(.suggestionHeadline).foregroundColor(.white)
                 }
 
                 if let errorMessage = state.errorMessage, let date = state.errorDate {
                     Text(NSLocalizedString("Error at", comment: "") + " " + dateFormatter.string(from: date))
                         .foregroundColor(.white)
-                        .font(.headline)
+                        .font(.suggestionError)
                         .padding(.bottom, 4)
                         .padding(.top, 8)
-                    Text(errorMessage).font(.caption).foregroundColor(.loopRed)
+                    Text(errorMessage).font(.buttonFont).foregroundColor(.loopRed)
                 } else if let suggestion = state.suggestion, (suggestion.bg ?? 100) == 400 {
-                    Text("Invalid CGM reading (HIGH).").font(.callout).bold().foregroundColor(.loopRed).padding(.top, 8)
-                    Text("SMBs and High Temps Disabled.").font(.caption).foregroundColor(.white).padding(.bottom, 4)
+                    Text("Invalid CGM reading (HIGH).").font(.suggestionError).bold().foregroundColor(.loopRed).padding(.top, 8)
+                    Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
                 }
             }
         }

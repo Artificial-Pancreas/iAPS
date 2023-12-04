@@ -307,7 +307,10 @@ struct ChartsView: View {
 
         return
             VStack {
-                Text("Time In Range").font(.title3).padding(10)
+                HStack {
+                    Text("Time In Range")
+                    Text((tirFormatter.string(from: fetched[1].decimal as NSNumber) ?? "") + "%")
+                }.font(.previewHeadline).padding(10)
                 Chart(data) { item in
                     BarMark(
                         x: .value("TIR", item.type),
@@ -321,7 +324,7 @@ struct ChartsView: View {
                             HStack {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
-                            }.font(.callout)
+                            }.font(.previewNormal)
                                 .padding(.leading, 20)
 
                         } else if item.group == NSLocalizedString(
@@ -332,7 +335,7 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
-                            .font(.footnote)
+                            .font(.previewSmall)
                             .padding(.leading, 20)
                         } else if item.group == NSLocalizedString(
                             "High",
@@ -342,7 +345,7 @@ struct ChartsView: View {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
                             }
-                            .font(.footnote)
+                            .font(.previewSmall)
                             .padding(.leading, 20)
                         } else if item.group == NSLocalizedString(
                             "Very High",
@@ -353,7 +356,7 @@ struct ChartsView: View {
                                 Text(item.group)
                             }
                             .offset(x: 0, y: -5)
-                            .font(.footnote)
+                            .font(.previewSmall)
                             .padding(.leading, 20)
                         } else if item.group == NSLocalizedString(
                             "Very Low",
@@ -364,7 +367,7 @@ struct ChartsView: View {
                                 Text(item.group)
                             }
                             .offset(x: 0, y: 5)
-                            .font(.footnote)
+                            .font(.previewSmall)
                             .padding(.leading, 20)
                         }
                     }

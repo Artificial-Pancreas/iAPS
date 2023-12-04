@@ -84,7 +84,7 @@ struct CurrentGlucoseView: View {
                                 NSLocalizedString("min", comment: "Short form for minutes") + " "
                         )
                     )
-                    .font(.caption2).foregroundColor(colorScheme == .dark ? Color.white.opacity(0.9) : Color.secondary)
+                    .font(.extraSmall).foregroundColor(colorScheme == .dark ? Color.white.opacity(0.9) : Color.secondary)
 
                     Text(
                         delta
@@ -92,7 +92,7 @@ struct CurrentGlucoseView: View {
                                 deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
                             } ?? "--"
                     )
-                    .font(.caption2).foregroundColor(colorScheme == .dark ? Color.white.opacity(0.9) : Color.secondary)
+                    .font(.extraSmall).foregroundColor(colorScheme == .dark ? Color.white.opacity(0.9) : Color.secondary)
                 }.frame(alignment: .top)
             }
         }

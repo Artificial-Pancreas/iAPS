@@ -35,13 +35,13 @@ struct LoopView: View {
             }
 
             if isLooping {
-                Text("looping").font(.caption2).padding(.leading, 5)
+                Text("looping").font(.extraSmall).padding(.leading, 5)
             } else if manualTempBasal {
-                Text("Manual").font(.caption2).padding(.leading, 5)
+                Text("Manual").font(.extraSmall).padding(.leading, 5)
             } else if actualSuggestion?.timestamp != nil {
                 Text(timeString).foregroundColor(.secondary).padding(.leading, 5)
             } else {
-                Text("--").font(.caption2).foregroundColor(.secondary).padding(.leading, 5)
+                Text("--").font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
             }
         }
     }
