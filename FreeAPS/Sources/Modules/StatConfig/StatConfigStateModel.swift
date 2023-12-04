@@ -11,6 +11,8 @@ extension StatConfig {
         @Published var rulerMarks: Bool = false
         @Published var skipBolusScreenAfterCarbs: Bool = false
         @Published var useFPUconversion: Bool = true
+        @Published var historyLayout: HistoryLayout = .twoTabs
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -24,6 +26,7 @@ extension StatConfig {
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
+            subscribeSetting(\.historyLayout, on: $historyLayout) { historyLayout = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
