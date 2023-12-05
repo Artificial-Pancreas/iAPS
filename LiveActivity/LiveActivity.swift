@@ -10,36 +10,47 @@ struct LiveActivity: Widget {
         return f
     }()
 
-    func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        if !context.isStale && !context.state.change.isEmpty {
-            Text(context.state.change)
+    @ViewBuilder func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        if !context.state.change.isEmpty {
+            if context.isStale {
+                Text(context.state.change).foregroundStyle(.primary.opacity(0.5))
+                    .strikethrough(pattern: .solid, color: .red.opacity(0.6))
+            } else {
+                Text(context.state.change)
+            }
         } else {
             Text("--")
         }
     }
 
     func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        Text("Updated: \(dateFormatter.string(from: context.state.date))")
-    }
-
-    func bgLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
+        let text = Text("Updated: \(dateFormatter.string(from: context.state.date))")
         if context.isStale {
-            Text("--")
+            return text.bold().foregroundStyle(.red)
         } else {
-            Text(context.state.bg)
+            return text
         }
     }
 
-    func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
-        if context.isStale {
-            return Text("--")
-        } else {
-            var str = context.state.bg
-            if let direction = context.state.direction {
-                // half width space
-                str += "\u{2009}" + direction
+    func bgAndTrendText(context: ActivityViewContext<LiveActivityAttributes>, space: Bool) -> String {
+        var str = context.state.bg
+        if let direction = context.state.direction {
+            // half width space
+            if space {
+                str += "\u{2009}"
             }
-            return Text(str)
+            _ = str += direction
+        }
+        return str
+    }
+
+    @ViewBuilder func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, space: Bool) -> some View {
+        let str = bgAndTrendText(context: context, space: space)
+
+        if context.isStale {
+            Text(str).foregroundStyle(.primary.opacity(0.5)).strikethrough(pattern: .solid, color: .red.opacity(0.6))
+        } else {
+            Text(str)
         }
     }
 
@@ -47,11 +58,11 @@ struct LiveActivity: Widget {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
             HStack(spacing: 3) {
-                bgAndTrend(context: context).font(.title)
+                bgAndTrend(context: context, space: true).font(.title)
                 Spacer()
                 VStack(alignment: .trailing, spacing: 5) {
                     changeLabel(context: context).font(.title3)
-                    updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
+                    updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
                 }
             }
             .privacySensitive()
@@ -67,25 +78,26 @@ struct LiveActivity: Widget {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    HStack(spacing: 3) {
-                        bgAndTrend(context: context)
-                    }.font(.title).padding(.leading, 5)
+                    bgAndTrend(context: context, space: true).font(.title).padding(.leading, 5)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     changeLabel(context: context).font(.title).padding(.trailing, 5)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
-                        .padding(.bottom, 5)
+                    Group {
+                        updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
+                    }
+                    .frame(
+                        maxHeight: .infinity,
+                        alignment: .bottom
+                    )
                 }
             } compactLeading: {
-                HStack(spacing: 1) {
-                    bgAndTrend(context: context)
-                }.padding(.leading, 5)
+                bgAndTrend(context: context, space: true).padding(.leading, 5)
             } compactTrailing: {
                 changeLabel(context: context).padding(.trailing, 5)
             } minimal: {
-                bgLabel(context: context)
+                bgAndTrend(context: context, space: false).fontWidth(.compressed)
             }
             .widgetURL(URL(string: "freeaps-x://"))
             .keylineTint(Color.cyan.opacity(0.5))
@@ -101,7 +113,7 @@ private extension LiveActivityAttributes {
 
 private extension LiveActivityAttributes.ContentState {
     static var test: LiveActivityAttributes.ContentState {
-        LiveActivityAttributes.ContentState(bg: "100", direction: "↗︎", change: "+7", date: Date())
+        LiveActivityAttributes.ContentState(bg: "000", direction: "↗︎", change: "+7", date: Date())
     }
 }
 

@@ -85,9 +85,15 @@ extension NotificationsConfig {
                         footer: Text(
                             liveActivityFooterText()
                         ),
-                        content: { Toggle("Show live activity", isOn: $state.useLiveActivity) }
+                        content: {
+                            if !systemLiveActivitySetting {
+                                Button("Open Settings App") {
+                                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                                }
+                            } else {
+                                Toggle("Show Live Activity", isOn: $state.useLiveActivity) }
+                        }
                     )
-                    .disabled(!systemLiveActivitySetting)
                     .onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
                         self.systemLiveActivitySetting = $0
                     })

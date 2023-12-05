@@ -137,7 +137,10 @@ extension LiveActivityAttributes.ContentState {
         }
 
         if let currentActivity {
-            let content = ActivityContent(state: state, staleDate: state.date.addingTimeInterval(TimeInterval(6 * 60)))
+            let content = ActivityContent(
+                state: state,
+                staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(6 * 60))
+            )
 
             if currentActivity.needsRecreation(), UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
