@@ -27,7 +27,7 @@ extension Home {
             Buttons(label: "12 hours", number: "12", active: false, hours: 12),
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
-
+        
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
 
@@ -673,7 +673,12 @@ extension Home {
                             preview
                         }
                     }
-                    buttonPanel().padding(.bottom, geo.safeAreaInsets.bottom > 0 ? geo.safeAreaInsets.bottom + 15 : 0)
+                    
+                    buttonPanel()
+                        .padding(
+                            .bottom,
+                            UIApplication.shared.windows[0].safeAreaInsets.bottom > 0 ? geo.safeAreaInsets.bottom + 15 : 0
+                        )
                 }
             }
             .onAppear {
