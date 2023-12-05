@@ -638,18 +638,9 @@ extension Home {
 
         var preview: some View {
             addBackground()
-                .frame(maxWidth: .infinity, minHeight: 200, alignment: .topLeading)
+                .frame(maxWidth: .infinity, minHeight: 175, alignment: .topLeading)
                 .overlay(alignment: .topLeading) {
-                    ChartsView(
-                        filter: DateFilter().today,
-                        $state.highGlucose,
-                        $state.lowGlucose,
-                        $state.units,
-                        $state.overrideUnit,
-                        $state.standing,
-                        $state.preview,
-                        $state.readings
-                    )
+                    PreviewChart(readings: $state.readings, lowLimit: $state.lowGlucose, highLimit: $state.highGlucose)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -682,9 +673,8 @@ extension Home {
                             preview
                         }
                     }
-                    buttonPanel()
+                    buttonPanel().padding(.bottom, geo.safeAreaInsets.bottom > 0 ? geo.safeAreaInsets.bottom + 15 : 0)
                 }
-                .padding(.bottom, 30)
             }
             .onAppear {
                 configureView {

@@ -11,10 +11,6 @@ struct ChartsView: View {
     @Binding var units: GlucoseUnits
     @Binding var overrideUnit: Bool
     @Binding var standing: Bool
-    @Binding var preview: Bool
-    @Binding var readings: [Readings]
-
-    @State var headline: Color = .secondary
 
     private let conversionFactor = 0.0555
 
@@ -27,20 +23,18 @@ struct ChartsView: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        if preview { previewTIRchart } else {
-            glucoseChart
-            Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
-            if standing {
-                VStack {
-                    tirChart
-                    Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
-                    groupedGlucoseStatsLaying
-                }
-            } else {
-                HStack(spacing: 20) {
-                    standingTIRchart
-                    groupedGlucose
-                }
+        glucoseChart
+        Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
+        if standing {
+            VStack {
+                tirChart
+                Rectangle().fill(.cyan.opacity(0.2)).frame(maxHeight: 3)
+                groupedGlucoseStatsLaying
+            }
+        } else {
+            HStack(spacing: 20) {
+                standingTIRchart
+                groupedGlucose
             }
         }
     }
@@ -51,9 +45,7 @@ struct ChartsView: View {
         _ lowLimit: Binding<Decimal>,
         _ units: Binding<GlucoseUnits>,
         _ overrideUnit: Binding<Bool>,
-        _ standing: Binding<Bool>,
-        _ preview: Binding<Bool>,
-        _ readings: Binding<[Readings]>
+        _ standing: Binding<Bool>
     ) { _fetchRequest = FetchRequest<Readings>(
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
         predicate: NSPredicate(format: "glucose > 0 AND date > %@", filter)
@@ -63,8 +55,6 @@ struct ChartsView: View {
     _units = units
     _overrideUnit = overrideUnit
     _standing = standing
-    _preview = preview
-    _readings = readings
     }
 
     var glucoseChart: some View {
@@ -221,190 +211,6 @@ struct ChartsView: View {
         ])
     }
 
-    var previewTIRchart: some View {
-        let fetched = previewTir()
-
-        struct TIRinPercent: Identifiable {
-            let type: String
-            let group: String
-            let percentage: Decimal
-            let id: UUID
-        }
-
-        let separator: Decimal = 4
-
-        var data: [TIRinPercent] = [
-            TIRinPercent(
-                type: "TIR",
-                group: NSLocalizedString(
-                    "Very Low",
-                    comment: ""
-                ),
-                percentage: fetched[4].decimal,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: "Separator",
-                percentage: separator,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: NSLocalizedString(
-                    "Low",
-                    comment: ""
-                ),
-                percentage: fetched[0].decimal,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: "Separator",
-                percentage: separator,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: NSLocalizedString("In Range", comment: ""),
-                percentage: fetched[1].decimal,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: "Separator",
-                percentage: separator,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: NSLocalizedString(
-                    "High",
-                    comment: ""
-                ),
-                percentage: fetched[2].decimal,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: "Separator",
-                percentage: separator,
-                id: UUID()
-            ),
-            TIRinPercent(
-                type: "TIR",
-                group: NSLocalizedString(
-                    "Very High",
-                    comment: ""
-                ),
-                percentage: fetched[3].decimal,
-                id: UUID()
-            )
-        ]
-
-        for index in 0 ..< 3 {
-            if data[index].percentage == 0 {
-                data.remove(at: index + 1)
-            }
-        }
-
-        return
-            VStack {
-                HStack {
-                    Text("Time In Range")
-                    if let percent = tirFormatter.string(from: fetched[1].decimal as NSNumber), !percent.contains("NaN") {
-                        Text(percent + "%")
-                    }
-                }.font(.previewHeadline).padding(10)
-                Chart(data) { item in
-                    BarMark(
-                        x: .value("TIR", item.type),
-                        y: .value("Percentage", item.percentage),
-                        width: .fixed(60) // ,
-                        // height: .fixed(100)
-                    )
-                    .foregroundStyle(by: .value("Group", item.group))
-                    .annotation(position: .trailing) {
-                        if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
-                            HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                Text(item.group)
-                            }.font(.previewNormal)
-                                .padding(.leading, 20)
-
-                        } else if item.group == NSLocalizedString(
-                            "Low",
-                            comment: ""
-                        ), item.percentage > 0 {
-                            HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                Text(item.group)
-                            }
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        } else if item.group == NSLocalizedString(
-                            "High",
-                            comment: ""
-                        ), item.percentage > 0 {
-                            HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                Text(item.group)
-                            }
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        } else if item.group == NSLocalizedString(
-                            "Very High",
-                            comment: ""
-                        ), item.percentage > 0 {
-                            HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                Text(item.group)
-                            }
-                            .offset(x: 0, y: -5)
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        } else if item.group == NSLocalizedString(
-                            "Very Low",
-                            comment: ""
-                        ), item.percentage > 0 {
-                            HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                Text(item.group)
-                            }
-                            .offset(x: 0, y: 5)
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        }
-                    }
-                }
-                .chartForegroundStyleScale([
-                    NSLocalizedString(
-                        "Low",
-                        comment: ""
-                    ): .red,
-                    NSLocalizedString("In Range", comment: ""): .darkGreen,
-                    NSLocalizedString(
-                        "High",
-                        comment: ""
-                    ): .yellow,
-                    NSLocalizedString(
-                        "Very High",
-                        comment: ""
-                    ): .red,
-                    NSLocalizedString(
-                        "Very Low",
-                        comment: ""
-                    ): .darkRed,
-                    "Separator": colorScheme == .dark ? Color.blueComplicationBackground : .white
-                ])
-                .chartXAxis(.hidden)
-                .chartYAxis(.hidden)
-                .chartLegend(.hidden)
-                .padding(.bottom, 15)
-                .frame(maxWidth: UIScreen.main.bounds.width / 2.7)
-            }
-    }
-
     var groupedGlucose: some View {
         VStack(alignment: .leading, spacing: 20) {
             let glucose = fetchRequest
@@ -493,46 +299,6 @@ struct ChartsView: View {
         let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
 
         let tir = 100 - (hypoPercentage + hyperPercentage)
-
-        var array: [(decimal: Decimal, string: String)] = []
-        array.append((decimal: Decimal(hypoPercentage), string: "Low"))
-        array.append((decimal: Decimal(tir), string: "NormaL"))
-        array.append((decimal: Decimal(hyperPercentage), string: "High"))
-        array.append((decimal: Decimal(veryHighPercentage), string: "Very High"))
-        array.append((decimal: Decimal(veryLowPercentage), string: "Very Low"))
-
-        return array
-    }
-
-    private func previewTir() -> [(decimal: Decimal, string: String)] {
-        let hypoLimit = Int(lowLimit)
-        let hyperLimit = Int(highLimit)
-
-        let glucose = readings
-
-        let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
-        let totalReadings = justGlucoseArray.count
-
-        let hyperArray = glucose.filter({ $0.glucose >= hyperLimit })
-        let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
-        var hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
-
-        let hypoArray = glucose.filter({ $0.glucose <= hypoLimit })
-        let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
-        var hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
-
-        let veryHighArray = glucose.filter({ $0.glucose > 197 })
-        let veryHighReadings = veryHighArray.compactMap({ each in each.glucose as Int16 }).count
-        let veryHighPercentage = Double(veryHighReadings) / Double(totalReadings) * 100
-
-        let veryLowArray = glucose.filter({ $0.glucose < 60 })
-        let veryLowReadings = veryLowArray.compactMap({ each in each.glucose as Int16 }).count
-        let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
-
-        hypoPercentage -= veryLowPercentage
-        hyperPercentage -= veryHighPercentage
-
-        let tir = 100 - (hypoPercentage + hyperPercentage + veryHighPercentage + veryLowPercentage)
 
         var array: [(decimal: Decimal, string: String)] = []
         array.append((decimal: Decimal(hypoPercentage), string: "Low"))
