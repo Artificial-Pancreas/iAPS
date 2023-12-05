@@ -211,11 +211,7 @@ extension DataTable {
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
-                if item.type == .bolus || item.type == .carbs {
-                    Image(systemName: "circle.fill").foregroundColor(item.color).padding(.vertical)
-                } else {
-                    Image(systemName: "circle.fill").foregroundColor(item.color)
-                }
+                Image(systemName: "circle.fill").foregroundColor(item.color)
                 Text((item.isSMB ?? false) ? "SMB" : item.type.name)
                 Text(item.amountText).foregroundColor(.secondary)
 
@@ -280,6 +276,7 @@ extension DataTable {
 
         @ViewBuilder private func mealView(_ meal: Treatment) -> some View {
             HStack {
+                Image(systemName: "circle.fill").foregroundColor(meal.color)
                 Text(meal.type.name)
                 Text(meal.amountText).foregroundColor(.secondary)
 
