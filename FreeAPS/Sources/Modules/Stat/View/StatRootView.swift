@@ -95,7 +95,8 @@ extension Stat {
                     $state.units,
                     $state.overrideUnit,
                     $state.layingChart,
-                    $state.preview
+                    $state.preview,
+                    $state.readings
                 )
             case .Day:
                 ChartsView(
@@ -105,7 +106,8 @@ extension Stat {
                     $state.units,
                     $state.overrideUnit,
                     $state.layingChart,
-                    $state.preview
+                    $state.preview,
+                    $state.readings
                 )
             case .Week:
                 ChartsView(
@@ -115,7 +117,8 @@ extension Stat {
                     $state.units,
                     $state.overrideUnit,
                     $state.layingChart,
-                    $state.preview
+                    $state.preview,
+                    $state.readings
                 )
             case .Month:
                 ChartsView(
@@ -125,7 +128,8 @@ extension Stat {
                     $state.units,
                     $state.overrideUnit,
                     $state.layingChart,
-                    $state.preview
+                    $state.preview,
+                    $state.readings
                 )
             case .Total:
                 ChartsView(
@@ -135,7 +139,8 @@ extension Stat {
                     $state.units,
                     $state.overrideUnit,
                     $state.layingChart,
-                    $state.preview
+                    $state.preview,
+                    $state.readings
                 )
             }
         }

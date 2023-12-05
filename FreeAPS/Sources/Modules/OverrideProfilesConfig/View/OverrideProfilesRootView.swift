@@ -12,6 +12,7 @@ extension OverrideProfilesConfig {
         @State private var showingDetail = false
         @State private var alertSring = ""
         @State var isSheetPresented: Bool = false
+        @State var index: Int = 1
 
         @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc

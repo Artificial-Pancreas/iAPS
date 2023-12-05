@@ -64,7 +64,7 @@ extension Home {
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
         @Published var tins: Bool = false
-
+        @Published var readings: [Readings] = []
         @Published var standing: Bool = false
         @Published var preview: Bool = true
         @Published var displayTimeButtons: Bool = false
@@ -72,7 +72,6 @@ extension Home {
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         override func subscribe() {
-            // calculateTINS()
             setupGlucose()
             setupBasals()
             setupBoluses()
@@ -232,6 +231,7 @@ extension Home {
                 guard let self = self else { return }
                 self.isManual = self.provider.manualGlucose(hours: self.filteredHours)
                 self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)
+                self.readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today)
                 self.recentGlucose = self.glucose.last
                 if self.glucose.count >= 2 {
                     self.glucoseDelta = (self.recentGlucose?.glucose ?? 0) - (self.glucose[self.glucose.count - 2].glucose ?? 0)

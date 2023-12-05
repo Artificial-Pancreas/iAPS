@@ -12,6 +12,7 @@ struct ChartsView: View {
     @Binding var overrideUnit: Bool
     @Binding var standing: Bool
     @Binding var preview: Bool
+    @Binding var readings: [Readings]
 
     @State var headline: Color = .secondary
 
@@ -51,7 +52,8 @@ struct ChartsView: View {
         _ units: Binding<GlucoseUnits>,
         _ overrideUnit: Binding<Bool>,
         _ standing: Binding<Bool>,
-        _ preview: Binding<Bool>
+        _ preview: Binding<Bool>,
+        _ readings: Binding<[Readings]>
     ) { _fetchRequest = FetchRequest<Readings>(
         sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
         predicate: NSPredicate(format: "glucose > 0 AND date > %@", filter)
@@ -62,6 +64,7 @@ struct ChartsView: View {
     _overrideUnit = overrideUnit
     _standing = standing
     _preview = preview
+    _readings = readings
     }
 
     var glucoseChart: some View {
@@ -505,7 +508,7 @@ struct ChartsView: View {
         let hypoLimit = Int(lowLimit)
         let hyperLimit = Int(highLimit)
 
-        let glucose = fetchRequest
+        let glucose = readings
 
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let totalReadings = justGlucoseArray.count

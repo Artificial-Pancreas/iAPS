@@ -647,7 +647,8 @@ extension Home {
                         $state.units,
                         $state.overrideUnit,
                         $state.standing,
-                        $state.preview
+                        $state.preview,
+                        $state.readings
                     )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
