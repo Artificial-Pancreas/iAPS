@@ -148,7 +148,7 @@ extension Bolus {
                                     Text("Hide").foregroundStyle(.gray)
                                     Image(systemName: "keyboard")
                                         .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
-                                }.padding(.leading)
+                                }.frame(maxWidth: .infinity, alignment: .trailing)
                             }
                             .controlSize(.mini)
                         }
