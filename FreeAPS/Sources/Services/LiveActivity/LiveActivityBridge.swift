@@ -45,10 +45,10 @@ extension LiveActivityAttributes.ContentState {
     func needsRecreation() -> Bool {
         switch activity.activityState {
         case .dismissed,
-             .ended:
+             .ended,
+             .stale:
             return true
-        case .active,
-             .stale: break
+        case .active: break
         @unknown default:
             return true
         }
@@ -137,16 +137,16 @@ extension LiveActivityAttributes.ContentState {
         }
 
         if let currentActivity {
-            let content = ActivityContent(
-                state: state,
-                staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(6 * 60))
-            )
-
             if currentActivity.needsRecreation(), UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
                 await endActivity()
                 await pushUpdate(state)
             } else {
+                let content = ActivityContent(
+                    state: state,
+                    staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(6 * 60))
+                )
+
                 await currentActivity.activity.update(content)
             }
         } else {
@@ -178,7 +178,7 @@ extension LiveActivityAttributes.ContentState {
     /// ends all live activities immediateny
     private func endActivity() async {
         if let currentActivity {
-            await currentActivity.activity.end(nil, dismissalPolicy: ActivityUIDismissalPolicy.immediate)
+            await currentActivity.activity.end(nil, dismissalPolicy: .immediate)
             self.currentActivity = nil
         }
 
