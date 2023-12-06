@@ -47,12 +47,6 @@ struct UseCustomBackGround: ViewModifier {
     }
 }
 
-extension View {
-    func useCustomBackGround() -> some View {
-        modifier(UseCustomBackGround())
-    }
-}
-
 struct UseCustomBackGroundForPumpManagers: ViewModifier {
     let test = LinearGradientBackGround()
     func body(content: Content) -> some View {
@@ -62,6 +56,10 @@ struct UseCustomBackGroundForPumpManagers: ViewModifier {
 }
 
 extension View {
+    func useCustomBackGround() -> some View {
+        modifier(UseCustomBackGround())
+    }
+
     func useCustomBackGroundForPumpManagers() -> some View {
         modifier(UseCustomBackGround())
     }

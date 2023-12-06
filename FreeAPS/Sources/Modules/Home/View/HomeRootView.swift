@@ -27,7 +27,7 @@ extension Home {
             Buttons(label: "12 hours", number: "12", active: false, hours: 12),
             Buttons(label: "24 hours", number: "24", active: false, hours: 24)
         ]
-        
+
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
 
@@ -638,7 +638,7 @@ extension Home {
 
         var preview: some View {
             addBackground()
-                .frame(maxWidth: .infinity, minHeight: 175, alignment: .topLeading)
+                .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
                 .overlay(alignment: .topLeading) {
                     PreviewChart(readings: $state.readings, lowLimit: $state.lowGlucose, highLimit: $state.highGlucose)
                 }
@@ -673,7 +673,7 @@ extension Home {
                             preview
                         }
                     }
-                    
+
                     buttonPanel()
                         .padding(
                             .bottom,

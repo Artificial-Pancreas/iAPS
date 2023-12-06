@@ -101,13 +101,16 @@ struct PreviewChart: View {
             }
         }
 
-        return VStack {
-            HStack {
-                Text("Time In Range")
-                if let percent = tirFormatter.string(from: fetched[1].decimal as NSNumber), !percent.contains("NaN") {
-                    Text(percent + "%")
-                }
-            }.font(.previewHeadline).padding(.top, 10).padding(.leading, 20)
+        return HStack {
+            /*
+             HStack {
+             Text("Time In Range")
+             if let percent = tirFormatter.string(from: fetched[1].decimal as NSNumber), !percent.contains("NaN") {
+             Text(percent + "%")
+             }
+             }.font(.previewHeadline).padding(.top, 10).padding(.leading, 20)
+
+             */
 
             VStack {
                 Chart(data) { item in
@@ -117,6 +120,7 @@ struct PreviewChart: View {
                         width: .fixed(60)
                     )
                     .foregroundStyle(by: .value("Group", item.group))
+
                     .annotation(position: .trailing) {
                         if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
                             HStack {
@@ -194,10 +198,23 @@ struct PreviewChart: View {
                 .chartYAxis(.hidden)
                 .chartLegend(.hidden)
                 .padding(.bottom, 15)
-                .padding(.trailing, 60)
                 .frame(maxWidth: UIScreen.main.bounds.width / 5, alignment: .leading)
-            }
-        }
+            }.frame(maxHeight: 130)
+            /*
+             VStack(alignment: .leading) {
+                 ForEach(data.reversed()) { data in
+                     if data.percentage > 0, data.group != "Separator" {
+                         HStack {
+                             Text(data.group)
+                                 .font(data.group != NSLocalizedString("In Range", comment: "") ? .previewSmall : .previewNormal)
+                             Text((tirFormatter.string(for: data.percentage) ?? "") + " %")
+                         }
+                     }
+                 }
+             }.frame(maxHeight: 130)
+              */
+
+        }.padding(.top, 10).padding(.leading, 20)
     }
 
     private func previewTir() -> [(decimal: Decimal, string: String)] {
