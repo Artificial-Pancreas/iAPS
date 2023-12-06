@@ -2,15 +2,21 @@ import ActivityKit
 import SwiftUI
 import WidgetKit
 
+private enum Size {
+    case minimal
+    case compact
+    case expanded
+}
+
 struct LiveActivity: Widget {
-    let dateFormatter: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         var f = DateFormatter()
         f.dateStyle = .none
         f.timeStyle = .short
         return f
     }()
 
-    @ViewBuilder func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+    @ViewBuilder private func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         if !context.state.change.isEmpty {
             if context.isStale {
                 Text(context.state.change).foregroundStyle(.primary.opacity(0.5))
@@ -23,7 +29,7 @@ struct LiveActivity: Widget {
         }
     }
 
-    func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
+    private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
         let text = Text("Updated: \(dateFormatter.string(from: context.state.date))")
         if context.isStale {
             return text.bold().foregroundStyle(.red)
@@ -32,10 +38,10 @@ struct LiveActivity: Widget {
         }
     }
 
-    func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, narrow: Bool) -> (some View, Int) {
+    private func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, size: Size) -> (some View, Int) {
         var characters = 0
 
-        let bgText = context.state.bg + (narrow ? "" : "\u{2009}") // half width space
+        let bgText = context.state.bg
         characters += bgText.count
 
         // narrow mode is for the minimal dynamic island view
@@ -45,7 +51,7 @@ struct LiveActivity: Widget {
         var directionText: String?
         var warnColor: Color?
         if let direction = context.state.direction {
-            if narrow {
+            if size == .compact {
                 directionText = String(direction[direction.startIndex ... direction.startIndex])
 
                 if direction.count > 1 {
@@ -58,20 +64,31 @@ struct LiveActivity: Widget {
             characters += directionText!.count
         }
 
-        let stack = HStack(spacing: narrow ? -1 : 0) {
+        let spacing: CGFloat
+        switch size {
+        case .minimal: spacing = -1
+        case .compact: spacing = 0
+        case .expanded: spacing = 3
+        }
+
+        let stack = HStack(spacing: spacing) {
             Text(bgText)
                 .strikethrough(context.isStale, pattern: .solid, color: .red.opacity(0.6))
             if let direction = directionText {
                 let text = Text(direction)
-                if narrow {
+                switch size {
+                case .minimal:
                     let scaledText = text.scaleEffect(x: 0.7, y: 0.7, anchor: .leading)
                     if let warnColor {
                         scaledText.foregroundStyle(warnColor)
                     } else {
                         scaledText
                     }
-                } else {
-                    text.scaleEffect(x: 0.8, y: 0.8, anchor: .leading)
+                case .compact:
+                    text.scaleEffect(x: 0.8, y: 0.8, anchor: .leading).padding(.trailing, -3)
+
+                case .expanded:
+                    text.scaleEffect(x: 0.7, y: 0.7, anchor: .leading).padding(.trailing, -5)
                 }
             }
         }
@@ -84,7 +101,7 @@ struct LiveActivity: Widget {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
             HStack(spacing: 3) {
-                bgAndTrend(context: context, narrow: false).0.font(.title)
+                bgAndTrend(context: context, size: .expanded).0.font(.title)
                 Spacer()
                 VStack(alignment: .trailing, spacing: 5) {
                     changeLabel(context: context).font(.title3)
@@ -104,7 +121,7 @@ struct LiveActivity: Widget {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    bgAndTrend(context: context, narrow: false).0.font(.title2).padding(.leading, 5)
+                    bgAndTrend(context: context, size: .expanded).0.font(.title2).padding(.leading, 5)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     changeLabel(context: context).font(.title2).padding(.trailing, 5)
@@ -119,11 +136,11 @@ struct LiveActivity: Widget {
                     )
                 }
             } compactLeading: {
-                bgAndTrend(context: context, narrow: false).0.padding(.leading, 5)
+                bgAndTrend(context: context, size: .compact).0.padding(.leading, 4)
             } compactTrailing: {
-                changeLabel(context: context).padding(.trailing, 5)
+                changeLabel(context: context).padding(.trailing, 4)
             } minimal: {
-                let (_label, characterCount) = bgAndTrend(context: context, narrow: true)
+                let (_label, characterCount) = bgAndTrend(context: context, size: .minimal)
 
                 let label = _label.padding(.leading, 7).padding(.trailing, 3)
 
@@ -138,6 +155,8 @@ struct LiveActivity: Widget {
             .widgetURL(URL(string: "freeaps-x://"))
             .keylineTint(Color.purple)
             .contentMargins(.horizontal, 0, for: .minimal)
+            .contentMargins(.trailing, 0, for: .compactLeading)
+            .contentMargins(.leading, 0, for: .compactTrailing)
         }
     }
 }
