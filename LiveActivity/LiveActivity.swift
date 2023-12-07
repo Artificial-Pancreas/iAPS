@@ -32,7 +32,11 @@ struct LiveActivity: Widget {
     private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
         let text = Text("Updated: \(dateFormatter.string(from: context.state.date))")
         if context.isStale {
-            return text.bold().foregroundStyle(.red)
+            if #available(iOSApplicationExtension 17.0, *) {
+                return text.bold().foregroundStyle(.red)
+            } else {
+                return text.bold().foregroundColor(.red)
+            }
         } else {
             return text
         }
@@ -193,6 +197,7 @@ private extension LiveActivityAttributes.ContentState {
     }
 }
 
+@available(iOS 17.0, iOSApplicationExtension 17.0, *)
 #Preview("Notification", as: .content, using: LiveActivityAttributes.preview) {
     LiveActivity()
 } contentStates: {
