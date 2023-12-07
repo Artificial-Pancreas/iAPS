@@ -11,6 +11,7 @@ struct PreviewChart: View {
     private var tirFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
+        formatter.roundingMode = .halfUp
         return formatter
     }
 
@@ -102,16 +103,6 @@ struct PreviewChart: View {
         }
 
         return HStack {
-            /*
-             HStack {
-             Text("Time In Range")
-             if let percent = tirFormatter.string(from: fetched[1].decimal as NSNumber), !percent.contains("NaN") {
-             Text(percent + "%")
-             }
-             }.font(.previewHeadline).padding(.top, 10).padding(.leading, 20)
-
-             */
-
             VStack {
                 Chart(data) { item in
                     BarMark(
@@ -122,7 +113,7 @@ struct PreviewChart: View {
                     .foregroundStyle(by: .value("Group", item.group))
 
                     .annotation(position: .trailing) {
-                        if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
+                        if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0.5 {
                             HStack {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
@@ -132,7 +123,7 @@ struct PreviewChart: View {
                         } else if item.group == NSLocalizedString(
                             "Low",
                             comment: ""
-                        ), item.percentage > 0 {
+                        ), item.percentage > 0.5 {
                             HStack {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
@@ -142,7 +133,7 @@ struct PreviewChart: View {
                         } else if item.group == NSLocalizedString(
                             "High",
                             comment: ""
-                        ), item.percentage > 0 {
+                        ), item.percentage > 0.5 {
                             HStack {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
@@ -152,7 +143,7 @@ struct PreviewChart: View {
                         } else if item.group == NSLocalizedString(
                             "Very High",
                             comment: ""
-                        ), item.percentage > 0 {
+                        ), item.percentage > 0.5 {
                             HStack {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
@@ -163,7 +154,7 @@ struct PreviewChart: View {
                         } else if item.group == NSLocalizedString(
                             "Very Low",
                             comment: ""
-                        ), item.percentage > 0 {
+                        ), item.percentage > 0.5 {
                             HStack {
                                 Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                                 Text(item.group)
@@ -214,7 +205,7 @@ struct PreviewChart: View {
              }.frame(maxHeight: 130)
               */
 
-        }.padding(.top, 10).padding(.leading, 20)
+        }.padding(.top, 20).padding(.leading, 20)
     }
 
     private func previewTir() -> [(decimal: Decimal, string: String)] {

@@ -272,15 +272,16 @@ extension OverrideProfilesConfig {
                         "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage."
                     )
                 }
-
-                Button("Return to Normal") {
-                    state.cancelProfile()
-                    dismiss()
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .buttonStyle(BorderlessButtonStyle())
-                .disabled(!state.isEnabled)
-                .tint(.red)
+                Section {
+                    Button("Return to Normal") {
+                        state.cancelProfile()
+                        dismiss()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .disabled(!state.isEnabled)
+                    .tint(.red)
+                } footer: { Text("").padding(.bottom, 150) }
             }
             .onAppear(perform: configureView)
             .onAppear { state.savedSettings() }

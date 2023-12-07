@@ -593,7 +593,7 @@ extension Home {
                         mainChart
                     }
                 }
-                .frame(minHeight: UIScreen.main.bounds.height / 2.5)
+                .frame(minHeight: UIScreen.main.bounds.height / 2)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
