@@ -10,8 +10,8 @@ struct PreviewChart: View {
 
     private var tirFormatter: NumberFormatter {
         let formatter = NumberFormatter()
-        formatter.numberStyle = .none
-        formatter.roundingMode = .halfUp
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
         return formatter
     }
 
@@ -111,21 +111,27 @@ struct PreviewChart: View {
                         width: .fixed(60)
                     )
                     .foregroundStyle(by: .value("Group", item.group))
-
                     .annotation(position: .trailing) {
-                        if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0.5 {
+                        if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
                             HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                if item.percentage < 1 {
+                                    Text("< 1%")
+                                } else {
+                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                }
                                 Text(item.group)
                             }.font(.previewNormal)
                                 .padding(.leading, 20)
-
                         } else if item.group == NSLocalizedString(
                             "Low",
                             comment: ""
-                        ), item.percentage > 0.5 {
+                        ), item.percentage > 0.0 {
                             HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                if item.percentage < 1 {
+                                    Text("< 1%")
+                                } else {
+                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                }
                                 Text(item.group)
                             }
                             .font(.previewSmall)
@@ -133,9 +139,13 @@ struct PreviewChart: View {
                         } else if item.group == NSLocalizedString(
                             "High",
                             comment: ""
-                        ), item.percentage > 0.5 {
+                        ), item.percentage > 0 {
                             HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                if item.percentage < 1 {
+                                    Text("< 1%")
+                                } else {
+                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                }
                                 Text(item.group)
                             }
                             .font(.previewSmall)
@@ -143,9 +153,13 @@ struct PreviewChart: View {
                         } else if item.group == NSLocalizedString(
                             "Very High",
                             comment: ""
-                        ), item.percentage > 0.5 {
+                        ), item.percentage > 0 {
                             HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                if item.percentage < 1 {
+                                    Text("< 1%")
+                                } else {
+                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                }
                                 Text(item.group)
                             }
                             .offset(x: 0, y: -5)
@@ -154,9 +168,13 @@ struct PreviewChart: View {
                         } else if item.group == NSLocalizedString(
                             "Very Low",
                             comment: ""
-                        ), item.percentage > 0.5 {
+                        ), item.percentage > 0 {
                             HStack {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                if item.percentage < 1 {
+                                    Text("< 1%")
+                                } else {
+                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                                }
                                 Text(item.group)
                             }
                             .offset(x: 0, y: 5)
@@ -191,19 +209,6 @@ struct PreviewChart: View {
                 .padding(.bottom, 15)
                 .frame(maxWidth: UIScreen.main.bounds.width / 5, alignment: .leading)
             }.frame(maxHeight: 130)
-            /*
-             VStack(alignment: .leading) {
-                 ForEach(data.reversed()) { data in
-                     if data.percentage > 0, data.group != "Separator" {
-                         HStack {
-                             Text(data.group)
-                                 .font(data.group != NSLocalizedString("In Range", comment: "") ? .previewSmall : .previewNormal)
-                             Text((tirFormatter.string(for: data.percentage) ?? "") + " %")
-                         }
-                     }
-                 }
-             }.frame(maxHeight: 130)
-              */
 
         }.padding(.top, 20).padding(.leading, 20)
     }

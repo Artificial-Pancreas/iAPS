@@ -389,12 +389,7 @@ extension Home {
                     .frame(maxHeight: 40).padding(8)
                     .background(
                         button.active ?
-                            (
-                                colorScheme == .dark ? Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196) :
-                                    Color.white
-                            ) :
-                            Color
-                            .clear
+                            (colorScheme == .dark ? .blueComplicationBackground: Color.white) : Color.clear
                     )
                     .cornerRadius(20)
                 }
@@ -673,7 +668,6 @@ extension Home {
                             preview
                         }
                     }
-
                     buttonPanel()
                         .padding(
                             .bottom,
