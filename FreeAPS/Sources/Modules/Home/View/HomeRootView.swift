@@ -156,52 +156,6 @@ extension Home {
             )
         }
 
-        var profileView: some View {
-            HStack {
-                if let override = fetchedPercent.first {
-                    if override.enabled {
-                        if override.isPreset {
-                            let profile = fetchedProfiles.first(where: { $0.id == override.id })
-                            if let currentProfile = profile {
-                                Image(systemName: "person.fill")
-                                    .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
-                                    .symbolRenderingMode(.palette)
-                                    .foregroundStyle(.purple)
-                                if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
-                                   name != "\u{0022}\u{0022}"
-                                {
-                                    Text(name).font(.statusFont)
-                                } else {
-                                    let lenght = (currentProfile.name ?? "").count
-                                    if lenght < 7 {
-                                        Text(currentProfile.name ?? "").font(.statusFont)
-                                    } else {
-                                        Text((currentProfile.name ?? "").prefix(5)).font(.statusFont)
-                                    }
-                                }
-                            }
-                        } else {
-                            Image(systemName: "person.fill")
-                                .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.purple)
-                            Text(override.percentage.formatted() + " %")
-                        }
-                    } else {
-                        Image(systemName: "person.fill")
-                            .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.green)
-                    }
-                } else {
-                    Image(systemName: "person.fill")
-                        .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.green)
-                }
-            }
-        }
-
         var tempBasalString: String? {
             guard let tempRate = state.tempRate else {
                 return nil
@@ -389,7 +343,7 @@ extension Home {
                     .frame(maxHeight: 40).padding(8)
                     .background(
                         button.active ?
-                            (colorScheme == .dark ? .blueComplicationBackground: Color.white) : Color.clear
+                            (colorScheme == .dark ? .blueComplicationBackground : Color.white) : Color.clear
                     )
                     .cornerRadius(20)
                 }
@@ -411,7 +365,6 @@ extension Home {
                         .ignoresSafeArea()
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                 }
-
                 MainChartView(
                     glucose: $state.glucose,
                     isManual: $state.isManual,
@@ -645,6 +598,52 @@ extension Home {
                 }
         }
 
+        var profileView: some View {
+            HStack {
+                if let override = fetchedPercent.first {
+                    if override.enabled {
+                        if override.isPreset {
+                            let profile = fetchedProfiles.first(where: { $0.id == override.id })
+                            if let currentProfile = profile {
+                                Image(systemName: "person.fill")
+                                    .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.purple)
+                                if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
+                                   name != "\u{0022}\u{0022}"
+                                {
+                                    Text(name).font(.statusFont)
+                                } else {
+                                    let lenght = (currentProfile.name ?? "").count
+                                    if lenght < 7 {
+                                        Text(currentProfile.name ?? "").font(.statusFont)
+                                    } else {
+                                        Text((currentProfile.name ?? "").prefix(5)).font(.statusFont)
+                                    }
+                                }
+                            }
+                        } else {
+                            Image(systemName: "person.fill")
+                                .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.purple)
+                            Text(override.percentage.formatted() + " %")
+                        }
+                    } else {
+                        Image(systemName: "person.fill")
+                            .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.green)
+                    }
+                } else {
+                    Image(systemName: "person.fill")
+                        .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.green)
+                }
+            }
+        }
+
         var body: some View {
             GeometryReader { geo in
                 VStack {
@@ -675,11 +674,7 @@ extension Home {
                         )
                 }
             }
-            .onAppear {
-                configureView {
-                    highlightButtons()
-                }
-            }
+            .onAppear { configureView { highlightButtons() } }
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)

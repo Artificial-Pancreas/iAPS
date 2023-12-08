@@ -13,6 +13,7 @@ extension Dynamic {
         @Published var tddAdjBasal: Bool = false
         @Published var threshold_setting: Decimal = 65
         @Published var unit: GlucoseUnits = .mmolL
+        @Published var useBlue: Bool = false
 
         var preferences: Preferences {
             settingsManager.preferences

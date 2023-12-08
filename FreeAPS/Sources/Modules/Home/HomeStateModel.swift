@@ -68,6 +68,7 @@ extension Home {
         @Published var standing: Bool = false
         @Published var preview: Bool = true
         @Published var displayTimeButtons: Bool = false
+        @Published var useBlue: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -107,6 +108,7 @@ extension Home {
             thresholdLines = settingsManager.settings.rulerMarks
             tins = settingsManager.settings.tins
             displayTimeButtons = settingsManager.settings.displayTimeButtons
+            useBlue = settingsManager.settings.useBlue
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -441,6 +443,7 @@ extension Home.StateModel:
         thresholdLines = settingsManager.settings.rulerMarks
         tins = settingsManager.settings.tins
         displayTimeButtons = settingsManager.settings.displayTimeButtons
+        useBlue = settingsManager.settings.useBlue
 
         setupGlucose()
     }

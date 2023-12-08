@@ -74,7 +74,8 @@ struct LinearGradientBackGround: View {
         )
             :
             LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-        return colorBackground
+        // return colorBackground
+        return colorScheme == .dark ? Color.black : Color.white
     }
 }
 
