@@ -305,17 +305,19 @@ extension Home {
                     Text("Max IOB: 0").font(.statusFont).foregroundColor(.orange).padding(.trailing, 20)
                 }
 
-                if let progress = state.bolusProgress {
-                    HStack {
-                        Text("Bolusing")
-                            .font(.system(size: 12, weight: .bold)).foregroundColor(colorScheme == .dark ? .primary : .insulin)
-                        ProgressView(value: Double(progress))
-                            .progressViewStyle(BolusProgressViewStyle())
-                    }
-                    .onTapGesture {
-                        state.cancelBolus()
-                    }
-                }
+                /*
+                 if let progress = state.bolusProgress {
+                     HStack {
+                         Text("Bolusing")
+                             .font(.system(size: 12, weight: .bold)).foregroundColor(colorScheme == .dark ? .primary : .insulin)
+                         ProgressView(value: Double(progress))
+                             .progressViewStyle(BolusProgressViewStyle())
+                     }
+                     .onTapGesture {
+                         state.cancelBolus()
+                     }
+                 }
+                 */
 
                 if let eventualBG = state.eventualBG {
                     Image(systemName: "arrow.forward")
@@ -644,6 +646,19 @@ extension Home {
             }
         }
 
+        func bolusProgressView(progress: Decimal) -> some View {
+            HStack {
+                Text("Bolusing")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(.insulin)
+                ProgressView(value: Double(progress))
+                    .progressViewStyle(BolusProgressViewStyle())
+            }
+            .onTapGesture {
+                state.cancelBolus()
+            }
+        }
+
         var body: some View {
             GeometryReader { geo in
                 VStack {
@@ -658,6 +673,9 @@ extension Home {
                             }.padding(.top, 60)
                             if state.displayTimeButtons {
                                 timeInterval
+                            }
+                            if let progress = state.bolusProgress {
+                                bolusProgressView(progress: progress)
                             }
                             chart
                             HStack {
