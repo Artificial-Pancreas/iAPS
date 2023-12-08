@@ -42,8 +42,9 @@ struct UseCustomBackGround: ViewModifier {
     let test = LinearGradientBackGround()
     func body(content: Content) -> some View {
         content
-            .scrollContentBackground(.hidden)
-            .background(test).ignoresSafeArea()
+            // .scrollContentBackground(.hidden)
+            // .background(test).ignoresSafeArea()
+            .ignoresSafeArea()
     }
 }
 
@@ -51,7 +52,8 @@ struct UseCustomBackGroundForPumpManagers: ViewModifier {
     let test = LinearGradientBackGround()
     func body(content: Content) -> some View {
         content
-            .background(test).ignoresSafeArea()
+            // .background(test).ignoresSafeArea()
+            .ignoresSafeArea()
     }
 }
 

@@ -51,7 +51,6 @@ struct AddShadow: ViewModifier {
 
 struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
-
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(
@@ -74,8 +73,7 @@ struct LinearGradientBackGround: View {
         )
             :
             LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-        // return colorBackground
-        return colorScheme == .dark ? Color.black : Color.white
+        return colorBackground
     }
 }
 
