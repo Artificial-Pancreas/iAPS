@@ -55,7 +55,7 @@ struct PumpView: View {
                         )
                         .font(.statusFont).bold()
                     }
-                }
+                }.padding(.leading, 20)
             }
 
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
@@ -67,7 +67,7 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 15)
                         .foregroundColor(batteryColor)
-                }
+                }.padding(.leading, 20)
             }
 
             if let date = expiresAtDate {
@@ -82,7 +82,7 @@ struct PumpView: View {
                     let timeLeft = date.timeIntervalSince(timerDate)
                     Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.statusFont).fontWeight(.bold)
                         .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
-                }
+                }.padding(.leading, 20)
             }
         } // .padding(.horizontal)
     }

@@ -85,7 +85,7 @@ struct CurrentGlucoseView: View {
                             } ?? "--"
                     )
                     .font(.extraSmall).foregroundColor(colorScheme == .dark ? Color.white.opacity(0.9) : Color.secondary)
-                }.frame(alignment: .top)
+                }
             }
         }
         .onChange(of: recentGlucose?.direction) { newDirection in
@@ -145,7 +145,7 @@ struct TrendShape: View {
     let color: Color
 
     var body: some View {
-        HStack(alignment: .center) {
+        HStack {
             ZStack {
                 Group {
                     CircleShape(gradient: gradient)

@@ -305,20 +305,6 @@ extension Home {
                     Text("Max IOB: 0").font(.statusFont).foregroundColor(.orange).padding(.trailing, 20)
                 }
 
-                /*
-                 if let progress = state.bolusProgress {
-                     HStack {
-                         Text("Bolusing")
-                             .font(.system(size: 12, weight: .bold)).foregroundColor(colorScheme == .dark ? .primary : .insulin)
-                         ProgressView(value: Double(progress))
-                             .progressViewStyle(BolusProgressViewStyle())
-                     }
-                     .onTapGesture {
-                         state.cancelBolus()
-                     }
-                 }
-                 */
-
                 if let eventualBG = state.eventualBG {
                     Image(systemName: "arrow.forward")
                     HStack {
@@ -513,7 +499,7 @@ extension Home {
                 .overlay(loopView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
-                .padding(.bottom, 10)
+                // .padding(.bottom, 10)
                 .onTapGesture {
                     state.isStatusPopupPresented = true
                 }.onLongPressGesture {
@@ -529,7 +515,7 @@ extension Home {
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
-                .padding(.bottom, 10)
+                // .padding(.bottom, 10)
                 .onTapGesture {
                     state.showModal(for: .overrideProfilesConfig)
                 }
@@ -558,33 +544,62 @@ extension Home {
                 .padding(.horizontal, 10)
         }
 
-        var carbAndInsulinStatusView: some View {
+        var insulinView: some View {
             HStack {
-                HStack {
-                    Text("IOB").font(.statusFont).foregroundColor(.secondary)
-                    Text(
-                        (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                            NSLocalizedString(" U", comment: "Insulin unit")
+                UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                Gradient.Stop(color: .lightBlue, location: 0.7),
+                                Gradient.Stop(color: .insulin, location: 0.7)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
                     )
-                }
-                HStack {
-                    Text("COB").font(.statusFont).foregroundColor(.secondary)
-                    Text(
-                        (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                            NSLocalizedString(" g", comment: "gram of carbs")
-                    )
-                }
+                    .frame(width: 15, height: 30)
+                    .padding(.trailing, 5)
+
+                Text(
+                    (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                        NSLocalizedString(" U", comment: "Insulin unit")
+                )
             }.font(.statusFont).bold()
         }
 
-        @ViewBuilder private func carbAndInsulinStatus() -> some View {
-            addBackground()
-                .frame(minHeight: 35)
-                .overlay(carbAndInsulinStatusView)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-                .padding(.leading, 10)
+        var carbsView: some View {
+            HStack {
+                UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                Gradient.Stop(color: .lemon, location: 0.7),
+                                Gradient.Stop(color: .loopYellow, location: 0.7)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .frame(width: 15, height: 30)
+                    .padding(.trailing, 5)
+
+                Text(
+                    (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                        NSLocalizedString(" g", comment: "gram of carbs")
+                )
+            }.font(.statusFont).bold()
         }
+
+        /*
+         @ViewBuilder private func carbAndInsulinStatus() -> some View {
+             addBackground()
+                 .frame(minHeight: 35)
+                 .overlay(carbAndInsulinStatusView)
+                 .clipShape(RoundedRectangle(cornerRadius: 15))
+                 .addShadows()
+                 .padding(.leading, 10)
+         }
+          */
 
         var preview: some View {
             addBackground()
@@ -665,12 +680,23 @@ extension Home {
                     ScrollView {
                         VStack(spacing: 10) {
                             ZStack {
-                                loop.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                    .padding(.leading, 10)
-                                glucoseView.padding(.top, 10).padding(.bottom, 40).frame(maxWidth: .infinity, alignment: .center)
-                                currentProfile.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                    .padding(.trailing, 10)
+                                loop.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                                    .padding(.trailing, 10).padding(.bottom, 30)
+                                glucoseView.padding(.top, 10).padding(.bottom, 40).frame(maxWidth: .infinity, alignment: .bottom)
+                                /* currentProfile.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                                 .padding(.top, 20)
+                                 .padding(.trailing, 10) */
                             }.padding(.top, 60)
+
+                            HStack {
+                                insulinView.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
+
+                                carbsView.frame(maxWidth: .infinity, alignment: .center)
+                                // carbAndInsulinStatusView
+                                // loop
+                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
+                            }
+
                             if state.displayTimeButtons {
                                 timeInterval
                             }
@@ -679,7 +705,7 @@ extension Home {
                             }
                             chart
                             HStack {
-                                carbAndInsulinStatus()
+                                // carbAndInsulinStatus()
                                 pumpStatus(geo)
                             }
                             preview
