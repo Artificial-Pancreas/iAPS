@@ -514,7 +514,7 @@ extension Home {
 
         var currentProfile: some View {
             addBackground()
-                .frame(maxWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
+                .frame(maxWidth: UIScreen.main.bounds.width / 2, maxHeight: 35)
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -540,7 +540,7 @@ extension Home {
 
         @ViewBuilder private func pumpStatus(_ geo: GeometryProxy) -> some View {
             addBackground()
-                .frame(minWidth: UIScreen.main.bounds.width * 2 / 3.1, minHeight: 35)
+                .frame(minWidth: UIScreen.main.bounds.width / 2, minHeight: 35)
                 .overlay(status(geo))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()

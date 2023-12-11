@@ -41,11 +41,17 @@ struct PumpView: View {
         HStack {
             if let reservoir = reservoir {
                 HStack {
-                    Image(systemName: "cross.vial")
+                    Image("vial")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 18)
+                        .frame(maxWidth: 10)
                         .foregroundColor(reservoirColor)
+                        .overlay {
+                            UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 2, bottomTrailing: 2))
+                                .fill(Color.insulin)
+                                .frame(maxWidth: 9, maxHeight: 8)
+                                .frame(maxHeight: .infinity, alignment: .bottom)
+                        }
                     if reservoir == 0xDEAD_BEEF {
                         Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).bold()
                     } else {
@@ -55,7 +61,9 @@ struct PumpView: View {
                         )
                         .font(.statusFont).bold()
                     }
-                }.padding(.leading, 20)
+                }
+            } else {
+                Text("No Pump connected").font(.statusFont).foregroundStyle(.secondary)
             }
 
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
@@ -84,7 +92,7 @@ struct PumpView: View {
                         .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
                 }.padding(.leading, 20)
             }
-        } // .padding(.horizontal)
+        }
     }
 
     private func remainingTimeString(time: TimeInterval) -> String {
