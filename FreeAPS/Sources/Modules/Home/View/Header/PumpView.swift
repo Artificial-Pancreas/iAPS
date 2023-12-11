@@ -39,8 +39,32 @@ struct PumpView: View {
 
     var body: some View {
         HStack {
+            if let date = expiresAtDate {
+                HStack {
+                    Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: IAPSconfig.iconSize)
+                    let timeLeft = date.timeIntervalSince(timerDate)
+                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.statusFont).fontWeight(.bold)
+                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
+                }.padding(.leading, 20)
+            }
+
+            if let battery = battery, battery.display ?? false, expiresAtDate == nil {
+                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 && (battery.percent ?? 100) >
+                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
+                HStack {
+                    Image(systemName: "battery.\(percent)")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: 15)
+                        .foregroundColor(batteryColor)
+                }.padding(.leading, 20)
+            }
+
             if let reservoir = reservoir {
-                let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.2), Double(reservoir) / 200.0, 0.9)) * 10
+                let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.2), Double(reservoir) / 200.0, 0.9)) * 12
                 HStack {
                     Image("vial")
                         .resizable()
@@ -65,30 +89,6 @@ struct PumpView: View {
                 }
             } else {
                 Text("No Pump connected").font(.statusFont).foregroundStyle(.secondary)
-            }
-
-            if let date = expiresAtDate {
-                HStack {
-                    Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: IAPSconfig.iconSize)
-                    let timeLeft = date.timeIntervalSince(timerDate)
-                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.statusFont).fontWeight(.bold)
-                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
-                }.padding(.leading, 20)
-            }
-
-            if let battery = battery, battery.display ?? false, expiresAtDate == nil {
-                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 && (battery.percent ?? 100) >
-                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
-                HStack {
-                    Image(systemName: "battery.\(percent)")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 15)
-                        .foregroundColor(batteryColor)
-                }.padding(.leading, 20)
             }
         }
     }

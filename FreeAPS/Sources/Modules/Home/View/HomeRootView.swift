@@ -606,9 +606,9 @@ extension Home {
                     let opacity: CGFloat = colorScheme == .dark ? 0.7 : 0.5
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
-                        let max = Double(settings.preferences.maxIOB)
+                        let max = max(Double(settings.preferences.maxIOB), 1)
                         let fraction: Double = 1 - (substance * 2 / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.15), substance > 0 ? 0.8 : 0.9))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
                         UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
                             .fill(
                                 LinearGradient(
@@ -629,9 +629,9 @@ extension Home {
 
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
-                        let max = Double(settings.preferences.maxCOB)
+                        let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.15), substance > 0 ? 0.8 : 0.9))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
                         UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
                             .fill(
                                 LinearGradient(
@@ -775,15 +775,19 @@ extension Home {
             }
         }
 
-        var headerView: some View {
+        @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 170)
+                .frame(minHeight: 220)
                 .overlay {
                     VStack {
                         ZStack {
                             glucoseView
                         }.padding(.top, 50).padding(.bottom, 10)
                         statusView.padding(.bottom, 10)
+                        HStack {
+                            status(geo).frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20)
+                            currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 30)
+                        }.padding(.bottom, 10)
                     }
                 }
                 .clipShape(Rectangle())
@@ -794,7 +798,7 @@ extension Home {
                 VStack {
                     ScrollView {
                         VStack(spacing: 10) {
-                            headerView // .padding(.bottom, 10)
+                            headerView(geo) // .padding(.bottom, 10)
 
                             if let progress = state.bolusProgress {
                                 bolusProgressView(progress: progress)
@@ -804,10 +808,12 @@ extension Home {
                             if state.displayTimeButtons {
                                 timeInterval.padding(.bottom, 20)
                             }
-                            HStack {
-                                pumpStatus(geo)
-                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
-                            }
+                            /*
+                             HStack {
+                                 pumpStatus(geo)
+                                 currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
+                             }
+                              */
                             preview
                         }
                     }
