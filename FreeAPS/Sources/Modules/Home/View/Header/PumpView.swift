@@ -71,7 +71,7 @@ struct PumpView: View {
                     Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 20)
+                        .frame(maxHeight: IAPSconfig.iconSize)
                     let timeLeft = date.timeIntervalSince(timerDate)
                     Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.statusFont).fontWeight(.bold)
                         .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)

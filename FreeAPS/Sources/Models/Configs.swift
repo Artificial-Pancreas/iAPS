@@ -12,7 +12,7 @@ struct DateFilter {
 
 public enum IAPSconfig {
     static let padding: CGFloat = 60
-    static let iconSize: CGFloat = 16
+    static let iconSize: CGFloat = 20
     static let backgroundOpacity: Double = 0.2
 }
 

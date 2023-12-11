@@ -261,7 +261,16 @@ extension Home {
             if durationString == "", !indefinite {
                 return nil
             }
-            return percentString + comma1 + targetString + comma2 + durationString + comma3 + smbToggleString
+
+            // Make string shorter. To do: remove the rest.
+            if newDuration > 0, !indefinite {
+                return durationString
+            } else if (fetchedPercent.first?.percentage ?? 100) != 100 {
+                return percentString
+            } else {
+                return nil
+            }
+            // return percentString + comma1 + targetString + comma2 + durationString + comma3 + smbToggleString
         }
 
         var infoPanel: some View {
@@ -290,21 +299,6 @@ extension Home {
                         Text("👤 " + overrideString)
                             .font(.system(size: 12))
                             .foregroundColor(.secondary)
-                        Image(systemName: "xmark")
-                            .foregroundStyle(.secondary)
-                    }
-                    .alert(
-                        "Return to Normal?", isPresented: $showCancelAlert,
-                        actions: {
-                            Button("No", role: .cancel) {}
-                            Button("Yes", role: .destructive) {
-                                state.cancelProfile()
-                            }
-                        }, message: { Text("This will change settings back to your normal profile.") }
-                    )
-                    .padding(.trailing, 8)
-                    .onTapGesture {
-                        showCancelAlert = true
                     }
                 }
 
@@ -532,7 +526,10 @@ extension Home {
                         mainChart
                     }
                 }
-                .frame(minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 2 : UIScreen.main.bounds.height / 2.2)
+                .frame(
+                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.7 : UIScreen.main.bounds
+                        .height / 1.9
+                )
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
@@ -676,7 +673,7 @@ extension Home {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
                             if let currentProfile = profile {
                                 Image(systemName: "person.fill")
-                                    .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                                    .frame(maxHeight: IAPSconfig.iconSize)
                                     .symbolRenderingMode(.palette)
                                     .foregroundStyle(.purple)
                                 if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
@@ -691,27 +688,50 @@ extension Home {
                                         Text((currentProfile.name ?? "").prefix(5)).font(.statusFont)
                                     }
                                 }
+
+                                Button { showCancelAlert = true }
+                                label: {
+                                    Image(systemName: "xmark")
+                                        .foregroundStyle(.secondary)
+                                }
                             }
                         } else {
                             Image(systemName: "person.fill")
-                                .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                                .frame(maxHeight: IAPSconfig.iconSize)
                                 .symbolRenderingMode(.palette)
                                 .foregroundStyle(.purple)
+
                             Text(override.percentage.formatted() + " %")
+
+                            Button { showCancelAlert = true }
+                            label: {
+                                Image(systemName: "xmark")
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     } else {
-                        Image(systemName: "person.fill")
-                            .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                        Image(systemName: "person.3.sequence.fill")
                             .symbolRenderingMode(.palette)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.green, .cyan, .purple)
+                            .frame(maxHeight: IAPSconfig.iconSize)
+                            .symbolRenderingMode(.palette)
                     }
                 } else {
-                    Image(systemName: "person.fill")
-                        .frame(maxWidth: IAPSconfig.iconSize, maxHeight: IAPSconfig.iconSize)
+                    Image(systemName: "person.3.sequence.fill")
                         .symbolRenderingMode(.palette)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(.green, .cyan, .purple)
+                        .frame(maxHeight: IAPSconfig.iconSize)
+                        .symbolRenderingMode(.palette)
                 }
-            }
+            }.alert(
+                "Return to Normal?", isPresented: $showCancelAlert,
+                actions: {
+                    Button("No", role: .cancel) {}
+                    Button("Yes", role: .destructive) {
+                        state.cancelProfile()
+                    }
+                }, message: { Text("This will change settings back to your normal profile.") }
+            )
         }
 
         func bolusProgressView(progress: Decimal) -> some View {
@@ -766,11 +786,10 @@ extension Home {
                             if let progress = state.bolusProgress {
                                 bolusProgressView(progress: progress)
                             }
-
                             chart
 
                             if state.displayTimeButtons {
-                                timeInterval
+                                timeInterval.padding(.bottom, 20)
                             }
                             HStack {
                                 pumpStatus(geo)
