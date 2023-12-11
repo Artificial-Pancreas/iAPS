@@ -514,7 +514,7 @@ extension Home {
 
         var currentProfile: some View {
             addBackground()
-                .frame(maxWidth: UIScreen.main.bounds.width / 2, maxHeight: 35)
+                .frame(maxWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -593,16 +593,17 @@ extension Home {
         var carbsAndInsulinView: some View {
             HStack(spacing: 20) {
                 if let settings = state.settingsManager {
+                    let opacity: CGFloat = colorScheme == .dark ? 0.7 : 0.5
                     HStack {
-                        let insulin = Double(state.suggestion?.iob ?? 0)
+                        let substance = Double(state.suggestion?.iob ?? 0)
                         let max = Double(settings.preferences.maxIOB)
-                        let fraction: Double = 1 - (insulin / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.15), insulin > 0 ? 0.9 : 0.95))
+                        let fraction: Double = 1 - (substance * 2 / max)
+                        let fill = CGFloat(min(Swift.max(fraction, 0.15), substance > 0 ? 0.8 : 0.9))
                         UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
                             .fill(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .white.opacity(0.5), location: fill),
+                                        Gradient.Stop(color: .white.opacity(opacity), location: fill),
                                         Gradient.Stop(color: .insulin, location: fill)
                                     ]),
                                     startPoint: .top,
@@ -617,15 +618,15 @@ extension Home {
                     }
 
                     HStack {
-                        let carbs = Double(state.suggestion?.cob ?? 0)
+                        let substance = Double(state.suggestion?.cob ?? 0)
                         let max = Double(settings.preferences.maxCOB)
-                        let fraction: Double = 1 - (carbs / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.15), carbs > 0 ? 0.9 : 0.95))
+                        let fraction: Double = 1 - (substance / max)
+                        let fill = CGFloat(min(Swift.max(fraction, 0.15), substance > 0 ? 0.8 : 0.9))
                         UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
                             .fill(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .white.opacity(0.5), location: fill),
+                                        Gradient.Stop(color: .white.opacity(opacity), location: fill),
                                         Gradient.Stop(color: .loopYellow, location: fill)
                                     ]),
                                     startPoint: .top,

@@ -66,6 +66,18 @@ struct PumpView: View {
                 Text("No Pump connected").font(.statusFont).foregroundStyle(.secondary)
             }
 
+            if let date = expiresAtDate {
+                HStack {
+                    Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: 20)
+                    let timeLeft = date.timeIntervalSince(timerDate)
+                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.statusFont).fontWeight(.bold)
+                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
+                }.padding(.leading, 20)
+            }
+
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 && (battery.percent ?? 100) >
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
@@ -75,21 +87,6 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 15)
                         .foregroundColor(batteryColor)
-                }.padding(.leading, 20)
-            }
-
-            if let date = expiresAtDate {
-                HStack {
-                    Image(systemName: "timer")
-                        .resizable()
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.primary, timerColor)
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 18)
-
-                    let timeLeft = date.timeIntervalSince(timerDate)
-                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.statusFont).fontWeight(.bold)
-                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
                 }.padding(.leading, 20)
             }
         }
