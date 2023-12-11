@@ -161,12 +161,14 @@ struct MainChartView: View {
 
     var body: some View {
         GeometryReader { geo in
-            ZStack(alignment: .leading) {
+            ZStack {
                 yGridView(fullSize: geo.size)
                 mainScrollView(fullSize: geo.size)
                 glucoseLabelsView(fullSize: geo.size)
                 if legendVisible {
-                    legendPanel.padding(.bottom, 120)
+                    legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                        .padding(.trailing, 10)
+                        .padding(.top, 20)
                 }
             }
             .onTapGesture {
@@ -194,14 +196,7 @@ struct MainChartView: View {
 
     var legendPanel: some View {
         ZStack {
-            HStack(alignment: .center) {
-                Spacer()
-
-                Group {
-                    Circle().fill(Color.loopGreen).frame(width: 8, height: 8)
-                    Text("BG")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGreen)
-                }
+            HStack {
                 Group {
                     Circle().fill(Color.insulin).frame(width: 8, height: 8)
                         .padding(.leading, 8)
@@ -226,9 +221,7 @@ struct MainChartView: View {
                     Text("UAM")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
                 }
-                Spacer()
             }
-            .frame(maxWidth: .infinity)
         }
     }
 
