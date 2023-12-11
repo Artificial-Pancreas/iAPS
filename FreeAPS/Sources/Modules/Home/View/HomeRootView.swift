@@ -430,7 +430,7 @@ extension Home {
                 Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                 label: {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image("carbs")
+                        Image(systemName: "fork.knife")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
