@@ -31,9 +31,13 @@ extension StatConfig {
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
                     Toggle("Display Chart Threshold lines for Low and High", isOn: $state.rulerMarks)
                     Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
-                    Toggle("Enable total insulin in scope", isOn: $state.tins)
                     Toggle("Display Buttons for Time Interval", isOn: $state.displayTimeButtons)
                 } header: { Text("Home Chart settings ") }
+
+                Section {
+                    Toggle("Display Temp Targets Button", isOn: $state.useTargetButton)
+                } header: { Text("Home View Button Panel ") }
+                footer: { Text("In case you're using both profiles and temp targets") }
 
                 Section {
                     HStack {

@@ -54,6 +54,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useLiveActivity: Bool = true
     var displayTimeButtons: Bool = false
     var useBlue: Bool = false
+    var useTargetButton: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -277,6 +278,10 @@ extension FreeAPSSettings: Decodable {
 
         if let useBlue = try? container.decode(Bool.self, forKey: .useBlue) {
             settings.useBlue = useBlue
+        }
+
+        if let useTargetButton = try? container.decode(Bool.self, forKey: .useTargetButton) {
+            settings.useTargetButton = useTargetButton
         }
 
         self = settings

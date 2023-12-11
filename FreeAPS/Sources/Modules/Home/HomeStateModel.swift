@@ -69,6 +69,7 @@ extension Home {
         @Published var preview: Bool = true
         @Published var displayTimeButtons: Bool = false
         @Published var useBlue: Bool = false
+        @Published var useTargetButton: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -109,6 +110,7 @@ extension Home {
             tins = settingsManager.settings.tins
             displayTimeButtons = settingsManager.settings.displayTimeButtons
             useBlue = settingsManager.settings.useBlue
+            useTargetButton = settingsManager.settings.useTargetButton
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -444,6 +446,7 @@ extension Home.StateModel:
         tins = settingsManager.settings.tins
         displayTimeButtons = settingsManager.settings.displayTimeButtons
         useBlue = settingsManager.settings.useBlue
+        useTargetButton = settingsManager.settings.useTargetButton
 
         setupGlucose()
     }

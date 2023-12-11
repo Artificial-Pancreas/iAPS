@@ -40,6 +40,7 @@ struct PumpView: View {
     var body: some View {
         HStack {
             if let reservoir = reservoir {
+                let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.2), Double(reservoir) / 200.0, 0.9)) * 10
                 HStack {
                     Image("vial")
                         .resizable()
@@ -49,7 +50,7 @@ struct PumpView: View {
                         .overlay {
                             UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 2, bottomTrailing: 2))
                                 .fill(Color.insulin)
-                                .frame(maxWidth: 9, maxHeight: 8)
+                                .frame(maxWidth: 9, maxHeight: fill)
                                 .frame(maxHeight: .infinity, alignment: .bottom)
                         }
                     if reservoir == 0xDEAD_BEEF {

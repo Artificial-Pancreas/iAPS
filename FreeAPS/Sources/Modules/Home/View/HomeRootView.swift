@@ -292,8 +292,6 @@ extension Home {
                         .foregroundColor(.secondary)
                 }
 
-                Spacer()
-
                 if let overrideString = overrideString {
                     HStack {
                         Text("👤 " + overrideString)
@@ -423,19 +421,19 @@ extension Home {
                         Image(systemName: "book.pages")
                             .symbolRenderingMode(.hierarchical)
                             .resizable()
-                            .frame(width: 30, height: 30, alignment: .bottom)
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                             .foregroundColor(.secondary)
                             .padding(8)
                     }
-                }
+                }.buttonStyle(.borderless)
                 Spacer()
                 Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                 label: {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image(systemName: "fork.knife")
+                        Image("carbs")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30, alignment: .bottom)
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                             .foregroundColor(.loopYellow)
                             .padding(8)
                         if let carbsReq = state.carbsRequired {
@@ -446,6 +444,19 @@ extension Home {
                                 .background(Capsule().fill(Color.red))
                         }
                     }
+                }.buttonStyle(.borderless)
+                if state.useTargetButton {
+                    Spacer()
+                    Button { state.showModal(for: .addTempTarget) }
+                    label: {
+                        Image("target")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
+                            .padding(8)
+                    }
+                    .foregroundColor(.loopGreen)
+                    .buttonStyle(.borderless)
                 }
                 Spacer()
                 Button {
@@ -455,12 +466,13 @@ extension Home {
                     ))
                 }
                 label: {
-                    Image(systemName: "syringe.fill")
+                    Image("bolus")
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 30, height: 30, alignment: .bottom)
+                        .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                         .padding(8)
                 }
+                .buttonStyle(.borderless)
                 .foregroundColor(.insulin)
                 Spacer()
                 if state.allowManualTemp {
@@ -469,7 +481,7 @@ extension Home {
                         Image("bolus1")
                             .renderingMode(.template)
                             .resizable()
-                            .frame(width: 30, height: 30, alignment: .bottom)
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                             .padding(8)
                     }
                     .foregroundColor(.insulin)
@@ -480,9 +492,10 @@ extension Home {
                     Image(systemName: "slider.horizontal.3")
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 30, height: 30, alignment: .bottom)
+                        .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                         .padding(8)
                 }
+                .buttonStyle(.borderless)
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
@@ -527,8 +540,8 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.7 : UIScreen.main.bounds
-                        .height / 1.9
+                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.62 : UIScreen.main.bounds
+                        .height / 1.85
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
