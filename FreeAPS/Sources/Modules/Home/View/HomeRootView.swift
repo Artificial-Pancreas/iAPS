@@ -602,7 +602,7 @@ extension Home {
                             .fill(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .lightBlue, location: fill),
+                                        Gradient.Stop(color: .white.opacity(0.5), location: fill),
                                         Gradient.Stop(color: .insulin, location: fill)
                                     ]),
                                     startPoint: .top,
@@ -625,7 +625,7 @@ extension Home {
                             .fill(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .carbYellow, location: fill),
+                                        Gradient.Stop(color: .white.opacity(0.5), location: fill),
                                         Gradient.Stop(color: .loopYellow, location: fill)
                                     ]),
                                     startPoint: .top,
