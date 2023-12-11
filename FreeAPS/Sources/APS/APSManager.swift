@@ -1192,19 +1192,15 @@ final class BaseAPSManager: APSManager, Injectable {
                 )
                 storage.save(dailystat, as: file)
                 nightscout.uploadStatistics(dailystat: dailystat)
-                nightscout.uploadPreferences()
 
                 let saveStatsCoreData = StatsData(context: self.coredataContext)
                 saveStatsCoreData.lastrun = Date()
                 try? self.coredataContext.save()
-                print("Test time of statistics computation: \(-1 * now.timeIntervalSinceNow) s")
             }
         }
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
-        let LoopStatsStartedAt = Date()
-
         coredataContext.perform {
             let nLS = LoopStatRecord(context: self.coredataContext)
 
@@ -1216,8 +1212,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
             try? self.coredataContext.save()
         }
-        print("LoopStatRecords: \(loopStatRecord)")
-        print("Test time of LoopStats computation: \(-1 * LoopStatsStartedAt.timeIntervalSinceNow) s")
     }
 
     private func processError(_ error: Error) {

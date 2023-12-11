@@ -49,11 +49,12 @@ extension Settings {
                     Toggle("Debug options", isOn: $state.debugOptions)
                     if state.debugOptions {
                         Group {
-                            Text("NS Upload Profile").onTapGesture {
-                                state.uploadProfile()
+                            HStack {
+                                Text("NS Upload Profile and Settings")
+                                Button("Upload") { state.uploadProfileAndSettings(true) }
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .buttonStyle(.borderedProminent)
                             }
-                            Text("NS Uploaded Profile")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedProfile), from: self)
                         }
                         Group {
                             Text("Preferences")
@@ -126,6 +127,7 @@ extension Settings {
             .navigationTitle("Settings")
             .navigationBarItems(leading: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.automatic)
+            .onDisappear(perform: { state.uploadProfileAndSettings(false) })
         }
     }
 }

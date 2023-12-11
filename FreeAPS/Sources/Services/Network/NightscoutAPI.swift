@@ -1,6 +1,8 @@
 import Combine
 import CommonCrypto
 import Foundation
+import JavaScriptCore
+import Swinject
 
 class NightscoutAPI {
     init(url: URL, secret: String? = nil) {
@@ -27,6 +29,8 @@ class NightscoutAPI {
     let secret: String?
 
     private let service = NetworkService()
+
+    @Injected() private var settingsManager: SettingsManager!
 }
 
 extension NightscoutAPI {
@@ -386,6 +390,30 @@ extension NightscoutAPI {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
         request.httpBody = try! JSONCoding.encoder.encode(prefs)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadSettings(_ settings: NightscoutSettings) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.statusPath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+        request.httpBody = try! JSONCoding.encoder.encode(settings)
         request.httpMethod = "POST"
 
         return service.run(request)
