@@ -38,7 +38,7 @@ struct PumpView: View {
     }
 
     var body: some View {
-        HStack {
+        HStack(spacing: 20) {
             if let date = expiresAtDate {
                 HStack {
                     Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
@@ -52,6 +52,13 @@ struct PumpView: View {
             }
 
             if let battery = battery, battery.display ?? false, expiresAtDate == nil {
+                /*
+                 Image("7xx Small Clear")
+                     .resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .frame(maxWidth: IAPSconfig.iconSize)
+                  */
+
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 && (battery.percent ?? 100) >
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
                 HStack {
@@ -60,7 +67,7 @@ struct PumpView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(maxHeight: 15)
                         .foregroundColor(batteryColor)
-                }.padding(.leading, 20)
+                }
             }
 
             if let reservoir = reservoir {

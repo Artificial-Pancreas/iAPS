@@ -168,7 +168,7 @@ struct MainChartView: View {
                 if legendVisible {
                     legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                         .padding(.trailing, 10)
-                        .padding(.top, 20)
+                        .padding(.top, 5)
                 }
             }
             .onTapGesture {

@@ -540,7 +540,7 @@ extension Home {
                 }
                 .frame(
                     minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.65 : UIScreen.main.bounds
-                        .height / 1.85
+                        .height / 1.87
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
