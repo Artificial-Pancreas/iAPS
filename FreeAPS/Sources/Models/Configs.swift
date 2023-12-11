@@ -13,6 +13,7 @@ struct DateFilter {
 public enum IAPSconfig {
     static let padding: CGFloat = 60
     static let iconSize: CGFloat = 16
+    static let backgroundOpacity: Double = 0.2
 }
 
 extension Font {
@@ -26,7 +27,7 @@ extension Font {
 
     static let suggestionHeadline = Font.custom("SuggestionHeadlineFont", fixedSize: 20)
     static let suggestionError = Font.custom("SuggestionErrorFone", fixedSize: 18)
-    static let suggestionParts = Font.custom("SuggestionPartsFont", fixedSize: 20)
+    static let suggestionParts = Font.custom("SuggestionPartsFont", fixedSize: 17)
     static let suggestionSmallParts = Font.custom("SuggestionSmallPartsFont", fixedSize: 16)
 }
 

@@ -154,6 +154,13 @@ extension Home {
                 lastLoopDate: $state.lastLoopDate,
                 manualTempBasal: $state.manualTempBasal
             )
+            .onTapGesture {
+                state.isStatusPopupPresented.toggle()
+            }.onLongPressGesture {
+                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                impactHeavy.impactOccurred()
+                state.runLoop()
+            }
         }
 
         var tempBasalString: String? {
@@ -486,11 +493,7 @@ extension Home {
             }
             .padding(.horizontal, 24)
             .frame(height: UIScreen.main.bounds.height / 12)
-            .background(
-                colorScheme == .dark ?
-                    Color(.darkerBlue)
-                    : .gray.opacity(0.25)
-            )
+            .background(.gray.opacity(IAPSconfig.backgroundOpacity))
         }
 
         var loop: some View {
@@ -511,7 +514,7 @@ extension Home {
 
         var currentProfile: some View {
             addBackground()
-                .frame(maxWidth: UIScreen.main.bounds.width / 4, maxHeight: 35)
+                .frame(maxWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -537,7 +540,7 @@ extension Home {
 
         @ViewBuilder private func pumpStatus(_ geo: GeometryProxy) -> some View {
             addBackground()
-                .frame(minHeight: 35)
+                .frame(minWidth: UIScreen.main.bounds.width * 2 / 3.1, minHeight: 35)
                 .overlay(status(geo))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -546,6 +549,10 @@ extension Home {
 
         var insulinView: some View {
             HStack {
+                Text(
+                    (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
+                        NSLocalizedString(" U", comment: "Insulin unit")
+                )
                 UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
                     .fill(
                         LinearGradient(
@@ -558,17 +565,16 @@ extension Home {
                         )
                     )
                     .frame(width: 15, height: 30)
-                    .padding(.trailing, 5)
-
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                        NSLocalizedString(" U", comment: "Insulin unit")
-                )
             }.font(.statusFont).bold()
         }
 
         var carbsView: some View {
             HStack {
+                Text(
+                    (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
+                        NSLocalizedString(" g", comment: "gram of carbs")
+                )
+
                 UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
                     .fill(
                         LinearGradient(
@@ -581,25 +587,71 @@ extension Home {
                         )
                     )
                     .frame(width: 15, height: 30)
-                    .padding(.trailing, 5)
-
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                        NSLocalizedString(" g", comment: "gram of carbs")
-                )
             }.font(.statusFont).bold()
         }
 
-        /*
-         @ViewBuilder private func carbAndInsulinStatus() -> some View {
-             addBackground()
-                 .frame(minHeight: 35)
-                 .overlay(carbAndInsulinStatusView)
-                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                 .addShadows()
-                 .padding(.leading, 10)
-         }
-          */
+        var carbsAndInsulinView: some View {
+            HStack(spacing: 20) {
+                if let settings = state.settingsManager {
+                    HStack {
+                        let insulin = Double(state.suggestion?.iob ?? 0)
+                        let max = Double(settings.preferences.maxIOB)
+                        let fraction: Double = 1 - (insulin / max)
+                        let fill = CGFloat(min(Swift.max(fraction, 0.15), insulin > 0 ? 0.9 : 0.95))
+                        UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
+                            .fill(
+                                LinearGradient(
+                                    gradient: Gradient(stops: [
+                                        Gradient.Stop(color: .lightBlue, location: fill),
+                                        Gradient.Stop(color: .insulin, location: fill)
+                                    ]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                            .frame(width: 10, height: 24)
+                        Text(
+                            numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
+                        ).font(.statusFont).bold()
+                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                    }
+
+                    HStack {
+                        let carbs = Double(state.suggestion?.cob ?? 0)
+                        let max = Double(settings.preferences.maxCOB)
+                        let fraction: Double = 1 - (carbs / max)
+                        let fill = CGFloat(min(Swift.max(fraction, 0.15), carbs > 0 ? 0.9 : 0.95))
+                        UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
+                            .fill(
+                                LinearGradient(
+                                    gradient: Gradient(stops: [
+                                        Gradient.Stop(color: .carbYellow, location: fill),
+                                        Gradient.Stop(color: .loopYellow, location: fill)
+                                    ]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                            .frame(width: 10, height: 24)
+                        Text(
+                            numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
+                        ).font(.statusFont).bold()
+                        Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+
+        var isfView: some View {
+            HStack {
+                if let suggestion = state.suggestion {
+                    // Image(systemName: "arrow.down").foregroundStyle(Color.insulin)
+                    Text("ISF").font(.statusFont).foregroundStyle(.secondary)
+                    let isf = fetchedTargetFormatter.string(from: (suggestion.isf ?? 0) as NSNumber) ?? ""
+                    Text(isf)
+                }
+            }
+        }
 
         var preview: some View {
             addBackground()
@@ -664,14 +716,43 @@ extension Home {
         func bolusProgressView(progress: Decimal) -> some View {
             HStack {
                 Text("Bolusing")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundColor(.insulin)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.primary)
                 ProgressView(value: Double(progress))
                     .progressViewStyle(BolusProgressViewStyle())
+                Image(systemName: "x.circle.fill")
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.white, .blue)
             }
             .onTapGesture {
                 state.cancelBolus()
             }
+        }
+
+        var statusView: some View {
+            HStack {
+                carbsAndInsulinView
+                    .padding(.leading, 10)
+                isfView
+                    .padding(.leading, 20)
+                loopView
+                    .padding(.leading, 20)
+                    .padding(.trailing, 10)
+            }
+        }
+
+        var headerView: some View {
+            addHeaderBackground()
+                .frame(minHeight: 170)
+                .overlay {
+                    VStack {
+                        ZStack {
+                            glucoseView
+                        }.padding(.top, 50).padding(.bottom, 10)
+                        statusView.padding(.bottom, 10)
+                    }
+                }
+                .clipShape(Rectangle())
         }
 
         var body: some View {
@@ -679,34 +760,20 @@ extension Home {
                 VStack {
                     ScrollView {
                         VStack(spacing: 10) {
-                            ZStack {
-                                loop.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                    .padding(.trailing, 10).padding(.bottom, 30)
-                                glucoseView.padding(.top, 10).padding(.bottom, 40).frame(maxWidth: .infinity, alignment: .bottom)
-                                /* currentProfile.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                                 .padding(.top, 20)
-                                 .padding(.trailing, 10) */
-                            }.padding(.top, 60)
+                            headerView // .padding(.bottom, 10)
 
-                            HStack {
-                                insulinView.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
-
-                                carbsView.frame(maxWidth: .infinity, alignment: .center)
-                                // carbAndInsulinStatusView
-                                // loop
-                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
+                            if let progress = state.bolusProgress {
+                                bolusProgressView(progress: progress)
                             }
+
+                            chart
 
                             if state.displayTimeButtons {
                                 timeInterval
                             }
-                            if let progress = state.bolusProgress {
-                                bolusProgressView(progress: progress)
-                            }
-                            chart
                             HStack {
-                                // carbAndInsulinStatus()
                                 pumpStatus(geo)
+                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
                             }
                             preview
                         }
@@ -716,7 +783,7 @@ extension Home {
                             .bottom,
                             UIApplication.shared.windows[0].safeAreaInsets.bottom > 0 ? geo.safeAreaInsets.bottom + 15 : 0
                         )
-                }
+                }.background(.gray.opacity(IAPSconfig.backgroundOpacity))
             }
             .onAppear { configureView { highlightButtons() } }
             .navigationTitle("Home")

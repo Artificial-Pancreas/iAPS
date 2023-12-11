@@ -26,8 +26,8 @@ struct LoopView: View {
         HStack {
             ZStack {
                 Circle()
-                    .strokeBorder(color, lineWidth: 2)
-                    .frame(width: rect.width, height: rect.height, alignment: .bottom)
+                    .strokeBorder(color, lineWidth: 2.5)
+                    .frame(width: rect.width, height: rect.height)
                     .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
                 if isLooping {
                     ProgressView()
@@ -39,7 +39,8 @@ struct LoopView: View {
             } else if manualTempBasal {
                 Text("Manual").font(.extraSmall).padding(.leading, 5)
             } else if actualSuggestion?.timestamp != nil {
-                Text(timeString).foregroundColor(.secondary).padding(.leading, 5)
+                Text(timeString).font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
+
             } else {
                 Text("--").font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
             }

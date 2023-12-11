@@ -60,6 +60,14 @@ struct ColouredRoundedBackground: View {
     }
 }
 
+struct HeaderBackground: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        Rectangle()
+            .fill(.gray.opacity(IAPSconfig.backgroundOpacity))
+    }
+}
+
 struct LinearGradientBackGround: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
@@ -176,6 +184,10 @@ extension View {
 
     func addBackground() -> some View {
         ColouredRoundedBackground()
+    }
+
+    func addHeaderBackground() -> some View {
+        HeaderBackground()
     }
 
     func linearColour() -> some View {

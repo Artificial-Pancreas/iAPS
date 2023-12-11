@@ -11,6 +11,10 @@ struct CurrentGlucoseView: View {
 
     @State private var rotationDegrees: Double = 0.0
 
+    enum Config {
+        static let size: CGFloat = 100
+    }
+
     @Environment(\.colorScheme) var colorScheme
 
     private var glucoseFormatter: NumberFormatter {
@@ -49,14 +53,10 @@ struct CurrentGlucoseView: View {
     }
 
     var body: some View {
-        let triangleColor = Color(red: 0.262745098, green: 0.7333333333, blue: 0.9137254902)
-
         ZStack {
-            TrendShape(gradient: .angularGradientIAPS, color: triangleColor)
-                .rotationEffect(.degrees(rotationDegrees))
-
             VStack(alignment: .center) {
-                HStack {
+                // HStack {
+                ZStack {
                     Text(
                         (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
                             .map {
@@ -64,8 +64,12 @@ struct CurrentGlucoseView: View {
                                     .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
                             ?? "--"
                     )
-                    .font(.system(size: 40, weight: .bold))
+                    .font(.system(size: 50, weight: .semibold))
                     .foregroundColor(alarm == nil ? .primary : .loopRed)
+                    .frame(maxWidth: .infinity, alignment: .center)
+
+                    image.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 100)
+                        .font(.system(size: 25, weight: .semibold))
                 }
                 HStack {
                     let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
@@ -76,7 +80,7 @@ struct CurrentGlucoseView: View {
                                 NSLocalizedString("min", comment: "Short form for minutes") + " "
                         )
                     )
-                    .font(.extraSmall).foregroundColor(colorScheme == .dark ? Color.white.opacity(0.9) : Color.secondary)
+                    .font(.extraSmall).foregroundStyle(.secondary)
 
                     Text(
                         delta
@@ -84,101 +88,35 @@ struct CurrentGlucoseView: View {
                                 deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
                             } ?? "--"
                     )
-                    .font(.extraSmall).foregroundColor(colorScheme == .dark ? Color.white.opacity(0.9) : Color.secondary)
-                }
-            }
-        }
-        .onChange(of: recentGlucose?.direction) { newDirection in
-            withAnimation {
-                switch newDirection {
-                case .doubleUp,
-                     .singleUp,
-                     .tripleUp:
-                    rotationDegrees = -90
-
-                case .fortyFiveUp:
-                    rotationDegrees = -45
-
-                case .flat:
-                    rotationDegrees = 0
-
-                case .fortyFiveDown:
-                    rotationDegrees = 45
-
-                case .doubleDown,
-                     .singleDown,
-                     .tripleDown:
-                    rotationDegrees = 90
-
-                case nil,
-                     .notComputable,
-                     .rateOutOfRange:
-                    rotationDegrees = 0
-
-                default:
-                    rotationDegrees = 0
+                    .font(.extraSmall).foregroundStyle(.secondary)
                 }
             }
         }
     }
-}
 
-struct Triangle: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-
-        let cornerRadius: CGFloat = 8
-
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - cornerRadius))
-        path.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY - cornerRadius), control: CGPoint(x: rect.midX, y: rect.maxY))
-        path.closeSubpath()
-
-        return path
-    }
-}
-
-struct TrendShape: View {
-    @Environment(\.colorScheme) var colorScheme
-
-    let gradient: AngularGradient
-    let color: Color
-
-    var body: some View {
-        HStack {
-            ZStack {
-                Group {
-                    CircleShape(gradient: gradient)
-                    TriangleShape(color: color)
-                }.shadow(color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33), radius: colorScheme == .dark ? 5 : 3)
-                CircleShape(gradient: gradient)
-            }
+    var image: some View {
+        guard let direction = recentGlucose?.direction else {
+            return Image(systemName: "arrow.left.and.right")
         }
-    }
-}
-
-struct CircleShape: View {
-    @Environment(\.colorScheme) var colorScheme
-    let gradient: AngularGradient
-
-    var body: some View {
-        let colorBackground: Color = colorScheme == .dark ? .blueComplicationBackground : Color.white
-
-        Circle()
-            .stroke(gradient, lineWidth: 6)
-            .background(Circle().fill(colorBackground))
-            .frame(width: 135, height: 135)
-    }
-}
-
-struct TriangleShape: View {
-    let color: Color
-
-    var body: some View {
-        Triangle()
-            .fill(color)
-            .frame(width: 40, height: 36)
-            .rotationEffect(.degrees(90))
-            .offset(x: 77)
+        switch direction {
+        case .doubleUp,
+             .singleUp,
+             .tripleUp:
+            return Image(systemName: "arrow.up")
+        case .fortyFiveUp:
+            return Image(systemName: "arrow.up.right")
+        case .flat:
+            return Image(systemName: "arrow.forward")
+        case .fortyFiveDown:
+            return Image(systemName: "arrow.down.forward")
+        case .doubleDown,
+             .singleDown,
+             .tripleDown:
+            return Image(systemName: "arrow.down")
+        case .none,
+             .notComputable,
+             .rateOutOfRange:
+            return Image(systemName: "arrow.left.and.right")
+        }
     }
 }
