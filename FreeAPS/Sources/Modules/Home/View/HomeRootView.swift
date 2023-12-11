@@ -606,7 +606,7 @@ extension Home {
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
-                        let fraction: Double = 1 - (substance * 2 / max)
+                        let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
                         UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
                             .fill(
@@ -620,10 +620,12 @@ extension Home {
                                 )
                             )
                             .frame(width: 10, height: 24)
-                        Text(
-                            numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
-                        ).font(.statusFont).bold()
-                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                        HStack(spacing: 0) {
+                            Text(
+                                numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
+                            ).font(.statusFont).bold()
+                            Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                        }
                     }
 
                     HStack {
@@ -643,10 +645,12 @@ extension Home {
                                 )
                             )
                             .frame(width: 10, height: 24)
-                        Text(
-                            numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
-                        ).font(.statusFont).bold()
-                        Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
+                        HStack(spacing: 0) {
+                            Text(
+                                numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
+                            ).font(.statusFont).bold()
+                            Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
