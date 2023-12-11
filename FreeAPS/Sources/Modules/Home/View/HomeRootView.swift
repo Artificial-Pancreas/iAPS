@@ -274,7 +274,7 @@ extension Home {
         }
 
         var infoPanel: some View {
-            HStack(alignment: .center) {
+            HStack(spacing: 10) {
                 if state.pumpSuspended {
                     Text("Pump suspended")
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
@@ -283,6 +283,7 @@ extension Home {
                     Text(tempBasalString)
                         .font(.system(size: 12, weight: .bold))
                         .foregroundColor(colorScheme == .dark ? .primary : .insulin)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, 8)
                 }
 
@@ -299,14 +300,12 @@ extension Home {
                             .foregroundColor(.secondary)
                     }
                 }
-
                 if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
-                    Text("Max IOB: 0").font(.statusFont).foregroundColor(.orange).padding(.trailing, 20)
+                    Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
                 }
-
                 if let eventualBG = state.eventualBG {
-                    Image(systemName: "arrow.forward")
                     HStack {
+                        Image(systemName: "arrow.forward")
                         Text(
                             fetchedTargetFormatter.string(
                                 from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
@@ -314,6 +313,7 @@ extension Home {
                         ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
                         Text(state.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
                     }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.trailing, 8)
                 }
             }
@@ -489,7 +489,7 @@ extension Home {
                 }
                 Button { state.showModal(for: .settings) }
                 label: {
-                    Image(systemName: "slider.horizontal.3")
+                    Image("settings1")
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
@@ -499,7 +499,7 @@ extension Home {
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
-            .frame(height: UIScreen.main.bounds.height / 12)
+            .frame(height: UIScreen.main.bounds.height / 12.2)
             .background(.gray.opacity(IAPSconfig.backgroundOpacity))
         }
 
@@ -521,11 +521,10 @@ extension Home {
 
         var currentProfile: some View {
             addBackground()
-                .frame(maxWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
+                .frame(minWidth: 60, maxHeight: 35)
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
-                // .padding(.bottom, 10)
                 .onTapGesture {
                     state.showModal(for: .overrideProfilesConfig)
                 }
@@ -540,7 +539,7 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.62 : UIScreen.main.bounds
+                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.65 : UIScreen.main.bounds
                         .height / 1.85
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -550,7 +549,7 @@ extension Home {
 
         @ViewBuilder private func pumpStatus(_ geo: GeometryProxy) -> some View {
             addBackground()
-                .frame(minWidth: UIScreen.main.bounds.width / 2, minHeight: 35)
+                .frame(minWidth: UIScreen.main.bounds.width / 2.7, minHeight: 35)
                 .overlay(status(geo))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -775,19 +774,15 @@ extension Home {
             }
         }
 
-        @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
+        @ViewBuilder private func headerView(_: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 220)
+                .frame(minHeight: 180)
                 .overlay {
                     VStack {
                         ZStack {
                             glucoseView
                         }.padding(.top, 50).padding(.bottom, 10)
                         statusView.padding(.bottom, 10)
-                        HStack {
-                            status(geo).frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20)
-                            currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 30)
-                        }.padding(.bottom, 10)
                     }
                 }
                 .clipShape(Rectangle())
@@ -808,12 +803,12 @@ extension Home {
                             if state.displayTimeButtons {
                                 timeInterval.padding(.bottom, 20)
                             }
-                            /*
-                             HStack {
-                                 pumpStatus(geo)
-                                 currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
-                             }
-                              */
+
+                            HStack {
+                                pumpStatus(geo)
+                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
+                            }
+
                             preview
                         }
                     }
