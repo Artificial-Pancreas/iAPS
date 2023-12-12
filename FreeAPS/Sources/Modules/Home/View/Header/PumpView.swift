@@ -71,7 +71,7 @@ struct PumpView: View {
             }
 
             if let reservoir = reservoir {
-                let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.2), Double(reservoir) / 200.0, 0.9)) * 12
+                let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.15), Double(reservoir) / 200.0, 0.9)) * 12
                 HStack {
                     Image("vial")
                         .resizable()

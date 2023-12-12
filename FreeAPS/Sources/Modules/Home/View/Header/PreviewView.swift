@@ -201,7 +201,7 @@ struct PreviewChart: View {
                         "Very Low",
                         comment: ""
                     ): .darkRed,
-                    "Separator": colorScheme == .dark ? Color.blueComplicationBackground : .white
+                    "Separator": colorScheme == .dark ? .black : .white
                 ])
                 .chartXAxis(.hidden)
                 .chartYAxis(.hidden)

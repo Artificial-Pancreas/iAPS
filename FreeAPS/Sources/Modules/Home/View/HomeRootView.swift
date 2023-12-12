@@ -96,9 +96,11 @@ extension Home {
             return scene
         }
 
-        @ViewBuilder func status(_: GeometryProxy) -> some View {
-            pumpView
-        }
+        /*
+         @ViewBuilder func status(_: GeometryProxy) -> some View {
+             pumpView
+         }
+          */
 
         var glucoseView: some View {
             CurrentGlucoseView(
@@ -519,9 +521,18 @@ extension Home {
                 }
         }
 
+        @ViewBuilder private func pumpStatus(_: GeometryProxy) -> some View {
+            addBackground()
+                .frame(minWidth: UIScreen.main.bounds.width / 1.8, minHeight: 35)
+                .overlay(pumpView)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+        }
+
         var currentProfile: some View {
             addBackground()
-                .frame(minWidth: 60, maxHeight: 35)
+                .frame(minWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -542,15 +553,6 @@ extension Home {
                     minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.65 : UIScreen.main.bounds
                         .height / 1.87
                 )
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-                .padding(.horizontal, 10)
-        }
-
-        @ViewBuilder private func pumpStatus(_ geo: GeometryProxy) -> some View {
-            addBackground()
-                .frame(minWidth: UIScreen.main.bounds.width / 2.7, minHeight: 35)
-                .overlay(status(geo))
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
@@ -608,18 +610,23 @@ extension Home {
                         let max = max(Double(settings.preferences.maxIOB), 1)
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
-                        UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
-                            .fill(
-                                LinearGradient(
-                                    gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .white.opacity(opacity), location: fill),
-                                        Gradient.Stop(color: .insulin, location: fill)
-                                    ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
+                        UnevenRoundedRectangle(
+                            topLeadingRadius: 1,
+                            bottomLeadingRadius: 50,
+                            bottomTrailingRadius: 50,
+                            topTrailingRadius: 1
+                        )
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(stops: [
+                                    Gradient.Stop(color: .white.opacity(opacity), location: fill),
+                                    Gradient.Stop(color: .insulin, location: fill)
+                                ]),
+                                startPoint: .top,
+                                endPoint: .bottom
                             )
-                            .frame(width: 10, height: 24)
+                        )
+                        .frame(width: 10, height: 24)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
@@ -633,18 +640,23 @@ extension Home {
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
-                        UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
-                            .fill(
-                                LinearGradient(
-                                    gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .white.opacity(opacity), location: fill),
-                                        Gradient.Stop(color: .loopYellow, location: fill)
-                                    ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
+                        UnevenRoundedRectangle(
+                            topLeadingRadius: 1,
+                            bottomLeadingRadius: 50,
+                            bottomTrailingRadius: 50,
+                            topTrailingRadius: 1
+                        )
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(stops: [
+                                    Gradient.Stop(color: .white.opacity(opacity), location: fill),
+                                    Gradient.Stop(color: .loopYellow, location: fill)
+                                ]),
+                                startPoint: .top,
+                                endPoint: .bottom
                             )
-                            .frame(width: 10, height: 24)
+                        )
+                        .frame(width: 10, height: 24)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"

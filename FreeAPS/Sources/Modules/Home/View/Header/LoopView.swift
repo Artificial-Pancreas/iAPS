@@ -21,12 +21,12 @@ struct LoopView: View {
         return formatter
     }
 
-    private let rect = CGRect(x: 0, y: 0, width: 20, height: 20)
+    private let rect = CGRect(x: 0, y: 0, width: 25, height: 25)
     var body: some View {
         HStack {
             ZStack {
                 Circle()
-                    .strokeBorder(color, lineWidth: 2.5)
+                    .strokeBorder(color, lineWidth: 3)
                     .frame(width: rect.width, height: rect.height)
                     .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
                 if isLooping {
@@ -39,20 +39,19 @@ struct LoopView: View {
             } else if manualTempBasal {
                 Text("Manual").font(.extraSmall).padding(.leading, 5)
             } else if actualSuggestion?.timestamp != nil {
-                Text(timeString).font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
-
-            } else {
-                Text("--").font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
+                if minutesAgo > 1440 {
+                    Text("--").font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
+                } else if minutesAgo > 10 {
+                    let timeString = "\(minutesAgo) " + NSLocalizedString("min", comment: "Minutes ago since last loop")
+                    Text(timeString).font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
+                }
             }
         }
     }
 
-    private var timeString: String {
+    private var minutesAgo: Int {
         let minAgo = Int((timerDate.timeIntervalSince(lastLoopDate) - Config.lag) / 60) + 1
-        if minAgo > 1440 {
-            return "--"
-        }
-        return "\(minAgo) " + NSLocalizedString("min", comment: "Minutes ago since last loop")
+        return minAgo
     }
 
     private var color: Color {
@@ -64,7 +63,7 @@ struct LoopView: View {
         }
         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
-        if delta <= 5.minutes.timeInterval {
+        if delta <= 6.minutes.timeInterval {
             guard actualSuggestion?.deliverAt != nil else {
                 return .loopYellow
             }

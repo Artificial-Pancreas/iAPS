@@ -60,6 +60,16 @@ struct ColouredRoundedBackground: View {
     }
 }
 
+struct ColouredButtonRoundedBackground: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(
+                Color.blueComplicationBackground
+            )
+    }
+}
+
 struct HeaderBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
@@ -184,6 +194,10 @@ extension View {
 
     func addBackground() -> some View {
         ColouredRoundedBackground()
+    }
+
+    func addButtonBackground() -> some View {
+        ColouredButtonRoundedBackground()
     }
 
     func addHeaderBackground() -> some View {
