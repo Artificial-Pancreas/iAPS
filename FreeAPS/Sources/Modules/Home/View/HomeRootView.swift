@@ -749,7 +749,7 @@ extension Home {
 
         @ViewBuilder private func headerView(_: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 225)
+                .frame(minHeight: 185)
                 .overlay {
                     VStack {
                         ZStack {
@@ -760,8 +760,8 @@ extension Home {
                                 .padding(.leading, 10)
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 20).padding(.bottom, 10)
-                        }.padding(.top, 50).padding(.bottom, 10)
+                                .padding(.trailing, 20).padding(.bottom, 5)
+                        }.padding(.top, 50) // .padding(.bottom, 10)
                     }
                 }
                 .clipShape(Rectangle())

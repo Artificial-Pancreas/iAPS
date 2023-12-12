@@ -22,20 +22,20 @@ struct LoopView: View {
     }
 
     var body: some View {
-        Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 40, weight: .thin)).foregroundStyle(color)
+        Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 25)).foregroundStyle(color)
             .frame(maxWidth: .infinity, alignment: .center)
-            .offset(x: 0, y: 10)
+            .offset(x: 0, y: 5)
         let textColor: Color = .secondary
         HStack {
             ZStack {
                 if !isLooping, actualSuggestion?.timestamp != nil {
                     if minutesAgo > 1440 {
-                        Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
-                    } else {
-                        let timeString = "\(minutesAgo) " +
-                            NSLocalizedString("min", comment: "Minutes ago since last loop")
-                        Text(timeString).font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
-                    }
+                        Text("Not looping").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                    } /* else {
+                         let timeString = "\(minutesAgo) " +
+                             NSLocalizedString("min", comment: "Minutes ago since last loop")
+                         Text(timeString).font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                     } */
                 }
                 if isLooping {
                     ProgressView()
@@ -46,7 +46,7 @@ struct LoopView: View {
             } else if manualTempBasal {
                 Text("Manual").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
             }
-        }.offset(x: 50, y: 10)
+        }.offset(x: 50, y: 0)
     }
 
     private var minutesAgo: Int {
@@ -63,24 +63,16 @@ struct LoopView: View {
         }
         let delta = timerDate.timeIntervalSince(lastLoopDate) - Config.lag
 
-        if delta <= 6.minutes.timeInterval {
+        if delta <= 8.minutes.timeInterval {
             guard actualSuggestion?.deliverAt != nil else {
                 return .loopYellow
             }
             return .loopGreen
-        } else if delta <= 10.minutes.timeInterval {
+        } else if delta <= 12.minutes.timeInterval {
             return .loopYellow
         } else {
             return .loopRed
         }
-    }
-
-    func mask(in rect: CGRect) -> Path {
-        var path = Rectangle().path(in: rect)
-        if !closedLoop || manualTempBasal {
-            path.addPath(Rectangle().path(in: CGRect(x: rect.minX, y: rect.midY - 5, width: rect.width, height: 10)))
-        }
-        return path
     }
 
     private var actualSuggestion: Suggestion? {

@@ -30,6 +30,9 @@ extension Font {
     static let suggestionError = Font.custom("SuggestionErrorFone", fixedSize: 18)
     static let suggestionParts = Font.custom("SuggestionPartsFont", fixedSize: 17)
     static let suggestionSmallParts = Font.custom("SuggestionSmallPartsFont", fixedSize: 16)
+
+    static let glucoseFont = Font.custom("SuggestionSmallPartsFont", fixedSize: 45)
+    static let glucoseSmallFont = Font.custom("SuggestionSmallPartsFont", fixedSize: 24)
 }
 
 extension AngularGradient {
