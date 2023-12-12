@@ -521,7 +521,7 @@ extension Home {
                 }
         }
 
-        @ViewBuilder private func pumpStatus(_: GeometryProxy) -> some View {
+        var pumpStatus: some View {
             addBackground()
                 .frame(minWidth: UIScreen.main.bounds.width / 1.8, minHeight: 35)
                 .overlay(pumpView)
@@ -558,53 +558,43 @@ extension Home {
                 .padding(.horizontal, 10)
         }
 
-        var insulinView: some View {
-            HStack {
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0") +
-                        NSLocalizedString(" U", comment: "Insulin unit")
-                )
-                UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(stops: [
-                                Gradient.Stop(color: .lightBlue, location: 0.7),
-                                Gradient.Stop(color: .insulin, location: 0.7)
-                            ]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .frame(width: 15, height: 30)
-            }.font(.statusFont).bold()
-        }
-
-        var carbsView: some View {
-            HStack {
-                Text(
-                    (numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0") +
-                        NSLocalizedString(" g", comment: "gram of carbs")
-                )
-
-                UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 50, bottomTrailing: 50))
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(stops: [
-                                Gradient.Stop(color: .lemon, location: 0.7),
-                                Gradient.Stop(color: .loopYellow, location: 0.7)
-                            ]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .frame(width: 15, height: 30)
-            }.font(.statusFont).bold()
-        }
-
         var carbsAndInsulinView: some View {
             HStack(spacing: 20) {
                 if let settings = state.settingsManager {
                     let opacity: CGFloat = colorScheme == .dark ? 0.7 : 0.5
+
+                    HStack {
+                        let substance = Double(state.suggestion?.cob ?? 0)
+                        let max = max(Double(settings.preferences.maxCOB), 1)
+                        let fraction: Double = 1 - (substance / max)
+                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
+                        UnevenRoundedRectangle(
+                            topLeadingRadius: 1,
+                            bottomLeadingRadius: 50,
+                            bottomTrailingRadius: 50,
+                            topTrailingRadius: 1
+                        )
+                        .fill(
+                            LinearGradient(
+                                gradient: Gradient(stops: [
+                                    Gradient.Stop(color: .white.opacity(opacity), location: fill),
+                                    Gradient.Stop(color: .loopYellow, location: fill)
+                                ]),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .frame(width: 12, height: 40)
+                        .offset(x: 0, y: -8)
+
+                        HStack(spacing: 0) {
+                            Text(
+                                numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
+                            ).font(.statusFont).bold()
+                            Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
+                        }
+                    }
+
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
@@ -632,36 +622,6 @@ extension Home {
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
                             Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                        }
-                    }
-
-                    HStack {
-                        let substance = Double(state.suggestion?.cob ?? 0)
-                        let max = max(Double(settings.preferences.maxCOB), 1)
-                        let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: 1,
-                            bottomLeadingRadius: 50,
-                            bottomTrailingRadius: 50,
-                            topTrailingRadius: 1
-                        )
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(stops: [
-                                    Gradient.Stop(color: .white.opacity(opacity), location: fill),
-                                    Gradient.Stop(color: .loopYellow, location: fill)
-                                ]),
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
-                        .frame(width: 10, height: 24)
-                        HStack(spacing: 0) {
-                            Text(
-                                numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
-                            ).font(.statusFont).bold()
-                            Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -811,6 +771,11 @@ extension Home {
                         VStack(spacing: 10) {
                             headerView(geo) // .padding(.bottom, 10)
 
+                            HStack {
+                                pumpStatus
+                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
+                            }
+
                             if let progress = state.bolusProgress {
                                 bolusProgressView(progress: progress)
                             }
@@ -820,11 +785,12 @@ extension Home {
                                 timeInterval.padding(.bottom, 20)
                             }
 
-                            HStack {
-                                pumpStatus(geo)
-                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
-                            }
-
+                            /*
+                             HStack {
+                                 pumpStatus(geo)
+                                 currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
+                             }
+                              */
                             preview
                         }
                     }
