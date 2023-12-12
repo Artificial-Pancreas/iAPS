@@ -22,31 +22,32 @@ struct LoopView: View {
     }
 
     var body: some View {
-        Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 25)).foregroundStyle(color)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .offset(x: 0, y: 5)
-        let textColor: Color = .secondary
-        HStack {
-            ZStack {
-                if !isLooping, actualSuggestion?.timestamp != nil {
-                    if minutesAgo > 1440 {
-                        Text("Not looping").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
-                    } /* else {
+        VStack {
+            let textColor: Color = .secondary
+            HStack {
+                ZStack {
+                    if !isLooping, actualSuggestion?.timestamp != nil {
+                        if minutesAgo > 1440 {
+                            Text("Not looping").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                        } /* else {
                          let timeString = "\(minutesAgo) " +
-                             NSLocalizedString("min", comment: "Minutes ago since last loop")
+                         NSLocalizedString("min", comment: "Minutes ago since last loop")
                          Text(timeString).font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
-                     } */
+                         } */
+                    }
+                    if isLooping {
+                        ProgressView()
+                    }
                 }
                 if isLooping {
-                    ProgressView()
+                    Text("looping").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
+                } else if manualTempBasal {
+                    Text("Manual").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
                 }
-            }
-            if isLooping {
-                Text("looping").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
-            } else if manualTempBasal {
-                Text("Manual").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
-            }
-        }.offset(x: 50, y: 0)
+            } // .offset(x: 50, y: 0)
+            Image(systemName: "circle").font(.system(size: 26, weight: .semibold)).foregroundStyle(color)
+                .frame(maxWidth: .infinity, alignment: .bottom)
+        }
     }
 
     private var minutesAgo: Int {

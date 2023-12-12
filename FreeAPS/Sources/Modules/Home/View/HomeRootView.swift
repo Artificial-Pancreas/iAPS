@@ -561,7 +561,7 @@ extension Home {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         UnevenRoundedRectangle(
                             topLeadingRadius: 1,
                             bottomLeadingRadius: 50,
@@ -593,7 +593,7 @@ extension Home {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.8 : 0.9))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         UnevenRoundedRectangle(
                             topLeadingRadius: 1,
                             bottomLeadingRadius: 50,
@@ -610,7 +610,8 @@ extension Home {
                                 endPoint: .bottom
                             )
                         )
-                        .frame(width: 10, height: 24)
+                        .frame(width: 10, height: 28)
+                        .offset(x: 0, y: -2)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
@@ -749,12 +750,12 @@ extension Home {
 
         @ViewBuilder private func headerView(_: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 185)
+                .frame(minHeight: 155)
                 .overlay {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).padding(.top, 10)
+                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 5)
                             statusView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                                 .padding(.leading, 10)

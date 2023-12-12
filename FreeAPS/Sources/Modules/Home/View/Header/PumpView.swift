@@ -74,14 +74,14 @@ struct PumpView: View {
 
             if let date = expiresAtDate {
                 HStack {
-                    Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: IAPSconfig.iconSize * 1.5)
+                    Image("pod_reservoir")
+                        .resizable(resizingMode: .stretch)
+                        .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                        .foregroundColor(colorScheme == .dark ? .secondary : .white)
                     let timeLeft = date.timeIntervalSince(timerDate)
                     remainingTime(time: date.timeIntervalSince(timerDate))
                         .font(.statusFont).fontWeight(.bold)
-                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
+                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : colorScheme == .dark ? .white : .black)
                 }
             } else if let battery = battery, expiresAtDate == nil {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
