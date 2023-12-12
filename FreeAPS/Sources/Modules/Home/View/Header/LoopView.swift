@@ -21,32 +21,32 @@ struct LoopView: View {
         return formatter
     }
 
-    private let rect = CGRect(x: 0, y: 0, width: 25, height: 25)
     var body: some View {
+        Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 40, weight: .thin)).foregroundStyle(color)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .offset(x: 0, y: 10)
+        let textColor: Color = .secondary
         HStack {
             ZStack {
-                Circle()
-                    .strokeBorder(color, lineWidth: 3)
-                    .frame(width: rect.width, height: rect.height)
-                    .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
+                if !isLooping, actualSuggestion?.timestamp != nil {
+                    if minutesAgo > 1440 {
+                        Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                    } else {
+                        let timeString = "\(minutesAgo) " +
+                            NSLocalizedString("min", comment: "Minutes ago since last loop")
+                        Text(timeString).font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                    }
+                }
                 if isLooping {
                     ProgressView()
                 }
             }
-
             if isLooping {
-                Text("looping").font(.extraSmall).padding(.leading, 5)
+                Text("looping").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
             } else if manualTempBasal {
-                Text("Manual").font(.extraSmall).padding(.leading, 5)
-            } else if actualSuggestion?.timestamp != nil {
-                if minutesAgo > 1440 {
-                    Text("--").font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
-                } else if minutesAgo > 10 {
-                    let timeString = "\(minutesAgo) " + NSLocalizedString("min", comment: "Minutes ago since last loop")
-                    Text(timeString).font(.extraSmall).foregroundColor(.secondary).padding(.leading, 5)
-                }
+                Text("Manual").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
             }
-        }
+        }.offset(x: 50, y: 10)
     }
 
     private var minutesAgo: Int {

@@ -96,12 +96,6 @@ extension Home {
             return scene
         }
 
-        /*
-         @ViewBuilder func status(_: GeometryProxy) -> some View {
-             pumpView
-         }
-          */
-
         var glucoseView: some View {
             CurrentGlucoseView(
                 recentGlucose: $state.recentGlucose,
@@ -507,7 +501,7 @@ extension Home {
 
         var loop: some View {
             addBackground()
-                .frame(maxWidth: UIScreen.main.bounds.width / 4, maxHeight: 35)
+                .frame(maxWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
                 .overlay(loopView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -523,7 +517,7 @@ extension Home {
 
         var pumpStatus: some View {
             addBackground()
-                .frame(minWidth: UIScreen.main.bounds.width / 1.8, minHeight: 35)
+                .frame(maxWidth: UIScreen.main.bounds.width / 2, maxHeight: 35)
                 .overlay(pumpView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -725,40 +719,49 @@ extension Home {
         func bolusProgressView(progress: Decimal) -> some View {
             HStack {
                 Text("Bolusing")
-                    .font(.system(size: 16, weight: .bold))
                     .foregroundColor(.primary)
                 ProgressView(value: Double(progress))
                     .progressViewStyle(BolusProgressViewStyle())
                 Image(systemName: "x.circle.fill")
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.white, .blue)
-            }
-            .onTapGesture {
-                state.cancelBolus()
-            }
+            }.font(.system(size: 16, weight: .bold))
+                .onTapGesture {
+                    state.cancelBolus()
+                }
         }
 
         var statusView: some View {
             HStack {
                 carbsAndInsulinView
                     .padding(.leading, 10)
-                isfView
-                    .padding(.leading, 20)
-                loopView
-                    .padding(.leading, 20)
-                    .padding(.trailing, 10)
+                /*
+                 isfView
+                     .padding(.leading, 20)
+                  */
+                /*
+                 loopView
+                     .padding(.leading, 20)
+                     .padding(.trailing, 10)
+                  */
             }
         }
 
         @ViewBuilder private func headerView(_: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 180)
+                .frame(minHeight: 225)
                 .overlay {
                     VStack {
                         ZStack {
-                            glucoseView
+                            glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center).padding(.top, 10)
+                            statusView
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                                .padding(.leading, 10)
+                            pumpView
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                                .padding(.trailing, 20).padding(.bottom, 10)
                         }.padding(.top, 50).padding(.bottom, 10)
-                        statusView.padding(.bottom, 10)
                     }
                 }
                 .clipShape(Rectangle())
@@ -771,10 +774,7 @@ extension Home {
                         VStack(spacing: 10) {
                             headerView(geo) // .padding(.bottom, 10)
 
-                            HStack {
-                                pumpStatus
-                                currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
-                            }
+                            // currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
 
                             if let progress = state.bolusProgress {
                                 bolusProgressView(progress: progress)

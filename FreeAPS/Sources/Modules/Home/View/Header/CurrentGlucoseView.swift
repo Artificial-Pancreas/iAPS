@@ -68,27 +68,30 @@ struct CurrentGlucoseView: View {
                     .foregroundColor(alarm == nil ? .primary : .loopRed)
                     .frame(maxWidth: .infinity, alignment: .center)
 
-                    image.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 100)
-                        .font(.system(size: 25, weight: .semibold))
-                }
-                HStack {
-                    let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
-                    let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
-                    Text(
-                        minutesAgo <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
-                            text + " " +
-                                NSLocalizedString("min", comment: "Short form for minutes") + " "
-                        )
-                    )
-                    .font(.extraSmall).foregroundStyle(.secondary)
-
-                    Text(
-                        delta
-                            .map {
-                                deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
-                            } ?? "--"
-                    )
-                    .font(.extraSmall).foregroundStyle(.secondary)
+                    HStack(spacing: 20) {
+                        image
+                            .font(.system(size: 25))
+                        VStack {
+                            Text(
+                                delta
+                                    .map {
+                                        deltaFormatter
+                                            .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
+                                    } ?? "--"
+                            )
+                            HStack {
+                                let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
+                                let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
+                                Text(
+                                    minutesAgo <= 1 ? "" : (
+                                        text + " " +
+                                            NSLocalizedString("min", comment: "Short form for minutes") + " "
+                                    )
+                                )
+                            }.offset(x: 7, y: 0)
+                        }
+                        .font(.extraSmall).foregroundStyle(.secondary)
+                    }.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 50)
                 }
             }
         }

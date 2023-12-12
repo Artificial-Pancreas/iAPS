@@ -38,38 +38,7 @@ struct PumpView: View {
     }
 
     var body: some View {
-        HStack(spacing: 20) {
-            if let date = expiresAtDate {
-                HStack {
-                    Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: IAPSconfig.iconSize)
-                    let timeLeft = date.timeIntervalSince(timerDate)
-                    Text(remainingTimeString(time: date.timeIntervalSince(timerDate))).font(.statusFont).fontWeight(.bold)
-                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
-                }.padding(.leading, 20)
-            }
-
-            if let battery = battery, battery.display ?? false, expiresAtDate == nil {
-                /*
-                 Image("7xx Small Clear")
-                     .resizable()
-                     .aspectRatio(contentMode: .fit)
-                     .frame(maxWidth: IAPSconfig.iconSize)
-                  */
-
-                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 && (battery.percent ?? 100) >
-                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
-                HStack {
-                    Image(systemName: "battery.\(percent)")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 15)
-                        .foregroundColor(batteryColor)
-                }
-            }
-
+        HStack(spacing: 10) {
             if let reservoir = reservoir {
                 let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.15), Double(reservoir) / 200.0, 0.9)) * 12
                 HStack {
@@ -85,43 +54,66 @@ struct PumpView: View {
                                 .frame(maxHeight: .infinity, alignment: .bottom)
                         }
                     if reservoir == 0xDEAD_BEEF {
-                        Text("50+ " + NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).bold()
+                        HStack(spacing: 0) {
+                            Text("50+ ").font(.statusFont).bold()
+                            Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                        }
                     } else {
-                        Text(
-                            reservoirFormatter
-                                .string(from: reservoir as NSNumber)! + NSLocalizedString(" U", comment: "Insulin unit")
-                        )
-                        .font(.statusFont).bold()
+                        HStack(spacing: 0) {
+                            Text(
+                                reservoirFormatter
+                                    .string(from: reservoir as NSNumber)!
+                            ).font(.statusFont).bold()
+                            Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                        }
                     }
                 }
             } else {
                 Text("No Pump connected").font(.statusFont).foregroundStyle(.secondary)
             }
+
+            if let date = expiresAtDate {
+                HStack {
+                    Image(colorScheme == .dark ? "pod_reservoir_mask" : "pod_reservoir")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxHeight: IAPSconfig.iconSize * 1.5)
+                    let timeLeft = date.timeIntervalSince(timerDate)
+                    remainingTime(time: date.timeIntervalSince(timerDate))
+                        .font(.statusFont).fontWeight(.bold)
+                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : .primary)
+                }
+            } else if let battery = battery, expiresAtDate == nil {
+                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
+                    (battery.percent ?? 100) >
+                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
+                Image(systemName: "battery.\(percent)")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 15)
+                    .foregroundColor(batteryColor)
+            }
         }
     }
 
-    private func remainingTimeString(time: TimeInterval) -> String {
-        guard time > 0 else {
-            return NSLocalizedString("Replace pod", comment: "View/Header when pod expired")
+    private func remainingTime(time: TimeInterval) -> some View {
+        VStack {
+            if time > 0 {
+                let days = Int(time / 1.days.timeInterval)
+                let hours = Int(time / 1.hours.timeInterval)
+                let minutes = Int(time / 1.minutes.timeInterval)
+                if days >= 1 {
+                    Text("\(days)" + NSLocalizedString("d", comment: "abbreviation for days"))
+                    Text(" \(hours - days * 24)" + NSLocalizedString("h", comment: "abbreviation for hours"))
+                } else if hours >= 1 {
+                    Text("\(hours)" + NSLocalizedString("h", comment: "abbreviation for hours"))
+                } else {
+                    Text("\(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes"))
+                }
+            } else {
+                Text(NSLocalizedString("Replace pod", comment: "View/Header when pod expired"))
+            }
         }
-
-        var time = time
-        let days = Int(time / 1.days.timeInterval)
-        time -= days.days.timeInterval
-        let hours = Int(time / 1.hours.timeInterval)
-        time -= hours.hours.timeInterval
-        let minutes = Int(time / 1.minutes.timeInterval)
-
-        if days >= 1 {
-            return "\(days)" + NSLocalizedString("d", comment: "abbreviation for days") + " \(hours)" +
-                NSLocalizedString("h", comment: "abbreviation for hours")
-        }
-
-        if hours >= 1 {
-            return "\(hours)" + NSLocalizedString("h", comment: "abbreviation for hours")
-        }
-
-        return "\(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes")
     }
 
     private var batteryColor: Color {
