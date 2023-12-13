@@ -30,33 +30,21 @@ struct LoopView: View {
                 ZStack {
                     if !isLooping, actualSuggestion?.timestamp != nil {
                         if minutesAgo > 1440 {
-                            Text("Not looping").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
-                        } /* else {
-                         let timeString = "\(minutesAgo) " +
-                         NSLocalizedString("min", comment: "Minutes ago since last loop")
-                         Text(timeString).font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
-                         } */
+                            Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                        }
                     }
                     if isLooping {
                         ProgressView()
                     }
                 }
-                if isLooping {
-                    Text("looping").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
-                } else if manualTempBasal {
-                    Text("Manual").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
-                }
-            } // .offset(x: 50, y: 0)
+            }
             .addButtonBackground()
             .frame(width: 60, height: 30)
             .overlay {
                 let timeString = "\(minutesAgo) " +
                     NSLocalizedString("min", comment: "Minutes ago since last loop")
                 Text(timeString).font(.extraSmall).foregroundColor(textColor)
-            }.shadow(
-                color: color.opacity(colorScheme == .dark ? 0.80 : 0.65),
-                radius: colorScheme == .dark ? 5 : 5
-            )
+            }
         }
     }
 

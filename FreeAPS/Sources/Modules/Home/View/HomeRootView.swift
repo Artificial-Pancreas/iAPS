@@ -196,9 +196,16 @@ extension Home {
         }
 
         var overrideString: String? {
-            guard fetchedPercent.first?.enabled ?? false else {
-                return nil
+            if let override = fetchedPercent.first {
+                guard override.enabled else {
+                    return nil
+                }
+
+                if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
+                    return profile.name ?? ""
+                }
             }
+
             var percentString = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
             var target = (fetchedPercent.first?.target ?? 100) as Decimal
             let indefinite = (fetchedPercent.first?.indefinite ?? false)
@@ -266,7 +273,6 @@ extension Home {
             } else {
                 return nil
             }
-            // return percentString + comma1 + targetString + comma2 + durationString + comma3 + smbToggleString
         }
 
         var infoPanel: some View {
@@ -291,9 +297,9 @@ extension Home {
 
                 if let overrideString = overrideString {
                     HStack {
-                        Text("👤 " + overrideString)
-                            .font(.system(size: 12))
-                            .foregroundColor(.secondary)
+                        Text(overrideString)
+                            .font(.system(size: 16))
+                            .foregroundColor(.primary)
                     }
                 }
                 if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
@@ -410,17 +416,7 @@ extension Home {
         }
 
         @ViewBuilder private func buttonPanel() -> some View {
-            /*
-             if let override = fetchedPercent.first {
-                 if override.enabled {
-                     ZStack {
-                         profileView
-                             .ignoresSafeArea()
-                             .offset(x: 0, y: 10)
-                     }
-                 }
-             }
-             */
+            let isOverride = fetchedPercent.first?.enabled ?? false
             HStack {
                 Button { state.showModal(for: .dataTable) }
                 label: {
@@ -453,24 +449,23 @@ extension Home {
                     }
                 }.buttonStyle(.borderless)
                 Spacer()
-                Button { state.showModal(for: .overrideProfilesConfig) }
+                Button {
+                    if isOverride {
+                        state.cancelProfile()
+                    } else {
+                        state.showModal(for: .overrideProfilesConfig)
+                    }
+                }
                 label: {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                         Image(systemName: "person.fill")
                             .symbolRenderingMode(.palette)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.purple)
                             .frame(height: IAPSconfig.buttonSize, alignment: .bottom)
                             .padding(8)
-                        if let override = fetchedPercent.first {
-                            if override.enabled {
-                                overlay {
-                                    profileView
-                                        .background(Capsule().fill(Color.primary))
-                                }
-                            }
-                        }
+                            .background(isOverride ? .blue.opacity(0.3) : .clear)
                     }
                 }.buttonStyle(.borderless)
 
@@ -528,7 +523,7 @@ extension Home {
                 .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
-            .frame(height: UIScreen.main.bounds.height / 10.5) // 12.2)
+            .frame(height: UIScreen.main.bounds.height / 10.5)
             .background(.gray.opacity(IAPSconfig.backgroundOpacity))
         }
 
@@ -555,19 +550,6 @@ extension Home {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
-        }
-
-        var currentProfile: some View {
-            addBackground()
-                .frame(minWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
-                .overlay(profileView)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-            /*
-             .onTapGesture {
-                 state.showModal(for: .overrideProfilesConfig)
-             }
-              */
         }
 
         var chart: some View {
@@ -690,56 +672,18 @@ extension Home {
                         if override.isPreset {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
                             if let currentProfile = profile {
-                                
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
                                     Text(name).font(.statusFont)
-
-                                    Button { showCancelAlert = true }
-                                    label: {
-                                        Image(systemName: "xmark")
-                                            .foregroundStyle(.secondary)
-                                    }
                                 }
                             }
                         } else {
-
                             Text(override.percentage.formatted() + " %")
-
-                            Button { showCancelAlert = true }
-                            label: {
-                                Image(systemName: "xmark")
-                                    .foregroundStyle(.secondary)
-                            }
                         }
-                    } /* else {
-                         /*
-                          Image(systemName: "person.3.sequence.fill")
-                              .symbolRenderingMode(.palette)
-                              .foregroundStyle(.green, .cyan, .purple)
-                              .frame(maxHeight: IAPSconfig.iconSize)
-                              .symbolRenderingMode(.palette)
-                           */
-                     } */
-                } /* else {
-                     /*
-                      Image(systemName: "person.3.sequence.fill")
-                          .symbolRenderingMode(.palette)
-                          .foregroundStyle(.green, .cyan, .purple)
-                          .frame(maxHeight: IAPSconfig.iconSize)
-                          .symbolRenderingMode(.palette)
-                       */
-                 } */
-            }.alert(
-                "Return to Normal?", isPresented: $showCancelAlert,
-                actions: {
-                    Button("No", role: .cancel) {}
-                    Button("Yes", role: .destructive) {
-                        state.cancelProfile()
                     }
-                }, message: { Text("This will change settings back to your normal profile.") }
-            )
+                }
+            }
         }
 
         func bolusProgressView(progress: Decimal) -> some View {
@@ -800,8 +744,6 @@ extension Home {
                         VStack(spacing: 10) {
                             headerView(geo) // .padding(.bottom, 10)
 
-                            // currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
-
                             if let progress = state.bolusProgress {
                                 bolusProgressView(progress: progress)
                             }
@@ -811,12 +753,6 @@ extension Home {
                                 timeInterval.padding(.bottom, 20)
                             }
 
-                            /*
-                             HStack {
-                                 pumpStatus(geo)
-                                 currentProfile.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 10)
-                             }
-                              */
                             preview
                         }
                     }
