@@ -21,6 +21,8 @@ struct LoopView: View {
         return formatter
     }
 
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         VStack {
             let textColor: Color = .secondary
@@ -47,18 +49,14 @@ struct LoopView: View {
             } // .offset(x: 50, y: 0)
             .addButtonBackground()
             .frame(width: 60, height: 30)
-
             .overlay {
                 let timeString = "\(minutesAgo) " +
                     NSLocalizedString("min", comment: "Minutes ago since last loop")
                 Text(timeString).font(.extraSmall).foregroundColor(textColor)
-            }
-            .addShadows()
-
-            /*
-             Image(systemName: "circle").font(.system(size: 26, weight: .semibold)).foregroundStyle(color)
-                 .frame(maxWidth: .infinity, alignment: .bottom)
-              */
+            }.shadow(
+                color: color.opacity(colorScheme == .dark ? 0.80 : 0.65),
+                radius: colorScheme == .dark ? 5 : 5
+            )
         }
     }
 

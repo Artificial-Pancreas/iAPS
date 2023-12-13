@@ -64,9 +64,7 @@ struct ColouredButtonRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(
-                Color.blueComplicationBackground
-            )
+            .fill(Color.gray).opacity(0.2)
     }
 }
 

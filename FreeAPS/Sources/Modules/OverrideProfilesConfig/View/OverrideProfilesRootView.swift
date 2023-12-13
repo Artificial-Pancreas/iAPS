@@ -46,16 +46,8 @@ extension OverrideProfilesConfig {
             let test = LinearGradientBackGround()
             return Form {
                 Section {
-                    TextField("Identifier", text: $state.emoji)
-                } header: {
-                    Text(
-                        "Identifier. 6 characters. Use emojis / short name."
-                    ).foregroundStyle(.primary)
-                }
-
-                Section {
-                    TextField("Description", text: $state.profileName)
-                } header: { Text("Description").foregroundStyle(.primary) }
+                    TextField("Name", text: $state.profileName)
+                } header: { Text("Profile Name").foregroundStyle(.primary) }
 
                 Section {
                     Button("Save") {
@@ -64,7 +56,7 @@ extension OverrideProfilesConfig {
                     }
                     .disabled(
                         state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
-                            .isNotEmpty || state.emoji.isEmpty
+                            .isNotEmpty
                     )
 
                     Button("Cancel") {
@@ -316,12 +308,8 @@ extension OverrideProfilesConfig {
             if name != "" {
                 HStack {
                     VStack {
-                        HStack {
-                            Text(identifier)
-                            if identifier != "" { Spacer() }
-                            Text(name)
-                            Spacer()
-                        }
+                        Text(name)
+                        Spacer()
                         HStack(spacing: 5) {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             if targetString != "" {

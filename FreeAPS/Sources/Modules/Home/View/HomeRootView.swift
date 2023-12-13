@@ -410,110 +410,122 @@ extension Home {
         }
 
         @ViewBuilder private func buttonPanel() -> some View {
-            VStack {
-                ZStack {
-                    profileView
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
-                HStack {
-                    Button { state.showModal(for: .dataTable) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "book.pages")
-                                .symbolRenderingMode(.hierarchical)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .foregroundColor(.secondary)
-                                .padding(8)
+            /*
+             if let override = fetchedPercent.first {
+                 if override.enabled {
+                     ZStack {
+                         profileView
+                             .ignoresSafeArea()
+                             .offset(x: 0, y: 10)
+                     }
+                 }
+             }
+             */
+            HStack {
+                Button { state.showModal(for: .dataTable) }
+                label: {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image(systemName: "book.pages")
+                            .symbolRenderingMode(.hierarchical)
+                            .resizable()
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .foregroundColor(.secondary)
+                            .padding(8)
+                    }
+                }.buttonStyle(.borderless)
+                Spacer()
+                Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
+                label: {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image(systemName: "fork.knife")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .foregroundColor(.loopYellow)
+                            .padding(8)
+                        if let carbsReq = state.carbsRequired {
+                            Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                .font(.caption)
+                                .foregroundColor(.white)
+                                .padding(4)
+                                .background(Capsule().fill(Color.red))
                         }
-                    }.buttonStyle(.borderless)
-                    Spacer()
-                    Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "fork.knife")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .foregroundColor(.loopYellow)
-                                .padding(8)
-                            if let carbsReq = state.carbsRequired {
-                                Text(numberFormatter.string(from: carbsReq as NSNumber)!)
-                                    .font(.caption)
-                                    .foregroundColor(.white)
-                                    .padding(4)
-                                    .background(Capsule().fill(Color.red))
+                    }
+                }.buttonStyle(.borderless)
+                Spacer()
+                Button { state.showModal(for: .overrideProfilesConfig) }
+                label: {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image(systemName: "person.fill")
+                            .symbolRenderingMode(.palette)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundStyle(.green)
+                            .frame(height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .padding(8)
+                        if let override = fetchedPercent.first {
+                            if override.enabled {
+                                overlay {
+                                    profileView
+                                        .background(Capsule().fill(Color.primary))
+                                }
                             }
                         }
-                    }.buttonStyle(.borderless)
-
-                    Spacer()
-                    Button { state.showModal(for: .overrideProfilesConfig) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "person.3.sequence.fill")
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.green, .cyan, .purple)
-                                .symbolRenderingMode(.palette)
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                // .foregroundColor(.loopYellow)
-                                .padding(8)
-                        }
-                    }.buttonStyle(.borderless)
-
-                    if state.useTargetButton {
-                        Spacer()
-                        Button { state.showModal(for: .addTempTarget) }
-                        label: {
-                            Image("target")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
-                                .padding(8)
-                        }
-                        .foregroundColor(.loopGreen)
-                        .buttonStyle(.borderless)
                     }
+                }.buttonStyle(.borderless)
+
+                if state.useTargetButton {
                     Spacer()
-                    Button {
-                        state.showModal(for: .bolus(
-                            waitForSuggestion: true,
-                            fetch: false
-                        ))
-                    }
+                    Button { state.showModal(for: .addTempTarget) }
                     label: {
-                        Image("bolus")
+                        Image("target")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
+                            .padding(8)
+                    }
+                    .foregroundColor(.loopGreen)
+                    .buttonStyle(.borderless)
+                }
+                Spacer()
+                Button {
+                    state.showModal(for: .bolus(
+                        waitForSuggestion: true,
+                        fetch: false
+                    ))
+                }
+                label: {
+                    Image("bolus")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                        .padding(8)
+                }
+                .buttonStyle(.borderless)
+                .foregroundColor(.insulin)
+                Spacer()
+                if state.allowManualTemp {
+                    Button { state.showModal(for: .manualTempBasal) }
+                    label: {
+                        Image("bolus1")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                             .padding(8)
                     }
-                    .buttonStyle(.borderless)
                     .foregroundColor(.insulin)
                     Spacer()
-                    if state.allowManualTemp {
-                        Button { state.showModal(for: .manualTempBasal) }
-                        label: {
-                            Image("bolus1")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .padding(8)
-                        }
-                        .foregroundColor(.insulin)
-                        Spacer()
-                    }
-                    Button { state.showModal(for: .settings) }
-                    label: {
-                        Image("settings1")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                            .padding(8)
-                    }
-                    .buttonStyle(.borderless)
-                    .foregroundColor(.gray)
                 }
+                Button { state.showModal(for: .settings) }
+                label: {
+                    Image("settings1")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                        .padding(8)
+                }
+                .buttonStyle(.borderless)
+                .foregroundColor(.gray)
             }
             .padding(.horizontal, 24)
             .frame(height: UIScreen.main.bounds.height / 10.5) // 12.2)
@@ -678,38 +690,20 @@ extension Home {
                         if override.isPreset {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
                             if let currentProfile = profile {
-                                /*
-                                 Image(systemName: "person.fill")
-                                     .frame(maxHeight: IAPSconfig.iconSize)
-                                     .symbolRenderingMode(.palette)
-                                     .foregroundStyle(.purple)
-                                  */
-                                if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
+                                
+                                if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
                                     Text(name).font(.statusFont)
-                                } else {
-                                    let lenght = (currentProfile.name ?? "").count
-                                    if lenght < 7 {
-                                        Text(currentProfile.name ?? "").font(.statusFont)
-                                    } else {
-                                        Text((currentProfile.name ?? "").prefix(5)).font(.statusFont)
-                                    }
-                                }
 
-                                Button { showCancelAlert = true }
-                                label: {
-                                    Image(systemName: "xmark")
-                                        .foregroundStyle(.secondary)
+                                    Button { showCancelAlert = true }
+                                    label: {
+                                        Image(systemName: "xmark")
+                                            .foregroundStyle(.secondary)
+                                    }
                                 }
                             }
                         } else {
-                            /*
-                             Image(systemName: "person.fill")
-                                 .frame(maxHeight: IAPSconfig.iconSize)
-                                 .symbolRenderingMode(.palette)
-                                 .foregroundStyle(.purple)
-                              */
 
                             Text(override.percentage.formatted() + " %")
 
@@ -719,24 +713,24 @@ extension Home {
                                     .foregroundStyle(.secondary)
                             }
                         }
-                    } else {
-                        /*
-                         Image(systemName: "person.3.sequence.fill")
-                             .symbolRenderingMode(.palette)
-                             .foregroundStyle(.green, .cyan, .purple)
-                             .frame(maxHeight: IAPSconfig.iconSize)
-                             .symbolRenderingMode(.palette)
-                          */
-                    }
-                } else {
-                    /*
-                     Image(systemName: "person.3.sequence.fill")
-                         .symbolRenderingMode(.palette)
-                         .foregroundStyle(.green, .cyan, .purple)
-                         .frame(maxHeight: IAPSconfig.iconSize)
-                         .symbolRenderingMode(.palette)
-                      */
-                }
+                    } /* else {
+                         /*
+                          Image(systemName: "person.3.sequence.fill")
+                              .symbolRenderingMode(.palette)
+                              .foregroundStyle(.green, .cyan, .purple)
+                              .frame(maxHeight: IAPSconfig.iconSize)
+                              .symbolRenderingMode(.palette)
+                           */
+                     } */
+                } /* else {
+                     /*
+                      Image(systemName: "person.3.sequence.fill")
+                          .symbolRenderingMode(.palette)
+                          .foregroundStyle(.green, .cyan, .purple)
+                          .frame(maxHeight: IAPSconfig.iconSize)
+                          .symbolRenderingMode(.palette)
+                       */
+                 } */
             }.alert(
                 "Return to Normal?", isPresented: $showCancelAlert,
                 actions: {
