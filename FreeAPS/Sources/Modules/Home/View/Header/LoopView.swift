@@ -45,8 +45,20 @@ struct LoopView: View {
                     Text("Manual").font(.extraSmall).padding(.leading, 5).foregroundColor(textColor)
                 }
             } // .offset(x: 50, y: 0)
-            Image(systemName: "circle").font(.system(size: 26, weight: .semibold)).foregroundStyle(color)
-                .frame(maxWidth: .infinity, alignment: .bottom)
+            .addButtonBackground()
+            .frame(width: 60, height: 30)
+
+            .overlay {
+                let timeString = "\(minutesAgo) " +
+                    NSLocalizedString("min", comment: "Minutes ago since last loop")
+                Text(timeString).font(.extraSmall).foregroundColor(textColor)
+            }
+            .addShadows()
+
+            /*
+             Image(systemName: "circle").font(.system(size: 26, weight: .semibold)).foregroundStyle(color)
+                 .frame(maxWidth: .infinity, alignment: .bottom)
+              */
         }
     }
 
