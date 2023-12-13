@@ -414,9 +414,6 @@ extension Home {
                 ZStack {
                     profileView
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .onTapGesture {
-                            state.showModal(for: .overrideProfilesConfig)
-                        }
                 }
                 HStack {
                     Button { state.showModal(for: .dataTable) }
@@ -454,9 +451,10 @@ extension Home {
                     Button { state.showModal(for: .overrideProfilesConfig) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "person.2.fill")
-                                .renderingMode(.template)
-                                .resizable()
+                            Image(systemName: "person.3.sequence.fill")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(.green, .cyan, .purple)
+                                .symbolRenderingMode(.palette)
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                                 // .foregroundColor(.loopYellow)
                                 .padding(8)
@@ -553,9 +551,11 @@ extension Home {
                 .overlay(profileView)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
-                .onTapGesture {
-                    state.showModal(for: .overrideProfilesConfig)
-                }
+            /*
+             .onTapGesture {
+                 state.showModal(for: .overrideProfilesConfig)
+             }
+              */
         }
 
         var chart: some View {
@@ -678,10 +678,12 @@ extension Home {
                         if override.isPreset {
                             let profile = fetchedProfiles.first(where: { $0.id == override.id })
                             if let currentProfile = profile {
-                                Image(systemName: "person.fill")
-                                    .frame(maxHeight: IAPSconfig.iconSize)
-                                    .symbolRenderingMode(.palette)
-                                    .foregroundStyle(.purple)
+                                /*
+                                 Image(systemName: "person.fill")
+                                     .frame(maxHeight: IAPSconfig.iconSize)
+                                     .symbolRenderingMode(.palette)
+                                     .foregroundStyle(.purple)
+                                  */
                                 if let name = currentProfile.emoji, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
@@ -702,10 +704,12 @@ extension Home {
                                 }
                             }
                         } else {
-                            Image(systemName: "person.fill")
-                                .frame(maxHeight: IAPSconfig.iconSize)
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.purple)
+                            /*
+                             Image(systemName: "person.fill")
+                                 .frame(maxHeight: IAPSconfig.iconSize)
+                                 .symbolRenderingMode(.palette)
+                                 .foregroundStyle(.purple)
+                              */
 
                             Text(override.percentage.formatted() + " %")
 
@@ -716,18 +720,22 @@ extension Home {
                             }
                         }
                     } else {
-                        Image(systemName: "person.3.sequence.fill")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.green, .cyan, .purple)
-                            .frame(maxHeight: IAPSconfig.iconSize)
-                            .symbolRenderingMode(.palette)
+                        /*
+                         Image(systemName: "person.3.sequence.fill")
+                             .symbolRenderingMode(.palette)
+                             .foregroundStyle(.green, .cyan, .purple)
+                             .frame(maxHeight: IAPSconfig.iconSize)
+                             .symbolRenderingMode(.palette)
+                          */
                     }
                 } else {
-                    Image(systemName: "person.3.sequence.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.green, .cyan, .purple)
-                        .frame(maxHeight: IAPSconfig.iconSize)
-                        .symbolRenderingMode(.palette)
+                    /*
+                     Image(systemName: "person.3.sequence.fill")
+                         .symbolRenderingMode(.palette)
+                         .foregroundStyle(.green, .cyan, .purple)
+                         .frame(maxHeight: IAPSconfig.iconSize)
+                         .symbolRenderingMode(.palette)
+                      */
                 }
             }.alert(
                 "Return to Normal?", isPresented: $showCancelAlert,
