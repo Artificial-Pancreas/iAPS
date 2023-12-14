@@ -98,7 +98,6 @@ struct MainChartView: View {
     @State private var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
-    @State private var legendVisible: Bool = false
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -165,16 +164,6 @@ struct MainChartView: View {
                 yGridView(fullSize: geo.size)
                 mainScrollView(fullSize: geo.size)
                 glucoseLabelsView(fullSize: geo.size)
-                if legendVisible {
-                    legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                        .padding(.trailing, 10)
-                        .padding(.top, 5)
-                }
-            }
-            .onTapGesture {
-                withAnimation {
-                    legendVisible.toggle()
-                }
             }
             .onChange(of: hSizeClass) { _ in
                 update(fullSize: geo.size)
@@ -231,6 +220,8 @@ struct MainChartView: View {
                 ZStack(alignment: .top) {
                     tempTargetsView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
+                    legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                        .padding(.trailing, 10)
 
                     mainView(fullSize: fullSize).id(Config.endID)
                         .drawingGroup()
