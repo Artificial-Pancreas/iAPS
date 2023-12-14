@@ -566,38 +566,37 @@ extension Home {
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
-                .padding(.horizontal, 10)
+            // .padding(.horizontal, 10)
         }
 
         var carbsAndInsulinView: some View {
-            HStack(spacing: 20) {
+            HStack(spacing: 10) {
                 if let settings = state.settingsManager {
-                    let opacity: CGFloat = colorScheme == .dark ? 0.7 : 0.5
+                    let opacity: CGFloat = colorScheme == .dark ? 0.3 : 0.15
 
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: 1,
-                            bottomLeadingRadius: 50,
-                            bottomTrailingRadius: 50,
-                            topTrailingRadius: 1
-                        )
-                        .fill(
-                            LinearGradient(
-                                gradient: Gradient(stops: [
-                                    Gradient.Stop(color: .white.opacity(opacity), location: fill),
-                                    Gradient.Stop(color: .loopYellow, location: fill)
-                                ]),
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        )
-                        .frame(width: 12, height: 40)
-                        .offset(x: 0, y: -8)
+                        UnevenRoundedRectangle.testTube
+                            .fill(
+                                LinearGradient(
+                                    gradient: Gradient(stops: [
+                                        Gradient.Stop(color: .clear /* .white.opacity(opacity) */, location: fill),
+                                        Gradient.Stop(color: .loopYellow, location: fill)
+                                    ]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            ).overlay {
+                                UnevenRoundedRectangle.testTube
+                                    .fill(.ultraThinMaterial.opacity(0.5))
+                            }
 
+                            .frame(width: 12, height: 40)
+                            .offset(x: 0, y: -9)
+                            .addShadows()
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"

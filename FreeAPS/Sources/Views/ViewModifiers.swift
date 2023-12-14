@@ -222,3 +222,13 @@ extension View {
 
     func asAny() -> AnyView { .init(self) }
 }
+
+extension UnevenRoundedRectangle {
+    static let testTube =
+        UnevenRoundedRectangle(
+            topLeadingRadius: 1,
+            bottomLeadingRadius: 50,
+            bottomTrailingRadius: 50,
+            topTrailingRadius: 1
+        )
+}
