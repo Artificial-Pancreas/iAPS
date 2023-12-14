@@ -553,7 +553,7 @@ extension Home {
         }
 
         var chart: some View {
-            addBackground()
+            addColouredBackground()
                 .overlay {
                     VStack {
                         infoPanel
@@ -564,16 +564,14 @@ extension Home {
                     minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.65 : UIScreen.main.bounds
                         .height / 1.87
                 )
-                .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
-            // .padding(.horizontal, 10)
         }
 
         var carbsAndInsulinView: some View {
             HStack(spacing: 10) {
                 if let settings = state.settingsManager {
-                    let opacity: CGFloat = colorScheme == .dark ? 0.3 : 0.15
-                    let materialOpacity: CGFloat = 0.3
+                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.2
+                    let materialOpacity: CGFloat = 0.25
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
@@ -583,7 +581,7 @@ extension Home {
                             .fill(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .clear /* .white.opacity(opacity) */, location: fill),
+                                        Gradient.Stop(color: .white.opacity(opacity), location: fill),
                                         Gradient.Stop(color: .loopYellow, location: fill)
                                     ]),
                                     startPoint: .top,

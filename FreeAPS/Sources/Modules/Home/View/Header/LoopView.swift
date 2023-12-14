@@ -26,9 +26,8 @@ struct LoopView: View {
     var body: some View {
         VStack {
             ColouredButtonRoundedBackground()
-                .frame(width: 60, height: 30)
+                .frame(width: minutesAgo > 9 ? 70 : 60, height: 30)
                 .overlay {
-                    // TEST
                     let textColor: Color = .secondary
                     HStack {
                         ZStack {
@@ -38,7 +37,7 @@ struct LoopView: View {
                                 } else {
                                     let timeString = "\(minutesAgo) " +
                                         NSLocalizedString("min", comment: "Minutes ago since last loop")
-                                    Text(timeString).font(.extraSmall).foregroundColor(textColor)
+                                    Text(timeString).font(.extraSmall).foregroundColor(minutesAgo > 12 ? .red : textColor)
                                 }
                             }
                             if isLooping {

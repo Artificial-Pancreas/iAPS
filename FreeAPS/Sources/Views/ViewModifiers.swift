@@ -69,10 +69,22 @@ struct GlassShadow: ViewModifier {
 
 struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(
-                colorScheme == .dark ? .black : // Color.blueComplicationBackground :
+                colorScheme == .dark ? .black :
+                    Color.white
+            )
+    }
+}
+
+struct ColouredBackground: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        Rectangle()
+            .fill(
+                colorScheme == .dark ? .black :
                     Color.white
             )
     }
@@ -214,6 +226,10 @@ extension View {
 
     func addBackground() -> some View {
         ColouredRoundedBackground()
+    }
+
+    func addColouredBackground() -> some View {
+        ColouredBackground()
     }
 
     func addButtonBackground() -> some View {
