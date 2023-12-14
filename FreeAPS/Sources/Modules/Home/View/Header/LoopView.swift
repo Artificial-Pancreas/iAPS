@@ -25,26 +25,28 @@ struct LoopView: View {
 
     var body: some View {
         VStack {
-            let textColor: Color = .secondary
-            HStack {
-                ZStack {
-                    if !isLooping, actualSuggestion?.timestamp != nil {
-                        if minutesAgo > 1440 {
-                            Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+            ColouredButtonRoundedBackground()
+                .frame(width: 60, height: 30)
+                .overlay {
+                    // TEST
+                    let textColor: Color = .secondary
+                    HStack {
+                        ZStack {
+                            if !isLooping, actualSuggestion?.timestamp != nil {
+                                if minutesAgo > 1440 {
+                                    Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                                } else {
+                                    let timeString = "\(minutesAgo) " +
+                                        NSLocalizedString("min", comment: "Minutes ago since last loop")
+                                    Text(timeString).font(.extraSmall).foregroundColor(textColor)
+                                }
+                            }
+                            if isLooping {
+                                ProgressView()
+                            }
                         }
                     }
-                    if isLooping {
-                        ProgressView()
-                    }
                 }
-            }
-            .addButtonBackground()
-            .frame(width: 60, height: 30)
-            .overlay {
-                let timeString = "\(minutesAgo) " +
-                    NSLocalizedString("min", comment: "Minutes ago since last loop")
-                Text(timeString).font(.extraSmall).foregroundColor(textColor)
-            }
         }
     }
 

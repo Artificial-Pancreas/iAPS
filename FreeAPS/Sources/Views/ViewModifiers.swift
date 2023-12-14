@@ -39,12 +39,30 @@ struct CapsulaBackground: ViewModifier {
 
 struct AddShadow: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
-
     func body(content: Content) -> some View {
         content
             .shadow(
-                color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                radius: colorScheme == .dark ? 5 : 3
+                color: Color.black
+                    .opacity(
+                        colorScheme == .dark ? IAPSconfig.shadowOpacity : IAPSconfig.shadowOpacity / IAPSconfig
+                            .shadowFraction
+                    ),
+                radius: colorScheme == .dark ? 3 : 2.5
+            )
+    }
+}
+
+struct GlassShadow: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content
+            .shadow(
+                color: Color.black
+                    .opacity(
+                        colorScheme == .dark ? IAPSconfig.glassShadowOpacity : IAPSconfig.glassShadowOpacity / IAPSconfig
+                            .shadowFraction
+                    ),
+                radius: colorScheme == .dark ? 2.2 : 2
             )
     }
 }
@@ -188,6 +206,10 @@ extension View {
 
     func addShadows() -> some View {
         modifier(AddShadow())
+    }
+
+    func glassShadows() -> some View {
+        modifier(GlassShadow())
     }
 
     func addBackground() -> some View {
