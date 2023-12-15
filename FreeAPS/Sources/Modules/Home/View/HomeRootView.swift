@@ -179,20 +179,7 @@ extension Home {
             guard let tempTarget = state.tempTarget else {
                 return nil
             }
-            let target = tempTarget.targetBottom ?? 0
-            let unitString = targetFormatter.string(from: (tempTarget.targetBottom?.asMmolL ?? 0) as NSNumber) ?? ""
-            let rawString = (tirFormatter.string(from: (tempTarget.targetBottom ?? 0) as NSNumber) ?? "") + " " + state.units
-                .rawValue
-
-            var string = ""
-            if sliderTTpresets.first?.active ?? false {
-                let hbt = sliderTTpresets.first?.hbt ?? 0
-                string = ", " + (tirFormatter.string(from: state.infoPanelTTPercentage(hbt, target) as NSNumber) ?? "") + " %"
-            }
-
-            let percentString = state
-                .units == .mmolL ? (unitString + " mmol/L" + string) : (rawString + (string == "0" ? "" : string))
-            return tempTarget.displayName + " " + percentString
+            return tempTarget.displayName
         }
 
         func overrideString() -> Text? {
@@ -214,52 +201,54 @@ extension Home {
 
         var infoPanel: some View {
             HStack(spacing: 10) {
-                if state.pumpSuspended {
-                    Text("Pump suspended")
-                        .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
-                        .padding(.leading, 8)
-                } else if let tempBasalString = tempBasalString {
-                    Text(tempBasalString)
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(colorScheme == .dark ? .primary : .insulin)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 8)
-                }
-
-                if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
-                    Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
-                } else if let tempTargetString = tempTargetString {
-                    Text(tempTargetString)
-                        .font(.buttonFont)
-                        .foregroundColor(.secondary)
-                }
-
-                if let override = fetchedPercent.first, override.enabled {
-                    if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
-                        Text(profile.name ?? "")
-                    } else if override.smbIsOff,!override.smbIsAlwaysOff {
-                        Text("💉").strikethrough(color: .red).bold()
-                    } else if override.smbIsOff {
-                        Text("🕝 💉")
-                    } else if override.percentage != 100 {
-                        Text("\(override.percentage.formatted(.number)) %")
-                    } else {
-                        Text("👤").foregroundColor(.purple)
-                    }
-                }
-
-                if let eventualBG = state.eventualBG {
+                ZStack {
                     HStack {
-                        Image(systemName: "arrow.forward")
-                        Text(
-                            fetchedTargetFormatter.string(
-                                from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
-                            )!
-                        ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
-                        Text(state.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
+                        if state.pumpSuspended {
+                            Text("Pump suspended")
+                                .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
+                        } else if let tempBasalString = tempBasalString {
+                            Text(tempBasalString)
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(colorScheme == .dark ? .primary : .insulin)
+                        }
+                        if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
+                            Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
+                        }
                     }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.trailing, 8)
+                    .padding(.leading, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                        Text(tempTargetString)
+                            .font(.buttonFont)
+                            .foregroundColor(.secondary)
+                    } else if let override = fetchedPercent.first, override.enabled {
+                        if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
+                            Text(profile.name ?? "")
+                        } else if override.smbIsOff,!override.smbIsAlwaysOff {
+                            Text("💉").strikethrough(color: .red).bold()
+                        } else if override.smbIsOff {
+                            Text("🕝 💉")
+                        } else if override.percentage != 100 {
+                            Text("\(override.percentage.formatted(.number)) %")
+                        } else {
+                            Text("👤").foregroundColor(.purple)
+                        }
+                    }
+
+                    if let eventualBG = state.eventualBG {
+                        HStack {
+                            Image(systemName: "arrow.forward")
+                            Text(
+                                fetchedTargetFormatter.string(
+                                    from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
+                                )!
+                            ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
+                            Text(state.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.trailing, 8)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
@@ -408,7 +397,7 @@ extension Home {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .foregroundStyle(.purple)
-                                .frame(height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                                 .padding(8)
                                 .background(isOverride ? .blue.opacity(0.3) : .clear)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -470,8 +459,6 @@ extension Home {
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
-                // .frame(height: UIScreen.main.bounds.height / 11.5)
-                // .background(.gray.opacity(IAPSconfig.backgroundOpacity))
             }
         }
 
@@ -525,20 +512,9 @@ extension Home {
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
-                        UnevenRoundedRectangle.testTube
-                            .fill(
-                                LinearGradient(
-                                    gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .white.opacity(opacity), location: fill),
-                                        Gradient.Stop(color: .loopYellow, location: fill)
-                                    ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            ).overlay { FrostedGlass(opacity: materialOpacity) }
+                        TestTube(opacity: opacity, amount: fill, colourOfSubstance: .loopYellow, materialOpacity: materialOpacity)
                             .frame(width: 12, height: 45)
                             .offset(x: 0, y: -10)
-                            .glassShadows()
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
@@ -546,26 +522,14 @@ extension Home {
                             Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
                         }
                     }
-
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
-                        UnevenRoundedRectangle.testTube
-                            .fill(
-                                LinearGradient(
-                                    gradient: Gradient(stops: [
-                                        Gradient.Stop(color: .white.opacity(opacity), location: fill),
-                                        Gradient.Stop(color: .insulin, location: fill)
-                                    ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            ).overlay { FrostedGlass(opacity: materialOpacity) }
+                        TestTube(opacity: opacity, amount: fill, colourOfSubstance: .insulin, materialOpacity: materialOpacity)
                             .frame(width: 10, height: 35)
                             .offset(x: 0, y: -4)
-                            .glassShadows()
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
@@ -629,10 +593,10 @@ extension Home {
                     .foregroundColor(.primary)
                 ProgressView(value: Double(progress))
                     .progressViewStyle(BolusProgressViewStyle())
-                Image(systemName: "x.circle.fill")
+                Image(systemName: "xmark.square.fill")
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.white, .blue)
-            }.font(.system(size: 16, weight: .bold))
+            }.font(.custom("BolusProgress", fixedSize: 20))
                 .onTapGesture {
                     state.cancelBolus()
                 }

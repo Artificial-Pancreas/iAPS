@@ -40,15 +40,13 @@ struct PumpView: View {
     var body: some View {
         HStack(spacing: 10) {
             if let date = expiresAtDate {
-                HStack(spacing: 0) {
+                HStack(spacing: 2) {
                     Image("pod_reservoir")
                         .resizable(resizingMode: .stretch)
                         .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
                         .foregroundColor(colorScheme == .dark ? .secondary : .white)
-                    let timeLeft = date.timeIntervalSince(timerDate)
                     remainingTime(time: date.timeIntervalSince(timerDate))
-                        .font(.statusFont).fontWeight(.bold).foregroundStyle(timeLeft < 4 * 60 * 60 ? .red : .secondary)
-                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : colorScheme == .dark ? .white : .black)
+                        .font(.statusFont).fontWeight(.bold)
                 }
             } else if let battery = battery, expiresAtDate == nil {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
@@ -103,12 +101,24 @@ struct PumpView: View {
                 let hours = Int(time / 1.hours.timeInterval)
                 let minutes = Int(time / 1.minutes.timeInterval)
                 if days >= 1 {
-                    Text(" \(days)" + NSLocalizedString("d", comment: "abbreviation for days"))
-                    Text(" \(hours - days * 24)" + NSLocalizedString("h", comment: "abbreviation for hours"))
+                    HStack(spacing: 0) {
+                        Text(" \(days)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
+                        Text(NSLocalizedString("d", comment: "abbreviation for days")) // .foregroundStyle(.secondary)
+                    }
+                    HStack(spacing: 0) {
+                        Text(" \(hours - days * 24)")
+                        Text(NSLocalizedString("h", comment: "abbreviation for hours")) // .foregroundStyle(.secondary)
+                    }
                 } else if hours >= 1 {
-                    Text("\(hours)" + NSLocalizedString("h", comment: "abbreviation for hours"))
+                    HStack(spacing: 0) {
+                        Text("\(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
+                        Text(NSLocalizedString("h", comment: "abbreviation for hours")) // .foregroundStyle(.secondary)
+                    }
                 } else {
-                    Text(" \(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes"))
+                    HStack(spacing: 0) {
+                        Text(" \(minutes)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
+                        Text(NSLocalizedString("m", comment: "abbreviation for minutes")) // .foregroundStyle(.secondary)
+                    }
                 }
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired"))
@@ -161,16 +171,5 @@ struct PumpView: View {
         default:
             return .green
         }
-    }
-}
-
-struct Hairline: View {
-    let color: Color
-
-    var body: some View {
-        Rectangle()
-            .fill(color)
-            .frame(width: UIScreen.main.bounds.width / 1.3, height: 1)
-            .opacity(0.5)
     }
 }

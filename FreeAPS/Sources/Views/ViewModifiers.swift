@@ -52,10 +52,28 @@ struct AddShadow: ViewModifier {
     }
 }
 
-struct GlassShadow: ViewModifier {
+struct TestTube: View {
+    let opacity: CGFloat
+    let amount: CGFloat
+    let colourOfSubstance: Color
+    let materialOpacity: CGFloat
     @Environment(\.colorScheme) var colorScheme
-    func body(content: Content) -> some View {
-        content
+
+    var body: some View {
+        UnevenRoundedRectangle.testTube
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(stops: [
+                        Gradient.Stop(color: .white.opacity(opacity), location: amount),
+                        Gradient.Stop(color: colourOfSubstance, location: amount)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .overlay {
+                FrostedGlass(opacity: materialOpacity)
+            }
             .shadow(
                 color: Color.black
                     .opacity(
@@ -225,10 +243,6 @@ extension View {
 
     func addShadows() -> some View {
         modifier(AddShadow())
-    }
-
-    func glassShadows() -> some View {
-        modifier(GlassShadow())
     }
 
     func addBackground() -> some View {
