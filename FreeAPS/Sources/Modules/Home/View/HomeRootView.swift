@@ -696,22 +696,6 @@ extension Home {
                 }
         }
 
-        var statusView: some View {
-            HStack {
-                carbsAndInsulinView
-                    .padding(.leading, 10)
-                /*
-                 isfView
-                     .padding(.leading, 20)
-                  */
-                /*
-                 loopView
-                     .padding(.leading, 20)
-                     .padding(.trailing, 10)
-                  */
-            }
-        }
-
         @ViewBuilder private func headerView(_: GeometryProxy) -> some View {
             addHeaderBackground()
                 .frame(minHeight: 155)
@@ -720,12 +704,12 @@ extension Home {
                         ZStack {
                             glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                             loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 5)
-                            statusView
+                            carbsAndInsulinView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                .padding(.leading, 5)
+                                .padding(.leading, 7)
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 5).padding(.bottom, 5)
+                                .padding(.trailing, 7).padding(.bottom, 5)
                         }.padding(.top, 50) // .padding(.bottom, 10)
                     }
                 }

@@ -39,6 +39,28 @@ struct PumpView: View {
 
     var body: some View {
         HStack(spacing: 10) {
+            if let date = expiresAtDate {
+                HStack(spacing: 0) {
+                    Image("pod_reservoir")
+                        .resizable(resizingMode: .stretch)
+                        .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                        .foregroundColor(colorScheme == .dark ? .secondary : .white)
+                    let timeLeft = date.timeIntervalSince(timerDate)
+                    remainingTime(time: date.timeIntervalSince(timerDate))
+                        .font(.statusFont).fontWeight(.bold).foregroundStyle(timeLeft < 4 * 60 * 60 ? .red : .secondary)
+                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : colorScheme == .dark ? .white : .black)
+                }
+            } else if let battery = battery, expiresAtDate == nil {
+                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
+                    (battery.percent ?? 100) >
+                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
+                Image(systemName: "battery.\(percent)")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 15)
+                    .foregroundColor(batteryColor)
+            }
+
             if let reservoir = reservoir {
                 let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.15), Double(reservoir) / 200.0, 0.9)) * 12
                 HStack {
@@ -70,28 +92,6 @@ struct PumpView: View {
                 }
             } else {
                 Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
-            }
-
-            if let date = expiresAtDate {
-                HStack(spacing: 0) {
-                    Image("pod_reservoir")
-                        .resizable(resizingMode: .stretch)
-                        .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
-                        .foregroundColor(colorScheme == .dark ? .secondary : .white)
-                    let timeLeft = date.timeIntervalSince(timerDate)
-                    remainingTime(time: date.timeIntervalSince(timerDate))
-                        .font(.statusFont).fontWeight(.bold)
-                        .foregroundColor(timeLeft < 4 * 60 * 60 ? .red : colorScheme == .dark ? .white : .black)
-                }
-            } else if let battery = battery, expiresAtDate == nil {
-                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
-                    (battery.percent ?? 100) >
-                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
-                Image(systemName: "battery.\(percent)")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxHeight: 15)
-                    .foregroundColor(batteryColor)
             }
         }
     }
