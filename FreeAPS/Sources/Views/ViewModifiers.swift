@@ -117,9 +117,10 @@ struct ColouredBackground: View {
 }
 
 struct LoopEllipse: View {
+    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(Color.white).opacity(0.2)
+            .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.1)
     }
 }
 

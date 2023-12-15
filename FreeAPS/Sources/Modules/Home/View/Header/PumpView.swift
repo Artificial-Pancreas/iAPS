@@ -70,8 +70,9 @@ struct PumpView: View {
                         .overlay {
                             UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 2, bottomTrailing: 2))
                                 .fill(Color.insulin)
-                                .frame(maxWidth: 9, maxHeight: fill)
+                                .frame(maxWidth: 8.8, maxHeight: fill)
                                 .frame(maxHeight: .infinity, alignment: .bottom)
+                                .offset(x: -0.09, y: -0.2)
                         }
                     if reservoir == 0xDEAD_BEEF {
                         HStack(spacing: 0) {
