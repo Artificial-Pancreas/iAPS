@@ -224,18 +224,17 @@ extension Home {
                             .foregroundColor(.secondary)
                     } else if let override = fetchedPercent.first, override.enabled {
                         if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
-                            Text(profile.name ?? "")
+                            Text(profile.name ?? "").font(.statusFont).foregroundStyle(.secondary)
                         } else if override.smbIsOff,!override.smbIsAlwaysOff {
                             Text("💉").strikethrough(color: .red).bold()
                         } else if override.smbIsOff {
-                            Text("🕝 💉")
+                            Text("🕝 💉").font(.statusFont)
                         } else if override.percentage != 100 {
-                            Text("\(override.percentage.formatted(.number)) %")
+                            Text("\(override.percentage.formatted(.number)) %").font(.statusFont).foregroundStyle(.secondary)
                         } else {
-                            Text("👤").foregroundColor(.purple)
+                            Text("👤").foregroundColor(.purple).font(.statusFont)
                         }
                     }
-
                     if let eventualBG = state.eventualBG {
                         HStack {
                             Image(systemName: "arrow.forward")
