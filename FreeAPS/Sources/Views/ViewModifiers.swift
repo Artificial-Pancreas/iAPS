@@ -80,7 +80,7 @@ struct TestTube: View {
                         colorScheme == .dark ? IAPSconfig.glassShadowOpacity : IAPSconfig.glassShadowOpacity / IAPSconfig
                             .shadowFraction
                     ),
-                radius: colorScheme == .dark ? 2.2 : 2.2
+                radius: colorScheme == .dark ? 2.2 : 3
             )
     }
 }

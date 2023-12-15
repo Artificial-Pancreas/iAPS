@@ -218,11 +218,7 @@ extension Home {
                     .padding(.leading, 8)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
-                        Text(tempTargetString)
-                            .font(.buttonFont)
-                            .foregroundColor(.secondary)
-                    } else if let override = fetchedPercent.first, override.enabled {
+                    if let override = fetchedPercent.first, override.enabled {
                         if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
                             Text(profile.name ?? "").font(.statusFont).foregroundStyle(.secondary)
                         } else if override.smbIsOff,!override.smbIsAlwaysOff {
@@ -232,9 +228,14 @@ extension Home {
                         } else if override.percentage != 100 {
                             Text("\(override.percentage.formatted(.number)) %").font(.statusFont).foregroundStyle(.secondary)
                         } else {
-                            Text("👤").foregroundColor(.purple).font(.statusFont)
+                            Text("👤")
                         }
+                    } else if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                        Text(tempTargetString)
+                            .font(.buttonFont)
+                            .foregroundColor(.secondary)
                     }
+
                     if let eventualBG = state.eventualBG {
                         HStack {
                             Image(systemName: "arrow.forward")
@@ -504,16 +505,16 @@ extension Home {
         var carbsAndInsulinView: some View {
             HStack(spacing: 10) {
                 if let settings = state.settingsManager {
-                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.25
-                    let materialOpacity: CGFloat = 0.25
+                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.6
+                    let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .loopYellow, materialOpacity: materialOpacity)
-                            .frame(width: 12, height: 45)
-                            .offset(x: 0, y: -10)
+                            .frame(width: 17, height: 65)
+                            .offset(x: 0, y: -12)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
@@ -527,8 +528,8 @@ extension Home {
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .insulin, materialOpacity: materialOpacity)
-                            .frame(width: 10, height: 35)
-                            .offset(x: 0, y: -4)
+                            .frame(width: 14, height: 50)
+                            .offset(x: 0, y: -3)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
@@ -611,7 +612,7 @@ extension Home {
                             loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 5)
                             carbsAndInsulinView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                .padding(.leading, 7)
+                                .padding(.leading, 10)
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 .padding(.trailing, 7).padding(.bottom, 5)

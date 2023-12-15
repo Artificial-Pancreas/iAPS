@@ -63,7 +63,6 @@ extension OverrideProfilesConfig {
                     }
                 }
             }
-            .padding(.top, IAPSconfig.padding)
         }
 
         var body: some View {

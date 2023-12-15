@@ -194,7 +194,6 @@ extension DataTable {
                 .navigationTitle("Add Glucose")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showManualGlucose = false }))
-                .padding(.top, IAPSconfig.padding)
             }
         }
 
@@ -326,7 +325,6 @@ extension DataTable {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showExternalInsulin = false
                     state.externalInsulinAmount = 0 }))
-                .padding(.top, IAPSconfig.padding)
             }
         }
 
