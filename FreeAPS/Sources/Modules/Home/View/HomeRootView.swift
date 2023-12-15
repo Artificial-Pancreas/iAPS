@@ -601,13 +601,13 @@ extension Home {
                 }
         }
 
-        @ViewBuilder private func headerView(_: GeometryProxy) -> some View {
+        @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 155)
+                .frame(minHeight: 120 + geo.safeAreaInsets.top)
                 .overlay {
                     VStack {
                         ZStack {
-                            glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                            glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).padding(.top, 10)
                             loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 5)
                             carbsAndInsulinView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
@@ -615,7 +615,7 @@ extension Home {
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 .padding(.trailing, 7).padding(.bottom, 5)
-                        }.padding(.top, 50) // .padding(.bottom, 10)
+                        }.padding(.top, geo.safeAreaInsets.top) // .padding(.bottom, 10)
                     }
                 }
                 .clipShape(Rectangle())
