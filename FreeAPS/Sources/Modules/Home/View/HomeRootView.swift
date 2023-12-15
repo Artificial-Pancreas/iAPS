@@ -358,117 +358,121 @@ extension Home {
             }
         }
 
-        @ViewBuilder private func buttonPanel() -> some View {
-            let isOverride = fetchedPercent.first?.enabled ?? false
-            HStack {
-                Button { state.showModal(for: .dataTable) }
-                label: {
-                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image(systemName: "book.pages")
-                            .symbolRenderingMode(.hierarchical)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                            .foregroundColor(.secondary)
-                            .padding(8)
-                    }
-                }.buttonStyle(.borderless)
-                Spacer()
-                Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
-                label: {
-                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image(systemName: "fork.knife")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                            .foregroundColor(.loopYellow)
-                            .padding(8)
-                        if let carbsReq = state.carbsRequired {
-                            Text(numberFormatter.string(from: carbsReq as NSNumber)!)
-                                .font(.caption)
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .background(Capsule().fill(Color.red))
+        @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
+            ZStack {
+                Rectangle().fill(.gray.opacity(IAPSconfig.backgroundOpacity)).frame(height: 50 + geo.safeAreaInsets.bottom)
+                let isOverride = fetchedPercent.first?.enabled ?? false
+                HStack {
+                    Button { state.showModal(for: .dataTable) }
+                    label: {
+                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                            Image(systemName: "book.pages")
+                                .symbolRenderingMode(.hierarchical)
+                                .resizable()
+                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .foregroundColor(.secondary)
+                                .padding(8)
+                        }
+                    }.buttonStyle(.borderless)
+                    Spacer()
+                    Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
+                    label: {
+                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                            Image(systemName: "fork.knife")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .foregroundColor(.loopYellow)
+                                .padding(8)
+                            if let carbsReq = state.carbsRequired {
+                                Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                    .font(.caption)
+                                    .foregroundColor(.white)
+                                    .padding(4)
+                                    .background(Capsule().fill(Color.red))
+                            }
+                        }
+                    }.buttonStyle(.borderless)
+                    Spacer()
+                    Button {
+                        if isOverride {
+                            state.cancelProfile()
+                        } else {
+                            state.showModal(for: .overrideProfilesConfig)
                         }
                     }
-                }.buttonStyle(.borderless)
-                Spacer()
-                Button {
-                    if isOverride {
-                        state.cancelProfile()
-                    } else {
-                        state.showModal(for: .overrideProfilesConfig)
-                    }
-                }
-                label: {
-                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image(systemName: "person.fill")
-                            .symbolRenderingMode(.palette)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundStyle(.purple)
-                            .frame(height: IAPSconfig.buttonSize, alignment: .bottom)
-                            .padding(8)
-                            .background(isOverride ? .blue.opacity(0.3) : .clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                }.buttonStyle(.borderless)
+                    label: {
+                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                            Image(systemName: "person.fill")
+                                .symbolRenderingMode(.palette)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundStyle(.purple)
+                                .frame(height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .padding(8)
+                                .background(isOverride ? .blue.opacity(0.3) : .clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                    }.buttonStyle(.borderless)
 
-                if state.useTargetButton {
-                    Spacer()
-                    Button { state.showModal(for: .addTempTarget) }
-                    label: {
-                        Image("target")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
-                            .padding(8)
+                    if state.useTargetButton {
+                        Spacer()
+                        Button { state.showModal(for: .addTempTarget) }
+                        label: {
+                            Image("target")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
+                                .padding(8)
+                        }
+                        .foregroundColor(.loopGreen)
+                        .buttonStyle(.borderless)
                     }
-                    .foregroundColor(.loopGreen)
-                    .buttonStyle(.borderless)
-                }
-                Spacer()
-                Button {
-                    state.showModal(for: .bolus(
-                        waitForSuggestion: true,
-                        fetch: false
-                    ))
-                }
-                label: {
-                    Image("bolus")
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                        .padding(8)
-                }
-                .buttonStyle(.borderless)
-                .foregroundColor(.insulin)
-                Spacer()
-                if state.allowManualTemp {
-                    Button { state.showModal(for: .manualTempBasal) }
+                    Spacer()
+                    Button {
+                        state.showModal(for: .bolus(
+                            waitForSuggestion: true,
+                            fetch: false
+                        ))
+                    }
                     label: {
-                        Image("bolus1")
+                        Image("bolus")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                             .padding(8)
                     }
+                    .buttonStyle(.borderless)
                     .foregroundColor(.insulin)
                     Spacer()
+                    if state.allowManualTemp {
+                        Button { state.showModal(for: .manualTempBasal) }
+                        label: {
+                            Image("bolus1")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .padding(8)
+                        }
+                        .foregroundColor(.insulin)
+                        Spacer()
+                    }
+                    Button { state.showModal(for: .settings) }
+                    label: {
+                        Image("settings1")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .padding(8)
+                    }
+                    .buttonStyle(.borderless)
+                    .foregroundColor(.gray)
                 }
-                Button { state.showModal(for: .settings) }
-                label: {
-                    Image("settings1")
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                        .padding(8)
-                }
-                .buttonStyle(.borderless)
-                .foregroundColor(.gray)
+                .padding(.horizontal, 24)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
+                // .frame(height: UIScreen.main.bounds.height / 11.5)
+                // .background(.gray.opacity(IAPSconfig.backgroundOpacity))
             }
-            .padding(.horizontal, 24)
-            .frame(height: UIScreen.main.bounds.height / 10.5)
-            .background(.gray.opacity(IAPSconfig.backgroundOpacity))
         }
 
         var loop: some View {
@@ -659,7 +663,7 @@ extension Home {
                 VStack {
                     ScrollView {
                         VStack(spacing: 10) {
-                            headerView(geo) // .padding(.bottom, 10)
+                            headerView(geo)
                             chart
                             if state.displayTimeButtons {
                                 timeInterval.padding(.bottom, 20)
@@ -670,11 +674,12 @@ extension Home {
                             preview
                         }
                     }
-                    buttonPanel()
-                        .padding(.bottom, geo.safeAreaInsets.bottom)
-                }.background(.gray.opacity(IAPSconfig.backgroundOpacity))
+                    .scrollIndicators(.hidden)
+                    buttonPanel(geo)
+                }
+                .background(.gray.opacity(IAPSconfig.backgroundOpacity))
+                .edgesIgnoringSafeArea(.vertical)
             }
-            .edgesIgnoringSafeArea(.vertical)
             .onAppear { configureView { highlightButtons() } }
             .navigationTitle("Home")
             .navigationBarHidden(true)
