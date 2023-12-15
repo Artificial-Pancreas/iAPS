@@ -570,7 +570,7 @@ extension Home {
         var carbsAndInsulinView: some View {
             HStack(spacing: 10) {
                 if let settings = state.settingsManager {
-                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.2
+                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.25
                     let materialOpacity: CGFloat = 0.25
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
@@ -591,8 +591,8 @@ extension Home {
                                 UnevenRoundedRectangle.testTube
                                     .fill(.ultraThinMaterial.opacity(materialOpacity))
                             }
-                            .frame(width: 12, height: 40)
-                            .offset(x: 0, y: -9)
+                            .frame(width: 12, height: 45)
+                            .offset(x: 0, y: -10)
                             .glassShadows()
                         HStack(spacing: 0) {
                             Text(
@@ -621,8 +621,8 @@ extension Home {
                                 UnevenRoundedRectangle.testTube
                                     .fill(.ultraThinMaterial.opacity(materialOpacity))
                             }
-                            .frame(width: 10, height: 28)
-                            .offset(x: 0, y: -2)
+                            .frame(width: 10, height: 35)
+                            .offset(x: 0, y: -4)
                             .glassShadows()
                         HStack(spacing: 0) {
                             Text(
@@ -722,10 +722,10 @@ extension Home {
                             loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 5)
                             statusView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                .padding(.leading, 10)
+                                .padding(.leading, 5)
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 20).padding(.bottom, 5)
+                                .padding(.trailing, 5).padding(.bottom, 5)
                         }.padding(.top, 50) // .padding(.bottom, 10)
                     }
                 }

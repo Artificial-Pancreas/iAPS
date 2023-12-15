@@ -69,11 +69,11 @@ struct PumpView: View {
                     }
                 }
             } else {
-                Text("No Pump connected").font(.statusFont).foregroundStyle(.secondary)
+                Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
             }
 
             if let date = expiresAtDate {
-                HStack {
+                HStack(spacing: 0) {
                     Image("pod_reservoir")
                         .resizable(resizingMode: .stretch)
                         .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
@@ -111,7 +111,7 @@ struct PumpView: View {
                     Text("\(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes"))
                 }
             } else {
-                Text(NSLocalizedString("Replace pod", comment: "View/Header when pod expired"))
+                Text(NSLocalizedString("Replace", comment: "View/Header when pod expired"))
             }
         }
     }
