@@ -116,10 +116,10 @@ struct ColouredBackground: View {
     }
 }
 
-struct ColouredButtonRoundedBackground: View {
+struct LoopEllipse: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(Color.gray).opacity(0.2)
+            .fill(Color.white).opacity(0.2)
     }
 }
 
@@ -128,23 +128,6 @@ struct HeaderBackground: View {
     var body: some View {
         Rectangle()
             .fill(.gray.opacity(IAPSconfig.backgroundOpacity))
-    }
-}
-
-struct LinearGradientBackGround: View {
-    @Environment(\.colorScheme) var colorScheme
-    var body: some View {
-        let colorBackground = colorScheme == .dark ? LinearGradient(
-            gradient: Gradient(colors: [
-                Color(red: 0.011, green: 0.058, blue: 0.109),
-                Color(red: 0.03921568627, green: 0.1333333333, blue: 0.2156862745)
-            ]),
-            startPoint: .bottom,
-            endPoint: .top
-        )
-            :
-            LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
-        return colorBackground
     }
 }
 
@@ -237,10 +220,6 @@ extension View {
         modifier(RoundedBackground())
     }
 
-    func buttonBackground() -> some View {
-        modifier(RoundedBackground(color: .accentColor))
-    }
-
     func addShadows() -> some View {
         modifier(AddShadow())
     }
@@ -253,20 +232,12 @@ extension View {
         ColouredBackground()
     }
 
-    func addButtonBackground() -> some View {
-        ColouredButtonRoundedBackground()
-    }
-
     func addHeaderBackground() -> some View {
         HeaderBackground()
     }
 
     func frostedGlassLayer(_ opacity: CGFloat) -> some View {
         FrostedGlass(opacity: opacity)
-    }
-
-    func linearColour() -> some View {
-        LinearGradientBackGround()
     }
 
     func navigationLink<V: BaseView>(to screen: Screen, from view: V) -> some View {
@@ -289,9 +260,9 @@ extension View {
 extension UnevenRoundedRectangle {
     static let testTube =
         UnevenRoundedRectangle(
-            topLeadingRadius: 1,
+            topLeadingRadius: 1.5,
             bottomLeadingRadius: 50,
             bottomTrailingRadius: 50,
-            topTrailingRadius: 1
+            topTrailingRadius: 1.5
         )
 }

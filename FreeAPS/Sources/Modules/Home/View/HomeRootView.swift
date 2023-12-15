@@ -513,14 +513,14 @@ extension Home {
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .loopYellow, materialOpacity: materialOpacity)
-                            .frame(width: 17, height: 65)
-                            .offset(x: 0, y: -12)
+                            .frame(width: 16.8, height: 55)
+                            .offset(x: 0, y: -7)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
                             Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
-                        }
+                        }.offset(x: 0, y: 10)
                     }
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
@@ -528,26 +528,15 @@ extension Home {
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .insulin, materialOpacity: materialOpacity)
-                            .frame(width: 14, height: 50)
-                            .offset(x: 0, y: -3)
+                            .frame(width: 14, height: 45)
+                            .offset(x: 0, y: -2)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
                             Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                        }
+                        }.offset(x: 0, y: 10)
                     }
-                }
-            }
-        }
-
-        var isfView: some View {
-            HStack {
-                if let suggestion = state.suggestion {
-                    // Image(systemName: "arrow.down").foregroundStyle(Color.insulin)
-                    Text("ISF").font(.statusFont).foregroundStyle(.secondary)
-                    let isf = fetchedTargetFormatter.string(from: (suggestion.isf ?? 0) as NSNumber) ?? ""
-                    Text(isf)
                 }
             }
         }
@@ -616,7 +605,7 @@ extension Home {
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 .padding(.trailing, 7).padding(.bottom, 5)
-                        }.padding(.top, geo.safeAreaInsets.top) // .padding(.bottom, 10)
+                        }.padding(.top, geo.safeAreaInsets.top)
                     }
                 }
                 .clipShape(Rectangle())
