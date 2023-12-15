@@ -67,6 +67,14 @@ struct GlassShadow: ViewModifier {
     }
 }
 
+struct FrostedGlass: View {
+    let opacity: CGFloat
+    var body: some View {
+        UnevenRoundedRectangle.testTube
+            .fill(.ultraThinMaterial.opacity(opacity))
+    }
+}
+
 struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
 
@@ -91,7 +99,6 @@ struct ColouredBackground: View {
 }
 
 struct ColouredButtonRoundedBackground: View {
-    @Environment(\.colorScheme) var colorScheme
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(Color.gray).opacity(0.2)
@@ -238,6 +245,10 @@ extension View {
 
     func addHeaderBackground() -> some View {
         HeaderBackground()
+    }
+
+    func frostedGlassLayer(_ opacity: CGFloat) -> some View {
+        FrostedGlass(opacity: opacity)
     }
 
     func linearColour() -> some View {

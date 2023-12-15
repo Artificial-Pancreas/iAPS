@@ -43,8 +43,7 @@ extension OverrideProfilesConfig {
         }
 
         var presetPopover: some View {
-            let test = LinearGradientBackGround()
-            return Form {
+            Form {
                 Section {
                     TextField("Name", text: $state.profileName)
                 } header: { Text("Profile Name").foregroundStyle(.primary) }
@@ -65,7 +64,6 @@ extension OverrideProfilesConfig {
                 }
             }
             .padding(.top, IAPSconfig.padding)
-            .background(test).ignoresSafeArea()
         }
 
         var body: some View {
@@ -280,8 +278,6 @@ extension OverrideProfilesConfig {
             .navigationBarTitle("Profiles")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
-            .padding(.top, 30)
-            .useCustomBackGround()
         }
 
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
@@ -307,9 +303,8 @@ extension OverrideProfilesConfig {
 
             if name != "" {
                 HStack {
-                    VStack {
+                    VStack(alignment: .leading) {
                         Text(name)
-                        Spacer()
                         HStack(spacing: 5) {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             if targetString != "" {

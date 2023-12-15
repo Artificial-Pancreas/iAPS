@@ -195,84 +195,21 @@ extension Home {
             return tempTarget.displayName + " " + percentString
         }
 
-        var overrideString: String? {
-            if let override = fetchedPercent.first {
-                guard override.enabled else {
-                    return nil
-                }
-
+        func overrideString() -> Text? {
+            if let override = fetchedPercent.first, override.enabled {
                 if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
-                    return profile.name ?? ""
+                    return Text(profile.name ?? "")
+                } else if override.smbIsAlwaysOff {
+                    return Text("💉").strikethrough(color: .red).bold()
+                } else if override.smbIsOff {
+                    return Text("🕝 💉")
+                } else if override.percentage != 100 {
+                    return Text("\(override.percentage.formatted(.number)) %")
+                } else {
+                    return Text("👤").foregroundColor(.purple)
                 }
             }
-
-            var percentString = "\((fetchedPercent.first?.percentage ?? 100).formatted(.number)) %"
-            var target = (fetchedPercent.first?.target ?? 100) as Decimal
-            let indefinite = (fetchedPercent.first?.indefinite ?? false)
-            let unit = state.units.rawValue
-            if state.units == .mmolL {
-                target = target.asMmolL
-            }
-            var targetString = (fetchedTargetFormatter.string(from: target as NSNumber) ?? "") + " " + unit
-            if tempTargetString != nil || target == 0 { targetString = "" }
-            percentString = percentString == "100 %" ? "" : percentString
-
-            let duration = (fetchedPercent.first?.duration ?? 0) as Decimal
-            let addedMinutes = Int(duration)
-            let date = fetchedPercent.first?.date ?? Date()
-            var newDuration: Decimal = 0
-
-            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) > Date() {
-                newDuration = Decimal(Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes)
-            }
-
-            var durationString = indefinite ?
-                "" : newDuration >= 1 ?
-                (newDuration.formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " min") :
-                (
-                    newDuration > 0 ? (
-                        (newDuration * 60).formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) + " s"
-                    ) :
-                        ""
-                )
-
-            let smbToggleString = (fetchedPercent.first?.smbIsOff ?? false) ? " \u{20e0}" : ""
-            var comma1 = ", "
-            var comma2 = comma1
-            var comma3 = comma1
-            if targetString == "" || percentString == "" { comma1 = "" }
-            if durationString == "" { comma2 = "" }
-            if smbToggleString == "" { comma3 = "" }
-
-            if percentString == "", targetString == "" {
-                comma1 = ""
-                comma2 = ""
-            }
-            if percentString == "", targetString == "", smbToggleString == "" {
-                durationString = ""
-                comma1 = ""
-                comma2 = ""
-                comma3 = ""
-            }
-            if durationString == "" {
-                comma2 = ""
-            }
-            if smbToggleString == "" {
-                comma3 = ""
-            }
-
-            if durationString == "", !indefinite {
-                return nil
-            }
-
-            // Make string shorter. To do: remove the rest.
-            if newDuration > 0, !indefinite {
-                return durationString
-            } else if (fetchedPercent.first?.percentage ?? 100) != 100 {
-                return percentString
-            } else {
-                return nil
-            }
+            return nil
         }
 
         var infoPanel: some View {
@@ -289,22 +226,28 @@ extension Home {
                         .padding(.leading, 8)
                 }
 
-                if let tempTargetString = tempTargetString {
+                if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
+                    Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
+                } else if let tempTargetString = tempTargetString {
                     Text(tempTargetString)
                         .font(.buttonFont)
                         .foregroundColor(.secondary)
                 }
 
-                if let overrideString = overrideString {
-                    HStack {
-                        Text(overrideString)
-                            .font(.system(size: 16))
-                            .foregroundColor(.primary)
+                if let override = fetchedPercent.first, override.enabled {
+                    if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
+                        Text(profile.name ?? "")
+                    } else if override.smbIsOff,!override.smbIsAlwaysOff {
+                        Text("💉").strikethrough(color: .red).bold()
+                    } else if override.smbIsOff {
+                        Text("🕝 💉")
+                    } else if override.percentage != 100 {
+                        Text("\(override.percentage.formatted(.number)) %")
+                    } else {
+                        Text("👤").foregroundColor(.purple)
                     }
                 }
-                if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
-                    Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
-                }
+
                 if let eventualBG = state.eventualBG {
                     HStack {
                         Image(systemName: "arrow.forward")
@@ -466,6 +409,7 @@ extension Home {
                             .frame(height: IAPSconfig.buttonSize, alignment: .bottom)
                             .padding(8)
                             .background(isOverride ? .blue.opacity(0.3) : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                 }.buttonStyle(.borderless)
 
@@ -587,10 +531,7 @@ extension Home {
                                     startPoint: .top,
                                     endPoint: .bottom
                                 )
-                            ).overlay {
-                                UnevenRoundedRectangle.testTube
-                                    .fill(.ultraThinMaterial.opacity(materialOpacity))
-                            }
+                            ).overlay { FrostedGlass(opacity: materialOpacity) }
                             .frame(width: 12, height: 45)
                             .offset(x: 0, y: -10)
                             .glassShadows()
@@ -617,10 +558,7 @@ extension Home {
                                     startPoint: .top,
                                     endPoint: .bottom
                                 )
-                            ).overlay {
-                                UnevenRoundedRectangle.testTube
-                                    .fill(.ultraThinMaterial.opacity(materialOpacity))
-                            }
+                            ).overlay { FrostedGlass(opacity: materialOpacity) }
                             .frame(width: 10, height: 35)
                             .offset(x: 0, y: -4)
                             .glassShadows()
@@ -722,26 +660,21 @@ extension Home {
                     ScrollView {
                         VStack(spacing: 10) {
                             headerView(geo) // .padding(.bottom, 10)
-
-                            if let progress = state.bolusProgress {
-                                bolusProgressView(progress: progress)
-                            }
                             chart
-
                             if state.displayTimeButtons {
                                 timeInterval.padding(.bottom, 20)
                             }
-
+                            if let progress = state.bolusProgress {
+                                bolusProgressView(progress: progress)
+                            }
                             preview
                         }
                     }
                     buttonPanel()
-                        .padding(
-                            .bottom,
-                            UIApplication.shared.windows[0].safeAreaInsets.bottom > 0 ? geo.safeAreaInsets.bottom + 15 : 0
-                        )
+                        .padding(.bottom, geo.safeAreaInsets.bottom)
                 }.background(.gray.opacity(IAPSconfig.backgroundOpacity))
             }
+            .edgesIgnoringSafeArea(.vertical)
             .onAppear { configureView { highlightButtons() } }
             .navigationTitle("Home")
             .navigationBarHidden(true)

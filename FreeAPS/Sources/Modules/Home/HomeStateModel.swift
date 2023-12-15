@@ -63,7 +63,6 @@ extension Home {
         @Published var hours: Int16 = 6
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
-        @Published var tins: Bool = false
         @Published var readings: [Readings] = []
         @Published var standing: Bool = false
         @Published var preview: Bool = true
@@ -107,7 +106,6 @@ extension Home {
             displayXgridLines = settingsManager.settings.xGridLines
             displayYgridLines = settingsManager.settings.yGridLines
             thresholdLines = settingsManager.settings.rulerMarks
-            tins = settingsManager.settings.tins
             displayTimeButtons = settingsManager.settings.displayTimeButtons
             useBlue = settingsManager.settings.useBlue
             useTargetButton = settingsManager.settings.useTargetButton
@@ -443,11 +441,9 @@ extension Home.StateModel:
         displayXgridLines = settingsManager.settings.xGridLines
         displayYgridLines = settingsManager.settings.yGridLines
         thresholdLines = settingsManager.settings.rulerMarks
-        tins = settingsManager.settings.tins
         displayTimeButtons = settingsManager.settings.displayTimeButtons
         useBlue = settingsManager.settings.useBlue
         useTargetButton = settingsManager.settings.useTargetButton
-
         setupGlucose()
     }
 

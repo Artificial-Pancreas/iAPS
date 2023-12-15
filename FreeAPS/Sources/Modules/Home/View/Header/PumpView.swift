@@ -103,12 +103,12 @@ struct PumpView: View {
                 let hours = Int(time / 1.hours.timeInterval)
                 let minutes = Int(time / 1.minutes.timeInterval)
                 if days >= 1 {
-                    Text("\(days)" + NSLocalizedString("d", comment: "abbreviation for days"))
+                    Text(" \(days)" + NSLocalizedString("d", comment: "abbreviation for days"))
                     Text(" \(hours - days * 24)" + NSLocalizedString("h", comment: "abbreviation for hours"))
                 } else if hours >= 1 {
                     Text("\(hours)" + NSLocalizedString("h", comment: "abbreviation for hours"))
                 } else {
-                    Text("\(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes"))
+                    Text(" \(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes"))
                 }
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired"))

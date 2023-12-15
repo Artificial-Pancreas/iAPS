@@ -8,7 +8,6 @@ extension PumpConfig {
 
         var body: some View {
             NavigationView {
-                let test = LinearGradientBackGround()
                 Form {
                     Section(header: Text("Model")) {
                         if let pumpState = state.pumpState {
@@ -32,12 +31,9 @@ extension PumpConfig {
                         }
                     }
                 }
-                .padding(.top, IAPSconfig.padding + 50)
-                .useCustomBackGroundForPumpManagers()
                 .onAppear(perform: configureView)
                 .navigationTitle("Pump config")
                 .navigationBarTitleDisplayMode(.inline)
-                .background(test).ignoresSafeArea()
                 .sheet(isPresented: $state.setupPump) {
                     if let pumpManager = state.provider.apsManager.pumpManager {
                         PumpSettingsView(

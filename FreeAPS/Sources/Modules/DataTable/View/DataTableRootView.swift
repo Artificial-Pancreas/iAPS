@@ -157,8 +157,7 @@ extension DataTable {
         }
 
         var addGlucoseView: some View {
-            let gradient = LinearGradientBackGround()
-            return NavigationView {
+            NavigationView {
                 VStack {
                     Form {
                         Section {
@@ -196,7 +195,6 @@ extension DataTable {
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showManualGlucose = false }))
                 .padding(.top, IAPSconfig.padding)
-                .useCustomBackGround()
             }
         }
 
@@ -270,8 +268,7 @@ extension DataTable {
         }
 
         var addExternalInsulinView: some View {
-            let gradient = LinearGradientBackGround()
-            return NavigationView {
+            NavigationView {
                 VStack {
                     Form {
                         Section {
@@ -330,7 +327,6 @@ extension DataTable {
                 .navigationBarItems(trailing: Button("Close", action: { showExternalInsulin = false
                     state.externalInsulinAmount = 0 }))
                 .padding(.top, IAPSconfig.padding)
-                .useCustomBackGround()
             }
         }
 

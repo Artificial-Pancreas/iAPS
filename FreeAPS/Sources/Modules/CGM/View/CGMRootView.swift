@@ -83,8 +83,6 @@ extension CGM {
                         Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
                     }
                 }
-                .padding(.top, IAPSconfig.padding + 20)
-                .useCustomBackGround()
                 .onAppear(perform: configureView)
                 .navigationTitle("CGM")
                 .navigationBarTitleDisplayMode(.inline)
