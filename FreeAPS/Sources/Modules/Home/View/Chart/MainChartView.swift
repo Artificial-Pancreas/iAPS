@@ -76,6 +76,7 @@ struct MainChartView: View {
     @Binding var displayXgridLines: Bool
     @Binding var displayYgridLines: Bool
     @Binding var thresholdLines: Bool
+    @Binding var overrides: [Override]
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -90,6 +91,7 @@ struct MainChartView: View {
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
+    @State private var overridesPath = Path()
     @State private var suspensionsPath = Path()
     @State private var carbsDots: [DotInfo] = []
     @State private var carbsPath = Path()
@@ -242,9 +244,10 @@ struct MainChartView: View {
             ScrollViewReader { scroll in
                 ZStack(alignment: .top) {
                     tempTargetsView(fullSize: fullSize).drawingGroup()
+                    overridesView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
                     legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                        .padding(.trailing, 40).padding(.bottom, 20)
+                        .padding(.trailing, legends ? 20 : 140).padding(.bottom, 20)
                     mainView(fullSize: fullSize).id(Config.endID)
                         .drawingGroup()
                         .onChange(of: glucose) { _ in
@@ -611,6 +614,27 @@ struct MainChartView: View {
         }
     }
 
+    private func overridesView(fullSize: CGSize) -> some View {
+        ZStack {
+            overridesPath
+                .fill(Color.purple.opacity(0.3))
+            overridesPath
+                .stroke(Color.purple.opacity(0.8), lineWidth: 1)
+        }
+        .onChange(of: glucose) { _ in
+            calculateOverridesRects(fullSize: fullSize)
+        }
+        .onChange(of: suggestion) { _ in
+            calculateOverridesRects(fullSize: fullSize)
+        }
+        .onChange(of: overrides) { _ in
+            calculateOverridesRects(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            calculateOverridesRects(fullSize: fullSize)
+        }
+    }
+
     private func predictionsView(fullSize: CGSize) -> some View {
         Group {
             Path { path in
@@ -660,6 +684,7 @@ extension MainChartView {
         calculateCarbsDots(fullSize: fullSize)
         calculateFPUsDots(fullSize: fullSize)
         calculateTempTargetsRects(fullSize: fullSize)
+        calculateOverridesRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
         calculateSuspensions(fullSize: fullSize)
     }
@@ -1032,6 +1057,45 @@ extension MainChartView {
 
             DispatchQueue.main.async {
                 tempTargetsPath = path
+            }
+        }
+    }
+
+    private func calculateOverridesRects(fullSize: CGSize) {
+        calculationQueue.async {
+            var rects = overrides.map { override -> CGRect in
+                let x0 = timeToXCoordinate((override.date ?? Date()).timeIntervalSince1970, fullSize: fullSize)
+                let y0 = glucoseToYCoordinate(Int(override.target ?? 0), fullSize: fullSize)
+                let x1 = timeToXCoordinate(
+                    (override.date ?? Date()).timeIntervalSince1970 + Int(override.duration ?? 0).minutes.timeInterval,
+                    fullSize: fullSize
+                )
+                let y1 = glucoseToYCoordinate(Int(override.target ?? 0), fullSize: fullSize)
+                return CGRect(
+                    x: x0,
+                    y: y0 - 3,
+                    width: x1 - x0,
+                    height: y1 - y0 + 6
+                )
+            }
+            if rects.count > 1 {
+                rects = rects.reduce([]) { result, rect -> [CGRect] in
+                    guard var last = result.last else { return [rect] }
+                    if last.origin.x + last.width > rect.origin.x {
+                        last.size.width = rect.origin.x - last.origin.x
+                    }
+                    var res = Array(result.dropLast())
+                    res.append(contentsOf: [last, rect])
+                    return res
+                }
+            }
+
+            let path = Path { path in
+                path.addRects(rects)
+            }
+
+            DispatchQueue.main.async {
+                overridesPath = path
             }
         }
     }

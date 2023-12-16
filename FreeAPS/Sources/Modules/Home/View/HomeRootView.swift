@@ -182,23 +182,6 @@ extension Home {
             return tempTarget.displayName
         }
 
-        func overrideString() -> Text? {
-            if let override = fetchedPercent.first, override.enabled {
-                if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
-                    return Text(profile.name ?? "")
-                } else if override.smbIsAlwaysOff {
-                    return Text("💉").strikethrough(color: .red).bold()
-                } else if override.smbIsOff {
-                    return Text("🕝 💉")
-                } else if override.percentage != 100 {
-                    return Text("\(override.percentage.formatted(.number)) %")
-                } else {
-                    return Text("👤").foregroundColor(.purple)
-                }
-            }
-            return nil
-        }
-
         var infoPanel: some View {
             HStack(spacing: 10) {
                 ZStack {
@@ -218,22 +201,12 @@ extension Home {
                     .padding(.leading, 8)
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if let override = fetchedPercent.first, override.enabled {
-                        if let profile = fetchedProfiles.filter({ $0.id == override.id }).first, profile.name != "" {
-                            Text(profile.name ?? "").font(.statusFont).foregroundStyle(.secondary)
-                        } else if override.smbIsOff,!override.smbIsAlwaysOff {
-                            Text("💉").strikethrough(color: .red).bold()
-                        } else if override.smbIsOff {
-                            Text("🕝 💉").font(.statusFont)
-                        } else if override.percentage != 100 {
-                            Text("\(override.percentage.formatted(.number)) %").font(.statusFont).foregroundStyle(.secondary)
-                        } else {
-                            Text("👤")
-                        }
-                    } else if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                    if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
                         Text(tempTargetString)
                             .font(.buttonFont)
                             .foregroundColor(.secondary)
+                    } else {
+                        profileView
                     }
 
                     if let eventualBG = state.eventualBG {
@@ -308,7 +281,8 @@ extension Home {
                     screenHours: $state.hours,
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
-                    thresholdLines: $state.thresholdLines
+                    thresholdLines: $state.thresholdLines,
+                    overrides: $state.overrides
                 )
             }
             .padding(.bottom, 5)
@@ -462,31 +436,6 @@ extension Home {
             }
         }
 
-        var loop: some View {
-            addBackground()
-                .frame(maxWidth: UIScreen.main.bounds.width / 3, maxHeight: 35)
-                .overlay(loopView)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-                // .padding(.bottom, 10)
-                .onTapGesture {
-                    state.isStatusPopupPresented = true
-                }.onLongPressGesture {
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    state.runLoop()
-                }
-        }
-
-        var pumpStatus: some View {
-            addBackground()
-                .frame(maxWidth: UIScreen.main.bounds.width / 2, maxHeight: 35)
-                .overlay(pumpView)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-                .padding(.horizontal, 10)
-        }
-
         var chart: some View {
             addColouredBackground()
                 .overlay {
@@ -565,11 +514,13 @@ extension Home {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
-                                    Text(name).font(.statusFont)
+                                    Text(name).font(.statusFont).foregroundStyle(.secondary)
                                 }
                             }
-                        } else {
+                        } else if override.percentage != 100 {
                             Text(override.percentage.formatted() + " %")
+                        } else {
+                            Text("Override").foregroundStyle(.secondary)
                         }
                     }
                 }

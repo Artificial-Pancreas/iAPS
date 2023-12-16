@@ -69,6 +69,7 @@ extension Home {
         @Published var displayTimeButtons: Bool = false
         @Published var useBlue: Bool = false
         @Published var useTargetButton: Bool = false
+        @Published var overrides: [Override] = []
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -85,8 +86,10 @@ extension Home {
             setupReservoir()
             setupAnnouncements()
             setupCurrentPumpTimezone()
+            setupOverrides()
 
             suggestion = provider.suggestion
+            overrides = provider.overrides()
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
@@ -323,6 +326,13 @@ extension Home {
             }
         }
 
+        private func setupOverrides() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overrides = self.provider.overrides()
+            }
+        }
+
         private func setupAnnouncements() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -425,6 +435,7 @@ extension Home.StateModel:
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
+        setupOverrides()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -473,6 +484,7 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
+        setupOverrides()
     }
 
     func pumpBatteryDidChange(_: Battery) {
@@ -481,6 +493,7 @@ extension Home.StateModel:
 
     func pumpReservoirDidChange(_: Decimal) {
         setupReservoir()
+        setupOverrides()
     }
 
     func pumpTimeZoneDidChange(_: TimeZone) {

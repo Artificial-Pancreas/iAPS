@@ -15,6 +15,10 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
 
+        func overrides() -> [Override] {
+            CoreDataStorage().fetchOverrides(interval: DateFilter().day)
+        }
+
         var enactedSuggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
