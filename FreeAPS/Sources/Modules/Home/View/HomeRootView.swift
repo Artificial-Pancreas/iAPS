@@ -505,7 +505,7 @@ extension Home {
         }
 
         var profileView: some View {
-            HStack {
+            HStack(spacing: 0) {
                 if let override = fetchedPercent.first {
                     if override.enabled {
                         if override.isPreset {
@@ -518,9 +518,17 @@ extension Home {
                                 }
                             }
                         } else if override.percentage != 100 {
-                            Text(override.percentage.formatted() + " %")
+                            Text(override.percentage.formatted() + " %").font(.statusFont).foregroundStyle(.secondary)
+                        } else if override.smbIsOff, !override.smbIsAlwaysOff {
+                            Text("No ").font(.statusFont).foregroundStyle(.secondary) // "No" as in no SMBs
+                            Image(systemName: "syringe")
+                                .font(.previewNormal).foregroundStyle(.secondary)
+                        } else if override.smbIsOff {
+                            Image(systemName: "clock").font(.statusFont).foregroundStyle(.secondary)
+                            Image(systemName: "syringe")
+                                .font(.previewNormal).foregroundStyle(.secondary)
                         } else {
-                            Text("Override").foregroundStyle(.secondary)
+                            Text("Override").font(.statusFont).foregroundStyle(.secondary)
                         }
                     }
                 }

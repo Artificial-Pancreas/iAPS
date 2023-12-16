@@ -1065,12 +1065,29 @@ extension MainChartView {
         calculationQueue.async {
             var rects = overrides.map { override -> CGRect in
                 let x0 = timeToXCoordinate((override.date ?? Date()).timeIntervalSince1970, fullSize: fullSize)
-                let y0 = glucoseToYCoordinate(Int(override.target ?? 0), fullSize: fullSize)
-                let x1 = timeToXCoordinate(
-                    (override.date ?? Date()).timeIntervalSince1970 + Int(override.duration ?? 0).minutes.timeInterval,
-                    fullSize: fullSize
-                )
-                let y1 = glucoseToYCoordinate(Int(override.target ?? 0), fullSize: fullSize)
+                let y0 = glucoseToYCoordinate(Int(truncating: override.target ?? 0), fullSize: fullSize)
+
+                let x1 = (override.duration ?? 0) == 0 ?
+
+                    timeToXCoordinate(
+                        (override.date ?? Date()).timeIntervalSince1970 + 300.minutes.timeInterval,
+                        fullSize: fullSize
+                    )
+                    :
+
+                    timeToXCoordinate(
+                        (override.date ?? Date()).timeIntervalSince1970 + Int(truncating: override.duration ?? 0).minutes
+                            .timeInterval, fullSize: fullSize
+                    )
+
+                /*
+                 let x1 = timeToXCoordinate(
+                     (override.date ?? Date()).timeIntervalSince1970 + Int(truncating: override.duration ?? 0).minutes.timeInterval,
+                     fullSize: fullSize
+                 )
+                  */
+
+                let y1 = glucoseToYCoordinate(Int(truncating: override.target ?? 0), fullSize: fullSize)
                 return CGRect(
                     x: x0,
                     y: y0 - 3,
