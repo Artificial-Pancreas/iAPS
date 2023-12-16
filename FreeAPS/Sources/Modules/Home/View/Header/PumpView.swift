@@ -39,16 +39,7 @@ struct PumpView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            if let date = expiresAtDate {
-                HStack(spacing: 2) {
-                    Image("pod_reservoir")
-                        .resizable(resizingMode: .stretch)
-                        .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
-                        .foregroundColor(colorScheme == .dark ? .secondary : .white)
-                    remainingTime(time: date.timeIntervalSince(timerDate))
-                        .font(.statusFont).fontWeight(.bold)
-                }
-            } else if let battery = battery, expiresAtDate == nil {
+            if let battery = battery, expiresAtDate == nil {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
                     (battery.percent ?? 100) >
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
@@ -72,7 +63,7 @@ struct PumpView: View {
                                 .fill(Color.insulin)
                                 .frame(maxWidth: 8.8, maxHeight: fill)
                                 .frame(maxHeight: .infinity, alignment: .bottom)
-                                .offset(x: -0.09, y: -0.2)
+                                .offset(x: -0.09, y: -0.22)
                         }
                     if reservoir == 0xDEAD_BEEF {
                         HStack(spacing: 0) {
@@ -88,9 +79,20 @@ struct PumpView: View {
                             Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                         }
                     }
-                }
+                }.offset(x: 0, y: 4)
             } else {
                 Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
+            }
+
+            if let date = expiresAtDate {
+                HStack(spacing: 2) {
+                    Image("pod_reservoir")
+                        .resizable(resizingMode: .stretch)
+                        .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                        .foregroundColor(colorScheme == .dark ? .secondary : .white)
+                    remainingTime(time: date.timeIntervalSince(timerDate))
+                        .font(.pumpFont)
+                }
             }
         }
     }

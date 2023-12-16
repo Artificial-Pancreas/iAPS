@@ -205,11 +205,11 @@ extension Home {
                     HStack {
                         if state.pumpSuspended {
                             Text("Pump suspended")
-                                .font(.system(size: 12, weight: .bold)).foregroundColor(.loopGray)
+                                .font(.custom("TempBasal", fixedSize: 13)).bold().foregroundColor(.loopGray)
                         } else if let tempBasalString = tempBasalString {
                             Text(tempBasalString)
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(colorScheme == .dark ? .primary : .insulin)
+                                .font(.custom("TempBasal", fixedSize: 13)).bold()
+                                .foregroundColor(.insulin)
                         }
                         if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
                             Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
@@ -496,8 +496,8 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.65 : UIScreen.main.bounds
-                        .height / 1.87
+                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.51 : UIScreen.main.bounds
+                        .height / 1.67
                 )
                 .addShadows()
         }
@@ -513,14 +513,14 @@ extension Home {
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .loopYellow, materialOpacity: materialOpacity)
-                            .frame(width: 16.8, height: 55)
-                            .offset(x: 0, y: -7)
+                            .frame(width: 13.8, height: 40)
+                            .offset(x: 0, y: -6)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
                             Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
-                        }.offset(x: 0, y: 10)
+                        }.offset(x: 0, y: 5)
                     }
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
@@ -528,14 +528,14 @@ extension Home {
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .insulin, materialOpacity: materialOpacity)
-                            .frame(width: 14, height: 45)
-                            .offset(x: 0, y: -2)
+                            .frame(width: 11, height: 36)
+                            .offset(x: 0, y: -2.5)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
                             ).font(.statusFont).bold()
                             Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                        }.offset(x: 0, y: 10)
+                        }.offset(x: 0, y: 5)
                     }
                 }
             }
@@ -577,18 +577,20 @@ extension Home {
         }
 
         func bolusProgressView(progress: Decimal) -> some View {
-            HStack {
-                Text("Bolusing")
-                    .foregroundColor(.primary)
-                ProgressView(value: Double(progress))
-                    .progressViewStyle(BolusProgressViewStyle())
-                Image(systemName: "xmark.square.fill")
-                    .symbolRenderingMode(.palette)
-                    .foregroundStyle(.white, .blue)
-            }.font(.custom("BolusProgress", fixedSize: 20))
-                .onTapGesture {
-                    state.cancelBolus()
-                }
+            ZStack {
+                HStack {
+                    Text("Bolusing")
+                        .foregroundColor(.primary)
+                    ProgressView(value: Double(progress))
+                        .progressViewStyle(BolusProgressViewStyle())
+                    Image(systemName: "xmark.square.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.white, .blue)
+                }.font(.custom("BolusProgress", fixedSize: 20))
+                    .onTapGesture {
+                        state.cancelBolus()
+                    }
+            }
         }
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
@@ -619,10 +621,7 @@ extension Home {
                             headerView(geo)
                             chart
                             if state.displayTimeButtons {
-                                timeInterval.padding(.bottom, 20)
-                            }
-                            if let progress = state.bolusProgress {
-                                bolusProgressView(progress: progress)
+                                timeInterval.padding(.bottom, 10)
                             }
                             preview
                         }
@@ -632,6 +631,16 @@ extension Home {
                 }
                 .background(.gray.opacity(IAPSconfig.backgroundOpacity))
                 .edgesIgnoringSafeArea(.vertical)
+                .overlay {
+                    if let progress = state.bolusProgress {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(.gray.opacity(0.8))
+                                .frame(width: 300, height: 50)
+                            bolusProgressView(progress: progress)
+                        }.frame(maxWidth: .infinity, alignment: .center)
+                    }
+                }
             }
             .onAppear { configureView { highlightButtons() } }
             .navigationTitle("Home")
