@@ -1075,66 +1075,36 @@ extension MainChartView {
         calculationQueue.async {
             var rects = overrides.chunks(ofCount: 2).map { chunk -> CGRect in
                 let chunk = Array(chunk)
-                guard !chunk.isEmpty else { return CGRect() }
-
                 var xStart = CGFloat()
                 var xEnd = CGFloat()
                 var target: Int = 0
+                var duration: Int = 0
 
-                if chunk.count == 1 {
-                    if chunk[0].enabled, chunk[0].duration != 0 {
-                        xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
-                        xEnd = timeToXCoordinate(
-                            chunk[1].date!.timeIntervalSince1970 + Int(truncating: chunk[0].duration ?? 0).minutes.timeInterval,
-                            fullSize: fullSize
-                        )
-                        target = Int(chunk[0].target ?? 0)
-                        if target == 0 {
-                            target = 6
-                        }
-                    } else if chunk[0].enabled {
-                        xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
-                        xEnd = timeToXCoordinate(
-                            chunk[0].date!.timeIntervalSince1970 + Int(90).minutes.timeInterval,
-                            fullSize: fullSize
-                        )
-                        target = Int(chunk[0].target ?? 0)
-                        if target == 0 {
-                            target = 6
-                        }
-                    }
-                } else if chunk[1].enabled {
+                if chunk.count > 1, chunk[1].enabled {
                     xStart = timeToXCoordinate(chunk[1].date!.timeIntervalSince1970, fullSize: fullSize)
                     xEnd = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
-                    target = Int(chunk[1].target ?? 0)
-                    if target == 0 {
-                        target = 6
-                    }
-                } else if chunk[0].enabled, chunk[0].duration != 0 {
-                    xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
-                    xEnd = timeToXCoordinate(
-                        chunk[1].date!.timeIntervalSince1970 + Int(truncating: chunk[0].duration ?? 0).minutes.timeInterval,
-                        fullSize: fullSize
-                    )
-                    target = Int(chunk[0].target ?? 0)
+                    let t = chunk[1].target ?? 0
+                    target = Int(t)
                     if target == 0 {
                         target = 6
                     }
                 } else if chunk[0].enabled {
                     xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
+                    if let d = chunk[0].duration, d != 0 {
+                        duration = Int(d)
+                    }
                     xEnd = timeToXCoordinate(
-                        chunk[0].date!.timeIntervalSince1970 + Int(90).minutes.timeInterval,
+                        Int(chunk[0].date!.timeIntervalSince1970) + duration != 0 ? duration.minutes.timeInterval : 0,
                         fullSize: fullSize
                     )
-                    target = Int(chunk[0].target ?? 0)
+                    let t = chunk[0].target ?? 0
+                    target = Int(t)
                     if target == 0 {
                         target = 6
                     }
                 }
 
-                // MARK: TO DO: which target to display when no override target?
-
-                let y = glucoseToYCoordinate(target == 0 ? 6 : target, fullSize: fullSize)
+                let y = glucoseToYCoordinate(target, fullSize: fullSize)
 
                 return CGRect(
                     x: xStart,
