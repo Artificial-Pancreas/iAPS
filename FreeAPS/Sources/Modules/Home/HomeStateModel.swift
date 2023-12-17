@@ -229,6 +229,11 @@ extension Home {
                 profiles.date = Date()
                 try? self.coredataContext.save()
             }
+            DispatchQueue.main.async {
+                self.broadcaster.notify(OverrideObserver.self, on: .main) {
+                    $0.overridesDidUpdate(self.overrides)
+                }
+            }
         }
 
         private func setupGlucose() {
@@ -439,7 +444,7 @@ extension Home.StateModel:
         setupOverrides()
     }
 
-    func overridesDidUpdate() {
+    func overridesDidUpdate(_: [Override]) {
         setupOverrides()
     }
 

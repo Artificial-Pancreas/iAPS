@@ -11,6 +11,7 @@ extension Home {
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
+        @State var triggerUpdate = false
 
         struct Buttons: Identifiable {
             let label: String
@@ -287,7 +288,8 @@ extension Home {
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
                     thresholdLines: $state.thresholdLines,
-                    overrides: $state.overrides
+                    overrides: $state.overrides,
+                    triggerUpdate: $triggerUpdate
                 )
             }
             .padding(.bottom, 5)
@@ -365,6 +367,7 @@ extension Home {
                     Button {
                         if isOverride {
                             state.cancelProfile()
+                            triggerUpdate.toggle()
                         } else {
                             state.showModal(for: .overrideProfilesConfig)
                         }
@@ -451,7 +454,7 @@ extension Home {
                 }
                 .frame(
                     minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.51 : UIScreen.main.bounds
-                        .height / 1.65
+                        .height / 1.6
                 )
                 .addShadows()
         }
@@ -587,7 +590,7 @@ extension Home {
                             if state.displayTimeButtons {
                                 timeInterval.padding(.vertical, 10)
                             }
-                            preview
+                            preview.padding(.top, !state.displayTimeButtons ? 10 : 0)
                         }
                     }
                     .scrollIndicators(.hidden)
@@ -607,6 +610,7 @@ extension Home {
                 }
             }
             .onAppear { configureView { highlightButtons() } }
+            // .onChange(of: profileView, action: triggerUpdate.toggle())
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)

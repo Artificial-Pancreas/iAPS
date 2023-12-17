@@ -108,7 +108,6 @@ extension Bolus {
             deltaBG = delta
         }
 
-        // CALCULATIONS FOR THE BOLUS CALCULATOR
         func calculateInsulin() -> Decimal {
             var conversion: Decimal = 1.0
             if units == .mmolL {

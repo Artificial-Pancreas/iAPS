@@ -9,9 +9,8 @@ import Swinject
      func fetchLatestOverride() -> [Override]
  }
   */
-
 protocol OverrideObserver {
-    func overridesDidUpdate()
+    func overridesDidUpdate(_: [Override])
 }
 
 final class OverrideStorage {

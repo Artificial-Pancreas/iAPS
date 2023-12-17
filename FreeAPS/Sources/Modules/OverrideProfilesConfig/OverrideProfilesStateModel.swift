@@ -28,6 +28,8 @@ extension OverrideProfilesConfig {
         @Published var defaultUamMinutes: Decimal = 0
         @Published var emoji: String = ""
 
+        @Injected() var broadcaster: Broadcaster!
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -47,6 +49,7 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.enabled = true
                 saveOverride.smbIsOff = self.smbIsOff
+
                 if self.isPreset {
                     saveOverride.isPreset = true
                     saveOverride.id = id
@@ -57,7 +60,12 @@ extension OverrideProfilesConfig {
                         target = target.asMgdL
                     }
                     saveOverride.target = target as NSDecimalNumber
-                } else { saveOverride.target = 0 }
+                } else {
+                    let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter().twoHours).first?.glucose ?? 100
+
+                    saveOverride.target = NSDecimalNumber(value: glucose)
+                    print("Target: \(NSDecimalNumber(value: glucose))")
+                }
 
                 if advancedSettings {
                     saveOverride.advancedSettings = true
@@ -139,8 +147,14 @@ extension OverrideProfilesConfig {
                 saveOverride.smbIsOff = profile.smbIsOff
                 saveOverride.isPreset = true
                 saveOverride.date = Date()
-                saveOverride.target = profile.target
                 saveOverride.id = id_
+
+                if let tar = profile.target, tar == 0 {
+                    let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter().twoHours).first?.glucose ?? 100
+                    saveOverride.target = NSDecimalNumber(value: glucose)
+                } else {
+                    saveOverride.target = profile.target
+                }
 
                 if profile.advancedSettings {
                     saveOverride.advancedSettings = true

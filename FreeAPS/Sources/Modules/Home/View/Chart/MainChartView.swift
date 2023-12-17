@@ -83,6 +83,7 @@ struct MainChartView: View {
     @Binding var displayYgridLines: Bool
     @Binding var thresholdLines: Bool
     @Binding var overrides: [Override]
+    @Binding var triggerUpdate: Bool
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -625,7 +626,7 @@ struct MainChartView: View {
             overridesPath
                 .fill(Color.purple.opacity(0.3))
             overridesPath
-                .stroke(Color.purple.opacity(0.6), lineWidth: 1)
+                .stroke(Color.purple.opacity(0.6), lineWidth: 0.5)
         }
         .onChange(of: glucose) { _ in
             calculateOverridesRects(fullSize: fullSize)
@@ -634,6 +635,9 @@ struct MainChartView: View {
             calculateOverridesRects(fullSize: fullSize)
         }
         .onChange(of: overrides) { _ in
+            calculateOverridesRects(fullSize: fullSize)
+        }
+        .onChange(of: triggerUpdate) { _ in
             calculateOverridesRects(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
@@ -1071,16 +1075,41 @@ extension MainChartView {
         calculationQueue.async {
             var rects = overrides.chunks(ofCount: 2).map { chunk -> CGRect in
                 let chunk = Array(chunk)
-                guard chunk.count == 2 else { return CGRect() }
+                guard !chunk.isEmpty else { return CGRect() }
 
                 var xStart = CGFloat()
                 var xEnd = CGFloat()
                 var target: Int = 0
 
-                if chunk[1].enabled {
+                if chunk.count == 1 {
+                    if chunk[0].enabled, chunk[0].duration != 0 {
+                        xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
+                        xEnd = timeToXCoordinate(
+                            chunk[1].date!.timeIntervalSince1970 + Int(truncating: chunk[0].duration ?? 0).minutes.timeInterval,
+                            fullSize: fullSize
+                        )
+                        target = Int(chunk[0].target ?? 0)
+                        if target == 0 {
+                            target = 6
+                        }
+                    } else if chunk[0].enabled {
+                        xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
+                        xEnd = timeToXCoordinate(
+                            chunk[0].date!.timeIntervalSince1970 + Int(90).minutes.timeInterval,
+                            fullSize: fullSize
+                        )
+                        target = Int(chunk[0].target ?? 0)
+                        if target == 0 {
+                            target = 6
+                        }
+                    }
+                } else if chunk[1].enabled {
                     xStart = timeToXCoordinate(chunk[1].date!.timeIntervalSince1970, fullSize: fullSize)
                     xEnd = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
                     target = Int(chunk[1].target ?? 0)
+                    if target == 0 {
+                        target = 6
+                    }
                 } else if chunk[0].enabled, chunk[0].duration != 0 {
                     xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
                     xEnd = timeToXCoordinate(
@@ -1088,6 +1117,9 @@ extension MainChartView {
                         fullSize: fullSize
                     )
                     target = Int(chunk[0].target ?? 0)
+                    if target == 0 {
+                        target = 6
+                    }
                 } else if chunk[0].enabled {
                     xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
                     xEnd = timeToXCoordinate(
@@ -1095,6 +1127,9 @@ extension MainChartView {
                         fullSize: fullSize
                     )
                     target = Int(chunk[0].target ?? 0)
+                    if target == 0 {
+                        target = 6
+                    }
                 }
 
                 // MARK: TO DO: which target to display when no override target?
@@ -1109,18 +1144,17 @@ extension MainChartView {
                 )
             }
 
-            /*
-             if rects.count > 1 {
-                 rects = rects.reduce([]) { result, rect -> [CGRect] in
-                     guard var last = result.last else { return [rect] }
-                     if last.origin.x + last.width > rect.origin.x {
-                         last.size.width = rect.origin.x - last.origin.x
-                     }
-                     var res = Array(result.dropLast())
-                     res.append(contentsOf: [last, rect])
-                     return res
-                 }
-             }*/
+            if rects.count > 1 {
+                rects = rects.reduce([]) { result, rect -> [CGRect] in
+                    guard var last = result.last else { return [rect] }
+                    if last.origin.x + last.width > rect.origin.x {
+                        last.size.width = rect.origin.x - last.origin.x
+                    }
+                    var res = Array(result.dropLast())
+                    res.append(contentsOf: [last, rect])
+                    return res
+                }
+            }
 
             let path = Path { path in
                 path.addRects(rects)
