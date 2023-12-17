@@ -425,7 +425,8 @@ extension Home.StateModel:
     EnactedSuggestionObserver,
     PumpBatteryObserver,
     PumpReservoirObserver,
-    PumpTimeZoneObserver
+    PumpTimeZoneObserver,
+    OverrideObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -435,6 +436,10 @@ extension Home.StateModel:
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
+        setupOverrides()
+    }
+
+    func overridesDidUpdate() {
         setupOverrides()
     }
 
@@ -493,7 +498,6 @@ extension Home.StateModel:
 
     func pumpReservoirDidChange(_: Decimal) {
         setupReservoir()
-        setupOverrides()
     }
 
     func pumpTimeZoneDidChange(_: TimeZone) {

@@ -16,7 +16,7 @@ extension Home {
         }
 
         func overrides() -> [Override] {
-            CoreDataStorage().fetchOverrides(interval: DateFilter().day)
+            OverrideStorage().fetchOverrides(interval: DateFilter().day)
         }
 
         var enactedSuggestion: Suggestion? {

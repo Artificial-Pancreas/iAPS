@@ -20,6 +20,12 @@ struct AnnouncementDot {
     let note: String
 }
 
+struct OverrideStruct {
+    let start: Date
+    let end: Date
+    let glucose: Int
+}
+
 typealias GlucoseYRange = (minValue: Int, minY: CGFloat, maxValue: Int, maxY: CGFloat)
 
 struct MainChartView: View {
@@ -619,7 +625,7 @@ struct MainChartView: View {
             overridesPath
                 .fill(Color.purple.opacity(0.3))
             overridesPath
-                .stroke(Color.purple.opacity(0.8), lineWidth: 1)
+                .stroke(Color.purple.opacity(0.6), lineWidth: 1)
         }
         .onChange(of: glucose) { _ in
             calculateOverridesRects(fullSize: fullSize)
@@ -1063,49 +1069,58 @@ extension MainChartView {
 
     private func calculateOverridesRects(fullSize: CGSize) {
         calculationQueue.async {
-            var rects = overrides.map { override -> CGRect in
-                let x0 = timeToXCoordinate((override.date ?? Date()).timeIntervalSince1970, fullSize: fullSize)
-                let y0 = glucoseToYCoordinate(Int(truncating: override.target ?? 0), fullSize: fullSize)
+            var rects = overrides.chunks(ofCount: 2).map { chunk -> CGRect in
+                let chunk = Array(chunk)
+                guard chunk.count == 2 else { return CGRect() }
 
-                let x1 = (override.duration ?? 0) == 0 ?
+                var xStart = CGFloat()
+                var xEnd = CGFloat()
+                var target: Int = 0
 
-                    timeToXCoordinate(
-                        (override.date ?? Date()).timeIntervalSince1970 + 300.minutes.timeInterval,
+                if chunk[1].enabled {
+                    xStart = timeToXCoordinate(chunk[1].date!.timeIntervalSince1970, fullSize: fullSize)
+                    xEnd = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
+                    target = Int(chunk[1].target ?? 0)
+                } else if chunk[0].enabled, chunk[0].duration != 0 {
+                    xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
+                    xEnd = timeToXCoordinate(
+                        chunk[1].date!.timeIntervalSince1970 + Int(truncating: chunk[0].duration ?? 0).minutes.timeInterval,
                         fullSize: fullSize
                     )
-                    :
-
-                    timeToXCoordinate(
-                        (override.date ?? Date()).timeIntervalSince1970 + Int(truncating: override.duration ?? 0).minutes
-                            .timeInterval, fullSize: fullSize
+                    target = Int(chunk[0].target ?? 0)
+                } else if chunk[0].enabled {
+                    xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
+                    xEnd = timeToXCoordinate(
+                        chunk[0].date!.timeIntervalSince1970 + Int(90).minutes.timeInterval,
+                        fullSize: fullSize
                     )
+                    target = Int(chunk[0].target ?? 0)
+                }
 
-                /*
-                 let x1 = timeToXCoordinate(
-                     (override.date ?? Date()).timeIntervalSince1970 + Int(truncating: override.duration ?? 0).minutes.timeInterval,
-                     fullSize: fullSize
-                 )
-                  */
+                // MARK: TO DO: which target to display when no override target?
 
-                let y1 = glucoseToYCoordinate(Int(truncating: override.target ?? 0), fullSize: fullSize)
+                let y = glucoseToYCoordinate(target == 0 ? 6 : target, fullSize: fullSize)
+
                 return CGRect(
-                    x: x0,
-                    y: y0 - 3,
-                    width: x1 - x0,
-                    height: y1 - y0 + 6
+                    x: xStart,
+                    y: y - 3,
+                    width: xEnd - xStart,
+                    height: 6
                 )
             }
-            if rects.count > 1 {
-                rects = rects.reduce([]) { result, rect -> [CGRect] in
-                    guard var last = result.last else { return [rect] }
-                    if last.origin.x + last.width > rect.origin.x {
-                        last.size.width = rect.origin.x - last.origin.x
-                    }
-                    var res = Array(result.dropLast())
-                    res.append(contentsOf: [last, rect])
-                    return res
-                }
-            }
+
+            /*
+             if rects.count > 1 {
+                 rects = rects.reduce([]) { result, rect -> [CGRect] in
+                     guard var last = result.last else { return [rect] }
+                     if last.origin.x + last.width > rect.origin.x {
+                         last.size.width = rect.origin.x - last.origin.x
+                     }
+                     var res = Array(result.dropLast())
+                     res.append(contentsOf: [last, rect])
+                     return res
+                 }
+             }*/
 
             let path = Path { path in
                 path.addRects(rects)

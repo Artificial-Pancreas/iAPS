@@ -230,16 +230,21 @@ extension Home {
         var timeInterval: some View {
             HStack {
                 ForEach(timeButtons) { button in
-                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
-                        state.hours = button.hours
-                    }
-                    .foregroundStyle(button.active ? (colorScheme == .dark ? Color.white : Color.black).opacity(0.9) : .secondary)
-                    .frame(maxHeight: 40).padding(8)
-                    .background(
-                        button.active ?
-                            (colorScheme == .dark ? .blueComplicationBackground : Color.white) : Color.clear
-                    )
-                    .cornerRadius(20)
+                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number)
+                        .font(.buttonFont)
+                        .onTapGesture {
+                            state.hours = button.hours
+                        }
+                        .foregroundStyle(
+                            button.active ? (colorScheme == .dark ? Color.white : Color.black)
+                                .opacity(0.9) : .secondary
+                        )
+                        .frame(maxHeight: 27).padding(.horizontal, 5).padding(.vertical, 2)
+                        .background(
+                            button.active ?
+                                (colorScheme == .dark ? .blueComplicationBackground : Color.white) : Color.clear
+                        )
+                        .cornerRadius(15)
                 }
             }
             .shadow(
@@ -446,7 +451,7 @@ extension Home {
                 }
                 .frame(
                     minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.51 : UIScreen.main.bounds
-                        .height / 1.67
+                        .height / 1.65
                 )
                 .addShadows()
         }
@@ -576,11 +581,11 @@ extension Home {
             GeometryReader { geo in
                 VStack {
                     ScrollView {
-                        VStack(spacing: 10) {
+                        VStack(spacing: 0) {
                             headerView(geo)
                             chart
                             if state.displayTimeButtons {
-                                timeInterval.padding(.bottom, 10)
+                                timeInterval.padding(.vertical, 10)
                             }
                             preview
                         }
