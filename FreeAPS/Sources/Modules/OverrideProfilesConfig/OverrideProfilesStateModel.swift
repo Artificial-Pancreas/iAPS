@@ -61,12 +61,8 @@ extension OverrideProfilesConfig {
                     }
                     saveOverride.target = target as NSDecimalNumber
                 } else {
-                    let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter().twoHours).first?.glucose ?? 100
-
-                    saveOverride.target = NSDecimalNumber(value: glucose)
-                    print("Target: \(NSDecimalNumber(value: glucose))")
+                    saveOverride.target = 0
                 }
-
                 if advancedSettings {
                     saveOverride.advancedSettings = true
 
@@ -150,8 +146,7 @@ extension OverrideProfilesConfig {
                 saveOverride.id = id_
 
                 if let tar = profile.target, tar == 0 {
-                    let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter().twoHours).first?.glucose ?? 100
-                    saveOverride.target = NSDecimalNumber(value: glucose)
+                    saveOverride.target = 0
                 } else {
                     saveOverride.target = profile.target
                 }

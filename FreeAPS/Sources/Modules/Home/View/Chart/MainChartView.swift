@@ -1096,9 +1096,8 @@ extension MainChartView {
             }
             if rects.count > 1, latest?.enabled ?? false {
                 var old = Array(rects)
-                var target: Int = 0
                 let t = latest?.target ?? 100
-                target = Int(t)
+                var target = Int(t)
                 if target == 0 {
                     target = 6
                 }
@@ -1121,7 +1120,7 @@ extension MainChartView {
                     }
                 } else {
                     let x1 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
-                    let plusNow = Date.now.addingTimeInterval(30.minutes.timeInterval)
+                    let plusNow = Date.now.addingTimeInterval(60.minutes.timeInterval)
                     let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
@@ -1138,11 +1137,9 @@ extension MainChartView {
                     }
                 }
             }
-
             let path = Path { path in
                 path.addRects(rects)
             }
-
             DispatchQueue.main.async {
                 overridesPath = path
             }

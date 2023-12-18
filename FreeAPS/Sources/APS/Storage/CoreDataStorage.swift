@@ -31,20 +31,4 @@ final class CoreDataStorage {
         }
         return overrideArray
     }
-
-    /*
-     func fetchOverrides(interval: NSDate) -> [Override] {
-         var overrideArray = [Override]()
-         coredataContext.performAndWait {
-             let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-             let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-             requestOverrides.sortDescriptors = [sortOverride]
-             requestOverrides.predicate = NSPredicate(
-                 format: "date > %@", interval
-             )
-             try? overrideArray = self.coredataContext.fetch(requestOverrides)
-         }
-         return overrideArray
-     }
-      */
 }
