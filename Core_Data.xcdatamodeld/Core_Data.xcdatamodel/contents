@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="22G313" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22G313" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Autosens_" representedClassName="Autosens_" syncable="YES" codeGenerationType="class">
         <attribute name="newisf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="ratio" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -99,6 +99,11 @@
         <attribute name="start" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="100"/>
         <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
+    </entity>
+    <entity name="OverrideHistory" representedClassName="OverrideHistory" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="duration" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="target" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="OverridePresets" representedClassName="OverridePresets" syncable="YES" codeGenerationType="class">
         <attribute name="advancedSettings" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

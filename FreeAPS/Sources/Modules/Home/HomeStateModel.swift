@@ -70,6 +70,7 @@ extension Home {
         @Published var useBlue: Bool = false
         @Published var useTargetButton: Bool = false
         @Published var overrides: [Override] = []
+        @Published var overrideHistory: [OverrideHistory] = []
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -87,9 +88,11 @@ extension Home {
             setupAnnouncements()
             setupCurrentPumpTimezone()
             setupOverrides()
+            setupOverrideHistory()
 
             suggestion = provider.suggestion
             overrides = provider.overrides()
+            overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
@@ -124,7 +127,7 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
-
+            broadcaster.register(OverrideObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
 
             timer.eventHandler = {
@@ -223,17 +226,8 @@ extension Home {
         }
 
         func cancelProfile() {
-            coredataContext.perform { [self] in
-                let profiles = Override(context: self.coredataContext)
-                profiles.enabled = false
-                profiles.date = Date()
-                try? self.coredataContext.save()
-            }
-            DispatchQueue.main.async {
-                self.broadcaster.notify(OverrideObserver.self, on: .main) {
-                    $0.overridesDidUpdate(self.overrides)
-                }
-            }
+            OverrideStorage().cancelProfile()
+            setupOverrideHistory()
         }
 
         private func setupGlucose() {
@@ -335,6 +329,13 @@ extension Home {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.overrides = self.provider.overrides()
+            }
+        }
+
+        private func setupOverrideHistory() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overrideHistory = self.provider.overrideHistory()
             }
         }
 
@@ -441,11 +442,11 @@ extension Home.StateModel:
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
-        setupOverrides()
+        setupOverrideHistory()
     }
 
-    func overridesDidUpdate(_: [Override]) {
-        setupOverrides()
+    func overrideHistoryDidUpdate(_: [OverrideHistory]) {
+        setupOverrideHistory()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -466,6 +467,7 @@ extension Home.StateModel:
         useBlue = settingsManager.settings.useBlue
         useTargetButton = settingsManager.settings.useTargetButton
         setupGlucose()
+        setupOverrideHistory()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -494,7 +496,7 @@ extension Home.StateModel:
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
-        setupOverrides()
+        setupOverrideHistory()
     }
 
     func pumpBatteryDidChange(_: Battery) {

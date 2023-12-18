@@ -288,8 +288,8 @@ extension Home {
                     displayXgridLines: $state.displayXgridLines,
                     displayYgridLines: $state.displayYgridLines,
                     thresholdLines: $state.thresholdLines,
-                    overrides: $state.overrides,
-                    triggerUpdate: $triggerUpdate
+                    triggerUpdate: $triggerUpdate,
+                    overrideHistory: $state.overrideHistory
                 )
             }
             .padding(.bottom, 5)
@@ -547,16 +547,17 @@ extension Home {
             ZStack {
                 HStack {
                     Text("Bolusing")
-                        .foregroundColor(.primary)
+                        .foregroundColor(.primary).font(.bolusProgressFont)
                     ProgressView(value: Double(progress))
                         .progressViewStyle(BolusProgressViewStyle())
                     Image(systemName: "xmark.square.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.white, .blue)
-                }.font(.custom("BolusProgress", fixedSize: 20))
-                    .onTapGesture {
-                        state.cancelBolus()
-                    }
+                        .font(.bolusProgressStopFont)
+                        .onTapGesture {
+                            state.cancelBolus()
+                        }
+                }
             }
         }
 
@@ -574,7 +575,7 @@ extension Home {
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 .padding(.trailing, 7).padding(.bottom, 5)
-                        }.padding(.top, geo.safeAreaInsets.top)
+                        }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
                     }
                 }
                 .clipShape(Rectangle())

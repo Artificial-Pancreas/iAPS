@@ -82,8 +82,8 @@ struct MainChartView: View {
     @Binding var displayXgridLines: Bool
     @Binding var displayYgridLines: Bool
     @Binding var thresholdLines: Bool
-    @Binding var overrides: [Override]
     @Binding var triggerUpdate: Bool
+    @Binding var overrideHistory: [OverrideHistory]
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -624,9 +624,9 @@ struct MainChartView: View {
     private func overridesView(fullSize: CGSize) -> some View {
         ZStack {
             overridesPath
-                .fill(Color.purple.opacity(0.3))
+                .fill(Color.purple.opacity(0.4))
             overridesPath
-                .stroke(Color.purple.opacity(0.6), lineWidth: 0.5)
+                .stroke(Color.purple.opacity(0.7), lineWidth: 0.5)
         }
         .onChange(of: glucose) { _ in
             calculateOverridesRects(fullSize: fullSize)
@@ -634,7 +634,7 @@ struct MainChartView: View {
         .onChange(of: suggestion) { _ in
             calculateOverridesRects(fullSize: fullSize)
         }
-        .onChange(of: overrides) { _ in
+        .onChange(of: overrideHistory) { _ in
             calculateOverridesRects(fullSize: fullSize)
         }
         .onChange(of: triggerUpdate) { _ in
@@ -1060,7 +1060,6 @@ extension MainChartView {
                     return res
                 }
             }
-
             let path = Path { path in
                 path.addRects(rects)
             }
@@ -1073,39 +1072,21 @@ extension MainChartView {
 
     private func calculateOverridesRects(fullSize: CGSize) {
         calculationQueue.async {
-            var rects = overrides.chunks(ofCount: 2).map { chunk -> CGRect in
-                let chunk = Array(chunk)
-                var xStart = CGFloat()
-                var xEnd = CGFloat()
+            let latest = OverrideStorage().fetchLatestOverride().first
+            var rects = overrideHistory.compactMap { each -> CGRect in
                 var target: Int = 0
-                var duration: Int = 0
-
-                if chunk.count > 1, chunk[1].enabled {
-                    xStart = timeToXCoordinate(chunk[1].date!.timeIntervalSince1970, fullSize: fullSize)
-                    xEnd = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
-                    let t = chunk[1].target ?? 0
-                    target = Int(t)
-                    if target == 0 {
-                        target = 6
-                    }
-                } else if chunk[0].enabled {
-                    xStart = timeToXCoordinate(chunk[0].date!.timeIntervalSince1970, fullSize: fullSize)
-                    if let d = chunk[0].duration, d != 0 {
-                        duration = Int(d)
-                    }
-                    xEnd = timeToXCoordinate(
-                        Int(chunk[0].date!.timeIntervalSince1970) + duration != 0 ? duration.minutes.timeInterval : 0,
-                        fullSize: fullSize
-                    )
-                    let t = chunk[0].target ?? 0
-                    target = Int(t)
-                    if target == 0 {
-                        target = 6
-                    }
+                let duration = each.duration
+                let xStart = timeToXCoordinate(each.date!.timeIntervalSince1970, fullSize: fullSize)
+                let xEnd = timeToXCoordinate(
+                    each.date!.addingTimeInterval(Int(duration).minutes.timeInterval).timeIntervalSince1970,
+                    fullSize: fullSize
+                )
+                let t = each.target
+                target = Int(t)
+                if target == 0 {
+                    target = 6
                 }
-
                 let y = glucoseToYCoordinate(target, fullSize: fullSize)
-
                 return CGRect(
                     x: xStart,
                     y: y - 3,
@@ -1113,16 +1094,48 @@ extension MainChartView {
                     height: 6
                 )
             }
-
-            if rects.count > 1 {
-                rects = rects.reduce([]) { result, rect -> [CGRect] in
-                    guard var last = result.last else { return [rect] }
-                    if last.origin.x + last.width > rect.origin.x {
-                        last.size.width = rect.origin.x - last.origin.x
+            if rects.count > 1, latest?.enabled ?? false {
+                var old = Array(rects)
+                var target: Int = 0
+                let t = latest?.target ?? 100
+                target = Int(t)
+                if target == 0 {
+                    target = 6
+                }
+                if (latest?.duration ?? 0) != 0 {
+                    let x1 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
+                    let plusNow = Date.now.addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
+                    let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
+                    let oneMore = CGRect(
+                        x: x1,
+                        y: glucoseToYCoordinate(target, fullSize: fullSize),
+                        width: x2 - x1,
+                        height: 6
+                    )
+                    old.append(oneMore)
+                    let path = Path { path in
+                        path.addRects(old)
                     }
-                    var res = Array(result.dropLast())
-                    res.append(contentsOf: [last, rect])
-                    return res
+                    return DispatchQueue.main.async {
+                        overridesPath = path
+                    }
+                } else {
+                    let x1 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
+                    let plusNow = Date.now.addingTimeInterval(30.minutes.timeInterval)
+                    let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
+                    let oneMore = CGRect(
+                        x: x1,
+                        y: glucoseToYCoordinate(target, fullSize: fullSize),
+                        width: x2 - x1,
+                        height: 6
+                    )
+                    old.append(oneMore)
+                    let path = Path { path in
+                        path.addRects(old)
+                    }
+                    return DispatchQueue.main.async {
+                        overridesPath = path
+                    }
                 }
             }
 

@@ -125,7 +125,7 @@ struct PumpView: View {
                     }
                 }
             } else {
-                Text(NSLocalizedString("Replace", comment: "View/Header when pod expired"))
+                Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
             }
         }
     }

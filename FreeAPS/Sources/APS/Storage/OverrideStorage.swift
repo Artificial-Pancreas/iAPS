@@ -10,7 +10,7 @@ import Swinject
  }
   */
 protocol OverrideObserver {
-    func overridesDidUpdate(_: [Override])
+    func overrideHistoryDidUpdate(_: [OverrideHistory])
 }
 
 final class OverrideStorage {
@@ -44,5 +44,36 @@ final class OverrideStorage {
             try? overrideArray = self.coredataContext.fetch(requestOverrides)
         }
         return overrideArray
+    }
+
+    func fetchOverrideHistory(interval: NSDate) -> [OverrideHistory] {
+        var overrideArray = [OverrideHistory]()
+        coredataContext.performAndWait {
+            let requestOverrides = OverrideHistory.fetchRequest() as NSFetchRequest<OverrideHistory>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestOverrides.sortDescriptors = [sortOverride]
+            requestOverrides.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+        }
+        return overrideArray
+    }
+
+    func cancelProfile() {
+        let scheduled = fetchLatestOverride().first
+        coredataContext.perform { [self] in
+            let profiles = Override(context: self.coredataContext)
+            let history = OverrideHistory(context: self.coredataContext)
+            if let latest = scheduled {
+                history.duration = -1 * (latest.date ?? Date()).timeIntervalSinceNow.minutes
+                print("History duration: \(history.duration) min")
+                history.date = latest.date ?? Date()
+                history.target = Double(latest.target ?? 100)
+            }
+            profiles.enabled = false
+            profiles.date = Date()
+            try? self.coredataContext.save()
+        }
     }
 }

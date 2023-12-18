@@ -254,14 +254,9 @@ extension OverrideProfilesConfig {
             override_target = false
             smbIsOff = false
             advancedSettings = false
-            coredataContext.perform { [self] in
-                let profiles = Override(context: self.coredataContext)
-                profiles.enabled = false
-                profiles.date = Date()
-                try? self.coredataContext.save()
-            }
             smbMinutes = defaultSmbMinutes
             uamMinutes = defaultUamMinutes
+            OverrideStorage().cancelProfile()
         }
     }
 }

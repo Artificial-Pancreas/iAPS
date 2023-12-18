@@ -37,6 +37,8 @@ extension Font {
 
     static let glucoseFont = Font.custom("SuggestionSmallPartsFont", fixedSize: 45)
     static let glucoseSmallFont = Font.custom("SuggestionSmallPartsFont", fixedSize: 24)
+    static let bolusProgressStopFont = Font.custom("BolusProgressStop", fixedSize: 24)
+    static let bolusProgressFont = Font.custom("BolusProgress", fixedSize: 20)
 }
 
 extension AngularGradient {
