@@ -62,9 +62,11 @@ extension NotificationsConfig {
                         footer: Text(
                             "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)"
                         )
-                    ) {
-                        Toggle("Show live activity", isOn: $state.useLiveActivity)
-                    }
+                    )
+                        {
+                            Toggle("Show live activity", isOn: $state.useLiveActivity)
+                            Toggle("Use white font", isOn: $state.useWhiteFont)
+                        }
                 }
             }
             .onAppear(perform: configureView)

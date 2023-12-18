@@ -57,9 +57,21 @@ struct LiveActivity: Widget {
             .imageScale(.small)
             .padding(.all, 15)
             .background(Color.white.opacity(0.2))
-            .foregroundColor(Color.black)
+            //.foregroundColor(Color.black)
             .activityBackgroundTint(Color.cyan.opacity(0.2))
+            if state.settings.useWhiteFont
+            {.foregroundColor(Color.white)
+            .activitySystemActionForegroundColor(Color.white)
+            }
+            else
+            {.foregroundColor(Color.black)
             .activitySystemActionForegroundColor(Color.black)
+            }
+            
+            
+            
+            
+          
 
         } dynamicIsland: { context in
             DynamicIsland {

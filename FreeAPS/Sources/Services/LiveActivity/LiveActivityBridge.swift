@@ -90,7 +90,7 @@ extension LiveActivityAttributes.ContentState {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var broadcaster: Broadcaster!
-
+    
     private var settings: FreeAPSSettings {
         settingsManager.settings
     }

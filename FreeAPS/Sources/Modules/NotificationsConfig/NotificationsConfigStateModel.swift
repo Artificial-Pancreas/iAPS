@@ -10,6 +10,8 @@ extension NotificationsConfig {
         @Published var highGlucose: Decimal = 0
         @Published var carbsRequiredThreshold: Decimal = 0
         @Published var useLiveActivity = false
+        @Published var useWhiteFont = false
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {

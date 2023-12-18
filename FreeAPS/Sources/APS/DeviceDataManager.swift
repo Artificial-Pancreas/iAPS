@@ -338,6 +338,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             settingsManager.updateInsulinCurve(status.insulinType)
         }
 
+        
+        
         let batteryPercent = Int((status.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(
             percent: batteryPercent,
