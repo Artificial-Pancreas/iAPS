@@ -134,7 +134,6 @@ struct PumpView: View {
         guard let battery = battery, let percent = battery.percent else {
             return .gray
         }
-
         switch percent {
         case ...10:
             return .red

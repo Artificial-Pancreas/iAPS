@@ -56,13 +56,12 @@ extension OverrideProfilesConfig {
                 } else { saveOverride.isPreset = false }
                 saveOverride.date = Date()
                 if override_target {
-                    if units == .mmolL {
-                        target = target.asMgdL
-                    }
-                    saveOverride.target = target as NSDecimalNumber
-                } else {
-                    saveOverride.target = 0
-                }
+                    saveOverride.target = (
+                        units == .mmolL
+                            ? target.asMgdL
+                            : target
+                    ) as NSDecimalNumber
+                } else { saveOverride.target = 6 }
                 if advancedSettings {
                     saveOverride.advancedSettings = true
 
@@ -81,6 +80,7 @@ extension OverrideProfilesConfig {
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                 }
                 try? self.coredataContext.save()
+                print("Target overrudeConfig: \(units == .mmolL ? target.asMgdL : target)")
             }
         }
 
@@ -103,7 +103,7 @@ extension OverrideProfilesConfig {
                             ? target.asMgdL
                             : target
                     ) as NSDecimalNumber
-                } else { saveOverride.target = 0 }
+                } else { saveOverride.target = 6 }
 
                 if advancedSettings {
                     saveOverride.advancedSettings = true
@@ -146,7 +146,7 @@ extension OverrideProfilesConfig {
                 saveOverride.id = id_
 
                 if let tar = profile.target, tar == 0 {
-                    saveOverride.target = 0
+                    saveOverride.target = 6
                 } else {
                     saveOverride.target = profile.target
                 }
