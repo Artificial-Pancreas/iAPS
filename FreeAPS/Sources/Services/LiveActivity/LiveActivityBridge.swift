@@ -21,7 +21,8 @@ extension LiveActivityAttributes.ContentState {
             .string(from: mmol ? value.asMmolL as NSNumber : NSNumber(value: value))!
     }
 
-    init?(new bg: BloodGlucose, prev: BloodGlucose?, mmol: Bool) {
+    init?(new bg: BloodGlucose, prev: BloodGlucose?, mmol: Bool,settings: FreeAPSSettings) {
+        let useWhiteFont = settings.useWhiteFont
         guard let glucose = bg.glucose,
               bg.dateString.timeIntervalSinceNow > -TimeInterval(minutes: 6)
         else {
@@ -29,7 +30,6 @@ extension LiveActivityAttributes.ContentState {
         }
 
         let formattedBG = Self.formatGlucose(glucose, mmol: mmol, forceSign: false)
-
         let trendString: String?
         switch bg.direction {
         case .doubleUp,
@@ -69,7 +69,7 @@ extension LiveActivityAttributes.ContentState {
 @available(iOS 16.2, *) private struct ActiveActivity {
     let activity: Activity<LiveActivityAttributes>
     let startDate: Date
-
+    let useWhiteFont: Bool
     func needsRecreation() -> Bool {
         switch activity.activityState {
         case .dismissed,
@@ -158,11 +158,11 @@ extension LiveActivityAttributes.ContentState {
         } else {
             do {
                 let activity = try Activity.request(
-                    attributes: LiveActivityAttributes(startDate: Date.now),
+                    attributes: LiveActivityAttributes(useWhiteFont:settings.useWhiteFont ,startDate: Date.now),
                     content: content,
                     pushType: nil
                 )
-                currentActivity = ActiveActivity(activity: activity, startDate: Date.now)
+                currentActivity = ActiveActivity(activity: activity, startDate: Date.now, useWhiteFont: settings.useWhiteFont)
             } catch {
                 print("activity creation error: \(error)")
             }
@@ -197,7 +197,8 @@ extension LiveActivityBridge: GlucoseObserver {
         guard let bg = glucose.last, let content = LiveActivityAttributes.ContentState(
             new: bg,
             prev: latestGlucose,
-            mmol: settings.units == .mmolL
+            mmol: settings.units == .mmolL,
+            settings: settings
         ) else {
             // no bg or value stale. Don't update the activity if there already is one, just let it turn stale so that it can still be used once current bg is available again
             return

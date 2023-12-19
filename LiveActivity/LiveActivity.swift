@@ -59,7 +59,12 @@ struct LiveActivity: Widget {
             .background(Color.white.opacity(0.2))
             //.foregroundColor(Color.black)
             .activityBackgroundTint(Color.cyan.opacity(0.2))
-            if state.settings.useWhiteFont
+            
+            
+            
+            
+            
+            if context.useWhiteFont
             {.foregroundColor(Color.white)
             .activitySystemActionForegroundColor(Color.white)
             }
@@ -106,7 +111,7 @@ struct LiveActivity: Widget {
 
 private extension LiveActivityAttributes {
     static var preview: LiveActivityAttributes {
-        LiveActivityAttributes(startDate: Date())
+        LiveActivityAttributes(useWhiteFont: <#T##Bool#>, startDate: Date())
     }
 }
 
