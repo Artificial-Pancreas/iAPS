@@ -1063,7 +1063,6 @@ extension MainChartView {
             let path = Path { path in
                 path.addRects(rects)
             }
-
             DispatchQueue.main.async {
                 tempTargetsPath = path
             }

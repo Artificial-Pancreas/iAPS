@@ -120,7 +120,7 @@ struct LoopEllipse: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.1)
+            .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
     }
 }
 
@@ -128,7 +128,7 @@ struct HeaderBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         Rectangle()
-            .fill(.gray.opacity(IAPSconfig.backgroundOpacity))
+            .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header.opacity(1))
     }
 }
 

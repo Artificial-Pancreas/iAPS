@@ -330,7 +330,8 @@ extension Home {
 
         @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(.gray.opacity(IAPSconfig.backgroundOpacity)).frame(height: 50 + geo.safeAreaInsets.bottom)
+                Rectangle().fill(colorScheme == .light ? .gray.opacity(0.15) : Color.header.opacity(0.15))
+                    .frame(height: 50 + geo.safeAreaInsets.bottom)
                 let isOverride = fetchedPercent.first?.enabled ?? false
                 HStack {
                     Button { state.showModal(for: .dataTable) }
@@ -611,7 +612,6 @@ extension Home {
                 }
             }
             .onAppear { configureView { highlightButtons() } }
-            // .onChange(of: profileView, action: triggerUpdate.toggle())
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
