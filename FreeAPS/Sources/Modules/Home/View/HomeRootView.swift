@@ -456,7 +456,7 @@ extension Home {
                 }
                 .frame(
                     minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.46 : UIScreen.main.bounds
-                        .height / 1.55
+                        .height / 1.56
                 )
                 .addShadows()
         }
@@ -591,9 +591,9 @@ extension Home {
                             headerView(geo)
                             chart
                             if state.displayTimeButtons {
-                                timeInterval.padding(.vertical, 10)
+                                timeInterval.padding(.top, 5)
                             }
-                            preview.padding(.top, !state.displayTimeButtons ? 10 : 5)
+                            preview.padding(.top, !state.displayTimeButtons ? 15 : 15)
                         }
                     }
                     .scrollIndicators(.hidden)
@@ -621,7 +621,7 @@ extension Home {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
-                            .fill(Color(UIColor.darkGray))
+                            .fill(Color.popUpGray)
                     )
                     .onTapGesture {
                         state.isStatusPopupPresented = false
