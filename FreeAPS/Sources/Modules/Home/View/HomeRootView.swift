@@ -330,7 +330,8 @@ extension Home {
 
         @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
-                Rectangle().fill(colorScheme == .light ? .gray.opacity(0.15) : Color.header.opacity(0.15))
+                addHeaderBackground()
+                    // Rectangle().fill(colorScheme == .light ? .gray.opacity(0.15) : Color.header.opacity(0.15))
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
                 let isOverride = fetchedPercent.first?.enabled ?? false
                 HStack {
@@ -454,8 +455,8 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.51 : UIScreen.main.bounds
-                        .height / 1.6
+                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.46 : UIScreen.main.bounds
+                        .height / 1.55
                 )
                 .addShadows()
         }
@@ -501,7 +502,7 @@ extension Home {
 
         var preview: some View {
             addBackground()
-                .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
+                .frame(maxWidth: .infinity, minHeight: 170, alignment: .topLeading)
                 .overlay(alignment: .topLeading) {
                     PreviewChart(readings: $state.readings, lowLimit: $state.lowGlucose, highLimit: $state.highGlucose)
                 }
@@ -592,7 +593,7 @@ extension Home {
                             if state.displayTimeButtons {
                                 timeInterval.padding(.vertical, 10)
                             }
-                            preview.padding(.top, !state.displayTimeButtons ? 10 : 0)
+                            preview.padding(.top, !state.displayTimeButtons ? 10 : 5)
                         }
                     }
                     .scrollIndicators(.hidden)

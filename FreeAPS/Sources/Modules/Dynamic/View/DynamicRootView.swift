@@ -77,12 +77,6 @@ extension Dynamic {
                         Text(state.unit.rawValue)
                     }
                 } header: { Text("Safety") }
-
-                Section {
-                    HStack {
-                        Toggle("Use blue instead of black background", isOn: $state.useBlue)
-                    }
-                } header: { Text("Background in Dark mode") }
             }
             .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")
