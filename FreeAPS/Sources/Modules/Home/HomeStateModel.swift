@@ -69,7 +69,6 @@ extension Home {
         @Published var displayTimeButtons: Bool = false
         @Published var useBlue: Bool = false
         @Published var useTargetButton: Bool = false
-        @Published var overrides: [Override] = []
         @Published var overrideHistory: [OverrideHistory] = []
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -87,11 +86,9 @@ extension Home {
             setupReservoir()
             setupAnnouncements()
             setupCurrentPumpTimezone()
-            setupOverrides()
             setupOverrideHistory()
 
             suggestion = provider.suggestion
-            overrides = provider.overrides()
             overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
@@ -322,13 +319,6 @@ extension Home {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.carbs = self.provider.carbs(hours: self.filteredHours)
-            }
-        }
-
-        private func setupOverrides() {
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.overrides = self.provider.overrides()
             }
         }
 

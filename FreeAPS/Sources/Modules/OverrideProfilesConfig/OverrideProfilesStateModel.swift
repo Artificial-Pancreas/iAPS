@@ -29,7 +29,6 @@ extension OverrideProfilesConfig {
         @Published var emoji: String = ""
 
         @Injected() var broadcaster: Broadcaster!
-
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -80,7 +79,11 @@ extension OverrideProfilesConfig {
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                 }
                 try? self.coredataContext.save()
-                print("Target overrudeConfig: \(units == .mmolL ? target.asMgdL : target)")
+            }
+            DispatchQueue.main.async {
+                self.broadcaster.notify(OverrideObserver.self, on: .main) {
+                    $0.overrideHistoryDidUpdate(OverrideStorage().fetchOverrideHistory(interval: DateFilter().today))
+                }
             }
         }
 
