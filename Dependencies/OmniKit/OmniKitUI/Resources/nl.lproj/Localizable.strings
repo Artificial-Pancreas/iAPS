@@ -597,7 +597,7 @@
    Scheduled reminder card title on NotificationSettingsView
    Title for scheduled expiration reminder edit page
    Title of SetupCompleteView */
-"Scheduled Reminder" = "Geplande herinnering";
+"Scheduled Reminder" = "Geplande melding";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pod." = "Selecteer het type insuline dat je in deze pod gaat gebruiken.";
@@ -654,7 +654,7 @@
 "Sync With Pod" = "Synchroniseer met pod";
 
 /* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Tik hieronder om het inbrengen van de cannule te starten.";
+"Tap below to start cannula insertion." = "Tik hieronder om het inbrengen van de canule te starten.";
 
 /* Navigation Title for ManualTempBasalEntryView */
 "Temporary Basal" = "Tijdelijke basaal";
@@ -760,7 +760,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Je begint nu met het configureren van je herinneringen, het vullen van je Pod met insuline, het koppelen van je apparaat en het op je lichaam plaatsen.";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Je Pod is klaar voor gebruik.\n\n%1$@ zal je eraan herinneren je pod te vervangen voordat deze verloopt. Je kunt dit wijzigen naar een tijdstip dat beter uitkomt.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Je Pod is klaar voor gebruik.\n\niAPS (%1$@) zal je eraan herinneren je pod te vervangen voordat deze verloopt. Je kunt dit wijzigen naar een tijdstip dat beter uitkomt.";
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Je Pod kan nog steeds insuline toedienen.\nVerwijder de Pod van je lichaam en tik vervolgens op \"Ga Verder\".";
