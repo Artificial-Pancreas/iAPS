@@ -83,10 +83,9 @@ extension CGM {
                         Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
                     }
                 }
-
                 .onAppear(perform: configureView)
                 .navigationTitle("CGM")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $setupCGM) {
                     if let cgmFetchManager = state.cgmManager, cgmFetchManager.glucoseSource.cgmType == state.cgm {
                         CGMSettingsView(
