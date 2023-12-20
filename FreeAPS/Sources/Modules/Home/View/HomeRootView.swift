@@ -250,32 +250,6 @@ extension Home {
             .modal(for: .dataTable, from: self)
         }
 
-        private func selectedProfile() -> (name: String, isOn: Bool) {
-            var profileString = ""
-            var display: Bool = false
-
-            let duration = (fetchedPercent.first?.duration ?? 0) as Decimal
-            let indefinite = fetchedPercent.first?.indefinite ?? false
-            let addedMinutes = Int(duration)
-            let date = fetchedPercent.first?.date ?? Date()
-            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) > Date() || indefinite {
-                display.toggle()
-            }
-
-            if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false), display {
-                profileString = NSLocalizedString("Custom Profile", comment: "Custom but unsaved Profile")
-            } else if !(fetchedPercent.first?.enabled ?? false) || !display {
-                profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile. Use a short string")
-            } else {
-                let id_ = fetchedPercent.first?.id ?? ""
-                let profile = fetchedProfiles.filter({ $0.id == id_ }).first
-                if profile != nil {
-                    profileString = profile?.name?.description ?? ""
-                }
-            }
-            return (name: profileString, isOn: display)
-        }
-
         @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
                 addHeaderBackground()
