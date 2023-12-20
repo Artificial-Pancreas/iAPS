@@ -53,30 +53,16 @@ struct LiveActivity: Widget {
                     updatedLabel(context: context).font(.caption).foregroundStyle(.black.opacity(0.7))
                 }
             }
+
             .privacySensitive()
             .imageScale(.small)
             .padding(.all, 15)
             .background(Color.white.opacity(0.2))
-            //.foregroundColor(Color.black)
+            // .foregroundColor(Color.black)
+            .foregroundColor(context.state.useWhiteFont ? .white : .black)
             .activityBackgroundTint(Color.cyan.opacity(0.2))
-            
-            
-            
-            
-            
-            if context.useWhiteFont
-            {.foregroundColor(Color.white)
-            .activitySystemActionForegroundColor(Color.white)
-            }
-            else
-            {.foregroundColor(Color.black)
-            .activitySystemActionForegroundColor(Color.black)
-            }
-            
-            
-            
-            
-          
+            .activitySystemActionForegroundColor(context.state.useWhiteFont ? .white : .black)
+            // .activitySystemActionForegroundColor(Color.black)
 
         } dynamicIsland: { context in
             DynamicIsland {
@@ -111,13 +97,19 @@ struct LiveActivity: Widget {
 
 private extension LiveActivityAttributes {
     static var preview: LiveActivityAttributes {
-        LiveActivityAttributes(useWhiteFont: <#T##Bool#>, startDate: Date())
+        LiveActivityAttributes(startDate: Date())
     }
 }
 
 private extension LiveActivityAttributes.ContentState {
     static var test: LiveActivityAttributes.ContentState {
-        LiveActivityAttributes.ContentState(bg: "100", trendSystemImage: "arrow.right", change: "+2", date: Date())
+        LiveActivityAttributes.ContentState(
+            bg: "100",
+            trendSystemImage: "arrow.right",
+            change: "+2",
+            date: Date(),
+            useWhiteFont: true
+        )
     }
 }
 

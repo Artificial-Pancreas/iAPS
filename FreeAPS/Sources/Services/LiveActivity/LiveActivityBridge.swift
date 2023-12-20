@@ -21,7 +21,7 @@ extension LiveActivityAttributes.ContentState {
             .string(from: mmol ? value.asMmolL as NSNumber : NSNumber(value: value))!
     }
 
-    init?(new bg: BloodGlucose, prev: BloodGlucose?, mmol: Bool,settings: FreeAPSSettings) {
+    init?(new bg: BloodGlucose, prev: BloodGlucose?, mmol: Bool, settings: FreeAPSSettings) {
         let useWhiteFont = settings.useWhiteFont
         guard let glucose = bg.glucose,
               bg.dateString.timeIntervalSinceNow > -TimeInterval(minutes: 6)
@@ -62,7 +62,13 @@ extension LiveActivityAttributes.ContentState {
             Self.formatGlucose(glucose - $0, mmol: mmol, forceSign: true)
         }) ?? ""
 
-        self.init(bg: formattedBG, trendSystemImage: trendString, change: change, date: bg.dateString)
+        self.init(
+            bg: formattedBG,
+            trendSystemImage: trendString,
+            change: change,
+            date: bg.dateString,
+            useWhiteFont: settings.useWhiteFont
+        )
     }
 }
 
@@ -90,7 +96,7 @@ extension LiveActivityAttributes.ContentState {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var broadcaster: Broadcaster!
-    
+
     private var settings: FreeAPSSettings {
         settingsManager.settings
     }
@@ -158,7 +164,7 @@ extension LiveActivityAttributes.ContentState {
         } else {
             do {
                 let activity = try Activity.request(
-                    attributes: LiveActivityAttributes(useWhiteFont:settings.useWhiteFont ,startDate: Date.now),
+                    attributes: LiveActivityAttributes(startDate: Date.now),
                     content: content,
                     pushType: nil
                 )

@@ -7,8 +7,8 @@ struct LiveActivityAttributes: ActivityAttributes {
         let trendSystemImage: String?
         let change: String
         let date: Date
-        
+        let useWhiteFont: Bool
     }
-    let useWhiteFont: Bool
+
     let startDate: Date
 }

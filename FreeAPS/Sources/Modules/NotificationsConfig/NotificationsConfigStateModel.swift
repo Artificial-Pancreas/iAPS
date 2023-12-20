@@ -25,6 +25,8 @@ extension NotificationsConfig {
                 addSourceInfoToGlucoseNotifications = $0 }
             subscribeSetting(\.useLiveActivity, on: $useLiveActivity) { useLiveActivity = $0 }
 
+            subscribeSetting(\.useWhiteFont, on: $useWhiteFont) { useWhiteFont = $0 }
+
             subscribeSetting(\.lowGlucose, on: $lowGlucose, initial: {
                 let value = max(min($0, 400), 40)
                 lowGlucose = units == .mmolL ? value.asMmolL : value
