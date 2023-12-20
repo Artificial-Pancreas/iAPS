@@ -67,16 +67,16 @@ extension Dynamic {
                             Toggle("Adjust basal", isOn: $state.tddAdjBasal)
                         }
                     } header: { Text("Settings") }
-
-                    Section {
-                        HStack {
-                            Text("Threshold Setting")
-                            Spacer()
-                            DecimalTextField("0", value: $state.threshold_setting, formatter: glucoseFormatter)
-                            Text(state.unit.rawValue)
-                        }
-                    } header: { Text("Safety") }
                 }
+
+                Section {
+                    HStack {
+                        Text("Threshold Setting")
+                        Spacer()
+                        DecimalTextField("0", value: $state.threshold_setting, formatter: glucoseFormatter)
+                        Text(state.unit.rawValue)
+                    }
+                } header: { Text("Safety") }
             }
             .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")
