@@ -285,8 +285,8 @@ extension Home {
                 HStack {
                     Button { state.showModal(for: .dataTable) }
                     label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "book.pages")
+                        ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
+                            Image(systemName: "book")
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
