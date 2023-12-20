@@ -20,6 +20,7 @@ extension Bolus {
         }
 
         @Environment(\.colorScheme) var colorScheme
+        @FocusState private var isFocused: Bool
 
         @FetchRequest(
             entity: Meals.entity(),
@@ -125,11 +126,12 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            autofocus: false,
-                            cleanInput: true
+                            cleanInput: true,
+                            useButtons: false
                         )
                         Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
                     }
+                    .focused($isFocused)
                     .onChange(of: state.amount) { newValue in
                         if newValue > state.maxBolus {
                             exceededMaxBolus = true
@@ -138,7 +140,21 @@ extension Bolus {
                         }
                     }
 
-                } header: { Text("Bolus") }
+                } header: {
+                    HStack {
+                        Text("Bolus")
+                        if isFocused {
+                            Button { isFocused = false } label: {
+                                HStack {
+                                    Text("Hide").foregroundStyle(.gray)
+                                    Image(systemName: "keyboard")
+                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
+                                }.frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                            .controlSize(.mini)
+                        }
+                    }
+                }
 
                 if state.amount > 0 {
                     Section {
@@ -162,8 +178,10 @@ extension Bolus {
                         label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
+
+                // Section {} footer: {}.padding(.bottom, 30)
             }
-            .blur(radius: showInfo ? 3 : 0)
+            .blur(radius: showInfo ? 20 : 0)
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
