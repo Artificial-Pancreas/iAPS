@@ -66,8 +66,6 @@ extension Home {
         @Published var readings: [Readings] = []
         @Published var standing: Bool = false
         @Published var preview: Bool = true
-        @Published var displayTimeButtons: Bool = false
-        @Published var useBlue: Bool = false
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
 

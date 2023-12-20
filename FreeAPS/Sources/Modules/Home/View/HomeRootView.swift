@@ -537,7 +537,7 @@ extension Home {
                         VStack(spacing: 0) {
                             headerView(geo)
                             chart
-                            preview.padding(.top, !state.displayTimeButtons ? 15 : 15)
+                            preview.padding(.top, 15)
                         }
                     }
                     .scrollIndicators(.hidden)
