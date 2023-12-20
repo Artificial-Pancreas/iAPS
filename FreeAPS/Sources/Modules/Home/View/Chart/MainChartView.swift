@@ -78,7 +78,7 @@ struct MainChartView: View {
     @Binding var smooth: Bool
     @Binding var highGlucose: Decimal
     @Binding var lowGlucose: Decimal
-    @Binding var screenHours: Int16
+    @Binding var screenHours: Int
     @Binding var displayXgridLines: Bool
     @Binding var displayYgridLines: Bool
     @Binding var thresholdLines: Bool
@@ -242,7 +242,8 @@ struct MainChartView: View {
                             .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
                     }
                 }
-            }.padding(.leading, legends ? 0 : 30)
+            }
+            .padding(.bottom, 20)
         }
     }
 
@@ -254,7 +255,7 @@ struct MainChartView: View {
                     overridesView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
                     legendPanel.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                        .padding(.trailing, legends ? 20 : 140).padding(.bottom, 20)
+                        .padding(.trailing, legends ? 20 : 70).padding(.bottom, 20)
                     mainView(fullSize: fullSize).id(Config.endID)
                         .drawingGroup()
                         .onChange(of: glucose) { _ in
@@ -1090,8 +1091,8 @@ extension MainChartView {
             if latest?.enabled ?? false {
                 var old = Array(rects)
                 if (latest?.duration ?? 0) != 0 {
-                    let x1 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
-                    let plusNow = Date.now.addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
+                    let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
+                    let plusNow = (latest?.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
                     let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
 
                     let oneMore = CGRect(
@@ -1111,8 +1112,8 @@ extension MainChartView {
                         overridesPath = path
                     }
                 } else {
-                    let x1 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
-                    let plusNow = Date.now.addingTimeInterval(60.minutes.timeInterval)
+                    let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
+                    let plusNow = (latest?.date ?? Date.now).addingTimeInterval(60.minutes.timeInterval)
                     let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
 
                     let oneMore = CGRect(

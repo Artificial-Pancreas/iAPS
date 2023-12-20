@@ -60,7 +60,7 @@ extension Home {
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
         @Published var timeZone: TimeZone?
-        @Published var hours: Int16 = 6
+        @Published var hours: Int = 6
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
         @Published var readings: [Readings] = []
@@ -112,6 +112,7 @@ extension Home {
             displayTimeButtons = settingsManager.settings.displayTimeButtons
             useBlue = settingsManager.settings.useBlue
             useTargetButton = settingsManager.settings.useTargetButton
+            hours = settingsManager.settings.hours
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -456,6 +457,7 @@ extension Home.StateModel:
         displayTimeButtons = settingsManager.settings.displayTimeButtons
         useBlue = settingsManager.settings.useBlue
         useTargetButton = settingsManager.settings.useTargetButton
+        hours = settingsManager.settings.hours
         setupGlucose()
         setupOverrideHistory()
     }

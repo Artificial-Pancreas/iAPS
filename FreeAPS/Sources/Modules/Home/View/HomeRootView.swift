@@ -13,22 +13,6 @@ extension Home {
         @State var showCancelAlert = false
         @State var triggerUpdate = false
 
-        struct Buttons: Identifiable {
-            let label: String
-            let number: String
-            var active: Bool
-            let hours: Int16
-            var id: String { label }
-        }
-
-        @State var timeButtons: [Buttons] = [
-            Buttons(label: "2 hours", number: "2", active: false, hours: 2),
-            Buttons(label: "4 hours", number: "4", active: false, hours: 4),
-            Buttons(label: "6 hours", number: "6", active: false, hours: 6),
-            Buttons(label: "12 hours", number: "12", active: false, hours: 12),
-            Buttons(label: "24 hours", number: "24", active: false, hours: 24)
-        ]
-
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
 
@@ -228,36 +212,6 @@ extension Home {
             .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
         }
 
-        var timeInterval: some View {
-            HStack {
-                ForEach(timeButtons) { button in
-                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number)
-                        .font(.buttonFont)
-                        .onTapGesture {
-                            state.hours = button.hours
-                        }
-                        .foregroundStyle(
-                            button.active ? (colorScheme == .dark ? Color.white : Color.black)
-                                .opacity(0.9) : .secondary
-                        )
-                        .frame(maxHeight: 27).padding(.horizontal, 5).padding(.vertical, 2)
-                        .background(
-                            button.active ?
-                                (colorScheme == .dark ? .blueComplicationBackground : Color.white) : Color.clear
-                        )
-                        .cornerRadius(15)
-                }
-            }
-            .shadow(
-                color: Color.black.opacity(colorScheme == .dark ? 0.75 : 0.33),
-                radius: colorScheme == .dark ? 5 : 3
-            )
-            .font(.buttonFont)
-            .onChange(of: state.hours) { _ in
-                highlightButtons()
-            }
-        }
-
         var mainChart: some View {
             ZStack {
                 if state.animatedBackground {
@@ -320,12 +274,6 @@ extension Home {
                 }
             }
             return (name: profileString, isOn: display)
-        }
-
-        func highlightButtons() {
-            for i in 0 ..< timeButtons.count {
-                timeButtons[i].active = timeButtons[i].hours == state.hours
-            }
         }
 
         @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
@@ -455,8 +403,7 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: !state.displayTimeButtons ? UIScreen.main.bounds.height / 1.46 : UIScreen.main.bounds
-                        .height / 1.56
+                    minHeight: UIScreen.main.bounds.height / 1.46
                 )
                 .addShadows()
         }
@@ -590,9 +537,6 @@ extension Home {
                         VStack(spacing: 0) {
                             headerView(geo)
                             chart
-                            if state.displayTimeButtons {
-                                timeInterval.padding(.top, 5)
-                            }
                             preview.padding(.top, !state.displayTimeButtons ? 15 : 15)
                         }
                     }
@@ -612,7 +556,7 @@ extension Home {
                     }
                 }
             }
-            .onAppear { configureView { highlightButtons() } }
+            .onAppear(perform: configureView)
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
