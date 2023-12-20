@@ -109,8 +109,6 @@ extension Home {
             displayXgridLines = settingsManager.settings.xGridLines
             displayYgridLines = settingsManager.settings.yGridLines
             thresholdLines = settingsManager.settings.rulerMarks
-            displayTimeButtons = settingsManager.settings.displayTimeButtons
-            useBlue = settingsManager.settings.useBlue
             useTargetButton = settingsManager.settings.useTargetButton
             hours = settingsManager.settings.hours
 
@@ -454,8 +452,6 @@ extension Home.StateModel:
         displayXgridLines = settingsManager.settings.xGridLines
         displayYgridLines = settingsManager.settings.yGridLines
         thresholdLines = settingsManager.settings.rulerMarks
-        displayTimeButtons = settingsManager.settings.displayTimeButtons
-        useBlue = settingsManager.settings.useBlue
         useTargetButton = settingsManager.settings.useTargetButton
         hours = settingsManager.settings.hours
         setupGlucose()

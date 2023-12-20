@@ -26,7 +26,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
     var useFPUconversion: Bool = true
-    var tins: Bool = false
     var individualAdjustmentFactor: Decimal = 0.5
     var timeCap: Int = 8
     var minuteInterval: Int = 30
@@ -51,9 +50,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var fattyMeals: Bool = false
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
-    var useLiveActivity: Bool = true
-    var displayTimeButtons: Bool = false
-    var useBlue: Bool = false
+    var useLiveActivity: Bool = false
     var useTargetButton: Bool = false
 }
 
@@ -143,10 +140,6 @@ extension FreeAPSSettings: Decodable {
 
         if let useFPUconversion = try? container.decode(Bool.self, forKey: .useFPUconversion) {
             settings.useFPUconversion = useFPUconversion
-        }
-
-        if let tins = try? container.decode(Bool.self, forKey: .tins) {
-            settings.tins = tins
         }
 
         if let individualAdjustmentFactor = try? container.decode(Decimal.self, forKey: .individualAdjustmentFactor) {
@@ -270,14 +263,6 @@ extension FreeAPSSettings: Decodable {
 
         if let useLiveActivity = try? container.decode(Bool.self, forKey: .useLiveActivity) {
             settings.useLiveActivity = useLiveActivity
-        }
-
-        if let displayTimeButtons = try? container.decode(Bool.self, forKey: .displayTimeButtons) {
-            settings.displayTimeButtons = displayTimeButtons
-        }
-
-        if let useBlue = try? container.decode(Bool.self, forKey: .useBlue) {
-            settings.useBlue = useBlue
         }
 
         if let useTargetButton = try? container.decode(Bool.self, forKey: .useTargetButton) {
