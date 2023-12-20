@@ -192,7 +192,7 @@ extension DataTable {
                 }
                 .onAppear(perform: configureView)
                 .navigationTitle("Add Glucose")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showManualGlucose = false }))
             }
         }

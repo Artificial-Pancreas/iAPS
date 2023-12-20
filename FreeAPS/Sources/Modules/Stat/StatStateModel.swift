@@ -10,6 +10,8 @@ extension Stat {
         @Published var overrideUnit: Bool = false
         @Published var layingChart: Bool = false
         @Published var units: GlucoseUnits = .mmolL
+        @Published var preview: Bool = false
+        @Published var readings: [Readings] = []
 
         override func subscribe() {
             highLimit = settingsManager.settings.high

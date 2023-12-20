@@ -51,7 +51,7 @@ extension PumpSettingsEditor {
             }
             .onAppear(perform: configureView)
             .navigationTitle("Pump Settings")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
