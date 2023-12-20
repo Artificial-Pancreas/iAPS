@@ -11,6 +11,9 @@ extension StatConfig {
         @Published var rulerMarks: Bool = false
         @Published var skipBolusScreenAfterCarbs: Bool = false
         @Published var useFPUconversion: Bool = true
+        @Published var useTargetButton: Bool = false
+        @Published var hours: Decimal = 6
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -22,6 +25,7 @@ extension StatConfig {
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
             subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
+            subscribeSetting(\.useTargetButton, on: $useTargetButton) { useTargetButton = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
 
@@ -39,6 +43,13 @@ extension StatConfig {
             }, map: {
                 guard units == .mmolL else { return $0 }
                 return $0.asMgdL
+            })
+
+            subscribeSetting(\.hours, on: $hours.map(Int.init), initial: {
+                let value = max(min($0, 24), 2)
+                hours = Decimal(value)
+            }, map: {
+                $0
             })
         }
     }

@@ -45,7 +45,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
         static let healthCarbObject = HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)
         static let healthInsulinObject = HKObjectType.quantityType(forIdentifier: .insulinDelivery)
 
-        // Meta-data key of FreeASPX data in HealthStore
+        // Meta-data key of iAPS data in HealthStore
         static let freeAPSMetaKey = "From iAPS"
     }
 
@@ -203,6 +203,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         start: $0.actualDate ?? $0.createdAt,
                         end: $0.actualDate ?? $0.createdAt,
                         metadata: [
+                            HKMetadataKeyExternalUUID: $0.id ?? "_id",
                             HKMetadataKeySyncIdentifier: $0.id ?? "_id",
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true

@@ -9,6 +9,14 @@ struct CurrentGlucoseView: View {
     @Binding var lowGlucose: Decimal
     @Binding var highGlucose: Decimal
 
+    @State private var rotationDegrees: Double = 0.0
+
+    enum Config {
+        static let size: CGFloat = 100
+    }
+
+    @Environment(\.colorScheme) var colorScheme
+
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -45,47 +53,54 @@ struct CurrentGlucoseView: View {
     }
 
     var body: some View {
-        VStack(alignment: .center) {
-            HStack {
-                Text(
-                    (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
-                        .map {
-                            glucoseFormatter
-                                .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
-                        ?? "--"
-                )
-                .font(.title).fontWeight(.bold)
-                .foregroundColor(alarm == nil ? colorOfGlucose : .loopRed)
-
-                image
-            }
-            HStack {
-                let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
-                let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
-                Text(
-                    minutesAgo <= 1 ? "< 1 " + NSLocalizedString("min", comment: "Short form for minutes") : (
-                        text + " " +
-                            NSLocalizedString("min", comment: "Short form for minutes") + " "
+        ZStack {
+            VStack(alignment: .center) {
+                // HStack {
+                ZStack {
+                    Text(
+                        (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
+                            .map {
+                                glucoseFormatter
+                                    .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)! }
+                            ?? "--"
                     )
-                )
-                .font(.caption2).foregroundColor(.secondary)
+                    .font(.glucoseFont)
+                    .foregroundColor(alarm == nil ? .primary : .loopRed)
+                    .frame(maxWidth: .infinity, alignment: .center)
 
-                Text(
-                    delta
-                        .map {
-                            deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
-                        } ?? "--"
-                )
-                .font(.caption2).foregroundColor(.secondary)
-            }.frame(alignment: .top)
+                    HStack(spacing: 20) {
+                        image
+                            .font(.system(size: 25))
+                        VStack {
+                            Text(
+                                delta
+                                    .map {
+                                        deltaFormatter
+                                            .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
+                                    } ?? "--"
+                            )
+                            HStack {
+                                let minutesAgo = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0) / 60
+                                let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
+                                Text(
+                                    minutesAgo <= 1 ? "" : (
+                                        text + " " +
+                                            NSLocalizedString("min", comment: "Short form for minutes") + " "
+                                    )
+                                )
+                            }.offset(x: 7, y: 0)
+                        }
+                        .font(.extraSmall).foregroundStyle(.secondary)
+                    }.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 50)
+                }
+            }
         }
     }
 
-    var image: Image {
+    var image: some View {
         guard let direction = recentGlucose?.direction else {
             return Image(systemName: "arrow.left.and.right")
         }
-
         switch direction {
         case .doubleUp,
              .singleUp,
@@ -101,28 +116,10 @@ struct CurrentGlucoseView: View {
              .singleDown,
              .tripleDown:
             return Image(systemName: "arrow.down")
-
         case .none,
              .notComputable,
              .rateOutOfRange:
             return Image(systemName: "arrow.left.and.right")
-        }
-    }
-
-    var colorOfGlucose: Color {
-        let whichGlucose = recentGlucose?.glucose ?? 0
-
-        guard lowGlucose < highGlucose else { return .primary }
-
-        switch whichGlucose {
-        case 0 ..< Int(lowGlucose):
-            return .loopRed
-        case Int(lowGlucose) ..< Int(highGlucose):
-            return .loopGreen
-        case Int(highGlucose)...:
-            return .loopYellow
-        default:
-            return .loopYellow
         }
     }
 }

@@ -26,7 +26,9 @@ extension OverrideProfilesConfig {
         @Published var uamMinutes: Decimal = 0
         @Published var defaultSmbMinutes: Decimal = 0
         @Published var defaultUamMinutes: Decimal = 0
+        @Published var emoji: String = ""
 
+        @Injected() var broadcaster: Broadcaster!
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -46,18 +48,19 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.enabled = true
                 saveOverride.smbIsOff = self.smbIsOff
+
                 if self.isPreset {
                     saveOverride.isPreset = true
                     saveOverride.id = id
                 } else { saveOverride.isPreset = false }
                 saveOverride.date = Date()
                 if override_target {
-                    if units == .mmolL {
-                        target = target.asMgdL
-                    }
-                    saveOverride.target = target as NSDecimalNumber
-                } else { saveOverride.target = 0 }
-
+                    saveOverride.target = (
+                        units == .mmolL
+                            ? target.asMgdL
+                            : target
+                    ) as NSDecimalNumber
+                } else { saveOverride.target = 6 }
                 if advancedSettings {
                     saveOverride.advancedSettings = true
 
@@ -77,6 +80,11 @@ extension OverrideProfilesConfig {
                 }
                 try? self.coredataContext.save()
             }
+            DispatchQueue.main.async {
+                self.broadcaster.notify(OverrideObserver.self, on: .main) {
+                    $0.overrideHistoryDidUpdate(OverrideStorage().fetchOverrideHistory(interval: DateFilter().today))
+                }
+            }
         }
 
         func savePreset() {
@@ -87,6 +95,7 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.smbIsOff = self.smbIsOff
                 saveOverride.name = self.profileName
+                saveOverride.emoji = self.emoji
                 id = UUID().uuidString
                 self.isPreset.toggle()
                 saveOverride.id = id
@@ -97,7 +106,7 @@ extension OverrideProfilesConfig {
                             ? target.asMgdL
                             : target
                     ) as NSDecimalNumber
-                } else { saveOverride.target = 0 }
+                } else { saveOverride.target = 6 }
 
                 if advancedSettings {
                     saveOverride.advancedSettings = true
@@ -137,8 +146,13 @@ extension OverrideProfilesConfig {
                 saveOverride.smbIsOff = profile.smbIsOff
                 saveOverride.isPreset = true
                 saveOverride.date = Date()
-                saveOverride.target = profile.target
                 saveOverride.id = id_
+
+                if let tar = profile.target, tar == 0 {
+                    saveOverride.target = 6
+                } else {
+                    saveOverride.target = profile.target
+                }
 
                 if profile.advancedSettings {
                     saveOverride.advancedSettings = true
@@ -238,14 +252,9 @@ extension OverrideProfilesConfig {
             override_target = false
             smbIsOff = false
             advancedSettings = false
-            coredataContext.perform { [self] in
-                let profiles = Override(context: self.coredataContext)
-                profiles.enabled = false
-                profiles.date = Date()
-                try? self.coredataContext.save()
-            }
             smbMinutes = defaultSmbMinutes
             uamMinutes = defaultUamMinutes
+            OverrideStorage().cancelProfile()
         }
     }
 }
