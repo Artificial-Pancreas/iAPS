@@ -16,6 +16,7 @@ extension Bolus {
         @State private var keepForNextWiew: Bool = false
 
         @Environment(\.colorScheme) var colorScheme
+        @FocusState private var isFocused: Bool
 
         @FetchRequest(
             entity: Meals.entity(),
@@ -81,7 +82,6 @@ extension Bolus {
                                 }
                         }.contentShape(Rectangle())
                     }
-
                     HStack {
                         Text("Amount")
                         Spacer()
@@ -89,13 +89,28 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            autofocus: true,
-                            cleanInput: true
+                            cleanInput: true,
+                            useButtons: false
                         )
                         Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
                     }
+                    .focused($isFocused)
 
-                } header: { Text("Bolus") }
+                } header: {
+                    HStack {
+                        Text("Bolus")
+                        if isFocused {
+                            Button { isFocused = false } label: {
+                                HStack {
+                                    Text("Hide").foregroundStyle(.gray)
+                                    Image(systemName: "keyboard")
+                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
+                                }.frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                            .controlSize(.mini)
+                        }
+                    }
+                }
 
                 if state.amount > 0 {
                     Section {

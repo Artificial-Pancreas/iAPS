@@ -12,6 +12,7 @@ extension OverrideProfilesConfig {
         @State private var showingDetail = false
         @State private var alertSring = ""
         @State var isSheetPresented: Bool = false
+        @State var index: Int = 1
 
         @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc
@@ -44,15 +45,18 @@ extension OverrideProfilesConfig {
         var presetPopover: some View {
             Form {
                 Section {
-                    TextField("Name Of Profile", text: $state.profileName)
-                } header: { Text("Enter Name of Profile") }
+                    TextField("Name", text: $state.profileName)
+                } header: { Text("Profile Name").foregroundStyle(.primary) }
 
                 Section {
                     Button("Save") {
                         state.savePreset()
                         isSheetPresented = false
                     }
-                    .disabled(state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName }).isNotEmpty)
+                    .disabled(
+                        state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
+                            .isNotEmpty
+                    )
 
                     Button("Cancel") {
                         isSheetPresented = false
@@ -257,20 +261,21 @@ extension OverrideProfilesConfig {
                         "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage."
                     )
                 }
-
-                Button("Return to Normal") {
-                    state.cancelProfile()
-                    dismiss()
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .buttonStyle(BorderlessButtonStyle())
-                .disabled(!state.isEnabled)
-                .tint(.red)
+                Section {
+                    Button("Return to Normal") {
+                        state.cancelProfile()
+                        dismiss()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .disabled(!state.isEnabled)
+                    .tint(.red)
+                } footer: { Text("").padding(.bottom, 150) }
             }
             .onAppear(perform: configureView)
             .onAppear { state.savedSettings() }
             .navigationBarTitle("Profiles")
-            .navigationBarTitleDisplayMode(.automatic)
+            .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
         }
 
@@ -279,6 +284,9 @@ extension OverrideProfilesConfig {
                 .asMmolL : (preset.target ?? 0) as Decimal
             let duration = (preset.duration ?? 0) as Decimal
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
+            let identifier = ((preset.emoji ?? "") == "") || (preset.emoji?.isEmpty ?? true) ||
+                (preset.emoji ?? "") == "\u{0022}\u{0022}" ?
+                "" : preset.emoji!
             let percent = preset.percentage / 100
             let perpetual = preset.indefinite
             let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
@@ -294,11 +302,8 @@ extension OverrideProfilesConfig {
 
             if name != "" {
                 HStack {
-                    VStack {
-                        HStack {
-                            Text(name)
-                            Spacer()
-                        }
+                    VStack(alignment: .leading) {
+                        Text(name)
                         HStack(spacing: 5) {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             if targetString != "" {
