@@ -31,17 +31,21 @@ struct LoopView: View {
                     let textColor: Color = .secondary
                     HStack {
                         ZStack {
-                            if !isLooping, actualSuggestion?.timestamp != nil {
-                                if minutesAgo > 1440 {
-                                    Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
-                                } else {
-                                    let timeString = "\(minutesAgo) " +
-                                        NSLocalizedString("min", comment: "Minutes ago since last loop")
-                                    Text(timeString).font(.extraSmall).foregroundColor(minutesAgo > 12 ? .red : textColor)
+                            if closedLoop {
+                                if !isLooping, actualSuggestion?.timestamp != nil {
+                                    if minutesAgo > 1440 {
+                                        Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                                    } else {
+                                        let timeString = "\(minutesAgo) " +
+                                            NSLocalizedString("min", comment: "Minutes ago since last loop")
+                                        Text(timeString).font(.extraSmall).foregroundColor(minutesAgo > 12 ? .red : textColor)
+                                    }
                                 }
-                            }
-                            if isLooping {
-                                ProgressView()
+                                if isLooping {
+                                    ProgressView()
+                                }
+                            } else if !isLooping {
+                                Text("Open")
                             }
                         }
                     }

@@ -379,7 +379,6 @@ extension Home {
                 .frame(
                     minHeight: UIScreen.main.bounds.height / 1.46
                 )
-                .addShadows()
         }
 
         var carbsAndInsulinView: some View {
@@ -491,13 +490,13 @@ extension Home {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).padding(.top, 10)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 5)
+                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
                             carbsAndInsulinView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                                 .padding(.leading, 10)
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 7).padding(.bottom, 5)
+                                .padding(.trailing, 7).padding(.bottom, 2)
                         }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
                     }
                 }
@@ -510,6 +509,7 @@ extension Home {
                     ScrollView {
                         VStack(spacing: 0) {
                             headerView(geo)
+                            RaisedRectangle()
                             chart
                             preview.padding(.top, 15)
                         }
