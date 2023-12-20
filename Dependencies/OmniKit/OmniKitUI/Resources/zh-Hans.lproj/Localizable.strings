@@ -171,7 +171,7 @@
 "Critical Alerts" = "Critical Alerts";
 
 /* Unit for singular day in pod life remaining */
-"day" = "day";
+"day" = "天";
 
 /* Unit for plural days in pod life remaining */
 "days" = "days";
@@ -276,7 +276,7 @@
 "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Finish deactivation";
+"Finish deactivation" = "完成停用";
 
 /* The title of the command to finish pod setup */
 "Finish pod setup" = "完成设置";
@@ -288,7 +288,7 @@
 "Greater than %1$@ units remaining at %2$@" = "Greater than %1$@ units remaining at %2$@";
 
 /* Unit for singular hour in pod life remaining */
-"hour" = "hour";
+"hour" = "小时";
 
 /* Unit for plural hours in pod life remaining */
 "hours" = "小时";
@@ -321,7 +321,7 @@
 "Insulin Delivered" = "已输注胰岛素";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "胰岛素输注";
 
 /* The action string on pod status page when pod faulted */
 "Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
@@ -370,7 +370,7 @@
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
 
 /* Unit for singular minute in pod life remaining */
-"minute" = "minute";
+"minute" = "分钟";
 
 /* Unit for plural minutes in pod life remaining */
 "minutes" = "分钟";
@@ -397,7 +397,7 @@
 
 /* Label for pod life state when no pod paired
    Text shown in insulin remaining space when no pod is paired */
-"No Pod" = "No Pod";
+"No Pod" = "无Pod";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -434,13 +434,13 @@
 "Pair Pod" = "Pair Pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Pair pod.";
+"Pair pod." = "配对Pod.";
 
 /* Label text indicating pairing finished. */
 "Paired" = "已配对";
 
 /* Pairing action button accessibility label while pairing */
-"Pairing." = "Pairing.";
+"Pairing." = "配对中.";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
@@ -471,7 +471,7 @@
 
 /* description label for activated at time pod details row
    Label for pod insertion row */
-"Pod Activated" = "Pod Activated";
+"Pod Activated" = "Pod 已激活";
 
 /* Label describing pod age view */
 "Pod Age" = "Pod使用天数";
@@ -487,13 +487,13 @@
 
 /* Error message for reservoir view when pod expired
    Label for pod expiration row, past tense */
-"Pod Expired" = "Pod Expired";
+"Pod Expired" = "Pod已到期";
 
 /* Label for pod expiration row */
-"Pod Expires" = "Pod Expires";
+"Pod Expires" = "Pod有效期限";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expires in";
+"Pod expires in" = "Pod将过期于 ";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Pod Fault Details";
@@ -502,7 +502,7 @@
 "Pod Occlusion" = "Pod Occlusion";
 
 /* Pairing action button accessibility label when pairing succeeded */
-"Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
+"Pod paired successfully. Continue." = "Pod配对成功，继续";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Pod设置";
@@ -523,7 +523,7 @@
 "Primed" = "已充盈";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Priming. Please wait.";
+"Priming. Please wait." = "准备中，请稍候";
 
 /* Pod pairing action button text while priming */
 "Priming..." = "Priming...";
@@ -630,7 +630,7 @@
 "Suspend Delivery" = "暂停输注";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Suspend Insulin Delivery";
+"Suspend Insulin Delivery" = "暂停胰岛素输注";
 
 /* The detail text of the basal row when pod is suspended */
 "Suspended" = "暂停";
@@ -708,7 +708,7 @@
 
 /* Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Time Change Detected";
+"Time Change Detected" = "检测到时间变化";
 
 /* No comment provided by engineer. */
 "Toggle sign" = "Toggle sign";
@@ -736,10 +736,10 @@
 "Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Unfinished Activation";
+"Unfinished Activation" = "未完成启用";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Unfinished deactivation";
+"Unfinished deactivation" = "尚未完成停用";
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "未知";
