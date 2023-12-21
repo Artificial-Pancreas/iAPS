@@ -52,7 +52,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = false
     var useTargetButton: Bool = false
-    var alwaysUseColors: Bool = false
+    var alwaysUseColors: Bool = true
 }
 
 extension FreeAPSSettings: Decodable {
