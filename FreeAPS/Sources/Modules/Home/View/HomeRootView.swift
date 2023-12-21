@@ -256,7 +256,6 @@ extension Home {
         @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
             ZStack {
                 addHeaderBackground()
-                    // Rectangle().fill(colorScheme == .light ? .gray.opacity(0.15) : Color.header.opacity(0.15))
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
                 let isOverride = fetchedPercent.first?.enabled ?? false
                 HStack {
@@ -267,7 +266,7 @@ extension Home {
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.gray)
                                 .padding(8)
                         }
                     }.buttonStyle(.borderless)
@@ -275,10 +274,12 @@ extension Home {
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "fork.knife")
+                            Image("carbs")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
+                                .padding(8)
                                 .foregroundColor(.loopYellow)
                                 .padding(8)
                             if let carbsReq = state.carbsRequired {
@@ -293,20 +294,19 @@ extension Home {
                     Spacer()
                     Button {
                         if isOverride {
-                            state.cancelProfile()
-                            triggerUpdate.toggle()
+                            showCancelAlert.toggle()
+                            // state.cancelProfile()
+                            // triggerUpdate.toggle()
                         } else {
                             state.showModal(for: .overrideProfilesConfig)
                         }
                     }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "person.fill")
+                            Image(systemName: isOverride ? "person.fill" : "person")
                                 .symbolRenderingMode(.palette)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
+                                .font(.custom("Buttons", size: 32))
                                 .foregroundStyle(.purple)
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                                 .padding(8)
                                 .background(isOverride ? .blue.opacity(0.3) : .clear)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -368,7 +368,16 @@ extension Home {
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
-            }
+            }.alert(
+                "Return to Normal?", isPresented: $showCancelAlert,
+                actions: {
+                    Button("No", role: .cancel) {}
+                    Button("Yes", role: .destructive) {
+                        state.cancelProfile()
+                        triggerUpdate.toggle()
+                    }
+                }, message: { Text("This will change settings back to your normal profile.") }
+            )
         }
 
         var chart: some View {
@@ -520,7 +529,7 @@ extension Home {
                     .scrollIndicators(.hidden)
                     buttonPanel(geo)
                 }
-                .background(.gray.opacity(IAPSconfig.backgroundOpacity))
+                .background(.gray.opacity(IAPSconfig.backgroundOpacity * 2))
                 .edgesIgnoringSafeArea(.vertical)
                 .overlay {
                     if let progress = state.bolusProgress {

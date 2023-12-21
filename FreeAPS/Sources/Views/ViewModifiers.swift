@@ -143,7 +143,6 @@ struct HeaderBackground: View {
     var body: some View {
         Rectangle()
             .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header.opacity(1))
-        // .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.darkerBlue.opacity(1))
     }
 }
 
