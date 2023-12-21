@@ -37,14 +37,14 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
 
             if fat > 0 || protein > 0 {
                 // -------------------------- FPU--------------------------------------
-                let interval = settings.settings.minuteInterval // Interval betwwen carbs
+                let interval = settings.settings.minuteInterval // Interval between carbs
                 let timeCap = settings.settings.timeCap // Max Duration
                 let adjustment = settings.settings.individualAdjustmentFactor
                 let delay = settings.settings.delay // Tme before first future carb entry
                 let kcal = protein * 4 + fat * 9
                 let carbEquivalents = (kcal / 10) * adjustment
                 let fpus = carbEquivalents / 10
-                // Duration in hours used for extended boluses with Warsaw Method. Here used for total duration of the computed carbquivalents instead, excluding the configurable delay.
+                // Duration in hours used for extended boluses with Warsaw Method. Here used for total duration of the computed carb equivalents instead, excluding the configurable delay.
                 var computedDuration = 0
                 switch fpus {
                 case ..<2:
@@ -99,7 +99,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                         storage.save(Array(uniqEvents), as: file)
                     }
                 }
-            } // ------------------------- END OF TPU ----------------------------------------
+            } // ------------------------- END OF FPU ----------------------------------------
             // Store the actual (normal) carbs
             if let entry = entries.last, entry.carbs > 0 {
                 // uniqEvents = []
