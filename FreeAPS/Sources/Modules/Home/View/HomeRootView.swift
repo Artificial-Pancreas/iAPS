@@ -89,7 +89,8 @@ extension Home {
                 units: $state.units,
                 alarm: $state.alarm,
                 lowGlucose: $state.lowGlucose,
-                highGlucose: $state.highGlucose
+                highGlucose: $state.highGlucose,
+                alwaysUseColors: $state.alwaysUseColors
             )
             .onTapGesture {
                 if state.alarm == nil {
