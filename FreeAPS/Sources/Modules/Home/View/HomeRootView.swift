@@ -196,7 +196,9 @@ extension Home {
 
                     if let eventualBG = state.eventualBG {
                         HStack {
-                            Image(systemName: "arrow.forward")
+                            Text("⇢").font(.statusFont).foregroundStyle(.secondary)
+
+                            // Image(systemName: "arrow.forward")
                             Text(
                                 fetchedTargetFormatter.string(
                                     from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
