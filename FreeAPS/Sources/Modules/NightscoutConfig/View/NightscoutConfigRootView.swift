@@ -9,6 +9,7 @@ extension NightscoutConfig {
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
         @State var importedHasRun = false
+        @State var displayPopUp = false
 
         @FetchRequest(
             entity: ImportError.entity(),
@@ -57,23 +58,31 @@ extension NightscoutConfig {
                 Section {
                     Toggle("Upload", isOn: $state.isUploadEnabled)
                     if state.isUploadEnabled {
-                        Toggle("Statistics", isOn: $state.uploadStats)
-                        HStack(alignment: .top) {
-                            Image(systemName: "pencil.circle.fill")
+                        Toggle("Glucose", isOn: $state.uploadGlucose)
+                        Toggle(isOn: $state.uploadStats) {
+                            HStack {
+                                Text("Statistics")
+                                Image(systemName: "info.bubble")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.primary, .blue)
+                                    .onTapGesture {
+                                        displayPopUp.toggle()
+                                    }
+                            }
+                        }
+                        if displayPopUp {
                             VStack {
                                 Text(
                                     "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n"
                                 )
-                                .font(.caption)
-                                Text(
-                                    "https://iaps-stats.hub.org"
-                                )
-                                .font(.caption)
-                                .multilineTextAlignment(.center)
+                                Text("https://iaps-stats.hub.org")
+                                    .multilineTextAlignment(.center)
+                            }
+                            .font(.extraSmall)
+                            .onTapGesture {
+                                displayPopUp.toggle()
                             }
                         }
-                        .foregroundColor(Color.secondary)
-                        Toggle("Glucose", isOn: $state.uploadGlucose)
                     }
                 } header: {
                     Text("Allow Uploads")
