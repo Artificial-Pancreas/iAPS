@@ -47,7 +47,7 @@
 "Agree and continue" = "Zustimmen und fortfahren";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Letze Berechnung um";
+"Enacted at" = "Letzte Berechnung um";
 
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Vorgeschlagen um";
@@ -137,7 +137,7 @@
 "Cancel Temp Target" = "Temporäres Ziel abbrechen";
 
 /* Custom temp target */
-"Custom" = "Benutzerdefiniertes";
+"Custom" = "Benutzerdefiniert";
 
 /*  */
 "Date" = "Datum";

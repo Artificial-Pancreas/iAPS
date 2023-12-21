@@ -196,7 +196,9 @@ extension Home {
 
                     if let eventualBG = state.eventualBG {
                         HStack {
-                            Image(systemName: "arrow.forward")
+                            Text("⇢").font(.statusFont).foregroundStyle(.secondary)
+
+                            // Image(systemName: "arrow.forward")
                             Text(
                                 fetchedTargetFormatter.string(
                                     from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
@@ -248,32 +250,6 @@ extension Home {
             }
             .padding(.bottom, 5)
             .modal(for: .dataTable, from: self)
-        }
-
-        private func selectedProfile() -> (name: String, isOn: Bool) {
-            var profileString = ""
-            var display: Bool = false
-
-            let duration = (fetchedPercent.first?.duration ?? 0) as Decimal
-            let indefinite = fetchedPercent.first?.indefinite ?? false
-            let addedMinutes = Int(duration)
-            let date = fetchedPercent.first?.date ?? Date()
-            if date.addingTimeInterval(addedMinutes.minutes.timeInterval) > Date() || indefinite {
-                display.toggle()
-            }
-
-            if fetchedPercent.first?.enabled ?? false, !(fetchedPercent.first?.isPreset ?? false), display {
-                profileString = NSLocalizedString("Custom Profile", comment: "Custom but unsaved Profile")
-            } else if !(fetchedPercent.first?.enabled ?? false) || !display {
-                profileString = NSLocalizedString("Normal Profile", comment: "Your normal Profile. Use a short string")
-            } else {
-                let id_ = fetchedPercent.first?.id ?? ""
-                let profile = fetchedProfiles.filter({ $0.id == id_ }).first
-                if profile != nil {
-                    profileString = profile?.name?.description ?? ""
-                }
-            }
-            return (name: profileString, isOn: display)
         }
 
         @ViewBuilder private func buttonPanel(_ geo: GeometryProxy) -> some View {
@@ -405,7 +381,6 @@ extension Home {
                 .frame(
                     minHeight: UIScreen.main.bounds.height / 1.46
                 )
-                .addShadows()
         }
 
         var carbsAndInsulinView: some View {
@@ -517,13 +492,13 @@ extension Home {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).padding(.top, 10)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 5)
+                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
                             carbsAndInsulinView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                                 .padding(.leading, 10)
                             pumpView
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 7).padding(.bottom, 5)
+                                .padding(.trailing, 7).padding(.bottom, 2)
                         }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
                     }
                 }
@@ -536,6 +511,7 @@ extension Home {
                     ScrollView {
                         VStack(spacing: 0) {
                             headerView(geo)
+                            RaisedRectangle()
                             chart
                             preview.padding(.top, 15)
                         }

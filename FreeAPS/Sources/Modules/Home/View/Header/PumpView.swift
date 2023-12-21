@@ -107,22 +107,24 @@ struct PumpView: View {
                 if days >= 1 {
                     HStack(spacing: 0) {
                         Text(" \(days)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("d", comment: "abbreviation for days")) // .foregroundStyle(.secondary)
+                        Text(NSLocalizedString("d", comment: "abbreviation for days"))
                     }
                     HStack(spacing: 0) {
                         Text(" \(hours - days * 24)")
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours")) // .foregroundStyle(.secondary)
+                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
                     }
                 } else if hours >= 1 {
                     HStack(spacing: 0) {
                         Text("\(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours")) // .foregroundStyle(.secondary)
-                    }
+                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
+                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
+                    }.offset(x: 0, y: 6)
                 } else {
                     HStack(spacing: 0) {
                         Text(" \(minutes)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("m", comment: "abbreviation for minutes")) // .foregroundStyle(.secondary)
-                    }
+                        Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
+                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
+                    }.offset(x: 0, y: 6)
                 }
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
