@@ -68,6 +68,7 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
+        @Published var alwaysUseColors: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -109,6 +110,7 @@ extension Home {
             thresholdLines = settingsManager.settings.rulerMarks
             useTargetButton = settingsManager.settings.useTargetButton
             hours = settingsManager.settings.hours
+            alwaysUseColors = settingsManager.settings.alwaysUseColors
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -452,6 +454,7 @@ extension Home.StateModel:
         thresholdLines = settingsManager.settings.rulerMarks
         useTargetButton = settingsManager.settings.useTargetButton
         hours = settingsManager.settings.hours
+        alwaysUseColors = settingsManager.settings.alwaysUseColors
         setupGlucose()
         setupOverrideHistory()
     }
