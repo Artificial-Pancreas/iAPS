@@ -25,7 +25,7 @@ struct LoopView: View {
 
     var body: some View {
         VStack {
-            LoopEllipse(color: color)
+            LoopEllipse(stroke: color)
                 .frame(width: minutesAgo > 9 ? 70 : 60, height: 27)
                 .overlay {
                     let textColor: Color = .secondary
