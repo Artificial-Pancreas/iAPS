@@ -25,7 +25,7 @@ struct LoopView: View {
 
     var body: some View {
         VStack {
-            LoopEllipse()
+            LoopEllipse(color: color)
                 .frame(width: minutesAgo > 9 ? 70 : 60, height: 27)
                 .overlay {
                     let textColor: Color = .secondary
@@ -38,7 +38,7 @@ struct LoopView: View {
                                     } else {
                                         let timeString = "\(minutesAgo) " +
                                             NSLocalizedString("min", comment: "Minutes ago since last loop")
-                                        Text(timeString).font(.extraSmall).foregroundColor(minutesAgo > 12 ? .red : textColor)
+                                        Text(timeString).font(.extraSmall).foregroundColor(textColor)
                                     }
                                 }
                                 if isLooping {
