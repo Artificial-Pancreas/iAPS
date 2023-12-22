@@ -11,7 +11,7 @@
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Zatvoriť";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continue without bolus";
@@ -35,16 +35,16 @@
 "Recommendation" = "Recommendation";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Vymazať";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Hotovo";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Čakajte prosím";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Súhlasím a pokračovať";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
@@ -155,7 +155,7 @@
 "Enact Temp Target" = "Enact Temp Target";
 
 /* */
-"Target" = "Target";
+"Target" = "Cieľ";
 
 /* */
 "Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
@@ -179,7 +179,7 @@
 "minutes" = "minutes";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Predvoľby";
 
 /* Save preset name */
 "Save" = "Save";
@@ -188,16 +188,16 @@
 "Save as Preset" = "Save as Preset";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Odstrániť predvoľbu";
 
 /* Confirm Deletion */
 "Delete preset '%@'?" = "Delete preset '%@'?";
 
 /* Button */
-"No" = "No";
+"No" = "Nie";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Áno";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -227,10 +227,10 @@
 "Delete autotune data" = "Delete autotune data";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Spustiť teraz";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Naposledy spustené";
 
 /*  */
 "Sensitivity" = "Sensitivity";
@@ -239,7 +239,7 @@
 "Use Autotune" = "Use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Pridať";
 
 /*  */
 "Basal Profile" = "Basal Profile";
@@ -254,7 +254,7 @@
 "Saving..." = "Saving...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Plán";
 
 /*  */
 "starts at" = "starts at";
