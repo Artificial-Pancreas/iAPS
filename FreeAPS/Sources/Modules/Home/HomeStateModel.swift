@@ -68,7 +68,7 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
-        @Published var alwaysUseColors: Bool = false
+        @Published var alwaysUseColors: Bool = true
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
