@@ -499,10 +499,10 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Áno";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Nie";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
