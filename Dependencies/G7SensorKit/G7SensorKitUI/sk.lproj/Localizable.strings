@@ -11,10 +11,10 @@
 "Bluetooth" = "Bluetooth";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Zrušiť";
 
 /* No comment provided by engineer. */
-"Configuration" = "Configuration";
+"Configuration" = "Nastavenie";
 
 /* title for g7 settings connection status when connected */
 "Connected" = "Pripojené";
@@ -26,7 +26,7 @@
 "Continue" = "Pokračovať";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Odstrániť senzor";
 
 /* Navigation bar title for G7SettingsView
    Title on WelcomeView */
@@ -60,7 +60,7 @@
 "LOW" = "NÍZKE";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "Názov";
 
 /* No comment provided by engineer. */
 "Scan for new sensor" = "Načítať nový senzor";
@@ -105,7 +105,7 @@
 "Signal\nLoss" = "Strata\nsignálu";
 
 /* Field label */
-"Time" = "Time";
+"Time" = "Čas";
 
 /* Field label */
 "Trend" = "Vývoj";
