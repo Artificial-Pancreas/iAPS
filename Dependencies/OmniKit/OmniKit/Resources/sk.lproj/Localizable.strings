@@ -27,7 +27,7 @@
 "Below 50 units" = "Menej ako 50 jednotiek";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Dávka";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Prebieha bolus";
