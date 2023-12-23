@@ -20,19 +20,19 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Pridať dávku";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Pridať dávku";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Odporúčaná dávka inzulínu";
 
 /*  */
 "Insulin required" = "Insulin required";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Odporúčania";
 
 /* Button */
 "Clear" = "Vymazať";
@@ -59,10 +59,10 @@
 "Meal Summary" = "Meal Summary";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Edit Meal";
+"Edit Meal" = "Upraviť jedlo";
 
 /* Bolus View Meal Add Meal Button */
-"Add Meal" = "Add Meal";
+"Add Meal" = "Pridať jedlo";
 
 /* Bolus View Bolus Summary Header */
 "Bolus Summary" = "Bolus Summary";
@@ -83,16 +83,16 @@
 "Fatty Meal Factor" = "Fatty Meal Factor";
 
 /* For the  Bolus View pop-up */
-"Result" = "Result";
+"Result" = "Výsledok";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Vaša zadaná hodnota bola obmedzená Vaším maximálnym nastavením dávky na %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Pokračovať";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Domov";
 
 /* Looping in progress */
 "looping" = "looping";
