@@ -56,7 +56,7 @@
 "Configuration" = "Konfigurácia";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Connect";
+"Connect" = "Pripojiť";
 
 /* Text for continue button */
 "Continue" = "Pokračovať";
@@ -200,7 +200,7 @@
 "Tuning radio…" = "Tuning radio…";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "J/hod";
 
 /* Text to indicate battery percentage is unknown */
 "unknown" = "unknown";
