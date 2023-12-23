@@ -9,15 +9,15 @@
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Add %@ without bolusing";
 
-"Bolus" = "Bolus";
+"Bolus" = "Dávka";
 
 "Close" = "Zatvoriť";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Pokračovať bez dávky";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDávka prekračuje vaše nastavenie Max Bolus!\nSte si istí, že chcete dávku pridať ";
 
 /* Header */
 "Enact Bolus" = "Pridať dávku";
@@ -26,10 +26,10 @@
 "Enact bolus" = "Pridať dávku";
 
 /*  */
-"Insulin recommended" = "Odporúčaná dávka inzulínu";
+"Insulin recommended" = "Odporúčaný inzulín";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Požadovaný inzulín";
 
 /* Bolus screen */
 "Recommendation" = "Odporúčania";
@@ -47,16 +47,16 @@
 "Agree and continue" = "Súhlasím a pokračovať";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Uskutočnené o";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Navrhnuté o";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Error at" = "Chyba o";
 
 /* Bolus View Meal Summary Header */
-"Meal Summary" = "Meal Summary";
+"Meal Summary" = "Sumár jedla";
 
 /* Bolus View Meal Edit Meal Button */
 "Edit Meal" = "Upraviť jedlo";
@@ -65,22 +65,22 @@
 "Add Meal" = "Pridať jedlo";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolus Summary";
+"Bolus Summary" = "Sumár dávky";
 
 /* For the  Bolus View pop-up */
-"Calculations" = "Calculations";
+"Calculations" = "Výpočty";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal" = "Fatty Meal";
+"Fatty Meal" = "Mastné jedlo";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Full Bolus";
+"Full Bolus" = "Celková dávka";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fraction";
+"Fraction" = "Zlomok";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fatty Meal Factor";
+"Fatty Meal Factor" = "Faktor mastného jedla";
 
 /* For the  Bolus View pop-up */
 "Result" = "Výsledok";
@@ -98,85 +98,85 @@
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "min. pred";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Žiadne návrhy";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Vymeňte pod";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Pridať sacharidy";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Pridať sacharidy ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Množstvo sacharidov";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramov";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Potrebné sacharidy";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "Uložené jedlá";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Ste si istý?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Spodný cieľ";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Zrušiť";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Zrušiť dočasný cieľ";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Vlastné";
 
 /*  */
-"Date" = "Date";
+"Date" = "Dátum";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Odstrániť";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Odstrániť predvoľbu \\\"%@\\\"";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Nastaviť dočasný cieľ";
 
 /* */
 "Target" = "Cieľ";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Pomer bazálneho inzulínu a citlivosti";
 
 /* */
 "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Vaše nastavenie: ";
 
 /* */
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Zadajte názov prednastavenia";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Názov";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minút";
 
 /*  */
 "Presets" = "Predvoľby";
@@ -191,7 +191,7 @@
 "Delete Preset" = "Odstrániť predvoľbu";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Odstrániť predvoľbu '%@'?";
 
 /* Button */
 "No" = "Nie";
@@ -218,13 +218,13 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Bazálny profil";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Sacharidový pomer";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Odstrániť údaje autotune";
 
 /*  */
 "Run now" = "Spustiť teraz";
@@ -233,16 +233,16 @@
 "Last run" = "Naposledy spustené";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Citlivosť";
 
 /*  */
-"Use Autotune" = "Use Autotune";
+"Use Autotune" = "Použiť autotune";
 
 /* Add profile basal */
 "Add" = "Pridať";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Bazálny profil";
 
 /* Rate basal profile */
 "Rate" = "Rate";
@@ -257,101 +257,101 @@
 "Schedule" = "Plán";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "začína o";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Čas";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Vypočítaný pomer";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Sacharidový pomer";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Pomer";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Vypočítaná citlivosť";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Inzulínová citlivosť";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Pomer citlivosti";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Zamietnuť";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Dôležitá správa";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Množstvo";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Zrušiť dočasný bazál";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Vykonať";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Manuálny dočasný bazál";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Povoliť nahrávanie";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API kľúč";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Pripojiť";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Pripojené!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Pripája sa...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Neplatná URL adresa";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Lokálny zdroj glukózy";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nastavenie Nightscout";
 
 /*  */
 "Port" = "Port";
 
 /*  */
-"URL" = "URL";
+"URL" = "Adresa URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Použiť lokálny server glukózy";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Upraviť settings json";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Jednotky glukózy";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Predvoľby";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Odporúčaný podiel inzulínu";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Preskočiť pridanie dávky po sacharidoch";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Vzdialené ovládanie";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.";
@@ -366,55 +366,55 @@ Enact a temp Basal or a temp target */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings";
 
 /* Import Error Headline */
-"Import Error" = "Import Error";
+"Import Error" = "Chyba importu";
 
 /* */
-"Yes, Import" = "Yes, Import";
+"Yes, Import" = "Áno, importovať";
 
 /* */
-"Import settings from Nightscout" = "Import settings from Nightscout";
+"Import settings from Nightscout" = "Importovať nastavenia z Nightscoutu";
 
 /* */
-"Import settings?" = "Import settings?";
+"Import settings?" = "Importovať nastavenia?";
 
 /* */
-"Import from Nightscout" = "Import from Nightscout";
+"Import from Nightscout" = "Importovať z Nightscoutu";
 
 /* */
-"Settings imported" = "Settings imported";
+"Settings imported" = "Nastavenia naimportované";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nNekompatibilné jednotky glukózy v Nightscoute a nastaveniach pumpy. Import nastavení bol zrušený.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Can't find the default Nightscout Profile.";
+"Can't find the default Nightscout Profile." = "Nemôžem nájsť predvolený Nightscout profil.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Blood Glucose Test";
+"Blood Glucose Test" = "Test krvi na glukózu";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Pridať Medtronic";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Pridať Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Pridať simulátor";
 
 /* Insulin model */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Nastavenia pumpy";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Obmedzenia dávkovania";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Trvanie účinku inzulínu";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "hodiny";
 
 /* Max setting */
 "Max Basal" = "Max Basal";
@@ -426,28 +426,28 @@ Enact a temp Basal or a temp target */
 "Max Carbs" = "Max Carbs";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Nastavenia pumpy";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "J/hod";
 
 /* Unit in number of units delivered (keep the space character!) */
-" U" = " U";
+" U" = " J";
 
 /* /Insulin unit */
-"/U" = "/U";
+"/U" = "/J";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "J";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " J/hod";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ J/hod";
 
 /* Number of units insulin delivered */
-"%@ U" = "%@ U";
+"%@ U" = "%@ J";
 
 /*Carb ratio unit */
 "g/U" = "g/U";
@@ -459,7 +459,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 J/hod";
 
 /* abbreviation for days */
 "d" = "d";
@@ -471,118 +471,118 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Uzavretý okruh";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Nastavenie";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Zariadenia";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pumpa";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Hodinky";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Nastavenie hodiniek";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Zobraziť na hodinkách";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Pridať zariadenie";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Cieľ glukózy";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Srdcový tep";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Kroky";
 
 /* */
-"ISF" = "ISF";
+"ISF" = "Citlivosť";
 
 /* */
-"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Aplikácia Garmin Connect musí byť nainštalovaná pre použitie s iAPS.\n Pre stiahnutie choďte do App Store";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin je nedostupný";
 
 /*  */
-"Services" = "Services";
+"Services" = "Služby";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Nastavenia";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Odporúčaný podiel dávky";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Zdieľať záznamy";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Vysoký cieľ";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Nízky cieľ";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Dávkovanie";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pumpa pozastavená";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "História";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Nahrať";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Povoliť nahrávanie";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Typ";
 
 /* CGM */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "ID vysielača";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Iné";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Najprv nastavte dočasný cieľ na iPhone";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Aktualizuje sa...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Dočasné ciele";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "Odstrániť sacharidy?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "Odstrániť inzulín?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Ošetrenia";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -594,31 +594,31 @@ Enact a temp Basal or a temp target */
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Nastaviť vysielač Libre";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibrácie";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Vytvoriť udalosť v kalendári";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Kalendár";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "Automatický";
 
 /* External insulin treatments */
-"External" = "External";
+"External" = "Externý";
 
 /* */
-"Other" = "Other";
+"Other" = "Iné";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre vysielač";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre vysielače";
 
 /* */
 "Bluetooth Transmitters" = "Bluetooth Transmitters";
@@ -663,16 +663,16 @@ Enact a temp Basal or a temp target */
 "Remove" = "Remove";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Odstrániť posledný";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Odstrániť všetko";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "O procese";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Uistite sa, že váš senzor Libre 2 je už aktivovaný a zahriaty. Ak máte iné aplikácie pripojené k senzoru cez bluetooth, tieto musia byť vypnuté alebo odinštalované.\n\nMôžete mať iba jednu aplikáciu komunikujúcu so senzorom cez bluetooth. Potom stlačte tlačidlo „spárovanie a pripojenie“ nižšie, aby ste začali proces. Upozorňujeme, že pripojenie cez bluetooth môže trvať až niekoľko minút, kým začne fungovať.";
 
 /* */
 "Pairinginfo" = "Pairinginfo";
@@ -729,49 +729,49 @@ Enact a temp Basal or a temp target */
 "(Snoozed)" = "(Snoozed)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Glukóza: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "Vysielač: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Nie je detegovaný žiadny senzor";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
 "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Nový senzor detegovaný";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
 "Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Detegovaná neplatný vzorka glukózy, skúste znova neskôr";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Senzor sa mohol dočasne zastaviť, spadnúť, alebo je príliš studený alebo príliš teplý";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Detegovaný neplatný senzor";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Detegovaný senzor nie je libre 1!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Detegovaný senzor nie je platný: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Slabá batéria";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Neplatný senzor";
 
 /* */
 "Sensor change" = "Sensor change";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Senzor čoskoro exspiruje";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
@@ -780,19 +780,19 @@ Enact a temp Basal or a temp target */
 "Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Senzor čoskoro skončí";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Aktuálny senzor čoskoro skončí! Do konca životnosti senzora zostáva %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Odložiť výstrahy";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Posledné meranie";
 
 /* */
 "Sensor Footer checksum" = "Sensor Footer checksum";
@@ -804,7 +804,7 @@ Enact a temp Basal or a temp target */
 "CurrentBG" = "CurrentBG";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "Informácie o senzore";
 
 /* */
 "Sensor Age" = "Sensor Age";
@@ -816,28 +816,28 @@ Enact a temp Basal or a temp target */
 "Sensor Endtime" = "Sensor Endtime";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Stav senzora";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Serióve číslo senzora";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Informácie o vysielači";
 
 /* */
-"Hardware" = "Hardware";
+"Hardware" = "Hardvér";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "Firmvér";
 
 /* */
 "Connection State" = "Stav pripojenia";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Typ vysielača";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Typ senzoru";
 
 /* */
 "Factory Calibration Parameters" = "Factory Calibration Parameters";
@@ -846,13 +846,13 @@ Enact a temp Basal or a temp target */
 "Valid for footer" = "Valid for footer";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Upraviť kalibrácie";
 
 /* */
 "edit calibration clicked" = "edit calibration clicked";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Odstrániť senzor";
 
 /* */
 "Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
@@ -861,7 +861,7 @@ Enact a temp Basal or a temp target */
 "There is no undo" = "There is no undo";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "Pokročilé";
 
 /* */
 "Alarms" = "Alarmy";
@@ -870,16 +870,16 @@ Enact a temp Basal or a temp target */
 "Glucose Settings" = "Glucose Settings";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "Oznámenia";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Exportovať záznamy";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Exportovanie nedostupné";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Exportovanie záznamov vyžaduje ios 15";
 
 /* */
 "Got it!" = "Got it!";
