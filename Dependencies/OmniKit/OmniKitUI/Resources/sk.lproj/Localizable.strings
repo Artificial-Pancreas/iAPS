@@ -720,7 +720,7 @@
 "Total Delivery" = "Celková dávka";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "J/hod";
 
 /* Instructions when pod cannot be deactivated */
 "Unable to deactivate pod. Please continue and pair a new one." = "Pod nie je možné deaktivovať. Prosím pokračujte a spárujte nový pod.";
