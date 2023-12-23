@@ -123,13 +123,13 @@
 "hour" = "hour";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "hodiny";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "minút";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -147,7 +147,7 @@
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Nastavenie";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -294,7 +294,7 @@
 "Resume" = "Resume";
 
 /* */
-"Bolus" = "Bolus";
+"Bolus" = "Dávka";
 
 /* */
 "Cancel Bolus" = "Cancel Bolus";
@@ -324,7 +324,7 @@
 "Activity" = "Aktivita";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Nastavenie";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -427,7 +427,7 @@
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“";
 
 /* Insulin Unit */
-"U" = "U";
+"U" = "J";
 
 /* The action string on pod status page when pod expired */
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.";
@@ -442,7 +442,7 @@
 "Paired" = "Paired";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Cancel";
+"Cancel" = "Zrušiť";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -523,7 +523,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
-"Time" = "Time";
+"Time" = "Čas";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Finish Setup";
@@ -576,7 +576,7 @@
 "Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "Čas";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -611,7 +611,7 @@
 "Rate" = "Rate";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "J/hod";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -688,7 +688,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Zrušiť";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Pokračovať";
