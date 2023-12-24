@@ -477,20 +477,28 @@ extension Home {
             }
         }
 
-        func bolusProgressView(progress: Decimal) -> some View {
+        func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
-                HStack {
-                    Text("Bolusing")
-                        .foregroundColor(.primary).font(.bolusProgressFont)
+                VStack {
+                    HStack {
+                        Text("Bolusing")
+                            .foregroundColor(.primary).font(.bolusProgressFont)
+                        let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
+
+                        Text(
+                            bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
+                                .formatted() + NSLocalizedString(" U", comment: "")
+                        ).font(.bolusProgressBarFont)
+
+                        Image(systemName: "xmark.square.fill")
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(.white, .blue)
+                            .font(.bolusProgressStopFont)
+                            .onTapGesture { state.cancelBolus() }
+                    }
                     ProgressView(value: Double(progress))
                         .progressViewStyle(BolusProgressViewStyle())
-                    Image(systemName: "xmark.square.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.white, .blue)
-                        .font(.bolusProgressStopFont)
-                        .onTapGesture {
-                            state.cancelBolus()
-                        }
+                        .offset(x: -15, y: 0)
                 }
             }
         }
@@ -532,12 +540,12 @@ extension Home {
                 .background(.gray.opacity(IAPSconfig.backgroundOpacity * 2))
                 .edgesIgnoringSafeArea(.vertical)
                 .overlay {
-                    if let progress = state.bolusProgress {
+                    if let progress = state.bolusProgress, let amount = state.bolusAmount {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(.gray.opacity(0.8))
-                                .frame(width: 300, height: 50)
-                            bolusProgressView(progress: progress)
+                                .frame(width: 320, height: 70)
+                            bolusProgressView(progress: progress, amount: amount)
                         }.frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
