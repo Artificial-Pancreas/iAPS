@@ -14,6 +14,23 @@ extension Home {
         @State var showCancelTTAlert = false
         @State var triggerUpdate = false
 
+        struct Buttons: Identifiable {
+            let label: String
+            let number: String
+            var active: Bool
+            let hours: Int
+            var id: String { label }
+        }
+
+        @State var timeButtons: [Buttons] = [
+            Buttons(label: "3 hours", number: "3", active: false, hours: 3),
+            Buttons(label: "6 hours", number: "6", active: true, hours: 6),
+            Buttons(label: "12 hours", number: "12", active: false, hours: 12),
+            Buttons(label: "24 hours", number: "24", active: false, hours: 24)
+        ]
+
+        let buttonFont = Font.custom("TimeButtonFont", size: 14)
+
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
 
@@ -396,6 +413,7 @@ extension Home {
                     VStack {
                         infoPanel
                         mainChart
+                        timeInterval
                     }
                 }
                 .frame(
@@ -534,6 +552,34 @@ extension Home {
                 .clipShape(Rectangle())
         }
 
+        var timeInterval: some View {
+            HStack(spacing: 5) {
+                ForEach(timeButtons) { button in
+                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
+                        state.hours = button.hours
+                    }
+                    .foregroundStyle(button.active ? .primary : .secondary)
+                    .frame(maxHeight: 20).padding(.horizontal, button.active ? 20 : 5)
+                    .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
+                }
+                Image(systemName: "ellipsis.circle")
+                    .foregroundStyle(.secondary)
+                    .padding(.leading)
+                    .onTapGesture {
+                        state.showModal(for: .statisticsConfig)
+                    }
+            }
+            .font(buttonFont)
+            .padding(.top, 20)
+            .padding(.bottom, 40)
+        }
+
+        func highlightButtons() {
+            for i in 0 ..< timeButtons.count {
+                timeButtons[i].active = timeButtons[i].hours == state.hours
+            }
+        }
+
         var body: some View {
             GeometryReader { geo in
                 VStack {
@@ -585,6 +631,14 @@ extension Home {
                                 }
                             }
                     )
+            }
+            .onChange(of: state.hours) { _ in
+                highlightButtons()
+            }
+            .onAppear {
+                configureView {
+                    highlightButtons()
+                }
             }
         }
 
