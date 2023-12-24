@@ -11,6 +11,7 @@ extension Home {
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
+        @State var showCancelTTAlert = false
         @State var triggerUpdate = false
 
         @Environment(\.managedObjectContext) var moc
@@ -258,6 +259,7 @@ extension Home {
                 addHeaderBackground()
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
                 let isOverride = fetchedPercent.first?.enabled ?? false
+                let isTarget = (state.tempTarget != nil)
                 HStack {
                     Button { state.showModal(for: .dataTable) }
                     label: {
@@ -292,39 +294,45 @@ extension Home {
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
-                    Button {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image(systemName: isOverride ? "person.fill" : "person")
+                            .symbolRenderingMode(.palette)
+                            .font(.custom("Buttons", size: 32))
+                            .foregroundStyle(.purple)
+                            .padding(8)
+                            .background(isOverride ? .blue.opacity(0.3) : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    .onTapGesture {
                         if isOverride {
                             showCancelAlert.toggle()
-                            // state.cancelProfile()
-                            // triggerUpdate.toggle()
                         } else {
                             state.showModal(for: .overrideProfilesConfig)
                         }
                     }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: isOverride ? "person.fill" : "person")
-                                .symbolRenderingMode(.palette)
-                                .font(.custom("Buttons", size: 32))
-                                .foregroundStyle(.purple)
-                                .padding(8)
-                                .background(isOverride ? .blue.opacity(0.3) : .clear)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                        }
-                    }.buttonStyle(.borderless)
-
+                    .onLongPressGesture {
+                        state.showModal(for: .overrideProfilesConfig)
+                    }
                     if state.useTargetButton {
                         Spacer()
-                        Button { state.showModal(for: .addTempTarget) }
-                        label: {
-                            Image("target")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
-                                .padding(8)
-                        }
-                        .foregroundColor(.loopGreen)
-                        .buttonStyle(.borderless)
+                        Image("target")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
+                            .padding(8)
+                            .foregroundColor(.loopGreen)
+                            .background(isTarget ? .blue.opacity(0.3) : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .onTapGesture {
+                                if isTarget {
+                                    showCancelTTAlert.toggle()
+                                } else {
+                                    state.showModal(for: .addTempTarget)
+                                }
+                            }
+                            .onLongPressGesture {
+                                state.showModal(for: .addTempTarget)
+                            }
                     }
                     Spacer()
                     Button {
@@ -369,14 +377,23 @@ extension Home {
                 .padding(.horizontal, 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
             }.alert(
-                "Return to Normal?", isPresented: $showCancelAlert,
+                "Cancel Profile Override?", isPresented: $showCancelAlert, // Cancel Profile Override
                 actions: {
                     Button("No", role: .cancel) {}
                     Button("Yes", role: .destructive) {
                         state.cancelProfile()
                         triggerUpdate.toggle()
                     }
-                }, message: { Text("This will change settings back to your normal profile.") }
+                }
+            )
+            .alert(
+                "Cancel Temp Target?", isPresented: $showCancelTTAlert,
+                actions: {
+                    Button("No", role: .cancel) {}
+                    Button("Yes", role: .destructive) {
+                        state.cancelTempTarget()
+                    }
+                }
             )
         }
 
