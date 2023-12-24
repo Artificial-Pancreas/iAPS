@@ -300,7 +300,7 @@ extension Home {
                             .font(.custom("Buttons", size: 32))
                             .foregroundStyle(.purple)
                             .padding(8)
-                            .background(isOverride ? .blue.opacity(0.3) : .clear)
+                            .background(isOverride ? .purple.opacity(0.15) : .clear)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     .onTapGesture {
@@ -321,7 +321,7 @@ extension Home {
                             .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
                             .padding(8)
                             .foregroundColor(.loopGreen)
-                            .background(isTarget ? .blue.opacity(0.3) : .clear)
+                            .background(isTarget ? .green.opacity(0.15) : .clear)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .onTapGesture {
                                 if isTarget {
