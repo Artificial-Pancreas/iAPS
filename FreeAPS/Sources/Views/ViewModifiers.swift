@@ -130,7 +130,7 @@ struct LoopEllipse: View {
     let stroke: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: 1)
+            .stroke(stroke, lineWidth: 2)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
