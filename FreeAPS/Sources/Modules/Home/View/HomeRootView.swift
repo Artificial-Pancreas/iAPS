@@ -557,7 +557,9 @@ extension Home {
                                 .fill(.gray.opacity(0.8))
                                 .frame(width: 320, height: 70)
                             bolusProgressView(progress: progress, amount: amount)
-                        }.frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .offset(x: 0, y: -70)
                     }
                 }
             }
