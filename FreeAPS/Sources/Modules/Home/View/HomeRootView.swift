@@ -376,25 +376,18 @@ extension Home {
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
-            }.alert(
-                "Cancel Profile Override?", isPresented: $showCancelAlert, // Cancel Profile Override
-                actions: {
-                    Button("No", role: .cancel) {}
-                    Button("Yes", role: .destructive) {
-                        state.cancelProfile()
-                        triggerUpdate.toggle()
-                    }
+            }
+            .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
+                Button("Cancel Profile Override", role: .destructive) {
+                    state.cancelProfile()
+                    triggerUpdate.toggle()
                 }
-            )
-            .alert(
-                "Cancel Temp Target?", isPresented: $showCancelTTAlert,
-                actions: {
-                    Button("No", role: .cancel) {}
-                    Button("Yes", role: .destructive) {
-                        state.cancelTempTarget()
-                    }
+            }
+            .confirmationDialog("Cancel Temporary Target", isPresented: $showCancelTTAlert) {
+                Button("Cancel Temporary Target", role: .destructive) {
+                    state.cancelTempTarget()
                 }
-            )
+            }
         }
 
         var chart: some View {
@@ -496,26 +489,27 @@ extension Home {
 
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
-                VStack {
-                    HStack {
-                        Text("Bolusing")
-                            .foregroundColor(.primary).font(.bolusProgressFont)
-                        let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
+                HStack {
+                    VStack {
+                        HStack {
+                            Text("Bolusing")
+                                .foregroundColor(.primary).font(.bolusProgressFont)
+                            let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
 
-                        Text(
-                            bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
-                                .formatted() + NSLocalizedString(" U", comment: "")
-                        ).font(.bolusProgressBarFont)
-
-                        Image(systemName: "xmark.square.fill")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.white, .blue)
-                            .font(.bolusProgressStopFont)
-                            .onTapGesture { state.cancelBolus() }
+                            Text(
+                                bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
+                                    .formatted() + NSLocalizedString(" U", comment: "")
+                            ).font(.bolusProgressBarFont)
+                        }
+                        ProgressView(value: Double(progress))
+                            .progressViewStyle(BolusProgressViewStyle())
                     }
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
-                        .offset(x: -15, y: 0)
+                    Image(systemName: "xmark.square.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(.white, .blue)
+                        .font(.bolusProgressStopFont)
+                        .onTapGesture { state.cancelBolus() }
+                        .offset(x: 10, y: 0)
                 }
             }
         }
