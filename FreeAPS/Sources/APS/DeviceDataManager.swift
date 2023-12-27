@@ -19,7 +19,7 @@ protocol DeviceDataManager: GlucoseSource {
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var recommendsLoop: PassthroughSubject<Void, Never> { get }
     var bolusTrigger: PassthroughSubject<Bool, Never> { get }
-    var manualTempBasal: PassthroughSubject<Bool, Never> { get }
+    var manualPodBasal: PassthroughSubject<Bool, Never> { get }
     var errorSubject: PassthroughSubject<Error, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
@@ -67,7 +67,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     let bolusTrigger = PassthroughSubject<Bool, Never>()
     let errorSubject = PassthroughSubject<Error, Never>()
     let pumpNewStatus = PassthroughSubject<Void, Never>()
-    let manualTempBasal = PassthroughSubject<Bool, Never>()
+    let manualPodBasal = PassthroughSubject<Bool, Never>()
 
     private let router = FreeAPSApp.resolver.resolve(Router.self)!
     @SyncAccess private var pumpUpdateCancellable: AnyCancellable?
@@ -363,15 +363,19 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 $0.pumpReservoirDidChange(Decimal(reservoir))
             }
 
-            if let tempBasal = omnipod.state.podState?.unfinalizedTempBasal, !tempBasal.isFinished(),
-               !tempBasal.automatic
-            {
-                // the manual basal temp is launch - block every thing
-                debug(.deviceManager, "manual temp basal")
-                manualTempBasal.send(true)
-            } else {
-                // no more manual Temp Basal !
-                manualTempBasal.send(false)
+            // manual temp basal and suspend mode on
+            if let podState = omnipod.state.podState {
+                if podState.isSuspended {
+                    debug(.deviceManager, "suspend basal")
+                    manualPodBasal.send(true)
+                } else if let tempBasal = podState.unfinalizedTempBasal, !tempBasal.isFinished(),
+                          !tempBasal.automatic
+                {
+                    debug(.deviceManager, "manual temp basal")
+                    manualPodBasal.send(true)
+                } else {
+                    manualPodBasal.send(false)
+                }
             }
 
             guard let endTime = omnipod.state.podState?.expiresAt else {
@@ -395,16 +399,19 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 $0.pumpReservoirDidChange(Decimal(reservoir))
             }
 
-            // manual temp basal on
-            if let tempBasal = omnipodBLE.state.podState?.unfinalizedTempBasal, !tempBasal.isFinished(),
-               !tempBasal.automatic
-            {
-                // the manual basal temp is launch - block every thing
-                debug(.deviceManager, "manual temp basal")
-                manualTempBasal.send(true)
-            } else {
-                // no more manual Temp Basal !
-                manualTempBasal.send(false)
+            // manual temp basal and suspend mode on
+            if let podState = omnipodBLE.state.podState {
+                if podState.isSuspended {
+                    debug(.deviceManager, "suspend basal")
+                    manualPodBasal.send(true)
+                } else if let tempBasal = podState.unfinalizedTempBasal, !tempBasal.isFinished(),
+                          !tempBasal.automatic
+                {
+                    debug(.deviceManager, "manual temp basal")
+                    manualPodBasal.send(true)
+                } else {
+                    manualPodBasal.send(false)
+                }
             }
 
             guard let endTime = omnipodBLE.state.podState?.expiresAt else {
@@ -415,6 +422,18 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
             if let startTime = omnipodBLE.state.podState?.activatedAt {
                 storage.save(startTime, as: OpenAPS.Monitor.podAge)
+            }
+        }
+
+        if let mockpump = pumpManager as? MockPumpManager {
+            // Mockup suspended
+            if case .suspended = mockpump.state.suspendState
+            {
+                debug(.deviceManager, "suspend basal")
+                manualPodBasal.send(true)
+            } else {
+                debug(.deviceManager, "suspend basal finished")
+                manualPodBasal.send(false)
             }
         }
     }

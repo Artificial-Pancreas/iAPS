@@ -11,7 +11,15 @@ extension Settings {
         var body: some View {
             Form {
                 Section {
-                    Toggle("Closed loop", isOn: $state.closedLoop)
+                    if state.manualPump {
+                        HStack {
+                            Text("Closed Loop:")
+                            Text("❌ Pump with temp basal")
+                        }
+                    } else {
+                        Toggle("Closed loop", isOn: $state.closedLoop)
+                    }
+
                 } header: {
                     Text(
                         "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "

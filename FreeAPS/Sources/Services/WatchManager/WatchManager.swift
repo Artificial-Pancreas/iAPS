@@ -131,6 +131,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                 self.state.override = "100 %"
             }
 
+            self.state.closedLoop = self.settingsManager.settings.closedLoop
+            self.state.isManualTempBasal = self.apsManager.isManualTempBasal
             self.sendState()
         }
     }

@@ -87,6 +87,28 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     return [
                         PumpHistoryEvent(
                             id: id,
+                            type: .tempBasalDuration,
+                            timestamp: event.date,
+                            amount: nil,
+                            duration: nil,
+                            durationMin: 30,
+                            rate: nil,
+                            temp: nil,
+                            carbInput: nil
+                        ),
+                        PumpHistoryEvent(
+                            id: "_" + id,
+                            type: .tempBasal,
+                            timestamp: event.date,
+                            amount: nil,
+                            duration: nil,
+                            durationMin: nil,
+                            rate: 0.0,
+                            temp: .absolute,
+                            carbInput: nil
+                        ),
+                        PumpHistoryEvent(
+                            id: "0" + id,
                             type: .pumpSuspend,
                             timestamp: event.date,
                             amount: nil,

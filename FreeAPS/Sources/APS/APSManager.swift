@@ -23,6 +23,7 @@ protocol APSManager {
     var bolusProgress: CurrentValueSubject<Decimal?, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
+    var isPodManual: Bool { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -96,6 +97,8 @@ final class BaseAPSManager: APSManager, Injectable {
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
+    @Persisted(key: "isPodManual") var isPodManual: Bool = false
+    private var closedLoopStateBeforePodManual: Bool?
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
@@ -125,7 +128,7 @@ final class BaseAPSManager: APSManager, Injectable {
         openAPS = OpenAPS(storage: storage)
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
-
+        closedLoopStateBeforePodManual = settingsManager.settings.closedLoop
         isLooping
             .weakAssign(to: \.deviceDataManager.loopInProgress, on: self)
             .store(in: &lifetime)
@@ -160,16 +163,21 @@ final class BaseAPSManager: APSManager, Injectable {
             .store(in: &lifetime)
 
         // manage a manual Temp Basal from OmniPod - Force loop() after stop a temp basal or finished
-        deviceDataManager.manualTempBasal
+        deviceDataManager.manualPodBasal
             .receive(on: processQueue)
             .sink { manualBasal in
-                if manualBasal {
+                if manualBasal, !self.isPodManual {
+                    // force to switch in not closed loop !
+                    self.isPodManual = true
+                    self.closedLoopStateBeforePodManual = self.settings.closedLoop
+                    self.settings.closedLoop = false
                     self.isManualTempBasal = true
-                } else {
-                    if self.isManualTempBasal {
-                        self.isManualTempBasal = false
-                        self.loop()
-                    }
+
+                } else if !manualBasal, self.isPodManual {
+                    self.isPodManual = false
+                    self.isManualTempBasal = false
+                    self.settings.closedLoop = self.closedLoopStateBeforePodManual!
+                    self.loop()
                 }
             }
             .store(in: &lifetime)
@@ -481,10 +489,10 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let pump = pumpManager else { return }
 
         // unable to do temp basal during manual temp basal 😁
-        if isManualTempBasal {
-            processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
-            return
-        }
+        //        if isManualTempBasal {
+        //            processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
+        //            return
+        //        }
 
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
@@ -500,6 +508,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 if rate == 0, duration == 0 {
                     self.pumpHistoryStorage.saveCancelTempEvents()
                 }
+                // if duration = 0  then cancel temp enact
+                self.isManualTempBasal = !(duration == 0)
             }
         }
     }
@@ -593,6 +603,12 @@ final class BaseAPSManager: APSManager, Injectable {
             }
         case let .looping(closedLoop):
             settings.closedLoop = closedLoop
+
+            if closedLoop, isManualTempBasal {
+                // cancel manualTempBasal
+                enactTempBasal(rate: 0, duration: 0)
+            }
+
             debug(.apsManager, "Closed loop \(closedLoop) by Announcement")
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
         case let .tempbasal(rate, duration):
