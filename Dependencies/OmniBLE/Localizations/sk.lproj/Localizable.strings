@@ -285,40 +285,40 @@
 "Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Pozastavenie";
 
 /* */
 "Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Pokračovať";
 
 /* */
 "Bolus" = "Dávka";
 
 /* */
-"Cancel Bolus" = "Cancel Bolus";
+"Cancel Bolus" = "Zrušiť bolus";
 
 /* Alert acknowledgment OK button */
 "OK" = "OK";
 
 /* The title for Empty Reservoir alarm notification */
-"Empty Reservoir" = "Empty Reservoir";
+"Empty Reservoir" = "Prázdny zásobník";
 
 /* The title for Occlusion alarm notification */
-"Occlusion Detected" = "Occlusion Detected";
+"Occlusion Detected" = "Zistená oklúzia";
 
 /* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Critical Pod Error";
+"Critical Pod Error" = "Kritická chyba zariadenia Pod";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
+"Insulin delivery stopped. Change Pod now." = "Podávanie inzulínu sa zastavilo. Vymeňte modul teraz.";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Zostávajúci inzulín";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Set Temporary Basal Rate";
+"Set Temporary Basal Rate" = "Nastavenie dočasnej bazálnej sadzby";
 
 /* Section header for activity section */
 "Activity" = "Aktivita";
@@ -327,25 +327,25 @@
 "Configuration" = "Nastavenie";
 
 /* Title for previous pod page */
-"Previous Pod" = "Previous Pod";
+"Previous Pod" = "Predchádzajúci Pod";
 
 /* The title of the command to change pump time zone */
-"Pump Time" = "Pump Time";
+"Pump Time" = "Čas čerpadla";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Adjusting Pump Time...";
+"Adjusting Pump Time..." = "Nastavenie času čerpadla...";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Synchronizácia s aktuálnym časom";
 
 /* Label for PumpManager deletion button */
-"Switch to other insulin delivery device" = "Switch to other insulin delivery device";
+"Switch to other insulin delivery device" = "Prechod na iné zariadenie na podávanie inzulínu";
 
 /* Title for pod sync time action sheet. */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Áno, synchronizujte s aktuálnym časom";
 
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "Nie, nechajte čerpadlo tak, ako je";
