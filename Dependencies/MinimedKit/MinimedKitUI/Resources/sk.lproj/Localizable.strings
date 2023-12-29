@@ -170,40 +170,40 @@
 "Sending button press…" = "Sending button press…";
 
 /* Title text for suspend resume button when temp basal starting */
-"Starting Temp Basal" = "Starting Temp Basal";
+"Starting Temp Basal" = "Spustiť Dočasný Bazál";
 
 /* A message indicating a command succeeded */
 "Succeeded" = "Úspešné";
 
 /* Title text for button to suspend insulin delivery */
-"Suspend Delivery" = "Suspend Delivery";
+"Suspend Delivery" = "Pozastavenie dodávky";
 
 /* The format string describing pump suspended state: (1: suspended) */
-"Suspended: %1$@\n" = "Suspended: %1$@\n";
+"Suspended: %1$@\n" = "Pozastavené: %1$@\n";
 
 /* Title text for button when insulin delivery is in the process of being stopped */
-"Suspending" = "Suspending";
+"Suspending" = "Pozastavenie";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Synchronizácia s aktuálnym časom";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od skutočného času. Chcete aktualizovať čas na čerpadle na aktuálny čas?";
 
 /* Title for pod sync time action sheet. */
 "Time Change Detected" = "Zistila sa zmena času";
 
 /* The label indicating the results of each frequency trial */
-"Trials" = "Trials";
+"Trials" = "Testovanie";
 
 /* Progress message for tuning radio */
-"Tuning radio…" = "Tuning radio…";
+"Tuning radio…" = "Naladenie rádia…";
 
 /* Units for showing temp basal rate */
 "U/hr" = "J/hod";
 
 /* Text to indicate battery percentage is unknown */
-"unknown" = "unknown";
+"unknown" = "neznámy";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Neznáme";
@@ -211,10 +211,10 @@
 /* Description for option to use MySentry
    navigation title for pump battery type selection
    Text for medtronic pump to use MySentry */
-"Use MySentry" = "Use MySentry";
+"Use MySentry" = "Používajte službu MySentry";
 
 /* Value string for MySentry config when MySentry is being used */
 "Yes" = "Áno";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Áno, synchronizujte s aktuálnym časom";
