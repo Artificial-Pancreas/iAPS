@@ -44,28 +44,28 @@
 "Make sure your RileyLink is nearby and powered on" = "Uistite sa, že je váš RileyLink v blízkosti a je zapnutý";
 
 /* Pump error code describing max setting exceeded */
-"Max setting exceeded" = "Max setting exceeded";
+"Max setting exceeded" = "Prekročené max nastavenie";
 
 /* Pump title (1: model number) */
 "Minimed %@" = "Minimed %@";
 
 /* Generic title of the minimed pump manager */
-"Minimed 500/700 Series" = "Minimed 500/700 Series";
+"Minimed 500/700 Series" = "";
 
 /* Describing the North America pump region */
-"North America" = "North America";
+"North America" = "Severná Amerika";
 
 /* No comment provided by engineer. */
-"Pump did not respond" = "Pump did not respond";
+"Pump did not respond" = "Pumpa neodpovedá";
 
 /* Error description */
-"Pump Error" = "Pump Error";
+"Pump Error" = "Chyba pumpy";
 
 /* No comment provided by engineer. */
-"Pump is suspended" = "Pump is suspended";
+"Pump is suspended" = "Pumpa je pozastavená";
 
 /* No comment provided by engineer. */
-"Pump responded unexpectedly" = "Pump responded unexpectedly";
+"Pump responded unexpectedly" = "Pumpa odpovedala neočakávane";
 
 /* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
 "PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "PumpMessage(%1$@, %2$@, %3$@, %4$@)";
