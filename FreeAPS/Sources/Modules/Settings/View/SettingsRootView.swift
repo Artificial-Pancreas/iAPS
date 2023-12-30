@@ -12,7 +12,7 @@ extension Settings {
             Form {
                 Section(
                     header: Text(
-                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "
+                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)\nBuildg Expires: \(Bundle.main.profileExpiration)"
                     ).textCase(nil)
                 ) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
