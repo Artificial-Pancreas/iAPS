@@ -262,11 +262,11 @@ extension Home {
                     Button { state.showModal(for: .dataTable) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
-                            Image(systemName: "book")
+                            Image(systemName: "bookmark.circle.fill")
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.basal)
                                 .padding(8)
                         }
                     }.buttonStyle(.borderless)
@@ -274,7 +274,7 @@ extension Home {
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs")
+                            Image(systemName: "fork.knife.circle.fill")
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: 24, height: 24)
@@ -287,7 +287,7 @@ extension Home {
                                     .font(.caption)
                                     .foregroundColor(.white)
                                     .padding(4)
-                                    .background(Capsule().fill(Color.red))
+                                    .background(Capsule().fill(Color.pink))
                             }
                         }
                     }.buttonStyle(.borderless)
@@ -303,12 +303,12 @@ extension Home {
                     }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: isOverride ? "person.fill" : "person")
+                            Image(systemName: isOverride ? "person.2.gobackward" : "person.circle")
                                 .symbolRenderingMode(.palette)
-                                .font(.custom("Buttons", size: 32))
-                                .foregroundStyle(.purple)
+                                .font(.custom("Buttons", size: 24))
+                                .foregroundStyle(isOverride ? .pink : .primary.opacity(0.5))
                                 .padding(8)
-                                .background(isOverride ? .blue.opacity(0.3) : .clear)
+                                .background(isOverride ? .teal.opacity(0.2) : .clear)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
                     }.buttonStyle(.borderless)
@@ -317,7 +317,7 @@ extension Home {
                         Spacer()
                         Button { state.showModal(for: .addTempTarget) }
                         label: {
-                            Image("target")
+                            Image(systemName: "target")
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
@@ -334,7 +334,7 @@ extension Home {
                         ))
                     }
                     label: {
-                        Image("bolus")
+                        Image(systemName: "syringe.fill")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
@@ -346,7 +346,7 @@ extension Home {
                     if state.allowManualTemp {
                         Button { state.showModal(for: .manualTempBasal) }
                         label: {
-                            Image("bolus1")
+                            Image(systemName: "vial.viewfinder")
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
@@ -357,7 +357,7 @@ extension Home {
                     }
                     Button { state.showModal(for: .settings) }
                     label: {
-                        Image("settings1")
+                        Image(systemName: "gear")
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
