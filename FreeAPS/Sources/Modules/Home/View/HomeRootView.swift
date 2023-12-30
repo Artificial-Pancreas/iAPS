@@ -398,7 +398,9 @@ extension Home {
                         infoPanel
                         VStack(spacing: 0) {
                             mainChart
-                            timeSetting
+                            if state.timeSettings {
+                                timeSetting
+                            }
                         }.chartBackground()
                     }
                 }

@@ -71,6 +71,7 @@ extension Home {
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
         @Published var alwaysUseColors: Bool = true
+        @Published var timeSettings: Bool = true
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -113,6 +114,7 @@ extension Home {
             useTargetButton = settingsManager.settings.useTargetButton
             hours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
+            timeSettings = settingsManager.settings.timeSettings
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -477,6 +479,7 @@ extension Home.StateModel:
         useTargetButton = settingsManager.settings.useTargetButton
         hours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors
+        timeSettings = settingsManager.settings.timeSettings
         setupGlucose()
         setupOverrideHistory()
     }

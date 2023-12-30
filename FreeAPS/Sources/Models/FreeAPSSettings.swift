@@ -53,6 +53,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useLiveActivity: Bool = false
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = true
+    var timeSettings: Bool = true
 }
 
 extension FreeAPSSettings: Decodable {
@@ -272,6 +273,10 @@ extension FreeAPSSettings: Decodable {
 
         if let alwaysUseColors = try? container.decode(Bool.self, forKey: .alwaysUseColors) {
             settings.alwaysUseColors = alwaysUseColors
+        }
+
+        if let timeSettings = try? container.decode(Bool.self, forKey: .timeSettings) {
+            settings.timeSettings = timeSettings
         }
 
         self = settings
