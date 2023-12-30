@@ -11,7 +11,10 @@ extension Home {
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
+        @State var showCancelTTAlert = false
         @State var triggerUpdate = false
+
+        let buttonFont = Font.custom("TimeButtonFont", size: 14)
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
@@ -258,6 +261,7 @@ extension Home {
                 addHeaderBackground()
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
                 let isOverride = fetchedPercent.first?.enabled ?? false
+                let isTarget = (state.tempTarget != nil)
                 HStack {
                     Button { state.showModal(for: .dataTable) }
                     label: {
@@ -265,7 +269,10 @@ extension Home {
                             Image(systemName: "book")
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .frame(
+                                    width: IAPSconfig.buttonSize * 0.9,
+                                    height: IAPSconfig.buttonSize
+                                )
                                 .foregroundColor(.gray)
                                 .padding(8)
                         }
@@ -274,10 +281,9 @@ extension Home {
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs")
+                            Image(systemName: "fork.knife")
                                 .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
+                                .font(.custom("Buttons", size: 24))
                                 .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
                                 .padding(8)
                                 .foregroundColor(.loopYellow)
@@ -292,39 +298,44 @@ extension Home {
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
-                    Button {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image(systemName: isOverride ? "person.fill" : "person")
+                            .symbolRenderingMode(.palette)
+                            .font(.custom("Buttons", size: 28))
+                            .foregroundStyle(.purple)
+                            .padding(8)
+                            .background(isOverride ? .purple.opacity(0.15) : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    .onTapGesture {
                         if isOverride {
                             showCancelAlert.toggle()
-                            // state.cancelProfile()
-                            // triggerUpdate.toggle()
                         } else {
                             state.showModal(for: .overrideProfilesConfig)
                         }
                     }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: isOverride ? "person.fill" : "person")
-                                .symbolRenderingMode(.palette)
-                                .font(.custom("Buttons", size: 32))
-                                .foregroundStyle(.purple)
-                                .padding(8)
-                                .background(isOverride ? .blue.opacity(0.3) : .clear)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                        }
-                    }.buttonStyle(.borderless)
-
+                    .onLongPressGesture {
+                        state.showModal(for: .overrideProfilesConfig)
+                    }
                     if state.useTargetButton {
                         Spacer()
-                        Button { state.showModal(for: .addTempTarget) }
-                        label: {
-                            Image("target")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
-                                .padding(8)
-                        }
-                        .foregroundColor(.loopGreen)
-                        .buttonStyle(.borderless)
+                        Image(systemName: "target")
+                            .renderingMode(.template)
+                            .font(.custom("Buttons", size: 24))
+                            .padding(8)
+                            .foregroundColor(.loopGreen)
+                            .background(isTarget ? .green.opacity(0.15) : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .onTapGesture {
+                                if isTarget {
+                                    showCancelTTAlert.toggle()
+                                } else {
+                                    state.showModal(for: .addTempTarget)
+                                }
+                            }
+                            .onLongPressGesture {
+                                state.showModal(for: .addTempTarget)
+                            }
                     }
                     Spacer()
                     Button {
@@ -334,10 +345,9 @@ extension Home {
                         ))
                     }
                     label: {
-                        Image("bolus")
+                        Image(systemName: "syringe")
                             .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .font(.custom("Buttons", size: 24))
                             .padding(8)
                     }
                     .buttonStyle(.borderless)
@@ -357,10 +367,9 @@ extension Home {
                     }
                     Button { state.showModal(for: .settings) }
                     label: {
-                        Image("settings1")
+                        Image(systemName: "gear")
                             .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .font(.custom("Buttons", size: 24))
                             .padding(8)
                     }
                     .buttonStyle(.borderless)
@@ -368,16 +377,18 @@ extension Home {
                 }
                 .padding(.horizontal, 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
-            }.alert(
-                "Return to Normal?", isPresented: $showCancelAlert,
-                actions: {
-                    Button("No", role: .cancel) {}
-                    Button("Yes", role: .destructive) {
-                        state.cancelProfile()
-                        triggerUpdate.toggle()
-                    }
-                }, message: { Text("This will change settings back to your normal profile.") }
-            )
+            }
+            .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
+                Button("Cancel Profile Override", role: .destructive) {
+                    state.cancelProfile()
+                    triggerUpdate.toggle()
+                }
+            }
+            .confirmationDialog("Cancel Temporary Target", isPresented: $showCancelTTAlert) {
+                Button("Cancel Temporary Target", role: .destructive) {
+                    state.cancelTempTarget()
+                }
+            }
         }
 
         var chart: some View {
@@ -385,11 +396,16 @@ extension Home {
                 .overlay {
                     VStack {
                         infoPanel
-                        mainChart
+                        VStack(spacing: 0) {
+                            mainChart
+                            if state.timeSettings {
+                                timeSetting
+                            }
+                        }.chartBackground()
                     }
                 }
                 .frame(
-                    minHeight: UIScreen.main.bounds.height / 1.46
+                    minHeight: UIScreen.main.bounds.height / 1.48
                 )
         }
 
@@ -456,7 +472,12 @@ extension Home {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
-                                    Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                    if name.count > 15 {
+                                        let shortened = name.prefix(15)
+                                        Text(shortened).font(.statusFont).foregroundStyle(.secondary)
+                                    } else {
+                                        Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                    }
                                 }
                             }
                         } else if override.percentage != 100 {
@@ -477,20 +498,29 @@ extension Home {
             }
         }
 
-        func bolusProgressView(progress: Decimal) -> some View {
+        func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
                 HStack {
-                    Text("Bolusing")
-                        .foregroundColor(.primary).font(.bolusProgressFont)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
+                    VStack {
+                        HStack {
+                            Text("Bolusing")
+                                .foregroundColor(.primary).font(.bolusProgressFont)
+                            let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
+
+                            Text(
+                                bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
+                                    .formatted() + NSLocalizedString(" U", comment: "")
+                            ).font(.bolusProgressBarFont)
+                        }
+                        ProgressView(value: Double(progress))
+                            .progressViewStyle(BolusProgressViewStyle())
+                    }
                     Image(systemName: "xmark.square.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.white, .blue)
                         .font(.bolusProgressStopFont)
-                        .onTapGesture {
-                            state.cancelBolus()
-                        }
+                        .onTapGesture { state.cancelBolus() }
+                        .offset(x: 10, y: 0)
                 }
             }
         }
@@ -515,6 +545,21 @@ extension Home {
                 .clipShape(Rectangle())
         }
 
+        var timeSetting: some View {
+            TimeEllipse()
+                .overlay {
+                    Menu("\(state.hours) " + NSLocalizedString("hours", comment: "")) {
+                        Button("3 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 3 })
+                        Button("6 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 6 })
+                        Button("12 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 12 })
+                        Button("24 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 24 })
+                        Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
+                    }.foregroundStyle(.secondary)
+                }
+                .font(buttonFont)
+                .padding(.vertical, 15)
+        }
+
         var body: some View {
             GeometryReader { geo in
                 VStack {
@@ -532,13 +577,15 @@ extension Home {
                 .background(.gray.opacity(IAPSconfig.backgroundOpacity * 2))
                 .edgesIgnoringSafeArea(.vertical)
                 .overlay {
-                    if let progress = state.bolusProgress {
+                    if let progress = state.bolusProgress, let amount = state.bolusAmount {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(.gray.opacity(0.8))
-                                .frame(width: 300, height: 50)
-                            bolusProgressView(progress: progress)
-                        }.frame(maxWidth: .infinity, alignment: .center)
+                                .frame(width: 320, height: 60)
+                            bolusProgressView(progress: progress, amount: amount)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .offset(x: 0, y: -100)
                     }
                 }
             }
@@ -565,6 +612,7 @@ extension Home {
                             }
                     )
             }
+            .onAppear(perform: configureView)
         }
 
         private var popup: some View {

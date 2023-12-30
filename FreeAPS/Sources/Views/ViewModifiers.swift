@@ -130,7 +130,7 @@ struct LoopEllipse: View {
     let stroke: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: 1)
+            .stroke(stroke, lineWidth: 2)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
@@ -138,11 +138,29 @@ struct LoopEllipse: View {
     }
 }
 
+struct TimeEllipse: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(Color.gray).opacity(colorScheme == .light ? 0.2 : 0.08)
+            .frame(width: 120, height: 25)
+    }
+}
+
 struct HeaderBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         Rectangle()
-            .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header.opacity(1))
+            .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1))
+    }
+}
+
+struct ChartBackground: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .background(colorScheme == .light ? .gray.opacity(0.05) : .black).brightness(colorScheme == .dark ? 0.05 : 0)
     }
 }
 
@@ -249,6 +267,10 @@ extension View {
 
     func addHeaderBackground() -> some View {
         HeaderBackground()
+    }
+
+    func chartBackground() -> some View {
+        modifier(ChartBackground())
     }
 
     func frostedGlassLayer(_ opacity: CGFloat) -> some View {

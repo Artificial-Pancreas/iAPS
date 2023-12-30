@@ -1094,7 +1094,6 @@ extension MainChartView {
                     let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
                     let plusNow = (latest?.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
                     let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
-
                     let oneMore = CGRect(
                         x: x1,
                         y: glucoseToYCoordinate(
@@ -1113,7 +1112,6 @@ extension MainChartView {
                     }
                 } else {
                     let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
-                    
                     let oneMore = CGRect(
                         x: x1,
                         y: glucoseToYCoordinate(Int(Double(latest?.target ?? 100)), fullSize: fullSize),

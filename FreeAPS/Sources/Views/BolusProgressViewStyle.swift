@@ -9,6 +9,6 @@ public struct BolusProgressViewStyle: ProgressViewStyle {
             VStack {
                 ProgressView(value: progress)
             }
-        }.frame(width: 80, height: 30)
+        }.frame(width: 160)
     }
 }

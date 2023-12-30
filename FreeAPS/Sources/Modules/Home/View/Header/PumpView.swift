@@ -39,33 +39,8 @@ struct PumpView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            if let battery = battery, expiresAtDate == nil {
-                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
-                    (battery.percent ?? 100) >
-                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
-                Image(systemName: "battery.\(percent)")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxHeight: 15)
-                    .foregroundColor(batteryColor)
-            }
-
             if let reservoir = reservoir {
-                let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.15), Double(reservoir) / 200.0, 0.9)) * 12
                 HStack {
-                    Image("vial")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 10)
-                        .foregroundColor(reservoirColor)
-                        .offset(x: 0, y: -3)
-                        .overlay {
-                            UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 2, bottomTrailing: 2))
-                                .fill(Color.insulin)
-                                .frame(maxWidth: 8.8, maxHeight: fill)
-                                .frame(maxHeight: .infinity, alignment: .bottom)
-                                .offset(x: -0.09, y: -3.22)
-                        }
                     if reservoir == 0xDEAD_BEEF {
                         HStack(spacing: 0) {
                             Text("50+ ").font(.statusFont).bold()
@@ -80,9 +55,20 @@ struct PumpView: View {
                             Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                         }
                     }
-                }.offset(x: 0, y: 4)
+                }.offset(x: 0, y: expiresAtDate != nil ? 4 : 0)
             } else {
                 Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
+            }
+
+            if let battery = battery, !state.pumpName.contains("Omni") {
+                let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
+                    (battery.percent ?? 100) >
+                    60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
+                Image(systemName: "battery.\(percent)")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 15)
+                    .foregroundColor(batteryColor)
             }
 
             if let date = expiresAtDate {
@@ -94,6 +80,8 @@ struct PumpView: View {
                     remainingTime(time: date.timeIntervalSince(timerDate))
                         .font(.pumpFont)
                 }
+            } else if state.pumpName.contains("Omni") {
+                Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
             }
         }
     }
@@ -108,28 +96,25 @@ struct PumpView: View {
                     HStack(spacing: 0) {
                         Text(" \(days)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                         Text(NSLocalizedString("d", comment: "abbreviation for days"))
-                    }
-                    HStack(spacing: 0) {
-                        Text(" \(hours - days * 24)")
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
+                        Text("+")
                     }
                 } else if hours >= 1 {
                     HStack(spacing: 0) {
-                        Text("\(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
+                        Text(" \(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                         Text(NSLocalizedString("h", comment: "abbreviation for hours"))
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                    }.offset(x: 0, y: 6)
+                    }
                 } else {
                     HStack(spacing: 0) {
                         Text(" \(minutes)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                         Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                    }.offset(x: 0, y: 6)
+                    }
                 }
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
             }
-        }
+        }.offset(x: 0, y: 4)
     }
 
     private var batteryColor: Color {
