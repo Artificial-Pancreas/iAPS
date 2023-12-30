@@ -635,11 +635,6 @@ extension Home {
             .onChange(of: state.hours) { _ in
                 highlightButtons()
             }
-            .onAppear {
-                configureView {
-                    highlightButtons()
-                }
-            }
         }
 
         private var popup: some View {
