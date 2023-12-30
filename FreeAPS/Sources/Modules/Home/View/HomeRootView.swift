@@ -14,21 +14,6 @@ extension Home {
         @State var showCancelTTAlert = false
         @State var triggerUpdate = false
 
-        struct Buttons: Identifiable {
-            let label: String
-            let number: String
-            var active: Bool
-            let hours: Int
-            var id: String { label }
-        }
-
-        @State var timeButtons: [Buttons] = [
-            Buttons(label: "3 hours", number: "3", active: false, hours: 3),
-            Buttons(label: "6 hours", number: "6", active: true, hours: 6),
-            Buttons(label: "12 hours", number: "12", active: false, hours: 12),
-            Buttons(label: "24 hours", number: "24", active: false, hours: 24)
-        ]
-
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
 
         @Environment(\.managedObjectContext) var moc
@@ -412,12 +397,14 @@ extension Home {
                 .overlay {
                     VStack {
                         infoPanel
-                        mainChart
-                        timeInterval
+                        VStack(spacing: 0) {
+                            mainChart
+                            timeSetting
+                        }.chartBackground()
                     }
                 }
                 .frame(
-                    minHeight: UIScreen.main.bounds.height / 1.46
+                    minHeight: UIScreen.main.bounds.height / 1.48
                 )
         }
 
@@ -552,32 +539,19 @@ extension Home {
                 .clipShape(Rectangle())
         }
 
-        var timeInterval: some View {
-            HStack(spacing: 5) {
-                ForEach(timeButtons) { button in
-                    Text(button.active ? NSLocalizedString(button.label, comment: "") : button.number).onTapGesture {
-                        state.hours = button.hours
-                    }
-                    .foregroundStyle(button.active ? .primary : .secondary)
-                    .frame(maxHeight: 20).padding(.horizontal, button.active ? 20 : 5)
-                    .background(button.active ? Color(.systemGray5) : .clear, in: .capsule(style: .circular))
+        var timeSetting: some View {
+            TimeEllipse()
+                .overlay {
+                    Menu("\(state.hours) " + NSLocalizedString("hours", comment: "")) {
+                        Button("3 hours", action: { state.hours = 3 })
+                        Button("6 hours", action: { state.hours = 6 })
+                        Button("12 hours", action: { state.hours = 12 })
+                        Button("24 hours", action: { state.hours = 24 })
+                        Button("UI/UX Settings", action: { state.showModal(for: .overrideProfilesConfig) })
+                    }.foregroundStyle(.secondary)
                 }
-                Image(systemName: "ellipsis.circle")
-                    .foregroundStyle(.secondary)
-                    .padding(.leading)
-                    .onTapGesture {
-                        state.showModal(for: .statisticsConfig)
-                    }
-            }
-            .font(buttonFont)
-            .padding(.top, 20)
-            .padding(.bottom, 40)
-        }
-
-        func highlightButtons() {
-            for i in 0 ..< timeButtons.count {
-                timeButtons[i].active = timeButtons[i].hours == state.hours
-            }
+                .font(buttonFont)
+                .padding(.vertical, 15)
         }
 
         var body: some View {
@@ -632,9 +606,7 @@ extension Home {
                             }
                     )
             }
-            .onChange(of: state.hours) { _ in
-                highlightButtons()
-            }
+            .onAppear(perform: configureView)
         }
 
         private var popup: some View {
