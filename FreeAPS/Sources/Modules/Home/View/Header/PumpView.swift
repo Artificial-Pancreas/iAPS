@@ -100,7 +100,7 @@ struct PumpView: View {
                     }
                 } else if hours >= 1 {
                     HStack(spacing: 0) {
-                        Text("\(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
+                        Text(" \(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                         Text(NSLocalizedString("h", comment: "abbreviation for hours"))
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                     }
