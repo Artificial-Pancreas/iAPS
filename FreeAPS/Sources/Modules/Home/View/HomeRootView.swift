@@ -269,7 +269,10 @@ extension Home {
                             Image(systemName: "book")
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .frame(
+                                    width: IAPSconfig.buttonSize * 0.9,
+                                    height: IAPSconfig.buttonSize
+                                )
                                 .foregroundColor(.gray)
                                 .padding(8)
                         }
@@ -278,10 +281,9 @@ extension Home {
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs")
+                            Image(systemName: "fork.knife")
                                 .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
+                                .font(.custom("Buttons", size: 24))
                                 .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
                                 .padding(8)
                                 .foregroundColor(.loopYellow)
@@ -299,7 +301,7 @@ extension Home {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                         Image(systemName: isOverride ? "person.fill" : "person")
                             .symbolRenderingMode(.palette)
-                            .font(.custom("Buttons", size: 32))
+                            .font(.custom("Buttons", size: 28))
                             .foregroundStyle(.purple)
                             .padding(8)
                             .background(isOverride ? .purple.opacity(0.15) : .clear)
@@ -317,10 +319,9 @@ extension Home {
                     }
                     if state.useTargetButton {
                         Spacer()
-                        Image("target")
+                        Image(systemName: "target")
                             .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
+                            .font(.custom("Buttons", size: 24))
                             .padding(8)
                             .foregroundColor(.loopGreen)
                             .background(isTarget ? .green.opacity(0.15) : .clear)
@@ -344,10 +345,9 @@ extension Home {
                         ))
                     }
                     label: {
-                        Image("bolus")
+                        Image(systemName: "syringe")
                             .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .font(.custom("Buttons", size: 24))
                             .padding(8)
                     }
                     .buttonStyle(.borderless)
@@ -367,10 +367,9 @@ extension Home {
                     }
                     Button { state.showModal(for: .settings) }
                     label: {
-                        Image("settings1")
+                        Image(systemName: "gear")
                             .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                            .font(.custom("Buttons", size: 24))
                             .padding(8)
                     }
                     .buttonStyle(.borderless)
@@ -471,7 +470,12 @@ extension Home {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
-                                    Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                    if name.count > 15 {
+                                        let shortened = name.prefix(15)
+                                        Text(shortened).font(.statusFont).foregroundStyle(.secondary)
+                                    } else {
+                                        Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                    }
                                 }
                             }
                         } else if override.percentage != 100 {
@@ -543,11 +547,11 @@ extension Home {
             TimeEllipse()
                 .overlay {
                     Menu("\(state.hours) " + NSLocalizedString("hours", comment: "")) {
-                        Button("3 hours", action: { state.hours = 3 })
-                        Button("6 hours", action: { state.hours = 6 })
-                        Button("12 hours", action: { state.hours = 12 })
-                        Button("24 hours", action: { state.hours = 24 })
-                        Button("UI/UX Settings", action: { state.showModal(for: .overrideProfilesConfig) })
+                        Button("3 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 3 })
+                        Button("6 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 6 })
+                        Button("12 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 12 })
+                        Button("24 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 24 })
+                        Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
                     }.foregroundStyle(.secondary)
                 }
                 .font(buttonFont)
@@ -575,11 +579,11 @@ extension Home {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(.gray.opacity(0.8))
-                                .frame(width: 320, height: 70)
+                                .frame(width: 320, height: 60)
                             bolusProgressView(progress: progress, amount: amount)
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .offset(x: 0, y: -70)
+                        .offset(x: 0, y: -100)
                     }
                 }
             }
