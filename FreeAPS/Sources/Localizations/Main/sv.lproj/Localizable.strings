@@ -46,6 +46,9 @@
 /*  */
 "Agree and continue" = "Godkänn och fortsätt";
 
+/* Bolus progress view */
+"of" = "av";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Utfört klockan";
 
@@ -334,6 +337,9 @@ Enact a temp Basal or a temp target */
 
 /**/
 "Use local glucose server" = "Använd lokal server som glukoskälla";
+
+/* Enable Statistics */
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
 
 /*  */
 "Edit settings json" = "Ändra debug-inställningar";
@@ -1331,8 +1337,11 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Spara som profil";
 
-/* */
-"Return to Normal" = "Tillbaka till normal profil";
+/* Alert */
+"Cancel Profile Override" = "Avbryt Profil";
+
+/* Alert */
+"Cancel Temp Target" = "Avbryt tillfälligt målvärde";
 
 /* Alert */
 "Return to Normal?" = "Tillbaka till normal profil?";
