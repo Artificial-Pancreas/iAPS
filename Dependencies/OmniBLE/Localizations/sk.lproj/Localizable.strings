@@ -174,121 +174,121 @@
 "No Pod" = "Žiadny pod";
 
 /* Pod life HUD view label */
-"Fault" = "Fault";
+"Fault" = "Chyba";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Age";
+"Pod Age" = "Vek podu";
 
 /* Label describing time remaining view */
-"Remaining" = "Remaining";
+"Remaining" = "Zostávajúce";
 
 /* Label indicating pod replacement necessary */
 "Replace Pod" = "Vymeňte pod";
 
 /* Error message shown when no pod is paired */
-"No pod paired" = "No pod paired";
+"No pod paired" = "Nie je spárovaný žiadny pod";
 
 /* Error message shown when user cannot pair because pod is already paired */
-"Pod already paired" = "Pod already paired";
+"Pod already paired" = "Pod je už spárovaný";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
-"Insulin type not configured" = "Insulin type not configured";
+"Insulin type not configured" = "Typ inzulínu nie je nakonfigurovaný";
 
 /* Error message when cannula insertion fails because the pod is in an unexpected state */
-"Pod is not in a state ready for cannula insertion." = "Pod is not in a state ready for cannula insertion.";
+"Pod is not in a state ready for cannula insertion." = "Pod nie je v stave pripravenom na zavedenie kanyly.";
 
 /* Error description for OmniBLEPumpManagerError.invalidSetting */
-"Invalid Setting" = "Invalid Setting";
+"Invalid Setting" = "Neplatné nastavenie";
 
 /* Recovery suggestion shown when no pod is paired */
-"Please pair a new pod" = "Please pair a new pod";
+"Please pair a new pod" = "Spárujte nový pod";
 
 /* Generic title of the OmniBLE pump manager */
 "Omnipod DASH" = "Omnipod DASH";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Comms Issue";
+"Comms Issue" = "Problém s komunikáciou";
 
 /* */
-"Finish Pairing" = "Finish Pairing";
+"Finish Pairing" = "Dokončiť párovanie";
 
 /* Status highlight that when pod is deactivating */
-"Finish Deactivation" = "Finish Deactivation";
+"Finish Deactivation" = "Dokončiť deaktiváciu";
 
 /* Status highlight that when no pod is paired. */
 "No Pod" = "Žiadny pod";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Žiadny inzulín";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "Pod expiroval";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "Oklúzia podu";
 
 /* Status highlight message for other alarm. */
-"Pod Error" = "Pod Error";
+"Pod Error" = "Chyba podu";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Žiadny inzulín";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Inzulín Suspendovaný";
 
 /* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "Strata signálu";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Manuálny bazál";
 
 /* */
 "Insert Cannula" = "Zaviesť Kanylu";
 
 /* Cannula insertion button text while inserting */
-"Inserting..." = "Inserting...";
+"Inserting..." = "Zavádza sa...";
 
 /* Cannula insertion button text while showing error */
-"Retry" = "Retry";
+"Retry" = "Skúsiť znova";
 
 /* Cannula insertion button text while checking insertion */
-"Checking..." = "Checking...";
+"Checking..." = "Kontroluje sa...";
 
 /* */
-"Check cannula insertion finished" = "Check cannula insertion finished";
+"Check cannula insertion finished" = "Skontrolujte, či je zavedenie kanyly dokončené";
 
 /* */
-"Get pod status" = "Get pod status";
+"Get pod status" = "Zistiť stav Podu";
 
 /* */
-"Save Basal Profile" = "Save Basal Profile";
+"Save Basal Profile" = "Nastavovanie bazálneho profilu";
 
 /* */
-"Save basal profile failed: %{public}@" = "Save basal profile failed: %{public}@";
+"Save basal profile failed: %{public}@" = "Uloženie základného profilu sa nepodarilo: %{public}@";
 
 /* */
-"Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
+"Skipping Play Test Beeps due to bolus still in progress." = "Vynechanie pípnutia testu prehrávania z dôvodu stále prebiehajúceho podávania bolusu.";
 
 /* */
-"Play Test Beeps" = "Play Test Beeps";
+"Play Test Beeps" = "Prehrať skúšobné pípnutia";
 
 /* */
-"Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
+"Skipping Read Pulse Log due to bolus still in progress." = "Vynechanie pípnutia testu prehrávania z dôvodu stále prebiehajúceho podávania bolusu.";
 
 /* */
-"Read Pulse Log" = "Read Pulse Log";
+"Read Pulse Log" = "Čítať protokol pulzov";
 
 /* */
-"Set Confirmation Beeps to %s" = "Set Confirmation Beeps to %s";
+"Set Confirmation Beeps to %s" = "Nastavenie potvrdzujúcich zvukových signálov na %s";
 
 /* */
-"Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
+"Set Confirmation Beeps Preference" = "Nastavenie preferencie potvrdzujúcich zvukových signálov";
 
 /* */
 "Suspend" = "Pozastavenie";
 
 /* */
-"Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
+"Failed to suspend: %{public}@" = "Nepodarilo sa pozastaviť: %{public}@";
 
 /* */
 "Resume" = "Pokračovať";
