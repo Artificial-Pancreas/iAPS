@@ -47,7 +47,7 @@
 "Agree and continue" = "Accepter et continuer";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "de";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Activé à";
@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Utiliser le serveur de glucose local";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Cela permet de télécharger le fichier statistics.json vers Nightscout, qui peut être utilisé par le projet de statistiques et de démographie communautaires.\n\nLa participation aux statistiques communautaires est facultative et nécessite une inscription séparée à l'adresse suivante:\n";
 
 /*  */
 "Edit settings json" = "Modifier les paramètres json";
@@ -1338,10 +1338,10 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Enregistrer comme profil";
 
 /* Alert */
-"Cancel Profile Override" = "Cancel Profile Override?";
+"Cancel Profile Override" = "Annuler le réglage de l'annulation du profil ?";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target?";
+"Cancel Temp Target" = "Annuler la cible temporaire ?";
 
 /* Alert */
 "Return to Normal?" = "Revenir à la normale?";
