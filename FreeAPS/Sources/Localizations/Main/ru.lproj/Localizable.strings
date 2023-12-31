@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Использовать локальный сервер глюкозы";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Это позволяет загружать файл statistics.json в Nightscout, который может использоваться проектом статистики и сообщества.\n\nУчастие в статистике сообщества является добровольным и требует отдельной регистрации по адресу:\n";
 
 /*  */
 "Edit settings json" = "Редактировать json настроек";
@@ -1338,10 +1338,10 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Сохранить как профиль";
 
 /* Alert */
-"Cancel Profile Override" = "Cancel Profile Override?";
+"Cancel Profile Override" = "Отменить переопределение профиля?";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target?";
+"Cancel Temp Target" = "Отменить временную цель?";
 
 /* Alert */
 "Return to Normal?" = "Вернуться к нормальному?";
