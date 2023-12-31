@@ -546,7 +546,7 @@ extension Home {
         }
 
         var timeSetting: some View {
-            let string = " \(state.hours) " + NSLocalizedString("hours", comment: "") + "   "
+            let string = "\(state.hours) " + NSLocalizedString("hours", comment: "") + "   "
             return Menu(string) {
                 Button("3 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 3 })
                 Button("6 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 6 })
