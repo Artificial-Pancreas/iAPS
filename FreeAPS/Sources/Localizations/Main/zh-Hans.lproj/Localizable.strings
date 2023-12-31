@@ -46,6 +46,9 @@
 /*  */
 "Agree and continue" = "同意并继续";
 
+/* Bolus progress view */
+"of" = "of";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
 
@@ -334,6 +337,9 @@ Enact a temp Basal or a temp target */
 
 /**/
 "Use local glucose server" = "使用本地端口获取血糖";
+
+/* Enable Statistics */
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
 
 /*  */
 "Edit settings json" = "编辑设置文件";
@@ -1331,8 +1337,11 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Save as Profile";
 
-/* */
-"Return to Normal" = "Return to Normal";
+/* Alert */
+"Cancel Profile Override" = "Cancel Profile Override?";
+
+/* Alert */
+"Cancel Temp Target" = "Cancel Temp Target?";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
