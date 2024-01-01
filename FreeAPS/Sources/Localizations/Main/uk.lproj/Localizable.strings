@@ -46,6 +46,9 @@
 /*  */
 "Agree and continue" = "Прийняти та Продовжити";
 
+/* Bolus progress view */
+"of" = "із";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Виконано в";
 
@@ -336,7 +339,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Використовувати локальний сервер";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Це дає змогу завантажувати statistics.json у Nightscout, який може використовуватися Проектом статистики та демографії спільноти.\n\nУчасть у статистиці спільноти є обов’язковою та потребує окремої реєстрації за адресою:\n";
 
 /*  */
 "Edit settings json" = "Редагувати json налаштувань";
@@ -1334,8 +1337,11 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Зберегти як Профіль";
 
-/* */
-"Return to Normal" = "Повернутися до Нормального стану";
+/* Alert */
+"Cancel Profile Override" = "Скасувати заміну профілю?";
+
+/* Alert */
+"Cancel Temp Target" = "Відмінити Тимчасову ціль?";
 
 /* Alert */
 "Return to Normal?" = "Повернутися до Нормального стану?";
