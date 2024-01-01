@@ -48,7 +48,6 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.enabled = true
                 saveOverride.smbIsOff = self.smbIsOff
-
                 if self.isPreset {
                     saveOverride.isPreset = true
                     saveOverride.id = id
@@ -63,7 +62,6 @@ extension OverrideProfilesConfig {
                 } else { saveOverride.target = 6 }
                 if advancedSettings {
                     saveOverride.advancedSettings = true
-
                     if !isfAndCr {
                         saveOverride.isfAndCr = false
                         saveOverride.isf = isf
@@ -110,7 +108,6 @@ extension OverrideProfilesConfig {
 
                 if advancedSettings {
                     saveOverride.advancedSettings = true
-
                     if !isfAndCr {
                         saveOverride.isfAndCr = false
                         saveOverride.isf = isf

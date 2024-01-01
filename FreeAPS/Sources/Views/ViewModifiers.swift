@@ -140,10 +140,11 @@ struct LoopEllipse: View {
 
 struct TimeEllipse: View {
     @Environment(\.colorScheme) var colorScheme
+    let characters: Int
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(Color.gray).opacity(colorScheme == .light ? 0.2 : 0.08)
-            .frame(width: 120, height: 25)
+            .frame(width: CGFloat(characters * 7), height: 25)
     }
 }
 

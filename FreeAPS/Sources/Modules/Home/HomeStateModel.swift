@@ -130,6 +130,13 @@ extension Home {
             broadcaster.register(OverrideObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
 
+            subscribeSetting(\.hours, on: $hours, initial: {
+                let value = max(min($0, 24), 2)
+                hours = value
+            }, map: {
+                $0
+            })
+
             timer.eventHandler = {
                 DispatchQueue.main.async { [weak self] in
                     self?.timerDate = Date()
