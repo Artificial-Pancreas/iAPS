@@ -30,7 +30,7 @@ extension Settings {
                     Text("Pump").navigationLink(to: .pumpConfig, from: self)
                     Text("CGM").navigationLink(to: .cgm, from: self)
                     Text("Watch").navigationLink(to: .watch, from: self)
-                } header: { Text("Devices" }
+                } header: { Text("Devices") }
 
                 Section {
                     Text("Nightscout").navigationLink(to: .nighscoutConfig, from: self)
@@ -41,7 +41,7 @@ extension Settings {
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("App Icons").navigationLink(to: .iconConfig, from: self)
                     Text("Statistics and Home View").navigationLink(to: .statisticsConfig, from: self)
-                } header: { Text("Services" }
+                } header: { Text("Services") }
 
                 Section {
                     Text("Preferences").navigationLink(to: .preferencesEditor, from: self)
@@ -51,7 +51,7 @@ extension Settings {
                     Text("Carb Ratios").navigationLink(to: .crEditor, from: self)
                     Text("Target Glucose").navigationLink(to: .targetsEditor, from: self)
                     Text("Autotune").navigationLink(to: .autotuneConfig, from: self)
-                } header: { Text("Configuration" }
+                } header: { Text("Configuration") }
 
                 Section {
                     Toggle("Debug options", isOn: $state.debugOptions)
@@ -115,7 +115,7 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                         }
                     }
-                } header: { Text("Developer" }
+                } header: { Text("Developer") }
 
                 Section {
                     Toggle("Animated Background", isOn: $state.animatedBackground)
