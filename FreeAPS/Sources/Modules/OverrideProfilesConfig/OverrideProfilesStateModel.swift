@@ -211,7 +211,6 @@ extension OverrideProfilesConfig {
                 }
 
                 let overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
-
                 var newDuration = Double(duration)
                 if isEnabled {
                     let duration = overrideArray.first?.duration ?? 0
@@ -221,12 +220,10 @@ extension OverrideProfilesConfig {
                         isEnabled = false
                     }
                     newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
-                    if overrideTarget != 0 {
-                        override_target = true
+                    if override_target {
                         target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
                     }
                 }
-
                 if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
 
                 if !isEnabled {

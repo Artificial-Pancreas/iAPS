@@ -47,7 +47,7 @@
 "Agree and continue" = "Godkänn och fortsätt";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "av";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Utfört klockan";
@@ -1338,10 +1338,10 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Spara som profil";
 
 /* Alert */
-"Cancel Profile Override" = "Cancel Profile Override?";
+"Cancel Profile Override" = "Avbryt Profil";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target?";
+"Cancel Temp Target" = "Avbryt tillfälligt målvärde";
 
 /* Alert */
 "Return to Normal?" = "Tillbaka till normal profil?";

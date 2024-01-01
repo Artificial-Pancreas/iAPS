@@ -8,6 +8,7 @@ struct CurrentGlucoseView: View {
     @Binding var alarm: GlucoseAlarm?
     @Binding var lowGlucose: Decimal
     @Binding var highGlucose: Decimal
+    @Binding var alwaysUseColors: Bool
 
     @State private var rotationDegrees: Double = 0.0
 
@@ -65,7 +66,7 @@ struct CurrentGlucoseView: View {
                             ?? "--"
                     )
                     .font(.glucoseFont)
-                    .foregroundColor(alarm == nil ? .primary : .loopRed)
+                    .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
                     .frame(maxWidth: .infinity, alignment: .center)
 
                     HStack(spacing: 20) {
@@ -120,6 +121,22 @@ struct CurrentGlucoseView: View {
              .notComputable,
              .rateOutOfRange:
             return Image(systemName: "arrow.left.and.right")
+        }
+    }
+
+    var colorOfGlucose: Color {
+        let whichGlucose = recentGlucose?.glucose ?? 0
+        guard lowGlucose < highGlucose else { return .primary }
+
+        switch whichGlucose {
+        case 0 ..< Int(lowGlucose):
+            return .loopRed
+        case Int(lowGlucose) ..< Int(highGlucose):
+            return .loopGreen
+        case Int(highGlucose)...:
+            return .loopYellow
+        default:
+            return .loopYellow
         }
     }
 }
