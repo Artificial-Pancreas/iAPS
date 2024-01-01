@@ -14,9 +14,16 @@ extension Settings {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
                 header: {
-                    Text(
-                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)\nBuild Expires: \(Bundle.main.profileExpiration)"
-                    ).textCase(nil)
+                    if let expirationDate = Bundle.main.profileExpiration {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
+                                "\nBuild Expires: " + expirationDate
+                        ).textCase(nil)
+                    } else {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
+                        )
+                    }
                 }
 
                 Section {
