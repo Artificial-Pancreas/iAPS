@@ -52,8 +52,10 @@ extension Bundle {
         }
 
         let dateWithTimeAsString = profileNSString.substring(with: rangeOfCapturedGroupForDate)
-        let dateAsStringIndex = dateWithTimeAsString.firstIndex(of: "T")!
-        let dateAsString = dateWithTimeAsString.substring(to: dateAsStringIndex)
-        return dateAsString
+        
+        guard let dateAsStringIndex = dateWithTimeAsString.firstIndex(of: "T") else {
+            return ""
+        }
+        return String(dateWithTimeAsString[..<dateAsStringIndex])
     }
 }
