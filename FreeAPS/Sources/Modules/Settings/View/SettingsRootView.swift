@@ -10,6 +10,9 @@ extension Settings {
 
         var body: some View {
             Form {
+                Section(
+                    header: Text(
+                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)\nBuild Expires: \(Bundle.main.profileExpiration)"
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 } header: {
