@@ -10,21 +10,29 @@ extension Settings {
 
         var body: some View {
             Form {
-                Section(
-                    header: Text(
-                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)\nBuild Expires: \(Bundle.main.profileExpiration)"
-                    ).textCase(nil)
-                ) {
+                Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
+                header: {
+                    if let expirationDate = Bundle.main.profileExpiration {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
+                                "\nBuild Expires: " + expirationDate
+                        ).textCase(nil)
+                    } else {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
+                        )
+                    }
+                }
 
-                Section(header: Text("Devices")) {
+                Section {
                     Text("Pump").navigationLink(to: .pumpConfig, from: self)
                     Text("CGM").navigationLink(to: .cgm, from: self)
                     Text("Watch").navigationLink(to: .watch, from: self)
-                }
+                } header: { Text("Devices" }
 
-                Section(header: Text("Services")) {
+                Section {
                     Text("Nightscout").navigationLink(to: .nighscoutConfig, from: self)
                     if HKHealthStore.isHealthDataAvailable() {
                         Text("Apple Health").navigationLink(to: .healthkit, from: self)
@@ -33,9 +41,9 @@ extension Settings {
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("App Icons").navigationLink(to: .iconConfig, from: self)
                     Text("Statistics and Home View").navigationLink(to: .statisticsConfig, from: self)
-                }
+                } header: { Text("Services" }
 
-                Section(header: Text("Configuration")) {
+                Section {
                     Text("Preferences").navigationLink(to: .preferencesEditor, from: self)
                     Text("Pump Settings").navigationLink(to: .pumpSettingsEditor, from: self)
                     Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
@@ -43,9 +51,9 @@ extension Settings {
                     Text("Carb Ratios").navigationLink(to: .crEditor, from: self)
                     Text("Target Glucose").navigationLink(to: .targetsEditor, from: self)
                     Text("Autotune").navigationLink(to: .autotuneConfig, from: self)
-                }
+                } header: { Text("Configuration" }
 
-                Section(header: Text("Developer")) {
+                Section {
                     Toggle("Debug options", isOn: $state.debugOptions)
                     if state.debugOptions {
                         Group {
@@ -107,7 +115,7 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                         }
                     }
-                }
+                } header: { Text("Developer" }
 
                 Section {
                     Toggle("Animated Background", isOn: $state.animatedBackground)
