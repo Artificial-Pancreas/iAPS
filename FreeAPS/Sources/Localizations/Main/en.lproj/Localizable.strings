@@ -46,6 +46,9 @@
 /*  */
 "Agree and continue" = "Agree and Continue";
 
+/* Bolus progress view */
+"of" = "of";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
 
@@ -1335,8 +1338,11 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Save as Profile";
 
-/* */
-"Return to Normal" = "Return to Normal";
+/* Alert */
+"Cancel Profile Override" = "Cancel Profile Override?";
+
+/* Alert */
+"Cancel Temp Target" = "Cancel Temp Target?";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";

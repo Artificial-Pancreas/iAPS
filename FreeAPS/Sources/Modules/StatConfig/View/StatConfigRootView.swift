@@ -37,6 +37,7 @@ extension StatConfig {
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)
                     }
+                    Toggle("Display Time Interval Setting Button", isOn: $state.timeSettings)
                 } header: { Text("Home Chart settings ") }
 
                 Section {

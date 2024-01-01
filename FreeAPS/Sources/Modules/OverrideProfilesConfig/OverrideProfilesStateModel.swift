@@ -48,7 +48,6 @@ extension OverrideProfilesConfig {
                 saveOverride.percentage = self.percentage
                 saveOverride.enabled = true
                 saveOverride.smbIsOff = self.smbIsOff
-
                 if self.isPreset {
                     saveOverride.isPreset = true
                     saveOverride.id = id
@@ -63,7 +62,6 @@ extension OverrideProfilesConfig {
                 } else { saveOverride.target = 6 }
                 if advancedSettings {
                     saveOverride.advancedSettings = true
-
                     if !isfAndCr {
                         saveOverride.isfAndCr = false
                         saveOverride.isf = isf
@@ -110,7 +108,6 @@ extension OverrideProfilesConfig {
 
                 if advancedSettings {
                     saveOverride.advancedSettings = true
-
                     if !isfAndCr {
                         saveOverride.isfAndCr = false
                         saveOverride.isf = isf
@@ -211,7 +208,6 @@ extension OverrideProfilesConfig {
                 }
 
                 let overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
-
                 var newDuration = Double(duration)
                 if isEnabled {
                     let duration = overrideArray.first?.duration ?? 0
@@ -221,12 +217,10 @@ extension OverrideProfilesConfig {
                         isEnabled = false
                     }
                     newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
-                    if overrideTarget != 0 {
-                        override_target = true
+                    if override_target {
                         target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
                     }
                 }
-
                 if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
 
                 if !isEnabled {
