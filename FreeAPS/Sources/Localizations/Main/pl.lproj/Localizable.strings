@@ -1343,7 +1343,7 @@ Połączono z Nightscout!";
 "Cancel Profile Override" = "Cancel Profile Override?";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target?";
+"Cancel Temp Target" = "Anuluj tymczasowy cel";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
