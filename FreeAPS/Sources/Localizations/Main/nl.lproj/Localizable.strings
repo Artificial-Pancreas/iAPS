@@ -1341,7 +1341,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Profieloverschrijving annuleren?";
 
 /* Alert */
-"Cancel Temp Target" = "Tijdelijk doel annuleren?";
+"Cancel Temp Target" = "Annuleer tijdelijk doel";
 
 /* Alert */
 "Return to Normal?" = "Terug naar normaal?";

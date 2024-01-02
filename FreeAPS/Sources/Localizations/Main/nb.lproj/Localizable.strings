@@ -1338,10 +1338,10 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Lagre som profil";
 
 /* Alert */
-"Cancel Profile Override" = "Cancel Profile Override?";
+"Cancel Profile Override" = "Cancel Profile Override";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target?";
+"Cancel Temp Target" = "Avbryt midlertidig mål";
 
 /* Alert */
 "Return to Normal?" = "Gå tilbake til normal?";

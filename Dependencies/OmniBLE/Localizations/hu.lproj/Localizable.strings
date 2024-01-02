@@ -4,8 +4,8 @@
   Created by Jon Mårtensson on 2022-08-28.
   Copyright © 2022 Randall Knutson. All rights reserved.
 */
-
 /* Alert content title for multiCommand pod alert */
+
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Alert content title for userPodExpiration pod alert */
@@ -123,13 +123,13 @@
 "hour" = "hour";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "óra";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "perc";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -147,7 +147,7 @@
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Beállítások";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -285,16 +285,16 @@
 "Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Felfüggesztés";
 
 /* */
 "Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Visszatérés";
 
 /* */
-"Bolus" = "Bolus";
+"Bolus" = "Bólus";
 
 /* */
 "Cancel Bolus" = "Cancel Bolus";
@@ -324,7 +324,7 @@
 "Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Beállítások";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -376,10 +376,8 @@
 
 /* Button text for 1 hour suspend duration" */
 "1 hour" = "1 hour";
-    
- /* Button text for 1 hour 30 minute suspend duration */
+/* Button text for 1 hour 30 minute suspend duration */
 "1 hour 30 minutes" = "1 hour 30 minutes";
-    
 /* Button text for 2 hour suspend duration */
 "2 hours" = "2 hours";
 
@@ -444,7 +442,7 @@
 "Paired" = "Paired";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Cancel";
+"Cancel" = "Mégse";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -501,10 +499,10 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Igen";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Nem";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
@@ -525,7 +523,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
-"Time" = "Time";
+"Time" = "Idő";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Finish Setup";
@@ -574,12 +572,11 @@
 
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
-    
 /* navigation title for notification settings */
 "Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "Idő";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -589,7 +586,6 @@
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
-    
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
@@ -615,14 +611,13 @@
 "Rate" = "Rate";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/óra";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
 
 /* Description text on manual temp basal action sheet */
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
-    
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Set Temporary Basal";
 
@@ -654,7 +649,7 @@
 "No\nDelivery" = "No\nDelivery";
 
 /* description label for active time pod details row */
-"Active Time"= "Active Time";
+"Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
@@ -693,7 +688,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Mégse";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Continue";
@@ -817,7 +812,6 @@
 
 /* button title when retrieving pump manager details */
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
-    
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
 

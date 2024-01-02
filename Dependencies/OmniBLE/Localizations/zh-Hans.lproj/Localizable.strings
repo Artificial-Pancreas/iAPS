@@ -249,7 +249,7 @@
 "Inserting..." = "Inserting...";
 
 /* Cannula insertion button text while showing error */
-"Retry" = "Retry";
+"Retry" = "重试";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Checking...";

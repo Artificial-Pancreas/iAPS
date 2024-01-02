@@ -29,7 +29,7 @@
 "Connection Monitoring" = "Connection Monitoring";
 
 /* The title of the cell showing BLE connection state */
-"Connection State" = "Connection State";
+"Connection State" = "Kapcsolat állapota";
 
 /* The title of the cell for connection vibration */
 "Connection Vibration" = "Connection Vibration";
@@ -38,7 +38,7 @@
 "Device" = "Device";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Devices";
+"Devices" = "Eszközök";
 
 /* The disconnected state */
 "Disconnected" = "Disconnected";
@@ -53,7 +53,7 @@
 "Firmware" = "Firmware";
 
 /* The title of the cell showing current rileylink frequency */
-"Frequency" = "Frequency" ;
+"Frequency" = "Frequency";
 
 /* The title of the command to fetch RileyLink statistics */
 "Get RileyLink Statistics" = "Get RileyLink Statistics";
@@ -71,7 +71,7 @@
 "Low Battery Alert" = "Low Battery Alert";
 
 /* The title of the cell showing device name */
-"Name" = "Name";
+"Name" = "Megnevezés";
 
 /* Detail text when battery alert disabled.
    Text indicating LED Mode is off */
