@@ -11,10 +11,10 @@
 "Bluetooth" = "Bluetooth";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Mégse";
 
 /* No comment provided by engineer. */
-"Configuration" = "Configuration";
+"Configuration" = "Beállítások";
 
 /* title for g7 settings connection status when connected */
 "Connected" = "Connected";
@@ -26,17 +26,17 @@
 "Continue" = "Continue";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "CGM kitörlése";
 
 /* Navigation bar title for G7SettingsView
    Title on WelcomeView */
 "Dexcom G7" = "Dexcom G7";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "Kész";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glükóz";
 
 /* title for g7 settings row showing sensor grace period end time */
 "Grace Period End" = "Grace Period End";
@@ -60,7 +60,7 @@
 "LOW" = "LOW";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "Megnevezés";
 
 /* No comment provided by engineer. */
 "Scan for new sensor" = "Scan for new sensor";
@@ -105,7 +105,7 @@
 "Signal\nLoss" = "Signal\nLoss";
 
 /* Field label */
-"Time" = "Time";
+"Time" = "Idő";
 
 /* Field label */
 "Trend" = "Trend";
@@ -115,4 +115,3 @@
 
 /* G7 Progress bar label when sensor in warmup */
 "Warmup completes" = "Warmup completes";
-
