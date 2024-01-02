@@ -1340,7 +1340,7 @@ Połączono z Nightscout!";
 "Save as Profile" = "Save as Profile";
 
 /* Alert */
-"Cancel Profile Override" = "Cancel Profile Override?";
+"Cancel Profile Override" = "Cancel Profile Override";
 
 /* Alert */
 "Cancel Temp Target" = "Anuluj tymczasowy cel";
