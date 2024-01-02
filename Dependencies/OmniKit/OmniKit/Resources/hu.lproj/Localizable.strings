@@ -27,7 +27,7 @@
 "Below 50 units" = "Below 50 units";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Bólus";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Bolus in progress";
@@ -36,7 +36,7 @@
 "Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
 
 /* Delivery status when bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Beadás";
 
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Bolusing with temp basal";
@@ -313,7 +313,7 @@
 "Reminder initialized" = "Reminder initialized";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Resume";
+"Resume" = "Visszatérés";
 
 /* Recovery suggestion when pod is suspended */
 "Resume delivery" = "Resume delivery";
@@ -340,7 +340,7 @@
 "Signal strength too high" = "Signal strength too high";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Suspend";
+"Suspend" = "Felfüggesztés";
 
 /* Alert content body for suspendInProgress pod alert
    Alert content title for suspendInProgress pod alert */
@@ -426,4 +426,3 @@
 
 /* Description waiting for pairing reminder */
 "Waiting for pairing reminder" = "Waiting for pairing reminder";
-
