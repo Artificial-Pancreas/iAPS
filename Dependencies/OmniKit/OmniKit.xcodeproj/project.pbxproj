@@ -220,6 +220,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		193F1E4B2B44C21E00525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		193F1E4C2B44C21E00525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1229C1729C7E5BC0066A89C /* RileyLinkBLEKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkBLEKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1229C1829C7E5BC0066A89C /* RileyLinkKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1229C1929C7E5BC0066A89C /* RileyLinkKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -991,6 +993,7 @@
 				nl,
 				ro,
 				hi,
+				hu,
 			);
 			mainGroup = C124016229C7D87A00B32844;
 			productRefGroup = C124016D29C7D87A00B32844 /* Products */;
@@ -1260,6 +1263,7 @@
 				C124020229C7D90B00B32844 /* fi */,
 				C124020329C7D90B00B32844 /* nl */,
 				C124020429C7D90B00B32844 /* ro */,
+				193F1E4B2B44C21E00525770 /* hu */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1290,6 +1294,7 @@
 				C124026429C7DA9700B32844 /* nl */,
 				C124026529C7DA9700B32844 /* ro */,
 				C124026629C7DA9700B32844 /* hi */,
+				193F1E4C2B44C21E00525770 /* hu */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
