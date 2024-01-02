@@ -38,7 +38,7 @@
 "Bolusing: %1$@\n" = "Bolusing: %1$@\n";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Mégse";
 
 /* Title text for suspend resume button when temp basal canceling */
 "Canceling Temp Basal" = "Canceling Temp Basal";
@@ -53,10 +53,10 @@
 "Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "Choose the type of battery you are using in your pump for better alerting about low battery conditions.";
 
 /* The title of the configuration section in MinimedPumpManager settings */
-"Configuration" = "Configuration";
+"Configuration" = "Beállítások";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Connect";
+"Connect" = "Csatlakozás";
 
 /* Text for continue button */
 "Continue" = "Continue";
@@ -66,7 +66,7 @@
 "Delete Pump" = "Delete Pump";
 
 /* Header for devices section of RileyLinkSetupView */
-"Devices" = "Devices";
+"Devices" = "Eszközök";
 
 /* Description for option to not use MySentry */
 "Do not use MySentry" = "Do not use MySentry";
@@ -114,7 +114,7 @@
 "Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models.";
 
 /* Value string for MySentry config when MySentry is not being used */
-"No" = "No";
+"No" = "Nem";
 
 /* Message display when no response from tuning pump */
 "No response" = "No response";
@@ -200,13 +200,13 @@
 "Tuning radio…" = "Tuning radio…";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "U/óra";
 
 /* Text to indicate battery percentage is unknown */
 "unknown" = "unknown";
 
 /* Text shown in basal rate space when delivery status is unknown */
-"Unknown" = "Unknown";
+"Unknown" = "Ismeretlen";
 
 /* Description for option to use MySentry
    navigation title for pump battery type selection
@@ -214,7 +214,7 @@
 "Use MySentry" = "Use MySentry";
 
 /* Value string for MySentry config when MySentry is being used */
-"Yes" = "Yes";
+"Yes" = "Igen";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Yes, Sync to Current Time";

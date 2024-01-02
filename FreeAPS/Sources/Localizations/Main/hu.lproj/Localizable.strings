@@ -4,185 +4,185 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Inzulin hozzáadása tényleges adagolás nélkül";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "%@ hozzáadása, nolus nélkül";
 
-"Bolus" = "Bolus";
+"Bolus" = "Bólus";
 
-"Close" = "Close";
+"Close" = "Bezár";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Folytatás bólus nélkül";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount több mint a Max Bólus beállítás! \nBiztos, hogy hozzá szeretnéd adni ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Bólus beadása";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Bólus beadása";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Ajánlott inzulin";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Szükséges inzulin";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Ajánlat";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Töröl";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Kész";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Kérlek várj";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Elfogadás és folytatás";
 
 /* Bolus progress view */
 "of" = "of";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Beadva";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Ajánlva";
 
 /* Headline in enacted pop up (at: at what time) */
- "Error at" = "Error at";
+"Error at" = "Hiba";
 
 /* Bolus View Meal Summary Header */
-"Meal Summary" = "Meal Summary";
+"Meal Summary" = "Étel összegzése";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Edit Meal";
+"Edit Meal" = "Étel javítása";
 
 /* Bolus View Meal Add Meal Button */
-"Add Meal" = "Add Meal";
+"Add Meal" = "Étel hozzáadás";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolus Summary";
+"Bolus Summary" = "Bólus összegzése";
 
 /* For the  Bolus View pop-up */
-"Calculations" = "Calculations";
+"Calculations" = "Kalkuláció";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal" = "Fatty Meal";
+"Fatty Meal" = "Zsíros étel";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Full Bolus";
+"Full Bolus" = "Teljes bólus";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fraction";
+"Fraction" = "Tört-rész";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fatty Meal Factor";
+"Fatty Meal Factor" = "Zsíros étel faktor";
 
 /* For the  Bolus View pop-up */
-"Result" = "Result";
+"Result" = "Eredmény";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "A beadott értek limitálva lett a max Bólus beállítással, ami %d%@";
 
 /* Bolus View Continue Button */
-"Continue" = "Continue";
+"Continue" = "Tovább";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Kezdőlap";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "loop-olás";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "perc. ezelőtt";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Nincs javaslat";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Pod cseréje";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Szénhidrát hozzáadása";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Szénhidrát hozzáadása ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Szénhidrát mennyiség";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramm";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Szénhidrát szükséges";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "Elmentett étel";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Biztos vagy benne?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Alsó cél";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Mégse";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Átmeneti cél kikapcsolása";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Egyéni";
 
 /*  */
-"Date" = "Date";
+"Date" = "Dátum";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Törlés";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Törölni az előre definiált \"%@\"";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Átmeneti cél bekapcsolása";
 
 /* */
-"Target" = "Target";
+"Target" = "Cél";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Bázis inzulin és érzékenység aránya";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Az alacsonyabb \"Fél bázis cél\" beállítás csökkenti a bázis értéket és korábban emeli az ISF-et, alacsonyabb célcukorszint mellett.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Az Ön beállítása: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Az Autosens.max korlátozza a maximális végpontot";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Előbeállítás nevének megadása";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Megnevezés";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "perc";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Előbeállítások";
 
 /* Save preset name */
 "Save" = "Save";
@@ -191,16 +191,16 @@
 "Save as Preset" = "Save as Preset";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Előbeállítás törlése";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Törli a(z) '%@' előbeállítást?";
 
 /* Button */
-"No" = "No";
+"No" = "Nem";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Igen";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -209,43 +209,43 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Legfelső célpont";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "ehhez";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "perc";
 
 /*  */
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Bázis profil";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Szénhidrát arány";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Autotune adatok törlése";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Futtatás";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Utolsó futtatás";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Érzékenység";
 
 /*  */
-"Use Autotune" = "Use Autotune";
+"Use Autotune" = "Autotune használata";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Hozzáad";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Bázis Profil";
 
 /* Rate basal profile */
 "Rate" = "Rate";
@@ -257,185 +257,185 @@
 "Saving..." = "Saving...";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Ütemezés";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "kezdődik";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Idő";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Kiszámított arány";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Szénhidrát arány";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Arány";
 
 /*  */
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Kiszámított érzékenység";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Inzulin érzékenység";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Érzékenységi arány";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Mégsem";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Fontos üzenet";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Mennyiség";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Átmeneti Bázis Kikapcsolása";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Beadni";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Átmeneti Kézi Bázis";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Feltöltés engedélyezése";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "Titkos API-kód";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Csatlakozás";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Csatlakozva!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Csatlakozás...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Érvénytelen URL";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Lokális glükózforrás";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscout Beállítás";
 
 /*  */
-"Port" = "Port";
+"Port" = "Portszám";
 
 /*  */
 "URL" = "URL";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Lokális glukóz szerver használata";
 
 /* Enable Statistics */
 "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Json beállítások javítása";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Vércukor mértékegysége";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Személyes beállítások";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Recommended Insulin Fraction";
+"Recommended Insulin Fraction" = "Ajánlott inzulin részegység";
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Bólus képernyő kihagyása szénhidrát után";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Távirányítás";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nMost kérlek alaposan nézd át a beállításokat:\n\n* Bázis Ceállítások\n * Szénhidrát Arány\n * Cukorszint Célpont\n * Inzulin Érzékenység\n * DIA\n\n iAPS beállítások > Konfiguráció.\n\nHelytelen vagy rossz beállításoknak halálos következményei lehetnek.";
 
 /* Profile Import Alert */
-"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?";
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Ez átállítja valamely, vagy az összes pumpa beállítását. Biztos vagy benne, hogy szeretnéd importálni a beállításokat a Nightscout-ból?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!";
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nÉrvénytelen Nightscout Bázis Beállítások. \n\nImport megszakítva. Kérlek ellenőrizd a Nightscout bázis profil beállításait!";
 
 /* Import Error */
-"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" =  "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings";
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nA beállítások importálva lettek, de nem lehetett őket elmenteni a pumpára (Nincs pumpa). Ellenőrizd a bázis beállításokat es nyomj a ´Pumpára mentés´ gombra hogy sinkronizáld az új bázis beállításokat";
 
 /* Import Error Headline */
-"Import Error" = "Import Error";
+"Import Error" = "Importálási hiba";
 
 /* */
-"Yes, Import" = "Yes, Import";
+"Yes, Import" = "Igen, Importálni";
 
 /* */
-"Import settings from Nightscout" = "Import settings from Nightscout";
+"Import settings from Nightscout" = "Import beállítások Nightscout-ról";
 
 /* */
-"Import settings?" = "Import settings?";
+"Import settings?" = "Beállítások importálása?";
 
 /* */
-"Import from Nightscout" = "Import from Nightscout";
+"Import from Nightscout" = "Importálás Nightscout-ról";
 
 /* */
-"Settings imported" = "Settings imported";
+"Settings imported" = "Beállítások importálva";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nEltérő cukor egységek a Nightscout és a pumpa beállításai között. A beállítások importálása megszüntetve.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Can't find the default Nightscout Profile.";
+"Can't find the default Nightscout Profile." = "Nem találom az alapértelmezett Nightscout profilt.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Blood Glucose Test";
+"Blood Glucose Test" = "Cukorszint teszt";
 
 /* Add Medtronic pump */
-"Add Medtronic" = "Add Medtronic";
+"Add Medtronic" = "Medtronic hozzáadása";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Add Omnipod";
+"Add Omnipod" = "Omnipod hozzáadása";
 
 /* Add Simulator pump */
-"Add Simulator" = "Add Simulator";
+"Add Simulator" = "Szimulátor hozzáadása";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "Típus";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pumpa beállítások";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Adagolási határértékek";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Inzulin hatásának hossza";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "óra";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Maximum bázis";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Maximum bólus";
 
 /* Max setting */
-"Max Carbs" = "Max Carbs";
+"Max Carbs" = "Maximum szénhidrát";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pumpa beállítások";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/óra";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -447,10 +447,10 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " U/óra";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ U/óra";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -465,181 +465,181 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 U/óra";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "n";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "ó";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "p";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Zárt loop";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Beállítások";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Eszközök";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pumpa";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Óra";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Óra Beállítások";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Megjelenítés az órán";
 
 /* */
-"Garmin Watch" = "Garmin Watch";
+"Garmin Watch" = "Garmin Óra";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Eszköz hozzáadása";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Glukóz cél";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Szívritmus";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Lépések";
 
 /* */
 "ISF" = "ISF";
 
 /* */
-"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Az iAPS használatához telepíteni kell a Garmin Connect alkalmazást.\n A letöltéshez látogasson el az App Store áruházba";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin nem elérhető";
 
 /*  */
-"Services" = "Services";
+"Services" = "Szolgáltatások";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Beállítások";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Ajánlott Bolus százalékos aránya";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Napló (log) megosztása";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Magas célpont";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Alacsony célpont";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Beadás";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Pumpa felfüggesztve";
 
 /* */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Elözmény";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Feltöltés";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Feltöltés engedélyezése";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Típus";
 
 /* CGM */
 "CGM" = "CGM";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Jeladó ID";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Egyéb";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Először állítsa be az iPhone-on az előre beállított átmeneti célokat";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Frissítés...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Átmeneti célértékek";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "Szénhidrát törlése?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "Inzulin törlése?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Kezelések";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " perc";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "Nem tudok semmit változtatni";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "Libre Jeladó beállítása";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibráció";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Események létrehozása a Naptárban";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Naptár";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "Automatikus";
 
 /* External insulin treatments */
-"External" = "External";
+"External" = "Külső";
 
 /* */
-"Other" = "Other";
+"Other" = "Egyéb";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre jeladó";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre jeladók";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Bluetooth jeladók";
 
 /* */
-"Modes" = "Modes";
+"Modes" = "Üzemmód";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Válassza ki a harmadik féltől származó adókészüléket, amelyhez csatlakozni kíván";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Állapot helyreállítva";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -648,187 +648,187 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Kalibrálás hozzáadása";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Cukor mérő";
 
 /* */
 "Info" = "Info";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "Lejtő";
 
 /* */
-"Intercept" = "Intercept";
+"Intercept" = "Elfogni";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "Grafikon";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Eltávolítás";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Utolsó eltávolítása";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Összes eltávolítása";
 
 /* */
-"About the Process"= "About the Process";
+"About the Process" = "Erről a folyamatról";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Kérjük, győződjön meg róla, hogy a Libre 2 érzékelője már aktiválva van és befejezte a bemelegedést. Ha más alkalmazások is csatlakoznak az szenzorhoz bluetooth-on keresztül, akkor ezeket le kell kapcsolni vagy el kell távolítani. \n\n Csak egy alkalmazás kommunikálhat az szenzorral bluetooth-on keresztül. Ezután nyomja meg az alábbi \"párolás és csatlakozás\" gombot a folyamat elindításához. Kérjük, vegye figyelembe, hogy a bluetooth-kapcsolat néhány percig is eltarthat, mire működésbe lép.";
 
 /* */
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Párolás információ";
 
 /* */
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Patch információ";
 
 /* */
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Kalibrácóinfó";
 
 /* */
-"Unknown" = "Unknown";
+"Unknown" = "Ismeretlen";
 
 /* */
-"Not paired yet" = "Not paired yet";
+"Not paired yet" = "Nincs még párosítva";
 
 /* */
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Párosítsd a szenzort & csatlakozz";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "A telefon NFC-je szükséges!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "A telefon vagy az alkalmazás nem engedélyezi az NFC kommunikációt, ami a libre2 szenzorral való párosításhoz szükséges";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Bluetooth kikapcsolása";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Kérem, kapcsolja be a bluetooth-t";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Nincs Libre Adokészülék kiválasztva";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Törölje a CGMManager-t és kezdje újra. A libreoopweb hitelesítő adatai megmaradnak";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Hibás libre ellenőrzés";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid"= "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "A Libre szenzort helytelenül olvastam, a CRC-k nem voltak érvényesek";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Glükóz";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "ALACSONY FIGYELMEZTETÉS!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "MAGAS FIGYELMEZTETÉS!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Késleltetve)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Glukóz: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "Jeladó: %@%%";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Nem érzékelek szenzort";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Ez egy időszakos probléma lehet, de kérjük, ellenőrizze, hogy a jeladó szorosan rögzítve van-e az érzékelő felett";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Új szenzort érzékelek";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "Kérjük, várjon legfeljebb 30 percet, mielőtt a vércukorszintmérés elérhetővé válik!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Érvénytelen glükózminta észlelve, próbálja meg később újra";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Az érzékelő átmenetileg megállt, leesett, vagy túl hideg vagy túl meleg van";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Érvénytelen szenzort észlelek";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "Úgy tűnik, hogy az érzékelő nem libre 1 érzékelő!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "Az érzékelő érvénytelen: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Alacsony akkufeszültség";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Érvénytelen szenzor";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Szenzorcsere";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "Szenzor hamarosan lejár";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "Az akkumulátor lemerülőben van %@, fontolja meg a %@ készülék mielőbbi feltöltését";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Kalibrációs adatok kinyerése az szenzorból";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "Szenzor hamarosan lejár";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "A jelenlegi érzékelő hamarosan lejár! Az érzékelő élettartama %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Risztások késleltetése";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "Utolsó mérés";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Szenzor lábléc összeg";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Utolsó vércukor-előrejelzés";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "JelenlegiBG";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "Szenzor infó";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Szenzor élettartalma";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Fennmaradó szenzor idő";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Szenzor kikapcsolás ideje";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Szenzorállapot";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Szenzor széria száma";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Jeladó Információ";
 
 /* */
 "Hardware" = "Hardware";
@@ -837,76 +837,76 @@ Enact a temp Basal or a temp target */
 "Firmware" = "Firmware";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "Kapcsolat állapota";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Jeladó Típusa";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Szenzor típusa";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "Gyári kalibrációs paraméterek";
 
 /* */
 "Valid for footer" = "Valid for footer";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Kalibrációk szerkesztése";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "kalibráció szerkesztése kattintva";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "CGM kitörlése";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Biztosan eltávolítja ezt a szenzort a loopból?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "Nincs visszavonás";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "Haladó";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Riasztások";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "Glükóz beállítások";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "Értesítések";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Log exportálása";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Az exportálás nem elérhető";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Log exportálásához iOS 15-re van szükség";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "Rendben!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "Elmentve a %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "Nincs elérhető log";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Glükóz értesítés láthatósága";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "Mindig jelezze a cukorszintet";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Értesítés olvasásonként";
 
 /* */
-"Value" = "Value";
+"Value" = "Érték";
 
 /* */
 "Adds Phone Battery" = "Adds Phone Battery";
@@ -1023,22 +1023,22 @@ Enact a temp Basal or a temp target */
 "Battery" = "Battery";
 
 /* */
- "Also add source info" = "Also add source info";
+"Also add source info" = "Also add source info";
 
- /* */
- "Carbs Required Threshold" = "Carbs Required Threshold";
+/* */
+"Carbs Required Threshold" = "Carbs Required Threshold";
 
- /* */
- "Carbs required: %d g" = "Carbs required: %d g";
+/* */
+"Carbs required: %d g" = "Carbs required: %d g";
 
- /* */
- "To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+/* */
+"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
 
- /* */
- "iAPS not active" = "iAPS not active";
+/* */
+"iAPS not active" = "iAPS not active";
 
- /* */
- "Last loop was more than %d min ago" = "Last loop was more than %d min ago";
+/* */
+"Last loop was more than %d min ago" = "Last loop was more than %d min ago";
 
 /* Glucose badge */
 "Show glucose on the app badge" = "Show glucose on the app badge";
@@ -1068,22 +1068,22 @@ Enact a temp Basal or a temp target */
 "Temp Basal" = "Temp Basal";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Átmeneti célpont";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Visszatérés";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Felfüggesztés";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Animált háttérkép";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = " nap(ok)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Display HR on Watch";
+"Display HR on Watch" = "Megjelenítés az órán";
 
 
 /* Headers for settings ----------------------- */
@@ -1126,8 +1126,8 @@ Enact a temp Basal or a temp target */
 "Online or internal server" = "Online or internal server";
 
 /* -------------- Developer settings ---------------------- */
-
 /* Debug options */
+
 "Developer" = "Developer";
 
 /* Debug option view NS Upload Profile */
@@ -1203,16 +1203,15 @@ Enact a temp Basal or a temp target */
 /* */
 "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
 
- /* New ALerts ------------------------- */
- 
- /* Info title */
- "Info" = "Info";
+/* New ALerts ------------------------- */
+/* Info title */
+"Info" = "Info";
 
- /* Warning title */
- "Warning" = "Warning";
+/* Warning title */
+"Warning" = "Warning";
 
- /* Error title */
- "Error" = "Error";
+/* Error title */
+"Error" = "Error";
 
 /* Manual temp basal mode */
 "Manual" = "Manual";
@@ -1236,8 +1235,8 @@ Enact a temp Basal or a temp target */
 "Total" = "Total";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
-
 /* Enable FPU */
+
 "Enable" = "Enable";
 
 /* Header */
@@ -1342,7 +1341,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Cancel Profile Override?";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Átmeneti cél kikapcsolása";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
@@ -1414,8 +1413,8 @@ Enact a temp Basal or a temp target */
 "Display Protein & Fat" = "Display Protein & Fat";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
-
 /* Warning about bolus recommendation. Title */
+
 "Warning!" = "Warning!";
 
 /* Alert to confirm bolus amount to add */
@@ -1470,7 +1469,7 @@ Enact a temp Basal or a temp target */
 ". Falling: " = ". Falling: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " =  "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Changing: ";
@@ -1511,7 +1510,7 @@ Enact a temp Basal or a temp target */
 "No Error" = "No Error";
 
 /* description label for active time pod details row */
-"Active Time"= "Active Time";
+"Active Time" = "Active Time";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
@@ -1551,7 +1550,6 @@ Enact a temp Basal or a temp target */
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
-    
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
@@ -1563,7 +1561,6 @@ Enact a temp Basal or a temp target */
 
 /* Description text on manual temp basal action sheet */
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
-    
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Set Temporary Basal";
 
@@ -1619,10 +1616,10 @@ Enact a temp Basal or a temp target */
 "Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
 
 //* -----------------------------------------------------------------------*/
-
 /* ----------------------Statistics strings -------------------------------*/
-
 /* */
+
+
 "Today" = "Today";
 
 /* */
@@ -1789,17 +1786,16 @@ Enact a temp Basal or a temp target */
 
 /* New Experimental feature */
 "Experimental" = "Experimental";
-    
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
 
- /* -----------------------------------------------------------------------------------------------------------
+/* -----------------------------------------------------------------------------------------------------------
 
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
-
 /* Headline Rewind Resets Autosens */
+
 "Rewind Resets Autosens" = "Rewind Resets Autosens";
 
 /* ”Rewind Resets Autosens” */
@@ -2031,8 +2027,8 @@ Enact a temp Basal or a temp target */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.";
 
 // Dynamic ISF + CR Settings:
-
 /* Headline "Adjust Dynamic ISF constant" */
+
 "Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Adjust Dynamic ISF constant */

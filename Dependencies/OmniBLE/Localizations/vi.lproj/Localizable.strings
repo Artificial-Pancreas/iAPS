@@ -4,8 +4,8 @@
   Created by Jon Mårtensson on 2022-08-28.
   Copyright © 2022 Randall Knutson. All rights reserved.
 */
-
 /* Alert content title for multiCommand pod alert */
+
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Alert content title for userPodExpiration pod alert */
@@ -75,7 +75,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Cài đặt thông báo";
 
 /* */
 "Confidence Reminders" = "Confidence Reminders";
@@ -123,13 +123,13 @@
 "hour" = "hour";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "giờ";
 
 /* Unit for singular minute in pod life remaining */
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "phút";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -240,7 +240,7 @@
 "Signal Loss" = "Signal Loss";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Liều Basal thủ công";
 
 /* */
 "Insert Cannula" = "Insert Cannula";
@@ -294,7 +294,7 @@
 "Resume" = "Resume";
 
 /* */
-"Bolus" = "Bolus";
+"Bolus" = "Liều bolus";
 
 /* */
 "Cancel Bolus" = "Cancel Bolus";
@@ -376,10 +376,8 @@
 
 /* Button text for 1 hour suspend duration" */
 "1 hour" = "1 hour";
-    
- /* Button text for 1 hour 30 minute suspend duration */
+/* Button text for 1 hour 30 minute suspend duration */
 "1 hour 30 minutes" = "1 hour 30 minutes";
-    
 /* Button text for 2 hour suspend duration */
 "2 hours" = "2 hours";
 
@@ -435,7 +433,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Listen for 2 beeps.";
@@ -444,7 +442,7 @@
 "Paired" = "Paired";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Cancel";
+"Cancel" = "Bỏ qua";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -501,10 +499,10 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Có";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Không";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
@@ -525,7 +523,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
-"Time" = "Time";
+"Time" = "Thời gian";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Finish Setup";
@@ -573,13 +571,12 @@
 "Critical Alerts" = "Critical Alerts";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
-    
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
 /* navigation title for notification settings */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Cài đặt thông báo";
 
 /* Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "Thời gian";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -589,7 +586,6 @@
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
-    
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
@@ -612,7 +608,7 @@
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Tỷ lệ";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -622,7 +618,6 @@
 
 /* Description text on manual temp basal action sheet */
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
-    
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Set Temporary Basal";
 
@@ -654,7 +649,7 @@
 "No\nDelivery" = "No\nDelivery";
 
 /* description label for active time pod details row */
-"Active Time"= "Active Time";
+"Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Total Delivery";
@@ -693,7 +688,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Bỏ qua";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Continue";
@@ -717,7 +712,7 @@
 "Low Reservoir" = "Low Reservoir";
 
 /* */
-"Save" = "Save";
+"Save" = "Lưu";
 
 /* hr (short for hour) */
 "hr" = "hr";
@@ -787,3 +782,41 @@
 
 /* Recovery suggestion when operation could not be completed due to existing temp basal in progress */
 "Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
+
+/* DASH Pod time ago since last status */
+"%@ ago" = "%@ trước đó";
+
+/* Title string for SilencePodPreference.enabled */
+"Silenced" = "Silenced";
+
+/* Description for SilencePodPreference.disabled */
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
+
+/* Description for SilencePodPreference.enabled */
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
+
+/* Help text for Silence Pod view */
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
+
+/* navigation title for Silnce Pod */
+"Silence Pod" = "Silence Pod";
+
+/* title for pod details page */
+"Pod Details" = "Pod Details";
+
+/* Text for previous pod details row" */
+"Previous Pod Details" = "Previous Pod Details";
+
+/* Text for pump manager details navigation link */
+"Pump Manager Details" = "Pump Manager Details";
+
+/* button title when retrieving pump manager details */
+"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+/* button title to refresh pump manager details */
+"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+
+/* Section header for diagnostic section */
+"Diagnostics" = "Diagnostics";
+
+/* Text for read pod status navigation link */
+"Read Pod Status" = "Read Pod Status";
