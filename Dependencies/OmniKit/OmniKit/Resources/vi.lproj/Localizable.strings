@@ -1,8 +1,8 @@
 /* Description for an inactive alert modifier */
-" (inactive)" = " (inactive)";
+" (inactive)" = " (không hoạt động)";
 
 /* Format string for low battery alert body for RileyLink. (1: device name) */
-"\"%1$@\" has a low battery" = "\"%1$@\" has a low battery";
+"\"%1$@\" has a low battery" = "\"%1$@\" gần hết pin";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
@@ -12,16 +12,16 @@
 
 /* Format string for activation time exceeded
    Pod state when activation not completed in the time allowed */
-"Activation time exceeded" = "Activation time exceeded";
+"Activation time exceeded" = "Đã quá thời gian kích hoạt";
 
 /* Description for auto-off */
-"Auto-off" = "Auto-Off";
+"Auto-off" = "Tự động tắt";
 
 /* Description for auto-off alarm */
-"Auto-off alarm" = "Auto-off alarm";
+"Auto-off alarm" = "Tự động tắt cảnh báo";
 
 /* Pod state when basal initialized */
-"Basal initialized" = "Basal initialized";
+"Basal initialized" = "Liều basal được khởi tạo";
 
 /* Pod state when running below fifty units */
 "Below 50 units" = "Dưới 50 units";
@@ -54,25 +54,25 @@
 "Change Pod now. Pod has been active for 72 hours." = "Thay pod ngay. Pod đã hoạt động 72 giờ qua.";
 
 /* Format string for invalid message error code (1: error code number) */
-"Command error %1$u" = "Command error %1$u";
+"Command error %1$u" = "Câu lệnh lỗi %1$u";
 
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Câu lệnh có vấn đề";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
-"Communication issue: Unacknowledged command pending." = "Communication issue: Unacknowledged command pending.";
+"Communication issue: Unacknowledged command pending." = "Sự cố giao tiếp: Lệnh chưa được xác nhận đang chờ xử lý.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Các tác vụ sẽ có âm thanh như khi bạn bolus, hủy bỏ bolus, tạm dừng bơm, hoạt động lại hay lưu các lời nhắc thông báo... sẽ không có âm thanh khi ứng dụng chạy tự động.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Sẽ có âm thanh báo nhắc khi ứng dụng tự động điều chỉnh liều cũng như khi bạn khởi tạo ứng dụng.";
 
 /* The title for AlarmCode.other notification */
 "Critical Pod Error" = "Pod lỗi nghiêm trọng";
 
 /* Recovery suggestion when unexpected address received */
-"Crosstalk possible. Please move to a new location" = "Crosstalk possible. Please move to a new location";
+"Crosstalk possible. Please move to a new location" = "Có nhiễu xuyên âm. Vui lòng di chuyển đến địa điểm mới";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Đã hủy kích hoạt";
