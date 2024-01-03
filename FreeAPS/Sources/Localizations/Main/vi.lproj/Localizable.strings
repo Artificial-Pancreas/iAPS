@@ -134,10 +134,10 @@
 "Bottom target" = "Mục tiêu dưới cùng";
 
 /* Cancel preset name */
-"Cancel" = "Bỏ qua";
+"Cancel" = "Hủy bỏ";
 
 /*  */
-"Cancel Temp Target" = "Bỏ qua mục tiêu tạm thời";
+"Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
 
 /* Custom temp target */
 "Custom" = "THÔNG LỆ";
@@ -173,7 +173,7 @@
 "mg/dl. Autosens.max limits the max endpoint" = "autosens.max Giới hạn điểm cuối tối đa mg/dl";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Nhập tên";
 
 /* Preset name */
 "Name" = "Tên";
@@ -212,7 +212,7 @@
 "Top target" = "Top target";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "của";
 
 /*  Temp target set for ... minutes */
 "min" = "phút";
@@ -221,7 +221,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal Profile";
+"Basal profile" = "Hồ sơ liều nền (Basal)";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
@@ -245,7 +245,7 @@
 "Add" = "Thêm vào";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Hồ sơ liều nền (Basal)";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -1341,7 +1341,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Cancel Profile Override?";
 
 /* Alert */
-"Cancel Temp Target" = "Bỏ qua mục tiêu tạm thời";
+"Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
 
 /* Alert */
 "Return to Normal?" = "Quay lại bình thường?";
