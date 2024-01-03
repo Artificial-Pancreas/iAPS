@@ -8,7 +8,7 @@
 "Continue" = "Tiếp tục";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Hủy bỏ";
+"Cancel" = "Bỏ qua";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "Dữ liệu đường huyết không có sẵn";
