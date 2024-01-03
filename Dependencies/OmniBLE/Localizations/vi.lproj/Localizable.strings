@@ -15,7 +15,7 @@
 "Pod Expired" = "Pod Expired";
 
 /* Alert content title for lowReservoir pod alert */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Sắp hết thuốc";
 
 /* Alert content title for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Suspend In Progress Reminder";
@@ -24,37 +24,37 @@
 "Resume Insulin" = "Resume Insulin";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Pod Pairing Incomplete";
+"Pod Pairing Incomplete" = "Pod ghép nối không thành công";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
-"Time Change Detected" = "Time Change Detected";
+"Time Change Detected" = "Thay đổi thời gian được phát hiện";
 
 /* Alert content body for multiCommand pod alert */
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod expires in %1$@.";
+"Pod expires in %1$@." = "Pod sẽ hết hạn trong: %1$@.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Change Pod now. Pod has been active for 72 hours.";
+"Change Pod now. Pod has been active for 72 hours." = "Thay pod ngay. Pod đã hoạt động 72 giờ qua.";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Change Pod now. Insulin delivery will stop in 1 hour.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Thay pod ngay. Insulin sẽ ngừng trong 1 giờ tới.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin or less remaining in Pod. Change Pod soon.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin hoặc ít hơn còn lại trong Pod. Thay Pod ngay.";
 
 /* Alert content body for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Suspend In Progress Reminder";
 
 /* Alert content body for suspendEnded pod alert */
-"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes.";
+"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Thời gian tạm ngưng insulin đã kết thúc.\n\n Bạn có thể phục hồi việc tiêm thuốc từ màn hình chính hoặc từ màn hình cài đặt bơm. Sẽ có thông báo nhắc trong vòng 15 phút.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Please finish pairing your pod.";
+"Please finish pairing your pod." = "Đề nghị hoàn thành ghép đôi pod.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
-"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings.";
+"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Thời gian trên bơm khác so với thời gian thực tế. Bạn có thể xem thời gian trên bơm và sync thời gian hiện hành trong cài đặt.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
 "Suspension time is up. Open the app and resume." = "Suspension time is up. Open the app and resume.";
@@ -147,7 +147,7 @@
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Cấu hình";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -234,7 +234,7 @@
 "No Insulin" = "No Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Liều insulin đã tạm dừng";
 
 /* Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Signal Loss";
@@ -243,7 +243,7 @@
 "Manual Basal" = "Liều Basal thủ công";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Thay Cannula";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Inserting...";
@@ -285,13 +285,13 @@
 "Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Đã tạm ngưng";
 
 /* */
 "Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Tiếp tục";
 
 /* */
 "Bolus" = "Liều bolus";
@@ -324,7 +324,7 @@
 "Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "Cấu hình";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -382,7 +382,7 @@
 "2 hours" = "2 hours";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 /* Alert title for resume error */
 "Failed to Resume Insulin Delivery" = "Failed to Resume Insulin Delivery";
@@ -490,7 +490,7 @@
 "Inserted" = "Inserted";
 
 /* Check Cannula */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Kiểm tra Cannula";
 
 /* */
 "Is the cannula inserted properly?" = "Is the cannula inserted properly?";
@@ -529,7 +529,7 @@
 "Finish Setup" = "Finish Setup";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Thiết lập xong";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -582,12 +582,12 @@
 "No Reminder" = "No Reminder";
 
 /* Label for low reservoir reminder row */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Báo nhắc gần hết thuốc";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Đảm bảo điện thoại và pod được đặt gần nhau. Nếu kết nối vẫn gặp trở ngại, đặt lại chổ khác.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Thay pod ngay. Insulin sẽ ngưng tiêm trong %1$@ hoặc khi không còn insulin.";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
@@ -614,30 +614,30 @@
 "U/hr" = "U/hr";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ cho %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop sẽ không tự động điều chỉnh liều insulin đến khi liều nền tạm thời thực hiện xong hoặc bị hủy bỏ.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Cài đặt liều nền tạm thời";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Liều nền tạm thời";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Liều nền tạm thời thất bại";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Không thể cài đặt liều nền tạm thời: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Không thể cài đặt liều nền tạm thời: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Thiếu cấu hình";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Maximum basal rate chưa được PumpManager cấu hình. Đề nghị vào therapy settings-> delivery limits và cấu hình maximum basal rate mới.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Expiration Reminder Default";
@@ -652,7 +652,7 @@
 "Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Tổng liều";
 
 /* description label for device name pod details row */
 "Device Name" = "Device Name";
@@ -709,7 +709,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Sắp hết thuốc";
 
 /* */
 "Save" = "Lưu";
@@ -724,7 +724,7 @@
 "Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Phục hồi liều insulin";
 
 /* Recovery suggestion when no pod is available */
 "Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
@@ -736,10 +736,10 @@
 "Suspended At" = "Suspended At";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "Đang phục hồi liều insulin...";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "Đang tạm dừng liều insulin...";
 
 /* Error message for PodCommsError.noPodsFound */
 "No pods found" = "No pods found";
