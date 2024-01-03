@@ -181,7 +181,7 @@
 "No alerts" = "Không có cảnh báo nào";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "Không có lời nhắc nào được sử dụng.";
 
 /* Description for Fault Event Code .noFaults */
 "No faults" = "Không có lỗi";
