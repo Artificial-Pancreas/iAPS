@@ -57,22 +57,22 @@
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Thời gian trên bơm khác so với thời gian thực tế. Bạn có thể xem thời gian trên bơm và sync thời gian hiện hành trong cài đặt.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Suspension time is up. Open the app and resume.";
+"Suspension time is up. Open the app and resume." = "Thời gian tạm dừng hết. Mở ứng dụng và tiếp tục lại.";
 
 /* Action button default text for PodAlerts */
 "Ok" = "Ok";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Unfinished Activation";
+"Unfinished Activation" = "Kích hoạt chưa hoàn thành";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expires in";
+"Pod expires in" = "Pod sẽ hết hạn trong";
 
 /* */
-"Pod Expires" = "Pod Expires";
+"Pod Expires" = "Pod hết hạn";
 
 /* */
-"Pod Activated" = "Pod Activated";
+"Pod Activated" = "Pod đã kích hoạt";
 
 /* */
 "Notification Settings" = "Cài đặt thông báo";
@@ -81,97 +81,97 @@
 "Confidence Reminders" = "Confidence Reminders";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Suspend Insulin Delivery";
+"Suspend Insulin Delivery" = "Tạm dừng insulin";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod expired";
+"Pod expired" = "Pod đã hết hạn";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Unfinished deactivation";
+"Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "No Pod";
+"No Pod" = "Không pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Kết nối Pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Pair pod.";
+"Pair pod." = "Kết nối Pod.";
 
 /* Pairing action button accessibility label while pairing */
-"Pairing." = "Pairing.";
+"Pairing." = "Đang ghép đôi.";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Priming. Please wait.";
+"Priming. Please wait." = "Đang priming. Xin chờ.";
 
 /* Pairing action button accessibility label when pairing succeeded */
-"Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
+"Pod paired successfully. Continue." = "Pod ghép đôi thành công. Tiếp tục.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Finish deactivation";
+"Finish deactivation" = "Hoàn tất việc ngưng kích hoạt";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Thay pod";
 
 /* Unit for singular day in pod life remaining */
-"day" = "day";
+"day" = "ngày";
 
 /* Unit for plural days in pod life remaining */
-"days" = "days";
+"days" = "ngày";
 
 /* Unit for singular hour in pod life remaining */
-"hour" = "hour";
+"hour" = "giờ";
 
 /* Unit for plural hours in pod life remaining */
 "hours" = "giờ";
 
 /* Unit for singular minute in pod life remaining */
-"minute" = "minute";
+"minute" = "phút";
 
 /* Unit for plural minutes in pod life remaining */
 "minutes" = "phút";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Khối lượng tiêm insulin";
 
 /* */
-"Scheduled Basal" = "Scheduled Basal";
+"Scheduled Basal" = "Đã lên chương trình cho liều Basal";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin Remaining";
+"Insulin Remaining" = "Insulin còn lại";
 
 /* Section header for activity section */
-"Activity" = "Activity";
+"Activity" = "Hoạt động";
 
 /* title for device details page */
-"Device Details" = "Device Details";
+"Device Details" = "Chi tiết thiết bị";
 
 /* Section header for configuration section */
 "Configuration" = "Cấu hình";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Finish deactivation";
+"Finish deactivation" = "Hoàn tất việc ngưng kích hoạt";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Thay pod";
 
 /* Settings page link description when next lifecycle action is to replace pod */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Thay pod";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Unfinished Activation";
+"Unfinished Activation" = "Kích hoạt chưa hoàn thành";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expires in";
+"Pod expires in" = "Pod sẽ hết hạn trong";
 
 /* Label for pod life state when within pod expiration window */
-"Pod expired" = "Pod expired";
+"Pod expired" = "Pod đã hết hạn";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Unfinished deactivation";
+"Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "No Pod";
+"No Pod" = "Không pod";
 
 /* Pod life HUD view label */
 "Fault" = "Fault";
@@ -183,7 +183,7 @@
 "Remaining" = "Remaining";
 
 /* Label indicating pod replacement necessary */
-"Replace Pod" = "Replace Pod";
+"Replace Pod" = "Thay pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "No pod paired";
@@ -216,7 +216,7 @@
 "Finish Deactivation" = "Finish Deactivation";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "No Pod";
+"No Pod" = "Không pod";
 
 /* Status highlight message for emptyReservoir alarm. */
 "No Insulin" = "No Insulin";
@@ -315,13 +315,13 @@
 "Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin Remaining";
+"Insulin Remaining" = "Insulin còn lại";
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Set Temporary Basal Rate";
 
 /* Section header for activity section */
-"Activity" = "Activity";
+"Activity" = "Hoạt động";
 
 /* Section header for configuration section */
 "Configuration" = "Cấu hình";
@@ -400,7 +400,7 @@
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Please deactivate the pod. When deactivation is complete, you may pair a new pod.";
 
 /* Deactivate pod action button */
-"Deactivate Pod" = "Deactivate Pod";
+"Deactivate Pod" = "Hủy kích hoạt Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactivating.";
@@ -511,7 +511,7 @@
 "Priming..." = "Priming...";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Đang hủy kích hoạt...";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Deactivated";
@@ -590,13 +590,13 @@
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Thay pod ngay. Insulin sẽ ngưng tiêm trong %1$@ hoặc khi không còn insulin.";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Vô hiệu hóa";
 
 /* Title string for BeepPreference.manualCommands */
-"Enabled" = "Enabled";
+"Enabled" = "Cho phép";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Mở rộng";
 
 /* Description for BeepPreference.silent */
 "No confidence reminders are used." = "No confidence reminders are used.";
@@ -643,13 +643,13 @@
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Thông tin Pod trước đó";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
 "No\nDelivery" = "No\nDelivery";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Thời gian Hoạt động";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = "Tổng liều";
@@ -670,10 +670,10 @@
 "BLE Firmware Version" = "BLE Firmware Version";
 
 /* description label for activated at timne pod details row */
-"Pod Activated" = "Pod Activated";
+"Pod Activated" = "Pod đã kích hoạt";
 
 /* description label for active time pod details row */
-"Active Time" = "Active Time";
+"Active Time" = "Thời gian Hoạt động";
 
 /* description label for last status date pod details row */
 "Last Status" = "Last Status";
