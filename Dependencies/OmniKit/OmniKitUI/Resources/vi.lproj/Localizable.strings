@@ -150,7 +150,7 @@
 "Comms Recovered" = "Comms Recovered";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Lời nhắc độ tin cậy";
 
 /* Help text for BeepPreferenceSelectionView */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
@@ -171,7 +171,7 @@
 "Critical Alerts" = "Critical Alerts";
 
 /* Unit for singular day in pod life remaining */
-"day" = "day";
+"day" = "ngày";
 
 /* Unit for plural days in pod life remaining */
 "days" = "days";
@@ -190,7 +190,7 @@
 "Deactivating." = "Deactivating.";
 
 /* Action button description while deactivating */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Đang hủy kích hoạt...";
 
 /* Button title to delete Omnipod PumpManager */
 "Delete Omnipod" = "Xóa Omnipod";
@@ -200,7 +200,7 @@
 
 /* Text for device details disclosure row
    title for device details page */
-"Device Details" = "Device Details";
+"Device Details" = "Chi tiết thiết bị";
 
 /* The title of the device information section in settings */
 "Device Information" = "Thông tin thiết bị";
@@ -276,7 +276,7 @@
 "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Finish deactivation";
+"Finish deactivation" = "Hoàn tất việc ngưng kích hoạt";
 
 /* The title of the command to finish pod setup */
 "Finish pod setup" = "Hoàn tất thiết lập pod";
@@ -288,7 +288,7 @@
 "Greater than %1$@ units remaining at %2$@" = "Nhiều hơn %1$@ units vẫn còn lúc %2$@";
 
 /* Unit for singular hour in pod life remaining */
-"hour" = "hour";
+"hour" = "giờ";
 
 /* Unit for plural hours in pod life remaining */
 "hours" = "giờ";
@@ -321,7 +321,7 @@
 "Insulin Delivered" = "Insulin đã được tiêm";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Khối lượng tiêm insulin";
 
 /* The action string on pod status page when pod faulted */
 "Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
@@ -330,7 +330,7 @@
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin Remaining";
+"Insulin Remaining" = "Insulin còn lại";
 
 /* Text for confidence reminders navigation link
    Title for insulin type selection screen */
@@ -370,7 +370,7 @@
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Đảm bảo điện thoại và pod được đặt gần nhau. Nếu kết nối vẫn gặp trở ngại, đặt lại chổ khác.";
 
 /* Unit for singular minute in pod life remaining */
-"minute" = "minute";
+"minute" = "phút";
 
 /* Unit for plural minutes in pod life remaining */
 "minutes" = "phút";
@@ -397,7 +397,7 @@
 
 /* Label for pod life state when no pod paired
    Text shown in insulin remaining space when no pod is paired */
-"No Pod" = "No Pod";
+"No Pod" = "Không pod";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -431,16 +431,16 @@
    Pod pairing action button text while ready to pair
    Settings page link description when next lifecycle action is to pair new pod
    Title for pod pairing screen */
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Kết nối Pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Pair pod.";
+"Pair pod." = "Kết nối Pod.";
 
 /* Label text indicating pairing finished. */
 "Paired" = "Đã được ghép đôi";
 
 /* Pairing action button accessibility label while pairing */
-"Pairing." = "Pairing.";
+"Pairing." = "Đang ghép đôi.";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
@@ -471,7 +471,7 @@
 
 /* description label for activated at time pod details row
    Label for pod insertion row */
-"Pod Activated" = "Pod Activated";
+"Pod Activated" = "Pod đã kích hoạt";
 
 /* Label describing pod age view */
 "Pod Age" = "Pod Age";
@@ -490,10 +490,10 @@
 "Pod Expired" = "Pod Expired";
 
 /* Label for pod expiration row */
-"Pod Expires" = "Pod Expires";
+"Pod Expires" = "Pod hết hạn";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expires in";
+"Pod expires in" = "Pod sẽ hết hạn trong";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Pod Fault Details";
@@ -502,7 +502,7 @@
 "Pod Occlusion" = "Pod Occlusion";
 
 /* Pairing action button accessibility label when pairing succeeded */
-"Pod paired successfully. Continue." = "Pod paired successfully. Continue.";
+"Pod paired successfully. Continue." = "Pod ghép đôi thành công. Tiếp tục.";
 
 /* Title of the pod settings view controller */
 "Pod Settings" = "Các thiết lập cho pod";
@@ -517,13 +517,13 @@
 "Previous Pod" = "Previous Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Thông tin Pod trước đó";
 
 /* The text of the loading label when pod is primed */
 "Primed" = "Đã được mồi";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Priming. Please wait.";
+"Priming. Please wait." = "Đang priming. Xin chờ.";
 
 /* Pod pairing action button text while priming */
 "Priming..." = "Priming...";
@@ -630,7 +630,7 @@
 "Suspend Delivery" = "Tạm ngưng liều insulin";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Suspend Insulin Delivery";
+"Suspend Insulin Delivery" = "Tạm dừng insulin";
 
 /* The detail text of the basal row when pod is suspended */
 "Suspended" = "Đã tạm ngưng";
@@ -736,10 +736,10 @@
 "Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Không thể cài đặt liều nền tạm thời: %1$@\n\n%2$@";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Unfinished Activation";
+"Unfinished Activation" = "Kích hoạt chưa hoàn thành";
 
 /* Label for pod life state when pod not fully deactivated */
-"Unfinished deactivation" = "Unfinished deactivation";
+"Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* The detail text for delivered insulin when no measurement is available */
 "Unknown" = "Không nhận ra";
