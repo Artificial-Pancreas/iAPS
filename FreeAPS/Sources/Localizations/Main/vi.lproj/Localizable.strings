@@ -161,16 +161,16 @@
 "Target" = "Mục tiêu";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Tỷ lệ Insulin cơ bản và độ nhạy";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Cài đặt '1/2 mục tiêu cơ bản' thấp hơn sẽ giảm mức cơ bản và tăng ISF sớm hơn, ở mức glucose mục tiêu thấp hơn.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Cài đặt của bạn: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "autosens.max Giới hạn điểm cuối tối đa mg/dl";
 
 /*  */
 "Enter preset name" = "Enter preset name";
@@ -221,25 +221,25 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Basal Profile";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Xóa dữ liệu Autotune";
 
 /*  */
 "Run now" = "Chạy ngay";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Chạy lần trước";
 
 /*  */
 "Sensitivity" = "Độ nhạy";
 
 /*  */
-"Use Autotune" = "Use Autotune";
+"Use Autotune" = "Sử dụng Autotune";
 
 /* Add profile basal */
 "Add" = "Thêm vào";
@@ -266,7 +266,7 @@
 "Time" = "Thời gian";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Tỷ lệ được tính toán";
 
 /* Carb Ratios header */
 "Carb Ratios" = "Tỷ lệ Carb";
@@ -278,13 +278,13 @@
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Độ nhạy được tính toán";
 
 /*  */
 "Insulin Sensitivities" = "Độ nhạy của Insulin";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Tỷ lệ độ nhạy";
 
 /*  */
 "Dismiss" = "Từ bỏ";
@@ -300,13 +300,13 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Chấp nhận";
 
 /* */
 "Manual Temp Basal" = "Liều Basal thủ công";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Cho phép tải lên";
 
 /* API secret in NS */
 "API secret" = "Khóa API";
@@ -465,46 +465,46 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "U/hr";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "ngày";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "giờ";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "phút";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Vòng lặp kín";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Cấu hình";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Thiết bị";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Bơm";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Đồng hồ";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Cấu hình đồng hồ";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Hiển thị trên đồng hồ";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Thêm thiết bị";
 
 /* */
 "Glucose Target" = "Glucose Target";
@@ -519,40 +519,40 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Phải cài đặt ứng dụng Garmin Connect để sử dụng cho iAPS.\n Hãy truy cập App Store để tải xuống ứng dụng này";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin không có sẵn";
 
 /*  */
-"Services" = "Services";
+"Services" = "Dịch vụ";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Cài đặt";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Tỷ lệ phần trăm Bolus được đề xuất";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "Chia sẻ nhật ký";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "Mục tiêu cao";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "Mục tiêu thấp";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "Đang tiến hành bolus";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "Bơm đã tạm ngưng";
 
 /* */
-"Middleware" = "Middleware";
+"Middleware" = "Phần mềm trung gian";
 
 /* Header */
-"History" = "History";
+"History" = "Lịch sử";
 
 /* Nightscout option */
 "Upload" = "Upload";
@@ -858,58 +858,58 @@ Enact a temp Basal or a temp target */
 "edit calibration clicked" = "edit calibration clicked";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Xóa CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "Bạn có chắc muốn xóa Cgm này khỏi Loop không?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "Không thể hoàn tác";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "Nâng cao";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "Cảnh báo";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "Cài đặt đường huyết";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "Thông báo";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Kết xuất nhật ký";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Không thể kết xuất";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Kết xuất nhật ký yêu cấu ios 15 trở lên";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "Đã hiểu!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "Đã lưu vào %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "Không có nhật ký";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Khả năng hiển thị thông báo Glucose";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "Luôn thông báo Glucose";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Thông báo cho mỗi lần đọc";
 
 /* */
-"Value" = "Value";
+"Value" = "Giá trị";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "Thêm Pin điện thoại";
 
 /* */
 "Adds Transmitter Battery" = "Thêm pin của Transmitter";
@@ -1062,19 +1062,19 @@ Enact a temp Basal or a temp target */
 "Carbs" = "Carbs";
 
 /* Food Type / Meal Note */
-"Note" = "Note";
+"Note" = "Lưu ý";
 
 /* */
 "Temp Basal" = "Temp Basal";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Top target";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Tiếp tục";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Đã tạm ngưng";
 
 /* */
 "Animated Background" = "Animated Background";
@@ -1083,29 +1083,29 @@ Enact a temp Basal or a temp target */
 " day(s)" = " day(s)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Display HR on Watch";
+"Display HR on Watch" = "Hiển thị trên đồng hồ";
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "Cài đặt chính của OpenAPS";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "Cài đặt SMB OpenAPS";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "Cài đặt mục tiêu OpenAPS";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "Cài đặt khác OpenAPS";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Mô phỏng Glucose";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Đã khôi phục trạng thái Bluetooth (APS đã khởi động lại?). Đã tìm thấy %d thiết bị ngoại vi và được kết nối với %@ bằng mã định danh %@";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Sử dụng nhóm ứng dụng dùng chung với ứng dụng CGM bên ngoài xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Sử dụng nhóm ứng dụng dùng chung với ứng dụng CGM bên ngoài GlucoseDirect";
 
 /* Dexcom G6 app */
 "Dexcom G6 app" = "Dexcom G6 app";
@@ -1120,15 +1120,15 @@ Enact a temp Basal or a temp target */
 "Simple simulator" = "Simple simulator";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Kết nối trực tiếp với bộ phát Libre 1 hoặc cảm biến Libre 2 của Châu Âu";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "Máy chủ trực tuyến hoặc nội bộ";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Nhà phát triển";
 
 /* Debug option view NS Upload Profile */
 "NS Upload Profile" = "NS Upload Profile";
@@ -1525,10 +1525,10 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "No confidence reminders are used.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Các tác vụ sẽ có âm thanh như khi bạn bolus, hủy bỏ bolus, tạm dừng bơm, hoạt động lại hay lưu các lời nhắc thông báo... sẽ không có âm thanh khi ứng dụng chạy tự động.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Sẽ có âm thanh báo nhắc khi ứng dụng tự động điều chỉnh liều cũng như khi bạn khởi tạo ứng dụng.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Expiration Reminder Default";
@@ -1537,7 +1537,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder" = "Expiration Reminder";
 
 /* */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Sắp hết thuốc";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -1546,99 +1546,99 @@ Enact a temp Basal or a temp target */
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Báo nhắc gần hết thuốc";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Đảm bảo điện thoại và pod được đặt gần nhau. Nếu kết nối vẫn gặp trở ngại, đặt lại chổ khác.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Thay pod ngay. Insulin sẽ ngưng tiêm trong %1$@ hoặc khi không còn insulin.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Tỷ lệ";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ cho %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop sẽ không tự động điều chỉnh liều insulin đến khi liều nền tạm thời thực hiện xong hoặc bị hủy bỏ.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Cài đặt liều nền tạm thời";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Liều nền tạm thời";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Liều nền tạm thời thất bại";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Không thể cài đặt liều nền tạm thời: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Không thể cài đặt liều nền tạm thời: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Thiếu cấu hình";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Maximum basal rate chưa được PumpManager cấu hình. Đề nghị vào therapy settings-> delivery limits và cấu hình maximum basal rate mới.";
 
 /* description label for active time pod details row */
 "Active Time" = "Active Time";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Tổng liều";
 
 /* */
-"Add Omnipod Dash" = "Add Omnipod Dash";
+"Add Omnipod Dash" = "Thay Omnipod Dash";
 
 /* */
-"Insert Cannula" = "Insert Cannula";
+"Insert Cannula" = "Thay Cannula";
 
 /* */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Kiểm tra Cannula";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Thiết lập xong";
 
 /* */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Liều insulin đã tạm dừng";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "Đang tạm dừng liều insulin...";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Phục hồi liều insulin";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "Đang phục hồi liều insulin...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
 /* */
 
 
-"Today" = "Today";
+"Today" = "Hôm nay";
 
 /* */
-"Day" = "Day";
+"Day" = "Ngày";
 
 /* */
-"Week" = "Week";
+"Week" = "Tuần";
 
 /* */
-"Month" = "Month";
+"Month" = "Tháng";
 
 /* */
 "Total" = "Tổng số";
 
 /* Headline Statistics */
-"Statistics" = "Statistics";
+"Statistics" = "Thống kê";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
+"Allow Upload of Statistics to NS" = "Cho phép tải thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Thấp";
@@ -1647,19 +1647,19 @@ Enact a temp Basal or a temp target */
 "High" = "Cao";
 
 /* In Range */
-"In Range" = "In Range";
+"In Range" = "Trong phạm vi";
 
 /* Display % */
-"Change HbA1c Unit" = "Change HbA1c Unit";
+"Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+"Display Chart X - Grid lines" = "Thể hiện biểu đồ dạng X-Grid";
 
 /* */
-"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+"Display Chart Y - Grid lines" = "Thể hiện biểu đồ dạng Y-Grid";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+"Display Chart Threshold lines for Low and High" = "Thể hiện các đường hiển thị Low và High";
 
 /* */
 "Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
@@ -1668,22 +1668,22 @@ Enact a temp Basal or a temp target */
 "Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
 
 /* */
-"2 hours" = "2 hours";
+"2 hours" = "2 giờ";
 
 /* */
-"4 hours" = "4 hours";
+"4 hours" = "4 giờ";
 
 /* */
-"6 hours" = "6 hours";
+"6 hours" = "6 giờ";
 
 /* */
-"12 hours" = "12 hours";
+"12 hours" = "12 giờ";
 
 /* */
-"24 hours" = "24 hours";
+"24 hours" = "24 giờ";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Trung bình";
 
 /* Median BG */
 "Median" = "Median";
