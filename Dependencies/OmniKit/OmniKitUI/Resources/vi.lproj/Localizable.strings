@@ -273,7 +273,7 @@
 "Fault" = "Lỗi";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps.";
+"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Dùng loại insulin U-100 cho pod. Lắng nghe 2 tiếng bíp.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Hoàn tất việc ngưng kích hoạt";
@@ -309,7 +309,7 @@
 "Inserted" = "Đã gắn";
 
 /* Insert cannula action button accessibility label while pairing */
-"Inserting. Please wait." = "Inserting. Please wait.";
+"Inserting. Please wait." = "Đang gắn. Chờ chút.";
 
 /* Cannula insertion button text while inserting */
 "Inserting..." = "Đang gắn...";
@@ -343,7 +343,7 @@
 "Is the cannula inserted properly?" = "Việc gắn cannual chuẩn chưa?";
 
 /* Label text for step 2 of pair pod instructions */
-"Keep the RileyLink about 6 inches from the pod during pairing." = "Keep the RileyLink about 6 inches from the pod during pairing.";
+"Keep the RileyLink about 6 inches from the pod during pairing." = "Để Rileylink cách pod 6 inches khi ghép đôi.";
 
 /* description label for last status date pod details row */
 "Last Status" = "Trạng thái cuối";
@@ -352,10 +352,10 @@
 "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop sẽ không tự động điều chỉnh liều insulin đến khi liều nền tạm thời thực hiện xong hoặc bị hủy bỏ.";
 
 /* The title of the cell showing the pod lot id */
-"Lot" = "Lot";
+"Lot" = "Lô";
 
 /* description label for lot number pod details row */
-"Lot Number" = "LOT Nummer";
+"Lot Number" = "Số Lô";
 
 /* Label text for low reservoir value row
    Navigation bar title for LowReservoirReminderSetupView
@@ -409,14 +409,14 @@
 "No, Keep Pump As Is" = "Không, Giữ nguyên";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
-"None" = "None";
+"None" = "Không";
 
 /* navigation title for notification settings
    Text for pod details disclosure row */
 "Notification Settings" = "Cài đặt thông báo";
 
 /* No comment provided by engineer. */
-"Numbers" = "Numbers";
+"Numbers" = "Số";
 
 /* Title for omnipod reminders section */
 "Omnipod Reminders" = "Lời nhắc của Omnipod";
@@ -446,10 +446,10 @@
 "Pairing..." = "Đang ghép đôi...";
 
 /* No comment provided by engineer. */
-"Percent = %lf" = "Percent = %lf";
+"Percent = %lf" = "Phần trăm = %lf";
 
 /* The title of the cell showing the pod pi version */
-"PI Version" = "PI Version";
+"PI Version" = "Đời PI";
 
 /* The title of the command to play test beeps */
 "Play Test Beeps" = "Kiểm tra tiếng Beep";
@@ -467,7 +467,7 @@
 "Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Hủy kích hoạt pod. Khi việc hủy kích hoạt hoàn tất, gỡ bỏ pod ra khỏi cơ thể và ghép nối pod mới.";
 
 /* The title of the cell showing the pod pm version */
-"PM Version" = "PM Version";
+"PM Version" = "Phiên bản PM";
 
 /* description label for activated at time pod details row
    Label for pod insertion row */
@@ -547,7 +547,7 @@
 "Remove Pump" = "Thay bơm";
 
 /* Label text for step two of attach pod instructions */
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Tháo nắp kim màu xanh và kiểm tra cannula. Sau đó gỡ bỏ lớp giấy phía sau.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -557,7 +557,7 @@
 "Replace Pod Now" = "Thay thế pod ngay";
 
 /* The title of the cell showing reservoir status */
-"Reservoir" = "Reservoir";
+"Reservoir" = "Ngăn chứa insulin";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Phục hồi liều insulin";
@@ -574,7 +574,7 @@
 "Retry Pod Deactivation" = "Hủy kích hoạt pod lại";
 
 /* bodyText for RileyLinkSetupView */
-"RileyLink allows for communication with the pump over Bluetooth" = "RileyLink allows for communication with the pump over Bluetooth";
+"RileyLink allows for communication with the pump over Bluetooth" = "RileyLink cho phép giao tiếp với bơm thông qua kết nối bluetooth";
 
 /* Navigation title for RileyLinkSetupView */
 "RileyLink Setup" = "Cài đặt RileyLink";
@@ -600,7 +600,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Title text for insulin type confirmation page */
-"Select the type of insulin that you will be using in this pod." = "Select the type of insulin that you will be using in this pod.";
+"Select the type of insulin that you will be using in this pod." = "Chọn loại insulin bạn sẽ sử dụng cho pod.";
 
 /* description label for sequence number pod details row */
 "Sequence Number" = "Số thứ tự";
@@ -681,13 +681,13 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Ứng dụng nhắc nhở bạn khi lượng insulin trong pod đạt đến mức này.";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Lời nhắc ở trên sẽ không phát ra âm thanh nếu thiết bị của bạn ở trạng thái Silent hoặc Do Not Disturb.\n\n Có nhiều cách cảnh báo khác nhau phát ra âm thanh ngay cả khi thiết bị của bạn ở trạng thái Silent hoặc Do Not Disturb.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Bạn có muốn cập nhật thời gian trên máy bơm của mình đến thời điểm hiện tại không?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Thời gian của máy bơm sẽ kiểm soát cài đặt trị liệu theo lịch trình của bạn. Cuộn xuống đến Pump Time để xem lại chênh lệch thời gian và cấu hình bơm của bạn.";
 
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Ô vuông trên đầu của pod sẽ nháy đỏ khi cannual được gắn chuẩn vào trong cơ thể.";
@@ -699,7 +699,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Đây là lời nhắc mà bạn đã lên lịch khi ghép nối Pod hiện tại của mình.";
 
 /* Alert format string for missing temp basal configuration. */
-"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate.";
+"This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "Máy bơm này chưa được cấu hình với maximum basal rate vì nó đã được thêm vào trước khi manual temp basal được đưa ra. Vui lòng đi tới Therapy Settings -> Delivery Limites và đặt Maximum Basal Rate mới.";
 
 /* Label for expiration reminder row
    Label for scheduled expiration reminder row
@@ -726,7 +726,7 @@
 "Unable to deactivate pod. Please continue and pair a new one." = "Không thể hủy kích hoạt pod. Đề nghị tiếp tục và ghép đôi pod mới.";
 
 /* Title of delivery uncertainty recovery page */
-"Unable to Reach Pod" = "Unable to Reach Pod";
+"Unable to Reach Pod" = "Không thể thấy pod";
 
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
