@@ -2051,10 +2051,10 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Sử dụng CR động. Tỷ lệ động sẽ được sử dụng cho CR như sau:\n\n Khi tỷ lệ > 1: dynCR = (newRatio - 1) / 2 + 1.\nKhi tỷ lệ < 1: dynCR = CR/dynCR.\n\nKhông sử dụng cùng với Tỷ lệ Insulin cao (> 2)";
 
 /* Enable Dyn ISF */
-"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+"Activate Dynamic Sensitivity (ISF)" = "Kích hoạt độ nhạy động (ISF)";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Kích hoạt Tỷ lệ Carb động (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
@@ -2066,63 +2066,63 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Sử dụng hàm Sigmoid (SF)";
 
 /* Which dyn ISF function to use */
-"Formula" = "Formula";
+"Formula" = "Công thức";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Safety";
+"Safety" = "An toàn";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Sử dụng hàm sigmoid cho ISF (và cho CR, khi được bật), thay vì công thức logarit mặc định. Yêu cầu bật cài đặt ISF động trong cài đặt\n\nCài đặt Điều chỉnh điều chỉnh độ dốc của đường cong (Y: Tỷ lệ động, X: Đường huyết). Giá trị thấp hơn ==> ít dốc hơn == ít linh hoạt hơn.\n\nCài đặt autosens.min/max xác định cả giới hạn tối đa/phút cho tỷ lệ động VÀ mức độ điều chỉnh tỷ lệ động. Nếu AF là độ dốc của đường cong thì autosens.min/max là chiều cao của biểu đồ, khoảng Y, trong đó Y: tỷ lệ động. Đường cong sẽ luôn có dạng sigmoid, bất kể cài đặt autosens.min/max nào được sử dụng, nghĩa là những cài đặt này có hậu quả lớn đối với kết quả của ISF động được tính toán. Hãy cẩn thận khi đặt giá trị autosens.max quá cao. Với cài đặt ISF cấu hình phù hợp, bạn có thể sẽ không bao giờ cần nó cao hơn 1,5\n\nGiới hạn Autosens.max > 1,5 là không nên khi sử dụng chức năng sigmoid.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting" = "Cài đặt ngưỡng";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Ngưỡng mặc định trong FAX tùy thuộc vào mục tiêu BG tối thiểu hiện tại của bạn, như sau:\n\nNếu mục tiêu BG tối thiểu của bạn = 90 mg/dl -> ngưỡng = 65 mg/dl,\n\nif mục tiêu BG tối thiểu = 100 mg/dl -> ngưỡng = 70 mg/dl,\n\nmục tiêu BG tối thiểu = 110 mg/dl -> ngưỡng = 75 mg/dl,\n\nand nếu mục tiêu BG tối thiểu = 130 mg/dl -> ngưỡng = 85 mg/dl.\n\nCài đặt này cho phép bạn thay đổi mặc định thành ngưỡng lặp cao hơn cho vòng lặp với dynISF. Giá trị hợp lệ là 65 mg/dl<= Cài đặt ngưỡng <= 120 mg/dl.";
 
 /* Header */
-"Calculator settings" = "Calculator settings";
+"Calculator settings" = "Thiết lập Tính toán";
 
 /* UI/UX option */
-"Display Predictions" = "Display Predictions";
+"Display Predictions" = "Hiển thị dự đoán";
 
 /* UI/UX option */
-"Smaller iPhone Screens" = "Smaller iPhone Screens";
+"Smaller iPhone Screens" = "Màn hình iPhone nhỏ hơn";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
+"Display and allow Fat and Protein entries" = "Hiển thị và cho phép nhập các mục Chất béo và chất đạm";
 
 /* UI/UX option */
-"Add Meal View settings " = "Add Meal View settings ";
+"Add Meal View settings " = "Thêm cài đặt Chế độ xem bữa ăn ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Display Temp Targets Button";
+"Display Temp Targets Button" = "Hiển thị nút tiêu tạm thời";
 
 /* UI/UX option */
-"Home View Button Panel " = "Home View Button Panel ";
+"Home View Button Panel " = "Bảng nút xem trang chủ ";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+"In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả hồ sơ và mục tiêu tạm thời";
 
 /* UI/UX option */
-"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+"Always Color Glucose Value (green, yellow etc)" = "Luôn tô màu Giá trị Glucose (xanh, vàng, v. v.)";
 
 /* UI/UX option */
-"Header settings" = "Header settings";
+"Header settings" = "Cài đặt tiêu đề";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Thông thường glucose chỉ có màu đỏ khi vượt quá hoặc dưới giới hạn thông báo của bạn về mức cao";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+"Horizontal Scroll View Visible hours" = "Chế độ xem cuộn ngang Giờ hiển thị";
 
 /* Notification option */
-"Live Activity" = "Live Activity";
+"Live Activity" = "Hoạt động trực tiếp";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và trên đảo động (nếu có)";
 
 /* Notification option */
-"Show live activity" = "Show live activity";
+"Show live activity" = "Hiển thị hoạt động trực tiếp";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Weighted Average of TDD. Weight of past 24 hours:";
