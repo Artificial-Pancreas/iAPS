@@ -2043,11 +2043,17 @@ Enact a temp Basal or a temp target */
 /* Enable Dynamic ISF */
 "Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Calcola un nuovo ISF per ogni ciclo di loop. Il nuovo ISF sarà basato sulla glicemia attuale, sulla TDD dell’insulina (oltre 24 ore o media ponderata) e su un fattore di aggiustamento (valore predefinito è 1).\n\nI rapporti ISF e CR dinamici saranno limitati dai tuoi limiti autosens.min/max.\n\nIl rapporto dinamico sostituisce il rapporto autosens.ratio: New ISF = rapporto statico ISF / dinamico,\nRapporto dinamico = profilo. ens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinuti";
 
-/* Headline "Enable Dynamic CR" */
+/* Headline Enable Dynamic CR */
 "Enable Dynamic CR" = "Abilita CR Dinamico";
 
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Usa CR Dinamico. Il rapporto dinamico sarà utilizzato per CR come segue:\n\n Quando rapporto > 1: dynCR = (newRatio - 1) / 2 + 1.\nQuando il rapporto < 1: dynCR = CR/dynCR.\n\nNon usare insieme a frazione d'insulina elevata (> 2)";
+
+/* Enable Dyn ISF */
+"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+
+/* Enable Dyn CR */
+"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Regola i rapporti dinamici della costante ISF";
@@ -2056,19 +2062,67 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Regola i rapporti dinamici di una costante. Il valore predefinito è 0,5. Più alto è il valore, maggiore sarà la correzione del tuo ISF per una glicemia alta o bassa. La correzione massima è determinata dalle impostazioni Autosens min/max. Per la funzione sigmoidea si consiglia di iniziare con un fattore di correzione di 0,4 - 0,5. Per la formula logaritmica c'è meno consenso, ma iniziare con 0,5 - 0,8 è più appropriato per la maggior parte degli utenti
 Regola la costante ISF dinamica";
 
-
-/* Headline "Use Sigmoid Function" */
+/* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Usa Funzione Sigmoid";
+
+/* Which dyn ISF function to use */
+"Formula" = "Formula";
+
+/* Extra Safety Features when using dyn ISF */
+"Safety" = "Safety";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Usa una funzione sigmoid per ISF (e per CR, quando abilitato), invece della formula Logaritmica predefinita. Richiede l'impostazione ISF dinamica per essere abilitata nelle impostazioni\n\nL'impostazione di regolazione regola la pendenza della curva (Y: Dynamic ratio, X: Colla Di Sangue). Un valore inferiore ==> meno ripido == meno aggressivo.\n\nGli autosens. le impostazioni in/max determinano sia i limiti max/min per il rapporto dinamico E quanto il rapporto dinamico viene regolato. Se AF è la pendenza della curva, gli autosensi. in/max è l'altezza del grafico, l'intervallo Y, dove Y: rapporto dinamico. La curva avrà sempre una forma di sigmoid, indipendentemente dagli autosensi. le impostazioni in/max sono usate, il che significa che queste impostazioni hanno grandi conseguenze per il risultato del ISF dinamico calcolato. Attenzione all'impostazione di un valore autosens.max troppo alto. Con una corretta impostazione ISF del profilo, probabilmente non avrete mai bisogno di essere superiore a 1.\n\nUn limite di Autosens.max > 1.5 non è consigliabile quando si utilizza la funzione sigmoid.";
 
-
-/* Headline "Threshold Setting" */
-"Threshold Setting (mg/dl)" = "Impostazione Soglia (mg/dl)";
+/* Headline Threshold Setting */
+"Threshold Setting" = "Threshold Setting";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "La soglia predefinita in FAX dipende dall'attuale obiettivo di glicemia minima, come segue:\n\nSe il vostro obiettivo minimo di glicemia = 90 mg/dl -> soglia = 65 mg/dl,\n\nse obiettivo minimo di glicemia = 100 mg/dl -> soglia = 70 mg/dl,\n\nobiettivo minimo di glicemia = 110 mg/dl -> soglia = 75 mg/dl,\n\ne se obiettivo minimo di glicemia = 130 mg/dl -> soglia = 85 mg/dl.\n\nQuesta impostazione ti permette di cambiare il valore predefinito ad una soglia più alta per il looping con dynISF. Valori validi sono 65 mg/dl<= Impostazione soglia <= 120 mg/dl.";
+
+/* Header */
+"Calculator settings" = "Calculator settings";
+
+/* UI/UX option */
+"Display Predictions" = "Display Predictions";
+
+/* UI/UX option */
+"Smaller iPhone Screens" = "Smaller iPhone Screens";
+
+/* UI/UX option */
+"Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
+
+/* UI/UX option */
+"Add Meal View settings " = "Add Meal View settings ";
+
+/* UI/UX option */
+"Display Temp Targets Button" = "Display Temp Targets Button";
+
+/* UI/UX option */
+"Home View Button Panel " = "Home View Button Panel ";
+
+/* UI/UX option */
+"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+
+/* UI/UX option */
+"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+
+/* UI/UX option */
+"Header settings" = "Header settings";
+/* UI/UX option */
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+
+/* UI/UX option */
+"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+
+/* Notification option */
+"Live Activity" = "Live Activity";
+
+/* Notification option */
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+
+/* Notification option */
+"Show live activity" = "Show live activity";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Media ponderata di TDD. Peso delle ultime 24 ore:";
