@@ -78,7 +78,7 @@
 "Deactivated" = "Đã hủy kích hoạt";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Vô hiệu hóa";
 
 /* Description for Empty reservoir pod fault */
 "Empty reservoir" = "Ngăn chứa insulin rỗng";
@@ -93,7 +93,7 @@
 "Expiration alert" = "Thông báo hết hạn";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Mở rộng";
 
 /* Delivery status when extended bolus is running */
 "Extended bolus running" = "Extended bolus running";
@@ -191,7 +191,7 @@
 "No Insulin" = "No Insulin";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "No Pod";
+"No Pod" = "Không pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "Không có pod nào được kết nối";
@@ -359,7 +359,7 @@
 "Suspended" = "Đã tạm ngưng";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Suspension time is up. Open the app and resume.";
+"Suspension time is up. Open the app and resume." = "Thời gian tạm dừng hết. Mở ứng dụng và tiếp tục lại.";
 
 /* Pod tank fill completed */
 "Tank fill completed" = "Hoàn tất nạp";
