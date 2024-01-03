@@ -69,7 +69,7 @@
 "Devices" = "Thiết bị";
 
 /* Description for option to not use MySentry */
-"Do not use MySentry" = "Do not use MySentry";
+"Do not use MySentry" = "Không sử dụng MySentry";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Lỗi khi đang tái thực hiện";
@@ -111,7 +111,7 @@
 "Medtronic %1$@" = "Medtronic %1$@";
 
 /* Instructions on selecting setting for MySentry */
-"Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models.";
+"Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Các mẫu máy bơm Medtronic 523, 723, 554 và 754 có một tính năng gọi là 'MySentry', phát sóng định kỳ mức pin của bình chứa và máy bơm. Việc lắng nghe các chương trình phát sóng này cho phép Loop liên lạc với máy bơm ít thường xuyên hơn, điều này có thể tăng tuổi thọ pin của máy bơm. Tuy nhiên, khi sử dụng tính năng này, RileyLink sẽ hoạt động lâu hơn và sử dụng nhiều pin hơn. Việc bật tính năng này có thể kéo dài tuổi thọ pin của máy bơm, trong khi việc tắt tính năng này có thể kéo dài tuổi thọ pin RileyLink. Cài đặt này bị bỏ qua đối với các kiểu máy bơm khác.";
 
 /* Value string for MySentry config when MySentry is not being used */
 "No" = "No";
