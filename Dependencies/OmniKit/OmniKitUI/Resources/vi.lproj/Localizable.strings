@@ -75,7 +75,7 @@
 "Activity" = "Hoạt động";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Adjusting Pump Time...";
+"Adjusting Pump Time..." = "Đang điều chỉnh thời gian của bơm...";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "Cảnh báo";
@@ -324,7 +324,7 @@
 "Insulin Delivery" = "Khối lượng tiêm insulin";
 
 /* The action string on pod status page when pod faulted */
-"Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
+"Insulin delivery stopped. Change Pod now." = "Insulin ngừng. Thay Pod ngay.";
 
 /* Message for suspend duration selection action sheet */
 "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
@@ -406,7 +406,7 @@
 "No, Continue With Pod" = "No, Continue With Pod";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "Không, Giữ nguyên";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
 "None" = "None";
@@ -419,7 +419,7 @@
 "Numbers" = "Numbers";
 
 /* Title for omnipod reminders section */
-"Omnipod Reminders" = "Omnipod Reminders";
+"Omnipod Reminders" = "Lời nhắc của Omnipod";
 
 /* Button title to pair with pod during setup */
 "Pair" = "Ghép đôi";
@@ -514,7 +514,7 @@
 "Prepare site." = "Prepare site.";
 
 /* title for previous pod page */
-"Previous Pod" = "Previous Pod";
+"Previous Pod" = "Pod trước";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Thông tin Pod trước đó";
@@ -532,7 +532,7 @@
 "Priming…" = "Đang mồi…";
 
 /* The title of the command to change pump time zone */
-"Pump Time" = "Pump Time";
+"Pump Time" = "Thời gian của Bơm";
 
 /* Label text for basal rate summary */
 "Rate" = "Tỷ lệ";
@@ -609,7 +609,7 @@
 "Set Temporary Basal" = "Cài đặt liều nền tạm thời";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Set Temporary Basal Rate";
+"Set Temporary Basal Rate" = "Cài đặt liều nền tạm thời";
 
 /* Title for setup complete screen */
 "Setup Complete" = "Cấu hình hoàn thành";
@@ -645,10 +645,10 @@
 "Switch from Omnipod Pumps" = "Chuyển đổ từ bơm Omnipod";
 
 /* Label for PumpManager deletion button */
-"Switch to other insulin delivery device" = "Switch to other insulin delivery device";
+"Switch to other insulin delivery device" = "Chuyển đổi sang bơm khác";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Đồng bộ thời gian hiện tại";
 
 /* Title of button to sync basal profile from pod */
 "Sync With Pod" = "Sync với Pod";
@@ -669,7 +669,7 @@
 "Testing Commands…" = "Thử nghiệm câu lệnh…";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Ứng dụng cấu hình lời nhắc trên pod để thông báo trước cho bạn khi pod hết hạn. Đặt số giờ bạn muốn cấu hình khi ghép nối pod mới.";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
@@ -684,7 +684,7 @@
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Bạn có muốn cập nhật thời gian trên máy bơm của mình đến thời điểm hiện tại không?";
 
 /* description for time change detected notice */
 "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
