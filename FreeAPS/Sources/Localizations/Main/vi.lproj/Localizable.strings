@@ -188,7 +188,7 @@
 "Save" = "Lưu";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Lưu dưới dạng cài đặt sẵn";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Xoá mẫu thiết lập";
@@ -1404,69 +1404,69 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Lưu dưới dạng cài đặt sẵn";
 
 /* */
-"Predictions" = "Predictions";
+"Predictions" = "Dự đoán";
 
 /* Watch Config Option */
-"Display Protein & Fat" = "Display Protein & Fat";
+"Display Protein & Fat" = "Hiển thị chất đạm và chất béo";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "Cảnh báo!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nNhấn 'Thêm' để tiếp tục với số lượng đã chọn.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Glucose hiện tại";
 
 /* */
-"Please wait" = "Please wait";
+"Please wait" = "Vui lòng chờ";
 
 /* */
 "Glucose, " = "Glucose, ";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Đường huyết mục tiêu";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Cài đặt phần trăm";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Độ nhạy Insulin";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Glucose hiện tại - Mục tiêu) / ISF";
 
 /* */
-"Formula:" = "Formula:";
+"Formula:" = "Công thức:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs và insulin trước đó được đưa vào dự đoán lượng đường, nhưng nếu Đường huyết hiện tại thấp hơn Đường huyết mục tiêu thì không nên tiêm một liều bolus.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Ẩn";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "nằm dưới Ngưỡng của bạn (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Leo: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". Lao xuóng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose cuối cùng > Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
@@ -2096,16 +2096,16 @@ Enact a temp Basal or a temp target */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Đặt giá trị EnableSMB_high_bg sẽ so sánh để kích hoạt SMB. Nếu BG > giá trị này, SMB sẽ kích hoạt.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Enable SMB With High BG";
+"Enable SMB With High BG" = "Kích hoạt SMB với BG cao";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Kích hoạt SMB khi phát hiện BG cao, dựa trên mục tiêu BG cao (đã điều chỉnh hoặc cấu hình)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamic settings";
+"Dynamic settings" = "Cài đặt động(Dynamic)";
 
 /* Insulin curve */
-"Insulin curve" = "Insulin curve";
+"Insulin curve" = "Đường cong insulin";
 
 /* Headline "Adjustment Factor" */
-"Adjustment Factor" = "Adjustment Factor";
+"Adjustment Factor" = "Yếu tố điều chỉnh (AF)";
