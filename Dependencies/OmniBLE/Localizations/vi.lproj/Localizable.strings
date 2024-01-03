@@ -9,10 +9,10 @@
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Alert content title for userPodExpiration pod alert */
-"Pod Expiration Reminder" = "Pod Expiration Reminder";
+"Pod Expiration Reminder" = "Lời Nhắc Pod Hết hạn";
 
 /* Alert content title for podExpiring pod alert */
-"Pod Expired" = "Pod Expired";
+"Pod Expired" = "Pod đã hết hạn";
 
 /* Alert content title for lowReservoir pod alert */
 "Low Reservoir" = "Sắp hết thuốc";
@@ -21,7 +21,7 @@
 "Suspend In Progress Reminder" = "Suspend In Progress Reminder";
 
 /* Alert content title for suspendEnded pod alert */
-"Resume Insulin" = "Resume Insulin";
+"Resume Insulin" = "Tiếp tục lại việc tiêm insulin";
 
 /* Alert content title for finishSetupReminder pod alert */
 "Pod Pairing Incomplete" = "Pod ghép nối không thành công";
@@ -174,70 +174,70 @@
 "No Pod" = "Không pod";
 
 /* Pod life HUD view label */
-"Fault" = "Fault";
+"Fault" = "Lỗi";
 
 /* Label describing pod age view */
 "Pod Age" = "Pod Age";
 
 /* Label describing time remaining view */
-"Remaining" = "Remaining";
+"Remaining" = "Đang còn lại";
 
 /* Label indicating pod replacement necessary */
 "Replace Pod" = "Thay pod";
 
 /* Error message shown when no pod is paired */
-"No pod paired" = "No pod paired";
+"No pod paired" = "Không có pod nào được kết nối";
 
 /* Error message shown when user cannot pair because pod is already paired */
-"Pod already paired" = "Pod already paired";
+"Pod already paired" = "Pod đã được ghép đôi";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
-"Insulin type not configured" = "Insulin type not configured";
+"Insulin type not configured" = "Loại insulin chưa được khai báo";
 
 /* Error message when cannula insertion fails because the pod is in an unexpected state */
-"Pod is not in a state ready for cannula insertion." = "Pod is not in a state ready for cannula insertion.";
+"Pod is not in a state ready for cannula insertion." = "Pod không sẵn sàng để gắn cannula.";
 
 /* Error description for OmniBLEPumpManagerError.invalidSetting */
-"Invalid Setting" = "Invalid Setting";
+"Invalid Setting" = "Cài đặt không tồn tại";
 
 /* Recovery suggestion shown when no pod is paired */
-"Please pair a new pod" = "Please pair a new pod";
+"Please pair a new pod" = "Đề nghị ghép đôi pod mới";
 
 /* Generic title of the OmniBLE pump manager */
 "Omnipod DASH" = "Omnipod DASH";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Comms Issue";
+"Comms Issue" = "Câu lệnh có vấn đề";
 
 /* */
-"Finish Pairing" = "Finish Pairing";
+"Finish Pairing" = "Hoàn tất ghép đôi";
 
 /* Status highlight that when pod is deactivating */
-"Finish Deactivation" = "Finish Deactivation";
+"Finish Deactivation" = "Hoàn tất việc ngưng kích hoạt";
 
 /* Status highlight that when no pod is paired. */
 "No Pod" = "Không pod";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Hết thuốc";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "Pod Expired";
+"Pod Expired" = "Pod đã hết hạn";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Pod Occlusion";
 
 /* Status highlight message for other alarm. */
-"Pod Error" = "Pod Error";
+"Pod Error" = "Lỗi Pod";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Hết thuốc";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Liều insulin đã tạm dừng";
 
 /* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "Mất tín hiệu";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Liều Basal thủ công";
@@ -246,31 +246,31 @@
 "Insert Cannula" = "Thay Cannula";
 
 /* Cannula insertion button text while inserting */
-"Inserting..." = "Inserting...";
+"Inserting..." = "Đang gắn...";
 
 /* Cannula insertion button text while showing error */
-"Retry" = "Retry";
+"Retry" = "Thử lại";
 
 /* Cannula insertion button text while checking insertion */
-"Checking..." = "Checking...";
+"Checking..." = "Đang kiểm tra...";
 
 /* */
-"Check cannula insertion finished" = "Check cannula insertion finished";
+"Check cannula insertion finished" = "Kiểm tra việc gắn cannula hoàn tất";
 
 /* */
-"Get pod status" = "Get pod status";
+"Get pod status" = "Lấy thông tin pod";
 
 /* */
-"Save Basal Profile" = "Save Basal Profile";
+"Save Basal Profile" = "Lưu profile basal";
 
 /* */
-"Save basal profile failed: %{public}@" = "Save basal profile failed: %{public}@";
+"Save basal profile failed: %{public}@" = "Lưu profile basal gặp lỗi: %{public}@";
 
 /* */
-"Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
+"Skipping Play Test Beeps due to bolus still in progress." = "Bỏ qua việc kiểm tra bíp do đang thực hiện liều bolus.";
 
 /* */
-"Play Test Beeps" = "Play Test Beeps";
+"Play Test Beeps" = "Kiểm tra bíp";
 
 /* */
 "Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
@@ -409,7 +409,7 @@
 "Pod deactivated successfully. Continue." = "Pod deactivated successfully. Continue.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Retry";
+"Retry" = "Thử lại";
 
 /* Action button description when deactivated */
 "Continue" = "Continue";
