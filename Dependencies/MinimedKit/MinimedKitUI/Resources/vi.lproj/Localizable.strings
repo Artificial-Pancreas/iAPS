@@ -20,7 +20,7 @@
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Adjusting Pump Time...";
+"Adjusting Pump Time..." = "Đang điều chỉnh thời gian bơm...";
 
 /* Instructions on selecting battery chemistry type */
 "Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Pin kềm và pin lithium phân rã ở các mức độ khác nhau. Pin kềm có xu hướng giảm điện áp tuyến tính theo thời gian trong khi pin lithium có xu hướng duy trì điện áp cho đến khi hết nửa vòng đời. Trong điều kiện sử dụng bình thường trên bơm Minimed (loại X22 hay X15) khi chạy Loop, pin kiềm có thể dùng được trong khoảng 4 đến 5 ngày trong khi pin lithium dùng dc 2 tuần. Việc lựa chọn này được sử dụng theo các mức phân rã điện áp khác nhau cho mỗi loại pin hóa học và sẽ có cảnh báo đối với người dùng khi pin hỏng đạt khoảng từ 8-10 giờ.";
@@ -69,7 +69,7 @@
 "Devices" = "Thiết bị";
 
 /* Description for option to not use MySentry */
-"Do not use MySentry" = "Do not use MySentry";
+"Do not use MySentry" = "Không sử dụng MySentry";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Lỗi khi đang tái thực hiện";
@@ -93,7 +93,7 @@
 "Firmware Version" = "Chương trình cơ sở";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "Insulin\n Đã tạm ngưng";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Khối lượng tiêm insulin";
@@ -111,10 +111,10 @@
 "Medtronic %1$@" = "Medtronic %1$@";
 
 /* Instructions on selecting setting for MySentry */
-"Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models.";
+"Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Các mẫu máy bơm Medtronic 523, 723, 554 và 754 có một tính năng gọi là 'MySentry', phát sóng định kỳ mức pin của bình chứa và máy bơm. Việc lắng nghe các chương trình phát sóng này cho phép Loop liên lạc với máy bơm ít thường xuyên hơn, điều này có thể tăng tuổi thọ pin của máy bơm. Tuy nhiên, khi sử dụng tính năng này, RileyLink sẽ hoạt động lâu hơn và sử dụng nhiều pin hơn. Việc bật tính năng này có thể kéo dài tuổi thọ pin của máy bơm, trong khi việc tắt tính năng này có thể kéo dài tuổi thọ pin RileyLink. Cài đặt này bị bỏ qua đối với các kiểu máy bơm khác.";
 
 /* Value string for MySentry config when MySentry is not being used */
-"No" = "No";
+"No" = "Không";
 
 /* Message display when no response from tuning pump */
 "No response" = "Không có phản hồi nào";
@@ -123,7 +123,8 @@
 "No, Keep Pump As Is" = "Không, Giữ nguyên máy bơm";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Trên máy bơm của bạn, hãy đi tới \"Find Device\". Chọn Main Menu >\Utilities >\\Connect Devices >\\Other Devices >\\On >\\Find Device.
+Bơm sẽ tìm thấy chỉ định";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
@@ -164,7 +165,7 @@
 "Scheduled Basal" = "Đã lên chương trình cho liều Basal";
 
 /* Title text for insulin type confirmation page */
-"Select the type of insulin that you will be using in this pump." = "Select the type of insulin that you will be using in this pump.";
+"Select the type of insulin that you will be using in this pump." = "Chọn loại insulin bạn sẽ sử dụng trong máy bơm này.";
 
 /* Progress message for sending button press to pump. */
 "Sending button press…" = "Đang gửi nút bấm…";
@@ -185,13 +186,13 @@
 "Suspending" = "Đang tạm ngưng";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Đồng bộ thời gian hiện tại";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Bạn có muốn cập nhật thời gian trên máy bơm của mình đến thời điểm hiện tại không?";
 
 /* Title for pod sync time action sheet. */
-"Time Change Detected" = "Time Change Detected";
+"Time Change Detected" = "Đã phát hiện thay đổi thời gian";
 
 /* The label indicating the results of each frequency trial */
 "Trials" = "Các thử nghiệm";
@@ -203,7 +204,7 @@
 "U/hr" = "U/giờ";
 
 /* Text to indicate battery percentage is unknown */
-"unknown" = "unknown";
+"unknown" = "không xác định";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Không nhận ra";
@@ -211,10 +212,10 @@
 /* Description for option to use MySentry
    navigation title for pump battery type selection
    Text for medtronic pump to use MySentry */
-"Use MySentry" = "Use MySentry";
+"Use MySentry" = "Sử dụng MySentry";
 
 /* Value string for MySentry config when MySentry is being used */
 "Yes" = "Có";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Có, đồng bộ với thời gian hiện tại";
