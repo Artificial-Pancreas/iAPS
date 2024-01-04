@@ -1302,7 +1302,7 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "Vô hiệu hóa SMBs";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normal Profile";
+"Normal Profile" = "Hồ sơ Normal";
 
 /* Custom but unsaved Profile */
 "Custom Profile" = "Tùy chỉnh Profile";
@@ -1728,7 +1728,7 @@ Enact a temp Basal or a temp target */
 "Errors" = "Lỗi";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Khoảng";
 
 /* Median loop interval */
 "Duration" = "Duration";
