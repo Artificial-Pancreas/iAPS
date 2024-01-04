@@ -35,7 +35,7 @@
 "Recommendation" = "LIỀU KHUYẾN NGHỊ";
 
 /* Button */
-"Clear" = "Bỏ";
+"Clear" = "Hủy bỏ";
 
 /* Button */
 "Done" = "Hoàn thành";
@@ -909,10 +909,10 @@ Enact a temp Basal or a temp target */
 "Value" = "Giá trị";
 
 /* */
-"Adds Phone Battery" = "Thêm Pin điện thoại";
+"Adds Phone Battery" = "Hãy sạc Pin điện thoại";
 
 /* */
-"Adds Transmitter Battery" = "Thêm pin của Transmitter";
+"Adds Transmitter Battery" = "Hãy sạc pin của Transmitter";
 
 /* */
 "Also vibrate" = "Rung";
@@ -954,10 +954,10 @@ Enact a temp Basal or a temp target */
 "Schedules were saved successfully!" = "Lịch trình được lưu thành công!";
 
 /* */
-"High Glucose Alarm active" = "Báo động Glucose Cao đang hoạt động";
+"High Glucose Alarm active" = "Báo động Glucose đang Cao";
 
 /* */
-"Low Glucose Alarm active" = "Báo động Glucose Thấp đang hoạt động";
+"Low Glucose Alarm active" = "Báo động Glucose đang Thấp";
 
 /* */
 "No Glucose Alarm active" = "Báo động Không có Glucose đang hoạt động";
@@ -1014,7 +1014,7 @@ Enact a temp Basal or a temp target */
 "Debug options" = "Tùy chọn gỡ lỗi";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Thêm nhiều dữ liệu vào Issue Report ";
+"Adds a lot of data to the Issue Report " = "Thêm nhiều dữ liệu vào Báo cáo vấn đề ";
 
 /* */
 "Persist sensordata" = "Duy trì dữ liệu cảm biến";
@@ -1041,10 +1041,10 @@ Enact a temp Basal or a temp target */
 "Last loop was more than %d min ago" = "Loop dừng hoạt động hơn %d phút trước";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Thể hiện đường huyết lên trên app";
+"Show glucose on the app badge" = "Thể hiện đường huyết lên trên iAPS";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Bổ sung glucose";
 
 /* About this source */
 "About this source" = "Thông tin nguồn này";
@@ -1173,7 +1173,7 @@ Enact a temp Basal or a temp target */
 "Enacted" = "Đã kích hoạt";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Announcements";
+"Announcements" = "Các thông báo";
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Thông báo đã kích hoạt";
