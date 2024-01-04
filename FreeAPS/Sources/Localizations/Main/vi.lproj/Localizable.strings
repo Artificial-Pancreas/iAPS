@@ -1243,13 +1243,13 @@ Enact a temp Basal or a temp target */
 "Conversion settings" = "Cài đặt chuyển đổi";
 
 /* Delay */
-"Delay In Minutes" = "Tạm ngừng trong số phút";
+"Delay In Minutes" = "Độ trễ theo phút";
 
 /* Duration */
-"Maximum Duration In Hours" = "Khoảng thời gian tối đa tính theo giờ";
+"Maximum Duration In Hours" = "Giới hạn thời gian tính theo giờ";
 
 /* Interval */
-"Interval In Minutes" = "Khoảng thời gian tính bằng phút";
+"Interval In Minutes" = "Khoảng thời gian tính bằng phút";
 
 /* Override */
 "Override With A Factor Of " = "Hệ số ";
