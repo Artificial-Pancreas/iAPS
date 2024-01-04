@@ -65,7 +65,7 @@
 "Edit Meal" = "Chỉnh sửa bữa ăn";
 
 /* Bolus View Meal Add Meal Button */
-"Add Meal" = "Thêm bữa ăn";
+"Add Meal" = "Khai báo bữa ăn";
 
 /* Bolus View Bolus Summary Header */
 "Bolus Summary" = "Tóm tắt liều bolus";
@@ -74,7 +74,7 @@
 "Calculations" = "Các tính toán";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal" = "Bữa ăn nhiều béo";
+"Fatty Meal" = "Bữa ăn nhiều chất béo";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Liều bolus đầy đủ";
@@ -83,7 +83,7 @@
 "Fraction" = "Chia cho";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Chỉ số bữa ăn nhiều béo";
+"Fatty Meal Factor" = "Chỉ số bữa ăn nhiều chất béo";
 
 /* For the  Bolus View pop-up */
 "Result" = "Kết quả";
@@ -140,7 +140,7 @@
 "Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
 
 /* Custom temp target */
-"Custom" = "THÔNG LỆ";
+"Custom" = "Tùy chọn";
 
 /*  */
 "Date" = "Ngày";
@@ -152,10 +152,10 @@
 "Delete preset \"%@\"" = "Xóa cài đặt trước \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Khoảng thời gian";
+"Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Bỏ qua mục tiêu tạm thời";
+"Enact Temp Target" = "Chấp nhận mục tiêu tạm thời";
 
 /* */
 "Target" = "Mục tiêu";
@@ -242,7 +242,7 @@
 "Use Autotune" = "Sử dụng Autotune";
 
 /* Add profile basal */
-"Add" = "Thêm vào";
+"Add" = "Thêm";
 
 /*  */
 "Basal Profile" = "Hồ sơ liều nền";
@@ -1653,13 +1653,13 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Thể hiện biểu đồ dạng X-Grid";
+"Display Chart X - Grid lines" = "Hiển thị biểu đồ dạng X-Grid";
 
 /* */
-"Display Chart Y - Grid lines" = "Thể hiện biểu đồ dạng Y-Grid";
+"Display Chart Y - Grid lines" = "Hiển thị biểu đồ dạng Y-Grid";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Thể hiện các đường hiển thị Low và High";
+"Display Chart Threshold lines for Low and High" = "Hiển thị các đường hiển thị Low và High";
 
 /* */
 "Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
@@ -1728,10 +1728,10 @@ Enact a temp Basal or a temp target */
 "Errors" = "Lỗi";
 
 /* Average loop interval */
-"Interval" = "Khoảng";
+"Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Khoảng thời gian";
+"Duration" = "Duration";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -1746,7 +1746,7 @@ Enact a temp Basal or a temp target */
 "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Mặc định là 20 phút. Tần suất cập nhật và lưu stats.json cũng như tải mảng cuối cùng lên Nightscout khi được bật.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "24 Giờ Qua ";
+"Past 24 Hours " = "24 giờ qua ";
 
 /* Duration displayed in statPanel */
 "Past Week " = "Một tuần qua ";
@@ -1808,13 +1808,13 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Mặc định là False. Khi được đặt thành True, sẽ tăng độ nhạy (tỷ lệ độ nhạy thấp hơn) cho các mục tiêu tạm thời được đặt thành >= 111. Từ đồng nghĩa với Fitness_mode. Mục tiêu tạm thời của bạn trên 110 càng cao sẽ dẫn đến tỷ lệ nhạy cảm hơn (thấp hơn), ví dụ: mục tiêu tạm thời là 120 dẫn đến tỷ lệ độ nhạy là 0,75, trong khi 140 dẫn đến tỷ lệ nhạy cảm là 0,6 (với HalfBasalTarget mặc định là 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
-"Low Temptarget Lowers Sensitivity" = "Low Temptarget Lowers Sensitivity";
+"Low Temptarget Lowers Sensitivity" = "Mục tiêu tạm thời thấp sẽ làm giảm độ nhạy";
 
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Mặc định là False. Khi được đặt thành True, có thể giảm độ nhạy (tỷ lệ độ nhạy cao hơn) cho mục tiêu tạm thời <= 99. Mục tiêu tạm thời của bạn càng thấp dưới 100 sẽ dẫn đến tỷ lệ kém nhạy hơn (cao hơn), ví dụ: mục tiêu tạm thời là 95 dẫn đến tỷ lệ độ nhạy là 1,09, trong khi 85 kết quả là 1,33 (với HalfBasalTarget mặc định là 160).";
 
 /* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "Sensitivity Raises Target";
+"Sensitivity Raises Target" = "Độ nhạy tăng mục tiêu";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Khi True, tăng mục tiêu BG khi cảm biến tự động phát hiện độ nhạy";
@@ -1826,7 +1826,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là False. Khi True, sẽ hạ mục tiêu BG khi cảm biến tự động phát hiện kháng cự";
 
 /* Headline ”Advanced Target Adjustments" */
-"Advanced Target Adjustments" = "Advanced Target Adjustments";
+"Advanced Target Adjustments" = "Điều chỉnh mục tiêu nâng cao";
 
 /* ”Advanced Target Adjustments" */
 "This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "Tính năng này trước đây được bật theo mặc định nhưng bây giờ sẽ được mặc định là false (sẽ KHÔNG được bật tự động) trong oref0 0.6.0 trở lên. (Không cần điều này với 0.6.0). Tính năng này tự động giảm BG mục tiêu của oref0 khi BG hiện tại và BG cuối cùng ở mức cao. Điều này giúp ngăn chặn và giảm thiểu BG cao, nhưng tự động chuyển sang nhiệt độ thấp để đảm bảo BG đi xuống mục tiêu thực tế của bạn một cách suôn sẻ. Nếu bạn thấy hành vi này quá hung hăng, bạn có thể tắt tính năng này. Nếu bạn làm như vậy, vui lòng cho chúng tôi biết để chúng tôi có thể hiểu rõ hơn cài đặt nào phù hợp nhất với mọi người.";
