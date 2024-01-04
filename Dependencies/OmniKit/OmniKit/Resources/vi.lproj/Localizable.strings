@@ -126,7 +126,7 @@
 "Insulin delivery stopped. Change Pod now." = "Insulin ngừng. Thay Pod ngay.";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Liều insulin đã tạm dừng";
+"Insulin Suspended" = "Insulin Đã tạm ngưng";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
 "Insulin type not configured" = "Loại insulin chưa được khai báo";
@@ -368,7 +368,7 @@
 "Tank power activated" = "Pod được kích hoạt";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Liều cơ bản tạm thời";
 
 /* Error message shown when temp basal could not be set due to existing temp basal in progress */
 "Temp basal in progress" = "Liều basal tạm thời đang tiến hành";
