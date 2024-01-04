@@ -459,8 +459,9 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Förbered hud.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Ta bort det blå kanylskyddet och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
+/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
+Label text for step two of attach pod instructions */
+"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Ta bort det blå kanylskyddet och kontrollera att kanylen inte redan sticker ut. Ta sedan bort skyddspappret.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Kontrollera din podd, sätt fast den och bekräfta sedan att den sitter bra.";
