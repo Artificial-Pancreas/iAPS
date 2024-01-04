@@ -2058,10 +2058,10 @@ Gebruik dit niet samen met een hoge insuline fractie (> 2).\n\n
 Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op basis van je recente verhoudingen. Het zorgt ervoor dat de aanpassingen niet te groot zijn en werkt niet goed als je een hoge insuline fractie hebt.";
 
 /* Enable Dyn ISF */
-"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+"Activate Dynamic Sensitivity (ISF)" = "Dynamische gevoeligheid (ISF) activeren";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Dynamische koolhydraat verhouding activeren (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Dynamische ISF-constante aanpassen";
@@ -2073,63 +2073,63 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Use Sigmoid Function" = "Gebruik Sigmoid functie";
 
 /* Which dyn ISF function to use */
-"Formula" = "Formula";
+"Formula" = "Formule";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Safety";
+"Safety" = "Veiligheid";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Gebruikt een Sigmoid functie voor ISF (en voor CR, indien ingeschakeld), in plaats van de standaard logaritmische formule. Vereist een geactiveerde dynamische ISF instelling.\n\nDe instelling aanpassing past de helling van de curve aan (Y: Dynamische verhouding, X: Bloedglucose). Een lagere waarde ==> minder steil = minder agressief.\n\nDe autosens.min/max instellingen bepalen zowel de max/min grenzen voor de dynamische ratio als hoeveel de dynamische ratio wordt aangepast. Als AF de helling van de curve is, is autosens.min/max de hoogte van de grafiek, het Y-interval, waarbij Y: dynamische verhouding. De curve zal altijd een sigmoïde vorm hebben, ongeacht de autosens.min/max instellingen, wat betekent dat deze instellingen grote gevolgen hebben voor het resultaat van de berekende dynamische ISF. Wees voorzichtig met het instellen van een te hoge autosens.max waarde. Met een goede profiel-ISF instelling zal het waarschijnlijk nooit nodig zijn deze hoger in te stellen dan 1,5.\n\nEen Autosens max grens > 1,5 is niet aan te raden bij gebruik van de Sigmoid functie.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting" = "Grenswaarde instellingen";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaard drempelwaarde in iAPS hangt af van je huidige minimum bloedsuikerdoel. Hier is hoe het werkt:\n\n Als je minimum doel 5,0 mmol/l is, dan is de drempel 3,6 mmol/l. Bij een minimum doel van 5,5 mmol/l, wordt de drempel 3,8 mmol/l. Als je minimum doel 6,1 mmol/l is, blijft de drempel 3,8 mmol/l. Bij een minimum doel van 7,2 mmol/l, wordt de drempel 4,7 mmol/l.\n\nJe kunt deze instelling aanpassen en een hogere drempelwaarde kiezen voor het herhalen met dynISF. De geldige waarden hiervoor zijn tussen 3,6 mmol/l en 6,6 mmol/l.";
 
 /* Header */
-"Calculator settings" = "Calculator settings";
+"Calculator settings" = "Calculator instellingen";
 
 /* UI/UX option */
-"Display Predictions" = "Display Predictions";
+"Display Predictions" = "Geef voorspellingen weer";
 
 /* UI/UX option */
-"Smaller iPhone Screens" = "Smaller iPhone Screens";
+"Smaller iPhone Screens" = "Kleinere iPhone schermen";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
+"Display and allow Fat and Protein entries" = "Vet- en proteïne weergeven en toestaan";
 
 /* UI/UX option */
-"Add Meal View settings " = "Add Meal View settings ";
+"Add Meal View settings " = "Maaltijdweergave instellingen toevoegen ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Display Temp Targets Button";
+"Display Temp Targets Button" = "Toon tijdelijke doelen knop";
 
 /* UI/UX option */
-"Home View Button Panel " = "Home View Button Panel ";
+"Home View Button Panel " = "Beginscherm knoppaneel ";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+"In case you're using both profiles and temp targets" = "In het geval dat je zowel profielen als tijdelijke doelen gebruikt";
 
 /* UI/UX option */
-"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+"Always Color Glucose Value (green, yellow etc)" = "Glucose waarde altijd in kleur (rood, groen, geel enz.) weergeven";
 
 /* UI/UX option */
-"Header settings" = "Header settings";
+"Header settings" = "Instellingen voor kopteksten";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normaal gesproken wordt glucose alleen rood gekleurd als je de notificatiegrens hebt overschreden voor hoog/laag";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+"Horizontal Scroll View Visible hours" = "Horizontale scrolweergave zichtbare uren";
 
 /* Notification option */
-"Live Activity" = "Live Activity";
+"Live Activity" = "Live activiteit";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
 
 /* Notification option */
-"Show live activity" = "Show live activity";
+"Show live activity" = "Toon live activiteit";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Gewogen gemiddelde van TDD van afgelopen 24 uur:";

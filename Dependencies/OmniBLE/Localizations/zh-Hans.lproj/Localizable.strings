@@ -459,8 +459,9 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "将注射部位做好准备";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "移除蓝色防尘帽并检查出药口软管，然后移除覆盖的贴纸";
+/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
+Label text for step two of attach pod instructions */
+"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "移除蓝色防尘帽并检查出药口软管，然后移除覆盖的贴纸";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "检查Pod，贴在注射部位上，确保pod已经贴牢";

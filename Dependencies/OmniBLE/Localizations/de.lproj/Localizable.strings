@@ -459,8 +459,9 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Setzstelle vorbereiten.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Entfernen Sie blaue Pod-Nadel Kappe und prüfen Sie die Kanüle. Danach die Klebefolien auf der Rückseite entfernen.";
+/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
+Label text for step two of attach pod instructions */
+"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Entfernen Sie blaue Pod-Nadel Kappe und prüfen Sie die Kanüle. Danach die Klebefolien auf der Rückseite entfernen.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Prüfen Sie den Pod, auf der Setzstelle anbringen, dann Prodanbringung bestätigen.";

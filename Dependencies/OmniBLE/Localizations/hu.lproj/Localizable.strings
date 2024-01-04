@@ -459,8 +459,9 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Prepare site.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Remove blue Pod needle cap and check cannula. Then remove paper backing.";
+/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
+Label text for step two of attach pod instructions */
+"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Check Pod, apply to site, then confirm pod attachment.";
