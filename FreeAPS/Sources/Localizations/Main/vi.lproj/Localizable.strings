@@ -221,7 +221,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Hồ sơ liều nền (Basal)";
+"Basal profile" = "Hồ sơ liều nền";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
@@ -245,7 +245,7 @@
 "Add" = "Thêm vào";
 
 /*  */
-"Basal Profile" = "Hồ sơ liều nền (Basal)";
+"Basal Profile" = "Hồ sơ liều nền";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -345,7 +345,7 @@ Enact a temp Basal or a temp target */
 "Edit settings json" = "Chỉnh sửa cấu hình json";
 
 /* */
-"Glucose units" = "Đơn vị glucose";
+"Glucose units" = "Đơn vị Glucose";
 
 /*  */
 "Preferences" = "Sở thích";
@@ -390,7 +390,7 @@ Enact a temp Basal or a temp target */
 "Settings imported" = "Các cấu hình đã được cập nhật";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Sai khác đơn vị glucose giữa Nightscout và Bơm. Cập nhật cấu hình bị bỏ.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Sai khác đơn vị Glucose giữa Nightscout và Bơm. Cập nhật cấu hình bị bỏ.";
 
 /* Import Error */
 "Can't find the default Nightscout Profile." = "Không thể tìm thấy Profile Nightscout mặc định.";
@@ -543,7 +543,7 @@ Enact a temp Basal or a temp target */
 "Low target" = "Mục tiêu thấp";
 
 /* When bolusing */
-"Bolusing" = "Đang tiến hành bolus";
+"Bolusing" = "Đang bolus";
 
 /* */
 "Pump suspended" = "Bơm đã tạm ngưng";
@@ -579,7 +579,7 @@ Enact a temp Basal or a temp target */
 "Updating..." = "Đang cập nhật...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp targets";
+"Temp Targets" = "Mục tiêu tạm thời";
 
 /* Delete carbs from data table and Nightscout */
 "Delete Carbs?" = "Xóa Carbs?";
@@ -603,7 +603,7 @@ Enact a temp Basal or a temp target */
 "Configure Libre Transmitter" = "Cấu hình Libre Transmitter";
 
 /* */
-"Calibrations" = "Hiệu chuẩn (Calib)";
+"Calibrations" = "Hiệu chuẩn";
 
 /* */
 "Create Events in Calendar" = "Tạo sự kiện trong Calendar";
