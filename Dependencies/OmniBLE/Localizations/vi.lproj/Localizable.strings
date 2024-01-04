@@ -234,7 +234,7 @@
 "No Insulin" = "Hết thuốc";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Liều insulin đã tạm dừng";
+"Insulin Suspended" = "Insulin Đã tạm ngưng";
 
 /* Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Mất tín hiệu";
@@ -459,8 +459,9 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Chuẩn bị vị trí.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Tháo nắp kim màu xanh và kiểm tra cannula. Sau đó gỡ bỏ lớp giấy phía sau.";
+/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
+Label text for step two of attach pod instructions */
+"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Tháo nắp kim màu xanh và kiểm tra cannula. Sau đó gỡ bỏ lớp giấy phía sau.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Kiểm tra pod, gắn vào vị trí sau đó xác nhận pod đã được gắn chặt.";
@@ -529,7 +530,7 @@
 "Finish Setup" = "Hoàn thành cài đặt";
 
 /* */
-"Setup Complete" = "Thiết lập xong";
+"Setup Complete" = "Cấu hình hoàn thành";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -640,7 +641,7 @@
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Maximum basal rate chưa được PumpManager cấu hình. Đề nghị vào therapy settings-> delivery limits và cấu hình maximum basal rate mới.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Mặc định Nhắc nhở Hết hạn";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Thông tin Pod trước đó";
@@ -703,7 +704,7 @@
 "Next" = "Kế tiếp";
 
 /* */
-"Expiration Reminder" = "Expiration Reminder";
+"Expiration Reminder" = "Nhắc nhở Hết hạn";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Ứng dụng sẽ thông báo khi lượng insulin trong Pod đạt đến mức này (50-10 U).\n\n Kéo xuống để chọn số Unit mà bạn muốn để nhận thông báo.";
