@@ -630,7 +630,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Transmitters";
 
 /* */
-"Modes" = "Các cách thức";
+"Modes" = "Chế độ cảm biến";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
@@ -702,7 +702,7 @@ Enact a temp Basal or a temp target */
 "Phone NFC required!" = "Bật NFC của điện thoại lên!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Điện thoại hoặc app của bạn không hỗ trợ NFC ghép nối với libre2";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Điện thoại hoặc ứng dụng của bạn không hỗ trợ NFC ghép nối với libre2";
 
 /* Bluetooth Power Off */
 "Bluetooth Power Off" = "Tắt bluetooth";
@@ -732,7 +732,7 @@ Enact a temp Basal or a temp target */
 "HIGHALERT!" = "CẢNH BÁO CAO!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Đã báo lại)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Đường huyết: %@";
@@ -756,10 +756,10 @@ Enact a temp Basal or a temp target */
 "Invalid Glucose sample detected, try again later" = "Mẫu đường huyết không hợp lệ, thử lại sau";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor có khả năng tạm dừng, bong khỏi hoặc quá lạnh hoặc quá nóng";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Cảm biến có khả năng tạm dừng, bong khỏi hoặc quá lạnh hoặc quá nóng";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Sensor không hợp lệ";
+"Invalid Sensor Detected" = "Cảm biến không hợp lệ";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
 "Detected sensor seems not to be a libre 1 sensor!" = "Cảm biến được phát hiện không phải là cảm biến libre 1!";
