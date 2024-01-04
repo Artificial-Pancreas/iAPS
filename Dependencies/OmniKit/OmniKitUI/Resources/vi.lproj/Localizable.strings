@@ -240,7 +240,7 @@
 "Expiration Reminder" = "Nhắc nhở Hết hạn";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Mặc định Nhắc nhở Hết hạn";
 
 /* The title of the cell showing the pod expiration after expiry */
 "Expired" = "Đã hết hạn";
@@ -261,7 +261,7 @@
 "Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+"Failed to update confidence reminder preference." = "Không cập nhật được tùy chọn lời nhắc về độ tin cậy.";
 
 /* Alert title for error when updating expiration reminder */
 "Failed to Update Expiration Reminder" = "Failed to Update Expiration Reminder";
