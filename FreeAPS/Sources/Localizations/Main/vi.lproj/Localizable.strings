@@ -152,7 +152,7 @@
 "Delete preset \"%@\"" = "Xóa cài đặt trước \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Trong khoảng";
 
 /*  */
 "Enact Temp Target" = "Chấp nhận mục tiêu tạm thời";
@@ -1728,13 +1728,13 @@ Enact a temp Basal or a temp target */
 "Errors" = "Lỗi";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Khoảng";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "Trong khoảng";
 
 /* "Display SD */
-"Display SD instead of CV" = "Display SD instead of CV";
+"Display SD instead of CV" = "Hiển thị SD thay vì CV";
 
 /* Description for display SD */
 "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Hiển thị Độ lệch chuẩn (SD) thay vì Hệ số biến thiên (CV) trong statPanel";
