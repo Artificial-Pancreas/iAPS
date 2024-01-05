@@ -1785,7 +1785,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to delete this CGM?" = "Bạn có chắc sẽ xóa CGM này?";
 
 /* New Experimental feature */
-"Experimental" = "Thử nghiệm";
+"Experimental" = "Thực hiện";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Giá trị Glucose mịn";
 
@@ -1802,7 +1802,7 @@ Enact a temp Basal or a temp target */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại tỷ lệ cảm biến tự động về mức trung tính khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi địa điểm có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình một cách độc lập với những thay đổi ở địa điểm, bạn có thể cân nhắc việc tắt tính năng này.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
-"High Temptarget Raises Sensitivity" = "High Temptarget Raises Sensitivity";
+"High Temptarget Raises Sensitivity" = "Mục tiêu tạm thời cao sẽ làm tăng độ nhạy";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Mặc định là False. Khi được đặt thành True, sẽ tăng độ nhạy (tỷ lệ độ nhạy thấp hơn) cho các mục tiêu tạm thời được đặt thành >= 111. Từ đồng nghĩa với Fitness_mode. Mục tiêu tạm thời của bạn trên 110 càng cao sẽ dẫn đến tỷ lệ nhạy cảm hơn (thấp hơn), ví dụ: mục tiêu tạm thời là 120 dẫn đến tỷ lệ độ nhạy là 0,75, trong khi 140 dẫn đến tỷ lệ nhạy cảm là 0,6 (với HalfBasalTarget mặc định là 160).";
@@ -1820,7 +1820,7 @@ Enact a temp Basal or a temp target */
 "When true, raises BG target when autosens detects sensitivity" = "Khi True, tăng mục tiêu BG khi cảm biến tự động phát hiện độ nhạy";
 
 /* Headline ”Resistance Lowers Target" */
-"Resistance Lowers Target" = "Resistance Lowers Target";
+"Resistance Lowers Target" = "Chống mục tiêu thấp";
 
 /* ”Resistance Lowers Target" */
 "Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là False. Khi True, sẽ hạ mục tiêu BG khi cảm biến tự động phát hiện kháng cự";
@@ -1835,7 +1835,7 @@ Enact a temp Basal or a temp target */
 "Exercise Mode" = "Chế độ tập thể dục";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Mặc định là False. Khi True, mục tiêu cao > 105 mg/dL sẽ điều chỉnh Tỷ lệ độ nhạy cho chế độ tập luyện. Từ đồng nghĩa với high_temptarget_raises_sensitive";
+"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Mặc định là False. Khi True, mục tiêu cao > 105 mg/dL sẽ điều chỉnh Tỷ lệ độ nhạy cho chế độ tập luyện. Từ đồng nghĩa với \"Mục tiêu tạm thời cao sẽ làm tăng độ nhạy\"";
 
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Phạm vi mục tiêu BG rộng";
@@ -1844,16 +1844,16 @@ Enact a temp Basal or a temp target */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Giá trị mặc định là False, có nghĩa là theo mặc định chỉ phần thấp nhất trong phạm vi mục tiêu BG của máy bơm được sử dụng làm mục tiêu OpenAPS. Đây là tính năng an toàn nhằm ngăn chặn các mục tiêu quá rộng và kết quả kém tối ưu. Do đó, mức cao hơn của phạm vi mục tiêu chỉ được sử dụng để tránh việc điều chỉnh quá mức của thuật sĩ truyền nhanh. Sử dụng wide_bg_target_range: true để buộc nhiệt độ trung tính trên phạm vi BG cuối cùng rộng hơn.";
 
 /* Headline "Skip Neutral Temps" */
-"Skip Neutral Temps" = "Skip Neutral Temps";
+"Skip Neutral Temps" = "Bỏ qua tạm thời trung lập";
 
 /* "Skip Neutral Temps" */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Mặc định là False, do đó iAPS sẽ đặt nhiệt độ bất cứ khi nào có thể, do đó, sẽ dễ dàng hơn để xem hệ thống có hoạt động hay không, ngay cả khi bạn ngoại tuyến. Điều này có nghĩa là OpenAPS sẽ đặt Temp “trung tính” (giống như Temp cơ bản mặc định của bạn) nếu không cần điều chỉnh. Đây là cài đặt cũ để OpenAPS có các tùy chọn giảm thiểu âm thanh và thông báo từ 'giàn khoan' có thể đánh thức bạn vào ban đêm. ";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Unsuspend If No Temp";
+"Unsuspend If No Temp" = "Bỏ tạm dừng nếu không có tạm thời";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Nhiều người thỉnh thoảng quên tiếp tục/hủy tạm dừng máy bơm sau khi kết nối lại. Nếu bạn là một trong số họ và sẵn sàng đặt nhiệt độ cơ bản bằng 0 một cách đáng tin cậy bất cứ khi nào tạm dừng và ngắt kết nối máy bơm của mình, thì tính năng này sẽ hỗ trợ bạn. Nếu được bật, nó sẽ tự động tiếp tục/hủy tạm dừng máy bơm nếu bạn quên làm như vậy trước khi hết nhiệt độ 0. Miễn là nhiệt độ bằng 0 vẫn đang chạy, nó sẽ khiến máy bơm bị treo.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Nhiều người thỉnh thoảng quên tiếp tục/hủy tạm dừng máy bơm sau khi kết nối lại. Nếu bạn là một trong số họ và sẵn sàng đặt nhiệt độ cơ bản bằng 0 một cách đáng tin cậy bất cứ khi nào tạm dừng và ngắt kết nối máy bơm của mình, thì tính năng này sẽ hỗ trợ bạn. Nếu được bật, nó sẽ tự động tiếp tục/hủy tạm dừng máy bơm nếu bạn quên làm như vậy trước khi hết tạm thời 0. Miễn là tạm thời bằng 0 vẫn đang chạy, nó sẽ khiến máy bơm bị treo.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Kích hoạt UAM";
@@ -1968,7 +1968,7 @@ Enact a temp Basal or a temp target */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "Giá trị mặc định là 0,5 cho giá trị này giữ cho ISF tự động điều chỉnh gần hơn với ISF bơm thông qua mức trung bình có trọng số của fullNewISF và PumpISF. 1.0 cho phép điều chỉnh hoàn toàn, 0 là không điều chỉnh từ bơm ISF.";
 
 /* Headline "Remaining Carbs Fraction" */
-"Remaining Carbs Fraction" = "Remaining Carbs Fraction";
+"Remaining Carbs Fraction" = "Phần carb còn lại";
 
 /* "Remaining Carbs Fraction" */
 "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Đây là tỷ lệ carbs mà chúng tôi cho rằng sẽ hấp thụ trong 4 giờ nếu chúng tôi chưa thấy sự hấp thụ carb.";
@@ -1980,19 +1980,19 @@ Enact a temp Basal or a temp target */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Đây là lượng carb tối đa mà chúng tôi cho rằng sẽ hấp thụ trong 4 giờ nếu chúng tôi chưa thấy khả năng hấp thụ carb.";
 
 /* Headline ”Max SMB Basal Minutes" */
-"Max SMB Basal Minutes" = "Số phút cơ bản(Basal) SMB tối đa";
+"Max SMB Basal Minutes" = "Số phút cơ bản SMB tối đa";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa có thể được phân phối dưới dạng một SMB duy nhất không có COB. Điều này mang lại khả năng làm cho SMB trở nên hung hãn hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Không nên đặt giá trị này cao hơn 90 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về nhiệt độ bằng 0 một cách an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Số phút cơ bản(basal) UAM SMB tối đa";
+"Max UAM SMB Basal Minutes" = "Số phút cơ bản UAM SMB tối đa";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa mà UAM có thể phân phối dưới dạng một SMB khi IOB vượt quá COB. Điều này mang lại khả năng khiến UAM trở nên hung hãn hơn hoặc ít hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Việc giảm giá trị sẽ khiến UAM giảm liều insulin cho mỗi SMB. Không nên đặt giá trị này cao hơn 60 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về nhiệt độ bằng 0 một cách an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "SMB Interval" */
-"SMB Interval" = "Khoảng thời gian SMB";
+"SMB Interval" = "SMB Interval";
 
 /* "SMB Interval" */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Thời lượng tối thiểu tính bằng phút cho SMB mới kể từ SMB cuối cùng hoặc liều truyền thủ công";
@@ -2004,7 +2004,7 @@ Enact a temp Basal or a temp target */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Số SMB được ban hành nhỏ nhất. Lượng tối thiểu đối với máy bơm Omnipod là 0,05 U, trong khi đối với máy bơm Medtronic, lượng này khác nhau đối với nhiều kiểu máy khác nhau, từ 0,025 U đến 0,10 U. Vui lòng kiểm tra lượng truyền nhanh tối thiểu mà máy bơm của bạn có thể cung cấp. Giá trị mặc định là 0,1.";
 
 /* Headline "Insulin Peak Time" */
-"Insulin Peak Time" = "Thời gian cao điểm của insulin";
+"Insulin Peak Time" = "Thời gian đỉnh của Insulin";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Thời gian tác dụng hạ đường huyết tối đa của insulin, tính bằng phút. Lưu ý: Oref giả định đường cong cực nhanh (Lyumjev) và tác dụng nhanh (Fiasp) tối thiểu (35 & 50 phút) và tối đa (100 & 120 phút) insulinPeakTimes áp dụng. Việc sử dụng insulinPeakTime tùy chỉnh ngoài các giới hạn này sẽ dẫn đến sự cố với iAPS, tính toán vòng lặp dài hơn và có thể xảy ra vòng lặp màu đỏ.";
@@ -2125,7 +2125,7 @@ Enact a temp Basal or a temp target */
 "Show live activity" = "Hiển thị hoạt động trực tiếp";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
-"Weighted Average of TDD. Weight of past 24 hours:" = "Weighted Average of TDD. Weight of past 24 hours:";
+"Weighted Average of TDD. Weight of past 24 hours:" = "Trung bình có trọng số của TDD. Trọng lượng trong 24 giờ qua:";
 
 /* Weight of past 24 hours of insulin */
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Phải > 0 và <= 1.\nMặc định là 0,65 (65 %) * TDD. Phần còn lại sẽ lấy từ mức trung bình của tổng dữ liệu (tối đa 14 ngày) của tất cả các phép tính TDD (35%). Để chỉ sử dụng 24 giờ qua, hãy đặt giá trị này thành 1.\n\nĐể tránh những biến động đột ngột, chẳng hạn như sau một bữa ăn thịnh soạn, tính toán TDD trung bình trong 2 giờ qua được sử dụng thay vì chỉ TDD hiện tại (24 giờ qua lúc thời điểm này).
@@ -2156,10 +2156,10 @@ Enact a temp Basal or a temp target */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Kích hoạt SMB khi phát hiện BG cao, dựa trên mục tiêu BG cao (đã điều chỉnh hoặc cấu hình)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Cài đặt động(Dynamic)";
+"Dynamic settings" = "Dynamic settings";
 
 /* Insulin curve */
-"Insulin curve" = "Đường cong insulin";
+"Insulin curve" = "Chủng loại insulin";
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Yếu tố điều chỉnh (AF)";
