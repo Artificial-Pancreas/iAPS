@@ -11,7 +11,7 @@
 
 "Bolus" = "Liều bolus";
 
-"Close" = "Đóng lại";
+"Close" = "Đóng";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Tiếp tục và bỏ qua liều bolus";
@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Sử dụng nguồn glucose nội tại";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Điều này cho phép tải lên các dữ liệu.json lên Nightscout mà có thể được sử dụng bởi Dự án Community Statictics và Demographics. \n\\Tham gia vào Community Statistics là tùy chọn và yêu cầu đăng ký riêng tại:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Điều này cho phép tải statistics.json lên Nightscout mà có thể được sử dụng bởi Dự án Community Statictics và Demographics. \n\nTham gia vào Community Statistics là tùy chọn và yêu cầu đăng ký riêng tại:\n";
 
 /*  */
 "Edit settings json" = "Chỉnh sửa cấu hình json";
@@ -1302,7 +1302,7 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "Vô hiệu hóa SMBs";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Hồ sơ Normal";
+"Normal Profile" = "Normal Profile";
 
 /* Custom but unsaved Profile */
 "Custom Profile" = "Tùy chỉnh Profile";
@@ -1728,7 +1728,7 @@ Enact a temp Basal or a temp target */
 "Errors" = "Lỗi";
 
 /* Average loop interval */
-"Interval" = "Khoảng";
+"Interval" = "Interval";
 
 /* Median loop interval */
 "Duration" = "Duration";
