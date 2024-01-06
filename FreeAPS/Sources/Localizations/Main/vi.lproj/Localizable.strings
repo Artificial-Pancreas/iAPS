@@ -128,7 +128,7 @@
 "Saved Food" = "Lưu thực phẩm";
 
 /* */
-"Are you sure?" = "Bạn có chắc?";
+"Are you sure?" = "Bạn có chắc không?";
 
 /* Bottom target temp */
 "Bottom target" = "Mục tiêu dưới cùng";
@@ -296,14 +296,14 @@
 "Amount" = "Số lượng";
 
 /* */
-"Cancel Temp Basal" = "Huỷ bỏ Temp Basal";
+"Cancel Temp Basal" = "Huỷ bỏ liều cơ bản tạm thời";
 
 /* Enact
 Enact a temp Basal or a temp target */
 "Enact" = "Chấp nhận";
 
 /* */
-"Manual Temp Basal" = "Liều Basal thủ công";
+"Manual Temp Basal" = "Liều cơ bản thủ công";
 
 /* Allow uploads to different services */
 "Allow uploads" = "Cho phép tải lên";
@@ -828,7 +828,7 @@ Enact a temp Basal or a temp target */
 "Sensor Serial" = "Serial cảm biến";
 
 /* */
-"Transmitter Info" = "Số Id của Transmitter";
+"Transmitter Info" = "Số ID của Transmitter";
 
 /* */
 "Hardware" = "Phần cứng";
@@ -861,7 +861,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Xóa CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Bạn có chắc muốn xóa Cgm này khỏi Loop không?";
+"Are you sure you want to remove this cgm from loop?" = "Bạn có chắc muốn xóa CGM này khỏi Loop không?";
 
 /* */
 "There is no undo" = "Không thể hoàn tác";
@@ -912,7 +912,7 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Hãy sạc Pin điện thoại";
 
 /* */
-"Adds Transmitter Battery" = "Hãy sạc pin của Transmitter";
+"Adds Transmitter Battery" = "Hãy sạc Pin của Transmitter";
 
 /* */
 "Also vibrate" = "Rung";
