@@ -807,7 +807,7 @@ Enact a temp Basal or a temp target */
 "Last Blood Sugar prediction" = "Dự đoán lượng đường trong máu";
 
 /* */
-"CurrentBG" = "Đường máu hiện tại";
+"CurrentBG" = "Đường huyết hiện tại";
 
 /* */
 "Sensor Info" = "Thông tin cảm biến";
