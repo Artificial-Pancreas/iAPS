@@ -474,7 +474,7 @@
 "Pod Activated" = "Pod đã kích hoạt";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Age";
+"Pod Age" = "Tuổi Pod";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
 "Pod deactivated successfully. Continue." = "Pod hủy kích hoạt thành công. Tiếp tục.";
