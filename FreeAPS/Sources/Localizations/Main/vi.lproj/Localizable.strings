@@ -1620,16 +1620,16 @@ Enact a temp Basal or a temp target */
 /* */
 
 
-"Today" = "Hôm nay";
+"Today" = "Today";
 
 /* */
-"Day" = "Ngày";
+"Day" = "Day";
 
 /* */
-"Week" = "Tuần";
+"Week" = "Week";
 
 /* */
-"Month" = "Tháng";
+"Month" = "Month";
 
 /* */
 "Total" = "Tổng số";
