@@ -149,7 +149,7 @@
 "Delete" = "Xóa";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Xóa cài đặt trước \"%@\"";
+"Delete preset \"%@\"" = "Xóa mẫu cài đặt \"%@\"";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Duration";
@@ -182,19 +182,19 @@
 "minutes" = "phút";
 
 /*  */
-"Presets" = "Mẫu thiết lặp";
+"Presets" = "Mẫu cài đặt sẵn";
 
 /* Save preset name */
 "Save" = "Lưu";
 
 /*  */
-"Save as Preset" = "Lưu dưới dạng cài đặt sẵn";
+"Save as Preset" = "Lưu cài đặt sẵn";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Xoá mẫu thiết lập";
+"Delete Preset" = "Xoá mẫu cài đặt";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Bạn có muốn xóa thiết lập sẵn '%@' không?";
+"Delete preset '%@'?" = "Bạn có muốn xóa mẫu cài đặt sẵn '%@' không?";
 
 /* Button */
 "No" = "Không";
@@ -405,7 +405,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Thêm Omnipod";
 
 /* Add Simulator pump */
-"Add Simulator" = "Thêm phần mô phỏng";
+"Add Simulator" = "Thêm Bơm mô phỏng";
 
 /* Insulin model */
 "Model" = "Model";
@@ -948,7 +948,7 @@ Enact a temp Basal or a temp target */
 "Some ui element was incorrectly specified" = "Một vài yếu tố ui đã không được chỉ định";
 
 /* */
-"Success" = "Thành công";
+"Success" = "Success";
 
 /* */
 "Schedules were saved successfully!" = "Lịch trình được lưu thành công!";
@@ -1344,7 +1344,7 @@ Enact a temp Basal or a temp target */
 "Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
 
 /* Alert */
-"Return to Normal?" = "Quay lại bình thường?";
+"Return to Normal?" = "Quay lại chế độ bình thường không?";
 
 /* */
 "This will change settings back to your normal profile." = "Việc này sẽ thay đổi cấu hình trở lại profile Normal của bạn.";
@@ -1404,7 +1404,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Lưu và tiếp tục";
 
 /* */
-"Save as Preset" = "Lưu dưới dạng cài đặt sẵn";
+"Save as Preset" = "Lưu cài đặt mẫu";
 
 /* */
 "Predictions" = "Dự đoán";
