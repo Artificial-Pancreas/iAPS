@@ -458,7 +458,7 @@
 "Play Test Beeps…" = "Kiểm tra tiếng Beep…";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Xác nhận rằng Pod được gắn chặt vào cơ thể bạn.\n\nCannula chỉ có thể lắp một lần. Nhấn vào “Confirm” khi Pod đã gắn chặt.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Xác nhận rằng Pod được gắn chặt vào cơ thể bạn.\n\nCannula chỉ có thể lắp một lần. Nhấn vào “Xác nhận” khi Pod đã gắn chặt.";
 
 /* Instructions for deactivate pod when pod not on body */
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Hủy kích hoạt pod. Khi việc hủy kích hoạt hoàn tất, bạn có thể ghép nối pod mới.";
@@ -618,7 +618,7 @@
 "Signal Loss" = "Mất tín hiệu";
 
 /* No comment provided by engineer. */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "Bỏ qua quá trình giới thiệu Omnipod?";
 
 /* The title of the status section in settings */
 "Status" = "Tình trạng";
@@ -711,7 +711,7 @@
 "Time Change Detected" = "Thay đổi thời gian được phát hiện";
 
 /* No comment provided by engineer. */
-"Toggle sign" = "Toggle sign";
+"Toggle sign" = "Chuyển đổi tín hiệu";
 
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
 "Too many entries" = "Quá nhiều mục";
