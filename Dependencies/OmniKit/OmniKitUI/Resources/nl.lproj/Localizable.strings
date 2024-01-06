@@ -547,7 +547,7 @@
 "Remove Pump" = "Verwijder Pomp";
 
 /* Label text for step two of attach pod instructions */
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Verwijder de transparante naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
