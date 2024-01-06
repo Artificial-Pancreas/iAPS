@@ -1746,19 +1746,19 @@ Enact a temp Basal or a temp target */
 "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Mặc định là 20 phút. Tần suất cập nhật và lưu stats.json cũng như tải mảng cuối cùng lên Nightscout khi được bật.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "24 giờ qua ";
+"Past 24 Hours " = "Past 24 Hours ";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Một tuần qua ";
+"Past Week " = "Past Week ";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Một tháng qua ";
+"Past Month " = "Past Month ";
 
 /* Duration displayed in statPanel */
 "Past 90 Days " = "90 ngày trước ";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "Tất cả dữ liệu những ngày qua ";
+"All Past Days of Data " = "All Past Days of Data ";
 
 /* "Display Loop statistics in statPanel */
 "Display Loop Cycle statistics" = "Hiển thị số liệu thống kê theo vòng tròn";
