@@ -168,12 +168,16 @@ extension Bolus {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button {
-                    carbsView()
+                    if fetch { // Only activate button when coming to bolusview from carbsview (breaks possibility to start meal registration from bolusview but solves issue with overwriting/deleting previous entered carbs when coming to carbsview from bolusview)
+                        carbsView()
+                    }
                 }
                 label: {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                        Text("Meal")
+                    if fetch { // Only show button label when coming to bolusview from carbsview
+                        HStack {
+                            Image(systemName: "chevron.backward")
+                            Text("Meal")
+                        }
                     }
                 },
                 trailing: Button { state.hideModal() }
