@@ -181,6 +181,7 @@ extension Bolus {
 
                 // Section {} footer: {}.padding(.bottom, 30)
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .blur(radius: showInfo ? 20 : 0)
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)

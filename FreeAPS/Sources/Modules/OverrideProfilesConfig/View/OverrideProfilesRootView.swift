@@ -62,7 +62,7 @@ extension OverrideProfilesConfig {
                         isSheetPresented = false
                     }
                 }
-            }
+            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var body: some View {
@@ -272,6 +272,7 @@ extension OverrideProfilesConfig {
                     .tint(.red)
                 } footer: { Text("").padding(.bottom, 150) }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .onAppear { state.savedSettings() }
             .navigationBarTitle("Profiles")

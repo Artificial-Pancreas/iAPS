@@ -158,7 +158,7 @@ extension Home {
 
             if state.apsManager.isManualTempBasal {
                 manualBasalString = NSLocalizedString(
-                    " - Manual Basal ⚠️",
+                    " Manual",
                     comment: "Manual Temp basal"
                 )
             }
@@ -178,28 +178,29 @@ extension Home {
                     HStack {
                         if state.pumpSuspended {
                             Text("Pump suspended")
-                                .font(.custom("TempBasal", fixedSize: 13)).bold().foregroundColor(.loopGray)
+                                .font(.extraSmall).bold().foregroundColor(.loopGray)
                         } else if let tempBasalString = tempBasalString {
                             Text(tempBasalString)
                                 .font(.statusFont).bold()
-                                // .font(.custom("TempBasal", fixedSize: 13)).bold()
                                 .foregroundColor(.insulin)
                         }
                         if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
                             Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
                         }
                     }
-                    .padding(.leading, 8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.leading, 8)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
-                        Text(tempTargetString)
-                            .font(.buttonFont)
-                            .foregroundColor(.secondary)
-                    } else {
-                        profileView
-                    }
+                if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                    Text(tempTargetString)
+                        .font(.buttonFont)
+                        .foregroundColor(.secondary)
+                } else {
+                    profileView
+                }
 
+                ZStack {
                     if let eventualBG = state.eventualBG {
                         HStack {
                             Text("⇢").font(.statusFont).foregroundStyle(.secondary)
@@ -539,7 +540,7 @@ extension Home {
                                     .frame(maxHeight: .infinity, alignment: .bottom)
 
                                 loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                                    .padding(.horizontal, 20)
+                                    .padding(.horizontal, fontSize < .extraLarge ? 20 : 10)
 
                                 pumpView
                                     .frame(maxHeight: .infinity, alignment: .bottom)

@@ -78,6 +78,7 @@ extension Dynamic {
                     }
                 } header: { Text("Safety") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")
             .navigationBarTitleDisplayMode(.automatic)
