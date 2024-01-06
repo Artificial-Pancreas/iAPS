@@ -46,7 +46,7 @@ extension Dynamic {
                 if state.useNewFormula {
                     Section {
                         HStack {
-                            Toggle("Use Sigmoid Formula", isOn: $state.sigmoid)
+                            Toggle("Use Sigmoid Function", isOn: $state.sigmoid)
                         }
                     } header: { Text("Formula") }
 

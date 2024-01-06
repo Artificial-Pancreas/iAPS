@@ -55,7 +55,7 @@ struct PumpView: View {
                             Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                         }
                     }
-                }.offset(x: 0, y: expiresAtDate != nil ? 4 : 0)
+                } // .offset(x: 0, y: expiresAtDate != nil ? 4 : 0)
             } else {
                 Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
             }
@@ -87,7 +87,7 @@ struct PumpView: View {
     }
 
     private func remainingTime(time: TimeInterval) -> some View {
-        VStack {
+        HStack {
             if time > 0 {
                 let days = Int(time / 1.days.timeInterval)
                 let hours = Int(time / 1.hours.timeInterval)
@@ -114,7 +114,7 @@ struct PumpView: View {
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
             }
-        }.offset(x: 0, y: 4)
+        } // .offset(x: 0, y: 4)
     }
 
     private var batteryColor: Color {

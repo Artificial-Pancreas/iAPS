@@ -18,6 +18,7 @@ extension Home {
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
+        @Environment(\.sizeCategory) private var fontSize
 
         @FetchRequest(
             entity: Override.entity(),
@@ -389,6 +390,7 @@ extension Home {
                     state.cancelTempTarget()
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
         }
 
         var chart: some View {
@@ -405,12 +407,12 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: UIScreen.main.bounds.height / 1.48
+                    minHeight: UIScreen.main.bounds.height / (state.timeSettings ? 1.50 : 1.48)
                 )
         }
 
         var carbsAndInsulinView: some View {
-            HStack(spacing: 10) {
+            HStack {
                 if let settings = state.settingsManager {
                     let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.6
                     let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
@@ -532,14 +534,20 @@ extension Home {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).padding(.top, 10)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                            carbsAndInsulinView
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                .padding(.leading, 10)
-                            pumpView
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 7).padding(.bottom, 2)
-                        }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
+                            HStack {
+                                carbsAndInsulinView
+                                    .frame(maxHeight: .infinity, alignment: .bottom)
+
+                                loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
+                                    .padding(.horizontal, fontSize == .medium ? 0 : 20)
+
+                                pumpView
+                                    .frame(maxHeight: .infinity, alignment: .bottom)
+                                    .padding(.bottom, 2)
+                            }
+                        }
+                        .dynamicTypeSize(...DynamicTypeSize.medium)
+                        .padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
                     }
                 }
                 .clipShape(Rectangle())
@@ -554,8 +562,9 @@ extension Home {
                 Button("24 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 24 })
                 Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
             }
+            .buttonStyle(.borderless)
             .foregroundStyle(.secondary)
-            .font(buttonFont)
+            .font(.timeSettingFont)
             .padding(.vertical, 15)
             .background(TimeEllipse(characters: string.count))
         }

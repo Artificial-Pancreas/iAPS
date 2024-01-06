@@ -329,7 +329,7 @@ struct MainChartView: View {
 
             return Text(glucoseFormatter.string(from: value as NSNumber)!)
                 .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
-                .font(.caption2)
+                .font(.bolusDotFont)
                 .asAny()
         }
     }
@@ -424,7 +424,7 @@ struct MainChartView: View {
                     EmptyView()
                 } else {
                     Text(format.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
-                        .font(.caption)
+                        .font(.chartTimeFont)
                         .position(
                             x: firstHourPosition(viewWidth: fullSize.width) +
                                 oneSecondStep(viewWidth: fullSize.width) *
@@ -489,7 +489,7 @@ struct MainChartView: View {
                     info.note.contains("tempbasal") ?
                     Command.tempbasal : Command.bolus
                 VStack {
-                    Text(type).font(.caption2).foregroundStyle(.orange)
+                    Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
                 }.position(position).asAny()
             }
@@ -554,7 +554,7 @@ struct MainChartView: View {
 
             ForEach(bolusDots, id: \.rect.minX) { info -> AnyView in
                 let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
-                return Text(bolusFormatter.string(from: info.value as NSNumber)!).font(.caption2)
+                return Text(bolusFormatter.string(from: info.value as NSNumber)!).font(.bolusDotFont)
                     .position(position)
                     .asAny()
             }
@@ -576,7 +576,7 @@ struct MainChartView: View {
 
             ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
                 let position = CGPoint(x: info.rect.midX, y: info.rect.minY - 8)
-                return Text(carbsFormatter.string(from: info.value as NSNumber)!).font(.caption2)
+                return Text(carbsFormatter.string(from: info.value as NSNumber)!).font(.carbsDotFont)
                     .position(position)
                     .asAny()
             }
@@ -625,7 +625,7 @@ struct MainChartView: View {
     private func overridesView(fullSize: CGSize) -> some View {
         ZStack {
             overridesPath
-                .fill(Color.purple.opacity(0.1))
+                .fill(Color.purple.opacity(colorScheme == .light ? 0.1 : 0.3))
             overridesPath
                 .stroke(Color.purple.opacity(0.7), lineWidth: 1)
         }
@@ -1085,7 +1085,7 @@ extension MainChartView {
                     x: xStart,
                     y: y - 3,
                     width: xEnd - xStart,
-                    height: 6
+                    height: 8
                 )
             }
             if latest?.enabled ?? false {
@@ -1101,7 +1101,7 @@ extension MainChartView {
                             fullSize: fullSize
                         ),
                         width: x2 - x1,
-                        height: 6
+                        height: 8
                     )
                     old.append(oneMore)
                     let path = Path { path in
@@ -1116,7 +1116,7 @@ extension MainChartView {
                         x: x1,
                         y: glucoseToYCoordinate(Int(Double(latest?.target ?? 100)), fullSize: fullSize),
                         width: additionalWidth(viewWidth: fullSize.width),
-                        height: 6
+                        height: 8
                     )
                     old.append(oneMore)
                     let path = Path { path in
