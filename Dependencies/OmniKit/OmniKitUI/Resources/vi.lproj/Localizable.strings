@@ -240,7 +240,7 @@
 "Expiration Reminder" = "Nhắc nhở Hết hạn";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Mặc định Nhắc nhở Hết hạn";
+"Expiration Reminder Default" = "Mặc định nhắc nhở hết hạn";
 
 /* The title of the cell showing the pod expiration after expiry */
 "Expired" = "Đã hết hạn";
@@ -400,7 +400,7 @@
 "No Pod" = "Không pod";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Không có lời nhắc";
 
 /* Continue pairing button title of in pairing cancel modal */
 "No, Continue With Pod" = "Không, tiếp tục";
@@ -449,7 +449,7 @@
 "Percent = %lf" = "Phần trăm = %lf";
 
 /* The title of the cell showing the pod pi version */
-"PI Version" = "Đời PI";
+"PI Version" = "Phiên bản PI";
 
 /* The title of the command to play test beeps */
 "Play Test Beeps" = "Kiểm tra tiếng Beep";
@@ -597,7 +597,7 @@
    Scheduled reminder card title on NotificationSettingsView
    Title for scheduled expiration reminder edit page
    Title of SetupCompleteView */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pod." = "Chọn loại insulin bạn sẽ sử dụng cho pod.";
