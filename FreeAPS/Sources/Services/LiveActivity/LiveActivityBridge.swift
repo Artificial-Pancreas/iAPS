@@ -22,47 +22,19 @@ extension LiveActivityAttributes.ContentState {
     }
 
     init?(new bg: BloodGlucose, prev: BloodGlucose?, mmol: Bool) {
-        guard let glucose = bg.glucose,
-              bg.dateString.timeIntervalSinceNow > -TimeInterval(minutes: 6)
-        else {
+        guard let glucose = bg.glucose else {
             return nil
         }
 
         let formattedBG = Self.formatGlucose(glucose, mmol: mmol, forceSign: false)
 
-        let trendString: String?
-        switch bg.direction {
-        case .doubleUp,
-             .singleUp,
-             .tripleUp:
-            trendString = "arrow.up"
-
-        case .fortyFiveUp:
-            trendString = "arrow.up.right"
-
-        case .flat:
-            trendString = "arrow.right"
-
-        case .fortyFiveDown:
-            trendString = "arrow.down.right"
-
-        case .doubleDown,
-             .singleDown,
-             .tripleDown:
-            trendString = "arrow.down"
-
-        case .notComputable,
-             Optional.none,
-             .rateOutOfRange,
-             .some(.none):
-            trendString = nil
-        }
+        let trendString = bg.direction?.symbol
 
         let change = prev?.glucose.map({
             Self.formatGlucose(glucose - $0, mmol: mmol, forceSign: true)
         }) ?? ""
 
-        self.init(bg: formattedBG, trendSystemImage: trendString, change: change, date: bg.dateString)
+        self.init(bg: formattedBG, direction: trendString, change: change, date: bg.dateString)
     }
 }
 
@@ -73,10 +45,10 @@ extension LiveActivityAttributes.ContentState {
     func needsRecreation() -> Bool {
         switch activity.activityState {
         case .dismissed,
-             .ended:
+             .ended,
+             .stale:
             return true
-        case .active,
-             .stale: break
+        case .active: break
         @unknown default:
             return true
         }
@@ -86,10 +58,13 @@ extension LiveActivityAttributes.ContentState {
     }
 }
 
-@available(iOS 16.2, *) final class LiveActivityBridge: Injectable {
+@available(iOS 16.2, *) final class LiveActivityBridge: Injectable, ObservableObject {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var glucoseStorage: GlucoseStorage!
     @Injected() private var broadcaster: Broadcaster!
+
+    private let activityAuthorizationInfo = ActivityAuthorizationInfo()
+    @Published private(set) var systemEnabled: Bool
 
     private var settings: FreeAPSSettings {
         settingsManager.settings
@@ -99,6 +74,8 @@ extension LiveActivityAttributes.ContentState {
     private var latestGlucose: BloodGlucose?
 
     init(resolver: Resolver) {
+        systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
+
         injectServices(resolver)
         broadcaster.register(GlucoseObserver.self, observer: self)
 
@@ -116,6 +93,20 @@ extension LiveActivityAttributes.ContentState {
             queue: nil
         ) { _ in
             self.forceActivityUpdate()
+        }
+
+        monitorForLiveActivityAuthorizationChanges()
+    }
+
+    private func monitorForLiveActivityAuthorizationChanges() {
+        Task {
+            for await activityState in activityAuthorizationInfo.activityEnablementUpdates {
+                if activityState != systemEnabled {
+                    await MainActor.run {
+                        systemEnabled = activityState
+                    }
+                }
+            }
         }
     }
 
@@ -145,24 +136,39 @@ extension LiveActivityAttributes.ContentState {
             await unknownActivity.end(nil, dismissalPolicy: .immediate)
         }
 
-        let content = ActivityContent(state: state, staleDate: state.date.addingTimeInterval(TimeInterval(6 * 60)))
-
         if let currentActivity {
             if currentActivity.needsRecreation(), UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
                 await endActivity()
                 await pushUpdate(state)
             } else {
+                let content = ActivityContent(
+                    state: state,
+                    staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(6 * 60))
+                )
+
                 await currentActivity.activity.update(content)
             }
         } else {
             do {
+                // always push a non-stale content as the first update
+                // pushing a stale content as the frst content results in the activity not being shown at all
+                // we want it shown though even if it is iniially stale, as we expect new BG readings to become available soon, which should then be displayed
+                let nonStale = ActivityContent(
+                    state: LiveActivityAttributes.ContentState(bg: "--", direction: nil, change: "--", date: Date.now),
+                    staleDate: Date.now.addingTimeInterval(60)
+                )
+
                 let activity = try Activity.request(
                     attributes: LiveActivityAttributes(startDate: Date.now),
-                    content: content,
+                    content: nonStale,
                     pushType: nil
                 )
+
                 currentActivity = ActiveActivity(activity: activity, startDate: Date.now)
+
+                // then show the actual content
+                await pushUpdate(state)
             } catch {
                 print("activity creation error: \(error)")
             }
@@ -172,7 +178,7 @@ extension LiveActivityAttributes.ContentState {
     /// ends all live activities immediateny
     private func endActivity() async {
         if let currentActivity {
-            await currentActivity.activity.end(nil, dismissalPolicy: ActivityUIDismissalPolicy.immediate)
+            await currentActivity.activity.end(nil, dismissalPolicy: .immediate)
             self.currentActivity = nil
         }
 
@@ -186,6 +192,15 @@ extension LiveActivityAttributes.ContentState {
 @available(iOS 16.2, *)
 extension LiveActivityBridge: GlucoseObserver {
     func glucoseDidUpdate(_ glucose: [BloodGlucose]) {
+        guard settings.useLiveActivity else {
+            if currentActivity != nil {
+                Task {
+                    await self.endActivity()
+                }
+            }
+            return
+        }
+
         // backfill latest glucose if contained in this update
         if glucose.count > 1 {
             latestGlucose = glucose[glucose.count - 2]
@@ -199,7 +214,7 @@ extension LiveActivityBridge: GlucoseObserver {
             prev: latestGlucose,
             mmol: settings.units == .mmolL
         ) else {
-            // no bg or value stale. Don't update the activity if there already is one, just let it turn stale so that it can still be used once current bg is available again
+            // no bg or value, can't update the live activity
             return
         }
 
