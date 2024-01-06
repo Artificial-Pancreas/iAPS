@@ -22,11 +22,13 @@ struct LoopView: View {
     }
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) private var fontSize
 
     var body: some View {
         VStack {
+            let multiplyForLargeFonts = fontSize > .extraLarge ? 1.2 : 1
             LoopEllipse(stroke: color)
-                .frame(width: minutesAgo > 9 ? 70 : 60, height: 27)
+                .frame(width: minutesAgo > 9 ? 70 * multiplyForLargeFonts : 60 * multiplyForLargeFonts, height: 27)
                 .overlay {
                     let textColor: Color = .secondary
                     HStack {

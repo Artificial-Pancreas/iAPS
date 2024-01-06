@@ -94,6 +94,7 @@ struct CurrentGlucoseView: View {
                         .font(.extraSmall).foregroundStyle(.secondary)
                     }.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 50)
                 }
+                .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xxLarge)
             }
         }
     }

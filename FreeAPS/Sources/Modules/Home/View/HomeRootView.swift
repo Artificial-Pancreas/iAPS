@@ -181,7 +181,8 @@ extension Home {
                                 .font(.custom("TempBasal", fixedSize: 13)).bold().foregroundColor(.loopGray)
                         } else if let tempBasalString = tempBasalString {
                             Text(tempBasalString)
-                                .font(.custom("TempBasal", fixedSize: 13)).bold()
+                                .font(.statusFont).bold()
+                                // .font(.custom("TempBasal", fixedSize: 13)).bold()
                                 .foregroundColor(.insulin)
                         }
                         if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
@@ -217,6 +218,7 @@ extension Home {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var mainChart: some View {
@@ -275,7 +277,6 @@ extension Home {
                                     height: IAPSconfig.buttonSize
                                 )
                                 .foregroundColor(.gray)
-                                .padding(8)
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
@@ -288,7 +289,6 @@ extension Home {
                                 .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
                                 .padding(8)
                                 .foregroundColor(.loopYellow)
-                                .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
                                     .font(.caption)
@@ -302,7 +302,7 @@ extension Home {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                         Image(systemName: isOverride ? "person.fill" : "person")
                             .symbolRenderingMode(.palette)
-                            .font(.custom("Buttons", size: 28))
+                            .font(.custom("Buttons", size: 30))
                             .foregroundStyle(.purple)
                             .padding(8)
                             .background(isOverride ? .purple.opacity(0.15) : .clear)
@@ -349,7 +349,6 @@ extension Home {
                         Image(systemName: "syringe")
                             .renderingMode(.template)
                             .font(.custom("Buttons", size: 24))
-                            .padding(8)
                     }
                     .buttonStyle(.borderless)
                     .foregroundColor(.insulin)
@@ -361,7 +360,6 @@ extension Home {
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .padding(8)
                         }
                         .foregroundColor(.insulin)
                         Spacer()
@@ -371,12 +369,11 @@ extension Home {
                         Image(systemName: "gear")
                             .renderingMode(.template)
                             .font(.custom("Buttons", size: 24))
-                            .padding(8)
                     }
                     .buttonStyle(.borderless)
                     .foregroundColor(.gray)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, state.allowManualTemp ? 5 : 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
             }
             .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
@@ -390,7 +387,7 @@ extension Home {
                     state.cancelTempTarget()
                 }
             }
-            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var chart: some View {
@@ -407,7 +404,8 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: UIScreen.main.bounds.height / (state.timeSettings ? 1.50 : 1.48)
+                    minHeight: UIScreen.main.bounds
+                        .height / (state.timeSettings ? 1.50 : fontSize < .extraExtraLarge ? 1.46 : 1.49)
                 )
         }
 
@@ -529,7 +527,9 @@ extension Home {
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 120 + geo.safeAreaInsets.top)
+                .frame(
+                    minHeight: fontSize < .extraExtraLarge ? 120 + geo.safeAreaInsets.top : 130 + geo.safeAreaInsets.top
+                )
                 .overlay {
                     VStack {
                         ZStack {
@@ -539,14 +539,13 @@ extension Home {
                                     .frame(maxHeight: .infinity, alignment: .bottom)
 
                                 loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                                    .padding(.horizontal, fontSize == .medium ? 0 : 20)
+                                    .padding(.horizontal, 20)
 
                                 pumpView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
                                     .padding(.bottom, 2)
-                            }
+                            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
                         }
-                        .dynamicTypeSize(...DynamicTypeSize.medium)
                         .padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
                     }
                 }
