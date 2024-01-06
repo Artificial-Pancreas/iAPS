@@ -2081,7 +2081,7 @@ Enact a temp Basal or a temp target */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Ngưỡng mặc định trong FAX tùy thuộc vào mục tiêu BG tối thiểu hiện tại của bạn, như sau:\n\nNếu mục tiêu BG tối thiểu của bạn = 90 mg/dl -> ngưỡng = 65 mg/dl,\n\nif mục tiêu BG tối thiểu = 100 mg/dl -> ngưỡng = 70 mg/dl,\n\nmục tiêu BG tối thiểu = 110 mg/dl -> ngưỡng = 75 mg/dl,\n\nand nếu mục tiêu BG tối thiểu = 130 mg/dl -> ngưỡng = 85 mg/dl.\n\nCài đặt này cho phép bạn thay đổi mặc định thành ngưỡng lặp cao hơn cho vòng lặp với dynISF. Giá trị hợp lệ là 65 mg/dl<= Cài đặt ngưỡng <= 120 mg/dl.";
 
 /* Header */
-"Calculator settings" = "Thiết lập Tính toán";
+"Calculator settings" = "Thiết lập tính toán";
 
 /* UI/UX option */
 "Display Predictions" = "Hiển thị dự đoán";
