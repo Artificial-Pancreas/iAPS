@@ -178,8 +178,6 @@ extension Bolus {
                         label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
-
-                // Section {} footer: {}.padding(.bottom, 30)
             }
             .blur(radius: showInfo ? 20 : 0)
             .navigationTitle("Enact Bolus")
