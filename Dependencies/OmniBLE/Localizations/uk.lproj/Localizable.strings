@@ -461,7 +461,7 @@
 
 /* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
 Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.";
+"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Зніміть захисну кришку канюлі та перевірте канюлю. Потім зніміть захисні стікери.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Перевірте Pod, установіть його на тілі, а потім підтвердіть установку Pod.";
