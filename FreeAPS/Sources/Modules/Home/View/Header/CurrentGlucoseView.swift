@@ -57,7 +57,7 @@ struct CurrentGlucoseView: View {
     var body: some View {
         ZStack {
             VStack {
-                let offset: CGFloat = fontSize < .large ? 90 : fontSize < .extraExtraLarge ? 100 : 110
+                let offset: CGFloat = fontSize < .large ? 75 : (fontSize >= .large && fontSize < .extraExtraLarge) ? 80 : 85
                 ZStack {
                     Text(
                         (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
