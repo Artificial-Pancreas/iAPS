@@ -240,7 +240,7 @@
 "Expiration Reminder" = "Nhắc nhở Hết hạn";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Mặc định Nhắc nhở Hết hạn";
+"Expiration Reminder Default" = "Mặc định nhắc nhở hết hạn";
 
 /* The title of the cell showing the pod expiration after expiry */
 "Expired" = "Đã hết hạn";
@@ -400,7 +400,7 @@
 "No Pod" = "Không pod";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Không có lời nhắc";
 
 /* Continue pairing button title of in pairing cancel modal */
 "No, Continue With Pod" = "Không, tiếp tục";
@@ -449,7 +449,7 @@
 "Percent = %lf" = "Phần trăm = %lf";
 
 /* The title of the cell showing the pod pi version */
-"PI Version" = "Đời PI";
+"PI Version" = "Phiên bản PI";
 
 /* The title of the command to play test beeps */
 "Play Test Beeps" = "Kiểm tra tiếng Beep";
@@ -458,7 +458,7 @@
 "Play Test Beeps…" = "Kiểm tra tiếng Beep…";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Xác nhận rằng Pod được gắn chặt vào cơ thể bạn.\n\nCannula chỉ có thể lắp một lần. Nhấn vào “Confirm” khi Pod đã gắn chặt.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Xác nhận rằng Pod được gắn chặt vào cơ thể bạn.\n\nCannula chỉ có thể lắp một lần. Nhấn vào “Xác nhận” khi Pod đã gắn chặt.";
 
 /* Instructions for deactivate pod when pod not on body */
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Hủy kích hoạt pod. Khi việc hủy kích hoạt hoàn tất, bạn có thể ghép nối pod mới.";
@@ -474,7 +474,7 @@
 "Pod Activated" = "Pod đã kích hoạt";
 
 /* Label describing pod age view */
-"Pod Age" = "Pod Age";
+"Pod Age" = "Tuổi Pod";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
 "Pod deactivated successfully. Continue." = "Pod hủy kích hoạt thành công. Tiếp tục.";
@@ -597,7 +597,7 @@
    Scheduled reminder card title on NotificationSettingsView
    Title for scheduled expiration reminder edit page
    Title of SetupCompleteView */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pod." = "Chọn loại insulin bạn sẽ sử dụng cho pod.";
@@ -618,7 +618,7 @@
 "Signal Loss" = "Mất tín hiệu";
 
 /* No comment provided by engineer. */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "Bỏ qua quá trình giới thiệu Omnipod?";
 
 /* The title of the status section in settings */
 "Status" = "Tình trạng";
@@ -711,7 +711,7 @@
 "Time Change Detected" = "Thay đổi thời gian được phát hiện";
 
 /* No comment provided by engineer. */
-"Toggle sign" = "Toggle sign";
+"Toggle sign" = "Chuyển đổi tín hiệu";
 
 /* The error message shown when Loop's basal schedule has more entries than the pod can support */
 "Too many entries" = "Quá nhiều mục";
