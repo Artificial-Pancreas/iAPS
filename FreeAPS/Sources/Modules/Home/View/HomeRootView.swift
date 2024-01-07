@@ -540,7 +540,10 @@ extension Home {
                                     .frame(maxHeight: .infinity, alignment: .bottom)
 
                                 loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                                    .padding(.horizontal, fontSize < .extraLarge ? 20 : 10)
+                                    .padding(
+                                        .horizontal,
+                                        fontSize < .small ? 30 : fontSize < .medium ? 25 : fontSize < .extraLarge ? 20 : 10
+                                    )
 
                                 pumpView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
