@@ -1090,7 +1090,8 @@ extension MainChartView {
             }
             if latest?.enabled ?? false {
                 var old = Array(rects)
-                if (latest?.duration ?? 0) != 0 {
+                let duration = Double(latest?.duration ?? 0)
+                if duration > 0 {
                     let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
                     let plusNow = (latest?.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
                     let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
@@ -1112,10 +1113,11 @@ extension MainChartView {
                     }
                 } else {
                     let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
+                    let x2 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
                         y: glucoseToYCoordinate(Int(Double(latest?.target ?? 100)), fullSize: fullSize),
-                        width: additionalWidth(viewWidth: fullSize.width),
+                        width: x2 - x1 + additionalWidth(viewWidth: fullSize.width),
                         height: 8
                     )
                     old.append(oneMore)
