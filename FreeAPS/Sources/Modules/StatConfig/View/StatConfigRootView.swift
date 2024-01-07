@@ -72,6 +72,7 @@ extension StatConfig {
                     Toggle("Display and allow Fat and Protein entries", isOn: $state.useFPUconversion)
                 } header: { Text("Add Meal View settings ") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("UI/UX")
             .navigationBarTitleDisplayMode(.automatic)

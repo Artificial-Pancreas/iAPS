@@ -179,6 +179,7 @@ extension Bolus {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .blur(radius: showInfo ? 20 : 0)
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)

@@ -18,6 +18,7 @@ extension Home {
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
+        @Environment(\.sizeCategory) private var fontSize
 
         @FetchRequest(
             entity: Override.entity(),
@@ -157,7 +158,7 @@ extension Home {
 
             if state.apsManager.isManualTempBasal {
                 manualBasalString = NSLocalizedString(
-                    " - Manual Basal ⚠️",
+                    " Manual",
                     comment: "Manual Temp basal"
                 )
             }
@@ -177,27 +178,29 @@ extension Home {
                     HStack {
                         if state.pumpSuspended {
                             Text("Pump suspended")
-                                .font(.custom("TempBasal", fixedSize: 13)).bold().foregroundColor(.loopGray)
+                                .font(.extraSmall).bold().foregroundColor(.loopGray)
                         } else if let tempBasalString = tempBasalString {
                             Text(tempBasalString)
-                                .font(.custom("TempBasal", fixedSize: 13)).bold()
+                                .font(.statusFont).bold()
                                 .foregroundColor(.insulin)
                         }
                         if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
                             Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
                         }
                     }
-                    .padding(.leading, 8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.leading, 8)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
-                        Text(tempTargetString)
-                            .font(.buttonFont)
-                            .foregroundColor(.secondary)
-                    } else {
-                        profileView
-                    }
+                if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                    Text(tempTargetString)
+                        .font(.buttonFont)
+                        .foregroundColor(.secondary)
+                } else {
+                    profileView
+                }
 
+                ZStack {
                     if let eventualBG = state.eventualBG {
                         HStack {
                             Text("⇢").font(.statusFont).foregroundStyle(.secondary)
@@ -216,6 +219,7 @@ extension Home {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var mainChart: some View {
@@ -274,7 +278,6 @@ extension Home {
                                     height: IAPSconfig.buttonSize
                                 )
                                 .foregroundColor(.gray)
-                                .padding(8)
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
@@ -287,7 +290,6 @@ extension Home {
                                 .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
                                 .padding(8)
                                 .foregroundColor(.loopYellow)
-                                .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
                                     .font(.caption)
@@ -301,7 +303,7 @@ extension Home {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                         Image(systemName: isOverride ? "person.fill" : "person")
                             .symbolRenderingMode(.palette)
-                            .font(.custom("Buttons", size: 28))
+                            .font(.custom("Buttons", size: 30))
                             .foregroundStyle(.purple)
                             .padding(8)
                             .background(isOverride ? .purple.opacity(0.15) : .clear)
@@ -348,7 +350,6 @@ extension Home {
                         Image(systemName: "syringe")
                             .renderingMode(.template)
                             .font(.custom("Buttons", size: 24))
-                            .padding(8)
                     }
                     .buttonStyle(.borderless)
                     .foregroundColor(.insulin)
@@ -360,7 +361,6 @@ extension Home {
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .padding(8)
                         }
                         .foregroundColor(.insulin)
                         Spacer()
@@ -370,14 +370,14 @@ extension Home {
                         Image(systemName: "gear")
                             .renderingMode(.template)
                             .font(.custom("Buttons", size: 24))
-                            .padding(8)
                     }
                     .buttonStyle(.borderless)
                     .foregroundColor(.gray)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, state.allowManualTemp ? 5 : 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
                 Button("Cancel Profile Override", role: .destructive) {
                     state.cancelProfile()
@@ -405,12 +405,13 @@ extension Home {
                     }
                 }
                 .frame(
-                    minHeight: UIScreen.main.bounds.height / 1.48
+                    minHeight: UIScreen.main.bounds
+                        .height / (state.timeSettings ? 1.50 : fontSize < .extraExtraLarge ? 1.46 : 1.49)
                 )
         }
 
         var carbsAndInsulinView: some View {
-            HStack(spacing: 10) {
+            HStack {
                 if let settings = state.settingsManager {
                     let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.6
                     let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
@@ -420,8 +421,8 @@ extension Home {
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .loopYellow, materialOpacity: materialOpacity)
-                            .frame(width: 13.8, height: 40)
-                            .offset(x: 0, y: -6)
+                            .frame(width: 12, height: 38)
+                            .offset(x: 0, y: -5)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
@@ -435,8 +436,8 @@ extension Home {
                         let fraction: Double = 1 - (substance / max)
                         let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
                         TestTube(opacity: opacity, amount: fill, colourOfSubstance: .insulin, materialOpacity: materialOpacity)
-                            .frame(width: 11, height: 36)
-                            .offset(x: 0, y: -2.5)
+                            .frame(width: 12, height: 38)
+                            .offset(x: 0, y: -5)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
@@ -527,20 +528,28 @@ extension Home {
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 120 + geo.safeAreaInsets.top)
+                .frame(
+                    minHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo.safeAreaInsets.top
+                )
                 .overlay {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).padding(.top, 10)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                            carbsAndInsulinView
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                .padding(.leading, 10)
-                            pumpView
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 7).padding(.bottom, 2)
-                        }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
-                    }
+                            HStack {
+                                carbsAndInsulinView
+                                    .frame(maxHeight: .infinity, alignment: .bottom)
+                                Spacer()
+                                loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
+                                    .offset(x: -2, y: 0) // To do: Remove all offsets, if possible.
+                                Spacer()
+                                pumpView
+                                    .frame(maxHeight: .infinity, alignment: .bottom)
+                                    .padding(.bottom, 2)
+                            }
+                            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                            .padding(.horizontal, 5)
+                        }
+                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)
                 }
                 .clipShape(Rectangle())
         }
@@ -554,8 +563,9 @@ extension Home {
                 Button("24 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 24 })
                 Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
             }
+            .buttonStyle(.borderless)
             .foregroundStyle(.secondary)
-            .font(buttonFont)
+            .font(.timeSettingFont)
             .padding(.vertical, 15)
             .background(TimeEllipse(characters: string.count))
         }

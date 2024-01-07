@@ -46,7 +46,7 @@ extension Dynamic {
                 if state.useNewFormula {
                     Section {
                         HStack {
-                            Toggle("Use Sigmoid Formula", isOn: $state.sigmoid)
+                            Toggle("Use Sigmoid Function", isOn: $state.sigmoid)
                         }
                     } header: { Text("Formula") }
 
@@ -78,6 +78,7 @@ extension Dynamic {
                     }
                 } header: { Text("Safety") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")
             .navigationBarTitleDisplayMode(.automatic)

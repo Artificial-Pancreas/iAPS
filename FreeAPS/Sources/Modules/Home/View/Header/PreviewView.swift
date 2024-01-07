@@ -209,8 +209,9 @@ struct PreviewChart: View {
                 .padding(.bottom, 15)
                 .frame(maxWidth: UIScreen.main.bounds.width / 5, alignment: .leading)
             }.frame(maxHeight: 200)
-
-        }.padding(.top, 20).padding(.leading, 20)
+        }
+        .padding(.top, 20).padding(.leading, 20)
+        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
     }
 
     private func previewTir() -> [(decimal: Decimal, string: String)] {
