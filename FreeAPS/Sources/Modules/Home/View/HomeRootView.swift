@@ -540,6 +540,7 @@ extension Home {
                                     .frame(maxHeight: .infinity, alignment: .bottom)
                                 Spacer()
                                 loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
+                                    .offset(x: -2, y: 0) // To do: Remove all offsets, if possible.
                                 Spacer()
                                 pumpView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
