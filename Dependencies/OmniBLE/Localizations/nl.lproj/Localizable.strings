@@ -459,8 +459,9 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Bereid de infusieplaats voor.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Remove blue Pod needle cap and check cannula. Then remove paper backing.";
+/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
+Label text for step two of attach pod instructions */
+"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Controleer de Pod, breng aan op de infusieplaats en bevestig de plaatsing.";
@@ -673,7 +674,7 @@
 "Pod Activated" = "Pod geactiveerd";
 
 /* description label for active time pod details row */
-"Active Time" = "Actieve duur";
+"Active Time" = "Activatie tijd";
 
 /* description label for last status date pod details row */
 "Last Status" = "Laatste status";
@@ -709,7 +710,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om in te stellen bij welk aantal eenheden je wilt worden herinnerd.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Reservoir bijna leeg";
+"Low Reservoir" = "Laag reservoir niveau";
 
 /* */
 "Save" = "Opslaan";
