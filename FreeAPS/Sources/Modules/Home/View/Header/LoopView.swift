@@ -22,11 +22,13 @@ struct LoopView: View {
     }
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) private var fontSize
 
     var body: some View {
         VStack {
+            let multiplyForLargeFonts = fontSize > .extraLarge ? 1.2 : 1
             LoopEllipse(stroke: color)
-                .frame(width: minutesAgo > 9 ? 70 : 60, height: 27)
+                .frame(width: minutesAgo > 9 ? 70 * multiplyForLargeFonts : 60 * multiplyForLargeFonts, height: 27)
                 .overlay {
                     let textColor: Color = .secondary
                     HStack {
@@ -34,18 +36,18 @@ struct LoopView: View {
                             if closedLoop {
                                 if !isLooping, actualSuggestion?.timestamp != nil {
                                     if minutesAgo > 1440 {
-                                        Text("--").font(.extraSmall).foregroundColor(textColor).padding(.leading, 5)
+                                        Text("--").font(.loopFont).foregroundColor(textColor).padding(.leading, 5)
                                     } else {
                                         let timeString = "\(minutesAgo) " +
                                             NSLocalizedString("min", comment: "Minutes ago since last loop")
-                                        Text(timeString).font(.extraSmall).foregroundColor(textColor)
+                                        Text(timeString).font(.loopFont).foregroundColor(textColor)
                                     }
                                 }
                                 if isLooping {
                                     ProgressView()
                                 }
                             } else if !isLooping {
-                                Text("Open")
+                                Text("Open").font(.loopFont)
                             }
                         }
                     }

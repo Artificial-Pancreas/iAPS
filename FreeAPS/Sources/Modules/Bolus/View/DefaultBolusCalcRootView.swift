@@ -136,6 +136,7 @@ extension Bolus {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),

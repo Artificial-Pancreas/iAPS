@@ -67,6 +67,7 @@ extension BolusCalculatorConfig {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Bolus Calculator")
             .navigationBarTitleDisplayMode(.automatic)

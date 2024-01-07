@@ -238,7 +238,7 @@ public class PodCommsSession {
     ///
     /// - Parameters:
     ///   - messageBlocks: The message blocks to send
-    ///   - beepBlock: If specified, confirmation beep block message to append to the message blocks to send
+    ///   - beepBlock: Optional confirmation beep block message to append to the message blocks to send
     ///   - expectFollowOnMessage: If true, the pod will expect another message within 4 minutes, or will alarm with an 0x33 (51) fault.
     /// - Returns: The received message response
     /// - Throws:
@@ -386,15 +386,20 @@ public class PodCommsSession {
         podState.finalizedDoses.append(UnfinalizedDose(resumeStartTime: currentDate, scheduledCertainty: .certain, insulinType: podState.insulinType))
     }
 
+    // Configures the given pod alert(s) and registers the newly configured alert slot(s).
+    // When re-configuring all the pod alerts for a silence pod toggle, the optional acknowledgeAll can be
+    // specified to first acknowledge and clear all possible pending pod alerts and pod alert configurations.
     @discardableResult
     func configureAlerts(_ alerts: [PodAlert], acknowledgeAll: Bool = false, beepBlock: MessageBlock? = nil) throws -> StatusResponse {
         let configurations = alerts.map { $0.configuration }
         let configureAlerts = ConfigureAlertsCommand(nonce: podState.currentNonce, configurations: configurations)
-        var blocksToSend: [MessageBlock] = [configureAlerts]
+        let blocksToSend: [MessageBlock]
         if acknowledgeAll {
-            // requested to acknowledge any possible pending pod alerts out of an abundnace of caution
-            let acknowledgeAll = AcknowledgeAlertCommand(nonce: podState.currentNonce, alerts: AlertSet(rawValue: ~0))
-            blocksToSend += [acknowledgeAll]
+            // Do the acknowledgeAllAlerts command first to clear all previous pod alert configurations.
+            let acknowledgeAllAlerts = AcknowledgeAlertCommand(nonce: podState.currentNonce, alerts: AlertSet(rawValue: ~0))
+            blocksToSend = [acknowledgeAllAlerts, configureAlerts]
+        } else {
+            blocksToSend = [configureAlerts]
         }
         let status: StatusResponse = try send(blocksToSend, beepBlock: beepBlock)
         for alert in alerts {
@@ -773,7 +778,7 @@ public class PodCommsSession {
         }
     }
 
-    public func resumeBasal(schedule: BasalSchedule, scheduleOffset: TimeInterval, acknowledgementBeep: Bool = false, completionBeep: Bool = false, programReminderInterval: TimeInterval = 0) throws -> StatusResponse {
+    public func resumeBasal(schedule: BasalSchedule, scheduleOffset: TimeInterval, acknowledgementBeep: Bool = false, programReminderInterval: TimeInterval = 0) throws -> StatusResponse {
 
         guard podState.unacknowledgedCommand == nil else {
             throw PodCommsError.unacknowledgedCommandPending

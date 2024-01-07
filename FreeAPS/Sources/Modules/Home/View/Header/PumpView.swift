@@ -40,24 +40,25 @@ struct PumpView: View {
     var body: some View {
         HStack(spacing: 10) {
             if let reservoir = reservoir {
-                HStack {
-                    if reservoir == 0xDEAD_BEEF {
-                        HStack(spacing: 0) {
-                            Text("50+ ").font(.statusFont).bold()
-                            Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                        }
-                    } else {
-                        HStack(spacing: 0) {
-                            Text(
-                                reservoirFormatter
-                                    .string(from: reservoir as NSNumber)!
-                            ).font(.statusFont).bold()
-                            Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                        }
+                if reservoir == 0xDEAD_BEEF {
+                    HStack(spacing: 0) {
+                        Text("50+ ").font(.statusFont).bold()
+                        Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                     }
-                }.offset(x: 0, y: expiresAtDate != nil ? 4 : 0)
+                    .offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
+                } else {
+                    HStack(spacing: 0) {
+                        Text(
+                            reservoirFormatter
+                                .string(from: reservoir as NSNumber)!
+                        ).font(.statusFont).bold()
+                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                    }
+                    .offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
+                }
             } else {
                 Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
+                    .offset(x: 0, y: -4)
             }
 
             if let battery = battery, !state.pumpName.contains("Omni") {
@@ -69,52 +70,45 @@ struct PumpView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: 15)
                     .foregroundColor(batteryColor)
+                    .offset(x: 0, y: -4)
             }
 
             if let date = expiresAtDate {
-                HStack(spacing: 2) {
-                    Image("pod_reservoir")
-                        .resizable(resizingMode: .stretch)
-                        .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
-                        .foregroundColor(colorScheme == .dark ? .secondary : .white)
-                    remainingTime(time: date.timeIntervalSince(timerDate))
-                        .font(.pumpFont)
-                }
+                Image("pod_reservoir")
+                    .resizable(resizingMode: .stretch)
+                    .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                    .foregroundColor(colorScheme == .dark ? .secondary : .white)
+                    .offset(x: 0, y: -5)
+
+                remainingTime(time: date.timeIntervalSince(timerDate))
+                    .font(.pumpFont)
             } else if state.pumpName.contains("Omni") {
                 Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
+                    .offset(x: 0, y: -4)
             }
         }
+        .offset(x: 0, y: 5)
     }
 
     private func remainingTime(time: TimeInterval) -> some View {
-        VStack {
+        HStack {
             if time > 0 {
                 let days = Int(time / 1.days.timeInterval)
                 let hours = Int(time / 1.hours.timeInterval)
                 let minutes = Int(time / 1.minutes.timeInterval)
                 if days >= 1 {
-                    HStack(spacing: 0) {
-                        Text(" \(days)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("d", comment: "abbreviation for days"))
-                        Text("+")
-                    }
+                    Text(" \(days)" + NSLocalizedString("d", comment: "abbreviation for days" + "+"))
                 } else if hours >= 1 {
-                    HStack(spacing: 0) {
-                        Text(" \(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                    }
+                    Text(" \(hours)" + NSLocalizedString("h", comment: "abbreviation for hours"))
+                        .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                 } else {
-                    HStack(spacing: 0) {
-                        Text(" \(minutes)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                    }
+                    Text(" \(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes"))
+                        .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                 }
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
             }
-        }.offset(x: 0, y: 4)
+        }
     }
 
     private var batteryColor: Color {
