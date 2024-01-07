@@ -23,14 +23,14 @@ public enum IAPSconfig {
 extension Font {
     static let buttonFont = Font.custom("TimeButtonFont", fixedSize: 14) // Same as Eventual BG size
 
-    static let loopFont = Font.custom("LoopFont", size: 18) // Loop min ago
+    static let loopFont = Font.custom("LoopFont", size: 13) // Loop min ago
     static let statusFont = Font.custom("StatusFont", size: 16) // IOB, COB etc.
-    static let pumpFont = Font.custom("PumpFont", size: 15)
+    static let pumpFont = Font.custom("PumpFont", size: 16)
 
-    static let previewSmall = Font.custom("PreviewSmallFont", fixedSize: 12)
-    static let previewNormal = Font.custom("PreviewNormalFont", fixedSize: 18)
-    static let previewHeadline = Font.custom("PreviewHeadlineFont", fixedSize: 20)
-    static let extraSmall = Font.custom("ExtraSmallFont", size: 14)
+    static let previewSmall = Font.custom("PreviewSmallFont", size: 14)
+    static let previewNormal = Font.custom("PreviewNormalFont", size: 16)
+    static let previewHeadline = Font.custom("PreviewHeadlineFont", size: 18)
+    static let extraSmall = Font.custom("ExtraSmallFont", size: 12)
 
     static let suggestionHeadline = Font.custom("SuggestionHeadlineFont", fixedSize: 20)
     static let suggestionError = Font.custom("SuggestionErrorFone", fixedSize: 18)
@@ -39,6 +39,7 @@ extension Font {
 
     static let glucoseFont = Font.custom("SuggestionSmallPartsFont", size: 45)
     static let glucoseSmallFont = Font.custom("SuggestionSmallPartsFont", size: 24)
+
     static let bolusProgressStopFont = Font.custom("BolusProgressStop", fixedSize: 24)
     static let bolusProgressFont = Font.custom("BolusProgress", fixedSize: 20)
     static let bolusProgressBarFont = Font.custom("BolusProgressBarFont", fixedSize: 18)
