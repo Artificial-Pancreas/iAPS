@@ -529,7 +529,7 @@ extension Home {
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
                 .frame(
-                    minHeight: fontSize < .extraExtraLarge ? 120 + geo.safeAreaInsets.top : 130 + geo.safeAreaInsets.top
+                    minHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo.safeAreaInsets.top
                 )
                 .overlay {
                     VStack {
@@ -538,20 +538,17 @@ extension Home {
                             HStack {
                                 carbsAndInsulinView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
-
+                                Spacer()
                                 loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                                    .padding(
-                                        .horizontal,
-                                        fontSize < .small ? 30 : fontSize < .medium ? 25 : fontSize < .extraLarge ? 20 : 10
-                                    )
-
+                                Spacer()
                                 pumpView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
                                     .padding(.bottom, 2)
-                            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                            }
+                            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                            .padding(.horizontal, 5)
                         }
-                        .padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
-                    }
+                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)
                 }
                 .clipShape(Rectangle())
         }
