@@ -377,6 +377,7 @@ extension Home {
                 .padding(.horizontal, state.allowManualTemp ? 5 : 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
                 Button("Cancel Profile Override", role: .destructive) {
                     state.cancelProfile()
@@ -388,7 +389,6 @@ extension Home {
                     state.cancelTempTarget()
                 }
             }
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var chart: some View {
