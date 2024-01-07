@@ -92,7 +92,7 @@ extension Home {
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
-            allowManualTemp = !settingsManager.settings.closedLoop && !apsManager.isPodManual
+            allowManualTemp = !settingsManager.settings.closedLoop
             closedLoop = settingsManager.settings.closedLoop
             lastLoopDate = apsManager.lastLoopDate
             carbsRequired = suggestion?.carbsReq
@@ -439,7 +439,7 @@ extension Home.StateModel:
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
-        allowManualTemp = !settings.closedLoop && !apsManager.isPodManual
+        allowManualTemp = !settings.closedLoop
         uploadStats = settingsManager.settings.uploadStats
         closedLoop = settingsManager.settings.closedLoop
         units = settingsManager.settings.units

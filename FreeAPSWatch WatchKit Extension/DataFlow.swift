@@ -24,8 +24,6 @@ struct WatchState: Codable {
     var useNewCalc: Bool?
     var isf: Decimal?
     var override: String?
-    var closedLoop: Bool?
-    var isManualTempBasal: Bool?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {

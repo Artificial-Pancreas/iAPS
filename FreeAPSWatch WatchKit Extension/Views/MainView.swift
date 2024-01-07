@@ -94,14 +94,10 @@ struct MainView: View {
                     .font(.caption2).foregroundColor(.gray)
                 }
                 Spacer()
-                let rect = CGRect(x: 0, y: 0, width: 26, height: 26)
+
                 VStack(spacing: 0) {
                     HStack {
-                        Circle()
-                            .strokeBorder(color, lineWidth: 5)
-                            .frame(width: rect.width, height: rect.height, alignment: .bottom)
-                            .mask(mask(in: rect).fill(style: FillStyle(eoFill: true)))
-                            .padding(10)
+                        Circle().stroke(color, lineWidth: 5).frame(width: 26, height: 26).padding(10)
                     }
 
                     if state.lastLoopDate != nil {
@@ -307,14 +303,6 @@ struct MainView: View {
         }
     }
 
-    func mask(in rect: CGRect) -> Path {
-        var path = Rectangle().path(in: rect)
-        if let cl = state.closedLoop,!cl {
-            path.addPath(Rectangle().path(in: CGRect(x: rect.minX, y: rect.midY - 5, width: rect.width, height: 10)))
-        }
-        return path
-    }
-
     func start() {
         autorizeHealthKit()
         startHeartRateQuery(quantityTypeIdentifier: .heartRate)
@@ -411,7 +399,7 @@ struct MainView: View {
     }
 
     private var timeString: String {
-        let minAgo = Int((state.timerDate.timeIntervalSince(state.lastLoopDate ?? .distantPast) - Config.lag) / 60) + 1
+        let minAgo = Int((Date().timeIntervalSince(state.lastLoopDate ?? .distantPast) - Config.lag) / 60) + 1
         if minAgo > 1440 {
             return "--"
         }
@@ -419,15 +407,10 @@ struct MainView: View {
     }
 
     private var color: Color {
-        // if not close loop, return green color
-        if let mt = state.isManualTempBasal, mt {
-            return .loopManualTemp
-        }
-
         guard let lastLoopDate = state.lastLoopDate else {
             return .loopGray
         }
-        let delta = state.timerDate.timeIntervalSince(lastLoopDate) - Config.lag
+        let delta = Date().timeIntervalSince(lastLoopDate) - Config.lag
 
         if delta <= 5.minutes.timeInterval {
             return .loopGreen

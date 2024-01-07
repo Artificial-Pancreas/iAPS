@@ -5,10 +5,8 @@ extension Settings {
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
         @Injected() private var nightscoutManager: NightscoutManager!
-        @Injected() private var apsManager: APSManager!
 
         @Published var closedLoop = false
-        @Published var manualPump = false
         @Published var debugOptions = false
         @Published var animatedBackground = false
 
@@ -18,7 +16,6 @@ extension Settings {
         private(set) var copyrightNotice = ""
 
         override func subscribe() {
-            manualPump = apsManager.isPodManual || apsManager.isManualTempBasal
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
 

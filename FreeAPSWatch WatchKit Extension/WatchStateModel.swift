@@ -57,8 +57,6 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var pendingBolus: Double?
     @Published var isf: Decimal?
     @Published var override: String?
-    @Published var closedLoop: Bool?
-    @Published var isManualTempBasal: Bool?
 
     private var lifetime = Set<AnyCancellable>()
     private var confirmationTimeout: AnyCancellable?
@@ -180,8 +178,6 @@ class WatchStateModel: NSObject, ObservableObject {
         useNewCalc = state.useNewCalc ?? false
         isf = state.isf
         override = state.override
-        closedLoop = state.closedLoop
-        isManualTempBasal = state.isManualTempBasal
     }
 }
 
