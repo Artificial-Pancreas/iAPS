@@ -435,6 +435,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Заполните новый Под U-100 инсулином (оставьте синюю защитную крышку Пода).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Удалите синюю крышку иглы Пода и проверьте канюлю. Затем удалите защитные пленки.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Прослушайте 2 звуковых сигнала.";
 
@@ -458,10 +461,6 @@
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Подготовьте место.";
-
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Удалите синюю крышку иглы Пода и проверьте канюлю. Затем удалите защитные пленки.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Проверьте Под, установите его на теле, затем подтвердите установку Пода.";

@@ -435,6 +435,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyll en ny Pod med U-100 insulin (la den blå hetten være på).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Lytt etter 2 pip.";
 
@@ -458,10 +461,6 @@
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Gjør klart stedet hvor pod skal festes.";
-
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Fjern det blå beskyttelsesdekselet og kontroller kanylen. Fjern deretter papiret fra plasteret.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Kontroller pod, fest på kroppen, og bekreft at den sitter korrekt.";
