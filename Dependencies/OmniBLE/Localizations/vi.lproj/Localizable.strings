@@ -462,9 +462,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Chuẩn bị vị trí.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Remove blue Pod needle cap and check cannula. Then remove paper backing.";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Kiểm tra pod, gắn vào vị trí sau đó xác nhận pod đã được gắn chặt.";
 
@@ -691,7 +688,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Bạn bắt đầu quá trình cài đặt các lời nhắc, đổ đầy thuốc vào pod, ghép đôi thiết bị và gắn pod lên người.";
 
 /* Cancel button title */
-"Cancel" = "Hủy bỏ";
+"Cancel" = "Bỏ qua";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Tiếp tục";
