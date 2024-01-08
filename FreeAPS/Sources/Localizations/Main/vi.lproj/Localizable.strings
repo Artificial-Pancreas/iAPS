@@ -927,10 +927,10 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Đơn vị ghi đè";
 
 /* */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* */
-"High" = "Cao";
+"High" = "High";
 
 /* */
 "glucose" = "đường huyết";
@@ -1232,7 +1232,7 @@ Enact a temp Basal or a temp target */
 " U/day" = " U/ngày";
 
 /* Total AT / Scheduled basal insulin */
-"Total" = "Tổng số";
+"Total" = "Total";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
 /* Enable FPU */
@@ -1293,7 +1293,7 @@ Enact a temp Basal or a temp target */
 "Override your Basal, ISF, CR and Target profiles" = "Ghi đè Basal, ISF, CR và Target của bạn";
 
 /* */
-"Enable indefinitely" = "Cấp phép không giới hạn";
+"Enable indefinitely" = "Kích hoạt vô thời hạn";
 
 /* */
 "Override Profile target" = "Mục tiêu của ghi đè";
@@ -1427,7 +1427,7 @@ Enact a temp Basal or a temp target */
 "Please wait" = "Vui lòng chờ";
 
 /* */
-"Glucose, " = "Glucose, ";
+"Glucose, " = "Đường huyết, ";
 
 /* */
 "Target Glucose" = "Đường huyết mục tiêu";
@@ -1632,7 +1632,7 @@ Enact a temp Basal or a temp target */
 "Month" = "Month";
 
 /* */
-"Total" = "Tổng số";
+"Total" = "Total";
 
 /* Headline Statistics */
 "Statistics" = "Thống kê";
@@ -1641,13 +1641,13 @@ Enact a temp Basal or a temp target */
 "Allow Upload of Statistics to NS" = "Cho phép tải thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "Cao";
+"High" = "High";
 
 /* In Range */
-"In Range" = "Trong phạm vi";
+"In Range" = "In Range";
 
 /* Display % */
 "Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
@@ -1701,10 +1701,10 @@ Enact a temp Basal or a temp target */
 "Normal" = "Normal";
 
 /* Title High BG in statPanel */
-"High (>" = "Cao (>";
+"High (>" = "High (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Thấp (<";
+"Low (<" = "Low (<";
 
 /* SD */
 "SD" = "SD";
