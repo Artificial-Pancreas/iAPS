@@ -47,5 +47,6 @@
   "overrideFactor": 0.8,
   "useCalc": false,
   "fattyMeals": false,
-  "fattyMealFactor": 0.7
+  "fattyMealFactor": 0.7,
+  "alarmSound": "New/Anticipalte.caf"
 }
