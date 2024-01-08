@@ -89,7 +89,7 @@
 "Result" = "Kết quả";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Liều thêm vào bị giới hạn bởi liều Max bolus %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Liều thêm vào bị giới hạn bởi liều \"Liều bolus tối đa\" %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Tiếp tục";
@@ -927,10 +927,10 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Đơn vị ghi đè";
 
 /* */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* */
-"High" = "Cao";
+"High" = "High";
 
 /* */
 "glucose" = "đường huyết";
@@ -1232,7 +1232,7 @@ Enact a temp Basal or a temp target */
 " U/day" = " U/ngày";
 
 /* Total AT / Scheduled basal insulin */
-"Total" = "Tổng số";
+"Total" = "Total";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
 /* Enable FPU */
@@ -1267,7 +1267,7 @@ Enact a temp Basal or a temp target */
 "Hide Fat & Protein" = "Ẩn chất béo & chất đạm";
 
 /* Add Fat */
-"Fat" = "Chất Béo";
+"Fat" = "Chất béo";
 
 /* Add Protein */
 "Protein" = "Chất đạm";
@@ -1293,7 +1293,7 @@ Enact a temp Basal or a temp target */
 "Override your Basal, ISF, CR and Target profiles" = "Ghi đè Basal, ISF, CR và Target của bạn";
 
 /* */
-"Enable indefinitely" = "Cấp phép không giới hạn";
+"Enable indefinitely" = "Kích hoạt vô thời hạn";
 
 /* */
 "Override Profile target" = "Mục tiêu của ghi đè";
@@ -1362,7 +1362,7 @@ Enact a temp Basal or a temp target */
 "Override Profile Target" = "Mục tiêu ghi đè";
 
 /* Alert string. Keep spaces. */
-" SMBs are disabled either by schedule or during the entire duration." = " SBMs bị vô hiệu theo lịch trình hoặc theo toàn bộ thời gian.";
+" SMBs are disabled either by schedule or during the entire duration." = " SMBs bị vô hiệu theo lịch trình hoặc theo toàn bộ thời gian.";
 
 /* Alert strings. Keep spaces */
 " infinite duration." = " thời gian không xác định.";
@@ -1392,7 +1392,7 @@ Enact a temp Basal or a temp target */
 "Empty" = "Trống rỗng";
 
 /* */
-"Delete Selected Preset" = "Xóa cài đặt trước đã chọn";
+"Delete Selected Preset" = "Xóa mẫu cài đặt trước đã chọn";
 
 /* */
 "Enter Meal Preset Name" = "Nhập tên trước bữa ăn";
@@ -1404,7 +1404,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Lưu và tiếp tục";
 
 /* */
-"Save as Preset" = "Lưu cài đặt mẫu";
+"Save as Preset" = "Lưu mẫu cài đặt";
 
 /* */
 "Predictions" = "Dự đoán";
@@ -1427,7 +1427,7 @@ Enact a temp Basal or a temp target */
 "Please wait" = "Vui lòng chờ";
 
 /* */
-"Glucose, " = "Glucose, ";
+"Glucose, " = "Đường huyết, ";
 
 /* */
 "Target Glucose" = "Đường huyết mục tiêu";
@@ -1632,7 +1632,7 @@ Enact a temp Basal or a temp target */
 "Month" = "Month";
 
 /* */
-"Total" = "Tổng số";
+"Total" = "Total";
 
 /* Headline Statistics */
 "Statistics" = "Thống kê";
@@ -1641,13 +1641,13 @@ Enact a temp Basal or a temp target */
 "Allow Upload of Statistics to NS" = "Cho phép tải thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "Cao";
+"High" = "High";
 
 /* In Range */
-"In Range" = "Trong phạm vi";
+"In Range" = "In Range";
 
 /* Display % */
 "Change HbA1c Unit" = "Thay đổi đơn vị của HbA1c";
@@ -1701,10 +1701,10 @@ Enact a temp Basal or a temp target */
 "Normal" = "Normal";
 
 /* Title High BG in statPanel */
-"High (>" = "Cao (>";
+"High (>" = "High (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Thấp (<";
+"Low (<" = "Low (<";
 
 /* SD */
 "SD" = "SD";
@@ -1950,13 +1950,13 @@ Enact a temp Basal or a temp target */
 "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Giá trị mặc định của maxCOB là 120. (Nếu ai đó nạp nhiều carbs hơn vào một hoặc nhiều mục, iAPS sẽ giới hạn COB ở mức maxCOB và giữ nó ở mức maxCOB cho đến khi lượng carb nhập vào trên maxCOB cho thấy đã được hấp thụ. Về cơ bản, điều này chỉ giới hạn UAM như một giới hạn an toàn chống lại các phép tính COB kỳ lạ do dữ liệu không ổn định.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
+"Bolus Snooze DIA Divisor" = "Chế độ báo lại bolus";
 
 /* "Bolus Snooze DIA Divisor" */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Chế độ báo lại bolus được kích hoạt sau khi bạn thực hiện một bữa ăn nhanh, vì vậy vòng lặp sẽ không phản tác dụng với nhiệt độ thấp khi bạn vừa ăn. Ví dụ ở đây và mặc định là 2; vì vậy DIA 3 giờ có nghĩa là thời gian báo lại bolus sẽ giảm dần trong 1,5 giờ (3DIA/2).";
 
 /* Headline "Min 5m Carbimpact" */
-"Min 5m Carbimpact" = "Tác động tối thiểu 5m";
+"Min 5m Carbimpact" = "Tác động tối thiểu 5 phút";
 
 /* "Min 5m Carbimpact" */
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Đây là cài đặt cho tác động hấp thụ carb mặc định trong 5 phút. Giá trị mặc định là 8 mg/dL/5 phút dự kiến. Điều này ảnh hưởng đến tốc độ phân hủy của COB trong các tình huống khi không thể nhìn thấy sự hấp thụ carb ở độ lệch BG. Giá trị mặc định là 8 mg/dL/5 phút tương ứng với tốc độ hấp thụ carb tối thiểu là 24g/giờ ở CSF là 4 mg/dL/g.";
@@ -1992,7 +1992,7 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa mà UAM có thể phân phối dưới dạng một SMB khi IOB vượt quá COB. Điều này mang lại khả năng khiến UAM trở nên hung hãn hơn hoặc ít hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Việc giảm giá trị sẽ khiến UAM giảm liều insulin cho mỗi SMB. Không nên đặt giá trị này cao hơn 60 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về nhiệt độ bằng 0 một cách an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "SMB Interval" */
-"SMB Interval" = "SMB Interval";
+"SMB Interval" = "Khoảng thời gian SMB";
 
 /* "SMB Interval" */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Thời lượng tối thiểu tính bằng phút cho SMB mới kể từ SMB cuối cùng hoặc liều truyền thủ công";
@@ -2156,7 +2156,7 @@ Enact a temp Basal or a temp target */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Kích hoạt SMB khi phát hiện BG cao, dựa trên mục tiêu BG cao (đã điều chỉnh hoặc cấu hình)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamic settings";
+"Dynamic settings" = "Cài đặt Dynamic";
 
 /* Insulin curve */
 "Insulin curve" = "Chủng loại insulin";

@@ -435,6 +435,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Dùng loại insulin U-100.";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Nghe 2 tiếng bíp.";
 
@@ -458,10 +461,6 @@
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Chuẩn bị vị trí.";
-
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Tháo nắp kim màu xanh và kiểm tra cannula. Sau đó gỡ bỏ lớp giấy phía sau.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Kiểm tra pod, gắn vào vị trí sau đó xác nhận pod đã được gắn chặt.";
@@ -521,7 +520,7 @@ Label text for step two of attach pod instructions */
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Pod đã sẵn sàng hoạt động.\n\n%1$@ sẽ nhắc nhở bạn thay đổi khi pod hết hạn. Bạn có thể thay khi nào tiện.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* Label for expiration reminder row */
 "Time" = "Thời gian";
@@ -533,7 +532,7 @@ Label text for step two of attach pod instructions */
 "Setup Complete" = "Cấu hình hoàn thành";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Không có lời nhắc";
 
 /* Error message description for PeripheralManagerError.notReady */
 "Peripheral Not Ready" = "Thiết bị ngoại vi chưa sẵn sàng";
@@ -563,7 +562,7 @@ Label text for step two of attach pod instructions */
 "This is a reminder that you scheduled when you paired your current Pod." = "Đây là lời nhắc mà bạn đã lên lịch khi ghép nối Pod hiện tại của mình.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Ứng dụng nhắc nhở bạn khi lượng insulin trong pod đạt đến mức này.";
@@ -580,7 +579,7 @@ Label text for step two of attach pod instructions */
 "Time" = "Thời gian";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Không có lời nhắc";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Báo nhắc gần hết thuốc";
@@ -638,10 +637,10 @@ Label text for step two of attach pod instructions */
 "Missing Config" = "Thiếu cấu hình";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Maximum basal rate chưa được PumpManager cấu hình. Đề nghị vào therapy settings-> delivery limits và cấu hình maximum basal rate mới.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Liều nền tối đa chưa được cấu hình. Đề nghị vào Cài đặt-> Cấu hình bơm và cấu hình Liều nền tối đa mới.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Mặc định Nhắc nhở Hết hạn";
+"Expiration Reminder Default" = "Mặc định nhắc nhở hết hạn";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Thông tin Pod trước đó";
@@ -689,7 +688,7 @@ Label text for step two of attach pod instructions */
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Bạn bắt đầu quá trình cài đặt các lời nhắc, đổ đầy thuốc vào pod, ghép đôi thiết bị và gắn pod lên người.";
 
 /* Cancel button title */
-"Cancel" = "Hủy bỏ";
+"Cancel" = "Bỏ qua";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Tiếp tục";
@@ -704,7 +703,7 @@ Label text for step two of attach pod instructions */
 "Next" = "Kế tiếp";
 
 /* */
-"Expiration Reminder" = "Nhắc nhở Hết hạn";
+"Expiration Reminder" = "Nhắc nhở hết hạn";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Ứng dụng sẽ thông báo khi lượng insulin trong Pod đạt đến mức này (50-10 U).\n\n Kéo xuống để chọn số Unit mà bạn muốn để nhận thông báo.";
@@ -809,12 +808,12 @@ Label text for step two of attach pod instructions */
 "Previous Pod Details" = "Thông tin của Pod trước đó";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "Chi tiết về Trình quản lý Máy bơm";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Pump Manager...";
+"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Trình quản lý máy bơm...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Làm mới Pump Manager Details";
+"Refresh Pump Manager Details" = "Làm mới Chi tiết về Trình quản lý Máy bơm";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Chẩn đoán";

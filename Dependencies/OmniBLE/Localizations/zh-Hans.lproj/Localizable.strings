@@ -435,6 +435,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "用至少100个单位的胰岛素填充一个新的pod (不要取下Pod的针头盖)。";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "注意听两声哔声";
 
@@ -458,10 +461,6 @@
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "将注射部位做好准备";
-
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "移除蓝色防尘帽并检查出药口软管，然后移除覆盖的贴纸";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "检查Pod，贴在注射部位上，确保pod已经贴牢";
@@ -710,7 +709,7 @@ Label text for step two of attach pod instructions */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "低药量";
 
 /* */
 "Save" = "保存​​";

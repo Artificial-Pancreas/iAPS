@@ -179,6 +179,9 @@
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Hủy kích hoạt";
 
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Trượt để vô hiệu hóa Pod";
+
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Hủy kích hoạt Pod";
