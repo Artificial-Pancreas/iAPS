@@ -84,7 +84,7 @@ extension NotificationsConfig {
                 Button(
                     action: {
                         currentName = name
-                        isPlay = true
+                        
                         if isPlay {
                             self.playSound(name, currentSoundID) {
                                 isPlay = false
@@ -96,6 +96,7 @@ extension NotificationsConfig {
                                 currentName = ""
                             }
                         }
+                        isPlay = true
 
                     },
 
