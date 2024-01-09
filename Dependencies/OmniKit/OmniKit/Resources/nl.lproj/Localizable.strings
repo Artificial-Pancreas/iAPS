@@ -175,7 +175,7 @@
 
 /* Alert content body for multiCommand pod alert
    Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Melding meerdere commando's";
+"Multiple Command Alert" = "Waarschuwing voor meerdere commando's";
 
 /* Pod alert state when no alerts are active */
 "No alerts" = "Geen waarschuwingen";
@@ -282,7 +282,7 @@
 "Pod Occlusion" = "Pod verstopping";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Koppeling Pod onvolledig";
+"Pod Pairing Incomplete" = "Koppeling Pod Onvolledig";
 
 /* Error message shown when pod sends ack instead of response */
 "Pod sent ack instead of response" = "Pod heeft een bevestiging gestuurd in plaats van een antwoord";
