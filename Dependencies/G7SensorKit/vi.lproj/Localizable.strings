@@ -2,128 +2,128 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS dokáže čítať dáta z G7 CGM, ale stále musíte používať aplikáciu Dexcom G7 na párovanie, kalibráciu a ďalšiu správu senzora.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS có thể đọc dữ liệu G7 CGM tuy nhiên bạn nên dùng app của Dexcom G7 để ghép đôi, hiệu chỉnh và quản lý sensor.";
 
 /* Button title for starting setup */
-"Continue" = "Pokračovať";
+"Continue" = "Tiếp tục";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Zrušiť";
+"Cancel" = "Bỏ qua";
 
 /* Error description for unreliable state */
-"Glucose data is unavailable" = "Dáta o hladine glukózy nie sú k dispozícii";
+"Glucose data is unavailable" = "Dữ liệu đường huyết không có sẵn";
 
 /* The description of sensor algorithm state when sensor is ok. */
-"Sensor is OK" = "Senzor pracuje správne";
+"Sensor is OK" = "Sensor is OK";
 
 /* The description of sensor algorithm state when sensor is stopped." */
-"Sensor is stopped" = "Senzor je zastavený";
+"Sensor is stopped" = "Cảm biến đã dừng hoạt động";
 
 /* The description of sensor algorithm state when sensor is warming up. */
-"Sensor is warming up" = "Senzor sa zahrieva";
+"Sensor is warming up" = "Cảm biến đang khởi động";
 
 /* The description of sensor algorithm state when sensor is expired. */
-"Sensor expired" = "Senzor exspiroval";
+"Sensor expired" = "Cảm biến đã hết hạn";
 
 /* The description of sensor algorithm state when sensor failed. */
-"Sensor failed" = "Senzor zlyhal";
+"Sensor failed" = "Lỗi cảm biến";
 
 /* The description of sensor algorithm state when raw value is unknown. (1: missing data details) */
-"Sensor is in unknown state %1$d" = "Senzor je v neznámom stave %1$d";
+"Sensor is in unknown state %1$d" = "Trạng thái cảm biến không xác định %1$d";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Čas zavedenia";
+"Sensor Start" = "Khởi động Cảm biến";
 
 /* title for g7 settings row showing sensor expiration time */
-"Sensor Expiration" = "Senzor exspiruje";
+"Sensor Expiration" = "Cảm biến hết hạn";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Dodatočná doba na výmenu senzoru končí";
+"Grace Period End" = "Thời gian ân huệ kết thúc";
 
 /* Field label */
-"Glucose" = "Glykémia";
+"Glucose" = "Đường huyết";
 
-"Last Reading" = "Posledná hodnota";
+"Last Reading" = "Kết quả đọc gần nhất";
 
-"Time" = "Čas";
+"Time" = "Thời gian";
 
-"Trend" = "Vývoj";
+"Trend" = "Xu hướng Glucose";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Názov";
+"Name" = "Tên";
 
 /* title for g7 settings connection status when scanning */
-"Scanning" = "Skenuje sa";
+"Scanning" = "Đang quét";
 
 /* title for g7 settings connection status when connected */
-"Connected" = "Pripojený";
+"Connected" = "Đã kết nối";
 
 /* title for g7 settings connection status when connecting */
-"Connecting" = "Pripája sa";
+"Connecting" = "Đang kết nối";
 
 /* title for g7 settings row showing sensor last connect time */
-"Last Connect" = "Posledné spojenie";
+"Last Connect" = "Kết nối gần đây nhất";
 
 /* Configuration */
-"Configuration" = "Nastavenie";
+"Configuration" = "Cấu hình";
 
 /* title for g7 config settings to upload readings */
-"Upload Readings" = "Nahrať merania";
+"Upload Readings" = "Glucose đang tải lên";
 
 /* Button */
-"Scan for new sensor" = "Načítať nový senzor";
+"Scan for new sensor" = "Scan để thay sensor";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Odstrániť senzor";
+"Delete CGM" = "Xoá CGM";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "NÍZKE";
+"LOW" = "THẤP";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "VYSOKÉ";
+"HIGH" = "CAO";
 
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@/phút";
 
 /* G7 Progress bar label when searching for sensor */
-"Searching for sensor" = "Vyhľadávam nový senzor";
+"Searching for sensor" = "Đang tìm kiếm cảm biến";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Senzor exspiroval";
+"Sensor expired" = "Cảm biến đã hết hạn";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Zahrievanie senzora dokončené";
+"Warmup completes" = "Khởi động hoàn tất";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Zahrievanie senzora dokončené";
+"Warmup completes" = "Khởi động hoàn tất";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Senzor zlyhal";
+"Sensor failed" = "Lỗi cảm biến";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
-"Sensor expires" = "Senzor exspiruje";
+"Sensor expires" = "Sensor hết hạn";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Zostávajúce predĺžené obdobie";
+"Grace period remaining" = "Thời gian ân huệ còn lại";
 
 /* G7 Status highlight text for searching for sensor */
-"Searching for\nSensor" = "Vyhľadávam\nsenzor";
+"Searching for\nSensor" = "Đang tìm kiếm \n sensor";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Senzor\nexspiroval";
+"Sensor\nExpired" = "Sensor\n hết hạn";
 
 /* G7 Status highlight text for signal loss */
-"Sensor\nFailed" = "Senzor\nzlyhal";
+"Sensor\nFailed" = "Sensor\n thất bại";
 
 /* G7 Status highlight text for signal loss */
-"Signal\nLoss" = "Strata\nsignálu";
+"Signal\nLoss" = "Tín hiệu\n mất";
 
 /*G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Problém\nsenzoru";
+"Sensor\nIssue" = "Sensor\n có vấn đề";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Zahrievanie\nsenzoru";
+"Sensor\nWarmup" = "Sensor\n đang khởi động";

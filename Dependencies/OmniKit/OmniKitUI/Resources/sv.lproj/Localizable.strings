@@ -179,6 +179,9 @@
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Inaktivera";
 
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Svep för att inaktivera podd";
+
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Inaktivera podd";
@@ -802,4 +805,3 @@ Silence Pod" = "Tysta podden";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Läd poddstatus";
->>>>>>> Crowdin

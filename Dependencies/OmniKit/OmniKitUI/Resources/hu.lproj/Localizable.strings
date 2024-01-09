@@ -78,7 +78,7 @@
 "Adjusting Pump Time..." = "Adjusting Pump Time...";
 
 /* The title of the cell showing alarm status */
-"Alarms" = "Alarms";
+"Alarms" = "Riasztások";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -114,7 +114,7 @@
 "Bolus Delivery" = "Bolus Delivery";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "Cancel";
+"Cancel" = "Mégse";
 
 /* Button title to cancel manual basal */
 "Cancel Manual Basal" = "Cancel Manual Basal";
@@ -156,7 +156,7 @@
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
 
 /* The title of the configuration section in settings */
-"Configuration" = "Configuration";
+"Configuration" = "Beállítások";
 
 /* Button title for confirm attachment option */
 "Confirm" = "Confirm";
@@ -178,6 +178,9 @@
 
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Deactivate";
+
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
 
 /* Button title for pod deactivation
    Button title to deactivate pod */
@@ -206,7 +209,7 @@
 "Device Information" = "Device Information";
 
 /* Header for devices section of RileyLinkSetupView */
-"Devices" = "Devices";
+"Devices" = "Eszközök";
 
 /* Title text for button to disable bolus beeps */
 "Disable Bolus Beeps" = "Disable Bolus Beeps";
@@ -216,7 +219,7 @@
 "Discard Pod" = "Discard Pod";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "Kész";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Enable Bolus Beeps";
@@ -291,7 +294,7 @@
 "hour" = "hour";
 
 /* Unit for plural hours in pod life remaining */
-"hours" = "hours";
+"hours" = "óra";
 
 /* Alert message body for confirm pod attachment */
 "If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "If you cancel Pod setup, the current Pod will be deactivated and will be unusable.";
@@ -373,7 +376,7 @@
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "perc";
 
 /* Alert title for missing temp basal configuration */
 "Missing Config" = "Missing Config";
@@ -387,7 +390,7 @@
 "Next" = "Next";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Nem";
 
 /* Text shown in insulin remaining space when no pod is paired */
 "No\nDelivery" = "No\nDelivery";
@@ -588,7 +591,7 @@
 "Saving..." = "Saving...";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Schedule";
+"Schedule" = "Ütemezés";
 
 /* Title of insulin delivery section */
 "Scheduled Basal" = "Scheduled Basal";
@@ -704,7 +707,7 @@
 /* Label for expiration reminder row
    Label for scheduled expiration reminder row
    Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "Idő";
 
 /* Title for pod sync time action sheet.
    title for time change detected notice */
@@ -720,7 +723,7 @@
 "Total Delivery" = "Total Delivery";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "U/óra";
 
 /* Instructions when pod cannot be deactivated */
 "Unable to deactivate pod. Please continue and pair a new one." = "Unable to deactivate pod. Please continue and pair a new one.";
@@ -742,13 +745,13 @@
 "Unfinished deactivation" = "Unfinished deactivation";
 
 /* The detail text for delivered insulin when no measurement is available */
-"Unknown" = "Unknown";
+"Unknown" = "Ismeretlen";
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Wait until insertion is completed.";
 
 /* Button label for user to answer cannula was properly inserted */
-"Yes" = "Yes";
+"Yes" = "Igen";
 
 /* Button title for confirm deactivation option */
 "Yes, Deactivate Pod" = "Yes, Deactivate Pod";
@@ -775,10 +778,10 @@
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
 
 /* Help text for Silence Pod view */
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
-
 /* navigation title for Silnce Pod" */
-"Silence Pod" = "Silence Pod";
+
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
+Silence Pod" = "Silence Pod";
 
 /* title for pod details page */
 "Pod Details" = "Pod Details";
@@ -791,7 +794,6 @@
 
 /* button title when retrieving pump manager details */
 "Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
-    
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Refresh Pump Manager Details";
 
