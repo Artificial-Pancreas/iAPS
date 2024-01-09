@@ -101,7 +101,8 @@ extension NotificationsConfig {
                     },
 
                     label: {
-                        Image(systemName: isPlay ? isPlay && currentName == name ? "pause" : "" : "play")
+                        isPlay && currentName == name ? Image(systemName: "pause") :
+                            !isPlay ? Image(systemName: "play") : nil
                     }
                 )
             }
