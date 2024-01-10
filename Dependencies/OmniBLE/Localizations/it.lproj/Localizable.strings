@@ -436,7 +436,7 @@
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Riempi un nuovo pod con U-100 Insulina (lascia il cappuccio blu dell’ago sul pod).";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Rimuovere il cappuccio blu dell'ago del Pod e controllare la cannula. Quindi rimuovere le due coperture di carta.";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Ascolta per 2 bip.";
