@@ -2,7 +2,7 @@
 "A bolus is already in progress" = "Un bolus est déjà en cours";
 
 /* The description of AlarmClockReminderPumpEvent */
-"AlarmClockReminder" = "AlarmClockReminder";
+"AlarmClockReminder" = "Alarme de rappel";
 
 /* The description of AlarmSensorPumpEvent */
 "AlarmSensor" = "AlarmSensor";

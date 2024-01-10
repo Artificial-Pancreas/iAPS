@@ -54,7 +54,7 @@ Title text for the button to remove a CGM from Loop */
 "Transmitter ID" = "ID vysielača";
 
 /* Title describing glucose trend */
-"Trend" = "Trend";
+"Trend" = "Vývoj";
 
 /* The title text for the upload glucose switch cell */
 "Upload Readings" = "Načítať údaje";

@@ -46,7 +46,7 @@ extension Dynamic {
                 if state.useNewFormula {
                     Section {
                         HStack {
-                            Toggle("Use Sigmoid Formula", isOn: $state.sigmoid)
+                            Toggle("Use Sigmoid Function", isOn: $state.sigmoid)
                         }
                     } header: { Text("Formula") }
 
@@ -67,17 +67,18 @@ extension Dynamic {
                             Toggle("Adjust basal", isOn: $state.tddAdjBasal)
                         }
                     } header: { Text("Settings") }
-
-                    Section {
-                        HStack {
-                            Text("Threshold Setting")
-                            Spacer()
-                            DecimalTextField("0", value: $state.threshold_setting, formatter: glucoseFormatter)
-                            Text(state.unit.rawValue)
-                        }
-                    } header: { Text("Safety") }
                 }
+
+                Section {
+                    HStack {
+                        Text("Threshold Setting")
+                        Spacer()
+                        DecimalTextField("0", value: $state.threshold_setting, formatter: glucoseFormatter)
+                        Text(state.unit.rawValue)
+                    }
+                } header: { Text("Safety") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Dynamic ISF")
             .navigationBarTitleDisplayMode(.automatic)
