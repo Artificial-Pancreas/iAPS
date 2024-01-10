@@ -55,10 +55,10 @@ platform :ios do
       type: "appstore",
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
-        "com.jon.#(TEAMID).aps",
-        "com.jon.#(TEAMID).aps.watchkitapp",
-        "com.jon.#(TEAMID).aps.watchkitapp.watchkitextension"
-        "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"
+        "com.jon.#{TEAMID}.aps",
+        "com.jon.#{TEAMID}.aps.watchkitapp",
+        "com.jon.#{TEAMID}.aps.watchkitapp.watchkitextension"
+        "com.jon.#{TEAMID}.aps.LiveActivity"
       ]
     )
 
@@ -192,10 +192,10 @@ platform :ios do
       force: true,
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
-        "com.jon.$(TEAMID).aps",
+        "com.jon.#{TEAMID}.aps",
         "com.jon.#{TEAMID}.aps.watchkitapp.watchkitextension",
         "com.jon.#{TEAMID}.aps.watchkitapp",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"
+        "com.jon.#{TEAMID}.aps.LiveActivity"
       ]
     )
   end
