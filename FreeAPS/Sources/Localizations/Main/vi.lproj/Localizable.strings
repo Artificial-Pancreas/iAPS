@@ -630,7 +630,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Transmitters";
 
 /* */
-"Modes" = "Chế độ cảm biến";
+"Modes" = "Loại cảm biến";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
@@ -675,7 +675,7 @@ Enact a temp Basal or a temp target */
 "Remove All" = "Loại bỏ tất cả";
 
 /* */
-"About the Process" = "Về quá trình";
+"About the Process" = "Về quá trình xử lý";
 
 /* */
 "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Xin chắc chắn rằng Libre 2 của bạn đã được kích hoạt and hoàn thành khởi động. Nếu bạn đang có app nào kết nối với cảm biến qua bluetooth thì nên đóng các app này lại hoặc gỡ các app khỏi máy.\n\n Bạn chỉ được dùng 01 app để kết nối với cảm biến qua bluetooth. Sau đó nhấn \"pairing and connection\" để tiếp tục. Bluetooth có thể mất vài phút để kết nối trước khi bắt đầu hoạt động.";
@@ -771,7 +771,7 @@ Enact a temp Basal or a temp target */
 "Low battery" = "Pin yếu";
 
 /* */
-"Invalid sensor" = "Lỗi nhập không hợp lệ";
+"Invalid sensor" = "Cảm biến không hợp lệ";
 
 /* */
 "Sensor change" = "Thay đổi cảm biến";
@@ -912,7 +912,7 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Hãy sạc Pin điện thoại";
 
 /* */
-"Adds Transmitter Battery" = "Hãy sạc Pin của Transmitter";
+"Adds Transmitter Battery" = "Hãy sạc Pin Transmitter";
 
 /* */
 "Also vibrate" = "Rung";
@@ -1077,7 +1077,7 @@ Enact a temp Basal or a temp target */
 "Suspend" = "Đã tạm ngưng";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Nền màn hình động";
 
 /* Sensor day(s) */
 " day(s)" = " ngày(s)";
@@ -1087,7 +1087,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "Cài đặt chính của OpenAPS";
+"OpenAPS main settings" = "Cài đặt chính OpenAPS";
 
 "OpenAPS SMB settings" = "Cài đặt SMB OpenAPS";
 
@@ -1901,7 +1901,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Mặc định là False. Đặt thành True cho phép thay đổi đỉnh của insulin";
 
 /* Headline "Suspend Zeros IOB” */
-"Suspend Zeros IOB" = "Suspend Zeros IOB";
+"Suspend Zeros IOB" = "Tạm dừng IOB bằng 0";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Mặc định là False. Mọi mức Temp Basals hiện có trong thời gian máy bơm bị tạm dừng sẽ bị xóa và mức Temp Basals 0 để phủ nhận tốc độ cơ bản của hồ sơ trong thời gian máy bơm bị tạm dừng sẽ được thêm vào.";

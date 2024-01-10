@@ -180,7 +180,7 @@
 "Deactivate" = "Disattiva";
 
 /* Action button description for deactivate while pod still active */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Scorri per disattivare il pod";
 
 /* Button title for pod deactivation
    Button title to deactivate pod */
