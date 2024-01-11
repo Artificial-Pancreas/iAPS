@@ -19,9 +19,9 @@ protocol HealthKitManager: GlucoseSource {
     func saveIfNeeded(carbs: [CarbsEntry])
     /// Save Insulin to Health store
     func saveIfNeeded(pumpEvents events: [PumpHistoryEvent])
-    /// Create observer for data passing beetwen Health Store and FreeAPS
+    /// Create observer for data passing beetwen Health Store and iAPS
     func createBGObserver()
-    /// Enable background delivering objects from Apple Health to FreeAPS
+    /// Enable background delivering objects from Apple Health to iAPS
     func enableBackgroundDelivery()
     /// Delete glucose with syncID
     func deleteGlucose(syncID: String)
@@ -45,7 +45,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
         static let healthCarbObject = HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)
         static let healthInsulinObject = HKObjectType.quantityType(forIdentifier: .insulinDelivery)
 
-        // Meta-data key of FreeASPX data in HealthStore
+        // Meta-data key of iAPS data in HealthStore
         static let freeAPSMetaKey = "From iAPS"
     }
 
@@ -177,7 +177,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                     debug(.service, error!.localizedDescription)
                 }
             }
-//            { _, _ in }
         }
 
         loadSamplesFromHealth(sampleType: sampleType, withIDs: bloodGlucose.map(\.id))
@@ -226,7 +225,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                     debug(.service, error!.localizedDescription)
                 }
             }
-//            { _, _ in }
         }
 
         loadSamplesFromHealth(sampleType: sampleType)
@@ -299,7 +297,6 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                     debug(.service, error!.localizedDescription)
                 }
             }
-//            { _, _ in }
         }
 
         loadSamplesFromHealth(sampleType: sampleType, withIDs: events.map(\.id))
