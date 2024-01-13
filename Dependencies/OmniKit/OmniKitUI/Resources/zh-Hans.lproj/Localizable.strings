@@ -179,6 +179,9 @@
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "解除";
 
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "解除Pod";

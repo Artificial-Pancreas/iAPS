@@ -49,6 +49,7 @@ extension PumpSettingsEditor {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Pump Settings")
             .navigationBarTitleDisplayMode(.inline)

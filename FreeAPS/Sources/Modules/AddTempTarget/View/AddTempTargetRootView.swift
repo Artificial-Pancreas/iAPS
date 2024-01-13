@@ -135,6 +135,7 @@ extension AddTempTarget {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView()
                 state.hbt = isEnabledArray.first?.hbt ?? 160

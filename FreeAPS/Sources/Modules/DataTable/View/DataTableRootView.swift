@@ -74,6 +74,7 @@ extension DataTable {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)

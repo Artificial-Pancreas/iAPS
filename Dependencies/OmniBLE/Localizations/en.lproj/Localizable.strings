@@ -437,6 +437,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Listen for 2 beeps.";
 
@@ -460,9 +463,6 @@
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Prepare site.";
-
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Remove blue Pod needle cap and check cannula. Then remove paper backing.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Check Pod, apply to site, then confirm pod attachment.";
