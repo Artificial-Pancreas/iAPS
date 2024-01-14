@@ -33,18 +33,6 @@ final class JavaScriptWorker {
             forKeyedSubscript: "_consoleLog" as NSString
         )
 
-        let consoleError: @convention(block) (String) -> Void = { message in
-            // try not to log "x", "-", "+", "=", etc.
-            if message.count > 1 {
-                debug(.openAPS, "JavaScript Error: \(message)")
-            }
-        }
-
-        context.setObject(
-            consoleError,
-            forKeyedSubscript: "_consoleError" as NSString
-        )
-
         return context
     }
 
