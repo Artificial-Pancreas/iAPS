@@ -543,7 +543,7 @@ Enact a temp Basal or a temp target */
 "Low target" = "Target Basso";
 
 /* When bolusing */
-"Bolusing" = "Eseguendo bolo";
+"Bolusing" = "Bolo in corso";
 
 /* */
 "Pump suspended" = "Micorinfusore sospeso";
