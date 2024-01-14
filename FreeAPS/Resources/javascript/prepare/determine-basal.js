@@ -6,7 +6,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     let middleware_was_used = "";
 
     try {
-        var middlewareReason = middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pump_history, preferences, basalProfile, oref2_variables);
+        const middlewareReason = middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, pump_history, preferences, basalProfile, oref2_variables);
         middleware_was_used = middlewareReason || "Nothing changed";
         console.log("Middleware reason: " + middleware_was_used);
     } catch (error) {
