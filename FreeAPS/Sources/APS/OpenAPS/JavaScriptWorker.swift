@@ -15,21 +15,34 @@ final class JavaScriptWorker {
     private func createContext() -> JSContext {
         let context = JSContext(virtualMachine: virtualMachine)!
 
-        var accumulatedLog = ""
-
         context.exceptionHandler = { _, exception in
             if let error = exception?.toString() {
-                warning(.openAPS, "JavaScript Error: \(error)")
+                warning(.openAPS, "JavaScript Exception Handler: \(error)")
             }
         }
 
         let consoleLog: @convention(block) (String) -> Void = { message in
-            accumulatedLog += message
+            // try not to log "x", "-", "+", "=", etc.
+            if message.count > 1 {
+                debug(.openAPS, "JavaScript Log: \(message)")
+            }
         }
 
         context.setObject(
             consoleLog,
             forKeyedSubscript: "_consoleLog" as NSString
+        )
+
+        let consoleError: @convention(block) (String) -> Void = { message in
+            // try not to log "x", "-", "+", "=", etc.
+            if message.count > 1 {
+                debug(.openAPS, "JavaScript Error: \(message)")
+            }
+        }
+
+        context.setObject(
+            consoleError,
+            forKeyedSubscript: "_consoleError" as NSString
         )
 
         return context
@@ -45,12 +58,12 @@ final class JavaScriptWorker {
 
         // Check if result is defined
         guard let result = result else {
-            debug(.openAPS, "JavaScript log: JS returning UNDEFINED")
+            debug(.openAPS, "JavaScript Evalutation Log: JS returning UNDEFINED")
             return nil
         }
 
         if !result.isObject, let log = result.toString(), log != "undefined", !log.isEmpty, !log.contains("insulinReq\":") {
-            debug(.openAPS, "JavaScript log: \(log)")
+            debug(.openAPS, "JavaScript Evalutation Log: \(log)")
         }
 
         return result
