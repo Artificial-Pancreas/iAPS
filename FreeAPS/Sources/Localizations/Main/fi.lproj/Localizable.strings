@@ -11,13 +11,13 @@
 
 "Bolus" = "Bolus";
 
-"Close" = "Close";
+"Close" = "Sulje";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continue without bolus";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nMäärä on isompi kuin sinun maksimi Bolus asetus\nOletko varma, että haluat lisätä ";
 
 /* Header */
 "Enact Bolus" = "Enact Bolus";
@@ -26,25 +26,25 @@
 "Enact bolus" = "Enact bolus";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "Suositeltu insuliini";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "Insuliinin tarve";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "Suositus";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "Tyhjennä";
 
 /* Button */
-"Done" = "Done";
+"Done" = "Valmis";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "Odota";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "Hyväksy ja jatka";
 
 /* Bolus progress view */
 "of" = "of";
@@ -62,22 +62,22 @@
 "Meal Summary" = "Meal Summary";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Edit Meal";
+"Edit Meal" = "Muokkaa ateriaa";
 
 /* Bolus View Meal Add Meal Button */
-"Add Meal" = "Add Meal";
+"Add Meal" = "Lisää ateria";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolus Summary";
+"Bolus Summary" = "Bolus yhteenveto";
 
 /* For the  Bolus View pop-up */
-"Calculations" = "Calculations";
+"Calculations" = "Laskenta";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal" = "Fatty Meal";
+"Fatty Meal" = "Rasvainen ruoka";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Full Bolus";
+"Full Bolus" = "Täysi bolus";
 
 /* For the  Bolus View pop-up */
 "Fraction" = "Fraction";
@@ -86,7 +86,7 @@
 "Fatty Meal Factor" = "Fatty Meal Factor";
 
 /* For the  Bolus View pop-up */
-"Result" = "Result";
+"Result" = "Tulos";
 
 /* For the  Bolus View pop-up */
 "Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
@@ -95,13 +95,13 @@
 "Continue" = "Jatka";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "Koti";
 
 /* Looping in progress */
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "minuuttia sitten";
 
 /* Status Title */
 "No suggestion" = "No suggestion";
@@ -110,43 +110,43 @@
 "Replace pod" = "Replace pod";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "Lisää hiilihydraatit";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "Lisää hiilihydraatit ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "Hiilihydraattien määrä";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "gramma";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "Hiilihydraattien tarve";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "Tallennettu ruoka";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "Oletko varma?";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "Alempi tavoite";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "Peru";
 
 /*  */
 "Cancel Temp Target" = "Cancel Temp Target";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "Muokattu";
 
 /*  */
-"Date" = "Date";
+"Date" = "Päivä";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "Poista";
 
 /* Delete preset temp target */
 "Delete preset \"%@\"" = "Delete preset \"%@\"";
@@ -158,7 +158,7 @@
 "Enact Temp Target" = "Enact Temp Target";
 
 /* */
-"Target" = "Target";
+"Target" = "Tavoite";
 
 /* */
 "Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
@@ -278,32 +278,32 @@
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "Laske herkkyys";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Insuliinin herkkyys";
 
 /* */
 "Sensitivity Ratio" = "Sensitivity Ratio";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "Hylkää";
 
 /*  */
 "Important message" = "Important message";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "Määrä";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "Peru väliaikainen Basaali";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "Aktivoi";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "Väliaikainen basaali";
 
 /* Allow uploads to different services */
 "Allow uploads" = "Allow uploads";
