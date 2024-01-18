@@ -225,7 +225,7 @@
 "Pod Expired" = "Pod đã hết hạn";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "Pod bị tắc nghẽn";
 
 /* Status highlight message for other alarm. */
 "Pod Error" = "Lỗi Pod";
@@ -664,10 +664,10 @@
 "Sequence Number" = "Số thứ tự";
 
 /* description label for firmware version pod details row */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Phiên bản phần mềm";
 
 /* description label for ble firmware version pod details row */
-"BLE Firmware Version" = "BLE Firmware Version";
+"BLE Firmware Version" = "Phiên bản phần mềm Bluetooth";
 
 /* description label for activated at timne pod details row */
 "Pod Activated" = "Pod đã kích hoạt";
@@ -694,7 +694,7 @@
 "Continue" = "Tiếp tục";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "Bỏ qua giới thiệu Omnipod không?";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Ứng dụng sẽ thông báo trước cho bạn thời gian pod hết hạn.\n\n Kéo xuống để thiết lập số giờ để ứng dụng thông báo.";

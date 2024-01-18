@@ -436,7 +436,7 @@
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Naplňte nový pod s inzulínom U-100 (modrý uzáver ihly pod nechajte nasadený).";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the blue needle Pod cover and inspect the cannula. Then remove the paper pad.";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Počúvajte 2 pípnutia.";

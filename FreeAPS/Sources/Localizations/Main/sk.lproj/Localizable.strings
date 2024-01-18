@@ -2050,10 +2050,10 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Používajte dynamický CR. Dynamický pomer sa použije pre CR takto:\n\n Keď pomer > 1: dynCR = (newRatio - 1) / 2 + 1.\nKeď pomer < 1: dynCR = CR/dynCR.\n\nNepoužívajte spolu s vysokou inzulínovou frakciou (> 2)";
 
 /* Enable Dyn ISF */
-"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+"Activate Dynamic Sensitivity (ISF)" = "Aktivácia funkcie Dynamic Sensitivity (ISF)";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Aktivácia funkcie Dynamic Carb Ratio (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
@@ -2065,63 +2065,63 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Použitie funkcie Sigmoid";
 
 /* Which dyn ISF function to use */
-"Formula" = "Formula";
+"Formula" = "Vzorec";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Safety";
+"Safety" = "Bezpečnosť";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Použitie sigmoidnej funkcie pre ISF (a pre CR, ak je povolená) namiesto predvoleného logaritmického vzorca. Vyžaduje, aby bolo v nastaveniach povolené nastavenie Dynamická ISF.\n\nNastavenie Adjustment (Úprava) upravuje sklon krivky (Y: dynamický pomer, X: glykémia). Nižšia hodnota ==> menej strmá == menej agresívna.\n\nNastavenie autosens.min/max určuje limity max/min pre dynamický pomer A tiež to, ako veľmi sa dynamický pomer upravuje. Ak AF je sklon krivky, autosens.min/max je výška grafu, interval Y, kde Y: dynamický pomer. Krivka bude mať vždy sigmoidný tvar bez ohľadu na to, aké nastavenia autosens.min/max sa použijú, čo znamená, že tieto nastavenia majú veľké dôsledky na výsledok vypočítaného dynamického ISF. Buďte opatrní pri nastavení príliš vysokej hodnoty autosens.max. Pri správnom nastavení profilu ISF ju pravdepodobne nikdy nebudete potrebovať vyššiu ako 1.5\n\nLimit autosens.max > 1.5 sa pri použití sigmoidnej funkcie neodporúča.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting" = "Nastavenie prahové hodnoty";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Predvolená prahová hodnota v iAPS závisí od vašej aktuálnej minimálnej cieľovej hodnoty BG nasledovne:\n\nAk je vaša minimálna cieľová hodnota BG = 90 mg/dl -> prahová hodnota = 65 mg/dl,\n\nak je vaša minimálna cieľová hodnota BG = 100 mg/dl -> prahová hodnota = 70 mg/dl,\n\nminimálna cieľová hodnota BG = 110 mg/dl -> prahová hodnota = 75 mg/dl,\n\na ak je vaša minimálna cieľová hodnota BG = 130 mg/dl -> prahová hodnota = 85 mg/dl. \n\nToto nastavenie umožňuje zmeniť predvolenú hodnotu na vyššiu prahovú hodnotu pre slučku s dynISF. Platné hodnoty sú 65 mg/dl<= Nastavenie prahu <= 120 mg/dl.";
 
 /* Header */
-"Calculator settings" = "Calculator settings";
+"Calculator settings" = "Nastavenia výpočtu";
 
 /* UI/UX option */
-"Display Predictions" = "Display Predictions";
+"Display Predictions" = "Zobraziť predpovede";
 
 /* UI/UX option */
-"Smaller iPhone Screens" = "Smaller iPhone Screens";
+"Smaller iPhone Screens" = "Menšie obrazovky iPhonu";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
+"Display and allow Fat and Protein entries" = "Zobrazenie a povolenie vstupov pre tuky a bielkoviny";
 
 /* UI/UX option */
-"Add Meal View settings " = "Add Meal View settings ";
+"Add Meal View settings " = "Pridanie nastavení zobrazenia jedla ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Display Temp Targets Button";
+"Display Temp Targets Button" = "Zobraziť dočasné cieľové tlačidlo";
 
 /* UI/UX option */
-"Home View Button Panel " = "Home View Button Panel ";
+"Home View Button Panel " = "Panel tlačidiel zobrazenia Domov ";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+"In case you're using both profiles and temp targets" = "V prípade, že používate profily aj dočasný cieľ";
 
 /* UI/UX option */
-"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+"Always Color Glucose Value (green, yellow etc)" = "Vždy farebná hodnota glukózy (zelená, žltá atď.)";
 
 /* UI/UX option */
-"Header settings" = "Header settings";
+"Header settings" = "Nastavenia záhlavia";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normálne sa glukóza sfarbí na červeno len vtedy, keď je nad alebo pod vašimi limitmi pre vysoké/nízke hodnoty";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+"Horizontal Scroll View Visible hours" = "Horizontálne rolovacie zobrazenie Viditeľné hodiny";
 
 /* Notification option */
-"Live Activity" = "Live Activity";
+"Live Activity" = "Živá aktivita";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živá aktivita zobrazuje glukózu v krvi na uzamknutej obrazovke a na dynamickom ostrove (ak je k dispozícii)";
 
 /* Notification option */
-"Show live activity" = "Show live activity";
+"Show live activity" = "Zobraziť živú aktivitu";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Vážený priemer TDD. Váha za posledných 24 hodín:";

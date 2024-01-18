@@ -38,7 +38,7 @@
 "Sensor Expiration" = "Cảm biến hết hạn";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Thời gian ân huệ kết thúc";
+"Grace Period End" = "Thời gian gia hạn kết thúc";
 
 /* Field label */
 "Glucose" = "Đường huyết";
@@ -108,7 +108,7 @@
 "Sensor expires" = "Sensor hết hạn";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Thời gian ân huệ còn lại";
+"Grace period remaining" = "Thời gian gia hạn còn lại";
 
 /* G7 Status highlight text for searching for sensor */
 "Searching for\nSensor" = "Đang tìm kiếm \n sensor";
