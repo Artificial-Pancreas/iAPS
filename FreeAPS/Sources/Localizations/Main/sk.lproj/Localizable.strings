@@ -2050,10 +2050,10 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Používajte dynamický CR. Dynamický pomer sa použije pre CR takto:\n\n Keď pomer > 1: dynCR = (newRatio - 1) / 2 + 1.\nKeď pomer < 1: dynCR = CR/dynCR.\n\nNepoužívajte spolu s vysokou inzulínovou frakciou (> 2)";
 
 /* Enable Dyn ISF */
-"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+"Activate Dynamic Sensitivity (ISF)" = "Aktivácia funkcie Dynamic Sensitivity (ISF)";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Aktivácia funkcie Dynamic Carb Ratio (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
@@ -2095,33 +2095,33 @@ Enact a temp Basal or a temp target */
 "Add Meal View settings " = "Pridanie nastavení zobrazenia jedla ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Display Temp Targets Button";
+"Display Temp Targets Button" = "Zobraziť dočasné cieľové tlačidlo";
 
 /* UI/UX option */
-"Home View Button Panel " = "Home View Button Panel ";
+"Home View Button Panel " = "Panel tlačidiel zobrazenia Domov ";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+"In case you're using both profiles and temp targets" = "V prípade, že používate profily aj dočasný cieľ";
 
 /* UI/UX option */
-"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+"Always Color Glucose Value (green, yellow etc)" = "Vždy farebná hodnota glukózy (zelená, žltá atď.)";
 
 /* UI/UX option */
-"Header settings" = "Header settings";
+"Header settings" = "Nastavenia záhlavia";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normálne sa glukóza sfarbí na červeno len vtedy, keď je nad alebo pod vašimi limitmi pre vysoké/nízke hodnoty";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+"Horizontal Scroll View Visible hours" = "Horizontálne rolovacie zobrazenie Viditeľné hodiny";
 
 /* Notification option */
-"Live Activity" = "Live Activity";
+"Live Activity" = "Živá aktivita";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živá aktivita zobrazuje glukózu v krvi na uzamknutej obrazovke a na dynamickom ostrove (ak je k dispozícii)";
 
 /* Notification option */
-"Show live activity" = "Show live activity";
+"Show live activity" = "Zobraziť živú aktivitu";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Vážený priemer TDD. Váha za posledných 24 hodín:";
