@@ -12,6 +12,8 @@ extension Bolus {
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
         @State private var keepForNextWiew: Bool = false
+        @State private var remoteBolusAlert: Alert?
+        @State private var isRemoteBolusAlertPresented: Bool = false
 
         private enum Config {
             static let dividerHeight: CGFloat = 2
@@ -159,8 +161,21 @@ extension Bolus {
                 if state.amount > 0 {
                     Section {
                         Button {
-                            keepForNextWiew = true
-                            state.add()
+                            if let remoteBolus = state.remoteBolus() {
+                                remoteBolusAlert = Alert(
+                                    title: Text("A Remote Bolus Was Just Delivered!"),
+                                    message: Text(remoteBolus),
+                                    primaryButton: .destructive(Text("Bolus"), action: {
+                                        keepForNextWiew = true
+                                        state.add()
+                                    }),
+                                    secondaryButton: .cancel()
+                                )
+                                isRemoteBolusAlertPresented = true
+                            } else {
+                                keepForNextWiew = true
+                                state.add()
+                            }
                         }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -178,6 +193,9 @@ extension Bolus {
                         label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
+            }
+            .alert(isPresented: $isRemoteBolusAlertPresented) {
+                remoteBolusAlert!
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .blur(radius: showInfo ? 20 : 0)

@@ -11,6 +11,7 @@ extension Bolus {
         // added for bolus calculator
         @Injected() var settings: SettingsManager!
         @Injected() var nsManager: NightscoutManager!
+        @Injected() var announcementStorage: AnnouncementsStorage!
 
         @Published var suggestion: Suggestion?
         @Published var predictions: Predictions?
@@ -257,6 +258,33 @@ extension Bolus {
             if deleteTwice {
                 nsManager.deleteCarbs(mealArray, complexMeal: true)
             }
+        }
+
+        func remoteBolus() -> String? {
+            if let enactedAnnouncement = announcementStorage.recentEnacted() {
+                let components = enactedAnnouncement.notes.split(separator: ":")
+                guard components.count == 2 else { return nil }
+                let command = String(components[0]).lowercased()
+                let arguments = String(components[1]).lowercased()
+                let eventual: String = units == .mmolL ? evBG.asMmolL
+                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) : evBG.formatted()
+
+                if command == "bolus" {
+                    return "\n" + NSLocalizedString("A Bolus of ", comment: "Remote Bolus Alert, part 1") + arguments +
+                        NSLocalizedString("U was delivered ", comment: "Remote Bolus Alert, part 2") + (
+                            -1 * enactedAnnouncement.createdAt
+                                .timeIntervalSinceNow
+                                .minutes
+                        )
+                        .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
+                        NSLocalizedString(
+                            " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?" +
+                                "\n\n" + "Predicted eventual glucose, if you don't bolus, is: " + eventual + " " + units.rawValue,
+                            comment: "Remote Bolus Alert, part 3"
+                        )
+                }
+            }
+            return nil
         }
     }
 }

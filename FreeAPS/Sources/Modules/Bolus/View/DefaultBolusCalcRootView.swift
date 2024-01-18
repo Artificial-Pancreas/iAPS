@@ -14,6 +14,8 @@ extension Bolus {
         @State private var presentInfo = false
         @State private var displayError = false
         @State private var keepForNextWiew: Bool = false
+        @State private var remoteBolusAlert: Alert?
+        @State private var isRemoteBolusAlertPresented: Bool = false
 
         @Environment(\.colorScheme) var colorScheme
         @FocusState private var isFocused: Bool
@@ -115,8 +117,22 @@ extension Bolus {
                 if state.amount > 0 {
                     Section {
                         Button {
-                            keepForNextWiew = true
-                            state.add()
+                            if let remoteBolus = state.remoteBolus() {
+                                remoteBolusAlert = Alert(
+                                    title: Text("A Remote Bolus Was Just Delivered!"),
+                                    message: Text(remoteBolus),
+                                    primaryButton: .destructive(Text("Bolus"), action: {
+                                        keepForNextWiew = true
+                                        state.add()
+                                    }),
+                                    secondaryButton: .cancel()
+                                )
+                                isRemoteBolusAlertPresented = true
+
+                            } else {
+                                keepForNextWiew = true
+                                state.add()
+                            }
                         }
                         label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -137,6 +153,9 @@ extension Bolus {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .alert(isPresented: $isRemoteBolusAlertPresented) {
+                remoteBolusAlert!
+            }
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),
