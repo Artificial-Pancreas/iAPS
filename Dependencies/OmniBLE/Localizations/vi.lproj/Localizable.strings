@@ -225,7 +225,7 @@
 "Pod Expired" = "Pod đã hết hạn";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "Pod bị tắc nghẽn";
 
 /* Status highlight message for other alarm. */
 "Pod Error" = "Lỗi Pod";
