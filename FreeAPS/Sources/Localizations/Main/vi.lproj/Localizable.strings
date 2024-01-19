@@ -35,10 +35,10 @@
 "Recommendation" = "LIỀU KHUYẾN NGHỊ";
 
 /* Button */
-"Clear" = "Hủy bỏ";
+"Clear" = "Hủy";
 
 /* Button */
-"Done" = "Hoàn thành";
+"Done" = "Xong";
 
 /*  */
 "Wait please" = "Xin đợi chốc lát";
@@ -134,7 +134,7 @@
 "Bottom target" = "Mục tiêu dưới cùng";
 
 /* Cancel preset name */
-"Cancel" = "Hủy bỏ";
+"Cancel" = "Hủy";
 
 /*  */
 "Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
