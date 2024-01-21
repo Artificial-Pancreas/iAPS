@@ -132,9 +132,27 @@ extension Dynamic {
                         Text("Threshold Setting")
                             .onTapGesture {
                                 scrollView = fontSize >= .extraLarge ? true : false
+                                let unitString = state.unit.rawValue
                                 info(
                                     header: "Minimum Threshold Setting",
-                                    body: "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is \(glucoseFormatter.string(for: state.unit == .mgdL ? 100 : 100.asMmolL as NSNumber) ?? "") \(state.unit.rawValue), the threshold will be \(glucoseFormatter.string(for: state.unit == .mgdL ? 70 : 70.asMmolL as NSNumber) ?? "") \(state.unit.rawValue), unless your threshold setting is set higher, meaning if your threshold setting is \(glucoseFormatter.string(for: state.unit == .mgdL ? 80 : 80.asMmolL as NSNumber) ?? "") \(state.unit.rawValue), the threshold will be \(glucoseFormatter.string(for: state.unit == .mgdL ? 80 : 80.asMmolL as NSNumber) ?? "") \(state.unit.rawValue) instead. This means no insulin will be given when your blood sugar is below \(glucoseFormatter.string(for: state.unit == .mgdL ? 80 : 80.asMmolL as NSNumber) ?? "") \(state.unit.rawValue). The largest minimum threshold you can set is \(glucoseFormatter.string(for: state.unit == .mgdL ? 120 : 120.asMmolL as NSNumber) ?? "") \(state.unit.rawValue)."
+                                    body: NSLocalizedString(
+                                        "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ",
+                                        comment: "Threshold string part 1"
+                                    ) + "\(glucoseString(100)) \(unitString) , " +
+                                        NSLocalizedString("the threshold will be ", comment: "Threshold string part 2") +
+                                        " \(glucoseString(70)) \(unitString), " + NSLocalizedString(
+                                            "unless your threshold setting is set higher, meaning if your threshold setting is ",
+                                            comment: "Threshold string part 3"
+                                        ) + "\(glucoseString(80)) \(unitString), " +
+                                        NSLocalizedString("the threshold will be ", comment: "Threshold string part 4") +
+                                        "\(glucoseString(80)) \(unitString) " + NSLocalizedString(
+                                            "instead. This means no insulin will be given when your blood sugar is below ",
+                                            comment: "Threshold string part 5"
+                                        ) + "\(glucoseString(80)) \(unitString). " +
+                                        NSLocalizedString(
+                                            "The largest minimum threshold you can set is ",
+                                            comment: "Threshold string part 6"
+                                        ) + "\(glucoseString(120)) \(unitString)."
                                 )
                             }
                         Spacer()
@@ -187,6 +205,10 @@ extension Dynamic {
                 isPresented.toggle()
                 scrollView = false
             }
+        }
+
+        func glucoseString(_ glucose: Int) -> String {
+            glucoseFormatter.string(for: state.unit == .mgdL ? glucose : glucose.asMmolL as NSNumber) ?? ""
         }
     }
 }
