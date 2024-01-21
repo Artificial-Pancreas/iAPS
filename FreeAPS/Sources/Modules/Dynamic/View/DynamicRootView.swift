@@ -61,7 +61,7 @@ extension Dynamic {
                                         scrollView = fontSize >= .extraLarge ? true : false
                                         info(
                                             header: "Activate Dynamic Carb Ratio (CR)",
-                                            body: "Use a Dynamic Carb Ratio (CR). The dynamic Carb Ratio will adjust your profile Carb Ratio (or your Autotuned CR if you're using Autotune) using the same the dynamic adjustment as for the Dynamic Insulin Sensitivity (ISF), but with an extra safety limit.\n\n When the dynamic adjustment is > 1:  Dynamic Ratio = (dynamic adjustment - 1) / 2 + 1.\nWhen dynamic adjustment < 1: Dynamic ratio = Profile CR/dynamic adjustment.\n\nPlease don't use toghether with a high Insulin Fraction (> 2) or together with a high Bolus Percentage (> 120 %), as this could lead to too big bolus recommendations"
+                                            body: "Use a Dynamic Carb Ratio (CR). The dynamic Carb Ratio will adjust your profile Carb Ratio (or your Autotuned CR if you're using Autotune) using the same the dynamic adjustment as for the Dynamic Insulin Sensitivity (ISF), but with an extra safety limit.\n\n When the dynamic adjustment is > 1:  Dynamic Ratio = (dynamic adjustment - 1) / 2 + 1.\nWhen dynamic adjustment < 1: Dynamic ratio = Profile CR / dynamic adjustment.\n\nPlease don't use together with a high Insulin Fraction (> 2) or together with a high Bolus Percentage (> 120 %), as this could lead to too big bolus recommendations"
                                         )
                                     }
                             }.disabled(isPresented)
