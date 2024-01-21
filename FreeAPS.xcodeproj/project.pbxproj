@@ -28,6 +28,7 @@
 		195D80B72AF697B800D25097 /* DynamicDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B62AF697B800D25097 /* DynamicDataFlow.swift */; };
 		195D80B92AF697F700D25097 /* DynamicProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B82AF697F700D25097 /* DynamicProvider.swift */; };
 		195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80BA2AF6980B00D25097 /* DynamicStateModel.swift */; };
+		195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195F00472B5C267D00DAC71A /* DescriptionView.swift */; };
 		1967DFBE29D052C200759F30 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967DFBD29D052C200759F30 /* Icons.swift */; };
 		1967DFC029D053AC00759F30 /* IconSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967DFBF29D053AC00759F30 /* IconSelection.swift */; };
 		1967DFC229D053D300759F30 /* IconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967DFC129D053D300759F30 /* IconImage.swift */; };
@@ -572,6 +573,7 @@
 		195D80B62AF697B800D25097 /* DynamicDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDataFlow.swift; sourceTree = "<group>"; };
 		195D80B82AF697F700D25097 /* DynamicProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicProvider.swift; sourceTree = "<group>"; };
 		195D80BA2AF6980B00D25097 /* DynamicStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicStateModel.swift; sourceTree = "<group>"; };
+		195F00472B5C267D00DAC71A /* DescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
 		1967DFBD29D052C200759F30 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		1967DFBF29D053AC00759F30 /* IconSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelection.swift; sourceTree = "<group>"; };
 		1967DFC129D053D300759F30 /* IconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImage.swift; sourceTree = "<group>"; };
@@ -1631,6 +1633,7 @@
 				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
 				38EA05FF262091870064E39B /* BolusProgressViewStyle.swift */,
 				38DF1785276A73D400B3528F /* TagCloudView.swift */,
+				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2872,6 +2875,7 @@
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
+				195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */,
 				19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */,
 				1935364028496F7D001E0B16 /* Oref2_variables.swift in Sources */,
 				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,

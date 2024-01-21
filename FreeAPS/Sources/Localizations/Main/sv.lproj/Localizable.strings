@@ -2079,6 +2079,12 @@ Enact a temp Basal or a temp target */
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Tröskelvärde för blodsocker beror på ditt nuvarande undre blodsockermålvärde, enligt följande:\n\nOm ditt målvräde = 5 mmol/l -> tröskelvörde = 3,6 mmol/l,\n\nOm ditt målvräde = 5,6 -> tröskelärde = 3,9 mmol/l,\n\nOm ditt målvräde = 6,1 mmol/l -> tröskelvärde = 4,2 mmol/l,\n\nOch om ditt målvräde = 7,2 mmol/l  -> tröskelvärde = 4,7 mmol/l.\n\nDenna inställning tillåter dig att ändra trösklevärdet till en högre inställnig när du loopar med dynamiska kvoter. Giltiga värden är 3,6 - 6,7.";
 
+/* Dynamic ISF Setting Title */
+"Minimum Threshold Setting" = "Tröskelvärde";
+
+/* Dynamic ISF Setting */
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is %1$@ %2$@, the threshold will be %3$@ %4$@, unless your threshold setting is set higher, meaning if your threshold setting is %5$@ %6$@, the threshold will be %7$@ %8$@ instead. This means no insulin will be given when your blood sugar is below %9$@ %10$@. The largest minimum threshold you can set is %11$@ %12$@." = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is %1$@ %2$@, the threshold will be %3$@ %4$@, unless your threshold setting is set higher, meaning if your threshold setting is %5$@ %6$@, the threshold will be %7$@ %8$@ instead. This means no insulin will be given when your blood sugar is below %9$@ %10$@. The largest minimum threshold you can set is %11$@ %12$@.";
+
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";
 
