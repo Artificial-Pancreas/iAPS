@@ -402,6 +402,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Inaktivera podd";
 
+/* */
+"Slide to Insert Cannula" = "Svep för att föra in kanyl";
+
+/* */
+"Slide to Deactivate Pod" = "Svep för att inaktivera podd";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Inaktiverar.";
 
