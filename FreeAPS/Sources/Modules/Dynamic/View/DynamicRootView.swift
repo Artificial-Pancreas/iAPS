@@ -15,13 +15,6 @@ extension Dynamic {
         @Environment(\.colorScheme) var colorScheme
         @Environment(\.sizeCategory) private var fontSize
 
-        struct Threshold: Identifiable, Equatable {
-            var id: String { UUID().uuidString }
-            let glucose: String
-            let setting: String
-            let threshold: String
-        }
-
         private var conversionFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -226,10 +219,10 @@ extension Dynamic {
 
         @ViewBuilder func thresholdTable() -> some View {
             let entries = [
-                Threshold(glucose: glucoseString(100), setting: glucoseString(65), threshold: glucoseString(70)),
-                Threshold(glucose: glucoseString(130), setting: glucoseString(65), threshold: glucoseString(85)),
-                Threshold(glucose: glucoseString(90), setting: glucoseString(65), threshold: glucoseString(65)),
-                Threshold(glucose: glucoseString(90), setting: glucoseString(80), threshold: glucoseString(80))
+                Thresholds(glucose: glucoseString(100), setting: glucoseString(65), threshold: glucoseString(70)),
+                Thresholds(glucose: glucoseString(130), setting: glucoseString(65), threshold: glucoseString(85)),
+                Thresholds(glucose: glucoseString(90), setting: glucoseString(65), threshold: glucoseString(65)),
+                Thresholds(glucose: glucoseString(90), setting: glucoseString(80), threshold: glucoseString(80))
             ]
 
             Grid {
@@ -252,10 +245,10 @@ extension Dynamic {
                 }
             }
             .padding(.all, 20)
-            .foregroundStyle(Color.white)
+            .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(colorScheme == .dark ? Color(.black) : Color(.darkGray))
+                    .fill(colorScheme == .dark ? Color(.black) : Color(.white))
             )
         }
     }
