@@ -1,0 +1,176 @@
+/* Title for DanaKitSetupView */
+"Dana-i/RS Setup" = "Dana-i/RS installatie"
+
+/* Generic loading text */
+"loading" = "Laden"
+
+/* bodyText for DanaKitSetupView */
+"You will now begin the process by connecting to your Dana-i/RS pump. After that, one of the three things can happen:" = "U begint nu het proces door verbinding te maken met uw Dana-i/RS-pomp. Daarna kan een van de drie dingen gebeuren:"
+
+/* danaRS v1 option text for DanaKitSetupView */
+"- For DanaRS-v1, Unsupported (yet)" = "- Voor DanaRS-v1, wordt (nog) niet ondersteunt"
+
+/* danaRS v3 option text for DanaKitSetupView */
+"- For DanaRS-v3, type 2 sequences of numbers and letters displayed on the pump to pair and the setup is completed!" = "- Voor DanaRS-v3, typt u 2 reeksen cijfers en letters die op de pomp worden weergegeven om te koppelen en de installatie is voltooid!"
+
+/* dana-i option text for DanaKitSetupView */
+"- For Dana-i, the standard Bluetooth pairing pin dialog will appear. You have to enter a 6-digit number password, displayed on the pump, and the setup is completed!" = "- Voor Dana-i, zal het standaard Bluetooth koppelingsdialoogvenster verschijnen. U moet een wachtwoord van 6 cijfers invoeren, dat op de pomp wordt weergegeven, en de installatie is voltooid!"
+
+/* Dana-i invalid ble5 keys */
+"ERROR: Failed to pair device" = "Error: Kan niet koppelen met apparaat"
+
+/* Dana-i oke invalid ble5 keys */
+"OK" = "Oke"
+
+/* Dana-i failed to pair p1 */
+"Failed to pair to " = "Kan niet koppelen met "
+
+/* Dana-i failed to pair p2 */
+". Please go to your bluetooth settings, forget this device, and try again" = ". Ga naar je Bluetooth-instellingen, vergeet dit apparaat en probeer het opnieuw"
+
+/* Dana-i/RS connecting alert title */
+"Connecting to device" = "Verbinding maken met apparaat"
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using in this pump" = "Select the type of insulin that you will be using in this pump"
+
+/* Title for Dana-i/RS PumpManager deletion action sheet. */
+"Remove Pump" = "Verwijder pomp"
+
+/* Message for Dana-i/RS PumpManager deletion action sheet */
+"Are you sure you want to stop using Dana-i/RS?" = "Weet u zeker dat u wilt stoppen met het gebruik van Dana-i/RS?"
+
+/* Button text to confirm Dana-i/RS PumpManager deletion */
+"Delete pump" = "Verwijder pomp"
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Verwijder insuline pump"
+
+/* Connection error message */
+"Error while connecting to device" = "Fout tijdens het verbinden met het apparaat"
+
+/* Dana-RS v3 found */
+"Dana-RS v3 found!" = "Dana-RS v3 gevonden!"
+
+/* Dana-RS v3 pincode prompt body */
+"Pincode required" = "Pincode vereist"
+
+/* Dana-RS v3 pincode prompt pin 1 */
+"Pin 1" = "Pin 1"
+
+/* Dana-RS v3 pincode prompt pin 2 */
+"Pin 2" = "Pin 2"
+
+/* Dana-RS v3 pincode prompt error invalid length */
+"Received invalid pincode lengths. Try again" = "Ongeldige pincode lengtes ontvangen. Probeer het nog eens"
+
+/* Dana-RS v3 pincode prompt error invalid hex */
+"Received invalid hex strings. Try again" = "Ongeldige hexadecimale waarde ontvangen. Probeer het nog eens"
+
+/* Dana-RS v3 pincode prompt oke */
+"OK" = "Oke"
+
+/* Title for setup complete */
+"Setup Complete" = "Setup voltooid"
+
+/* Dana-RS v3 pincode prompt error checksum failed */
+"Checksum failed. Try again" = "Checksum is mislukt. Probeer het nog eens"
+
+/* Title for delivery speed */
+"Delivery speed" = "Bolus snelheid"
+
+/* Dana bolus speed 12u per min */
+"12 U/min" = "12 E/min"
+
+/* Dana bolus speed 30u per min */
+"30 U/min" = "30 E/min"
+
+/* Dana bolus speed 60u per min */
+"60 U/min" = "60 E/min"
+
+/* Dana delivery speed body */
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "De Dana-pompen ondersteunen verschillende bolus snelheden. Je kunt dit hier instellen, maar ook in het instellingenmenu"
+
+/* Text for finish button */
+"Finish" = "Afronden"
+
+/* Dana setup complete p1 */
+"Your " = "Jouw "
+
+/* Dana setup complete p2 */
+" is ready to be used!" = " is klaar voor gebruik!"
+
+/* Dana setup SMB setting */
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Belangrijk: Uw Dana-pomp heeft een speciale instelling waarmee u de pieptonen van uw Dana-pomp kunt uitschakelen. Neem contact op met uw Dana-distributeur om dit te activeren"
+
+/* Error description when no dana connected */
+"Failed to make a connection" = "Verbinding maken is mislukt"
+
+/* Error description when failed temp adjustment */
+"Failed to adjust temp basal" = "Aanpassing aan tijdelijk basal is mislukt"
+
+/* Error description when failed suspension adjustment */
+"Failed to adjust suspension" = "Aanpassing pauze functie is mislukt"
+
+/* Error description when failed generating basal program */
+"Failed to generate Dana basal program" = "Het genereren van basaal programma is mislukt"
+
+/* Error description when failed basal adjustment */
+"Failed to adjust basal" = "Aanpassing basaal is mislukt"
+
+/* Error description when trying to set temp basal */
+"Setting temp basal is not supported at this time" = "Het zetten van een tijdelijk basaal wordt momenteel nog niet ondersteunt"
+
+/* dana AB limitation warning title */
+"Only Automatic Bolus is supported" = "Alleen automatische bolus wordt ondersteunt"
+
+/* dana AB limitation warning body */
+"Please consider changing your dosing strategy in the setting menu" = "Overweeg uw dosering strategie te wijzigen in het instellingenmenu"
+
+/* Dana settings resume delivery */
+"Resume delivery" = "Hervat toedieningen"
+
+/* Dana settings suspend delivery */
+"Suspend delivery" = "Pauzeer toedieningen"
+
+/* Dana settings stop temp basal */
+"Stop temp basal" = "Stop tijdelijke basaal"
+
+/* The title of the configuration section in DanaKit settings */
+"Configuration" = "Configuratie"
+
+/* Text for confidence reminders navigation link */
+"Insulin Type" = "Insuline type"
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Ingesteld Basaal";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Insulinetoediening";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Insuline\nOnderbroken";
+
+/* Text shown in basal rate space when delivery status is unknown */
+"Unknown" = "Onbekend";
+
+/* Units for showing temp basal rate */
+"U/hr" = "E/uur";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Resterende Insuline";
+
+/* Text for Dana pump name */
+"Pump name" = "Pomp naam"
+
+/* Text for hardware model */
+"Hardware model" = "Hardware model"
+
+/* Text for firmware version */
+"Firmware version" = "Firmware versie"
+
+/* DanaKit sync pump */
+"Sync pump data" = "Synchroniseer pompgegevens"
+
+/* Text for last sync */
+"Last sync" = "Laatste synchronisatie"

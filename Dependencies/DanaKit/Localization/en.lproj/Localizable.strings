@@ -1,0 +1,167 @@
+/* Title for DanaKitSetupView */
+"Dana-i/RS Setup" = "Dana-i/RS Setup"
+
+/* Generic loading text */
+"loading" = "loading"
+
+/* bodyText for DanaKitSetupView */
+"You will now begin the process by connecting to your Dana-i/RS pump. After that, one of the three things can happen:" = "You will now begin the process by connecting to your Dana-i/RS pump. After that, one of the three things can happen:"
+
+/* danaRS v1 option text for DanaKitSetupView */
+"- For DanaRS-v1, Unsupported (yet)" = "- For DanaRS-v1, Unsupported (yet)"
+
+/* danaRS v3 option text for DanaKitSetupView */
+"- For DanaRS-v3, type 2 sequences of numbers and letters displayed on the pump to pair and the setup is completed!" = "- For DanaRS-v3, type 2 sequences of numbers and letters displayed on the pump to pair and the setup is completed!"
+
+/* dana-i option text for DanaKitSetupView */
+"- For Dana-i, the standard Bluetooth pairing pin dialog will appear. You have to enter a 6-digit number password, displayed on the pump, and the setup is completed!" = " For Dana-i, the standard Bluetooth pairing pin dialog will appear. You have to enter a 6-digit number password, displayed on the pump, and the setup is completed!"
+
+/* Dana-i/RS invalid ble5 keys */
+"ERROR: Failed to pair device" = "ERROR: Failed to pair device"
+
+/* Dana-i oke invalid ble5 keys */
+"OK" = "OK"
+
+/* Title for setup complete */
+"Setup Complete" = "Setup Complete"
+
+/* Dana-i/RS connecting alert title */
+"Connecting to device" = "Connecting to device"
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using in this pump" = "Selecteer het type insuline dat u in deze pomp gaat gebruiken"
+
+/* Title for Dana-i/RS PumpManager deletion action sheet. */
+"Remove Pump" = "Remove Pump"
+
+/* Message for Dana-i/RS PumpManager deletion action sheet */
+"Are you sure you want to stop using Dana-i/RS?" = "Are you sure you want to stop using Dana-i/RS?"
+
+/* Button text to confirm Dana-i/RS PumpManager deletion */
+"Delete pump" = "Delete pump"
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Delete Pump"
+
+/* Connection error message */
+"Error while connecting to device" = "Error while connecting to device"
+
+/* Dana-RS v3 found */
+"Dana-RS v3 found!" = "Dana-RS v3 found!"
+
+/* Dana-RS v3 pincode prompt body */
+"Pincode required" = "Pincode required"
+
+/* Dana-RS v3 pincode prompt pin 1 */
+"Pin 1" = "Pin 1"
+
+/* Dana-RS v3 pincode prompt pin 2 */
+"Pin 2" = "Pin 2"
+
+/* Dana-RS v3 pincode prompt error invalid length */
+"Received invalid pincode lengths. Try again" = "Received invalid pincode lengths. Try again"
+
+/* Dana-RS v3 pincode prompt error invalid hex */
+"Received invalid hex strings. Try again" = "Received invalid hex strings. Try again"
+
+/* Dana-RS v3 pincode prompt oke */
+"OK" = "Oke"
+
+/* Dana-RS v3 pincode prompt error checksum failed */
+"Checksum failed. Try again" = "Checksum failed. Try again"
+
+/* Title for delivery speed */
+"Delivery speed" = "Delivery speed"
+
+/* Dana bolus speed 12u per min */
+"12 U/min" = "12 U/min"
+
+/* Dana bolus speed 30u per min */
+"30 U/min" = "30 U/min"
+
+/* Dana bolus speed 60u per min */
+"60 U/min" = "60 U/min"
+
+/* Dana delivery speed body */
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu"
+
+/* Text for finish button */
+"Finish" = "Finish"
+
+/* Dana setup complete p1 */
+"Your " = "Your "
+
+/* Dana setup complete p2 */
+" is ready to be used!" = " is ready to be used!"
+
+/* Dana setup SMB setting */
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor"
+
+/* Error description when no dana connected */
+"Failed to make a connection" = "Failed to make a connection"
+
+/* Error description when failed temp adjustment */
+"Failed to adjust temp basal" = "Failed to adjust temp basal"
+
+/* Error description when failed suspension adjustment */
+"Failed to adjust suspension" = "Failed to adjust suspension"
+
+/* Error description when failed generating basal program */
+"Failed to generate Dana basal program" = "Failed to generate Dana basal program"
+
+/* Error description when failed basal adjustment */
+"Failed to adjust basal" = "Failed to adjust basal"
+
+/* Error description when trying to set temp basal */
+"Setting temp basal is not supported at this time" = "Setting temp basal is not supported at this time"
+
+/* dana AB limitation warning title */
+"Only Automatic Bolus is supported" = "Only Automatic Bolus is supported"
+
+/* dana AB limitation warning body */
+"Please consider changing your dosing strategy in the setting menu" = "Please consider changing your dosing strategy in the setting menu"
+
+/* Dana settings resume delivery */
+"Resume delivery" = "Resume delivery"
+
+/* Dana settings suspend delivery */
+"Suspend delivery" = "Suspend delivery"
+
+/* Dana settings stop temp basal */
+"Stop temp basal" = "Stop temp basal"
+
+/* Text for confidence reminders navigation link */
+"Insulin Type" = "Insulin Type"
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Scheduled Basal";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Insulin Delivery";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Insulin\nSuspended";
+
+/* Text shown in basal rate space when delivery status is unknown */
+"Unknown" = "Unknown";
+
+/* Units for showing temp basal rate */
+"U/hr" = "U/hr";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Insulin Remaining";
+
+/* Text for Dana pump name */
+"Pump name" = "Pump name"
+
+/* Text for hardware model */
+"Hardware model" = "Hardware model"
+
+/* Text for firmware version */
+"Firmware version" = "Firmware version"
+
+/* DanaKit sync pump */
+"Sync pump data" = "Sync pump data"
+
+/* Text for last sync */
+"Last sync" = "Last sync"
