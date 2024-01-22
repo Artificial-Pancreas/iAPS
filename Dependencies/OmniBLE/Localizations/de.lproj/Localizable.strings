@@ -406,7 +406,7 @@
 "Slide to Insert Cannula" = "Slide to Insert Cannula";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Slide zum Deaktivieren von Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deaktivierung.";
