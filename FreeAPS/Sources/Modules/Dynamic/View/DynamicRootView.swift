@@ -63,7 +63,7 @@ extension Dynamic {
                                         scrollView = fontSize >= .extraLarge ? true : false
                                         info(
                                             header: "Activate Dynamic Carb Ratio (CR)",
-                                            body: "Use a Dynamic Carb Ratio (CR). The dynamic Carb Ratio will adjust your profile Carb Ratio (or your Autotuned CR if you're using Autotune) using the same the dynamic adjustment as for the Dynamic Insulin Sensitivity (ISF), but with an extra safety limit.\n\n When the dynamic adjustment is > 1:  Dynamic Ratio = (dynamic adjustment - 1) / 2 + 1.\nWhen dynamic adjustment < 1: Dynamic ratio = Profile CR / dynamic adjustment.\n\nPlease don't use together with a high Insulin Fraction (> 2) or together with a high Bolus Percentage (> 120 %), as this could lead to too big bolus recommendations",
+                                            body: "Use a Dynamic Carb Ratio (CR). The dynamic Carb Ratio will adjust your profile Carb Ratio (or your Autotuned CR if you're using Autotune) using the same dynamic adjustment as for the Dynamic Insulin Sensitivity (ISF), but with an extra safety limit.\n\n When the dynamic adjustment is > 1:  Dynamic Ratio = (dynamic adjustment - 1) / 2 + 1.\nWhen dynamic adjustment < 1: Dynamic ratio = Profile CR / dynamic adjustment.\n\nPlease don't use together with a high Insulin Fraction (> 2) or together with a high Bolus Percentage (> 120 %), as this could lead to too big bolus recommendations",
                                             useGraphics: nil
                                         )
                                     }
@@ -95,7 +95,7 @@ extension Dynamic {
                                 .onTapGesture {
                                     info(
                                         header: "Adjustment Factor",
-                                        body: "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users start even lower when using logaritmic formula, to avoid over aggressive treatment.",
+                                        body: "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.",
                                         useGraphics: nil
                                     )
                                 }
