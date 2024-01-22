@@ -2059,7 +2059,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Ändra AF-konstant";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Individuell justering (en multipel) av hur din insulinkänslighet räknas ut. Stnadarvärde är 0.5. Ett högre värde betyder mer aggressiv justering. Maximal insulinkänslighet och minimal insulinkänslighet bestäms av Autosens min/max inställningar och av din schemalagda inställning för insulinkänslighet.\n\nFör S-formad dynamisk inställning rekommendaras att börja med 0.3-0-4. För logaritmisk inställning rekommenderas att börja med 0.5-0.8";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuell justering av hur din insulinkänslighet och insulinkvot räknas ut. Stnadarvärde är 0.5. Ett högre värde betyder mer aggressiv justering. Maximal och minimal insulinkänslighet och insulinkvot bestäms av dina Autosens-min/max-inställningar och av dina schemalagda profilinställningar.\n\nFör S-formad dynamisk inställning rekommenderas att börja med 0.3-0-4.\n\n För logaritmisk inställning rekommenderas att börja med 0.5-0.8";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Använd S-formad dynamisk insulinkänslighet";
@@ -2076,8 +2076,23 @@ Enact a temp Basal or a temp target */
 /* Headline Threshold Setting */
 "Threshold Setting" = "Tröskelvärde";
 
-/* Threshold Setting */
-"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Tröskelvärde för blodsocker beror på ditt nuvarande undre blodsockermålvärde, enligt följande:\n\nOm ditt målvräde = 5 mmol/l -> tröskelvörde = 3,6 mmol/l,\n\nOm ditt målvräde = 5,6 -> tröskelärde = 3,9 mmol/l,\n\nOm ditt målvräde = 6,1 mmol/l -> tröskelvärde = 4,2 mmol/l,\n\nOch om ditt målvräde = 7,2 mmol/l  -> tröskelvärde = 4,7 mmol/l.\n\nDenna inställning tillåter dig att ändra trösklevärdet till en högre inställnig när du loopar med dynamiska kvoter. Giltiga värden är 3,6 - 6,7.";
+/* Dynamic ISF Setting Title */
+"Minimum Threshold Setting" = "Tröskelvärde";
+
+/* Minimum Threshold Setting, Part 1 */
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "När blodsocker är under denna inställning kommer inget insulin att ges.\n\nTröskelvärdet som kommer att användas kommer vara det största värdet av din inställning och det beräknade värdet:\n\nMålvärde - (Målvärde - 40) * 5\nhär med mg/dl som glukosenhet.\n\nTill exempel, om ditt målvärde är ";
+
+/* Minimum Threshold Setting, Part 2 */
+"the threshold will be " = "kommer tröskelvärdet att vara ";
+
+/* Minimum Threshold Setting, Part 3 */
+"unless your threshold setting is set higher:" = "såvida inte din tröskelvärdesinställning är högre:";
+
+/* Threshold Table Columns Title */
+"Setting" = "Inställning";
+
+/* Threshold Table Columns Title */
+"Threshold" = "Tröskelvärde";
 
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";
