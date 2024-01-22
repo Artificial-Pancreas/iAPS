@@ -2096,16 +2096,13 @@ Enact a temp Basal or a temp target */
 "the threshold will be " = "the threshold will be ";
 
 /* Dynamic ISF Setting, Part 3 */
-"unless your threshold setting is set higher, meaning if your threshold setting is " = "unless your threshold setting is set higher, meaning if your threshold setting is ";
+"unless your threshold setting is set higher:" = "unless your threshold setting is set higher:";
 
-/* Dynamic ISF Setting, Part 4 */
-"the threshold will be " = "the threshold will be ";
+/* Threshold Table Columns Title */
+"Setting" = "Setting";
 
-/* Dynamic ISF Setting, Part 5 */
-"instead. This means no insulin will be given when your blood sugar is below " = "instead. This means no insulin will be given when your blood sugar is below ";
-
-/* Dynamic ISF Setting, Part 6 */
-"The largest minimum threshold you can set is " = "The largest minimum threshold you can set is ";
+/* Threshold Table Columns Title */
+"Threshold" = "Threshold";
 
 /* Header */
 "Calculator settings" = "Calculator settings";

@@ -10,9 +10,17 @@ extension Dynamic {
         @State var description = Text("")
         @State var descriptionHeader = Text("")
         @State var scrollView = false
+        @State var graphics: (any View)?
 
         @Environment(\.colorScheme) var colorScheme
         @Environment(\.sizeCategory) private var fontSize
+
+        struct Threshold: Identifiable, Equatable {
+            var id: String { UUID().uuidString }
+            let glucose: String
+            let setting: String
+            let threshold: String
+        }
 
         private var conversionFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -47,7 +55,8 @@ extension Dynamic {
                                 .onTapGesture {
                                     info(
                                         header: "Activate Dynamic Sensitivity (ISF)",
-                                        body: "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 1 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits."
+                                        body: "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 1 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits.",
+                                        useGraphics: nil
                                     )
                                 }
                         }.disabled(isPresented)
@@ -61,7 +70,8 @@ extension Dynamic {
                                         scrollView = fontSize >= .extraLarge ? true : false
                                         info(
                                             header: "Activate Dynamic Carb Ratio (CR)",
-                                            body: "Use a Dynamic Carb Ratio (CR). The dynamic Carb Ratio will adjust your profile Carb Ratio (or your Autotuned CR if you're using Autotune) using the same the dynamic adjustment as for the Dynamic Insulin Sensitivity (ISF), but with an extra safety limit.\n\n When the dynamic adjustment is > 1:  Dynamic Ratio = (dynamic adjustment - 1) / 2 + 1.\nWhen dynamic adjustment < 1: Dynamic ratio = Profile CR / dynamic adjustment.\n\nPlease don't use together with a high Insulin Fraction (> 2) or together with a high Bolus Percentage (> 120 %), as this could lead to too big bolus recommendations"
+                                            body: "Use a Dynamic Carb Ratio (CR). The dynamic Carb Ratio will adjust your profile Carb Ratio (or your Autotuned CR if you're using Autotune) using the same the dynamic adjustment as for the Dynamic Insulin Sensitivity (ISF), but with an extra safety limit.\n\n When the dynamic adjustment is > 1:  Dynamic Ratio = (dynamic adjustment - 1) / 2 + 1.\nWhen dynamic adjustment < 1: Dynamic ratio = Profile CR / dynamic adjustment.\n\nPlease don't use together with a high Insulin Fraction (> 2) or together with a high Bolus Percentage (> 120 %), as this could lead to too big bolus recommendations",
+                                            useGraphics: nil
                                         )
                                     }
                             }.disabled(isPresented)
@@ -78,7 +88,8 @@ extension Dynamic {
                                         scrollView = true
                                         info(
                                             header: "Use Sigmoid Function",
-                                            body: "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function."
+                                            body: "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.",
+                                            useGraphics: nil
                                         )
                                     }
                             }.disabled(isPresented)
@@ -91,7 +102,8 @@ extension Dynamic {
                                 .onTapGesture {
                                     info(
                                         header: "Adjustment Factor",
-                                        body: "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users start even lower when using logaritmic formula, to avoid over aggressive treatment."
+                                        body: "Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users start even lower when using logaritmic formula, to avoid over aggressive treatment.",
+                                        useGraphics: nil
                                     )
                                 }
                             Spacer()
@@ -104,7 +116,8 @@ extension Dynamic {
                                 .onTapGesture {
                                     info(
                                         header: "Weighted Average of TDD. Weight of past 24 hours:",
-                                        body: "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)."
+                                        body: "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).",
+                                        useGraphics: nil
                                     )
                                 }
                             Spacer()
@@ -118,7 +131,8 @@ extension Dynamic {
                                     .onTapGesture {
                                         info(
                                             header: "Adjust basal",
-                                            body: "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD"
+                                            body: "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD",
+                                            useGraphics: nil
                                         )
                                     }
                             }.disabled(isPresented)
@@ -131,7 +145,8 @@ extension Dynamic {
                     HStack {
                         Text("Threshold Setting")
                             .onTapGesture {
-                                scrollView = fontSize >= .extraLarge ? true : false
+                                scrollView = true
+                                graphics = thresholdTable().asAny()
                                 let unitString = state.unit.rawValue
                                 info(
                                     header: "Minimum Threshold Setting",
@@ -141,18 +156,10 @@ extension Dynamic {
                                     ) + "\(glucoseString(100)) \(unitString) , " +
                                         NSLocalizedString("the threshold will be ", comment: "Threshold string part 2") +
                                         " \(glucoseString(70)) \(unitString), " + NSLocalizedString(
-                                            "unless your threshold setting is set higher, meaning if your threshold setting is ",
+                                            "unless your threshold setting is set higher:",
                                             comment: "Threshold string part 3"
-                                        ) + "\(glucoseString(80)) \(unitString), " +
-                                        NSLocalizedString("the threshold will be ", comment: "Threshold string part 4") +
-                                        "\(glucoseString(80)) \(unitString) " + NSLocalizedString(
-                                            "instead. This means no insulin will be given when your blood sugar is below ",
-                                            comment: "Threshold string part 5"
-                                        ) + "\(glucoseString(80)) \(unitString). " +
-                                        NSLocalizedString(
-                                            "The largest minimum threshold you can set is ",
-                                            comment: "Threshold string part 6"
-                                        ) + "\(glucoseString(120)) \(unitString)."
+                                        ),
+                                    useGraphics: graphics
                                 )
                             }
                         Spacer()
@@ -175,10 +182,11 @@ extension Dynamic {
             }
         }
 
-        func info(header: String, body: String) {
+        func info(header: String, body: String, useGraphics: (any View)?) {
             isPresented.toggle()
             description = Text(NSLocalizedString(body, comment: "Dynamic ISF Setting"))
             descriptionHeader = Text(NSLocalizedString(header, comment: "Dynamic ISF Setting Title"))
+            graphics = useGraphics
         }
 
         var info: some View {
@@ -198,7 +206,12 @@ extension Dynamic {
 
         func infoScrollView() -> some View {
             ScrollView {
-                info
+                VStack(spacing: 20) {
+                    info
+                    if let view = graphics {
+                        view.asAny()
+                    }
+                }
             }
             .formatDescription()
             .onTapGesture {
@@ -209,6 +222,41 @@ extension Dynamic {
 
         func glucoseString(_ glucose: Int) -> String {
             glucoseFormatter.string(for: state.unit == .mgdL ? glucose : glucose.asMmolL as NSNumber) ?? ""
+        }
+
+        @ViewBuilder func thresholdTable() -> some View {
+            let entries = [
+                Threshold(glucose: glucoseString(100), setting: glucoseString(65), threshold: glucoseString(70)),
+                Threshold(glucose: glucoseString(130), setting: glucoseString(65), threshold: glucoseString(85)),
+                Threshold(glucose: glucoseString(90), setting: glucoseString(65), threshold: glucoseString(65)),
+                Threshold(glucose: glucoseString(90), setting: glucoseString(80), threshold: glucoseString(80))
+            ]
+
+            Grid {
+                GridRow {
+                    Text(NSLocalizedString("Glucose Target", comment: ""))
+                    Text("Setting")
+                    Text("Threshold")
+                }
+                .bold()
+                Divider()
+                ForEach(entries) { entry in
+                    GridRow {
+                        Text(entry.glucose)
+                        Text(entry.setting)
+                        Text(entry.threshold)
+                    }
+                    if entry != entries.last {
+                        Divider()
+                    }
+                }
+            }
+            .padding(.all, 20)
+            .foregroundStyle(Color.white)
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(colorScheme == .dark ? Color(.black) : Color(.darkGray))
+            )
         }
     }
 }

@@ -2089,13 +2089,13 @@ Enact a temp Basal or a temp target */
 "the threshold will be " = "kommer tröskelvärdet att vara ";
 
 /* Dynamic ISF Setting, Part 3 */
-"unless your threshold setting is set higher, meaning if your threshold setting is " = "såvida inte din tröskelvärdesinställning är högre, vilket betyder att om din inställning är ";
+"unless your threshold setting is set higher:" = "såvida inte din tröskelvärdesinställning är högre:";
 
-/* Dynamic ISF Setting, Part 4 */
-"instead. This means no insulin will be given when your blood sugar is below " = "istället. Detta betyder att inget insulin kommer att ges när ditt blodsocker är under ";
+/* Threshold Table Columns Title */
+"Setting" = "Inställning";
 
-/* Dynamic ISF Setting, Part 5 */
-"The largest minimum threshold you can set is " = "Den största tillåtna inställningen är ";
+/* Threshold Table Columns Title */
+"Threshold" = "Tröskelvärde";
 
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";
