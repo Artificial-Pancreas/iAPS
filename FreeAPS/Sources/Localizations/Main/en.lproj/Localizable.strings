@@ -2084,7 +2084,7 @@ Enact a temp Basal or a temp target */
 "Minimum Threshold Setting" = "Minimum Threshold Setting";
 
 /* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ";
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ";
 
 /* Minimum Threshold Setting, Part 2 */
 "the threshold will be " = "the threshold will be ";

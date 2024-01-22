@@ -144,7 +144,7 @@ extension Dynamic {
                                 info(
                                     header: "Minimum Threshold Setting",
                                     body: NSLocalizedString(
-                                        "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) * 5\nhere using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ",
+                                        "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ",
                                         comment: "Threshold string part 1"
                                     ) + "\(glucoseString(100)) \(unitString) , " +
                                         NSLocalizedString("the threshold will be ", comment: "Threshold string part 2") +
