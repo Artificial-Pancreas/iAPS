@@ -299,6 +299,7 @@
 		B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA241FB1663EC96FDBE64C8A /* CalibrationsDataFlow.swift */; };
 		B8CB7F102B5EF22C00614051 /* DanaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B817FA092B5EE8E0009DC94F /* DanaKit.framework */; };
 		B8CB7F112B5EF22C00614051 /* DanaKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B817FA092B5EE8E0009DC94F /* DanaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B8CB7F152B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CB7F142B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift */; };
 		B9CAAEFC2AE70836000F68BC /* branch.txt in Resources */ = {isa = PBXBuildFile; fileRef = B9CAAEFB2AE70836000F68BC /* branch.txt */; };
 		BA00D96F7B2FF169A06FB530 /* CGMStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C018D1680307A31C9ED7120 /* CGMStateModel.swift */; };
 		BA90041DC8991147E5C8C3AA /* CalibrationsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500371C09F54F89A97D65FDB /* CalibrationsRootView.swift */; };
@@ -821,6 +822,7 @@
 		B5EF98E22A39CD656A230704 /* AutotuneConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AutotuneConfigProvider.swift; sourceTree = "<group>"; };
 		B817FA092B5EE8E0009DC94F /* DanaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DanaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorRootView.swift; sourceTree = "<group>"; };
+		B8CB7F142B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitPumpManagerExtensions.swift; sourceTree = "<group>"; };
 		B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CGMDataFlow.swift; sourceTree = "<group>"; };
 		B9CAAEFB2AE70836000F68BC /* branch.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = branch.txt; sourceTree = SOURCE_ROOT; };
 		BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorDataFlow.swift; sourceTree = "<group>"; };
@@ -1680,6 +1682,7 @@
 				CE48C86328CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift */,
 				CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */,
 				CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */,
+				B8CB7F142B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2630,6 +2633,7 @@
 				3811DEAC25C9D88300A708ED /* NightscoutManager.swift in Sources */,
 				19A910302A24BF6300C8951B /* StatsView.swift in Sources */,
 				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
+				B8CB7F152B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift in Sources */,
 				190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
