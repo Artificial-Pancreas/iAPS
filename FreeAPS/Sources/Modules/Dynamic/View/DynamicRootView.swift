@@ -234,7 +234,7 @@ extension Dynamic {
 
             Grid {
                 GridRow {
-                    Text(NSLocalizedString("Glucose Target", comment: ""))
+                    Text("Glucose Target")
                     Text("Setting")
                     Text("Threshold")
                 }
