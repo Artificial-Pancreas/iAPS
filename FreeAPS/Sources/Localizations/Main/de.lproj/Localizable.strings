@@ -4,10 +4,10 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Insulin ohne Bolusabgabe erfassen";
+"Add insulin without actually bolusing" = "Insulin erfassen ohne tatsächliche Bolusabgabe";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Hinzufügen von %@ ohne Bolusabgabe";
+"Add %@ without bolusing" = "Hinzufügen von %@ ohne tatsächliche Bolusabgabe";
 
 "Bolus" = "Bolus";
 
@@ -17,7 +17,7 @@
 "Continue without bolus" = "Ohne Bolusabgabe fortfahren";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nEingegebener Bolus ist größer als Max Bolus Einstellung! Sind Sie sicher, dass er hinzugefügt werden soll ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nEingegebener Bolus ist größer als Max Bolus Einstellung! \nTrotzdem hinzufügen? ";
 
 /* Header */
 "Enact Bolus" = "Bolus abgeben";
@@ -26,10 +26,10 @@
 "Enact bolus" = "Bolus abgeben";
 
 /*  */
-"Insulin recommended" = "Empfohlener Bolus";
+"Insulin recommended" = "Empfohlene Insulinmenge";
 
 /*  */
-"Insulin required" = "Benötigtes Insulin";
+"Insulin required" = "Benötigte Insulinmenge";
 
 /* Bolus screen */
 "Recommendation" = "Empfehlung";
@@ -68,7 +68,7 @@
 "Add Meal" = "Mahlzeit hinzufügen";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolusübersicht";
+"Bolus Summary" = "Bolus-Zusammenfassung";
 
 /* For the  Bolus View pop-up */
 "Calculations" = "Berechnungen";
