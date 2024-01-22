@@ -50,7 +50,7 @@
 "of" = "de";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Activé à";
+"Enacted at" = "Dernier calcul à";
 
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Suggéré à";
@@ -2050,10 +2050,10 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Utiliser le CR. dynamique. Le ratio dynamique sera utilisé pour CR comme suit:\n\n Quand ratio > 1: dynCR = (newRatio - 1) / 2 + 1.\nRatio < 1 : dynCR = CR/dynCR.\n\nN'utilisez pas de toghether avec une fraction d'insuline élevée (> 2)";
 
 /* Enable Dyn ISF */
-"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+"Activate Dynamic Sensitivity (ISF)" = "Activer la sensibilité dynamique (FSI)";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Activer le ratio de glucides dynamique (RC)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Ajuster la constante ISF Dynamique";
@@ -2065,51 +2065,51 @@ Enact a temp Basal or a temp target */
 "Use Sigmoid Function" = "Utiliser la fonction Sigmoid";
 
 /* Which dyn ISF function to use */
-"Formula" = "Formula";
+"Formula" = "Formule";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Safety";
+"Safety" = "Sécurité";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Utilisez une fonction sigmoid pour ISF (et pour CR, quand activé), au lieu de la formule logarithmique par défaut. Nécessite que le paramètre ISF dynamique soit activé dans les paramètres\n\nLe paramètre Ajustement ajuste la pente de la courbe (Y : ratio dynamique, X: Glucose de sang). Une valeur inférieure ==> moins raide, == moins agressive.\n\nL'autosens. Les paramètres in/max déterminent à la fois les limites max/min pour le ratio dynamique ET combien le rapport dynamique est ajusté. Si AF est la pente de la courbe, l’autosens. in/max est la hauteur du graphique, l'intervalle Y, où le rapport dynamique, la courbe aura toujours une forme sigmoïde, peu importe l'autosens. Les paramètres in/max sont utilisés, ce qui signifie que ces paramètres ont de grandes conséquences sur le résultat de la SI dynamique calculée. Soyez prudent en définissant une valeur autosens.max trop élevée. Avec un réglage correct du profil ISF, vous n'aurez probablement jamais besoin qu'il soit supérieur à 1.\n\nUne limite Autosens.max > 1.5 n'est pas recommandée lors de l'utilisation de la fonction sigmoid.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting" = "Réglage du seuil";
 
 /* Threshold Setting */
 "The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Le seuil par défaut du iAPS dépend de votre cible de glycémie minimale actuelle, comme suit :\n\nSi votre cible de glycémie minimale = 90 mg/dl -> seuil = 65 mg/dl,\n\nsi cible Glycémie minimale = 100 mg/dl -> seuil = 70 mg/dl,\n\nobjectif minimum de glycémie = 110 mg/dl -> seuil = 75 mg/dl,\n\net si l'objectif de glycémie minimum = 130 mg/dl -> seuil = 85 mg/dl.\n\nCe paramètre vous permet de changer le seuil par défaut pour la boucle avec dynISF. Les valeurs valides sont 65 mg/dl<= Seuil <= 120 mg/dl.";
 
 /* Header */
-"Calculator settings" = "Calculator settings";
+"Calculator settings" = "Réglages de la calculatrice";
 
 /* UI/UX option */
-"Display Predictions" = "Display Predictions";
+"Display Predictions" = "Afficher les prédictions";
 
 /* UI/UX option */
-"Smaller iPhone Screens" = "Smaller iPhone Screens";
+"Smaller iPhone Screens" = "Petits écrans d'iPhone";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
+"Display and allow Fat and Protein entries" = "Afficher et autoriser les entrées de matières grasses et protéines";
 
 /* UI/UX option */
 "Add Meal View settings " = "Add Meal View settings ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Display Temp Targets Button";
+"Display Temp Targets Button" = "Afficher le bouton de cible temporaire";
 
 /* UI/UX option */
 "Home View Button Panel " = "Home View Button Panel ";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+"In case you're using both profiles and temp targets" = "Si vous utilisez à la fois des profils et des cibles temporaires";
 
 /* UI/UX option */
-"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+"Always Color Glucose Value (green, yellow etc)" = "Toujours la valeur de glucose en couleur (vert, jaune, etc.)";
 
 /* UI/UX option */
-"Header settings" = "Header settings";
+"Header settings" = "Paramètres de l'en-tête";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normalement, la valeur de glucose est en rouge uniquement lorsqu'elle est supérieure ou inférieure à vos limites de notification pour les valeurs hautes/basses";
 
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
