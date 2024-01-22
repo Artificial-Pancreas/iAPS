@@ -82,6 +82,7 @@ struct PumpView: View {
 
                 remainingTime(time: date.timeIntervalSince(timerDate))
                     .font(.pumpFont)
+                    .offset(x: -7, y: 0)
             } else if state.pumpName.contains("Omni") {
                 Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
                     .offset(x: 0, y: -4)
