@@ -74,7 +74,7 @@
 "Calculations" = "Berechnungen";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal" = "Fette Mahlzeit";
+"Fatty Meal" = "Fettige Mahlzeit";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Voller Bolus";
@@ -83,7 +83,7 @@
 "Fraction" = "Fraktion";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fettspeise Faktor";
+"Fatty Meal Factor" = "Faktor für fettige Mahlzeit";
 
 /* For the  Bolus View pop-up */
 "Result" = "Ergebnis";
@@ -101,7 +101,7 @@
 "looping" = "Loop aktiv";
 
 /* min ago since last loop */
-"min ago" = "min her";
+"min ago" = "Min. her";
 
 /* Status Title */
 "No suggestion" = "Kein Vorschlag";
@@ -116,13 +116,13 @@
 "Add Carbs " = "Kohlenhydrate hinzufügen ";
 
 /*  */
-"Amount Carbs" = "Menge Kohlenhydrate";
+"Amount Carbs" = "Kohlenhydratmenge";
 
 /* Grams unit */
 "grams" = "Gramm";
 
 /*  */
-"Carbs required" = "Kohlenhydrate erforderlich";
+"Carbs required" = "Erforderliche Kohlenhydrate";
 
 /* Saved Food Presets */
 "Saved Food" = "Gespeichertes Essen";
