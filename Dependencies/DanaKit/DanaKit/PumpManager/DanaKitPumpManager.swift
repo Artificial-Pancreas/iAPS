@@ -227,6 +227,11 @@ extension DanaKitPumpManager: PumpManager {
                 return
             case .success:
                 Task {
+                    guard !self.state.isPumpSuspended else {
+                        completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpSuspended))
+                        return
+                    }
+                    
                     do {
                         let packet = generatePacketBolusStart(options: PacketBolusStart(amount: units, speed: self.state.bolusSpeed))
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
@@ -297,6 +302,11 @@ extension DanaKitPumpManager: PumpManager {
                 return
             case .success:
                 Task {
+                    guard !self.state.isPumpSuspended else {
+                        completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpSuspended))
+                        return
+                    }
+                    
                     if (duration < .ulpOfOne) {
                         do {
                             let packet = generatePacketBasalCancelTemporary()

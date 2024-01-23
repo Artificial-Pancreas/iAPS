@@ -13,6 +13,5 @@ func generatePacketBasalCancelTemporary() -> DanaGeneratePacket {
 }
 
 func parsePacketBasalCancelTemporary(data: Data) -> DanaParsePacket<Any> {
-    let success = data[DataStart] == 0
-    return DanaParsePacket(success: success, data: nil)
+    return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

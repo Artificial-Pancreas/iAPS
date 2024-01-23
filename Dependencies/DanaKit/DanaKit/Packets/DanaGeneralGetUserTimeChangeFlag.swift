@@ -23,12 +23,14 @@ func parsePacketGeneralGetUserTimeChangeFlag(data: Data) -> DanaParsePacket<Pack
     guard data.count >= 3 else {
         return DanaParsePacket(
             success: false,
+            rawData: data,
             data: PacketGeneralGetUserTimeChangeFlag(userTimeChangeFlag: 0)
         )
     }
 
     return DanaParsePacket(
         success: true,
+        rawData: data,
         data: PacketGeneralGetUserTimeChangeFlag(userTimeChangeFlag: data[DataStart])
     )
 }

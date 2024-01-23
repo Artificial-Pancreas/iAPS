@@ -22,6 +22,7 @@ func generatePacketGeneralGetShippingVersion() -> DanaGeneratePacket {
 func parsePacketGeneralGetShippingVersion(data: Data) -> DanaParsePacket<PacketGeneralGetShippingVersion> {
     return DanaParsePacket(
         success: true,
+        rawData: data,
         data: PacketGeneralGetShippingVersion(
             bleModel: String(data: data.subdata(in: DataStart..<data.count), encoding: .utf8) ?? ""
         )

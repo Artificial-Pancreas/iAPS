@@ -17,5 +17,5 @@ func generatePacketBasalGetProfileNumber() -> DanaGeneratePacket {
 }
 
 func parsePacketBasalGetProfileNumber(data: Data) -> DanaParsePacket<PacketBasalGetProfileNumber> {
-    return DanaParsePacket(success: true, data: PacketBasalGetProfileNumber(activeProfile: data[DataStart]))
+    return DanaParsePacket(success: true, rawData: data, data: PacketBasalGetProfileNumber(activeProfile: data[DataStart]))
 }

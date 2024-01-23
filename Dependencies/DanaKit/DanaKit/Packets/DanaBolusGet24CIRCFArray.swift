@@ -32,5 +32,5 @@ func parsePacketBolusGet24CIRCFArray(data: Data) -> DanaParsePacket<PacketBolusG
         isf.append(data.uint16(at: DataStart + 49 + 2 * i) / (unit == 0 ? 1 : 100))
     }
 
-    return DanaParsePacket(success: unit == 0 || unit == 1, data: PacketBolusGet24CIRCFArray(unit: unit, ic: ic, isf: isf))
+    return DanaParsePacket(success: unit == 0 || unit == 1, rawData: data, data: PacketBolusGet24CIRCFArray(unit: unit, ic: ic, isf: isf))
 }

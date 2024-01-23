@@ -14,8 +14,12 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingDeleteConfirmation = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
+    @Published var isUpdatingPumpState: Bool = false
     @Published var isSyncing: Bool = false
     @Published var lastSync: Date? = nil
+    
+    @Published var reservoirLevel: Double?
+    @Published var isSuspended: Bool = false
     
     private(set) var insulineType: InsulinType
     private var pumpManager: DanaKitPumpManager?
@@ -27,16 +31,8 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.pumpManager?.state.getFriendlyDeviceName() ?? ""
     }
     
-    public var isSuspended: Bool {
-        self.pumpManager?.state.isPumpSuspended ?? true
-    }
-    
     public var basalRate: Double? {
         self.pumpManager?.currentBaseBasalRate
-    }
-    
-    public var reservoirLevel: Double? {
-        self.pumpManager?.state.reservoirLevel
     }
     
     public var deviceName: String? {
@@ -78,8 +74,12 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.insulineType = self.pumpManager?.state.insulinType ?? .novolog
         self.bolusSpeed = self.pumpManager?.state.bolusSpeed ?? .speed12
         self.lastSync = self.pumpManager?.state.lastStatusDate
+        self.reservoirLevel = self.pumpManager?.state.reservoirLevel
+        self.isSuspended = self.pumpManager?.state.isPumpSuspended ?? false
         
         self.basalButtonText = self.updateBasalButtonText()
+        
+        self.pumpManager?.addStateObserver(self, queue: .main)
     }
     
     func stopUsingDana() {
@@ -130,17 +130,21 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     func suspendResumeButtonPressed() {
-        guard self.pumpManager?.state.isConnected ?? false else {
-            return
-        }
+        self.isUpdatingPumpState = true
         
         if self.pumpManager?.state.isPumpSuspended ?? false {
             self.pumpManager?.resumeDelivery(completion: { error in
+                DispatchQueue.main.async {
+                    self.basalButtonText = self.updateBasalButtonText()
+                    self.isUpdatingPumpState = false
+                }
+                
+                // Check if action failed, otherwise skip state sync
                 guard error == nil else {
                     return
                 }
                 
-                self.basalButtonText = self.updateBasalButtonText()
+                self.pumpManager?.ensureCurrentPumpData(completion: { _ in })
             })
             
             return
@@ -149,22 +153,34 @@ class DanaKitSettingsViewModel : ObservableObject {
         if self.pumpManager?.state.isTempBasalInProgress ?? false {
             // Stop temp basal
             self.pumpManager?.enactTempBasal(unitsPerHour: 0, for: 0, completion: { error in
+                DispatchQueue.main.async {
+                    self.basalButtonText = self.updateBasalButtonText()
+                    self.isUpdatingPumpState = false
+                }
+                
+                // Check if action failed, otherwise skip state sync
                 guard error == nil else {
                     return
                 }
                 
-                self.basalButtonText = self.updateBasalButtonText()
+                self.pumpManager?.ensureCurrentPumpData(completion: { _ in })
             })
             
             return
         }
         
         self.pumpManager?.suspendDelivery(completion: { error in
+            DispatchQueue.main.async {
+                self.basalButtonText = self.updateBasalButtonText()
+                self.isUpdatingPumpState = false
+            }
+            
+            // Check if action failed, otherwise skip state sync
             guard error == nil else {
                 return
             }
             
-            self.basalButtonText = self.updateBasalButtonText()
+            self.pumpManager?.ensureCurrentPumpData(completion: { _ in })
         })
     }
     
@@ -178,5 +194,21 @@ class DanaKitSettingsViewModel : ObservableObject {
         }
         
         return LocalizedString("Suspend delivery", comment: "Dana settings suspend delivery")
+    }
+}
+
+extension DanaKitSettingsViewModel: StateObserver {
+    func stateDidUpdate(_ state: DanaKitPumpManagerState, _ oldState: DanaKitPumpManagerState) {
+        self.insulineType = state.insulinType ?? .novolog
+        self.bolusSpeed = state.bolusSpeed
+        self.lastSync = state.lastStatusDate
+        self.reservoirLevel = state.reservoirLevel
+        self.isSuspended = state.isPumpSuspended
+        
+        self.basalButtonText = self.updateBasalButtonText()
+    }
+    
+    func deviceScanDidUpdate(_ device: DanaPumpScan) {
+        // Don't do anything here. We are not scanning for a new pump
     }
 }

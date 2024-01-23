@@ -18,6 +18,7 @@ func generatePacketGeneralKeepConnection() -> DanaGeneratePacket {
 func parsePacketGeneralKeepConnection(data: Data) -> DanaParsePacket<Any> {
     return DanaParsePacket(
         success: data[DataStart] == 0,
+        rawData: data,
         data: nil
     )
 }

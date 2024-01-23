@@ -31,7 +31,7 @@ func parsePacketBolusGetCalculationInformation(data: Data) -> DanaParsePacket<Pa
     let currentCF = data.uint16(at: DataStart + 9)
     let units = data[DataStart + 11]
 
-    return DanaParsePacket(success: data[DataStart] == 0, data: PacketBolusGetCalculationInformation(
+    return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: PacketBolusGetCalculationInformation(
         currentBg: units == 1 ? currentBg / 100 : currentBg,
         carbohydrate: carbohydrate,
         currentTarget: units == 1 ? currentTarget / 100 : currentTarget,

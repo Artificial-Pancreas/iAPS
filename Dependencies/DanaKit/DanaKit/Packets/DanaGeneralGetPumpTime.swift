@@ -31,11 +31,12 @@ func parsePacketGeneralGetPumpTime(data: Data) -> DanaParsePacket<PacketGeneralG
 
     guard let parsedTime = Calendar.current.date(from: time) else {
         // Handle error, if needed
-        return DanaParsePacket(success: false, data: nil)
+        return DanaParsePacket(success: false, rawData: data, data: nil)
     }
 
     return DanaParsePacket(
         success: true,
+        rawData: data,
         data: PacketGeneralGetPumpTime(time: parsedTime)
     )
 }

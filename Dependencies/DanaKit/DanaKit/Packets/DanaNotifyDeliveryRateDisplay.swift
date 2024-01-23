@@ -15,6 +15,7 @@ func parsePacketNotifyDeliveryRateDisplay(data: Data) -> DanaParsePacket<PacketN
     return DanaParsePacket(
         success: true,
         notifyType: CommandNotifyDeliveryRateDisplay,
+        rawData: data,
         data: PacketNotifyDeliveryRateDisplay(
             deliveredInsulin: Double(data.uint16(at: DataStart)) / 100
         )

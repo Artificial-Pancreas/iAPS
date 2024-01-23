@@ -8,6 +8,7 @@
 
 public enum DanaKitPumpManagerError {
     case noConnection
+    case pumpSuspended
     case failedTempBasalAdjustment
     case failedSuspensionAdjustment
     case failedBasalGeneration
@@ -31,6 +32,8 @@ extension DanaKitPumpManagerError: LocalizedError {
             return LocalizedString("Failed to adjust basal", comment: "Error description when failed basal adjustment")
         case .unsupportedTempBasal:
             return LocalizedString("Setting temp basal is not supported at this time", comment: "Error description when trying to set temp basal")
+        case .pumpSuspended:
+            return LocalizedString("The insulin delivery has been suspend. Action failed", comment: "Error description when pump is suspended")
         }
     }
 }

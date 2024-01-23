@@ -25,6 +25,7 @@ func parsePacketGeneralGetShippingInformation(data: Data) -> DanaParsePacket<Pac
     guard data.count >= 18 else {
         return DanaParsePacket(
             success: false,
+            rawData: data,
             data: PacketGeneralGetShippingInformation(
                 serialNumber: "",
                 shippingCountry: "",
@@ -51,11 +52,12 @@ func parsePacketGeneralGetShippingInformation(data: Data) -> DanaParsePacket<Pac
 
     guard let parsedDate = Calendar.current.date(from: shippingDate) else {
         // Handle error, if needed
-        return DanaParsePacket(success: false, data: nil)
+        return DanaParsePacket(success: false, rawData: data, data: nil)
     }
 
     return DanaParsePacket(
         success: true,
+        rawData: data,
         data: PacketGeneralGetShippingInformation(
             serialNumber: serialNumber,
             shippingCountry: shippingCountry,

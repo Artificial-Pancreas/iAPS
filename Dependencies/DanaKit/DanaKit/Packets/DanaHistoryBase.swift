@@ -57,6 +57,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     if data.count == 3 {
         return DanaParsePacket(
             success: false,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_UNKNOWN,
                 timestamp: Date(),
@@ -69,6 +70,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     if data.count == 5 {
         return DanaParsePacket(
             success: data[DataStart] == 0x00,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_DONE_UPLOAD,
                 timestamp: Date(),
@@ -86,6 +88,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_BOLUS:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_BOLUS,
                 timestamp: data.date(at: DataStart + 1),
@@ -106,6 +109,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
 
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_DAILY,
                 timestamp: timestamp,
@@ -117,6 +121,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_PRIME:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_PRIME,
                 timestamp: data.date(at: DataStart + 1),
@@ -127,6 +132,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_REFILL:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_REFILL,
                 timestamp: data.date(at: DataStart + 1),
@@ -137,6 +143,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_BASALHOUR:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_BASALHOUR,
                 timestamp: data.date(at: DataStart + 1),
@@ -147,6 +154,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_TEMP_BASAL:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_TEMP_BASAL,
                 timestamp: data.date(at: DataStart + 1),
@@ -157,6 +165,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_GLUCOSE:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_GLUCOSE,
                 timestamp: data.date(at: DataStart + 1),
@@ -167,6 +176,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_CARBO:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_CARBO,
                 timestamp: data.date(at: DataStart + 1),
@@ -177,6 +187,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_SUSPEND:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_SUSPEND,
                 timestamp: data.date(at: DataStart + 1),
@@ -187,6 +198,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     case HistoryCode.RECORD_TYPE_ALARM:
         return DanaParsePacket(
             success: true,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_ALARM,
                 timestamp: data.date(at: DataStart + 1),
@@ -198,6 +210,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
     default:
         return DanaParsePacket(
             success: false,
+            rawData: data,
             data: HistoryItem(
                 code: HistoryCode.RECORD_TYPE_UNKNOWN,
                 timestamp: data.date(at: DataStart + 1),

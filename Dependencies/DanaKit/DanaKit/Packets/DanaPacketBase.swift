@@ -24,6 +24,7 @@ struct DanaParsePacket<T>: DanaParsePacketProtocol {
     let success: Bool
     var command: UInt16? = nil
     var notifyType: UInt16? = nil
+    let rawData: Data
     let data: T?
 }
 

@@ -21,6 +21,7 @@ func generatePacketGeneralGetPumpCheck() -> DanaGeneratePacket {
 func parsePacketGeneralGetPumpCheck(data: Data) -> DanaParsePacket<PacketGeneralGetPumpCheck> {
     return DanaParsePacket(
         success: data[4] < 4, // Unsupported hardware...
+        rawData: data,
         data: PacketGeneralGetPumpCheck(
             hwModel: data[DataStart],
             protocolCode: data[DataStart + 1],

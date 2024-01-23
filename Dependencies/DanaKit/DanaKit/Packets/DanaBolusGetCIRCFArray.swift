@@ -55,7 +55,7 @@ func parsePacketBolusGetCIRCFArray(data: Data) -> DanaParsePacket<PacketBolusGet
     let cf06 = Float(data.uint16(at: DataStart + 26)) / Float(divisionFactor)
     let nightCF = Float(data.uint16(at: DataStart + 28)) / Float(divisionFactor)
 
-    return DanaParsePacket(success: unit == 0 || unit == 1, data: PacketBolusGetCIRCFArray(
+    return DanaParsePacket(success: unit == 0 || unit == 1, rawData: data, data: PacketBolusGetCIRCFArray(
         language: language,
         unit: unit,
         morningCIR: morningCIR,

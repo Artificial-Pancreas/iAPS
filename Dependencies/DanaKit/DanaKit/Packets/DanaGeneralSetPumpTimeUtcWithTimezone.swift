@@ -27,6 +27,7 @@ func generatePacketGeneralSetPumpTimeUtcWithTimezone(options: PacketGeneralSetPu
 func parsePacketGeneralSetPumpTimeUtcWithTimezone(data: Data) -> DanaParsePacket<Any> {
     return DanaParsePacket(
         success: data[DataStart] == 0,
+        rawData: data,
         data: nil
     )
 }

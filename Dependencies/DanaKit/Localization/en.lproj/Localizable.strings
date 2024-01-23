@@ -22,9 +22,6 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "OK"
 
-/* Title for setup complete */
-"Setup Complete" = "Setup Complete"
-
 /* Dana-i/RS connecting alert title */
 "Connecting to device" = "Connecting to device"
 
@@ -114,6 +111,9 @@
 
 /* Error description when trying to set temp basal */
 "Setting temp basal is not supported at this time" = "Setting temp basal is not supported at this time"
+
+/* Error description when pump is suspended */
+"The insulin delivery has been suspend. Action failed" = "The insulin delivery has been suspend. Action failed"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Only Automatic Bolus is supported"

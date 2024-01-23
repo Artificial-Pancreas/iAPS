@@ -19,6 +19,7 @@ func parsePacketNotifyAlarm(data: Data) -> DanaParsePacket<PacketNotifyAlarm> {
     return DanaParsePacket(
         success: true,
         notifyType: CommandNotifyAlarm,
+        rawData: data,
         data: PacketNotifyAlarm(
             code: code,
             message: message

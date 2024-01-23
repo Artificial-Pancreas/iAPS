@@ -46,6 +46,7 @@ func generatePacketBolusStart(options: PacketBolusStart) -> DanaGeneratePacket {
 
 /**
  * Error codes:
+ * 0x01 => Pump suspended
  * 0x04 => Bolus timeout active
  * 0x10 => Max bolus violation
  * 0x20 => Command error
@@ -53,5 +54,5 @@ func generatePacketBolusStart(options: PacketBolusStart) -> DanaGeneratePacket {
  * 0x80 => Insulin limit violation
  */
 func parsePacketBolusStart(data: Data) -> DanaParsePacket<Any> {
-    return DanaParsePacket(success: data[DataStart] == 0, data: nil)
+    return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

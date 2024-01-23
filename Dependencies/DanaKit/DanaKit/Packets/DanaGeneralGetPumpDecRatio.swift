@@ -22,6 +22,7 @@ func generatePacketGeneralGetPumpDecRatio() -> DanaGeneratePacket {
 func parsePacketGeneralGetPumpDecRatio(data: Data) -> DanaParsePacket<PacketGeneralGetPumpDecRatio> {
     return DanaParsePacket(
         success: true,
+        rawData: data,
         data: PacketGeneralGetPumpDecRatio(
             decRatio: data[DataStart] * 5
         )

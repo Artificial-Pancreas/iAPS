@@ -37,7 +37,7 @@ func generatePacketBolusGetOption() -> DanaGeneratePacket {
 func parsePacketBolusGetOption(data: Data) -> DanaParsePacket<PacketBolusGetOption> {
     let isExtendedBolusEnabled = data[DataStart] == 1
 
-    return DanaParsePacket(success: isExtendedBolusEnabled, data: PacketBolusGetOption(
+    return DanaParsePacket(success: isExtendedBolusEnabled, rawData: data, data: PacketBolusGetOption(
         isExtendedBolusEnabled: isExtendedBolusEnabled,
         bolusCalculationOption: data[DataStart + 1],
         missedBolusConfig: data[DataStart + 2],

@@ -41,6 +41,7 @@ func generatePacketGeneralGetUserOption() -> DanaGeneratePacket {
 func parsePacketGeneralGetUserOption(data: Data) -> DanaParsePacket<PacketGeneralGetUserOption> {
     return DanaParsePacket(
         success: data[DataStart + 3] >= 5,
+        rawData: data,
         data: PacketGeneralGetUserOption(
             isTimeDisplay24H: data[DataStart] == 0,
             isButtonScrollOnOff: data[DataStart + 1] == 1,

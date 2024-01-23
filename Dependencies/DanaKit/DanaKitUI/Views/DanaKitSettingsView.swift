@@ -53,9 +53,19 @@ struct DanaKitSettingsView: View {
             }
             
             Section {
-                Button($viewModel.basalButtonText.wrappedValue) {
+                Button(action: {
                     viewModel.suspendResumeButtonPressed()
+                }) {
+                    HStack {
+                        Text($viewModel.basalButtonText.wrappedValue)
+                        Spacer()
+                        if viewModel.isUpdatingPumpState {
+                            ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                        }
+                    }
                 }
+                .disabled(viewModel.isUpdatingPumpState || viewModel.isSyncing)
+                
                 Button(action: {
                     viewModel.syncData()
                 }) {
@@ -67,7 +77,8 @@ struct DanaKitSettingsView: View {
                         }
                     }
                 }
-                .disabled(viewModel.isSyncing)
+                .disabled(viewModel.isUpdatingPumpState || viewModel.isSyncing)
+                
                 HStack {
                     Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
                     Spacer()

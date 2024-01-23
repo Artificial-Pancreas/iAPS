@@ -28,6 +28,7 @@ func parsePacketNotifyMissedBolus(data: Data) -> DanaParsePacket<PacketNotifyMis
     return DanaParsePacket(
         success: data[DataStart] != 0x01 && data[DataStart + 1] != 0x01 && data[DataStart + 2] != 0x01 && data[DataStart + 3] != 0x01,
         notifyType: CommandNotifyMissedBolus,
+        rawData: data,
         data: PacketNotifyMissedBolus(
             startTime: startTime,
             endTime: endTime

@@ -30,7 +30,7 @@ func generatePacketGeneralGetInitialScreenInformation() -> DanaGeneratePacket {
 
 func parsePacketGeneralGetInitialScreenInformation(data: Data) -> DanaParsePacket<PacketGeneralGetInitialScreenInformation> {
     if data.count < 17 {
-        return DanaParsePacket(success: false, data: PacketGeneralGetInitialScreenInformation(
+        return DanaParsePacket(success: false, rawData: data, data: PacketGeneralGetInitialScreenInformation(
             isPumpSuspended: false,
             isTempBasalInProgress: false,
             isExtendedInProgress: false,
@@ -49,7 +49,7 @@ func parsePacketGeneralGetInitialScreenInformation(data: Data) -> DanaParsePacke
 
     let statusPump = data[DataStart]
 
-    return DanaParsePacket(success: true, data: PacketGeneralGetInitialScreenInformation(
+    return DanaParsePacket(success: true, rawData: data, data: PacketGeneralGetInitialScreenInformation(
         isPumpSuspended: (statusPump & 0x01) == 0x01,
         isTempBasalInProgress: (statusPump & 0x10) == 0x10,
         isExtendedInProgress: (statusPump & 0x04) == 0x04,

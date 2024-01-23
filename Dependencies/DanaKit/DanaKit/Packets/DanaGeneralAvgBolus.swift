@@ -35,6 +35,7 @@ func parsePacketGeneralAvgBolus(data: Data) -> DanaParsePacket<PacketGeneralAvgB
         bolusAvg14days != checkValue &&
         bolusAvg21days != checkValue &&
         bolusAvg28days != checkValue,
+        rawData: data,
         data: PacketGeneralAvgBolus(
             bolusAvg03days: bolusAvg03days,
             bolusAvg07days: bolusAvg07days,
