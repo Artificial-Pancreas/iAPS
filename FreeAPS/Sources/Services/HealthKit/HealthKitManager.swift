@@ -595,9 +595,12 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 value: syncID
             )
 
-            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) glucose entries deleted from Health Store", printToConsole: true)
+                }
             }
         }
     }
@@ -662,9 +665,12 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 value: syncID
             )
 
-            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) insulin entries with ID: \(syncID) deleted from Health Store", printToConsole: true)
+                }
             }
         }
     }
