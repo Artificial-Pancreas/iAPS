@@ -2089,10 +2089,10 @@ Enact a temp Basal or a temp target */
 "unless your threshold setting is set higher:" = "unless your threshold setting is set higher:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Setting";
+"Setting" = "Inställning";
 
 /* Threshold Table Columns Title */
-"Threshold" = "Threshold";
+"Threshold" = "Tröskelvärde";
 
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";
