@@ -187,10 +187,10 @@
 "Deactivate Pod" = "Hủy kích hoạt Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide to Insert Cannula";
+"Slide to Insert Cannula" = "Trượt để chèn ống thông";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Trượt để vô hiệu hóa Pod";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Đã hủy kích hoạt";

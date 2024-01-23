@@ -403,10 +403,10 @@
 "Deactivate Pod" = "Hủy kích hoạt Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide to Insert Cannula";
+"Slide to Insert Cannula" = "Trượt để chèn ống thông";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Trượt để vô hiệu hóa Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Đang hủy kích hoạt.";
@@ -694,7 +694,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Bạn bắt đầu quá trình cài đặt các lời nhắc, đổ đầy thuốc vào pod, ghép đôi thiết bị và gắn pod lên người.";
 
 /* Cancel button title */
-"Cancel" = "Bỏ qua";
+"Cancel" = "Hủy";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Tiếp tục";
