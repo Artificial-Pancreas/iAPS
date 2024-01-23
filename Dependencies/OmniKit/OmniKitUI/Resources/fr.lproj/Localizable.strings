@@ -180,17 +180,17 @@
 "Deactivate" = "Désactiver";
 
 /* Action button description for deactivate while pod still active */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Glisser pour désactiver le Pod";
 
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Désactiver le Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide to Insert Cannula";
+"Slide to Insert Cannula" = "Glisser pour insérer la canule";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Glisser pour désactiver le Pod";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Désactivé";

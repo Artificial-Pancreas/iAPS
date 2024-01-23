@@ -406,7 +406,7 @@
 "Slide to Insert Cannula" = "Slide to Insert Cannula";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Veeg om Pod te deactiveren";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactiveren.";
@@ -715,7 +715,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om in te stellen bij welk aantal eenheden je wilt worden herinnerd.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Reservoir bijna leeg";
+"Low Reservoir" = "Laag reservoir niveau";
 
 /* */
 "Save" = "Opslaan";
