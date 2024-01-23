@@ -1487,6 +1487,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Deactivating..." = "Đang hủy kích hoạt...";
 
+/* */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+
 "Pair Pod" = "Kết nối Pod";
 
 /* Text for previous pod information row */
