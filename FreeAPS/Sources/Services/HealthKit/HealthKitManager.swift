@@ -610,23 +610,22 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
               checkAvailabilitySave(objectTypeToHealthStore: sampleType)
         else { return }
 
-        print("meals 4: ID: " + syncID + " FPU ID: " + fpuID)
-
-        if syncID != "" {
+        if syncID.count > 2 {
             let predicate = HKQuery.predicateForObjects(
                 withMetadataKey: HKMetadataKeySyncIdentifier,
                 operatorType: .equalTo,
                 value: syncID
             )
-
-            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) carb entries with ID: " + syncID + " deleted from Health Store", printToConsole: true)
+                }
             }
         }
 
-        if fpuID != "" {
-            // processQueue.async {
+        if fpuID.count > 2 {
             let recentCarbs: [CarbsEntry] = carbsStorage.recent()
             let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.id)
             let predicate = HKQuery.predicateForObjects(
@@ -634,11 +633,13 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 allowedValues: ids
             )
             print("found IDs: " + ids.description)
-            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
+            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) carb entries with ID: " + syncID + " deleted from Health Store", printToConsole: true)
+                }
             }
-            // }
         }
     }
 
