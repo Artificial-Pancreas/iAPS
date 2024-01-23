@@ -390,13 +390,13 @@ Enact a temp Basal or a temp target */
 "Settings imported" = "Các cấu hình đã được cập nhật";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Sai khác đơn vị Glucose giữa Nightscout và Bơm. Cập nhật cấu hình bị bỏ.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Đơn vị glucose không khớp trong Cài đặt Nightscout và Pump. Cập nhật cấu hình bị hủy bỏ.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Không thể tìm thấy Profile Nightscout mặc định.";
+"Can't find the default Nightscout Profile." = "Không thể tìm thấy Hồ sơ Nightscout mặc định.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Xét nghiệm đường huyết";
+"Blood Glucose Test" = "Kiểm tra đường huyết";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Thêm Medtronic";
@@ -948,7 +948,7 @@ Enact a temp Basal or a temp target */
 "Some ui element was incorrectly specified" = "Một vài yếu tố ui đã không được chỉ định";
 
 /* */
-"Success" = "Success";
+"Success" = "Thành công";
 
 /* */
 "Schedules were saved successfully!" = "Lịch trình được lưu thành công!";
@@ -2060,7 +2060,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Điều chỉnh riêng các tỷ lệ động được tính toán. Mặc định là 0,5. Giá trị càng cao thì mức điều chỉnh ISF/CR của bạn đối với mức đường huyết cao hay thấp càng lớn. Hiệu chỉnh tối đa/tối thiểu được xác định bởi cài đặt tối thiểu/tối đa của Autosens.\n\nĐối với hàm Sigmoid, hệ số điều chỉnh được khuyến nghị là 0,4 - 0,5 để bắt đầu.\n\nĐối với công thức logarit, có ít sự đồng thuận hơn, nhưng bắt đầu từ khoảng 0,8 là có lẽ phù hợp với hầu hết người dùng trưởng thành. Đối với người dùng trẻ tuổi, nên bắt đầu ở mức thấp hơn nữa khi sử dụng công thức logarit để tránh điều trị quá tích cực.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Sử dụng hàm Sigmoid (SF)";
@@ -2078,22 +2078,22 @@ Enact a temp Basal or a temp target */
 "Threshold Setting" = "Cài đặt ngưỡng";
 
 /* Dynamic ISF Setting Title */
-"Minimum Threshold Setting" = "Minimum Threshold Setting";
+"Minimum Threshold Setting" = "Cài đặt ngưỡng tối thiểu";
 
 /* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ";
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Cài đặt này cho phép bạn chọn mức dưới đó sẽ không cung cấp insulin.\n\nNgưỡng này sử dụng lượng lớn nhất trong cài đặt ngưỡng của bạn và ngưỡng được tính toán:\n\nGlucose mục tiêu - (Glucose mục tiêu - 40) ";
 
 /* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "the threshold will be ";
+"the threshold will be " = "ngưỡng sẽ là ";
 
 /* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "unless your threshold setting is set higher:";
+"unless your threshold setting is set higher:" = "trừ khi cài đặt ngưỡng của bạn được đặt cao hơn:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Setting";
+"Setting" = "Thiết lập";
 
 /* Threshold Table Columns Title */
-"Threshold" = "Threshold";
+"Threshold" = "Ngưỡng";
 
 /* Header */
 "Calculator settings" = "Thiết lập tính toán";
