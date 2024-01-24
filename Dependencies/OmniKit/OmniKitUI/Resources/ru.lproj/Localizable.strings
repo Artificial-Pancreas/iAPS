@@ -190,7 +190,7 @@
 "Slide to Insert Cannula" = "Slide to Insert Cannula";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Сдвиньте для деактивации";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Не активен";

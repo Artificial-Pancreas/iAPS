@@ -408,7 +408,6 @@
 /* */
 "Slide to Deactivate Pod" = "Slide to Deactivate Pod";
 
-
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "停用中";
 
@@ -716,7 +715,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "低药量";
+"Low Reservoir" = "Low Reservoir";
 
 /* */
 "Save" = "保存​​";

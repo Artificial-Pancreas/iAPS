@@ -187,10 +187,10 @@
 "Deactivate Pod" = "Disattiva Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide to Insert Cannula";
+"Slide to Insert Cannula" = "Scorri per inserire la Cannula";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Scorri per disattivare il pod";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Disattivato";

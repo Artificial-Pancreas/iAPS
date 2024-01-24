@@ -30,7 +30,7 @@
 "Time Change Detected" = "Zeitänderung erkannt";
 
 /* Alert content body for multiCommand pod alert */
-"Multiple Command Alert" = "Mehrfache Befehlsbenachrichtigung";
+"Multiple Command Alert" = "Mehrfache Befehlswarnungen";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
 "Pod expires in %1$@." = "Pod läuft ab in %1$@.";
@@ -45,7 +45,7 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ Insulin oder weniger verfügbar im Pod. Pod bald ersetzen.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Unterbrechung in Fortschrittserinnerung";
+"Suspend In Progress Reminder" = "Erinnerung: Pumpe vorübergehend unterbrochen";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Die Insulinunterbrechung ist beendet.\n\nSie können die Zufuhr über das Banner auf dem Startbildschirm oder über die Pumpeneinstellungen fortsetzen. Sie werden in 15 Minuten noch einmal erinnert.";
@@ -222,7 +222,7 @@
 "No Insulin" = "Kein Insulin";
 
 /* Status highlight message for podExpired alarm. */
-"Pod Expired" = "POD abgelaufen";
+"Pod Expired" = "Pod abgelaufen";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Pumpe verstopft";
@@ -403,10 +403,10 @@
 "Deactivate Pod" = "Pod deaktivieren";
 
 /* */
-"Slide to Insert Cannula" = "Slide to Insert Cannula";
+"Slide to Insert Cannula" = "Streichen um die Kanüle einzuführen";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Streichen um den Pod zu deaktivieren";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deaktivierung.";
@@ -415,7 +415,7 @@
 "Pod deactivated successfully. Continue." = "Pod erfolgreich deaktiviert. Fortfahren.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Wiederholen";
+"Retry" = "Erneut versuchen";
 
 /* Action button description when deactivated */
 "Continue" = "Fortsetzen";
@@ -697,7 +697,7 @@
 "Cancel" = "Abbrechen";
 
 /* Text for continue button on PodSetupView */
-"Continue" = "Fortsetzen";
+"Continue" = "Weiter";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
 "Skip Omnipod Onboarding?" = "Das Omnipod Onboarding überspringen?";
