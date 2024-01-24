@@ -223,9 +223,16 @@ extension Bolus {
             }
         }
 
-        func backToCarbsView(complexEntry: Bool, _ meal: FetchedResults<Meals>, override: Bool) {
-            delete(deleteTwice: complexEntry, meal: meal)
-            showModal(for: .addCarbs(editMode: complexEntry, override: override))
+        // To do rewrite everything! Looking ridiculous now.
+        func backToCarbsView(
+            complexEntry: Bool,
+            _ meal: FetchedResults<Meals>,
+            override: Bool,
+            deleteNothing: Bool,
+            editMode: Bool
+        ) {
+            if !deleteNothing { delete(deleteTwice: complexEntry, meal: meal) }
+            showModal(for: .addCarbs(editMode: editMode, override: override))
         }
 
         func delete(deleteTwice: Bool, meal: FetchedResults<Meals>) {
@@ -233,30 +240,20 @@ extension Bolus {
                 return
             }
 
-            var date = Date()
-
-            if let mealDate = meals.actualDate {
-                date = mealDate
-            } else if let mealdate = meals.createdAt {
-                date = mealdate
-            }
-
             let mealArray = DataTable.Treatment(
                 units: units,
                 type: .carbs,
-                date: date,
+                date: (deleteTwice ? (meals.createdAt ?? Date()) : meals.actualDate) ?? Date(),
                 id: meals.id ?? "",
                 isFPU: deleteTwice ? true : false,
                 fpuID: deleteTwice ? (meals.fpuID ?? "") : ""
             )
 
-            print(
-                "meals 2: ID: " + mealArray.id.description + " FPU ID: " + (mealArray.fpuID ?? "")
-                    .description
-            )
-
             if deleteTwice {
-                nsManager.deleteCarbs(mealArray, complexMeal: true)
+                nsManager.deleteNormalCarbs(mealArray)
+                nsManager.deleteFPUs(mealArray)
+            } else {
+                nsManager.deleteNormalCarbs(mealArray)
             }
         }
 

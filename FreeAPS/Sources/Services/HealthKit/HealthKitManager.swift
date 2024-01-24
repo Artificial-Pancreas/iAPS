@@ -168,18 +168,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         ]
                     )
                 }
-
             healthKitStore.save(samplesToSave) { (success: Bool, error: Error?) -> Void in
-                if success {
-                    for sample in samplesToSave {
-                        debug(
-                            .service,
-                            "Stored blood glucose \(sample.quantity) in HealthKit Store! Metadata: \(String(describing: sample.metadata?.values))"
-                        )
-                    }
-                } else {
-                    debug(.service, "Failed to store blood glucose in HealthKit Store!")
-                    debug(.service, error?.localizedDescription ?? "Unknown error")
+                if !success, let error = error {
+                    debug(.service, "Failed to store blood glucose in HealthKit Store! Error: " + error.localizedDescription)
                 }
             }
         }
@@ -224,16 +215,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 }
 
             healthKitStore.save(samplesToSave) { (success: Bool, error: Error?) -> Void in
-                if success {
-                    for sample in samplesToSave {
-                        debug(
-                            .service,
-                            "Stored carb entry \(sample.quantity) in HealthKit Store! Metadata: \(String(describing: sample.metadata?.values))"
-                        )
-                    }
-                } else {
-                    debug(.service, "Failed to store carb entry in HealthKit Store!")
-                    debug(.service, error?.localizedDescription ?? "Unknown error")
+                if !success, let error = error {
+                    debug(.service, "Failed to store carb entry in HealthKit Store! Error: " + error.localizedDescription)
                 }
             }
         }
@@ -301,16 +284,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 }
 
             healthKitStore.save(bolusSamples + basalSamples) { (success: Bool, error: Error?) -> Void in
-                if success {
-                    for sample in bolusSamples + basalSamples {
-                        debug(
-                            .service,
-                            "Stored insulin entry in HealthKit Store! Metadata: \(String(describing: sample.metadata?.values))"
-                        )
-                    }
-                } else {
-                    debug(.service, "Failed to store insulin entry in HealthKit Store!")
-                    debug(.service, error?.localizedDescription ?? "Unknown error")
+                if !success, let error = error {
+                    debug(.service, "Failed to store insulin entry in HealthKit Store! Error: " + error.localizedDescription)
                 }
             }
         }
