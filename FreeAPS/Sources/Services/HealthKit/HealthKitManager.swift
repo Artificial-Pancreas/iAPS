@@ -244,8 +244,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                     value: syncID
                 )
                 self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                    guard let error = error else { return }
-                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                    if let error = error {
+                        warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                    }
                 }
             }
             let bolusTotal = bolus + bolusToModify
@@ -253,7 +254,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 .map {
                     HKQuantitySample(
                         type: sampleType,
-                        quantity: HKQuantity(unit: .internationalUnit(), doubleValue: Double($0.amount)),
+                        quantity: HKQuantity(unit: .internationalUnit(), doubleValue: roundDouble(Double($0.amount))),
                         start: $0.date,
                         end: $0.date,
                         metadata: [
@@ -270,7 +271,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 .map {
                     HKQuantitySample(
                         type: sampleType,
-                        quantity: HKQuantity(unit: .internationalUnit(), doubleValue: Double($0.amount)),
+                        quantity: HKQuantity(unit: .internationalUnit(), doubleValue: roundDouble(Double($0.amount))),
                         start: $0.startDelivery,
                         end: $0.endDelivery,
                         metadata: [
@@ -404,6 +405,21 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
             }
             debug(.service, "Background delivery status is \(status)")
         }
+    }
+
+    func roundDouble(_ double: Double) -> Double {
+        var minimalDose = Double(settingsManager.preferences.bolusIncrement)
+        if (minimalDose != 0.05) || (minimalDose != 0.025) {
+            minimalDose = 0.1
+        }
+        let incrementsRaw = double / minimalDose
+        var amountRounded: Double
+        if incrementsRaw >= 1 {
+            let incrementsRounded = floor(Double(incrementsRaw))
+            amountRounded = round(incrementsRounded * Double(minimalDose) * 100_000.0) / 100_000.0
+        } else { amountRounded = 0 }
+
+        return amountRounded
     }
 
     /// Try to load samples from Health store
