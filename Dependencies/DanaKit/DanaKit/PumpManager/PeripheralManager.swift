@@ -736,8 +736,19 @@ extension PeripheralManager {
         }
         
         if (message.notifyType != nil) {
-            // TODO: send notification somehow
-            return
+            switch message.notifyType {
+            case CommandNotifyDeliveryComplete:
+                let data = message.data as! PacketNotifyDeliveryComplete
+                self.pumpManager.notifyBolusDone(deliveredUnits: data.deliveredInsulin)
+                return
+            case CommandNotifyDeliveryRateDisplay:
+                let data = message.data as! PacketNotifyDeliveryRateDisplay
+                self.pumpManager.notifyBolusDidUpdate(deliveredUnits: data.deliveredInsulin)
+                return
+            default:
+                self.pumpManager.notifyBolusError()
+                return
+            }
         }
         
         // Message received and dequeueing timeout

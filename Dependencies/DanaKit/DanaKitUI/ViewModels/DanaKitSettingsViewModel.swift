@@ -119,8 +119,10 @@ class DanaKitSettingsViewModel : ObservableObject {
         
         self.isSyncing = true
         pumpManager.ensureCurrentPumpData(completion: { date in
-            self.isSyncing = false
-            self.lastSync = date
+            DispatchQueue.main.async {
+                self.isSyncing = false
+                self.lastSync = date
+            }
         })
     }
     

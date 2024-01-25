@@ -115,6 +115,9 @@
 /* Error description when pump is suspended */
 "The insulin delivery has been suspend. Action failed" = "The insulin delivery has been suspend. Action failed"
 
+/* Error description when pump is busy (with bolussing probably) */
+"Action has been canceled, because the pump is busy" = "Action has been canceled, because the pump is busy"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Only Automatic Bolus is supported"
 

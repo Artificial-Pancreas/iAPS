@@ -121,6 +121,9 @@
 /* Error description when trying to set temp basal */
 "Setting temp basal is not supported at this time" = "Het zetten van een tijdelijk basaal wordt momenteel nog niet ondersteunt"
 
+/* Error description when pump is busy (with bolussing probably) */
+"Action has been canceled, because the pump is busy" = "Actie is geannuleerd, omdat de pomp bezig is"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Alleen automatische bolus wordt ondersteunt"
 

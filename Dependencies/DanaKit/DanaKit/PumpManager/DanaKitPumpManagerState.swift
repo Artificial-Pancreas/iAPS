@@ -14,6 +14,13 @@ public enum DanaKitBasal: Int {
     case suspended = 1
 }
 
+public enum BolusState: Int {
+    case noBolus = 0
+    case initiating = 1
+    case inProgress = 2
+    case canceling = 3
+}
+
 public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public typealias RawValue = PumpManager.RawStateValue
     
@@ -33,6 +40,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.bolusSpeed = rawValue["bolusSpeed"] as? BolusSpeed ?? .speed12
         self.isOnBoarded = rawValue["isOnBoarded"] as? Bool ?? false
         self.basalDeliveryDate = rawValue["basalDeliveryDate"] as? Date ?? Date.now
+        self.bolusState = rawValue["bolusState"] as? BolusState ?? .noBolus
         
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -64,6 +72,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["isOnBoarded"] = self.isOnBoarded
         value["basalDeliveryDate"] = self.basalDeliveryDate
         value["basalDeliveryOrdinal"] = self.basalDeliveryOrdinal.rawValue
+        value["bolusState"] = self.bolusState.rawValue
         
         return value
     }
@@ -71,77 +80,35 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     /// The last moment this state has been updated (only for relavant values like isConnected or reservoirLevel)
     public var lastStatusDate: Date = Date()
     
-    public var isOnBoarded = false {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var isOnBoarded = false
     
     /// The name of the device. Needed for en/de-crypting messages
-    public var deviceName: String? = nil {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var deviceName: String? = nil
     
     /// The bluetooth identifier. Used to reconnect to pump
-    public var bleIdentifier: String? = nil {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var bleIdentifier: String? = nil
     
     /// Flag for checking if the device is still connected
-    public var isConnected: Bool = false {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var isConnected: Bool = false
     
     /// Current reservoir levels
-    public var reservoirLevel: Double = 0  {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var reservoirLevel: Double = 0
     
     /// The hardware model of the pump. Dertermines the friendly device name
-    public var hwModel: UInt8 = 0x00  {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var hwModel: UInt8 = 0x00
     
     /// Pump protocol
-    public var pumpProtocol: UInt8 = 0x00  {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var pumpProtocol: UInt8 = 0x00
     
-    public var bolusSpeed: BolusSpeed = .speed12 {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var bolusSpeed: BolusSpeed = .speed12
     
-    public var batteryRemaining: Double = 0  {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var batteryRemaining: Double = 0
     
-    public var isPumpSuspended: Bool = false  {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var isPumpSuspended: Bool = false
     
-    public var isTempBasalInProgress: Bool = false {
-        didSet {
-            lastStatusDate = Date()
-        }
-    }
+    public var isTempBasalInProgress: Bool = false
+    
+    public var bolusState: BolusState = .noBolus
     
     public var insulinType: InsulinType? = nil
     
@@ -244,6 +211,7 @@ extension DanaKitPumpManagerState: CustomDebugStringConvertible {
             "* friendlyDeviceName: \(getFriendlyDeviceName())",
             "* insulinType: \(String(describing: insulinType))",
             "* reservoirLevel: \(reservoirLevel)",
+            "* bolusState: \(bolusState.rawValue)",
             "* basalDeliveryDate: \(basalDeliveryDate)",
             "* basalDeliveryOrdinal: \(basalDeliveryOrdinal)",
             "* hwModel: \(hwModel)",

@@ -10,7 +10,7 @@ import Foundation
 import LoopKit
 
 extension DoseEntry {
-    public static func bolus(units: Double, duration: TimeInterval, activationType: BolusActivationType, insulinType: InsulinType) -> DoseEntry {
+    public static func bolus(units: Double, deliveredUnits: Double, duration: TimeInterval, activationType: BolusActivationType, insulinType: InsulinType) -> DoseEntry {
         var endTime = Date.now
         endTime.addTimeInterval(duration)
         
@@ -20,11 +20,11 @@ extension DoseEntry {
             endDate: endTime,
             value: units,
             unit: .units,
-            deliveredUnits: units,
+            deliveredUnits: deliveredUnits,
             insulinType: insulinType,
             automatic: activationType.isAutomatic,
             manuallyEntered: activationType == .manualNoRecommendation,
-            isMutable: false
+            isMutable: true
         )
     }
     
