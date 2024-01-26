@@ -1065,7 +1065,7 @@ Enact a temp Basal or a temp target */
 "Note" = "Lưu ý";
 
 /* */
-"Temp Basal" = "Liều cơ bản tạm thời";
+"Temp Basal" = "Temp Basal";
 
 /* */
 "Temp Target" = "Mục tiêu tạm thời";
@@ -1217,7 +1217,7 @@ Enact a temp Basal or a temp target */
 "Manual" = "Thủ công";
 
 /* An Automatic delivered bolus (SMB) */
-"SMB" = "Liều tiêm tự động (SMB)";
+"SMB" = "SMB";
 
 /* A manually entered dose of external insulin */
 "External Insulin" = "Liều insulin tiêm ngoài";
@@ -1892,7 +1892,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Cho phép SMB có Temptarget cao";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép supermicrobolus (nếu được bật khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được bật khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Sử dụng giờ cao điểm tùy chỉnh";
@@ -2134,7 +2134,7 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Hoạt động trực tiếp";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và trên đảo động (nếu có)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa";
 
 /* Notification option */
 "Show live activity" = "Hiển thị hoạt động trực tiếp";
