@@ -161,7 +161,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
 
-            if fpuID != "" {
+            if fpuID.count > 3 {
                 if allValues.firstIndex(where: { $0.fpuID == fpuID }) == nil {
                     debug(.default, "Didn't find any carb equivalents to delete. ID to search for: " + fpuID.description)
                 } else {
@@ -173,7 +173,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 }
             }
 
-            if fpuID == "" || complex {
+            if fpuID.count < 3 || complex {
                 if allValues.firstIndex(where: { $0.id == uniqueID }) == nil {
                     debug(.default, "Didn't find any carb entries to delete. ID to search for: " + uniqueID.description)
                 } else {
