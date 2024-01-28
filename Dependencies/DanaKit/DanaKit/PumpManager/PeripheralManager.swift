@@ -39,6 +39,8 @@ class PeripheralManager: NSObject {
     private var isSendingRequest = false
     private var continuationToken: CheckedContinuation<(any DanaParsePacketProtocol), Error>? = nil
     
+    private var historyLog: [HistoryItem] = []
+    
     private var encryptionMode: EncryptionType = .DEFAULT {
         didSet {
             DanaRSEncryption.setEnhancedEncryption(encryptionMode.rawValue)
@@ -65,7 +67,8 @@ class PeripheralManager: NSObject {
     }
     
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol)  {
-        let isHistoryPacket = self.isHistoryPacket(opCode: packet.opCode)
+        let command = UInt16(((packet.type ?? DanaPacketType.TYPE_RESPONSE) & 0xff) << 8) + UInt16(packet.opCode & 0xff)
+        let isHistoryPacket = self.isHistoryPacket(opCode: command)
         if (isHistoryPacket && !self.pumpManager.state.isInFetchHistoryMode) {
             throw NSError(domain: "Pump is not in history fetch mode", code: 0, userInfo: nil)
         }
@@ -758,11 +761,23 @@ extension PeripheralManager {
             return
         }
         
+        if let data = message.data as? HistoryItem {
+            if data.code == HistoryCode.RECORD_TYPE_DONE_UPLOAD {
+                token.resume(returning: DanaParsePacket<[HistoryItem]>(success: true, rawData: Data([]), data: self.historyLog.map({ $0 })))
+                self.continuationToken = nil
+                self.historyLog = []
+            } else {
+                self.historyLog.append(data)
+            }
+
+            return
+        }
+        
         token.resume(returning: message)
         self.continuationToken = nil
     }
     
-    private func isHistoryPacket(opCode: UInt8) -> Bool {
-        return opCode > DanaPacketType.OPCODE_REVIEW__BASAL && opCode < DanaPacketType.OPCODE_REVIEW__ALL_HISTORY
+    private func isHistoryPacket(opCode: UInt16) -> Bool {
+        return opCode > CommandHistoryAlarm && opCode < CommandHistoryAll
     }
 }

@@ -214,23 +214,85 @@ extension DanaKitPumpManager: PumpManager {
                 completion?(nil)
                 return
             case .success:
-                // TODO: Sync pump history
-                
-                self.state.lastStatusDate = Date()
-                
-                // By connecting to the pump, the state gets updated
-                self.disconnect()
-                
-                self.pumpDelegate.notify { (delegate) in
-                    guard let delegate = delegate else {
-                        preconditionFailure("pumpManagerDelegate cannot be nil")
+                Task {
+                    let events = await self.syncHistory()
+                    self.state.lastStatusDate = Date()
+                    
+                    self.disconnect()
+                    
+                    self.pumpDelegate.notify { (delegate) in
+                        delegate?.pumpManager(self, hasNewPumpEvents: events, lastReconciliation: Date.now, completion: { (error) in
+                            completion?(Date.now)
+                        })
                     }
-
-                    delegate.pumpManager(self, hasNewPumpEvents: [], lastReconciliation: Date.now, completion: { (error) in
-                        completion?(Date.now)
-                    })
                 }
             }
+        }
+    }
+    
+    private func syncHistory() async -> [NewPumpEvent] {
+        var hasHistoryModeBeenActivate = false
+        do {
+            let activateHistoryModePacket = generatePacketGeneralSetHistoryUploadMode(options: PacketGeneralSetHistoryUploadMode(mode: 1))
+            let activateHistoryModeResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(activateHistoryModePacket)
+            guard activateHistoryModeResult.success else {
+                return []
+            }
+            
+            hasHistoryModeBeenActivate = true
+            
+            let fetchHistoryPacket = generatePacketHistoryAll(options: PacketHistoryBase(from: state.lastStatusDate))
+            let fetchHistoryResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(fetchHistoryPacket)
+            guard activateHistoryModeResult.success else {
+                return []
+            }
+            
+            let deactivateHistoryModePacket = generatePacketGeneralSetHistoryUploadMode(options: PacketGeneralSetHistoryUploadMode(mode: 0))
+            let _ = try await DanaKitPumpManager.bluetoothManager.writeMessage(deactivateHistoryModePacket)
+
+            return (fetchHistoryResult.data as! [HistoryItem]).map({ item in
+                switch(item.code) {
+                case HistoryCode.RECORD_TYPE_ALARM:
+                    return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Alarm: \(getAlarmMessage(param8: item.alarm))", type: .alarm, alarmType: PumpAlarmType.fromParam8(item.alarm))
+                
+                case HistoryCode.RECORD_TYPE_BOLUS:
+                    // If we find a bolus here, we assume that is hasnt been synced to Loop
+                    return NewPumpEvent.bolus(
+                        dose: DoseEntry.bolus(units: item.value!, deliveredUnits: item.value!, duration: item.durationInMin! * 60, activationType: .manualNoRecommendation, insulinType: self.state.insulinType!),
+                        units: item.value!)
+                    
+                case HistoryCode.RECORD_TYPE_SUSPEND:
+                    if item.value! == 1 {
+                        return NewPumpEvent.suspend(dose: DoseEntry.suspend(suspendDate: item.timestamp))
+                    } else {
+                        return NewPumpEvent.resume(dose: DoseEntry.resume(insulinType: self.state.insulinType!, resumeDate: item.timestamp))
+                    }
+                    
+                case HistoryCode.RECORD_TYPE_PRIME:
+                    return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Prime \(item.value!)U", type: .prime, alarmType: nil)
+                    
+                case HistoryCode.RECORD_TYPE_REFILL:
+                    return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Rewind \(item.value!)U", type: .rewind, alarmType: nil)
+                    
+                case HistoryCode.RECORD_TYPE_TEMP_BASAL:
+                    // TODO: Find a way to convert % to U/hr
+                    return nil
+                    
+                default:
+                    return nil
+                }
+            })
+            // Filter nil values
+            .compactMap{$0}
+        } catch {
+            log.error("%{public}@: Failed to sync history. Error: %{public}@", #function, error.localizedDescription)
+            if hasHistoryModeBeenActivate {
+                do {
+                    let deactivateHistoryModePacket = generatePacketGeneralSetHistoryUploadMode(options: PacketGeneralSetHistoryUploadMode(mode: 0))
+                    let _ = try await DanaKitPumpManager.bluetoothManager.writeMessage(deactivateHistoryModePacket)
+                } catch {}
+            }
+            return []
         }
     }
     
@@ -342,6 +404,8 @@ extension DanaKitPumpManager: PumpManager {
                             return
                         }
                         
+                        // Increase status update date, to prevent double bolus entries
+                        self.state.lastStatusDate = Date()
                         self.state.bolusState = .noBolus
                         self.notifyStateDidChange()
                         
@@ -619,9 +683,9 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     private func ensureConnected(_ completion: @escaping (ConnectionResult) -> Void) {
-        // Device still has an active connection with pump
+        // Device still has an active connection with pump and is probably busy with something
         if DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral?.state == .connected {
-            completion(.success)
+            completion(.failure)
             
         // State hasnt been updated yet, so we have to try to connect
         } else if DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral != nil {
