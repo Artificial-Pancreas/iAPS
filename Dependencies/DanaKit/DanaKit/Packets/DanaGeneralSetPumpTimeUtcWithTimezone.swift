@@ -15,7 +15,7 @@ let CommandGeneralSetPumpTimeUtcWithTimezone: UInt16 = (UInt16(DanaPacketType.TY
 
 func generatePacketGeneralSetPumpTimeUtcWithTimezone(options: PacketGeneralSetPumpTimeUtcWithTimezone) -> DanaGeneratePacket {
     var data = Data(count: 7)
-    data.addDate(at: 0, date: options.time, usingUTC: true)
+    data.addDate(at: 0, date: options.time)
     data[6] = (options.zoneOffset < 0 ? 0b10000000 : 0x0) | (options.zoneOffset & 0x7f)
 
     return DanaGeneratePacket(

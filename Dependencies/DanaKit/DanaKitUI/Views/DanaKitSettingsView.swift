@@ -31,6 +31,16 @@ struct DanaKitSettingsView: View {
         ])
     }
     
+    var syncPumpTime: ActionSheet {
+        ActionSheet(title: Text(LocalizedString("Time Change Detected", comment: "Title for pod sync time action sheet.")),
+                    message: Text(LocalizedString("The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?", comment: "Message for pod sync time action sheet")), buttons: [
+            .default(Text(LocalizedString("Yes, Sync to Current Time", comment: "Button text to confirm pump time sync"))) {
+                self.viewModel.syncPumpTime()
+            },
+            .cancel(Text(LocalizedString("No, Keep Pump As Is", comment: "Button text to cancel pump time sync")))
+        ])
+    }
+    
     var body: some View {
         List {
             Section() {
@@ -50,6 +60,15 @@ struct DanaKitSettingsView: View {
                     reservoirStatus
                 }
                 .padding(.bottom, 5)
+                
+                if viewModel.showPumpTimeSyncWarning {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(LocalizedString("Time Change Detected", comment: "title for time change detected notice"))
+                            .font(Font.subheadline.weight(.bold))
+                        Text(LocalizedString("The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.", comment: "description for time change detected notice"))
+                            .font(Font.footnote.weight(.semibold))
+                    }.padding(.vertical, 8)
+                }
             }
             
             Section {
@@ -125,6 +144,29 @@ struct DanaKitSettingsView: View {
                     Spacer()
                     Text(String(viewModel.firmwareVersion ?? 0))
                         .foregroundColor(.secondary)
+                }
+                HStack {
+                    Text(LocalizedString("Pump time", comment: "Text for pump time")).foregroundColor(Color.primary)
+                    Spacer()
+                    if viewModel.showPumpTimeSyncWarning {
+                        Image(systemName: "clock.fill")
+                            .foregroundColor(guidanceColors.warning)
+                    }
+                    Text(String(viewModel.formatDate(viewModel.pumpTime)))
+                        .foregroundColor(viewModel.showPumpTimeSyncWarning ? guidanceColors.warning : .secondary)
+                }
+                
+                if viewModel.showPumpTimeSyncWarning {
+                    Button(action: {
+                        viewModel.showingTimeSyncConfirmation = true
+                    }) {
+                        Text(LocalizedString("Sync Pump time", comment: "Label for syncing the time on the pump"))
+                            .foregroundColor(.accentColor)
+                    }
+                    .disabled(viewModel.isSyncing)
+                    .actionSheet(isPresented: $viewModel.showingTimeSyncConfirmation) {
+                        syncPumpTime
+                    }
                 }
             }
             

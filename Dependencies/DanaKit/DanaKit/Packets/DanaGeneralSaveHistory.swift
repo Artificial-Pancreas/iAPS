@@ -18,7 +18,7 @@ let CommandGeneralSaveHistory: UInt16 = (UInt16(DanaPacketType.TYPE_RESPONSE & 0
 func generatePacketGeneralSaveHistory(options: PacketGeneralSaveHistory) -> DanaGeneratePacket {
     var data = Data(count: 10)
     data[0] = options.historyType
-    data.addDate(at: 1, date: options.historyDate, usingUTC: false)
+    data.addDate(at: 1, date: options.historyDate)
 
     data[7] = options.historyCode
     data[8] = UInt8(options.historyValue & 0xff)

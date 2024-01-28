@@ -11,7 +11,6 @@ import LoopKit
 
 class DanaKitDoseProgressReporter: DoseProgressReporter {
     var progress: DoseProgress {
-        print(self.deliveredUnits / self.total)
         return DoseProgress(deliveredUnits: self.deliveredUnits, percentComplete: self.deliveredUnits / self.total)
     }
     

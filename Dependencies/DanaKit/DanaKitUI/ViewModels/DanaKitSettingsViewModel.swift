@@ -12,11 +12,15 @@ import HealthKit
 
 class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingDeleteConfirmation = false
+    @Published var showingTimeSyncConfirmation = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
     @Published var isUpdatingPumpState: Bool = false
     @Published var isSyncing: Bool = false
     @Published var lastSync: Date? = nil
+    
+    @Published var showPumpTimeSyncWarning: Bool = false
+    @Published var pumpTime: Date? = nil
     
     @Published var reservoirLevel: Double?
     @Published var isSuspended: Bool = false
@@ -63,7 +67,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     
     private let dateFormatter = {
         let formatter = DateFormatter()
-        formatter.timeStyle = .long
+        formatter.timeStyle = .short
         return formatter
     }
     
@@ -76,6 +80,8 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.lastSync = self.pumpManager?.state.lastStatusDate
         self.reservoirLevel = self.pumpManager?.state.reservoirLevel
         self.isSuspended = self.pumpManager?.state.isPumpSuspended ?? false
+        self.pumpTime = self.pumpManager?.state.pumpTime
+        self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
         
         self.basalButtonText = self.updateBasalButtonText()
         
@@ -117,12 +123,26 @@ class DanaKitSettingsViewModel : ObservableObject {
             return
         }
         
-        self.isSyncing = true
+        DispatchQueue.main.async {
+            self.isSyncing = true
+        }
+        
         pumpManager.ensureCurrentPumpData(completion: { date in
             DispatchQueue.main.async {
                 self.isSyncing = false
                 self.lastSync = date
             }
+        })
+    }
+    
+    func syncPumpTime() {
+        guard let pumpManager = self.pumpManager else {
+            return
+        }
+        
+        self.isSyncing = true
+        pumpManager.syndPumpTime(completion: { error in
+            self.syncData()
         })
     }
     
@@ -197,6 +217,15 @@ class DanaKitSettingsViewModel : ObservableObject {
         
         return LocalizedString("Suspend delivery", comment: "Dana settings suspend delivery")
     }
+    
+    private func shouldShowTimeWarning(pumpTime: Date?, syncedAt: Date?) -> Bool {
+        guard let pumpTime = pumpTime, let syncedAt = syncedAt else {
+            return false
+        }
+        
+        // Allow a 10 sec diff in time
+        return abs(syncedAt.timeIntervalSince1970 - pumpTime.timeIntervalSince1970) > 10
+    }
 }
 
 extension DanaKitSettingsViewModel: StateObserver {
@@ -206,6 +235,8 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.lastSync = state.lastStatusDate
         self.reservoirLevel = state.reservoirLevel
         self.isSuspended = state.isPumpSuspended
+        self.pumpTime = self.pumpManager?.state.pumpTime
+        self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
         
         self.basalButtonText = self.updateBasalButtonText()
     }

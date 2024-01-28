@@ -71,16 +71,16 @@
 "Delivery speed" = "Delivery speed"
 
 /* Dana bolus speed 12u per min */
-"12 U/min" = "12 U/min"
+"12 sec/U" = "12 sec/U"
 
 /* Dana bolus speed 30u per min */
-"30 U/min" = "30 U/min"
+"30 sec/U" = "30 sec/U"
 
 /* Dana bolus speed 60u per min */
-"60 U/min" = "60 U/min"
+"60 sec/U" = "60 sec/U"
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu"
+"The Dana pumps support different delivery speeds. You can set it up here" = "The Dana pumps support different delivery speeds. You can set it up here"
 
 /* Text for finish button */
 "Finish" = "Finish"
@@ -108,6 +108,9 @@
 
 /* Error description when failed basal adjustment */
 "Failed to adjust basal" = "Failed to adjust basal"
+
+/* Error description when pump time failed to sync */
+"Failed to adjust pump time" = "Failed to adjust pump time"
 
 /* Error description when trying to set temp basal */
 "Setting temp basal is not supported at this time" = "Setting temp basal is not supported at this time"
@@ -168,3 +171,26 @@
 
 /* Text for last sync */
 "Last sync" = "Last sync"
+
+/* Text for pump time */
+"Pump time" = "Pump time"
+
+/* Label for syncing the time on the pump */
+"Sync Pump time" = "Sync Pump time"
+
+/* Alert content title for timeOffsetChangeDetected pod alert
+   Title for pod sync time action sheet.
+   title for time change detected notice */
+"Time Change Detected" = "Time Change Detected"
+
+/* Message for pod sync time action sheet */
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?"
+
+/* description for time change detected notice */
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
+
+/* Button text to confirm pump time sync */
+"Yes, Sync to Current Time" = "Yes, Sync to Current Time"
+
+/* Button text to cancel pump time sync */
+"No, Keep Pump As Is" = "No, Keep Pump As Is"

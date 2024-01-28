@@ -48,7 +48,7 @@ func generatePacketHistoryData(options: PacketHistoryBase) -> Data {
         data[4] = 0
         data[5] = 0
     } else {
-        data.addDate(at: 0, date: options.from!, usingUTC: false)
+        data.addDate(at: 0, date: options.from!)
     }
 
     return data

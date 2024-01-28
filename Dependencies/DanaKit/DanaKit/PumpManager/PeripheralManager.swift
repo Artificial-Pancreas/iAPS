@@ -120,7 +120,7 @@ class PeripheralManager: NSObject {
 
 extension PeripheralManager : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
-        if (error != nil) {
+        guard error == nil else {
             log.error("%{public}@: %{public}@", #function, error!.localizedDescription)
             self.bluetoothManager.disconnect(peripheral)
             
@@ -135,7 +135,7 @@ extension PeripheralManager : CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        if (error != nil) {
+        guard error == nil else {
             log.error("%{public}@: %{public}@", #function, error!.localizedDescription)
             self.bluetoothManager.disconnect(peripheral)
             
@@ -162,7 +162,7 @@ extension PeripheralManager : CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        if (error != nil) {
+        guard error == nil else {
             log.error("%{public}@: %{public}@", #function, error!.localizedDescription)
             self.bluetoothManager.disconnect(peripheral)
             
@@ -191,7 +191,7 @@ extension PeripheralManager : CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?)  {
-        if (error != nil) {
+        guard error == nil else {
             log.error("%{public}@: %{public}@", #function, error!.localizedDescription)
             self.bluetoothManager.disconnect(peripheral)
             
@@ -206,7 +206,7 @@ extension PeripheralManager : CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-        if (error != nil) {
+        guard error == nil else {
             log.error("%{public}@: %{public}@", #function, error!.localizedDescription)
             self.bluetoothManager.disconnect(peripheral)
             
@@ -778,6 +778,6 @@ extension PeripheralManager {
     }
     
     private func isHistoryPacket(opCode: UInt16) -> Bool {
-        return opCode > CommandHistoryAlarm && opCode < CommandHistoryAll
+        return opCode > CommandHistoryBolus && opCode < CommandHistoryAll
     }
 }

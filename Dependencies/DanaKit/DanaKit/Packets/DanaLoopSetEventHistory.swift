@@ -30,7 +30,6 @@ struct PacketLoopSetEventHistory {
     var time: Date
     var param1: UInt16
     var param2: UInt16
-    var usingUTC: Bool
 }
 
 let CommandLoopSetEventHistory: UInt16 = (UInt16(DanaPacketType.TYPE_RESPONSE & 0xff) << 8) + UInt16(DanaPacketType.OPCODE__APS_SET_EVENT_HISTORY & 0xff)
@@ -45,7 +44,7 @@ func generatePacketLoopSetEventHistory(options: PacketLoopSetEventHistory) -> Da
     }
 
     data[0] = options.packetType
-    data.addDate(at: 1, date: options.time, usingUTC: options.usingUTC)
+    data.addDate(at: 1, date: options.time)
 
     data[7] = UInt8(param1 >> 8)
     data[8] = UInt8(param1 & 0xff)

@@ -41,6 +41,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.isOnBoarded = rawValue["isOnBoarded"] as? Bool ?? false
         self.basalDeliveryDate = rawValue["basalDeliveryDate"] as? Date ?? Date.now
         self.bolusState = rawValue["bolusState"] as? BolusState ?? .noBolus
+        self.pumpTime = rawValue["pumpTime"] as? Date
+        self.pumpTimeSyncedAt = rawValue["pumpTimeSyncedAt"] as? Date
         
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -73,6 +75,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["basalDeliveryDate"] = self.basalDeliveryDate
         value["basalDeliveryOrdinal"] = self.basalDeliveryOrdinal.rawValue
         value["bolusState"] = self.bolusState.rawValue
+        value["pumpTime"] = self.pumpTime
+        value["pumpTimeSyncedAt"] = self.pumpTimeSyncedAt
         
         return value
     }
@@ -122,8 +126,12 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public var isEasyMode: Bool = false
     public var isUnitUD: Bool = false
     
-    // Do not store this value
-    public var pumpTime: Date?
+    public var pumpTime: Date? {
+        didSet {
+            pumpTimeSyncedAt = Date.now
+        }
+    }
+    public var pumpTimeSyncedAt: Date?
     
     public var basalDeliveryState: PumpManagerStatus.BasalDeliveryState {
         switch(self.basalDeliveryOrdinal) {
