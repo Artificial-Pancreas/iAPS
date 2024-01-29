@@ -157,7 +157,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 .map {
                     HKQuantitySample(
                         type: sampleType,
-                        quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double($0.glucose!)),
+                        quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double($0.glucose ?? 0)),
                         start: $0.dateString,
                         end: $0.dateString,
                         metadata: [
@@ -259,8 +259,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         end: $0.date,
                         metadata: [
                             HKMetadataKeyInsulinDeliveryReason: NSNumber(2),
-                            HKMetadataKeyExternalUUID: $0.id,
-                            HKMetadataKeySyncIdentifier: $0.id,
+                            HKMetadataKeyExternalUUID: NSString(string: $0.id),
+                            HKMetadataKeySyncIdentifier: NSString(string: $0.id),
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]
@@ -276,8 +276,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         end: $0.endDelivery,
                         metadata: [
                             HKMetadataKeyInsulinDeliveryReason: NSNumber(1),
-                            HKMetadataKeyExternalUUID: $0.id,
-                            HKMetadataKeySyncIdentifier: $0.id,
+                            HKMetadataKeyExternalUUID: NSString(string: $0.id),
+                            HKMetadataKeySyncIdentifier: NSString(string: $0.id),
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]
@@ -481,8 +481,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
 
         newGlucose += samples
             .compactMap { sample -> HealthKitSample? in
-                let fromFAX = sample.metadata?[Config.freeAPSMetaKey] as? Bool ?? false
-                guard !fromFAX else { return nil }
+                let fromiAPS = sample.metadata?[Config.freeAPSMetaKey] as? Bool ?? false
+                guard !fromiAPS else { return nil }
                 return HealthKitSample(
                     healthKitId: sample.uuid.uuidString,
                     date: sample.startDate,
