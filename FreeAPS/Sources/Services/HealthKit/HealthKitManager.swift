@@ -157,7 +157,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 .map {
                     HKQuantitySample(
                         type: sampleType,
-                        quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double($0.glucose!)),
+                        quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double($0.glucose ?? 0)),
                         start: $0.dateString,
                         end: $0.dateString,
                         metadata: [
@@ -168,18 +168,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         ]
                     )
                 }
-
             healthKitStore.save(samplesToSave) { (success: Bool, error: Error?) -> Void in
-                if success {
-                    for sample in samplesToSave {
-                        debug(
-                            .service,
-                            "Stored blood glucose \(sample.quantity) in HealthKit Store! Metadata: \(String(describing: sample.metadata?.values))"
-                        )
-                    }
-                } else {
-                    debug(.service, "Failed to store blood glucose in HealthKit Store!")
-                    debug(.service, error?.localizedDescription ?? "Unknown error")
+                if !success, let error = error {
+                    debug(.service, "Failed to store blood glucose in HealthKit Store! Error: " + error.localizedDescription)
                 }
             }
         }
@@ -224,16 +215,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 }
 
             healthKitStore.save(samplesToSave) { (success: Bool, error: Error?) -> Void in
-                if success {
-                    for sample in samplesToSave {
-                        debug(
-                            .service,
-                            "Stored carb entry \(sample.quantity) in HealthKit Store! Metadata: \(String(describing: sample.metadata?.values))"
-                        )
-                    }
-                } else {
-                    debug(.service, "Failed to store carb entry in HealthKit Store!")
-                    debug(.service, error?.localizedDescription ?? "Unknown error")
+                if !success, let error = error {
+                    debug(.service, "Failed to store carb entry in HealthKit Store! Error: " + error.localizedDescription)
                 }
             }
         }
@@ -261,8 +244,9 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                     value: syncID
                 )
                 self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                    guard let error = error else { return }
-                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                    if let error = error {
+                        warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                    }
                 }
             }
             let bolusTotal = bolus + bolusToModify
@@ -275,8 +259,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         end: $0.date,
                         metadata: [
                             HKMetadataKeyInsulinDeliveryReason: NSNumber(2),
-                            HKMetadataKeyExternalUUID: $0.id,
-                            HKMetadataKeySyncIdentifier: $0.id,
+                            HKMetadataKeyExternalUUID: NSString(string: $0.id),
+                            HKMetadataKeySyncIdentifier: NSString(string: $0.id),
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]
@@ -292,8 +276,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         end: $0.endDelivery,
                         metadata: [
                             HKMetadataKeyInsulinDeliveryReason: NSNumber(1),
-                            HKMetadataKeyExternalUUID: $0.id,
-                            HKMetadataKeySyncIdentifier: $0.id,
+                            HKMetadataKeyExternalUUID: NSString(string: $0.id),
+                            HKMetadataKeySyncIdentifier: NSString(string: $0.id),
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
                         ]
@@ -301,16 +285,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 }
 
             healthKitStore.save(bolusSamples + basalSamples) { (success: Bool, error: Error?) -> Void in
-                if success {
-                    for sample in bolusSamples + basalSamples {
-                        debug(
-                            .service,
-                            "Stored insulin entry in HealthKit Store! Metadata: \(String(describing: sample.metadata?.values))"
-                        )
-                    }
-                } else {
-                    debug(.service, "Failed to store insulin entry in HealthKit Store!")
-                    debug(.service, error?.localizedDescription ?? "Unknown error")
+                if !success, let error = error {
+                    debug(.service, "Failed to store insulin entry in HealthKit Store! Error: " + error.localizedDescription)
                 }
             }
         }
@@ -505,8 +481,8 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
 
         newGlucose += samples
             .compactMap { sample -> HealthKitSample? in
-                let fromFAX = sample.metadata?[Config.freeAPSMetaKey] as? Bool ?? false
-                guard !fromFAX else { return nil }
+                let fromiAPS = sample.metadata?[Config.freeAPSMetaKey] as? Bool ?? false
+                guard !fromiAPS else { return nil }
                 return HealthKitSample(
                     healthKitId: sample.uuid.uuidString,
                     date: sample.startDate,
@@ -595,9 +571,12 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 value: syncID
             )
 
-            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) glucose entries deleted from Health Store", printToConsole: true)
+                }
             }
         }
     }
@@ -610,23 +589,22 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
               checkAvailabilitySave(objectTypeToHealthStore: sampleType)
         else { return }
 
-        print("meals 4: ID: " + syncID + " FPU ID: " + fpuID)
-
-        if syncID != "" {
+        if syncID.count > 2 {
             let predicate = HKQuery.predicateForObjects(
                 withMetadataKey: HKMetadataKeySyncIdentifier,
                 operatorType: .equalTo,
                 value: syncID
             )
-
-            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) carb entries with ID: " + syncID + " deleted from Health Store", printToConsole: true)
+                }
             }
         }
 
-        if fpuID != "" {
-            // processQueue.async {
+        if fpuID.count > 2 {
             let recentCarbs: [CarbsEntry] = carbsStorage.recent()
             let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.id)
             let predicate = HKQuery.predicateForObjects(
@@ -634,11 +612,13 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 allowedValues: ids
             )
             print("found IDs: " + ids.description)
-            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
+            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) carb entries with ID: " + syncID + " deleted from Health Store", printToConsole: true)
+                }
             }
-            // }
         }
     }
 
@@ -661,9 +641,12 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 value: syncID
             )
 
-            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { _, _, error in
-                guard let error = error else { return }
-                warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+            self.healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+                if let error = error {
+                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
+                } else if success {
+                    debug(.service, "\(int) insulin entries with ID: \(syncID) deleted from Health Store", printToConsole: true)
+                }
             }
         }
     }
