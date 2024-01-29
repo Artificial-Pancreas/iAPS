@@ -195,14 +195,12 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        /*
-         // start background time extension
-         backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
-             guard let backgroundTask = self.backGroundTaskID else { return }
-             UIApplication.shared.endBackgroundTask(backgroundTask)
-             self.backGroundTaskID = .invalid
-         }
-          */
+        // start background time extension
+        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
+            guard let backgroundTask = self.backGroundTaskID else { return }
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            self.backGroundTaskID = .invalid
+        }
 
         debug(.apsManager, "Starting loop with a delay of \(UIApplication.shared.backgroundTimeRemaining.rounded())")
 
@@ -272,11 +270,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
-            /*
-             if let backgroundTask = backGroundTaskID {
-                 UIApplication.shared.endBackgroundTask(backgroundTask)
-                 backGroundTaskID = .invalid
-             }*/
+            if let backgroundTask = backGroundTaskID {
+                UIApplication.shared.endBackgroundTask(backgroundTask)
+                backGroundTaskID = .invalid
+            }
             processError(error)
         } else {
             debug(.apsManager, "Loop succeeded")
@@ -290,13 +287,11 @@ final class BaseAPSManager: APSManager, Injectable {
             reportEnacted(received: error == nil)
         }
 
-        /*
-         // end of the BG tasks
-         if let backgroundTask = backGroundTaskID {
-             UIApplication.shared.endBackgroundTask(backgroundTask)
-             backGroundTaskID = .invalid
-         }
-          */
+        // end of the BG tasks
+        if let backgroundTask = backGroundTaskID {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backGroundTaskID = .invalid
+        }
     }
 
     private func verifyStatus() -> Error? {
