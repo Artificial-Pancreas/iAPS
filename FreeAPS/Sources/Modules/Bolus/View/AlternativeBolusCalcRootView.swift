@@ -12,6 +12,8 @@ extension Bolus {
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
         @State private var keepForNextWiew: Bool = false
+        @State private var remoteBolusAlert: Alert?
+        @State private var isRemoteBolusAlertPresented: Bool = false
 
         private enum Config {
             static let dividerHeight: CGFloat = 2
@@ -20,6 +22,7 @@ extension Bolus {
         }
 
         @Environment(\.colorScheme) var colorScheme
+        @FocusState private var isFocused: Bool
 
         @FetchRequest(
             entity: Meals.entity(),
@@ -125,11 +128,12 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            autofocus: false,
-                            cleanInput: true
+                            cleanInput: true,
+                            useButtons: false
                         )
                         Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
                     }
+                    .focused($isFocused)
                     .onChange(of: state.amount) { newValue in
                         if newValue > state.maxBolus {
                             exceededMaxBolus = true
@@ -138,13 +142,40 @@ extension Bolus {
                         }
                     }
 
-                } header: { Text("Bolus") }
+                } header: {
+                    HStack {
+                        Text("Bolus")
+                        if isFocused {
+                            Button { isFocused = false } label: {
+                                HStack {
+                                    Text("Hide").foregroundStyle(.gray)
+                                    Image(systemName: "keyboard")
+                                        .symbolRenderingMode(.monochrome).foregroundStyle(colorScheme == .dark ? .white : .black)
+                                }.frame(maxWidth: .infinity, alignment: .trailing)
+                            }
+                            .controlSize(.mini)
+                        }
+                    }
+                }
 
                 if state.amount > 0 {
                     Section {
                         Button {
-                            keepForNextWiew = true
-                            state.add()
+                            if let remoteBolus = state.remoteBolus() {
+                                remoteBolusAlert = Alert(
+                                    title: Text("A Remote Bolus Was Just Delivered!"),
+                                    message: Text(remoteBolus),
+                                    primaryButton: .destructive(Text("Bolus"), action: {
+                                        keepForNextWiew = true
+                                        state.add()
+                                    }),
+                                    secondaryButton: .cancel()
+                                )
+                                isRemoteBolusAlertPresented = true
+                            } else {
+                                keepForNextWiew = true
+                                state.add()
+                            }
                         }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -163,7 +194,11 @@ extension Bolus {
                     }
                 }
             }
-            .blur(radius: showInfo ? 3 : 0)
+            .alert(isPresented: $isRemoteBolusAlertPresented) {
+                remoteBolusAlert!
+            }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .blur(radius: showInfo ? 20 : 0)
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
@@ -285,9 +320,9 @@ extension Bolus {
         func carbsView() {
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: true, meal, override: false)
+                state.backToCarbsView(complexEntry: hasFatOrProtein, meal, override: false, deleteNothing: false, editMode: true)
             } else {
-                state.backToCarbsView(complexEntry: false, meal, override: true)
+                state.backToCarbsView(complexEntry: false, meal, override: true, deleteNothing: true, editMode: false)
             }
         }
 

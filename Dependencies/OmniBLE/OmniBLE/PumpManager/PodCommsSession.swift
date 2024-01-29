@@ -369,6 +369,7 @@ public class PodCommsSession {
             podState.updateFromStatusResponse(status, at: currentDate)
             if status.podProgressStatus == .basalInitialized {
                 podState.setupProgress = .initialBasalScheduleSet
+                podState.finalizedDoses.append(UnfinalizedDose(resumeStartTime: currentDate, scheduledCertainty: .certain, insulinType: podState.insulinType))
                 return
             }
         }
@@ -380,15 +381,20 @@ public class PodCommsSession {
         podState.finalizedDoses.append(UnfinalizedDose(resumeStartTime: currentDate, scheduledCertainty: .certain, insulinType: podState.insulinType))
     }
 
+    // Configures the given pod alert(s) and registers the newly configured alert slot(s).
+    // When re-configuring all the pod alerts for a silence pod toggle, the optional acknowledgeAll can be
+    // specified to first acknowledge and clear all possible pending pod alerts and pod alert configurations.
     @discardableResult
     func configureAlerts(_ alerts: [PodAlert], acknowledgeAll: Bool = false, beepBlock: MessageBlock? = nil) throws -> StatusResponse {
         let configurations = alerts.map { $0.configuration }
         let configureAlerts = ConfigureAlertsCommand(nonce: podState.currentNonce, configurations: configurations)
-        var blocksToSend: [MessageBlock] = [configureAlerts]
+        let blocksToSend: [MessageBlock]
         if acknowledgeAll {
-            // requested to acknowledge any possible pending pod alerts out of an abundnace of caution
-            let acknowledgeAll = AcknowledgeAlertCommand(nonce: podState.currentNonce, alerts: AlertSet(rawValue: ~0))
-            blocksToSend += [acknowledgeAll]
+            // Do the acknowledgeAllAlerts command first to clear all previous pod alert configurations.
+            let acknowledgeAllAlerts = AcknowledgeAlertCommand(nonce: podState.currentNonce, alerts: AlertSet(rawValue: ~0))
+            blocksToSend = [acknowledgeAllAlerts, configureAlerts]
+        } else {
+            blocksToSend = [configureAlerts]
         }
         let status: StatusResponse = try send(blocksToSend, beepBlock: beepBlock)
         for alert in alerts {
@@ -741,9 +747,9 @@ public class PodCommsSession {
         let basalExtraCommand = BasalScheduleExtraCommand.init(schedule: schedule, scheduleOffset: scheduleOffset, acknowledgementBeep: acknowledgementBeep, programReminderInterval: programReminderInterval)
 
         do {
-            if !(podState.lastCommsOK && podState.deliveryStatusVerified) {
-                // Can't trust the current delivery state -- do a cancel all
-                // to be sure that setting a basal program won't fault the pod.
+            if podState.setupProgress == .completed && !(podState.lastCommsOK && podState.deliveryStatusVerified) {
+                // The pod setup is complete and the current delivery state can't be trusted so
+                // do a cancel all to be sure that setting the basal program won't fault the pod.
                 let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
             }
             var status: StatusResponse = try send([basalScheduleCommand, basalExtraCommand])
@@ -875,10 +881,10 @@ public class PodCommsSession {
             self.log.default("Recovering from unacknowledged command %{public}@, status = %{public}@", String(describing: pendingCommand), String(describing: status))
 
             if status.lastProgrammingMessageSeqNum == pendingCommand.sequence {
-                self.log.debug("Unacknowledged command was received by pump")
+                self.log.default("Unacknowledged command was received by pump")
                 unacknowledgedCommandWasReceived(pendingCommand: pendingCommand, podStatus: status)
             } else {
-                self.log.debug("Unacknowledged command was not received by pump")
+                self.log.default("Unacknowledged command was not received by pump")
             }
             podState.unacknowledgedCommand = nil
         }

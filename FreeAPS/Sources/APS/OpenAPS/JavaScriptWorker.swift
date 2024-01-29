@@ -20,7 +20,9 @@ final class JavaScriptWorker {
             }
         }
         let consoleLog: @convention(block) (String) -> Void = { message in
-            debug(.openAPS, "JavaScript log: \(message)")
+            if message.count > 3 { // Remove the cryptic test logs created during development of Autosens
+                debug(.openAPS, "JavaScript log: \(message)")
+            }
         }
 
         context.setObject(

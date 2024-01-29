@@ -28,16 +28,20 @@
 		195D80B72AF697B800D25097 /* DynamicDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B62AF697B800D25097 /* DynamicDataFlow.swift */; };
 		195D80B92AF697F700D25097 /* DynamicProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B82AF697F700D25097 /* DynamicProvider.swift */; };
 		195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80BA2AF6980B00D25097 /* DynamicStateModel.swift */; };
+		195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195F00472B5C267D00DAC71A /* DescriptionView.swift */; };
 		1967DFBE29D052C200759F30 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967DFBD29D052C200759F30 /* Icons.swift */; };
 		1967DFC029D053AC00759F30 /* IconSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967DFBF29D053AC00759F30 /* IconSelection.swift */; };
 		1967DFC229D053D300759F30 /* IconImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1967DFC129D053D300759F30 /* IconImage.swift */; };
 		19795118275953E50044850D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		198377D2266BFFF6004DE65E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
+		198CED9D2B2E62940073032D /* OverrideStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CED9C2B2E62940073032D /* OverrideStorage.swift */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
 		19A910302A24BF6300C8951B /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9102F2A24BF6300C8951B /* StatsView.swift */; };
-		19A910362A24D6D700C8951B /* DateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910352A24D6D700C8951B /* DateFilter.swift */; };
+		19A910362A24D6D700C8951B /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910352A24D6D700C8951B /* Configs.swift */; };
 		19A910382A24EF3200C8951B /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910372A24EF3200C8951B /* ChartsView.swift */; };
+		19AEF4322B1F5A98006FFE8B /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AEF4312B1F5A98006FFE8B /* PreviewView.swift */; };
 		19B0EF2128F6D66200069496 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B0EF2028F6D66200069496 /* Statistics.swift */; };
+		19B60B782B5E7E97002F4F74 /* Threshold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B60B772B5E7E97002F4F74 /* Threshold.swift */; };
 		19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */; };
 		19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */; };
 		19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */; };
@@ -390,6 +394,7 @@
 		D6D02515BBFBE64FEBE89856 /* DataTableRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881E04BA5E0A003DE8E0A9C6 /* DataTableRootView.swift */; };
 		D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */; };
 		D76333C9256787610B3B4875 /* AutotuneConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D295A3F870E826BE371C0BB5 /* AutotuneConfigStateModel.swift */; };
+		D8DA5CD12B49EEF000C54E6C /* SlideButton in Frameworks */ = {isa = PBXBuildFile; productRef = D8DA5CD02B49EEF000C54E6C /* SlideButton */; };
 		DBA5254DBB2586C98F61220C /* ISFEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F137F126D9F8DEB799F26 /* ISFEditorProvider.swift */; };
 		DD399FB31EACB9343C944C4C /* PreferencesEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA3E609094E064C99A4752C /* PreferencesEditorStateModel.swift */; };
 		E00EEC0327368630002FF094 /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00EEBFD27368630002FF094 /* ServiceAssembly.swift */; };
@@ -560,12 +565,17 @@
 		1927C8FB2744612600347C69 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1927C8FE274489BA00347C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1935363F28496F7D001E0B16 /* Oref2_variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oref2_variables.swift; sourceTree = "<group>"; };
+		193F1E392B44C13B00525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		193F1E3A2B44C13B00525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		193F1E3B2B44C14800525770 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		193F1E3C2B44C14800525770 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		193F6CDC2A512C8F001240FD /* Loops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loops.swift; sourceTree = "<group>"; };
 		1956FB202AFF79E200C7B4FF /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
 		195D80B32AF6973A00D25097 /* DynamicRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRootView.swift; sourceTree = "<group>"; };
 		195D80B62AF697B800D25097 /* DynamicDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDataFlow.swift; sourceTree = "<group>"; };
 		195D80B82AF697F700D25097 /* DynamicProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicProvider.swift; sourceTree = "<group>"; };
 		195D80BA2AF6980B00D25097 /* DynamicStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicStateModel.swift; sourceTree = "<group>"; };
+		195F00472B5C267D00DAC71A /* DescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionView.swift; sourceTree = "<group>"; };
 		1967DFBD29D052C200759F30 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		1967DFBF29D053AC00759F30 /* IconSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelection.swift; sourceTree = "<group>"; };
 		1967DFC129D053D300759F30 /* IconImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconImage.swift; sourceTree = "<group>"; };
@@ -587,13 +597,16 @@
 		198377E2266C0AC8004DE65E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377E3266C0ADC004DE65E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377E4266C13D2004DE65E /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		198CED9C2B2E62940073032D /* OverrideStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideStorage.swift; sourceTree = "<group>"; };
 		199561C0275E61A50077B976 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		199732B4271B72DD00129A3F /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		199732B5271B9EE900129A3F /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		19A9102F2A24BF6300C8951B /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
-		19A910352A24D6D700C8951B /* DateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFilter.swift; sourceTree = "<group>"; };
+		19A910352A24D6D700C8951B /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		19A910372A24EF3200C8951B /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
+		19AEF4312B1F5A98006FFE8B /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		19B0EF2028F6D66200069496 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		19B60B772B5E7E97002F4F74 /* Threshold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threshold.swift; sourceTree = "<group>"; };
 		19C166682756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19C166692756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigDataFlow.swift; sourceTree = "<group>"; };
@@ -977,6 +990,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC751D829D88262006E9D24 /* MinimedKitUI.framework in Frameworks */,
+				D8DA5CD12B49EEF000C54E6C /* SlideButton in Frameworks */,
 				CEC751D629D88262006E9D24 /* MinimedKit.framework in Frameworks */,
 				CEC751D429D88257006E9D24 /* OmniKitUI.framework in Frameworks */,
 				CEC751D229D88257006E9D24 /* OmniKit.framework in Frameworks */,
@@ -1248,8 +1262,8 @@
 			isa = PBXGroup;
 			children = (
 				195D80B22AF696EE00D25097 /* Dynamic */,
-				BD7DA9A32AE06DBA00601B20 /* BolusCalculatorConfig */,
 				190EBCC229FF134900BA767D /* StatConfig */,
+				BD7DA9A32AE06DBA00601B20 /* BolusCalculatorConfig */,
 				19F95FF129F10F9C00314DDC /* Stat */,
 				CE94597C29E9E1CD0047C9C6 /* WatchConfig */,
 				19E1F7E629D0828B005C8D20 /* IconConfig */,
@@ -1575,6 +1589,7 @@
 				383420D525FFE38C002D46C1 /* LoopView.swift */,
 				38AAF85425FFF846004AF583 /* CurrentGlucoseView.swift */,
 				38DAB27F260CBB7F00F74C1A /* PumpView.swift */,
+				19AEF4312B1F5A98006FFE8B /* PreviewView.swift */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -1622,6 +1637,7 @@
 				389ECDFD2601061500D86C4F /* View+Snapshot.swift */,
 				38EA05FF262091870064E39B /* BolusProgressViewStyle.swift */,
 				38DF1785276A73D400B3528F /* TagCloudView.swift */,
+				195F00472B5C267D00DAC71A /* DescriptionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1714,10 +1730,11 @@
 				191F62672AD6B05A004D7911 /* NightscoutSettings.swift */,
 				1967DFBD29D052C200759F30 /* Icons.swift */,
 				19D4E4EA29FC6A9F00351451 /* Charts.swift */,
-				19A910352A24D6D700C8951B /* DateFilter.swift */,
+				19A910352A24D6D700C8951B /* Configs.swift */,
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
 				CC6C406D2ACDD69E009B8058 /* RawFetchedProfile.swift */,
 				CC41E2992B1E1F460070974F /* HistoryLayout.swift */,
+				19B60B772B5E7E97002F4F74 /* Threshold.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1764,6 +1781,7 @@
 				38F3B2EE25ED8E2A005C48AA /* TempTargetsStorage.swift */,
 				CE82E02428E867BA00473A9C /* AlertStorage.swift */,
 				1956FB202AFF79E200C7B4FF /* CoreDataStorage.swift */,
+				198CED9C2B2E62940073032D /* OverrideStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -2452,6 +2470,7 @@
 				3818AA46274C255A00843DB3 /* LibreTransmitter */,
 				38DF1788276FC8C400B3528F /* SwiftMessages */,
 				CEB434FC28B90B7C00B70274 /* SwiftCharts */,
+				D8DA5CD02B49EEF000C54E6C /* SlideButton */,
 			);
 			productName = FreeAPS;
 			productReference = 388E595825AD948C0019842D /* FreeAPS.app */;
@@ -2579,6 +2598,8 @@
 				"pt-PT",
 				"pt-BR",
 				sk,
+				hu,
+				vi,
 			);
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
@@ -2587,6 +2608,7 @@
 				3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				38DF1787276FC8C300B3528F /* XCRemoteSwiftPackageReference "SwiftMessages" */,
 				CEB434FB28B90B7C00B70274 /* XCRemoteSwiftPackageReference "SwiftCharts" */,
+				D8DA5CCF2B49EEF000C54E6C /* XCRemoteSwiftPackageReference "SlideButton" */,
 			);
 			productRefGroup = 388E595925AD948C0019842D /* Products */;
 			projectDirPath = "";
@@ -2743,6 +2765,7 @@
 				383948DA25CD64D500E91849 /* Glucose.swift in Sources */,
 				CE94598029E9E3BD0047C9C6 /* WatchConfigDataFlow.swift in Sources */,
 				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
+				198CED9D2B2E62940073032D /* OverrideStorage.swift in Sources */,
 				E00EEC0527368630002FF094 /* StorageAssembly.swift in Sources */,
 				384E803825C388640086DB71 /* Script.swift in Sources */,
 				CE94597E29E9E1EE0047C9C6 /* GarminManager.swift in Sources */,
@@ -2844,6 +2867,7 @@
 				38DAB28A260D349500F74C1A /* FetchGlucoseManager.swift in Sources */,
 				38F37828261260DC009DB701 /* Color+Extensions.swift in Sources */,
 				3811DE3F25C9D4A100A708ED /* SettingsStateModel.swift in Sources */,
+				19B60B782B5E7E97002F4F74 /* Threshold.swift in Sources */,
 				CE7CA3582A064E2F004BE681 /* ListStateView.swift in Sources */,
 				193F6CDD2A512C8F001240FD /* Loops.swift in Sources */,
 				38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */,
@@ -2859,6 +2883,7 @@
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
+				195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */,
 				19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */,
 				1935364028496F7D001E0B16 /* Oref2_variables.swift in Sources */,
 				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,
@@ -2872,6 +2897,7 @@
 				CE1856F72ADC4869007E39C7 /* CarbPresetIntentRequest.swift in Sources */,
 				BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */,
 				9825E5E923F0B8FA80C8C7C7 /* NightscoutConfigStateModel.swift in Sources */,
+				19AEF4322B1F5A98006FFE8B /* PreviewView.swift in Sources */,
 				38A43598262E0E4900E80935 /* FetchAnnouncementsManager.swift in Sources */,
 				642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */,
 				BD7DA9AC2AE06EB900601B20 /* BolusCalculatorConfigRootView.swift in Sources */,
@@ -2885,7 +2911,7 @@
 				38E44536274E411700EC9A94 /* Disk.swift in Sources */,
 				2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */,
 				6B9625766B697D1C98E455A2 /* PumpSettingsEditorStateModel.swift in Sources */,
-				19A910362A24D6D700C8951B /* DateFilter.swift in Sources */,
+				19A910362A24D6D700C8951B /* Configs.swift in Sources */,
 				A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */,
 				E06B911A275B5EEA003C04B6 /* Array+Extension.swift in Sources */,
 				38EA0600262091870064E39B /* BolusProgressViewStyle.swift in Sources */,
@@ -3116,6 +3142,8 @@
 				1927C8FB2744612600347C69 /* uk */,
 				1927C8FE274489BA00347C69 /* Base */,
 				19C166682756EFBD00ED12E3 /* sk */,
+				193F1E392B44C13B00525770 /* hu */,
+				193F1E3B2B44C14800525770 /* vi */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -3144,6 +3172,8 @@
 				199732B4271B72DD00129A3F /* pt-PT */,
 				199732B5271B9EE900129A3F /* pt-BR */,
 				19C166692756EFBD00ED12E3 /* sk */,
+				193F1E3A2B44C13B00525770 /* hu */,
+				193F1E3C2B44C14800525770 /* vi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -3567,7 +3597,7 @@
 				INFOPLIST_FILE = LiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiveActivity;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3601,7 +3631,7 @@
 				INFOPLIST_FILE = LiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiveActivity;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3718,6 +3748,14 @@
 				kind = branch;
 			};
 		};
+		D8DA5CCF2B49EEF000C54E6C /* XCRemoteSwiftPackageReference "SlideButton" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/no-comment/SlideButton";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3754,6 +3792,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CEB434FB28B90B7C00B70274 /* XCRemoteSwiftPackageReference "SwiftCharts" */;
 			productName = SwiftCharts;
+		};
+		D8DA5CD02B49EEF000C54E6C /* SlideButton */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D8DA5CCF2B49EEF000C54E6C /* XCRemoteSwiftPackageReference "SlideButton" */;
+			productName = SlideButton;
 		};
 /* End XCSwiftPackageProductDependency section */
 

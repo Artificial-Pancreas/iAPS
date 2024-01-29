@@ -60,8 +60,12 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.glucose = glucoseValues.glucose
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
-            self.state.trendRaw = readings.first?.direction ?? "↔︎"
+            self.state.trendRaw = self.convertTrendToDirectionText(trend: glucoseValues.trend)
             self.state.glucoseDate = readings.first?.date ?? .distantPast
+            self.state.glucoseDateInterval = self.state.glucoseDate.map {
+                guard $0.timeIntervalSince1970 > 0 else { return 0 }
+                return UInt64($0.timeIntervalSince1970)
+            }
             self.state.lastLoopDate = self.enactedSuggestion?.recieved == true ? self.enactedSuggestion?.deliverAt : self
                 .apsManager.lastLoopDate
             self.state.lastLoopDateInterval = self.state.lastLoopDate.map {
@@ -115,7 +119,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
             self.state.displayFatAndProteinOnWatch = self.settingsManager.settings.displayFatAndProteinOnWatch
 
-            let eBG = self.evetualBGStraing()
+            let eBG = self.eventualBGString()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
             self.state.eventualBGRaw = eBG
 
@@ -192,7 +196,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         return description
     }
 
-    private func evetualBGStraing() -> String? {
+    private func eventualBGString() -> String? {
         guard let eventualBG = suggestion?.eventualBG else {
             return nil
         }
@@ -200,6 +204,31 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         return eventualFormatter.string(
             from: (units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
         )!
+    }
+
+    private func convertTrendToDirectionText(trend: String) -> String {
+        switch trend {
+        case "↑↑↑":
+            return Direction.tripleUp.rawValue
+        case "↑↑":
+            return Direction.doubleUp.rawValue
+        case "↑":
+            return Direction.singleUp.rawValue
+        case "↗︎":
+            return Direction.fortyFiveUp.rawValue
+        case "→":
+            return Direction.flat.rawValue
+        case "↘︎":
+            return Direction.fortyFiveDown.rawValue
+        case "↓":
+            return Direction.singleDown.rawValue
+        case "↓↓↓":
+            return Direction.tripleDown.rawValue
+        case "↓↓":
+            return Direction.doubleDown.rawValue
+        default:
+            return Direction.notComputable.rawValue
+        }
     }
 
     private func newBolusCalc(delta: [Readings], suggestion _: Suggestion?) -> Decimal {

@@ -12,10 +12,18 @@ extension Settings {
             Form {
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
-                } header: {
-                    Text(
-                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "
-                    ).textCase(nil)
+                }
+                header: {
+                    if let expirationDate = Bundle.main.profileExpiration {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
+                                "\nBuild Expires: " + expirationDate
+                        ).textCase(nil)
+                    } else {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
+                        )
+                    }
                 }
 
                 Section {
@@ -131,6 +139,7 @@ extension Settings {
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(activityItems: state.logItems())
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))

@@ -7,6 +7,7 @@ protocol AnnouncementsStorage {
     func syncDate() -> Date
     func recent() -> Announcement?
     func validate() -> [Announcement]
+    func recentEnacted() -> Announcement?
 }
 
 final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
@@ -66,6 +67,19 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
             return nil
         }
         return recent
+    }
+
+    func recentEnacted() -> Announcement? {
+        guard let enactedEvents = storage.retrieve(OpenAPS.FreeAPS.announcementsEnacted, as: [Announcement].self)
+        else {
+            return nil
+        }
+        let enactedEventsLast = enactedEvents.first
+
+        if -1 * (enactedEventsLast?.createdAt ?? .distantPast).timeIntervalSinceNow.minutes < 10 {
+            return enactedEventsLast
+        }
+        return nil
     }
 
     func validate() -> [Announcement] {

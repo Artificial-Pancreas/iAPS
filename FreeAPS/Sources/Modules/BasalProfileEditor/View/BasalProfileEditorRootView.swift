@@ -51,6 +51,7 @@ extension BasalProfileEditor {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Basal Profile")
             .navigationBarTitleDisplayMode(.automatic)

@@ -29,10 +29,24 @@ extension DataTable {
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 0
+
+            if state.units == .mmolL {
+                formatter.maximumFractionDigits = 1
+                formatter.roundingMode = .halfUp
+            } else {
+                formatter.maximumFractionDigits = 0
+            }
+            return formatter
+        }
+
+        private var manualGlucoseFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
             if state.units == .mmolL {
                 formatter.maximumFractionDigits = 1
                 formatter.roundingMode = .ceiling
+            } else {
+                formatter.maximumFractionDigits = 0
             }
             return formatter
         }
@@ -70,6 +84,7 @@ extension DataTable {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
@@ -167,7 +182,7 @@ extension DataTable {
                                 DecimalTextField(
                                     " ... ",
                                     value: $state.manualGlucose,
-                                    formatter: glucoseFormatter,
+                                    formatter: manualGlucoseFormatter,
                                     autofocus: true,
                                     cleanInput: true
                                 )
@@ -193,7 +208,7 @@ extension DataTable {
                 }
                 .onAppear(perform: configureView)
                 .navigationTitle("Add Glucose")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
                 .navigationBarItems(trailing: Button("Close", action: { showManualGlucose = false }))
             }
         }
@@ -395,7 +410,12 @@ extension DataTable {
         @ViewBuilder private func glucoseView(_ item: Glucose, isManual: BloodGlucose) -> some View {
             HStack {
                 Text(item.glucose.glucose.map {
-                    glucoseFormatter.string(from: Double(
+                    (
+                        isManual.type == GlucoseType.manual.rawValue ?
+                            manualGlucoseFormatter :
+                            glucoseFormatter
+                    )
+                    .string(from: Double(
                         state.units == .mmolL ? $0.asMmolL : Decimal($0)
                     ) as NSNumber)!
                 } ?? "--")
@@ -415,14 +435,15 @@ extension DataTable {
                     role: .none,
                     action: {
                         alertGlucoseToDelete = item
-
-                        let valueText = glucoseFormatter.string(from: Double(
+                        let valueText = (
+                            isManual.type == GlucoseType.manual.rawValue ?
+                                manualGlucoseFormatter :
+                                glucoseFormatter
+                        ).string(from: Double(
                             state.units == .mmolL ? Double(item.glucose.value.asMmolL) : item.glucose.value
                         ) as NSNumber)! + " " + state.units.rawValue
-
                         alertTitle = "Delete Glucose?"
                         alertMessage = dateFormatter.string(from: item.glucose.dateString) + ", " + valueText
-
                         isRemoveHistoryItemAlertPresented = true
                     }
                 ).tint(.red)
@@ -433,14 +454,10 @@ extension DataTable {
             ) {
                 Button("Cancel", role: .cancel) {}
                 Button("Delete", role: .destructive) {
-                    // gracefully unwrap value here.
-                    // value cannot ever really be nil because it is an existing(!) table entry
-                    // but just to be sure.
                     guard let glucoseToDelete = alertGlucoseToDelete else {
-                        print("Cannot gracefully unwrap alertTreatmentToDelete!")
+                        print("Cannot unwrap alertTreatmentToDelete!")
                         return
                     }
-
                     state.deleteGlucose(glucoseToDelete)
                 }
             } message: {

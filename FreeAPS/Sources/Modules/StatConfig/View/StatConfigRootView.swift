@@ -31,7 +31,24 @@ extension StatConfig {
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
                     Toggle("Display Chart Threshold lines for Low and High", isOn: $state.rulerMarks)
                     Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
+                    HStack {
+                        Text("Horizontal Scroll View Visible hours")
+                        Spacer()
+                        DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
+                        Text("hours").foregroundColor(.secondary)
+                    }
+                    Toggle("Display Time Interval Setting Button", isOn: $state.timeSettings)
                 } header: { Text("Home Chart settings ") }
+
+                Section {
+                    Toggle("Display Temp Targets Button", isOn: $state.useTargetButton)
+                } header: { Text("Home View Button Panel ") }
+                footer: { Text("In case you're using both profiles and temp targets") }
+
+                Section {
+                    Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
+                } header: { Text("Header settings") }
+                footer: { Text("Normally glucose is colored red only when over or under your notification limits for high/low") }
 
                 Section {
                     HStack {
@@ -66,6 +83,7 @@ extension StatConfig {
                     }
                 } header: { Text("History Settings") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("UI/UX")
             .navigationBarTitleDisplayMode(.automatic)

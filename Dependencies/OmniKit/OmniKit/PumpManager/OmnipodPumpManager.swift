@@ -44,6 +44,7 @@ public enum OmnipodPumpManagerError: Error {
     case insulinTypeNotConfigured
     case notReadyForCannulaInsertion
     case invalidSetting
+    case setupNotComplete
     case communication(Error)
     case state(Error)
 }
@@ -59,6 +60,10 @@ extension OmnipodPumpManagerError: LocalizedError {
             return LocalizedString("Insulin type not configured", comment: "Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured")
         case .notReadyForCannulaInsertion:
             return LocalizedString("Pod is not in a state ready for cannula insertion.", comment: "Error message when cannula insertion fails because the pod is in an unexpected state")
+        case .invalidSetting:
+            return LocalizedString("Invalid Setting", comment: "Error description for invalid setting")
+        case .setupNotComplete:
+            return LocalizedString("Pod setup is not complete", comment: "Error description when pod setup is not complete")
         case .communication(let error):
             if let error = error as? LocalizedError {
                 return error.errorDescription
@@ -71,8 +76,6 @@ extension OmnipodPumpManagerError: LocalizedError {
             } else {
                 return String(describing: error)
             }
-        case .invalidSetting:
-            return LocalizedString("Invalid Setting", comment: "Error description for OmniBLEPumpManagerError.invalidSetting")
         }
     }
 
@@ -1021,6 +1024,12 @@ extension OmnipodPumpManager {
             return
         }
 
+        guard state.podState?.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            completion(.state(OmnipodPumpManagerError.setupNotComplete))
+            return
+        }
+
         guard state.podState?.unfinalizedBolus?.isFinished() != false else {
             completion(.state(PodCommsError.unfinalizedBolus))
             return
@@ -1053,6 +1062,11 @@ extension OmnipodPumpManager {
                 // If there's no active pod yet, save the basal schedule anyway
                 state.basalSchedule = schedule
                 return .success(false)
+            }
+
+            guard state.podState?.setupProgress == .completed else {
+                // A cancel delivery command before pod setup is complete will fault the pod
+                return .failure(PumpManagerError.deviceState(OmnipodPumpManagerError.setupNotComplete))
             }
 
             guard state.podState?.unfinalizedBolus?.isFinished() != false else {
@@ -1799,6 +1813,12 @@ extension OmnipodPumpManager: PumpManager {
             return
         }
 
+        guard state.podState?.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            completion(.failure(PumpManagerError.deviceState(OmnipodPumpManagerError.setupNotComplete)))
+            return
+        }
+
         let rileyLinkSelector = self.rileyLinkDeviceProvider.firstConnectedDevice
         self.podComms.runSession(withName: "Cancel Bolus", using: rileyLinkSelector) { (result) in
 
@@ -1861,6 +1881,18 @@ extension OmnipodPumpManager: PumpManager {
 
         guard self.hasActivePod else {
             completion(.configuration(OmnipodPumpManagerError.noPodPaired))
+            return
+        }
+
+        guard state.podState?.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            completion(.deviceState(OmnipodPumpManagerError.setupNotComplete))
+            return
+        }
+
+        // Legal duration values are [virtual] zero (to cancel current temp basal) or between 30 min and 12 hours
+        guard duration < .ulpOfOne || (duration >= .minutes(30) && duration <= .hours(12)) else {
+            completion(.deviceState(OmnipodPumpManagerError.invalidSetting))
             return
         }
 

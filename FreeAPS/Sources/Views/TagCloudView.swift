@@ -66,9 +66,12 @@ struct TagCloudView: View {
                  textTag where textTag.contains("AF:"),
                  textTag where textTag.contains("Autosens/Dynamic Limit:"),
                  textTag where textTag.contains("Dynamic ISF/CR"),
-                 textTag where textTag.contains("Basal ratio"),
-                 textTag where textTag.contains("SMB Ratio"):
+                 textTag where textTag.contains("Basal ratio"):
                 return .zt
+            case textTag where textTag.contains("Middleware:"):
+                return .red
+            case textTag where textTag.contains("SMB Ratio"):
+                return .orange
             default:
                 return .insulin
             }
@@ -77,7 +80,7 @@ struct TagCloudView: View {
         return ZStack { Text(textTag)
             .padding(.vertical, 2)
             .padding(.horizontal, 4)
-            .font(.subheadline)
+            .font(.suggestionParts)
             .background(colorOfTag.opacity(0.8))
             .foregroundColor(Color.white)
             .cornerRadius(2) }

@@ -120,7 +120,7 @@ final class OpenAPS {
 
     func oref2() -> RawJSON {
         coredataContext.performAndWait {
-            let preferences = storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
+            let preferences = self.storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
             let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
@@ -207,6 +207,12 @@ final class OpenAPS {
                     saveToCoreData.duration = 0
                     saveToCoreData.indefinite = false
                     saveToCoreData.percentage = 100
+                    let saveToHistory = OverrideHistory(context: self.coredataContext)
+                    let d: Double = -1 * date.addingTimeInterval(addedMinutes.minutes.timeInterval).timeIntervalSinceNow.minutes
+                    print("Duration: \(d) minutes")
+                    saveToHistory.duration = d
+                    saveToHistory.target = Double(overrideTarget)
+                    saveToHistory.date = overrideArray.first?.date ?? Date()
                     try? self.coredataContext.save()
                 }
             }

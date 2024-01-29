@@ -23,6 +23,7 @@ protocol APSManager {
     var bolusProgress: CurrentValueSubject<Decimal?, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
+    var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -100,8 +101,8 @@ final class BaseAPSManager: APSManager, Injectable {
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
     let lastError = CurrentValueSubject<Error?, Never>(nil)
-
     let bolusProgress = CurrentValueSubject<Decimal?, Never>(nil)
+    let bolusAmount = CurrentValueSubject<Decimal?, Never>(nil)
 
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> {
         deviceDataManager.pumpDisplayState
@@ -194,12 +195,14 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
-        // start background time extension
-        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
-            guard let backgroundTask = self.backGroundTaskID else { return }
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            self.backGroundTaskID = .invalid
-        }
+        /*
+         // start background time extension
+         backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
+             guard let backgroundTask = self.backGroundTaskID else { return }
+             UIApplication.shared.endBackgroundTask(backgroundTask)
+             self.backGroundTaskID = .invalid
+         }
+          */
 
         debug(.apsManager, "Starting loop with a delay of \(UIApplication.shared.backgroundTimeRemaining.rounded())")
 
@@ -269,10 +272,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
-            if let backgroundTask = backGroundTaskID {
-                UIApplication.shared.endBackgroundTask(backgroundTask)
-                backGroundTaskID = .invalid
-            }
+            /*
+             if let backgroundTask = backGroundTaskID {
+                 UIApplication.shared.endBackgroundTask(backgroundTask)
+                 backGroundTaskID = .invalid
+             }*/
             processError(error)
         } else {
             debug(.apsManager, "Loop succeeded")
@@ -286,11 +290,13 @@ final class BaseAPSManager: APSManager, Injectable {
             reportEnacted(received: error == nil)
         }
 
-        // end of the BG tasks
-        if let backgroundTask = backGroundTaskID {
-            UIApplication.shared.endBackgroundTask(backgroundTask)
-            backGroundTaskID = .invalid
-        }
+        /*
+         // end of the BG tasks
+         if let backgroundTask = backGroundTaskID {
+             UIApplication.shared.endBackgroundTask(backgroundTask)
+             backGroundTaskID = .invalid
+         }
+          */
     }
 
     private func verifyStatus() -> Error? {
@@ -449,6 +455,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
                 self.bolusProgress.send(0)
+                self.bolusAmount.send(Decimal(roundedAmout))
             }
         } receiveValue: { _ in }
             .store(in: &lifetime)
@@ -559,6 +566,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     debug(.apsManager, "Announcement Bolus succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     self.bolusProgress.send(0)
+                    self.bolusAmount.send(Decimal(roundedAmount))
                 }
             }
         case let .pump(pumpAction):
@@ -693,6 +701,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             return pump.enactBolus(units: Double(units), automatic: true).map { _ in
                 self.bolusProgress.send(0)
+                self.bolusAmount.send(units)
                 return ()
             }
             .eraseToAnyPublisher()

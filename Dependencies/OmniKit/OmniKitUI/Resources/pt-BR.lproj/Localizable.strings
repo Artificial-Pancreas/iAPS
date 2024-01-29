@@ -179,9 +179,18 @@
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Desativar";
 
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Desativar Pod";
+
+/* */
+"Slide to Insert Cannula" = "Slide to Insert Cannula";
+
+/* */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Desativado";

@@ -124,6 +124,7 @@ extension AddCarbs {
                     mealPresets
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView {
                     state.loadEntries(editMode)
@@ -159,7 +160,7 @@ extension AddCarbs {
                         isPromptPresented = false }
                     label: { Text("Cancel") }
                 } header: { Text("Enter Meal Preset Name") }
-            }
+            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         private var empty: Bool {
@@ -239,7 +240,7 @@ extension AddCarbs {
                     if state.selection != nil {
                         plusButton
                     }
-                }
+                }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
 
                 HStack {
                     Button("Delete Preset") {
