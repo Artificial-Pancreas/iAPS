@@ -381,7 +381,12 @@ extension PeripheralManager {
                 return
             }
             
-            let ble5Keys = data.subdata(in: 8..<14)
+            var ble5Keys = data.subdata(in: 8..<14)
+            if ble5Keys.filter({ $0 == 0 }).count != 0 {
+                // Try to get keys from previous session
+                ble5Keys = self.pumpManager.state.ble5Keys
+            }
+            
             guard ble5Keys.filter({ $0 == 0 }).count == 0 else {
                 log.error("%{public}@: Invalid BLE-5 keys. Please unbound device and try again.", #function)
                 self.pumpManager.disconnect(self.connectedDevice)
@@ -407,6 +412,7 @@ extension PeripheralManager {
             }
             
             DanaRSEncryption.setBle5Key(ble5Key: ble5Keys)
+            self.pumpManager.state.ble5Keys = ble5Keys
             self.sendBLE5PairingInformation()
         } else if (data.count == 6 && self.isPump(data)) {
             log.error("%{public}@: PUMP_CHECK error. Data: %{public}@", #function, data.base64EncodedString())

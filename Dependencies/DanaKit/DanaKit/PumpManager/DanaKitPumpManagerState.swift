@@ -47,6 +47,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.basalSchedule = rawValue["basalSchedule"] as? [Double] ?? []
         self.tempBasalUnits = rawValue["tempBasalUnits"] as? Double
         self.tempBasalDuration = rawValue["tempBasalDuration"] as? Double
+        self.ble5Keys = rawValue["ble5Keys"] as? Data ?? Data([0, 0, 0, 0, 0, 0])
         
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -84,6 +85,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["basalSchedule"] = self.basalSchedule
         value["tempBasalUnits"] = self.tempBasalUnits
         value["tempBasalDuration"] = self.tempBasalDuration
+        value["ble5Keys"] = self.ble5Keys
         
         return value
     }
@@ -134,6 +136,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     // Use of these 2 bools are unknown...
     public var isEasyMode: Bool = false
     public var isUnitUD: Bool = false
+    
+    public var ble5Keys: Data = Data([0, 0, 0, 0, 0, 0])
     
     public var pumpTime: Date? {
         didSet {
