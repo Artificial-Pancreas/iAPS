@@ -203,3 +203,30 @@
 
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "Nee, laat de pomp ongewijzigd";
+
+/* Pump Event title for UnfinalizedDose with doseType of .bolus */
+"Bolus" = "Bolus";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Tijdelijk Basaal";
+
+/* Pump Event title for UnfinalizedDose with doseType of .basal */
+"Basal" = "Basaal";
+
+/* Pump Event title for UnfinalizedDose with doseType of .resume */
+"Resume" = "Hervatten";
+
+/* Pump Event title for UnfinalizedDose with doseType of .suspend */
+"Suspend" = "Onderbreek";
+
+/* Title for user settings */
+"User settings" = "Gebruiker opties"
+
+/* Text for low reservoir reminder */
+"Low reservoir reminder" = "Laag reservoir herinnering"
+
+/* Insulin unit */
+"U" = "E"
+
+/* Description for low reservoir reminder */
+"The pump reminds you when the amount of insulin in the pump reaches this level" = "De pomp herinnert je eraan wanneer de hoeveelheid insuline in de pomp dit niveau bereikt"

@@ -124,6 +124,10 @@ struct DanaKitSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                 }
+//                NavigationLink(destination: DanaKitUserSettingsView(viewModel: viewModel.userSettingsViewModel)) {
+//                    Text(LocalizedString("User settings", comment: "Title for user settings"))
+//                        .foregroundColor(Color.primary)
+//                }
             }
             
             Section {
@@ -143,6 +147,12 @@ struct DanaKitSettingsView: View {
                     Text(LocalizedString("Firmware version", comment: "Text for firmware version")).foregroundColor(Color.primary)
                     Spacer()
                     Text(String(viewModel.firmwareVersion ?? 0))
+                        .foregroundColor(.secondary)
+                }
+                HStack {
+                    Text(LocalizedString("Battery level", comment: "Text for Battery level")).foregroundColor(Color.primary)
+                    Spacer()
+                    Text(String(viewModel.batteryLevel) + "%")
                         .foregroundColor(.secondary)
                 }
                 HStack {

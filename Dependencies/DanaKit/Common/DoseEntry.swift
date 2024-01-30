@@ -28,10 +28,11 @@ extension DoseEntry {
         )
     }
     
-    public static func tempBasal(absoluteUnit: Double, insulinType: InsulinType, startDate: Date = Date.now) -> DoseEntry {
+    public static func tempBasal(absoluteUnit: Double, duration: TimeInterval, insulinType: InsulinType, startDate: Date = Date.now) -> DoseEntry {
         return DoseEntry(
             type: .tempBasal,
             startDate: startDate,
+            endDate: startDate + duration,
             value: absoluteUnit,
             unit: .unitsPerHour,
             insulinType: insulinType

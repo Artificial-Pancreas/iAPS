@@ -18,6 +18,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var isUpdatingPumpState: Bool = false
     @Published var isSyncing: Bool = false
     @Published var lastSync: Date? = nil
+    @Published var batteryLevel: Double = 0
     
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
@@ -51,6 +52,10 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.pumpManager?.state.pumpProtocol
     }
     
+//    public var userSettingsViewModel: DanaKitUserSettingsViewModel {
+//        DanaKitUserSettingsViewModel(pumpManager)
+//    }
+    
     let basalRateFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -81,6 +86,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.reservoirLevel = self.pumpManager?.state.reservoirLevel
         self.isSuspended = self.pumpManager?.state.isPumpSuspended ?? false
         self.pumpTime = self.pumpManager?.state.pumpTime
+        self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
         self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
         
         self.basalButtonText = self.updateBasalButtonText()
@@ -141,7 +147,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         }
         
         self.isSyncing = true
-        pumpManager.syndPumpTime(completion: { error in
+        pumpManager.syncPumpTime(completion: { error in
             self.syncData()
         })
     }
@@ -236,6 +242,7 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.reservoirLevel = state.reservoirLevel
         self.isSuspended = state.isPumpSuspended
         self.pumpTime = self.pumpManager?.state.pumpTime
+        self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
         self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
         
         self.basalButtonText = self.updateBasalButtonText()

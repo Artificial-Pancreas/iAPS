@@ -175,6 +175,18 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     private func status(_ state: DanaKitPumpManagerState) -> LoopKit.PumpManagerStatus {
+        // Check if temp basal is expired, before constructing basalDeliveryState
+        if self.state.basalDeliveryOrdinal == .tempBasal && self.state.basalDeliveryDate + (self.state.tempBasalDuration ?? 0) > Date.now {
+            self.state.basalDeliveryOrdinal = .active
+            self.state.basalDeliveryDate = Date.now
+            self.state.tempBasalDuration = nil
+            self.state.tempBasalDuration = nil
+            
+            DispatchQueue.main.async {
+                self.notifyStateDidChange()
+            }
+        }
+        
         return PumpManagerStatus(
             timeZone: TimeZone.current,
             device: device(),
@@ -219,8 +231,10 @@ extension DanaKitPumpManager: PumpManager {
                     self.state.lastStatusDate = Date()
                     
                     self.disconnect()
-                    
+ 
                     DispatchQueue.main.async {
+                        self.notifyStateDidChange()
+                        
                         self.pumpDelegate.notify { (delegate) in
                             delegate?.pumpManager(self, hasNewPumpEvents: events, lastReconciliation: Date.now, completion: { _ in })
                             delegate?.pumpManager(self, didReadReservoirValue: self.state.reservoirLevel, at: Date.now, completion: { _ in })
@@ -431,7 +445,8 @@ extension DanaKitPumpManager: PumpManager {
     /// NOTE: There are 2 ways to set a temp basal:
     /// - The normal way (which only accepts full hours and percentages)
     /// - A short APS-special temp basal command (which only accepts 15 min (only above 100%) or 30 min (only below 100%)
-    /// TODO: Need to discuss what to do here / how to make this work within the Loop algorithm AND if the convertion from absolute to percentage is acceptable
+    /// Currently, the above is implemented with a simpel U/hr -> % calculator
+    /// TODO: Finetune the calculator and find a way to deal with 90 min temp basal i.e.
     public func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
         guard self.state.bolusState == .noBolus else {
             completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpIsBusy))
@@ -451,39 +466,111 @@ extension DanaKitPumpManager: PumpManager {
                         return
                     }
                     
-                    if (duration < .ulpOfOne) {
-                        do {
+                    do {
+                        if (duration < .ulpOfOne) {
                             let packet = generatePacketBasalCancelTemporary()
                             let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
                             
                             self.disconnect()
                             
                             guard result.success else {
-                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment))
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump send error")))
                                 return
                             }
                             
                             self.state.basalDeliveryOrdinal = .active
                             self.state.basalDeliveryDate = Date.now
+                            self.state.tempBasalUnits = nil
+                            self.state.tempBasalDuration = nil
                             self.notifyStateDidChange()
                             
                             let dose = DoseEntry.basal(rate: self.currentBaseBasalRate, insulinType: self.state.insulinType!)
                             self.pumpDelegate.notify { (delegate) in
-                                guard let delegate = delegate else {
-                                    preconditionFailure("pumpManagerDelegate cannot be nil")
-                                }
-                                
-                                delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)], lastReconciliation: Date.now, completion: { (error) in
-                                    completion(nil)
-                                })
+                                delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)], lastReconciliation: Date.now, completion: { _ in })
                             }
-                        } catch {
+                            
+                            completion(nil)
+                            
+                        } else if duration == 900 {
+                            // 15 min. Only basal boosts allowed here
+                            let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
+                            guard percentage > 100 else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal is above or equal to 100%")))
+                                return
+                            }
+                            
+                            let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage))
+                            let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                            
+                            guard result.success else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump send error")))
+                                return
+                            }
+                            
+                            let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: duration, insulinType: self.state.insulinType!)
+                            self.state.basalDeliveryOrdinal = .tempBasal
+                            self.state.basalDeliveryDate = Date.now
+                            self.state.tempBasalUnits = unitsPerHour
+                            self.state.tempBasalDuration = duration
+                            self.notifyStateDidChange()
+                            
+                            self.pumpDelegate.notify { (delegate) in
+                                delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
+                            }
+                        } else if duration == 1800 {
+                            // 30 min. Only temp basal below 100% allowed here
+                            let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
+                            guard percentage < 100 else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal is below or equal to 100%")))
+                                return
+                            }
+                            
+                            let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage))
+                            let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                            
+                            guard result.success else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump send error")))
+                                return
+                            }
+                            
+                            let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: duration, insulinType: self.state.insulinType!)
+                            self.state.basalDeliveryOrdinal = .tempBasal
+                            self.state.basalDeliveryDate = Date.now
+                            self.state.tempBasalUnits = unitsPerHour
+                            self.state.tempBasalDuration = duration
+                            self.notifyStateDidChange()
+                            
+                            self.pumpDelegate.notify { (delegate) in
+                                delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
+                            }
+                        } else if Int(duration) % 60 == 0 {
+                            // Only full hours are allowed here
+                            let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
+                            let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage))
+                            let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                            
+                            guard result.success else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump send error")))
+                                return
+                            }
+                            
+                            let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: duration, insulinType: self.state.insulinType!)
+                            self.state.basalDeliveryOrdinal = .tempBasal
+                            self.state.basalDeliveryDate = Date.now
+                            self.state.tempBasalUnits = unitsPerHour
+                            self.state.tempBasalDuration = duration
+                            self.notifyStateDidChange()
+                            
+                            self.pumpDelegate.notify { (delegate) in
+                                delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
+                            }
+                        } else {
                             self.disconnect()
-                            completion(PumpManagerError.communication(nil))
+                            completion(PumpManagerError.configuration(DanaKitPumpManagerError.unsupportedTempBasal(duration)))
                         }
-                    } else {
+                    } catch {
                         self.disconnect()
-                        completion(PumpManagerError.configuration(DanaKitPumpManagerError.unsupportedTempBasal))
+                        completion(PumpManagerError.communication(nil))
                     }
                 }
             }
@@ -626,6 +713,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.currentBaseBasalRate = schedule.value(at: Date.now)
                         self.state.basalDeliveryOrdinal = .active
                         self.state.basalDeliveryDate = Date.now
+                        self.state.basalSchedule = basal
                         self.notifyStateDidChange()
                         
                         let dose = DoseEntry.basal(rate: self.currentBaseBasalRate, insulinType: self.state.insulinType!)
@@ -647,6 +735,68 @@ extension DanaKitPumpManager: PumpManager {
         }
     }
     
+    public func getUserSettings(completion: @escaping (PacketGeneralGetUserOption?) -> Void) {
+        guard self.state.bolusState == .noBolus else {
+            completion(nil)
+            return
+        }
+        
+        self.ensureConnected { result in
+            switch result {
+            case .failure:
+                completion(nil)
+                return
+            case .success:
+                Task {
+                    do {
+                        let packet = generatePacketGeneralGetUserOption()
+                        let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                        
+                        self.disconnect()
+                        
+                        guard result.success else {
+                            completion(nil)
+                            return
+                        }
+                        
+                        completion(result.data as? PacketGeneralGetUserOption)
+                    } catch {
+                        self.disconnect()
+                        completion(nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    public func setUserSettings(data: PacketGeneralSetUserOption, completion: @escaping (Bool) -> Void) {
+        guard self.state.bolusState == .noBolus else {
+            completion(false)
+            return
+        }
+        
+        self.ensureConnected { result in
+            switch result {
+            case .failure:
+                completion(false)
+                return
+            case .success:
+                Task {
+                    do {
+                        let packet = generatePacketGeneralSetUserOption(options: data)
+                        let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                        
+                        self.disconnect()
+                        completion(result.success)
+                    } catch {
+                        self.disconnect()
+                        completion(false)
+                    }
+                }
+            }
+        }
+    }
+    
     public func syncDeliveryLimits(limits deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
         // Dana does not allow the max basal and max bolus to be set
         // Max basal = 3 U/hr
@@ -655,7 +805,7 @@ extension DanaKitPumpManager: PumpManager {
         completion(.success(deliveryLimits))
     }
     
-    public func syndPumpTime(completion: @escaping (Error?) -> Void) {
+    public func syncPumpTime(completion: @escaping (Error?) -> Void) {
         guard self.state.bolusState == .noBolus else {
             completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpIsBusy))
             return

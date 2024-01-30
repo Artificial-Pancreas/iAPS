@@ -6,7 +6,7 @@
 //  Copyright © 2023 Randall Knutson. All rights reserved.
 //
 
-struct PacketGeneralGetUserOption {
+public struct PacketGeneralGetUserOption {
     var isTimeDisplay24H: Bool
     var isButtonScrollOnOff: Bool
     var beepAndAlarm: UInt8

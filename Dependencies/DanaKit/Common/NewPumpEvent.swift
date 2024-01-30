@@ -11,47 +11,52 @@ import LoopKit
 
 extension NewPumpEvent {
     public static func bolus(dose: DoseEntry, units: Double) -> NewPumpEvent {
+        let dateFormatter = ISO8601DateFormatter()
         return NewPumpEvent(
             date: Date.now,
             dose: dose,
-            raw: "\(DoseType.bolus.rawValue) \(units) \(formatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
-            title: "Bolus: \(units)"
+            raw: "\(DoseType.bolus.rawValue) \(units) \(dateFormatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
+            title: LocalizedString("Bolus", comment: "Pump Event title for UnfinalizedDose with doseType of .bolus")
         )
     }
     
     public static func tempBasal(dose: DoseEntry, units: Double, duration: TimeInterval) -> NewPumpEvent {
+        let dateFormatter = ISO8601DateFormatter()
         return NewPumpEvent(
             date: Date.now,
             dose: dose,
-            raw: "\(DoseType.tempBasal.rawValue) \(units) \(duration) \(formatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
-            title: "Temp basal: \(units) for \(duration)"
+            raw: "\(DoseType.tempBasal.rawValue) \(units) \(duration) \(dateFormatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
+            title: LocalizedString("Temp Basal", comment: "Pump Event title for UnfinalizedDose with doseType of .tempBasal")
         )
     }
     
     public static func basal(dose: DoseEntry) -> NewPumpEvent {
+        let dateFormatter = ISO8601DateFormatter()
         return NewPumpEvent(
             date: Date.now,
             dose: dose,
-            raw: "\(DoseType.basal.rawValue) \(formatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
-            title: "Basal"
+            raw: "\(DoseType.basal.rawValue) \(dateFormatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
+            title: LocalizedString("Basal", comment: "Pump Event title for UnfinalizedDose with doseType of .basal")
         )
     }
     
     public static func resume(dose: DoseEntry) -> NewPumpEvent {
+        let dateFormatter = ISO8601DateFormatter()
         return NewPumpEvent(
             date: Date.now,
             dose: dose,
-            raw: "\(DoseType.resume.rawValue) \(formatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
-            title: "Resume"
+            raw: "\(DoseType.resume.rawValue) \(dateFormatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
+            title: LocalizedString("Resume", comment: "Pump Event title for UnfinalizedDose with doseType of .resume")
         )
     }
     
     public static func suspend(dose: DoseEntry) -> NewPumpEvent {
+        let dateFormatter = ISO8601DateFormatter()
         return NewPumpEvent(
             date: Date.now,
             dose: dose,
-            raw: "\(DoseType.suspend.rawValue) \(formatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
-            title: "Suspend"
+            raw: "\(DoseType.suspend.rawValue) \(dateFormatter.string(from: Date.now))".data(using: .utf8) ?? Data([]),
+            title: LocalizedString("Suspend", comment: "Pump Event title for UnfinalizedDose with doseType of .suspend")
         )
     }
 }

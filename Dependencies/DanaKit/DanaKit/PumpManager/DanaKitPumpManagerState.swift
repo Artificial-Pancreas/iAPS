@@ -12,6 +12,7 @@ import LoopKit
 public enum DanaKitBasal: Int {
     case active = 0
     case suspended = 1
+    case tempBasal = 2
 }
 
 public enum BolusState: Int {
@@ -43,6 +44,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.bolusState = rawValue["bolusState"] as? BolusState ?? .noBolus
         self.pumpTime = rawValue["pumpTime"] as? Date
         self.pumpTimeSyncedAt = rawValue["pumpTimeSyncedAt"] as? Date
+        self.basalSchedule = rawValue["basalSchedule"] as? [Double] ?? []
+        self.tempBasalUnits = rawValue["tempBasalUnits"] as? Double
+        self.tempBasalDuration = rawValue["tempBasalDuration"] as? Double
         
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -77,6 +81,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["bolusState"] = self.bolusState.rawValue
         value["pumpTime"] = self.pumpTime
         value["pumpTimeSyncedAt"] = self.pumpTimeSyncedAt
+        value["basalSchedule"] = self.basalSchedule
+        value["tempBasalUnits"] = self.tempBasalUnits
+        value["tempBasalDuration"] = self.tempBasalDuration
         
         return value
     }
@@ -122,6 +129,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public var ignorePassword: Bool = false
     public var devicePassword: UInt16 = 0
     
+    public var basalSchedule: [Double]
+    
     // Use of these 2 bools are unknown...
     public var isEasyMode: Bool = false
     public var isUnitUD: Bool = false
@@ -133,17 +142,22 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     }
     public var pumpTimeSyncedAt: Date?
     
+    public var basalDeliveryDate: Date = Date.now
+    public var basalDeliveryOrdinal: DanaKitBasal = .active
+    public var tempBasalUnits: Double?
+    public var tempBasalDuration: Double?
     public var basalDeliveryState: PumpManagerStatus.BasalDeliveryState {
         switch(self.basalDeliveryOrdinal) {
         case .active:
             return .active(self.basalDeliveryDate)
         case .suspended:
             return .suspended(self.basalDeliveryDate)
+        case .tempBasal:
+            return .tempBasal(DoseEntry.tempBasal(absoluteUnit: tempBasalUnits ?? 0, duration: tempBasalDuration ?? 0, insulinType: insulinType!, startDate: basalDeliveryDate))
         }
     }
     
-    public var basalDeliveryDate: Date = Date.now
-    public var basalDeliveryOrdinal: DanaKitBasal = .active
+    
     
     mutating func resetState() {
         self.ignorePassword = false
