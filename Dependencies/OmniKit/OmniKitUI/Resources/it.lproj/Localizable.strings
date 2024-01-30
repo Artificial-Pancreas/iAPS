@@ -285,7 +285,7 @@
 "Fault" = "Guasto";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Riempi un nuovo Pod con 100-U d'insulina (lascia inserito il cappuccio trasparente dell'ago del pod). Ascolta 2 segnali acustici.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Completa la disattivazione";
