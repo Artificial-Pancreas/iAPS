@@ -2097,6 +2097,18 @@ Enact a temp Basal or a temp target */
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";
 
+/* Bolus Calculator Setting */
+"Use alternate Bolus Calculator" = "Använd alternativ boluskalkylator";
+
+/* Bolus Calculator Setting */
+"Fatty Meals" = "Fet måltid";
+
+/* Bolus Calculator Setting */
+"Apply factor for fatty meals" = "Justera för fet mat";
+
+/* Bolus Calculator Footer */
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Den alternativa boluskalkylatorn använder en annan algoritm för beräkning av bolus. För individuell justering kan du ändra justeringsfaktor (standardvärde 0.8) beroende på om du vill få högre (över 1) eller mindre (under 1) bolusrekommendationer.\n\nFö extra feta måltider, tex pizza, finns möjlighet att minska rekommenderad bolus med en annan faktor (standard 0,7).";
+
 /* UI/UX option */
 "Display Predictions" = "Visa prognoser";
 
@@ -2115,6 +2127,15 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Home View Button Panel " = "Knappar på hemskärmen ";
 
+/* UI/UX title */
+"Home Chart settings " = "Hemskärmens diagram ";
+
+/* UI/UX title */
+"Statistics settings " = "Statistikskärmen ";
+
+/* UI/UX title */
+"Override HbA1c Unit" = "Byt HbA1c-enhet";
+
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Om du använder både profiler och tillfälliga målvärden";
 
@@ -2129,6 +2150,12 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Antal synliga timmar i hemfönstret";
 
+/* Setting title */
+"Bolus Calculator" = "Boluskalkylator";
+
+/* Setting title */
+"Dynamic ISF" = "Dynamisk insulinkänslighet";
+
 /* Notification option */
 "Live Activity" = "Liveaktiviteter";
 
@@ -2136,7 +2163,13 @@ Enact a temp Basal or a temp target */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Liveaktivitet visar senaste blodsockeravläsning på låsskärmen och på Dynamic Island, om sådan finns på din iPhone-modell";
 
 /* Notification option */
-"Show live activity" = "Visa Liveaktivitet";
+"Show Live activity" = "Visa Liveaktiviteter";
+
+/* Live Activity Footer */
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Liveaktivitet visar senaste blodsockeravläsning på låsskärmen och på Dynamic Island, om sådan finns på din iPhone-modell";
+
+/* Live Activity Footer when off */
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Inställning för Liveaktiviteter är av i dina iPhone-inställningar. För att aktivera behöver du öppna inställningar -> iAPS -> Liveaktiviteter -> reglage.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Viktat Genomsnitt av TDD. Vikt de senaste 24 timmarna:";
