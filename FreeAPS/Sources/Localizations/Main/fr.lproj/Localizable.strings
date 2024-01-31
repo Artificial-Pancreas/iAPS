@@ -2038,7 +2038,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic ISF" = "Activer ISF dynamique";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Activer ISF dynamique";
+"Enable Dynamic ISF" = "Activer le facteur de sensibilité à l'insuline (FSI) dynamique";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Calcule un nouveau facteur de sensibilité à l'insuline (FSI) à chaque cycle de boucle. Le nouveau FSI sera basé sur votre glycémie actuelle, la dose quotidienne totale d'insuline (DQT = total de toutes les doses d'insuline livrées dans les dernières 24 heures) et un facteur d'ajustement individuel (il est recommandé de commencer par 0,5 si vous utilisez la fonction Sigmoid et 0,8 si ce n'est pas le cas).\n\nTous les ajustements dynamiques du FSI et du RGI (Ratio insuline/glucides) seront limités par vos paramètres autosens min/max.";
@@ -2056,7 +2056,7 @@ Enact a temp Basal or a temp target */
 "Activate Dynamic Carb Ratio (CR)" = "Activer le ratio de glucides dynamique (RC)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Ajuster la constante ISF Dynamique";
+"Adjust Dynamic ISF constant" = "Ajuster la constante du FSI Dynamique";
 
 /* Adjust Dynamic ISF constant */
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
@@ -2134,7 +2134,7 @@ Enact a temp Basal or a temp target */
 "Statistics settings " = "Paramètres des statistiques ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Override HbA1c Unit";
+"Override HbA1c Unit" = "Outrepasser l'unité HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Si vous utilisez à la fois des profils et des cibles temporaires";
@@ -2163,13 +2163,13 @@ Enact a temp Basal or a temp target */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
 
 /* Notification option */
-"Show Live activity" = "Show Live activity";
+"Show Live activity" = "Afficher l'activité en direct";
 
 /* Live Activity Footer */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'activité en direct affiche la glycémie sur l'écran de verrouillage et sur l'île dynamique (si disponible)";
 
 /* Live Activity Footer when off */
-"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Les activités en direct sont désactivées dans les paramètres du système. Pour activer les activités en direct, allez dans Réglages -> iAPS -> Activer les activités en direct.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Moyenne pondérée de TDD. Poids des dernières 24 heures:";
