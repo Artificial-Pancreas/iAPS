@@ -58,7 +58,7 @@ extension Dynamic {
                     if state.useNewFormula {
                         HStack {
                             Toggle(isOn: $state.enableDynamicCR) {
-                                Text("Activate Dynamic Carb Ratio (CR")
+                                Text("Activate Dynamic Carb Ratio (CR)")
                                     .onTapGesture {
                                         scrollView = fontSize >= .extraLarge ? true : false
                                         info(
