@@ -1065,7 +1065,7 @@ Enact a temp Basal or a temp target */
 "Note" = "Lưu ý";
 
 /* */
-"Temp Basal" = "Liều cơ bản tạm thời";
+"Temp Basal" = "Temp Basal";
 
 /* */
 "Temp Target" = "Mục tiêu tạm thời";
@@ -1217,7 +1217,7 @@ Enact a temp Basal or a temp target */
 "Manual" = "Thủ công";
 
 /* An Automatic delivered bolus (SMB) */
-"SMB" = "Liều tiêm tự động (SMB)";
+"SMB" = "SMB";
 
 /* A manually entered dose of external insulin */
 "External Insulin" = "Liều insulin tiêm ngoài";
@@ -1871,7 +1871,7 @@ Enact a temp Basal or a temp target */
 "Enable SMB With Temptarget" = "Kích hoạt SMB với mục tiêu tạm thời";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép supermicrobolus (SMB) đạt được mục tiêu ăn sớm / nhiệt độ thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép Super Micro Bolus (SMB) đạt được mục tiêu ăn sớm / nhiệt độ thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
 
 /* Headline "Enable SMB Always" */
 "Enable SMB Always" = "Luôn bật SMB";
@@ -1883,7 +1883,7 @@ Enact a temp Basal or a temp target */
 "Enable SMB After Carbs" = "Kích hoạt SMB sau Carbs";
 
 /* "Enable SMB After Carbs" */
-"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật supermicrobolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
+"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật Super Micro Bolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
 "Allow SMB With High Temptarget" = "Cho phép SMB có Temptarget cao";
@@ -1892,7 +1892,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Cho phép SMB có Temptarget cao";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép supermicrobolus (nếu được bật khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được bật khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Sử dụng giờ cao điểm tùy chỉnh";
@@ -2098,6 +2098,18 @@ Enact a temp Basal or a temp target */
 /* Header */
 "Calculator settings" = "Thiết lập tính toán";
 
+/* Bolus Calculator Setting */
+"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Fatty Meals" = "Fatty Meals";
+
+/* Bolus Calculator Setting */
+"Apply factor for fatty meals" = "Apply factor for fatty meals";
+
+/* Bolus Calculator Footer */
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).";
+
 /* UI/UX option */
 "Display Predictions" = "Hiển thị dự đoán";
 
@@ -2116,6 +2128,15 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Home View Button Panel " = "Bảng nút xem trang chủ ";
 
+/* UI/UX title */
+"Home Chart settings " = "Home Chart settings ";
+
+/* UI/UX title */
+"Statistics settings " = "Statistics settings ";
+
+/* UI/UX title */
+"Override HbA1c Unit" = "Override HbA1c Unit";
+
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả hồ sơ và mục tiêu tạm thời";
 
@@ -2130,14 +2151,26 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Chế độ xem cuộn ngang Giờ hiển thị";
 
+/* Setting title */
+"Bolus Calculator" = "Bolus Calculator";
+
+/* Setting title */
+"Dynamic ISF" = "Dynamic ISF";
+
 /* Notification option */
 "Live Activity" = "Hoạt động trực tiếp";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và trên đảo động (nếu có)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa";
 
 /* Notification option */
-"Show live activity" = "Hiển thị hoạt động trực tiếp";
+"Show Live activity" = "Show Live activity";
+
+/* Live Activity Footer */
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa";
+
+/* Live Activity Footer when off */
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Trung bình có trọng số của TDD. Trọng lượng trong 24 giờ qua:";

@@ -1338,7 +1338,7 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Salva Profilo";
 
 /* Alert */
-"Cancel Profile Override" = "Cancel Profile Override";
+"Cancel Profile Override" = "Cancella Profilo";
 
 /* Alert */
 "Cancel Temp Target" = "Cancella basali temporanee";
@@ -2099,6 +2099,18 @@ Regola la costante ISF dinamica.";
 /* Header */
 "Calculator settings" = "Impostazioni calcolatore";
 
+/* Bolus Calculator Setting */
+"Use alternate Bolus Calculator" = "Usa calcolatore bolo alternativo";
+
+/* Bolus Calculator Setting */
+"Fatty Meals" = "Pasti Grassi";
+
+/* Bolus Calculator Setting */
+"Apply factor for fatty meals" = "Applica fattore per i pasti grassi";
+
+/* Bolus Calculator Footer */
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Il nuovo calcolatore alternativo di bolo è un altro approccio al calcolatore di bolo predefinito in iAPS. Se l'interruttore è acceso, si utilizza questa calcolatrice per il bolo e non la calcolatrice iAPS originale. Alla fine del calcolo viene applicato un fattore personalizzato come si suppone che sia quando si utilizza smbs (predefinita 0.8).\n\nPuoi anche aggiungere l'opzione nella calcolatrice del bolo per applicarne un altro (!) fattore personalizzabile al termine del calcolo che potrebbe essere utile per i pasti grassi. es. Pizza (predefinita 0.7).";
+
 /* UI/UX option */
 "Display Predictions" = "Mostra Previsioni";
 
@@ -2117,6 +2129,15 @@ Regola la costante ISF dinamica.";
 /* UI/UX option */
 "Home View Button Panel " = "Pannello Pulsante Visualizzazione Home ";
 
+/* UI/UX title */
+"Home Chart settings " = "Impostazioni grafico Home ";
+
+/* UI/UX title */
+"Statistics settings " = "Impostazioni statistiche";
+
+/* UI/UX title */
+"Override HbA1c Unit" = "Ignora Unità HbA1c";
+
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Nel caso in cui stai utilizzando sia i profili che gli obiettivi temporali";
 
@@ -2131,6 +2152,12 @@ Regola la costante ISF dinamica.";
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "La vista di scorrimento orizzontale mostra le ore visibili";
 
+/* Setting title */
+"Bolus Calculator" = "Calcolatore Bolo";
+
+/* Setting title */
+"Dynamic ISF" = "Sensibilità Dinamica";
+
 /* Notification option */
 "Live Activity" = "Attività in tempo reale";
 
@@ -2138,7 +2165,13 @@ Regola la costante ISF dinamica.";
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'attività in tempo reale mostra il glucosio attivo nel sangue sulla schermata di blocco e sulla Dynamic Island(se disponibile)";
 
 /* Notification option */
-"Show live activity" = "Mostra attività in tempo reale";
+"Show Live activity" = "Mostra attività dal vivo";
+
+/* Live Activity Footer */
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'attività in tempo reale mostra il glucosio attivo nel sangue sulla schermata di blocco e sulla Dynamic Island(se disponibile)";
+
+/* Live Activity Footer when off */
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Le attività dal vivo sono disattivate nelle impostazioni di sistema. Per abilitare le attività dal vivo, vai su Impostazioni app -> iAPS -> Attiva attività dal vivo.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Media ponderata di TDD. Peso delle ultime 24 ore:";

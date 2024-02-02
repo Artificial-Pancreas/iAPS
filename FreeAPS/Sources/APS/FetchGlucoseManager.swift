@@ -156,11 +156,10 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         nightscoutManager.uploadGlucose()
 
         // end of the BG tasks
-        /*
-         if let backgroundTask = backGroundFetchBGTaskID {
-             UIApplication.shared.endBackgroundTask(backgroundTask)
-             backGroundFetchBGTaskID = .invalid
-         }*/
+        if let backgroundTask = backGroundFetchBGTaskID {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backGroundFetchBGTaskID = .invalid
+        }
 
         let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
         guard glucoseForHealth.isNotEmpty else {
