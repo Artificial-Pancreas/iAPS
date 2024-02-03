@@ -2098,16 +2098,16 @@ Enact a temp Basal or a temp target */
 "Calculator settings" = "Налаштування калькулятора";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
+"Use alternate Bolus Calculator" = "Використати альтернативний болюсний калькулятор";
 
 /* Bolus Calculator Setting */
-"Fatty Meals" = "Fatty Meals";
+"Fatty Meals" = "Жирна їжа";
 
 /* Bolus Calculator Setting */
-"Apply factor for fatty meals" = "Apply factor for fatty meals";
+"Apply factor for fatty meals" = "Застосувати коефіцієнт жирної їжі";
 
 /* Bolus Calculator Footer */
-"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).";
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Новий альтернативний болюсний калькулятор є іншим підходом до стандартного болюсного калькулятора в iAPS. Якщо перемикач увімкнено, ви використовуєте цей болюсний калькулятор, а не оригінальний калькулятор iAPS. Наприкінці обчислення застосовано спеціальний коефіцієнт, як це має бути під час використання smbs (за замовчуванням 0,8).\n\nВи також можете додати опцію у своєму болюсному калькуляторі, щоб застосувати інший (!) настроюваний коефіцієнт наприкінці обчислення, яке може бути корисним для жирних страв, наприклад, піци (за замовчуванням 0,7).";
 
 /* UI/UX option */
 "Display Predictions" = "Показати передбачення";
@@ -2128,13 +2128,13 @@ Enact a temp Basal or a temp target */
 "Home View Button Panel " = "Панель кнопок домашнього перегляду";
 
 /* UI/UX title */
-"Home Chart settings " = "Home Chart settings ";
+"Home Chart settings " = "Налаштування домашньої діаграми";
 
 /* UI/UX title */
-"Statistics settings " = "Statistics settings ";
+"Statistics settings " = "Налаштування статистики ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Override HbA1c Unit";
+"Override HbA1c Unit" = "Замінити одиницю HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Якщо ви використовуєте профілі та тимчасові цілі";
@@ -2151,10 +2151,10 @@ Enact a temp Basal or a temp target */
 "Horizontal Scroll View Visible hours" = "Горизонтальна прокрутка Видимі години";
 
 /* Setting title */
-"Bolus Calculator" = "Bolus Calculator";
+"Bolus Calculator" = "Калькулятор Болюса";
 
 /* Setting title */
-"Dynamic ISF" = "Dynamic ISF";
+"Dynamic ISF" = "Динамічний ISF";
 
 /* Notification option */
 "Live Activity" = "Дії наживо";
@@ -2163,13 +2163,13 @@ Enact a temp Basal or a temp target */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
 
 /* Notification option */
-"Show Live activity" = "Show Live activity";
+"Show Live activity" = "Показати дії наживо";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
 
 /* Live Activity Footer when off */
-"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Активність у реальному часі вимкнено в налаштуваннях системи. Щоб увімкнути дії в реальному часі, перейдіть у додаток Налаштування -> iAPS -> УВІМКНУТИ дії в реальному часі.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Виважене Середнє Значення TDD. Вага останніх 24 годин:";

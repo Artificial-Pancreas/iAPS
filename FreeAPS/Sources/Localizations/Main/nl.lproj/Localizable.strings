@@ -2102,16 +2102,16 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Calculator settings" = "Calculator instellingen";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
+"Use alternate Bolus Calculator" = "Gebruik alternatieve Bolus Calculator";
 
 /* Bolus Calculator Setting */
-"Fatty Meals" = "Fatty Meals";
+"Fatty Meals" = "Vette maaltijd";
 
 /* Bolus Calculator Setting */
-"Apply factor for fatty meals" = "Apply factor for fatty meals";
+"Apply factor for fatty meals" = "Pas factor toe voor vette maaltijden";
 
 /* Bolus Calculator Footer */
-"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).";
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "De nieuwe alternatieve boluscalculator is een andere benadering van de standaard boluscalculator in iAPS. Als de knop aan staat, gebruik je deze boluscalculator en niet de originele iAPS-calculator. Aan het einde van de berekening wordt een aangepaste factor toegepast, zoals het hoort bij het gebruik van smbs (standaard 0,8).\n\nJe kunt ook de optie toevoegen in je boluscalculator om een andere (!) aanpasbare factor toe te passen aan het einde van de berekening, wat handig kan zijn voor vette maaltijden, zoals pizza (standaard 0,7).";
 
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";
@@ -2132,13 +2132,13 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Home View Button Panel " = "Beginscherm knoppaneel ";
 
 /* UI/UX title */
-"Home Chart settings " = "Home Chart settings ";
+"Home Chart settings " = "Home grafiek instellingen ";
 
 /* UI/UX title */
-"Statistics settings " = "Statistics settings ";
+"Statistics settings " = "Statistiek instellingen ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Override HbA1c Unit";
+"Override HbA1c Unit" = "HbA1c eenheid overschrijven";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "In het geval dat je zowel profielen als tijdelijke doelen gebruikt";
@@ -2155,10 +2155,10 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Horizontal Scroll View Visible hours" = "Horizontale scrolweergave zichtbare uren";
 
 /* Setting title */
-"Bolus Calculator" = "Bolus Calculator";
+"Bolus Calculator" = "Bolus calculator";
 
 /* Setting title */
-"Dynamic ISF" = "Dynamic ISF";
+"Dynamic ISF" = "Dynamische ISF";
 
 /* Notification option */
 "Live Activity" = "Live activiteit";
@@ -2167,13 +2167,13 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
 
 /* Notification option */
-"Show Live activity" = "Show Live activity";
+"Show Live activity" = "Toon live activiteit";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
 
 /* Live Activity Footer when off */
-"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activiteiten zijn uitgeschakeld in systeem instellingen. Ga naar Instellingen -> iAPS -> Live activiteiten\n\n om live activiteiten in te schakelen.";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Gewogen gemiddelde van TDD van afgelopen 24 uur:";
