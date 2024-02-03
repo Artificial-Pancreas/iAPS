@@ -2150,6 +2150,9 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Antal synliga timmar i hemfönstret";
 
+/* UI/UX option */
+"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
 
