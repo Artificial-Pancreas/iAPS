@@ -484,18 +484,6 @@ struct OmniBLESettingsView: View  {
                     FrameworkLocalText("Pod Diagnostics", comment: "Text for pod diagnostics row")
                         .foregroundColor(Color.primary)
                 }
-                .disabled(self.viewModel.noPod)
-                NavigationLink(destination: ReadPulseLogView(toRun: viewModel.readPulseLog)) {
-                    FrameworkLocalText("Read Pulse Log", comment: "Text for read pulse log navigation link").foregroundColor(Color.primary)
-                }
-                .disabled(self.viewModel.noPod)
-                NavigationLink(destination: PlayTestBeepsView(toRun: viewModel.playTestBeeps)) {
-                    FrameworkLocalText("Play Test Beeps", comment: "Text for play test beeps navigation link").foregroundColor(Color.primary)
-                }
-                .disabled(!self.viewModel.podOk)
-                NavigationLink(destination: PumpManagerDetailsView(toRun: viewModel.pumpManagerDetails)) {
-                    FrameworkLocalText("Pump Manager Details", comment: "Text for pump manager details navigation link").foregroundColor(Color.primary)
-                }
             }
 
             if self.viewModel.lifeState.allowsPumpManagerRemoval {
