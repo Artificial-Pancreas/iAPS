@@ -16,6 +16,7 @@ protocol GlucoseStorage {
     func isGlucoseNotFlat() -> Bool
     func nightscoutGlucoseNotUploaded() -> [BloodGlucose]
     func nightscoutCGMStateNotUploaded() -> [NigtscoutTreatment]
+    func nightscoutManualGlucoseNotUploaded() -> [NigtscoutTreatment]
     var alarm: GlucoseAlarm? { get }
 }
 
@@ -35,9 +36,18 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
         injectServices(resolver)
     }
 
-    func storeGlucose(_ glucose: [BloodGlucose]) {
-        let storeGlucoseStarted = Date()
+    private var glucoseFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        if settingsManager.settings.units == .mmolL {
+            formatter.maximumFractionDigits = 1
+        }
+        formatter.decimalSeparator = "."
+        return formatter
+    }
 
+    func storeGlucose(_ glucose: [BloodGlucose]) {
         processQueue.sync {
             debug(.deviceManager, "start storage glucose")
             let file = OpenAPS.Monitor.glucose
@@ -61,11 +71,13 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 var bg_ = 0
                 var bgDate = Date()
                 var id = ""
+                var direction = ""
 
                 if glucose.isNotEmpty {
                     bg_ = glucose[0].glucose ?? 0
                     bgDate = glucose[0].dateString
                     id = glucose[0].id
+                    direction = glucose[0].direction?.symbol ?? "↔︎"
                 }
 
                 if bg_ != 0 {
@@ -74,6 +86,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         dataForForStats.date = bgDate
                         dataForForStats.glucose = Int16(bg_)
                         dataForForStats.id = id
+                        dataForForStats.direction = direction
                         try? self.coredataContext.save()
                     }
                 }
@@ -136,7 +149,6 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 }
             }
         }
-        print("Test time of glucoseStorage: \(-1 * storeGlucoseStarted.timeIntervalSinceNow) s")
     }
 
     func removeGlucose(ids: [String]) {
@@ -212,8 +224,27 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     func nightscoutCGMStateNotUploaded() -> [NigtscoutTreatment] {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedCGMState, as: [NigtscoutTreatment].self) ?? []
         let recent = storage.retrieve(OpenAPS.Monitor.cgmState, as: [NigtscoutTreatment].self) ?? []
-
         return Array(Set(recent).subtracting(Set(uploaded)))
+    }
+
+    func nightscoutManualGlucoseNotUploaded() -> [NigtscoutTreatment] {
+        let uploaded = (storage.retrieve(OpenAPS.Nightscout.uploadedGlucose, as: [BloodGlucose].self) ?? [])
+            .filter({ $0.type == GlucoseType.manual.rawValue })
+        let recent = recent().filter({ $0.type == GlucoseType.manual.rawValue })
+        let filtered = Array(Set(recent).subtracting(Set(uploaded)))
+        let manualReadings = filtered.map { item -> NigtscoutTreatment in
+            NigtscoutTreatment(
+                duration: nil, rawDuration: nil, rawRate: nil, absolute: nil, rate: nil, eventType: .capillaryGlucose,
+                createdAt: item.dateString, enteredBy: "iAPS", bolus: nil, insulin: nil, notes: "iAPS User", carbs: nil,
+                fat: nil,
+                protein: nil, foodType: nil, targetTop: nil, targetBottom: nil, glucoseType: "Manual",
+                glucose: settingsManager.settings
+                    .units == .mgdL ? (glucoseFormatter.string(from: Int(item.glucose ?? 100) as NSNumber) ?? "")
+                    : (glucoseFormatter.string(from: Decimal(item.glucose ?? 100).asMmolL as NSNumber) ?? ""),
+                units: settingsManager.settings.units == .mmolL ? "mmol" : "mg/dl"
+            )
+        }
+        return manualReadings
     }
 
     var alarm: GlucoseAlarm? {

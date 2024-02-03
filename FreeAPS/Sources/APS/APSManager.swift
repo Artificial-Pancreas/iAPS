@@ -23,6 +23,7 @@ protocol APSManager {
     var bolusProgress: CurrentValueSubject<Decimal?, Never> { get }
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
+    var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -72,7 +73,6 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
-    @Injected() private var healthKitManager: HealthKitManager!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
@@ -101,8 +101,8 @@ final class BaseAPSManager: APSManager, Injectable {
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
     let lastError = CurrentValueSubject<Error?, Never>(nil)
-
     let bolusProgress = CurrentValueSubject<Decimal?, Never>(nil)
+    let bolusAmount = CurrentValueSubject<Decimal?, Never>(nil)
 
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> {
         deviceDataManager.pumpDisplayState
@@ -267,10 +267,6 @@ final class BaseAPSManager: APSManager, Injectable {
     // Loop exit point
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
         isLooping.send(false)
-
-        // save AH events
-        let events = pumpHistoryStorage.recent()
-        healthKitManager.saveIfNeeded(pumpEvents: events)
 
         if let error = error {
             warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
@@ -454,6 +450,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
                 self.bolusProgress.send(0)
+                self.bolusAmount.send(Decimal(roundedAmout))
             }
         } receiveValue: { _ in }
             .store(in: &lifetime)
@@ -564,6 +561,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     debug(.apsManager, "Announcement Bolus succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     self.bolusProgress.send(0)
+                    self.bolusAmount.send(Decimal(roundedAmount))
                 }
             }
         case let .pump(pumpAction):
@@ -698,6 +696,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             return pump.enactBolus(units: Double(units), automatic: true).map { _ in
                 self.bolusProgress.send(0)
+                self.bolusAmount.send(units)
                 return ()
             }
             .eraseToAnyPublisher()
@@ -713,6 +712,15 @@ final class BaseAPSManager: APSManager, Injectable {
             enacted.recieved = received
 
             storage.save(enacted, as: OpenAPS.Enact.enacted)
+
+            // Save to CoreData also. TO DO: Remove the JSON saving after some testing.
+            coredataContext.perform {
+                let saveLastLoop = LastLoop(context: self.coredataContext)
+                saveLastLoop.iob = (enacted.iob ?? 0) as NSDecimalNumber
+                saveLastLoop.cob = (enacted.cob ?? 0) as NSDecimalNumber
+                saveLastLoop.timestamp = (enacted.timestamp ?? .distantPast) as Date
+                try? self.coredataContext.save()
+            }
 
             debug(.apsManager, "Suggestion enacted. Received: \(received)")
             DispatchQueue.main.async {
@@ -1256,7 +1264,7 @@ private extension PumpManager {
                     debug(.apsManager, "Temp basal failed: \(unitsPerHour) for: \(duration)")
                     promise(.failure(error))
                 } else {
-                    debug(.apsManager, "Temp basal succeded: \(unitsPerHour) for: \(duration)")
+                    debug(.apsManager, "Temp basal succeeded: \(unitsPerHour) for: \(duration)")
                     promise(.success(nil))
                 }
             }
@@ -1275,7 +1283,7 @@ private extension PumpManager {
                     debug(.apsManager, "Bolus failed: \(units)")
                     promise(.failure(error))
                 } else {
-                    debug(.apsManager, "Bolus succeded: \(units)")
+                    debug(.apsManager, "Bolus succeeded: \(units)")
                     promise(.success(nil))
                 }
             }
@@ -1289,7 +1297,7 @@ private extension PumpManager {
             self.cancelBolus { result in
                 switch result {
                 case let .success(dose):
-                    debug(.apsManager, "Cancel Bolus succeded")
+                    debug(.apsManager, "Cancel Bolus succeeded")
                     promise(.success(dose))
                 case let .failure(error):
                     debug(.apsManager, "Cancel Bolus failed")

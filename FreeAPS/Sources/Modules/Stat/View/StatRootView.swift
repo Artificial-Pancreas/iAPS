@@ -146,10 +146,11 @@ extension Stat {
                 .pickerStyle(.segmented).background(.cyan.opacity(0.2))
                 stats()
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Statistics")
-            .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button("Close", action: state.hideModal))
         }
     }
 }

@@ -54,10 +54,6 @@ enum StateIntentError: Error {
 }
 
 @available(iOS 16.0, *) final class StateIntentRequest: BaseIntentsRequest {
-    @Injected() private var glucoseStorage: GlucoseStorage!
-    @Injected() private var carbsStorage: CarbsStorage!
-    @Injected() private var apsManager: APSManager!
-
     func getLastBG() throws -> (dateGlucose: Date, glucose: String, trend: String, delta: String) {
         let glucose = glucoseStorage.recent()
         guard let lastGlucose = glucose.last, let glucoseValue = lastGlucose.glucose else { throw StateIntentError.NoBG }

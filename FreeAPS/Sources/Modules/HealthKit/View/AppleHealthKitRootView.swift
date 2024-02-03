@@ -28,6 +28,7 @@ extension AppleHealthKit {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Apple Health")
             .navigationBarTitleDisplayMode(.automatic)

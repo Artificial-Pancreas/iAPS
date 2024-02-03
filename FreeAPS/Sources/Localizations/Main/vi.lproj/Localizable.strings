@@ -35,10 +35,10 @@
 "Recommendation" = "LIỀU KHUYẾN NGHỊ";
 
 /* Button */
-"Clear" = "Hủy bỏ";
+"Clear" = "Hủy";
 
 /* Button */
-"Done" = "Hoàn thành";
+"Done" = "Xong";
 
 /*  */
 "Wait please" = "Xin đợi chốc lát";
@@ -134,7 +134,7 @@
 "Bottom target" = "Mục tiêu dưới cùng";
 
 /* Cancel preset name */
-"Cancel" = "Hủy bỏ";
+"Cancel" = "Hủy";
 
 /*  */
 "Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
@@ -390,13 +390,13 @@ Enact a temp Basal or a temp target */
 "Settings imported" = "Các cấu hình đã được cập nhật";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Sai khác đơn vị Glucose giữa Nightscout và Bơm. Cập nhật cấu hình bị bỏ.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Đơn vị glucose không khớp trong Cài đặt Nightscout và Pump. Cập nhật cấu hình bị hủy bỏ.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Không thể tìm thấy Profile Nightscout mặc định.";
+"Can't find the default Nightscout Profile." = "Không thể tìm thấy Hồ sơ Nightscout mặc định.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Xét nghiệm đường huyết";
+"Blood Glucose Test" = "Kiểm tra đường huyết";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Thêm Medtronic";
@@ -630,7 +630,7 @@ Enact a temp Basal or a temp target */
 "Bluetooth Transmitters" = "Bluetooth Transmitters";
 
 /* */
-"Modes" = "Chế độ cảm biến";
+"Modes" = "Loại cảm biến";
 
 /* Libre 2 Direct */
 "Libre 2 Direct" = "Libre 2 Direct";
@@ -771,7 +771,7 @@ Enact a temp Basal or a temp target */
 "Low battery" = "Pin yếu";
 
 /* */
-"Invalid sensor" = "Lỗi nhập không hợp lệ";
+"Invalid sensor" = "Cảm biến không hợp lệ";
 
 /* */
 "Sensor change" = "Thay đổi cảm biến";
@@ -912,7 +912,7 @@ Enact a temp Basal or a temp target */
 "Adds Phone Battery" = "Hãy sạc Pin điện thoại";
 
 /* */
-"Adds Transmitter Battery" = "Hãy sạc Pin của Transmitter";
+"Adds Transmitter Battery" = "Hãy sạc Pin Transmitter";
 
 /* */
 "Also vibrate" = "Rung";
@@ -948,7 +948,7 @@ Enact a temp Basal or a temp target */
 "Some ui element was incorrectly specified" = "Một vài yếu tố ui đã không được chỉ định";
 
 /* */
-"Success" = "Success";
+"Success" = "Thành công";
 
 /* */
 "Schedules were saved successfully!" = "Lịch trình được lưu thành công!";
@@ -1065,7 +1065,7 @@ Enact a temp Basal or a temp target */
 "Note" = "Lưu ý";
 
 /* */
-"Temp Basal" = "Liều cơ bản tạm thời";
+"Temp Basal" = "Temp Basal";
 
 /* */
 "Temp Target" = "Mục tiêu tạm thời";
@@ -1077,7 +1077,7 @@ Enact a temp Basal or a temp target */
 "Suspend" = "Đã tạm ngưng";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Nền màn hình động";
 
 /* Sensor day(s) */
 " day(s)" = " ngày(s)";
@@ -1087,7 +1087,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "Cài đặt chính của OpenAPS";
+"OpenAPS main settings" = "Cài đặt chính OpenAPS";
 
 "OpenAPS SMB settings" = "Cài đặt SMB OpenAPS";
 
@@ -1217,7 +1217,7 @@ Enact a temp Basal or a temp target */
 "Manual" = "Thủ công";
 
 /* An Automatic delivered bolus (SMB) */
-"SMB" = "Liều tiêm tự động (SMB)";
+"SMB" = "SMB";
 
 /* A manually entered dose of external insulin */
 "External Insulin" = "Liều insulin tiêm ngoài";
@@ -1404,7 +1404,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Lưu và tiếp tục";
 
 /* */
-"Save as Preset" = "Lưu mẫu cài đặt";
+"Save as Preset" = "Lưu cài đặt sẵn";
 
 /* */
 "Predictions" = "Dự đoán";
@@ -1871,7 +1871,7 @@ Enact a temp Basal or a temp target */
 "Enable SMB With Temptarget" = "Kích hoạt SMB với mục tiêu tạm thời";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép supermicrobolus (SMB) đạt được mục tiêu ăn sớm / nhiệt độ thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép Super Micro Bolus (SMB) đạt được mục tiêu ăn sớm / nhiệt độ thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
 
 /* Headline "Enable SMB Always" */
 "Enable SMB Always" = "Luôn bật SMB";
@@ -1883,7 +1883,7 @@ Enact a temp Basal or a temp target */
 "Enable SMB After Carbs" = "Kích hoạt SMB sau Carbs";
 
 /* "Enable SMB After Carbs" */
-"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật supermicrobolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
+"Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật Super Micro Bolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
 "Allow SMB With High Temptarget" = "Cho phép SMB có Temptarget cao";
@@ -1892,7 +1892,7 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Cho phép SMB có Temptarget cao";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép supermicrobolus (nếu được bật khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được bật khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Sử dụng giờ cao điểm tùy chỉnh";
@@ -1901,7 +1901,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Mặc định là False. Đặt thành True cho phép thay đổi đỉnh của insulin";
 
 /* Headline "Suspend Zeros IOB” */
-"Suspend Zeros IOB" = "Đình chỉ IOB bằng 0";
+"Suspend Zeros IOB" = "Tạm dừng IOB bằng 0";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Mặc định là False. Mọi mức Temp Basals hiện có trong thời gian máy bơm bị tạm dừng sẽ bị xóa và mức Temp Basals 0 để phủ nhận tốc độ cơ bản của hồ sơ trong thời gian máy bơm bị tạm dừng sẽ được thêm vào.";
@@ -2042,7 +2042,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic ISF" = "Kích hoạt ISF động";
 
 /* Enable Dynamic ISF */
-"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Tính toán ISF mới với mỗi chu kỳ vòng lặp. ISF mới sẽ dựa trên BG, TDD hiện tại của insulin (24 giờ qua hoặc mức trung bình có trọng số) và Hệ số điều chỉnh (mặc định là 1).\n\nTỷ lệ ISF và CR động sẽ bị giới hạn bởi giới hạn autosens.min/max của bạn.\n\nTỷ lệ động thay thế tỷ lệ autosens: ISF mới = ISF tĩnh / Tỷ lệ động,\nTỷ lệ động = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes";
+"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Tính toán Cài đặt độ nhạy Insulin (ISF) mới sau mỗi chu kỳ vòng lặp. ISF mới sẽ dựa trên Glucose hiện tại của bạn, tổng liều insulin hàng ngày (TDD, tổng lượng insulin được cung cấp trong 24 giờ qua) và Hệ số Điều chỉnh riêng lẻ (khuyến nghị bắt đầu là 0,5 nếu sử dụng Chức năng Sigmoid và 0,8 nếu không sử dụng).\\ n\nTất cả các điều chỉnh ISF động và CR sẽ bị giới hạn bởi autosens.min của bạn.";
 
 /* Headline Enable Dynamic CR */
 "Enable Dynamic CR" = "Kích hoạt CR động";
@@ -2060,7 +2060,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Điều chỉnh tỷ lệ động theo một hằng số. Mặc định là 0,5. Giá trị càng cao thì mức điều chỉnh ISF của bạn sẽ càng lớn đối với BG cao hay thấp. Hiệu chỉnh tối đa được xác định bởi cài đặt tối thiểu/tối đa của Autosens. Đối với hàm Sigmoid, hệ số điều chỉnh được khuyến nghị là 0,4 - 0,5 để bắt đầu. Đối với công thức logarit, thre có ít sự đồng thuận hơn, nhưng bắt đầu bằng 0,5 - 0,8 thì phù hợp hơn với hầu hết người dùng";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Điều chỉnh riêng các tỷ lệ động được tính toán. Mặc định là 0,5. Giá trị càng cao thì mức điều chỉnh ISF/CR của bạn đối với mức đường huyết cao hay thấp càng lớn. Hiệu chỉnh tối đa/tối thiểu được xác định bởi cài đặt tối thiểu/tối đa của Autosens.\n\nĐối với hàm Sigmoid, hệ số điều chỉnh được khuyến nghị là 0,4 - 0,5 để bắt đầu.\n\nĐối với công thức logarit, có ít sự đồng thuận hơn, nhưng bắt đầu từ khoảng 0,8 là có lẽ phù hợp với hầu hết người dùng trưởng thành. Đối với người dùng trẻ tuổi, nên bắt đầu ở mức thấp hơn nữa khi sử dụng công thức logarit để tránh điều trị quá tích cực.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Sử dụng hàm Sigmoid (SF)";
@@ -2077,11 +2077,38 @@ Enact a temp Basal or a temp target */
 /* Headline Threshold Setting */
 "Threshold Setting" = "Cài đặt ngưỡng";
 
-/* Threshold Setting */
-"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "Ngưỡng mặc định trong FAX tùy thuộc vào mục tiêu BG tối thiểu hiện tại của bạn, như sau:\n\nNếu mục tiêu BG tối thiểu của bạn = 90 mg/dl -> ngưỡng = 65 mg/dl,\n\nif mục tiêu BG tối thiểu = 100 mg/dl -> ngưỡng = 70 mg/dl,\n\nmục tiêu BG tối thiểu = 110 mg/dl -> ngưỡng = 75 mg/dl,\n\nand nếu mục tiêu BG tối thiểu = 130 mg/dl -> ngưỡng = 85 mg/dl.\n\nCài đặt này cho phép bạn thay đổi mặc định thành ngưỡng lặp cao hơn cho vòng lặp với dynISF. Giá trị hợp lệ là 65 mg/dl<= Cài đặt ngưỡng <= 120 mg/dl.";
+/* Dynamic ISF Setting Title */
+"Minimum Threshold Setting" = "Cài đặt ngưỡng tối thiểu";
+
+/* Minimum Threshold Setting, Part 1 */
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Cài đặt này cho phép bạn chọn mức dưới đó sẽ không cung cấp insulin.\n\nNgưỡng này sử dụng lượng lớn nhất trong cài đặt ngưỡng của bạn và ngưỡng được tính toán:\n\nGlucose mục tiêu - (Glucose mục tiêu - 40) ";
+
+/* Minimum Threshold Setting, Part 2 */
+"the threshold will be " = "ngưỡng sẽ là ";
+
+/* Minimum Threshold Setting, Part 3 */
+"unless your threshold setting is set higher:" = "trừ khi cài đặt ngưỡng của bạn được đặt cao hơn:";
+
+/* Threshold Table Columns Title */
+"Setting" = "Thiết lập";
+
+/* Threshold Table Columns Title */
+"Threshold" = "Ngưỡng";
 
 /* Header */
 "Calculator settings" = "Thiết lập tính toán";
+
+/* Bolus Calculator Setting */
+"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Fatty Meals" = "Fatty Meals";
+
+/* Bolus Calculator Setting */
+"Apply factor for fatty meals" = "Apply factor for fatty meals";
+
+/* Bolus Calculator Footer */
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).";
 
 /* UI/UX option */
 "Display Predictions" = "Hiển thị dự đoán";
@@ -2101,6 +2128,15 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Home View Button Panel " = "Bảng nút xem trang chủ ";
 
+/* UI/UX title */
+"Home Chart settings " = "Home Chart settings ";
+
+/* UI/UX title */
+"Statistics settings " = "Statistics settings ";
+
+/* UI/UX title */
+"Override HbA1c Unit" = "Override HbA1c Unit";
+
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả hồ sơ và mục tiêu tạm thời";
 
@@ -2115,14 +2151,26 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Chế độ xem cuộn ngang Giờ hiển thị";
 
+/* Setting title */
+"Bolus Calculator" = "Bolus Calculator";
+
+/* Setting title */
+"Dynamic ISF" = "Dynamic ISF";
+
 /* Notification option */
 "Live Activity" = "Hoạt động trực tiếp";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và trên đảo động (nếu có)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa";
 
 /* Notification option */
-"Show live activity" = "Hiển thị hoạt động trực tiếp";
+"Show Live activity" = "Show Live activity";
+
+/* Live Activity Footer */
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa";
+
+/* Live Activity Footer when off */
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Trung bình có trọng số của TDD. Trọng lượng trong 24 giờ qua:";
