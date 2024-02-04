@@ -2152,6 +2152,9 @@ Regola la costante ISF dinamica.";
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "La vista di scorrimento orizzontale mostra le ore visibili";
 
+/* UI/UX option */
+"Display Time Interval Setting Button" = "Mostra Pulsante Impostazione nell'intervallo di tempo";
+
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
 
