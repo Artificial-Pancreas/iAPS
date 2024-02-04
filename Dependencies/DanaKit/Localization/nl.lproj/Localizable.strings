@@ -219,8 +219,8 @@
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "Onderbreek";
 
-/* Title for user settings */
-"User settings" = "Gebruiker opties"
+/* Title for user options */
+"User options" = "Gebruiker opties"
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Laag reservoir herinnering"
@@ -230,3 +230,24 @@
 
 /* Description for low reservoir reminder */
 "The pump reminds you when the amount of insulin in the pump reaches this level" = "De pomp herinnert je eraan wanneer de hoeveelheid insuline in de pomp dit niveau bereikt"
+
+/* DanaKit share logs */
+"Share Dana pump logs" = "Deel Dana pomp logging"
+
+/* Loading */
+"Loading" = "Laden"
+
+/* Text for save button */
+"Save" = "Opslaan"
+
+/* Text for 24h display */
+"24h display" = "24u tijd weergaven"
+
+/* Description for 24h display */
+"Should time be display in 12h or 24h" = "Dient tijd weergegeven te worden in 12u of 24u"
+
+/* text on */
+"On" = "Aan"
+
+/* text off */
+"Off" = "Uit"

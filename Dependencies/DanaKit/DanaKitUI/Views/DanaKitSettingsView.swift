@@ -11,11 +11,13 @@ import LoopKit
 import LoopKitUI
 
 struct DanaKitSettingsView: View {
+    @Environment(\.openURL) private var openURL
     @Environment(\.guidanceColors) private var guidanceColors
     @Environment(\.dismissAction) private var dismiss
     @Environment(\.insulinTintColor) var insulinTintColor
     
     @ObservedObject var viewModel: DanaKitSettingsViewModel
+    @State var loadingLogs = false
     
     var supportedInsulinTypes: [InsulinType]
     var imageName: String
@@ -98,6 +100,19 @@ struct DanaKitSettingsView: View {
                 }
                 .disabled(viewModel.isUpdatingPumpState || viewModel.isSyncing)
                 
+                Button(action: {
+                    shareLogs()
+                }) {
+                    HStack {
+                        Text(LocalizedString("Share Dana pump logs", comment: "DanaKit share logs"))
+                        Spacer()
+                        if self.loadingLogs {
+                            ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                        }
+                    }
+                }
+                .disabled(self.loadingLogs)
+                
                 HStack {
                     Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
                     Spacer()
@@ -124,10 +139,10 @@ struct DanaKitSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                 }
-//                NavigationLink(destination: DanaKitUserSettingsView(viewModel: viewModel.userSettingsViewModel)) {
-//                    Text(LocalizedString("User settings", comment: "Title for user settings"))
-//                        .foregroundColor(Color.primary)
-//                }
+                NavigationLink(destination: DanaKitUserSettingsView(viewModel: DanaKitUserSettingsViewModel(viewModel.pumpManager))) {
+                    Text(LocalizedString("User options", comment: "Title for user options"))
+                        .foregroundColor(Color.primary)
+                }
             }
             
             Section {
@@ -277,6 +292,31 @@ struct DanaKitSettingsView: View {
         }
         
         return guidanceColors.critical
+    }
+    
+    private func shareLogs() {
+        self.loadingLogs = true
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let logging = viewModel.getLogs().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+                DispatchQueue.main.async {
+                    self.loadingLogs = false
+                }
+                return
+            }
+            
+            let mailto = "mailto:verhaar.bastiaan@gmail.com?subject=Dana%20logs&body=" + logging
+            guard let url = URL(string: mailto) else {
+                DispatchQueue.main.async {
+                    self.loadingLogs = false
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.loadingLogs = false
+                openURL(url)
+            }
+        }
     }
 }
 

@@ -36,8 +36,6 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.isInFetchHistoryMode = rawValue["isInFetchHistoryMode"] != nil
         self.ignorePassword = rawValue["ignorePassword"] as? Bool ?? false
         self.devicePassword = rawValue["devicePassword"] as? UInt16 ?? 0
-        self.isEasyMode = rawValue["isEasyMode"] as? Bool ?? false
-        self.isUnitUD = rawValue["isUnitUD"] as? Bool ?? false
         self.bolusSpeed = rawValue["bolusSpeed"] as? BolusSpeed ?? .speed12
         self.isOnBoarded = rawValue["isOnBoarded"] as? Bool ?? false
         self.basalDeliveryDate = rawValue["basalDeliveryDate"] as? Date ?? Date.now
@@ -48,6 +46,22 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.tempBasalUnits = rawValue["tempBasalUnits"] as? Double
         self.tempBasalDuration = rawValue["tempBasalDuration"] as? Double
         self.ble5Keys = rawValue["ble5Keys"] as? Data ?? Data([0, 0, 0, 0, 0, 0])
+        self.isTimeDisplay24H = rawValue["isTimeDisplay24H"] as? Bool ?? false
+        self.isButtonScrollOnOff = rawValue["isButtonScrollOnOff"] as? Bool ?? false
+        self.beepAndAlarm = rawValue["beepAndAlarm"] as? UInt8 ?? 0
+        self.lcdOnTimeInSec = rawValue["lcdOnTimeInSec"] as? UInt8 ?? 0
+        self.backlightOnTimInSec = rawValue["backlightOnTimInSec"] as? UInt8 ?? 0
+        self.units = rawValue["units"] as? UInt8 ?? 0
+        self.lowReservoirRate = rawValue["lowReservoirRate"] as? UInt8 ?? 0
+        self.selectedLanguage = rawValue["selectedLanguage"] as? UInt8 ?? 0
+        self.shutdownHour = rawValue["shutdownHour"] as? UInt8 ?? 0
+        self.cannulaVolume = rawValue["cannulaVolume"] as? UInt16 ?? 0
+        self.refillAmount = rawValue["refillAmount"] as? UInt16 ?? 0
+        self.selectableLanguage1 = rawValue["selectableLanguage1"] as? UInt8 ?? 0
+        self.selectableLanguage2 = rawValue["selectableLanguage2"] as? UInt8 ?? 0
+        self.selectableLanguage3 = rawValue["selectableLanguage3"] as? UInt8 ?? 0
+        self.selectableLanguage4 = rawValue["selectableLanguage4"] as? UInt8 ?? 0
+        self.selectableLanguage5 = rawValue["selectableLanguage5"] as? UInt8 ?? 0
         
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -58,6 +72,40 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         } else {
             self.basalDeliveryOrdinal = .active
         }
+    }
+    
+    public init(basalSchedule: [Double]? = nil) {
+        self.lastStatusDate = Date()
+        self.isConnected = false // To prevent having an old isConnected state
+        self.reservoirLevel = 0
+        self.hwModel = 0
+        self.pumpProtocol = 0
+        self.isInFetchHistoryMode = false
+        self.ignorePassword = false
+        self.devicePassword = 0
+        self.bolusSpeed = .speed12
+        self.isOnBoarded = false
+        self.basalDeliveryDate = Date.now
+        self.bolusState = .noBolus
+        self.basalSchedule = basalSchedule ?? []
+        self.ble5Keys = Data([0, 0, 0, 0, 0, 0])
+        self.basalDeliveryOrdinal = .active
+        self.isTimeDisplay24H = false
+        self.isButtonScrollOnOff = false
+        self.beepAndAlarm = 0
+        self.lcdOnTimeInSec = 0
+        self.backlightOnTimInSec = 0
+        self.units = 0
+        self.lowReservoirRate = 0
+        self.selectedLanguage = 0
+        self.shutdownHour = 0
+        self.cannulaVolume = 0
+        self.refillAmount = 0
+        self.selectableLanguage1 = 0
+        self.selectableLanguage2 = 0
+        self.selectableLanguage3 = 0
+        self.selectableLanguage4 = 0
+        self.selectableLanguage5 = 0
     }
     
     public var rawValue: RawValue {
@@ -72,8 +120,6 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["isInFetchHistoryMode"] = self.isInFetchHistoryMode
         value["ignorePassword"] = self.ignorePassword
         value["devicePassword"] = self.devicePassword
-        value["isEasyMode"] = self.isEasyMode
-        value["isUnitUD"] = self.isUnitUD
         value["insulinType"] = self.insulinType?.rawValue
         value["bolusSpeed"] = self.bolusSpeed.rawValue
         value["isOnBoarded"] = self.isOnBoarded
@@ -86,6 +132,21 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["tempBasalUnits"] = self.tempBasalUnits
         value["tempBasalDuration"] = self.tempBasalDuration
         value["ble5Keys"] = self.ble5Keys
+        value["isTimeDisplay24H"] = self.isTimeDisplay24H
+        value["isButtonScrollOnOff"] = self.isButtonScrollOnOff
+        value["beepAndAlarm"] = self.beepAndAlarm
+        value["lcdOnTimeInSec"] = self.lcdOnTimeInSec
+        value["backlightOnTimInSec"] = self.backlightOnTimInSec
+        value["units"] = self.units
+        value["selectedLanguage"] = self.selectedLanguage
+        value["shutdownHour"] = self.shutdownHour
+        value["cannulaVolume"] = self.cannulaVolume
+        value["refillAmount"] = self.refillAmount
+        value["selectableLanguage1"] = self.selectableLanguage1
+        value["selectableLanguage2"] = self.selectableLanguage2
+        value["selectableLanguage3"] = self.selectableLanguage3
+        value["selectableLanguage4"] = self.selectableLanguage4
+        value["selectableLanguage5"] = self.selectableLanguage5
         
         return value
     }
@@ -133,10 +194,6 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     public var basalSchedule: [Double]
     
-    // Use of these 2 bools are unknown...
-    public var isEasyMode: Bool = false
-    public var isUnitUD: Bool = false
-    
     public var ble5Keys: Data = Data([0, 0, 0, 0, 0, 0])
     
     public var pumpTime: Date? {
@@ -145,6 +202,24 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         }
     }
     public var pumpTimeSyncedAt: Date?
+    
+    /// User options
+    public var isTimeDisplay24H: Bool
+    public var isButtonScrollOnOff: Bool
+    public var beepAndAlarm: UInt8
+    public var lcdOnTimeInSec: UInt8
+    public var backlightOnTimInSec: UInt8
+    public var selectedLanguage: UInt8
+    public var units: UInt8
+    public var shutdownHour: UInt8
+    public var lowReservoirRate: UInt8
+    public var cannulaVolume: UInt16
+    public var refillAmount: UInt16
+    public var selectableLanguage1: UInt8
+    public var selectableLanguage2: UInt8
+    public var selectableLanguage3: UInt8
+    public var selectableLanguage4: UInt8
+    public var selectableLanguage5: UInt8
     
     public var basalDeliveryDate: Date = Date.now
     public var basalDeliveryOrdinal: DanaKitBasal = .active
@@ -161,13 +236,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         }
     }
     
-    
-    
     mutating func resetState() {
         self.ignorePassword = false
         self.devicePassword = 0
-        self.isEasyMode = false
-        self.isUnitUD = false
         self.isInFetchHistoryMode = false
     }
     
@@ -224,6 +295,25 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
             return "danai"
         }
     }
+    
+    static func convertBasal(_ scheduleItems: [RepeatingScheduleValue<Double>]) -> [Double] {
+        let basalIntervals: [TimeInterval] = Array(0..<24).map({ TimeInterval(60 * 60 * $0) })
+        var output: [Double] = []
+        
+        var currentIndex = 0
+        for i in 0..<24 {
+            if (currentIndex >= scheduleItems.count) {
+                output.append(scheduleItems[currentIndex - 1].value)
+            } else if (scheduleItems[currentIndex].startTime != basalIntervals[i]) {
+                output.append(scheduleItems[currentIndex - 1].value)
+            } else {
+                output.append(scheduleItems[currentIndex].value)
+                currentIndex += 1
+            }
+        }
+        
+        return output
+    }
 }
 
 extension DanaKitPumpManagerState: CustomDebugStringConvertible {
@@ -243,9 +333,7 @@ extension DanaKitPumpManagerState: CustomDebugStringConvertible {
             "* hwModel: \(hwModel)",
             "* pumpProtocol: \(pumpProtocol)",
             "* isInFetchHistoryMode: \(isInFetchHistoryMode)",
-            "* ignorePassword: \(ignorePassword)",
-            "* isEasyMode: \(isEasyMode)",
-            "* isUnitUD: \(isUnitUD)"
+            "* ignorePassword: \(ignorePassword)"
         ].joined(separator: "\n")
     }
 }

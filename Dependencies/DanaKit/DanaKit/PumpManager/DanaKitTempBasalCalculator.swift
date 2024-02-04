@@ -8,7 +8,11 @@
 
 import Foundation
 
-func absoluteBasalRateToPercentage(absoluteValue: Double, basalSchedule: [Double]) -> UInt16 {
+func absoluteBasalRateToPercentage(absoluteValue: Double, basalSchedule: [Double]) -> UInt16? {
+    guard basalSchedule.count > 0 else {
+        return nil
+    }
+    
     let now = Date()
     let startOfDay = Calendar.current.startOfDay(for: now)
     let nowTimeInterval = now.timeIntervalSince(startOfDay)

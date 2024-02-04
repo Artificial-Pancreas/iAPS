@@ -494,6 +494,10 @@ extension DanaKitPumpManager: PumpManager {
                         } else if duration == 900 {
                             // 15 min. Only basal boosts allowed here
                             let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
+                            guard let percentage = percentage else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
+                                return
+                            }
                             guard percentage > 100 else {
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal is above or equal to 100%")))
                                 return
@@ -520,6 +524,10 @@ extension DanaKitPumpManager: PumpManager {
                         } else if duration == 1800 {
                             // 30 min. Only temp basal below 100% allowed here
                             let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
+                            guard let percentage = percentage else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
+                                return
+                            }
                             guard percentage < 100 else {
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal is below or equal to 100%")))
                                 return
@@ -546,6 +554,11 @@ extension DanaKitPumpManager: PumpManager {
                         } else if Int(duration) % 60 == 0 {
                             // Only full hours are allowed here
                             let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
+                            guard let percentage = percentage else {
+                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
+                                return
+                            }
+                            
                             let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage))
                             let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
                             
@@ -685,7 +698,7 @@ extension DanaKitPumpManager: PumpManager {
             case .success:
                 Task {
                     do {
-                        let basal = self.convertBasal(scheduleItems)
+                        let basal = DanaKitPumpManagerState.convertBasal(scheduleItems)
                         let packet = try generatePacketBasalSetProfileRate(options: PacketBasalSetProfileRate(profileNumber: self.basalProfileNumber, profileBasalRate: basal))
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
                         
@@ -850,25 +863,6 @@ extension DanaKitPumpManager: PumpManager {
             localIdentifier: self.state.deviceName,
             udiDeviceIdentifier: nil
         )
-    }
-    
-    private func convertBasal(_ scheduleItems: [RepeatingScheduleValue<Double>]) -> [Double] {
-        let basalIntervals: [TimeInterval] = Array(0..<24).map({ TimeInterval(60 * 60 * $0) })
-        var output: [Double] = []
-        
-        var currentIndex = 0
-        for i in 0..<24 {
-            if (currentIndex >= scheduleItems.count) {
-                output.append(scheduleItems[currentIndex - 1].value)
-            } else if (scheduleItems[currentIndex].startTime != basalIntervals[i]) {
-                output.append(scheduleItems[currentIndex - 1].value)
-            } else {
-                output.append(scheduleItems[currentIndex].value)
-                currentIndex += 1
-            }
-        }
-        
-        return output
     }
     
     private func ensureConnected(_ completion: @escaping (ConnectionResult) -> Void) {

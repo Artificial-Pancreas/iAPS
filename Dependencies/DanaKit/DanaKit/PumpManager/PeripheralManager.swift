@@ -36,7 +36,7 @@ class PeripheralManager: NSObject {
     private let WRITE_CHAR_UUID = CBUUID(string: "FFF2")
     private var writeCharacteristic: CBCharacteristic!
     
-    private var isSendingRequest = false
+    private var sendingTimer: Timer? = nil
     private var continuationToken: CheckedContinuation<(any DanaParsePacketProtocol), Error>? = nil
     
     private var historyLog: [HistoryItem] = []
@@ -67,6 +67,10 @@ class PeripheralManager: NSObject {
     }
     
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol)  {
+        guard self.continuationToken == nil, self.sendingTimer == nil else {
+            throw NSError(domain: "Another write action is running. Please wait", code: 0, userInfo: nil)
+        }
+        
         let command = UInt16(((packet.type ?? DanaPacketType.TYPE_RESPONSE) & 0xff) << 8) + UInt16(packet.opCode & 0xff)
         let isHistoryPacket = self.isHistoryPacket(opCode: command)
         if (isHistoryPacket && !self.pumpManager.state.isInFetchHistoryMode) {
@@ -83,8 +87,6 @@ class PeripheralManager: NSObject {
         
         var data = DanaRSEncryption.encodePacket(operationCode: packet.opCode, buffer: packet.data, deviceName: self.deviceName)
         log.default("%{public}@: Encrypted data: %{public}@", #function, data.base64EncodedString())
-        
-        self.isSendingRequest = true
         
         if (self.encryptionMode != .DEFAULT) {
             data = DanaRSEncryption.encodeSecondLevel(data: data)
@@ -104,11 +106,8 @@ class PeripheralManager: NSObject {
         // If this timeout expired, disconnect from the pump and prompt an error...
         return try await withCheckedThrowingContinuation { continuation in
             self.continuationToken = continuation
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + (!isHistoryPacket ? 5 : 20)) {
-                // Check if the message still hasn't been received
-                // If not, we should throw an exception
-                guard let continuationToken = self.continuationToken, self.isSendingRequest else {
+            self.sendingTimer = Timer.scheduledTimer(withTimeInterval: !isHistoryPacket ? 5 : 20, repeats: false) { _ in
+                guard let continuationToken = self.continuationToken else {
                     return
                 }
                 
@@ -297,9 +296,6 @@ extension PeripheralManager {
     }
     
     private func processEasyMenuCheck(_ data: Data) {
-        self.pumpManager.state.isEasyMode = data[2] == 0x01
-        self.pumpManager.state.isUnitUD = data[3] == 0x01
-        
         if (self.encryptionMode == .RSv3) {
             self.sendV3PairingInformationEmpty()
         } else {
@@ -587,6 +583,29 @@ extension PeripheralManager {
                 return
             }
             
+            log.default("%{public}@: Getting user options", #function)
+            let userOptionPacket = generatePacketGeneralGetUserOption()
+            let userOptionResult = try await self.writeMessage(userOptionPacket)
+            guard userOptionResult.success else {
+                log.error("%{public}@: Failed to fetch user options...", #function)
+                self.pumpManager.disconnect(self.connectedDevice)
+                
+                DispatchQueue.main.async {
+                    self.completion(NSError(domain: "Failed to fetch user options", code: 0, userInfo: nil))
+                }
+                return
+            }
+            
+            guard let dataUserOption = userOptionResult.data as? PacketGeneralGetUserOption else {
+                log.error("%{public}@: No data received (user option)...", #function)
+                self.pumpManager.disconnect(self.connectedDevice)
+                
+                DispatchQueue.main.async {
+                    self.completion(NSError(domain: "No data received (user option)", code: 0, userInfo: nil))
+                }
+                return
+            }
+            
             log.default("%{public}@: Getting pump time with timezone", #function)
             let timeUtcWithTimezonePacket = generatePacketGeneralGetPumpTimeUtcWithTimezone()
             let resultTimeUtcWithTimezone = try await self.writeMessage(timeUtcWithTimezonePacket)
@@ -615,6 +634,21 @@ extension PeripheralManager {
             self.pumpManager.state.batteryRemaining = data.batteryRemaining
             self.pumpManager.state.isPumpSuspended = data.isPumpSuspended
             self.pumpManager.state.isTempBasalInProgress = data.isTempBasalInProgress
+            self.pumpManager.state.lowReservoirRate = dataUserOption.lowReservoirRate
+            self.pumpManager.state.isButtonScrollOnOff = dataUserOption.isButtonScrollOnOff
+            self.pumpManager.state.beepAndAlarm = dataUserOption.beepAndAlarm
+            self.pumpManager.state.lcdOnTimeInSec = dataUserOption.lcdOnTimeInSec
+            self.pumpManager.state.backlightOnTimInSec = dataUserOption.selectedLanguage
+            self.pumpManager.state.units = dataUserOption.units
+            self.pumpManager.state.shutdownHour = dataUserOption.shutdownHour
+            self.pumpManager.state.cannulaVolume = dataUserOption.cannulaVolume
+            self.pumpManager.state.refillAmount = dataUserOption.refillAmount
+            self.pumpManager.state.selectableLanguage1 = dataUserOption.selectableLanguage1
+            self.pumpManager.state.selectableLanguage2 = dataUserOption.selectableLanguage2
+            self.pumpManager.state.selectableLanguage3 = dataUserOption.selectableLanguage3
+            self.pumpManager.state.selectableLanguage4 = dataUserOption.selectableLanguage4
+            self.pumpManager.state.selectableLanguage5 = dataUserOption.selectableLanguage5
+            self.pumpManager.state.units = dataUserOption.units
             self.pumpManager.currentBaseBasalRate = data.currentBasal
             self.pumpManager.state.pumpTime = dataTimeUtc.time
             self.pumpManager.notifyStateDidChange()
@@ -761,7 +795,8 @@ extension PeripheralManager {
         }
         
         // Message received and dequeueing timeout
-        self.isSendingRequest = false
+        self.sendingTimer?.invalidate()
+        self.sendingTimer = nil
         guard let token = self.continuationToken else {
             log.error("%{public}@: No continuation toke to send this message back...", #function)
             return

@@ -9,6 +9,7 @@
 import SwiftUI
 import LoopKit
 import HealthKit
+import os.log
 
 class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingDeleteConfirmation = false
@@ -23,14 +24,14 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
     
+    @Published var reservoirLevelWarning: Double
     @Published var reservoirLevel: Double?
     @Published var isSuspended: Bool = false
     
+    private let log = OSLog(category: "SettingsView")
     private(set) var insulineType: InsulinType
-    private var pumpManager: DanaKitPumpManager?
+    private(set) var pumpManager: DanaKitPumpManager?
     private var didFinish: (() -> Void)?
-    
-    private(set) var reservoirLevelWarning: Double = 20
     
     public var pumpModel: String {
         self.pumpManager?.state.getFriendlyDeviceName() ?? ""
@@ -51,10 +52,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     public var firmwareVersion: UInt8? {
         self.pumpManager?.state.pumpProtocol
     }
-    
-//    public var userSettingsViewModel: DanaKitUserSettingsViewModel {
-//        DanaKitUserSettingsViewModel(pumpManager)
-//    }
+
     
     let basalRateFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -87,6 +85,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.isSuspended = self.pumpManager?.state.isPumpSuspended ?? false
         self.pumpTime = self.pumpManager?.state.pumpTime
         self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
+        self.reservoirLevelWarning = Double(self.pumpManager?.state.lowReservoirRate ?? 20)
         self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
         
         self.basalButtonText = self.updateBasalButtonText()
@@ -109,6 +108,10 @@ class DanaKitSettingsViewModel : ObservableObject {
         
         self.pumpManager?.state.insulinType = type
         self.insulineType = type
+    }
+    
+    func getLogs() -> String {
+        return log.getDebugLogs()
     }
     
     func formatDate(_ date: Date?) -> String {

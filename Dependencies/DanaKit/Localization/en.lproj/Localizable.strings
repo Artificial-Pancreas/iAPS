@@ -210,5 +210,26 @@
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "Suspend";
 
-/* Title for user settings */
-"User settings" = "User settings"
+/* Title for user options */
+"User options" = "User options"
+
+/* DanaKit share logs */
+"Share Dana pump logs" = "Share Dana pump logs"
+
+/* Loading */
+"Loading" = "Loading"
+
+/* Text for save button */
+"Save" = "Save"
+
+/* Text for 24h display */
+"24h display" = "24h display"
+
+/* Description for 24h display */
+"Should time be display in 12h or 24h" = "Should time be display in 12h or 24h"
+
+/* text on */
+"On" = "On"
+
+/* text off */
+"Off" = "Off"

@@ -65,8 +65,11 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
     
     init(pumpManager: DanaKitPumpManager? = nil, colorPalette: LoopUIColorPalette, pumpManagerSettings: PumpManagerSetupSettings? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
     {
-        if pumpManager == nil {
+        if pumpManager == nil && pumpManagerSettings == nil {
             self.pumpManager = DanaKitPumpManager(state: DanaKitPumpManagerState(rawValue: [:]))
+        } else if pumpManager == nil && pumpManagerSettings != nil {
+            let basal = DanaKitPumpManagerState.convertBasal(pumpManagerSettings!.basalSchedule.items)
+            self.pumpManager = DanaKitPumpManager(state: DanaKitPumpManagerState(basalSchedule: basal))
         } else {
             self.pumpManager = pumpManager
         }
