@@ -1583,7 +1583,7 @@ Enact a temp Basal or a temp target */
 "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Le Gestionnaire de Pompes n'a pas été configuré avec un débit de base maximum car il a été ajouté avant que le Basal temporaire manuel soit une fonctionnalité. Veuillez aller dans les paramètres de thérapie -> limites de délivrance et définir un nouveau taux de basal maximum.";
 
 /* description label for active time pod details row */
-"Active Time" = "Heure d’activation";
+"Active Time" = "Durée d’activité";
 
 /* description label for total delivery pod details row */
 "Total Delivery" = " Total délivré";
@@ -2149,6 +2149,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+
+/* UI/UX option */
+"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";

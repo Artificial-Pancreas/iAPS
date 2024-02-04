@@ -1974,7 +1974,7 @@ Enact a temp Basal or a temp target */
 "This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Đây là tỷ lệ carbs mà chúng tôi cho rằng sẽ hấp thụ trong 4 giờ nếu chúng tôi chưa thấy sự hấp thụ carb.";
 
 /* Headline "Remaining Carbs Cap" */
-"Remaining Carbs Cap" = "Phần carb còn lại";
+"Remaining Carbs Cap" = "Giới hạn lượng carb còn lại";
 
 /* "Remaining Carbs Cap" */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Đây là lượng carb tối đa mà chúng tôi cho rằng sẽ hấp thụ trong 4 giờ nếu chúng tôi chưa thấy khả năng hấp thụ carb.";
@@ -2150,6 +2150,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Chế độ xem cuộn ngang Giờ hiển thị";
+
+/* UI/UX option */
+"Display Time Interval Setting Button" = "Nút cài đặt khoảng thời gian hiển thị";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán Bolus";
