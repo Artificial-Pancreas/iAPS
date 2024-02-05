@@ -80,7 +80,9 @@ extension Bolus {
                         Button(action: {
                             showInfo.toggle()
                         }, label: {
-                            Image(systemName: "info.circle")
+                            Image(systemName: "info.bubble")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
                             Text("Calculations")
                         })
                             .foregroundStyle(.blue)
@@ -108,7 +110,7 @@ extension Bolus {
                         }
                     } else {
                         HStack {
-                            Text("Recommended Bolus")
+                            Text("Insulin recommended")
                             Spacer()
                             Text(
                                 formatter
