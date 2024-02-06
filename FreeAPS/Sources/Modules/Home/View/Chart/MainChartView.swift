@@ -478,19 +478,22 @@ struct MainChartView: View {
         ZStack {
             ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
                 let position = CGPoint(x: info.rect.midX, y: info.rect.maxY - Config.owlOffset)
+                let command = info.note.lowercased()
                 let type: String =
-                    info.note.contains("true") ?
+                    command.contains("true") ?
                     Command.open :
-                    info.note.contains("false") ?
+                    command.contains("false") ?
                     Command.closed :
-                    info.note.contains("suspend") ?
+                    command.contains("suspend") ?
                     Command.suspend :
-                    info.note.contains("resume") ?
+                    command.contains("resume") ?
                     Command.resume :
-                    info.note.contains("tempbasal") ?
+                    command.contains("tempbasal") ?
                     Command.tempbasal :
-                    info.note.contains("meal") ?
-                    Command.meal : Command.bolus
+                    command.contains("meal") ?
+                    Command.meal :
+                    command.contains("bolus") ?
+                    Command.bolus : ""
                 VStack {
                     Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
