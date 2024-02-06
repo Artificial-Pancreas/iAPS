@@ -28,20 +28,27 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                     return Just([]).eraseToAnyPublisher()
                 }
                 debug(.nightscout, "FetchAnnouncementsManager heartbeat")
-                debug(.nightscout, "Start fetching announcements")
+                debug(
+                    .nightscout,
+                    "Start fetching announcements, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
+                ) // Add timestamp for debugging of the remote command delay
                 return self.nightscoutManager.fetchAnnouncements()
             }
             .sink { announcements in
-                guard let last = announcements.filter({ $0.createdAt > self.announcementsStorage.syncDate() })
+                guard let last = announcements // Don't allow future remote meals (too dangerous)
+                    .filter({ $0.createdAt < Date.now && $0.createdAt > self.announcementsStorage.syncDate() })
                     .sorted(by: { $0.createdAt < $1.createdAt })
                     .last
                 else { return }
 
                 self.announcementsStorage.storeAnnouncements([last], enacted: false)
-                if self.settingsManager.settings.allowAnnouncements, let recent = self.announcementsStorage.recent(),
+                if let recent = self.announcementsStorage.recent(),
                    recent.action != nil
                 {
-                    debug(.nightscout, "New announcements found")
+                    debug(
+                        .nightscout,
+                        "New announcements found, time: \(Date.now.formatted(date: .omitted, time: .shortened))"
+                    ) // Add timestamp for debugging of remote commnand delay
                     self.apsManager.enactAnnouncement(recent)
                 }
             }

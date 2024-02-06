@@ -289,6 +289,11 @@ extension NightscoutAPI {
             URLQueryItem(
                 name: "find[enteredBy]",
                 value: Announcement.remote.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            ),
+            URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds
+                    .string(from: Date.now) // Dont allow future remote meals (too dangerous)
             )
         ]
         if let date = sinceDate {

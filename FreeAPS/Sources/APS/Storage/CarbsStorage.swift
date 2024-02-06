@@ -104,7 +104,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             if let entry = entries.last, entry.carbs > 0 {
                 // uniqEvents = []
                 let onlyCarbs = CarbsEntry(
-                    id: entry.id ?? "",
+                    id: entry.id ?? UUID().uuidString,
                     createdAt: entry.createdAt,
                     actualDate: entry.actualDate ?? entry.createdAt,
                     carbs: entry.carbs,

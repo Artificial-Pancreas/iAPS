@@ -558,7 +558,10 @@ final class BaseAPSManager: APSManager, Injectable {
                     }
 
                 } else {
-                    debug(.apsManager, "Announcement Bolus succeeded")
+                    debug(
+                        .apsManager,
+                        "Announcement Bolus succeeded."
+                    )
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     self.bolusProgress.send(0)
                     self.bolusAmount.send(Decimal(roundedAmount))
@@ -616,10 +619,38 @@ final class BaseAPSManager: APSManager, Injectable {
                 if let error = error {
                     warning(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
                 } else {
-                    debug(.apsManager, "Announcement TempBasal succeeded")
+                    debug(
+                        .apsManager,
+                        "Announcement TempBasal succeeded."
+                    )
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 }
             }
+        case let .meal(carbs, fat, protein):
+            let date = announcement.createdAt.date
+
+            guard carbs > 0 || fat > 0 || protein > 0 else {
+                return
+            }
+
+            carbsStorage.storeCarbs([CarbsEntry(
+                id: UUID().uuidString,
+                createdAt: date,
+                actualDate: date,
+                carbs: carbs,
+                fat: fat,
+                protein: protein,
+                note: "Remote Meal Entry",
+                enteredBy: "Nightscout operator",
+                isFPU: fat > 0 || protein > 0,
+                fpuID: (fat > 0 || protein > 0) ? UUID().uuidString : nil
+            )])
+
+            announcementsStorage.storeAnnouncements([announcement], enacted: true)
+            debug(
+                .apsManager,
+                "Remote Meal by Announcement succeeded. Carbs: \(carbs), fat: \(fat), protein: \(protein)."
+            )
         }
     }
 
