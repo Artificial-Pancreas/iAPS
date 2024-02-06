@@ -35,7 +35,14 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 return self.nightscoutManager.fetchAnnouncements()
             }
             .sink { announcements in
-                guard let last = announcements // Don't allow future remote meals (too dangerous)
+                let futureEntries = announcements.filter({ $0.createdAt > Date.now })
+                // Delete future entries
+                if !futureEntries.isEmpty {
+                    debug(.nightscout, "Future Announcements found")
+                    self.nightscoutManager.deleteAnnouncements()
+                }
+
+                guard let last = announcements
                     .filter({ $0.createdAt < Date.now && $0.createdAt > self.announcementsStorage.syncDate() })
                     .sorted(by: { $0.createdAt < $1.createdAt })
                     .last
