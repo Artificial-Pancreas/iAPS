@@ -42,7 +42,7 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 else { return }
 
                 self.announcementsStorage.storeAnnouncements([last], enacted: false)
-                if let recent = self.announcementsStorage.recent(),
+                if self.settingsManager.settings.allowAnnouncements, let recent = self.announcementsStorage.recent(),
                    recent.action != nil
                 {
                     debug(
