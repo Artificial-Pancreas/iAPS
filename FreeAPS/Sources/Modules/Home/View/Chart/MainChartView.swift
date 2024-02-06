@@ -47,7 +47,7 @@ struct MainChartView: View {
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
         static let announcementScale: CGFloat = 2.5
-        static let owlSeize: CGFloat = 25
+        static let owlSeize: CGFloat = 20
         static let owlOffset: CGFloat = 80
     }
 
@@ -58,6 +58,7 @@ struct MainChartView: View {
         static let resume = "✅"
         static let tempbasal = "basal"
         static let bolus = "💧"
+        static let meal = "🍴"
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -476,7 +477,7 @@ struct MainChartView: View {
     private func announcementView(fullSize: CGSize) -> some View {
         ZStack {
             ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX + 5, y: info.rect.maxY - Config.owlOffset)
+                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY - Config.owlOffset)
                 let type: String =
                     info.note.contains("true") ?
                     Command.open :
@@ -487,7 +488,9 @@ struct MainChartView: View {
                     info.note.contains("resume") ?
                     Command.resume :
                     info.note.contains("tempbasal") ?
-                    Command.tempbasal : Command.bolus
+                    Command.tempbasal :
+                    info.note.contains("meal") ?
+                    Command.meal : Command.bolus
                 VStack {
                     Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
