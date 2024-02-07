@@ -49,6 +49,18 @@
 /* Bolus progress view */
 "of" = "of";
 
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "A Remote Bolus ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "was delivered";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " =  " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
 
