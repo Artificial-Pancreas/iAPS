@@ -481,9 +481,9 @@ struct MainChartView: View {
                 let command = info.note.lowercased()
                 let type: String =
                     command.contains("true") ?
-                    Command.open :
-                    command.contains("false") ?
                     Command.closed :
+                    command.contains("false") ?
+                    Command.open :
                     command.contains("suspend") ?
                     Command.suspend :
                     command.contains("resume") ?
@@ -495,8 +495,12 @@ struct MainChartView: View {
                     command.contains("bolus") ?
                     Command.bolus : ""
                 VStack {
-                    Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
+                        .overlay {
+                            Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
+                                .offset(x: 0, y: -15)
+                        }
+                    // Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
                 }.position(position).asAny()
             }
         }
