@@ -491,12 +491,13 @@ struct MainChartView: View {
                     Command.resume :
                     command.contains("tempbasal") ?
                     Command.tempbasal :
+                    command.contains("override") ?
+                    Command.override :
                     command.contains("meal") ?
                     Command.meal :
                     command.contains("bolus") ?
-                    Command.bolus :
-                    command.contains("override") ?
-                    Command.override : ""
+                    Command.bolus : ""
+
                 VStack {
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
                         .overlay {
