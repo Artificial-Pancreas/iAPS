@@ -59,6 +59,7 @@ struct MainChartView: View {
         static let tempbasal = "basal"
         static let bolus = "💧"
         static let meal = "🍴"
+        static let override = "👤"
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -493,7 +494,9 @@ struct MainChartView: View {
                     command.contains("meal") ?
                     Command.meal :
                     command.contains("bolus") ?
-                    Command.bolus : ""
+                    Command.bolus :
+                    command.contains("override") ?
+                    Command.override : ""
                 VStack {
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
                         .overlay {
