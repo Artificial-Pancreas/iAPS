@@ -37,7 +37,7 @@ extension NightscoutAPI {
     func checkConnection() -> AnyPublisher<Void, Swift.Error> {
         struct Check: Codable, Equatable {
             var eventType = "Note"
-            var enteredBy = "freeaps-x"
+            var enteredBy = "iAPS"
             var notes = "iAPS connected"
         }
         let check = Check()
@@ -141,14 +141,49 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {
+    func deleteCarbs(_ treatement: DataTable.Treatment, _isFPU: Bool) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+
+        let arguments = _isFPU ? "find[fpuID][$eq]" : "find[created_at][$eq]"
+
+        let value = _isFPU ? (treatement.fpuID ?? "") : Formatter.iso8601withFractionalSeconds
+            .string(from: treatement.date)
+
+        components.queryItems = [
+            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
+            URLQueryItem(
+                name: arguments,
+                value: value
+            )
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.httpMethod = "DELETE"
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func deleteManualGlucose(at date: Date) -> AnyPublisher<Void, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.treatmentsPath
         components.queryItems = [
-            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
+            URLQueryItem(name: "find[glucose][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$eq]",
                 value: Formatter.iso8601withFractionalSeconds.string(from: date)
@@ -278,6 +313,34 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
+    func deleteAnnouncements() -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+        components.queryItems = [
+            URLQueryItem(name: "find[eventType]", value: "Announcement"),
+            URLQueryItem(
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds
+                    .string(from: Date.now)
+            )
+        ]
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.httpMethod = "DELETE"
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
     func uploadTreatments(_ treatments: [NigtscoutTreatment]) -> AnyPublisher<Void, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
@@ -293,7 +356,7 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
-        request.httpBody = try! JSONCoding.encoder.encode(treatments)
+        request.httpBody = try? JSONCoding.encoder.encode(treatments)
         request.httpMethod = "POST"
 
         return service.run(request)
@@ -438,6 +501,30 @@ extension NightscoutAPI {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
         request.httpBody = try! JSONCoding.encoder.encode(profile)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadPreferences(_ preferences: Preferences) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.profilePath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+        request.httpBody = try! JSONCoding.encoder.encode(preferences)
         request.httpMethod = "POST"
 
         return service.run(request)

@@ -7,19 +7,22 @@ struct DecimalTextField: UIViewRepresentable {
     private var formatter: NumberFormatter
     private var autofocus: Bool
     private var cleanInput: Bool
+    private var useButtons: Bool
 
     init(
         _ placeholder: String,
         value: Binding<Decimal>,
         formatter: NumberFormatter,
         autofocus: Bool = false,
-        cleanInput: Bool = false
+        cleanInput: Bool = false,
+        useButtons: Bool = true
     ) {
         self.placeholder = placeholder
         _value = value
         self.formatter = formatter
         self.autofocus = autofocus
         self.cleanInput = cleanInput
+        self.useButtons = useButtons
     }
 
     func makeUIView(context: Context) -> UITextField {
@@ -53,8 +56,11 @@ struct DecimalTextField: UIViewRepresentable {
             target: nil,
             action: nil
         )
-        toolBar.setItems([clearButton, space, doneButton], animated: true)
-        textfield.inputAccessoryView = toolBar
+        if useButtons {
+            toolBar.setItems([clearButton, space, doneButton], animated: true)
+            textfield.inputAccessoryView = toolBar
+        }
+
         if autofocus {
             DispatchQueue.main.async {
                 textfield.becomeFirstResponder()

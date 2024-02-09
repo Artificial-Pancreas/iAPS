@@ -102,10 +102,11 @@ extension AutotuneConfig {
                         }
                         label: { Text("Save as your Normal Basal Rates") }
                     } header: {
-                        Text("Replace Normal Basal")
+                        Text("Save on Pump")
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Autotune")
             .navigationBarTitleDisplayMode(.automatic)

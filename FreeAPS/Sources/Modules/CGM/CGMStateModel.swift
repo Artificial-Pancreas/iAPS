@@ -16,6 +16,8 @@ extension CGM {
         @Published var uploadGlucose = true
         @Published var smoothGlucose = false
         @Published var createCalendarEvents = false
+        @Published var displayCalendarIOBandCOB = false
+        @Published var displayCalendarEmojis = false
         @Published var calendarIDs: [String] = []
         @Published var currentCalendarID: String = ""
         @Persisted(key: "CalendarManager.currentCalendarID") var storedCalendarID: String? = nil
@@ -28,6 +30,8 @@ extension CGM {
             cgmTransmitterDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
 
             subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
+            subscribeSetting(\.displayCalendarIOBandCOB, on: $displayCalendarIOBandCOB) { displayCalendarIOBandCOB = $0 }
+            subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { displayCalendarEmojis = $0 }
             subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
 
             $cgm

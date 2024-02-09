@@ -12,9 +12,15 @@ struct ChartsView: View {
     @Binding var overrideUnit: Bool
     @Binding var standing: Bool
 
-    @State var headline: Color = .secondary
-
     private let conversionFactor = 0.0555
+
+    private var tirFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        return formatter
+    }
+
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         glucoseChart
@@ -284,12 +290,22 @@ struct ChartsView: View {
         let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
         let hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
 
+        let veryHighArray = glucose.filter({ $0.glucose > 198 })
+        let veryHighReadings = veryHighArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryHighPercentage = Double(veryHighReadings) / Double(totalReadings) * 100
+
+        let veryLowArray = glucose.filter({ $0.glucose < 59 })
+        let veryLowReadings = veryLowArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
+
         let tir = 100 - (hypoPercentage + hyperPercentage)
 
         var array: [(decimal: Decimal, string: String)] = []
         array.append((decimal: Decimal(hypoPercentage), string: "Low"))
         array.append((decimal: Decimal(tir), string: "NormaL"))
         array.append((decimal: Decimal(hyperPercentage), string: "High"))
+        array.append((decimal: Decimal(veryHighPercentage), string: "Very High"))
+        array.append((decimal: Decimal(veryLowPercentage), string: "Very Low"))
 
         return array
     }

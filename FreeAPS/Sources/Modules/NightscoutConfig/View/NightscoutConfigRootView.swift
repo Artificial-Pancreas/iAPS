@@ -9,6 +9,7 @@ extension NightscoutConfig {
         @State var importAlert: Alert?
         @State var isImportAlertPresented = false
         @State var importedHasRun = false
+        @State var displayPopUp = false
 
         @FetchRequest(
             entity: ImportError.entity(),
@@ -57,8 +58,31 @@ extension NightscoutConfig {
                 Section {
                     Toggle("Upload", isOn: $state.isUploadEnabled)
                     if state.isUploadEnabled {
-                        Toggle("Statistics", isOn: $state.uploadStats)
                         Toggle("Glucose", isOn: $state.uploadGlucose)
+                        Toggle(isOn: $state.uploadStats) {
+                            HStack {
+                                Text("Statistics")
+                                Image(systemName: "info.bubble")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.primary, .blue)
+                                    .onTapGesture {
+                                        displayPopUp.toggle()
+                                    }
+                            }
+                        }
+                        if displayPopUp {
+                            VStack {
+                                Text(
+                                    "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n"
+                                )
+                                Text("https://iaps-stats.hub.org")
+                                    .multilineTextAlignment(.center)
+                            }
+                            .font(.extraSmall)
+                            .onTapGesture {
+                                displayPopUp.toggle()
+                            }
+                        }
                     }
                 } header: {
                     Text("Allow Uploads")
@@ -124,6 +148,7 @@ extension NightscoutConfig {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
                 } header: { Text("Allow Remote control of iAPS") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Nightscout Config")
             .navigationBarTitleDisplayMode(.automatic)

@@ -52,6 +52,7 @@ extension FPUConfig {
                 )
                     {}
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Fat and Protein")
             .navigationBarTitleDisplayMode(.automatic)

@@ -9,9 +9,12 @@ extension Home {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
+        @Injected() var storage: TempTargetsStorage!
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
         @Published var glucose: [BloodGlucose] = []
+        @Published var isManual: [BloodGlucose] = []
+        @Published var announcement: [Announcement] = []
         @Published var suggestion: Suggestion?
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
@@ -41,6 +44,7 @@ extension Home {
         @Published var errorMessage: String? = nil
         @Published var errorDate: Date? = nil
         @Published var bolusProgress: Decimal?
+        @Published var bolusAmount: Decimal?
         @Published var eventualBG: Int?
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
@@ -54,10 +58,20 @@ extension Home {
         @Published var lowGlucose: Decimal = 4 / 0.0555
         @Published var highGlucose: Decimal = 10 / 0.0555
         @Published var overrideUnit: Bool = false
-        @Published var screenHours: Int = 6
         @Published var displayXgridLines: Bool = false
         @Published var displayYgridLines: Bool = false
         @Published var thresholdLines: Bool = false
+        @Published var timeZone: TimeZone?
+        @Published var hours: Int = 6
+        @Published var totalBolus: Decimal = 0
+        @Published var isStatusPopupPresented: Bool = false
+        @Published var readings: [Readings] = []
+        @Published var standing: Bool = false
+        @Published var preview: Bool = true
+        @Published var useTargetButton: Bool = false
+        @Published var overrideHistory: [OverrideHistory] = []
+        @Published var alwaysUseColors: Bool = true
+        @Published var timeSettings: Bool = true
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -72,8 +86,12 @@ extension Home {
             setupCarbs()
             setupBattery()
             setupReservoir()
+            setupAnnouncements()
+            setupCurrentPumpTimezone()
+            setupOverrideHistory()
 
             suggestion = provider.suggestion
+            overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
             units = settingsManager.settings.units
@@ -90,10 +108,13 @@ extension Home {
             lowGlucose = settingsManager.settings.low
             highGlucose = settingsManager.settings.high
             overrideUnit = settingsManager.settings.overrideHbA1cUnit
-            screenHours = settingsManager.settings.hours
             displayXgridLines = settingsManager.settings.xGridLines
             displayYgridLines = settingsManager.settings.yGridLines
             thresholdLines = settingsManager.settings.rulerMarks
+            useTargetButton = settingsManager.settings.useTargetButton
+            hours = settingsManager.settings.hours
+            alwaysUseColors = settingsManager.settings.alwaysUseColors
+            timeSettings = settingsManager.settings.timeSettings
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -106,8 +127,15 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
-
+            broadcaster.register(OverrideObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
+
+            subscribeSetting(\.hours, on: $hours, initial: {
+                let value = max(min($0, 24), 2)
+                hours = value
+            }, map: {
+                $0
+            })
 
             timer.eventHandler = {
                 DispatchQueue.main.async { [weak self] in
@@ -154,6 +182,11 @@ extension Home {
                 .weakAssign(to: \.bolusProgress, on: self)
                 .store(in: &lifetime)
 
+            apsManager.bolusAmount
+                .receive(on: DispatchQueue.main)
+                .weakAssign(to: \.bolusAmount, on: self)
+                .store(in: &lifetime)
+
             apsManager.pumpDisplayState
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] state in
@@ -193,7 +226,7 @@ extension Home {
         }
 
         func addCarbs() {
-            showModal(for: .addCarbs)
+            showModal(for: .addCarbs(editMode: false, override: false))
         }
 
         func runLoop() {
@@ -205,10 +238,21 @@ extension Home {
         }
 
         func cancelProfile() {
-            coredataContext.perform { [self] in
-                let profiles = Override(context: self.coredataContext)
-                profiles.enabled = false
-                profiles.date = Date()
+            OverrideStorage().cancelProfile()
+            setupOverrideHistory()
+        }
+
+        func cancelTempTarget() {
+            storage.storeTempTargets([TempTarget.cancel(at: Date())])
+            coredataContext.performAndWait {
+                let saveToCoreData = TempTargets(context: self.coredataContext)
+                saveToCoreData.active = false
+                saveToCoreData.date = Date()
+                try? self.coredataContext.save()
+
+                let setHBT = TempTargetsSlider(context: self.coredataContext)
+                setHBT.enabled = false
+                setHBT.date = Date()
                 try? self.coredataContext.save()
             }
         }
@@ -216,7 +260,9 @@ extension Home {
         private func setupGlucose() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.isManual = self.provider.manualGlucose(hours: self.filteredHours)
                 self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)
+                self.readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today)
                 self.recentGlucose = self.glucose.last
                 if self.glucose.count >= 2 {
                     self.glucoseDelta = (self.recentGlucose?.glucose ?? 0) - (self.glucose[self.glucose.count - 2].glucose ?? 0)
@@ -306,6 +352,20 @@ extension Home {
             }
         }
 
+        private func setupOverrideHistory() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overrideHistory = self.provider.overrideHistory()
+            }
+        }
+
+        private func setupAnnouncements() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.announcement = self.provider.announcement(self.filteredHours)
+            }
+        }
+
         private func setStatusTitle() {
             guard let suggestion = suggestion else {
                 statusTitle = "No suggestion"
@@ -349,6 +409,10 @@ extension Home {
             tempTarget = provider.tempTarget()
         }
 
+        private func setupCurrentPumpTimezone() {
+            timeZone = provider.pumpTimeZone()
+        }
+
         func openCGM() {
             guard var url = nightscoutManager.cgmURL else { return }
 
@@ -386,7 +450,9 @@ extension Home.StateModel:
     CarbsObserver,
     EnactedSuggestionObserver,
     PumpBatteryObserver,
-    PumpReservoirObserver
+    PumpReservoirObserver,
+    PumpTimeZoneObserver,
+    OverrideObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -396,6 +462,11 @@ extension Home.StateModel:
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
+        setupOverrideHistory()
+    }
+
+    func overrideHistoryDidUpdate(_: [OverrideHistory]) {
+        setupOverrideHistory()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -409,18 +480,22 @@ extension Home.StateModel:
         lowGlucose = settingsManager.settings.low
         highGlucose = settingsManager.settings.high
         overrideUnit = settingsManager.settings.overrideHbA1cUnit
-        screenHours = settingsManager.settings.hours
         displayXgridLines = settingsManager.settings.xGridLines
         displayYgridLines = settingsManager.settings.yGridLines
         thresholdLines = settingsManager.settings.rulerMarks
-
+        useTargetButton = settingsManager.settings.useTargetButton
+        hours = settingsManager.settings.hours
+        alwaysUseColors = settingsManager.settings.alwaysUseColors
+        timeSettings = settingsManager.settings.timeSettings
         setupGlucose()
+        setupOverrideHistory()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
         setupBasals()
         setupBoluses()
         setupSuspensions()
+        setupAnnouncements()
     }
 
     func pumpSettingsDidChange(_: PumpSettings) {
@@ -437,11 +512,13 @@ extension Home.StateModel:
 
     func carbsDidUpdate(_: [CarbsEntry]) {
         setupCarbs()
+        setupAnnouncements()
     }
 
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
+        setupOverrideHistory()
     }
 
     func pumpBatteryDidChange(_: Battery) {
@@ -450,6 +527,10 @@ extension Home.StateModel:
 
     func pumpReservoirDidChange(_: Decimal) {
         setupReservoir()
+    }
+
+    func pumpTimeZoneDidChange(_: TimeZone) {
+        setupCurrentPumpTimezone()
     }
 }
 
