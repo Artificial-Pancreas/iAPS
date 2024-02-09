@@ -20,6 +20,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadStatistics(dailystat: Statistics)
     func uploadPreferences(_ preferences: Preferences)
     func uploadProfileAndSettings(_: Bool)
+    func deleteAnnouncements()
     var cgmURL: URL? { get }
 }
 
@@ -172,7 +173,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         guard let nightscout = nightscoutAPI, isNetworkReachable else {
             return Just([]).eraseToAnyPublisher()
         }
-
         let since = announcementsStorage.syncDate()
         return nightscout.fetchAnnouncement(sinceDate: since)
             .replaceError(with: [])
@@ -280,6 +280,28 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
     }
 
+    func deleteAnnouncements() {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+        nightscout.deleteAnnouncements()
+            .collect()
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Annuncement(s) deleted from NS.")
+
+                case let .failure(error):
+                    info(
+                        .nightscout,
+                        "Deletion of Announcements not possible \(error.localizedDescription)",
+                        type: MessageType.warning
+                    )
+                }
+            } receiveValue: { _ in }
+            .store(in: &lifetime)
+    }
+
     func deleteNormalCarbs(_ treatement: DataTable.Treatment) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             carbsStorage.deleteCarbs(at: treatement.id, fpuID: "", complex: false)
@@ -313,9 +335,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return
         }
 
-        carbsStorage.deleteCarbs(at: "", fpuID: treatement.fpuID ?? "", complex: false)
-
         healthkitManager.deleteCarbs(syncID: "", fpuID: treatement.fpuID ?? "")
+
+        carbsStorage.deleteCarbs(at: "", fpuID: treatement.fpuID ?? "", complex: false)
 
         nightscout.deleteCarbs(treatement, _isFPU: true)
             .collect()

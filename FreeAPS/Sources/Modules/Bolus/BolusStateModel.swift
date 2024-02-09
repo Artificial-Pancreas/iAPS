@@ -267,18 +267,17 @@ extension Bolus {
                     .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) : evBG.formatted()
 
                 if command == "bolus" {
-                    return "\n" + NSLocalizedString("A Bolus of ", comment: "Remote Bolus Alert, part 1") + arguments +
-                        NSLocalizedString("U was delivered ", comment: "Remote Bolus Alert, part 2") + (
+                    return "\n" + NSLocalizedString("A Remote Bolus ", comment: "Remote Bolus Alert, part 1") +
+                        NSLocalizedString("was delivered", comment: "Remote Bolus Alert, part 2") + (
                             -1 * enactedAnnouncement.createdAt
                                 .timeIntervalSinceNow
                                 .minutes
                         )
                         .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
                         NSLocalizedString(
-                            " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?" +
-                                "\n\n" + "Predicted eventual glucose, if you don't bolus, is: " + eventual + " " + units.rawValue,
+                            " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ",
                             comment: "Remote Bolus Alert, part 3"
-                        )
+                        ) + eventual + " " + units.rawValue
                 }
             }
             return nil

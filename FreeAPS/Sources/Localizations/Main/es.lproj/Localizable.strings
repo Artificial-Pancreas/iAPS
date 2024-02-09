@@ -2156,6 +2156,9 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
 
+/* UI/UX option */
+"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
 
