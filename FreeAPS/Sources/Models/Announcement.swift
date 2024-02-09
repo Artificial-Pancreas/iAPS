@@ -12,6 +12,7 @@ struct Announcement: JSON, Equatable, Hashable {
         guard components.count == 2 else {
             return nil
         }
+        var name = String(notes.split(separator: ":")[1])
         let command = String(components[0]).lowercased()
         let arguments = String(components[1]).lowercased()
         switch command {
@@ -40,6 +41,10 @@ struct Announcement: JSON, Equatable, Hashable {
             guard let carbs = Decimal(from: carbsArg), let fat = Decimal(from: fatArg),
                   let protein = Decimal(from: proteinArg) else { return nil }
             return .meal(carbs: carbs, fat: fat, protein: protein)
+        case "override":
+            guard !name.isEmpty else { return nil }
+            if name.prefix(1) == " " { name = String(name.dropFirst()) }
+            return .override(name: name)
         default: return nil
         }
     }
@@ -59,6 +64,7 @@ enum AnnouncementAction {
     case looping(Bool)
     case tempbasal(rate: Decimal, duration: Decimal)
     case meal(carbs: Decimal, fat: Decimal, protein: Decimal)
+    case override(name: String)
 }
 
 enum PumpAction: String {

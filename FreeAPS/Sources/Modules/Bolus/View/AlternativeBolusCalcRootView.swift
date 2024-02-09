@@ -301,6 +301,7 @@ extension Bolus {
                 .padding(.bottom, 20)
             }
             .font(.footnote)
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .background(
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4).opacity(0.9))

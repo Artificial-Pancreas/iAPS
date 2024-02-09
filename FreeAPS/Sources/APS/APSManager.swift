@@ -640,7 +640,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
-                note: "Remote Meal Entry",
+                note: "Remote",
                 enteredBy: "Nightscout operator",
                 isFPU: fat > 0 || protein > 0,
                 fpuID: (fat > 0 || protein > 0) ? UUID().uuidString : nil
@@ -651,6 +651,19 @@ final class BaseAPSManager: APSManager, Injectable {
                 .apsManager,
                 "Remote Meal by Announcement succeeded. Carbs: \(carbs), fat: \(fat), protein: \(protein)."
             )
+        case let .override(name):
+            guard !name.isEmpty else { return }
+            if name.lowercased() == "cancel" {
+                OverrideStorage().cancelProfile()
+                announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                debug(.apsManager, "Override Canceled by Announcement succeeded.")
+                return
+            }
+
+            guard let override = CoreDataStorage().fetchProfile(name) else { return }
+            CoreDataStorage().activateOverride(override)
+            announcementsStorage.storeAnnouncements([announcement], enacted: true)
+            debug(.apsManager, "Remote Override by Announcement succeeded.")
         }
     }
 
