@@ -335,9 +335,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             return
         }
 
-        carbsStorage.deleteCarbs(at: "", fpuID: treatement.fpuID ?? "", complex: false)
-
         healthkitManager.deleteCarbs(syncID: "", fpuID: treatement.fpuID ?? "")
+
+        carbsStorage.deleteCarbs(at: "", fpuID: treatement.fpuID ?? "", complex: false)
 
         nightscout.deleteCarbs(treatement, _isFPU: true)
             .collect()
