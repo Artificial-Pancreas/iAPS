@@ -47,7 +47,7 @@ struct MainChartView: View {
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
         static let announcementScale: CGFloat = 2.5
-        static let owlSeize: CGFloat = 25
+        static let owlSeize: CGFloat = 20
         static let owlOffset: CGFloat = 80
     }
 
@@ -58,6 +58,8 @@ struct MainChartView: View {
         static let resume = "✅"
         static let tempbasal = "basal"
         static let bolus = "💧"
+        static let meal = "🍴"
+        static let override = "👤"
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -476,21 +478,33 @@ struct MainChartView: View {
     private func announcementView(fullSize: CGSize) -> some View {
         ZStack {
             ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX + 5, y: info.rect.maxY - Config.owlOffset)
+                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY - Config.owlOffset)
+                let command = info.note.lowercased()
                 let type: String =
-                    info.note.contains("true") ?
-                    Command.open :
-                    info.note.contains("false") ?
+                    command.contains("true") ?
                     Command.closed :
-                    info.note.contains("suspend") ?
+                    command.contains("false") ?
+                    Command.open :
+                    command.contains("suspend") ?
                     Command.suspend :
-                    info.note.contains("resume") ?
+                    command.contains("resume") ?
                     Command.resume :
-                    info.note.contains("tempbasal") ?
-                    Command.tempbasal : Command.bolus
+                    command.contains("tempbasal") ?
+                    Command.tempbasal :
+                    command.contains("override") ?
+                    Command.override :
+                    command.contains("meal") ?
+                    Command.meal :
+                    command.contains("bolus") ?
+                    Command.bolus : ""
+
                 VStack {
-                    Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
+                        .overlay {
+                            Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
+                                .offset(x: 0, y: -15)
+                        }
+                    // Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
                 }.position(position).asAny()
             }
         }
