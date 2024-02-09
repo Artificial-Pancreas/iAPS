@@ -47,7 +47,7 @@
 "Agree and continue" = "Godta og fortsett";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "av";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Utført kl.";
@@ -339,7 +339,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Bruk lokal glukoseserver";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Dette skrur på opplasting av statistics.json til Nightscout, som kan brukes av prosjektet \"Community Statistics and Demographics\".\n\nDeltakelse er frivillig og krever en egen registrering på:\n";
 
 /*  */
 "Edit settings json" = "Rediger \"freeaps_settings.json\"";
@@ -582,10 +582,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige mål";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "Slette karbohydrater?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "Slette insulin?";
 
 /* Treatments list */
 "Treatments" = "Behandlinger";
@@ -1377,13 +1377,13 @@ Enact a temp Basal or a temp target */
 "Statistics and Home View" = "Statistikk og startskjerm";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+"Delete Carb Equivalents?" = "Slette karboekvivalenter?";
 
 /* */
-"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+"All FPUs of the meal will be deleted." = "Alle karboekvivalenter for måltidet vil bli slettet.";
 
 /* */
-"Delete Glucose?" = "Delete Glucose?";
+"Delete Glucose?" = "Slette blodsukker?";
 
 /* */
 "Meal Presets" = "Forvalg av måltid";
@@ -1671,16 +1671,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 timer";
 
 /* */
-"4 hours" = "4 hours";
+"4 hours" = "4 timer";
 
 /* */
-"6 hours" = "6 hours";
+"6 hours" = "6 timer";
 
 /* */
-"12 hours" = "12 hours";
+"12 hours" = "12 timer";
 
 /* */
-"24 hours" = "24 hours";
+"24 hours" = "24 timer";
 
 /* Average BG = */
 "Average" = "Gj.snitt";
@@ -2041,7 +2041,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic ISF" = "Aktiver dynamisk ISF";
 
 /* Enable Dynamic ISF */
-"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits.";
+"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Beregne ny insulinsensitivitet (ISF) ved hver loop-syklus. Den nye ISF-verdien vil bli basert på nåværende blodsukker, total daglig insulindose (TDD, siste 24 timer med levert insulin) og en individuell justeringsfaktor (anbefalingen er å starte med 0.5 hvis man benytter Sigmoid og ellers 0.8).\n\nAlle dynamiske justeringer av ISF og CR blir begrenset av dine Autosens MIN/MAX-innstillinger.";
 
 /* Headline Enable Dynamic CR */
 "Enable Dynamic CR" = "Aktiver dynamisk CR";
@@ -2050,10 +2050,10 @@ Enact a temp Basal or a temp target */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Bruk dynamisk CR. Dynamisk ratio brukes for CR som følger:\n\n Når ratio > 1: dynCR = (newRatio - 1) / 2 + 1.\nNår ratio < 1: dynCR = CR/dynCR.\n\nIkke bruk denne innstillingen sammen med en høy insulinbrøk (Insulin Fraction > 2)";
 
 /* Enable Dyn ISF */
-"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+"Activate Dynamic Sensitivity (ISF)" = "Aktivere dynamisk insulinfølsomhet (ISF)";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Aktivere dynamisk karbohydratforhold (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Juster konstant for dynamisk ISF";
