@@ -616,7 +616,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                 if let error = error {
                     warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
                 } else if success {
-                    debug(.service, "\(int) carb entries with ID: " + syncID + " deleted from Health Store", printToConsole: true)
+                    debug(.service, "\(int) carb entries with ID: " + fpuID + " deleted from Health Store", printToConsole: true)
                 }
             }
         }

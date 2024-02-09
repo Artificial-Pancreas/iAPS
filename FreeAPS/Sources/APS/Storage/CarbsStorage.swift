@@ -104,7 +104,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             if let entry = entries.last, entry.carbs > 0 {
                 // uniqEvents = []
                 let onlyCarbs = CarbsEntry(
-                    id: entry.id ?? UUID().uuidString,
+                    id: entry.id ?? "",
                     createdAt: entry.createdAt,
                     actualDate: entry.actualDate ?? entry.createdAt,
                     carbs: entry.carbs,
@@ -116,12 +116,23 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     fpuID: ""
                 )
 
-                self.storage.transaction { storage in
-                    storage.append(onlyCarbs, to: file, uniqBy: \.id)
-                    uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                        .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                        .sorted { $0.createdAt > $1.createdAt } ?? []
-                    storage.save(Array(uniqEvents), as: file)
+                // If fetched en masse from NS
+                if entries.filter({ $0.carbs > 0 }).count > 1 {
+                    self.storage.transaction { storage in
+                        storage.append(entries, to: file, uniqBy: \.createdAt)
+                        uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
+                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .sorted { $0.createdAt > $1.createdAt } ?? []
+                        storage.save(Array(uniqEvents), as: file)
+                    }
+                } else {
+                    self.storage.transaction { storage in
+                        storage.append(onlyCarbs, to: file, uniqBy: \.id)
+                        uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
+                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .sorted { $0.createdAt > $1.createdAt } ?? []
+                        storage.save(Array(uniqEvents), as: file)
+                    }
                 }
             }
 
