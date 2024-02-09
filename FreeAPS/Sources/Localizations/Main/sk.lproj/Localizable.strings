@@ -2041,7 +2041,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic ISF" = "Povolenie funkcie Dynamic ISF";
 
 /* Enable Dynamic ISF */
-"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits.";
+"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Vypočítajte nové nastavenie citlivosti na inzulín (ISF) pri každom cykle slučky. Nové nastavenie ISF bude založené na vašej aktuálnej glykémii, celkovej dennej dávke inzulínu (TDD, posledných 24 hodín všetkého podaného inzulínu) a vašom individuálnom korekčnom faktore (odporúčanie na začiatok je 0,5, ak používate sigmoidnú funkciu, a 0,8, ak nie).\n\\Všetky dynamické úpravy ISF a CR budú obmedzené vašimi limitmi min/max automatického snímania.";
 
 /* Headline Enable Dynamic CR */
 "Enable Dynamic CR" = "Povolenie funkcie Dynamic CR";
@@ -2059,7 +2059,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuálne nastavenie vypočítaných dynamických pomerov. Predvolená hodnota je 0,5. Čím vyššia je táto hodnota, tým väčšia bude korekcia vášho ISF/CR pre vysokú alebo nízku hladinu glukózy v krvi. Maximálna/minimálna korekcia je určená nastavením min/max v programe Autosens.\n\nPre sigmoidnú funkciu sa na začiatok odporúča korekčný faktor 0,4 - 0,5.\n\nPre logaritmický vzorec existuje menej konsenzu, ale začiatok okolo 0,8 je pravdepodobne vhodný pre väčšinu dospelých používateľov. U mladších používateľov sa pri používaní logaritmickej formuly odporúča začať ešte nižšie, aby sa zabránilo príliš agresívnej liečbe.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Použitie funkcie Sigmoid";
@@ -2077,37 +2077,37 @@ Enact a temp Basal or a temp target */
 "Threshold Setting" = "Nastavenie prahové hodnoty";
 
 /* Dynamic ISF Setting Title */
-"Minimum Threshold Setting" = "Minimum Threshold Setting";
+"Minimum Threshold Setting" = "Nastavenie minimálneho prahu";
 
 /* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ";
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Toto nastavenie vám umožňuje zvoliť hladinu, pod ktorou nebude podaný žiadny inzulín.\n\nPrahová hodnota používa najväčšiu hodnotu vášho nastavenia prahovej hodnoty a vypočítanú prahovú hodnotu:\n\nCielová glykémia - (cieľová glykémia - 40) / 2\n, tu s použitím mg/dl ako jednotky glukózy.\n\nNapr. ak je vaša cieľová glykémia ";
 
 /* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "the threshold will be ";
+"the threshold will be " = "prahová hodnota bude ";
 
 /* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "unless your threshold setting is set higher:";
+"unless your threshold setting is set higher:" = "pokiaľ nie je nastavená vyššia prahová hodnota:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Setting";
+"Setting" = "Nastavenia";
 
 /* Threshold Table Columns Title */
-"Threshold" = "Threshold";
+"Threshold" = "Hranica";
 
 /* Header */
 "Calculator settings" = "Nastavenia výpočtu";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
+"Use alternate Bolus Calculator" = "Použite alternatívnu kalkulačku Bolus";
 
 /* Bolus Calculator Setting */
-"Fatty Meals" = "Fatty Meals";
+"Fatty Meals" = "Mastné jedlo";
 
 /* Bolus Calculator Setting */
-"Apply factor for fatty meals" = "Apply factor for fatty meals";
+"Apply factor for fatty meals" = "Použite faktor pre mastné jedlá";
 
 /* Bolus Calculator Footer */
-"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).";
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Nová alternatívna bolusová kalkulačka je ďalším prístupom k predvolenej bolusovej kalkulačke v systéme iAPS. Ak je prepínač zapnutý, používate túto kalkulačku bolusu a nie pôvodnú kalkulačku iAPS. Na konci výpočtu sa použije vlastný faktor, ako to má byť pri používaní smbs (predvolene 0,8).\n\nV kalkulačke bolusu môžete tiež pridať možnosť použiť na konci výpočtu ďalší (!) prispôsobiteľný faktor, ktorý by mohol byť užitočný pre tučné jedlá, napr. pizzu (predvolene 0,7).";
 
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";
@@ -2128,13 +2128,13 @@ Enact a temp Basal or a temp target */
 "Home View Button Panel " = "Panel tlačidiel zobrazenia Domov ";
 
 /* UI/UX title */
-"Home Chart settings " = "Home Chart settings ";
+"Home Chart settings " = "Domov Nastavenia grafu ";
 
 /* UI/UX title */
-"Statistics settings " = "Statistics settings ";
+"Statistics settings " = "Nastavenia štatistík ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Override HbA1c Unit";
+"Override HbA1c Unit" = "Prepísanie jednotky HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "V prípade, že používate profily aj dočasný cieľ";
@@ -2151,13 +2151,13 @@ Enact a temp Basal or a temp target */
 "Horizontal Scroll View Visible hours" = "Horizontálne rolovacie zobrazenie Viditeľné hodiny";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+"Display Time Interval Setting Button" = "Tlačidlo nastavenia časového intervalu zobrazenia";
 
 /* Setting title */
-"Bolus Calculator" = "Bolus Calculator";
+"Bolus Calculator" = "Kalkulátor bolusu";
 
 /* Setting title */
-"Dynamic ISF" = "Dynamic ISF";
+"Dynamic ISF" = "Dynamická ISF";
 
 /* Notification option */
 "Live Activity" = "Živá aktivita";
@@ -2166,13 +2166,13 @@ Enact a temp Basal or a temp target */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živá aktivita zobrazuje glukózu v krvi na uzamknutej obrazovke a na dynamickom ostrove (ak je k dispozícii)";
 
 /* Notification option */
-"Show Live activity" = "Show Live activity";
+"Show Live activity" = "Zobraziť živú aktivitu";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živá aktivita zobrazuje glukózu v krvi na uzamknutej obrazovke a na dynamickom ostrove (ak je k dispozícii)";
 
 /* Live Activity Footer when off */
-"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Aktivity v režime Live sú v nastaveniach systému vypnuté. Ak chcete zapnúť živé aktivity, prejdite do Nastavenia -> iAPS -> Zapnúť živé aktivity.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Vážený priemer TDD. Váha za posledných 24 hodín:";
