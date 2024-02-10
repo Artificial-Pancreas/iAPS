@@ -648,6 +648,7 @@ extension PeripheralManager {
             self.pumpManager.state.selectableLanguage3 = dataUserOption.selectableLanguage3
             self.pumpManager.state.selectableLanguage4 = dataUserOption.selectableLanguage4
             self.pumpManager.state.selectableLanguage5 = dataUserOption.selectableLanguage5
+            self.pumpManager.state.bolusState = .noBolus
             self.pumpManager.state.units = dataUserOption.units
             self.pumpManager.currentBaseBasalRate = data.currentBasal
             self.pumpManager.state.pumpTime = dataTimeUtc.time
