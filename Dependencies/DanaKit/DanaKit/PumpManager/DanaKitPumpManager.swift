@@ -395,12 +395,19 @@ extension DanaKitPumpManager: PumpManager {
                             return
                         }
                         
-                        self.doseEntry = UnfinalizedDose(units: units, duration: self.estimatedDuration(toBolus: units), activationType: activationType, insulinType: self.state.insulinType!)
+                        let duration = self.estimatedDuration(toBolus: units)
+                        self.doseEntry = UnfinalizedDose(units: units, duration: duration, activationType: activationType, insulinType: self.state.insulinType!)
                         self.doseReporter = DanaKitDoseProgressReporter(total: units)
                         
                         self.state.lastStatusDate = Date()
                         self.state.bolusState = .inProgress
                         self.notifyStateDidChange()
+                        
+                        // To ensure the bolus state doesnt block loop, we set a timer to remove the blocking bolusstate
+                        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                            self.state.bolusState = .noBolus
+                            self.notifyStateDidChange()
+                        }
                         
                         completion(nil)
                     } catch {
