@@ -93,6 +93,24 @@ public class DanaKitPumpManager: DeviceManager {
     public func stopScan() {
         DanaKitPumpManager.bluetoothManager.stopScan()
     }
+    
+    // Not persisted
+    var provideHeartbeat: Bool = false
+
+    private var lastHeartbeat: Date = .distantPast
+    
+    public func setMustProvideBLEHeartbeat(_ mustProvideBLEHeartbeat: Bool) {
+        provideHeartbeat = mustProvideBLEHeartbeat
+    }
+
+    private func issueHeartbeatIfNeeded() {
+        if self.provideHeartbeat, Date().timeIntervalSince(lastHeartbeat) > 2 * 60 {
+            self.pumpDelegate.notify { (delegate) in
+                delegate?.pumpManagerBLEHeartbeatDidFire(self)
+            }
+            self.lastHeartbeat = Date()
+        }
+    }
 }
 
 extension DanaKitPumpManager: PumpManager {
@@ -215,7 +233,9 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public func ensureCurrentPumpData(completion: ((Date?) -> Void)?) {
+        log.default("%{public}@: Syncing pump data", #function)
         guard self.state.bolusState == .noBolus else {
+            log.error("%{public}@: Bolus state is incorrect", #function)
             completion?(nil)
             return
         }
@@ -223,6 +243,7 @@ extension DanaKitPumpManager: PumpManager {
         self.ensureConnected { result in
             switch result {
             case .failure:
+                self.log.error("%{public}@: Connection failure", #function)
                 completion?(nil)
                 return
             case .success:
@@ -233,6 +254,7 @@ extension DanaKitPumpManager: PumpManager {
                     self.disconnect()
  
                     DispatchQueue.main.async {
+                        self.issueHeartbeatIfNeeded()
                         self.notifyStateDidChange()
                         
                         self.pumpDelegate.notify { (delegate) in
@@ -314,9 +336,6 @@ extension DanaKitPumpManager: PumpManager {
         }
     }
     
-    public func setMustProvideBLEHeartbeat(_ mustProvideBLEHeartbeat: Bool) {
-    }
-    
     public func createBolusProgressReporter(reportingOn dispatchQueue: DispatchQueue) -> DoseProgressReporter? {
         return doseReporter
     }
@@ -333,7 +352,9 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public func enactBolus(units: Double, activationType: BolusActivationType, completion: @escaping (PumpManagerError?) -> Void) {
+        log.default("%{public}@: Enact bolus", #function)
         guard self.state.bolusState == .noBolus else {
+            log.error("%{public}@: Bolus state is incorrect", #function)
             completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpIsBusy))
             return
         }
@@ -344,6 +365,7 @@ extension DanaKitPumpManager: PumpManager {
         self.ensureConnected { result in
             switch result {
             case .failure:
+                self.log.error("%{public}@: Connection error", #function)
                 self.state.bolusState = .noBolus
                 self.notifyStateDidChange()
                 
@@ -395,6 +417,7 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public func cancelBolus(completion: @escaping (PumpManagerResult<DoseEntry?>) -> Void) {
+        log.default("%{public}@: Cancel bolus", #function)
         let oldBolusState = self.state.bolusState
         self.state.bolusState = .canceling
         self.notifyStateDidChange()
@@ -402,6 +425,7 @@ extension DanaKitPumpManager: PumpManager {
         self.ensureConnected { result in
             switch result {
             case .failure:
+                self.log.error("%{public}@: Connection error", #function)
                 self.state.bolusState = oldBolusState
                 self.notifyStateDidChange()
                 
@@ -448,7 +472,9 @@ extension DanaKitPumpManager: PumpManager {
     /// Currently, the above is implemented with a simpel U/hr -> % calculator
     /// TODO: Finetune the calculator and find a way to deal with 90 min temp basal i.e.
     public func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
+        log.default("%{public}@: Enact temp basal", #function)
         guard self.state.bolusState == .noBolus else {
+            log.error("%{public}@: Bolus state is incorrect", #function)
             completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpIsBusy))
             return
         }
@@ -456,11 +482,13 @@ extension DanaKitPumpManager: PumpManager {
         self.ensureConnected { result in
             switch result {
             case .failure:
+                self.log.error("%{public}@: Conenction error", #function)
                 completion(PumpManagerError.connection(DanaKitPumpManagerError.noConnection))
                 return
             case .success:
                 Task {
                     guard !self.state.isPumpSuspended else {
+                        self.log.error("%{public}@: Pump is suspended", #function)
                         self.disconnect()
                         completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpSuspended))
                         return
@@ -578,6 +606,7 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
                             }
                         } else {
+                            self.log.error("%{public}@: Unsupported temp basal duration: %{public}@", #function, duration)
                             self.disconnect()
                             completion(PumpManagerError.configuration(DanaKitPumpManagerError.unsupportedTempBasal(duration)))
                         }
@@ -591,7 +620,10 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public func suspendDelivery(completion: @escaping (Error?) -> Void) {
+        log.default("%{public}@: Suspend delivery", #function)
+        
         guard self.state.bolusState == .noBolus else {
+            log.error("%{public}@: Bolus state is incorrect", #function)
             completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpIsBusy))
             return
         }
@@ -599,6 +631,7 @@ extension DanaKitPumpManager: PumpManager {
         self.ensureConnected { result in
             switch result {
             case .failure:
+                self.log.error("%{public}@: Connection error", #function)
                 completion(PumpManagerError.connection(DanaKitPumpManagerError.noConnection))
                 return
             case .success:
@@ -638,7 +671,10 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public func resumeDelivery(completion: @escaping (Error?) -> Void) {
+        log.default("%{public}@: Resume delivery", #function)
+        
         guard self.state.bolusState == .noBolus else {
+            log.error("%{public}@: Incorrect bolus state", #function)
             completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpIsBusy))
             return
         }
@@ -646,6 +682,7 @@ extension DanaKitPumpManager: PumpManager {
         self.ensureConnected { result in
             switch result {
             case .failure:
+                self.log.error("%{public}@: Connection error", #function)
                 completion(PumpManagerError.connection(DanaKitPumpManagerError.noConnection))
                 return
             case .success:
@@ -685,7 +722,9 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public func syncBasalRateSchedule(items scheduleItems: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
+        log.default("%{public}@: Sync basal", #function)
         guard self.state.bolusState == .noBolus else {
+            log.error("%{public}@: Incorrect bolus state", #function)
             completion(.failure(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpIsBusy)))
             return
         }
@@ -693,6 +732,7 @@ extension DanaKitPumpManager: PumpManager {
         self.ensureConnected { result in
             switch result {
             case .failure:
+                self.log.error("%{public}@: Connection error", #function)
                 completion(.failure(PumpManagerError.connection(DanaKitPumpManagerError.noConnection)))
                 return
             case .success:
@@ -832,6 +872,7 @@ extension DanaKitPumpManager: PumpManager {
             case .success:
                 Task {
                     do {
+                        let offset = Date.now.timeIntervalSince(self.state.pumpTime ?? Date.distantPast)
                         let packet = generatePacketGeneralSetPumpTimeUtcWithTimezone(options: PacketGeneralSetPumpTimeUtcWithTimezone(time: Date.now, zoneOffset: UInt8(round(Double(TimeZone.current.secondsFromGMT(for: Date.now) / 3600)))))
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
                         
@@ -842,6 +883,9 @@ extension DanaKitPumpManager: PumpManager {
                             return
                         }
                         
+                        self.pumpDelegate.notify { (delegate) in
+                            delegate?.pumpManager(self, didAdjustPumpClockBy: offset)
+                        }
                         completion(nil)
                     } catch {
                         self.disconnect()
