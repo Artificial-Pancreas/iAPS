@@ -42,6 +42,7 @@
   "rulerMarks" : false,
   "maxCarbs" : 1000,
   "displayFatAndProteinOnWatch" : false,
+  "confirmBolusFaster": false,
   "onlyAutotuneBasals" : false,
   "overrideFactor" : 0.8,
   "useCalc" : false,
