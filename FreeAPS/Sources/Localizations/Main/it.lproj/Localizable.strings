@@ -1195,7 +1195,7 @@ Enact a temp Basal or a temp target */
 "Apple Health" = "Apple Salute";
 
 /* */
-"Connect to Apple Health" = "Connetti con Apple Salute";
+"Connect to Apple Health" = "Connetti ad Apple Salute";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Per scrivere dati su Apple Health devi dare il permesso in Impostazioni > Salute > Accesso dati";
