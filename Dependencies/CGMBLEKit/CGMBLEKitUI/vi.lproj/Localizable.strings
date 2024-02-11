@@ -27,7 +27,7 @@ Title text for the button to remove a CGM from Loop */
 "Latest Reading" = "Kết quả đọc mới nhất";
 
 /* Section title for latest connection date */
-"Latest Connection" = "Kết nối gần đây nhất";
+"Latest Connection" = "Kết nối mới nhất";
 
 /* Button title to open CGM app */
 "Open App" = "Mở ứng dụng";

@@ -5,11 +5,16 @@ extension StatConfig {
         @Published var overrideHbA1cUnit = false
         @Published var low: Decimal = 4 / 0.0555
         @Published var high: Decimal = 10 / 0.0555
-        @Published var hours: Decimal = 6
         @Published var xGridLines = false
         @Published var yGridLines: Bool = false
         @Published var oneDimensionalGraph = false
         @Published var rulerMarks: Bool = false
+        @Published var skipBolusScreenAfterCarbs: Bool = false
+        @Published var useFPUconversion: Bool = true
+        @Published var useTargetButton: Bool = false
+        @Published var hours: Decimal = 6
+        @Published var alwaysUseColors: Bool = true
+        @Published var timeSettings: Bool = true
 
         var units: GlucoseUnits = .mmolL
 
@@ -21,6 +26,11 @@ extension StatConfig {
             subscribeSetting(\.xGridLines, on: $xGridLines) { xGridLines = $0 }
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
             subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
+            subscribeSetting(\.timeSettings, on: $timeSettings) { timeSettings = $0 }
+            subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { alwaysUseColors = $0 }
+            subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
+            subscribeSetting(\.useTargetButton, on: $useTargetButton) { useTargetButton = $0 }
+            subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
