@@ -499,7 +499,6 @@ extension DanaKitPumpManager: PumpManager {
                         if (duration < .ulpOfOne) {
                             let packet = generatePacketBasalCancelTemporary()
                             let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
-                            
                             self.disconnect()
                             
                             guard result.success else {
@@ -524,16 +523,14 @@ extension DanaKitPumpManager: PumpManager {
                             // 15 min. Only basal boosts allowed here
                             let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
                             guard let percentage = percentage else {
+                                self.disconnect()
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
-                                return
-                            }
-                            guard percentage > 100 else {
-                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal is above or equal to 100%")))
                                 return
                             }
                             
                             let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage))
                             let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                            self.disconnect()
                             
                             guard result.success else {
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump send error")))
@@ -554,16 +551,14 @@ extension DanaKitPumpManager: PumpManager {
                             // 30 min. Only temp basal below 100% allowed here
                             let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
                             guard let percentage = percentage else {
+                                self.disconnect()
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
-                                return
-                            }
-                            guard percentage < 100 else {
-                                completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal is below or equal to 100%")))
                                 return
                             }
                             
                             let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage))
                             let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                            self.disconnect()
                             
                             guard result.success else {
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump send error")))
@@ -584,12 +579,14 @@ extension DanaKitPumpManager: PumpManager {
                             // Only full hours are allowed here
                             let percentage = absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule)
                             guard let percentage = percentage else {
+                                self.disconnect()
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
                                 return
                             }
                             
                             let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage))
                             let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                            self.disconnect()
                             
                             guard result.success else {
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump send error")))
