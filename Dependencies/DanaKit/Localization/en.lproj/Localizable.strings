@@ -233,3 +233,96 @@
 
 /* text off */
 "Off" = "Off"
+
+/* 12h */
+"12h notation" = "12h notation"
+
+/* 24h */
+"24h notation" = "24h notation"
+
+/* Text for Scroll function */
+"Scroll function" = "Scroll function"
+
+/* text for second */
+"sec" = "sec"
+
+/* backlightOnTimeInSec */
+"Backlight on time" = "Verlichting aan tijd"
+
+/* lcdOnTimeInSec */
+"Lcd on time" = "Lcd on time"
+
+/* Alert title for batteryZeroPercent */
+"Pump battery 0%" = "Pump battery 0%"
+
+/* Alert body for batteryZeroPercent */
+"Pump battery is empty. Replace it now!" = "Pump battery is empty. Replace it now!"
+
+/* Alert title for pumpError */
+"Pump error" = "Pump error"
+
+/* Alert body for pumpError */
+"Check the pump and try again" = "Check the pump and try again"
+
+/* Alert title for occlusion */
+"Occlusion" = "Occlusion"
+
+/* Alert body for occlusion */
+"Check the reservoir and infus and try again" = "Check the reservoir and infus and try again"
+
+/* Alert title for lowBattery */
+"Low pump battery" = "Low pump battery"
+
+/* Alert body for lowBattery */
+"Pump battery needs to be replaced soon" = "Pump battery needs to be replaced soon"
+
+/* Alert title for shutdown */
+"Pump shutdown" = "Pump shutdown"
+
+/* Alert body for shutdown */
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump"
+
+/* Alert title for basalCompare */
+"Basal Compare" = "Basal Compare"
+
+/* Alert title for bloodSugarMeasure */
+"Blood glucose Measure" = "Blood glucose Measure"
+
+/* Alert title for remainingInsulinLevel */
+"Remaining insulin level" = "Remaining insulin level"
+
+/* Alert title for emptyReservoir */
+"Empty reservoir" = "Empty reservoir"
+
+/* Alert body for emptyReservoir */
+"Reservoir is empty. Replace it now!" = "Reservoir is empty. Replace it now!"
+
+/* Alert title for emptyReservoir */
+"Check chaft" = "Check chaft"
+
+/* Alert body for checkShaft */
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again"
+
+/* Alert title for basalMax */
+"Basal limit reached" = "Basal limit reached"
+
+/* Alert body for basalMax */
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit"
+
+/* Alert title for dailyMax */
+"Daily limit reached" = "Daily limit reached"
+
+/* Alert body for basalMax */
+"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit"
+
+/* Alert title for bloodSugarCheckMiss */
+"Missed Blood glucose check" = "Missed Blood glucose check"
+
+/* Alert body for bloodSugarCheckMiss */
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump"
+
+/* Alert title for unknown */
+"Unknown error" = "Unknown error"
+
+/* Alert body for unknown */
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "An unknown error has occurred during processing the alert from the pump. Please report this"

@@ -251,3 +251,96 @@
 
 /* text off */
 "Off" = "Uit"
+
+/* 12h */
+"12h notation" = "12 uursnotatie"
+
+/* 24h */
+"24h notation" = "24 uursnotatie"
+
+/* Text for Scroll function */
+"Scroll function" = "Scrol functie"
+
+/* text for second */
+"sec" = "sec"
+
+/* backlightOnTimeInSec */
+"Backlight on time" = "Verlichting aan tijd"
+
+/* lcdOnTimeInSec */
+"Lcd on time" = "Lcd aan tijd"
+
+/* Alert title for batteryZeroPercent */
+"Pump battery 0%" = "Pomp batterij 0%"
+
+/* Alert body for batteryZeroPercent */
+"Pump battery is empty. Replace it now!" = "Pomp batterij is leeg. Vervang deze nu!"
+
+/* Alert title for pumpError */
+"Pump error" = "Pomp error"
+
+/* Alert body for pumpError */
+"Check the pump and try again" = "Controleer de pomp en probeer opnieuw"
+
+/* Alert title for occlusion */
+"Occlusion" = "Verstopping"
+
+/* Alert body for occlusion */
+"Check the reservoir and infus and try again" = "Controleer het reservoir en infuus en probeer opnieuw"
+
+/* Alert title for lowBattery */
+"Low pump battery" = "Pomp batterij laag"
+
+/* Alert body for lowBattery */
+"Pump battery needs to be replaced soon" = "Pomp batterij moet binnenkort vervangen worden"
+
+/* Alert title for shutdown */
+"Pump shutdown" = "Pomp is uitgeschakeld"
+
+/* Alert body for shutdown */
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Er is al te lang geen interactie met de pomp geweest. Schakel deze functie in de pomp uit of communiceer met de pomp"
+
+/* Alert title for basalCompare */
+"Basal Compare" = "Basaal vergelijken"
+
+/* Alert title for bloodSugarMeasure */
+"Blood glucose Measure" = "Bloed glucose meeting"
+
+/* Alert title for remainingInsulinLevel */
+"Remaining insulin level" = "Resterende insuline niveau"
+
+/* Alert title for emptyReservoir */
+"Empty reservoir" = "Reservoir leeg"
+
+/* Alert body for emptyReservoir */
+"Reservoir is empty. Replace it now!" = "Reservoir is leeg. Vervang deze nu!"
+
+/* Alert title for emptyReservoir */
+"Check chaft" = "Controleer chaft"
+
+/* Alert body for checkShaft */
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "De pomp heeft een probleem met het chaft gedetecteerd. Verwijder het reservoir, controleer alles en probeer het opnieuw"
+
+/* Alert title for basalMax */
+"Basal limit reached" = "Basaal limiet bereikt"
+
+/* Alert body for basalMax */
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Uw dagelijkse basaallimiet is bereikt. Neem contact op met uw Dana-distributeur om de limiet te verhogen"
+
+/* Alert title for dailyMax */
+"Daily limit reached" = "Dagelijks limiet bereikt"
+
+/* Alert body for basalMax */
+"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Uw dagelijkse insuline limiet is bereikt. Neem contact op met uw Dana-distributeur om de limiet te verhogen"
+
+/* Alert title for bloodSugarCheckMiss */
+"Missed Blood glucose check" = "Gemisde bloed glucose check"
+
+/* Alert body for bloodSugarCheckMiss */
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Er is een herinnering voor bloedglucosecontrole ingesteld in uw pomp en deze wordt geactiveerd. Verwijder deze of geef uw glucosewaarde aan de pomp"
+
+/* Alert title for unknown */
+"Unknown error" = "Onbekende error"
+
+/* Alert body for unknown */
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "Er is een onbekende fout opgetreden tijdens het verwerken van de waarschuwing van de pomp. Meld dit alstublieft"

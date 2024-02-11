@@ -9,7 +9,6 @@
 import CoreBluetooth
 import Foundation
 import os.log
-import SwiftUI
 
 public struct DanaPumpScan {
     let bleIdentifier: String
@@ -37,7 +36,6 @@ class BluetoothManager : NSObject {
     private(set) var peripheral: CBPeripheral?
     private var peripheralManager: PeripheralManager?
     
-    private var view: UIViewController?
     private var connectionCompletion: (Error?) -> Void = { _ in }
     
     private var devices: [DanaPumpScan] = []
@@ -77,23 +75,21 @@ class BluetoothManager : NSObject {
         log.info("%{public}@: Stopped scanning", #function)
     }
     
-    func connect(_ bleIdentifier: String, _ view: UIViewController?, _ completion: @escaping (Error?) -> Void) throws {
+    func connect(_ bleIdentifier: String, _ completion: @escaping (Error?) -> Void) throws {
         guard let identifier = UUID(uuidString: bleIdentifier) else {
             log.error("%{public}@: Invalid identifier - %{public}@", #function, bleIdentifier)
             return
         }
         
-        self.view = view
         self.connectionCompletion = completion
         
         let peripherals = manager.retrievePeripherals(withIdentifiers: [identifier])
         if let peripheral = peripherals.first {
             DispatchQueue.main.async {
-                let view = self.view ?? UIApplication.shared.windows.last!.rootViewController!
                 self.peripheral = peripheral
-                self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, view, self.connectionCompletion)
+                self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, self.connectionCompletion)
                 
-                self.log.default("%{public}@: Found peripheral! %{public}@", #function, peripheral)
+//                self.log.default("%{public}@: Found peripheral! %{public}@", #function, peripheral)
                 self.manager.connect(peripheral, options: nil)
             }
             return
@@ -111,19 +107,17 @@ class BluetoothManager : NSObject {
         }
     }
     
-    func connect(_ peripheral: CBPeripheral, _ view: UIViewController?, _ completion: @escaping (Error?) -> Void) {
+    func connect(_ peripheral: CBPeripheral, _ completion: @escaping (Error?) -> Void) {
         if self.peripheral != nil {
             self.disconnect(self.peripheral!)
         }
         
         manager.connect(peripheral, options: nil)
         
-        self.view = view
         self.connectionCompletion = completion
     }
     
     func disconnect(_ peripheral: CBPeripheral) {
-        log.default("Disconnecting from pump...")
         self.autoConnectUUID = nil
         self.manager.cancelPeripheralConnection(peripheral)
     }
@@ -168,7 +162,7 @@ extension BluetoothManager : CBCentralManagerDelegate {
         
         if self.autoConnectUUID != nil && peripheral.identifier.uuidString == self.autoConnectUUID {
             self.stopScan()
-            self.connect(peripheral, self.view, self.connectionCompletion)
+            self.connect(peripheral, self.connectionCompletion)
             return
         }
         
@@ -185,13 +179,11 @@ extension BluetoothManager : CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         
-        log.default("%{public}@: %{public}@", #function, peripheral)
+//        log.default("%{public}@: %{public}@", #function, peripheral)
         
         DispatchQueue.main.async {
-            let view = self.view ?? UIApplication.shared.windows.last!.rootViewController!
-            
             self.peripheral = peripheral
-            self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, view, self.connectionCompletion)
+            self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, self.connectionCompletion)
             
             self.pumpManagerDelegate?.state.deviceName = peripheral.name
             self.pumpManagerDelegate?.state.bleIdentifier = peripheral.identifier.uuidString

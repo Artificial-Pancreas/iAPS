@@ -106,10 +106,7 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
         switch(screen) {
         case .debugView:
             let viewModel = DanaKitDebugViewModel(self.pumpManager)
-            let view = hostingController(rootView: DanaKitDebugView(viewModel: viewModel))
-            viewModel.setView(view)
-            
-            return view
+            return hostingController(rootView: DanaKitDebugView(viewModel: viewModel))
         case .firstRunScreen:
             let view = DanaKitSetupView(nextAction: self.stepFinished, debugAction: { self.navigateTo(.debugView) }) //self.allowDebugFeatures ? { self.navigateTo(.debugView) } : {})
             return hostingController(rootView: view)
@@ -134,10 +131,7 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             self.pumpManager?.notifyStateDidChange()
             
             let viewModel = DanaKitScanViewModel(self.pumpManager, nextStep: self.stepFinished)
-            let view = hostingController(rootView: DanaKitScanView(viewModel: viewModel))
-            viewModel.setView(view)
-            
-            return view
+            return hostingController(rootView: DanaKitScanView(viewModel: viewModel))
         case .setupComplete:
             let nextStep: () -> Void = {
                 self.pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didCreatePumpManager: self.pumpManager!)

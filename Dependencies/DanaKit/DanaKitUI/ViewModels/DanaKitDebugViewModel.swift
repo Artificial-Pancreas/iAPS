@@ -27,17 +27,12 @@ class DanaKitDebugViewModel : ObservableObject {
     private let log = OSLog(category: "DebugView")
     private var pumpManager: DanaKitPumpManager?
     private var connectedDevice: DanaPumpScan?
-    private var view: UIViewController?
     
     init(_ pumpManager: DanaKitPumpManager? = nil) {
         self.pumpManager = pumpManager
         
         self.pumpManager?.addScanDeviceObserver(self, queue: .main)
         self.pumpManager?.addStateObserver(self, queue: .main)
-    }
-    
-    func setView(_ view: UIViewController) {
-        self.view = view
     }
     
     func scan() {
@@ -50,13 +45,13 @@ class DanaKitDebugViewModel : ObservableObject {
     }
     
     func connect() {
-        guard let device = scannedDevices.last, let view = self.view else {
+        guard let device = scannedDevices.last else {
             log.error("No view or device...")
             return
         }
         
         self.pumpManager?.stopScan()
-        self.pumpManager?.connect(device.peripheral, view, connectCompletion)
+        self.pumpManager?.connect(device.peripheral, connectCompletion)
         self.connectedDevice = device
     }
     

@@ -26,7 +26,6 @@ class DanaKitScanViewModel : ObservableObject {
      
     private let log = OSLog(category: "ScanView")
     private var pumpManager: DanaKitPumpManager?
-    private var view: UIViewController?
     private var nextStep: () -> Void
     private var foundDevices: [String:CBPeripheral] = [:]
     
@@ -45,19 +44,15 @@ class DanaKitScanViewModel : ObservableObject {
         }
     }
     
-    func setView(_ view: UIViewController) {
-        self.view = view
-    }
-    
     func connect(_ item: ScanResultItem) {
-        guard let device = self.foundDevices[item.bleIdentifier], let view = self.view else {
+        guard let device = self.foundDevices[item.bleIdentifier] else {
             log.error("No view or device...")
             return
         }
         
         self.stopScan()
         
-        self.pumpManager?.connect(device, view, { error in self.connectComplete(error, device) })
+        self.pumpManager?.connect(device) { error in self.connectComplete(error, device) }
         self.isConnecting = true
     }
     
@@ -74,10 +69,6 @@ class DanaKitScanViewModel : ObservableObject {
     }
     
     func stopScan() {
-        if !self.isScanning {
-            return
-        }
-        
         self.pumpManager?.stopScan()
         self.isScanning = false
     }

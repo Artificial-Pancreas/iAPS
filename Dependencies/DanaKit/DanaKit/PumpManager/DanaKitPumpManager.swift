@@ -11,7 +11,6 @@ import HealthKit
 import LoopKit
 import UserNotifications
 import os.log
-import SwiftUI
 import CoreBluetooth
 
 private enum ConnectionResult {
@@ -77,8 +76,8 @@ public class DanaKitPumpManager: DeviceManager {
         return lines.joined(separator: "\n")
     }
     
-    public func connect(_ peripheral: CBPeripheral, _ view: UIViewController?, _ completion: @escaping (Error?) -> Void) {
-        DanaKitPumpManager.bluetoothManager.connect(peripheral, view, completion)
+    public func connect(_ peripheral: CBPeripheral, _ completion: @escaping (Error?) -> Void) {
+        DanaKitPumpManager.bluetoothManager.connect(peripheral, completion)
     }
     
     public func disconnect(_ peripheral: CBPeripheral) {
@@ -234,11 +233,6 @@ extension DanaKitPumpManager: PumpManager {
     
     public func ensureCurrentPumpData(completion: ((Date?) -> Void)?) {
         log.default("%{public}@: Syncing pump data", #function)
-        guard self.state.bolusState == .noBolus else {
-            log.error("%{public}@: Bolus state is incorrect", #function)
-            completion?(nil)
-            return
-        }
         
         self.ensureConnected { result in
             switch result {
@@ -923,34 +917,34 @@ extension DanaKitPumpManager: PumpManager {
             
         // State hasnt been updated yet, so we have to try to connect
         } else if DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral != nil {
-            self.connect(DanaKitPumpManager.bluetoothManager.peripheral!, nil, { error in
+            self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { error in
                 if error == nil {
                     completion(.success)
                 } else {
                     completion(.failure)
                 }
-            })
+            }
         
         // There is no active connection, but we stored the peripheral. We can quickly reconnect
         } else if !DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral != nil {
-            self.connect(DanaKitPumpManager.bluetoothManager.peripheral!, nil, { error in
+            self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { error in
                 if error == nil {
                     completion(.success)
                 } else {
                     completion(.failure)
                 }
-            })
+            }
             
         // No active connection and no stored peripheral. We have to scan for device before being able to send command
         } else if !DanaKitPumpManager.bluetoothManager.isConnected && self.state.bleIdentifier != nil {
             do {
-                try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!, nil, { error in
+                try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!) { error in
                     if error == nil {
                         completion(.success)
                     } else {
                         completion(.failure)
                     }
-                })
+                }
             } catch {
                 completion(.failure)
             }
@@ -1026,6 +1020,18 @@ extension DanaKitPumpManager {
 
     public func removeScanDeviceObserver(_ observer: StateObserver) {
         scanDeviceObservers.removeElement(observer)
+    }
+    
+    func notifyAlert(_ alert: PumpManagerAlert) {
+        let identifier = Alert.Identifier(managerIdentifier: self.managerIdentifier, alertIdentifier: alert.identifier)
+        let loopAlert = Alert(identifier: identifier, foregroundContent: alert.foregroundContent, backgroundContent: alert.backgroundContent, trigger: .immediate)
+        
+        let event = NewPumpEvent(date: Date(), dose: nil, raw: alert.raw, title: "Alarm: \(alert.foregroundContent.title)", type: .alarm, alarmType: alert.type)
+        
+        self.pumpDelegate.notify { delegate in
+            delegate?.issueAlert(loopAlert)
+            delegate?.pumpManager(self, hasNewPumpEvents: [event], lastReconciliation: Date(), completion: { _ in })
+        }
     }
     
     func notifyScanDeviceDidChange(_ device: DanaPumpScan) {
