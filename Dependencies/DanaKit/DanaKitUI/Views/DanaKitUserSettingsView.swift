@@ -14,7 +14,7 @@ struct DanaKitUserSettingsView: View {
     
     private var revervoirWarningView: PickerView {
         PickerView(
-            currentOption: Int(viewModel.lowReservoirRate),
+            value: Int(viewModel.lowReservoirRate),
             allowedOptions: Array(5...40),
             formatter: { value in String(value) + LocalizedString("U", comment: "Insulin unit")},
             didChange: { value in viewModel.lowReservoirRate = UInt8(value) },
@@ -25,12 +25,52 @@ struct DanaKitUserSettingsView: View {
     
     private var time24hView: PickerView {
         PickerView(
-            currentOption: viewModel.isTimeDisplay24H ? 1 : 0,
+            value: viewModel.isTimeDisplay24H ? 1 : 0,
             allowedOptions: [0, 1],
-            formatter: { value in value == 1 ? LocalizedString("On", comment: "text on") : LocalizedString("Off", comment: "text off")},
+            formatter: { value in value == 1 ? LocalizedString("24h notation", comment: "24h notation") : LocalizedString("12h notation", comment: "12h notation")},
             didChange: { value in viewModel.isTimeDisplay24H = value == 1 },
             title: LocalizedString("24h display", comment: "Text for 24h display"),
             description: LocalizedString("Should time be display in 12h or 24h", comment: "Description for 24h display")
+        )
+    }
+    
+    private var buttonScrollOnOffView: PickerView {
+        PickerView(
+            value: viewModel.isButtonScrollOnOff ? 1 : 0,
+            allowedOptions: [0, 1],
+            formatter: { value in value == 1 ? LocalizedString("On", comment: "text on") : LocalizedString("Off", comment: "text off")},
+            didChange: { value in viewModel.isButtonScrollOnOff = value == 1 },
+            title: LocalizedString("Scroll function", comment: "Text for Scroll function")
+        )
+    }
+    
+    private var backlightOnTimeInSecView: PickerView {
+        PickerView(
+            value: Int(viewModel.backlightOnTimeInSec),
+            allowedOptions: Array(1...48).map({ $0 * 5 }),
+            formatter: { value in "\(value) \(LocalizedString("sec", comment: "text for second"))"},
+            didChange: { value in viewModel.backlightOnTimeInSec = UInt8(value) },
+            title: LocalizedString("Backlight on time", comment: "backlightOnTime")
+        )
+    }
+    
+    private var lcdOnTimeInSecView: PickerView {
+        PickerView(
+            value: Int(viewModel.lcdOnTimeInSec),
+            allowedOptions: Array(1...48).map({ $0 * 5 }),
+            formatter: { value in "\(value) \(LocalizedString("sec", comment: "text for second"))"},
+            didChange: { value in viewModel.lcdOnTimeInSec = UInt8(value) },
+            title: LocalizedString("Lcd on time", comment: "lcdOnTime")
+        )
+    }
+    
+    private var beepAlarmView: PickerView {
+        PickerView(
+            value: Int(viewModel.beepAndAlarm.rawValue),
+            allowedOptions: BeepAlarmType.all(),
+            formatter: beepFormatter,
+            didChange: { value in viewModel.beepAndAlarm = BeepAlarmType(rawValue: UInt8(value)) ?? .sound },
+            title: LocalizedString("Alarm beeps", comment: "beepAndAlarm")
         )
     }
     
@@ -51,19 +91,68 @@ struct DanaKitUserSettingsView: View {
                         Text(LocalizedString("24h display", comment: "Text for 24h display"))
                             .foregroundColor(Color.primary)
                         Spacer()
-                        Text(viewModel.isTimeDisplay24H ? LocalizedString("On", comment: "text on") : LocalizedString("Off", comment: "text off"))
+                        Text(viewModel.isTimeDisplay24H ? LocalizedString("24h notation", comment: "24h notation") : LocalizedString("12h notation", comment: "12h notation"))
+                    }
+                }
+                NavigationLink(destination: buttonScrollOnOffView) {
+                    HStack {
+                        Text(LocalizedString("Scroll function", comment: "Text for Scroll function"))
+                            .foregroundColor(Color.primary)
+                        Spacer()
+                        Text(viewModel.isButtonScrollOnOff ? LocalizedString("On", comment: "text on") : LocalizedString("Off", comment: "text off"))
+                    }
+                }
+                NavigationLink(destination: backlightOnTimeInSecView) {
+                    HStack {
+                        Text(LocalizedString("Backlight on time", comment: "backlightOnTime"))
+                            .foregroundColor(Color.primary)
+                        Spacer()
+                        Text("\(viewModel.backlightOnTimeInSec) \(LocalizedString("sec", comment: "text for second"))")
+                    }
+                }
+                NavigationLink(destination: lcdOnTimeInSecView) {
+                    HStack {
+                        Text(LocalizedString("Lcd on time", comment: "lcdOnTime"))
+                            .foregroundColor(Color.primary)
+                        Spacer()
+                        Text("\(viewModel.lcdOnTimeInSec) \(LocalizedString("sec", comment: "text for second"))")
+                    }
+                }
+                NavigationLink(destination: beepAlarmView) {
+                    HStack {
+                        Text(LocalizedString("Alarm beeps", comment: "beepAndAlarm"))
+                            .foregroundColor(Color.primary)
+                        Spacer()
+                        Text(beepFormatter(value: Int(viewModel.beepAndAlarm.rawValue)))
                     }
                 }
             }
             Spacer()
             Button(action: { viewModel.storeUserOption() }) {
-                Text(LocalizedString("Save", comment: "Text for save button"))
-                    .actionButtonStyle(.primary)
-                    .padding()
+                if viewModel.storingUseroption {
+                    ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                } else {
+                    Text(LocalizedString("Save", comment: "Text for save button"))
+                        .actionButtonStyle(.primary)
+                        .padding()
+                }
             }
             .disabled(viewModel.storingUseroption)
         }
         .navigationBarTitle(LocalizedString("User options", comment: "Title for user options"))
+    }
+    
+    private func beepFormatter(value: Int) -> String {
+        switch value {
+        case 1:
+            return LocalizedString("Sound", comment: "beepAndAlarm.sound")
+        case 2:
+            return LocalizedString("Vibration", comment: "beepAndAlarm.vibration")
+        case 3:
+            return LocalizedString("Both", comment: "beepAndAlarm.both")
+        default:
+            return ""
+        }
     }
 }
 

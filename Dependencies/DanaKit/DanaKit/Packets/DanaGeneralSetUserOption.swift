@@ -11,19 +11,13 @@ public struct PacketGeneralSetUserOption {
     var isButtonScrollOnOff: Bool
     var beepAndAlarm: UInt8
     var lcdOnTimeInSec: UInt8
-    var backlightOnTimInSec: UInt8
+    var backlightOnTimeInSec: UInt8
     var selectedLanguage: UInt8
     var units: UInt8
     var shutdownHour: UInt8
     var lowReservoirRate: UInt8
     var cannulaVolume: UInt16
     var refillAmount: UInt16
-
-    var selectableLanguage1: UInt8
-    var selectableLanguage2: UInt8
-    var selectableLanguage3: UInt8
-    var selectableLanguage4: UInt8
-    var selectableLanguage5: UInt8
 
     /** Only on hw v7+ */
     var targetBg: UInt16?
@@ -37,7 +31,7 @@ func generatePacketGeneralSetUserOption(options: PacketGeneralSetUserOption) -> 
     data[1] = options.isButtonScrollOnOff ? 0x01 : 0x00
     data[2] = options.beepAndAlarm
     data[3] = options.lcdOnTimeInSec
-    data[4] = options.backlightOnTimInSec
+    data[4] = options.backlightOnTimeInSec
     data[5] = options.selectedLanguage
     data[6] = options.units
     data[7] = options.shutdownHour

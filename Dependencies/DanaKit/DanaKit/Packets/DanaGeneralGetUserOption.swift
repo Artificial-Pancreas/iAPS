@@ -6,10 +6,20 @@
 //  Copyright © 2023 Randall Knutson. All rights reserved.
 //
 
+public enum BeepAlarmType: UInt8 {
+    case sound = 1
+    case vibration = 2
+    case both = 3
+    
+    static func all() -> [Int] {
+        [1, 2, 3]
+    }
+}
+
 public struct PacketGeneralGetUserOption {
     var isTimeDisplay24H: Bool
     var isButtonScrollOnOff: Bool
-    var beepAndAlarm: UInt8
+    var beepAndAlarm: BeepAlarmType
     var lcdOnTimeInSec: UInt8
     var backlightOnTimInSec: UInt8
     var selectedLanguage: UInt8
@@ -45,7 +55,7 @@ func parsePacketGeneralGetUserOption(data: Data) -> DanaParsePacket<PacketGenera
         data: PacketGeneralGetUserOption(
             isTimeDisplay24H: data[DataStart] == 0,
             isButtonScrollOnOff: data[DataStart + 1] == 1,
-            beepAndAlarm: data[DataStart + 2],
+            beepAndAlarm: BeepAlarmType(rawValue: data[DataStart + 2]) ?? .sound,
             lcdOnTimeInSec: data[DataStart + 3],
             backlightOnTimInSec: data[DataStart + 4],
             selectedLanguage: data[DataStart + 5],
@@ -59,7 +69,7 @@ func parsePacketGeneralGetUserOption(data: Data) -> DanaParsePacket<PacketGenera
             selectableLanguage3: data[DataStart + 15],
             selectableLanguage4: data[DataStart + 16],
             selectableLanguage5: data[DataStart + 17],
-            targetBg: data.count > 22 ? (data.uint16(at: DataStart + 18) / (data[DataStart + 6] == 6 ? 100 : 1)) : nil
+            targetBg: data.count >= 22 ? data.uint16(at: DataStart + 18) : nil
         )
     )
 }

@@ -189,7 +189,7 @@ extension BluetoothManager : CBCentralManagerDelegate {
             self.pumpManagerDelegate?.state.bleIdentifier = peripheral.identifier.uuidString
             self.pumpManagerDelegate?.notifyStateDidChange()
             
-            peripheral.readRSSI()
+            peripheral.discoverServices([PeripheralManager.SERVICE_UUID])
         }
     }
     

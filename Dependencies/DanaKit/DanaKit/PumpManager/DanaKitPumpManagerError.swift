@@ -16,6 +16,7 @@ public enum DanaKitPumpManagerError {
     case failedBasalAdjustment
     case failedTimeAdjustment
     case unsupportedTempBasal(_ duration: TimeInterval)
+    case unknown(_ message: String)
 }
 
 
@@ -40,6 +41,8 @@ extension DanaKitPumpManagerError: LocalizedError {
             return LocalizedString("Failed to adjust pump time", comment: "Error description when pump time failed to sync")
         case .pumpIsBusy:
             return LocalizedString("Action has been canceled, because the pump is busy", comment: "Error description when pump is busy (with bolussing probably)")
+        case .unknown(let message):
+            return "Unknown error occured: \(message)"
         }
     }
 }

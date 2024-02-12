@@ -6,8 +6,14 @@
 //  Copyright © 2023 Randall Knutson. All rights reserved.
 //
 
+enum LoopTempBasalDuration {
+    case min15
+    case min30
+}
+
 struct PacketLoopSetTemporaryBasal {
     var percent: UInt16
+    var duration: LoopTempBasalDuration
 }
 
 struct TemporaryBasalDuration {
@@ -27,7 +33,7 @@ func generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal) -
     let data = Data([
         UInt8(percent & 0xff),
         UInt8((percent >> 8) & 0xff),
-        UInt8((percent < 100 ? TemporaryBasalDuration.PARAM_30_MIN : TemporaryBasalDuration.PARAM_15_MIN) & 0xff),
+        UInt8((options.duration == .min30 ? TemporaryBasalDuration.PARAM_30_MIN : TemporaryBasalDuration.PARAM_15_MIN) & 0xff),
     ])
 
     return DanaGeneratePacket(

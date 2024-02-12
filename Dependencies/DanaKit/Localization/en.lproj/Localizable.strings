@@ -252,6 +252,18 @@
 /* lcdOnTimeInSec */
 "Lcd on time" = "Lcd on time"
 
+/* beepAndAlarm */
+"Alarm beeps" = "Alarm beeps"
+
+/* beepAndAlarm.sound */
+"Sound" = "Sound"
+
+/* beepAndAlarm.vibration */
+"Vibration" = "Vibration"
+
+/* beepAndAlarm.both */
+"Both" = "Both"
+
 /* Alert title for batteryZeroPercent */
 "Pump battery 0%" = "Pump battery 0%"
 
