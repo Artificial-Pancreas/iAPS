@@ -215,7 +215,7 @@ public final class G7Sensor: G7BluetoothManagerDelegate {
         }
 
         /// The Dexcom G7 advertises "DXCMxx" & te One+ "DX02xx", and later reports a full name of "Dexcomxx"
-        if name.hasPrefix("DXCM") || name.hasPrefix("DXCM") {
+        if name.hasPrefix("DXCM") || name.hasPrefix("DX02") {
             // If we're following this name or if we're scanning, connect
             if let sensorName = sensorID, name.suffix(2) == sensorName.suffix(2) {
                 return .makeActive
