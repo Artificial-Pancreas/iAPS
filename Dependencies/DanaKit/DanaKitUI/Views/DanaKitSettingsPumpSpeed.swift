@@ -11,10 +11,16 @@ import LoopKitUI
 
 struct DanaKitSettingsPumpSpeed: View {
     let speedsAllowed = BolusSpeed.all()
-    @State var currentSpeed: Int {
-        didSet {
-            didChange?(BolusSpeed.init(rawValue: UInt8(currentSpeed))!)
-        }
+    @State var value: Int
+    
+    private var currentValue: Binding<Int> {
+        Binding(
+            get: { value },
+            set: { newValue in
+                self.value = newValue
+                didChange?(BolusSpeed(rawValue: UInt8(newValue))!)
+            }
+       )
     }
     
     var didChange: ((BolusSpeed) -> Void)?
@@ -30,9 +36,9 @@ struct DanaKitSettingsPumpSpeed: View {
     @ViewBuilder
     private var content: some View {
         VStack(alignment: .leading, spacing: 15) {
-            Text(LocalizedString("The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu", comment: "Dana delivery speed body")).fixedSize(horizontal: false, vertical: true)
+            Text(LocalizedString("The Dana pumps support different delivery speeds. You can set it up here", comment: "Dana delivery speed body")).fixedSize(horizontal: false, vertical: true)
             Divider()
-            ResizeablePicker(selection: $currentSpeed,
+            ResizeablePicker(selection: currentValue,
                                      data: self.speedsAllowed,
                                      formatter: { BolusSpeed.init(rawValue: UInt8($0))!.format() })
         }
@@ -49,5 +55,5 @@ struct DanaKitSettingsPumpSpeed: View {
 }
 
 #Preview {
-    DanaKitSettingsPumpSpeed(currentSpeed: Int(BolusSpeed.speed12.rawValue))
+    DanaKitSettingsPumpSpeed(value: 0)
 }

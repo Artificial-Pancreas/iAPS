@@ -28,7 +28,13 @@ internal class DanaKitHUDProvider: NSObject, HUDProvider {
     
     private let allowedInsulinTypes: [InsulinType]
     
-    var visible: Bool = true
+    var visible: Bool = true {
+        didSet {
+            if oldValue != visible && visible {
+                hudDidAppear()
+            }
+        }
+    }
     
     public init(pumpManager: DanaKitPumpManager, bluetoothProvider: BluetoothProvider, colorPalette: LoopUIColorPalette, allowedInsulinTypes: [InsulinType]) {
         self.pumpManager = pumpManager
@@ -57,6 +63,15 @@ internal class DanaKitHUDProvider: NSObject, HUDProvider {
     
     public func didTapOnHUDView(_ view: BaseHUDView, allowDebugFeatures: Bool) -> HUDTapAction? {
         return nil
+    }
+    
+    private func hudDidAppear() {
+        updateReservoirView()
+        self.pumpManager.ensureCurrentPumpData { _ in
+            DispatchQueue.main.async {
+                self.updateReservoirView()
+            }
+        }
     }
     
     public static func createHUDView(rawValue: HUDProvider.HUDViewRawState) -> BaseHUDView? {

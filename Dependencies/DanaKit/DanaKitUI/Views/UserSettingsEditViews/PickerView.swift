@@ -10,10 +10,16 @@ import SwiftUI
 import LoopKitUI
 
 struct PickerView: View {
-    @State var currentOption: Int {
-        didSet {
-            didChange?(currentOption)
-        }
+    @State var value: Int
+    
+    private var currentValue: Binding<Int> {
+        Binding(
+            get: { value },
+            set: { newValue in
+                self.value = newValue
+                didChange?(newValue)
+            }
+       )
     }
     
     var allowedOptions: [Int]
@@ -40,7 +46,7 @@ struct PickerView: View {
                 Text(description!).fixedSize(horizontal: false, vertical: true)
                 Divider()
             }
-            ResizeablePicker(selection: $currentOption,
+            ResizeablePicker(selection: currentValue,
                              data: self.allowedOptions,
                              formatter: { formatter($0) })
             .padding()
@@ -58,5 +64,5 @@ struct PickerView: View {
 }
 
 #Preview {
-    PickerView(currentOption: 0, allowedOptions: [0, 1, 2, 3], formatter: { _ in ""}, didChange: { _ in }, title: "Preview Title", description: "Preview description")
+    PickerView(value: 0, allowedOptions: [0, 1, 2, 3], formatter: { _ in ""}, didChange: { _ in }, title: "Preview Title", description: "Preview description")
 }
