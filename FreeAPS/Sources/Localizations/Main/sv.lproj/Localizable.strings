@@ -49,6 +49,18 @@
 /* Bolus progress view */
 "of" = "av";
 
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "En fjärrstyrd bolus ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "gavs för";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " =  " minuter sedan, aktiverad från Nightscout, av en assistent eller förälder. Vill du fortfarande ge en ny bolus?\n\nBeräknad blodsockerprognos, om du inte ger bolus, är: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "En fjärrstyrd bolus gavs precis!";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Utfört klockan";
 

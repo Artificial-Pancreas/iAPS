@@ -128,7 +128,6 @@ extension Bolus {
                                     secondaryButton: .cancel()
                                 )
                                 isRemoteBolusAlertPresented = true
-
                             } else {
                                 keepForNextWiew = true
                                 state.add()
@@ -139,6 +138,9 @@ extension Bolus {
                             .disabled(disabled)
                             .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
                             .tint(.white)
+                    }
+                    .alert(isPresented: $isRemoteBolusAlertPresented) {
+                        remoteBolusAlert!
                     }
                 }
 
@@ -151,10 +153,6 @@ extension Bolus {
                         label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .alert(isPresented: $isRemoteBolusAlertPresented) {
-                remoteBolusAlert!
             }
             .alert(isPresented: $displayError) {
                 Alert(
@@ -169,7 +167,9 @@ extension Bolus {
                     ),
                     secondaryButton: .cancel()
                 )
-            }.onAppear {
+            }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .onAppear {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
@@ -358,6 +358,7 @@ extension Bolus {
                         .foregroundColor(.blue)
                 }.padding(.bottom, 10)
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))
