@@ -49,6 +49,18 @@
 /* Bolus progress view */
 "of" = "van";
 
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "A Remote Bolus ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "was delivered";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Toegediend op";
 
@@ -358,6 +370,9 @@ Enact a temp Basal or a temp target */
 
 /* Allow remote control from NS */
 "Remote control" = "Afstandsbediening";
+
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nCheck nu al je nieuwe instellingen:\n\n* Basaal instellingen\n * Koolhydraat ratio's\n * Doel glucose waarde\n * Insuline sensitiviteit\n * DIA\n\n in iAPS instellingen > Configuratie.\n\nSlechte of ongeldige profielinstellingen kunnen  desastreuze effecten hebben!";
@@ -2155,7 +2170,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Horizontal Scroll View Visible hours" = "Horizontale scrolweergave zichtbare uren";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+"Display Time Interval Setting Button" = "Knop voor tijdinterval weergeven";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
