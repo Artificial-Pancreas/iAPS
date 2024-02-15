@@ -49,6 +49,18 @@
 /* Bolus progress view */
 "of" = "из";
 
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "A Remote Bolus ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "was delivered";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Принято в";
 
@@ -358,6 +370,9 @@ Enact a temp Basal or a temp target */
 
 /* Allow remote control from NS */
 "Remote control" = "Удаленное управление";
+
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nПожалуйста, проверьте все ваши новые настройки:\n\n* Настройки базала\n * Углеводные коэффициенты\n * Целевой диапазон\n * Чувствительность к инсулину\n\n в настройках iAPS Настройки > Конфигурация.\n\nНекорректные настройки профиля могут привести к катастрофическим последствиям.";
