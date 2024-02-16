@@ -1158,6 +1158,7 @@
 				C1F67EC927975F360017487F /* DeliveryUncertaintyRecoveryViewModel.swift in Sources */,
 				1016325C27185EE5007A3BC2 /* BasalDeliveryTable.swift in Sources */,
 				84752EE326ED13F5009FD801 /* BLEPacket.swift in Sources */,
+				D845A1402AF89F8400EA0853 /* ReadPulseLogView.swift in Sources */,
 				102111472709462300784F13 /* PodState.swift in Sources */,
 				196A6F232AFFFD1700E3C089 /* SilencePodPreference.swift in Sources */,
 				1021114B2709462300784F13 /* BasalSchedule+LoopKit.swift in Sources */,
