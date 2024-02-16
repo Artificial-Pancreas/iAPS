@@ -587,10 +587,6 @@ Enact a temp Basal or a temp target */
 /* Delete insulin from pump history and Nightscout */
 "Delete Insulin?" = "Delete Insulin?";
 
-/* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
->>>>>>> Crowdin
-
 /* Treatments list */
 "Treatments" = "Tedaviler";
 
