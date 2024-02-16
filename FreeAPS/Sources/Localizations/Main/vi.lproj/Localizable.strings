@@ -867,10 +867,10 @@ Enact a temp Basal or a temp target */
 "Valid for footer" = "Hợp lệ";
 
 /* */
-"Edit calibrations" = "Thêm kết quả hiệu chuẩn";
+"Edit calibrations" = "Chỉnh sửa hiệu chuẩn";
 
 /* */
-"edit calibration clicked" = "Nhấp vào để hiệu chuẩn";
+"edit calibration clicked" = "nhấp vào để chỉnh sửa hiệu chuẩn";
 
 /* */
 "Delete CGM" = "Xóa CGM";
@@ -909,7 +909,7 @@ Enact a temp Basal or a temp target */
 "Saved to %@" = "Đã lưu vào %@";
 
 /* */
-"No logs available" = "Không có nhật ký";
+"No logs available" = "Không có nhật ký nào";
 
 /* */
 "Glucose Notification visibility" = "Khả năng hiển thị thông báo Glucose";
