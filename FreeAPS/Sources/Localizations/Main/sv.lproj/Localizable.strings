@@ -50,16 +50,16 @@
 "of" = "av";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "En fjärrstyrd bolus ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "gavs";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuter sedan, fjärrstyrd från Nightscout, av en assistent eller förälder. Vill du fortfarande ge bolus?\n\nBlodsockerprognos, ifall du inte ger denna bolus, är: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "En fjärrstyrt aktiverad bolus gavs nyligen!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Utfört klockan";
@@ -372,7 +372,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Fjärrstyrning";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Tillåt fjärrstyrning från Nightscout";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nKontrollera nu alla dina nya pumpinställningar noga:\n\n* Basalinställningar\n * Insulinkvoter\n * Målvärden\n * Insulinkänslighet\n\n i Inställningar > Konfiguration.\n\nDåliga eller ogiltiga pumpinställningar kan gå katastrofala följder.";
