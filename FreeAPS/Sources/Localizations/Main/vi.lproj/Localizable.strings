@@ -501,7 +501,7 @@ Enact a temp Basal or a temp target */
 "Devices" = "Thiết bị";
 
 /*  */
-"Pump" = "Bơm";
+"Pump" = "Bơm Insulin";
 
 /* */
 "Watch" = "Đồng hồ";
@@ -624,7 +624,7 @@ Enact a temp Basal or a temp target */
 "Create Events in Calendar" = "Tạo sự kiện trong Calendar";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Lập lịch";
 
 /* Automatic delivered treatments */
 "Automatic" = "Tự động";
