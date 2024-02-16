@@ -2,7 +2,7 @@
 " (inactive)" = "{neaktívne}";
 
 /* Format string for low battery alert body for RileyLink. (1: device name) */
-"\"%1$@\" has a low battery" = "\"%1$@\" has a low battery";
+"\"%1$@\" has a low battery" = "\"%1$@\" má slabú batériu";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
@@ -18,7 +18,7 @@
 "Auto-off" = "Automatické vypnutie";
 
 /* Description for auto-off alarm */
-"Auto-off alarm" = "Auto-off alarm";
+"Auto-off alarm" = "Alarm auto-vypnutý";
 
 /* Pod state when basal initialized */
 "Basal initialized" = "Bazál inciovaný";
@@ -27,7 +27,7 @@
 "Below 50 units" = "Menej ako 50 jednotiek";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Dávka";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Prebieha bolus";
@@ -54,22 +54,22 @@
 "Change Pod now. Pod has been active for 72 hours." = "Vymeniť pod teraz. Pod bol aktívny 72 hodín.";
 
 /* Format string for invalid message error code (1: error code number) */
-"Command error %1$u" = "Command error %1$u";
+"Command error %1$u" = "Chyba príkazu %1$u";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Comms Issue";
+"Comms Issue" = "Problém s komunikáciou";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
 "Communication issue: Unacknowledged command pending." = "Problém s komunikáciou: Čaká sa na potvrdenie príkazu.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Pripomienky spoľahlivosti zaznejú pri príkazoch, ktoré spustíte, ako je bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie upozornení atď. Keď Loop automaticky upraví podanie, nepoužijú sa žiadne pripomenutia spoľahlivosti.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Tieto upozornenia s pípnutím zo zariadenia Pod zaznejú pri spustení príkazov, ako je bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie pripomienky s upozornením atď. Keď aplikácia automaticky zmení správu, nepoužívajú sa žiadne oznámenia.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Keď Loop automaticky upraví podávanie, ako aj prevedie príkazy, ktoré iniciujete, zaznejú pripomenutia spoľahlivosti.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Tieto zvukové upozornenia zo zariadenia Pod zaznejú, keď aplikácia automaticky upraví dodávku, ako aj pri príkazoch, ktoré iniciujete.";
 
 /* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Critical Pod Error";
+"Critical Pod Error" = "Kritická chyba zariadenia Pod";
 
 /* Recovery suggestion when unexpected address received */
 "Crosstalk possible. Please move to a new location" = "Možné presluchy. Presuňte sa na iné miesto";
@@ -78,7 +78,7 @@
 "Deactivated" = "Deaktivované";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Vypnuté";
 
 /* Description for Empty reservoir pod fault */
 "Empty reservoir" = "Prázdna nádrž";
@@ -93,7 +93,7 @@
 "Expiration alert" = "Varovanie o expirácii";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Rozšírený";
 
 /* Delivery status when extended bolus is running */
 "Extended bolus running" = "Prebieha predĺžený bolus";
@@ -105,10 +105,10 @@
 "Fault event occurred" = "Vyskytla sa chybová udalosť";
 
 /* Status highlight that when pod is deactivating. */
-"Finish Deactivation" = "Finish Deactivation";
+"Finish Deactivation" = "Dokončiť deaktiváciu";
 
 /* Status highlight that when pod is activating. */
-"Finish Pairing" = "Finish Pairing";
+"Finish Pairing" = "Dokončiť párovanie";
 
 /* Description for finish setup */
 "Finish setup " = "Dokončiť nastavenie";
@@ -126,7 +126,7 @@
 "Insulin delivery stopped. Change Pod now." = "Podávanie inzulínu sa zastavilo. Vymeňte modul teraz.";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Inzulín Suspendovaný";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
 "Insulin type not configured" = "Typ inzulínu nie je nakonfigurovaný";
@@ -225,7 +225,7 @@
 "Pairing completed" = "Párovanie je dokončené";
 
 /* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
-"Parsing Error: %1$@ in (%2$@)" = "Parsing Error: %1$@ in (%2$@)";
+"Parsing Error: %1$@ in (%2$@)" = "Chyba pri analyzovaní: %1$@ v (%2$@)";
 
 /* Recovery suggestion on unexpected pod change */
 "Please bring only original pod in range or deactivate original pod" = "Prosím, majte iba pôvodný pod v dosahu alebo deaktivujte pôvodný pod";
@@ -264,7 +264,7 @@
 "Pod expired" = "Pod vypršal";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod expires in %1$@.";
+"Pod expires in %1$@." = "Pod vyprší za %1$@.";
 
 /* Format string for pod fault code */
 "Pod Fault: %1$@" = "Chyba podu: %1$@";
@@ -313,7 +313,7 @@
 "Reminder initialized" = "Pripomienka bola inicializovaná";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Resume";
+"Resume" = "Pokračovať";
 
 /* Recovery suggestion when pod is suspended */
 "Resume delivery" = "Obnoviť podávanie inzulínu";
@@ -322,7 +322,7 @@
 "Resume Insulin" = "Obnoviť podávanie inzulínu";
 
 /* The format string describing a resume. (1: Time)(2: Scheduled certainty */
-"Resume: %1$@ %2$@" = "Resume: %1$@ %2$@";
+"Resume: %1$@ %2$@" = "Obnoviť: %1$@ %2$@";
 
 /* Delivery status when basal is running */
 "Scheduled Basal" = "Naplánovaný bazál";

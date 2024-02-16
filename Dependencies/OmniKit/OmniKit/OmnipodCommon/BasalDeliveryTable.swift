@@ -132,8 +132,7 @@ extension BasalDeliveryTable: CustomDebugStringConvertible {
 // Round basal rate by rounding down to pulse size boundary,
 // but basal rates within a small delta will be rounded up.
 // Rounds down to 0 for both non-Eros and Eros (temp basals).
-func roundToSupportedBasalRate(rate: Double) -> Double
-{
+func roundToSupportedBasalRate(rate: Double) -> Double {
     let delta = 0.01
     let supportedBasalRates: [Double] = (0...600).map { Double($0) / Double(Pod.pulsesPerUnit) }
     return supportedBasalRates.last(where: { $0 <= rate + delta }) ?? 0
@@ -163,8 +162,9 @@ public struct RateEntry {
             // Eros zero TB is the only case not using pulses
             return 0
         } else {
-            // Use delayBetweenPulses to compute rate, works for non-Eros near zero rates
-            return (.hours(1) / delayBetweenPulses) / Pod.pulsesPerUnit
+            // Use delayBetweenPulses to compute rate which will also work for non-Eros near zero rates.
+            // Round the rate calculation to a two digit value to avoid slightly off values for some cases.
+            return round(((.hours(1) / delayBetweenPulses) / Pod.pulsesPerUnit) * 100) / 100.0
         }
     }
     
@@ -173,8 +173,9 @@ public struct RateEntry {
             // Eros zero TB case uses fixed 30 minute rate entries
             return TimeInterval(minutes: 30)
         } else {
-            // Use delayBetweenPulses to compute duration, works for non-Eros near zero rates
-            return delayBetweenPulses * totalPulses
+            // Use delayBetweenPulses to compute duration which will also work for non-Eros near zero rates.
+            // Round to nearest second to not be slightly off of the 30 minute rate entry boundary for some cases.
+            return round(delayBetweenPulses * totalPulses)
         }
     }
     
@@ -196,13 +197,14 @@ public struct RateEntry {
         let maxPulsesPerEntry: Double = 0xffff / 10 // max # of 1/10th pulses encoded in a 2-byte value
         var entries = [RateEntry]()
         let rrate = roundToSupportedBasalTimingRate(rate: rate)
+        let numHalfHours = max(Int(round(duration.minutes / 30)), 1) // shortest basal duration is 30m
         
-        var remainingSegments = Int(round(duration.minutes / 30))
+        var remainingSegments = numHalfHours
         
         let pulsesPerSegment = round(rrate / Pod.pulseSize) / 2
         let maxSegmentsPerEntry = pulsesPerSegment > 0 ? Int(maxPulsesPerEntry / pulsesPerSegment) : 1
         
-        var remainingPulses = rrate * duration.hours / Pod.pulseSize
+        var remainingPulses = rrate * Double(numHalfHours) / 2 / Pod.pulseSize
 
         while (remainingSegments > 0) {
             let entry: RateEntry
@@ -230,6 +232,6 @@ public struct RateEntry {
 
 extension RateEntry: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "RateEntry(rate:\(rate) duration:\(duration.stringValue))"
+        return "RateEntry(rate:\(rate), duration:\(duration.timeIntervalStr))"
     }
 }

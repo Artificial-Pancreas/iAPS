@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "SlideButton",
+        "repositoryURL": "https://github.com/no-comment/SlideButton",
+        "state": {
+          "branch": "main",
+          "revision": "5eacebba4d7deeb693592bc9a62ab2d2181e133b",
+          "version": null
+        }
+      },
+      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {
@@ -30,7 +39,7 @@
       },
       {
         "package": "SwiftCharts",
-        "repositoryURL": "https://github.com/ivanschuetz/SwiftCharts",
+        "repositoryURL": "https://github.com/ivanschuetz/SwiftCharts.git",
         "state": {
           "branch": "master",
           "revision": "c354c1945bb35a1f01b665b22474f6db28cba4a2",

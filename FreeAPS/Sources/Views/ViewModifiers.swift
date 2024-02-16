@@ -37,6 +37,134 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
+struct AddShadow: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+    func body(content: Content) -> some View {
+        content
+            .shadow(
+                color: Color.black
+                    .opacity(
+                        colorScheme == .dark ? IAPSconfig.shadowOpacity : IAPSconfig.shadowOpacity / IAPSconfig
+                            .shadowFraction
+                    ),
+                radius: colorScheme == .dark ? 3 : 2.5
+            )
+    }
+}
+
+struct RaisedRectangle: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        Rectangle().fill(colorScheme == .dark ? .black : .white)
+            .frame(height: 1)
+            .addShadows()
+    }
+}
+
+struct TestTube: View {
+    let opacity: CGFloat
+    let amount: CGFloat
+    let colourOfSubstance: Color
+    let materialOpacity: CGFloat
+    @Environment(\.colorScheme) var colorScheme
+
+    var body: some View {
+        UnevenRoundedRectangle.testTube
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(stops: [
+                        Gradient.Stop(color: .white.opacity(opacity), location: amount),
+                        Gradient.Stop(color: colourOfSubstance, location: amount)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .overlay {
+                FrostedGlass(opacity: materialOpacity)
+            }
+            .shadow(
+                color: Color.black
+                    .opacity(
+                        colorScheme == .dark ? IAPSconfig.glassShadowOpacity : IAPSconfig.glassShadowOpacity / IAPSconfig
+                            .shadowFraction
+                    ),
+                radius: colorScheme == .dark ? 2.2 : 3
+            )
+    }
+}
+
+struct FrostedGlass: View {
+    let opacity: CGFloat
+    var body: some View {
+        UnevenRoundedRectangle.testTube
+            .fill(.ultraThinMaterial.opacity(opacity))
+    }
+}
+
+struct ColouredRoundedBackground: View {
+    @Environment(\.colorScheme) var colorScheme
+
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(
+                colorScheme == .dark ? .black :
+                    Color.white
+            )
+    }
+}
+
+struct ColouredBackground: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        Rectangle()
+            .fill(
+                colorScheme == .dark ? .black :
+                    Color.white
+            )
+    }
+}
+
+struct LoopEllipse: View {
+    @Environment(\.colorScheme) var colorScheme
+    let stroke: Color
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .stroke(stroke, lineWidth: 2)
+            .background(
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
+            )
+    }
+}
+
+struct TimeEllipse: View {
+    @Environment(\.colorScheme) var colorScheme
+    let characters: Int
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(Color.gray).opacity(colorScheme == .light ? 0.2 : 0.08)
+            .frame(width: CGFloat(characters * 7), height: 25)
+    }
+}
+
+struct HeaderBackground: View {
+    @Environment(\.colorScheme) var colorScheme
+    var body: some View {
+        Rectangle()
+            .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1))
+    }
+}
+
+struct ChartBackground: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .background(colorScheme == .light ? .gray.opacity(0.05) : .black).brightness(colorScheme == .dark ? 0.05 : 0)
+    }
+}
+
 private let navigationCache = LRUCache<Screen.ID, AnyView>(capacity: 10)
 
 struct NavigationLazyView: View {
@@ -126,8 +254,28 @@ extension View {
         modifier(RoundedBackground())
     }
 
-    func buttonBackground() -> some View {
-        modifier(RoundedBackground(color: .accentColor))
+    func addShadows() -> some View {
+        modifier(AddShadow())
+    }
+
+    func addBackground() -> some View {
+        ColouredRoundedBackground()
+    }
+
+    func addColouredBackground() -> some View {
+        ColouredBackground()
+    }
+
+    func addHeaderBackground() -> some View {
+        HeaderBackground()
+    }
+
+    func chartBackground() -> some View {
+        modifier(ChartBackground())
+    }
+
+    func frostedGlassLayer(_ opacity: CGFloat) -> some View {
+        FrostedGlass(opacity: opacity)
     }
 
     func navigationLink<V: BaseView>(to screen: Screen, from view: V) -> some View {
@@ -145,4 +293,14 @@ extension View {
     }
 
     func asAny() -> AnyView { .init(self) }
+}
+
+extension UnevenRoundedRectangle {
+    static let testTube =
+        UnevenRoundedRectangle(
+            topLeadingRadius: 1.5,
+            bottomLeadingRadius: 50,
+            bottomTrailingRadius: 50,
+            topTrailingRadius: 1.5
+        )
 }

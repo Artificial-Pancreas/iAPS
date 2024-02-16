@@ -1,4 +1,6 @@
+import ActivityKit
 import CoreData
+import Foundation
 import SwiftUI
 import Swinject
 
@@ -44,12 +46,15 @@ import Swinject
         _ = resolver.resolve(WatchManager.self)!
         _ = resolver.resolve(HealthKitManager.self)!
         _ = resolver.resolve(BluetoothStateManager.self)!
+        if #available(iOS 16.2, *) {
+            _ = resolver.resolve(LiveActivityBridge.self)!
+        }
     }
 
     init() {
         debug(
             .default,
-            "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)]"
+            "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration)]"
         )
         loadServices()
     }

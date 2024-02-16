@@ -40,7 +40,7 @@ struct BolusConfirmationView: View {
                     if isCrownLeftOriented {
                         Spacer().frame(width: elementSize / 2)
                     } else {
-                        Image(systemName: "arrow.down")
+                        Image(systemName: "digitalcrown.arrow.counterclockwise.fill")
                             .resizable()
                             .frame(width: elementSize / 2, height: elementSize / 2)
                             .foregroundColor(.primary)
@@ -51,7 +51,7 @@ struct BolusConfirmationView: View {
             .padding()
             HStack(spacing: 16) {
                 if isCrownLeftOriented {
-                    Image(systemName: "arrow.down")
+                    Image(systemName: "digitalcrown.arrow.counterclockwise.fill")
                         .resizable()
                         .frame(width: elementSize / 2, height: elementSize / 2)
                         .foregroundColor(.primary)
@@ -75,7 +75,7 @@ struct BolusConfirmationView: View {
             $crownProgress,
             from: 0.0,
             through: 100.0,
-            by: 0.5,
+            by: state.confirmBolusFaster ? 5 : 0.5,
             sensitivity: .high,
             isContinuous: false,
             isHapticFeedbackEnabled: true

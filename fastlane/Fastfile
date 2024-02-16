@@ -57,7 +57,8 @@ platform :ios do
       app_identifier: [
         "ru.artpancreas.#{TEAMID}.FreeAPS",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension"
+        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
+        "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"
       ]
     )
 
@@ -97,6 +98,12 @@ platform :ios do
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch"]
     )
+    update_code_signing_settings(
+      path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
+      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"],
+      code_sign_identity: "iPhone Distribution",
+      targets: ["LiveActivityExtension"]
+    )
 
     gym(
       export_method: "app-store",
@@ -126,6 +133,7 @@ platform :ios do
       skip_submission: false,
       ipa: "iAPS.ipa",
       skip_waiting_for_build_processing: true,
+      changelog: git_branch+" "+last_git_commit[:abbreviated_commit_hash],
     )
   end
 
@@ -161,6 +169,10 @@ platform :ios do
     configure_bundle_id("FreeAPSWatch", "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
+
+    configure_bundle_id("LiveActivityExtension", "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity", [
+      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
+    ])
     
   end
 
@@ -183,6 +195,7 @@ platform :ios do
         "ru.artpancreas.#{TEAMID}.FreeAPS",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
         "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
+        "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"
       ]
     )
   end
@@ -203,6 +216,12 @@ platform :ios do
     end
 
     find_bundle_id("ru.artpancreas.#{TEAMID}.FreeAPS")
+
+    match(
+      type: "appstore",
+      git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
+      app_identifier: [],
+    )
   end
 
   desc "Nuke Certs"

@@ -19,6 +19,8 @@ export_languages:
   - pt-PT
   - pt-BR
   - sk
+  - vi
+  - hu
 files:
   - source: /FreeAPS/Sources/Localizations/Main/en.lproj/Localizable.strings
     translation: /FreeAPS/Sources/Localizations/Main/%osx_locale%.lproj/Localizable.strings
@@ -44,3 +46,5 @@ files:
     translation: /Dependencies/CGMBLEKit/CGMBLEKit/%osx_locale%.lproj/Localizable.strings
   - source: //Dependencies/CGMBLEKit/CGMBLEKitUI/en.lproj/TransmitterManagerSetup.strings
     translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/TransmitterManagerSetup.strings
+  - source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings
+    translation: /Dependencies/G7SensorKit/G7SensorKitUI/%osx_locale%.lproj/Localizable.strings

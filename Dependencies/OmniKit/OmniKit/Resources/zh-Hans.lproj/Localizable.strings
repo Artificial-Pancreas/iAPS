@@ -8,7 +8,7 @@
 "%@ dB" = "%@ dB";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin or less remaining in Pod. Change Pod soon.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ 或更少胰岛素剩余，请即刻更换Pod";
 
 /* Format string for activation time exceeded
    Pod state when activation not completed in the time allowed */
@@ -48,10 +48,10 @@
 "Certain" = "Certain";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Change Pod now. Insulin delivery will stop in 1 hour.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "请立刻更改Pod ，胰岛素输注将在 1 小时后停止";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Change Pod now. Pod has been active for 72 hours.";
+"Change Pod now. Pod has been active for 72 hours." = "立即更换 Pod ，Pod 已使用72小时";
 
 /* Format string for invalid message error code (1: error code number) */
 "Command error %1$u" = "Command error %1$u";
@@ -63,10 +63,10 @@
 "Communication issue: Unacknowledged command pending." = "Communication issue: Unacknowledged command pending.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When Loop automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when Loop automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* The title for AlarmCode.other notification */
 "Critical Pod Error" = "Critical Pod Error";
@@ -175,7 +175,7 @@
 
 /* Alert content body for multiCommand pod alert
    Alert content title for multiCommand pod alert */
-"Multiple Command Alert" = "Multiple Command Alert";
+"Multiple Command Alert" = "多个命令警报";
 
 /* Pod alert state when no alerts are active */
 "No alerts" = "运行正常";
@@ -191,7 +191,7 @@
 "No Insulin" = "No Insulin";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "No Pod";
+"No Pod" = "无Pod";
 
 /* Error message shown when no pod is paired */
 "No pod paired" = "未配对Pod";
@@ -234,7 +234,7 @@
 "Please bring your pod closer to the RileyLink and try again" = "请确保Rileylink与Pod保持近距离并重试";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Please finish pairing your pod.";
+"Please finish pairing your pod." = "请完成配对您的pod";
 
 /* Recover suggestion shown when no pod is paired */
 "Please pair a new pod" = "请配对一个新的Pod";
@@ -264,7 +264,7 @@
 "Pod expired" = "Pod已到期";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod expires in %1$@.";
+"Pod expires in %1$@." = "Pod 将于 %1$@到期";
 
 /* Format string for pod fault code */
 "Pod Fault: %1$@" = "Pod错误: %1$@";
@@ -282,7 +282,7 @@
 "Pod Occlusion" = "Pod Occlusion";
 
 /* Alert content title for finishSetupReminder pod alert */
-"Pod Pairing Incomplete" = "Pod Pairing Incomplete";
+"Pod Pairing Incomplete" = "Pod 配对未完成";
 
 /* Error message shown when pod sends ack instead of response */
 "Pod sent ack instead of response" = "Pod sent ack instead of response";
@@ -319,7 +319,7 @@
 "Resume delivery" = "Resume delivery";
 
 /* Alert content title for suspendEnded pod alert */
-"Resume Insulin" = "Resume Insulin";
+"Resume Insulin" = "恢复输注";
 
 /* The format string describing a resume. (1: Time)(2: Scheduled certainty */
 "Resume: %1$@ %2$@" = "恢复输注: %1$@ %2$@";
@@ -344,7 +344,7 @@
 
 /* Alert content body for suspendInProgress pod alert
    Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "泵暂停中 的提醒";
 
 /* Description for suspend time expired */
 "Suspend time expired" = "Suspend time expired";
@@ -359,7 +359,7 @@
 "Suspended" = "暂停";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Suspension time is up. Open the app and resume.";
+"Suspension time is up. Open the app and resume." = "输注暂停已经结束，打开应用程序并恢复输注";
 
 /* Pod tank fill completed */
 "Tank fill completed" = "已向Pod注入胰岛素";
@@ -380,13 +380,13 @@
 "TempBasal: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@" = "临时基础率: %1$@ U/hour %2$@ %3$@ %4$@ U %5$@";
 
 /* Alert content body for suspendEnded pod alert */
-"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes.";
+"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "胰岛素输注暂停期已经结束，\n\n您可以从屏幕上方的横幅或者从您的泵设置屏幕上恢复输注，您将在 15 分钟内再次被提醒";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
-"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings.";
+"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "您泵上的时间不同于当前时间。您可以在设置里将泵时间并同步到当前时间。";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
-"Time Change Detected" = "Time Change Detected";
+"Time Change Detected" = "检测到时间变化";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
 "Time to replace your pod! Your pod will expire in %1$@" = "Pod将在%1$@后到期,请准备更换Pod";

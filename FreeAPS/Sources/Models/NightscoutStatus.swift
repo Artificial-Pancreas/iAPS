@@ -29,7 +29,7 @@ struct Uploader: JSON {
 struct NightscoutTimevalue: JSON {
     let time: String
     let value: Decimal
-    let timeAsSeconds: Int
+    let timeAsSeconds: Int?
 }
 
 struct ScheduledNightscoutProfile: JSON {

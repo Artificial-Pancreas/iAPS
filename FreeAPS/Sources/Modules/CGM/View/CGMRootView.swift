@@ -54,11 +54,26 @@ extension CGM {
                         Text("Calibrations").navigationLink(to: .calibrations, from: self)
                     }
                     Section(header: Text("Calendar")) {
-                        Toggle("Create events in calendar", isOn: $state.createCalendarEvents)
+                        Toggle("Create Events in Calendar", isOn: $state.createCalendarEvents)
                         if state.calendarIDs.isNotEmpty {
                             Picker("Calendar", selection: $state.currentCalendarID) {
                                 ForEach(state.calendarIDs, id: \.self) {
                                     Text($0).tag($0)
+                                }
+                            }
+                            Toggle("Display Emojis as Labels", isOn: $state.displayCalendarEmojis)
+                            Toggle("Display IOB and COB", isOn: $state.displayCalendarIOBandCOB)
+                        } else if state.createCalendarEvents {
+                            if #available(iOS 17.0, *) {
+                                Text(
+                                    "If you are not seeing calendars to choose here, please go to Settings -> iAPS -> Calendars and change permissions to \"Full Access\""
+                                ).font(.footnote)
+
+                                Button("Open Settings") {
+                                    // Get the settings URL and open it
+                                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                                        UIApplication.shared.open(url)
+                                    }
                                 }
                             }
                         }
@@ -68,14 +83,16 @@ extension CGM {
                         Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
                     }
                 }
-
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .onAppear(perform: configureView)
                 .navigationTitle("CGM")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $setupCGM) {
-                    if let cgmFetchManager = state.cgmManager, cgmFetchManager.glucoseSource.cgmType == state.cgm {
+                    if let cgmFetchManager = state.cgmManager, cgmFetchManager.glucoseSource.cgmType == state.cgm,
+                       let cmgManager = cgmFetchManager.glucoseSource.cgmManager
+                    {
                         CGMSettingsView(
-                            cgmManager: cgmFetchManager.glucoseSource.cgmManager!,
+                            cgmManager: cmgManager,
                             bluetoothManager: state.provider.apsManager.bluetoothManager!,
                             unit: state.settingsManager.settings.units,
                             completionDelegate: state
