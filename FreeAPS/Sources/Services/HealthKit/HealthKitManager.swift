@@ -372,7 +372,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             let query = HKSampleQuery(
                 sampleType: sampleType,
                 predicate: nil,
-                limit: 1000,
+                limit: 100,
                 sortDescriptors: nil
             ) { _, results, _ in
                 promise(.success((results as? [HKQuantitySample]) ?? []))
@@ -395,7 +395,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver {
             let query = HKSampleQuery(
                 sampleType: sampleType,
                 predicate: predicate,
-                limit: 1000,
+                limit: 100,
                 sortDescriptors: nil
             ) { _, results, _ in
                 promise(.success((results as? [HKQuantitySample]) ?? []))
