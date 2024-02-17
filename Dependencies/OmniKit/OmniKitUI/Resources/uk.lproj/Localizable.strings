@@ -776,11 +776,6 @@
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Ваш Pod може все ще подавати інсулін.\nЗніміть його зі свого тіла, а потім натисніть «Продовжити»";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> Crowdin
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Сповіщення вимкнено";
