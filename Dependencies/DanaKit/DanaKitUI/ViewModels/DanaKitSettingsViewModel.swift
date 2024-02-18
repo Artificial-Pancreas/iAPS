@@ -28,7 +28,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var reservoirLevel: Double?
     @Published var isSuspended: Bool = false
     
-    private let log = OSLog(category: "SettingsView")
+    private let log = Logger(category: "SettingsView")
     private(set) var insulineType: InsulinType
     private(set) var pumpManager: DanaKitPumpManager?
     private var didFinish: (() -> Void)?
@@ -168,7 +168,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.isUpdatingPumpState = true
         
         if self.pumpManager?.state.isPumpSuspended ?? false {
-            self.pumpManager?.resumeDelivery(completion: { error in
+            self.pumpManager?.resumeDelivery{ error in
                 DispatchQueue.main.async {
                     self.basalButtonText = self.updateBasalButtonText()
                     self.isUpdatingPumpState = false
@@ -176,11 +176,10 @@ class DanaKitSettingsViewModel : ObservableObject {
                 
                 // Check if action failed, otherwise skip state sync
                 guard error == nil else {
+                    self.log.error("\(#function): failed to resume delivery. Error: \(error!.localizedDescription)")
                     return
                 }
-                
-                self.pumpManager?.ensureCurrentPumpData(completion: { _ in })
-            })
+            }
             
             return
         }
@@ -195,10 +194,9 @@ class DanaKitSettingsViewModel : ObservableObject {
                 
                 // Check if action failed, otherwise skip state sync
                 guard error == nil else {
+                    self.log.error("\(#function): failed to stop temp basal. Error: \(error!.localizedDescription)")
                     return
                 }
-                
-                self.pumpManager?.ensureCurrentPumpData(completion: { _ in })
             })
             
             return
@@ -212,10 +210,9 @@ class DanaKitSettingsViewModel : ObservableObject {
             
             // Check if action failed, otherwise skip state sync
             guard error == nil else {
+                self.log.error("\(#function): failed to suspend delivery. Error: \(error!.localizedDescription)")
                 return
             }
-            
-            self.pumpManager?.ensureCurrentPumpData(completion: { _ in })
         })
     }
     

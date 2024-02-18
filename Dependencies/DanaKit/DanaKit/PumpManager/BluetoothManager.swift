@@ -24,7 +24,7 @@ enum EncryptionType: UInt8 {
 
 class BluetoothManager : NSObject {
     
-    private let log = OSLog(category: "BluetoothManager")
+    private let log = Logger(category: "BluetoothManager")
     
     private var autoConnectUUID: String?
     private let deviceNameRegex = try! NSRegularExpression(pattern: "^[a-zA-Z]{3}[0-9]{5}[a-zA-Z]{2}$")
@@ -58,26 +58,26 @@ class BluetoothManager : NSObject {
         }
         
         guard !self.manager.isScanning else {
-            log.info("%{public}@: Device is already scanning...", #function)
+            log.info("\(#function): Device is already scanning...")
             return
         }
         
         self.devices = []
         
         manager.scanForPeripherals(withServices: [])
-        log.info("%{public}@: Started scanning", #function)
+        log.info("\(#function): Started scanning")
     }
     
     func stopScan() {
         manager.stopScan()
         self.devices = []
         
-        log.info("%{public}@: Stopped scanning", #function)
+        log.info("\(#function): Stopped scanning")
     }
     
     func connect(_ bleIdentifier: String, _ completion: @escaping (Error?) -> Void) throws {
         guard let identifier = UUID(uuidString: bleIdentifier) else {
-            log.error("%{public}@: Invalid identifier - %{public}@", #function, bleIdentifier)
+            log.error("\(#function): Invalid identifier - \(bleIdentifier)")
             return
         }
         
@@ -89,7 +89,7 @@ class BluetoothManager : NSObject {
                 self.peripheral = peripheral
                 self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, self.connectionCompletion)
                 
-//                self.log.default("%{public}@: Found peripheral! %{public}@", #function, peripheral)
+//                self.log.info("\(#function): Found peripheral! \(peripheral)")
                 self.manager.connect(peripheral, options: nil)
             }
             return
@@ -144,12 +144,12 @@ extension BluetoothManager : CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         
-        log.default("%{public}@: %{public}@", #function, String(describing: central.state.rawValue))
+        log.info("\(#function): \(String(describing: central.state.rawValue))")
     }
     
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
-        log.info("%{public}@: %{public}@", #function, dict)
+        log.info("\(#function): \(dict)")
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
@@ -158,7 +158,7 @@ extension BluetoothManager : CBCentralManagerDelegate {
         }
         
         dispatchPrecondition(condition: .onQueue(managerQueue))
-        log.default("%{public}@: %{public}@, %{public}@", #function, peripheral, advertisementData)
+        log.info("\(#function): \(peripheral), \(advertisementData)")
         
         if self.autoConnectUUID != nil && peripheral.identifier.uuidString == self.autoConnectUUID {
             self.stopScan()
@@ -179,7 +179,7 @@ extension BluetoothManager : CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         
-//        log.default("%{public}@: %{public}@", #function, peripheral)
+//        log.info("\(#function): \(peripheral)")
         
         DispatchQueue.main.async {
             self.peripheral = peripheral
@@ -194,7 +194,7 @@ extension BluetoothManager : CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        log.default("%{public}@: Device disconnected, name: %{public}@", #function, peripheral.name ?? "<NO_NAME>")
+        log.info("\(#function): Device disconnected, name: \(peripheral.name ?? "<NO_NAME>")")
         
         self.pumpManagerDelegate?.state.isConnected = false
         self.pumpManagerDelegate?.notifyStateDidChange()
@@ -204,6 +204,6 @@ extension BluetoothManager : CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        log.default("%{public}@: Device connect error, name: %{public}@, error", #function, peripheral.name ?? "<NO_NAME>", error!.localizedDescription)
+        log.info("\(#function): Device connect error, name: \(peripheral.name ?? "<NO_NAME>"), error: \(error!.localizedDescription)")
     }
 }

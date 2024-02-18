@@ -24,7 +24,7 @@ class DanaKitDebugViewModel : ObservableObject {
     @Published var isConnectionError = false
     @Published var connectionErrorMessage: String?
     
-    private let log = OSLog(category: "DebugView")
+    private let log = Logger(category: "DebugView")
     private var pumpManager: DanaKitPumpManager?
     private var connectedDevice: DanaPumpScan?
     
@@ -146,7 +146,7 @@ class DanaKitDebugViewModel : ObservableObject {
 
 extension DanaKitDebugViewModel: StateObserver {
     func deviceScanDidUpdate(_ device: DanaPumpScan) {
-        log.default("Found device %{public}@", device.name)
+        log.info("Found device \(device.name)")
         self.scannedDevices.append(device)
         
         messageScanAlert = "Do you want to connect to: " + device.name + " (" + device.bleIdentifier + ")"

@@ -8,6 +8,7 @@ import MinimedKit
 import MockKit
 import OmniBLE
 import OmniKit
+import os.log
 import ShareClient
 import SwiftDate
 import Swinject
@@ -34,6 +35,7 @@ private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
     OmnipodPumpManager.self,
     OmniBLEPumpManager.self,
+    DanaKitPumpManager.self,
     MockPumpManager.self
 ]
 
