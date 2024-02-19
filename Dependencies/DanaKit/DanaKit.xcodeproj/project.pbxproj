@@ -113,6 +113,7 @@
 		B8DCDA052B6FE78400120011 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DCDA042B6FE78400120011 /* PickerView.swift */; };
 		B8DCDA072B6FE7BA00120011 /* DanaKitUserSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DCDA062B6FE7BA00120011 /* DanaKitUserSettingsView.swift */; };
 		B8F4E1AC2B83E00C000F4AE1 /* BackgroundTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F4E1AB2B83E00C000F4AE1 /* BackgroundTask.swift */; };
+		B8F4E1AE2B83E07A000F4AE1 /* blank.wav in Resources */ = {isa = PBXBuildFile; fileRef = B8F4E1AD2B83E07A000F4AE1 /* blank.wav */; };
 		B8FB5F152B5D705D001C88BA /* DoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB5F142B5D705D001C88BA /* DoseEntry.swift */; };
 		B8FB5F172B5D91A6001C88BA /* NewPumpEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FB5F162B5D91A6001C88BA /* NewPumpEvent.swift */; };
 		B8FDA0E12B791E93007004A5 /* PumpManagerAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FDA0E02B791E93007004A5 /* PumpManagerAlert.swift */; };
@@ -246,6 +247,7 @@
 		B8DCDA042B6FE78400120011 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		B8DCDA062B6FE7BA00120011 /* DanaKitUserSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitUserSettingsView.swift; sourceTree = "<group>"; };
 		B8F4E1AB2B83E00C000F4AE1 /* BackgroundTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTask.swift; sourceTree = "<group>"; };
+		B8F4E1AD2B83E07A000F4AE1 /* blank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blank.wav; sourceTree = "<group>"; };
 		B8FB5F142B5D705D001C88BA /* DoseEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseEntry.swift; sourceTree = "<group>"; };
 		B8FB5F162B5D91A6001C88BA /* NewPumpEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPumpEvent.swift; sourceTree = "<group>"; };
 		B8FDA0E02B791E93007004A5 /* PumpManagerAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerAlert.swift; sourceTree = "<group>"; };
@@ -435,6 +437,7 @@
 				B885168D2B3060560063402A /* Views */,
 				B88516892B305D6E0063402A /* DanaKitPumpManager+UI.swift */,
 				B885168B2B305E740063402A /* DanaKitUI.xcassets */,
+				B8F4E1AD2B83E07A000F4AE1 /* blank.wav */,
 				B88516962B30CA860063402A /* DanaKitHUDProvider.swift */,
 			);
 			path = DanaKitUI;
@@ -589,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A91B2DEC276E1E5E001B0E95 /* README.md in Resources */,
+				B8F4E1AE2B83E07A000F4AE1 /* blank.wav in Resources */,
 				B88516932B30C6DA0063402A /* DanaKitReservoirView.xib in Resources */,
 				B871156F2B4C8419004B4A98 /* DanaKitUI.xcassets in Resources */,
 			);
