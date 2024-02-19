@@ -36,7 +36,7 @@
 "Done" = "Hecho";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glucosa";
 
 /* title for g7 settings row showing sensor grace period end time */
 "Grace Period End" = "Grace Period End";
