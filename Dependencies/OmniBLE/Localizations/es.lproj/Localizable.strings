@@ -117,7 +117,7 @@
 "day" = "day";
 
 /* Unit for plural days in pod life remaining */
-"days" = "days";
+"days" = "días";
 
 /* Unit for singular hour in pod life remaining */
 "hour" = "hour";
