@@ -1129,45 +1129,45 @@ Enact a temp Basal or a temp target */
 "Native G5 app" = "Aplicación nativa de Dexcom G5";
 
 /* Minilink transmitter */
-"Minilink transmitter" = "Minilink transmitter";
+"Minilink transmitter" = "Transmisor Minilink";
 
 /* Simple simulator */
-"Simple simulator" = "Simple simulator";
+"Simple simulator" = "Simulador simple";
 
 /* Direct connection with Libre 1 transmitters or Libre 2 */
-"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Direct connection with Libre 1 transmitters or European Libre 2 sensors";
+"Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Conexión directa con transmisores Libre 1 o sensores europeos Libre 2";
 
 /* Online or internal server */
-"Online or internal server" = "Online or internal server";
+"Online or internal server" = "Servidor en línea o interno";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Desarrollador";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profile";
+"NS Upload Profile" = "Subir perfil a NS";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "NS Uploaded Profile";
+"NS Uploaded Profile" = "Perfil subido a NS";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
 
 /* Insulin sensitivity config header */
-"Dynamic Sensitivity" = "Dynamic Sensitivity";
+"Dynamic Sensitivity" = "Sensibilidad Dinámica";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Only Autotune Basal Insulin";
+"Only Autotune Basal Insulin" = "Sólo Insulina Basal de Autotune";
 
 /* */
-"Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
+"Save as your Normal Basal Rates" = "Guardar como tus ratios basales normales";
 
 /* */
 "Save on Pump" = "Guardar en Bomba";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "Historial de la bomba";
 
 /* Debug option view Target Ranges */
 "Target ranges" = "Target ranges";
@@ -1329,28 +1329,28 @@ Enact a temp Basal or a temp target */
 "More options" = "More options";
 
 /* */
-"Schedule when SMBs are Off" = "Schedule when SMBs are Off";
+"Schedule when SMBs are Off" = "Programar cuándo los SMB están apagados";
 
 /* */
-"Change ISF and CR" = "Change ISF and CR";
+"Change ISF and CR" = "Modificar el Factor de Sensibilidad a la Insulina (ISF) y Factor de Carbohidratos (CR)";
 
 /* */
-"Change ISF" = "Change ISF";
+"Change ISF" = "Cambiar Factor de Sensibilidad a la Insulina (ISF)";
 
 /* */
-"Change CR" = "Change CR";
+"Change CR" = "Cambiar Factor de Carbohidratos (CR)";
 
 /* */
-"SMB Minutes" = "SMB Minutes";
+"SMB Minutes" = "Minutos de SMB";
 
 /* */
-"UAM SMB Minutes" = "UAM SMB Minutes";
+"UAM SMB Minutes" = "Minutos de SMB en UAM";
 
 /* */
-"Start new Profile" = "Start new Profile";
+"Start new Profile" = "Iniciar nuevo perfil";
 
 /* */
-"Save as Profile" = "Save as Profile";
+"Save as Profile" = "Guardar como perfil";
 
 /* Alert */
 "Cancel Profile Override" = "Cancel Profile Override";
@@ -1359,135 +1359,135 @@ Enact a temp Basal or a temp target */
 "Cancel Temp Target" = "Cancelar objetivo temporal";
 
 /* Alert */
-"Return to Normal?" = "Return to Normal?";
+"Return to Normal?" = "¿Regresar a normal?";
 
 /* */
-"This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
+"This will change settings back to your normal profile." = "Esto cambiará la configuración a tu perfil normal.";
 
 /* Start Profile Alert */
-"Start Profile" = "Start Profile";
+"Start Profile" = "Iniciar perfil";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Su dosis basal de insulina se ajustará con el porcentaje de ajuste temporal. En consecuencia, su factor de sensibilidad a la insulina (ISF) y su índice glucémico (CR) se ajustarán en sentido inverso al mismo porcentaje.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Al iniciar esta anulación, se modificarán tus perfiles y/o tu glucosa objetivo utilizados para el lazo cerrado durante toda la duración seleccionada. Al tocar \"Iniciar perfil\", se iniciará tu nuevo perfil o se editará tu perfil activo actual.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Override Profile Target";
+"Override Profile Target" = "Sobreescribir el objetivo del perfil";
 
 /* Alert string. Keep spaces. */
-" SMBs are disabled either by schedule or during the entire duration." = " SMBs are disabled either by schedule or during the entire duration.";
+" SMBs are disabled either by schedule or during the entire duration." = " Los SMB están desactivados ya sea por horario o durante toda la duración.";
 
 /* Alert strings. Keep spaces */
-" infinite duration." = " infinite duration.";
+" infinite duration." = " duración infinita.";
 
 /* Service Section */
-"App Icons" = "App Icons";
+"App Icons" = "Iconos de la aplicación";
 
 /* */
-"iAPS Icon" = "iAPS Icon";
+"iAPS Icon" = "Icono de iAPS";
 
 /* Service Section */
-"Statistics and Home View" = "Statistics and Home View";
+"Statistics and Home View" = "Estadísticas y Vista de Inicio";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+"Delete Carb Equivalents?" = "¿Eliminar Equivalentes de Carbohidratos?";
 
 /* */
-"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+"All FPUs of the meal will be deleted." = "Se eliminarán todas las unidades de grasa y proteína (FPU) de la comida.";
 
 /* */
-"Delete Glucose?" = "Delete Glucose?";
+"Delete Glucose?" = "¿Eliminar glucosa?";
 
 /* */
-"Meal Presets" = "Meal Presets";
+"Meal Presets" = "Atajo de comida";
 
 /* */
-"Empty" = "Empty";
+"Empty" = "Vacío";
 
 /* */
-"Delete Selected Preset" = "Delete Selected Preset";
+"Delete Selected Preset" = "Eliminar preajuste seleccionado";
 
 /* */
-"Enter Meal Preset Name" = "Enter Meal Preset Name";
+"Enter Meal Preset Name" = "Introduce nombre del atajo de comida";
 
 /* */
-"Name Of Dish" = "Name Of Dish";
+"Name Of Dish" = "Nombre del plato";
 
 /* Save Carbs and continue to bolus recommendation */
-"Save and continue" = "Save and continue";
+"Save and continue" = "Guardar y continuar";
 
 /* */
 "Save as Preset" = "Guardar como Ajuste Predefinido";
 
 /* */
-"Predictions" = "Predictions";
+"Predictions" = "Predicciones";
 
 /* Watch Config Option */
-"Display Protein & Fat" = "Display Protein & Fat";
+"Display Protein & Fat" = "Mostrar proteínas y grasas";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
-"Warning!" = "Warning!";
+"Warning!" = "¡Advertencia!";
 
 /* Alert to confirm bolus amount to add */
-"\n\nTap 'Add' to continue with selected amount." = "\n\nTap 'Add' to continue with selected amount.";
+"\n\nTap 'Add' to continue with selected amount." = "\n\nPulse 'Añadir' para continuar con la cantidad seleccionada.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Glucosa eventual";
 
 /* */
-"Please wait" = "Please wait";
+"Please wait" = "Por favor, espere";
 
 /* */
-"Glucose, " = "Glucose, ";
+"Glucose, " = "Glucosa, ";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Glucosa objetivo";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Ajuste del porcentaje";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Sensibilidad a la insulina";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Glucosa eventual - objetivo) / ISF";
 
 /* */
-"Formula:" = "Formula:";
+"Formula:" = "Fórmula:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Los carbohidratos y la insulina anterior están incluidos en la predicción de la glucosa. Si la glucosa eventual es inferior a la glucosa ovjetivo, no se recomienda bolo.";
 
 /* Hide pop-up */
-"Hide" = "Hide";
+"Hide" = "Ocultar";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucosa eventual > glucosa objetivo, pero se prevé que la glucosa caiga primero a ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "que está por debajo del umbral (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucosa eventual > glucosa objetivo, pero el valor de glucosa está aumentando más lento de lo esperado. Se espera: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Subiendo: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucosa eventual > glucosa objetivo, pero el valor de glucosa está descendiendo más rápido de lo esperado. Se espera: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". Descendiendo: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucosa eventual > glucosa objetivo, pero el valor de glucosa está cambiando más rápido de lo esperado. Se espera: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Changing: " = ". Changing: ";
+". Changing: " = ". Cambiando: ";
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " without bolusing";
@@ -1668,61 +1668,61 @@ Enact a temp Basal or a temp target */
 "Change HbA1c Unit" = "Change HbA1c Unit";
 
 /* */
-"Display Chart X - Grid lines" = "Display Chart X - Grid lines";
+"Display Chart X - Grid lines" = "Mostrar eje X - líneas de la cuadrícula";
 
 /* */
-"Display Chart Y - Grid lines" = "Display Chart Y - Grid lines";
+"Display Chart Y - Grid lines" = "Mostrar eje Y - líneas de la cuadrícula";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Display Chart Threshold lines for Low and High";
+"Display Chart Threshold lines for Low and High" = "Mostrar umbrales en el gráfico para glucemia baja y alta";
 
 /* */
-"Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
+"Standing / Laying TIR Chart" = "Gráfico de Tiempo en Rango (TIR) vertical / horizontal";
 
 /* */
-"Hours X-Axis (6 default)" = "Hours X-Axis (6 default)";
+"Hours X-Axis (6 default)" = "Horas mostradas en el eje X (por defecto, 6)";
 
 /* */
-"2 hours" = "2 hours";
+"2 hours" = "2 horas";
 
 /* */
-"4 hours" = "4 hours";
+"4 hours" = "4 horas";
 
 /* */
-"6 hours" = "6 hours";
+"6 hours" = "6 horas";
 
 /* */
-"12 hours" = "12 hours";
+"12 hours" = "12 horas";
 
 /* */
-"24 hours" = "24 hours";
+"24 hours" = "24 horas";
 
 /* Average BG = */
-"Average" = "Average";
+"Average" = "Media";
 
 /* Median BG */
-"Median" = "Median";
+"Median" = "Mediana";
 
 /* CGM readings in statView */
-"Readings" = "Readings";
+"Readings" = "Lecturas";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Readings / 24h";
+"Readings / 24h" = "Lecturas / 24h";
 
 /* Days of saved readings*/
-"Days" = "Days";
+"Days" = "Días";
 
 /* Normal BG (within TIR) */
 "Normal" = "Normal";
 
 /* Title High BG in statPanel */
-"High (>" = "High (>";
+"High (>" = "Alto (>";
 
 /* Title Low BG in statPanel */
-"Low (<" = "Low (<";
+"Low (<" = "Bajo (<";
 
 /* SD */
-"SD" = "SD";
+"SD" = "DS";
 
 /* CV */
 "CV" = "CV";
@@ -1731,78 +1731,78 @@ Enact a temp Basal or a temp target */
 "HbA1c" = "HbA1c";
 
 /* Total number of days of data for HbA1c estimation, part 1/2*/
-"All" = "All";
+"All" = "Todos";
 
 /* Total number of days of data for HbA1c estimation, part 2/2*/
-"days" = "days";
+"days" = "días";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Loops";
+"Loops" = "Ciclos";
 
 /* Loop Errors in statPanel */
-"Errors" = "Errors";
+"Errors" = "Errores";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Intervalo";
 
 /* Median loop interval */
 "Duration" = "Duración";
 
 /* "Display SD */
-"Display SD instead of CV" = "Display SD instead of CV";
+"Display SD instead of CV" = "Mostrar DS en lugar de CV";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel";
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Mostrar Desviación Estándar (DS) en lugar del Coeficiente de Variación (CV) en el Panel de Estadísticas";
 
 /* How often to update the statistics */
-"Update every number of minutes:" = "Update every number of minutes:";
+"Update every number of minutes:" = "Actualizar cada número de minutos:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Con qué frecuencia actualizar, guardar las estadísticas.json y subir la última línea de la matriz, si está habilitado, a Nightscout. Por defecto, 20 minutos.";
 
 /* Duration displayed in statPanel */
-"Past 24 Hours " = "Past 24 Hours ";
+"Past 24 Hours " = "Últimas 24 horas";
 
 /* Duration displayed in statPanel */
-"Past Week " = "Past Week ";
+"Past Week " = "Última semana";
 
 /* Duration displayed in statPanel */
-"Past Month " = "Past Month ";
+"Past Month " = "Último mes";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "Últimos 90 días";
 
 /* Duration displayed in statPanel */
-"All Past Days of Data " = "All Past Days of Data ";
+"All Past Days of Data " = "Todos los días pasados de datos ";
 
 /* "Display Loop statistics in statPanel */
-"Display Loop Cycle statistics" = "Display Loop Cycle statistics";
+"Display Loop Cycle statistics" = "Mostrar estadísticas de ciclos del lazo cerrado";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Displays Loop statistics in the statPanel in Home View";
+"Displays Loop statistics in the statPanel in Home View" = "Muestra las estadísticas del lazo cerrado en el panel de estado en la vista de inicio";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Cambiar las unidad por defecto de HbA1c en el panel de estadísticas. Las unidades serán actualizadas en dicho panel de estadísticas en la próxima actualización del fichero estadísticas.json";
 
 /* HbA1c for all glucose storage days */
-"all" = "all";
+"all" = "todos";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "CGM Configuration";
+"CGM Configuration" = "Configuración de MCG";
 
-"Heartbeat" = "Heartbeat";
+"Heartbeat" = "Latido del corazón";
 
-"CGM address :" = "CGM address :";
+"CGM address :" = "Dirección del MCG :";
 
-"CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
+"CGM is not used as heartbeat." = "El MCG no se utiliza como latido de corazón.";
 
-"Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
+"Are you sure you want to delete this CGM?" = "¿Está usted seguro de querer eliminar este MCG?";
 
 /* New Experimental feature */
 "Experimental" = "Experimental";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Smooth Glucose Value";
+"Smooth Glucose Value" = "Suavizar valores de glucosa";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1811,25 +1811,25 @@ Enact a temp Basal or a temp target */
 */
 /* Headline Rewind Resets Autosens */
 
-"Rewind Resets Autosens" = "Rewind Resets Autosens";
+"Rewind Resets Autosens" = "Rebobinar reinicia Autosens";
 
 /* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Esta función, activada por defecto, restablece la proporción de autosens a neutral cuando rebobinas la bomba, suponiendo que esto corresponde a un probable cambio en el sitio. Autosens comenzará a aprender la sensibilidad desde el momento del evento, y puede tardar hasta 6 horas. Si normalmente rebobina su bomba independientemente de los cambios en el sitio, puede considerar desactivar esta función.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
-"High Temptarget Raises Sensitivity" = "High Temptarget Raises Sensitivity";
+"High Temptarget Raises Sensitivity" = "Objetivo temporal elevado aumenta la sensibilidad";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Por defecto 'Falso'. Cuando se cambia a 'Verdadero', aumenta la sensibilidad (menor proporción de sensibilidad) para objetivos temporales fijados en >= 111. Sinónimo de modo ejercicio. Cuanto mayor sea su objetivo temporal superior a 110, resultará en relaciones más sensibles (más bajas), p.ej., objetivo temporal de 120 resulta en una proporción de sensibilidad de 0.75, mientras que 140 resultaría en 0.6 (con un valor por defecto de objetivo basal de 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
-"Low Temptarget Lowers Sensitivity" = "Low Temptarget Lowers Sensitivity";
+"Low Temptarget Lowers Sensitivity" = "Objetivo temporal bajo reduce la sensibilidad";
 
 /* ”Low Temptarget Lowers Sensitivity" */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Por defecto 'Falso'. Cuando se establece 'Verdadero', puede disminuir la sensibilidad (mayor proporción de sensibilidad) para objetivos temporales <= 99. Cuanto menor sea su objetivo temporal por debajo de 100, resultará en proporciones menos sensibles (superiores), p. ej., el objetivo temporal de 95 resulta en la proporción de sensibilidad de 1.09, mientras que 85 resulta en 1.33 (con la mitad de objetivo predeterminada de 160).";
 
 /* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "Sensitivity Raises Target";
+"Sensitivity Raises Target" = "Sensibilidad aumenta el objetivo";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Cuando es verdadero, aumenta el objetivo BG cuando los autosens detectan sensibilidad";
@@ -2083,13 +2083,13 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
 
 /* Headline Use Sigmoid Function */
-"Use Sigmoid Function" = "Use Sigmoid Function";
+"Use Sigmoid Function" = "Usar función de Sigmoid";
 
 /* Which dyn ISF function to use */
-"Formula" = "Formula";
+"Formula" = "Fórmula";
 
 /* Extra Safety Features when using dyn ISF */
-"Safety" = "Safety";
+"Safety" = "Seguridad";
 
 /* Use Sigmoid Function */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.";
