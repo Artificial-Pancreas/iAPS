@@ -17,7 +17,7 @@
 "Continue without bolus" = "Continuar sin administrar bolo";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "¡La cantidad es mayor que el ajuste del bolo máximo!\n ¿Está seguro de que desea añadir ";
 
 /* Header */
 "Enact Bolus" = "Administrar Bolo";
@@ -47,7 +47,7 @@
 "Agree and continue" = "Aceptar y continuar";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "de";
 
 /* Remote Bolus Alert, Part 1 */
 "A Remote Bolus " = "Un Bolo Remoto ";
@@ -101,7 +101,7 @@
 "Result" = "Resultado";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "La cantidad ingresada ha sido limitada por la configuración máxima del bolo de %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Continuar";
@@ -137,7 +137,7 @@
 "Carbs required" = "Se requieren carbohidratos";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "Alimento guardado";
 
 /* */
 "Are you sure?" = "¿Estás seguro?";
@@ -170,19 +170,19 @@
 "Enact Temp Target" = "Iniciar objetivo temporal";
 
 /* */
-"Target" = "Target";
+"Target" = "Objetivo";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Ratio de insulina basal y sensibilidad";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Un ajuste inferior de 'Objetivo Basal Medio' reducirá la basal y elevará el factor de sensibilidad antes, en un objetivo glucémico más bajo.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Tu configuración: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limita el extremo máximo";
 
 /*  */
 "Enter preset name" = "Introduzca nombre del predef";
@@ -200,19 +200,19 @@
 "Save" = "Guardar";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Guardar como Ajuste Predefinido";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Eliminar Ajuste Predefinido";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "¿Eliminar ajuste predefinido \"%@'?";
 
 /* Button */
 "No" = "No";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Sí";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -224,7 +224,7 @@
 "Top target" = "Objetivo Superior";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "para";
 
 /*  Temp target set for ... minutes */
 "min" = "min";
@@ -351,7 +351,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Usar servidor local de glucosa";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Esto permite subir estadísticas.json a Nightscout, que puede ser utilizado por el Proyecto de Estadísticas y Demografía de la Comunidad.\n\nLa participación en las estadísticas de la comunidad es opcional, y requiere registrarse por separado en:\n";
 
 /*  */
 "Edit settings json" = "Editar configuración json";
@@ -372,19 +372,19 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Control a distancia";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Permitir Control Remoto de iAPS";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nAhora, por favor, verifique todos sus nuevos ajustes de forma exhaustiva:\n\n* Ajustes Basales\n * Relación de Carbs\n * Objetivos de Glucosa\n * Sensibilidades a la Insulina\n * DAI\n\n en Ajustes de iAPS > Configuración.\n\nConfiguración del perfil incorrecta o inválida podría tener efectos desatrosos.";
 
 /* Profile Import Alert */
-"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?";
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Esto reemplazará algunos o todos los ajustes actuales de la bomba. ¿Está seguro de que desea importar la configuración del perfil de Nightscout?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!";
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nConfiguración basal de Nightscout inválida. \n\nImportación cancelada. ¡Compruebe la configuración basal de su perfil de Nightscout!";
 
 /* Import Error */
-"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings";
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nConfiguración importada pero las Basales no se pudieron guardar en la bomba (Sin bomba). Revisa la configuración basal y pulsa \"Guardar en la bomba\" para sincronizar la nueva configuración basal";
 
 /* Import Error Headline */
 "Import Error" = "Error de Importación";
@@ -399,13 +399,13 @@ Enact a temp Basal or a temp target */
 "Import settings?" = "¿Importar ajustes?";
 
 /* */
-"Import from Nightscout" = "Import from Nightscout";
+"Import from Nightscout" = "Importar de Nightscout";
 
 /* */
-"Settings imported" = "Settings imported";
+"Settings imported" = "Ajustes importados";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "Las unidades de glucosa de Nightscout y la bomba no coinciden. Ajustes de importación cancelados.";
 
 /* Import Error */
 "Can't find the default Nightscout Profile." = "Can't find the default Nightscout Profile.";
@@ -699,10 +699,10 @@ Enact a temp Basal or a temp target */
 "Pairinginfo" = "Pairinginfo";
 
 /* */
-"PatchInfo" = "PatchInfo";
+"PatchInfo" = "Info del parche";
 
 /* */
-"Calibrationinfo" = "Calibrationinfo";
+"Calibrationinfo" = "Info de calibración";
 
 /* */
 "Unknown" = "Desconocido";
@@ -711,139 +711,139 @@ Enact a temp Basal or a temp target */
 "Not paired yet" = "No emparejado aún";
 
 /* */
-"Pair Sensor & connect" = "Pair Sensor & connect";
+"Pair Sensor & connect" = "Emparejar Sensor y conectar";
 
 /* */
-"Phone NFC required!" = "Phone NFC required!";
+"Phone NFC required!" = "¡Es necesario un teléfono con NFC!";
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Tu teléfono o aplicación no está habilitada para el uso de NFC, lo que es necesario para emparejar con sensores Libre 2";
 
 /* Bluetooth Power Off */
-"Bluetooth Power Off" = "Bluetooth Power Off";
+"Bluetooth Power Off" = "Apagar Bluetooth";
 
 /* Please turn on Bluetooth */
-"Please turn on Bluetooth" = "Please turn on Bluetooth";
+"Please turn on Bluetooth" = "Por favor, active el Bluetooth";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Ningún Transmisor Libre seleccionado";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Eliminar el gestor de MCG e iniciar de nuevo. Sus credenciales libreoopweb se conservarán";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Suma de verificación del Libre no válida";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "El sensor Libre fue leído incorrectamente, sus CRCs no son válidos";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Glucosa";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "¡ALERTA BAJA!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "¡ALERTA ALTA!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Pospuesto)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Glucose: %@";
+"Glucose: %@" = "Glucosa: %@";
 
 /* Transmitter: %@%% */
-"Transmitter: %@%%" = "Transmitter: %@%%";
+"Transmitter: %@%%" = "Transmisor %@";
 
 /* No Sensor Detected */
-"No Sensor Detected" = "No Sensor Detected";
+"No Sensor Detected" = "Ningún sensor detectado";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Esto podría ser un problema intermitente, pero por favor compruebe que su transmisor está firmemente asegurado sobre su sensor";
 
 /* New Sensor Detected */
-"New Sensor Detected" = "New Sensor Detected";
+"New Sensor Detected" = "Se ha detectado un sensor nuevo";
 
 /* Please wait up to 30 minutes before glucose readings are available! */
-"Please wait up to 30 minutes before glucose readings are available!" = "Please wait up to 30 minutes before glucose readings are available!";
+"Please wait up to 30 minutes before glucose readings are available!" = "¡Por favor, espere hasta 30 minutos antes de que las lecturas de glucosa estén disponibles!";
 
 /* Invalid Glucose sample detected, try again later */
-"Invalid Glucose sample detected, try again later" = "Invalid Glucose sample detected, try again later";
+"Invalid Glucose sample detected, try again later" = "Se detectó una muestra de glucosa no válida, inténtalo de nuevo más tarde";
 
 /* ensor might have temporarily stopped, fallen off or is too cold or too warm */
-"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "Sensor might have temporarily stopped, fallen off or is too cold or too warm";
+"Sensor might have temporarily stopped, fallen off or is too cold or too warm" = "El sensor podría haberse detenido temporalmente, caído o estar demasiado frío o demasiado caliente";
 
 /* Invalid Sensor Detected */
-"Invalid Sensor Detected" = "Invalid Sensor Detected";
+"Invalid Sensor Detected" = "Sensor no válido detectado";
 
 /* Detected sensor seems not to be a libre 1 sensor! */
-"Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
+"Detected sensor seems not to be a libre 1 sensor!" = "¡El sensor detectado parece no ser un sensor Libre 1!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "El sensor detectado no es válido: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "Batería baja";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "Sensor inválido";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "Cambio de sensor";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "El sensor expira pronto";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "La batería es baja %@, considera cargar tu dispositivo %@ lo antes posible";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Extrayendo datos de calibración del sensor";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "El sensor finaliza pronto";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "¡El sensor actual terminará pronto! Vida restante del sensor en %@";
 
 /* */
 "Libre Bluetooth" = "Bluetooth Libre";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "Silenciar Alarmas";
 
 /* */
 "Last measurement" = "Última medición";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Suma de verificación del sensor";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Última predicción del nivel de glucosa";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "Glucosa actual";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "Info del sensor";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "Tiempo del sensor";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "Tiempo restante del sensor";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "Caducidad del sensor";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "Estado del sensor";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "Serial del sensor";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "Información del transmisor";
 
 /* */
 "Hardware" = "Hardware";
@@ -855,13 +855,13 @@ Enact a temp Basal or a temp target */
 "Connection State" = "Estado de Conexión";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "Tipo de transmisor";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "Tipo de sensor";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "Parámetros de calibración de fábrica";
 
 /* */
 "Valid for footer" = "Valid for footer";
@@ -1017,116 +1017,116 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Backfill options";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "El relleno de las tendencias no está bien soportado por Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Rellenar valores desde historial";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Rellenar valores desde tendencia";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Opciones de depuración";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Añade muchos datos al Informe de Incidencias ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Mantener datos del sensor";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Batería";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Añadir también información de origen";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Umbral de carbohidratos requeridos";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Carbohidratos necesarios: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "Para prevenir BAJO se requieren %d g. de carbohidratos";
 
 /* */
-"iAPS not active" = "iAPS not active";
+"iAPS not active" = "iAPS inactivo";
 
 /* */
-"Last loop was more than %d min ago" = "Last loop was more than %d min ago";
+"Last loop was more than %d min ago" = "El último ciclo fue hace más de %d mins";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Mostrar glucosa en la insignia de la aplicación";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Rellenar valores de glucosa";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Acerca de esta fuente";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "Bolo fallido";
 
 /* "Max Bolus Exceeded label" */
-"Max Bolus exceeded!" = "Max Bolus exceeded!";
+"Max Bolus exceeded!" = "¡Bolo máximo superado!";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolo fallido o inexacto. Revise el historial de la bomba antes de repetir la acción.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Carbohidratos";
 
 /* Food Type / Meal Note */
-"Note" = "Note";
+"Note" = "Nota";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Insulina basal temporal";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Objetivo temporal";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Reanudar";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Suspender";
 
 /* */
-"Animated Background" = "Animated Background";
+"Animated Background" = "Fondo animado";
 
 /* Sensor day(s) */
-" day(s)" = " day(s)";
+" day(s)" = " día(s)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Display HR on Watch";
+"Display HR on Watch" = "Mostrar frecuencia cardíaca en el reloj";
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "Ajustes principales de OpenAPS";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "Ajustes de SMB en OpenAPS";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "Ajustes de objetivos de OpenAPS";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "Otros ajustes de OpenAPS";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Simulador de glucosa";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Estado del Bluetooth restaurado (¿se ha reiniciado APS?). Se encontraron %d periféricos, y se conectó al %@ con el identificador %@";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Utilizar el grupo de aplicaciones compartidas con la app de MCG externa xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
-"Using shared app group with external CGM app GlucoseDirect" = "Using shared app group with external CGM app GlucoseDirect";
+"Using shared app group with external CGM app GlucoseDirect" = "Utilizar el grupo de aplicaciones compartidas con la app de MCG externa GlucoseDirect";
 
 /* Dexcom G6 app */
-"Dexcom G6 app" = "Dexcom G6 app";
+"Dexcom G6 app" = "Aplicación Dexcom G6";
 
 /* Native G5 app */
-"Native G5 app" = "Native G5 app";
+"Native G5 app" = "Aplicación nativa de Dexcom G5";
 
 /* Minilink transmitter */
 "Minilink transmitter" = "Minilink transmitter";
@@ -1419,7 +1419,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Guardar como Ajuste Predefinido";
 
 /* */
 "Predictions" = "Predictions";
