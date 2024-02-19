@@ -57,6 +57,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.cannulaVolume = rawValue["cannulaVolume"] as? UInt16 ?? 0
         self.refillAmount = rawValue["refillAmount"] as? UInt16 ?? 0
         self.targetBg = rawValue["targetBg"] as? UInt16
+        self.useSilentTones = rawValue["useSilentTones"] as? Bool ?? true
         
         if let rawInsulinType = rawValue["insulinType"] as? InsulinType.RawValue {
             insulinType = InsulinType(rawValue: rawInsulinType)
@@ -103,6 +104,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.cannulaVolume = 0
         self.refillAmount = 0
         self.targetBg = nil
+        self.useSilentTones = false
     }
     
     public var rawValue: RawValue {
@@ -140,6 +142,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["cannulaVolume"] = self.cannulaVolume
         value["refillAmount"] = self.refillAmount
         value["targetBg"] = self.targetBg
+        value["useSilentTones"] = self.useSilentTones
         
         return value
     }
@@ -224,6 +227,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
             return .tempBasal(DoseEntry.tempBasal(absoluteUnit: tempBasalUnits ?? 0, duration: tempBasalDuration ?? 0, insulinType: insulinType!, startDate: basalDeliveryDate))
         }
     }
+    
+    public var useSilentTones: Bool = false
     
     mutating func resetState() {
         self.ignorePassword = false

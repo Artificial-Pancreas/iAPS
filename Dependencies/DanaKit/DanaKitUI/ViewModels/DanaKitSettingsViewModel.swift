@@ -20,6 +20,8 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var isSyncing: Bool = false
     @Published var lastSync: Date? = nil
     @Published var batteryLevel: Double = 0
+    @Published var showingSilentTone: Bool = false
+    @Published var silentTone: Bool = false
     
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
@@ -88,6 +90,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.isSuspended = self.pumpManager?.state.isPumpSuspended ?? false
         self.pumpTime = self.pumpManager?.state.pumpTime
         self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
+        self.silentTone = self.pumpManager?.state.useSilentTones ?? false
         self.reservoirLevelWarning = Double(self.pumpManager?.state.lowReservoirRate ?? 20)
         self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
         
@@ -140,12 +143,12 @@ class DanaKitSettingsViewModel : ObservableObject {
             self.isSyncing = true
         }
         
-        pumpManager.ensureCurrentPumpData(completion: { date in
+        pumpManager.syncPump { date in
             DispatchQueue.main.async {
                 self.isSyncing = false
                 self.lastSync = date
             }
-        })
+        }
     }
     
     func syncPumpTime() {
@@ -162,6 +165,15 @@ class DanaKitSettingsViewModel : ObservableObject {
     func reservoirText(for units: Double) -> String {
         let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: units)
         return reservoirVolumeFormatter.string(from: quantity, for: .internationalUnit()) ?? ""
+    }
+    
+    func toggleSilentTone() {
+        guard let pumpManager = self.pumpManager else {
+            return
+        }
+        
+        pumpManager.state.useSilentTones = !self.silentTone
+        self.silentTone = pumpManager.state.useSilentTones
     }
     
     func suspendResumeButtonPressed() {
@@ -247,6 +259,7 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.isSuspended = state.isPumpSuspended
         self.pumpTime = self.pumpManager?.state.pumpTime
         self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
+        self.silentTone = self.pumpManager?.state.useSilentTones ?? false
         self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
         
         self.basalButtonText = self.updateBasalButtonText()

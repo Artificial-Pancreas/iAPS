@@ -338,3 +338,18 @@
 
 /* Alert body for unknown */
 "An unknown error has occurred during processing the alert from the pump. Please report this" = "An unknown error has occurred during processing the alert from the pump. Please report this"
+
+/* The title of the pump information section in DanaKit settings */
+"Pump information" = "Pump information"
+
+/* Title for silent tone action sheet */
+"Toggle silent tone?" = "Toggle silent tone?"
+
+/* Button text to cancel silent tone */
+"No, Keep as is" = "No, Keep as is"
+
+/* Button text to disable silent tone */
+"Yes, Disable silent tones" = "Yes, Disable silent tones"
+
+/* Button text to enable silent tone */
+"Yes, Enable silent tones" = "Yes, Enable silent tones"
