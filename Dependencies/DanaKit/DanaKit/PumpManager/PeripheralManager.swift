@@ -373,10 +373,26 @@ extension PeripheralManager {
                 log.error("\(#function): Invalid BLE-5 keys. Please unbound device and try again.")
                 
                 self.pumpManager.disconnect(self.connectedDevice)
-                self.pumpManager.notifyAlert(PumpManagerAlert.ble5InvalidKeys(self.pumpManager.state.deviceName ?? "<NO NAME>"))
                 
                 DispatchQueue.main.async {
                     self.completion(NSError(domain: "Invalid ble5 keys", code: 0, userInfo: nil))
+                    
+                    // Need to manually show error, since pumpDelegate hasnt been attached yet...
+                    let dialogMessage = UIAlertController(
+                        title:LocalizedString("ERROR: Failed to pair device", comment: "Dana-i invalid ble5 keys"),
+                        message: LocalizedString("Failed to pair to ", comment: "Dana-i failed to pair p1") + (self.pumpManager.state.deviceName ?? "<NO_NAME>") + LocalizedString(". Please go to your bluetooth settings, forget this device, and try again", comment: "Dana-i failed to pair p2"),
+                        preferredStyle: .alert)
+                    
+                    dialogMessage.addAction(UIAlertAction(
+                        title: LocalizedString("Oke", comment: "Dana-RS v3 pincode prompt oke"),
+                        style: .default
+                    ))
+                    
+                    guard let view = UIApplication.shared.windows.last?.rootViewController else {
+                        return
+                    }
+                    
+                    view.present(dialogMessage, animated: true, completion: nil)
                 }
                 return
             }
@@ -626,7 +642,6 @@ extension PeripheralManager {
             self.pumpManager.state.targetBg = dataUserOption.targetBg
             self.pumpManager.state.units = dataUserOption.units
             self.pumpManager.state.bolusState = .noBolus
-            self.pumpManager.currentBaseBasalRate = data.currentBasal
             self.pumpManager.state.pumpTime = dataTimeUtc.time
             self.pumpManager.notifyStateDidChange()
             

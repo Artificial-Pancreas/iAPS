@@ -71,13 +71,21 @@ public class DanaKitPumpManager: DeviceManager {
     
     private var doseReporter: DanaKitDoseProgressReporter?
     private var doseEntry: UnfinalizedDose?
-    private let basalProfileNumber: UInt8 = 1
+    private let basalProfileNumber: UInt8 = 0
     
     public var isOnboarded: Bool {
         self.state.isOnBoarded
     }
     
-    public var currentBaseBasalRate: Double = 0
+    private let basalIntervals: [TimeInterval] = Array(0..<24).map({ TimeInterval(60 * 60 * $0) })
+    public var currentBaseBasalRate: Double {
+        let now = Date()
+        let startOfDay = Calendar.current.startOfDay(for: now)
+        let nowTimeInterval = now.timeIntervalSince(startOfDay)
+        
+        let index = (basalIntervals.firstIndex(where: { $0 > nowTimeInterval}) ?? 24) - 1
+        return self.state.basalSchedule[index]
+    }
     public var status: PumpManagerStatus {
         return self.status(state)
     }
@@ -519,38 +527,44 @@ extension DanaKitPumpManager: PumpManager {
                     return
                 }
                 
-                // Check if duration is supported
-                // If not, round it down to nearest supported duration
-                var duration = duration
-                if !self.isSupportedDuration(duration) {
-                    if duration > .hours(1) {
-                        // Round down to nearest full hour
-                        duration = .hours(1) * floor(duration / .hours(1))
-                        
-                    } else if duration > .minutes(30) {
-                        // Round down to 30 min
-                        duration = .minutes(30)
-                        
-                    } else if duration > .minutes(15) {
-                        // Round down to 15 min
-                        duration = .minutes(15)
-                        
-                    } else {
-                        self.disconnect()
-                        self.log.error("\(#function): Temp basal below 15 min is unsupported (floor duration)")
-                        completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal below 15 min is unsupported... (floor duration)")))
-                        return
-                    }
-                }
                 
-                guard let percentage = self.absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule) else {
-                    self.disconnect()
-                    self.log.error("\(#function): Basal schedule is not available...")
-                    completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
-                    return
-                }
                 
                 do {
+                    // Check if duration is supported
+                    // If not, round it down to nearest supported duration
+                    var duration = duration
+                    if !self.isSupportedDuration(duration) {
+                        let oldDuration = duration
+                        if duration > .hours(1) {
+                            // Round down to nearest full hour
+                            duration = .hours(1) * floor(duration / .hours(1))
+                            self.log.info("\(#function): Temp basal rounded down from \(oldDuration / .hours(1))h to \(floor(duration / .hours(1)))h")
+                            
+                        } else if duration > .minutes(30) {
+                            // Round down to 30 min
+                            duration = .minutes(30)
+                            self.log.info("\(#function): Temp basal rounded down from \(oldDuration / .minutes(1))min to 30min")
+                            
+                        } else if duration > .minutes(15) {
+                            // Round down to 15 min
+                            duration = .minutes(15)
+                            self.log.info("\(#function): Temp basal rounded down from \(oldDuration / .minutes(1))min to 15min")
+                            
+                        } else {
+                            self.disconnect()
+                            self.log.error("\(#function): Temp basal below 15 min is unsupported (floor duration)")
+                            completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal below 15 min is unsupported... (floor duration)")))
+                            return
+                        }
+                    }
+                    
+                    guard let percentage = self.absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule) else {
+                        self.disconnect()
+                        self.log.error("\(#function): Basal schedule is not available...")
+                        completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
+                        return
+                    }
+                    
                     if self.state.isTempBasalInProgress {
                         let packet = generatePacketBasalCancelTemporary()
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
@@ -561,6 +575,8 @@ extension DanaKitPumpManager: PumpManager {
                             completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Could not cancel old temp basal")))
                             return
                         }
+                        
+                        self.log.info("\(#function): Succesfully canceled old temp basal")
                     }
                     
                     if (duration < .ulpOfOne) {
@@ -811,7 +827,6 @@ extension DanaKitPumpManager: PumpManager {
                         return
                     }
                     
-                    self.currentBaseBasalRate = schedule.value(at: Date.now)
                     self.state.basalDeliveryOrdinal = .active
                     self.state.basalDeliveryDate = Date.now
                     self.state.basalSchedule = basal

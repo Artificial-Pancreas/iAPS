@@ -11,6 +11,8 @@ import SwiftUI
 
 struct LoadingModal<Content>: View where Content: View {
 
+    @Environment(\.colorScheme) var colorScheme
+    
     @Binding var isShowing: Bool
     var text: String?
     var content: () -> Content
@@ -33,7 +35,7 @@ struct LoadingModal<Content>: View where Content: View {
                         Text(text ?? LocalizedString("loading", comment: "Generic loading text")).font(.headline)
                     }
                     .frame(width: 250, height: 200)
-                    .background(Color.white)
+                    .background(colorScheme == .light ? Color.white : Color.black)
                     .foregroundColor(Color.primary)
                     .cornerRadius(16)
                 }
