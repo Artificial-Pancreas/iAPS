@@ -127,7 +127,6 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
-            broadcaster.register(OverrideObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
 
             subscribeSetting(\.hours, on: $hours, initial: {
@@ -239,7 +238,6 @@ extension Home {
 
         func cancelProfile() {
             let storage = OverrideStorage()
-            // let duration = storage.cancelProfile()
 
             if let activeOveride = storage.fetchLatestOverride().first {
                 let presetName = storage.isPresetName()
@@ -461,8 +459,7 @@ extension Home.StateModel:
     EnactedSuggestionObserver,
     PumpBatteryObserver,
     PumpReservoirObserver,
-    PumpTimeZoneObserver,
-    OverrideObserver
+    PumpTimeZoneObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -472,10 +469,6 @@ extension Home.StateModel:
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
-        setupOverrideHistory()
-    }
-
-    func overrideHistoryDidUpdate(_: [OverrideHistory]) {
         setupOverrideHistory()
     }
 

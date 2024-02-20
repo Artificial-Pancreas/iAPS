@@ -44,7 +44,7 @@ extension OverrideProfilesConfig {
 
         func saveSettings() {
             // Is other override already active?
-            let last = CoreDataStorage().fetchLatestOverride().last
+            let last = OverrideStorage().fetchLatestOverride().last
 
             coredataContext.perform { [self] in
                 let saveOverride = Override(context: self.coredataContext)
@@ -95,11 +95,6 @@ extension OverrideProfilesConfig {
 
                 try? self.coredataContext.save()
             }
-            DispatchQueue.main.async {
-                self.broadcaster.notify(OverrideObserver.self, on: .main) {
-                    $0.overrideHistoryDidUpdate(OverrideStorage().fetchOverrideHistory(interval: DateFilter().today))
-                }
-            }
         }
 
         func savePreset() {
@@ -147,7 +142,7 @@ extension OverrideProfilesConfig {
             guard id_ != "" else { return }
 
             // Is other already active?
-            let last = CoreDataStorage().fetchLatestOverride().last
+            let last = OverrideStorage().fetchLatestOverride().last
 
             coredataContext.performAndWait {
                 var profileArray = [OverridePresets]()
@@ -278,8 +273,8 @@ extension OverrideProfilesConfig {
             uamMinutes = defaultUamMinutes
 
             let storage = OverrideStorage()
-            let duration_ = storage.cancelProfile()
 
+            let duration_ = storage.cancelProfile()
             let last_ = storage.fetchLatestOverride().last
             let name = storage.isPresetName()
             if let last = last_, let duration = duration_ {

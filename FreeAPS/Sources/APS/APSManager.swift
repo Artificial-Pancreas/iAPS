@@ -659,10 +659,6 @@ final class BaseAPSManager: APSManager, Injectable {
 
             // Command to Cancel Active Override
             if name.lowercased() == "cancel", isActive {
-                // let duration = OverrideStorage().cancelProfile()
-                // announcementsStorage.storeAnnouncements([announcement], enacted: true)
-                // debug(.apsManager, "Override Canceled by Announcement succeeded.")
-
                 if let activeOveride = lastActiveOveride {
                     let presetName = storage.isPresetName()
                     let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
@@ -686,10 +682,10 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
-            let preset = CoreDataStorage().fetchPreset(name)
+            let preset = storage.fetchPreset(name)
             guard let id = preset.id, let preset_ = preset.preset else { return }
-            CoreDataStorage().overrideFromPreset(preset_, id)
-            let currentActiveOveride = CoreDataStorage().fetchLatestOverride().first
+            storage.overrideFromPreset(preset_, id)
+            let currentActiveOveride = storage.fetchLatestOverride().first
             nightscout.uploadOverride(name, Double(preset.preset?.duration ?? 0), currentActiveOveride?.date ?? Date.now)
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")

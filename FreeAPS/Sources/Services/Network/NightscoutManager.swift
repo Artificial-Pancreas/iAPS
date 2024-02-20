@@ -41,6 +41,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     @Injected() private var reachabilityManager: ReachabilityManager!
     @Injected() var healthkitManager: HealthKitManager!
 
+    let overrideStorage = OverrideStorage()
+
     private let processQueue = DispatchQueue(label: "BaseNetworkManager.processQueue")
     private var ping: TimeInterval?
 
@@ -757,7 +759,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                                 case .finished:
                                     debug(.nightscout, "Override Uploaded to NS, date: \(date)")
                                 case let .failure(error):
-                                    CoreDataStorage().addToNotUploaded(1)
+                                    self.overrideStorage.addToNotUploaded(1)
                                     self.notUploaded(overrides: exercise)
                                     debug(.nightscout, "Upload of Override failed: " + error.localizedDescription)
                                 }
@@ -765,7 +767,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                             .store(in: &self.lifetime)
                     case let .failure(error):
                         debug(.nightscout, "Deletion of Old Override failed: " + error.localizedDescription)
-                        CoreDataStorage().addToNotUploaded(1)
+                        self.overrideStorage.addToNotUploaded(1)
                         self.notUploaded(overrides: exercise)
                     }
                 } receiveValue: {}
@@ -910,7 +912,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private func checkForNoneUploadedOverides() {
         guard let nightscout = nightscoutAPI, isUploadEnabled else { return }
-        guard let count = CoreDataStorage().countNotUploaded() else { return }
+        guard let count = overrideStorage.countNotUploaded() else { return }
 
         let file = storage.retrieve(OpenAPS.Nightscout.notUploadedOverrides, as: [NigtscoutExercise].self) ?? []
         guard file.isNotEmpty else { return }
@@ -921,7 +923,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 switch completion {
                 case .finished:
                     self.removeFromNotUploaded()
-                    CoreDataStorage().addToNotUploaded(0)
+                    self.overrideStorage.addToNotUploaded(0)
                     debug(.nightscout, "Last Override deleted from NS")
                 case let .failure(error):
                     debug(.nightscout, "Last Override deleteion from NS failed! " + error.localizedDescription)
@@ -934,7 +936,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 switch completion {
                 case .finished:
                     self.removeFromNotUploaded()
-                    CoreDataStorage().addToNotUploaded(0)
+                    self.overrideStorage.addToNotUploaded(0)
                     debug(.nightscout, "\(count) Override(s) from list of not uploaded now uploaded!")
                 case let .failure(error):
                     debug(.nightscout, "Upload of Override from list of not uploaded failed: " + error.localizedDescription)
