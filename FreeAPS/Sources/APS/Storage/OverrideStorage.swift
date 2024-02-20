@@ -2,7 +2,6 @@ import Combine
 import CoreData
 import Foundation
 import SwiftDate
-import Swinject
 
 final class OverrideStorage {
     let coredataContext = CoreDataStack.shared.persistentContainer.viewContext

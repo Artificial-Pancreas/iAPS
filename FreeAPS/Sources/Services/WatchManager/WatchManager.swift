@@ -444,7 +444,7 @@ extension BaseWatchManager: WCSessionDelegate {
             let storage = OverrideStorage()
             if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
                 preset.date = Date.now
-                
+
                 // Cancel eventual current active override first
                 if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
                     if let duration = storage.cancelProfile() {
