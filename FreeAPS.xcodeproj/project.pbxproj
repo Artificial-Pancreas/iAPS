@@ -23,6 +23,7 @@
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
 		1935364028496F7D001E0B16 /* Oref2_variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Oref2_variables.swift */; };
 		193F6CDD2A512C8F001240FD /* Loops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193F6CDC2A512C8F001240FD /* Loops.swift */; };
+		194297512B815938006B8A0B /* OverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194297502B815938006B8A0B /* OverridesView.swift */; };
 		1956FB212AFF79E200C7B4FF /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1956FB202AFF79E200C7B4FF /* CoreDataStorage.swift */; };
 		195D80B42AF6973A00D25097 /* DynamicRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B32AF6973A00D25097 /* DynamicRootView.swift */; };
 		195D80B72AF697B800D25097 /* DynamicDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B62AF697B800D25097 /* DynamicDataFlow.swift */; };
@@ -569,6 +570,7 @@
 		193F1E3B2B44C14800525770 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		193F1E3C2B44C14800525770 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		193F6CDC2A512C8F001240FD /* Loops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loops.swift; sourceTree = "<group>"; };
+		194297502B815938006B8A0B /* OverridesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverridesView.swift; sourceTree = "<group>"; };
 		1956FB202AFF79E200C7B4FF /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
 		195D80B32AF6973A00D25097 /* DynamicRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRootView.swift; sourceTree = "<group>"; };
 		195D80B62AF697B800D25097 /* DynamicDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDataFlow.swift; sourceTree = "<group>"; };
@@ -1904,6 +1906,7 @@
 				38E8757A2757B1C300975559 /* TempTargetsView.swift */,
 				38E8757C2757C45D00975559 /* BolusView.swift */,
 				38E8757F27595DC500975559 /* BolusConfirmationView.swift */,
+				194297502B815938006B8A0B /* OverridesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3053,6 +3056,7 @@
 			files = (
 				38E8757927579D9200975559 /* Publisher.swift in Sources */,
 				38E8755B27568A6800975559 /* ConfirmationView.swift in Sources */,
+				194297512B815938006B8A0B /* OverridesView.swift in Sources */,
 				38E8757D2757C45D00975559 /* BolusView.swift in Sources */,
 				38E8752E27554D5700975559 /* NotificationController.swift in Sources */,
 				38E8754C2755548F00975559 /* WatchStateModel.swift in Sources */,

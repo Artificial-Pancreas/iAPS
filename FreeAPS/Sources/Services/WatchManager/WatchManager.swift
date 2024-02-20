@@ -1,4 +1,5 @@
 import Foundation
+import SwiftDate
 import Swinject
 import WatchConnectivity
 
@@ -55,6 +56,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     private func configureState() {
         processQueue.async {
+            let overrideStorage = OverrideStorage()
             let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
             let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
@@ -115,10 +117,41 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                         until: untilDate
                     )
                 }
+
+            self.state.overrides = overrideStorage.fetchProfiles()
+                .map { preset -> OverridePresets_ in
+                    let untilDate = overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
+                        guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
+
+                        let duration = Double(currentOverride.duration ?? 0)
+                        let overrideDate: Date = currentOverride.date ?? Date.now
+
+                        let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                        return date > Date.now ? date : nil
+                    }
+
+                    return OverridePresets_(
+                        name: preset.name ?? "",
+                        id: preset.id ?? "",
+                        until: untilDate
+                    )
+                }
+            // Is there an active override but no preset?
+            let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
+            if let last = overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
+                let duration = Double(last.duration ?? 0)
+                let overrideDate: Date = last.date ?? Date.now
+                let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                let date = date_ > Date.now ? date_ : nil
+
+                self.state.overrides.append(OverridePresets_(name: "custom", id: last.id ?? "", until: date))
+            }
+
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
             self.state.displayFatAndProteinOnWatch = self.settingsManager.settings.displayFatAndProteinOnWatch
             self.state.confirmBolusFaster = self.settingsManager.settings.confirmBolusFaster
+            self.state.useTargetButton = self.settingsManager.settings.useTargetButton
 
             let eBG = self.eventualBGString()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
@@ -126,12 +159,11 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.isf = self.suggestion?.isf
 
-            let overrideArray = self.coreDataStorage.fetchLatestOverride()
+            let overrideArray = overrideStorage.fetchLatestOverride()
 
             if overrideArray.first?.enabled ?? false {
                 let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
                 self.state.override = percentString
-
             } else {
                 self.state.override = "100 %"
             }
@@ -403,6 +435,22 @@ extension BaseWatchManager: WCSessionDelegate {
                 )
                 tempTargetsStorage.storeTempTargets([entry])
                 replyHandler(["confirmation": true])
+                return
+            }
+        }
+
+        if let overrideID = message["override"] as? String {
+            let storage = OverrideStorage()
+            if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
+                preset.date = Date.now
+                storage.overrideFromPreset(preset)
+                replyHandler(["confirmation": true])
+                configureState()
+                return
+            } else if overrideID == "cancel" {
+                OverrideStorage().cancelProfile()
+                replyHandler(["confirmation": true])
+                configureState()
                 return
             }
         }

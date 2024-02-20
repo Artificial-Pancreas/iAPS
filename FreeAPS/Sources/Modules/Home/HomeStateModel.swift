@@ -70,6 +70,7 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
+        @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = true
         @Published var timeSettings: Bool = true
 
@@ -127,7 +128,7 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
-            broadcaster.register(OverrideObserver.self, observer: self)
+            // broadcaster.register(OverridesObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
 
             subscribeSetting(\.hours, on: $hours, initial: {
@@ -359,6 +360,13 @@ extension Home {
             }
         }
 
+        private func setupOverrides() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overrides = self.provider.overrides()
+            }
+        }
+
         private func setupAnnouncements() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -451,9 +459,14 @@ extension Home.StateModel:
     EnactedSuggestionObserver,
     PumpBatteryObserver,
     PumpReservoirObserver,
-    PumpTimeZoneObserver,
-    OverrideObserver
+    PumpTimeZoneObserver
+// OverridesObserver
 {
+    /*
+     func overridesDidUpdate(_: [Override]) {
+         setupOverrides()
+     }*/
+
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }
@@ -465,9 +478,10 @@ extension Home.StateModel:
         setupOverrideHistory()
     }
 
-    func overrideHistoryDidUpdate(_: [OverrideHistory]) {
-        setupOverrideHistory()
-    }
+    /*
+     func overrideHistoryDidUpdate(_: [OverrideHistory]) {
+         setupOverrideHistory()
+     }*/
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop

@@ -653,20 +653,23 @@ final class BaseAPSManager: APSManager, Injectable {
             )
         case let .override(name):
             guard !name.isEmpty else { return }
+
+            let overrideStorage = OverrideStorage()
+
             if name.lowercased() == "cancel" {
-                OverrideStorage().cancelProfile()
+                overrideStorage.cancelProfile()
                 announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 debug(.apsManager, "Override Canceled by Announcement succeeded.")
                 return
             }
 
-            guard let override = CoreDataStorage().fetchProfile(name) else { return }
+            guard let override = overrideStorage.fetchProfile(name) else { return }
 
             // Cancel current active first (for the UI to update)
-            if CoreDataStorage().isActive() {
-                OverrideStorage().cancelProfile()
+            if overrideStorage.isActive() {
+                overrideStorage.cancelProfile()
             }
-            CoreDataStorage().activateOverride(override)
+            overrideStorage.activateOverride(override)
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")
         }
