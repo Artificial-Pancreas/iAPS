@@ -1,9 +1,11 @@
+import Combine
 import CoreData
 import Foundation
 import SwiftDate
+import Swinject
 
 final class OverrideStorage {
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     func fetchOverrides(interval: NSDate) -> [Override] {
         var overrideArray = [Override]()
@@ -45,9 +47,10 @@ final class OverrideStorage {
         return overrideArray
     }
 
-    func cancelProfile() {
+    func cancelProfile() -> Double? {
         let scheduled = fetchLatestOverride().first
-        coredataContext.perform { [self] in
+        var duration: Double?
+        coredataContext.performAndWait { [self] in
             let profiles = Override(context: self.coredataContext)
             let history = OverrideHistory(context: self.coredataContext)
             if let latest = scheduled {
@@ -55,11 +58,13 @@ final class OverrideStorage {
                 print("History duration: \(history.duration) min")
                 history.date = latest.date ?? Date()
                 history.target = Double(latest.target ?? 100)
+                duration = history.duration
             }
             profiles.enabled = false
             profiles.date = Date()
             try? self.coredataContext.save()
         }
+        return duration
     }
 
     func overrideFromPreset(_ preset: OverridePresets) {
@@ -190,5 +195,165 @@ final class OverrideStorage {
             return false
         }
         return lastOverride.enabled
+    }
+
+    func isPresetName() -> String? {
+        var presetsArray = [OverridePresets]()
+        var overrideArray = [Override]()
+        var name: String?
+        coredataContext.performAndWait {
+            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestOverrides.sortDescriptors = [sortOverride]
+            requestOverrides.fetchLimit = 1
+            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+
+            if let or = overrideArray.first, let id = or.id {
+                let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
+                requestPresets.predicate = NSPredicate(
+                    format: "id == %@", id
+                )
+                try? presetsArray = self.coredataContext.fetch(requestPresets)
+
+                guard let presets = presetsArray.first, let presetName = presets.name else {
+                    return
+                }
+                name = presetName
+            }
+        }
+        return name
+    }
+
+    func nameOfLastActiveOverride() -> String? {
+        var presetsArray = [OverridePresets]()
+        var overrideArray = [Override]()
+        var name: String?
+        coredataContext.performAndWait {
+            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestOverrides.sortDescriptors = [sortOverride]
+            requestOverrides.fetchLimit = 2
+            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+
+            if let or = overrideArray.first, let id = or.id {
+                let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
+                requestPresets.predicate = NSPredicate(
+                    format: "id == %@", id
+                )
+                try? presetsArray = self.coredataContext.fetch(requestPresets)
+
+                guard let presets = presetsArray.first, let presetName = presets.name else {
+                    return
+                }
+                name = presetName
+            }
+        }
+        return name
+    }
+
+    func fetchPreset(_ name: String) -> (id: String?, preset: OverridePresets?) {
+        var presetsArray = [OverridePresets]()
+        var id: String?
+        var overridePreset: OverridePresets?
+        coredataContext.performAndWait {
+            let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
+            requestPresets.predicate = NSPredicate(
+                format: "name == %@", name
+            )
+            try? presetsArray = self.coredataContext.fetch(requestPresets)
+
+            guard let preset = presetsArray.first else {
+                return
+            }
+            guard let id_ = preset.id else {
+                return
+            }
+            id = id_
+            overridePreset = preset
+        }
+        return (id, overridePreset)
+    }
+
+    func overrideFromPreset(_ preset: OverridePresets, _ id: String) {
+        coredataContext.performAndWait {
+            coredataContext.performAndWait {
+                let save = Override(context: coredataContext)
+                save.date = Date.now
+                save.id = id
+                save.end = preset.end
+                save.start = preset.start
+                save.advancedSettings = preset.advancedSettings
+                save.cr = preset.cr
+                save.duration = preset.duration
+                save.enabled = true
+                save.indefinite = preset.indefinite
+                save.isPreset = true
+                save.isf = preset.isf
+                save.isfAndCr = preset.isfAndCr
+                save.percentage = preset.percentage
+                save.smbIsAlwaysOff = preset.smbIsAlwaysOff
+                save.smbMinutes = preset.smbMinutes
+                save.uamMinutes = preset.uamMinutes
+                save.target = preset.target
+                try? coredataContext.save()
+            }
+        }
+    }
+
+    func addToNotUploaded(_ add: Int16) {
+        var currentCount = [NotUploaded]()
+        coredataContext.performAndWait {
+            let requestCount = NotUploaded.fetchRequest() as NSFetchRequest<NotUploaded>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestCount.sortDescriptors = [sortOverride]
+            requestCount.fetchLimit = 1
+            try? currentCount = self.coredataContext.fetch(requestCount)
+
+            var log: Int16 = currentCount.first?.number ?? 0
+
+            let save = NotUploaded(context: coredataContext)
+            if currentCount.first != nil, log != 0 {
+                save.number += add
+                save.date = Date.now
+                try? coredataContext.save()
+                log = save.number
+            } else if add > 0 {
+                save.number = add
+                save.date = Date.now
+                try? coredataContext.save()
+                log = save.number
+            } else if add < 0 {
+                if (currentCount.first?.number ?? 0) + add >= 0 {
+                    save.number = add
+                    save.date = Date.now
+                    try? coredataContext.save()
+                    log = save.number
+                } else {
+                    save.number = 0
+                    save.date = Date.now
+                    try? coredataContext.save()
+                    log = save.number
+                }
+            }
+            debug(.service, "CoreData. addToNotUploaded Overides incremented. Current amount: \(log)")
+        }
+    }
+
+    func countNotUploaded() -> Int? {
+        var currentCount = [NotUploaded]()
+        coredataContext.performAndWait {
+            let requestCount = NotUploaded.fetchRequest() as NSFetchRequest<NotUploaded>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestCount.predicate = NSPredicate(
+                format: "date > %@", Date().addingTimeInterval(-2.days.timeInterval) as NSDate
+            )
+            requestCount.sortDescriptors = [sortOverride]
+            requestCount.fetchLimit = 1
+            try? currentCount = self.coredataContext.fetch(requestCount)
+        }
+        if let latest = currentCount.first, latest.number > 0 {
+            return Int(latest.number)
+        }
+        return nil
     }
 }

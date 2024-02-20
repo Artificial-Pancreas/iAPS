@@ -17,6 +17,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var garmin: GarminManager!
+    @Injected() private var nightscout: NightscoutManager!
 
     let coreDataStorage = CoreDataStorage()
 
@@ -443,14 +444,36 @@ extension BaseWatchManager: WCSessionDelegate {
             let storage = OverrideStorage()
             if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
                 preset.date = Date.now
+                
+                // Cancel eventual current active override first
+                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
+                    if let duration = storage.cancelProfile() {
+                        let presetName = storage.isPresetName()
+                        let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+                        nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date())
+                    }
+                }
+                // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
                 storage.overrideFromPreset(preset)
+                nightscout.uploadOverride(
+                    preset.name ?? "",
+                    Double(preset.duration ?? 0),
+                    storage.fetchLatestOverride().first?.date ?? Date.now
+                )
                 replyHandler(["confirmation": true])
                 configureState()
                 return
             } else if overrideID == "cancel" {
-                OverrideStorage().cancelProfile()
-                replyHandler(["confirmation": true])
-                configureState()
+                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
+                    let presetName = storage.isPresetName()
+                    let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+
+                    if let duration = storage.cancelProfile() {
+                        nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                        replyHandler(["confirmation": true])
+                        configureState()
+                    }
+                }
                 return
             }
         }

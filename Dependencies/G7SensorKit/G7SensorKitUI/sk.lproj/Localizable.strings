@@ -11,7 +11,7 @@
 "Bluetooth" = "Bluetooth";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Zrušiť";
 
 /* No comment provided by engineer. */
 "Configuration" = "Nastavenie";
@@ -33,10 +33,10 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "Hotovo";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glykémia";
 
 /* title for g7 settings row showing sensor grace period end time */
 "Grace Period End" = "Dodatočná doba na výmenu senzoru končí";
@@ -48,7 +48,7 @@
 "HIGH" = "VYSOKÉ";
 
 /* title for g7 settings row showing sensor last connect time */
-"Last Connect" = "Last Connect";
+"Last Connect" = "Posledné spojenie";
 
 /* No comment provided by engineer. */
 "Last Reading" = "Posledná hodnota";
@@ -60,13 +60,7 @@
 "LOW" = "NÍZKE";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
-
-/* No comment provided by engineer. */
-"Scan for new sensor" = "Načítať nový senzor";
-
-/* No comment provided by engineer. */
-"Scan for new sensor" = "Načítať nový senzor";
+"Name" = "Názov";
 
 /* No comment provided by engineer. */
 "Scan for new sensor" = "Načítať nový senzor";
@@ -102,7 +96,7 @@
 "Sensor expires" = "Senzor exspiruje";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Sensor failed";
+"Sensor failed" = "Senzor zlyhal";
 
 /* title for g7 settings row showing sensor start time */
 "Sensor Start" = "Senzor štartu";
@@ -111,7 +105,7 @@
 "Signal\nLoss" = "Strata\nsignálu";
 
 /* Field label */
-"Time" = "Time";
+"Time" = "Čas";
 
 /* Field label */
 "Trend" = "Vývoj";

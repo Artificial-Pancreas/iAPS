@@ -128,7 +128,6 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
-            // broadcaster.register(OverridesObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
 
             subscribeSetting(\.hours, on: $hours, initial: {
@@ -239,7 +238,16 @@ extension Home {
         }
 
         func cancelProfile() {
-            OverrideStorage().cancelProfile()
+            let storage = OverrideStorage()
+
+            if let activeOveride = storage.fetchLatestOverride().first {
+                let presetName = storage.isPresetName()
+                let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+
+                if let duration = storage.cancelProfile() {
+                    nightscoutManager.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                }
+            }
             setupOverrideHistory()
         }
 
@@ -460,7 +468,6 @@ extension Home.StateModel:
     PumpBatteryObserver,
     PumpReservoirObserver,
     PumpTimeZoneObserver
-// OverridesObserver
 {
     /*
      func overridesDidUpdate(_: [Override]) {
@@ -477,11 +484,6 @@ extension Home.StateModel:
         setStatusTitle()
         setupOverrideHistory()
     }
-
-    /*
-     func overrideHistoryDidUpdate(_: [OverrideHistory]) {
-         setupOverrideHistory()
-     }*/
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop

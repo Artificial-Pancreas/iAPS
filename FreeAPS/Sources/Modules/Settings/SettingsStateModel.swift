@@ -73,6 +73,15 @@ extension Settings {
         func hideSettingsModal() {
             hideModal()
         }
+
+        /*
+         func deleteOverrides() {
+             nightscoutManager.deleteAllNSoverrrides() // For testing
+         }
+
+         func deleteOverride() {
+             nightscoutManager.deleteOverride() // For testing
+         }*/
     }
 }
 
