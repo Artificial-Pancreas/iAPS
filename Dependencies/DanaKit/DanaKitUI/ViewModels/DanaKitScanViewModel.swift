@@ -40,7 +40,7 @@ class DanaKitScanViewModel : ObservableObject {
             try self.pumpManager?.startScan()
             self.isScanning = true
         } catch {
-            log.error("\(#function): Failed to start scan action: \(error.localizedDescription)")
+            log.error("\(#function): Failed to start scan action: \(error.localizedDescription, privacy: .public)")
         }
     }
     

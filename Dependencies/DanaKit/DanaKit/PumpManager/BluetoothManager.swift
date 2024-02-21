@@ -194,7 +194,7 @@ extension BluetoothManager : CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        log.info("\(#function): Device disconnected, name: \(peripheral.name ?? "<NO_NAME>")")
+        log.info("\(#function): Device disconnected, name: \(peripheral.name ?? "<NO_NAME>", privacy: .public)")
         
         self.pumpManagerDelegate?.state.isConnected = false
         self.pumpManagerDelegate?.notifyStateDidChange()
@@ -204,6 +204,6 @@ extension BluetoothManager : CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-        log.info("\(#function): Device connect error, name: \(peripheral.name ?? "<NO_NAME>"), error: \(error!.localizedDescription)")
+        log.info("\(#function): Device connect error, name: \(peripheral.name ?? "<NO_NAME>", privacy: .public), error: \(error!.localizedDescription, privacy: .public)")
     }
 }

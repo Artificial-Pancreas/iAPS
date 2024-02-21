@@ -652,7 +652,7 @@ extension PeripheralManager {
                 self.completion = { _ in }
             }
         } catch {
-            log.error("\(#function): Cautch error during sending the message. error: \(error.localizedDescription)")
+            log.error("\(#function): Caught error during sending the message. error: \(error.localizedDescription, privacy: .public)")
             self.pumpManager.disconnect(self.connectedDevice)
             DispatchQueue.main.async {
                 self.completion(error)

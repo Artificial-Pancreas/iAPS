@@ -245,8 +245,8 @@ class DanaKitSettingsViewModel : ObservableObject {
             return false
         }
         
-        // Allow a 10 sec diff in time
-        return abs(syncedAt.timeIntervalSince1970 - pumpTime.timeIntervalSince1970) > 10
+        // Allow a 1 min diff in time
+        return abs(syncedAt.timeIntervalSince1970 - pumpTime.timeIntervalSince1970) > 60
     }
 }
 

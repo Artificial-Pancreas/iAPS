@@ -60,15 +60,6 @@ public class DanaKitPumpManager: DeviceManager {
     private let stateObservers = WeakSynchronizedSet<StateObserver>()
     private let scanDeviceObservers = WeakSynchronizedSet<StateObserver>()
     
-    private let queue = DispatchQueue(label: "com.loopkit.PeripheralManager.queue", qos: .unspecified)
-    private let sessionQueue: OperationQueue = {
-        let queue = OperationQueue()
-        queue.name = "com.DanaKit.PumpManager.sessionQueue"
-        queue.maxConcurrentOperationCount = 1
-
-        return queue
-    }()
-    
     private var doseReporter: DanaKitDoseProgressReporter?
     private var doseEntry: UnfinalizedDose?
     private let basalProfileNumber: UInt8 = 0
@@ -358,7 +349,7 @@ extension DanaKitPumpManager: PumpManager {
             // Filter nil values
             .compactMap{$0}
         } catch {
-            self.log.error("\(#function): Failed to sync history. Error: \(error.localizedDescription)")
+            self.log.error("\(#function): Failed to sync history. Error: \(error.localizedDescription, privacy: .public)")
             if hasHistoryModeBeenActivate {
                 do {
                     let deactivateHistoryModePacket = generatePacketGeneralSetHistoryUploadMode(options: PacketGeneralSetHistoryUploadMode(mode: 0))
@@ -376,11 +367,11 @@ extension DanaKitPumpManager: PumpManager {
     public func estimatedDuration(toBolus units: Double) -> TimeInterval {
         switch(self.state.bolusSpeed) {
         case .speed12:
-            return units / 12 * 60
+            return units * 12 // 12sec/U
         case .speed30:
-            return units / 30 * 60
+            return units * 30 // 30sec/U
         case .speed60:
-            return units // / 60 * 60
+            return units * 60 // 60sec/U
         }
     }
     
@@ -434,21 +425,22 @@ extension DanaKitPumpManager: PumpManager {
                     self.state.bolusState = .inProgress
                     self.notifyStateDidChange()
                     
-                    // To ensure the bolus state doesnt block loop, we set a timer to remove the blocking bolusstate
+                    // It is not possible to enforce other commands while the bolus is going
+                    // Therefore, we set a timer and after that, we allow a possible temp basal to continue
                     DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                        completion(nil)
+                        
                         self.state.bolusState = .noBolus
                         self.doseReporter = nil
                         self.notifyStateDidChange()
                     }
-                    
-                    completion(nil)
                 } catch {
                     self.state.bolusState = .noBolus
                     self.doseReporter = nil
                     self.notifyStateDidChange()
                     self.disconnect()
                     
-                    self.log.error("\(#function): Failed to do bolus. Error: \(error.localizedDescription)")
+                    self.log.error("\(#function): Failed to do bolus. Error: \(error.localizedDescription, privacy: .public)")
                     completion(PumpManagerError.connection(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                 }
             }
@@ -498,7 +490,7 @@ extension DanaKitPumpManager: PumpManager {
                     self.notifyStateDidChange()
                     self.disconnect()
                     
-                    self.log.error("\(#function): Failed to cancel bolus. Error: \(error.localizedDescription)")
+                    self.log.error("\(#function): Failed to cancel bolus. Error: \(error.localizedDescription, privacy: .public)")
                     completion(.failure(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription))))
                 }
             }
@@ -683,7 +675,7 @@ extension DanaKitPumpManager: PumpManager {
                 } catch {
                     self.disconnect()
                     
-                    self.log.error("\(#function): Failed to set temp basal. Error: \(error.localizedDescription)")
+                    self.log.error("\(#function): Failed to set temp basal. Error: \(error.localizedDescription, privacy: .public)")
                     completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                 }
             }
@@ -734,7 +726,7 @@ extension DanaKitPumpManager: PumpManager {
                 } catch {
                     self.disconnect()
                     
-                    self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription)")
+                    self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
                     completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                 }
             }
@@ -781,7 +773,7 @@ extension DanaKitPumpManager: PumpManager {
                 } catch {
                     self.disconnect()
                     
-                    self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription)")
+                    self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
                     completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                 }
             }
@@ -845,7 +837,7 @@ extension DanaKitPumpManager: PumpManager {
                 } catch {
                     self.disconnect()
                     
-                    self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription)")
+                    self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
                     completion(.failure(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription))))
                 }
             }
@@ -869,7 +861,7 @@ extension DanaKitPumpManager: PumpManager {
                     self.disconnect()
                     completion(result.success)
                 } catch {
-                    self.log.error("\(#function): error caught \(error.localizedDescription)")
+                    self.log.error("\(#function): error caught \(error.localizedDescription, privacy: .public)")
                     self.disconnect()
                     completion(false)
                 }
@@ -915,7 +907,7 @@ extension DanaKitPumpManager: PumpManager {
                         maximumBolus: HKQuantity(unit: .internationalUnit(), doubleValue: (bolusResult.data as! PacketBolusGetStepInformation).maxBolus)
                     )))
                 } catch {
-                    self.log.error("\(#function): error caught \(error.localizedDescription)")
+                    self.log.error("\(#function): error caught \(error.localizedDescription, privacy: .public)")
                     self.disconnect()
                     completion(.failure(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription))))
                 }
@@ -954,7 +946,7 @@ extension DanaKitPumpManager: PumpManager {
                     completion(nil)
                 } catch {
                     self.disconnect()
-                    self.log.error("\(#function): Failed to sync time. Error: \(error.localizedDescription)")
+                    self.log.error("\(#function): Failed to sync time. Error: \(error.localizedDescription, privacy: .public)")
                     completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                 }
             }
@@ -974,10 +966,6 @@ extension DanaKitPumpManager: PumpManager {
         )
     }
     
-    func perform(_ block: @escaping ()  -> Void) {
-        queue.async(execute: block)
-    }
-    
     private func ensureConnected(_ completion: @escaping (ConnectionResult) async -> Void) {
         let block: (ConnectionResult) -> Void = { result in
             Task {
@@ -985,62 +973,45 @@ extension DanaKitPumpManager: PumpManager {
             }
         }
         
-        sessionQueue.addOperation({ [self] in
-            self.perform {
-                // Device still has an active connection with pump and is probably busy with something
-                if DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral?.state == .connected {
-                    self.logDeviceCommunication("Failed to connect: Already connected", type: .connection)
-                    block(.failure)
-                    
-                    // State hasnt been updated yet, so we have to try to connect
-                } else if DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral != nil {
-                    self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { error in
-                        if error == nil {
-                            self.logDeviceCommunication("Connected", type: .connection)
-                            block(.success)
-                        } else {
-                            self.logDeviceCommunication("Failed to connect: " + error!.localizedDescription, type: .connection)
-                            block(.failure)
-                        }
-                    }
-                    
-                    // There is no active connection, but we stored the peripheral. We can quickly reconnect
-                } else if !DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral != nil {
-                    self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { error in
-                        if error == nil {
-                            self.logDeviceCommunication("Connected", type: .connection)
-                            block(.success)
-                        } else {
-                            self.logDeviceCommunication("Failed to connect: " + error!.localizedDescription, type: .connection)
-                            block(.failure)
-                        }
-                    }
-                    
-                    // No active connection and no stored peripheral. We have to scan for device before being able to send command
-                } else if !DanaKitPumpManager.bluetoothManager.isConnected && self.state.bleIdentifier != nil {
-                    do {
-                        try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!) { error in
-                            if error == nil {
-                                self.logDeviceCommunication("Connected", type: .connection)
-                                block(.success)
-                            } else {
-                                self.logDeviceCommunication("Failed to connect: " + error!.localizedDescription, type: .connection)
-                                block(.failure)
-                            }
-                        }
-                    } catch {
-                        self.logDeviceCommunication("Failed to connect: " + error.localizedDescription, type: .connection)
-                        block(.failure)
-                    }
-                    
-                    // Should never reach, but is only possible if device is not onboard (we have no ble identifier to connect to)
+        // Device still has an active connection with pump and is probably busy with something
+        if DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral?.state == .connected {
+            self.logDeviceCommunication("Failed to connect: Already connected", type: .connection)
+            block(.failure)
+            
+        // We stored the peripheral. We can quickly reconnect
+        } else if DanaKitPumpManager.bluetoothManager.peripheral != nil {
+            self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { error in
+                if error == nil {
+                    self.logDeviceCommunication("Connected", type: .connection)
+                    block(.success)
                 } else {
-                    self.log.error("\(#function): Pump is not onboarded")
-                    self.logDeviceCommunication("Pump is not onboarded", type: .connection)
+                    self.logDeviceCommunication("Failed to connect: " + error!.localizedDescription, type: .connection)
                     block(.failure)
                 }
             }
-        })
+            // No active connection and no stored peripheral. We have to scan for device before being able to send command
+        } else if !DanaKitPumpManager.bluetoothManager.isConnected && self.state.bleIdentifier != nil {
+            do {
+                try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!) { error in
+                    if error == nil {
+                        self.logDeviceCommunication("Connected", type: .connection)
+                        block(.success)
+                    } else {
+                        self.logDeviceCommunication("Failed to connect: " + error!.localizedDescription, type: .connection)
+                        block(.failure)
+                    }
+                }
+            } catch {
+                self.logDeviceCommunication("Failed to connect: " + error.localizedDescription, type: .connection)
+                block(.failure)
+            }
+            
+            // Should never reach, but is only possible if device is not onboard (we have no ble identifier to connect to)
+        } else {
+            self.log.error("\(#function): Pump is not onboarded")
+            self.logDeviceCommunication("Pump is not onboarded", type: .connection)
+            block(.failure)
+        }
     }
     
     private func disconnect() {
