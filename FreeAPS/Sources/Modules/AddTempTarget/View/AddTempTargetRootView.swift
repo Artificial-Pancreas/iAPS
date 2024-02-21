@@ -116,7 +116,7 @@ extension AddTempTarget {
 
                 Section {
                     Button { state.enact() }
-                    label: { Text("Enact") }
+                    label: { Text("Start") }
                     Button { state.cancel() }
                     label: { Text("Cancel Temp Target") }
                 }

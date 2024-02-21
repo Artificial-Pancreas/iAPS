@@ -273,7 +273,7 @@ struct MainView: View {
                     .foregroundColor(.loopYellow)
             }
 
-            if state.useTargetButton {
+            if state.profilesOrTempTargets {
                 NavigationLink(isActive: $state.isTempTargetViewActive) {
                     TempTargetsView()
                         .environmentObject(state)

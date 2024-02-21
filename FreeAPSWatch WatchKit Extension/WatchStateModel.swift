@@ -39,7 +39,7 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var confirmBolusFaster = false
     @Published var useNewCalc = false
     @Published var eventualBG = ""
-    @Published var useTargetButton = false
+    @Published var profilesOrTempTargets = true
     @Published var isConfirmationViewActive = false {
         didSet {
             confirmationTimeout = nil
@@ -193,7 +193,7 @@ class WatchStateModel: NSObject, ObservableObject {
         displayOnWatch = state.displayOnWatch ?? .BGTarget
         displayFatAndProteinOnWatch = state.displayFatAndProteinOnWatch ?? false
         confirmBolusFaster = state.confirmBolusFaster ?? false
-        useTargetButton = state.useTargetButton ?? false
+        profilesOrTempTargets = state.profilesOrTempTargets ?? true
         useNewCalc = state.useNewCalc ?? false
         isf = state.isf
         override = state.override

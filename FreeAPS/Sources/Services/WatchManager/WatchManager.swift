@@ -152,7 +152,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
             self.state.displayFatAndProteinOnWatch = self.settingsManager.settings.displayFatAndProteinOnWatch
             self.state.confirmBolusFaster = self.settingsManager.settings.confirmBolusFaster
-            self.state.useTargetButton = self.settingsManager.settings.useTargetButton
+            self.state.profilesOrTempTargets = self.settingsManager.settings.profilesOrTempTargets
 
             let eBG = self.eventualBGString()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
