@@ -41,4 +41,5 @@ struct OverridePresets_: Codable, Identifiable {
     let name: String
     let id: String
     let until: Date?
+    let description: String
 }

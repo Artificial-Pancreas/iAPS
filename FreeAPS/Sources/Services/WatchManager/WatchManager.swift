@@ -134,7 +134,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                     return OverridePresets_(
                         name: preset.name ?? "",
                         id: preset.id ?? "",
-                        until: untilDate
+                        until: untilDate,
+                        description: self.description(preset)
                     )
                 }
             // Is there an active override but no preset?
@@ -145,7 +146,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                 let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
                 let date = date_ > Date.now ? date_ : nil
 
-                self.state.overrides.append(OverridePresets_(name: "custom", id: last.id ?? "", until: date))
+                self.state.overrides
+                    .append(OverridePresets_(name: "custom", id: last.id ?? "", until: date, description: self.description(last)))
             }
 
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
@@ -319,6 +321,30 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         // Not 0 or over maxBolus
         insulinCalculated = max(min(insulinCalculated, maxBolus), 0)
         return insulinCalculated
+    }
+
+    private func description(_ preset: OverridePresets) -> String {
+        let rawtarget = (preset.target ?? 0) as Decimal
+
+        let targetValue = settingsManager.settings.units == .mmolL ? rawtarget.asMmolL : rawtarget
+        let target: String = rawtarget > 6 ? glucoseFormatter.string(from: targetValue as NSNumber) ?? "" : ""
+
+        let percentage = preset.percentage != 100 ? preset.percentage.formatted() + "%" : ""
+        let string = (preset.target ?? 0) as Decimal > 6 && !percentage.isEmpty ? target + " " + settingsManager.settings.units
+            .rawValue + ", " + percentage : target + percentage
+        return string
+    }
+
+    private func description(_ override: Override) -> String {
+        let rawtarget = (override.target ?? 0) as Decimal
+
+        let targetValue = settingsManager.settings.units == .mmolL ? rawtarget.asMmolL : rawtarget
+        let target: String = rawtarget > 6 ? glucoseFormatter.string(from: targetValue as NSNumber) ?? "" : ""
+
+        let percentage = override.percentage != 100 ? override.percentage.formatted() + "%" : ""
+        let string = (override.target ?? 0) as Decimal > 6 && !percentage.isEmpty ? target + " " + settingsManager.settings.units
+            .rawValue + ", " + percentage : target + percentage
+        return string
     }
 
     private var glucoseFormatter: NumberFormatter {

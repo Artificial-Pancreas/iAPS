@@ -25,6 +25,7 @@ struct OverridesView: View {
                                     }
                                 }
                             }
+                            Text(override.description).font(.caption2).foregroundColor(.secondary)
                         }
                     }
                 }
@@ -48,10 +49,10 @@ struct OverridesView_Previews: PreviewProvider {
             OverridePresets_(
                 name: "Custom",
                 id: UUID().uuidString,
-                until: Date().addingTimeInterval(60 * 60)
+                until: Date().addingTimeInterval(60 * 60), description: "110 %"
             ),
-            OverridePresets_(name: "Override 1", id: UUID().uuidString, until: nil),
-            OverridePresets_(name: "Override 2", id: UUID().uuidString, until: nil)
+            OverridePresets_(name: "Override 1", id: UUID().uuidString, until: nil, description: "120 %"),
+            OverridePresets_(name: "Override 2", id: UUID().uuidString, until: nil, description: "6,5 mmol/l, 90 %")
         ]
         return OverridesView().environmentObject(model)
     }
