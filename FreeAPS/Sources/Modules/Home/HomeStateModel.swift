@@ -238,13 +238,13 @@ extension Home {
         }
 
         func cancelProfile() {
-            let storage = OverrideStorage()
+            let os = OverrideStorage()
 
-            if let activeOveride = storage.fetchLatestOverride().first {
-                let presetName = storage.isPresetName()
+            if let activeOveride = os.fetchLatestOverride().first {
+                let presetName = os.isPresetName()
                 let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
 
-                if let duration = storage.cancelProfile() {
+                if let duration = os.cancelProfile() {
                     nightscoutManager.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
                 }
             }
