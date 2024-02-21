@@ -1,4 +1,5 @@
 import Foundation
+import SwiftDate
 import Swinject
 import WatchConnectivity
 
@@ -16,6 +17,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var garmin: GarminManager!
+    @Injected() private var nightscout: NightscoutManager!
 
     let coreDataStorage = CoreDataStorage()
 
@@ -55,6 +57,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     private func configureState() {
         processQueue.async {
+            let overrideStorage = OverrideStorage()
             let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
             let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
@@ -115,10 +118,41 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                         until: untilDate
                     )
                 }
+
+            self.state.overrides = overrideStorage.fetchProfiles()
+                .map { preset -> OverridePresets_ in
+                    let untilDate = overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
+                        guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
+
+                        let duration = Double(currentOverride.duration ?? 0)
+                        let overrideDate: Date = currentOverride.date ?? Date.now
+
+                        let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                        return date > Date.now ? date : nil
+                    }
+
+                    return OverridePresets_(
+                        name: preset.name ?? "",
+                        id: preset.id ?? "",
+                        until: untilDate
+                    )
+                }
+            // Is there an active override but no preset?
+            let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
+            if let last = overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
+                let duration = Double(last.duration ?? 0)
+                let overrideDate: Date = last.date ?? Date.now
+                let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                let date = date_ > Date.now ? date_ : nil
+
+                self.state.overrides.append(OverridePresets_(name: "custom", id: last.id ?? "", until: date))
+            }
+
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
             self.state.displayFatAndProteinOnWatch = self.settingsManager.settings.displayFatAndProteinOnWatch
             self.state.confirmBolusFaster = self.settingsManager.settings.confirmBolusFaster
+            self.state.useTargetButton = self.settingsManager.settings.useTargetButton
 
             let eBG = self.eventualBGString()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
@@ -126,12 +160,11 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             self.state.isf = self.suggestion?.isf
 
-            let overrideArray = OverrideStorage().fetchLatestOverride()
+            let overrideArray = overrideStorage.fetchLatestOverride()
 
             if overrideArray.first?.enabled ?? false {
                 let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
                 self.state.override = percentString
-
             } else {
                 self.state.override = "100 %"
             }
@@ -403,6 +436,46 @@ extension BaseWatchManager: WCSessionDelegate {
                 )
                 tempTargetsStorage.storeTempTargets([entry])
                 replyHandler(["confirmation": true])
+                return
+            }
+        }
+
+        if let overrideID = message["override"] as? String {
+            let storage = OverrideStorage()
+            if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
+                preset.date = Date.now
+
+                // Cancel eventual current active override first
+                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
+                    let name = storage.isPresetName()
+
+                    if let duration = storage.cancelProfile() {
+                        let presetName = preset.name
+                        let nsString = name != nil ? name! : activeOveride.percentage.formatted()
+                        nightscout.editOverride(nsString, duration, activeOveride.date ?? Date())
+                    }
+                }
+                // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
+                storage.overrideFromPreset(preset)
+                nightscout.uploadOverride(
+                    preset.name ?? "",
+                    Double(preset.duration ?? 0),
+                    storage.fetchLatestOverride().first?.date ?? Date.now
+                )
+                replyHandler(["confirmation": true])
+                configureState()
+                return
+            } else if overrideID == "cancel" {
+                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
+                    let presetName = storage.isPresetName()
+                    let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+
+                    if let duration = storage.cancelProfile() {
+                        nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                        replyHandler(["confirmation": true])
+                        configureState()
+                    }
+                }
                 return
             }
         }

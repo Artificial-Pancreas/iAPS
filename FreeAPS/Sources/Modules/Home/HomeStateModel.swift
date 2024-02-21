@@ -70,6 +70,7 @@ extension Home {
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
+        @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = true
         @Published var timeSettings: Bool = true
 
@@ -367,6 +368,13 @@ extension Home {
             }
         }
 
+        private func setupOverrides() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overrides = self.provider.overrides()
+            }
+        }
+
         private func setupAnnouncements() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -461,6 +469,11 @@ extension Home.StateModel:
     PumpReservoirObserver,
     PumpTimeZoneObserver
 {
+    /*
+     func overridesDidUpdate(_: [Override]) {
+         setupOverrides()
+     }*/
+
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }
