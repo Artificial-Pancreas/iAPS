@@ -1141,6 +1141,7 @@
 				C124028B29C7DA9700B32844 /* BeepPreferenceSelectionView.swift in Sources */,
 				C12EDA1429C7DFBF00435701 /* TimeInterval.swift in Sources */,
 				C124028D29C7DA9700B32844 /* AttachPodView.swift in Sources */,
+				D845A14F2AF8A4FB00EA0853 /* ReadPulseLogView.swift in Sources */,
 				C124027229C7DA9700B32844 /* DeactivatePodViewModel.swift in Sources */,
 				C124028C29C7DA9700B32844 /* ExpirationReminderSetupView.swift in Sources */,
 				D845A1462AF8A4DA00EA0853 /* ActivityView.swift in Sources */,

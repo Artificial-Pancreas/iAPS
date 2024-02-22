@@ -539,7 +539,7 @@ extension Home {
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
                 .frame(
-                    minHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo.safeAreaInsets.top
+                    maxHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo.safeAreaInsets.top
                 )
                 .overlay {
                     VStack {
@@ -583,9 +583,9 @@ extension Home {
         var body: some View {
             GeometryReader { geo in
                 VStack {
+                    headerView(geo)
                     ScrollView {
                         VStack(spacing: 0) {
-                            headerView(geo)
                             RaisedRectangle()
                             chart
                             preview.padding(.top, 15)
