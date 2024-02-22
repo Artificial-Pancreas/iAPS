@@ -314,6 +314,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "执行";
 
+/* Start a temp target or a profile override */
+"Start" = "Start";
+
 /* */
 "Manual Temp Basal" = "手动设置临时基础";
 
