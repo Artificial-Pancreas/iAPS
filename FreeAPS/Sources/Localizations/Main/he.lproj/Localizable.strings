@@ -314,6 +314,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "Enact";
 
+/* Start a temp target or a profile override */
+"Start" = "Start";
+
 /* */
 "Manual Temp Basal" = "Manual Temp Basal";
 
