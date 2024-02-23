@@ -430,9 +430,12 @@ extension DanaKitPumpManager: PumpManager {
                     DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                         completion(nil)
                         
-                        self.state.bolusState = .noBolus
-                        self.doseReporter = nil
-                        self.notifyStateDidChange()
+                        if self.state.bolusState != .noBolus {
+                            self.state.lastStatusDate = Date()
+                            self.state.bolusState = .noBolus
+                            self.doseReporter = nil
+                            self.notifyStateDidChange()
+                        }
                     }
                 } catch {
                     self.state.bolusState = .noBolus
@@ -1133,6 +1136,7 @@ extension DanaKitPumpManager {
             return
         }
         
+        self.state.lastStatusDate = Date()
         self.state.bolusState = .noBolus
         self.notifyStateDidChange()
         
@@ -1165,6 +1169,7 @@ extension DanaKitPumpManager {
     }
     
     func notifyBolusDone(deliveredUnits: Double) {
+        self.state.lastStatusDate = Date()
         self.state.bolusState = .noBolus
         self.notifyStateDidChange()
         self.disconnect()
