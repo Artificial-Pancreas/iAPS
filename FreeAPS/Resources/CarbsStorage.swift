@@ -116,12 +116,23 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     fpuID: ""
                 )
 
-                self.storage.transaction { storage in
-                    storage.append(onlyCarbs, to: file, uniqBy: \.id)
-                    uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                        .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                        .sorted { $0.createdAt > $1.createdAt } ?? []
-                    storage.save(Array(uniqEvents), as: file)
+                // If fetched en masse from NS
+                if entries.filter({ $0.carbs > 0 }).count > 1 {
+                    self.storage.transaction { storage in
+                        storage.append(entries, to: file, uniqBy: \.createdAt)
+                        uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
+                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .sorted { $0.createdAt > $1.createdAt } ?? []
+                        storage.save(Array(uniqEvents), as: file)
+                    }
+                } else {
+                    self.storage.transaction { storage in
+                        storage.append(onlyCarbs, to: file, uniqBy: \.id)
+                        uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
+                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .sorted { $0.createdAt > $1.createdAt } ?? []
+                        storage.save(Array(uniqEvents), as: file)
+                    }
                 }
             }
 
@@ -190,7 +201,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedCarbs, as: [NigtscoutTreatment].self) ?? []
 
-        let eventsManual = recent().filter { $0.enteredBy == CarbsEntry.manual }
+        let eventsManual = recent().filter { $0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote }
         let treatments = eventsManual.map {
             NigtscoutTreatment(
                 duration: nil,

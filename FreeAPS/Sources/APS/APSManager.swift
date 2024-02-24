@@ -558,7 +558,10 @@ final class BaseAPSManager: APSManager, Injectable {
                     }
 
                 } else {
-                    debug(.apsManager, "Announcement Bolus succeeded")
+                    debug(
+                        .apsManager,
+                        "Announcement Bolus succeeded."
+                    )
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     self.bolusProgress.send(0)
                     self.bolusAmount.send(Decimal(roundedAmount))
@@ -616,10 +619,76 @@ final class BaseAPSManager: APSManager, Injectable {
                 if let error = error {
                     warning(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
                 } else {
-                    debug(.apsManager, "Announcement TempBasal succeeded")
+                    debug(
+                        .apsManager,
+                        "Announcement TempBasal succeeded."
+                    )
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 }
             }
+        case let .meal(carbs, fat, protein):
+            let date = announcement.createdAt.date
+
+            guard carbs > 0 || fat > 0 || protein > 0 else {
+                return
+            }
+
+            carbsStorage.storeCarbs([CarbsEntry(
+                id: UUID().uuidString,
+                createdAt: date,
+                actualDate: date,
+                carbs: carbs,
+                fat: fat,
+                protein: protein,
+                note: "Remote",
+                enteredBy: "Nightscout operator",
+                isFPU: fat > 0 || protein > 0,
+                fpuID: (fat > 0 || protein > 0) ? UUID().uuidString : nil
+            )])
+
+            announcementsStorage.storeAnnouncements([announcement], enacted: true)
+            debug(
+                .apsManager,
+                "Remote Meal by Announcement succeeded. Carbs: \(carbs), fat: \(fat), protein: \(protein)."
+            )
+        case let .override(name):
+            guard !name.isEmpty else { return }
+            let storage = OverrideStorage()
+            let lastActiveOveride = storage.fetchLatestOverride().first
+            let isActive = lastActiveOveride?.enabled ?? false
+
+            // Command to Cancel Active Override
+            if name.lowercased() == "cancel", isActive {
+                if let activeOveride = lastActiveOveride {
+                    let presetName = storage.isPresetName()
+                    let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+
+                    if let duration = storage.cancelProfile() {
+                        nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                    }
+                    announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                    debug(.apsManager, "Override Canceled by Announcement succeeded.")
+                }
+                return
+            }
+
+            // Cancel eventual current active override first
+            if isActive {
+                if let duration = OverrideStorage().cancelProfile(), let last = lastActiveOveride {
+                    let presetName = storage.isPresetName()
+                    let nsString = presetName != nil ? presetName : last.percentage.formatted()
+                    nightscout.editOverride(nsString!, duration, last.date ?? Date())
+                }
+            }
+
+            // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
+            let preset = storage.fetchPreset(name)
+            guard let id = preset.id, let preset_ = preset.preset else { return }
+            storage.overrideFromPreset(preset_, id)
+            let currentActiveOveride = storage.fetchLatestOverride().first
+            nightscout.uploadOverride(name, Double(preset.preset?.duration ?? 0), currentActiveOveride?.date ?? Date.now)
+            announcementsStorage.storeAnnouncements([announcement], enacted: true)
+            debug(.apsManager, "Remote Override by Announcement succeeded.")
         }
     }
 

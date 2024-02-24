@@ -4,7 +4,7 @@ import SwiftDate
 import Swinject
 
 final class CoreDataStorage {
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     func fetchGlucose(interval: NSDate) -> [Readings] {
         var fetchGlucose = [Readings]()
@@ -18,17 +18,5 @@ final class CoreDataStorage {
             try? fetchGlucose = self.coredataContext.fetch(requestReadings)
         }
         return fetchGlucose
-    }
-
-    func fetchLatestOverride() -> [Override] {
-        var overrideArray = [Override]()
-        coredataContext.performAndWait {
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = 1
-            try? overrideArray = self.coredataContext.fetch(requestOverrides)
-        }
-        return overrideArray
     }
 }
