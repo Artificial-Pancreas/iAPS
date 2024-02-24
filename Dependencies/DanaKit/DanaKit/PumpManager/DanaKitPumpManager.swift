@@ -430,12 +430,10 @@ extension DanaKitPumpManager: PumpManager {
                     DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                         completion(nil)
                         
-                        if self.state.bolusState != .noBolus {
-                            self.state.lastStatusDate = Date()
-                            self.state.bolusState = .noBolus
-                            self.doseReporter = nil
-                            self.notifyStateDidChange()
-                        }
+                        self.state.lastStatusDate = Date()
+                        self.state.bolusState = .noBolus
+                        self.doseReporter = nil
+                        self.notifyStateDidChange()
                     }
                 } catch {
                     self.state.bolusState = .noBolus
