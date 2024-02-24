@@ -117,7 +117,7 @@
 "day" = "day";
 
 /* Unit for plural days in pod life remaining */
-"days" = "days";
+"days" = "días";
 
 /* Unit for singular hour in pod life remaining */
 "hour" = "hour";
@@ -285,13 +285,13 @@
 "Set Confirmation Beeps Preference" = "Set Confirmation Beeps Preference";
 
 /* */
-"Suspend" = "Suspend";
+"Suspend" = "Suspender";
 
 /* */
 "Failed to suspend: %{public}@" = "Failed to suspend: %{public}@";
 
 /* */
-"Resume" = "Resume";
+"Resume" = "Reanudar";
 
 /* */
 "Bolus" = "Bolo";
@@ -508,7 +508,7 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Sí";
 
 /* Button label for user to answer cannula was not properly inserted */
 "No" = "No";
