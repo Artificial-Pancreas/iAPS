@@ -602,11 +602,16 @@ extension DanaKitPumpManager: PumpManager {
                         
                         guard result.success else {
                             if alreadyRetried {
+                                self.disconnect()
                                 self.log.error("\(#function): Pump rejected command (15 min)")
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump rejected command (15 min)")))
                                 return
                             } else {
-                                self.log.error("\(#function): Retry-ing temp basal command (15 min). Data: \(result.rawData.base64EncodedString())")
+                                self.log.error("\(#function): Retry-ing with canceled temp basal command (15 min). Data: \(result.rawData.base64EncodedString())")
+                                
+                                let packet = generatePacketBasalCancelTemporary()
+                                try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                                self.disconnect()
                                 
                                 // Wait 1 sec before retrying command, allow the system to disconnect
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -615,6 +620,8 @@ extension DanaKitPumpManager: PumpManager {
                                 return
                             }
                         }
+                        
+                        self.disconnect()
                         
                         let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: actualDuration, insulinType: self.state.insulinType!)
                         self.state.basalDeliveryOrdinal = .tempBasal
@@ -633,15 +640,20 @@ extension DanaKitPumpManager: PumpManager {
                     } else if actualDuration == .minutes(30) {
                         let packet = generatePacketLoopSetTemporaryBasal(options: PacketLoopSetTemporaryBasal(percent: percentage, duration: .min30))
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
-                        self.disconnect()
                         
                         guard result.success else {
                             if alreadyRetried {
                                 self.log.error("\(#function): Pump rejected command (30 min)")
+                                self.disconnect()
+                                
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump rejected command (30 min)")))
                                 return
                             } else {
-                                self.log.error("\(#function): Retry-ing temp basal command (30 min). Data: \(result.rawData.base64EncodedString())")
+                                self.log.error("\(#function): Retry-ing with cancel temp basal command (30 min). Data: \(result.rawData.base64EncodedString())")
+                                
+                                let packet = generatePacketBasalCancelTemporary()
+                                try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                                self.disconnect()
                                 
                                 // Wait 1 sec before retrying command, allow the system to disconnect
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -650,6 +662,8 @@ extension DanaKitPumpManager: PumpManager {
                                 return
                             }
                         }
+                        
+                        self.disconnect()
                         
                         let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: actualDuration, insulinType: self.state.insulinType!)
                         self.state.basalDeliveryOrdinal = .tempBasal
@@ -676,15 +690,20 @@ extension DanaKitPumpManager: PumpManager {
                         
                         let packet = generatePacketBasalSetTemporary(options: PacketBasalSetTemporary(temporaryBasalRatio: UInt8(percentage), temporaryBasalDuration: UInt8(floor(actualDuration / .hours(1)))))
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
-                        self.disconnect()
                         
                         guard result.success else {
                             if alreadyRetried {
                                 self.log.error("\(#function): Pump rejected command (full hour)")
+                                self.disconnect()
+                                
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump rejected command (full hour)")))
                                 return
                             } else {
-                                self.log.error("\(#function): Retry-ing temp basal command (full hour). Data: \(result.rawData.base64EncodedString())")
+                                self.log.error("\(#function): Retry-ing with cancel temp basal command (full hour). Data: \(result.rawData.base64EncodedString())")
+                                
+                                let packet = generatePacketBasalCancelTemporary()
+                                try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
+                                self.disconnect()
                                 
                                 // Wait 1 sec before retrying command, allow the system to disconnect
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -693,6 +712,8 @@ extension DanaKitPumpManager: PumpManager {
                                 return
                             }
                         }
+                        
+                        self.disconnect()
                         
                         let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: actualDuration, insulinType: self.state.insulinType!)
                         self.state.basalDeliveryOrdinal = .tempBasal
