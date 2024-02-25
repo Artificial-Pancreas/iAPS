@@ -176,20 +176,6 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.silentTone = pumpManager.state.useSilentTones
     }
     
-    func setTempBasal() {
-        guard let pumpManager = self.pumpManager else {
-            return
-        }
-        
-        pumpManager.enactBolus(units: 0.5, activationType: .manualRecommendationChanged, completion: { e in
-            print(e)
-            pumpManager.enactTempBasal(unitsPerHour: Double.random(in: 0 ..< 1), for: 1800, completion: { e in
-                print(e)
-            })
-        })
-        
-    }
-    
     func suspendResumeButtonPressed() {
         self.isUpdatingPumpState = true
         
