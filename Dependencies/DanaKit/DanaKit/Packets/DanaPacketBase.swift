@@ -17,6 +17,7 @@ protocol DanaParsePacketProtocol {
     var command: UInt16? { get set }
     var notifyType: UInt16? { get set }
     associatedtype PayloadType
+    var rawData: Data { get }
     var data: PayloadType? { get }
 }
 

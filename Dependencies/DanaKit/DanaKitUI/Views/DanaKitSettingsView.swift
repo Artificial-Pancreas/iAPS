@@ -88,7 +88,7 @@ struct DanaKitSettingsView: View {
             
             Section {
                 Button(action: {
-                    viewModel.suspendResumeButtonPressed()
+                    viewModel.setTempBasal()
                 }) {
                     HStack {
                         Text($viewModel.basalButtonText.wrappedValue)
