@@ -320,7 +320,7 @@ extension OmnipodPumpManager {
         switch podCommState(for: state) {
         case .activating:
             return PumpStatusHighlight(
-                localizedMessage: LocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
+                localizedMessage: LocalizedString("Finish Setup", comment: "Status highlight that when pod is activating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .deactivating:
@@ -583,7 +583,7 @@ extension OmnipodPumpManager {
         } else if !podState.isSetupComplete {
             return .activating
         }
-        return .deactivating
+        return .deactivating // Can't be reached and thus will never be returned
     }
 
     public var podCommState: PodCommState {
@@ -666,6 +666,25 @@ extension OmnipodPumpManager {
         return date
     }
 
+    // Reset all the per pod state kept in pump manager state which doesn't span pods
+    fileprivate func resetPerPodPumpManagerState() {
+
+        // Reset any residual per pod slot based pump manager alerts
+        // (i.e., all but timeOffsetChangeDetected which isn't actually used)
+        let podAlerts = state.activeAlerts.filter { $0 != .timeOffsetChangeDetected }
+        for alert in podAlerts {
+            self.retractAlert(alert: alert)
+        }
+
+        self.setState { (state) in
+            // Reset alertsWithPendingAcknowledgment which are all pod slot based
+            state.alertsWithPendingAcknowledgment = []
+
+            // Reset other miscellaneous state variables that are actually per pod
+            state.podAttachmentConfirmed = false
+            state.acknowledgedTimeOffsetAlert = false
+        }
+    }
 
     // MARK: - Pod comms
 
@@ -682,6 +701,8 @@ extension OmnipodPumpManager {
         }
 
         podComms.forgetPod()
+
+        self.resetPerPodPumpManagerState()
 
         if let dosesToStore = self.state.podState?.dosesToStore {
             self.store(doses: dosesToStore, completion: { error in
@@ -701,7 +722,7 @@ extension OmnipodPumpManager {
             completion()
         }
     }
-    
+
     // MARK: Testing
     #if targetEnvironment(simulator)
     private func jumpStartPod(address: UInt32, lot: UInt32, tid: UInt32, fault: DetailedStatus? = nil, startDate: Date? = nil, mockFault: Bool) {
@@ -716,8 +737,14 @@ extension OmnipodPumpManager {
 
         podComms = PodComms(podState: podState)
 
+        self.podComms.delegate = self
+        self.podComms.messageLogger = self
+
+        self.resetPerPodPumpManagerState()
+
         setState({ (state) in
             state.updatePodStateFromPodComms(podState)
+            state.scheduledExpirationReminderOffset = state.defaultExpirationReminderOffset
         })
     }
     #endif
@@ -811,7 +838,9 @@ extension OmnipodPumpManager {
                         state.pairingAttemptAddress = nil
                     }
                 }
-                
+
+                self.resetPerPodPumpManagerState()
+
                 // Calls completion
                 primeSession(result)
             }

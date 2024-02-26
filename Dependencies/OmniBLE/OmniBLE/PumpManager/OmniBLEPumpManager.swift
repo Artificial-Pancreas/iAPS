@@ -455,7 +455,7 @@ extension OmniBLEPumpManager {
         } else if !podState.isSetupComplete {
             return .activating
         }
-        return .deactivating
+        return .deactivating // Can't be reached and thus will never be returned
     }
 
     public var podCommState: PodCommState {
@@ -596,7 +596,7 @@ extension OmniBLEPumpManager {
         switch podCommState(for: state) {
         case .activating:
             return PumpStatusHighlight(
-                localizedMessage: LocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
+                localizedMessage: LocalizedString("Finish Setup", comment: "Status highlight that when pod is activating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .deactivating:
@@ -707,6 +707,25 @@ extension OmniBLEPumpManager {
         }
     }
 
+    // Reset all the per pod state kept in pump manager state which doesn't span pods
+    fileprivate func resetPerPodPumpManagerState() {
+
+        // Reset any residual per pod slot based pump manager alerts
+        // (i.e., all but timeOffsetChangeDetected which isn't actually used)
+        let podAlerts = state.activeAlerts.filter { $0 != .timeOffsetChangeDetected }
+        for alert in podAlerts {
+            self.retractAlert(alert: alert)
+        }
+
+        self.setState { (state) in
+            // Reset alertsWithPendingAcknowledgment which are all pod slot based
+            state.alertsWithPendingAcknowledgment = []
+
+            // Reset other miscellaneous state variables that are actually per pod
+            state.podAttachmentConfirmed = false
+            state.acknowledgedTimeOffsetAlert = false
+        }
+    }
 
     // MARK: - Pod comms
 
@@ -734,13 +753,14 @@ extension OmniBLEPumpManager {
 
         self.podComms.forgetPod()
 
+        self.resetPerPodPumpManagerState()
+
         if let dosesToStore = state.podState?.dosesToStore {
             store(doses: dosesToStore, completion: { error in
                 self.setState({ (state) in
                     if error != nil {
                         state.unstoredDoses.append(contentsOf: dosesToStore)
                     }
-                    state.alertsWithPendingAcknowledgment = []
                 })
                 self.prepForNewPod()
                 completion()
@@ -774,6 +794,8 @@ extension OmniBLEPumpManager {
 
         self.podComms.delegate = self
         self.podComms.messageLogger = self
+
+        self.resetPerPodPumpManagerState()
 
         setState({ (state) in
             state.updatePodStateFromPodComms(podState)
@@ -871,6 +893,8 @@ extension OmniBLEPumpManager {
                 case .success:
                     self.podComms.pairAndSetupPod(timeZone: .currentFixed, insulinType: insulinType, messageLogger: self)
                     { (result) in
+
+                        self.resetPerPodPumpManagerState()
 
                         // Calls completion
                         primeSession(result)
