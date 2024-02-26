@@ -1053,7 +1053,7 @@ extension DanaKitPumpManager: PumpManager {
         
         // Max percentage 200%
         let percentage = min(UInt16(round(absoluteValue / basalRate * 100)), 200)
-        let actualAbsoluteValue = absoluteValue * Double(percentage)
+        let actualAbsoluteValue = absoluteValue * Double(percentage / 100)
         return (percentage, actualAbsoluteValue)
     }
 }
