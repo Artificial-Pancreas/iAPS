@@ -166,7 +166,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     
     func reservoirText(for units: Double) -> String {
         let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: units)
-        return reservoirVolumeFormatter.string(from: quantity) ?? ""
+        return reservoirVolumeFormatter.string(from: quantity, for: .internationalUnit()) ?? ""
     }
     
     func toggleSilentTone() {
