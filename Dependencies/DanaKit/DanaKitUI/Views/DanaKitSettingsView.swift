@@ -177,6 +177,12 @@ struct DanaKitSettingsView: View {
                         .foregroundColor(.secondary)
                 }
                 HStack {
+                    Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
+                    Spacer()
+                    Text(viewModel.basalProfile)
+                        .foregroundColor(.secondary)
+                }
+                HStack {
                     Text(LocalizedString("Pump time", comment: "Text for pump time")).foregroundColor(Color.primary)
                     Spacer()
                     if viewModel.showPumpTimeSyncWarning {
@@ -226,7 +232,7 @@ struct DanaKitSettingsView: View {
                 }
             }
         }
-        .insetGroupedListStyle()
+        .listStyle(InsetGroupedListStyle())
         .navigationBarItems(trailing: doneButton)
         .navigationBarTitle(viewModel.pumpModel)
     }
@@ -268,7 +274,7 @@ struct DanaKitSettingsView: View {
                         .fontWeight(.bold)
                         .fixedSize()
                 }
-            } else if let basalRate = self.viewModel.basalRate {
+            } else if let basalRate = $viewModel.basalRate.wrappedValue {
                 HStack(alignment: .center) {
                     HStack(alignment: .lastTextBaseline, spacing: 3) {
                         Text(viewModel.basalRateFormatter.string(from: basalRate) ?? "")

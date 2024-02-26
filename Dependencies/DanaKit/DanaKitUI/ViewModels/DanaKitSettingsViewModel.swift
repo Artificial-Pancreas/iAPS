@@ -22,6 +22,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var batteryLevel: Double = 0
     @Published var showingSilentTone: Bool = false
     @Published var silentTone: Bool = false
+    @Published var basalProfile: String = "A"
     
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
@@ -29,6 +30,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var reservoirLevelWarning: Double
     @Published var reservoirLevel: Double?
     @Published var isSuspended: Bool = false
+    @Published var basalRate: Double?
     
     private let log = Logger(category: "SettingsView")
     private(set) var insulineType: InsulinType
@@ -40,9 +42,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.pumpManager?.state.getFriendlyDeviceName() ?? ""
     }
     
-    public var basalRate: Double? {
-        self.pumpManager?.currentBaseBasalRate
-    }
+    
     
     public var deviceName: String? {
         self.pumpManager?.state.deviceName
@@ -92,7 +92,9 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
         self.silentTone = self.pumpManager?.state.useSilentTones ?? false
         self.reservoirLevelWarning = Double(self.pumpManager?.state.lowReservoirRate ?? 20)
+        self.basalProfile = transformBasalProfile(self.pumpManager?.basalProfileNumber ?? 0)
         self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
+        updateBasalRate()
         
         self.basalButtonText = self.updateBasalButtonText()
         
@@ -164,7 +166,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     
     func reservoirText(for units: Double) -> String {
         let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: units)
-        return reservoirVolumeFormatter.string(from: quantity, for: .internationalUnit()) ?? ""
+        return reservoirVolumeFormatter.string(from: quantity) ?? ""
     }
     
     func toggleSilentTone() {
@@ -248,6 +250,31 @@ class DanaKitSettingsViewModel : ObservableObject {
         // Allow a 1 min diff in time
         return abs(syncedAt.timeIntervalSince1970 - pumpTime.timeIntervalSince1970) > 60
     }
+    
+    private func transformBasalProfile(_ index: UInt8) -> String {
+        if index == 0 {
+            return "A"
+        } else if index == 1 {
+            return "B"
+        } else if index == 2 {
+            return "C"
+        } else {
+            return "D"
+        }
+    }
+    
+    private func updateBasalRate() {
+        guard let pumpManager = self.pumpManager else {
+            self.basalRate = 0
+            return
+        }
+        
+        if pumpManager.state.basalDeliveryOrdinal == .tempBasal && pumpManager.state.basalDeliveryDate + (pumpManager.state.tempBasalDuration ?? 0) < Date.now {
+            self.basalRate = pumpManager.state.tempBasalUnits ?? 0
+        } else {
+            self.basalRate = pumpManager.currentBaseBasalRate
+        }
+    }
 }
 
 extension DanaKitSettingsViewModel: StateObserver {
@@ -260,7 +287,9 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.pumpTime = self.pumpManager?.state.pumpTime
         self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
         self.silentTone = self.pumpManager?.state.useSilentTones ?? false
+        self.basalProfile = transformBasalProfile(self.pumpManager?.basalProfileNumber ?? 0)
         self.showPumpTimeSyncWarning = shouldShowTimeWarning(pumpTime: self.pumpTime, syncedAt: self.pumpManager?.state.pumpTimeSyncedAt)
+        updateBasalRate()
         
         self.basalButtonText = self.updateBasalButtonText()
     }
