@@ -176,19 +176,9 @@ final class OpenAPS {
                 let date = overrideArray.first?.date ?? Date()
                 if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !unlimited {
                     useOverride = false
-                    let presetName = OverrideStorage().isPresetName()
-                    if let duration = OverrideStorage().cancelProfile(), let last = overrideArray.first {
-                        let nsString = presetName != nil ? presetName : last.percentage.formatted() != "100" ? last.percentage
-                            .formatted() + " %" : "Custom"
-                        nightscout.editOverride(nsString!, duration, last.date ?? Date())
+                    if OverrideStorage().cancelProfile() != nil {
+                        debug(.nightscout, "Override ended, duration: \(duration) minutes")
                     }
-                    let saveToHistory = OverrideHistory(context: self.coredataContext)
-                    let d: Double = -1 * date.addingTimeInterval(addedMinutes.minutes.timeInterval).timeIntervalSinceNow.minutes
-                    print("Duration: \(d) minutes")
-                    saveToHistory.duration = d
-                    saveToHistory.target = Double(overrideTarget)
-                    saveToHistory.date = overrideArray.first?.date ?? Date()
-                    try? self.coredataContext.save()
                 }
             }
 
