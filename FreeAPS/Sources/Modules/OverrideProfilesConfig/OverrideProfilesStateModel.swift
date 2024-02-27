@@ -86,7 +86,9 @@ extension OverrideProfilesConfig {
                     if let preset = OverrideStorage().isPresetName(), let duration = OverrideStorage().cancelProfile() {
                         ns.editOverride(preset, duration, last?.date ?? Date.now)
                     } else if let duration = OverrideStorage().cancelProfile() {
-                        ns.editOverride("Custom", duration, last?.date ?? Date.now)
+                        let nsString = active.percentage.formatted() != "100" ? active.percentage
+                            .formatted() + " %" : "Custom"
+                        ns.editOverride(nsString, duration, last?.date ?? Date.now)
                     }
                 } else {
                     let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)

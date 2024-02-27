@@ -790,15 +790,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 notes: profile
             )]
 
-        print("Override uploaded: \(exercise)")
-
         processQueue.async {
             nightscout.uploadEcercises(exercise)
                 // nightscout.uploadTreatments(override)
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        debug(.nightscout, "Override Uploaded to NS, date: \(date)")
+                        debug(.nightscout, "Override Uploaded to NS, date: \(date), override: \(exercise)")
                     case let .failure(error):
                         debug(.nightscout, "Upload of Override failed: " + error.localizedDescription)
                     }

@@ -32,6 +32,18 @@ final class OverrideStorage {
         return overrideArray
     }
 
+    func fetchNumberOfOverrides(numbers: Int) -> [Override] {
+        var overrideArray = [Override]()
+        coredataContext.performAndWait {
+            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
+            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
+            requestOverrides.sortDescriptors = [sortOverride]
+            requestOverrides.fetchLimit = numbers
+            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+        }
+        return overrideArray
+    }
+
     func fetchOverrideHistory(interval: NSDate) -> [OverrideHistory] {
         var overrideArray = [OverrideHistory]()
         coredataContext.performAndWait {
