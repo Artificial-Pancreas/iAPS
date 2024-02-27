@@ -6,13 +6,14 @@ import JavaScriptCore
 final class OpenAPS {
     private let jsWorker = JavaScriptWorker()
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
-
     private let storage: FileStorage
+    private let nightscout: NightscoutManager
 
     let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
 
-    init(storage: FileStorage) {
+    init(storage: FileStorage, nightscout: NightscoutManager) {
         self.storage = storage
+        self.nightscout = nightscout
     }
 
     func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
@@ -125,37 +126,17 @@ final class OpenAPS {
             let wp = preferences?.weightPercentage ?? 1
             let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
             let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30) as NSDecimalNumber
-
-            let tenDaysAgo = Date().addingTimeInterval(-10.days.timeInterval)
             let twoHoursAgo = Date().addingTimeInterval(-2.hours.timeInterval)
 
-            var uniqueEvents = [TDD]()
-            let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
-            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", tenDaysAgo as NSDate)
-            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
-            requestTDD.sortDescriptors = [sortTDD]
-            try? uniqueEvents = coredataContext.fetch(requestTDD)
-
-            var sliderArray = [TempTargetsSlider]()
-            let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
-            let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
-            requestIsEnbled.sortDescriptors = [sortIsEnabled]
-            // requestIsEnbled.fetchLimit = 1
-            try? sliderArray = coredataContext.fetch(requestIsEnbled)
-
-            var overrideArray = [Override]()
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            // requestOverrides.fetchLimit = 1
-            try? overrideArray = coredataContext.fetch(requestOverrides)
-
-            var tempTargetsArray = [TempTargets]()
-            let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
-            let sortTT = NSSortDescriptor(key: "date", ascending: false)
-            requestTempTargets.sortDescriptors = [sortTT]
-            requestTempTargets.fetchLimit = 1
-            try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
+            let cd = CoreDataStorage()
+            // TDD
+            let uniqueEvents = cd.fetchTDD(interval: DateFilter().tenDays)
+            // Temp Targets using slider
+            let sliderArray = cd.fetchTempTargetsSlider()
+            // Overrides
+            let overrideArray = OverrideStorage().fetchNumberOfOverrides(numbers: 2)
+            // Temp Target
+            let tempTargetsArray = cd.fetchTempTargets()
 
             let total = uniqueEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
             var indeces = uniqueEvents.count
@@ -183,37 +164,21 @@ final class OpenAPS {
 
             let average2hours = totalAmount / Decimal(nrOfIndeces)
             let average14 = total / Decimal(indeces)
-
-            let weight = wp
-            let weighted_average = weight * average2hours + (1 - weight) * average14
+            let weighted_average = wp * average2hours + (1 - wp) * average14
 
             var duration: Decimal = 0
-            var newDuration: Decimal = 0
             var overrideTarget: Decimal = 0
 
             if useOverride {
                 duration = (overrideArray.first?.duration ?? 0) as Decimal
                 overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
-                let advancedSettings = overrideArray.first?.advancedSettings ?? false
                 let addedMinutes = Int(duration)
                 let date = overrideArray.first?.date ?? Date()
-                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(),
-                   !unlimited
-                {
+                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !unlimited {
                     useOverride = false
-                    let saveToCoreData = Override(context: self.coredataContext)
-                    saveToCoreData.enabled = false
-                    saveToCoreData.date = Date()
-                    saveToCoreData.duration = 0
-                    saveToCoreData.indefinite = false
-                    saveToCoreData.percentage = 100
-                    let saveToHistory = OverrideHistory(context: self.coredataContext)
-                    let d: Double = -1 * date.addingTimeInterval(addedMinutes.minutes.timeInterval).timeIntervalSinceNow.minutes
-                    print("Duration: \(d) minutes")
-                    saveToHistory.duration = d
-                    saveToHistory.target = Double(overrideTarget)
-                    saveToHistory.date = overrideArray.first?.date ?? Date()
-                    try? self.coredataContext.save()
+                    if OverrideStorage().cancelProfile() != nil {
+                        debug(.nightscout, "Override ended, duration: \(duration) minutes")
+                    }
                 }
             }
 
