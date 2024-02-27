@@ -315,7 +315,7 @@ Enact a temp Basal or a temp target */
 "Enact" = "Attiva";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "Avvia";
 
 /* */
 "Manual Temp Basal" = "Basale temporanea manuale";
@@ -2077,7 +2077,8 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Regola i rapporti dinamici della costante ISF";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Aggiustamenti individuali dei rapporti dinamici calcolati. Il valore predefinito è 0,5. Più alto è il valore, maggiore sarà la correzione del tuo ISF/CR per una glicemia alta o bassa. La correzione massima/minima è determinata dalle impostazioni Autosens min/max.\n\nPer la funzione sigmoidea si consiglia di iniziare con un fattore di correzione di 0,4 - 0,5.\n\n Per la formula logaritmica c'è meno consenso; iniziare con 0,8 è appropriato per la maggior parte degli utenti adulti.
+Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più basso quando si utilizza la formula logaritmica, per evitare un trattamento eccessivamente aggressivo.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Usa Funzione Sigmoid";
