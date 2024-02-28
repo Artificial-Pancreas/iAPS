@@ -24,7 +24,7 @@ extension DoseEntry {
             insulinType: insulinType,
             automatic: activationType.isAutomatic,
             manuallyEntered: activationType == .manualNoRecommendation,
-            isMutable: true
+            isMutable: false
         )
     }
     

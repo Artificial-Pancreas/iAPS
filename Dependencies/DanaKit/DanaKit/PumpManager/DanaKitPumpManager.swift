@@ -127,7 +127,7 @@ public class DanaKitPumpManager: DeviceManager {
     private let backgroundTask = BackgroundTask()
     @objc func appMovedToBackground() {
         if self.state.useSilentTones {
-            self.log.info("\(#function): Starting silent tones")
+            self.log.info("\(#function, privacy: .public): Starting silent tones")
             backgroundTask.startBackgroundTask()
         }
     }
@@ -253,7 +253,7 @@ extension DanaKitPumpManager: PumpManager {
     
     public func ensureCurrentPumpData(completion: ((Date?) -> Void)?) {
         guard Date.now.timeIntervalSince(self.state.lastStatusDate) > .minutes(6) else {
-            self.log.info("\(#function): Skipping status update because pumpData is fresh: \(Date.now.timeIntervalSince(self.state.lastStatusDate)) sec")
+            self.log.info("\(#function, privacy: .public): Skipping status update because pumpData is fresh: \(Date.now.timeIntervalSince(self.state.lastStatusDate)) sec")
             completion?(self.state.lastStatusDate)
             return
         }
@@ -264,12 +264,12 @@ extension DanaKitPumpManager: PumpManager {
     /// Extention from ensureCurrentPumpData, but overrides the stale data check
     public func syncPump(_ completion: ((Date?) -> Void)?) {
         delegateQueue.async {
-            self.log.info("\(#function): Syncing pump data")
+            self.log.info("\(#function, privacy: .public): Syncing pump data")
             
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection failure")
+                    self.log.error("\(#function, privacy: .public): Connection failure")
                     completion?(nil)
                     return
                 case .success:
@@ -349,7 +349,7 @@ extension DanaKitPumpManager: PumpManager {
             // Filter nil values
             .compactMap{$0}
         } catch {
-            self.log.error("\(#function): Failed to sync history. Error: \(error.localizedDescription, privacy: .public)")
+            self.log.error("\(#function, privacy: .public): Failed to sync history. Error: \(error.localizedDescription, privacy: .public)")
             if hasHistoryModeBeenActivate {
                 do {
                     let deactivateHistoryModePacket = generatePacketGeneralSetHistoryUploadMode(options: PacketGeneralSetHistoryUploadMode(mode: 0))
@@ -377,7 +377,7 @@ extension DanaKitPumpManager: PumpManager {
     
     public func enactBolus(units: Double, activationType: BolusActivationType, completion: @escaping (PumpManagerError?) -> Void) {
         delegateQueue.async {
-            self.log.info("\(#function): Enact bolus")
+            self.log.info("\(#function, privacy: .public): Enact bolus")
             
             let duration = self.estimatedDuration(toBolus: units)
             self.doseEntry = UnfinalizedDose(units: units, duration: duration, activationType: activationType, insulinType: self.state.insulinType!)
@@ -388,7 +388,7 @@ extension DanaKitPumpManager: PumpManager {
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     self.state.bolusState = .noBolus
                     self.doseReporter = nil
                     self.notifyStateDidChange()
@@ -403,7 +403,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.notifyStateDidChange()
                         self.disconnect()
                         
-                        self.log.error("\(#function): Pump is suspended")
+                        self.log.error("\(#function, privacy: .public): Pump is suspended")
                         completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpSuspended))
                         return
                     }
@@ -444,7 +444,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.notifyStateDidChange()
                         self.disconnect()
                         
-                        self.log.error("\(#function): Failed to do bolus. Error: \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): Failed to do bolus. Error: \(error.localizedDescription, privacy: .public)")
                         completion(PumpManagerError.connection(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                     }
                 }
@@ -454,7 +454,7 @@ extension DanaKitPumpManager: PumpManager {
     
     public func cancelBolus(completion: @escaping (PumpManagerResult<DoseEntry?>) -> Void) {
         delegateQueue.async {
-            self.log.info("\(#function): Cancel bolus")
+            self.log.info("\(#function, privacy: .public): Cancel bolus")
             
             let oldBolusState = self.state.bolusState
             self.state.bolusState = .canceling
@@ -463,7 +463,7 @@ extension DanaKitPumpManager: PumpManager {
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     self.state.bolusState = oldBolusState
                     self.notifyStateDidChange()
                     
@@ -496,7 +496,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.notifyStateDidChange()
                         self.disconnect()
                         
-                        self.log.error("\(#function): Failed to cancel bolus. Error: \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): Failed to cancel bolus. Error: \(error.localizedDescription, privacy: .public)")
                         completion(.failure(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription))))
                     }
                 }
@@ -511,17 +511,17 @@ extension DanaKitPumpManager: PumpManager {
     /// NOTE: The max temp basal is 200%
     public func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
         delegateQueue.async {
-            self.log.info("\(#function): Enact temp basal. Value: \(unitsPerHour) U/hr, duration: \(duration) sec")
+            self.log.info("\(#function, privacy: .public): Enact temp basal. Value: \(unitsPerHour) U/hr, duration: \(duration) sec")
             
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     completion(PumpManagerError.connection(DanaKitPumpManagerError.noConnection))
                     return
                 case .success:
                     guard !self.state.isPumpSuspended else {
-                        self.log.error("\(#function): Pump is suspended")
+                        self.log.error("\(#function, privacy: .public): Pump is suspended")
                         self.disconnect()
                         completion(PumpManagerError.deviceState(DanaKitPumpManagerError.pumpSuspended))
                         return
@@ -536,21 +536,21 @@ extension DanaKitPumpManager: PumpManager {
                             if duration > .hours(1) {
                                 // Round down to nearest full hour
                                 duration = .hours(1) * floor(duration / .hours(1))
-                                self.log.info("\(#function): Temp basal rounded down from \(oldDuration / .hours(1))h to \(floor(duration / .hours(1)))h")
+                                self.log.info("\(#function, privacy: .public): Temp basal rounded down from \(oldDuration / .hours(1))h to \(floor(duration / .hours(1)))h")
                                 
                             } else if duration > .minutes(30) {
                                 // Round down to 30 min
                                 duration = .minutes(30)
-                                self.log.info("\(#function): Temp basal rounded down from \(oldDuration / .minutes(1))min to 30min")
+                                self.log.info("\(#function, privacy: .public): Temp basal rounded down from \(oldDuration / .minutes(1))min to 30min")
                                 
                             } else if duration > .minutes(15) {
                                 // Round down to 15 min
                                 duration = .minutes(15)
-                                self.log.info("\(#function): Temp basal rounded down from \(oldDuration / .minutes(1))min to 15min")
+                                self.log.info("\(#function, privacy: .public): Temp basal rounded down from \(oldDuration / .minutes(1))min to 15min")
                                 
                             } else {
                                 self.disconnect()
-                                self.log.error("\(#function): Temp basal below 15 min is unsupported (floor duration)")
+                                self.log.error("\(#function, privacy: .public): Temp basal below 15 min is unsupported (floor duration)")
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Temp basal below 15 min is unsupported... (floor duration)")))
                                 return
                             }
@@ -558,7 +558,7 @@ extension DanaKitPumpManager: PumpManager {
                         
                         guard let (percentage, actualAbsoluteUnits) = self.absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule) else {
                             self.disconnect()
-                            self.log.error("\(#function): Basal schedule is not available...")
+                            self.log.error("\(#function, privacy: .public): Basal schedule is not available...")
                             completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
                             return
                         }
@@ -569,12 +569,12 @@ extension DanaKitPumpManager: PumpManager {
                             
                             guard result.success else {
                                 self.disconnect()
-                                self.log.error("\(#function): Could not cancel old temp basal")
+                                self.log.error("\(#function, privacy: .public): Could not cancel old temp basal")
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Could not cancel old temp basal")))
                                 return
                             }
                             
-                            self.log.info("\(#function): Succesfully canceled old temp basal")
+                            self.log.info("\(#function, privacy: .public): Succesfully canceled old temp basal")
                         }
                         
                         if (duration < .ulpOfOne) {
@@ -592,7 +592,7 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("\(#function): Succesfully cancelled temp basal")
+                            self.log.info("\(#function, privacy: .public): Succesfully cancelled temp basal")
                             completion(nil)
                             
                         } else if duration == .minutes(15) {
@@ -601,7 +601,7 @@ extension DanaKitPumpManager: PumpManager {
                             self.disconnect()
                             
                             guard result.success else {
-                                self.log.error("\(#function): Pump rejected command (15 min)")
+                                self.log.error("\(#function, privacy: .public): Pump rejected command (15 min)")
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump rejected command (15 min)")))
                                 return
                             }
@@ -617,7 +617,7 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("\(#function): Succesfully started 15 min temp basal")
+                            self.log.info("\(#function, privacy: .public): Succesfully started 15 min temp basal")
                             completion(nil)
                             
                         } else if duration == .minutes(30) {
@@ -626,7 +626,7 @@ extension DanaKitPumpManager: PumpManager {
                             self.disconnect()
                             
                             guard result.success else {
-                                self.log.error("\(#function): Pump rejected command (30 min)")
+                                self.log.error("\(#function, privacy: .public): Pump rejected command (30 min)")
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump rejected command (30 min)")))
                                 return
                             }
@@ -642,7 +642,7 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("\(#function): Succesfully started 30 min temp basal")
+                            self.log.info("\(#function, privacy: .public): Succesfully started 30 min temp basal")
                             completion(nil)
                             
                             // Full hour
@@ -652,7 +652,7 @@ extension DanaKitPumpManager: PumpManager {
                             self.disconnect()
                             
                             guard result.success else {
-                                self.log.error("\(#function): Pump rejected command (full hour)")
+                                self.log.error("\(#function, privacy: .public): Pump rejected command (full hour)")
                                 completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Pump rejected command (full hour)")))
                                 return
                             }
@@ -668,13 +668,13 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("\(#function): Succesfully started full hourly temp basal")
+                            self.log.info("\(#function, privacy: .public): Succesfully started full hourly temp basal")
                             completion(nil)
                         }
                     } catch {
                         self.disconnect()
                         
-                        self.log.error("\(#function): Failed to set temp basal. Error: \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): Failed to set temp basal. Error: \(error.localizedDescription, privacy: .public)")
                         completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                     }
                 }
@@ -688,12 +688,12 @@ extension DanaKitPumpManager: PumpManager {
     
     public func suspendDelivery(completion: @escaping (Error?) -> Void) {
         delegateQueue.async {
-            self.log.info("\(#function): Suspend delivery")
+            self.log.info("\(#function, privacy: .public): Suspend delivery")
             
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     completion(PumpManagerError.connection(DanaKitPumpManagerError.noConnection))
                     return
                 case .success:
@@ -704,7 +704,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.disconnect()
                         
                         guard result.success else {
-                            self.log.error("\(#function): Pump rejected command")
+                            self.log.error("\(#function, privacy: .public): Pump rejected command")
                             completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedSuspensionAdjustment))
                             return
                         }
@@ -727,7 +727,7 @@ extension DanaKitPumpManager: PumpManager {
                     } catch {
                         self.disconnect()
                         
-                        self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
                         completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                     }
                 }
@@ -737,12 +737,12 @@ extension DanaKitPumpManager: PumpManager {
     
     public func resumeDelivery(completion: @escaping (Error?) -> Void) {
         delegateQueue.async {
-            self.log.info("\(#function): Resume delivery")
+            self.log.info("\(#function, privacy: .public): Resume delivery")
             
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     completion(PumpManagerError.connection(DanaKitPumpManagerError.noConnection))
                     return
                 case .success:
@@ -753,7 +753,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.disconnect()
                         
                         guard result.success else {
-                            self.log.error("\(#function): Pump rejected command")
+                            self.log.error("\(#function, privacy: .public): Pump rejected command")
                             completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedSuspensionAdjustment))
                             return
                         }
@@ -776,7 +776,7 @@ extension DanaKitPumpManager: PumpManager {
                     } catch {
                         self.disconnect()
                         
-                        self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
                         completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                     }
                 }
@@ -786,12 +786,12 @@ extension DanaKitPumpManager: PumpManager {
     
     public func syncBasalRateSchedule(items scheduleItems: [RepeatingScheduleValue<Double>], completion: @escaping (Result<BasalRateSchedule, Error>) -> Void) {
         delegateQueue.async {
-            self.log.info("\(#function): Sync basal")
+            self.log.info("\(#function, privacy: .public): Sync basal")
             
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     completion(.failure(PumpManagerError.connection(DanaKitPumpManagerError.noConnection)))
                     return
                 case .success:
@@ -802,7 +802,7 @@ extension DanaKitPumpManager: PumpManager {
                         
                         guard result.success else {
                             self.disconnect()
-                            self.log.error("\(#function): Pump rejected command (setting rates)")
+                            self.log.error("\(#function, privacy: .public): Pump rejected command (setting rates)")
                             completion(.failure(PumpManagerError.configuration(DanaKitPumpManagerError.failedBasalAdjustment)))
                             return
                         }
@@ -813,13 +813,13 @@ extension DanaKitPumpManager: PumpManager {
                         self.disconnect()
                         
                         guard activateResult.success else {
-                            self.log.error("\(#function): Pump rejected command (activate profile)")
+                            self.log.error("\(#function, privacy: .public): Pump rejected command (activate profile)")
                             completion(.failure(PumpManagerError.configuration(DanaKitPumpManagerError.failedBasalAdjustment)))
                             return
                         }
                         
                         guard let schedule = DailyValueSchedule<Double>(dailyItems: scheduleItems) else {
-                            self.log.error("\(#function): Failed to convert schedule")
+                            self.log.error("\(#function, privacy: .public): Failed to convert schedule")
                             completion(.failure(PumpManagerError.configuration(DanaKitPumpManagerError.failedBasalGeneration)))
                             return
                         }
@@ -842,7 +842,7 @@ extension DanaKitPumpManager: PumpManager {
                     } catch {
                         self.disconnect()
                         
-                        self.log.error("\(#function): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): Failed to suspend delivery. Error: \(error.localizedDescription, privacy: .public)")
                         completion(.failure(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription))))
                     }
                 }
@@ -852,12 +852,12 @@ extension DanaKitPumpManager: PumpManager {
     
     public func setUserSettings(data: PacketGeneralSetUserOption, completion: @escaping (Bool) -> Void) {
         delegateQueue.async {
-            self.log.info("\(#function): Set user settings")
+            self.log.info("\(#function, privacy: .public): Set user settings")
             
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     completion(false)
                     return
                 case .success:
@@ -868,7 +868,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.disconnect()
                         completion(result.success)
                     } catch {
-                        self.log.error("\(#function): error caught \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): error caught \(error.localizedDescription, privacy: .public)")
                         self.disconnect()
                         completion(false)
                     }
@@ -880,12 +880,12 @@ extension DanaKitPumpManager: PumpManager {
     public func syncDeliveryLimits(limits deliveryLimits: DeliveryLimits, completion: @escaping (Result<DeliveryLimits, Error>) -> Void) {
         delegateQueue.async {
             // Dana does not allow the max basal and max bolus to be set
-            self.log.info("\(#function): Skipping sync delivery limits (not supported by dana). Fetching current settings")
+            self.log.info("\(#function, privacy: .public): Skipping sync delivery limits (not supported by dana). Fetching current settings")
             
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     completion(.failure(PumpManagerError.connection(DanaKitPumpManagerError.noConnection)))
                     return
                 case .success:
@@ -894,7 +894,7 @@ extension DanaKitPumpManager: PumpManager {
                         let basalResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(basalPacket)
                         
                         guard basalResult.success else {
-                            self.log.error("\(#function): Pump refused to send basal rates back")
+                            self.log.error("\(#function, privacy: .public): Pump refused to send basal rates back")
                             self.disconnect()
                             completion(.failure(PumpManagerError.configuration(DanaKitPumpManagerError.unknown("Pump refused to send basal rates back"))))
                             return
@@ -905,18 +905,18 @@ extension DanaKitPumpManager: PumpManager {
                         
                         self.disconnect()
                         guard bolusResult.success else {
-                            self.log.error("\(#function): Pump refused to send bolus step back")
+                            self.log.error("\(#function, privacy: .public): Pump refused to send bolus step back")
                             completion(.failure(PumpManagerError.configuration(DanaKitPumpManagerError.unknown("Pump refused to send bolus step back"))))
                             return
                         }
                         
-                        self.log.info("\(#function): Fetching pump settings succesfully!")
+                        self.log.info("\(#function, privacy: .public): Fetching pump settings succesfully!")
                         completion(.success(DeliveryLimits(
                             maximumBasalRate: HKQuantity(unit: HKUnit.internationalUnit().unitDivided(by: .hour()), doubleValue: (basalResult.data as! PacketBasalGetRate).maxBasal),
                             maximumBolus: HKQuantity(unit: .internationalUnit(), doubleValue: (bolusResult.data as! PacketBolusGetStepInformation).maxBolus)
                         )))
                     } catch {
-                        self.log.error("\(#function): error caught \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): error caught \(error.localizedDescription, privacy: .public)")
                         self.disconnect()
                         completion(.failure(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription))))
                     }
@@ -930,7 +930,7 @@ extension DanaKitPumpManager: PumpManager {
             self.ensureConnected { result in
                 switch result {
                 case .failure:
-                    self.log.error("\(#function): Connection error")
+                    self.log.error("\(#function, privacy: .public): Connection error")
                     completion(PumpManagerError.connection(DanaKitPumpManagerError.noConnection))
                     return
                 case .success:
@@ -952,7 +952,7 @@ extension DanaKitPumpManager: PumpManager {
                         completion(nil)
                     } catch {
                         self.disconnect()
-                        self.log.error("\(#function): Failed to sync time. Error: \(error.localizedDescription, privacy: .public)")
+                        self.log.error("\(#function, privacy: .public): Failed to sync time. Error: \(error.localizedDescription, privacy: .public)")
                         completion(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription)))
                     }
                 }
@@ -1015,7 +1015,7 @@ extension DanaKitPumpManager: PumpManager {
             
             // Should never reach, but is only possible if device is not onboard (we have no ble identifier to connect to)
         } else {
-            self.log.error("\(#function): Pump is not onboarded")
+            self.log.error("\(#function, privacy: .public): Pump is not onboarded")
             self.logDeviceCommunication("Pump is not onboarded", type: .connection)
             block(.failure)
         }
@@ -1053,7 +1053,7 @@ extension DanaKitPumpManager: PumpManager {
         
         // Max percentage 200%
         let percentage = min(UInt16(round(absoluteValue / basalRate * 100)), 200)
-        let actualAbsoluteValue = absoluteValue * Double(percentage / 100)
+        let actualAbsoluteValue = basalRate * Double(percentage / 100)
         return (percentage, actualAbsoluteValue)
     }
 }
@@ -1170,7 +1170,7 @@ extension DanaKitPumpManager {
     
     func notifyBolusDidUpdate(deliveredUnits: Double) {
         guard let doseEntry = self.doseEntry else {
-            self.log.error("\(#function): No bolus entry found...")
+            self.log.error("\(#function, privacy: .public): No bolus entry found...")
             return
         }
         
