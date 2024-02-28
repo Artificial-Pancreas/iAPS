@@ -6,6 +6,7 @@ struct PumpView: View {
     @Binding var name: String
     @Binding var expiresAtDate: Date?
     @Binding var timerDate: Date
+    @Binding var timeZone: TimeZone?
 
     @State var state: Home.StateModel
 
@@ -71,6 +72,17 @@ struct PumpView: View {
                     .frame(maxHeight: 15)
                     .foregroundColor(batteryColor)
                     .offset(x: 0, y: -4)
+                    .overlay {
+                        if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                            Image(systemName: "clock.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxHeight: 20)
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(Color(.warning))
+                                .offset(x: 10, y: -20)
+                        }
+                    }
             }
 
             if let date = expiresAtDate {
@@ -79,7 +91,17 @@ struct PumpView: View {
                     .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
                     .foregroundColor(colorScheme == .dark ? .secondary : .white)
                     .offset(x: 0, y: -5)
-
+                    .overlay {
+                        if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                            Image(systemName: "clock.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxHeight: 20)
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(Color(.warning))
+                                .offset(x: 10, y: -20)
+                        }
+                    }
                 remainingTime(time: date.timeIntervalSince(timerDate))
                     .font(.pumpFont)
                     .offset(x: -7, y: 0)
