@@ -95,6 +95,7 @@
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>audio</string>
 		<string>bluetooth-central</string>
 		<string>bluetooth-peripheral</string>
 		<string>processing</string>
@@ -114,10 +115,6 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>To create events with BG reading values, so that they can be viewed on Apple Watch and CarPlay</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
