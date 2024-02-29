@@ -74,13 +74,7 @@ struct PumpView: View {
                     .offset(x: 0, y: -4)
                     .overlay {
                         if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
-                            Image(systemName: "clock.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxHeight: 20)
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(Color(.warning))
-                                .offset(x: 10, y: -20)
+                            ClockOffset()
                         }
                     }
             }
@@ -93,13 +87,7 @@ struct PumpView: View {
                     .offset(x: 0, y: -5)
                     .overlay {
                         if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
-                            Image(systemName: "clock.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxHeight: 20)
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(Color(.warning))
-                                .offset(x: 10, y: -20)
+                            ClockOffset()
                         }
                     }
                 remainingTime(time: date.timeIntervalSince(timerDate))
