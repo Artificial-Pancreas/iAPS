@@ -300,14 +300,14 @@ extension Home {
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
-                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image(systemName: isOverride ? "person.fill" : "person")
-                            .symbolRenderingMode(.palette)
-                            .font(.custom("Buttons", size: 30))
-                            .foregroundStyle(.purple)
-                            .padding(8)
-                            .background(isOverride ? .purple.opacity(0.15) : .clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                            Image(systemName: isOverride ? "person.2.gobackward" : "person.circle")
+                                .symbolRenderingMode(.palette)
+                                .font(.custom("Buttons", size: 30))
+                                .foregroundStyle(isOverride ? .pink : .primary.opacity(0.5))
+                                .padding(8)
+                                .background(isOverride ? .teal.opacity(0.2) : .clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     .onTapGesture {
                         if isOverride {
