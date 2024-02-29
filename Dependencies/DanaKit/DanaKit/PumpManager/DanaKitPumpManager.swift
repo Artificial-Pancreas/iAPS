@@ -507,8 +507,8 @@ extension DanaKitPumpManager: PumpManager {
     /// NOTE: There are 2 ways to set a temp basal:
     /// - The normal way (which only accepts full hours and percentages)
     /// - A short APS-special temp basal command (which only accepts 15 min or 30 min
-    /// Currently, the above is implemented with a simpel U/hr -> % calculator
-    /// NOTE: The max temp basal is 200%
+    /// Currently, this is implemented with a simpel U/hr -> % calculator
+    /// NOTE: A temp basal >200% for 30 min (or full hour) is rescheduled to 15min
     public func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (PumpManagerError?) -> Void) {
         delegateQueue.async {
             self.log.info("\(#function, privacy: .public): Enact temp basal. Value: \(unitsPerHour) U/hr, duration: \(duration) sec")
@@ -556,11 +556,17 @@ extension DanaKitPumpManager: PumpManager {
                             }
                         }
                         
-                        guard let (percentage, actualAbsoluteUnits) = self.absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule) else {
+                        guard let percentage = self.absoluteBasalRateToPercentage(absoluteValue: unitsPerHour, basalSchedule: self.state.basalSchedule) else {
                             self.disconnect()
                             self.log.error("\(#function, privacy: .public): Basal schedule is not available...")
                             completion(PumpManagerError.configuration(DanaKitPumpManagerError.failedTempBasalAdjustment("Basal schedule is not available...")))
                             return
+                        }
+                        
+                        // Temp basal >15min && >200% is not supported
+                        // Floor it down to 15min
+                        if percentage > 200 && duration != .minutes(15) {
+                            duration = .minutes(15)
                         }
                         
                         if self.state.isTempBasalInProgress {
@@ -606,10 +612,10 @@ extension DanaKitPumpManager: PumpManager {
                                 return
                             }
                             
-                            let dose = DoseEntry.tempBasal(absoluteUnit: actualAbsoluteUnits, duration: duration, insulinType: self.state.insulinType!)
+                            let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: duration, insulinType: self.state.insulinType!)
                             self.state.basalDeliveryOrdinal = .tempBasal
                             self.state.basalDeliveryDate = Date.now
-                            self.state.tempBasalUnits = actualAbsoluteUnits
+                            self.state.tempBasalUnits = unitsPerHour
                             self.state.tempBasalDuration = duration
                             self.notifyStateDidChange()
                             
@@ -631,10 +637,10 @@ extension DanaKitPumpManager: PumpManager {
                                 return
                             }
                             
-                            let dose = DoseEntry.tempBasal(absoluteUnit: duration, duration: duration, insulinType: self.state.insulinType!)
+                            let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: duration, insulinType: self.state.insulinType!)
                             self.state.basalDeliveryOrdinal = .tempBasal
                             self.state.basalDeliveryDate = Date.now
-                            self.state.tempBasalUnits = actualAbsoluteUnits
+                            self.state.tempBasalUnits = unitsPerHour
                             self.state.tempBasalDuration = duration
                             self.notifyStateDidChange()
                             
@@ -657,10 +663,10 @@ extension DanaKitPumpManager: PumpManager {
                                 return
                             }
                             
-                            let dose = DoseEntry.tempBasal(absoluteUnit: actualAbsoluteUnits, duration: duration, insulinType: self.state.insulinType!)
+                            let dose = DoseEntry.tempBasal(absoluteUnit: unitsPerHour, duration: duration, insulinType: self.state.insulinType!)
                             self.state.basalDeliveryOrdinal = .tempBasal
                             self.state.basalDeliveryDate = Date.now
-                            self.state.tempBasalUnits = actualAbsoluteUnits
+                            self.state.tempBasalUnits = unitsPerHour
                             self.state.tempBasalDuration = duration
                             self.notifyStateDidChange()
                             
@@ -1034,9 +1040,9 @@ extension DanaKitPumpManager: PumpManager {
         self.pumpDelegate.delegate?.deviceManager(self, logEventForDeviceIdentifier: address, type: type, message: message, completion: nil)
     }
     
-    private func absoluteBasalRateToPercentage(absoluteValue: Double, basalSchedule: [Double]) -> (UInt16, Double)? {
+    private func absoluteBasalRateToPercentage(absoluteValue: Double, basalSchedule: [Double]) -> UInt16? {
         if absoluteValue == 0 {
-            return (0, 0)
+            return 0
         }
         
         guard basalSchedule.count == 24 else {
@@ -1051,10 +1057,7 @@ extension DanaKitPumpManager: PumpManager {
         let basalIndex = (basalIntervals.firstIndex(where: { $0 > nowTimeInterval}) ?? 24) - 1
         let basalRate = basalSchedule[basalIndex]
         
-        // Max percentage 200%
-        let percentage = min(UInt16(round(absoluteValue / basalRate * 100)), 200)
-        let actualAbsoluteValue = basalRate * Double(percentage / 100)
-        return (percentage, actualAbsoluteValue)
+        return UInt16(round(absoluteValue / basalRate * 100))
     }
 }
 
