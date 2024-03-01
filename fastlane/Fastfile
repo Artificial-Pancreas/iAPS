@@ -162,12 +162,12 @@ platform :ios do
       Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING
     ])
 
-    configure_bundle_id("FreeAPSWatch WatchKit Extension", "com.jon.#(TEAMID).aps.watchkitapp.watchkitextension", [
+    configure_bundle_id("FreeAPSWatch WatchKit Extension", "com.jon.#{TEAMID}.aps.watchkitapp.watchkitextension", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT
     ])
     
-    configure_bundle_id("FreeAPSWatch", "com.jon.#(TEAMID).aps.watchkitapp", [
+    configure_bundle_id("FreeAPSWatch", "com.jon.#{TEAMID}.aps.watchkitapp", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
 
