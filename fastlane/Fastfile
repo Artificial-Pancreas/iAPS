@@ -64,7 +64,7 @@ platform :ios do
 
 
     previous_build_number = latest_testflight_build_number(
-      app_identifier: "com.jon.#(TEAMID).aps",
+      app_identifier: "com.jon.#{TEAMID}.aps",
       api_key: api_key,
     )
 
@@ -81,27 +81,27 @@ platform :ios do
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["com.jon.#(TEAMID).aps"],
+      profile_name: mapping["com.jon.#{TEAMID}.aps"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPS"]
     )
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["com.jon.#(TEAMID).aps.watchkitapp.watchkitextension"],
+      profile_name: mapping["com.jon.#{TEAMID}.aps.watchkitapp.watchkitextension"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch WatchKit Extension"]
     )
     
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["com.jon.#(TEAMID).aps.watchkitapp"],
+      profile_name: mapping["com.jon.#{TEAMID}.aps.watchkitapp"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch"]
     )
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"],
+      profile_name: mapping["com.jon.#{TEAMID}.aps.LiveActivity"],
       code_sign_identity: "iPhone Distribution",
       targets: ["LiveActivityExtension"]
     )
