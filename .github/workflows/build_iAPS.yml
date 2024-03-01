@@ -140,49 +140,6 @@ jobs:
       - name: Select Xcode version
         run: "sudo xcode-select --switch /Applications/Xcode_15.0.1.app/Contents/Developer"
       
-      - name: Checkout Repo for syncing
-        if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-          vars.SCHEDULED_SYNC == 'true'
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
-          ref: ${{ env.TARGET_BRANCH }} 
-      
-      - name: Sync upstream changes
-        if: | # do not run the upstream sync action on the upstream repository
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-          vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
-        id: sync
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
-        with:
-          target_sync_branch: ${{ env.TARGET_BRANCH }}
-          shallow_since: 6 months ago
-          target_repo_token: ${{ secrets.GH_PAT }}
-          upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
-          upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
-      
-      # Display a sample message based on the sync output var 'has_new_commits'
-      - name: New commits found
-        if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
-        run: echo "New commits were found to sync."
-    
-      - name: No new commits
-        if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' && 
-          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
-        run: echo "There were no new commits."
-      
-      - name: Show value of 'has_new_commits'
-        if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true'
-          && vars.SCHEDULED_SYNC == 'true'
-        run: |
-          echo ${{ steps.sync.outputs.has_new_commits }}
-          echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }}" >> $GITHUB_OUTPUT
-
       - name: Checkout Repo for building
         uses: actions/checkout@v4
         with:
