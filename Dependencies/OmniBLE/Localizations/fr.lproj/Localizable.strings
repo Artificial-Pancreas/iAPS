@@ -402,6 +402,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Désactiver le pod";
 
+/* */
+"Slide to Insert Cannula" = "Glisser pour insérer la canule";
+
+/* */
+"Slide to Deactivate Pod" = "Glisser pour désactiver le Pod";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Désactivation.";
 
@@ -485,6 +491,9 @@
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Attendez que l'insertion soit terminée.";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Inséré";

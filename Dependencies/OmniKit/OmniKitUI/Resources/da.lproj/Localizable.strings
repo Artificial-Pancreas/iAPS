@@ -153,11 +153,7 @@
 "Confidence Reminders" = "Påmindelse om succesfulde aktiviteter";
 
 /* Help text for BeepPreferenceSelectionView */
-<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
-=======
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påmindelse om succesfulde aktiviteter er bip fra Pod'en, som kan bruges til at bekræfte valgte kommandoer.";
->>>>>>> main
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfiguration";
@@ -189,6 +185,15 @@
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Deaktiver Pod";
+
+/* */
+"Slide to Insert Cannula" = "Slide to Insert Cannula";
+
+/* */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Deaktiveret";
@@ -280,7 +285,7 @@
 "Fault" = "Fejl";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Fyld en ny Pod med 100 E insulin (lad podnålehætten sidde på). Lyt efter 2 bip.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Afslut deaktivering";
@@ -554,11 +559,7 @@
 "Remove Pump" = "Fjern pumpe";
 
 /* Label text for step two of attach pod instructions */
-<<<<<<< HEAD
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
-=======
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Fjern Pod'ens nålehætte og kontroller kanyle. Fjern derefter papirbagsiden.";
->>>>>>> main
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */

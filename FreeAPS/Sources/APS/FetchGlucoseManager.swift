@@ -151,23 +151,17 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
 
         nightscoutManager.uploadGlucose()
 
-        let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
-
-        guard glucoseForHealth.isNotEmpty else {
-            // end of the BG tasks
-            if let backgroundTask = backGroundFetchBGTaskID {
-                UIApplication.shared.endBackgroundTask(backgroundTask)
-                backGroundFetchBGTaskID = .invalid
-            }
-            return
-        }
-        healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
-
         // end of the BG tasks
         if let backgroundTask = backGroundFetchBGTaskID {
             UIApplication.shared.endBackgroundTask(backgroundTask)
             backGroundFetchBGTaskID = .invalid
         }
+
+        let glucoseForHealth = filteredByDate.filter { !glucoseFromHealth.contains($0) }
+        guard glucoseForHealth.isNotEmpty else {
+            return
+        }
+        healthKitManager.saveIfNeeded(bloodGlucose: glucoseForHealth)
     }
 
     /// The function used to start the timer sync - Function of the variable defined in config

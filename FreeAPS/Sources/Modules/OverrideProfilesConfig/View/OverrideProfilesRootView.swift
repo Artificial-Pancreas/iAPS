@@ -185,7 +185,7 @@ extension OverrideProfilesConfig {
                     }
 
                     HStack {
-                        Button("Start new Profile") {
+                        Button("Start") {
                             showAlert.toggle()
                             alertSring = "\(state.percentage.formatted(.number)) %, " +
                                 (
@@ -261,16 +261,18 @@ extension OverrideProfilesConfig {
                         "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage."
                     )
                 }
-                Section {
-                    Button("Return to Normal") {
-                        state.cancelProfile()
-                        dismiss()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .buttonStyle(BorderlessButtonStyle())
-                    .disabled(!state.isEnabled)
-                    .tint(.red)
-                } footer: { Text("").padding(.bottom, 150) }
+                if state.isEnabled {
+                    Section {
+                        Button("Cancel Profile Override") {
+                            state.cancelProfile()
+                            dismiss()
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .buttonStyle(BorderlessButtonStyle())
+                        .disabled(!state.isEnabled)
+                        .tint(.red)
+                    } footer: { Text("").padding(.bottom, 150) }
+                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
@@ -281,8 +283,8 @@ extension OverrideProfilesConfig {
         }
 
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
-            let target = state.units == .mmolL ? (((preset.target ?? 0) as NSDecimalNumber) as Decimal)
-                .asMmolL : (preset.target ?? 0) as Decimal
+            let targetRaw = ((preset.target ?? 0) as NSDecimalNumber) as Decimal
+            let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
             let duration = (preset.duration ?? 0) as Decimal
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
             let identifier = ((preset.emoji ?? "") == "") || (preset.emoji?.isEmpty ?? true) ||
@@ -293,7 +295,7 @@ extension OverrideProfilesConfig {
             let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
             let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
-            let targetString = target != 0 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
+            let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
             let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
             let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
             let isfString = preset.isf ? "ISF" : ""

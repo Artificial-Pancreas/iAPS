@@ -153,11 +153,7 @@
 "Confidence Reminders" = "Przypomnienia (sygnały dźwiękowe) z POD'a";
 
 /* Help text for BeepPreferenceSelectionView */
-<<<<<<< HEAD
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
-=======
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Przypomnienia potwierdzające to sygnały dźwiękowe, z których można korzystać w celu potwierdzania wybranych poleceń.";
->>>>>>> main
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfiguracja";
@@ -189,6 +185,15 @@
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Dezaktywuj POD'a";
+
+/* */
+"Slide to Insert Cannula" = "Slide to Insert Cannula";
+
+/* */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Deaktywowany";
@@ -280,7 +285,7 @@
 "Fault" = "Usterka";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Napełnij nowego POD'a insuliną U-100 (minimum 80j). Pozostaw niebieską osłonkę igły. Powinieneś usłyszeć dwa sygnały dźwiękowe.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Zakończ dezaktywację";
@@ -554,11 +559,7 @@
 "Remove Pump" = "Usuń pompę";
 
 /* Label text for step two of attach pod instructions */
-<<<<<<< HEAD
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
-=======
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Usuń osłonę igły i sprawdź kaniulę. Następnie usuń papierowe zabezpieczenie kleju.";
->>>>>>> main
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */

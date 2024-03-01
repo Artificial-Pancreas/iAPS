@@ -14,6 +14,8 @@ extension Bolus {
         @State private var presentInfo = false
         @State private var displayError = false
         @State private var keepForNextWiew: Bool = false
+        @State private var remoteBolusAlert: Alert?
+        @State private var isRemoteBolusAlertPresented: Bool = false
 
         @Environment(\.colorScheme) var colorScheme
         @FocusState private var isFocused: Bool
@@ -115,14 +117,30 @@ extension Bolus {
                 if state.amount > 0 {
                     Section {
                         Button {
-                            keepForNextWiew = true
-                            state.add()
+                            if let remoteBolus = state.remoteBolus() {
+                                remoteBolusAlert = Alert(
+                                    title: Text("A Remote Bolus Was Just Delivered!"),
+                                    message: Text(remoteBolus),
+                                    primaryButton: .destructive(Text("Bolus"), action: {
+                                        keepForNextWiew = true
+                                        state.add()
+                                    }),
+                                    secondaryButton: .cancel()
+                                )
+                                isRemoteBolusAlertPresented = true
+                            } else {
+                                keepForNextWiew = true
+                                state.add()
+                            }
                         }
                         label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
                             .frame(maxWidth: .infinity, alignment: .center)
                             .disabled(disabled)
                             .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
                             .tint(.white)
+                    }
+                    .alert(isPresented: $isRemoteBolusAlertPresented) {
+                        remoteBolusAlert!
                     }
                 }
 
@@ -136,7 +154,6 @@ extension Bolus {
                     }
                 }
             }
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .alert(isPresented: $displayError) {
                 Alert(
                     title: Text("Warning!"),
@@ -150,7 +167,9 @@ extension Bolus {
                     ),
                     secondaryButton: .cancel()
                 )
-            }.onAppear {
+            }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .onAppear {
                 configureView {
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
@@ -209,9 +228,9 @@ extension Bolus {
         func carbsView() {
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: fetch, meal, override: false)
+                state.backToCarbsView(complexEntry: hasFatOrProtein, meal, override: false, deleteNothing: false, editMode: true)
             } else {
-                state.backToCarbsView(complexEntry: false, meal, override: true)
+                state.backToCarbsView(complexEntry: false, meal, override: true, deleteNothing: true, editMode: false)
             }
         }
 
@@ -339,6 +358,7 @@ extension Bolus {
                         .foregroundColor(.blue)
                 }.padding(.bottom, 10)
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4))

@@ -12,6 +12,8 @@ extension Bolus {
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
         @State private var keepForNextWiew: Bool = false
+        @State private var remoteBolusAlert: Alert?
+        @State private var isRemoteBolusAlertPresented: Bool = false
 
         private enum Config {
             static let dividerHeight: CGFloat = 2
@@ -78,7 +80,9 @@ extension Bolus {
                         Button(action: {
                             showInfo.toggle()
                         }, label: {
-                            Image(systemName: "info.circle")
+                            Image(systemName: "info.bubble")
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
                             Text("Calculations")
                         })
                             .foregroundStyle(.blue)
@@ -106,7 +110,7 @@ extension Bolus {
                         }
                     } else {
                         HStack {
-                            Text("Recommended Bolus")
+                            Text("Insulin recommended")
                             Spacer()
                             Text(
                                 formatter
@@ -159,8 +163,21 @@ extension Bolus {
                 if state.amount > 0 {
                     Section {
                         Button {
-                            keepForNextWiew = true
-                            state.add()
+                            if let remoteBolus = state.remoteBolus() {
+                                remoteBolusAlert = Alert(
+                                    title: Text("A Remote Bolus Was Just Delivered!"),
+                                    message: Text(remoteBolus),
+                                    primaryButton: .destructive(Text("Bolus"), action: {
+                                        keepForNextWiew = true
+                                        state.add()
+                                    }),
+                                    secondaryButton: .cancel()
+                                )
+                                isRemoteBolusAlertPresented = true
+                            } else {
+                                keepForNextWiew = true
+                                state.add()
+                            }
                         }
                         label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -178,6 +195,9 @@ extension Bolus {
                         label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
+            }
+            .alert(isPresented: $isRemoteBolusAlertPresented) {
+                remoteBolusAlert!
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .blur(radius: showInfo ? 20 : 0)
@@ -281,6 +301,7 @@ extension Bolus {
                 .padding(.bottom, 20)
             }
             .font(.footnote)
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .background(
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                     .fill(Color(colorScheme == .dark ? UIColor.systemGray4 : UIColor.systemGray4).opacity(0.9))
@@ -302,9 +323,9 @@ extension Bolus {
         func carbsView() {
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: true, meal, override: false)
+                state.backToCarbsView(complexEntry: hasFatOrProtein, meal, override: false, deleteNothing: false, editMode: true)
             } else {
-                state.backToCarbsView(complexEntry: false, meal, override: true)
+                state.backToCarbsView(complexEntry: false, meal, override: true, deleteNothing: true, editMode: false)
             }
         }
 
