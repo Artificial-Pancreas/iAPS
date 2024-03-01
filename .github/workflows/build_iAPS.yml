@@ -25,64 +25,6 @@ jobs:
 
   # Checks if GH_PAT holds workflow permissions
   # Checks for existence of alive branch; if non-existent creates it
-  check_alive_and_permissions:
-    needs: validate
-    runs-on: ubuntu-latest
-    name: Check alive branch and permissions
-    permissions:
-      contents: write
-    outputs:
-      WORKFLOW_PERMISSION: ${{ steps.workflow-permission.outputs.has_permission }}
-    
-    steps:
-    - name: Check for workflow permissions
-      id: workflow-permission
-      env: 
-        TOKEN_TO_CHECK: ${{ secrets.GH_PAT }}
-      run: |
-        PERMISSIONS=$(curl -sS -f -I -H "Authorization: token ${{ env.TOKEN_TO_CHECK }}" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2-);
-        
-        if [[ $PERMISSIONS =~ "workflow" || $PERMISSIONS == "" ]]; then
-          echo "GH_PAT holds workflow permissions or is fine-grained PAT."
-          echo "has_permission=true" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to false.
-        else 
-          echo "GH_PAT lacks workflow permissions."
-          echo "Automated build features will be skipped!"
-          echo "has_permission=false" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to false.
-        fi
-    
-    - name: Check for alive branch
-      if: steps.workflow-permission.outputs.has_permission == 'true'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        if [[ "$(gh api -H "Accept: application/vnd.github+json" /repos/${{ github.repository_owner }}/iAPS/branches | jq --raw-output 'any(.name=="alive")')" == "true" ]]; then
-          echo "Branch 'alive' exists."
-          echo "ALIVE_BRANCH_EXISTS=true" >> $GITHUB_ENV # Set ALIVE_BRANCH_EXISTS to true
-        else
-          echo "Branch 'alive' does not exist."
-          echo "ALIVE_BRANCH_EXISTS=false" >> $GITHUB_ENV # Set ALIVE_BRANCH_EXISTS to false
-        fi
-    
-    - name: Create alive branch
-      if: env.ALIVE_BRANCH_EXISTS == 'false'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # Get ref for Artificial-Pancreas/iAPS:main
-        SHA=$(curl -sS https://api.github.com/repos/${{ env.UPSTREAM_REPO }}/git/refs \
-          | jq '.[] | select(.ref == "refs/heads/main" ) | .object.sha' \
-          | tr -d '"'
-        );
-        
-        # Create alive branch based on Artificial-Pancreas/iAPS:dev
-        gh api \
-          --method POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.v3+json" \
-          /repos/${{ github.repository_owner }}/iAPS/git/refs \
-          -f ref='refs/heads/alive' \
-          -f sha=$SHA 
   
   # Builds iAPS
   build:
