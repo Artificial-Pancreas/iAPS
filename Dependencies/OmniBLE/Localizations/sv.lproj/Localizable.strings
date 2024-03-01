@@ -823,7 +823,6 @@
 "Retrieving Pump Manager Details..." = "Hämtar pumphanterarens detaljer...";
 /* button title to refresh pump manager details */
 "Refresh Pump Manager Details" = "Uppdatera pumphanterarens detaljer";
-<<<<<<< HEAD
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Diagnostik";
