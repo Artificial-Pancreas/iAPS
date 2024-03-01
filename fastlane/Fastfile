@@ -57,10 +57,11 @@ platform :ios do
       app_identifier: [
         "com.jon.#{TEAMID}.aps",
         "com.jon.#{TEAMID}.aps.watchkitapp",
-        "com.jon.#{TEAMID}.aps.watchkitapp.watchkitextension"
+        "com.jon.#{TEAMID}.aps.watchkitapp.watchkitextension",
         "com.jon.#{TEAMID}.aps.LiveActivity"
       ]
     )
+
 
     previous_build_number = latest_testflight_build_number(
       app_identifier: "com.jon.#(TEAMID).aps",
