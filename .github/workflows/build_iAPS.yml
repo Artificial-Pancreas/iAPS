@@ -9,8 +9,6 @@ on:
       - 'fastlane'
   
   schedule:
-    #- cron: '30 04 1 * *' # Runs at 04:30 UTC on the 1st every month
-    - cron: '0 8 * * 3' # Checks for updates at 08:00 UTC every Wednesday
     - cron: '0 6 1 * *' # Builds the app on the 1st of every month at 06:00 UTC
 
 env:  
@@ -84,44 +82,7 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           /repos/${{ github.repository_owner }}/iAPS/git/refs \
           -f ref='refs/heads/alive' \
-          -f sha=$SHA
-  
-  # Performs keepalive to avoid stale fork
-  check_latest_from_upstream:
-    needs: [validate, check_alive_and_permissions]
-    runs-on: ubuntu-latest
-    name: Check upstream and keep alive
-    outputs: 
-      NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
-    
-    steps:
-    - name: Checkout target repo
-      if: |
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-        (vars.SCHEDULED_BUILD != 'false' || vars.SCHEDULED_SYNC != 'false')
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GH_PAT }}
-        ref: alive
-        
-    # Keep repository "alive": add empty commits to ALIVE_BRANCH after "time_elapsed" days of inactivity to avoid inactivation of scheduled workflows
-    - name: Keep alive
-      if: |
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-        (vars.SCHEDULED_BUILD != 'false' || vars.SCHEDULED_SYNC != 'false')
-      uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
-      with:
-        time_elapsed: 20 # Time elapsed from the previous commit to trigger a new automated commit (in days)
-    
-    - name: Show scheduled build configuration message
-      if: needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION != 'true'
-      run: |
-        echo "### :calendar: Scheduled Sync and Build Disabled :mobile_phone_off:" >> $GITHUB_STEP_SUMMARY
-        echo "You have not yet configured the scheduled sync and build for iAPS's browser build." >> $GITHUB_STEP_SUMMARY
-        echo "Synchronizing your fork of <code>iAPS</code> with the upstream repository <code>Artificial-Pancreas/iAPS</code> will be skipped." >> $GITHUB_STEP_SUMMARY
-        echo "If you want to enable automatic builds and updates for your iAPS, please follow the instructions \
-              under the following path <code>iAPS/fastlane/testflight.md</code>." >> $GITHUB_STEP_SUMMARY
-   
+          -f sha=$SHA 
   
   # Builds iAPS
   build:
