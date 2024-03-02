@@ -167,7 +167,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     }
 
     func syncDate() -> Date {
-        Date().addingTimeInterval(-settingsManager.settings.autotuneTuneDays.days.timeInterval)
+        Date().addingTimeInterval(-1.days.timeInterval)
     }
 
     func recent() -> [CarbsEntry] {
