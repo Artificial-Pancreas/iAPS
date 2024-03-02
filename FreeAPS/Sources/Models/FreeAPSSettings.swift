@@ -46,6 +46,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var displayFatAndProteinOnWatch: Bool = false
     var confirmBolusFaster: Bool = false
     var onlyAutotuneBasals: Bool = false
+    var autotuneTuneDays: Int = 1
     var overrideFactor: Decimal = 0.8
     var useCalc: Bool = false
     var fattyMeals: Bool = false
@@ -263,6 +264,10 @@ extension FreeAPSSettings: Decodable {
 
         if let onlyAutotuneBasals = try? container.decode(Bool.self, forKey: .onlyAutotuneBasals) {
             settings.onlyAutotuneBasals = onlyAutotuneBasals
+        }
+
+        if let autotuneTuneDays = try? container.decode(Int.self, forKey: .autotuneTuneDays) {
+            settings.autotuneTuneDays = autotuneTuneDays
         }
 
         if let displayPredictions = try? container.decode(Bool.self, forKey: .displayPredictions) {

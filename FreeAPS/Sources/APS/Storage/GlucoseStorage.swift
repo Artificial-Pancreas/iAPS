@@ -55,7 +55,9 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                 storage.append(glucose, to: file, uniqBy: \.dateString)
 
                 let uniqEvents = storage.retrieve(file, as: [BloodGlucose].self)?
-                    .filter { $0.dateString.addingTimeInterval(24.hours.timeInterval) > Date() }
+                    .filter {
+                        $0.dateString
+                            .addingTimeInterval(self.settingsManager.settings.autotuneTuneDays.days.timeInterval) > Date() }
                     .sorted { $0.dateString > $1.dateString } ?? []
                 let glucose = Array(uniqEvents)
                 storage.save(glucose, as: file)

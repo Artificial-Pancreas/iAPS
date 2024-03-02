@@ -44,6 +44,7 @@
   "displayFatAndProteinOnWatch" : false,
   "confirmBolusFaster" : false,
   "onlyAutotuneBasals" : false,
+  "autotuneTuneDays" : 1,
   "overrideFactor" : 0.8,
   "useCalc" : false,
   "fattyMeals" : false,

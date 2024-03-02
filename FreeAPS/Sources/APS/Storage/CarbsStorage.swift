@@ -19,7 +19,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     private let processQueue = DispatchQueue(label: "BaseCarbsStorage.processQueue")
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
-    @Injected() private var settings: SettingsManager!
+    @Injected() private var settingsManager: SettingsManager!
 
     let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
@@ -37,10 +37,10 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
 
             if fat > 0 || protein > 0 {
                 // -------------------------- FPU--------------------------------------
-                let interval = settings.settings.minuteInterval // Interval between carbs
-                let timeCap = settings.settings.timeCap // Max Duration
-                let adjustment = settings.settings.individualAdjustmentFactor
-                let delay = settings.settings.delay // Tme before first future carb entry
+                let interval = settingsManager.settings.minuteInterval // Interval between carbs
+                let timeCap = settingsManager.settings.timeCap // Max Duration
+                let adjustment = settingsManager.settings.individualAdjustmentFactor
+                let delay = settingsManager.settings.delay // Tme before first future carb entry
                 let kcal = protein * 4 + fat * 9
                 let carbEquivalents = (kcal / 10) * adjustment
                 let fpus = carbEquivalents / 10
@@ -94,7 +94,9 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     self.storage.transaction { storage in
                         storage.append(futureCarbArray, to: file, uniqBy: \.id)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .filter {
+                                $0.createdAt
+                                    .addingTimeInterval(settingsManager.settings.autotuneTuneDays.days.timeInterval) > Date() }
                             .sorted { $0.createdAt > $1.createdAt } ?? []
                         storage.save(Array(uniqEvents), as: file)
                     }
@@ -121,7 +123,9 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     self.storage.transaction { storage in
                         storage.append(entries, to: file, uniqBy: \.createdAt)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .filter {
+                                $0.createdAt
+                                    .addingTimeInterval(settingsManager.settings.autotuneTuneDays.days.timeInterval) > Date() }
                             .sorted { $0.createdAt > $1.createdAt } ?? []
                         storage.save(Array(uniqEvents), as: file)
                     }
@@ -129,7 +133,9 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     self.storage.transaction { storage in
                         storage.append(onlyCarbs, to: file, uniqBy: \.id)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .filter {
+                                $0.createdAt
+                                    .addingTimeInterval(settingsManager.settings.autotuneTuneDays.days.timeInterval) > Date() }
                             .sorted { $0.createdAt > $1.createdAt } ?? []
                         storage.save(Array(uniqEvents), as: file)
                     }
@@ -161,7 +167,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     }
 
     func syncDate() -> Date {
-        Date().addingTimeInterval(-1.days.timeInterval)
+        Date().addingTimeInterval(-settingsManager.settings.autotuneTuneDays.days.timeInterval)
     }
 
     func recent() -> [CarbsEntry] {

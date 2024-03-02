@@ -21,6 +21,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     private let processQueue = DispatchQueue(label: "BasePumpHistoryStorage.processQueue")
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var settingsManager: SettingsManager!
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -183,7 +184,9 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             self.storage.transaction { storage in
                 storage.append(events, to: file, uniqBy: \.id)
                 uniqEvents = storage.retrieve(file, as: [PumpHistoryEvent].self)?
-                    .filter { $0.timestamp.addingTimeInterval(1.days.timeInterval) > Date() }
+                    .filter {
+                        $0.timestamp
+                            .addingTimeInterval(self.settingsManager.settings.autotuneTuneDays.days.timeInterval) > Date() }
                     .sorted { $0.timestamp > $1.timestamp } ?? []
                 storage.save(Array(uniqEvents), as: file)
             }
