@@ -27,8 +27,8 @@ import Foundation
         AppShortcut(
             intent: ApplyOverrideIntent(),
             phrases: [
-                "Activate an \(.applicationName) Overide Preset",
-                "Apply an \(.applicationName) override preset"
+                "Activate an \(.applicationName) Override Preset",
+                "Activates an \(.applicationName) Override Preset"
             ]
         )
         AppShortcut(
