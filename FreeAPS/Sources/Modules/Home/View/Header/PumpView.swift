@@ -73,9 +73,9 @@ struct PumpView: View {
                     .foregroundColor(batteryColor)
                     .offset(x: 0, y: -4)
                     .overlay {
-                        // if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
-                        ClockOffset(mdtPump: true)
-                        // }
+                        if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                            ClockOffset(mdtPump: true)
+                        }
                     }
             }
 
