@@ -427,6 +427,9 @@ Połączono z Nightscout!";
 /* Add Simulator pump */
 "Add Simulator" = "Add Simulator";
 
+/* View/Header when pod expired */
+"Replace" = "Replace";
+
 /* Insulin model */
 "Model" = "Model";
 
