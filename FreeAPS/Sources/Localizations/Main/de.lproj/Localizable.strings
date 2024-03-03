@@ -426,7 +426,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Simulator hinzufügen";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Pod ersetzen!";
 
 /* Insulin model */
 "Model" = "Modell";
