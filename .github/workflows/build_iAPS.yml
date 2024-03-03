@@ -8,15 +8,6 @@ on:
     branches:
       - 'fastlane'
   
-  schedule:
-    - cron: '0 6 1 * *' # Builds the app on the 1st of every month at 06:00 UTC
-
-env:  
-  UPSTREAM_REPO: Artificial-Pancreas/iAPS
-  UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
-  TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (replace with specific branch name if needed)
-  ALIVE_BRANCH: alive
-
 jobs:
   validate:
     name: Validate
@@ -33,12 +24,7 @@ jobs:
     runs-on: macos-13
     permissions:
       contents: write
-    if: | # runs if started manually, or if sync schedule is set and enabled and scheduled on the first Saturday each month, or if sync schedule is set and enabled and new commits were found
-        github.event_name == 'workflow_dispatch' ||
-        (needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-          (vars.SCHEDULED_BUILD != 'false' && github.event.schedule == '0 6 1 * *') ||
-          (vars.SCHEDULED_SYNC == 'true' && needs.check_latest_from_upstream.outputs.NEW_COMMITS == 'true' )
-        )
+      
     steps:
       - name: Select Xcode version
         run: "sudo xcode-select --switch /Applications/Xcode_15.0.1.app/Contents/Developer"
