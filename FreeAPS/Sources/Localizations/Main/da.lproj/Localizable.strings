@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* Add Simulator pump */
 "Add Simulator" = "Tilføj Simulator";
 
+/* View/Header when pod expired */
+"Replace" = "Replace";
+
 /* Insulin model */
 "Model" = "Model";
 
