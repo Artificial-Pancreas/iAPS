@@ -156,6 +156,21 @@ struct HeaderBackground: View {
     }
 }
 
+struct ClockOffset: View {
+    let mdtPump: Bool
+    var body: some View {
+        ZStack {
+            Image(systemName: "clock.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 20)
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(Color(.warning))
+                .offset(x: 10, y: !mdtPump ? -20 : -13)
+        }
+    }
+}
+
 struct ChartBackground: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
 
