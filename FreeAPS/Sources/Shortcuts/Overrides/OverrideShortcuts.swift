@@ -69,7 +69,7 @@ enum OverrideIntentError: Error {
             let displayName: String = presetToApply.name
             if confirmBeforeApplying {
                 try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to activate the Override Preset \(displayName) ?")
+                    result: .result(dialog: "Are you sure you want to activate the Override Preset \(displayName)?")
                 )
             }
 
