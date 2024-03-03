@@ -61,7 +61,7 @@ struct DanaKitSettingsView: View {
             Section() {
                 HStack(){
                     Spacer()
-                    Image(uiImage: UIImage(named: imageName, in: Bundle(for: DanaKitHUDProvider.self), compatibleWith: nil)!)
+                    Image(danaImage: imageName)
                         .resizable()
                         .scaledToFit()
                         .padding(.horizontal)

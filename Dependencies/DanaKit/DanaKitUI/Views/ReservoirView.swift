@@ -44,7 +44,7 @@ struct ReservoirView: View {
                 Rectangle()
                     .fill(fillColor)
                     .mask(
-                        Image(uiImage: UIImage(named: "reservoir_mask", in: Bundle(for: DanaKitHUDProvider.self), compatibleWith: nil)!)
+                        Image(danaImage: "reservoir_mask")
                             .resizable()
                             .scaledToFit()
                             .frame(height: maskHeight)
@@ -54,7 +54,7 @@ struct ReservoirView: View {
                         Rectangle().path(in: CGRect(x:0, y: frameCenterY+maskHeight/2 - fillHeight + maskOffset, width: geometry.size.width, height: fillHeight))
                     )
             }
-            Image(uiImage: UIImage(named: "reservoir", in: Bundle(for: DanaKitHUDProvider.self), compatibleWith: nil)!)
+            Image(danaImage: "reservoir")
                 .resizable()
                 .scaledToFit()
         }

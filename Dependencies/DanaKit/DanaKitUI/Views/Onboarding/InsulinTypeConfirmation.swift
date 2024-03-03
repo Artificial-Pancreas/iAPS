@@ -32,24 +32,26 @@ struct InsulinTypeConfirmation: View {
     }
     
     var body: some View {
-        VStack {
-            List {
-                Section {
-                    Text(LocalizedString("Select the type of insulin that you will be using in this pump.", comment: "Title text for insulin type confirmation page"))
-                }
-                Section {
-                    InsulinTypeChooser(insulinType: $insulinType, supportedInsulinTypes: supportedInsulinTypes)
-                }
-                .buttonStyle(PlainButtonStyle()) // Disable row highlighting on selection
-            }
-            .insetGroupedListStyle()
+        VStack(alignment: .leading) {
+            title
             
-            Button(action: { self.continueWithType(insulinType) }) {
-                Text(LocalizedString("Continue", comment: "Text for continue button"))
-                    .actionButtonStyle(.primary)
-                    .padding()
+            ScrollView {
+                InsulinTypeChooser(insulinType: $insulinType, supportedInsulinTypes: supportedInsulinTypes)
+                    .padding(.horizontal)
             }
+            
+            Spacer()
+            
+            VStack(spacing: 0) {
+                Button(LocalizedString("Continue", comment: "Text for continue button"), action: { self.continueWithType(insulinType) })
+                    .buttonStyle(ActionButtonStyle())
+                    .padding([.bottom, .horizontal])
+            }
+                .padding(.top, 10)
+                .background(Color(.secondarySystemGroupedBackground)
+                .shadow(radius: 5))
         }
+        .navigationBarHidden(false)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
@@ -57,6 +59,21 @@ struct InsulinTypeConfirmation: View {
                 })
             }
         }
+    }
+    
+    @ViewBuilder
+    private var title: some View {
+        Text(LocalizedString("Select insulin type", comment: "Title for insulin type"))
+            .font(.title)
+            .bold()
+            .padding([.bottom, .horizontal])
+        
+        Text(LocalizedString("Select the type of insulin that you will be using in this pump.", comment: "Title text for insulin type confirmation page"))
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal)
+        
+        Divider()
+            .padding(.vertical)
     }
 }
 

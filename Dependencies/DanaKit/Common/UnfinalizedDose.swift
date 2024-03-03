@@ -20,7 +20,6 @@ public class UnfinalizedDose {
     public var deliveredUnits: Double = 0
     public let insulinType: InsulinType?
     public let automatic: Bool?
-    public let manuallyEntered: Bool
     
     public init(units: Double, duration: TimeInterval, activationType: BolusActivationType, insulinType: InsulinType) {
         var endTime = Date.now
@@ -33,7 +32,6 @@ public class UnfinalizedDose {
         self.endDate = endTime
         self.insulinType = insulinType
         self.automatic = activationType.isAutomatic
-        self.manuallyEntered = activationType == .manualNoRecommendation
     }
     
     public func toDoseEntry() -> DoseEntry? {
@@ -48,8 +46,7 @@ public class UnfinalizedDose {
                 deliveredUnits: deliveredUnits,
                 insulinType: insulinType,
                 automatic: automatic,
-                manuallyEntered: manuallyEntered,
-                isMutable: deliveredUnits != value
+                isMutable: false
             )
         default:
             return nil
