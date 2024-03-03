@@ -109,7 +109,7 @@ extension OverrideProfilesConfig {
                 saveOverride.name = self.profileName
                 saveOverride.emoji = self.emoji
                 id = UUID().uuidString
-                self.isPreset.toggle()
+                self.isPreset = true
                 saveOverride.id = id
                 saveOverride.date = Date()
                 if override_target {
