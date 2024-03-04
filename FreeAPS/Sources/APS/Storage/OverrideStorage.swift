@@ -66,9 +66,11 @@ final class OverrideStorage {
             let history = OverrideHistory(context: self.coredataContext)
             if let latest = scheduled {
                 history.duration = -1 * (latest.date ?? Date()).timeIntervalSinceNow.minutes
-                print("History duration: \(history.duration) min")
                 history.date = latest.date ?? Date()
-                history.target = Double(latest.target ?? 100)
+                // Looks better in Home View Main Chart when target isn't == 0.
+                if Double(latest.target ?? 100) < 6 {
+                    history.target = 6
+                } else { history.target = Double(latest.target ?? 100) }
                 duration = history.duration
             }
             profiles.enabled = false
@@ -95,6 +97,7 @@ final class OverrideStorage {
             save.isfAndCr = preset.isfAndCr
             save.percentage = preset.percentage
             save.smbIsAlwaysOff = preset.smbIsAlwaysOff
+            save.smbIsOff = preset.smbIsOff
             save.smbMinutes = preset.smbMinutes
             save.uamMinutes = preset.uamMinutes
             save.target = preset.target
@@ -102,10 +105,9 @@ final class OverrideStorage {
         }
     }
 
-    func fetchProfile(_ name: String) -> Override? {
+    func fetchProfilePreset(_ name: String) -> OverridePresets? {
         var presetsArray = [OverridePresets]()
-        var overrideArray = [Override]()
-        var override: Override?
+        var preset: OverridePresets?
         coredataContext.performAndWait {
             let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
             requestPresets.predicate = NSPredicate(
@@ -113,27 +115,15 @@ final class OverrideStorage {
             )
             try? presetsArray = self.coredataContext.fetch(requestPresets)
 
-            guard let preset = presetsArray.first else {
+            guard let overidePreset = presetsArray.first else {
                 return
             }
-            guard let id = preset.id else {
-                return
-            }
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            requestOverrides.predicate = NSPredicate(
-                format: "id == %@", id
-            )
-            try? overrideArray = self.coredataContext.fetch(requestOverrides)
-
-            guard let override_ = overrideArray.first else {
-                return
-            }
-            override = override_
+            preset = overidePreset
         }
-        return override
+        return preset
     }
 
-    func fetchProfiles() -> OverridePresets? {
+    func fetchProfile() -> OverridePresets? {
         var presetsArray = [OverridePresets]()
         coredataContext.performAndWait {
             let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
@@ -186,6 +176,7 @@ final class OverrideStorage {
             save.isfAndCr = override.isfAndCr
             save.percentage = override.percentage
             save.smbIsAlwaysOff = override.smbIsAlwaysOff
+            save.smbIsOff = override.smbIsOff
             save.smbMinutes = override.smbMinutes
             save.uamMinutes = override.uamMinutes
             save.target = override.target
@@ -276,9 +267,12 @@ final class OverrideStorage {
                 save.isfAndCr = preset.isfAndCr
                 save.percentage = preset.percentage
                 save.smbIsAlwaysOff = preset.smbIsAlwaysOff
+                save.smbIsOff = preset.smbIsOff
                 save.smbMinutes = preset.smbMinutes
                 save.uamMinutes = preset.uamMinutes
-                save.target = preset.target
+                if (preset.target ?? 0) as Decimal > 6 {
+                    save.target = preset.target
+                } else { save.target = 6 }
                 try? coredataContext.save()
             }
         }
