@@ -45,7 +45,7 @@ extension AutotuneConfig {
                             Text("Tune Days")
                             Spacer()
                             DecimalTextField("1", value: $state.autotuneTuneDays, formatter: carbsFormatter)
-                            Text("hours").foregroundColor(.secondary)
+                            Text("days").foregroundColor(.secondary)
                         }
                     }
                 }
