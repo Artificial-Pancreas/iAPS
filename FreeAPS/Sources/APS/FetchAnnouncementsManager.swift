@@ -43,12 +43,13 @@ final class BaseFetchAnnouncementsManager: FetchAnnouncementsManager, Injectable
                 }
 
                 guard let last = announcements
-                    .filter({ $0.createdAt < Date.now && $0.createdAt > self.announcementsStorage.syncDate() })
+                    .filter({ $0.createdAt < Date.now })
                     .sorted(by: { $0.createdAt < $1.createdAt })
                     .last
                 else { return }
 
                 self.announcementsStorage.storeAnnouncements([last], enacted: false)
+
                 if self.settingsManager.settings.allowAnnouncements, let recent = self.announcementsStorage.recent(),
                    recent.action != nil
                 {
