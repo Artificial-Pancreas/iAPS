@@ -142,123 +142,109 @@ extension OverrideProfilesConfig {
 
         func selectProfile(id_: String) {
             guard id_ != "" else { return }
-
             // Is other already active?
             let last = OverrideStorage().fetchLatestOverride().last
+            let profileArray = OverrideStorage().fetchProfiles()
+            guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
 
-            coredataContext.performAndWait {
-                var profileArray = [OverridePresets]()
-                let requestProfiles = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
-                try? profileArray = coredataContext.fetch(requestProfiles)
+            let saveOverride = Override(context: coredataContext)
+            saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
+            saveOverride.indefinite = profile.indefinite
+            saveOverride.percentage = profile.percentage
+            saveOverride.enabled = true
+            saveOverride.smbIsOff = profile.smbIsOff
+            saveOverride.isPreset = true
+            saveOverride.date = Date()
+            saveOverride.id = id_
 
-                guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
+            if let tar = profile.target, tar == 0 {
+                saveOverride.target = 6
+            } else {
+                saveOverride.target = profile.target
+            }
 
-                let saveOverride = Override(context: self.coredataContext)
-                saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
-                saveOverride.indefinite = profile.indefinite
-                saveOverride.percentage = profile.percentage
-                saveOverride.enabled = true
-                saveOverride.smbIsOff = profile.smbIsOff
-                saveOverride.isPreset = true
-                saveOverride.date = Date()
-                saveOverride.id = id_
+            if profile.advancedSettings {
+                saveOverride.advancedSettings = true
+                if !isfAndCr {
+                    saveOverride.isfAndCr = false
+                    saveOverride.isf = profile.isf
+                    saveOverride.cr = profile.cr
+                } else { saveOverride.isfAndCr = true }
+                if profile.smbIsAlwaysOff {
+                    saveOverride.smbIsAlwaysOff = true
+                    saveOverride.start = profile.start
+                    saveOverride.end = profile.end
+                } else { saveOverride.smbIsAlwaysOff = false }
 
-                if let tar = profile.target, tar == 0 {
-                    saveOverride.target = 6
-                } else {
-                    saveOverride.target = profile.target
-                }
+                saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
+                saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
+            }
 
-                if profile.advancedSettings {
-                    saveOverride.advancedSettings = true
-                    if !isfAndCr {
-                        saveOverride.isfAndCr = false
-                        saveOverride.isf = profile.isf
-                        saveOverride.cr = profile.cr
-                    } else { saveOverride.isfAndCr = true }
-                    if profile.smbIsAlwaysOff {
-                        saveOverride.smbIsAlwaysOff = true
-                        saveOverride.start = profile.start
-                        saveOverride.end = profile.end
-                    } else { saveOverride.smbIsAlwaysOff = false }
-
-                    saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
-                    saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
-                }
-
-                if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
-                    ns.editOverride(profile.name ?? "Custom", duration, alreadyActive.date ?? Date.now)
-                } else {
-                    ns.uploadOverride(profile.name ?? "", Double(saveOverride.duration ?? 0), saveOverride.date ?? Date())
-                }
-
-                try? self.coredataContext.save()
+            if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
+                ns.editOverride(profile.name ?? "Custom", duration, alreadyActive.date ?? Date.now)
+            } else {
+                ns.uploadOverride(profile.name ?? "", Double(saveOverride.duration ?? 0), saveOverride.date ?? Date())
             }
         }
 
         func savedSettings() {
-            coredataContext.performAndWait {
-                var overrideArray = [Override]()
-                let requestEnabled = Override.fetchRequest() as NSFetchRequest<Override>
-                let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
-                requestEnabled.sortDescriptors = [sortIsEnabled]
-                // requestEnabled.fetchLimit = 1
-                try? overrideArray = coredataContext.fetch(requestEnabled)
-                isEnabled = overrideArray.first?.enabled ?? false
-                percentage = overrideArray.first?.percentage ?? 100
-                _indefinite = overrideArray.first?.indefinite ?? true
-                duration = (overrideArray.first?.duration ?? 0) as Decimal
-                smbIsOff = overrideArray.first?.smbIsOff ?? false
-                advancedSettings = overrideArray.first?.advancedSettings ?? false
-                isfAndCr = overrideArray.first?.isfAndCr ?? true
-                smbIsAlwaysOff = overrideArray.first?.smbIsAlwaysOff ?? false
+            guard let overrideArray = OverrideStorage().fetchLatestOverride().first else {
+                return
+            }
+            isEnabled = overrideArray.enabled
+            percentage = overrideArray.percentage
+            _indefinite = overrideArray.indefinite
+            duration = (overrideArray.duration ?? 0) as Decimal
+            smbIsOff = overrideArray.smbIsOff
+            advancedSettings = overrideArray.advancedSettings
+            isfAndCr = overrideArray.isfAndCr
+            smbIsAlwaysOff = overrideArray.smbIsAlwaysOff
 
-                if advancedSettings {
-                    if !isfAndCr {
-                        isf = overrideArray.first?.isf ?? false
-                        cr = overrideArray.first?.cr ?? false
-                    }
-                    if smbIsAlwaysOff {
-                        start = (overrideArray.first?.start ?? 0) as Decimal
-                        end = (overrideArray.first?.end ?? 0) as Decimal
-                    }
-
-                    if (overrideArray[0].smbMinutes as Decimal?) != nil {
-                        smbMinutes = (overrideArray.first?.smbMinutes ?? 30) as Decimal
-                    }
-
-                    if (overrideArray[0].uamMinutes as Decimal?) != nil {
-                        uamMinutes = (overrideArray.first?.uamMinutes ?? 30) as Decimal
-                    }
+            if advancedSettings {
+                if !isfAndCr {
+                    isf = overrideArray.isf
+                    cr = overrideArray.cr
+                }
+                if smbIsAlwaysOff {
+                    start = (overrideArray.start ?? 0) as Decimal
+                    end = (overrideArray.end ?? 0) as Decimal
                 }
 
-                let overrideTarget = (overrideArray.first?.target ?? 0) as Decimal
-                var newDuration = Double(duration)
-                if isEnabled {
-                    let duration = overrideArray.first?.duration ?? 0
-                    let addedMinutes = Int(duration as Decimal)
-                    let date = overrideArray.first?.date ?? Date()
-                    if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !_indefinite {
-                        isEnabled = false
-                    }
-                    newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
-                    if override_target {
-                        target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
-                    }
+                if (overrideArray.smbMinutes as Decimal?) != nil {
+                    smbMinutes = (overrideArray.smbMinutes ?? 30) as Decimal
                 }
-                if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
 
-                if !isEnabled {
-                    _indefinite = true
-                    percentage = 100
-                    duration = 0
-                    target = 0
-                    override_target = false
-                    smbIsOff = false
-                    advancedSettings = false
-                    smbMinutes = defaultSmbMinutes
-                    uamMinutes = defaultUamMinutes
+                if (overrideArray.uamMinutes as Decimal?) != nil {
+                    uamMinutes = (overrideArray.uamMinutes ?? 30) as Decimal
                 }
+            }
+
+            let overrideTarget = (overrideArray.target ?? 0) as Decimal
+            var newDuration = Double(duration)
+            if isEnabled {
+                let duration = overrideArray.duration ?? 0
+                let addedMinutes = Int(duration as Decimal)
+                let date = overrideArray.date ?? Date()
+                if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !_indefinite {
+                    isEnabled = false
+                }
+                newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
+                if override_target {
+                    target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
+                }
+            }
+            if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
+
+            if !isEnabled {
+                _indefinite = true
+                percentage = 100
+                duration = 0
+                target = 0
+                override_target = false
+                smbIsOff = false
+                advancedSettings = false
+                smbMinutes = defaultSmbMinutes
+                uamMinutes = defaultUamMinutes
             }
         }
 
