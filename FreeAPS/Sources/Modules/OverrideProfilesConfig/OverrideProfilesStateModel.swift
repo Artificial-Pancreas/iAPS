@@ -46,6 +46,17 @@ extension OverrideProfilesConfig {
             // Is other override already active?
             let last = OverrideStorage().fetchLatestOverride().last
 
+            // Is other already active?
+            if let active = last, active.enabled {
+                if let preset = OverrideStorage().isPresetName(), let duration = OverrideStorage().cancelProfile() {
+                    ns.editOverride(preset, duration, last?.date ?? Date.now)
+                } else if let duration = OverrideStorage().cancelProfile() {
+                    let nsString = active.percentage.formatted() != "100" ? active.percentage
+                        .formatted() + " %" : "Custom"
+                    ns.editOverride(nsString, duration, last?.date ?? Date.now)
+                }
+            }
+
             coredataContext.perform { [self] in
                 let saveOverride = Override(context: self.coredataContext)
                 saveOverride.duration = self.duration as NSDecimalNumber
@@ -82,18 +93,8 @@ extension OverrideProfilesConfig {
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                 }
 
-                if let active = last, active.enabled {
-                    if let preset = OverrideStorage().isPresetName(), let duration = OverrideStorage().cancelProfile() {
-                        ns.editOverride(preset, duration, last?.date ?? Date.now)
-                    } else if let duration = OverrideStorage().cancelProfile() {
-                        let nsString = active.percentage.formatted() != "100" ? active.percentage
-                            .formatted() + " %" : "Custom"
-                        ns.editOverride(nsString, duration, last?.date ?? Date.now)
-                    }
-                } else {
-                    let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)
-                    ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
-                }
+                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)
+                ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
 
                 try? self.coredataContext.save()
             }
