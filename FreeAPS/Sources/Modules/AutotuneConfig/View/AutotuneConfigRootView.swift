@@ -14,6 +14,13 @@ extension AutotuneConfig {
             return formatter
         }
 
+        private var carbsFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
+
         private var rateFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -34,6 +41,12 @@ extension AutotuneConfig {
                     Toggle("Use Autotune", isOn: $state.useAutotune)
                     if state.useAutotune {
                         Toggle("Only Autotune Basal Insulin", isOn: $state.onlyAutotuneBasals)
+                        HStack {
+                            Text("Tune Days")
+                            Spacer()
+                            DecimalTextField("1", value: $state.autotuneTuneDays, formatter: carbsFormatter)
+                            Text("hours").foregroundColor(.secondary)
+                        }
                     }
                 }
 

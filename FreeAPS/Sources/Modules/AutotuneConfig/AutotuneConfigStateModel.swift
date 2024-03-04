@@ -8,6 +8,7 @@ extension AutotuneConfig {
         @Injected() private var storage: FileStorage!
         @Published var useAutotune = false
         @Published var onlyAutotuneBasals = false
+        @Published var autotuneTuneDays: Decimal = 1
         @Published var autotune: Autotune?
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
@@ -25,6 +26,13 @@ extension AutotuneConfig {
             useAutotune = settingsManager.settings.useAutotune
             publishedDate = lastAutotuneDate
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
+
+            subscribeSetting(\.autotuneTuneDays, on: $autotuneTuneDays.map(Int.init), initial: {
+                let value = max(min($0, 14), 1)
+                autotuneTuneDays = Decimal(value)
+            }, map: {
+                $0
+            })
 
             $useAutotune
                 .removeDuplicates()
