@@ -67,7 +67,10 @@ final class OverrideStorage {
             if let latest = scheduled {
                 history.duration = -1 * (latest.date ?? Date()).timeIntervalSinceNow.minutes
                 history.date = latest.date ?? Date()
-                history.target = Double(latest.target ?? 100)
+                // Looks better in Home View Main Chart when target isn't == 0.
+                if Double(latest.target ?? 100) < 6 {
+                    history.target = 6
+                } else { history.target = Double(latest.target ?? 100) }
                 duration = history.duration
             }
             profiles.enabled = false
