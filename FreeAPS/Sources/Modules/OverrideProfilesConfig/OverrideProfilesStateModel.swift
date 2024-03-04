@@ -142,12 +142,19 @@ extension OverrideProfilesConfig {
         }
 
         func selectProfile(id_: String) {
-            guard id_ != "" else { return }
-            // Is other already active?
-            let last = OverrideStorage().fetchLatestOverride().last
+            guard !id_.isEmpty else { return }
+
+            // Double Check that preset actually still exist in databasa (shouldn't really be necessary)
             let profileArray = OverrideStorage().fetchProfiles()
             guard let profile = profileArray.filter({ $0.id == id_ }).first else { return }
 
+            // Is there already an active override?
+            let last = OverrideStorage().fetchLatestOverride().last
+            let lastPreset = OverrideStorage().isPresetName()
+            if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
+                ns.editOverride((last?.isPreset ?? false) ? lastPreset! : "Custom", duration, alreadyActive.date ?? Date.now)
+            }
+            // New Override properties
             let saveOverride = Override(context: coredataContext)
             saveOverride.duration = (profile.duration ?? 0) as NSDecimalNumber
             saveOverride.indefinite = profile.indefinite
@@ -180,12 +187,11 @@ extension OverrideProfilesConfig {
                 saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
                 saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
             }
-
-            if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
-                ns.editOverride(profile.name ?? "Custom", duration, alreadyActive.date ?? Date.now)
-            } else {
-                ns.uploadOverride(profile.name ?? "", Double(saveOverride.duration ?? 0), saveOverride.date ?? Date())
-            }
+            // Saves
+            coredataContext.perform { try? self.coredataContext.save() }
+            
+            // Uploads new Override to NS
+            ns.uploadOverride(profile.name ?? "", Double(saveOverride.duration ?? 0), saveOverride.date ?? Date())
         }
 
         func savedSettings() {
