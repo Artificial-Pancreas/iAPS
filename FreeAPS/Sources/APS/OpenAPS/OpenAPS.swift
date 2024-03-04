@@ -28,9 +28,24 @@ final class OpenAPS {
                 self.storage.save(tempBasal, as: Monitor.tempBasal)
 
                 // meal
-                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
-                let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
-                let glucose = self.loadFileFromStorage(name: Monitor.glucose)
+                let pumpHistory = self.storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self)?
+                    .filter {
+                        $0.timestamp
+                            .addingTimeInterval(1.days.timeInterval) > Date() }
+                    .sorted { $0.timestamp > $1.timestamp } ?? []
+
+                let carbs = self.storage.retrieve(Monitor.carbHistory, as: [CarbsEntry].self)?
+                    .filter {
+                        $0.createdAt
+                            .addingTimeInterval(1.days.timeInterval) > Date() }
+                    .sorted { $0.createdAt > $1.createdAt } ?? []
+
+                let glucose = self.storage.retrieve(Monitor.glucose, as: [Glucose].self)?
+                    .filter {
+                        $0.date
+                            .addingTimeInterval(1.days.timeInterval) > Date() }
+                    .sorted { $0.date > $1.date } ?? []
+
                 let profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
 
