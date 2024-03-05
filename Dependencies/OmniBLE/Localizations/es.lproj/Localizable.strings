@@ -78,7 +78,7 @@
 "Notification Settings" = "Notification Settings";
 
 /* */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Recordatorios de confianza";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Suspend Insulin Delivery";
@@ -93,7 +93,7 @@
 "No Pod" = "No Pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Emparejar Pod";
 
 /* Pairing action button accessibility label while ready to pair */
 "Pair pod." = "Pair pod.";
@@ -240,7 +240,7 @@
 "Signal Loss" = "Signal Loss";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Basal temporal manual";
 
 /* */
 "Insert Cannula" = "Insertar Cánula";
@@ -475,7 +475,7 @@
 "Continue" = "Continuar";
 
 /* */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Adherir Pod";
 
 /* Alert title for confirm pod attachment */
 "Confirm Pod Attachment" = "Confirm Pod Attachment";
@@ -520,7 +520,7 @@
 "Priming..." = "Priming...";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Desactivando...";
 
 /* Pod state when pod has been deactivated */
 "Deactivated" = "Deactivated";
@@ -599,16 +599,16 @@
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Desactivado";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Habilitado";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Extendido";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "No se utilizan recordatorios de confianza.";
 
 /* Description for BeepPreference.manualCommands */
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
@@ -652,7 +652,7 @@
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Información del Pod anterior";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
 "No\nDelivery" = "No\nDelivery";
