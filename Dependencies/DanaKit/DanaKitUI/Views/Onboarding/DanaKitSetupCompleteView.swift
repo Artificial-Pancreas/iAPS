@@ -17,37 +17,28 @@ struct DanaKitSetupCompleteView: View {
     var body: some View {
         VStack(alignment: .leading) {
             title
-            content
-        }
-        .padding(.horizontal)
-        .navigationBarHidden(false)
-    }
-    
-    @ViewBuilder
-    private var content: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            HStack {
-                Spacer()
-                Image(danaImage: imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 200)
-                Spacer()
+            VStack(alignment: .leading) {
+                Text(LocalizedString("Your ", comment: "Dana setup complete p1") + friendlyPumpModelName + LocalizedString(" is ready to be used!", comment: "Dana setup complete p2"))
+                
+                HStack {
+                    Spacer()
+                    Image(danaImage: imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 200)
+                    Spacer()
+                }
+                .padding(.vertical)
+                
+                Text(LocalizedString("Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor", comment: "Dana setup SMB setting"))
             }
-            Text(LocalizedString("Your ", comment: "Dana setup complete p1") + friendlyPumpModelName + LocalizedString(" is ready to be used!", comment: "Dana setup complete p2"))
+            .padding(.horizontal)
+            Spacer()
+            
+            ContinueButton(action: { finish?() })
         }
-        VStack(alignment: .leading) {
-            Text(LocalizedString("Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor", comment: "Dana setup SMB setting"))
-        }
-        Spacer()
-        Button(action: {
-            finish?()
-        }) {
-            Text(LocalizedString("Finish", comment: "Text for finish button"))
-                .actionButtonStyle(.primary)
-        }
-        .padding()
-        .background(Color(UIColor.systemBackground))
+        .edgesIgnoringSafeArea(.bottom)
+        .navigationBarHidden(false)
     }
     
     @ViewBuilder
@@ -55,6 +46,10 @@ struct DanaKitSetupCompleteView: View {
         Text(LocalizedString("Setup Complete", comment: "Title for setup complete"))
             .font(.title)
             .bold()
+            .padding(.horizontal)
+        
+        Divider()
+            .padding(.bottom)
     }
 }
 

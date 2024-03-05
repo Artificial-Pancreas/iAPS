@@ -158,9 +158,9 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             
             return hostingController(rootView: view)
         case .deviceScanningScreen:
-            self.pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: self.pumpManager!)
             self.pumpManager?.state.isOnBoarded = true
             self.pumpManager?.notifyStateDidChange()
+            self.pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: self.pumpManager!)
             
             let viewModel = DanaKitScanViewModel(self.pumpManager, nextStep: self.stepFinished)
             return hostingController(rootView: DanaKitScanView(viewModel: viewModel))

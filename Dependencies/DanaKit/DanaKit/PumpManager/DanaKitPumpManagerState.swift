@@ -57,6 +57,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.targetBg = rawValue["targetBg"] as? UInt16
         self.useSilentTones = rawValue["useSilentTones"] as? Bool ?? true
         self.batteryRemaining = rawValue["batteryRemaining"] as? Double ?? 0
+        self.basalProfileNumber = rawValue["basalProfileNumber"] as? UInt8 ?? 0
         
         if let bolusSpeedRaw = rawValue["bolusSpeed"] as? BolusSpeed.RawValue {
             bolusSpeed = BolusSpeed(rawValue: bolusSpeedRaw) ?? .speed12
@@ -113,6 +114,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.selectedLanguage = 0
         self.shutdownHour = 0
         self.cannulaVolume = 0
+        self.basalProfileNumber = 0
         self.refillAmount = 0
         self.targetBg = nil
         self.useSilentTones = false
@@ -156,6 +158,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["targetBg"] = self.targetBg
         value["useSilentTones"] = self.useSilentTones
         value["batteryRemaining"] = self.batteryRemaining
+        value["basalProfileNumber"] = self.basalProfileNumber
         
         return value
     }
@@ -212,6 +215,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     }
     public var pumpTimeSyncedAt: Date?
     
+    public var basalProfileNumber: UInt8 = 0
+    
     /// User options
     public var isTimeDisplay24H: Bool
     public var isButtonScrollOnOff: Bool
@@ -230,6 +235,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public var basalDeliveryOrdinal: DanaKitBasal = .active
     public var tempBasalUnits: Double?
     public var tempBasalDuration: Double?
+    public var tempBasalEndsAt: Date {
+        basalDeliveryDate + (tempBasalUnits ?? 0)
+    }
     public var basalDeliveryState: PumpManagerStatus.BasalDeliveryState {
         switch(self.basalDeliveryOrdinal) {
         case .active:
@@ -237,7 +245,13 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         case .suspended:
             return .suspended(self.basalDeliveryDate)
         case .tempBasal:
-            return .tempBasal(DoseEntry.tempBasal(absoluteUnit: tempBasalUnits ?? 0, duration: tempBasalDuration ?? 0, insulinType: insulinType!, startDate: basalDeliveryDate))
+            return .tempBasal(
+                DoseEntry.tempBasal(
+                    absoluteUnit: tempBasalUnits ?? 0,
+                    duration: tempBasalDuration ?? 0,
+                    insulinType: insulinType!,
+                    startDate: basalDeliveryDate
+                ))
         }
     }
     

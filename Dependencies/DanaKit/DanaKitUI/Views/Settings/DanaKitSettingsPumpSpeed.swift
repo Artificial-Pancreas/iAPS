@@ -10,6 +10,8 @@ import SwiftUI
 import LoopKitUI
 
 struct DanaKitSettingsPumpSpeed: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     let speedsAllowed = BolusSpeed.all()
     @State var value: Int
     
@@ -18,7 +20,6 @@ struct DanaKitSettingsPumpSpeed: View {
             get: { value },
             set: { newValue in
                 self.value = newValue
-                didChange?(BolusSpeed(rawValue: UInt8(newValue))!)
             }
        )
     }
@@ -27,23 +28,29 @@ struct DanaKitSettingsPumpSpeed: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            title
-            content
+            VStack(alignment: .leading) {
+                title
+                Text(LocalizedString("The Dana pumps support different delivery speeds. You can set it up here", comment: "Dana delivery speed body")).fixedSize(horizontal: false, vertical: true)
+                
+                Divider()
+                Spacer()
+                ResizeablePicker(selection: currentValue,
+                                         data: self.speedsAllowed,
+                                         formatter: { BolusSpeed.init(rawValue: UInt8($0))!.format() })
+                
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            ContinueButton(action: {
+                didChange?(BolusSpeed(rawValue: UInt8(value))!)
+                
+                // Go back action
+                presentationMode.wrappedValue.dismiss()
+            })
         }
-        .padding(.horizontal)
-    }
-    
-    @ViewBuilder
-    private var content: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text(LocalizedString("The Dana pumps support different delivery speeds. You can set it up here", comment: "Dana delivery speed body")).fixedSize(horizontal: false, vertical: true)
-            Divider()
-            ResizeablePicker(selection: currentValue,
-                                     data: self.speedsAllowed,
-                                     formatter: { BolusSpeed.init(rawValue: UInt8($0))!.format() })
-        }
-        .padding(.vertical, 8)
-        
+        .edgesIgnoringSafeArea(.bottom)
+        .navigationBarHidden(false)
     }
     
     @ViewBuilder

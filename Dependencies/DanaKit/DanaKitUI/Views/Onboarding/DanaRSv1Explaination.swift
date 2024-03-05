@@ -15,7 +15,7 @@ struct DanaRSv1Explaination: View {
     let nextAction: () -> Void
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             title
             
             ScrollView {
@@ -41,15 +41,10 @@ struct DanaRSv1Explaination: View {
                 }
                 .padding(.horizontal)
             }
-            VStack(spacing: 0) {
-                Button(LocalizedString("Continue", comment: "Text for continue button"), action: nextAction)
-                    .buttonStyle(ActionButtonStyle())
-                    .padding([.bottom, .horizontal])
-            }
-                .padding(.top, 10)
-                .background(Color(.secondarySystemGroupedBackground)
-                .shadow(radius: 5))
+            
+            ContinueButton(action: nextAction)
         }
+        .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(false)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -62,11 +57,12 @@ struct DanaRSv1Explaination: View {
     
     @ViewBuilder
     private var title: some View {
-        Text(LocalizedString("Setting up your DanaRS v1", comment: "Title for danars v1 explaination"))
+        Text(LocalizedString("Setting up DanaRS v1", comment: "Title for danars v1 explaination"))
             .font(.title)
             .bold()
+            .padding(.horizontal)
         Divider()
-            .padding(.vertical)
+            .padding(.bottom)
     }
 }
 

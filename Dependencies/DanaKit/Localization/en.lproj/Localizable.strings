@@ -17,7 +17,7 @@
 "Dana-i" = "Dana-i"
 
 /* Title for danars v1 explaination */
-"Setting up your DanaRS v1" = "Setting up your DanaRS v1"
+"Setting up DanaRS v1" = "Setting up DanaRS v1"
 
 /* Subtext for danars v1 */
 "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1"
@@ -32,13 +32,13 @@
 "Fill in password" = "Fill in password"
 
 /* Title for danars v3 explaination */
-"Setting up your DanaRS v3" = "Setting up your DanaRS v3"
+"Setting up DanaRS v3" = "Setting up DanaRS v3"
 
 /* Subtext for danars v3 */
 "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3"
 
 /* Title for dana-i explaination */
-"Setting up your Dana-i" = "Setting up your Dana-i"
+"Setting up Dana-i" = "Setting up Dana-i"
 
 /* General subtext for dana */
 "After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop."
@@ -383,3 +383,6 @@
 
 /* Button text to enable silent tone */
 "Yes, Enable silent tones" = "Yes, Enable silent tones"
+
+/* Description for basal profile number */
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop"

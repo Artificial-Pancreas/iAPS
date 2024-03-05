@@ -56,12 +56,23 @@ struct DanaKitSettingsView: View {
                     ])
     }
     
+    private var basalProfileView: PickerView {
+        PickerView(
+            value: Int($viewModel.basalProfileNumber.wrappedValue),
+            allowedOptions: Array(0..<4),
+            formatter: { value in viewModel.transformBasalProfile(UInt8(value))},
+            didChange: viewModel.basalProfileNumberChanged,
+            title: LocalizedString("Basal profile", comment: "Text for Basal profile"),
+            description: LocalizedString("Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop", comment: "Description for basal profile number")
+        )
+    }
+    
     var body: some View {
         List {
             Section() {
                 HStack(){
                     Spacer()
-                    Image(danaImage: imageName)
+                    Image(uiImage: UIImage(named: imageName, in: Bundle(for: DanaKitHUDProvider.self), compatibleWith: nil)!)
                         .resizable()
                         .scaledToFit()
                         .padding(.horizontal)
@@ -139,6 +150,14 @@ struct DanaKitSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                 }
+                NavigationLink(destination: basalProfileView) {
+                    HStack {
+                        Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
+                        Spacer()
+                        Text(viewModel.transformBasalProfile(viewModel.basalProfileNumber))
+                            .foregroundColor(.secondary)
+                    }
+                }
                 NavigationLink(destination: viewModel.userOptionsView) {
                     Text(LocalizedString("User options", comment: "Title for user options"))
                         .foregroundColor(Color.primary)
@@ -174,12 +193,6 @@ struct DanaKitSettingsView: View {
                     Text(LocalizedString("Battery level", comment: "Text for Battery level")).foregroundColor(Color.primary)
                     Spacer()
                     Text(String(viewModel.batteryLevel) + "%")
-                        .foregroundColor(.secondary)
-                }
-                HStack {
-                    Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
-                    Spacer()
-                    Text(viewModel.basalProfile)
                         .foregroundColor(.secondary)
                 }
                 HStack {

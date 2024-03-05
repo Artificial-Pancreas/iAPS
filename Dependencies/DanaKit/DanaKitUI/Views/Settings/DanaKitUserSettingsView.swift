@@ -128,17 +128,10 @@ struct DanaKitUserSettingsView: View {
                 }
             }
             Spacer()
-            Button(action: { viewModel.storeUserOption() }) {
-                if viewModel.storingUseroption {
-                    ActivityIndicator(isAnimating: .constant(true), style: .medium)
-                } else {
-                    Text(LocalizedString("Save", comment: "Text for save button"))
-                        .actionButtonStyle(.primary)
-                        .padding()
-                }
-            }
-            .disabled(viewModel.storingUseroption)
+            
+            ContinueButton(loading: $viewModel.storingUseroption, action: { viewModel.storeUserOption() })
         }
+        .edgesIgnoringSafeArea(.bottom)
         .navigationBarTitle(LocalizedString("User options", comment: "Title for user options"))
     }
     

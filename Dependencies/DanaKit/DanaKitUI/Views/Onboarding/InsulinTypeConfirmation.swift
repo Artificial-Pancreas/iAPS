@@ -42,15 +42,9 @@ struct InsulinTypeConfirmation: View {
             
             Spacer()
             
-            VStack(spacing: 0) {
-                Button(LocalizedString("Continue", comment: "Text for continue button"), action: { self.continueWithType(insulinType) })
-                    .buttonStyle(ActionButtonStyle())
-                    .padding([.bottom, .horizontal])
-            }
-                .padding(.top, 10)
-                .background(Color(.secondarySystemGroupedBackground)
-                .shadow(radius: 5))
+            ContinueButton(action: { self.continueWithType(insulinType) })
         }
+        .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(false)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

@@ -20,9 +20,25 @@ struct DanaKitPumpSpeed: View {
     var body: some View {
         VStack(alignment: .leading) {
             title
-            content
+            
+            VStack(alignment: .leading) {
+                Spacer()
+                ResizeablePicker(selection: $speedDefault,
+                                         data: self.speedsAllowed,
+                                 formatter: { BolusSpeed.init(rawValue: UInt8($0))!.format() })
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            ContinueButton(action: {
+                guard let speed = BolusSpeed(rawValue: UInt8($speedDefault.wrappedValue)) else {
+                    return
+                }
+                
+                next?(speed)
+            })
         }
-        .padding(.horizontal)
+        .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(false)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -34,37 +50,16 @@ struct DanaKitPumpSpeed: View {
     }
     
     @ViewBuilder
-    private var content: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text(LocalizedString("The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu", comment: "Dana delivery speed body")).fixedSize(horizontal: false, vertical: true)
-            Divider()
-            ResizeablePicker(selection: $speedDefault,
-                                     data: self.speedsAllowed,
-                             formatter: { BolusSpeed.init(rawValue: UInt8($0))!.format() })
-            Spacer()
-            VStack {
-                Button(action: {
-                    guard let speed = BolusSpeed(rawValue: UInt8($speedDefault.wrappedValue)) else {
-                        return
-                    }
-                    
-                    next?(speed)
-                }) {
-                    Text(LocalizedString("Continue", comment: "Text for continue button"))
-                        .actionButtonStyle(.primary)
-                }
-            }
-            .padding()
-        }
-        .padding(.vertical, 8)
-        
-    }
-    
-    @ViewBuilder
     private var title: some View {
         Text(LocalizedString("Delivery speed", comment: "Title for delivery speed"))
             .font(.title)
             .bold()
+            .padding(.horizontal)
+        Text(LocalizedString("The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu", comment: "Dana delivery speed body"))
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal)
+        
+        Divider()
     }
 }
 

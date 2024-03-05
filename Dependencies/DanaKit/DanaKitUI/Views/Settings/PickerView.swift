@@ -10,6 +10,8 @@ import SwiftUI
 import LoopKitUI
 
 struct PickerView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @State var value: Int
     
     private var currentValue: Binding<Int> {
@@ -17,7 +19,6 @@ struct PickerView: View {
             get: { value },
             set: { newValue in
                 self.value = newValue
-                didChange?(newValue)
             }
        )
     }
@@ -32,27 +33,35 @@ struct PickerView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            titleView
-            content
-        }
-        .padding(.horizontal)
-        .navigationBarHidden(false)
-    }
-    
-    @ViewBuilder
-    private var content: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            if description != nil {
-                Text(description!).fixedSize(horizontal: false, vertical: true)
+            VStack(alignment: .leading) {
+                titleView
+                if description != nil {
+                    Text(description!).fixedSize(horizontal: false, vertical: true)
+                }
+                
                 Divider()
+                Spacer()
+                
+                ResizeablePicker(selection: currentValue,
+                                 data: self.allowedOptions,
+                                 formatter: { formatter($0) })
+                    .padding(.horizontal)
+                
+                Spacer()
+                
+                
             }
-            ResizeablePicker(selection: currentValue,
-                             data: self.allowedOptions,
-                             formatter: { formatter($0) })
-            .padding()
+            .padding(.horizontal)
+            
+            ContinueButton(action: {
+                didChange?(value)
+                
+                // Go back action
+                presentationMode.wrappedValue.dismiss()
+            })
         }
-        .padding(.vertical, 8)
-        
+        .edgesIgnoringSafeArea(.bottom)
+        .navigationBarHidden(false)
     }
     
     @ViewBuilder
