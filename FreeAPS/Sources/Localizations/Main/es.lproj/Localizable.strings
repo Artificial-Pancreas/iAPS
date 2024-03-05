@@ -315,7 +315,7 @@ Enact a temp Basal or a temp target */
 "Enact" = "Ejecutar";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "Iniciar";
 
 /* */
 "Manual Temp Basal" = "Basal temporal manual";
@@ -411,10 +411,10 @@ Enact a temp Basal or a temp target */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "Las unidades de glucosa de Nightscout y la bomba no coinciden. Ajustes de importación cancelados.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Can't find the default Nightscout Profile.";
+"Can't find the default Nightscout Profile." = "No se puede encontrar el perfil de Nightscout por defecto.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Blood Glucose Test";
+"Blood Glucose Test" = "Prueba de glucosa en sangre";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Añadir Medtronic";
@@ -426,7 +426,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Añadir simulador";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Sustituir";
 
 /* Insulin model */
 "Model" = "Modelo";
@@ -450,7 +450,7 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Bolo máximo";
 
 /* Max setting */
-"Max Carbs" = "Max Carbs";
+"Max Carbs" = "Carbohidratos máximos";
 
 /* */
 "Pump Settings" = "Configuración de la bomba";
@@ -510,40 +510,40 @@ Enact a temp Basal or a temp target */
 "Pump" = "Bomba";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Ver";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Configuración del reloj";
 
 /* */
 "Apple Watch" = "Apple Watch";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "Mostrar en reloj";
 
 /* */
-"Garmin Watch" = "Garmin Watch";
+"Garmin Watch" = "Reloj de Garmin";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "Añadir dispositivo";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Objetivo de glucosa";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "Ritmo cardíaco";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "Pasos";
 
 /* */
-"ISF" = "ISF";
+"ISF" = "ISF (Factor Sensibilidad Insulina)";
 
 /* */
-"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
+"The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "La aplicación Garmin Connect debe estar instalada para usar con iAPS.\n Vaya a la App Store para descargarla";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "Garmin no está disponible";
 
 /*  */
 "Services" = "Servicios";
@@ -552,7 +552,7 @@ Enact a temp Basal or a temp target */
 "Settings" = "Ajustes";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Porcentaje de Bolo Recomendado";
 
 /* 2 log files to share */
 "Share logs" = "Compartir registros";
@@ -576,10 +576,10 @@ Enact a temp Basal or a temp target */
 "History" = "Historial";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Cargar";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Permitir subida de datos";
 
 /* Type of CGM or glucose source */
 "Type" = "Tipo";
@@ -594,19 +594,19 @@ Enact a temp Basal or a temp target */
 "Other" = "Otro";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Establecer primero los objetivos temporales en el iPhone";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Actualizando...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Objetivos temporales";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "¿Eliminar carbohidratos?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "¿Eliminar insulina?";
 
 /* Treatments list */
 "Treatments" = "Tratamientos";
@@ -615,7 +615,7 @@ Enact a temp Basal or a temp target */
 " min" = " min";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "No se pudo cambiar nada";
 
 
 /* Calendar and Libre transmitter settings ---------------
@@ -627,25 +627,25 @@ Enact a temp Basal or a temp target */
 "Calibrations" = "Calibraciones";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Crear eventos en el calendario";
 
 /* */
 "Calendar" = "Calendario";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "Automático";
 
 /* External insulin treatments */
-"External" = "External";
+"External" = "Externo";
 
 /* */
 "Other" = "Otro";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Transmisor Libre";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Transmisores Libre";
 
 /* */
 "Bluetooth Transmitters" = "Transmisores Bluetooth";
@@ -660,7 +660,7 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Seleccione el transmisor de terceros al que desea conectarse";
 
 /* State was restored */
-"State was restored" = "State was restored";
+"State was restored" = "Conexión restablecida";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -672,16 +672,16 @@ Enact a temp Basal or a temp target */
 "Add calibration" = "Añadir calibración";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Glucosa del medidor";
 
 /* */
 "Info" = "Info";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "Pendiente";
 
 /* */
-"Intercept" = "Intercept";
+"Intercept" = "Interceptar";
 
 /* */
 "Chart" = "Gráfica";
@@ -696,13 +696,14 @@ Enact a temp Basal or a temp target */
 "Remove All" = "Eliminar todos";
 
 /* */
-"About the Process" = "About the Process";
+"About the Process" = "Acerca del proceso";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Por favor asegúrate de que el sensor Libre 2 ya ha terminado de calentar y está activo. Si tienes otras apps conectadas al sensor vía bluetooth, necesitas revocar el permiso de las mismas.
+Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación, pulsa el botón más abajo de \"Enlazado y conexión\" para empezar el proceso. Ten en cuenta que la conexión puede tardar hasta unos minutos antes de funcionar correctamente.";
 
 /* */
-"Pairinginfo" = "Pairinginfo";
+"Pairinginfo" = "Info de enlazado";
 
 /* */
 "PatchInfo" = "Info del parche";
@@ -870,46 +871,46 @@ Enact a temp Basal or a temp target */
 "Factory Calibration Parameters" = "Parámetros de calibración de fábrica";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "Válido para pie de página";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "Editar calibraciones";
 
 /* */
-"edit calibration clicked" = "edit calibration clicked";
+"edit calibration clicked" = "Editar calibración seleccionada";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Eliminar MCG";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "¿Estás seguro de que deseas eliminar esta MCG del lazo cerrado?";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "No se puede deshacer";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "Avanzado";
 
 /* */
 "Alarms" = "Alarmas";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "Ajustes de glucosa";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "Notificaciones";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "Exportar registros";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "Exportación no disponible";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "Exportar registros requiere iOS 15";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "¡Entendido!";
 
 /* */
 "Saved to %@" = "Saved to %@";
@@ -1219,10 +1220,10 @@ Enact a temp Basal or a temp target */
 "Connect to Apple Health" = "Connect to Apple Health";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "For write data to Apple Health you must give permissions in Settings > Health > Data Access";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Para escribir datos en Apple Health debes dar permisos en Ajustes > Salud > Acceso a datos";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Esto permite a iAPS leer y escribir en Apple Heath. También debe dar permisos en Ajustes > Salud > Acceso a datos. Si ingresas un valor de glucosa en Apple Health, abre iAPS para confirmar que aparece.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1241,16 +1242,16 @@ Enact a temp Basal or a temp target */
 "SMB" = "SMB";
 
 /* A manually entered dose of external insulin */
-"External Insulin" = "External Insulin";
+"External Insulin" = "Insulina externa";
 
 /* Status highlight when manual temp basal is running. */
-"Manual Basal" = "Manual Basal";
+"Manual Basal" = "Basal temporal manual";
 
 /* Current Manual Temp basal */
-" -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
+" -  Manual Basal ⚠️" = " -  Basal temporal manual ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+" U/day" = " U/día";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
@@ -1258,81 +1259,81 @@ Enact a temp Basal or a temp target */
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
 /* Enable FPU */
 
-"Enable" = "Enable";
+"Enable" = "Habilitar";
 
 /* Header */
-"Conversion settings" = "Conversion settings";
+"Conversion settings" = "Configuración de la conversión";
 
 /* Delay */
-"Delay In Minutes" = "Delay In Minutes";
+"Delay In Minutes" = "Demora en minutos";
 
 /* Duration */
-"Maximum Duration In Hours" = "Maximum Duration In Hours";
+"Maximum Duration In Hours" = "Duración máxima en horas";
 
 /* Interval */
-"Interval In Minutes" = "Interval In Minutes";
+"Interval In Minutes" = "Intervalo en minutos";
 
 /* Override */
-"Override With A Factor Of " = "Override With A Factor Of ";
+"Override With A Factor Of " = "Reemplazar con un Factor de ";
 
 /* Description */
-"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min";
+"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Permite convertir grasas y proteínas en futuros equivalentes de carbohidratos utilizando la fórmula de kilocalorías de Varsovia dividida por 10.\n\nEsto difunde los glúcidos equivalentes en un ajuste de duración máxima que puede configurarse de 5-12 horas.\n\nLa demora es el tiempo desde ahora hasta la primera entrada futura de carbohidratos.\n\nIntervalo en minutos es cuántos minutos hay entre entradas. Cuanto más corto sea el intervalo, más suave será el resultado, 10, 15, 20, 30 o 60 son opciones razonables.\n\nEl factor de ajuste es cuánto efecto tiene la grasa y la proteína en las entradas. 1.0 tiene efecto completo (método original de Varsovia) y 0.5 es la mitad del efecto. Tenga en cuenta que puede que encuentre que su ratio de carbohidratos usual necesita aumentar a un número mayor si empieza a agregar entradas de grasa y proteínas. Por esta razón, es mejor empezar con un factor de aproximadamente 0,5 para facilitar el ajuste.\n\nAjustes predeterminados: Duración máxima: 8 horas, Intervalo: 30 min, Factor: 0.5, Demora 60 min";
 
 /* FPU Settings Title */
-"Fat and Protein" = "Fat and Protein";
+"Fat and Protein" = "Grasa y proteína";
 
 /* Display fat and protein entities */
-"Fat & Protein" = "Fat & Protein";
+"Fat & Protein" = "Grasa y proteína";
 
 /* */
-"Hide Fat & Protein" = "Hide Fat & Protein";
+"Hide Fat & Protein" = "Ocultar grasa y proteína";
 
 /* Add Fat */
-"Fat" = "Fat";
+"Fat" = "Grasa";
 
 /* Add Protein */
-"Protein" = "Protein";
+"Protein" = "Proteína";
 
 /* Service Section */
-"Fat And Protein Conversion" = "Fat And Protein Conversion";
+"Fat And Protein Conversion" = "Conversión de grasa y proteína";
 
 /* Service Section */
-"Profile Override" = "Profile Override";
+"Profile Override" = "Anulación del perfil";
 
 /* */
-"Override Profiles" = "Override Profiles";
+"Override Profiles" = "Sobreescritura de Perfil";
 
 /* */
 "Normal " = "Normal ";
 
-"Currently no Override active" = "Currently no Override active";
+"Currently no Override active" = "Actualmente no hay ninguna sobrescritura activa";
 
 /* */
-"Total Insulin Adjustment" = "Total Insulin Adjustment";
+"Total Insulin Adjustment" = "Ajuste total de insulina";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Override your Basal, ISF, CR and Target profiles";
+"Override your Basal, ISF, CR and Target profiles" = "Reemplaza tu perfil basal, ISF, CR y objetivo";
 
 /* */
-"Enable indefinitely" = "Enable indefinitely";
+"Enable indefinitely" = "Habilitar indefinidamente";
 
 /* */
-"Override Profile target" = "Override Profile target";
+"Override Profile target" = "Sobreescribir el objetivo del perfil";
 
 /* */
-"Disable SMBs" = "Disable SMBs";
+"Disable SMBs" = "Deshabilitar SMBs";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normal Profile";
+"Normal Profile" = "Perfil normal";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Custom Profile";
+"Custom Profile" = "Perfil personalizado";
 
 /* */
-"Profiles" = "Profiles";
+"Profiles" = "Perfiles";
 
 /* */
-"More options" = "More options";
+"More options" = "Más opciones";
 
 /* */
 "Schedule when SMBs are Off" = "Programar cuándo los SMB están apagados";
@@ -1496,27 +1497,27 @@ Enact a temp Basal or a temp target */
 ". Changing: " = ". Cambiando: ";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = " sin bolo";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Adherir Pod";
 
 "Deactivate Pod" = "Desactivar Pod";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Desactivando...";
 
-"Pair Pod" = "Pair Pod";
+"Pair Pod" = "Emparejar Pod";
 
 /* Text for previous pod information row */
-"Previous Pod Information" = "Previous Pod Information";
+"Previous Pod Information" = "Información del Pod anterior";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Recordatorios de confianza";
 
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Los recordatorios de confianza son pitidos que emite el Pod que pueden utilizarse para tener certeza de que se han seleccionado comandos cuando no está silenciado.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Guardando...";
@@ -1525,31 +1526,31 @@ Enact a temp Basal or a temp target */
 "Save" = "Guardar";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+"Failed to update confidence reminder preference." = "No se ha podido actualizar la preferencia de recordatorio de confianza.";
 
 /* */
-"No Error" = "No Error";
+"No Error" = "Sin error";
 
 /* description label for active time pod details row */
 "Active Time" = "Tiempo Activo";
 
 /* Title string for BeepPreference.silent */
-"Disabled" = "Disabled";
+"Disabled" = "Desactivado";
 
 /* Title string for BeepPreference.manualCommands */
 "Enabled" = "Habilitado";
 
 /* Title string for BeepPreference.extended */
-"Extended" = "Extended";
+"Extended" = "Extendido";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "No se utilizan recordatorios de confianza.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Los recordatorios de confianza sonarán para los comandos que inicie, como bolo, cancelar bolo, suspender, reanudar, guardar recordatorios de notificación, etc. Cuando el lazo cerrado ajusta automáticamente la administración de insulina, no se utilizan recordatorios de confianza.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Los recordatorios de confianza sonarán cuando el lazo cerrado ajuste la administración de insulina, así como para los comandos manuales.";
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Expiration Reminder Default";
