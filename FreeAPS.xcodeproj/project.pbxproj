@@ -25,6 +25,7 @@
 		1935364028496F7D001E0B16 /* Oref2_variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Oref2_variables.swift */; };
 		193F6CDD2A512C8F001240FD /* Loops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193F6CDC2A512C8F001240FD /* Loops.swift */; };
 		194297512B815938006B8A0B /* OverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194297502B815938006B8A0B /* OverridesView.swift */; };
+		194C32772B93A9BF0016FB2A /* OverrideShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C32762B93A9BF0016FB2A /* OverrideShortcuts.swift */; };
 		1956FB212AFF79E200C7B4FF /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1956FB202AFF79E200C7B4FF /* CoreDataStorage.swift */; };
 		195D80B42AF6973A00D25097 /* DynamicRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B32AF6973A00D25097 /* DynamicRootView.swift */; };
 		195D80B72AF697B800D25097 /* DynamicDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195D80B62AF697B800D25097 /* DynamicDataFlow.swift */; };
@@ -573,6 +574,7 @@
 		193F1E3C2B44C14800525770 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		193F6CDC2A512C8F001240FD /* Loops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loops.swift; sourceTree = "<group>"; };
 		194297502B815938006B8A0B /* OverridesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverridesView.swift; sourceTree = "<group>"; };
+		194C32762B93A9BF0016FB2A /* OverrideShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideShortcuts.swift; sourceTree = "<group>"; };
 		1956FB202AFF79E200C7B4FF /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
 		195D80B32AF6973A00D25097 /* DynamicRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRootView.swift; sourceTree = "<group>"; };
 		195D80B62AF697B800D25097 /* DynamicDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicDataFlow.swift; sourceTree = "<group>"; };
@@ -1143,6 +1145,14 @@
 				195D80B32AF6973A00D25097 /* DynamicRootView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		196579A52B924BD400642E8E /* Overrides */ = {
+			isa = PBXGroup;
+			children = (
+				194C32762B93A9BF0016FB2A /* OverrideShortcuts.swift */,
+			);
+			path = Overrides;
 			sourceTree = "<group>";
 		};
 		198377CF266BFEDE004DE65E /* Localizations */ = {
@@ -2252,9 +2262,10 @@
 		CE7CA3422A064973004BE681 /* Shortcuts */ = {
 			isa = PBXGroup;
 			children = (
-				CE1856F32ADC4835007E39C7 /* Carbs */,
 				CE7CA3432A064973004BE681 /* AppShortcuts.swift */,
 				CE7CA3442A064973004BE681 /* BaseIntentsRequest.swift */,
+				CE1856F32ADC4835007E39C7 /* Carbs */,
+				196579A52B924BD400642E8E /* Overrides */,
 				CE7CA3452A064973004BE681 /* TempPresets */,
 				CE7CA34B2A064973004BE681 /* State */,
 			);
@@ -3007,6 +3018,7 @@
 				F90692D3274B9A130037068D /* AppleHealthKitRootView.swift in Sources */,
 				3862CC1F273FDC9200BF832C /* CalibrationsChart.swift in Sources */,
 				19E1F7EC29D082FE005C8D20 /* IconConfigStateModel.swift in Sources */,
+				194C32772B93A9BF0016FB2A /* OverrideShortcuts.swift in Sources */,
 				711C0CB42CAABE788916BC9D /* ManualTempBasalDataFlow.swift in Sources */,
 				BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */,
 				F90692D6274B9A450037068D /* HealthKitStateModel.swift in Sources */,

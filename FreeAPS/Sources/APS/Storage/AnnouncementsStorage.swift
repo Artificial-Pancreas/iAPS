@@ -28,8 +28,8 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
             self.storage.transaction { storage in
                 storage.append(announcements, to: file, uniqBy: \.createdAt)
                 let uniqEvents = storage.retrieve(file, as: [Announcement].self)?
-                    .sorted { $0.createdAt > $1.createdAt } ?? []
                     .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                    .sorted { $0.createdAt > $1.createdAt } ?? []
                 storage.save(Array(uniqEvents), as: file)
             }
         }
@@ -76,7 +76,7 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
         }
         let enactedEventsLast = enactedEvents.first
 
-        if -1 * (enactedEventsLast?.createdAt ?? .distantPast).timeIntervalSinceNow.minutes < 10 {
+        if -1 * (enactedEventsLast?.createdAt ?? .distantPast).timeIntervalSinceNow.minutes <= 10 {
             return enactedEventsLast
         }
         return nil
