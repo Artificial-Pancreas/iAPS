@@ -913,52 +913,52 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Got it!" = "¡Entendido!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "Guardado en %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "No hay registros disponibles";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "Valor de glucosa en sangre en notificaciones";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "Notificar siempre la glucosa";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Notificar por lectura";
 
 /* */
-"Value" = "Value";
+"Value" = "Valor";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "Añade batería del teléfono";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "Añade batería del transmisor";
 
 /* */
-"Also vibrate" = "Also vibrate";
+"Also vibrate" = "Vibrar también";
 
 /* */
-"Additional notification types" = "Additional notification types";
+"Additional notification types" = "Tipos de notificación adicionales";
 
 /* */
-"Misc" = "Misc";
+"Misc" = "Varios";
 
 /* */
-"Unit override" = "Unit override";
+"Unit override" = "Sobreescribir unidad";
 
 /* */
-"Low" = "Low";
+"Low" = "Bajo";
 
 /* */
-"High" = "High";
+"High" = "Alto";
 
 /* */
-"glucose" = "glucose";
+"glucose" = "glucosa";
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Programa ";
 
 /* */
 "tapped save schedules" = "tapped save schedules";
@@ -967,61 +967,61 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Error" = "Error";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Se especificó incorrectamente algún elemento de la interfaz";
 
 /* */
-"Success" = "Success";
+"Success" = "Completado";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "¡Los cambios se han guardado correctamente!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Alarma de glucosa alta activa";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Alarma de glucosa baja activa";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "No hay alarma de glucosa activa";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "posponer hasta %@";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "no posponer";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "nada para ver aquí";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "posponer desde pulsación de la vista de prueba";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "se pospondrá por %@ hasta %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Pulsar para posponer alertas";
 
 /* */
-"Strength" = "Strength";
+"Strength" = "Potencia";
 
 /* */
-"Hold the top of your iPhone near the sensor to pair" = "Hold the top of your iPhone near the sensor to pair";
+"Hold the top of your iPhone near the sensor to pair" = "Mantén la parte superior de tu iPhone cerca del sensor para emparejar";
 
 /* */
-"Sensor not found" = "Sensor not found";
+"Sensor not found" = "Sensor no encontrado";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "Reproducir también sonido de alerta";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "Configuración de las notificaciones";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "Dispositivos encontrados: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Opciones de relleno";
 
 /* */
 "Backfilling from trend is currently not well supported by Loop" = "El relleno de las tendencias no está bien soportado por Loop";
@@ -1177,10 +1177,10 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Pump History" = "Historial de la bomba";
 
 /* Debug option view Target Ranges */
-"Target ranges" = "Target ranges";
+"Target ranges" = "Rangos objetivo";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Temp targets";
+"Temp targets" = "Objetivos temporales";
 
 /* Debug option view Meal */
 "Meal" = "Meal";
@@ -1663,10 +1663,10 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Low";
+"Low" = "Bajo";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "High";
+"High" = "Alto";
 
 /* In Range */
 "In Range" = "In Range";
