@@ -1206,8 +1206,8 @@ extension DanaKitPumpManager {
             return
         }
         
-        self.state.lastStatusDate = Date()
         self.state.bolusState = .noBolus
+        self.state.lastStatusDate = Date.now
         self.notifyStateDidChange()
         
         let dose = doseEntry.toDoseEntry()
@@ -1241,6 +1241,7 @@ extension DanaKitPumpManager {
     func notifyBolusDone(deliveredUnits: Double) {
         self.state.lastStatusDate = Date()
         self.state.bolusState = .noBolus
+        self.state.lastStatusDate = Date.now
         self.notifyStateDidChange()
         self.disconnect()
         
