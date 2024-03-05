@@ -46,13 +46,6 @@ struct InsulinTypeView: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(false)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
-                    self.dismiss()
-                })
-            }
-        }
     }
     
     @ViewBuilder
