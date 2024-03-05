@@ -41,14 +41,58 @@ extension DanaKitPumpManager : PumpManagerUI {
     }
     
     public var pumpStatusHighlight: DeviceStatusHighlight? {
-        return nil
+        return buildPumpStatusHighlight()
     }
     
+    // Not needed
     public var pumpLifecycleProgress: DeviceLifecycleProgress? {
         return nil
     }
     
     public var pumpStatusBadge: DeviceStatusBadge? {
+        return self.state.shouldShowTimeWarning() ? DanaStatusBadge.timeSyncNeeded : nil
+    }
+    
+    
+}
+
+extension DanaKitPumpManager {
+    private enum DanaStatusBadge: DeviceStatusBadge {
+        case timeSyncNeeded
+        
+        public var image: UIImage? {
+            switch self {
+            case .timeSyncNeeded:
+                return UIImage(systemName: "clock.fill")
+            }
+        }
+        
+        public var state: DeviceStatusBadgeState {
+            switch self {
+            case .timeSyncNeeded:
+                return .warning
+            }
+        }
+    }
+    
+    private func buildPumpStatusHighlight() -> DeviceStatusHighlight? {
+        if state.reservoirLevel < 1 {
+            return PumpStatusHighlight(
+                localizedMessage: LocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
+                imageName: "exclamationmark.circle.fill",
+                state: .critical)
+        } else if self.state.isPumpSuspended {
+            return PumpStatusHighlight(
+                localizedMessage: LocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
+                imageName: "pause.circle.fill",
+                state: .warning)
+        } else if Date.now.timeIntervalSince(state.lastStatusDate) > .minutes(12) {
+            return PumpStatusHighlight(
+                localizedMessage: LocalizedString("Signal Loss", comment: "Status highlight when communications with the pod haven't happened recently."),
+                imageName: "exclamationmark.circle.fill",
+                state: .critical)
+        }
+        
         return nil
     }
 }

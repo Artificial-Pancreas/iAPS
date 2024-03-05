@@ -35,7 +35,7 @@ struct DanaKitSetupCompleteView: View {
             .padding(.horizontal)
             Spacer()
             
-            ContinueButton(action: { finish?() })
+            ContinueButton(text: LocalizedString("Finish", comment: "Text for finish button"), action: { finish?() })
         }
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(false)

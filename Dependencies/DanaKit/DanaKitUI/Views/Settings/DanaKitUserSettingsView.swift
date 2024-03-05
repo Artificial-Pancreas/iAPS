@@ -129,7 +129,11 @@ struct DanaKitUserSettingsView: View {
             }
             Spacer()
             
-            ContinueButton(loading: $viewModel.storingUseroption, action: { viewModel.storeUserOption() })
+            ContinueButton(
+                loading: $viewModel.storingUseroption,
+                text: LocalizedString("Save", comment: "Text for save button"),
+                action: { viewModel.storeUserOption() }
+            )
         }
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarTitle(LocalizedString("User options", comment: "Title for user options"))

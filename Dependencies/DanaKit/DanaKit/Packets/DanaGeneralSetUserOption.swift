@@ -27,7 +27,7 @@ let CommandGeneralSetUserOption: UInt16 = (UInt16(DanaPacketType.TYPE_RESPONSE &
 
 func generatePacketGeneralSetUserOption(options: PacketGeneralSetUserOption) -> DanaGeneratePacket {
     var data = Data(count: options.targetBg != nil ? 15 : 13)
-    data[0] = options.isTimeDisplay24H ? 0x01 : 0x00
+    data[0] = options.isTimeDisplay24H ? 0x00 : 0x01
     data[1] = options.isButtonScrollOnOff ? 0x01 : 0x00
     data[2] = options.beepAndAlarm
     data[3] = options.lcdOnTimeInSec

@@ -386,3 +386,16 @@
 
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop"
+
+
+/* Error message for reservoir view when reservoir empty
+   Status highlight message for emptyReservoir alarm.
+   Status highlight that a pump is out of insulin. */
+"No Insulin" = "No Insulin"
+
+/* Status highlight that insulin delivery was suspended. */
+"Insulin Suspended" = "Insulin Suspended"
+
+/* Error message for reservoir view during general pod fault
+   Status highlight when communications with the pod haven't happened recently. */
+"Signal Loss" = "Signal Loss"

@@ -427,16 +427,6 @@ extension DanaKitPumpManager: PumpManager {
                         self.state.bolusState = .inProgress
                         self.notifyStateDidChange()
                         
-                        // It is not possible to enforce other commands while the bolus is going
-                        // Therefore, we set a timer and after that, we allow a possible temp basal to continue
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1 + duration) {
-                            self.state.lastStatusDate = Date()
-                            self.state.bolusState = .noBolus
-                            self.doseReporter = nil
-                            self.doseEntry = nil
-                            self.notifyStateDidChange()
-                        }
-                        
                         completion(nil)
                     } catch {
                         self.state.bolusState = .noBolus
@@ -927,7 +917,12 @@ extension DanaKitPumpManager: PumpManager {
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
                         
                         self.disconnect()
-                        completion(result.success)
+                        guard result.success else {
+                            self.log.error("\(#function, privacy: .public): Pump rejected command (user options)")
+                            completion(false)
+                            return
+                        }
+                        completion(true)
                     } catch {
                         self.log.error("\(#function, privacy: .public): error caught \(error.localizedDescription, privacy: .public)")
                         self.disconnect()

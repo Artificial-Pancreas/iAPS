@@ -52,7 +52,7 @@ class DanaKitUserSettingsViewModel : ObservableObject {
             targetBg: pumpManager.state.targetBg
         )
         
-        self.pumpManager?.setUserSettings(data: model, completion: { err in
+        pumpManager.setUserSettings(data: model, completion: { err in
             DispatchQueue.main.async {
                 self.storingUseroption = false
             }
