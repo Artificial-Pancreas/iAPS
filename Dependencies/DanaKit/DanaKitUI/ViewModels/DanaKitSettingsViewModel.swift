@@ -37,8 +37,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     private(set) var pumpManager: DanaKitPumpManager?
     private var didFinish: (() -> Void)?
     private(set) var userOptionsView: DanaKitUserSettingsView
-    
-    private var debounce_timer: Timer?
+    private(set) var basalProfileView: BasalProfileView
 
     public var pumpModel: String {
         self.pumpManager?.state.getFriendlyDeviceName() ?? ""
@@ -84,6 +83,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.didFinish = didFinish
         
         self.userOptionsView = DanaKitUserSettingsView(viewModel: DanaKitUserSettingsViewModel(self.pumpManager))
+        self.basalProfileView = BasalProfileView(viewModel: BasalProfileViewModel(self.pumpManager))
         
         self.insulineType = self.pumpManager?.state.insulinType ?? .novolog
         self.bolusSpeed = self.pumpManager?.state.bolusSpeed ?? .speed12
@@ -108,8 +108,10 @@ class DanaKitSettingsViewModel : ObservableObject {
             return
         }
         
+        pumpManager.state.isOnBoarded = false
+        pumpManager.notifyStateDidChange()
+        
         pumpManager.notifyDelegateOfDeactivation {
-            pumpManager.state.isOnBoarded = false
             DispatchQueue.main.async {
                 self.didFinish?()
             }
@@ -157,18 +159,6 @@ class DanaKitSettingsViewModel : ObservableObject {
                 self.isSyncing = false
                 self.lastSync = date
             }
-        }
-    }
-    
-    func basalProfileNumberChanged(_ index: Int) {
-        debounce_timer?.invalidate()
-        debounce_timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { _ in
-            guard let pumpManager = self.pumpManager else {
-                return
-            }
-            
-            pumpManager.state.basalProfileNumber = UInt8(index)
-            pumpManager.syncBasalSchedule(basal: pumpManager.state.basalSchedule, completion: { _ in })
         }
     }
     

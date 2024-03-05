@@ -56,17 +56,6 @@ struct DanaKitSettingsView: View {
                     ])
     }
     
-    private var basalProfileView: PickerView {
-        PickerView(
-            value: Int($viewModel.basalProfileNumber.wrappedValue),
-            allowedOptions: Array(0..<4),
-            formatter: { value in viewModel.transformBasalProfile(UInt8(value))},
-            didChange: viewModel.basalProfileNumberChanged,
-            title: LocalizedString("Basal profile", comment: "Text for Basal profile"),
-            description: LocalizedString("Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop", comment: "Description for basal profile number")
-        )
-    }
-    
     var body: some View {
         List {
             Section() {
@@ -134,7 +123,7 @@ struct DanaKitSettingsView: View {
             
             Section(header: SectionHeader(label: LocalizedString("Configuration", comment: "The title of the configuration section in DanaKit settings")))
             {
-                NavigationLink(destination: InsulinTypeSetting(initialValue: viewModel.insulineType, supportedInsulinTypes: supportedInsulinTypes, allowUnsetInsulinType: false, didChange: viewModel.didChangeInsulinType)) {
+                NavigationLink(destination: InsulinTypeView(initialValue: viewModel.insulineType, supportedInsulinTypes: supportedInsulinTypes, didConfirm: viewModel.didChangeInsulinType)) {
                     HStack {
                         Text(LocalizedString("Insulin Type", comment: "Text for confidence reminders navigation link")).foregroundColor(Color.primary)
                         Spacer()
@@ -150,7 +139,7 @@ struct DanaKitSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                 }
-                NavigationLink(destination: basalProfileView) {
+                NavigationLink(destination: viewModel.basalProfileView) {
                     HStack {
                         Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
                         Spacer()
