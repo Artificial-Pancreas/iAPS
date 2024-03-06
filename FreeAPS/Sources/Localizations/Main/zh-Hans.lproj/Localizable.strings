@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* Add Simulator pump */
 "Add Simulator" = "添加模拟器";
 
+/* View/Header when pod expired */
+"Replace" = "Replace";
+
 /* Insulin model */
 "Model" = "模型";
 

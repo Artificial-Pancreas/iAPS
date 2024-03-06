@@ -425,6 +425,9 @@ Enact a temp Basal or a temp target */
 /* Add Simulator pump */
 "Add Simulator" = "Añadir simulador";
 
+/* View/Header when pod expired */
+"Replace" = "Replace";
+
 /* Insulin model */
 "Model" = "Modelo";
 
@@ -613,6 +616,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Unable to change anything" = "Unable to change anything";
+
 
 /* Calendar and Libre transmitter settings ---------------
  */
