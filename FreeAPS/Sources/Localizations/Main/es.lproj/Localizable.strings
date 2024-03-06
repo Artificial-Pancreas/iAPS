@@ -1707,6 +1707,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Average BG = */
 "Average" = "Media";
 
+/* TIR Preview Headline */
+"Time In Range" = "Time In Range";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Average Interval";
+
 /* Median BG */
 "Median" = "Mediana";
 
