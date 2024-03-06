@@ -1397,6 +1397,7 @@
 				3811DE2E25C9D49500A708ED /* HomeRootView.swift */,
 				3833B51E260264AC003021B3 /* Chart */,
 				3833B51F260264B6003021B3 /* Header */,
+				194D7E6C2B974EA4007A38C1 /* Previews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1613,7 +1614,6 @@
 				383420D525FFE38C002D46C1 /* LoopView.swift */,
 				38AAF85425FFF846004AF583 /* CurrentGlucoseView.swift */,
 				38DAB27F260CBB7F00F74C1A /* PumpView.swift */,
-				194D7E6C2B974EA4007A38C1 /* Previews */,
 			);
 			path = Header;
 			sourceTree = "<group>";
