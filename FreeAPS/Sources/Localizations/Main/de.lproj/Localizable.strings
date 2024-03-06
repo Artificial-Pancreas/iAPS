@@ -1707,7 +1707,7 @@ Enact a temp Basal or a temp target */
 "Average" = "Mittelwert";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "Zeit im Zielbereich";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Average Interval";
