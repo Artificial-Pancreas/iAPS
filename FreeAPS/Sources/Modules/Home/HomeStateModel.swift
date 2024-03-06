@@ -383,7 +383,7 @@ extension Home {
             let loops = loopStats.compactMap({ each in each.loopStatus }).count
             let readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today).compactMap({ each in each.glucose })
                 .count
-            let percentage = readings != 0 ? (Double(loops) / Double(readings) * 100) : 0
+            let percentage = min(readings != 0 ? (Double(loops) / Double(readings) * 100) : 0, 100)
             let average = loops != 0 ? (-1 * (DateFilter().today.timeIntervalSinceNow / 60) / Double(loops)) :
                 (DateFilter().today.timeIntervalSinceNow / 60)
             loopStatistics = (
