@@ -1708,6 +1708,12 @@ Połączono z Nightscout!";
 /* Average BG = */
 "Average" = "Average";
 
+/* TIR Preview Headline */
+"Time In Range" = "Time In Range";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Average Interval";
+
 /* Median BG */
 "Median" = "Median";
 
