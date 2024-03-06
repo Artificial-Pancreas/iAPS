@@ -66,6 +66,7 @@ extension Home {
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
         @Published var readings: [Readings] = []
+        @Published var loopStatistics: (Int, Int, Double, String) = (0, 0, 0, "")
         @Published var standing: Bool = false
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
@@ -90,6 +91,7 @@ extension Home {
             setupAnnouncements()
             setupCurrentPumpTimezone()
             setupOverrideHistory()
+            setupLoopStats()
 
             suggestion = provider.suggestion
             overrideHistory = provider.overrideHistory()
@@ -376,6 +378,22 @@ extension Home {
             }
         }
 
+        private func setupLoopStats() {
+            let loopStats = CoreDataStorage().fetchLoopStats(interval: DateFilter().today)
+            let loops = loopStats.compactMap({ each in each.loopStatus }).count
+            let readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today).compactMap({ each in each.glucose })
+                .count
+            let percentage = readings != 0 ? (Double(loops) / Double(readings) * 100) : 0
+            let average = loops != 0 ? (-1 * (DateFilter().today.timeIntervalSinceNow / 60) / Double(loops)) :
+                (DateFilter().today.timeIntervalSinceNow / 60)
+            loopStatistics = (
+                loops,
+                readings,
+                percentage,
+                average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min"
+            )
+        }
+
         private func setupOverrides() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -477,13 +495,9 @@ extension Home.StateModel:
     PumpReservoirObserver,
     PumpTimeZoneObserver
 {
-    /*
-     func overridesDidUpdate(_: [Override]) {
-         setupOverrides()
-     }*/
-
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
+        setupLoopStats()
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
@@ -491,6 +505,7 @@ extension Home.StateModel:
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
         setupOverrideHistory()
+        setupLoopStats()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -543,6 +558,7 @@ extension Home.StateModel:
         enactedSuggestion = suggestion
         setStatusTitle()
         setupOverrideHistory()
+        setupLoopStats()
     }
 
     func pumpBatteryDidChange(_: Battery) {

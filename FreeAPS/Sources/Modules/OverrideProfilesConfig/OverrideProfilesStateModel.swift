@@ -189,7 +189,7 @@ extension OverrideProfilesConfig {
             }
             // Saves
             coredataContext.perform { try? self.coredataContext.save() }
-            
+
             // Uploads new Override to NS
             ns.uploadOverride(profile.name ?? "", Double(saveOverride.duration ?? 0), saveOverride.date ?? Date())
         }
