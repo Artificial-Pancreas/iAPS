@@ -20,6 +20,20 @@ final class CoreDataStorage {
         return fetchGlucose
     }
 
+    func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
+        var fetchLoopStats = [LoopStatRecord]()
+        coredataContext.performAndWait {
+            let requestLoopStats = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+            let sort = NSSortDescriptor(key: "start", ascending: false)
+            requestLoopStats.sortDescriptors = [sort]
+            requestLoopStats.predicate = NSPredicate(
+                format: "interval > 0 AND start > %@", interval
+            )
+            try? fetchLoopStats = self.coredataContext.fetch(requestLoopStats)
+        }
+        return fetchLoopStats
+    }
+
     func fetchTDD(interval: NSDate) -> [TDD] {
         var uniqueEvents = [TDD]()
         coredataContext.performAndWait {

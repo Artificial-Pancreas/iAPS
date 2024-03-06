@@ -66,6 +66,7 @@ extension Home {
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
         @Published var readings: [Readings] = []
+        @Published var loopStats: [LoopStatRecord] = []
         @Published var standing: Bool = false
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
@@ -280,6 +281,7 @@ extension Home {
                 self.isManual = self.provider.manualGlucose(hours: self.filteredHours)
                 self.glucose = self.provider.filteredGlucose(hours: self.filteredHours)
                 self.readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today)
+                self.loopStats = CoreDataStorage().fetchLoopStats(interval: DateFilter().today)
                 self.recentGlucose = self.glucose.last
                 if self.glucose.count >= 2 {
                     self.glucoseDelta = (self.recentGlucose?.glucose ?? 0) - (self.glucose[self.glucose.count - 2].glucose ?? 0)
@@ -373,6 +375,7 @@ extension Home {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.overrideHistory = self.provider.overrideHistory()
+                self.loopStats = CoreDataStorage().fetchLoopStats(interval: DateFilter().today)
             }
         }
 
