@@ -123,7 +123,7 @@ struct PreviewChart: View {
                             }
                             Text(item.group)
                         }.font(.previewNormal)
-                            .padding(.leading, 20)
+                            .padding(.leading, 10)
                     } else if item.group == NSLocalizedString(
                         "Low",
                         comment: ""
@@ -137,7 +137,7 @@ struct PreviewChart: View {
                             Text(item.group)
                         }
                         .font(.loopFont)
-                        .padding(.leading, 20)
+                        .padding(.leading, 10)
                     } else if item.group == NSLocalizedString(
                         "High",
                         comment: ""
@@ -151,7 +151,7 @@ struct PreviewChart: View {
                             Text(item.group)
                         }
                         .font(.loopFont)
-                        .padding(.leading, 20)
+                        .padding(.leading, 10)
                     } else if item.group == NSLocalizedString(
                         "Very High",
                         comment: ""
@@ -166,7 +166,7 @@ struct PreviewChart: View {
                         }
                         .offset(x: 0, y: -5)
                         .font(.loopFont)
-                        .padding(.leading, 20)
+                        .padding(.leading, 10)
                     } else if item.group == NSLocalizedString(
                         "Very Low",
                         comment: ""
@@ -181,7 +181,7 @@ struct PreviewChart: View {
                         }
                         .offset(x: 0, y: 5)
                         .font(.loopFont)
-                        .padding(.leading, 20)
+                        .padding(.leading, 10)
                     }
                 }
             }
@@ -210,7 +210,7 @@ struct PreviewChart: View {
             .chartLegend(.hidden)
             .padding(.bottom, 15)
             .frame(maxWidth: UIScreen.main.bounds.width / 5)
-            .offset(x: fontSize > .extraExtraLarge ? -60 : 0, y: 0)
+            .offset(x: -UIScreen.main.bounds.width / 5, y: 0)
         }.frame(maxHeight: 200)
             .padding(.top, 20)
             .dynamicTypeSize(...DynamicTypeSize.accessibility1)
