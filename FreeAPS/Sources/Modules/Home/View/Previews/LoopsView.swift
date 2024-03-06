@@ -3,15 +3,14 @@ import Foundation
 import SwiftUI
 
 struct LoopsView: View {
-    @Binding var fetchedReadings: [Readings]
-    @Binding var fetchedLoops: [LoopStatRecord]
+    @Binding var loopStatistics: (Int, Int, Double, String)
 
     var body: some View {
         VStack {
             // Data
-            let loops = fetchedLoops.compactMap({ each in each.duration }).count
-            let readings = fetchedReadings.compactMap({ each in each.glucose }).count
-            let percentage = Double(loops) / Double(readings) * 100
+            let loops = loopStatistics.0
+            let readings = loopStatistics.1
+            let percentage = loopStatistics.2
 
             Text("Loops / Readings").padding(.bottom, 10).font(.previewHeadline)
 
@@ -19,19 +18,17 @@ struct LoopsView: View {
 
             HStack {
                 Text("Average Interval")
-                let average = -1 * (DateFilter().today.timeIntervalSinceNow / 60) /
-                    Double(loops)
-                Text(average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min")
+                Text(loopStatistics.3)
             }.font(.loopFont)
 
             HStack {
                 Text("Readings")
-                Text("\(fetchedReadings.compactMap({ each in each.glucose }).count)")
+                Text("\(readings)")
             }.font(.loopFont)
 
             HStack {
                 Text("Loops")
-                Text("\(fetchedLoops.compactMap({ each in each.duration }).count)")
+                Text("\(loops)")
             }.font(.loopFont)
         }
         .padding(.top, 20)

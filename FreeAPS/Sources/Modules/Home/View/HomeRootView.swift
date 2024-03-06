@@ -477,7 +477,7 @@ extension Home {
             addBackground()
                 .frame(minHeight: 190)
                 .overlay {
-                    LoopsView(fetchedReadings: $state.readings, fetchedLoops: $state.loopStats)
+                    LoopsView(loopStatistics: $state.loopStatistics)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
