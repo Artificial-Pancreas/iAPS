@@ -144,9 +144,12 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
     var didRequestDeactivation: (() -> Void)?
     
     var cannulaInserter: CannulaInserter
-    
+
+    var autoRetryAttempted: Bool
+
     init(cannulaInserter: CannulaInserter) {
         self.cannulaInserter = cannulaInserter
+        self.autoRetryAttempted = false
 
         // If resuming, don't wait for the button action
         if cannulaInserter.cannulaInsertionSuccessfullyStarted {
@@ -184,7 +187,19 @@ class InsertCannulaViewModel: ObservableObject, Identifiable {
                         self.state = .finished
                     }
                 case .failure(let error):
-                    self.state = .error(error)
+                    if self.autoRetryAttempted {
+                        self.autoRetryAttempted = false // allow for an auto retry on the next user attempt
+                        self.state = .error(error)
+                    } else {
+                        self.autoRetryAttempted = true
+                        let autoRetryPauseTime = TimeInterval(seconds: 3)
+                        print("### insertCannula encountered error \(error.localizedDescription), retrying after \(autoRetryPauseTime) seconds")
+                        DispatchQueue.global(qos: .utility).async {
+                            Thread.sleep(forTimeInterval: autoRetryPauseTime)
+
+                            self.insertCannula()
+                        }
+                    }
                 }
             }
         }

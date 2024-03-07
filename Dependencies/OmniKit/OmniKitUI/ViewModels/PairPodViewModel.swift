@@ -169,8 +169,11 @@ class PairPodViewModel: ObservableObject, Identifiable {
 
     var podPairer: PodPairer
 
+    var autoRetryAttempted: Bool
+
     init(podPairer: PodPairer) {
         self.podPairer = podPairer
+        self.autoRetryAttempted = false
 
         // If resuming, don't wait for the button action
         if podPairer.podCommState == .activating {
@@ -190,8 +193,20 @@ class PairPodViewModel: ObservableObject, Identifiable {
             DispatchQueue.main.async {
                 switch status {
                 case .failure(let error):
-                    let pairingError = OmnipodPairingError.pumpManagerError(error)
-                    self.state = .error(pairingError)
+                    if self.autoRetryAttempted {
+                        self.autoRetryAttempted = false // allow for an auto retry on the next user attempt
+                        let pairAndPrimeError = OmnipodPairingError.pumpManagerError(error)
+                        self.state = .error(pairAndPrimeError)
+                    } else {
+                        self.autoRetryAttempted = true
+                        let autoRetryPauseTime = TimeInterval(seconds: 3)
+                        print("### pairAndPrimePod encountered error \(error.localizedDescription), retrying after \(autoRetryPauseTime) seconds")
+                        DispatchQueue.global(qos: .utility).async {
+                            Thread.sleep(forTimeInterval: autoRetryPauseTime)
+
+                            self.pairAndPrime() // handles both pairing or priming failures
+                        }
+                    }
                 case .success(let duration):
                     
                     if duration > 0 {
