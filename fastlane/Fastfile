@@ -22,6 +22,7 @@ FASTLANE_KEY = ENV["FASTLANE_KEY"]
 DEVICE_NAME = ENV["DEVICE_NAME"]
 DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
+APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
 
 platform :ios do
   desc "Build iAPS"
@@ -40,7 +41,7 @@ platform :ios do
     )
 
     previous_build_number = latest_testflight_build_number(
-      app_identifier: "ru.artpancreas.#{TEAMID}.FreeAPS",
+      app_identifier: "#{APP_IDENTIFIER}",
       api_key: api_key,
     )
 
@@ -55,15 +56,15 @@ platform :ios do
       type: "appstore",
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
-        "ru.artpancreas.#{TEAMID}.FreeAPS",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"
+        "#{APP_IDENTIFIER}",
+        "#{APP_IDENTIFIER}.watchkitapp",
+        "#{APP_IDENTIFIER}.watchkitapp.watchkitextension",
+        "#{APP_IDENTIFIER}.LiveActivity"
       ]
     )
 
     previous_build_number = latest_testflight_build_number(
-      app_identifier: "ru.artpancreas.#{TEAMID}.FreeAPS",
+      app_identifier: "#{APP_IDENTIFIER}",
       api_key: api_key,
     )
 
@@ -80,27 +81,27 @@ platform :ios do
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS"],
+      profile_name: mapping["#{APP_IDENTIFIER}"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPS"]
     )
 
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension"],
+      profile_name: mapping["#{APP_IDENTIFIER}.watchkitapp.watchkitextension"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch WatchKit Extension"]
     )
     
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp"],
+      profile_name: mapping["#{APP_IDENTIFIER}.watchkitapp"],
       code_sign_identity: "iPhone Distribution",
       targets: ["FreeAPSWatch"]
     )
     update_code_signing_settings(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
-      profile_name: mapping["ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"],
+      profile_name: mapping["#{APP_IDENTIFIER}.LiveActivity"],
       code_sign_identity: "iPhone Distribution",
       targets: ["LiveActivityExtension"]
     )
@@ -155,22 +156,22 @@ platform :ios do
       }
     end
 
-    configure_bundle_id("FreeAPS", "ru.artpancreas.#{TEAMID}.FreeAPS", [
+    configure_bundle_id("FreeAPS", "#{APP_IDENTIFIER}", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
       Spaceship::ConnectAPI::BundleIdCapability::Type::NFC_TAG_READING
     ])
 
-    configure_bundle_id("FreeAPSWatch WatchKit Extension", "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension", [
+    configure_bundle_id("FreeAPSWatch WatchKit Extension", "#{APP_IDENTIFIER}.watchkitapp.watchkitextension", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
       Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT
     ])
     
-    configure_bundle_id("FreeAPSWatch", "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp", [
+    configure_bundle_id("FreeAPSWatch", "#{APP_IDENTIFIER}.watchkitapp", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
 
-    configure_bundle_id("LiveActivityExtension", "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity", [
+    configure_bundle_id("LiveActivityExtension", "#{APP_IDENTIFIER}.LiveActivity", [
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
     
@@ -192,10 +193,10 @@ platform :ios do
       force: true,
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
-        "ru.artpancreas.#{TEAMID}.FreeAPS",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp.watchkitextension",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.watchkitapp",
-        "ru.artpancreas.#{TEAMID}.FreeAPS.LiveActivity"
+        "#{APP_IDENTIFIER}",
+        "#{APP_IDENTIFIER}.watchkitapp.watchkitextension",
+        "#{APP_IDENTIFIER}.watchkitapp",
+        "#{APP_IDENTIFIER}.LiveActivity"
       ]
     )
   end
@@ -215,7 +216,7 @@ platform :ios do
       bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier)
     end
 
-    find_bundle_id("ru.artpancreas.#{TEAMID}.FreeAPS")
+    find_bundle_id("#{APP_IDENTIFIER}")
 
     match(
       type: "appstore",
