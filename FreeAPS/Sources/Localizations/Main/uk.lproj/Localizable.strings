@@ -426,7 +426,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Додати Симулятор";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Замінити";
 
 /* Insulin model */
 "Model" = "МОДЕЛЬ";
@@ -1707,10 +1707,10 @@ Enact a temp Basal or a temp target */
 "Average" = "Середній";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "Час в Діапазоні";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
+"Average Interval" = "Середній Інтервал";
 
 /* Median BG */
 "Median" = "Медіана";
