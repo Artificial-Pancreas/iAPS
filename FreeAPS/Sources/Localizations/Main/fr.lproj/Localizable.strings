@@ -1519,7 +1519,7 @@ Enact a temp Basal or a temp target */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Les rappels de confiance sont des bips émis par le Pod qui peuvent être utilisés pour confirmer l'exécution des commandes sélectionnées.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Sauvegarde...";
+"Saving..." = "Sauvegarde en cours...";
 
 /* button title for saving low reservoir reminder */
 "Save" = "Sauvegarder";
@@ -1707,10 +1707,10 @@ Enact a temp Basal or a temp target */
 "Average" = "Moyenne";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "Temps dans la plage cible";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
+"Average Interval" = "Intervalle moyen";
 
 /* Median BG */
 "Median" = "Médiane";
