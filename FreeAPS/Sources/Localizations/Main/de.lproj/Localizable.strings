@@ -1170,7 +1170,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Als deine normalen Basalraten speichern";
 
 /* */
-"Save on Pump" = "Auf Pumpe speichern";
+"Save on Pump" = "Auf der Pumpe speichern";
 
 /* Debug option view Pump History */
 "Pump History" = "Insulinpumpen-Speicher";
@@ -1575,7 +1575,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Wechsle jetzt den Pod! Die Insulinabgabe wird in %1$@ unterbrochen, spätestens wenn kein Insulin mehr vorhanden ist.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "BR";
+"Rate" = "Basalrate";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ für %2$@";
@@ -1710,7 +1710,7 @@ Enact a temp Basal or a temp target */
 "Time In Range" = "Zeit im Zielbereich";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
+"Average Interval" = "Durchschnittliches Zeitintervall";
 
 /* Median BG */
 "Median" = "Median";
