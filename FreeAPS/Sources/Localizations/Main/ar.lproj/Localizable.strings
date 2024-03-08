@@ -40,6 +40,18 @@
 /* Button */
 "Done" = "Done";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Display Emojis as Labels";
+
+/* Calender Option */
+"Display IOB and COB" = "Display IOB and COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Confirm Bolus Faster";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Wait please";
 
