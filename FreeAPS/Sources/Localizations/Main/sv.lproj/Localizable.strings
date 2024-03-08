@@ -41,13 +41,13 @@
 "Done" = "Klar";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Visa Emojis";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Visa IOB och COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Bekräfta Bolus snabbare";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -1447,11 +1447,11 @@ Enact a temp Basal or a temp target */
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Nu";
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Visa framtida";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
