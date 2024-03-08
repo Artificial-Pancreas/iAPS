@@ -41,7 +41,7 @@
 "Done" = "Fertig";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Emojis als Etiketten benutzen";
 
 /* Calender Option */
 "Display IOB and COB" = "Display IOB and COB";
@@ -1447,7 +1447,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Jetzt";
 
 
 /* Display future data table entries */
