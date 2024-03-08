@@ -40,6 +40,18 @@
 /* Button */
 "Done" = "Terminé";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Display Emojis as Labels";
+
+/* Calender Option */
+"Display IOB and COB" = "Display IOB and COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Confirm Bolus Faster";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Merci de patienter";
 
@@ -50,16 +62,16 @@
 "of" = "de";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "Un bolus à distance ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "a été livré";
 
 /* Remote Bolus Alert, Part 3 */
 " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "Un bolus à distance vient d'être livré !";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Dernier calcul à";
@@ -375,7 +387,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Contrôle à distance";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Autoriser le contrôle à distance d'iAPS";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nVeuillez maintenant vérifier soigneusement tous vos nouveaux paramètres:\n\n* Paramètres basaux\n * Ratios glucidiques\n * Objectifs glycémiques\n * Sensibilité à l'insuline\n * DIA\n\n dans iAPS Paramètres > Configuration.\n\nDes paramètres de profil incorrects ou invalides peuvent avoir des effets désastreux.";
@@ -426,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Ajouter un simulateur";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Remplacer";
 
 /* Insulin model */
 "Model" = "Modèle";
@@ -1435,11 +1447,11 @@ Enact a temp Basal or a temp target */
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Maintenant";
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Afficher le futur";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
