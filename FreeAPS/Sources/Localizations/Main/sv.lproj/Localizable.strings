@@ -1454,7 +1454,7 @@ Enact a temp Basal or a temp target */
 "Show Future" = "Visa framtida";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Dölj";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
