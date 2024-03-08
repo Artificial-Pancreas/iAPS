@@ -1454,6 +1454,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Display future data table entries */
 "Show Future" = "Show Future";
 
+/* Hide future data table entries */
+"Hide Future" = "Hide Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
