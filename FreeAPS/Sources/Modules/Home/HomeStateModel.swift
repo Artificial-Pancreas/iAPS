@@ -381,11 +381,13 @@ extension Home {
         private func setupLoopStats() {
             let loopStats = CoreDataStorage().fetchLoopStats(interval: DateFilter().today)
             let loops = loopStats.compactMap({ each in each.loopStatus }).count
-            let readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today).compactMap({ each in each.glucose })
-                .count
-            let percentage = readings != 0 ? (Double(loops) / Double(readings) * 100) : 0
-            let average = loops != 0 ? (-1 * (DateFilter().today.timeIntervalSinceNow / 60) / Double(loops)) :
-                (DateFilter().today.timeIntervalSinceNow / 60)
+            let readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today).compactMap({ each in each.glucose }).count
+            let percentage = min(readings != 0 ? (Double(loops) / Double(readings) * 100) : 0, 100)
+            // First loop date
+            let time = (loopStats.last?.start ?? Date.now).addingTimeInterval(-5.minutes.timeInterval)
+
+            let average = -1 * (time.timeIntervalSinceNow / 60) / max(Double(loops), 1)
+
             loopStatistics = (
                 loops,
                 readings,
