@@ -1170,7 +1170,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Als deine normalen Basalraten speichern";
 
 /* */
-"Save on Pump" = "Auf der Pumpe speichern";
+"Save on Pump" = "Auf Pumpe speichern";
 
 /* Debug option view Pump History */
 "Pump History" = "Insulinpumpen-Speicher";
@@ -1433,6 +1433,14 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Zeige Eiweiß & Fett";
 
+
+/* Time of new meal entry */
+"Now" = "Now";
+
+
+/* Display future data table entries */
+"Show Future" = "Show Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1575,7 +1583,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Wechsle jetzt den Pod! Die Insulinabgabe wird in %1$@ unterbrochen, spätestens wenn kein Insulin mehr vorhanden ist.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Basalrate";
+"Rate" = "BR";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ für %2$@";
