@@ -1434,6 +1434,14 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Watch Config Option */
 "Display Protein & Fat" = "Mostrar proteínas y grasas";
 
+
+/* Time of new meal entry */
+"Now" = "Now";
+
+
+/* Display future data table entries */
+"Show Future" = "Show Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
