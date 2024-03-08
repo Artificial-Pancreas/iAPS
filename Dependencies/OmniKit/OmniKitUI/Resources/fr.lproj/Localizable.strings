@@ -822,7 +822,7 @@ Silence Pod" = "Pod silencieux";
 "Read Pulse Log Plus" = "Read Pulse Log Plus";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Lire le temps d'activation";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Lire les alertes déclenchées";
