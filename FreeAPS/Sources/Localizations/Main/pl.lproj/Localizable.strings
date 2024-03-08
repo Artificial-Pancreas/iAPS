@@ -1455,6 +1455,9 @@ Połączono z Nightscout!";
 /* Display future data table entries */
 "Show Future" = "Show Future";
 
+/* Hide future data table entries */
+"Hide Future" = "Hide Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
