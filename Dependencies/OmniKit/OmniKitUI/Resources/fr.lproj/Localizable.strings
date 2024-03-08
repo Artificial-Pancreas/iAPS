@@ -816,7 +816,7 @@ Silence Pod" = "Pod silencieux";
 "Read Pod Status" = "Lire l’état de la pompe";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Diagnostics du pod";
 
 /* Text for read pulse log plus title */
 "Read Pulse Log Plus" = "Read Pulse Log Plus";
