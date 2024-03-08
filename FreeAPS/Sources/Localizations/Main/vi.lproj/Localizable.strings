@@ -1433,6 +1433,14 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Hiển thị chất đạm và chất béo";
 
+
+/* Time of new meal entry */
+"Now" = "Now";
+
+
+/* Display future data table entries */
+"Show Future" = "Show Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
