@@ -127,10 +127,8 @@ struct StatsView: View {
             let glucose = fetchRequestReadings
             // First date
             let previous = glucose.last?.date ?? Date()
-            // Last date (recent)
-            let current = glucose.first?.date ?? Date()
-            // Total time in days
-            let numberOfDays = (current - previous).timeInterval / 8.64E4
+            // Days
+            let numberOfDays = -1 * previous.timeIntervalSinceNow / 8.64E4
 
             let hba1cString = (
                 useUnit == .mmolL ? hba1cs.ifcc
@@ -171,9 +169,7 @@ struct StatsView: View {
             // First date
             let previous = glucose.last?.date ?? Date()
             // Last date (recent)
-            let current = glucose.first?.date ?? Date()
-            // Total time in days
-            let numberOfDays = (current - previous).timeInterval / 8.64E4
+            let numberOfDays = -1 * previous.timeIntervalSinceNow / 8.64E4
 
             VStack(spacing: 5) {
                 Text(numberOfDays < 1 ? "Readings" : "Readings / 24h").font(.subheadline)

@@ -37,6 +37,7 @@ protocol APSManager {
 enum APSError: LocalizedError {
     case pumpError(Error)
     case invalidPumpState(message: String)
+    case bolusInProgress(message: String)
     case glucoseError(message: String)
     case apsError(message: String)
     case deviceSyncError(message: String)
@@ -48,6 +49,8 @@ enum APSError: LocalizedError {
             return "Pump error: \(error.localizedDescription)"
         case let .invalidPumpState(message):
             return "Error: Invalid Pump State: \(message)"
+        case let .bolusInProgress(message):
+            return "Error: Pump is Busy. \(message)"
         case let .glucoseError(message):
             return "Error: Invalid glucose: \(message)"
         case let .apsError(message):
@@ -301,7 +304,10 @@ final class BaseAPSManager: APSManager, Injectable {
         let status = pump.status.pumpStatus
 
         guard !status.bolusing else {
-            return APSError.invalidPumpState(message: "Pump is bolusing")
+            return APSError
+                .bolusInProgress(
+                    message: "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle"
+                )
         }
 
         guard !status.suspended else {
