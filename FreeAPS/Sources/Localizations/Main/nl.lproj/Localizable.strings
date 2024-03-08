@@ -1707,10 +1707,10 @@ Enact a temp Basal or a temp target */
 "Average" = "Gemiddeld";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "Tijd binnen bereik (TIR)";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
+"Average Interval" = "Gemiddelde interval";
 
 /* Median BG */
 "Median" = "Mediaan";
