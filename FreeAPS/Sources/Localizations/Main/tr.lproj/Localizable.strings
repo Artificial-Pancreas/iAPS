@@ -40,6 +40,18 @@
 /* Button */
 "Done" = "Tamam";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Display Emojis as Labels";
+
+/* Calender Option */
+"Display IOB and COB" = "Display IOB and COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Confirm Bolus Faster";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Lütfen Bekleyin";
 
@@ -1433,6 +1445,17 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Display Protein & Fat";
 
+
+/* Time of new meal entry */
+"Now" = "Now";
+
+
+/* Display future data table entries */
+"Show Future" = "Show Future";
+
+/* Hide future data table entries */
+"Hide Future" = "Hide Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1550,6 +1573,10 @@ Enact a temp Basal or a temp target */
 
 /* Description for BeepPreference.extended */
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+
+/* Description for BeepPreference.extended */
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Loop, başlattığınız komutların yanı sıra teslimatı otomatik olarak ayarladığında, onay sesi çalacaktır.";
+>>>>>>> main
 
 /* Label text for expiration reminder default row */
 "Expiration Reminder Default" = "Varsayılan Süre Sonu Hatırlatıcı";
@@ -1705,6 +1732,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Ortalama";
+
+/* TIR Preview Headline */
+"Time In Range" = "Time In Range";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Average Interval";
 
 /* Median BG */
 "Median" = "Orta Değer";

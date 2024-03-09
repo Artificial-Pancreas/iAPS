@@ -40,6 +40,18 @@
 /* Button */
 "Done" = "Готово";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Display Emojis as Labels";
+
+/* Calender Option */
+"Display IOB and COB" = "Display IOB and COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Confirm Bolus Faster";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Зачекайте";
 
@@ -426,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Додати Симулятор";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Замінити";
 
 /* Insulin model */
 "Model" = "МОДЕЛЬ";
@@ -1433,6 +1445,17 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Показати білок і жир";
 
+
+/* Time of new meal entry */
+"Now" = "Now";
+
+
+/* Display future data table entries */
+"Show Future" = "Show Future";
+
+/* Hide future data table entries */
+"Hide Future" = "Hide Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1705,6 +1728,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Середній";
+
+/* TIR Preview Headline */
+"Time In Range" = "Час в Діапазоні";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Середній Інтервал";
 
 /* Median BG */
 "Median" = "Медіана";
