@@ -967,6 +967,9 @@ Połączono z Nightscout!";
 /* */
 "High" = "High";
 
+/* TIR Chart */
+"Very High" = "Very High";
+
 /* */
 "glucose" = "glucose";
 
