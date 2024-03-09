@@ -41,10 +41,10 @@
 "Done" = "Готово";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Відображати Emojis як Мітки";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Відображення IOB і COB";
 
 /* Apple Watch App setting */
 "Confirm Bolus Faster" = "Confirm Bolus Faster";
@@ -1454,7 +1454,7 @@ Enact a temp Basal or a temp target */
 "Show Future" = "Show Future";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Приховати майбутнє";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
