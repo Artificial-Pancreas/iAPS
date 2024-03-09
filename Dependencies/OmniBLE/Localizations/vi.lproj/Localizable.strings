@@ -834,13 +834,13 @@
 "Done" = "Xong";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Chẩn đoán Pod";
 
 /* Text for read pulse log plus title */
 "Read Pulse Log Plus" = "Read Pulse Log Plus";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Đọc thời gian kích hoạt";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Đọc cảnh báo được kích hoạt";

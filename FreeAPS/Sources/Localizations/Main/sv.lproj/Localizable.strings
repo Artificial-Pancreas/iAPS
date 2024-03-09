@@ -1451,7 +1451,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Display future data table entries */
-"Show Future" = "Visa framtida";
+"Show Future" = "Visa";
 
 /* Hide future data table entries */
 "Hide Future" = "Dölj";
