@@ -965,6 +965,9 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "高";
 
+/* TIR Chart */
+"Very High" = "Very High";
+
 /* */
 "glucose" = "葡萄糖";
 
