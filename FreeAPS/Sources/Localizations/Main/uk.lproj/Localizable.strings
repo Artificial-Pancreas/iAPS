@@ -47,7 +47,7 @@
 "Display IOB and COB" = "Відображення IOB і COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Підтвердити Швидкий Болюс";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -1447,11 +1447,11 @@ Enact a temp Basal or a temp target */
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Щойно";
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Показати Майбутнє";
 
 /* Hide future data table entries */
 "Hide Future" = "Приховати майбутнє";
