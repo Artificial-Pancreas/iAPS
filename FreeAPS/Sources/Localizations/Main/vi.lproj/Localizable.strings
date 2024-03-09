@@ -40,6 +40,18 @@
 /* Button */
 "Done" = "Xong";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Hiển thị biểu tượng cảm xúc";
+
+/* Calender Option */
+"Display IOB and COB" = "Hiển thị IOB và COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Xác nhận Bolus nhanh";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Xin đợi chốc lát";
 
@@ -1433,6 +1445,17 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Hiển thị chất đạm và chất béo";
 
+
+/* Time of new meal entry */
+"Now" = "Bây giờ";
+
+
+/* Display future data table entries */
+"Show Future" = "Hiển thị tương lai";
+
+/* Hide future data table entries */
+"Hide Future" = "Ẩn tương lai";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1705,6 +1728,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Average";
+
+/* TIR Preview Headline */
+"Time In Range" = "Trong phạm vi mục tiêu";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Khoảng thời gian trung bình";
 
 /* Median BG */
 "Median" = "Median";
