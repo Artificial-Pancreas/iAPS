@@ -966,6 +966,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* */
 "High" = "Alto";
 
+/* TIR Chart */
+"Very High" = "Very High";
+
 /* */
 "glucose" = "glucosa";
 
