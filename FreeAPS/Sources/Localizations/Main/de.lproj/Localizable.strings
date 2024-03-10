@@ -74,7 +74,7 @@
 "was delivered" = "wurde inijiziert";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " Minuten seit des Auslösens auf Entfernung via Nightscout, von einem Betreuer oder einem Elternteil. Möchtest du immer noch einen Bolus?\n\nDer vorhergesagte Blutzucker ohne weiteren Bolus ist: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "Ein Remote Bolus wurde gerade abgegeben!";
