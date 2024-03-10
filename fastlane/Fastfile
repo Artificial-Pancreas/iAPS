@@ -169,7 +169,6 @@ platform :ios do
     ])
     
     configure_bundle_id("FreeAPSWatch", "#{APP_IDENTIFIER}.watchkitapp", [
-
       Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
 

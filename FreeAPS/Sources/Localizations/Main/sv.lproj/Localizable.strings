@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Spara måltid utan bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Status";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDetta är mer insulin än din maxdos-inställning!\nÄr du säker på att du vill lägga till ";
 
@@ -965,6 +971,9 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "Högt";
 
+/* TIR Chart */
+"Very High" = "Mycket Högt";
+
 /* */
 "glucose" = "glukos";
 
@@ -1451,7 +1460,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Display future data table entries */
-"Show Future" = "Visa framtida";
+"Show Future" = "Visa";
 
 /* Hide future data table entries */
 "Hide Future" = "Dölj";

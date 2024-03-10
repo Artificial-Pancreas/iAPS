@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continuar sin administrar bolo";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Estado";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "¡La cantidad es mayor que el ajuste del bolo máximo!\n ¿Está seguro de que desea añadir ";
 
@@ -965,6 +971,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* */
 "High" = "Alto";
+
+/* TIR Chart */
+"Very High" = "Very High";
 
 /* */
 "glucose" = "glucosa";

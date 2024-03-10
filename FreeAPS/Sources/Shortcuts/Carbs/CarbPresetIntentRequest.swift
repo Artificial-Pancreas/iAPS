@@ -19,7 +19,8 @@ import Foundation
                 protein: Decimal(quantityProtein),
                 note: "add with shortcuts",
                 enteredBy: CarbsEntry.manual,
-                isFPU: false, fpuID: nil
+                isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false,
+                fpuID: (quantityFat > 0 || quantityProtein > 0) ? UUID().uuidString : nil
             )]
         )
         var resultDisplay: String
