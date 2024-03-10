@@ -17,7 +17,7 @@
 "Continue without bolus" = "Continuer sans bonus";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Enregistrer le repas sans bolus";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Statut";
@@ -53,7 +53,7 @@
 "Display IOB and COB" = "Afficher l'insuline active (IA) et les glucides actifs (GA)";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Confirmer un bolus avec moins de rotation";
 
 /* Setting Section */
 "UI/UX" = "Interface et expérience utilisateur";
@@ -74,7 +74,7 @@
 "was delivered" = "a été livré";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes depuis le déclenchement à distance via Nightscout par un soignant ou un parent. Voulez-vous toujours un bolus ?\n\nLa glycémie prédite, si vous ne le faites pas, est : ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "Un bolus à distance vient d'être livré !";
@@ -969,10 +969,10 @@ Enact a temp Basal or a temp target */
 "Low" = "Faible";
 
 /* */
-"High" = "Élevée";
+"High" = "Élevé";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Très élevé";
 
 /* */
 "glucose" = "glycémie";
@@ -1463,7 +1463,7 @@ Enact a temp Basal or a temp target */
 "Show Future" = "Afficher le futur";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Cacher données futures";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1697,7 +1697,7 @@ Enact a temp Basal or a temp target */
 "Low" = "Faible";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "Élevée";
+"High" = "Élevé";
 
 /* In Range */
 "In Range" = "À portée";
