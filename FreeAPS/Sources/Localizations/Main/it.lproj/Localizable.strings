@@ -17,7 +17,7 @@
 "Continue without bolus" = "Continua senza eseguire un bolo";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Salva il pasto senza il bolo";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Stato";
@@ -47,13 +47,13 @@
 "Done" = "Fine";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Visualizza Emoji come etichette";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Mostra IOB e COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Conferma Bolo Più Veloce";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -444,7 +444,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Aggiungi Simulazione microinfusore";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Sostituisci";
 
 /* Insulin model */
 "Model" = "Modello";
@@ -972,7 +972,7 @@ Enact a temp Basal or a temp target */
 "High" = "Alto";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Molto alta";
 
 /* */
 "glucose" = "glicemie";
@@ -1456,14 +1456,14 @@ Enact a temp Basal or a temp target */
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Adesso";
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Visualizza Futuro";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Nascondi Futuro";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1739,7 +1739,7 @@ Enact a temp Basal or a temp target */
 "Average" = "Media";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "Tempo nell’intervallo";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Average Interval";
