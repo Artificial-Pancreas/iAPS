@@ -496,9 +496,31 @@ extension DanaKitPumpManager: PumpManager {
             }
             
             // Increase status update date, to prevent double bolus entries
-            self.state.lastStatusDate = Date()
+            self.state.lastStatusDate = Date.now
             self.state.bolusState = .noBolus
             self.notifyStateDidChange()
+            
+            guard let doseEntry = self.doseEntry else {
+                completion(.success(nil))
+                return
+            }
+            
+            let dose = doseEntry.toDoseEntry()
+            self.doseEntry = nil
+            self.doseReporter = nil
+            
+            guard let dose = dose else {
+                completion(.success(nil))
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.pumpDelegate.notify { (delegate) in
+                    delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.bolus(dose: dose, units: dose.deliveredUnits ?? 0)], lastReconciliation: Date.now, completion: { _ in })
+                }
+                
+                self.notifyStateDidChange()
+            }
             
             completion(.success(nil))
         } catch {
@@ -1242,7 +1264,6 @@ extension DanaKitPumpManager {
     }
     
     func notifyBolusDone(deliveredUnits: Double) {
-        self.state.lastStatusDate = Date()
         self.state.bolusState = .noBolus
         self.state.lastStatusDate = Date.now
         self.notifyStateDidChange()
