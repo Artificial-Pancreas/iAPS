@@ -816,7 +816,7 @@ Silence Pod" = "Stille Pod";
 "Read Pod Status" = "Pod-Status ablesen";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Diagnose-Infos";
 
 /* Text for read pulse log plus title */
 "Read Pulse Log Plus" = "Read Pulse Log Plus";
