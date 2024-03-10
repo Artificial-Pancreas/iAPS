@@ -7,6 +7,7 @@ struct PreviewChart: View {
     @Binding var highLimit: Decimal
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) private var fontSize
 
     private var tirFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -102,116 +103,117 @@ struct PreviewChart: View {
             }
         }
 
-        return HStack {
-            VStack {
-                Chart(data) { item in
-                    BarMark(
-                        x: .value("TIR", item.type),
-                        y: .value("Percentage", item.percentage),
-                        width: .fixed(60)
-                    )
-                    .foregroundStyle(by: .value("Group", item.group))
-                    .annotation(position: .trailing) {
-                        if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
-                            HStack {
-                                if item.percentage < 1 {
-                                    Text("< 1%")
-                                } else {
-                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                }
-                                Text(item.group)
-                            }.font(.previewNormal)
-                                .padding(.leading, 20)
-                        } else if item.group == NSLocalizedString(
-                            "Low",
-                            comment: ""
-                        ), item.percentage > 0.0 {
-                            HStack {
-                                if item.percentage < 1 {
-                                    Text("< 1%")
-                                } else {
-                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                }
-                                Text(item.group)
+        return VStack {
+            Text("Time In Range").padding(.bottom, 10).font(.previewHeadline)
+
+            Chart(data) { item in
+                BarMark(
+                    x: .value("TIR", item.type),
+                    y: .value("Percentage", item.percentage),
+                    width: .fixed(60)
+                )
+                .foregroundStyle(by: .value("Group", item.group))
+                .annotation(position: .trailing) {
+                    if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
+                        HStack {
+                            if item.percentage < 1 {
+                                Text("< 1%")
+                            } else {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
                             }
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        } else if item.group == NSLocalizedString(
-                            "High",
-                            comment: ""
-                        ), item.percentage > 0 {
-                            HStack {
-                                if item.percentage < 1 {
-                                    Text("< 1%")
-                                } else {
-                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                }
-                                Text(item.group)
-                            }
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        } else if item.group == NSLocalizedString(
-                            "Very High",
-                            comment: ""
-                        ), item.percentage > 0 {
-                            HStack {
-                                if item.percentage < 1 {
-                                    Text("< 1%")
-                                } else {
-                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                }
-                                Text(item.group)
-                            }
-                            .offset(x: 0, y: -5)
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        } else if item.group == NSLocalizedString(
-                            "Very Low",
-                            comment: ""
-                        ), item.percentage > 0 {
-                            HStack {
-                                if item.percentage < 1 {
-                                    Text("< 1%")
-                                } else {
-                                    Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                                }
-                                Text(item.group)
-                            }
-                            .offset(x: 0, y: 5)
-                            .font(.previewSmall)
-                            .padding(.leading, 20)
-                        }
-                    }
-                }
-                .chartForegroundStyleScale([
-                    NSLocalizedString(
+                            Text(item.group)
+                        }.font(.previewNormal)
+                            .padding(.leading, 10)
+                    } else if item.group == NSLocalizedString(
                         "Low",
                         comment: ""
-                    ): .red,
-                    NSLocalizedString("In Range", comment: ""): .darkGreen,
-                    NSLocalizedString(
+                    ), item.percentage > 0.0 {
+                        HStack {
+                            if item.percentage < 1 {
+                                Text("< 1%")
+                            } else {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                            }
+                            Text(item.group)
+                        }
+                        .font(.loopFont)
+                        .padding(.leading, 10)
+                    } else if item.group == NSLocalizedString(
                         "High",
                         comment: ""
-                    ): .yellow,
-                    NSLocalizedString(
+                    ), item.percentage > 0 {
+                        HStack {
+                            if item.percentage < 1 {
+                                Text("< 1%")
+                            } else {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                            }
+                            Text(item.group)
+                        }
+                        .font(.loopFont)
+                        .padding(.leading, 10)
+                    } else if item.group == NSLocalizedString(
                         "Very High",
                         comment: ""
-                    ): .red,
-                    NSLocalizedString(
+                    ), item.percentage > 0 {
+                        HStack {
+                            if item.percentage < 1 {
+                                Text("< 1%")
+                            } else {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                            }
+                            Text(item.group)
+                        }
+                        .offset(x: 0, y: -5)
+                        .font(.loopFont)
+                        .padding(.leading, 10)
+                    } else if item.group == NSLocalizedString(
                         "Very Low",
                         comment: ""
-                    ): .darkRed,
-                    "Separator": colorScheme == .dark ? .black : .white
-                ])
-                .chartXAxis(.hidden)
-                .chartYAxis(.hidden)
-                .chartLegend(.hidden)
-                .padding(.bottom, 15)
-                .frame(maxWidth: UIScreen.main.bounds.width / 5, alignment: .leading)
-            }.frame(maxHeight: 200)
-        }
-        .padding(.top, 20).padding(.leading, 20)
-        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
+                    ), item.percentage > 0 {
+                        HStack {
+                            if item.percentage < 1 {
+                                Text("< 1%")
+                            } else {
+                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
+                            }
+                            Text(item.group)
+                        }
+                        .offset(x: 0, y: 5)
+                        .font(.loopFont)
+                        .padding(.leading, 10)
+                    }
+                }
+            }
+            .chartForegroundStyleScale([
+                NSLocalizedString(
+                    "Low",
+                    comment: ""
+                ): .red,
+                NSLocalizedString("In Range", comment: ""): .darkGreen,
+                NSLocalizedString(
+                    "High",
+                    comment: ""
+                ): .yellow,
+                NSLocalizedString(
+                    "Very High",
+                    comment: ""
+                ): .red,
+                NSLocalizedString(
+                    "Very Low",
+                    comment: ""
+                ): .darkRed,
+                "Separator": colorScheme == .dark ? .black : .white
+            ])
+            .chartXAxis(.hidden)
+            .chartYAxis(.hidden)
+            .chartLegend(.hidden)
+            .padding(.bottom, 15)
+            .frame(maxWidth: UIScreen.main.bounds.width / 5)
+            .offset(x: -UIScreen.main.bounds.width / 5, y: 0)
+        }.frame(maxHeight: 200)
+            .padding(.top, 20)
+            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
     }
 
     private func previewTir() -> [(decimal: Decimal, string: String)] {

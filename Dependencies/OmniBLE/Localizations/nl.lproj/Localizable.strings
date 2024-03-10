@@ -682,7 +682,7 @@
 "Pod Activated" = "Pod geactiveerd";
 
 /* description label for active time pod details row */
-"Active Time" = "Activatie tijd";
+"Active Time" = "Actieve duur";
 
 /* description label for last status date pod details row */
 "Last Status" = "Laatste status";
@@ -718,7 +718,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om in te stellen bij welk aantal eenheden je wilt worden herinnerd.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Reservoir bijna leeg";
+"Low Reservoir" = "Laag reservoir niveau";
 
 /* */
 "Save" = "Opslaan";
@@ -829,3 +829,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Lees pompstatus";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "OK";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Pod Diagnostics";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Read Activation Time";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Read Triggered Alerts";

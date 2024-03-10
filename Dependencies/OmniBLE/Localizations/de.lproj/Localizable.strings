@@ -493,7 +493,7 @@
 "Wait until insertion is completed." = "Warten Sie, bis die Einführung abgeschlossen ist.";
 
 /* Label text for step one of insert cannula instructions */
-"Slide the switch below to start cannula insertion." = "Schieben Sie den Schalter unten, um mit dem Einfügen von Kanülen zu beginnen.";
+"Slide the switch below to start cannula insertion." = "Verschieben Sie den Schalter unten, um mit der Kanüleneinfügen zu beginnen.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Eingeführt";
@@ -829,3 +829,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Pod-Status ablesen";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Fertig";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Pod Diagnostics";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Read Activation Time";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Read Triggered Alerts";

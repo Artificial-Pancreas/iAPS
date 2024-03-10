@@ -37,6 +37,16 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
+struct CompactSectionSpacing: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            return content
+                .listSectionSpacing(.compact)
+        } else {
+            return content }
+    }
+}
+
 struct AddShadow: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
@@ -153,6 +163,21 @@ struct HeaderBackground: View {
     var body: some View {
         Rectangle()
             .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1))
+    }
+}
+
+struct ClockOffset: View {
+    let mdtPump: Bool
+    var body: some View {
+        ZStack {
+            Image(systemName: "clock.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 20)
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(Color(.warning))
+                .offset(x: 10, y: !mdtPump ? -20 : -13)
+        }
     }
 }
 
@@ -290,6 +315,10 @@ extension View {
         onTapGesture {
             view.state.showModal(for: screen)
         }
+    }
+
+    func compactSectionSpacing() -> some View {
+        modifier(CompactSectionSpacing())
     }
 
     func asAny() -> AnyView { .init(self) }

@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continuer sans bonus";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Statut";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nLe montant est supérieur à votre paramètre de Bolus Max ! \nÊtes-vous sûr de vouloir ajouter ";
 
@@ -40,6 +46,18 @@
 /* Button */
 "Done" = "Terminé";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Afficher des émojis en tant qu'étiquettes";
+
+/* Calender Option */
+"Display IOB and COB" = "Afficher l'insuline active (IA) et les glucides actifs (GA)";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Confirm Bolus Faster";
+
+/* Setting Section */
+"UI/UX" = "Interface et expérience utilisateur";
+
 /*  */
 "Wait please" = "Merci de patienter";
 
@@ -48,6 +66,18 @@
 
 /* Bolus progress view */
 "of" = "de";
+
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "Un bolus à distance ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "a été livré";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "Un bolus à distance vient d'être livré !";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Dernier calcul à";
@@ -302,6 +332,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "Injecter";
 
+/* Start a temp target or a profile override */
+"Start" = "Démarrer";
+
 /* */
 "Manual Temp Basal" = "Basal temporaire manuel";
 
@@ -359,6 +392,9 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Contrôle à distance";
 
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Autoriser le contrôle à distance d'iAPS";
+
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nVeuillez maintenant vérifier soigneusement tous vos nouveaux paramètres:\n\n* Paramètres basaux\n * Ratios glucidiques\n * Objectifs glycémiques\n * Sensibilité à l'insuline\n * DIA\n\n dans iAPS Paramètres > Configuration.\n\nDes paramètres de profil incorrects ou invalides peuvent avoir des effets désastreux.";
 
@@ -406,6 +442,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Simulator pump */
 "Add Simulator" = "Ajouter un simulateur";
+
+/* View/Header when pod expired */
+"Replace" = "Remplacer";
 
 /* Insulin model */
 "Model" = "Modèle";
@@ -932,6 +971,9 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "Élevée";
 
+/* TIR Chart */
+"Very High" = "Very High";
+
 /* */
 "glucose" = "glycémie";
 
@@ -1412,6 +1454,17 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Afficher les protéines et graisses";
 
+
+/* Time of new meal entry */
+"Now" = "Maintenant";
+
+
+/* Display future data table entries */
+"Show Future" = "Afficher le futur";
+
+/* Hide future data table entries */
+"Hide Future" = "Hide Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1510,7 +1563,7 @@ Enact a temp Basal or a temp target */
 "No Error" = "Aucune erreur";
 
 /* description label for active time pod details row */
-"Active Time" = "Heure d’activation";
+"Active Time" = "Durée d’activité";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Désactivé";
@@ -1684,6 +1737,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Moyenne";
+
+/* TIR Preview Headline */
+"Time In Range" = "Temps dans la plage cible";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Intervalle moyen";
 
 /* Median BG */
 "Median" = "Médiane";
@@ -2029,13 +2088,13 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Ajuster la constante ISF Dynamique";
+"Adjust Dynamic ISF constant" = "Ajuster la constante du FSI Dynamique";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ISF constant" = "Ajuster la constante ISF Dynamique";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Activer ISF dynamique";
+"Enable Dynamic ISF" = "Activer le facteur de sensibilité à l'insuline (FSI) dynamique";
 
 /* Headline "Enable Dynamic ISF" */
 "Enable Dynamic ISF" = "Activer le facteur de sensibilité à l'insuline (FSI) dynamique";
@@ -2059,7 +2118,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Ajuster la constante du FSI Dynamique";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Ajustement individuel des ratios dynamiques calculés. La valeur par défaut est de 0,5. Plus la valeur est élevée, plus la correction de votre facteur de sensibilité à l'insuline (ISF) et/ou de votre ratio insuline/glucides (I:G) sera importante en cas de glycémie élevée ou basse. La correction maximale/minimale est déterminée par les réglages min/max dans Autosens.\n\nPour la fonction Sigmoid, un facteur d'ajustement de 0,4 à 0,5 est recommandé pour commencer.\n\nPour la formule logarithmique, il existe moins de consensus, mais un démarrage autour de 0,8 est probablement approprié pour la plupart des utilisateurs adultes. Pour les utilisateurs plus jeunes, il est recommandé de démarrer encore plus bas lors de l'utilisation de la formule logarithmique, afin d'éviter un traitement trop agressif.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Utiliser la fonction Sigmoid";
@@ -2080,13 +2139,13 @@ Enact a temp Basal or a temp target */
 "Minimum Threshold Setting" = "Réglage du seuil minimal";
 
 /* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ";
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Ce paramètre vous permet de choisir un niveau endessous duquel aucune insuline ne sera donnée.\n\nLe seuil utilise la plus grande quantité de votre seuil de réglage et le seuil calculé :\n\nGlycémie cible - (Glycémie cible - 40) / 2\n, en utilisant mg/dl comme unité de glucose.\n\nPar exemple, si votre glycémie cible est ";
 
 /* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "the threshold will be ";
+"the threshold will be " = "le seuil sera ";
 
 /* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "unless your threshold setting is set higher:";
+"unless your threshold setting is set higher:" = "à moins que votre seuil ne soit défini plus haut :";
 
 /* Threshold Table Columns Title */
 "Setting" = "Paramètre";
@@ -2119,13 +2178,13 @@ Enact a temp Basal or a temp target */
 "Display and allow Fat and Protein entries" = "Afficher et autoriser les entrées de matières grasses et protéines";
 
 /* UI/UX option */
-"Add Meal View settings " = "Add Meal View settings ";
+"Add Meal View settings " = "Paramètres de : \"Entrer un repas\" ";
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Afficher le bouton de cible temporaire";
 
 /* UI/UX option */
-"Home View Button Panel " = "Home View Button Panel ";
+"Home View Button Panel " = "Panneau des boutons sur la vue d'accueil ";
 
 /* UI/UX title */
 "Home Chart settings " = "Paramètres du graphique de la page d'accueil ";
@@ -2148,10 +2207,10 @@ Enact a temp Basal or a temp target */
 "Normally glucose is colored red only when over or under your notification limits for high/low" = "Normalement, la valeur de glucose est en rouge uniquement lorsqu'elle est supérieure ou inférieure à vos limites de notification pour les valeurs hautes/basses";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+"Horizontal Scroll View Visible hours" = "Heures visibles dans le défilement horizontal de la graphique principale";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+"Display Time Interval Setting Button" = "Afficher le bouton de réglage des heures visibles";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";
@@ -2160,10 +2219,10 @@ Enact a temp Basal or a temp target */
 "Dynamic ISF" = "Facteur de sensibilité à l'insuline (FSI) dynamique";
 
 /* Notification option */
-"Live Activity" = "Live Activity";
+"Live Activity" = "Activité en direct";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'activité en direct affiche la glycémie sur l'écran de verrouillage et sur l'île dynamique (si disponible)";
 
 /* Notification option */
 "Show Live activity" = "Afficher l'activité en direct";

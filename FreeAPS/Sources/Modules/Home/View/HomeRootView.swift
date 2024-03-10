@@ -120,7 +120,7 @@ extension Home {
                 battery: $state.battery,
                 name: $state.pumpName,
                 expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.timerDate,
+                timerDate: $state.timerDate, timeZone: $state.timeZone,
                 state: state
             )
             .onTapGesture {
@@ -461,9 +461,23 @@ extension Home {
 
         var preview: some View {
             addBackground()
-                .frame(maxWidth: .infinity, minHeight: 170, alignment: .topLeading)
-                .overlay(alignment: .topLeading) {
+                .frame(minHeight: 200)
+                .overlay {
                     PreviewChart(readings: $state.readings, lowLimit: $state.lowGlucose, highLimit: $state.highGlucose)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+                .onTapGesture {
+                    state.showModal(for: .statistics)
+                }
+        }
+
+        var loopPreview: some View {
+            addBackground()
+                .frame(minHeight: 190)
+                .overlay {
+                    LoopsView(loopStatistics: $state.loopStatistics)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -589,6 +603,7 @@ extension Home {
                             RaisedRectangle()
                             chart
                             preview.padding(.top, 15)
+                            loopPreview.padding(.top, 15)
                         }
                     }
                     .scrollIndicators(.hidden)

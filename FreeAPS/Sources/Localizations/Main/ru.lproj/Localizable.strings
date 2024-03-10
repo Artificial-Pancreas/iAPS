@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Продолжить без болюса";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Статус";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nКоличество превышает максимальную дозу болюса! \nВы уверены, что хотите добавить ";
 
@@ -40,6 +46,18 @@
 /* Button */
 "Done" = "Готово";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Display Emojis as Labels";
+
+/* Calender Option */
+"Display IOB and COB" = "Display IOB and COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Confirm Bolus Faster";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Подождите";
 
@@ -48,6 +66,18 @@
 
 /* Bolus progress view */
 "of" = "из";
+
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "Дистанционный Болюс ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "был введен";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " минут назад, запущенный удаленно из Nightscout лицом, осуществляющим уход, или родителем. Вы все еще хотите выполнить болюс?\n\nПрогнозируемый уровень глюкозы, если вы не подтверждаете болюс, составляет: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "Дистанционный Болюс был только что введен!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Принято в";
@@ -302,6 +332,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "Запустить";
 
+/* Start a temp target or a profile override */
+"Start" = "Start";
+
 /* */
 "Manual Temp Basal" = "Ручная ВБС";
 
@@ -359,6 +392,9 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Удаленное управление";
 
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Разрешить дистанционное управление iAPS";
+
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nПожалуйста, проверьте все ваши новые настройки:\n\n* Настройки базала\n * Углеводные коэффициенты\n * Целевой диапазон\n * Чувствительность к инсулину\n\n в настройках iAPS Настройки > Конфигурация.\n\nНекорректные настройки профиля могут привести к катастрофическим последствиям.";
 
@@ -406,6 +442,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Simulator pump */
 "Add Simulator" = "Добавить Cимулятор";
+
+/* View/Header when pod expired */
+"Replace" = "Replace";
 
 /* Insulin model */
 "Model" = "Модель";
@@ -932,6 +971,9 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "Высокий";
 
+/* TIR Chart */
+"Very High" = "Very High";
+
 /* */
 "glucose" = "глюкоза";
 
@@ -1412,6 +1454,17 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Отображать белки и жиры";
 
+
+/* Time of new meal entry */
+"Now" = "Now";
+
+
+/* Display future data table entries */
+"Show Future" = "Show Future";
+
+/* Hide future data table entries */
+"Hide Future" = "Hide Future";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1684,6 +1737,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Средний";
+
+/* TIR Preview Headline */
+"Time In Range" = "Time In Range";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Average Interval";
 
 /* Median BG */
 "Median" = "Медиана";
@@ -2059,7 +2118,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Настроить константу динамического ISF";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Индивидуальная настройка рассчитанных динамических коэффициентов. Значение по умолчанию равно 0.5. Чем выше значение, тем больше будет коррекция вашего ISF/CR для высокого или низкого уровня глюкозы в крови. Максимальная/минимальная коррекция определяется настройками autosens min/max.\n\nДля сигмоидной функции рекомендуется для начала использовать коэффициент 0.4 - 0.5.\n\nДля логарифмической формулы существует меньшее единодушие, но для большинства взрослых пользователей, вероятно, подходит значение, начинающееся примерно с 0.8. Для более молодых пользователей рекомендуется начинать с еще меньшего значения при использовании логарифмической формулы, чтобы избежать чрезмерно агрессивного лечения.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Использовать Сигмоидную функцию";

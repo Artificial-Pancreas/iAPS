@@ -814,3 +814,15 @@ Silence Pod" = "Pod im lặng";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Đọc tình trạng pod";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Chẩn đoán Pod";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Đọc thời gian kích hoạt";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Đọc cảnh báo được kích hoạt";

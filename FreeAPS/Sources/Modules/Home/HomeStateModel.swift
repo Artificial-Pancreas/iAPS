@@ -66,10 +66,12 @@ extension Home {
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
         @Published var readings: [Readings] = []
+        @Published var loopStatistics: (Int, Int, Double, String) = (0, 0, 0, "")
         @Published var standing: Bool = false
         @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
+        @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = true
         @Published var timeSettings: Bool = true
 
@@ -89,6 +91,7 @@ extension Home {
             setupAnnouncements()
             setupCurrentPumpTimezone()
             setupOverrideHistory()
+            setupLoopStats()
 
             suggestion = provider.suggestion
             overrideHistory = provider.overrideHistory()
@@ -127,7 +130,6 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
-            broadcaster.register(OverrideObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
 
             subscribeSetting(\.hours, on: $hours, initial: {
@@ -238,7 +240,24 @@ extension Home {
         }
 
         func cancelProfile() {
-            OverrideStorage().cancelProfile()
+            let os = OverrideStorage()
+            // Is there a saved Override?
+            if let activeOveride = os.fetchLatestOverride().first {
+                let presetName = os.isPresetName()
+                // Is the Override a Preset?
+                if let preset = presetName {
+                    if let duration = os.cancelProfile() {
+                        // Update in Nightscout
+                        nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                    }
+                } else {
+                    let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
+                        .formatted() + " %" : "Custom"
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                    }
+                }
+            }
             setupOverrideHistory()
         }
 
@@ -359,6 +378,31 @@ extension Home {
             }
         }
 
+        private func setupLoopStats() {
+            let loopStats = CoreDataStorage().fetchLoopStats(interval: DateFilter().today)
+            let loops = loopStats.compactMap({ each in each.loopStatus }).count
+            let readings = CoreDataStorage().fetchGlucose(interval: DateFilter().today).compactMap({ each in each.glucose }).count
+            let percentage = min(readings != 0 ? (Double(loops) / Double(readings) * 100) : 0, 100)
+            // First loop date
+            let time = (loopStats.last?.start ?? Date.now).addingTimeInterval(-5.minutes.timeInterval)
+
+            let average = -1 * (time.timeIntervalSinceNow / 60) / max(Double(loops), 1)
+
+            loopStatistics = (
+                loops,
+                readings,
+                percentage,
+                average.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min"
+            )
+        }
+
+        private func setupOverrides() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.overrides = self.provider.overrides()
+            }
+        }
+
         private func setupAnnouncements() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -451,11 +495,11 @@ extension Home.StateModel:
     EnactedSuggestionObserver,
     PumpBatteryObserver,
     PumpReservoirObserver,
-    PumpTimeZoneObserver,
-    OverrideObserver
+    PumpTimeZoneObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
+        setupLoopStats()
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
@@ -463,10 +507,7 @@ extension Home.StateModel:
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
         setupOverrideHistory()
-    }
-
-    func overrideHistoryDidUpdate(_: [OverrideHistory]) {
-        setupOverrideHistory()
+        setupLoopStats()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -519,6 +560,7 @@ extension Home.StateModel:
         enactedSuggestion = suggestion
         setStatusTitle()
         setupOverrideHistory()
+        setupLoopStats()
     }
 
     func pumpBatteryDidChange(_: Battery) {
