@@ -298,7 +298,7 @@
 "Pump battery 0%" = "Батарея насоса 0%"
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Аккумулятор насоса разряжен. Замените его сейчас!"
+"Pump battery is empty. Replace it now!" = "Батарея насоса разряжена. Замените его сейчас!"
 
 /* Alert title for pumpError */
 "Pump error" = "Ошибка насоса"
@@ -399,3 +399,9 @@
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Потеря сигнала"
+
+/* Text for Day unit */
+"day(s)" = "день(а)"
+
+/* Text for cannula age */
+"Cannula age" = "Возраст канюли"

@@ -23,6 +23,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingSilentTone: Bool = false
     @Published var silentTone: Bool = false
     @Published var basalProfileNumber: UInt8 = 0
+    @Published var cannulaAge: String = ""
     
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
@@ -56,6 +57,14 @@ class DanaKitSettingsViewModel : ObservableObject {
     public var firmwareVersion: UInt8? {
         self.pumpManager?.state.pumpProtocol
     }
+    
+    public var isTempBasal: Bool {
+        guard let pumpManager = self.pumpManager else {
+            return false
+        }
+        
+        return pumpManager.state.basalDeliveryOrdinal == .tempBasal && pumpManager.state.tempBasalEndsAt > Date.now
+    }
 
     
     let basalRateFormatter: NumberFormatter = {
@@ -76,7 +85,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         return formatter
-    }
+    }()
     
     public init(_ pumpManager: DanaKitPumpManager?, _ didFinish: (() -> Void)?) {
         self.pumpManager = pumpManager
@@ -97,6 +106,10 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.basalProfileNumber = self.pumpManager?.state.basalProfileNumber ?? 0
         self.showPumpTimeSyncWarning = self.pumpManager?.state.shouldShowTimeWarning() ?? false
         updateBasalRate()
+        
+        if let cannulaDate = self.pumpManager?.state.cannulaDate {
+            self.cannulaAge = "\(round(cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+        }
         
         self.basalButtonText = self.updateBasalButtonText()
         
@@ -136,7 +149,7 @@ class DanaKitSettingsViewModel : ObservableObject {
             return ""
         }
         
-        return self.dateFormatter().string(from: date)
+        return self.dateFormatter.string(from: date)
     }
     
     func didBolusSpeedChanged(_ bolusSpeed: BolusSpeed) {
@@ -223,7 +236,7 @@ class DanaKitSettingsViewModel : ObservableObject {
             return
         }
         
-        if pumpManager.state.basalDeliveryOrdinal == .tempBasal && pumpManager.state.tempBasalEndsAt > Date.now {
+        if isTempBasal {
             // Stop temp basal
             self.pumpManager?.enactTempBasal(unitsPerHour: 0, for: 0, completion: { error in
                 DispatchQueue.main.async {
@@ -264,7 +277,7 @@ class DanaKitSettingsViewModel : ObservableObject {
             return LocalizedString("Resume delivery", comment: "Dana settings resume delivery")
         }
         
-        if pumpManager.state.basalDeliveryOrdinal == .tempBasal && pumpManager.state.tempBasalEndsAt > Date.now {
+        if isTempBasal {
             return LocalizedString("Stop temp basal", comment: "Dana settings stop temp basal")
         }
         

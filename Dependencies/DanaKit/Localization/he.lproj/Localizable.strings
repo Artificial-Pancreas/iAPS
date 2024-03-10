@@ -2,7 +2,7 @@
 "loading" = "טוען"
 
 /* Title for DanaKitSetupView */
-"Dana-i/RS Setup" = "הגדרות Dana-i/RS"
+"Dana-i/RS Setup" = "הגדרת Dana-i/RS"
 
 /* Subtitle for DanaKitSetupView */
 "Select your pump" = "בחר את המשאבה שלך"
@@ -399,3 +399,9 @@
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "אובדן אות"
+
+/* Text for Day unit */
+"day(s)" = "ימים"
+
+/* Text for cannula age */
+"Cannula age" = "גיל קנולה"

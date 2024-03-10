@@ -119,6 +119,13 @@ struct DanaKitSettingsView: View {
                     Text(String(viewModel.formatDate(viewModel.lastSync)))
                         .foregroundColor(.secondary)
                 }
+                
+                HStack {
+                    Text(LocalizedString("Cannula age", comment: "Text for cannula age")).foregroundColor(Color.primary)
+                    Spacer()
+                    Text(String(viewModel.cannulaAge))
+                        .foregroundColor(.secondary)
+                }
             }
             
             Section(header: SectionHeader(label: LocalizedString("Configuration", comment: "The title of the configuration section in DanaKit settings")))
@@ -302,10 +309,12 @@ struct DanaKitSettingsView: View {
     }
     
     var deliverySectionTitle: String {
-        if !self.viewModel.isSuspended {
-            return LocalizedString("Scheduled Basal", comment: "Title of insulin delivery section")
-        } else {
+        if self.viewModel.isSuspended {
             return LocalizedString("Insulin Delivery", comment: "Title of insulin delivery section")
+        } else if viewModel.isTempBasal {
+            return LocalizedString("Temp Basal", comment: "Pump Event title for UnfinalizedDose with doseType of .tempBasal")
+        } else {
+            return LocalizedString("Scheduled Basal", comment: "Title of insulin delivery section")
         }
     }
     

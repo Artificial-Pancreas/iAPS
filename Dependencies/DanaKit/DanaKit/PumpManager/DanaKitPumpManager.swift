@@ -336,6 +336,10 @@ extension DanaKitPumpManager: PumpManager {
                     return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Prime \(item.value!)U", type: .prime, alarmType: nil)
                     
                 case HistoryCode.RECORD_TYPE_REFILL:
+                    if self.state.cannulaDate == nil || item.timestamp > self.state.cannulaDate! {
+                        self.state.cannulaDate = item.timestamp
+                    }
+                    
                     return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Rewind \(item.value!)U", type: .rewind, alarmType: nil)
                     
                 case HistoryCode.RECORD_TYPE_TEMP_BASAL:

@@ -399,3 +399,9 @@
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Mất tín hiệu"
+
+/* Text for Day unit */
+"day(s)" = "(các) ngày"
+
+/* Text for cannula age */
+"Cannula age" = "Tuổi ống thông"

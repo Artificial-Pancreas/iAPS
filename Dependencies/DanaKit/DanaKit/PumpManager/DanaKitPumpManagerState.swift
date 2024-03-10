@@ -58,6 +58,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.useSilentTones = rawValue["useSilentTones"] as? Bool ?? true
         self.batteryRemaining = rawValue["batteryRemaining"] as? Double ?? 0
         self.basalProfileNumber = rawValue["basalProfileNumber"] as? UInt8 ?? 0
+        self.cannulaDate = rawValue["cannulaDate"] as? Date
         
         if let bolusSpeedRaw = rawValue["bolusSpeed"] as? BolusSpeed.RawValue {
             bolusSpeed = BolusSpeed(rawValue: bolusSpeedRaw) ?? .speed12
@@ -119,6 +120,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.targetBg = nil
         self.useSilentTones = false
         self.batteryRemaining = 0
+        self.cannulaDate = nil
     }
     
     public var rawValue: RawValue {
@@ -159,6 +161,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["useSilentTones"] = self.useSilentTones
         value["batteryRemaining"] = self.batteryRemaining
         value["basalProfileNumber"] = self.basalProfileNumber
+        value["cannulaDate"] = self.cannulaDate
         
         return value
     }
@@ -216,6 +219,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public var pumpTimeSyncedAt: Date?
     
     public var basalProfileNumber: UInt8 = 0
+    
+    public var cannulaDate: Date?
     
     /// User options
     public var isTimeDisplay24H: Bool

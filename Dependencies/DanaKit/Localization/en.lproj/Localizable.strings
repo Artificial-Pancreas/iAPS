@@ -399,3 +399,9 @@
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Signal Loss"
+
+/* Text for Day unit */
+"day(s)" = "day(s)"
+
+/* Text for cannula age */
+"Cannula age" = "Cannula age"
