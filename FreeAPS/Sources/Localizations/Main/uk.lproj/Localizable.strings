@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Продовжити без болюсу";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Статус";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nКількість перевищує ваш максимальний болюс! \nВи впевнені, що хочете додати";
 
@@ -964,6 +970,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "High" = "Високий";
+
+/* TIR Chart */
+"Very High" = "Дуже Високий";
 
 /* */
 "glucose" = "Глюкоза";

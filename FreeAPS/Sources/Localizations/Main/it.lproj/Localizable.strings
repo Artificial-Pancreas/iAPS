@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continua senza eseguire un bolo";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Stato";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nLa quantità è superiore all'impostazione del bolo massimo! \nSei sicuro di voler aggiungere?";
 
@@ -964,6 +970,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "High" = "Alto";
+
+/* TIR Chart */
+"Very High" = "Very High";
 
 /* */
 "glucose" = "glicemie";

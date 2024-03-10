@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Tiếp tục và bỏ qua liều bolus";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Tình trạng";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nLiều tiêm nhiều hơn liều Max Bolus! \nBạn có chắc chắn muốn thêm ";
 
@@ -964,6 +970,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "High" = "High";
+
+/* TIR Chart */
+"Very High" = "Very High";
 
 /* */
 "glucose" = "đường huyết";
