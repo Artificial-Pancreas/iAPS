@@ -37,6 +37,16 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
+struct CompactSectionSpacing: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            return content
+                .listSectionSpacing(.compact)
+        } else {
+            return content }
+    }
+}
+
 struct AddShadow: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
@@ -305,6 +315,10 @@ extension View {
         onTapGesture {
             view.state.showModal(for: screen)
         }
+    }
+
+    func compactSectionSpacing() -> some View {
+        modifier(CompactSectionSpacing())
     }
 
     func asAny() -> AnyView { .init(self) }
