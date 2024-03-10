@@ -17,7 +17,7 @@
 "Continue without bolus" = "Продовжити без болюсу";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Зберегти Їжу без болюсу";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Статус";
