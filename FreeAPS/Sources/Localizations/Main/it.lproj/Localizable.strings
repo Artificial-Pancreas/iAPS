@@ -1742,7 +1742,7 @@ Enact a temp Basal or a temp target */
 "Time In Range" = "Tempo nell’intervallo";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
+"Average Interval" = "Intervallo medio";
 
 /* Median BG */
 "Median" = "Mediana";
