@@ -17,7 +17,7 @@
 "Continue without bolus" = "Ohne Bolusabgabe fortfahren";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Mahlzeit ohne Bolus speichern";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Status";
@@ -50,13 +50,13 @@
 "Display Emojis as Labels" = "Emojis als Etiketten benutzen";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "IOB und COB anzeigen";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Bolus schneller bestätigen";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "Benutzeroberfläche / Benutzerfreundlichkeit";
 
 /*  */
 "Wait please" = "Bitte warten";
@@ -1460,10 +1460,10 @@ Enact a temp Basal or a temp target */
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Zeige Eintragungen in der Zukunft";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Eintragungen in der Zukunft verstecken";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
