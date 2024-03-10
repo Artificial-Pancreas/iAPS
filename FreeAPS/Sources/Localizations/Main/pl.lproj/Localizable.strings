@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Kontynuuj bez bolusa";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Status";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
 
@@ -966,6 +972,9 @@ Połączono z Nightscout!";
 
 /* */
 "High" = "High";
+
+/* TIR Chart */
+"Very High" = "Very High";
 
 /* */
 "glucose" = "glucose";
