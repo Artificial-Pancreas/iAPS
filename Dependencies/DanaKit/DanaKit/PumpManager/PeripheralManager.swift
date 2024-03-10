@@ -35,7 +35,7 @@ class PeripheralManager: NSObject {
     private let WRITE_CHAR_UUID = CBUUID(string: "FFF2")
     private var writeCharacteristic: CBCharacteristic!
     
-    private var writeQueue: Dictionary<UInt16, (Timer, CheckedContinuation<(any DanaParsePacketProtocol), Error>)> = [:]
+    private var writeQueue: Dictionary<UInt8, (Timer, CheckedContinuation<(any DanaParsePacketProtocol), Error>)> = [:]
     
     private var historyLog: [HistoryItem] = []
     
@@ -65,10 +65,9 @@ class PeripheralManager: NSObject {
     
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol)  {
         let command = (UInt16((packet.type ?? DanaPacketType.TYPE_RESPONSE)) << 8) + UInt16(packet.opCode)
-        guard self.writeQueue[command] == nil else {
+        guard self.writeQueue[packet.opCode] == nil else {
             throw NSError(domain: "This command is already running. Please wait", code: 0, userInfo: nil)
         }
-        
         
         let isHistoryPacket = self.isHistoryPacket(opCode: command)
         if (isHistoryPacket && !self.pumpManager.state.isInFetchHistoryMode) {
@@ -91,29 +90,27 @@ class PeripheralManager: NSObject {
 //            log.info("\(#function): Second level encrypted data: \(data.base64EncodedString())")
         }
         
-        while (data.count != 0) {
-            let end = min(20, data.count)
-            let message = data.subdata(in: 0..<end)
-            
-            self.writeQ(message)
-            data = data.subdata(in: end..<data.count)
-        }
-        
-        // Now schedule a 5 sec timeout (or 20 when in fetchHistoryMode) for the pump to send its message back
+        // Now schedule a 6 sec timeout (or 21 when in fetchHistoryMode) for the pump to send its message back
         // This timeout will be cancelled by `processMessage` once it received the message
         // If this timeout expired, disconnect from the pump and prompt an error...
         return try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.main.async {
-                let sendingTimer = Timer.scheduledTimer(withTimeInterval: !isHistoryPacket ? 5 : 20, repeats: false) { _ in
-                    guard let queueItem = self.writeQueue[command] else {
-                        return
-                    }
-                    
-                    queueItem.1.resume(throwing: NSError(domain: "Message write timeout", code: 0, userInfo: nil))
-                    self.writeQueue[command] = nil
+            let sendingTimer = Timer.scheduledTimer(withTimeInterval: !isHistoryPacket ? 6 : 21, repeats: false) { _ in
+                guard let queueItem = self.writeQueue[packet.opCode] else {
+                    return
                 }
                 
-                self.writeQueue[command] = (sendingTimer, continuation)
+                queueItem.1.resume(throwing: NSError(domain: "Message write timeout", code: 0, userInfo: nil))
+                self.writeQueue[packet.opCode] = nil
+            }
+            
+            self.writeQueue[packet.opCode] = (sendingTimer, continuation)
+            
+            while (data.count != 0) {
+                let end = min(20, data.count)
+                let message = data.subdata(in: 0..<end)
+                
+                self.writeQ(message)
+                data = data.subdata(in: end..<data.count)
             }
         }
     }
@@ -389,6 +386,7 @@ extension PeripheralManager {
                     ))
                     
                     guard let view = UIApplication.shared.windows.last?.rootViewController else {
+                        self.log.error("No views are found to prompt ble 5 error")
                         return
                     }
                     
@@ -792,8 +790,8 @@ extension PeripheralManager {
         }
         
         // Message received and dequeueing timeout
-        guard let queueItem = self.writeQueue[message.command ?? 0] else {
-            log.error("\(#function): No continuation toke to send this message back...")
+        guard let queueItem = self.writeQueue[message.opCode ?? 0] else {
+            log.error("\(#function): No continuation token found to send this message back...")
             return
         }
         
@@ -811,7 +809,7 @@ extension PeripheralManager {
         }
         
         queueItem.1.resume(returning: message)
-        self.writeQueue[message.command ?? 0] = nil
+        self.writeQueue[message.opCode ?? 0] = nil
     }
     
     private func isHistoryPacket(opCode: UInt16) -> Bool {

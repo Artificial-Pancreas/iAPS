@@ -23,7 +23,7 @@ extension Logger {
             return allEntries
                 .compactMap { $0 as? OSLogEntryLog }
                 .filter { $0.subsystem == "com.randallknutson.DanaKit" }
-                .map({ "[\($0.date.formatted(date: .numeric, time: .shortened)) \(getLevel($0.level))] \($0.composedMessage)" })
+                .map({ "[\($0.date.formatted(date: .numeric, time: .standard)) \(getLevel($0.level))] \($0.composedMessage)" })
                 .joined(separator: "\n")
         } catch {
             return ""

@@ -23,14 +23,6 @@ struct InsulinTypeConfirmation: View {
         self.didConfirm = didConfirm
     }
     
-    func continueWithType(_ insulinType: InsulinType?) {
-        if let insulinType = insulinType {
-            didConfirm(insulinType)
-        } else {
-            assertionFailure()
-        }
-    }
-    
     var body: some View {
         VStack(alignment: .leading) {
             title
@@ -42,7 +34,12 @@ struct InsulinTypeConfirmation: View {
             
             Spacer()
             
-            ContinueButton(action: { self.continueWithType(insulinType) })
+            ContinueButton(action: {
+                guard let insulinType = insulinType else {
+                    return
+                }
+                didConfirm(insulinType)
+            })
         }
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(false)

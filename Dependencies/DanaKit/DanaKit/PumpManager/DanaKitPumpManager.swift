@@ -1084,10 +1084,13 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     private func disconnect() {
-        if DanaKitPumpManager.bluetoothManager.isConnected {
-            DanaKitPumpManager.bluetoothManager.disconnect(DanaKitPumpManager.bluetoothManager.peripheral!)
-            logDeviceCommunication("Disconnected", type: .connection)
+        guard DanaKitPumpManager.bluetoothManager.isConnected else {
+            // Disconnect is not needed
+            return
         }
+        
+        DanaKitPumpManager.bluetoothManager.disconnect(DanaKitPumpManager.bluetoothManager.peripheral!)
+        logDeviceCommunication("Disconnected", type: .connection)
     }
     
     private func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
@@ -1243,6 +1246,7 @@ extension DanaKitPumpManager {
         self.state.bolusState = .noBolus
         self.state.lastStatusDate = Date.now
         self.notifyStateDidChange()
+        
         self.disconnect()
         
         guard let doseEntry = self.doseEntry else {

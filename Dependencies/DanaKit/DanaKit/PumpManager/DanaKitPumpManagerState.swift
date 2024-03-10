@@ -26,7 +26,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public typealias RawValue = PumpManager.RawStateValue
     
     public init(rawValue: RawValue) {
-        self.lastStatusDate = rawValue["lastStatusDate"] as? Date ?? Date()
+        self.lastStatusDate = rawValue["lastStatusDate"] as? Date ?? Date().addingTimeInterval(.hours(-8))
         self.deviceName = rawValue["deviceName"] as? String
         self.bleIdentifier = rawValue["bleIdentifier"] as? String
         self.isConnected = false // To prevent having an old isConnected state
@@ -89,7 +89,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     }
     
     public init(basalSchedule: [Double]? = nil) {
-        self.lastStatusDate = Date()
+        self.lastStatusDate = Date().addingTimeInterval(.hours(-8))
         self.isConnected = false // To prevent having an old isConnected state
         self.reservoirLevel = 0
         self.hwModel = 0
@@ -164,7 +164,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     }
     
     /// The last moment this state has been updated (only for relavant values like isConnected or reservoirLevel)
-    public var lastStatusDate: Date = Date()
+    public var lastStatusDate: Date = Date().addingTimeInterval(.hours(-8))
     
     public var isOnBoarded = false
     

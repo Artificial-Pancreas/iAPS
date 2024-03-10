@@ -15,6 +15,7 @@ func parseMessage(data: Data) -> (any DanaParsePacketProtocol)? {
 
     var parsedResult = parser(data) as! (any DanaParsePacketProtocol)
     parsedResult.command = receivedCommand
+    parsedResult.opCode = data[OpCodeIndex] & 0xff
 
     return parsedResult
 }
