@@ -966,7 +966,7 @@ Enact a temp Basal or a temp target */
 "High" = "Hoch";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Sehr hoch";
 
 /* */
 "glucose" = "Blutzucker";
@@ -1185,7 +1185,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Als deine normalen Basalraten speichern";
 
 /* */
-"Save on Pump" = "Auf Pumpe speichern";
+"Save on Pump" = "Auf der Pumpe speichern";
 
 /* Debug option view Pump History */
 "Pump History" = "Insulinpumpen-Speicher";
