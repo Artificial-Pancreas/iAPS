@@ -1088,7 +1088,7 @@ extension OmnipodPumpManager {
             return
         }
 
-        guard podState.setupProgress == .completed else {
+        guard podState.isSetupComplete else {
             // A cancel delivery command before pod setup is complete will fault the pod
             completion(.state(PodCommsError.setupNotComplete))
             return
