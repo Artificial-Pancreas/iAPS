@@ -814,3 +814,15 @@ Silence Pod" = "Tysta podden";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Läd poddstatus";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Poddiagnostik";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Läs pulslogg plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Läs aktiveringstid";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Läs utlösta varningar";

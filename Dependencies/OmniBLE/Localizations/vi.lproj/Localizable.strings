@@ -697,7 +697,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Bạn bắt đầu quá trình cài đặt các lời nhắc, đổ đầy thuốc vào pod, ghép đôi thiết bị và gắn pod lên người.";
 
 /* Cancel button title */
-"Cancel" = "Bỏ qua";
+"Cancel" = "Hủy";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Tiếp tục";
@@ -829,3 +829,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Đọc tình trạng pod";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Xong";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Chẩn đoán Pod";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Đọc thời gian kích hoạt";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Đọc cảnh báo được kích hoạt";

@@ -34,7 +34,7 @@ struct StatsView: View {
     ) {
         _fetchRequest = FetchRequest<LoopStatRecord>(
             sortDescriptors: [NSSortDescriptor(key: "start", ascending: false)],
-            predicate: NSPredicate(format: "interval > 0 AND start > %@", filter)
+            predicate: NSPredicate(format: "start > %@", filter)
         )
 
         _fetchRequestReadings = FetchRequest<Readings>(
@@ -50,32 +50,26 @@ struct StatsView: View {
 
     var loops: some View {
         let loops = fetchRequest
-        // First date
-        let previous = loops.last?.end ?? Date()
-        // Last date (recent)
-        let current = loops.first?.start ?? Date()
-        // Total time in days
-        let totalTime = (current - previous).timeInterval / 8.64E4
-
+        // First loop date
+        let previous = (loops.last?.start ?? Date.now).addingTimeInterval(-5.minutes.timeInterval)
+        // Time in days
+        let days = -1 * previous.timeIntervalSinceNow / 8.64E4
+        // Calculations
         let durationArray = loops.compactMap({ each in each.duration })
-        let durationArrayCount = durationArray.count
-        // var durationAverage = durationArray.reduce(0, +) / Double(durationArrayCount)
         let medianDuration = medianCalculationDouble(array: durationArray)
         let successsNR = loops.compactMap({ each in each.loopStatus }).filter({ each in each!.contains("Success") }).count
-        let errorNR = durationArrayCount - successsNR
-        let total = Double(successsNR + errorNR) == 0 ? 1 : Double(successsNR + errorNR)
-        let successRate: Double? = (Double(successsNR) / total) * 100
-        let loopNr = totalTime <= 1 ? total : round(total / (totalTime != 0 ? totalTime : 1))
-        let intervalArray = loops.compactMap({ each in each.interval as Double })
-        let count = intervalArray.count != 0 ? intervalArray.count : 1
-        let intervalAverage = intervalArray.reduce(0, +) / Double(count)
-        // let maximumInterval = intervalArray.max()
-        // let minimumInterval = intervalArray.min()
+        let loopCount = loops.compactMap({ each in each.loopStatus }).count
+        let successRate: Double? = (Double(successsNR) / max(Double(loopCount), 1)) * 100
+        let intervalAverage = -1 * (previous.timeIntervalSinceNow / 60) / max(Double(loopCount), 1)
+
+        // Round
+        let loopsPerDay = round(Double(loopCount) / max(days, 1))
+
         return VStack(spacing: 10) {
             HStack(spacing: 35) {
                 VStack(spacing: 5) {
                     Text("Loops").font(.subheadline).foregroundColor(headline)
-                    Text(loopNr.formatted())
+                    Text(loopsPerDay.formatted())
                 }
                 VStack(spacing: 5) {
                     Text("Interval").font(.subheadline).foregroundColor(headline)
@@ -133,10 +127,8 @@ struct StatsView: View {
             let glucose = fetchRequestReadings
             // First date
             let previous = glucose.last?.date ?? Date()
-            // Last date (recent)
-            let current = glucose.first?.date ?? Date()
-            // Total time in days
-            let numberOfDays = (current - previous).timeInterval / 8.64E4
+            // Days
+            let numberOfDays = -1 * previous.timeIntervalSinceNow / 8.64E4
 
             let hba1cString = (
                 useUnit == .mmolL ? hba1cs.ifcc
@@ -177,9 +169,7 @@ struct StatsView: View {
             // First date
             let previous = glucose.last?.date ?? Date()
             // Last date (recent)
-            let current = glucose.first?.date ?? Date()
-            // Total time in days
-            let numberOfDays = (current - previous).timeInterval / 8.64E4
+            let numberOfDays = -1 * previous.timeIntervalSinceNow / 8.64E4
 
             VStack(spacing: 5) {
                 Text(numberOfDays < 1 ? "Readings" : "Readings / 24h").font(.subheadline)

@@ -5,7 +5,7 @@
 "%@/min" = "%@/min";
 
 /* No comment provided by engineer. */
-"Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
+"Are you sure you want to delete this CGM?" = "¿Está usted seguro de querer eliminar este MCG?";
 
 /* No comment provided by engineer. */
 "Bluetooth" = "Bluetooth";
@@ -26,7 +26,7 @@
 "Continue" = "Continuar";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Eliminar MCG";
 
 /* Navigation bar title for G7SettingsView
    Title on WelcomeView */
@@ -36,7 +36,7 @@
 "Done" = "Hecho";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glucosa";
 
 /* title for g7 settings row showing sensor grace period end time */
 "Grace Period End" = "Grace Period End";

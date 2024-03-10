@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continua senza eseguire un bolo";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Stato";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nLa quantità è superiore all'impostazione del bolo massimo! \nSei sicuro di voler aggiungere?";
 
@@ -40,6 +46,18 @@
 /* Button */
 "Done" = "Fine";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Display Emojis as Labels";
+
+/* Calender Option */
+"Display IOB and COB" = "Display IOB and COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Confirm Bolus Faster";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Attendere prego";
 
@@ -48,6 +66,18 @@
 
 /* Bolus progress view */
 "of" = "di";
+
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "Un Bolo Remoto ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "è stato consegnato";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuti fa, innescato a distanza da Nightscout, da un assistente o da un genitore. Vuoi ancora fare il bolo?\n\nL'eventuale glicemia prevista, se non fai bolo, è:";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "Un Bolo Remoto è appena Consegnato!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Eseguito alle";
@@ -302,6 +332,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "Attiva";
 
+/* Start a temp target or a profile override */
+"Start" = "Avvia";
+
 /* */
 "Manual Temp Basal" = "Basale temporanea manuale";
 
@@ -359,6 +392,9 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Controllo remoto";
 
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Consenti il controllo remoto di iAPS";
+
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nOra verifica attentamente tutte le nuove impostazioni:\n\n* Impostazioni basali\n * Rapporti carboidrati\n * Obiettivi glucosio\n * Sensibilità insulinica\n * DIA\n\n in Impostazioni iAPS > Configurazione.\n\nImpostazioni del profilo errate o non valide potrebbero avere effetti disastrosi.";
 
@@ -406,6 +442,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Simulator pump */
 "Add Simulator" = "Aggiungi Simulazione microinfusore";
+
+/* View/Header when pod expired */
+"Replace" = "Replace";
 
 /* Insulin model */
 "Model" = "Modello";
@@ -932,6 +971,9 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "Alto";
 
+/* TIR Chart */
+"Very High" = "Very High";
+
 /* */
 "glucose" = "glicemie";
 
@@ -1195,7 +1237,7 @@ Enact a temp Basal or a temp target */
 "Apple Health" = "Apple Salute";
 
 /* */
-"Connect to Apple Health" = "Connetti con Apple Salute";
+"Connect to Apple Health" = "Connetti ad Apple Salute";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Per scrivere dati su Apple Health devi dare il permesso in Impostazioni > Salute > Accesso dati";
@@ -1411,6 +1453,17 @@ Enact a temp Basal or a temp target */
 
 /* Watch Config Option */
 "Display Protein & Fat" = "Mostra Proteine & Grassi";
+
+
+/* Time of new meal entry */
+"Now" = "Now";
+
+
+/* Display future data table entries */
+"Show Future" = "Show Future";
+
+/* Hide future data table entries */
+"Hide Future" = "Hide Future";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1684,6 +1737,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Media";
+
+/* TIR Preview Headline */
+"Time In Range" = "Time In Range";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Average Interval";
 
 /* Median BG */
 "Median" = "Mediana";
@@ -2059,9 +2118,8 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Regola i rapporti dinamici della costante ISF";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Regola i rapporti dinamici di una costante. Il valore predefinito è 0,5. Più alto è il valore, maggiore sarà la correzione del tuo ISF per una glicemia alta o bassa. La correzione massima è determinata dalle impostazioni Autosens min/max.\n\nPer la funzione sigmoidea si consiglia di iniziare con un fattore di correzione di 0,4 - 0,5.\n\n Per la formula logaritmica c'è meno consenso, ma iniziare con 0,5 - 0,8 è più appropriato per la maggior parte degli utenti adulti.
-Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più basso quando si utilizza la formula logaritmica, per evitare un trattamento eccessivamente aggressivo.
-Regola la costante ISF dinamica.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Aggiustamenti individuali dei rapporti dinamici calcolati. Il valore predefinito è 0,5. Più alto è il valore, maggiore sarà la correzione del tuo ISF/CR per una glicemia alta o bassa. La correzione massima/minima è determinata dalle impostazioni Autosens min/max.\n\nPer la funzione sigmoidea si consiglia di iniziare con un fattore di correzione di 0,4 - 0,5.\n\n Per la formula logaritmica c'è meno consenso; iniziare con 0,8 è appropriato per la maggior parte degli utenti adulti.
+Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più basso quando si utilizza la formula logaritmica, per evitare un trattamento eccessivamente aggressivo.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Usa Funzione Sigmoid";

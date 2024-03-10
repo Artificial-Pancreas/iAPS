@@ -66,13 +66,13 @@ extension Bolus {
                     } else {
                         predictionChart
                     }
-                } header: { Text("Predictions") }
+                } header: { Text("Status") }
 
                 Section {}
                 if fetch {
                     Section {
                         mealEntries
-                    } header: { Text("Meal Summary") }
+                    } // header: { Text("Meal Summary") }
                 }
 
                 Section {
@@ -192,10 +192,17 @@ extension Bolus {
                             keepForNextWiew = true
                             state.showModal(for: nil)
                         }
-                        label: { Text("Continue without bolus") }.frame(maxWidth: .infinity, alignment: .center)
+                        label: {
+                            fetch ?
+                                Text("Save Meal without bolus") :
+                                Text("Continue without bolus") }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .listRowBackground(Color(.systemBlue))
+                            .tint(.white)
                     }
                 }
             }
+            .compactSectionSpacing()
             .alert(isPresented: $isRemoteBolusAlertPresented) {
                 remoteBolusAlert!
             }
@@ -214,7 +221,7 @@ extension Bolus {
                     }
                 },
                 trailing: Button { state.hideModal() }
-                label: { Text("Close") }
+                label: { Text("Cancel") }
             )
             .onAppear {
                 configureView {

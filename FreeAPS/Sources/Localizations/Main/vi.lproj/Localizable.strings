@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Tiếp tục và bỏ qua liều bolus";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Save Meal without bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Tình trạng";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nLiều tiêm nhiều hơn liều Max Bolus! \nBạn có chắc chắn muốn thêm ";
 
@@ -40,6 +46,18 @@
 /* Button */
 "Done" = "Xong";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Hiển thị biểu tượng cảm xúc";
+
+/* Calender Option */
+"Display IOB and COB" = "Hiển thị IOB và COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Xác nhận Bolus nhanh";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Xin đợi chốc lát";
 
@@ -48,6 +66,18 @@
 
 /* Bolus progress view */
 "of" = "của";
+
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "Một liều Bolus từ xa ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "vừa được hoàn thành";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " phút trước, được kích hoạt từ xa từ Nightscout, bởi người chăm sóc hoặc phụ huynh. Bạn vẫn muốn bolus?\n\nDự đoán lượng đường cuối cùng, nếu bạn không bolus, là: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "Một liều Bolus từ xa vừa được hoàn thành!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Thực hiện ở";
@@ -302,6 +332,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "Chấp nhận";
 
+/* Start a temp target or a profile override */
+"Start" = "Khởi chạy";
+
 /* */
 "Manual Temp Basal" = "Liều cơ bản thủ công";
 
@@ -359,6 +392,9 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Điều khiển từ xa";
 
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Cho phép điều khiển iAPS từ xa";
+
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Cài đặt liều nền\n * Tỷ lệ Carb\n * Mục tiêu đường huyết \n * Độ nhạy của Insulin\n * Thời gian hoạt động của insulin\n\n trong iAPS Cài đặt > Cấu hình.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.";
 
@@ -406,6 +442,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Simulator pump */
 "Add Simulator" = "Thêm Bơm mô phỏng";
+
+/* View/Header when pod expired */
+"Replace" = "Thay thế";
 
 /* Insulin model */
 "Model" = "Model";
@@ -486,7 +525,7 @@ Enact a temp Basal or a temp target */
 "Devices" = "Thiết bị";
 
 /*  */
-"Pump" = "Bơm";
+"Pump" = "Bơm Insulin";
 
 /* */
 "Watch" = "Đồng hồ";
@@ -609,7 +648,7 @@ Enact a temp Basal or a temp target */
 "Create Events in Calendar" = "Tạo sự kiện trong Calendar";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Lập lịch";
 
 /* Automatic delivered treatments */
 "Automatic" = "Tự động";
@@ -852,10 +891,10 @@ Enact a temp Basal or a temp target */
 "Valid for footer" = "Hợp lệ";
 
 /* */
-"Edit calibrations" = "Thêm kết quả hiệu chuẩn";
+"Edit calibrations" = "Chỉnh sửa hiệu chuẩn";
 
 /* */
-"edit calibration clicked" = "Nhấp vào để hiệu chuẩn";
+"edit calibration clicked" = "nhấp vào để chỉnh sửa hiệu chuẩn";
 
 /* */
 "Delete CGM" = "Xóa CGM";
@@ -894,7 +933,7 @@ Enact a temp Basal or a temp target */
 "Saved to %@" = "Đã lưu vào %@";
 
 /* */
-"No logs available" = "Không có nhật ký";
+"No logs available" = "Không có nhật ký nào";
 
 /* */
 "Glucose Notification visibility" = "Khả năng hiển thị thông báo Glucose";
@@ -931,6 +970,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "High" = "High";
+
+/* TIR Chart */
+"Very High" = "Very High";
 
 /* */
 "glucose" = "đường huyết";
@@ -1412,6 +1454,17 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Hiển thị chất đạm và chất béo";
 
+
+/* Time of new meal entry */
+"Now" = "Bây giờ";
+
+
+/* Display future data table entries */
+"Show Future" = "Hiển thị tương lai";
+
+/* Hide future data table entries */
+"Hide Future" = "Ẩn tương lai";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1684,6 +1737,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Average";
+
+/* TIR Preview Headline */
+"Time In Range" = "Trong phạm vi mục tiêu";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Khoảng thời gian trung bình";
 
 /* Median BG */
 "Median" = "Median";
@@ -2060,7 +2119,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Điều chỉnh riêng các tỷ lệ động được tính toán. Mặc định là 0,5. Giá trị càng cao thì mức điều chỉnh ISF/CR của bạn đối với mức đường huyết cao hay thấp càng lớn. Hiệu chỉnh tối đa/tối thiểu được xác định bởi cài đặt tối thiểu/tối đa của Autosens.\n\nĐối với hàm Sigmoid, hệ số điều chỉnh được khuyến nghị là 0,4 - 0,5 để bắt đầu.\n\nĐối với công thức logarit, có ít sự đồng thuận hơn, nhưng bắt đầu từ khoảng 0,8 là có lẽ phù hợp với hầu hết người dùng trưởng thành. Đối với người dùng trẻ tuổi, nên bắt đầu ở mức thấp hơn nữa khi sử dụng công thức logarit để tránh điều trị quá tích cực.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Điều chỉnh riêng các tỷ lệ động được tính toán. Mặc định là 0,5. Giá trị càng cao thì mức điều chỉnh ISF/CR của bạn đối với mức đường huyết cao hay thấp càng lớn. Hiệu chỉnh tối đa/tối thiểu được xác định bởi cài đặt tối thiểu/tối đa của Autosens.\n\nĐối với hàm Sigmoid, hệ số điều chỉnh được khuyến nghị là 0,4 - 0,5 để bắt đầu.\n\nĐối với công thức logarit, có ít sự đồng thuận hơn, nhưng bắt đầu từ khoảng 0,8 là có lẽ phù hợp với hầu hết người dùng trưởng thành. Đối với người dùng trẻ tuổi, nên bắt đầu ở mức thấp hơn nữa khi sử dụng công thức logarit để tránh điều trị quá tích cực.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Sử dụng hàm Sigmoid (SF)";

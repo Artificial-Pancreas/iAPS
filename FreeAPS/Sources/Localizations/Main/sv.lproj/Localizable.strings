@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Spara måltid utan bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Status";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDetta är mer insulin än din maxdos-inställning!\nÄr du säker på att du vill lägga till ";
 
@@ -40,6 +46,18 @@
 /* Button */
 "Done" = "Klar";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Visa Emojis";
+
+/* Calender Option */
+"Display IOB and COB" = "Visa IOB och COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Bekräfta Bolus snabbare";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Vänta...";
 
@@ -56,7 +74,7 @@
 "was delivered" = "gavs för";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " =  " minuter sedan, aktiverad från Nightscout, av en assistent eller förälder. Vill du fortfarande ge en ny bolus?\n\nBeräknad blodsockerprognos, om du inte ger bolus, är: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuter sedan, aktiverad från Nightscout, av en assistent eller förälder. Vill du fortfarande ge en ny bolus?\n\nBeräknad blodsockerprognos, om du inte ger bolus, är: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "En fjärrstyrd bolus gavs precis!";
@@ -314,6 +332,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "Utför";
 
+/* Start a temp target or a profile override */
+"Start" = "Starta";
+
 /* */
 "Manual Temp Basal" = "Manuell temporär basal";
 
@@ -371,6 +392,9 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Fjärrstyrning";
 
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Tillåt fjärrstyrning från Nightscout";
+
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nKontrollera nu alla dina nya pumpinställningar noga:\n\n* Basalinställningar\n * Insulinkvoter\n * Målvärden\n * Insulinkänslighet\n\n i Inställningar > Konfiguration.\n\nDåliga eller ogiltiga pumpinställningar kan gå katastrofala följder.";
 
@@ -418,6 +442,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Simulator pump */
 "Add Simulator" = "Lägg till simulator";
+
+/* View/Header when pod expired */
+"Replace" = "Byt!";
 
 /* Insulin model */
 "Model" = "Modell";
@@ -944,6 +971,9 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "Högt";
 
+/* TIR Chart */
+"Very High" = "Mycket Högt";
+
 /* */
 "glucose" = "glukos";
 
@@ -1424,6 +1454,17 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Visa fett och protein";
 
+
+/* Time of new meal entry */
+"Now" = "Nu";
+
+
+/* Display future data table entries */
+"Show Future" = "Visa";
+
+/* Hide future data table entries */
+"Hide Future" = "Dölj";
+
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
 
@@ -1696,6 +1737,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Medelvärde";
+
+/* TIR Preview Headline */
+"Time In Range" = "Tid inom intervallet";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Medelintervall";
 
 /* Median BG */
 "Median" = "Medianvärde";
@@ -2071,7 +2118,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Ändra AF-konstant";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuell justering av hur din insulinkänslighet och insulinkvot (om du använder dyamisk insulinkvot) räknas ut. Stnadarvärde är 0.5. Ett högre värde betyder mer aggressiv justering.\n\nFör S-formad dynamisk inställning rekommendaras att börja med 0.3-0-4. För logaritmisk inställning rekommenderas att börja med 0.5-0.8.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuell justering av hur din insulinkänslighet och insulinkvot (om du använder dyamisk insulinkvot) räknas ut. Standardvärde är 0.5. Ett högre värde betyder mer aggressiv justering.\n\nFör S-formad dynamisk inställning rekommendaras att börja med 0.3-0-4. För logaritmisk inställning rekommenderas att börja med 0.5-0.8.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Använd S-formad dynamisk insulinkänslighet";
@@ -2163,7 +2210,7 @@ Enact a temp Basal or a temp target */
 "Horizontal Scroll View Visible hours" = "Antal synliga timmar i hemfönstret";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Visa knapp för tillfälligt målvärde";
+"Display Time Interval Setting Button" = "Visa knapp för tidsintervell";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
