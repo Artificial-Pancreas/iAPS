@@ -19,6 +19,7 @@
 		190EBCC829FF13AA00BA767D /* StatConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC729FF13AA00BA767D /* StatConfigStateModel.swift */; };
 		190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */; };
 		191F62682AD6B05A004D7911 /* NightscoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191F62672AD6B05A004D7911 /* NightscoutSettings.swift */; };
+		1920BF5D2B9DF53200E861FE /* BolusShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */; };
 		19229B962AFBB84800CD91CA /* Predictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19229B952AFBB84800CD91CA /* Predictions.swift */; };
 		192424CB2B7A64E70063CBF0 /* NIghtscoutExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */; };
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
@@ -546,6 +547,7 @@
 		190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatConfigRootView.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		191F62672AD6B05A004D7911 /* NightscoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutSettings.swift; sourceTree = "<group>"; };
+		1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusShortcut.swift; sourceTree = "<group>"; };
 		19229B952AFBB84800CD91CA /* Predictions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictions.swift; sourceTree = "<group>"; };
 		192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIghtscoutExercise.swift; sourceTree = "<group>"; };
 		1927C8E92744611700347C69 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1120,6 +1122,14 @@
 				190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1920BF5B2B9DF4B900E861FE /* Bolus */ = {
+			isa = PBXGroup;
+			children = (
+				1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */,
+			);
+			path = Bolus;
 			sourceTree = "<group>";
 		};
 		192F0FF5276AC36D0085BE4D /* Recovered References */ = {
@@ -2277,6 +2287,7 @@
 				CE7CA3442A064973004BE681 /* BaseIntentsRequest.swift */,
 				CE1856F32ADC4835007E39C7 /* Carbs */,
 				196579A52B924BD400642E8E /* Overrides */,
+				1920BF5B2B9DF4B900E861FE /* Bolus */,
 				CE7CA3452A064973004BE681 /* TempPresets */,
 				CE7CA34B2A064973004BE681 /* State */,
 			);
@@ -2825,6 +2836,7 @@
 				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */,
+				1920BF5D2B9DF53200E861FE /* BolusShortcut.swift in Sources */,
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,
 				E00EEC0627368630002FF094 /* UIAssembly.swift in Sources */,
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
