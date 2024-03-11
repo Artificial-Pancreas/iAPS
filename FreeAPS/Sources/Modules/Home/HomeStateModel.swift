@@ -130,6 +130,7 @@ extension Home {
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
             broadcaster.register(PumpReservoirObserver.self, observer: self)
+            broadcaster.register(PumpTimeZoneObserver.self, observer: self)
             animatedBackground = settingsManager.settings.animatedBackground
 
             subscribeSetting(\.hours, on: $hours, initial: {
@@ -454,7 +455,10 @@ extension Home {
         }
 
         private func setupCurrentPumpTimezone() {
-            timeZone = provider.pumpTimeZone()
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.timeZone = self.provider.pumpTimeZone()
+            }
         }
 
         func openCGM() {
