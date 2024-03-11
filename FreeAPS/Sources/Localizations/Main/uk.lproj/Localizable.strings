@@ -975,28 +975,25 @@ Enact a temp Basal or a temp target */
 "Very High" = "Дуже Високий";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Дуже низький";
 
 /* */
 "glucose" = "Глюкоза";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Введіть кількість болюсу";
 
 /* Bolus shortcut */
-"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+"Are you sure you want to bolus %@ U of insulin?" = "Ви впевнені, що хочете ввести %@ ОД інсуліну?";
 
 /* Bolus shortcut */
-"A bolus command of %@ U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = "A bolus command of %@ U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+"A bolus command of " = "Болюсна команда";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
-
-/* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = "U інсуліну відправлено в iAPS. Перевірте в додатку iAPS або в Nightscout, чи було введено болюс.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "занадто мала кількість болюсу";
 
 /* Bolus shortcut */
 "Bolus Amount in U" = "Bolus Amount in U";
