@@ -975,16 +975,16 @@ Enact a temp Basal or a temp target */
 "Very High" = "Sehr hoch";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Sehr niedrig";
 
 /* */
 "glucose" = "Blutzucker";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Gib einen Bolus ein";
 
 /* Bolus shortcut */
-"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+"Are you sure you want to bolus %@ U of insulin?" = "Bist du sicher, dass du %@ Einheiten des Insulins abgeben möchtest?";
 
 /* Bolus shortcut */
 "A bolus command of " = "A bolus command of ";
