@@ -17,7 +17,7 @@
 "Continue without bolus" = "Продолжить без болюса";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Сохранить прием пищи без болюса";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Статус";
@@ -47,13 +47,13 @@
 "Done" = "Готово";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Отображать эмодзи в качестве меток";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Отображать IOB и COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Подтверждать болюс быстрее";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -333,7 +333,7 @@ Enact a temp Basal or a temp target */
 "Enact" = "Запустить";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "Запустить";
 
 /* */
 "Manual Temp Basal" = "Ручная ВБС";
@@ -444,7 +444,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Добавить Cимулятор";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Заменить";
 
 /* Insulin model */
 "Model" = "Модель";
@@ -972,58 +972,58 @@ Enact a temp Basal or a temp target */
 "High" = "Высокий";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Очень высокий";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Очень низкий";
 
 /* */
 "glucose" = "глюкоза";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Введите размер Болюса";
 
 /* Bolus shortcut */
-"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+"Are you sure you want to bolus %@ U of insulin?" = "Вы уверены, что хотите ввести %@ ед. инсулина?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "Команда болюса из ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " ед. инсулина была отправлена в iAPS. Проверьте в приложении iAPS или в Nightscout, был ли доставлен болюс.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "слишком маленький размер болюса";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Болюс в размере ед.";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Активировать переопределение";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Разрешать активацию переопределения профиля.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Какую предустановку переопределения активировать?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Активировать предустановку переопределения %@?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Переопределение профиля";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "сейчас активировано";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Отменить переопределение";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Переопределение отменено";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Активирует %@ переопределение";
 
 /* */
 "Schedule " = "Расписание ";
@@ -1504,14 +1504,14 @@ Enact a temp Basal or a temp target */
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Сейчас";
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Показать будущее";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Скрыть будущее";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1787,10 +1787,10 @@ Enact a temp Basal or a temp target */
 "Average" = "Средний";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "В диапазоне";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
+"Average Interval" = "Средний интервал";
 
 /* Median BG */
 "Median" = "Медиана";
@@ -2166,7 +2166,7 @@ Enact a temp Basal or a temp target */
 "Adjust Dynamic ISF constant" = "Настроить константу динамического ISF";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Индивидуальная настройка рассчитанных динамических коэффициентов. Значение по умолчанию равно 0.5. Чем выше значение, тем больше будет коррекция вашего ISF/CR для высокого или низкого уровня глюкозы в крови. Максимальная/минимальная коррекция определяется настройками autosens min/max.\n\nДля сигмоидной функции рекомендуется для начала использовать коэффициент 0.4 - 0.5.\n\nДля логарифмической формулы существует меньшее единодушие, но для большинства взрослых пользователей, вероятно, подходит значение, начинающееся примерно с 0.8. Для более молодых пользователей рекомендуется начинать с еще меньшего значения при использовании логарифмической формулы, чтобы избежать чрезмерно агрессивного лечения.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Использовать Сигмоидную функцию";
