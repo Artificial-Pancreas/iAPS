@@ -38,5 +38,12 @@ import Foundation
                 "Cancels an active \(.applicationName) override"
             ]
         )
+        AppShortcut(
+            intent: BolusIntent(),
+            phrases: [
+                "\(.applicationName) Bolus",
+                "\(.applicationName) Tries to Enact a bolus"
+            ]
+        )
     }
 }
