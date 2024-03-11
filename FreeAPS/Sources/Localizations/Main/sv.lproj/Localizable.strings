@@ -974,14 +974,11 @@ Enact a temp Basal or a temp target */
 /* TIR Chart */
 "Very High" = "Mycket Högt";
 
+/* TIR Chart */
+"Very Low" = "Mycket lågt";
+
 /* */
 "glucose" = "glukos";
-
-/* */
-"Schedule " = "Schema ";
-
-/* Bolus shortcut. Shortcut Title */
-"iAPS Bolus" = "iAPS Bolus";
 
 /* Bolus shortcut */
 "Enter a Bolus Amount" = "Ange mängd insulin";
@@ -989,23 +986,26 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut */
 "Are you sure you want to bolus %@ U of insulin?" = "Är du säker på att du vill ge %@ E insulin?";
 
-//* Bolus shortcut */
-"A bolus command of " =  "Ett kommando med ";
+/* Bolus shortcut */
+"A bolus command of " = "Ett kommando med ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " E insulin har skickats till iAPS. Verifiera i iAPS-appen eller i Nightscout att din bolus verkligen har givits.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " E insulin skickades till iAPS. Verifiera i iAPS eller Nightscout att din bolus har givits.";
 
 /* Bolus shortcut. Error */
 "too small bolus amount" = "för liten insulinmängd";
 
-/* Override Shortcut */
-"Activate an Override Preset" = "Aktivera Profil";
+/* Bolus shortcut */
+"Bolus Amount in U" = "Enheter insulin";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Tillåt att aktivera en profil.";
+"Activate an Override Preset" = "Aktivera en profil";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Vilken profil will du aktivera?";
+"Allow to activate an overrride preset." = "Tillåter att aktivera en profil.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Vilken profil vill du aktvera?";
 
 /* Override Shortcut */
 "Are you sure you want to activate the Override Preset %@?" = "Är du säker på att du vill aktivera profilen %@?";
@@ -1014,16 +1014,19 @@ Enact a temp Basal or a temp target */
 "The Profile Override" = "Profilen";
 
 /* Override Shortcut */
-"is now activated" = "är nu aktverad";
+"is now activated" = "är nu aktiverad";
 
 /* Override Shortcut */
-"Cancel active override" = "Avbryt aktiv profil";
+"Cancel active override" = "Avbryt profil";
 
 /* Override Shortcut */
 "Override canceled" = "Profil avbruten";
 
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Aktiverar en %@ - profil";
+
+/* */
+"Schedule " = "Schema ";
 
 /* */
 "tapped save schedules" = "klickat på sparade scheman";
