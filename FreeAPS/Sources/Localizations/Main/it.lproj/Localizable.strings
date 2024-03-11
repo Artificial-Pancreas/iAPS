@@ -975,28 +975,28 @@ Enact a temp Basal or a temp target */
 "Very High" = "Molto alta";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Molto Basso";
 
 /* */
 "glucose" = "glicemie";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Inserire una quantità di Bolo";
 
 /* Bolus shortcut */
-"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+"Are you sure you want to bolus %@ U of insulin?" = "Sei sicuro di voler somministrare %@ U di insulina?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "Un comando di bolo di";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U di insulina è stata inviata a iAPS. Verificare in app iAPS o in Nightscout se il bolo è stato erogato.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "Quantità Bolo troppo piccola";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Quantità Bolo in U";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Activate an Override Preset";
@@ -1005,25 +1005,25 @@ Enact a temp Basal or a temp target */
 "Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Quale override preimpostato vorresti attivare?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Sei sicuro di voler attivare il %@ di Override preimpostato?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Il Profilo Override";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "è ora attivato";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Annulla il profilo override attivo";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Profilo override annullato";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Attiva un %@ profilo Override preimpostato";
 
 /* */
 "Schedule " = "Programmazione ";
