@@ -1474,7 +1474,7 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nAppuyez sur 'Ajouter' pour continuer avec le montant sélectionné.";
 
 /* */
-"Eventual Glucose" = "Glucose éventuel";
+"Eventual Glucose" = "Glycémie éventuelle";
 
 /* */
 "Please wait" = "Patientez s''il vous plait";
@@ -1492,7 +1492,7 @@ Enact a temp Basal or a temp target */
 "Insulin Sensitivity" = "Facteur de sensibilité à l’insuline";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Glycémie ventuelle - Cible) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Glycémie éventuelle - Cible) / ISF";
 
 /* */
 "Formula:" = "Formule:";
@@ -1700,7 +1700,7 @@ Enact a temp Basal or a temp target */
 "High" = "Élevé";
 
 /* In Range */
-"In Range" = "À portée";
+"In Range" = "Dans la plage cible";
 
 /* Display % */
 "Change HbA1c Unit" = "Changer l'unité HbA1c";
@@ -1897,7 +1897,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "La valeur par défaut est désactivé. Quand activé, toute cible glycemique temporaire avec une valeur > 105 mg/dL entraine une augmentation de l'Isf (sensibilité à l'insuline). Synonyme de la préférence high_temptarget_raises_sensibilité";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Portée de la cible Glycémie large";
+"Wide BG Target Range" = "Plage cible étendue";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "La valeur par défaut est désactivé, ce qui signifie par défaut que seule la valeur basse de la plage cible de glycémie de la pompe est utilisée comme cible OpenAPS. Il s'agit d'une caractéristique de sécurité qui permet d'éviter des cibles trop larges et des résultats moins optimaux. Par conséquent, la valeur supérieure de la cible glycemique n'est utilisée que pour éviter les surcorrections de l'assistant de bolus. Activez cette option pour forcer l'utilisation de l'ensemble de la plage de cible glycemique dans l'algorithme.";
