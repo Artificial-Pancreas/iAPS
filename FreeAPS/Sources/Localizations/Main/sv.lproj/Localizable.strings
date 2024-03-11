@@ -981,7 +981,7 @@ Enact a temp Basal or a temp target */
 "Schedule " = "Schema ";
 
 /* Bolus shortcut. Shortcut Title */
-"% Bolus" = "% Bolus";
+"iAPS Bolus" = "iAPS Bolus";
 
 /* Bolus shortcut */
 "Enter a Bolus Amount" = "Ange mängd insulin";
@@ -997,6 +997,33 @@ Enact a temp Basal or a temp target */
 
 /* Bolus shortcut. Error */
 "too small bolus amount" = "för liten insulinmängd";
+
+/* Override Shortcut */
+"Activate an Override Preset" = "Aktivera Profil";
+
+/* Override Shortcut */
+"Allow to activate an overrride preset." = "Tillåt att aktivera en profil.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Vilken profil will du aktivera?";
+
+/* Override Shortcut */
+"Are you sure you want to activate the Override Preset %@?" = "Är du säker på att du vill aktivera profilen %@?";
+
+/* Override Shortcut */
+"The Profile Override" = "Profilen";
+
+/* Override Shortcut */
+"is now activated" = "är nu aktverad";
+
+/* Override Shortcut */
+"Cancel active override" = "Avbryt aktiv profil";
+
+/* Override Shortcut */
+"Override canceled" = "Profil avbruten";
+
+/* Override Shortcut */
+"Activates an %@ Override Preset" = "Aktiverar en %@ - profil";
 
 /* */
 "tapped save schedules" = "klickat på sparade scheman";
