@@ -2136,13 +2136,13 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
+"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
+"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Aktiviere Dynamic ISF";
+"Enable Dynamic ISF" = "Dynamischen Insulinempfindlichkeitsfaktor (ISF) aktivieren";
 
 /* Headline "Enable Dynamic ISF" */
 "Enable Dynamic ISF" = "Dynamischen Insulinempfindlichkeitsfaktor (ISF) aktivieren";
@@ -2270,7 +2270,7 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Live-Aktivitäten";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Die Live-Aktivität zeigt die Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel (falls verfügbar)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live-Aktivität zeigt den Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel an (falls verfügbar)";
 
 /* Notification option */
 "Show Live activity" = "Live Aktivitäten anzeigen";
