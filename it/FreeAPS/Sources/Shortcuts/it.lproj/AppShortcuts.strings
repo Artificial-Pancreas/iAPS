@@ -14,22 +14,22 @@
 "Add carbs in ${applicationName}" = "Aggiungi carboidrati in ${applicationName}";
 
 /* iAPS Add carbs shortcut description */
-"${applicationName} allows to add carbs" = "${applicationName} allows to add carbs";
+"${applicationName} allows to add carbs" = "${applicationName} permette di aggiungere carboidrati";
 
 /* iAPS Override shortcut */
-"Activate an ${applicationName} Override Preset" = "Activate an ${applicationName} Override Preset";
+"Activate an ${applicationName} Override Preset" = "Attiva un ${applicationName} profilo preimpostato";
 
 /* iAPS Override shortcut description */
-"Activates an ${applicationName} Override Preset" = "Activates an ${applicationName} Override Preset";
+"Activates an ${applicationName} Override Preset" = "Attivato un ${applicationName} profilo preimpostato";
 
 /* iAPS Cancel Override shortcut */
-"Cancel ${applicationName} Overide" = "Cancel ${applicationName} Overide";
+"Cancel ${applicationName} Overide" = "Annulla ${applicationName} profilo";
 
 /* iAPS Cancel Override shortcut description */
-"Cancels an active ${applicationName} override" = "Cancels an active ${applicationName} override";
+"Cancels an active ${applicationName} override" = "Annulla ${applicationName} profilo attivo";
 
 /* iAPS Bolus shortcut */
-"${applicationName} Bolus" = "${applicationName} Bolus";
+"${applicationName} Bolus" = "${applicationName} Bolo";
 
 /* iAPS Bolus shortcut description */
-"${applicationName} Tries to Enact a bolus" = "${applicationName} Tries to Enact a bolus";
+"${applicationName} Tries to Enact a bolus" = "${applicationName} Cerca d' inviare un bolo";
