@@ -999,13 +999,13 @@ Enact a temp Basal or a temp target */
 "Bolus Amount in U" = "Кількість Болюсу в U";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Активуйте попередні налаштування заміни";
+"Activate an Override Preset" = "Активуйте попередні налаштування Профілю";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Дозволити активувати попередні налаштування заміни.";
+"Allow to activate an overrride preset." = "Дозволити активувати попередні налаштування Профілю.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Який попередній набір ви б хотіли активувати?";
+"Which override preset would you like to activate?" = "Який попередній Профіль ви б хотіли активувати?";
 
 /* Override Shortcut */
 "Are you sure you want to activate the Override Preset %@?" = "Ви впевнені, що бажаєте активувати попередні налаштування %@?";
@@ -1014,16 +1014,16 @@ Enact a temp Basal or a temp target */
 "The Profile Override" = "Перевизначення Профілю";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "зараз активовано";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Скасувати заміну Профілю";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Перевизначення скасовано";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Активує попередні налаштування %@";
 
 /* */
 "Schedule " = "Розклад ";
