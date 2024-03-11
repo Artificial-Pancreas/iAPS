@@ -974,8 +974,35 @@ Enact a temp Basal or a temp target */
 /* TIR Chart */
 "Very High" = "Very High";
 
+/* TIR Chart */
+"Very Low" = "Very Low";
+
 /* */
 "glucose" = "glucose";
+
+/* Bolus shortcut. Shortcut Title */
+"% Bolus" = "% Bolus";
+
+/* Bolus shortcut */
+"Enter a Bolus Amount" = "Enter a Bolus Amount";
+
+/* Bolus shortcut */
+"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+
+/* Bolus shortcut */
+"A bolus command of %@ U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = "A bolus command of %@ U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+
+/* Bolus shortcut */
+"A bolus command of " =  "A bolus command of ";
+
+/* Bolus shortcut */
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+
+/* Bolus shortcut. Error */
+"too small bolus amount" = "too small bolus amount";
+
+/* Bolus shortcut */
+"Bolus Amount in U" = "Bolus Amount in U";
 
 /* */
 "Schedule " = "Schedule ";
