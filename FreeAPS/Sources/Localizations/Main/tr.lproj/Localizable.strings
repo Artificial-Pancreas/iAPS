@@ -974,8 +974,59 @@ Enact a temp Basal or a temp target */
 /* TIR Chart */
 "Very High" = "Very High";
 
+/* TIR Chart */
+"Very Low" = "Very Low";
+
 /* */
 "glucose" = "glikoz";
+
+/* Bolus shortcut */
+"Enter a Bolus Amount" = "Enter a Bolus Amount";
+
+/* Bolus shortcut */
+"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+
+/* Bolus shortcut */
+"A bolus command of %@ U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = "A bolus command of %@ U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+
+/* Bolus shortcut */
+"A bolus command of " = "A bolus command of ";
+
+/* Bolus shortcut */
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+
+/* Bolus shortcut. Error */
+"too small bolus amount" = "too small bolus amount";
+
+/* Bolus shortcut */
+"Bolus Amount in U" = "Bolus Amount in U";
+
+/* Override Shortcut */
+"Activate an Override Preset" = "Activate an Override Preset";
+
+/* Override Shortcut */
+"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+
+/* Override Shortcut */
+"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+
+/* Override Shortcut */
+"The Profile Override" = "The Profile Override";
+
+/* Override Shortcut */
+"is now activated" = "is now activated";
+
+/* Override Shortcut */
+"Cancel active override" = "Cancel active override";
+
+/* Override Shortcut */
+"Override canceled" = "Override canceled";
+
+/* Override Shortcut */
+"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
 
 /* */
 "Schedule " = "Planlama ";
