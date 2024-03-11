@@ -48,3 +48,5 @@ files:
     translation: /Dependencies/CGMBLEKit/CGMBLEKitUI/%osx_locale%.lproj/TransmitterManagerSetup.strings
   - source: /Dependencies/G7SensorKit/G7SensorKitUI/en.lproj/Localizable.strings
     translation: /Dependencies/G7SensorKit/G7SensorKitUI/%osx_locale%.lproj/Localizable.strings
+  - source: FreeAPS/Sources/Shortcuts/en.lproj/AppShortcuts.strings
+    translation: FreeAPS/Sources/Shortcuts/%osx_locale%.lproj/AppShortcuts.strings
