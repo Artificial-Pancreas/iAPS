@@ -6,7 +6,7 @@ import Foundation
         AppShortcut(
             intent: ApplyTempPresetIntent(),
             phrases: [
-                "Activate \(.applicationName) temporary target ?",
+                "Activate \(.applicationName) temporary target",
                 "\(.applicationName) apply a temporary target"
             ]
         )
@@ -42,7 +42,7 @@ import Foundation
             intent: BolusIntent(),
             phrases: [
                 "\(.applicationName) Bolus",
-                "\(.applicationName) Tries to Enact a bolus"
+                "\(.applicationName) Enacts a bolus"
             ]
         )
     }

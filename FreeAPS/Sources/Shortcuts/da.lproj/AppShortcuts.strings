@@ -1,0 +1,36 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Activate ${applicationName} temporary target";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} apply a temporary target";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "List ${applicationName} state";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "${applicationName} state";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Add carbs in ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "${applicationName} allows to add carbs";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Activate an ${applicationName} Override Preset";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Activates an ${applicationName} Override Preset";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" =  "Cancel ${applicationName} Overide";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Cancels an active ${applicationName} override";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} Bolus";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Tries to Enact a bolus" = "${applicationName} Tries to Enact a bolus";
+
