@@ -17,7 +17,7 @@
 "Continue without bolus" = "Continuer sans bonus";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Enregistrer le repas sans bolus";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Statut";
@@ -53,7 +53,7 @@
 "Display IOB and COB" = "Afficher l'insuline active (IA) et les glucides actifs (GA)";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Confirmer un bolus avec moins de rotation";
 
 /* Setting Section */
 "UI/UX" = "Interface et expérience utilisateur";
@@ -74,7 +74,7 @@
 "was delivered" = "a été livré";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes depuis le déclenchement à distance via Nightscout par un soignant ou un parent. Voulez-vous toujours un bolus ?\n\nLa glycémie prédite, si vous ne le faites pas, est : ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "Un bolus à distance vient d'être livré !";
@@ -969,13 +969,61 @@ Enact a temp Basal or a temp target */
 "Low" = "Faible";
 
 /* */
-"High" = "Élevée";
+"High" = "Élevé";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Très élevé";
+
+/* TIR Chart */
+"Very Low" = "Very Low";
 
 /* */
 "glucose" = "glycémie";
+
+/* Bolus shortcut */
+"Enter a Bolus Amount" = "Enter a Bolus Amount";
+
+/* Bolus shortcut */
+"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+
+/* Bolus shortcut */
+"A bolus command of " = "A bolus command of ";
+
+/* Bolus shortcut */
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+
+/* Bolus shortcut. Error */
+"too small bolus amount" = "too small bolus amount";
+
+/* Bolus shortcut */
+"Bolus Amount in U" = "Bolus Amount in U";
+
+/* Override Shortcut */
+"Activate an Override Preset" = "Activate an Override Preset";
+
+/* Override Shortcut */
+"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+
+/* Override Shortcut */
+"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+
+/* Override Shortcut */
+"The Profile Override" = "The Profile Override";
+
+/* Override Shortcut */
+"is now activated" = "is now activated";
+
+/* Override Shortcut */
+"Cancel active override" = "Cancel active override";
+
+/* Override Shortcut */
+"Override canceled" = "Override canceled";
+
+/* Override Shortcut */
+"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
 
 /* */
 "Schedule " = "Horaires ";
@@ -1463,7 +1511,7 @@ Enact a temp Basal or a temp target */
 "Show Future" = "Afficher le futur";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Cacher données futures";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1474,7 +1522,7 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nAppuyez sur 'Ajouter' pour continuer avec le montant sélectionné.";
 
 /* */
-"Eventual Glucose" = "Glucose éventuel";
+"Eventual Glucose" = "Glycémie éventuelle";
 
 /* */
 "Please wait" = "Patientez s''il vous plait";
@@ -1492,7 +1540,7 @@ Enact a temp Basal or a temp target */
 "Insulin Sensitivity" = "Facteur de sensibilité à l’insuline";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Glycémie ventuelle - Cible) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Glycémie éventuelle - Cible) / ISF";
 
 /* */
 "Formula:" = "Formule:";
@@ -1697,10 +1745,10 @@ Enact a temp Basal or a temp target */
 "Low" = "Faible";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "Élevée";
+"High" = "Élevé";
 
 /* In Range */
-"In Range" = "À portée";
+"In Range" = "Dans la plage cible";
 
 /* Display % */
 "Change HbA1c Unit" = "Changer l'unité HbA1c";
@@ -1897,7 +1945,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "La valeur par défaut est désactivé. Quand activé, toute cible glycemique temporaire avec une valeur > 105 mg/dL entraine une augmentation de l'Isf (sensibilité à l'insuline). Synonyme de la préférence high_temptarget_raises_sensibilité";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Portée de la cible Glycémie large";
+"Wide BG Target Range" = "Plage cible étendue";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "La valeur par défaut est désactivé, ce qui signifie par défaut que seule la valeur basse de la plage cible de glycémie de la pompe est utilisée comme cible OpenAPS. Il s'agit d'une caractéristique de sécurité qui permet d'éviter des cibles trop larges et des résultats moins optimaux. Par conséquent, la valeur supérieure de la cible glycemique n'est utilisée que pour éviter les surcorrections de l'assistant de bolus. Activez cette option pour forcer l'utilisation de l'ensemble de la plage de cible glycemique dans l'algorithme.";
