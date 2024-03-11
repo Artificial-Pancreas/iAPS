@@ -1,17 +1,17 @@
 /* iAPS Temporary Target shortcut*/
-"Activate ${applicationName} temporary target" = "Activate ${applicationName} temporary target";
+"Activate ${applicationName} temporary target" = "Attiva ${applicationName} Obiettivo temporaneo";
 
 /* iAPS Temporary Target shortcut Description */
-"${applicationName} apply a temporary target" = "${applicationName} apply a temporary target";
+"${applicationName} apply a temporary target" = "${applicationName} applica un obiettivo temporaneo";
 
 /* iAPS Status shortcut */
-"List ${applicationName} state" = "List ${applicationName} state";
+"List ${applicationName} state" = "Stato della lista ${applicationName}";
 
 /* iAPS Status shortcut Description*/
-"${applicationName} state" = "${applicationName} state";
+"${applicationName} state" = "Stato ${applicationName}";
 
 /* iAPS Add carbs shortcut */
-"Add carbs in ${applicationName}" = "Add carbs in ${applicationName}";
+"Add carbs in ${applicationName}" = "Aggiungi carboidrati in ${applicationName}";
 
 /* iAPS Add carbs shortcut description */
 "${applicationName} allows to add carbs" = "${applicationName} allows to add carbs";
