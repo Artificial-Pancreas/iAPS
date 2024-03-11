@@ -975,55 +975,55 @@ Enact a temp Basal or a temp target */
 "Very High" = "Très élevé";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Très bas";
 
 /* */
 "glucose" = "glycémie";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Entrez la quantité de bolus";
 
 /* Bolus shortcut */
-"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+"Are you sure you want to bolus %@ U of insulin?" = "Êtes-vous sûr de vouloir administrer un bolus de %@ U d'insuline ?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "Une commande de bolus de ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U d'insuline ont étés envoyés à iAPS. Vérifiez dans l'application iAPS ou dans Nightscout si le bolus a été livré.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "quantité de bolus trop petit";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Quantité de Bolus en U";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Activer un préréglage de remplacement";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Permettre d'activer un préréglage de remplacement.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Quel préréglage de remplacement voulez-vous activer ?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Êtes-vous sûr de vouloir activer le préréglage de remplacement %@ ?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Le profil de remplacement";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "est maintenant activé";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Annuler le remplacement actif";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Remplacement annulé";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Active un %@ préréglage de remplacement";
 
 /* */
 "Schedule " = "Horaires ";
