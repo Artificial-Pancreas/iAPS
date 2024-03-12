@@ -17,7 +17,7 @@
 "Continue without bolus" = "Tiếp tục và bỏ qua liều bolus";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Lưu bữa ăn mà không cần bolus";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Tình trạng";
@@ -972,67 +972,67 @@ Enact a temp Basal or a temp target */
 "High" = "High";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Quá cao";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Quá thấp";
 
 /* */
 "glucose" = "đường huyết";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Nhập số lượng Bolus";
 
 /* Bolus shortcut */
-"Are you sure you want to bolus %@ U of insulin?" = "Are you sure you want to bolus %@ U of insulin?";
+"Are you sure you want to bolus %@ U of insulin?" = "Bạn có chắc chắn muốn tiêm %@U insulin không?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "Một lệnh bolus của ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U insulin đã được gửi đến iAPS. Xác minh trong ứng dụng iAPS hoặc trong Nightscout xem bolus đã được phân phối hay chưa.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "lượng bolus quá nhỏ";
 
 /* Bolus shortcut. Error */
-"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
+"Bolus Shortcuts are disabled in iAPS settings" = "Phím tắt Bolus bị tắt trong cài đặt iAPS";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Lượng Bolus tính bằng U";
 
 /* Bolus shortcut. Setting */
-"Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
+"Allow iOS Bolus Shortcuts" = "Cho phép phím tắt Bolus của iOS";
 
 /* Bolus shortcut. Pop-up */
-"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Nếu bật cài đặt này, bạn sẽ có thể sử dụng các phím tắt iOS và tính năng tự động hóa của nó để kích hoạt bolus trong iAPS.\n\nLưu ý rằng các phím tắt iOS cũng hoạt động với Siri!\n\nNếu bạn cần sử dụng Phím tắt Bolus, hãy đảm bảo để tắt cài đặt nghe 'Hey Siri' trong cài đặt Siri của iPhone, để tránh bất kỳ sự kích hoạt vô ý nào của bolus với Siri.\nNếu bạn không tắt 'Hey Siri' thì phím tắt bolus iAPS có thể được kích hoạt bằng câu nói 'Hey Siri, iAPS Bolus'.\n\nKhi được kích hoạt bằng Siri, bạn sẽ được yêu cầu cung cấp số lượng và xác nhận trước khi lệnh truyền nhanh có thể được gửi tới iAPS.";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Kích hoạt cài đặt trước ghi đè";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Cho phép kích hoạt cài đặt trước ghi đè.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Bạn muốn kích hoạt cài đặt trước ghi đè nào?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Bạn có chắc chắn muốn kích hoạt Ghi đè cài sẵn %@ không?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Hồ sơ ghi đè";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "hiện đã được kích hoạt";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Hủy bỏ ghi đè đang hoạt động";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Đã hủy ghi đè";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Kích hoạt %@ cài đặt sẵn ghi đè";
 
 /* */
 "Schedule " = "Lịch trình ";
