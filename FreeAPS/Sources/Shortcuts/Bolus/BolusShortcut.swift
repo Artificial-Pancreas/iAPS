@@ -59,9 +59,13 @@ import Intents
 
 @available(iOS 16.0,*) final class BolusIntentRequest: BaseIntentsRequest {
     func bolus(_ bolusAmount: Double) throws -> String {
+        guard settingsManager.settings.allowBolusShortcut else {
+            return NSLocalizedString("Bolus Shortcuts are disabled in iAPS settings", comment: "")
+        }
         guard bolusAmount >= Double(settingsManager.preferences.bolusIncrement) else {
             return NSLocalizedString("too small bolus amount", comment: "")
         }
+
         let bolus = min(
             max(Decimal(bolusAmount), settingsManager.preferences.bolusIncrement),
             settingsManager.pumpSettings.maxBolus
