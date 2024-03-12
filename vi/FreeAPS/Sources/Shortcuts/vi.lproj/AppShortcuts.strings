@@ -1,0 +1,35 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Kích hoạt ${applicationName} mục tiêu tạm thời";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} áp dụng mục tiêu tạm thời";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "Liệt kê ${applicationName} trạng thái";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "${applicationName} Trạng thái";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Thêm carbs vào ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "${applicationName} cho phép bổ sung carbs";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Kích hoạt ${applicationName} cài đặt sẵn ghi đè";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Kích hoạt ${applicationName} cài đặt sẵn ghi đè";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Hủy ${applicationName} ghi đè";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Hủy ghi đè ${applicationName} đang hoạt động";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} Bolus";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Tries to Enact a bolus" = "${applicationName} Cố gắng kích hoạt một liều tiêm nhanh";

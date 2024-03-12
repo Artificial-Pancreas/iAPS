@@ -273,10 +273,10 @@
 "Play Test Beeps" = "Testtöne abspielen";
 
 /* */
-"Skipping Read Pulse Log due to bolus still in progress." = "Überspringe Lese Pulse Protokoll wegen noch laufendem Bolus.";
+"Skipping Read Pulse Log due to bolus still in progress." = "Impuls-Log kann nicht gelesen werden da die Pumpe zurzeit einen Bolus verabreicht.";
 
 /* */
-"Read Pulse Log" = "Pulse-Log lesen";
+"Read Pulse Log" = "Impuls-Log lesen";
 
 /* */
 "Set Confirmation Beeps to %s" = "Bestätigungston auf %s setzen";
@@ -834,13 +834,13 @@
 "Done" = "Fertig";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Diagnose-Infos";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Erweiterten Impuls-Log lesen";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Aktivierungsinformationen";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Ausgelöste Warnungen";
