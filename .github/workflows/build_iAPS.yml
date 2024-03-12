@@ -6,7 +6,7 @@ on:
   ## Remove the "#" sign from the beginning of the line below to get automated builds on push (code changes in your repository)
   push:
     branches:
-      - 'fastlane'
+      - 'fastlane_main'
   
 jobs:
   validate:
