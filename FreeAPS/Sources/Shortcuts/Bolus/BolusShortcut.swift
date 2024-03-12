@@ -66,6 +66,10 @@ import Intents
             return NSLocalizedString("too small bolus amount", comment: "")
         }
 
+        guard bolusAmount <= Double(settingsManager.pumpSettings.maxBolus) else {
+            return NSLocalizedString("Max Bolus exceeded!", comment: "")
+        }
+
         let bolus = min(
             max(Decimal(bolusAmount), settingsManager.preferences.bolusIncrement),
             settingsManager.pumpSettings.maxBolus
