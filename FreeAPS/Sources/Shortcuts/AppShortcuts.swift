@@ -6,7 +6,7 @@ import Foundation
         AppShortcut(
             intent: ApplyTempPresetIntent(),
             phrases: [
-                "Activate \(.applicationName) temporary target ?",
+                "Activate \(.applicationName) temporary target",
                 "\(.applicationName) apply a temporary target"
             ]
         )
@@ -36,6 +36,13 @@ import Foundation
             phrases: [
                 "Cancel \(.applicationName) Overide",
                 "Cancels an active \(.applicationName) override"
+            ]
+        )
+        AppShortcut(
+            intent: BolusIntent(),
+            phrases: [
+                "\(.applicationName) Bolus",
+                "\(.applicationName) Enacts a bolus"
             ]
         )
     }
