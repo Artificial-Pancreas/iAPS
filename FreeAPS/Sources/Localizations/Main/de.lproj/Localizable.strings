@@ -1023,10 +1023,10 @@ Enact a temp Basal or a temp target */
 "The Profile Override" = "The Profile Override";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "ist jetzt aktiv";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Profilüberschreibung abbrechen";
 
 /* Override Shortcut */
 "Override canceled" = "Override canceled";
