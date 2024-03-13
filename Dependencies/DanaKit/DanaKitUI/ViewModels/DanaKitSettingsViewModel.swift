@@ -108,7 +108,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         updateBasalRate()
         
         if let cannulaDate = self.pumpManager?.state.cannulaDate {
-            self.cannulaAge = "\(round(cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.cannulaAge = "\(round(-cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
         }
         
         self.basalButtonText = self.updateBasalButtonText()
@@ -117,14 +117,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     func stopUsingDana() {
-        guard let pumpManager = self.pumpManager else {
-            return
-        }
-        
-        pumpManager.state.isOnBoarded = false
-        pumpManager.notifyStateDidChange()
-        
-        pumpManager.notifyDelegateOfDeactivation {
+        self.pumpManager?.notifyDelegateOfDeactivation {
             DispatchQueue.main.async {
                 self.didFinish?()
             }
