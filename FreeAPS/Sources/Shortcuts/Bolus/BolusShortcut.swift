@@ -43,10 +43,10 @@ import Intents
             let bolusAmountString = amount.formatted()
 
             // if confirmBeforeApplying {
-            let bolusString = BolusIntentRequest().currentGlucose() // Fetch current glucose
+            let glucoseString = BolusIntentRequest().currentGlucose() // Fetch current glucose
             try await requestConfirmation(
                 result: .result(
-                    dialog: "Your current glucose is \(bolusString != nil ? bolusString! : "not available"). Are you sure you want to bolus \(bolusAmountString) U of insulin?"
+                    dialog: "Your current glucose is \(glucoseString != nil ? glucoseString! : "not available"). Are you sure you want to bolus \(bolusAmountString) U of insulin?"
                 )
             )
             // }
