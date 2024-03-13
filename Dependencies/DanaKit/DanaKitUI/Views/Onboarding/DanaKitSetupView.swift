@@ -27,11 +27,10 @@ struct DanaKitSetupView: View {
        )
     }
     
-    private let allowedOptions: [Int] = [0, 1, 2]
+    private let allowedOptions: [Int] = [1, 2]
     
     var body: some View {
-        VStack(spacing: 0) {
-            close
+        VStack(alignment: .leading) {
             title
                 .onLongPressGesture(minimumDuration: 2) {
                     didLongPressOnTitle()
@@ -51,7 +50,14 @@ struct DanaKitSetupView: View {
             ContinueButton(action: { nextAction(value) })
         }
         .edgesIgnoringSafeArea(.bottom)
-        .navigationBarHidden(true)
+        .navigationBarHidden(false)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
+                    self.dismiss()
+                })
+            }
+        }
     }
 
     @ViewBuilder
@@ -70,6 +76,7 @@ struct DanaKitSetupView: View {
     private func formatter(_ index: Int) -> String {
         switch (index) {
         case 0:
+            // UNSUPPORTED ATM
             return LocalizedString("DanaRS-v1", comment: "danaRS v1 option text for DanaKitSetupView")
         case 1:
             return LocalizedString("DanaRS-v3", comment: "danaRS v3 option text for DanaKitSetupView")
@@ -78,17 +85,6 @@ struct DanaKitSetupView: View {
         default:
             return ""
         }
-    }
-    
-    @ViewBuilder
-    private var close: some View {
-        HStack {
-            Spacer()
-            Button(LocalizedString("Cancel", comment: "Cancel button title"), action: {
-                self.dismiss()
-            })
-        }
-        .padding(.top)
     }
     
     private func didLongPressOnTitle() {
