@@ -984,7 +984,7 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Ange mängd insulin";
 
 /* Bolus shortcut */
-"Are you sure you want to bolus %@ U of insulin?" = "Är du säker på att du vill ge %@ E insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Ditt blodsocker är %@. Är du säker på att du vill ge %@ E insulin?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Ett kommando med ";
