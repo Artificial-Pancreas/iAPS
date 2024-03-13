@@ -17,6 +17,7 @@ struct CurrentGlucoseView: View {
     }
 
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) private var fontSize
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
@@ -55,8 +56,8 @@ struct CurrentGlucoseView: View {
 
     var body: some View {
         ZStack {
-            VStack(alignment: .center) {
-                // HStack {
+            VStack {
+                let offset: CGFloat = fontSize < .large ? 82 : (fontSize >= .large && fontSize < .extraExtraLarge) ? 87 : 92
                 ZStack {
                     Text(
                         (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
@@ -69,7 +70,7 @@ struct CurrentGlucoseView: View {
                     .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
                     .frame(maxWidth: .infinity, alignment: .center)
 
-                    HStack(spacing: 20) {
+                    HStack(spacing: 10) {
                         image
                             .font(.system(size: 25))
                         VStack {
@@ -92,8 +93,10 @@ struct CurrentGlucoseView: View {
                             }.offset(x: 7, y: 0)
                         }
                         .font(.extraSmall).foregroundStyle(.secondary)
-                    }.frame(maxWidth: .infinity, alignment: .trailing).padding(.trailing, 50)
+                    }.frame(maxWidth: .infinity, alignment: .center)
+                        .offset(x: offset, y: 0)
                 }
+                .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xxLarge)
             }
         }
     }

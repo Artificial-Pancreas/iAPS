@@ -31,6 +31,7 @@ extension PumpConfig {
                         }
                     }
                 }
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .onAppear(perform: configureView)
                 .navigationTitle("Pump config")
                 .navigationBarTitleDisplayMode(.inline)

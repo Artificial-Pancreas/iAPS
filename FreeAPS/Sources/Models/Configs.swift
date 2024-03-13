@@ -8,6 +8,8 @@ struct DateFilter {
     var week = Date().addingTimeInterval(-7.days.timeInterval) as NSDate
     var month = Date().addingTimeInterval(-30.days.timeInterval) as NSDate
     var total = Date().addingTimeInterval(-90.days.timeInterval) as NSDate
+    var tenDays = Date().addingTimeInterval(-10.days.timeInterval) as NSDate
+    var fourteen = Date().addingTimeInterval(-14.days.timeInterval) as NSDate
 }
 
 public enum IAPSconfig {
@@ -18,25 +20,37 @@ public enum IAPSconfig {
     static let shadowOpacity: CGFloat = 0.75
     static let glassShadowOpacity: CGFloat = 0.6
     static let shadowFraction: CGFloat = 2
+    static let minimumCarbEquivalent: Decimal = 0.6
 }
 
 extension Font {
     static let buttonFont = Font.custom("TimeButtonFont", fixedSize: 14) // Same as Eventual BG size
-    static let loopFont = Font.custom("LoopFont", fixedSize: 18) // Loop min ago
-    static let statusFont = Font.custom("StatusFont", fixedSize: 16) // IOB, COB etc.
-    static let pumpFont = Font.custom("StatusFont", fixedSize: 15)
-    static let previewSmall = Font.custom("PreviewSmallFont", fixedSize: 12)
-    static let previewNormal = Font.custom("PreviewNormalFont", fixedSize: 18)
-    static let previewHeadline = Font.custom("PreviewHeadlineFont", fixedSize: 20)
-    static let extraSmall = Font.custom("ExtraSmallFont", fixedSize: 14)
+
+    static let loopFont = Font.custom("LoopFont", size: 13) // Loop min ago
+    static let statusFont = Font.custom("StatusFont", size: 16) // IOB, COB etc.
+    static let pumpFont = Font.custom("PumpFont", size: 16)
+
+    static let previewSmall = Font.custom("PreviewSmallFont", size: 14)
+    static let previewNormal = Font.custom("PreviewNormalFont", size: 16)
+    static let previewHeadline = Font.custom("PreviewHeadlineFont", size: 18)
+    static let extraSmall = Font.custom("ExtraSmallFont", size: 12)
 
     static let suggestionHeadline = Font.custom("SuggestionHeadlineFont", fixedSize: 20)
     static let suggestionError = Font.custom("SuggestionErrorFone", fixedSize: 18)
     static let suggestionParts = Font.custom("SuggestionPartsFont", fixedSize: 17)
     static let suggestionSmallParts = Font.custom("SuggestionSmallPartsFont", fixedSize: 16)
 
-    static let glucoseFont = Font.custom("SuggestionSmallPartsFont", fixedSize: 45)
-    static let glucoseSmallFont = Font.custom("SuggestionSmallPartsFont", fixedSize: 24)
+    static let glucoseFont = Font.custom("SuggestionSmallPartsFont", size: 45)
+    static let glucoseSmallFont = Font.custom("SuggestionSmallPartsFont", size: 24)
+
     static let bolusProgressStopFont = Font.custom("BolusProgressStop", fixedSize: 24)
     static let bolusProgressFont = Font.custom("BolusProgress", fixedSize: 20)
+    static let bolusProgressBarFont = Font.custom("BolusProgressBarFont", fixedSize: 18)
+
+    static let chartTimeFont = Font.custom("ChartTimeFont", fixedSize: 14)
+    static let timeSettingFont = Font.custom("TimeSettingFont", fixedSize: 14)
+
+    static let carbsDotFont = Font.custom("CarbsDotFont", fixedSize: 14)
+    static let bolusDotFont = Font.custom("BolusDotFont", fixedSize: 14)
+    static let announcementSymbolFont = Font.custom("AnnouncementSymbolFont", fixedSize: 14)
 }

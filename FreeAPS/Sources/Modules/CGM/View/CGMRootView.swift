@@ -83,6 +83,7 @@ extension CGM {
                         Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
                     }
                 }
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .onAppear(perform: configureView)
                 .navigationTitle("CGM")
                 .navigationBarTitleDisplayMode(.inline)

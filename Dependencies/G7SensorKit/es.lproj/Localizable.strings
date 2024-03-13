@@ -41,7 +41,7 @@
 "Grace Period End" = "Grace Period End";
 
 /* Field label */
-"Glucose" = "Glucose";
+"Glucose" = "Glucosa";
 
 "Last Reading" = "Last Reading";
 
@@ -76,7 +76,7 @@
 "Scan for new sensor" = "Scan for new sensor";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "Eliminar MCG";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";

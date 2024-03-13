@@ -13,6 +13,7 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     let fpuID: String?
 
     static let manual = "iAPS"
+    static let remote = "Nightscout operator"
     static let appleHealth = "applehealth"
 
     static func == (lhs: CarbsEntry, rhs: CarbsEntry) -> Bool {

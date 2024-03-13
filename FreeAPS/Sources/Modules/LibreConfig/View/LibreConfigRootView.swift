@@ -28,6 +28,7 @@ extension LibreConfig {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationBarTitle("")
             .navigationBarHidden(true)
             .onAppear(perform: configureView)

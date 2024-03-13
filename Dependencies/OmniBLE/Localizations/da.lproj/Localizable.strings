@@ -402,6 +402,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Deaktiver Pod";
 
+/* */
+"Slide to Insert Cannula" = "Slide to Insert Cannula";
+
+/* */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deaktiverer.";
 
@@ -435,6 +441,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Lyt efter 2 bip.";
 
@@ -459,9 +468,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Forbered pumpested.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Fjern Pod'ens nålehætte og kontroller kanyle. Fjern derefter papirbagsiden.";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Tjek Pod, sæt på kroppen og bekræft derefter Pod er sat korrekt på.";
 
@@ -485,6 +491,9 @@
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Vent, indtil indsættelsen er afsluttet.";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Indsat";
@@ -562,7 +571,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Dette er en påmindelse om, at du planlagde, hvornår du parrede din nuværende Pod.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Planlagt Påmindelse";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Appen giver dig besked, når mængden af insulin i Pod'en når dette niveau.";
@@ -579,7 +588,7 @@
 "Time" = "Tid";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Ingen Påmindelse";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Påmindelse om lavt reservoir";
@@ -820,3 +829,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "OK";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Pod Diagnostics";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Read Activation Time";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Read Triggered Alerts";

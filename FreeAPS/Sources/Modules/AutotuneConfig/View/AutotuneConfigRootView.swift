@@ -106,6 +106,7 @@ extension AutotuneConfig {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Autotune")
             .navigationBarTitleDisplayMode(.automatic)

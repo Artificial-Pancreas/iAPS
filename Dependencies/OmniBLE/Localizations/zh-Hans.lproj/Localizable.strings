@@ -249,7 +249,7 @@
 "Inserting..." = "Inserting...";
 
 /* Cannula insertion button text while showing error */
-"Retry" = "Retry";
+"Retry" = "重试";
 
 /* Cannula insertion button text while checking insertion */
 "Checking..." = "Checking...";
@@ -402,6 +402,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "解除Pod";
 
+/* */
+"Slide to Insert Cannula" = "Slide to Insert Cannula";
+
+/* */
+"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "停用中";
 
@@ -435,6 +441,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "用至少100个单位的胰岛素填充一个新的pod (不要取下Pod的针头盖)。";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "注意听两声哔声";
 
@@ -459,9 +468,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "将注射部位做好准备";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "移除蓝色防尘帽并检查出药口软管，然后移除覆盖的贴纸";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "检查Pod，贴在注射部位上，确保pod已经贴牢";
 
@@ -485,6 +491,9 @@
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "等待，直到插入完成";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "插入完毕";
@@ -562,7 +571,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "预约提醒";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
@@ -579,7 +588,7 @@
 "Time" = "时间";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "无提醒";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Low Reservoir Reminder";
@@ -820,3 +829,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "完成";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Pod Diagnostics";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Read Activation Time";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Read Triggered Alerts";

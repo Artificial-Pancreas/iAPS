@@ -11,7 +11,7 @@
 "Bluetooth" = "Bluetooth";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "Peru";
 
 /* No comment provided by engineer. */
 "Configuration" = "Configuration";
@@ -33,7 +33,7 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "Valmis";
 
 /* Field label */
 "Glucose" = "Glucose";

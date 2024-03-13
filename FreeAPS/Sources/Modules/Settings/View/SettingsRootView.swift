@@ -12,10 +12,18 @@ extension Settings {
             Form {
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
-                } header: {
-                    Text(
-                        "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice) "
-                    ).textCase(nil)
+                }
+                header: {
+                    if let expirationDate = Bundle.main.profileExpiration {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
+                                "\nBuild Expires: " + expirationDate
+                        ).textCase(nil)
+                    } else {
+                        Text(
+                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
+                        )
+                    }
                 }
 
                 Section {
@@ -63,6 +71,22 @@ extension Settings {
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                             }
+
+                            HStack {
+                                Text("Delete All NS Overrides")
+                                Button("Delete") { state.deleteOverrides() }
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                            } /*
+
+                             HStack {
+                                 Text("Delete latest NS Override")
+                                 Button("Delete") { state.deleteOverride() }
+                                     .frame(maxWidth: .infinity, alignment: .trailing)
+                                     .buttonStyle(.borderedProminent)
+                                     .tint(.red)
+                             } */
                         }
                         Group {
                             Text("Preferences")
@@ -96,6 +120,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
                             Text("Enacted announcements")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
+                            Text("Overrides Not Uploaded")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.notUploadedOverrides), from: self)
                             Text("Autotune")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
                             Text("Glucose")
@@ -131,6 +157,7 @@ extension Settings {
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(activityItems: state.logItems())
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))

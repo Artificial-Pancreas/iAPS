@@ -47,7 +47,7 @@ struct MainChartView: View {
         static let fpuScale: CGFloat = 1
         static let announcementSize: CGFloat = 8
         static let announcementScale: CGFloat = 2.5
-        static let owlSeize: CGFloat = 25
+        static let owlSeize: CGFloat = 20
         static let owlOffset: CGFloat = 80
     }
 
@@ -58,6 +58,8 @@ struct MainChartView: View {
         static let resume = "✅"
         static let tempbasal = "basal"
         static let bolus = "💧"
+        static let meal = "🍴"
+        static let override = "👤"
     }
 
     @Binding var glucose: [BloodGlucose]
@@ -329,7 +331,7 @@ struct MainChartView: View {
 
             return Text(glucoseFormatter.string(from: value as NSNumber)!)
                 .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
-                .font(.caption2)
+                .font(.bolusDotFont)
                 .asAny()
         }
     }
@@ -424,7 +426,7 @@ struct MainChartView: View {
                     EmptyView()
                 } else {
                     Text(format.string(from: firstHourDate().addingTimeInterval(hour.hours.timeInterval)))
-                        .font(.caption)
+                        .font(.chartTimeFont)
                         .position(
                             x: firstHourPosition(viewWidth: fullSize.width) +
                                 oneSecondStep(viewWidth: fullSize.width) *
@@ -476,21 +478,33 @@ struct MainChartView: View {
     private func announcementView(fullSize: CGSize) -> some View {
         ZStack {
             ForEach(announcementDots, id: \.rect.minX) { info -> AnyView in
-                let position = CGPoint(x: info.rect.midX + 5, y: info.rect.maxY - Config.owlOffset)
+                let position = CGPoint(x: info.rect.midX, y: info.rect.maxY - Config.owlOffset)
+                let command = info.note.lowercased()
                 let type: String =
-                    info.note.contains("true") ?
-                    Command.open :
-                    info.note.contains("false") ?
+                    command.contains("true") ?
                     Command.closed :
-                    info.note.contains("suspend") ?
+                    command.contains("false") ?
+                    Command.open :
+                    command.contains("suspend") ?
                     Command.suspend :
-                    info.note.contains("resume") ?
+                    command.contains("resume") ?
                     Command.resume :
-                    info.note.contains("tempbasal") ?
-                    Command.tempbasal : Command.bolus
+                    command.contains("tempbasal") ?
+                    Command.tempbasal :
+                    command.contains("override") ?
+                    Command.override :
+                    command.contains("meal") ?
+                    Command.meal :
+                    command.contains("bolus") ?
+                    Command.bolus : ""
+
                 VStack {
-                    Text(type).font(.caption2).foregroundStyle(.orange)
                     Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
+                        .overlay {
+                            Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
+                                .offset(x: 0, y: -15)
+                        }
+                    // Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
                 }.position(position).asAny()
             }
         }
@@ -554,7 +568,7 @@ struct MainChartView: View {
 
             ForEach(bolusDots, id: \.rect.minX) { info -> AnyView in
                 let position = CGPoint(x: info.rect.midX, y: info.rect.maxY + 8)
-                return Text(bolusFormatter.string(from: info.value as NSNumber)!).font(.caption2)
+                return Text(bolusFormatter.string(from: info.value as NSNumber)!).font(.bolusDotFont)
                     .position(position)
                     .asAny()
             }
@@ -576,7 +590,7 @@ struct MainChartView: View {
 
             ForEach(carbsDots, id: \.rect.minX) { info -> AnyView in
                 let position = CGPoint(x: info.rect.midX, y: info.rect.minY - 8)
-                return Text(carbsFormatter.string(from: info.value as NSNumber)!).font(.caption2)
+                return Text(carbsFormatter.string(from: info.value as NSNumber)!).font(.carbsDotFont)
                     .position(position)
                     .asAny()
             }
@@ -625,9 +639,9 @@ struct MainChartView: View {
     private func overridesView(fullSize: CGSize) -> some View {
         ZStack {
             overridesPath
-                .fill(Color.purple.opacity(0.1))
+                .fill(Color.violet.opacity(colorScheme == .light ? 0.3 : 0.6))
             overridesPath
-                .stroke(Color.purple.opacity(0.7), lineWidth: 1)
+                .stroke(Color.violet.opacity(0.7), lineWidth: 1)
         }
         .onChange(of: glucose) { _ in
             calculateOverridesRects(fullSize: fullSize)
@@ -1085,24 +1099,26 @@ extension MainChartView {
                     x: xStart,
                     y: y - 3,
                     width: xEnd - xStart,
-                    height: 6
+                    height: 8
                 )
             }
-            if latest?.enabled ?? false {
+            // Display active Override
+            if let last = latest, last.enabled {
                 var old = Array(rects)
-                if (latest?.duration ?? 0) != 0 {
-                    let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
-                    let plusNow = (latest?.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
-                    let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
+                let duration = Double(last.duration ?? 0)
+                // Looks better when target isn't == 0 in Home View Main Chart
+                let targetRaw = last.target ?? 0
+                let target = Int(targetRaw) < 6 ? 6 : targetRaw
 
+                if duration > 0 {
+                    let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
+                    let plusNow = (last.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
+                    let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
-                        y: glucoseToYCoordinate(
-                            Int(Double(latest?.target ?? 100)),
-                            fullSize: fullSize
-                        ),
+                        y: glucoseToYCoordinate(Int(target), fullSize: fullSize) - 3,
                         width: x2 - x1,
-                        height: 6
+                        height: 8
                     )
                     old.append(oneMore)
                     let path = Path { path in
@@ -1112,13 +1128,13 @@ extension MainChartView {
                         overridesPath = path
                     }
                 } else {
-                    let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
-                    
+                    let x1 = timeToXCoordinate((last.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
+                    let x2 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
-                        y: glucoseToYCoordinate(Int(Double(latest?.target ?? 100)), fullSize: fullSize),
-                        width: additionalWidth(viewWidth: fullSize.width),
-                        height: 6
+                        y: glucoseToYCoordinate(Int(target), fullSize: fullSize) - 3,
+                        width: x2 - x1 + additionalWidth(viewWidth: fullSize.width),
+                        height: 8
                     )
                     old.append(oneMore)
                     let path = Path { path in

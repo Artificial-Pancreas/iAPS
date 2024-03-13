@@ -37,6 +37,7 @@ extension StatConfig {
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)
                     }
+                    Toggle("Display Time Interval Setting Button", isOn: $state.timeSettings)
                 } header: { Text("Home Chart settings ") }
 
                 Section {
@@ -71,6 +72,7 @@ extension StatConfig {
                     Toggle("Display and allow Fat and Protein entries", isOn: $state.useFPUconversion)
                 } header: { Text("Add Meal View settings ") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("UI/UX")
             .navigationBarTitleDisplayMode(.automatic)

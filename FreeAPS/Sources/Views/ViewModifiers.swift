@@ -37,6 +37,16 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
+struct CompactSectionSpacing: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            return content
+                .listSectionSpacing(.compact)
+        } else {
+            return content }
+    }
+}
+
 struct AddShadow: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
@@ -130,7 +140,7 @@ struct LoopEllipse: View {
     let stroke: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: 1)
+            .stroke(stroke, lineWidth: 2)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
@@ -138,11 +148,45 @@ struct LoopEllipse: View {
     }
 }
 
+struct TimeEllipse: View {
+    @Environment(\.colorScheme) var colorScheme
+    let characters: Int
+    var body: some View {
+        RoundedRectangle(cornerRadius: 15)
+            .fill(Color.gray).opacity(colorScheme == .light ? 0.2 : 0.08)
+            .frame(width: CGFloat(characters * 7), height: 25)
+    }
+}
+
 struct HeaderBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         Rectangle()
-            .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header.opacity(1))
+            .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1))
+    }
+}
+
+struct ClockOffset: View {
+    let mdtPump: Bool
+    var body: some View {
+        ZStack {
+            Image(systemName: "clock.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 20)
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(Color(.warning))
+                .offset(x: 10, y: !mdtPump ? -20 : -13)
+        }
+    }
+}
+
+struct ChartBackground: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .background(colorScheme == .light ? .gray.opacity(0.05) : .black).brightness(colorScheme == .dark ? 0.05 : 0)
     }
 }
 
@@ -251,6 +295,10 @@ extension View {
         HeaderBackground()
     }
 
+    func chartBackground() -> some View {
+        modifier(ChartBackground())
+    }
+
     func frostedGlassLayer(_ opacity: CGFloat) -> some View {
         FrostedGlass(opacity: opacity)
     }
@@ -267,6 +315,10 @@ extension View {
         onTapGesture {
             view.state.showModal(for: screen)
         }
+    }
+
+    func compactSectionSpacing() -> some View {
+        modifier(CompactSectionSpacing())
     }
 
     func asAny() -> AnyView { .init(self) }

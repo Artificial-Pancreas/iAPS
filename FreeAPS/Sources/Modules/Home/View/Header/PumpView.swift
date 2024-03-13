@@ -6,6 +6,7 @@ struct PumpView: View {
     @Binding var name: String
     @Binding var expiresAtDate: Date?
     @Binding var timerDate: Date
+    @Binding var timeZone: TimeZone?
 
     @State var state: Home.StateModel
 
@@ -39,7 +40,29 @@ struct PumpView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            if let battery = battery, expiresAtDate == nil {
+            if let reservoir = reservoir {
+                if reservoir == 0xDEAD_BEEF {
+                    HStack(spacing: 0) {
+                        Text("50+ ").font(.statusFont).bold()
+                        Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                    }
+                    .offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
+                } else {
+                    HStack(spacing: 0) {
+                        Text(
+                            reservoirFormatter
+                                .string(from: reservoir as NSNumber)!
+                        ).font(.statusFont).bold()
+                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                    }
+                    .offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
+                }
+            } else {
+                Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
+                    .offset(x: 0, y: -4)
+            }
+
+            if let battery = battery, !state.pumpName.contains("Omni") {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
                     (battery.percent ?? 100) >
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
@@ -48,83 +71,50 @@ struct PumpView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: 15)
                     .foregroundColor(batteryColor)
-            }
-
-            if let reservoir = reservoir {
-                let fill = CGFloat(min(max(Double(reservoir) / 200.0, 0.15), Double(reservoir) / 200.0, 0.9)) * 12
-                HStack {
-                    Image("vial")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 10)
-                        .foregroundColor(reservoirColor)
-                        .offset(x: 0, y: -3)
-                        .overlay {
-                            UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 2, bottomTrailing: 2))
-                                .fill(Color.insulin)
-                                .frame(maxWidth: 8.8, maxHeight: fill)
-                                .frame(maxHeight: .infinity, alignment: .bottom)
-                                .offset(x: -0.09, y: -3.22)
-                        }
-                    if reservoir == 0xDEAD_BEEF {
-                        HStack(spacing: 0) {
-                            Text("50+ ").font(.statusFont).bold()
-                            Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                        }
-                    } else {
-                        HStack(spacing: 0) {
-                            Text(
-                                reservoirFormatter
-                                    .string(from: reservoir as NSNumber)!
-                            ).font(.statusFont).bold()
-                            Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                    .offset(x: 0, y: -4)
+                    .overlay {
+                        if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                            ClockOffset(mdtPump: true)
                         }
                     }
-                }.offset(x: 0, y: 4)
-            } else {
-                Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
             }
 
             if let date = expiresAtDate {
-                HStack(spacing: 2) {
-                    Image("pod_reservoir")
-                        .resizable(resizingMode: .stretch)
-                        .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
-                        .foregroundColor(colorScheme == .dark ? .secondary : .white)
-                    remainingTime(time: date.timeIntervalSince(timerDate))
-                        .font(.pumpFont)
-                }
+                Image("pod_reservoir")
+                    .resizable(resizingMode: .stretch)
+                    .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                    .foregroundColor(colorScheme == .dark ? .secondary : .white)
+                    .offset(x: 0, y: -5)
+                    .overlay {
+                        if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                            ClockOffset(mdtPump: false)
+                        }
+                    }
+                remainingTime(time: date.timeIntervalSince(timerDate))
+                    .font(.pumpFont)
+                    .offset(x: -7, y: 0)
+            } else if state.pumpName.contains("Omni") {
+                Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
+                    .offset(x: 0, y: -4)
             }
         }
+        .offset(x: 0, y: 5)
     }
 
     private func remainingTime(time: TimeInterval) -> some View {
-        VStack {
+        HStack {
             if time > 0 {
                 let days = Int(time / 1.days.timeInterval)
                 let hours = Int(time / 1.hours.timeInterval)
                 let minutes = Int(time / 1.minutes.timeInterval)
                 if days >= 1 {
-                    HStack(spacing: 0) {
-                        Text(" \(days)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("d", comment: "abbreviation for days"))
-                    }
-                    HStack(spacing: 0) {
-                        Text(" \(hours - days * 24)")
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
-                    }
+                    Text(" \(days)" + NSLocalizedString("d", comment: "abbreviation for days" + "+"))
                 } else if hours >= 1 {
-                    HStack(spacing: 0) {
-                        Text("\(hours)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                    }.offset(x: 0, y: 6)
+                    Text(" \(hours)" + NSLocalizedString("h", comment: "abbreviation for hours"))
+                        .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                 } else {
-                    HStack(spacing: 0) {
-                        Text(" \(minutes)").foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                        Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
-                    }.offset(x: 0, y: 6)
+                    Text(" \(minutes)" + NSLocalizedString("m", comment: "abbreviation for minutes"))
+                        .foregroundStyle(time < 4 * 60 * 60 ? .red : .primary)
                 }
             } else {
                 Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)

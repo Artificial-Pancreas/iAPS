@@ -1,4 +1,5 @@
 import Foundation
+import SwiftDate
 import Swinject
 import WatchConnectivity
 
@@ -16,6 +17,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
     @Injected() private var garmin: GarminManager!
+    @Injected() private var nightscout: NightscoutManager!
 
     let coreDataStorage = CoreDataStorage()
 
@@ -55,13 +57,18 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     private func configureState() {
         processQueue.async {
+            let overrideStorage = OverrideStorage()
             let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
             let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
-            self.state.trendRaw = readings.first?.direction ?? "↔︎"
+            self.state.trendRaw = self.convertTrendToDirectionText(trend: glucoseValues.trend)
             self.state.glucoseDate = readings.first?.date ?? .distantPast
+            self.state.glucoseDateInterval = self.state.glucoseDate.map {
+                guard $0.timeIntervalSince1970 > 0 else { return 0 }
+                return UInt64($0.timeIntervalSince1970)
+            }
             self.state.lastLoopDate = self.enactedSuggestion?.recieved == true ? self.enactedSuggestion?.deliverAt : self
                 .apsManager.lastLoopDate
             self.state.lastLoopDateInterval = self.state.lastLoopDate.map {
@@ -111,22 +118,55 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                         until: untilDate
                     )
                 }
+
+            self.state.overrides = overrideStorage.fetchProfiles()
+                .map { preset -> OverridePresets_ in
+                    let untilDate = overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
+                        guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
+
+                        let duration = Double(currentOverride.duration ?? 0)
+                        let overrideDate: Date = currentOverride.date ?? Date.now
+
+                        let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                        return date > Date.now ? date : nil
+                    }
+
+                    return OverridePresets_(
+                        name: preset.name ?? "",
+                        id: preset.id ?? "",
+                        until: untilDate,
+                        description: self.description(preset)
+                    )
+                }
+            // Is there an active override but no preset?
+            let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
+            if let last = overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
+                let duration = Double(last.duration ?? 0)
+                let overrideDate: Date = last.date ?? Date.now
+                let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                let date = date_ > Date.now ? date_ : nil
+
+                self.state.overrides
+                    .append(OverridePresets_(name: "custom", id: last.id ?? "", until: date, description: self.description(last)))
+            }
+
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
             self.state.displayFatAndProteinOnWatch = self.settingsManager.settings.displayFatAndProteinOnWatch
+            self.state.confirmBolusFaster = self.settingsManager.settings.confirmBolusFaster
+            self.state.profilesOrTempTargets = self.settingsManager.settings.profilesOrTempTargets
 
-            let eBG = self.evetualBGStraing()
+            let eBG = self.eventualBGString()
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
             self.state.eventualBGRaw = eBG
 
             self.state.isf = self.suggestion?.isf
 
-            let overrideArray = self.coreDataStorage.fetchLatestOverride()
+            let overrideArray = overrideStorage.fetchLatestOverride()
 
             if overrideArray.first?.enabled ?? false {
                 let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
                 self.state.override = percentString
-
             } else {
                 self.state.override = "100 %"
             }
@@ -192,7 +232,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         return description
     }
 
-    private func evetualBGStraing() -> String? {
+    private func eventualBGString() -> String? {
         guard let eventualBG = suggestion?.eventualBG else {
             return nil
         }
@@ -200,6 +240,31 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         return eventualFormatter.string(
             from: (units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
         )!
+    }
+
+    private func convertTrendToDirectionText(trend: String) -> String {
+        switch trend {
+        case "↑↑↑":
+            return Direction.tripleUp.rawValue
+        case "↑↑":
+            return Direction.doubleUp.rawValue
+        case "↑":
+            return Direction.singleUp.rawValue
+        case "↗︎":
+            return Direction.fortyFiveUp.rawValue
+        case "→":
+            return Direction.flat.rawValue
+        case "↘︎":
+            return Direction.fortyFiveDown.rawValue
+        case "↓":
+            return Direction.singleDown.rawValue
+        case "↓↓↓":
+            return Direction.tripleDown.rawValue
+        case "↓↓":
+            return Direction.doubleDown.rawValue
+        default:
+            return Direction.notComputable.rawValue
+        }
     }
 
     private func newBolusCalc(delta: [Readings], suggestion _: Suggestion?) -> Decimal {
@@ -256,6 +321,30 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         // Not 0 or over maxBolus
         insulinCalculated = max(min(insulinCalculated, maxBolus), 0)
         return insulinCalculated
+    }
+
+    private func description(_ preset: OverridePresets) -> String {
+        let rawtarget = (preset.target ?? 0) as Decimal
+
+        let targetValue = settingsManager.settings.units == .mmolL ? rawtarget.asMmolL : rawtarget
+        let target: String = rawtarget > 6 ? glucoseFormatter.string(from: targetValue as NSNumber) ?? "" : ""
+
+        let percentage = preset.percentage != 100 ? preset.percentage.formatted() + "%" : ""
+        let string = (preset.target ?? 0) as Decimal > 6 && !percentage.isEmpty ? target + " " + settingsManager.settings.units
+            .rawValue + ", " + percentage : target + percentage
+        return string
+    }
+
+    private func description(_ override: Override) -> String {
+        let rawtarget = (override.target ?? 0) as Decimal
+
+        let targetValue = settingsManager.settings.units == .mmolL ? rawtarget.asMmolL : rawtarget
+        let target: String = rawtarget > 6 ? glucoseFormatter.string(from: targetValue as NSNumber) ?? "" : ""
+
+        let percentage = override.percentage != 100 ? override.percentage.formatted() + "%" : ""
+        let string = (override.target ?? 0) as Decimal > 6 && !percentage.isEmpty ? target + " " + settingsManager.settings.units
+            .rawValue + ", " + percentage : target + percentage
+        return string
     }
 
     private var glucoseFormatter: NumberFormatter {
@@ -373,6 +462,46 @@ extension BaseWatchManager: WCSessionDelegate {
                 )
                 tempTargetsStorage.storeTempTargets([entry])
                 replyHandler(["confirmation": true])
+                return
+            }
+        }
+
+        if let overrideID = message["override"] as? String {
+            let storage = OverrideStorage()
+            if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
+                preset.date = Date.now
+
+                // Cancel eventual current active override first
+                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
+                    let name = storage.isPresetName()
+
+                    if let duration = storage.cancelProfile() {
+                        let presetName = preset.name
+                        let nsString = name != nil ? name! : activeOveride.percentage.formatted()
+                        nightscout.editOverride(nsString, duration, activeOveride.date ?? Date())
+                    }
+                }
+                // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
+                storage.overrideFromPreset(preset)
+                nightscout.uploadOverride(
+                    preset.name ?? "",
+                    Double(preset.duration ?? 0),
+                    storage.fetchLatestOverride().first?.date ?? Date.now
+                )
+                replyHandler(["confirmation": true])
+                configureState()
+                return
+            } else if overrideID == "cancel" {
+                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
+                    let presetName = storage.isPresetName()
+                    let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+
+                    if let duration = storage.cancelProfile() {
+                        nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                        replyHandler(["confirmation": true])
+                        configureState()
+                    }
+                }
                 return
             }
         }

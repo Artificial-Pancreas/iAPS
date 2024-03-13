@@ -43,7 +43,8 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
 
 - Dexcom G5  
 - Dexcom G6   
-- Dexcom ONE   
+- Dexcom ONE
+- Dexcom ONE +   
 - Dexcom G7   
 - Libre 1   
 - Libre 2 (European)   
@@ -52,11 +53,11 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
 
 # iPhone and iPod
 
-iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required.
+iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required. Minimum iOS 16.
 
 # Documentation
 
-[Discord iAPS - Server ](https://discord.gg/2gBpxRT2g)
+[Discord iAPS - Server ](https://discord.com/invite/ptkk2Y264Z)
 
 [iAPS documentation (under development)](https://iaps.readthedocs.io/en/latest/)
 

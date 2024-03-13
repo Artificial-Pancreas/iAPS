@@ -44,6 +44,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var rulerMarks: Bool = false
     var maxCarbs: Decimal = 1000
     var displayFatAndProteinOnWatch: Bool = false
+    var confirmBolusFaster: Bool = false
     var onlyAutotuneBasals: Bool = false
     var overrideFactor: Decimal = 0.8
     var useCalc: Bool = false
@@ -53,6 +54,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var useLiveActivity: Bool = false
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = true
+    var timeSettings: Bool = true
+    var profilesOrTempTargets: Bool = false
+    var allowBolusShortcut: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -254,6 +258,10 @@ extension FreeAPSSettings: Decodable {
             settings.displayFatAndProteinOnWatch = displayFatAndProteinOnWatch
         }
 
+        if let confirmBolusFaster = try? container.decode(Bool.self, forKey: .confirmBolusFaster) {
+            settings.confirmBolusFaster = confirmBolusFaster
+        }
+
         if let onlyAutotuneBasals = try? container.decode(Bool.self, forKey: .onlyAutotuneBasals) {
             settings.onlyAutotuneBasals = onlyAutotuneBasals
         }
@@ -272,6 +280,18 @@ extension FreeAPSSettings: Decodable {
 
         if let alwaysUseColors = try? container.decode(Bool.self, forKey: .alwaysUseColors) {
             settings.alwaysUseColors = alwaysUseColors
+        }
+
+        if let timeSettings = try? container.decode(Bool.self, forKey: .timeSettings) {
+            settings.timeSettings = timeSettings
+        }
+
+        if let profilesOrTempTargets = try? container.decode(Bool.self, forKey: .profilesOrTempTargets) {
+            settings.profilesOrTempTargets = profilesOrTempTargets
+        }
+
+        if let allowBolusShortcut = try? container.decode(Bool.self, forKey: .allowBolusShortcut) {
+            settings.allowBolusShortcut = allowBolusShortcut
         }
 
         self = settings

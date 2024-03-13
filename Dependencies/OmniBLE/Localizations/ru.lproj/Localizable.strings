@@ -402,6 +402,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Деактивировать Pod";
 
+/* */
+"Slide to Insert Cannula" = "Сдвиньте, чтобы вставить канюлю";
+
+/* */
+"Slide to Deactivate Pod" = "Сдвиньте для деактивации";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Деактивировать.";
 
@@ -435,6 +441,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Заполните новый Под U-100 инсулином (оставьте синюю защитную крышку Пода).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Удалите синюю крышку иглы Пода и проверьте канюлю. Затем удалите защитные пленки.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Прослушайте 2 звуковых сигнала.";
 
@@ -459,9 +468,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Подготовьте место.";
 
-/* Label text for step two of attach pod instructions */
-"Remove blue Pod needle cap and check cannula. Then remove paper backing." = "Удалите синюю крышку иглы Пода и проверьте канюлю. Затем удалите защитные пленки.";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Проверьте Под, установите его на теле, затем подтвердите установку Пода.";
 
@@ -485,6 +491,9 @@
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Дождитесь окончания введения канюли.";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Сдвиньте переключатель ниже, чтобы начать введение канюли.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Введено";
@@ -820,3 +829,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Получить статус Пода";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Готово";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Диагностика пода";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Расширенный журнал импульсов";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Прочитать время активации";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Прочитать сработавшие оповещения";

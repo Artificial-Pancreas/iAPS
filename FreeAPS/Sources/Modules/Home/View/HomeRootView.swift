@@ -11,10 +11,14 @@ extension Home {
         @StateObject var state = StateModel()
         @State var isStatusPopupPresented = false
         @State var showCancelAlert = false
+        @State var showCancelTTAlert = false
         @State var triggerUpdate = false
+
+        let buttonFont = Font.custom("TimeButtonFont", size: 14)
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
+        @Environment(\.sizeCategory) private var fontSize
 
         @FetchRequest(
             entity: Override.entity(),
@@ -116,7 +120,7 @@ extension Home {
                 battery: $state.battery,
                 name: $state.pumpName,
                 expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.timerDate,
+                timerDate: $state.timerDate, timeZone: $state.timeZone,
                 state: state
             )
             .onTapGesture {
@@ -154,7 +158,7 @@ extension Home {
 
             if state.apsManager.isManualTempBasal {
                 manualBasalString = NSLocalizedString(
-                    " - Manual Basal ⚠️",
+                    " Manual",
                     comment: "Manual Temp basal"
                 )
             }
@@ -174,27 +178,29 @@ extension Home {
                     HStack {
                         if state.pumpSuspended {
                             Text("Pump suspended")
-                                .font(.custom("TempBasal", fixedSize: 13)).bold().foregroundColor(.loopGray)
+                                .font(.extraSmall).bold().foregroundColor(.loopGray)
                         } else if let tempBasalString = tempBasalString {
                             Text(tempBasalString)
-                                .font(.custom("TempBasal", fixedSize: 13)).bold()
+                                .font(.statusFont).bold()
                                 .foregroundColor(.insulin)
                         }
                         if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
                             Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
                         }
                     }
-                    .padding(.leading, 8)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.leading, 8)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
-                        Text(tempTargetString)
-                            .font(.buttonFont)
-                            .foregroundColor(.secondary)
-                    } else {
-                        profileView
-                    }
+                if let tempTargetString = tempTargetString, !(fetchedPercent.first?.enabled ?? false) {
+                    Text(tempTargetString)
+                        .font(.buttonFont)
+                        .foregroundColor(.secondary)
+                } else {
+                    profileView
+                }
 
+                ZStack {
                     if let eventualBG = state.eventualBG {
                         HStack {
                             Text("⇢").font(.statusFont).foregroundStyle(.secondary)
@@ -213,6 +219,7 @@ extension Home {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var mainChart: some View {
@@ -258,6 +265,7 @@ extension Home {
                 addHeaderBackground()
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
                 let isOverride = fetchedPercent.first?.enabled ?? false
+                let isTarget = (state.tempTarget != nil)
                 HStack {
                     Button { state.showModal(for: .dataTable) }
                     label: {
@@ -265,23 +273,23 @@ extension Home {
                             Image(systemName: "book")
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                                .frame(
+                                    width: IAPSconfig.buttonSize * 0.9,
+                                    height: IAPSconfig.buttonSize
+                                )
                                 .foregroundColor(.gray)
-                                .padding(8)
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image("carbs")
+                            Image(systemName: "fork.knife")
                                 .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 24, height: 24)
+                                .font(.custom("Buttons", size: 24))
                                 .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
                                 .padding(8)
                                 .foregroundColor(.loopYellow)
-                                .padding(8)
                             if let carbsReq = state.carbsRequired {
                                 Text(numberFormatter.string(from: carbsReq as NSNumber)!)
                                     .font(.caption)
@@ -292,39 +300,44 @@ extension Home {
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
-                    Button {
+                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                        Image(systemName: isOverride ? "person.fill" : "person")
+                            .symbolRenderingMode(.palette)
+                            .font(.custom("Buttons", size: 30))
+                            .foregroundStyle(.purple)
+                            .padding(8)
+                            .background(isOverride ? .purple.opacity(0.15) : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    }
+                    .onTapGesture {
                         if isOverride {
                             showCancelAlert.toggle()
-                            // state.cancelProfile()
-                            // triggerUpdate.toggle()
                         } else {
                             state.showModal(for: .overrideProfilesConfig)
                         }
                     }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: isOverride ? "person.fill" : "person")
-                                .symbolRenderingMode(.palette)
-                                .font(.custom("Buttons", size: 32))
-                                .foregroundStyle(.purple)
-                                .padding(8)
-                                .background(isOverride ? .blue.opacity(0.3) : .clear)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                        }
-                    }.buttonStyle(.borderless)
-
+                    .onLongPressGesture {
+                        state.showModal(for: .overrideProfilesConfig)
+                    }
                     if state.useTargetButton {
                         Spacer()
-                        Button { state.showModal(for: .addTempTarget) }
-                        label: {
-                            Image("target")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize)
-                                .padding(8)
-                        }
-                        .foregroundColor(.loopGreen)
-                        .buttonStyle(.borderless)
+                        Image(systemName: "target")
+                            .renderingMode(.template)
+                            .font(.custom("Buttons", size: 24))
+                            .padding(8)
+                            .foregroundColor(.loopGreen)
+                            .background(isTarget ? .green.opacity(0.15) : .clear)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .onTapGesture {
+                                if isTarget {
+                                    showCancelTTAlert.toggle()
+                                } else {
+                                    state.showModal(for: .addTempTarget)
+                                }
+                            }
+                            .onLongPressGesture {
+                                state.showModal(for: .addTempTarget)
+                            }
                     }
                     Spacer()
                     Button {
@@ -334,11 +347,9 @@ extension Home {
                         ))
                     }
                     label: {
-                        Image("bolus")
+                        Image(systemName: "syringe")
                             .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                            .padding(8)
+                            .font(.custom("Buttons", size: 24))
                     }
                     .buttonStyle(.borderless)
                     .foregroundColor(.insulin)
@@ -350,34 +361,34 @@ extension Home {
                                 .renderingMode(.template)
                                 .resizable()
                                 .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                                .padding(8)
                         }
                         .foregroundColor(.insulin)
                         Spacer()
                     }
                     Button { state.showModal(for: .settings) }
                     label: {
-                        Image("settings1")
+                        Image(systemName: "gear")
                             .renderingMode(.template)
-                            .resizable()
-                            .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                            .padding(8)
+                            .font(.custom("Buttons", size: 24))
                     }
                     .buttonStyle(.borderless)
                     .foregroundColor(.gray)
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, state.allowManualTemp ? 5 : 24)
                 .padding(.bottom, geo.safeAreaInsets.bottom)
-            }.alert(
-                "Return to Normal?", isPresented: $showCancelAlert,
-                actions: {
-                    Button("No", role: .cancel) {}
-                    Button("Yes", role: .destructive) {
-                        state.cancelProfile()
-                        triggerUpdate.toggle()
-                    }
-                }, message: { Text("This will change settings back to your normal profile.") }
-            )
+            }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
+                Button("Cancel Profile Override", role: .destructive) {
+                    state.cancelProfile()
+                    triggerUpdate.toggle()
+                }
+            }
+            .confirmationDialog("Cancel Temporary Target", isPresented: $showCancelTTAlert) {
+                Button("Cancel Temporary Target", role: .destructive) {
+                    state.cancelTempTarget()
+                }
+            }
         }
 
         var chart: some View {
@@ -385,16 +396,22 @@ extension Home {
                 .overlay {
                     VStack {
                         infoPanel
-                        mainChart
+                        VStack(spacing: 0) {
+                            mainChart
+                            if state.timeSettings {
+                                timeSetting
+                            }
+                        }.chartBackground()
                     }
                 }
                 .frame(
-                    minHeight: UIScreen.main.bounds.height / 1.46
+                    minHeight: UIScreen.main.bounds
+                        .height / (state.timeSettings ? 1.50 : fontSize < .extraExtraLarge ? 1.46 : 1.49)
                 )
         }
 
         var carbsAndInsulinView: some View {
-            HStack(spacing: 10) {
+            HStack {
                 if let settings = state.settingsManager {
                     let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.6
                     let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
@@ -402,10 +419,15 @@ extension Home {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
-                        TestTube(opacity: opacity, amount: fill, colourOfSubstance: .loopYellow, materialOpacity: materialOpacity)
-                            .frame(width: 13.8, height: 40)
-                            .offset(x: 0, y: -6)
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 0.97))
+                        TestTube(
+                            opacity: opacity,
+                            amount: fill,
+                            colourOfSubstance: .loopYellow,
+                            materialOpacity: materialOpacity
+                        )
+                        .frame(width: 12, height: 38)
+                        .offset(x: 0, y: -5)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
@@ -417,10 +439,15 @@ extension Home {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.10), substance > 0 ? 0.85 : 0.92))
-                        TestTube(opacity: opacity, amount: fill, colourOfSubstance: .insulin, materialOpacity: materialOpacity)
-                            .frame(width: 11, height: 36)
-                            .offset(x: 0, y: -2.5)
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 0.98))
+                        TestTube(
+                            opacity: opacity,
+                            amount: fill,
+                            colourOfSubstance: substance < 0 ? .red : .insulin,
+                            materialOpacity: materialOpacity
+                        )
+                        .frame(width: 12, height: 38)
+                        .offset(x: 0, y: -5)
                         HStack(spacing: 0) {
                             Text(
                                 numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
@@ -434,9 +461,23 @@ extension Home {
 
         var preview: some View {
             addBackground()
-                .frame(maxWidth: .infinity, minHeight: 170, alignment: .topLeading)
-                .overlay(alignment: .topLeading) {
+                .frame(minHeight: 200)
+                .overlay {
                     PreviewChart(readings: $state.readings, lowLimit: $state.lowGlucose, highLimit: $state.highGlucose)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+                .onTapGesture {
+                    state.showModal(for: .statistics)
+                }
+        }
+
+        var loopPreview: some View {
+            addBackground()
+                .frame(minHeight: 190)
+                .overlay {
+                    LoopsView(loopStatistics: $state.loopStatistics)
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -456,7 +497,12 @@ extension Home {
                                 if let name = currentProfile.name, name != "EMPTY", name.nonEmpty != nil, name != "",
                                    name != "\u{0022}\u{0022}"
                                 {
-                                    Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                    if name.count > 15 {
+                                        let shortened = name.prefix(15)
+                                        Text(shortened).font(.statusFont).foregroundStyle(.secondary)
+                                    } else {
+                                        Text(name).font(.statusFont).foregroundStyle(.secondary)
+                                    }
                                 }
                             }
                         } else if override.percentage != 100 {
@@ -477,53 +523,87 @@ extension Home {
             }
         }
 
-        func bolusProgressView(progress: Decimal) -> some View {
+        func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
                 HStack {
-                    Text("Bolusing")
-                        .foregroundColor(.primary).font(.bolusProgressFont)
-                    ProgressView(value: Double(progress))
-                        .progressViewStyle(BolusProgressViewStyle())
+                    VStack {
+                        HStack {
+                            Text("Bolusing")
+                                .foregroundColor(.primary).font(.bolusProgressFont)
+                            let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
+
+                            Text(
+                                bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
+                                    .formatted() + NSLocalizedString(" U", comment: "")
+                            ).font(.bolusProgressBarFont)
+                        }
+                        ProgressView(value: Double(progress))
+                            .progressViewStyle(BolusProgressViewStyle())
+                    }
                     Image(systemName: "xmark.square.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.white, .blue)
                         .font(.bolusProgressStopFont)
-                        .onTapGesture {
-                            state.cancelBolus()
-                        }
+                        .onTapGesture { state.cancelBolus() }
+                        .offset(x: 10, y: 0)
                 }
             }
         }
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
-                .frame(minHeight: 120 + geo.safeAreaInsets.top)
+                .frame(
+                    maxHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo.safeAreaInsets.top
+                )
                 .overlay {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).padding(.top, 10)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                            carbsAndInsulinView
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                                .padding(.leading, 10)
-                            pumpView
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                .padding(.trailing, 7).padding(.bottom, 2)
-                        }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 5)
-                    }
+                            HStack {
+                                carbsAndInsulinView
+                                    .frame(maxHeight: .infinity, alignment: .bottom)
+                                Spacer()
+                                loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
+                                    .offset(x: -2, y: 0) // To do: Remove all offsets, if possible.
+                                Spacer()
+                                pumpView
+                                    .frame(maxHeight: .infinity, alignment: .bottom)
+                                    .padding(.bottom, 2)
+                            }
+                            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                            .padding(.horizontal, 5)
+                        }
+                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)
                 }
                 .clipShape(Rectangle())
+        }
+
+        var timeSetting: some View {
+            let string = "\(state.hours) " + NSLocalizedString("hours", comment: "") + "   "
+            return Menu(string) {
+                Button("3 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 3 })
+                Button("6 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 6 })
+                Button("12 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 12 })
+                Button("24 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 24 })
+                Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
+            }
+            .buttonStyle(.borderless)
+            .foregroundStyle(.secondary)
+            .font(.timeSettingFont)
+            .padding(.vertical, 15)
+            .background(TimeEllipse(characters: string.count))
         }
 
         var body: some View {
             GeometryReader { geo in
                 VStack {
+                    headerView(geo)
                     ScrollView {
                         VStack(spacing: 0) {
-                            headerView(geo)
                             RaisedRectangle()
                             chart
                             preview.padding(.top, 15)
+                            loopPreview.padding(.top, 15)
                         }
                     }
                     .scrollIndicators(.hidden)
@@ -532,13 +612,15 @@ extension Home {
                 .background(.gray.opacity(IAPSconfig.backgroundOpacity * 2))
                 .edgesIgnoringSafeArea(.vertical)
                 .overlay {
-                    if let progress = state.bolusProgress {
+                    if let progress = state.bolusProgress, let amount = state.bolusAmount {
                         ZStack {
                             RoundedRectangle(cornerRadius: 15)
                                 .fill(.gray.opacity(0.8))
-                                .frame(width: 300, height: 50)
-                            bolusProgressView(progress: progress)
-                        }.frame(maxWidth: .infinity, alignment: .center)
+                                .frame(width: 320, height: 60)
+                            bolusProgressView(progress: progress, amount: amount)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .offset(x: 0, y: -100)
                     }
                 }
             }
@@ -565,6 +647,7 @@ extension Home {
                             }
                     )
             }
+            .onAppear(perform: configureView)
         }
 
         private var popup: some View {

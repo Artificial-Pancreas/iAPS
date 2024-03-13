@@ -69,9 +69,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Get ref for Artificial-Pancreas/iAPS:dev
+        # Get ref for Artificial-Pancreas/iAPS:main
         SHA=$(curl -sS https://api.github.com/repos/${{ env.UPSTREAM_REPO }}/git/refs \
-          | jq '.[] | select(.ref == "refs/heads/dev" ) | .object.sha' \
+          | jq '.[] | select(.ref == "refs/heads/main" ) | .object.sha' \
           | tr -d '"'
         );
         
@@ -84,7 +84,6 @@ jobs:
           -f ref='refs/heads/alive' \
           -f sha=$SHA
   
-  # Checks for changes in upstream repository; if changes exist prompts sync for build
   # Performs keepalive to avoid stale fork
   check_latest_from_upstream:
     needs: [validate, check_alive_and_permissions]
@@ -98,43 +97,11 @@ jobs:
       if: |
         needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
         (vars.SCHEDULED_BUILD != 'false' || vars.SCHEDULED_SYNC != 'false')
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GH_PAT }}
         ref: alive
-    
-    - name: Sync upstream changes
-      if: | # do not run the upstream sync action on the upstream repository
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-        vars.SCHEDULED_SYNC != 'false' && github.repository_owner != 'Artificial-Pancreas'
-      id: sync
-      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
-      with:
-        target_sync_branch: ${{ env.ALIVE_BRANCH }}
-        shallow_since: 6 months ago
-        target_repo_token: ${{ secrets.GH_PAT }}
-        upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
-        upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
-    
-    # Display a sample message based on the sync output var 'has_new_commits'
-    - name: New commits found
-      if: |
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-        vars.SCHEDULED_SYNC != 'false' && steps.sync.outputs.has_new_commits == 'true'
-      run: echo "New commits were found to sync."
-    
-    - name: No new commits
-      if: |
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' && 
-        vars.SCHEDULED_SYNC != 'false' && steps.sync.outputs.has_new_commits == 'false'
-      run: echo "There were no new commits."
-    
-    - name: Show value of 'has_new_commits'
-      if: needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' && vars.SCHEDULED_SYNC != 'false'
-      run: |
-        echo ${{ steps.sync.outputs.has_new_commits }}
-        echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }}" >> $GITHUB_OUTPUT
-    
+        
     # Keep repository "alive": add empty commits to ALIVE_BRANCH after "time_elapsed" days of inactivity to avoid inactivation of scheduled workflows
     - name: Keep alive
       if: |
@@ -175,7 +142,7 @@ jobs:
         if: |
           needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
           vars.SCHEDULED_SYNC == 'true'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
           ref: ${{ env.TARGET_BRANCH }} 
@@ -215,7 +182,7 @@ jobs:
           echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }}" >> $GITHUB_OUTPUT
 
       - name: Checkout Repo for building
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
           submodules: recursive

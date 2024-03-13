@@ -107,6 +107,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		193F1E3D2B44C18000525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		193F1E3E2B44C18100525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1086B0E29C9169100D46E65 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1086B0F29C9169100D46E65 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C109F149291ECCE2008EA5B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -550,6 +552,7 @@
 				uk,
 				"pt-PT",
 				ca,
+				hu,
 			);
 			mainGroup = C17F50BC291EAC3800555EB5;
 			productRefGroup = C17F50C7291EAC3800555EB5 /* Products */;
@@ -715,6 +718,7 @@
 				C1CCD81429C916F600A1158E /* sv */,
 				C1CE705E29C916FE00E70F9D /* tr */,
 				C1E3B2FF29C9170800A06681 /* vi */,
+				193F1E3D2B44C18000525770 /* hu */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -745,6 +749,7 @@
 				C1E3B30029C9170800A06681 /* vi */,
 				C1E9A8EB29C9170F00478AA9 /* zh-Hans */,
 				C19C9F4F29C91ED400A6D3D0 /* en */,
+				193F1E3E2B44C18100525770 /* hu */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

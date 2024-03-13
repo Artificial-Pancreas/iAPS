@@ -21,6 +21,12 @@ extension WatchConfig {
 
                 Toggle("Display Protein & Fat", isOn: $state.displayFatAndProteinOnWatch)
 
+                Toggle("Confirm Bolus Faster", isOn: $state.confirmBolusFaster)
+
+                Section {
+                    Toggle("Profile Overrides Button / Temp Targets Button", isOn: $state.profilesOrTempTargets)
+                } header: { Text("Display either Overides or Temp Targets") }
+
                 Section(header: Text("Garmin Watch")) {
                     List {
                         ForEach(state.devices, id: \.uuid) { device in
@@ -33,6 +39,7 @@ extension WatchConfig {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationTitle("Watch Configuration")
             .navigationBarTitleDisplayMode(.automatic)

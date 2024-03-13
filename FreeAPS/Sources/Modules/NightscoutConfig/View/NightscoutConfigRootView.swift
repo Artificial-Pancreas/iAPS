@@ -148,6 +148,7 @@ extension NightscoutConfig {
                     Toggle("Remote control", isOn: $state.allowAnnouncements)
                 } header: { Text("Allow Remote control of iAPS") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Nightscout Config")
             .navigationBarTitleDisplayMode(.automatic)

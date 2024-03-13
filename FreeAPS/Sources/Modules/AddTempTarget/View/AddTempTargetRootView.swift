@@ -116,7 +116,7 @@ extension AddTempTarget {
 
                 Section {
                     Button { state.enact() }
-                    label: { Text("Enact") }
+                    label: { Text("Start") }
                     Button { state.cancel() }
                     label: { Text("Cancel Temp Target") }
                 }
@@ -135,6 +135,7 @@ extension AddTempTarget {
                     }
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView()
                 state.hbt = isEnabledArray.first?.hbt ?? 160
