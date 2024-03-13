@@ -984,7 +984,7 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Введіть кількість болюсу";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Ваш поточний рівень глюкози %@. Ви впевнені, що хочете ввести %@ U інсуліну?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Болюсна команда";
@@ -1008,10 +1008,10 @@ Enact a temp Basal or a temp target */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Якщо ви ввімкнете це налаштування, ви зможете використовувати ярлики iOS та їх автоматичні засоби для запуску болюсу в iAPS.\n\nЗверніть увагу, що ярлики iOS також працюють із Siri!\n\nЯкщо вам потрібно використовувати ярлики болюсу, переконайтеся, що щоб вимкнути прослуховування параметра «Привіт, Сірі» в налаштуваннях iPhone Siri, щоб уникнути будь-якої випадкової активації болюсу за допомогою Siri.\nЯкщо ви не вимкнете «Привіт, Сірі», ярлик болюсу iAPS можна запустити за допомогою виголошення «Привіт». Siri, iAPS Bolus'.\n\nПісля запуску за допомогою Siri вам буде запропоновано ввести суму та підтвердження, перш ніж команду болюсу можна буде надіслати в iAPS.";
 
 /* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+"Max allowed bolus amount using shortcuts " = "Максимальна дозволена кількість болюсу за допомогою ярликів";
 
 /* Bolus shortcut. Error */
-"not available" = "not available";
+"not available" = "недоступний";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Активуйте попередні налаштування Профілю";
