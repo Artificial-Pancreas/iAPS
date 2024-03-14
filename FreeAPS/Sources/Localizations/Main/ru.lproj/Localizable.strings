@@ -984,7 +984,7 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Введите размер Болюса";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Ваш уровень глюкозы составляет %@. Вы уверены, что хотите ввести %@ ед. инсулина?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Команда болюса из ";
