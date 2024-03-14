@@ -1007,6 +1007,12 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Denna inställning tillåter att använda iOS genvägar och automatiseringar för att utlösa en bolus med iAP.\n\nObservera att genvägar fungerar även med Siri!\n\nOm du behöver att använda genvägar för bolus säkerställ att du först har stängt av inställningen för att lyssna efter 'Hej Siri' i dina Siri-inställningarna, för att undvika eventuell oavsiktlig aktivering med Siri av genvägen för bolus.\nOm du har denna 'Hej Siri'-inställning på kommer genvägen för bolus att utlösas av att du säger 'Hej Siri, iAPS Bolus'.\n\nNär du startat genvägen med Siri kommer du först bli tillfrågad om mängd insulin och därefter kommer du beöva att bekräfta innan boluskommandot kan skickas till din iAPS-app.";
 
+/* Bolus shortcut. Setting */
+"Max allowed bolus amount using shortcuts " = "Max tillåtna bolusbelopp med genvägar ";
+
+/* Bolus shortcut. Error */
+"not available" = "inte tillgänglig";
+
 /* Override Shortcut */
 "Activate an Override Preset" = "Aktivera en profil";
 
