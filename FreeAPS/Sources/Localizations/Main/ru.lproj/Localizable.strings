@@ -984,7 +984,7 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Введите размер Болюса";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Ваш уровень глюкозы составляет %@. Вы уверены, что хотите ввести %@ ед. инсулина?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Команда болюса из ";
@@ -1008,10 +1008,10 @@ Enact a temp Basal or a temp target */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Если включить, то появится возможность использовать приложение \"Команды\" iOS и ее автоматизацию для запуска болюсного введения в iAPS\n\nОбратите внимание, что команды iOS также работают с Siri!\n\nЕсли вам необходимо использовать болюсные команды, пожалуйста, не забудьте отключить настройку прослушивания \"Привет, Сири\" в настройках iPhone Siri, чтобы избежать случайной активации болюса с помощью Siri.\nЕсли вы не отключите \"Привет, Сири\", ярлык \"iAPS болюс\" может быть активирован произнесением \"Привет, Сири, iAPS болюс\".\n\nПри запуске с помощью Siri у вас будет запрошен размер болюса и подтверждение, прежде чем команда на ввод болюса будет отправлена в iAPS.";
 
 /* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+"Max allowed bolus amount using shortcuts " = "Максимальный размер болюса через команды ";
 
 /* Bolus shortcut. Error */
-"not available" = "not available";
+"not available" = "недоступно";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Активировать переопределение";
