@@ -1013,6 +1013,12 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Error */
 "not available" = "niet beschikbaar";
 
+/* Bolus shortcut. Setting */
+"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+
+/* Bolus shortcut. Error */
+"not available" = "not available";
+
 /* Override Shortcut */
 "Activate an Override Preset" = "Activeer een overschrijvingsvoorinstelling";
 
