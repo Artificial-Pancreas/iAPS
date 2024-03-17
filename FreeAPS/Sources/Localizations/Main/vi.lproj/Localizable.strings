@@ -450,7 +450,7 @@ Enact a temp Basal or a temp target */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Cấu hình bơm";
+"Pump config" = "Cấu hình bơm Insulin";
 
 /*  */
 "Delivery limits" = "Các giới hạn liều tiêm";
@@ -1053,7 +1053,7 @@ Enact a temp Basal or a temp target */
 "Some ui element was incorrectly specified" = "Một vài yếu tố ui đã không được chỉ định";
 
 /* */
-"Success" = "Thành công";
+"Success" = "Success";
 
 /* */
 "Schedules were saved successfully!" = "Lịch trình được lưu thành công!";
