@@ -451,7 +451,7 @@
 "Paired" = "Đã ghép đôi";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Bỏ qua";
+"Cancel" = "Hủy";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Bạn có chắc chắn muốn hủy cấu hình pod?";

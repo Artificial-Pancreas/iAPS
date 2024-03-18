@@ -1,0 +1,35 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Активировать ${applicationName} временную цель";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} устанавливает временную цель";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "Список ${applicationName} состояний";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "${applicationName} состояние";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Добавить углеводы в ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "${applicationName} позволяет добавить углеводы";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Активировать ${applicationName} переопределение профиля";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Активирует ${applicationName} переопределение профиля";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Отменить ${applicationName} переопределение";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Отменяет текущее ${applicationName} переопределение профиля";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} Болюс";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Tries to Enact a bolus" = "${applicationName} Выполняет попытку болюса";
