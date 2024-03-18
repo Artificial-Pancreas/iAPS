@@ -276,7 +276,7 @@
 "Skipping Read Pulse Log due to bolus still in progress." = "Ignorer les bips de test en raison du bolus en cours.";
 
 /* */
-"Read Pulse Log" = "Lecture journal d'impulsion";
+"Read Pulse Log" = "Journal des impulsions";
 
 /* */
 "Set Confirmation Beeps to %s" = "Définir les bips de confirmation à %s";
@@ -837,7 +837,7 @@
 "Pod Diagnostics" = "Diagnostics du pod";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Journal des impulsions étendu";
 
 /* Text for read activation time title */
 "Read Activation Time" = "Lire le temps d'activation";

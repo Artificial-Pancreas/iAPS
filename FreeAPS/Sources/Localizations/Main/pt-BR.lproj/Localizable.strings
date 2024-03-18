@@ -974,8 +974,71 @@ Enact a temp Basal or a temp target */
 /* TIR Chart */
 "Very High" = "Very High";
 
+/* TIR Chart */
+"Very Low" = "Very Low";
+
 /* */
 "glucose" = "glucose";
+
+/* Bolus shortcut */
+"Enter a Bolus Amount" = "Enter a Bolus Amount";
+
+/* Bolus shortcut */
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+
+/* Bolus shortcut */
+"A bolus command of " = "A bolus command of ";
+
+/* Bolus shortcut */
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+
+/* Bolus shortcut. Error */
+"too small bolus amount" = "too small bolus amount";
+
+/* Bolus shortcut. Error */
+"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
+
+/* Bolus shortcut */
+"Bolus Amount in U" = "Bolus Amount in U";
+
+/* Bolus shortcut. Setting */
+"Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
+
+/* Bolus shortcut. Pop-up */
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
+
+/* Bolus shortcut. Setting */
+"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+
+/* Bolus shortcut. Error */
+"not available" = "not available";
+
+/* Override Shortcut */
+"Activate an Override Preset" = "Activate an Override Preset";
+
+/* Override Shortcut */
+"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+
+/* Override Shortcut */
+"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+
+/* Override Shortcut */
+"The Profile Override" = "The Profile Override";
+
+/* Override Shortcut */
+"is now activated" = "is now activated";
+
+/* Override Shortcut */
+"Cancel active override" = "Cancel active override";
+
+/* Override Shortcut */
+"Override canceled" = "Override canceled";
+
+/* Override Shortcut */
+"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
 
 /* */
 "Schedule " = "Schedule ";
@@ -1298,6 +1361,9 @@ Enact a temp Basal or a temp target */
 
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min";
+
+/* Fat/Protein additional info */
+"\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount.";
 
 /* FPU Settings Title */
 "Fat and Protein" = "Fat and Protein";

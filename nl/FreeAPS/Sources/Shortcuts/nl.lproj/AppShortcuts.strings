@@ -1,0 +1,35 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Activeer ${applicationName} tijdelijk doel";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} past een tijdelijk doel toe";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "Lijst ${applicationName} status";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "${applicationName} status";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Koolhydraten toevoegen in ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "Met ${applicationName} is het toegestaan dat koolhydraten worden toegevoegd";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Activeer een ${applicationName} overschrijvingsvoorinstelling";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Activeer een ${applicationName} overschrijvingsvoorinstelling";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Annuleer ${applicationName} overschrijving";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Annuleert een actieve ${applicationName} overschrijving";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} bolus";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Tries to Enact a bolus" = "${applicationName} probeert een bolus in te voeren";

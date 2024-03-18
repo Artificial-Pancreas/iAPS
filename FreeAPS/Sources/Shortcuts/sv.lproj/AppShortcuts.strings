@@ -1,0 +1,36 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "${applicationName} tillfälligt målvärde";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} aktiverare ett tillfälligt målvärde";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "${applicationName} status";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "Visar ${applicationName} status";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "${applicationName} måltid";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "Lägger till måltid i ${applicationName}";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "${applicationName} Profil";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Aktiverar en profil i ${applicationName}";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" =  "${applicationName} avbryt profil";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Avbryter en profil i ${applicationName}";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} bolus";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Tries to Enact a bolus" = "Ger bolus med ${applicationName}";
+

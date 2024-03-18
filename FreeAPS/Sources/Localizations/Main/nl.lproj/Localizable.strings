@@ -17,7 +17,7 @@
 "Continue without bolus" = "Verdergaan zonder bolus";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Status";
@@ -47,13 +47,13 @@
 "Done" = "OK";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Emojis als labels weergeven";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Geef IOB en COB weer";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Bevestig bolus sneller";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -972,10 +972,79 @@ Enact a temp Basal or a temp target */
 "High" = "Hoog";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Erg hoog";
+
+/* TIR Chart */
+"Very Low" = "Erg laag";
 
 /* */
 "glucose" = "glucose";
+
+/* Bolus shortcut */
+"Enter a Bolus Amount" = "Voer een bolus hoeveelheid in";
+
+/* Bolus shortcut */
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Je huidige glucose is %@. Weet je zeker dat je een %@ E insuline wilt bolussen?";
+
+/* Bolus shortcut */
+"A bolus command of " = "Een bolus commando van ";
+
+/* Bolus shortcut */
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " E van insuline is verzonden naar iAPS. Verifieer in de iAPS app of in Nightscout zodra de bolus is afgeleverd.";
+
+/* Bolus shortcut. Error */
+"too small bolus amount" = "te kleine bolus hoeveelheid";
+
+/* Bolus shortcut. Error */
+"Bolus Shortcuts are disabled in iAPS settings" = "Bolus snelkoppelingen zijn uitgeschakeld in de iAPS instellingen";
+
+/* Bolus shortcut */
+"Bolus Amount in U" = "Bolus hoeveelheid in E";
+
+/* Bolus shortcut. Setting */
+"Allow iOS Bolus Shortcuts" = "iOS bolus snelkoppelingen toestaan";
+
+/* Bolus shortcut. Pop-up */
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Als je deze instelling aanzet kun je iOS sneltoetsen en de bijbehorende automatiseringen gebruiken om een bolus te activeren in iAPS.\n\nLet op: iOS sneltoetsen werken ook met Siri!\n\nAls je bolus snelkoppelingen wilt gebruiken, zorg er dan voor dat je 'Hey Siri' uitzet in de iPhone Siri instellingen, om te voorkomen dat je per ongeluk een bolus activeert met Siri.\n\nAls je 'Hey Siri' niet uitschakelt, kan de iAPS bolussnelkoppeling worden geactiveerd met de uitspraak 'Hey Siri, iAPS Bolus'. Als je de bolus snelkoppeling met Siri activeert, word je gevraagd om een hoeveelheid en een bevestiging voordat het bolus commando naar iAPS kan worden gestuurd.";
+
+/* Bolus shortcut. Setting */
+"Max allowed bolus amount using shortcuts " = "Max toegestane bolus hoeveelheid met snelkoppelingen ";
+
+/* Bolus shortcut. Error */
+"not available" = "niet beschikbaar";
+
+/* Bolus shortcut. Setting */
+"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+
+/* Bolus shortcut. Error */
+"not available" = "not available";
+
+/* Override Shortcut */
+"Activate an Override Preset" = "Activeer een overschrijvingsvoorinstelling";
+
+/* Override Shortcut */
+"Allow to activate an overrride preset." = "Toestaan om een overschrijvingsvoorinstelling te activeren.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Welke vooraf ingestelde overschrijving wil je activeren?";
+
+/* Override Shortcut */
+"Are you sure you want to activate the Override Preset %@?" = "Weet je zeker dat je een overschrijvingsvoorinstelling %@ wilt activeren?";
+
+/* Override Shortcut */
+"The Profile Override" = "De profieloverschrijving";
+
+/* Override Shortcut */
+"is now activated" = "is nu geactiveerd";
+
+/* Override Shortcut */
+"Cancel active override" = "Actieve profieloverschrijving annuleren";
+
+/* Override Shortcut */
+"Override canceled" = "Overschrijven geannuleerd";
+
+/* Override Shortcut */
+"Activates an %@ Override Preset" = "Activeer een %@ overschrijvingsvoorinstelling";
 
 /* */
 "Schedule " = "Schema ";
@@ -1299,6 +1368,9 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Dit laat je vet en eiwit omzetten in toekomstige koolhydraten met behulp van de Warschau-formule. Deze formule verdeelt de koolhydraten over een zelf in te stellen tijdsduur van 5-12 uur.\n\nDe vertraging is de tijd tussen nu en de eerste toekomstige koolhydrateninvoer. Het interval in minuten is het aantal minuten tussen elke invoer. Als je een korter interval kiest, wordt het resultaat gelijkmatiger. Goede keuzes zijn bijvoorbeeld 10, 15, 20, 30 of 60 minuten.\n\nDe aanpassingsfactor bepaalt het effect van vet en eiwit op de waarden. Een factor van 1,0 betekent volledig effect (de oorspronkelijke Warschau-methode), en 0,5 betekent half effect.\n\nLet op dat je mogelijk moet opmerken dat je normale koolhydratenverhouding moet verhogen tot een hoger getal wanneer je vet en eiwit toevoegt. Daarom is het het beste om te beginnen met een factor van ongeveer 0,5 om het jezelf makkelijk te maken.\n\nStandaardinstellingen zijn een tijdslimiet van 8 uur, een interval van 30 minuten, een factor van 0,5 en een vertraging van 60 minuten";
 
+/* Fat/Protein additional info */
+"\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nKoolhydraateenheden die te klein worden (0,6 g of minder) worden uitgesloten en de equivalenten boven 0,6 maar onder 1 worden naar boven afgerond op 1. Met een hogere tijdsintervalinstelling krijg je minder eenheden met een hogere hoeveelheid koolhydraten.";
+
 /* FPU Settings Title */
 "Fat and Protein" = "Vetten & eiwitten";
 
@@ -1456,14 +1528,14 @@ Enact a temp Basal or a temp target */
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Nu";
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Toon toekomstig";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Verberg toekomstig";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
