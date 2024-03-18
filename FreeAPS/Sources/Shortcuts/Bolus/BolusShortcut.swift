@@ -41,11 +41,15 @@ import Intents
                 amount = try await $bolusQuantity.requestValue("Enter a Bolus Amount")
             }
             let bolusAmountString = amount.formatted()
-            if confirmBeforeApplying {
-                try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to bolus \(bolusAmountString) U of insulin?")
+
+            // if confirmBeforeApplying {
+            let glucoseString = BolusIntentRequest().currentGlucose() // Fetch current glucose
+            try await requestConfirmation(
+                result: .result(
+                    dialog: "Your current glucose is \(glucoseString != nil ? glucoseString! : "not available"). Are you sure you want to bolus \(bolusAmountString) U of insulin?"
                 )
-            }
+            )
+            // }
             let finalQuantityBolusDisplay = try BolusIntentRequest().bolus(amount)
             return .result(
                 dialog: IntentDialog(stringLiteral: finalQuantityBolusDisplay)
@@ -66,13 +70,15 @@ import Intents
             return NSLocalizedString("too small bolus amount", comment: "")
         }
 
-        guard bolusAmount <= Double(settingsManager.pumpSettings.maxBolus) else {
+        guard bolusAmount <= Double(settingsManager.pumpSettings.maxBolus),
+              settingsManager.settings.allowedRemoteBolusAmount >= Decimal(bolusAmount)
+        else {
             return NSLocalizedString("Max Bolus exceeded!", comment: "")
         }
 
         let bolus = min(
             max(Decimal(bolusAmount), settingsManager.preferences.bolusIncrement),
-            settingsManager.pumpSettings.maxBolus
+            settingsManager.pumpSettings.maxBolus, settingsManager.settings.allowedRemoteBolusAmount
         )
 
         let resultDisplay: String =
@@ -83,5 +89,17 @@ import Intents
 
         apsManager.enactBolus(amount: Double(bolus), isSMB: false)
         return resultDisplay
+    }
+
+    func currentGlucose() -> String? {
+        if let fetchedReading = coreDataStorage.fetchGlucose(interval: DateFilter().today).first {
+            let fetchedGlucose = Decimal(fetchedReading.glucose)
+            let convertedString = settingsManager.settings.units == .mmolL ? fetchedGlucose.asMmolL
+                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) : fetchedGlucose
+                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0)))
+
+            return convertedString + " " + NSLocalizedString(settingsManager.settings.units.rawValue, comment: "Glucose Unit")
+        }
+        return nil
     }
 }
