@@ -28,6 +28,13 @@ struct ContactPicture: View {
         return formatter
     }()
 
+    private static let numberFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.decimalSeparator = "."
+        return formatter
+    }()
+
     private static let ringWidth = 0.07 // percent
     private static let ringGap = 0.02 // percent
 
@@ -106,13 +113,13 @@ struct ContactPicture: View {
             ) : rect
             let topRect = CGRect(
                 x: rect.minX,
-                y: rect.minY + rect.height * 0.10,
+                y: rect.minY + rect.height * 0.07,
                 width: rect.width,
                 height: rect.height * 0.20
             )
             let bottomRect = CGRect(
                 x: rect.minX,
-                y: rect.minY + rect.height * 0.70,
+                y: rect.minY + rect.height * 0.73,
                 width: rect.width,
                 height: rect.height * 0.20
             )
@@ -580,8 +587,8 @@ struct ContactPicture_Previews: PreviewProvider {
                     )
                 ),
                 state: .constant(ContactTrickState(
-                    glucose: "6.8",
-                    trend: "↗︎",
+                    glucose: "8.8",
+                    trend: "→",
                     lastLoopDate: .now
                 ))
 

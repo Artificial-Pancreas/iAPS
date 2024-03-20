@@ -319,6 +319,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.locale = Locale(identifier: "en_US")
         formatter.maximumFractionDigits = 0
         if settingsManager.settings.units == .mmolL {
             formatter.minimumFractionDigits = 1
