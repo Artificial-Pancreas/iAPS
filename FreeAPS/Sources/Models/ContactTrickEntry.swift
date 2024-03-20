@@ -1,13 +1,14 @@
 
 struct ContactTrickEntry: JSON, Equatable {
     var enabled: Bool = false
-    var layout: ContactTrickLayout
-    var primary: ContactTrickValue = .bg
-    var secondary: ContactTrickValue? = .trend
+    var layout: ContactTrickLayout = .single
+    var ring1: ContactTrickLargeRing = .none
+    var ring2: ContactTrickLargeRing = .none
+    var primary: ContactTrickValue = .glucose
+    var top: ContactTrickValue = .none
+    var bottom: ContactTrickValue = .none
     var contactId: String? = nil
     var displayName: String? = nil
-    var trend: Bool = false
-    var ring: Bool = false
     var darkMode: Bool = true
     var fontSize: Int = 100
     var fontName: String = "Default Font"
@@ -26,12 +27,13 @@ extension ContactTrickEntry {
     private enum CodingKeys: String, CodingKey {
         case enabled
         case layout
+        case ring1
+        case ring2
         case primary
-        case secondary
+        case top
+        case bottom
         case contactId
         case displayName
-        case trend
-        case ring
         case darkMode
         case fontSize
         case fontName
@@ -42,12 +44,13 @@ extension ContactTrickEntry {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let enabled = try container.decode(Bool.self, forKey: .enabled)
         let layout = try container.decode(ContactTrickLayout.self, forKey: .layout)
+        let ring1 = try container.decode(ContactTrickLargeRing.self, forKey: .ring1)
+        let ring2 = try container.decode(ContactTrickLargeRing.self, forKey: .ring2)
         let primary = try container.decode(ContactTrickValue.self, forKey: .primary)
-        let secondary = try container.decodeIfPresent(ContactTrickValue.self, forKey: .secondary)
+        let top = try container.decode(ContactTrickValue.self, forKey: .top)
+        let bottom = try container.decode(ContactTrickValue.self, forKey: .bottom)
         let contactId = try container.decodeIfPresent(String.self, forKey: .contactId)
         let displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
-        let trend = try container.decode(Bool.self, forKey: .trend)
-        let ring = try container.decode(Bool.self, forKey: .ring)
         let darkMode = try container.decode(Bool.self, forKey: .darkMode)
         let fontSize = try container.decode(Int.self, forKey: .fontSize)
         let fontName = try container.decodeIfPresent(String.self, forKey: .fontName) ?? "Default Font"
@@ -56,12 +59,13 @@ extension ContactTrickEntry {
         self = ContactTrickEntry(
             enabled: enabled,
             layout: layout,
+            ring1: ring1,
+            ring2: ring2,
             primary: primary,
-            secondary: secondary,
+            top: top,
+            bottom: bottom,
             contactId: contactId,
             displayName: displayName,
-            trend: trend,
-            ring: ring,
             darkMode: darkMode,
             fontSize: fontSize,
             fontName: fontName,

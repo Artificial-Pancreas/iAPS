@@ -1,5 +1,6 @@
 import Algorithms
 import Combine
+import Contacts
 import Foundation
 import LoopKit
 import LoopKitUI
@@ -21,6 +22,8 @@ private let accessLock = NSRecursiveLock(label: "BaseContactTrickManager.accessL
 final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseContactTrickManager.processQueue")
     private var state = ContactTrickState()
+    private let contactStore = CNContactStore()
+    private var workItem: DispatchWorkItem?
 
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settingsManager: SettingsManager!
@@ -56,8 +59,10 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     }
 
     func updateContacts(contacts: [ContactTrickEntry], completion: @escaping (Result<Void, Error>) -> Void) {
+        print("update contacts: \(contacts)")
         processQueue.async {
             self.contacts = contacts
+            self.renderContacts()
             completion(.success(()))
         }
     }
@@ -71,19 +76,8 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
             self.state.glucoseDate = readings.first?.date ?? .distantPast
-            self.state.glucoseDateInterval = self.state.glucoseDate.map {
-                guard $0.timeIntervalSince1970 > 0 else { return 0 }
-                return UInt64($0.timeIntervalSince1970)
-            }
             self.state.lastLoopDate = self.enactedSuggestion?.recieved == true ? self.enactedSuggestion?.deliverAt : self
                 .apsManager.lastLoopDate
-            self.state.lastLoopDateInterval = self.state.lastLoopDate.map {
-                guard $0.timeIntervalSince1970 > 0 else { return 0 }
-                return UInt64($0.timeIntervalSince1970)
-            }
-            self.state.bolusIncrement = self.settingsManager.preferences.bolusIncrement
-            self.state.maxCOB = self.settingsManager.preferences.maxCOB
-            self.state.maxBolus = self.settingsManager.pumpSettings.maxBolus
             self.state.carbsRequired = self.suggestion?.carbsReq
 
             var insulinRequired = self.suggestion?.insulinReq ?? 0
@@ -109,6 +103,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             }
 
             self.state.iob = self.suggestion?.iob
+            self.state.maxIOB = self.settingsManager.preferences.maxIOB
             self.state.cob = self.suggestion?.cob
             self.state.tempTargets = self.tempTargetsStorage.presets()
                 .map { target -> TempTargetContactPreset in
@@ -125,43 +120,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
                     )
                 }
 
-            self.state.overrides = overrideStorage.fetchProfiles()
-                .map { preset -> OverrideContactPresets_ in
-                    let untilDate = overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
-                        guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
-
-                        let duration = Double(currentOverride.duration ?? 0)
-                        let overrideDate: Date = currentOverride.date ?? Date.now
-
-                        let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
-                        return date > Date.now ? date : nil
-                    }
-
-                    return OverrideContactPresets_(
-                        name: preset.name ?? "",
-                        id: preset.id ?? "",
-                        until: untilDate,
-                        description: self.description(preset)
-                    )
-                }
-            // Is there an active override but no preset?
-            let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
-            if let last = overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
-                let duration = Double(last.duration ?? 0)
-                let overrideDate: Date = last.date ?? Date.now
-                let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
-                let date = date_ > Date.now ? date_ : nil
-
-                self.state.overrides
-                    .append(OverrideContactPresets_(
-                        name: "custom",
-                        id: last.id ?? "",
-                        until: date,
-                        description: self.description(last)
-                    ))
-            }
-
-            self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
             self.state.profilesOrTempTargets = self.settingsManager.settings.profilesOrTempTargets
 
             let eBG = self.eventualBGString()
@@ -179,13 +137,52 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
                 self.state.override = "100 %"
             }
 
-            self.updateContacts()
+            self.renderContacts()
         }
     }
 
-    private func updateContacts() {
-        print("state: \(state)")
-        print("contacts: \(contacts)")
+    private func renderContacts() {
+        print("render contacts")
+        contacts.forEach { renderContact($0) }
+        workItem = DispatchWorkItem(block: {
+            print("in updateContact, no updates received for more than 5 minutes")
+            self.renderContacts()
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5 * 60 + 15, execute: workItem!)
+    }
+
+    private func renderContact(_ entry: ContactTrickEntry) {
+        print("render contact: \(entry)")
+        guard let contactId = entry.contactId else {
+            return
+        }
+
+        let keysToFetch = [CNContactImageDataKey] as [CNKeyDescriptor]
+
+        let contact: CNContact
+        do {
+            contact = try contactStore.unifiedContact(withIdentifier: contactId, keysToFetch: keysToFetch)
+        } catch {
+            print("in updateContact, an error has been thrown while fetching the selected contact")
+            return
+        }
+
+        guard let mutableContact = contact.mutableCopy() as? CNMutableContact else {
+            return
+        }
+
+        mutableContact.imageData = ContactPicture.getImage(
+            contact: entry,
+            state: state
+        ).pngData()
+
+        let saveRequest = CNSaveRequest()
+        saveRequest.update(mutableContact)
+        do {
+            try contactStore.execute(saveRequest)
+        } catch {
+            print("in updateContact, failed to update the contact")
+        }
     }
 
     // copy-pastes from the BaseWatchManager

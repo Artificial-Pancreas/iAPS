@@ -3,30 +3,45 @@ import SwiftUI
 
 enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
     var id: String { rawValue }
-    case bg
+    case none
+    case glucose
+    case eventualBG
     case delta
     case trend
-    case time
+    case glucoseDate
+    case lastLoopDate
     case cob
     case iob
+    case bolusRecommended
+    case carbsRequired
     case isf
     case override
     case ring
 
     var displayName: String {
         switch self {
-        case .bg:
-            return NSLocalizedString("BG", comment: "")
+        case .none:
+            return NSLocalizedString("None", comment: "")
+        case .glucose:
+            return NSLocalizedString("Glucose", comment: "")
+        case .eventualBG:
+            return NSLocalizedString("Eventual BG", comment: "")
         case .delta:
             return NSLocalizedString("Delta", comment: "")
         case .trend:
             return NSLocalizedString("Trend", comment: "")
-        case .time:
-            return NSLocalizedString("Time", comment: "")
+        case .glucoseDate:
+            return NSLocalizedString("Glucose date", comment: "")
+        case .lastLoopDate:
+            return NSLocalizedString("Last loop date", comment: "")
         case .cob:
             return NSLocalizedString("COB", comment: "")
         case .iob:
             return NSLocalizedString("IOB", comment: "")
+        case .bolusRecommended:
+            return NSLocalizedString("Bolus recommended", comment: "")
+        case .carbsRequired:
+            return NSLocalizedString("Carbs required", comment: "")
         case .isf:
             return NSLocalizedString("ISF", comment: "")
         case .override:
@@ -41,7 +56,6 @@ enum ContactTrickLayout: String, JSON, CaseIterable, Identifiable, Codable {
     var id: String { rawValue }
     case single
     case split
-    case ring
 
     var displayName: String {
         switch self {
@@ -49,8 +63,24 @@ enum ContactTrickLayout: String, JSON, CaseIterable, Identifiable, Codable {
             return NSLocalizedString("Single", comment: "")
         case .split:
             return NSLocalizedString("Split", comment: "")
-        case .ring:
-            return NSLocalizedString("Ring", comment: "")
+        }
+    }
+}
+
+enum ContactTrickLargeRing: String, JSON, CaseIterable, Identifiable, Codable {
+    var id: String { rawValue }
+    case none
+    case loop
+    case iob
+
+    var displayName: String {
+        switch self {
+        case .none:
+            return NSLocalizedString("Don't show", comment: "")
+        case .loop:
+            return NSLocalizedString("Loop status", comment: "")
+        case .iob:
+            return NSLocalizedString("IOB", comment: "")
         }
     }
 }
@@ -74,11 +104,9 @@ extension ContactTrick {
                 index: items.count,
                 entry: ContactTrickEntry(
                     enabled: false,
-                    value: .bg,
+                    layout: .single,
                     contactId: nil,
                     displayName: nil,
-                    trend: false,
-                    ring: false,
                     darkMode: true,
                     fontSize: 100,
                     fontName: "Default Font",
