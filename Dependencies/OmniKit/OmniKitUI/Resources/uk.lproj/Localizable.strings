@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Встановити Тимчасову Базальну Швидкість";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Ваша подача інсуліну не буде автоматично скоригована, доки тимчасова базальна доза не закінчиться або не буде скасована.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Налаштування завершено";
 

@@ -1013,12 +1013,6 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Error */
 "not available" = "niet beschikbaar";
 
-/* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
-
-/* Bolus shortcut. Error */
-"not available" = "not available";
-
 /* Override Shortcut */
 "Activate an Override Preset" = "Activeer een overschrijvingsvoorinstelling";
 
@@ -1450,6 +1444,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Profile" = "Bewaar als profiel";
+
+/* */
+"Save as preset" = "Save as preset";
 
 /* Alert */
 "Cancel Profile Override" = "Profieloverschrijving annuleren?";
@@ -2243,6 +2240,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "De nieuwe alternatieve boluscalculator is een andere benadering van de standaard boluscalculator in iAPS. Als de knop aan staat, gebruik je deze boluscalculator en niet de originele iAPS-calculator. Aan het einde van de berekening wordt een aangepaste factor toegepast, zoals het hoort bij het gebruik van smbs (standaard 0,8).\n\nJe kunt ook de optie toevoegen in je boluscalculator om een andere (!) aanpasbare factor toe te passen aan het einde van de berekening, wat handig kan zijn voor vette maaltijden, zoals pizza (standaard 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Extra Features";
 
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";
