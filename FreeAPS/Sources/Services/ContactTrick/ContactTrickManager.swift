@@ -142,7 +142,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     }
 
     private func renderContacts() {
-        print("render contacts")
         contacts.forEach { renderContact($0) }
         workItem = DispatchWorkItem(block: {
             print("in updateContact, no updates received for more than 5 minutes")
@@ -152,8 +151,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     }
 
     private func renderContact(_ entry: ContactTrickEntry) {
-        print("render contact: \(entry)")
-        guard let contactId = entry.contactId else {
+        guard let contactId = entry.contactId, entry.enabled else {
             return
         }
 

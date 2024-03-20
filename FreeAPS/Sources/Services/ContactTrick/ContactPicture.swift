@@ -28,7 +28,7 @@ struct ContactPicture: View {
         return formatter
     }()
 
-    private static let ringWidth = 0.05 // percent
+    private static let ringWidth = 0.07 // percent
     private static let ringGap = 0.02 // percent
 
     static func getImage(
@@ -104,20 +104,26 @@ struct ContactPicture: View {
                 width: rect.width,
                 height: rect.height * 0.40
             ) : rect
-            let topRect = CGRect(x: rect.minX, y: rect.minY + rect.height * 0.10, width: rect.width, height: rect.height * 0.20)
+            let topRect = CGRect(
+                x: rect.minX,
+                y: rect.minY + rect.height * 0.10,
+                width: rect.width,
+                height: rect.height * 0.20
+            )
             let bottomRect = CGRect(
                 x: rect.minX,
                 y: rect.minY + rect.height * 0.70,
                 width: rect.width,
                 height: rect.height * 0.20
             )
-            let secondaryFontSize = Int(Double(contact.fontSize) * 0.80)
+            let secondaryFontSize = Int(Double(contact.fontSize) * 0.70)
 
             displayPiece(
                 value: contact.primary,
                 contact: contact,
                 state: state,
                 rect: primaryRect,
+                fitHeigh: false,
                 fontName: contact.fontName,
                 fontSize: contact.fontSize,
                 fontWeight: fontWeight,
@@ -129,6 +135,7 @@ struct ContactPicture: View {
                     contact: contact,
                     state: state,
                     rect: topRect,
+                    fitHeigh: true,
                     fontName: contact.fontName,
                     fontSize: secondaryFontSize,
                     fontWeight: fontWeight,
@@ -141,6 +148,7 @@ struct ContactPicture: View {
                     contact: contact,
                     state: state,
                     rect: bottomRect,
+                    fitHeigh: true,
                     fontName: contact.fontName,
                     fontSize: secondaryFontSize,
                     fontWeight: fontWeight,
@@ -158,6 +166,7 @@ struct ContactPicture: View {
                 contact: contact,
                 state: state,
                 rect: topRect,
+                fitHeigh: true,
                 fontName: contact.fontName,
                 fontSize: splitFontSize,
                 fontWeight: fontWeight,
@@ -168,6 +177,7 @@ struct ContactPicture: View {
                 contact: contact,
                 state: state,
                 rect: bottomRect,
+                fitHeigh: true,
                 fontName: contact.fontName,
                 fontSize: splitFontSize,
                 fontWeight: fontWeight,
@@ -184,6 +194,7 @@ struct ContactPicture: View {
         contact: ContactTrickEntry,
         state: ContactTrickState,
         rect: CGRect,
+        fitHeigh: Bool,
         fontName: String?,
         fontSize: Int,
         fontWeight: UIFont.Weight,
@@ -196,6 +207,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.glucose,
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -205,6 +217,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.eventualBG,
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -214,6 +227,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.delta,
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -223,6 +237,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.trend,
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -232,6 +247,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.glucoseDate.map { formatter.string(from: $0) },
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -241,6 +257,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.lastLoopDate.map { formatter.string(from: $0) },
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -250,6 +267,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.cob.map { $0.formatted() },
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -259,6 +277,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.iob.map { $0.formatted() },
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -268,6 +287,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.bolusRecommended.map { $0.formatted() },
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -277,6 +297,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.carbsRequired.map { $0.formatted() },
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -286,6 +307,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.isf.map { $0.formatted() },
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -295,6 +317,7 @@ struct ContactPicture: View {
             drawText(
                 text: state.override,
                 rect: rect,
+                fitHeigh: fitHeigh,
                 fontName: fontName,
                 fontSize: fontSize,
                 fontWeight: fontWeight,
@@ -309,6 +332,7 @@ struct ContactPicture: View {
     private static func drawText(
         text: String?,
         rect: CGRect,
+        fitHeigh: Bool,
         fontName: String?,
         fontSize: Int,
         fontWeight: UIFont.Weight,
@@ -332,7 +356,7 @@ struct ContactPicture: View {
 
         if let text {
             var stringSize = text.size(withAttributes: attributes)
-            while stringSize.width > rect.width * 0.85 || stringSize.height > rect.height * 0.95, theFontSize > 30 {
+            while stringSize.width > rect.width * 0.90 || fitHeigh && (stringSize.height > rect.height * 0.95), theFontSize > 50 {
                 theFontSize = theFontSize - 10
                 attributes = makeAttributes(size: theFontSize)
                 stringSize = text.size(withAttributes: attributes)
@@ -380,7 +404,7 @@ struct ContactPicture: View {
                 drawProgressBar(
                     rect: rect,
                     progress: Double(iob) / Double(state.maxIOB),
-                    colors: [.blue, .red],
+                    colors: [contact.darkMode ? .blue : .blue, contact.darkMode ? .pink : .red],
                     strokeWidth: strokeWidth
                 )
             }

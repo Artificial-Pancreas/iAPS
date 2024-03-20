@@ -221,7 +221,7 @@ extension ContactTrick {
                 }
 
                 Section(header: Text("Font")) {
-                    if entry.isDefaultFont() && availableFonts == nil {
+                    if availableFonts == nil {
                         HStack(spacing: 0) {
                             Button {
                                 loadFonts()
