@@ -1445,6 +1445,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Enregistrer comme profil";
 
+/* */
+"Save as preset" = "Save as preset";
+
 /* Alert */
 "Cancel Profile Override" = "Annuler le réglage de l'annulation du profil ?";
 
@@ -2233,6 +2236,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Le nouveau calculateur alternatif de bolus est une option au calculateur par défaut dans iAPS. Quand activé, vous utilisez ce calculateur de bolus et non pas le calculateur iAPS original. À la fin du calcul, un facteur personnalisé est appliqué, comme il est censé l'être lors de l'utilisation de SMBs (par défaut 0,8).\n\nVous pouvez également ajouter l'option d'appliquer un autre facteur personnalisable (!) à la fin du calcul, ce qui pourrait être utile pour les repas riches en matières grasses, par exemple, une pizza (par défaut 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Extra Features";
 
 /* UI/UX option */
 "Display Predictions" = "Afficher les prédictions";
