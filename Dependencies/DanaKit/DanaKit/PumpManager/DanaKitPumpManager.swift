@@ -306,7 +306,7 @@ extension DanaKitPumpManager: PumpManager {
             
             let fetchHistoryPacket = generatePacketHistoryAll(options: PacketHistoryBase(from: state.lastStatusDate))
             let fetchHistoryResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(fetchHistoryPacket)
-            guard activateHistoryModeResult.success else {
+            guard fetchHistoryResult.success else {
                 return []
             }
             

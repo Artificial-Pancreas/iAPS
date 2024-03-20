@@ -50,7 +50,7 @@ func generatePacketHistoryData(options: PacketHistoryBase) -> Data {
     } else {
         data.addDate(at: 0, date: options.from!)
     }
-
+    
     return data
 }
 
@@ -84,7 +84,7 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
 
     let param7 = data[DataStart + 6]
     let param8 = data[DataStart + 7]
-    let value = (Int(data[DataStart + 8]) << 8) + Int(data[DataStart + 9])
+    let value = (UInt16(data[DataStart + 8]) << 8) + UInt16(data[DataStart + 9])
 
     let recordType = Int(data[DataStart])
     switch recordType {
@@ -103,11 +103,8 @@ func parsePacketHistory(data: Data) -> DanaParsePacket<HistoryItem> {
         )
 
     case HistoryCode.RECORD_TYPE_DAILY:
-        let dailyBasalValue = Double(data[DataStart + 5]) * 0.01
-        let dailyBasal = Double(data[DataStart + 4] << 8) + dailyBasalValue
-        
-        let dailyBolusValue = Double(data[DataStart + 7]) * 0.01
-        let dailyBolus = Double(data[DataStart + 6] << 8) + dailyBolusValue
+        let dailyBasal = Double((UInt16(data[DataStart + 4]) << 8) + UInt16(data[DataStart + 5])) * 0.01
+        let dailyBolus = Double((UInt16(data[DataStart + 6]) << 8) + UInt16(data[DataStart + 7])) * 0.01
         var timestamp = data.date(at: DataStart + 1)
         timestamp = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: timestamp) ?? timestamp
 
