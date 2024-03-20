@@ -94,7 +94,7 @@ extension ContactTrick {
                             Spacer()
 
                             Text(
-                                state.items[index].entry.value.displayName
+                                state.items[index].entry.primary.displayName
                             )
                             .foregroundColor(.accentColor)
                         }
@@ -146,62 +146,118 @@ extension ContactTrick {
                 Section {
                     Toggle("Enabled", isOn: $entry.enabled)
                     Picker(
-                        selection: $entry.value,
-                        label: Text("Display")
+                        selection: $entry.layout,
+                        label: Text("Layout")
                     ) {
-                        ForEach(ContactTrickValue.allCases) { v in
+                        ForEach(ContactTrickLayout.allCases) { v in
                             Text(v.displayName).tag(v)
                         }
                     }
                 }
-                if entry.value == .bg {
-                    Section {
-                        VStack {
-                            Toggle("Trend", isOn: $entry.trend)
-                            Toggle("Ring", isOn: $entry.ring)
+                Section {
+                    switch entry.layout {
+                    case .single:
+                        Picker(
+                            selection: $entry.primary,
+                            label: Text("Primary")
+                        ) {
+                            ForEach(ContactTrickValue.allCases) { v in
+                                Text(v.displayName).tag(v)
+                            }
+                        }
+                        Picker(
+                            selection: $entry.top,
+                            label: Text("Top")
+                        ) {
+                            ForEach(ContactTrickValue.allCases) { v in
+                                Text(v.displayName).tag(v)
+                            }
+                        }
+                        Picker(
+                            selection: $entry.bottom,
+                            label: Text("Bottom")
+                        ) {
+                            ForEach(ContactTrickValue.allCases) { v in
+                                Text(v.displayName).tag(v)
+                            }
+                        }
+                    case .split:
+                        Picker(
+                            selection: $entry.top,
+                            label: Text("Top")
+                        ) {
+                            ForEach(ContactTrickValue.allCases) { v in
+                                Text(v.displayName).tag(v)
+                            }
+                        }
+                        Picker(
+                            selection: $entry.bottom,
+                            label: Text("Bottom")
+                        ) {
+                            ForEach(ContactTrickValue.allCases) { v in
+                                Text(v.displayName).tag(v)
+                            }
                         }
                     }
                 }
-                if entry.value != .ring {
-                    Section(header: Text("Font")) {
-                        if entry.isDefaultFont() && availableFonts == nil {
-                            HStack(spacing: 0) {
-                                Button {
-                                    loadFonts()
-                                } label: {
-                                    Text(entry.fontName)
-                                }
-                            }
-                        } else {
-                            Picker(
-                                selection: $entry.fontName,
-                                label: EmptyView()
-                            ) {
-                                ForEach(availableFonts!, id: \.self) { f in
-                                    Text(f).tag(f)
-                                }
-                            }
-                            .pickerStyle(.navigationLink)
-                            .labelsHidden()
+
+                Section(header: Text("Rings")) {
+                    Picker(
+                        selection: $entry.ring1,
+                        label: Text("Outer")
+                    ) {
+                        ForEach(ContactTrickLargeRing.allCases) { v in
+                            Text(v.displayName).tag(v)
                         }
+                    }
+                    Picker(
+                        selection: $entry.ring2,
+                        label: Text("Inner")
+                    ) {
+                        ForEach(ContactTrickLargeRing.allCases) { v in
+                            Text(v.displayName).tag(v)
+                        }
+                    }
+                }
+
+                Section(header: Text("Font")) {
+                    if entry.isDefaultFont() && availableFonts == nil {
                         HStack(spacing: 0) {
-                            Picker(
-                                selection: $entry.fontSize,
-                                label: Text("Size")
-                            ) {
-                                ForEach(fontSizes, id: \.self) { s in
-                                    Text("\(s)").tag(s)
-                                }
+                            Button {
+                                loadFonts()
+                            } label: {
+                                Text(entry.fontName)
                             }
                         }
-                        if entry.isDefaultFont() {
-                            Picker(
-                                selection: $entry.fontWeight,
-                                label: Text("Weight")
-                            ) {
-                                ForEach(FontWeight.allCases) { w in
-                                    Text(w.displayName).tag(w)
-                                }
+                    } else {
+                        Picker(
+                            selection: $entry.fontName,
+                            label: EmptyView()
+                        ) {
+                            ForEach(availableFonts!, id: \.self) { f in
+                                Text(f).tag(f)
+                            }
+                        }
+                        .pickerStyle(.navigationLink)
+                        .labelsHidden()
+                    }
+                    HStack(spacing: 0) {
+                        Picker(
+                            selection: $entry.fontSize,
+                            label: Text("Size")
+                        ) {
+                            ForEach(fontSizes, id: \.self) { s in
+                                Text("\(s)").tag(s)
+                            }
+                        }
+                    }
+                    if entry.isDefaultFont() {
+                        Picker(
+                            selection: $entry.fontWeight,
+                            label: Text("Weight")
+                        ) {
+                            ForEach(FontWeight.allCases) { w in
+                                Text(w.displayName).tag(w)
                             }
                         }
                     }
