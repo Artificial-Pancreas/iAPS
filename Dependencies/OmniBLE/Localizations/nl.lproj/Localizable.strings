@@ -834,13 +834,13 @@
 "Done" = "OK";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Diagnostische Pod gegevens";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Pulslog uitlezen";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Activatietijd lezen";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Lees geactiveerde waarschuwingen";

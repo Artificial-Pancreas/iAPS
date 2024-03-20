@@ -819,7 +819,7 @@ Silence Pod" = "Pod silencieux";
 "Pod Diagnostics" = "Diagnostics du pod";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Journal des impulsions étendu";
 
 /* Text for read activation time title */
 "Read Activation Time" = "Lire le temps d'activation";
