@@ -69,11 +69,6 @@ class PeripheralManager: NSObject {
             throw NSError(domain: "This command is already running. Please wait", code: 0, userInfo: nil)
         }
         
-        let isHistoryPacket = self.isHistoryPacket(opCode: command)
-        if (isHistoryPacket && !self.pumpManager.state.isInFetchHistoryMode) {
-            throw NSError(domain: "Pump is not in history fetch mode", code: 0, userInfo: nil)
-        }
-        
         // Make sure we have the correct state
         if (packet.opCode == CommandGeneralSetHistoryUploadMode && packet.data != nil) {
             self.pumpManager.state.isInFetchHistoryMode = packet.data![0] == 0x01
@@ -93,6 +88,7 @@ class PeripheralManager: NSObject {
         // Now schedule a 6 sec timeout (or 21 when in fetchHistoryMode) for the pump to send its message back
         // This timeout will be cancelled by `processMessage` once it received the message
         // If this timeout expired, disconnect from the pump and prompt an error...
+        let isHistoryPacket = self.isHistoryPacket(opCode: command)
         return try await withCheckedThrowingContinuation { continuation in
             let sendingTimer = Timer.scheduledTimer(withTimeInterval: !isHistoryPacket ? 6 : 21, repeats: false) { _ in
                 guard let queueItem = self.writeQueue[packet.opCode] else {
@@ -626,7 +622,15 @@ extension PeripheralManager {
             self.pumpManager.state.batteryRemaining = data.batteryRemaining
             self.pumpManager.state.isPumpSuspended = data.isPumpSuspended
             self.pumpManager.state.isTempBasalInProgress = data.isTempBasalInProgress
-            self.pumpManager.state.basalDeliveryOrdinal = data.isTempBasalInProgress ? .tempBasal : data.isPumpSuspended ? .suspended : .active
+            
+            if self.pumpManager.state.basalDeliveryOrdinal != .suspended && data.isPumpSuspended {
+                // Suspended has been enabled via the pump
+                // We cannot be sure at what point it has been enabled...
+                self.pumpManager.state.basalDeliveryDate = Date.now
+            }
+            
+            self.pumpManager.state.basalDeliveryOrdinal = data.isTempBasalInProgress ? .tempBasal :
+                                                            data.isPumpSuspended ? .suspended : .active
             self.pumpManager.state.lowReservoirRate = dataUserOption.lowReservoirRate
             self.pumpManager.state.isTimeDisplay24H = dataUserOption.isTimeDisplay24H
             self.pumpManager.state.isButtonScrollOnOff = dataUserOption.isButtonScrollOnOff
