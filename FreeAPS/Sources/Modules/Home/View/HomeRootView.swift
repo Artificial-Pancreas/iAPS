@@ -341,10 +341,17 @@ extension Home {
                     }
                     Spacer()
                     Button {
-                        state.showModal(for: .bolus(
-                            waitForSuggestion: true,
-                            fetch: false
-                        ))
+                        if state.dontUseBolusCalculator {
+                            state.showModal(for: .bolus(
+                                waitForSuggestion: false,
+                                fetch: false
+                            ))
+                        } else {
+                            state.showModal(for: .bolus(
+                                waitForSuggestion: true,
+                                fetch: false
+                            ))
+                        }
                     }
                     label: {
                         Image(systemName: "syringe")
