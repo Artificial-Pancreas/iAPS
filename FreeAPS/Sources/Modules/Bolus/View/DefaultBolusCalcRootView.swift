@@ -24,12 +24,6 @@ extension Bolus {
         @Environment(\.colorScheme) var colorScheme
         @FocusState private var isFocused: Bool
 
-        /*
-         @FetchRequest(
-             entity: Meals.entity(),
-             sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]
-         ) var meal: FetchedResults<Meals>*/
-
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
