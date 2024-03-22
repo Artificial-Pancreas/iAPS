@@ -84,7 +84,6 @@
 		C124027329C7DA9700B32844 /* RileyLinkListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124022A29C7DA9700B32844 /* RileyLinkListDataSource.swift */; };
 		C124027429C7DA9700B32844 /* PodLifeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124022B29C7DA9700B32844 /* PodLifeState.swift */; };
 		C124027529C7DA9700B32844 /* OmnipodSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124022C29C7DA9700B32844 /* OmnipodSettingsViewModel.swift */; };
-		C124027629C7DA9700B32844 /* PodLifeHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124022E29C7DA9700B32844 /* PodLifeHUDView.swift */; };
 		C124027729C7DA9700B32844 /* CheckInsertedCannulaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124022F29C7DA9700B32844 /* CheckInsertedCannulaView.swift */; };
 		C124027829C7DA9700B32844 /* HUDAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C124023029C7DA9700B32844 /* HUDAssets.xcassets */; };
 		C124027929C7DA9700B32844 /* RoundedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124023229C7DA9700B32844 /* RoundedCard.swift */; };
@@ -98,7 +97,6 @@
 		C124028229C7DA9700B32844 /* UncertaintyRecoveredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124023B29C7DA9700B32844 /* UncertaintyRecoveredView.swift */; };
 		C124028329C7DA9700B32844 /* InsulinTypeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124023C29C7DA9700B32844 /* InsulinTypeConfirmation.swift */; };
 		C124028429C7DA9700B32844 /* ManualTempBasalEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124023D29C7DA9700B32844 /* ManualTempBasalEntryView.swift */; };
-		C124028529C7DA9700B32844 /* PodLifeHUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C124023E29C7DA9700B32844 /* PodLifeHUDView.xib */; };
 		C124028629C7DA9700B32844 /* NotificationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124023F29C7DA9700B32844 /* NotificationSettingsView.swift */; };
 		C124028729C7DA9700B32844 /* OmnipodSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124024029C7DA9700B32844 /* OmnipodSettingsView.swift */; };
 		C124028829C7DA9700B32844 /* PodSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C124024129C7DA9700B32844 /* PodSetupView.swift */; };
@@ -323,7 +321,6 @@
 		C124022A29C7DA9700B32844 /* RileyLinkListDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RileyLinkListDataSource.swift; sourceTree = "<group>"; };
 		C124022B29C7DA9700B32844 /* PodLifeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodLifeState.swift; sourceTree = "<group>"; };
 		C124022C29C7DA9700B32844 /* OmnipodSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnipodSettingsViewModel.swift; sourceTree = "<group>"; };
-		C124022E29C7DA9700B32844 /* PodLifeHUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodLifeHUDView.swift; sourceTree = "<group>"; };
 		C124022F29C7DA9700B32844 /* CheckInsertedCannulaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInsertedCannulaView.swift; sourceTree = "<group>"; };
 		C124023029C7DA9700B32844 /* HUDAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = HUDAssets.xcassets; sourceTree = "<group>"; };
 		C124023229C7DA9700B32844 /* RoundedCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedCard.swift; sourceTree = "<group>"; };
@@ -337,7 +334,6 @@
 		C124023B29C7DA9700B32844 /* UncertaintyRecoveredView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UncertaintyRecoveredView.swift; sourceTree = "<group>"; };
 		C124023C29C7DA9700B32844 /* InsulinTypeConfirmation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsulinTypeConfirmation.swift; sourceTree = "<group>"; };
 		C124023D29C7DA9700B32844 /* ManualTempBasalEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualTempBasalEntryView.swift; sourceTree = "<group>"; };
-		C124023E29C7DA9700B32844 /* PodLifeHUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PodLifeHUDView.xib; sourceTree = "<group>"; };
 		C124023F29C7DA9700B32844 /* NotificationSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingsView.swift; sourceTree = "<group>"; };
 		C124024029C7DA9700B32844 /* OmnipodSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmnipodSettingsView.swift; sourceTree = "<group>"; };
 		C124024129C7DA9700B32844 /* PodSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodSetupView.swift; sourceTree = "<group>"; };
@@ -729,7 +725,6 @@
 				D845A1492AF8A4EF00EA0853 /* PlayTestBeepsView.swift */,
 				C124024829C7DA9700B32844 /* PodDetailsView.swift */,
 				D85AEAC72B1403C000081044 /* PodDiagnostics.swift */,
-				C124022E29C7DA9700B32844 /* PodLifeHUDView.swift */,
 				C124024129C7DA9700B32844 /* PodSetupView.swift */,
 				D845A14D2AF8A4FB00EA0853 /* PumpManagerDetailsView.swift */,
 				D85AEAC92B1403CB00081044 /* ReadPodInfoView.swift */,
@@ -758,7 +753,6 @@
 			isa = PBXGroup;
 			children = (
 				C12ED9C429C7DB7200435701 /* OmnipodReservoirView.xib */,
-				C124023E29C7DA9700B32844 /* PodLifeHUDView.xib */,
 				C124023029C7DA9700B32844 /* HUDAssets.xcassets */,
 				C124026729C7DA9700B32844 /* OmniKitUI.xcassets */,
 				C124024F29C7DA9700B32844 /* Localizable.strings */,
@@ -1031,7 +1025,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C124028529C7DA9700B32844 /* PodLifeHUDView.xib in Resources */,
 				C12ED9C529C7DB7200435701 /* OmnipodReservoirView.xib in Resources */,
 				C124029629C7DA9700B32844 /* OmniKitUI.xcassets in Resources */,
 				C124029529C7DA9700B32844 /* Localizable.strings in Resources */,
@@ -1141,7 +1134,6 @@
 				C124028B29C7DA9700B32844 /* BeepPreferenceSelectionView.swift in Sources */,
 				C12EDA1429C7DFBF00435701 /* TimeInterval.swift in Sources */,
 				C124028D29C7DA9700B32844 /* AttachPodView.swift in Sources */,
-				D845A14F2AF8A4FB00EA0853 /* ReadPulseLogView.swift in Sources */,
 				C124027229C7DA9700B32844 /* DeactivatePodViewModel.swift in Sources */,
 				C124028C29C7DA9700B32844 /* ExpirationReminderSetupView.swift in Sources */,
 				D845A1462AF8A4DA00EA0853 /* ActivityView.swift in Sources */,
@@ -1167,7 +1159,6 @@
 				C12EDA1229C7DF4B00435701 /* IdentifiableClass.swift in Sources */,
 				D845A1482AF8A4E400EA0853 /* FirstAppear.swift in Sources */,
 				C124027529C7DA9700B32844 /* OmnipodSettingsViewModel.swift in Sources */,
-				C124027629C7DA9700B32844 /* PodLifeHUDView.swift in Sources */,
 				C124029729C7DA9700B32844 /* OmnipodUICoordinator.swift in Sources */,
 				C124028429C7DA9700B32844 /* ManualTempBasalEntryView.swift in Sources */,
 				C124027729C7DA9700B32844 /* CheckInsertedCannulaView.swift in Sources */,
