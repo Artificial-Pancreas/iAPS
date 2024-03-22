@@ -1659,7 +1659,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder" = "Nhắc nhở hết hạn";
 
 /* */
-"Low Reservoir" = "Sắp hết thuốc";
+"Low Reservoir" = "Sắp hết insulin";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "Không có lời nhắc";
@@ -1668,7 +1668,7 @@ Enact a temp Basal or a temp target */
 "Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* */
-"Low Reservoir Reminder" = "Báo nhắc gần hết thuốc";
+"Low Reservoir Reminder" = "Báo nhắc gần hết insulin";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Đảm bảo điện thoại và pod được đặt gần nhau. Nếu kết nối vẫn gặp trở ngại, đặt lại chổ khác.";
