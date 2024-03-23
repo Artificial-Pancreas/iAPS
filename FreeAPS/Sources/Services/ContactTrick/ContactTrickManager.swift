@@ -16,7 +16,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var apsManager: APSManager!
     @Injected() private var storage: FileStorage!
 
     private var contacts: [ContactTrickEntry] = []
@@ -54,7 +53,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             self.state.trend = glucoseValues.trend
             self.state.delta = glucoseValues.delta
             self.state.glucoseDate = readings.first?.date ?? .distantPast
-            self.state.lastLoopDate = self.apsManager.lastLoopDate
+            self.state.lastLoopDate = self.suggestion?.timestamp
 
             self.state.iob = self.suggestion?.iob
             self.state.cob = self.suggestion?.cob
@@ -104,8 +103,26 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         saveRequest.update(mutableContact)
         do {
             try contactStore.execute(saveRequest)
+        } catch let error as NSError {
+            var details: String?
+            if error.domain == CNErrorDomain {
+                switch error.code {
+                case CNError.authorizationDenied.rawValue:
+                    details = "Authorization denied"
+                case CNError.communicationError.rawValue:
+                    details = "Communication error"
+                case CNError.insertedRecordAlreadyExists.rawValue:
+                    details = "Record already exists"
+                case CNError.dataAccessError.rawValue:
+                    details = "Data access error"
+                default:
+                    details = "Code \(error.code)"
+                }
+            }
+            print("in updateContact, failed to update the contact - \(details ?? "no details"): \(error.localizedDescription)")
+
         } catch {
-            print("in updateContact, failed to update the contact")
+            print("in updateContact, failed to update the contact: \(error.localizedDescription)")
         }
     }
 
