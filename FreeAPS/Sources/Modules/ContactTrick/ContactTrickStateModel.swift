@@ -12,10 +12,6 @@ enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
     case lastLoopDate
     case cob
     case iob
-    case bolusRecommended
-    case carbsRequired
-    case isf
-    case override
     case ring
 
     var displayName: String {
@@ -38,14 +34,6 @@ enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
             return NSLocalizedString("COB", comment: "")
         case .iob:
             return NSLocalizedString("IOB", comment: "")
-        case .bolusRecommended:
-            return NSLocalizedString("Bolus recommended", comment: "")
-        case .carbsRequired:
-            return NSLocalizedString("Carbs required", comment: "")
-        case .isf:
-            return NSLocalizedString("ISF", comment: "")
-        case .override:
-            return NSLocalizedString("Override %", comment: "")
         case .ring:
             return NSLocalizedString("Ring", comment: "")
         }
@@ -72,6 +60,8 @@ enum ContactTrickLargeRing: String, JSON, CaseIterable, Identifiable, Codable {
     case none
     case loop
     case iob
+    case cob
+    case iobcob
 
     var displayName: String {
         switch self {
@@ -81,6 +71,10 @@ enum ContactTrickLargeRing: String, JSON, CaseIterable, Identifiable, Codable {
             return NSLocalizedString("Loop status", comment: "")
         case .iob:
             return NSLocalizedString("IOB", comment: "")
+        case .cob:
+            return NSLocalizedString("COB", comment: "")
+        case .iobcob:
+            return NSLocalizedString("IOB+COB", comment: "")
         }
     }
 }

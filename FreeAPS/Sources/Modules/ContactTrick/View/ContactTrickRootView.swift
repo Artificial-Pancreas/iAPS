@@ -132,6 +132,8 @@ extension ContactTrick {
         @State private var availableFonts: [String]? = nil
 
         private let fontSizes: [Int] = [70, 80, 90, 100, 110, 120, 130, 140, 150]
+        private let ringWidths: [Int] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        private let ringGaps: [Int] = [0, 1, 2, 3, 4, 5]
 
         var body: some View {
             Form {
@@ -218,6 +220,22 @@ extension ContactTrick {
                             Text(v.displayName).tag(v)
                         }
                     }
+                    Picker(
+                        selection: $entry.ringWidth,
+                        label: Text("Width")
+                    ) {
+                        ForEach(ringWidths, id: \.self) { s in
+                            Text("\(s)").tag(s)
+                        }
+                    }
+                    Picker(
+                        selection: $entry.ringGap,
+                        label: Text("Gap")
+                    ) {
+                        ForEach(ringGaps, id: \.self) { s in
+                            Text("\(s)").tag(s)
+                        }
+                    }
                 }
 
                 Section(header: Text("Font")) {
@@ -241,14 +259,12 @@ extension ContactTrick {
                         .pickerStyle(.navigationLink)
                         .labelsHidden()
                     }
-                    HStack(spacing: 0) {
-                        Picker(
-                            selection: $entry.fontSize,
-                            label: Text("Size")
-                        ) {
-                            ForEach(fontSizes, id: \.self) { s in
-                                Text("\(s)").tag(s)
-                            }
+                    Picker(
+                        selection: $entry.fontSize,
+                        label: Text("Size")
+                    ) {
+                        ForEach(fontSizes, id: \.self) { s in
+                            Text("\(s)").tag(s)
                         }
                     }
                     if entry.isDefaultFont() {
@@ -257,6 +273,16 @@ extension ContactTrick {
                             label: Text("Weight")
                         ) {
                             ForEach(FontWeight.allCases) { w in
+                                Text(w.displayName).tag(w)
+                            }
+                        }
+                    }
+                    if entry.isDefaultFont() {
+                        Picker(
+                            selection: $entry.fontTracking,
+                            label: Text("Tracking")
+                        ) {
+                            ForEach(FontTracking.allCases) { w in
                                 Text(w.displayName).tag(w)
                             }
                         }
