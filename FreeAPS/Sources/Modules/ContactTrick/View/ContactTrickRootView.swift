@@ -240,7 +240,8 @@ extension ContactTrick {
 
                 Section(header: Text("Font")) {
                     if availableFonts == nil {
-                        HStack(spacing: 0) {
+                        HStack {
+                            Spacer()
                             Button {
                                 loadFonts()
                             } label: {
@@ -267,22 +268,20 @@ extension ContactTrick {
                             Text("\(s)").tag(s)
                         }
                     }
+                    Picker(
+                        selection: $entry.fontTracking,
+                        label: Text("Tracking")
+                    ) {
+                        ForEach(FontTracking.allCases) { w in
+                            Text(w.displayName).tag(w)
+                        }
+                    }
                     if entry.isDefaultFont() {
                         Picker(
                             selection: $entry.fontWeight,
                             label: Text("Weight")
                         ) {
                             ForEach(FontWeight.allCases) { w in
-                                Text(w.displayName).tag(w)
-                            }
-                        }
-                    }
-                    if entry.isDefaultFont() {
-                        Picker(
-                            selection: $entry.fontTracking,
-                            label: Text("Tracking")
-                        ) {
-                            ForEach(FontTracking.allCases) { w in
                                 Text(w.displayName).tag(w)
                             }
                         }

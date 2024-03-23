@@ -39,7 +39,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     }
 
     func updateContacts(contacts: [ContactTrickEntry], completion: @escaping (Result<Void, Error>) -> Void) {
-        print("update contacts: \(contacts)")
         processQueue.async {
             self.contacts = contacts
             self.renderContacts()
@@ -49,7 +48,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
     private func configureState() {
         processQueue.async {
-            let overrideStorage = OverrideStorage()
             let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
             let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
