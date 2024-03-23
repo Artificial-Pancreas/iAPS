@@ -1892,7 +1892,7 @@ Enact a temp Basal or a temp target */
 "Display Loop Cycle statistics" = "Loop cyclusstatistieken tonen";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Laat Loop statistieken zien in het statPanel in de Home weergave";
+"Displays Loop statistics in the statPanel in Home View" = "Laat statistieken zien in het statPanel in de Home weergave";
 
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Standaard HbA1c-eenheid in statPanel wijzigen. De eenheid in statPanel zal worden bijgewerkt met de volgende statistics.json update";
