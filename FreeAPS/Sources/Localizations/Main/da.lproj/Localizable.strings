@@ -699,7 +699,7 @@ Enact a temp Basal or a temp target */
 "Slope" = "Hældning";
 
 /* */
-"Intercept" = "Intercept";
+"Intercept" = "Opfange";
 
 /* */
 "Chart" = "Graf";
@@ -717,7 +717,7 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Om Processen";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Sørg venligst for, at din Libre 2-sensor allerede er aktiveret og færdig med opvarmningen. Hvis du har andre apps, der opretter forbindelse til sensoren via bluetooth, disse skal lukkes ned eller afinstalleres. \n\n Du kan kun have en app til at kommunikere med sensoren via bluetooth. Tryk derefter på \"pariring and connection\" knappen nedenfor for at starte processen. Bemærk venligst, at bluetooth-forbindelsen kan tage op til et par minutter, før det begynder at arbejde.";
 
 /* */
 "Pairinginfo" = "Pairinginfo";
@@ -753,13 +753,13 @@ Enact a temp Basal or a temp target */
 "No Libre Transmitter Selected" = "Ingen Libre Sensor Valgt";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Slet CGMManager og start på ny. Dine libreoopweb legitimationsoplysninger vil blive bevaret";
 
 /* Invalid libre checksum */
 "Invalid libre checksum" = "Ugyldig libre checksum";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor blev læst forkert, CRC'er var ikke gyldige";
 
 /* Glucose */
 "Glucose" = "Glukose";
@@ -783,7 +783,7 @@ Enact a temp Basal or a temp target */
 "No Sensor Detected" = "Ingen Sensor Fundet";
 
 /* This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor */
-"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor";
+"This might be an intermittent problem, but please check that your transmitter is tightly secured over your sensor" = "Dette kan være et sporadisk problem, men tjek venligst at senderen er tæt fastgjort over din sensor";
 
 /* New Sensor Detected */
 "New Sensor Detected" = "Ny Sensor Fundet";
@@ -822,13 +822,13 @@ Enact a temp Basal or a temp target */
 "Battery is running low %@, consider charging your %@ device as soon as possible" = "Lavt batteriniveau %@, lad venligst din %@ enhed snarest muligt";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "Udtrækker kalibreringsdata fra sensor";
 
 /* Sensor Ending Soon */
 "Sensor Ending Soon" = "Sensor Udløber Snart";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "Nuværende sensor slutter snart! Sensorliv tilbage i %@";
 
 /* */
 "Libre Bluetooth" = "Libre Bluetooth";
@@ -840,13 +840,13 @@ Enact a temp Basal or a temp target */
 "Last measurement" = "Sidste måling";
 
 /* */
-"Sensor Footer checksum" = "Sensor Footer checksum";
+"Sensor Footer checksum" = "Sensor sidefod kontrolsum";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "Sidste blodsukker forudsigelse";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "NuværendeBG";
 
 /* */
 "Sensor Info" = "Sensor Info";
@@ -942,7 +942,7 @@ Enact a temp Basal or a temp target */
 "Always Notify Glucose" = "Send altid Glukosenotifikation";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "Underrette pr. læsning";
 
 /* */
 "Value" = "Værdi";
@@ -963,7 +963,7 @@ Enact a temp Basal or a temp target */
 "Misc" = "Diverse";
 
 /* */
-"Unit override" = "Unit override";
+"Unit override" = "Enhed tilsidesætte";
 
 /* */
 "Low" = "Lav";
@@ -972,118 +972,118 @@ Enact a temp Basal or a temp target */
 "High" = "Høj";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Meget høj";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Meget lav";
 
 /* */
 "glucose" = "glukose";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Angiv en Bolus mængde";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Dit nuværende blodsukker er %@. Er du sikker på du vil bolus %@ U af insulin?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "En bolus kommando af ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U insulin blev sendt til iAPS. Kontroller i iAPS app eller i Nightscout, om bolus blev leveret.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "for lille bolus mængde";
 
 /* Bolus shortcut. Error */
-"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
+"Bolus Shortcuts are disabled in iAPS settings" = "Bolus genveje er deaktiveret i iAPS indstillinger";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Bolus mængde i U";
 
 /* Bolus shortcut. Setting */
-"Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
+"Allow iOS Bolus Shortcuts" = "Tillad iOS Bolus Genveje";
 
 /* Bolus shortcut. Pop-up */
-"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Hvis du aktiverer denne indstilling, vil du være i stand til at bruge iOS genveje og dens automatiseringer til at udløse en bolus i iAPS.\n\nObserver, at iOS shortuts også fungerer med Siri!\n\nHvis du har brug for Bolus Shorcuts, sørg for at slukke for lytningen til indstillingen 'Hey Siri' i iPhone Siri-indstillinger, for at undgå utilsigtet aktivering af en bolus med Siri.\nHvis du ikke deaktiverer 'Hey Siri' kan iAPS-bolusgenvejen udløses med udtalelsen 'Hey Siri, iAPS Bolus'.\n\nNår udløst med Siri, vil du blive bedt om en mængde og en bekræftelse før bolus kommandoen kan sendes til iAPS.";
 
 /* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+"Max allowed bolus amount using shortcuts " = "Maks. tilladte bolus mængde ved hjælp af genveje ";
 
 /* Bolus shortcut. Error */
-"not available" = "not available";
+"not available" = "ikke tilgængelig";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Aktivér en tilsidesæt forudindstilling";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Tillad at aktivere en tilsidesættelse forudindstilling.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Hvilken tilsidesættelse forudindstilling vil du aktivere?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Er du sikker på du vil aktivere den tilsidesætte forudindstillede %@?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Profil Tilsidesætte";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "er nu aktiveret";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Annuller aktiv tilsidesættelse";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Tilsidesæt annulleret";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Aktivér en %@ Tilsidesæt forudindstilling";
 
 /* */
 "Schedule " = "Skema ";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "trykkede på gem program";
 
 /* */
 "Error" = "Fejl";
 
 /* */
-"Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
+"Some ui element was incorrectly specified" = "Nogle ui element blev forkert angivet";
 
 /* */
 "Success" = "Succes";
 
 /* */
-"Schedules were saved successfully!" = "Schedules were saved successfully!";
+"Schedules were saved successfully!" = "Programmer blev gemt med succes!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Høj glukosealarm aktiv";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Lavt glukosealarm aktiv";
 
 /* */
-"No Glucose Alarm active" = "No Glucose Alarm active";
+"No Glucose Alarm active" = "Ingen glukosealarm aktiv";
 
 /* */
-"snoozing until %@" = "snoozing until %@";
+"snoozing until %@" = "slumrer indtil %@";
 
 /* */
-"not snoozing" = "not snoozing";
+"not snoozing" = "ikke slumrer";
 
 /* */
-"nothing to see here" = "nothing to see here";
+"nothing to see here" = "intet at se her";
 
 /* */
-"snooze from testview clicked" = "snooze from testview clicked";
+"snooze from testview clicked" = "slumre fra testvisning klikket";
 
 /* */
-"will snooze for %@ until %@" = "will snooze for %@ until %@";
+"will snooze for %@ until %@" = "vil slumre til %@ indtil %@";
 
 /* */
-"Click to Snooze Alerts" = "Click to Snooze Alerts";
+"Click to Snooze Alerts" = "Klik for at slumre advarsler";
 
 /* */
 "Strength" = "Styrke";
@@ -1104,10 +1104,10 @@ Enact a temp Basal or a temp target */
 "Found devices: %d" = "Fundne enheder: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "Valgmuligheder for tilbagefyldning";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by Loop" = "Tilbagefyldning fra trend er i øjeblikket ikke godt understøttet af Loop";
 
 /* */
 "Backfill from history" = "Backfill from history";
@@ -1425,28 +1425,28 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Schedule when SMBs are Off";
 
 /* */
-"Change ISF and CR" = "Change ISF and CR";
+"Change ISF and CR" = "Ændre ISF og CR";
 
 /* */
-"Change ISF" = "Change ISF";
+"Change ISF" = "Ændre ISF";
 
 /* */
-"Change CR" = "Change CR";
+"Change CR" = "Ændre CR";
 
 /* */
-"SMB Minutes" = "SMB Minutes";
+"SMB Minutes" = "SMB Minutter";
 
 /* */
-"UAM SMB Minutes" = "UAM SMB Minutes";
+"UAM SMB Minutes" = "UAM SMB Minutter";
 
 /* */
-"Start new Profile" = "Start new Profile";
+"Start new Profile" = "Start ny profil";
 
 /* */
-"Save as Profile" = "Save as Profile";
+"Save as Profile" = "Gem som profil";
 
 /* */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Gem som forudindstilling";
 
 /* Alert */
 "Cancel Profile Override" = "Cancel Profile Override";
@@ -1455,28 +1455,28 @@ Enact a temp Basal or a temp target */
 "Cancel Temp Target" = "Annuller Midlertidigt Mål";
 
 /* Alert */
-"Return to Normal?" = "Return to Normal?";
+"Return to Normal?" = "Returner til Normal?";
 
 /* */
-"This will change settings back to your normal profile." = "This will change settings back to your normal profile.";
+"This will change settings back to your normal profile." = "Dette vil ændre indstillinger tilbage til din normale profil.";
 
 /* Start Profile Alert */
 "Start Profile" = "Start Profil";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Din profil basalinsulin vil blive justeret med overskrivningsprocenten, og din profil ISF og CR vil blive omvendt justeret med procentdelen.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Start af denne tilsidesættelse vil ændre dine profiler og/eller dit Glukose mål, der bruges til looping i hele den valgte periode. Tryk på ”Start profil” vil starte din nye profil eller redigere din nuværende aktive profil.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Override Profile Target";
+"Override Profile Target" = "Tilsidesæt Profil Mål";
 
 /* Alert string. Keep spaces. */
-" SMBs are disabled either by schedule or during the entire duration." = " SMBs are disabled either by schedule or during the entire duration.";
+" SMBs are disabled either by schedule or during the entire duration." = " SMB'er deaktiveres enten efter tidsplan eller i hele perioden.";
 
 /* Alert strings. Keep spaces */
-" infinite duration." = " infinite duration.";
+" infinite duration." = " uendelig varighed.";
 
 /* Service Section */
 "App Icons" = "Appikoner";
@@ -1485,28 +1485,28 @@ Enact a temp Basal or a temp target */
 "iAPS Icon" = "iAPS Ikon";
 
 /* Service Section */
-"Statistics and Home View" = "Statistics and Home View";
+"Statistics and Home View" = "Statistik og hjemmevisning";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Delete Carb Equivalents?";
+"Delete Carb Equivalents?" = "Slet Kulhydrat Ækvivalenter?";
 
 /* */
-"All FPUs of the meal will be deleted." = "All FPUs of the meal will be deleted.";
+"All FPUs of the meal will be deleted." = "Alle FPU'er af måltidet vil blive slettet.";
 
 /* */
-"Delete Glucose?" = "Delete Glucose?";
+"Delete Glucose?" = "Slet Glukose?";
 
 /* */
-"Meal Presets" = "Meal Presets";
+"Meal Presets" = "Måltid Forudindstillinger";
 
 /* */
 "Empty" = "Tom";
 
 /* */
-"Delete Selected Preset" = "Delete Selected Preset";
+"Delete Selected Preset" = "Slet valgte forudindstilling";
 
 /* */
-"Enter Meal Preset Name" = "Enter Meal Preset Name";
+"Enter Meal Preset Name" = "Indtast Måltid Forudindstilling Navn";
 
 /* */
 "Name Of Dish" = "Navn på ret";
@@ -1518,21 +1518,21 @@ Enact a temp Basal or a temp target */
 "Save as Preset" = "Gem som forudindstilling";
 
 /* */
-"Predictions" = "Predictions";
+"Predictions" = "Forudsigelser";
 
 /* Watch Config Option */
-"Display Protein & Fat" = "Display Protein & Fat";
+"Display Protein & Fat" = "Vis Protein & Fedt";
 
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Nu";
 
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Vis Fremtid";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Skjul Fremtid";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1546,68 +1546,68 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Eventuelt Glukoseniveau";
 
 /* */
-"Please wait" = "Please wait";
+"Please wait" = "Vent venligst";
 
 /* */
-"Glucose, " = "Glucose, ";
+"Glucose, " = "Glukose, ";
 
 /* */
-"Target Glucose" = "Target Glucose";
+"Target Glucose" = "Glukose Mål";
 
 /* */
-"Percentage setting" = "Percentage setting";
+"Percentage setting" = "Indstilling i procent";
 
 /* */
-"Insulin Sensitivity" = "Insulin Sensitivity";
+"Insulin Sensitivity" = "Insulin Følsomhed";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Eventual Glucose - Target) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Eventuelt Blodsukker - Målet) / ISF";
 
 /* */
-"Formula:" = "Formula:";
+"Formula:" = "Formel:";
 
 /* Bolus pop-up footer */
-"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended.";
+"Carbs and previous insulin are included in the glucose prediction, but if the Eventual Glucose is lower than the Target Glucose, a bolus will not be recommended." = "Kulhydrater og tidligere insulin er inkluderet i glukoseforudsigelsen, men hvis den Eventuelle Glukose er lavere end Glukose Mål, en bolus vil ikke blive anbefalet.";
 
 /* Hide pop-up */
 "Hide" = "Skjul";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, but glucose is predicted to first drop down to ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventuel Glukose > Glukose Mål, men glukose forventes først at falde ned til ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"which is below your Threshold (" = "which is below your Threshold (";
+"which is below your Threshold (" = "som er under din tærskel (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventuel Glukose > Glukose Mål, men glukose klatrer langsommere end forventet. Forventet: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Climbing: ";
+". Climbing: " = ". Klatring: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventuel Glukose > Glukose Mål, men glukose klatrer langsommere end forventet. Forventet: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Falling: ";
+". Falling: " = ". Falder: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventuel Glukose > Glukose Mål, men glukose ændrer sig hurtigere end forventet. Forventet: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Changing: " = ". Changing: ";
+". Changing: " = ". Ændrer: ";
 
 /* Add insulin without bolusing alert */
-" without bolusing" = " without bolusing";
+" without bolusing" = " uden at give bolus";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Påsæt Pod";
 
 "Deactivate Pod" = "Deaktiver Pod";
 
 /* */
-"Deactivating..." = "Deactivating...";
+"Deactivating..." = "Deaktiverer...";
 
 "Pair Pod" = "Par Pod";
 
@@ -1615,9 +1615,9 @@ Enact a temp Basal or a temp target */
 "Previous Pod Information" = "Forringe Pod Information";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Confidence Reminders";
+"Confidence Reminders" = "Tillidspåmindelser";
 
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Tillid påmindelser er bip fra Poden, som kan bruges til at anerkende valgte kommandoer, når Poden ikke er bragt til tavshed.";
 
 /* button title for saving low reservoir reminder while saving */
 "Saving..." = "Gemmer...";
@@ -1626,7 +1626,7 @@ Enact a temp Basal or a temp target */
 "Save" = "Gem";
 
 /* Alert title for error when updating confidence reminder preference */
-"Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
+"Failed to update confidence reminder preference." = "Mislykkedes at opdatere tillidspåmindelse præferencer.";
 
 /* */
 "No Error" = "Ingen fejl";
@@ -1644,7 +1644,7 @@ Enact a temp Basal or a temp target */
 "Extended" = "Forlænget";
 
 /* Description for BeepPreference.silent */
-"No confidence reminders are used." = "No confidence reminders are used.";
+"No confidence reminders are used." = "Ingen tillidspåmindelser brugt.";
 
 /* Description for BeepPreference.manualCommands */
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
@@ -1902,20 +1902,20 @@ Enact a temp Basal or a temp target */
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "CGM Configuration";
+"CGM Configuration" = "CGM Konfiguration";
 
-"Heartbeat" = "Heartbeat";
+"Heartbeat" = "Puls";
 
-"CGM address :" = "CGM address :";
+"CGM address :" = "CGM adresse :";
 
-"CGM is not used as heartbeat." = "CGM is not used as heartbeat.";
+"CGM is not used as heartbeat." = "CGM anvendes ikke som puls.";
 
-"Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
+"Are you sure you want to delete this CGM?" = "Er du sikker på, at du vil slette denne CGM?";
 
 /* New Experimental feature */
-"Experimental" = "Experimental";
+"Experimental" = "Eksperimental";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Smooth Glucose Value";
+"Smooth Glucose Value" = "Glat Glukose Værdi";
 
 /* -----------------------------------------------------------------------------------------------------------
 
@@ -1924,7 +1924,7 @@ Enact a temp Basal or a temp target */
 */
 /* Headline Rewind Resets Autosens */
 
-"Rewind Resets Autosens" = "Rewind Resets Autosens";
+"Rewind Resets Autosens" = "Spol tilbage Nulstiller Autosens";
 
 /* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
