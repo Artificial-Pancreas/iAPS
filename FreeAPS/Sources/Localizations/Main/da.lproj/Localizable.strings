@@ -1110,70 +1110,70 @@ Enact a temp Basal or a temp target */
 "Backfilling from trend is currently not well supported by Loop" = "Tilbagefyldning fra trend er i øjeblikket ikke godt understøttet af Loop";
 
 /* */
-"Backfill from history" = "Backfill from history";
+"Backfill from history" = "Tilbagefyldning fra historik";
 
 /* */
-"Backfill from trend" = "Backfill from trend";
+"Backfill from trend" = "Tilbagefyldning fra tendens";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Debug indstillinger";
 
 /* */
-"Adds a lot of data to the Issue Report " = "Adds a lot of data to the Issue Report ";
+"Adds a lot of data to the Issue Report " = "Tilføjer en masse data til Problem rapporten ";
 
 /* */
-"Persist sensordata" = "Persist sensordata";
+"Persist sensordata" = "Vedvarende sensordata";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Batteri";
 
 /* */
-"Also add source info" = "Also add source info";
+"Also add source info" = "Tilføj også kildeinfo";
 
 /* */
-"Carbs Required Threshold" = "Carbs Required Threshold";
+"Carbs Required Threshold" = "Kulhydrater Påkrævet Grænseværdi";
 
 /* */
-"Carbs required: %d g" = "Carbs required: %d g";
+"Carbs required: %d g" = "Kulhydrater påkrævet: %d g";
 
 /* */
-"To prevent LOW required %d g of carbs" = "To prevent LOW required %d g of carbs";
+"To prevent LOW required %d g of carbs" = "For at forhindre LAV påkrævet %d g kulhydrater";
 
 /* */
-"iAPS not active" = "iAPS not active";
+"iAPS not active" = "iAPS er ikke aktiv";
 
 /* */
-"Last loop was more than %d min ago" = "Last loop was more than %d min ago";
+"Last loop was more than %d min ago" = "Sidste loop var mere end %d min. siden";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Show glucose on the app badge";
+"Show glucose on the app badge" = "Vis glukose på app-badge";
 
 /* */
-"Backfill glucose" = "Backfill glucose";
+"Backfill glucose" = "Tilbagepakning af glukose";
 
 /* About this source */
-"About this source" = "About this source";
+"About this source" = "Omkring denne kilde";
 
 /* */
-"Bolus failed" = "Bolus failed";
+"Bolus failed" = "Bolus mislykkedes";
 
 /* "Max Bolus Exceeded label" */
-"Max Bolus exceeded!" = "Max Bolus exceeded!";
+"Max Bolus exceeded!" = "Max Bolus overskredet!";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus failed or inaccurate. Check pump history before repeating.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus mislykkedes eller unøjagtig. Tjek pumpehistorik før gentagelse.";
 
 /* */
-"Carbs" = "Carbs";
+"Carbs" = "Kulhydrater";
 
 /* Food Type / Meal Note */
-"Note" = "Note";
+"Note" = "Bemærk";
 
 /* */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Midlertidig Basal";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Midlertidigt mål";
 
 /* */
 "Resume" = "Genoptag";
@@ -1188,26 +1188,26 @@ Enact a temp Basal or a temp target */
 " day(s)" = " dag(e)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Display HR on Watch";
+"Display HR on Watch" = "Vis HR på Ur";
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "OpenAPS main settings";
+"OpenAPS main settings" = "OpenAPS primære indstillinger";
 
-"OpenAPS SMB settings" = "OpenAPS SMB settings";
+"OpenAPS SMB settings" = "OpenAPS SMB indstillinger";
 
-"OpenAPS targets settings" = "OpenAPS targets settings";
+"OpenAPS targets settings" = "OpenAPS målindstillinger";
 
-"OpenAPS other settings" = "OpenAPS other settings";
+"OpenAPS other settings" = "OpenAPS andre indstillinger";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose Simulator";
+"Glucose Simulator" = "Glukose Simulator";
 
 /* Restored state message */
-"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@";
+"Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Bluetooth-tilstand gendannet (APS genstartet?). Fundet %d perifere enheder, og forbundet til %@ med id %@";
 
 /* Shared app group xDrip4iOS */
-"Using shared app group with external CGM app xDrip4iOS" = "Using shared app group with external CGM app xDrip4iOS";
+"Using shared app group with external CGM app xDrip4iOS" = "Brug af delt app-gruppe med ekstern CGM app xDrip4iOS";
 
 /* Shared app group GlucoseDirect */
 "Using shared app group with external CGM app GlucoseDirect" = "Brug af delt app-gruppe med ekstern CGM app GlucoseDirect";
@@ -1278,16 +1278,16 @@ Enact a temp Basal or a temp target */
 "Enacted" = "Udført";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Announcements";
+"Announcements" = "Meddelelser";
 
 /* Debug option view Enacted announcements announcements (from NS) */
-"Enacted announcements" = "Enacted announcements";
+"Enacted announcements" = "Indførte meddelelser";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
 
 /* Debug option view Target presets */
-"Target presets" = "Target presets";
+"Target presets" = "Forudindstillede mål";
 
 /* Debug option view */
 "Loop Cycles" = "Loop Cykler";
@@ -1325,7 +1325,7 @@ Enact a temp Basal or a temp target */
 "SMB" = "SMB";
 
 /* A manually entered dose of external insulin */
-"External Insulin" = "External Insulin";
+"External Insulin" = "Ekstern Insulin";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manuel Basal";
@@ -1927,10 +1927,10 @@ Enact a temp Basal or a temp target */
 "Rewind Resets Autosens" = "Spol tilbage Nulstiller Autosens";
 
 /* ”Rewind Resets Autosens” */
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Denne funktion, aktiveret som standard, nulstiller autosens forholdet til neutral, når du spoler din pumpe tilbage ud fra den antagelse, at dette svarer til en sandsynlig stedændring. Autosens vil begynde at lære følsomhed på ny fra genvindingstidspunktet, hvilket kan tage op til 6 timer. Hvis du normalt spoler tilbage din pumpe uafhængigt af stedændringer, kan du overveje at deaktivere denne funktion.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
-"High Temptarget Raises Sensitivity" = "High Temptarget Raises Sensitivity";
+"High Temptarget Raises Sensitivity" = "Høj midlertidig basal øger sensitivitet";
 
 /* ”High Temptarget Raises Sensitivity" */
 "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160).";
