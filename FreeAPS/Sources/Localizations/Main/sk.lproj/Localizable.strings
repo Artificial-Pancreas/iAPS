@@ -1445,6 +1445,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Uložiť ako profil";
 
+/* */
+"Save as preset" = "Save as preset";
+
 /* Alert */
 "Cancel Profile Override" = "Zrušiť prepísanie profilu?";
 
@@ -2233,6 +2236,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Nová alternatívna bolusová kalkulačka je ďalším prístupom k predvolenej bolusovej kalkulačke v systéme iAPS. Ak je prepínač zapnutý, používate túto kalkulačku bolusu a nie pôvodnú kalkulačku iAPS. Na konci výpočtu sa použije vlastný faktor, ako to má byť pri používaní smbs (predvolene 0,8).\n\nV kalkulačke bolusu môžete tiež pridať možnosť použiť na konci výpočtu ďalší (!) prispôsobiteľný faktor, ktorý by mohol byť užitočný pre tučné jedlá, napr. pizzu (predvolene 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Extra Features";
 
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";

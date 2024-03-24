@@ -1,11 +1,11 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC wordt gebruikt voor het scannen van Libre sensoren.";
+"NFCReaderUsageDescription" = "NFC wordt gebruikt om Libre sensoren te scannen.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met de insuline pomp en de continue glucose meter";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met insulinepomp en continue glucose monitor apparaten";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met de insuline pomp en de continue glucose meter";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met de insuline pomp en de continue glucose monitor";
 
 /* Privacy - Face ID Usage Description */
 "NSFaceIDUsageDescription" = "Voor geautoriseerde toegang tot bolus";

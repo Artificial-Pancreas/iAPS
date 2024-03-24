@@ -1445,6 +1445,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Lagre som profil";
 
+/* */
+"Save as preset" = "Save as preset";
+
 /* Alert */
 "Cancel Profile Override" = "Cancel Profile Override";
 
@@ -2233,6 +2236,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Den nye alternative boluskalkulatoren bruker en annen tilnærming enn den vanlige boluskalkulatoren i iAPS. Ved slutten av beregningen brukes det en faktor for å begrense hvor mye av beregnet bolus som blir gitt med en gang. Tanken er at resten av nødvendig insulin blir gitt via SMB. Standard faktor er 0.8, som betyr at kalkulatoren foreslår å dosere 80% av insulinbehovet som bolus.\n\nDu kan også legge til en annen faktor for måltider med høyt fettinnhold, for eksempel pizza. Tanken er at slike måltider trenger mindre insulin ved måltidsstart. Standard faktor er derfor 0.7 (70%).";
+
+/* Settings Section */
+"Extra Features" = "Extra Features";
 
 /* UI/UX option */
 "Display Predictions" = "Vis prognoser";

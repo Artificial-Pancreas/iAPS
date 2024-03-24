@@ -1445,6 +1445,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Сохранить как профиль";
 
+/* */
+"Save as preset" = "Сохранить как шаблон";
+
 /* Alert */
 "Cancel Profile Override" = "Отменить переопределение профиля?";
 
@@ -2233,6 +2236,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Альтернативный калькулятор болюса использует другой алгоритм расчета болюса. Для индивидуальной настройки вы можете изменить поправочный коэффициент (значение по умолчанию 0.8) в зависимости от того, хотите ли вы более высокие (выше 1) или меньшие (ниже 1) рекомендации по болюсу.\n\nДля особо жирных блюд, таких как пицца, существует возможность уменьшить рекомендуемый болюс еще на один коэффициент (стандартно 0.7).";
+
+/* Settings Section */
+"Extra Features" = "Дополнительные функции";
 
 /* UI/UX option */
 "Display Predictions" = "Отображать прогнозы";
