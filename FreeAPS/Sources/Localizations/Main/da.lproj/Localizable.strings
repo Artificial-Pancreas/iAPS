@@ -17,7 +17,7 @@
 "Continue without bolus" = "Fortsæt uden bolus";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Gem måltid uden bolus";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Status";
@@ -47,13 +47,13 @@
 "Done" = "OK";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Vis Emojis som etiketter";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Vis IOB og COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Bekræft Bolus Hurtigere";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -65,19 +65,19 @@
 "Agree and continue" = "Godkend og fortsæt";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "af";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "En Fjern Bolus ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "er blevet leveret";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " få minutter siden, udløst fjernt fra Nightscout, af en omsorgsperson eller en forælder. Ønsker du stadig at bolus?\n\nForventet eventuelt glukose, hvis du ikke boluser, er: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "En Fjern Bolus var netop leveret!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Udført";
@@ -372,7 +372,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Brug lokal server som glukosekilde";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Dette gør det muligt at uploade statistics.json til Nightscout, som kan bruges af fællesskabsstatistikker og demografiske projekt.\n\nDeltagelse i fællesskabsstatistikker er fravalgt, og kræver særskilt registrering på:\n";
 
 /*  */
 "Edit settings json" = "Rediger indstillingsjson";
@@ -393,7 +393,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Fjernkontrol";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Tillad fjernstyring af iAPS";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nKontroller nu alle dine nye indstillinger grundigt:\n\n* Basal Indstillinger\n * Kulhydratratios\n * Glukose Mål\n * Insulin Følsomhed\n * VIA\n\n i iAPS Indstillinger > Konfiguration.\n\nDårlige eller ugyldige profilindstillinger kan have katastrofale effekter.";
@@ -444,7 +444,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Tilføj Simulator";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Erstat";
 
 /* Insulin model */
 "Model" = "Model";
@@ -621,10 +621,10 @@ Enact a temp Basal or a temp target */
 "Temp Targets" = "Midlertidige Mål";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "Slet Kulhydrater?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "Slet Insulin?";
 
 /* Treatments list */
 "Treatments" = "Behandlinger";
