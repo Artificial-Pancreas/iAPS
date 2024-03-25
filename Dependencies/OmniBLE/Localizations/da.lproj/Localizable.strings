@@ -9,7 +9,7 @@
 "Multiple Command Alert" = "Advarsel om flere kommandoer";
 
 /* Alert content title for userPodExpiration pod alert */
-"Pod Expiration Reminder" = "Påmindelse om udløb";
+"Pod Expiration Reminder" = "Pod udløbspåmindelse";
 
 /* Alert content title for podExpiring pod alert */
 "Pod Expired" = "Pod udløbet";
@@ -808,16 +808,16 @@
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod advarsler bruger ingen bip og bekræftelse påmindelse bip er undertrykt. Pod vil kun bippe for fatale Pod fejl og når du spiller test bip.\n\n⚠️Advarsel - Når Pod er lydløs, skal den holdes inden for Bluetooth-rækkevidde af denne enhed for at modtage meddelelser om Pod advarsler.";
 
 /* Help text for Silence Pod view */
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Lydløs Pod tilstand undertrykker alle Pod alarmer og bekræftelsespåmindelsesbip.";
 
 /* navigation title for Silnce Pod */
-"Silence Pod" = "Silence Pod";
+"Silence Pod" = "Lydløs Pod";
 
 /* title for pod details page */
-"Pod Details" = "Pod Details";
+"Pod Details" = "Pod Detaljer";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Previous Pod Details";
+"Previous Pod Details" = "Forrige Pod Detaljer";
 
 /* Text for pump manager details navigation link */
 "Pump Manager Details" = "Pumpe Manager Detaljer";
