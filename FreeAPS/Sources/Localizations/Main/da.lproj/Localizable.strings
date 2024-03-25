@@ -1448,6 +1448,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as preset" = "Gem som forudindstilling";
 
+/* */
+"Save as preset" = "Save as preset";
+
 /* Alert */
 "Cancel Profile Override" = "Cancel Profile Override";
 

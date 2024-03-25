@@ -1,6 +1,6 @@
 //
 //  FirstAppear.swift
-//  Omnipod
+//  OmniKit
 //
 //  Created by Joe Moran on 9/24/23.
 //  Copyright © 2023 LoopKit Authors. All rights reserved.
