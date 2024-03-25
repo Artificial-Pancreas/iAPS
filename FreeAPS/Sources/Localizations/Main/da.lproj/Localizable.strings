@@ -1448,9 +1448,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as preset" = "Gem som forudindstilling";
 
-/* */
-"Save as preset" = "Save as preset";
-
 /* Alert */
 "Cancel Profile Override" = "Cancel Profile Override";
 
@@ -1650,31 +1647,31 @@ Enact a temp Basal or a temp target */
 "No confidence reminders are used." = "Ingen tillidspåmindelser brugt.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Påmindelser om succesfulde handlinger vil lyde for de kommandoer du igangsætter, som bolus, annulleret, suspenderet, genoptaget bolus, gemme notifikations påmindelser etc. Når iAPS automatisk justerer tilførslen, bliver påmindelser om succesfulde handlinger ikke benyttet.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Påmindelser om succesfulde handlinger vil lyde, når iAPS automatisk justerer tilførslen også for de kommandoer, du igangsætter.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Standard udløbspåmindelse";
 
 /* */
 "Expiration Reminder" = "Udløbs Påmindelse";
 
 /* */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Lavt Reservoir";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Ingen Påmindelse";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Planlagt Påmindelse";
 
 /* */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Påmindelse om lavt reservoir";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Sørg for, at din telefon og pod er tæt på hinanden. Hvis kommunikationsproblemer fortsætter, skal du flytte til et nyt sted.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
