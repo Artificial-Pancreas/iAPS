@@ -574,7 +574,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "Dette er en påmindelse om, at du planlagde, hvornår du parrede din nuværende Pod.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Planlagt Påmindelse";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Appen giver dig besked, når mængden af insulin i Pod'en når dette niveau.";
@@ -591,7 +591,7 @@
 "Time" = "Tid";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Ingen Påmindelse";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Påmindelse om lavt reservoir";
