@@ -116,6 +116,8 @@
 	</array>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>To create events with BG reading values, so that they can be viewed on Apple Watch and CarPlay</string>
+    <key>NSContactsUsageDescription</key>
+    <string>To update contacts with BG reading values (contact trick)</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>UISupportedInterfaceOrientations~ipad</key>

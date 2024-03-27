@@ -62,6 +62,9 @@ extension Settings {
                 } header: { Text("Extra Features") }
 
                 Section {
+                    Text("Contact trick").navigationLink(to: .contactTrick, from: self)
+                }
+                Section {
                     Toggle("Debug options", isOn: $state.debugOptions)
                     if state.debugOptions {
                         Group {
