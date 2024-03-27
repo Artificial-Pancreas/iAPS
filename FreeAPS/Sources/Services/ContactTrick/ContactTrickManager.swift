@@ -10,7 +10,6 @@ protocol ContactTrickManager {
 
 final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     private let processQueue = DispatchQueue(label: "BaseContactTrickManager.processQueue")
-    private var state = ContactTrickState()
     private let contactStore = CNContactStore()
     private var workItem: DispatchWorkItem?
 
@@ -26,48 +25,53 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         super.init()
         injectServices(resolver)
 
-        contacts = storage.retrieve(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self)
-            ?? [ContactTrickEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick))
-            ?? []
-
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(SettingsObserver.self, observer: self)
 
-        configureState()
+        contacts = storage.retrieve(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self)
+            ?? [ContactTrickEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick))
+            ?? []
+        
+        processQueue.async {
+            self.renderContacts()
+        }
     }
 
     func updateContacts(contacts: [ContactTrickEntry], completion: @escaping (Result<Void, Error>) -> Void) {
+        self.contacts = contacts
+        
         processQueue.async {
-            self.contacts = contacts
             self.renderContacts()
             completion(.success(()))
         }
     }
 
-    private func configureState() {
-        processQueue.async {
-            let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
-            let glucoseValues = self.glucoseText(readings)
-            self.state.glucose = glucoseValues.glucose
-            self.state.trend = glucoseValues.trend
-            self.state.delta = glucoseValues.delta
-            self.state.glucoseDate = readings.first?.date ?? .distantPast
-            self.state.lastLoopDate = self.suggestion?.timestamp
-
-            self.state.iob = self.suggestion?.iob
-            self.state.cob = self.suggestion?.cob
-            self.state.maxIOB = self.settingsManager.preferences.maxIOB
-            self.state.maxCOB = self.settingsManager.preferences.maxCOB
-
-            self.state.eventualBG = self.eventualBGString()
-
-            self.renderContacts()
-        }
-    }
-
     private func renderContacts() {
-        contacts.forEach { renderContact($0) }
+        if let workItem = workItem, !workItem.isCancelled {
+            workItem.cancel()
+        }
+
+        let readings = coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+        let glucoseValues = glucoseText(readings)
+
+        let suggestion: Suggestion? = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+
+        let state = ContactTrickState(
+            glucose: glucoseValues.glucose,
+            trend: glucoseValues.trend,
+            delta: glucoseValues.delta,
+            glucoseDate: readings.first?.date ?? .distantPast,
+            lastLoopDate: suggestion?.timestamp,
+            iob: suggestion?.iob,
+            cob: suggestion?.cob,
+            eventualBG: eventualBGString(suggestion),
+            maxIOB: settingsManager.preferences.maxIOB,
+            maxCOB: settingsManager.preferences.maxCOB
+        )
+
+        contacts.forEach { renderContact($0, state) }
+
         workItem = DispatchWorkItem(block: {
             print("in updateContact, no updates received for more than 5 minutes")
             self.renderContacts()
@@ -75,7 +79,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         DispatchQueue.main.asyncAfter(deadline: .now() + 5 * 60 + 15, execute: workItem!)
     }
 
-    private func renderContact(_ entry: ContactTrickEntry) {
+    private func renderContact(_ entry: ContactTrickEntry, _ state: ContactTrickState) {
         guard let contactId = entry.contactId, entry.enabled else {
             return
         }
@@ -99,6 +103,10 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             state: state
         ).pngData()
 
+        saveUpdatedContact(mutableContact)
+    }
+
+    private func saveUpdatedContact(_ mutableContact: CNMutableContact) {
         let saveRequest = CNSaveRequest()
         saveRequest.update(mutableContact)
         do {
@@ -151,7 +159,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         return (glucoseText, directionText, deltaText)
     }
 
-    private func eventualBGString() -> String? {
+    private func eventualBGString(_ suggestion: Suggestion?) -> String? {
         guard let eventualBG = suggestion?.eventualBG else {
             return nil
         }
@@ -188,10 +196,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         formatter.positivePrefix = "+"
         return formatter
     }
-
-    private var suggestion: Suggestion? {
-        storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
-    }
 }
 
 extension BaseContactTrickManager:
@@ -200,14 +204,14 @@ extension BaseContactTrickManager:
     SettingsObserver
 {
     func glucoseDidUpdate(_: [BloodGlucose]) {
-        configureState()
+        renderContacts()
     }
 
     func suggestionDidUpdate(_: Suggestion) {
-        configureState()
+        renderContacts()
     }
 
     func settingsDidChange(_: FreeAPSSettings) {
-        configureState()
+        renderContacts()
     }
 }
