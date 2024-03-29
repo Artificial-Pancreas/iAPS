@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Установить ВБС";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Подача инсулина не будет автоматизирована до тех пор, пока временная базальная скорость не закончится или не будет отменена.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Настройка завершена";
 

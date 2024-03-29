@@ -320,6 +320,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Stel tijdelijke basaal in";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Je insuline levering zal niet automatisch worden aangepast totdat de tijdelijke basaalstand is beëindigd of is geannuleerd.";
+
 /* Section header for activity section */
 "Activity" = "Activiteit";
 
@@ -403,10 +406,10 @@
 "Deactivate Pod" = "Deactiveer Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide om canule in te brengen";
+"Slide to Insert Cannula" = "Schuif om canule in te brengen";
 
 /* */
-"Slide to Deactivate Pod" = "Veeg om Pod te deactiveren";
+"Slide to Deactivate Pod" = "Schuif om de Pod te deactiveren";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactiveren.";
@@ -493,7 +496,7 @@
 "Wait until insertion is completed." = "Wacht tot het inbrengen is voltooid.";
 
 /* Label text for step one of insert cannula instructions */
-"Slide the switch below to start cannula insertion." = "Schuif om canule te starten.";
+"Slide the switch below to start cannula insertion." = "Schuif om de canule te starten.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Ingebracht";
@@ -682,7 +685,7 @@
 "Pod Activated" = "Pod geactiveerd";
 
 /* description label for active time pod details row */
-"Active Time" = "Actieve duur";
+"Active Time" = "Activatie tijd";
 
 /* description label for last status date pod details row */
 "Last Status" = "Laatste status";
@@ -718,7 +721,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt (50-10 E).\n\nScroll om in te stellen bij welk aantal eenheden je wilt worden herinnerd.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Laag reservoir niveau";
+"Low Reservoir" = "Reservoir bijna leeg";
 
 /* */
 "Save" = "Opslaan";
@@ -730,7 +733,7 @@
 "Cancel Manual Basal" = "Annuleer handmatige basaal";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insuline\nOnderbroken";
+"Insulin\nSuspended" = "Insuline\nopgeschort";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Insulinetoediening hervatten";
@@ -834,13 +837,13 @@
 "Done" = "OK";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Diagnostische Pod gegevens";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Pulslog uitlezen";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Activatietijd lezen";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Lees geactiveerde waarschuwingen";

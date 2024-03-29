@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Cài đặt liều nền tạm thời";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Việc cung cấp insulin của bạn sẽ không được điều chỉnh tự động cho đến khi mức cơ bản tạm thời kết thúc hoặc bị hủy bỏ.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Cấu hình hoàn thành";
 
@@ -799,12 +802,12 @@ Silence Pod" = "Pod im lặng";
 "Previous Pod Details" = "Thông tin của Pod trước đó";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "Chi tiết về Trình quản lý Máy bơm";
 
 /* button title when retrieving pump manager details */
 "Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Pump Manager...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Làm mới Pump Manager Details";
+"Refresh Pump Manager Details" = "Làm mới chi tiết Trình quản lý máy bơm";
 
 /* Alert title for error when updating silence pod preference */
 "Failed to update silence pod preference." = "Không thể cập nhật im lặng cho pod.";

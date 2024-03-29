@@ -984,11 +984,11 @@ extension OmniBLEPumpManager {
 
                     let expirationReminderTime = Pod.nominalPodLife - self.state.defaultExpirationReminderOffset
                     let alerts: [PodAlert] = [
-                        .expirationReminder(offset: self.podTime, absAlertTime: self.state.defaultExpirationReminderOffset > 0 ? expirationReminderTime : 0),
-                        .lowReservoir(units: self.state.lowReservoirReminderValue)
+                        .expirationReminder(offset: self.podTime, absAlertTime: self.state.defaultExpirationReminderOffset > 0 ? expirationReminderTime : 0, silent: self.state.silencePod),
+                        .lowReservoir(units: self.lowReservoirReminderValue, silent: self.state.silencePod)
                     ]
 
-                    let finishWait = try session.insertCannula(optionalAlerts: alerts, silent: self.silencePod)
+                    let finishWait = try session.insertCannula(optionalAlerts: alerts, silent: self.state.silencePod)
                     completion(.success(finishWait))
                 } catch let error {
                     completion(.failure(.communication(error)))
