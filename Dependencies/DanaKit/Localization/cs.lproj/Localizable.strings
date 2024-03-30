@@ -405,3 +405,6 @@
 
 /* Text for cannula age */
 "Cannula age" = "Stáří kanyly"
+
+/* Text for reservoir age */
+"Reservoir age" = "Stáří nádrže"

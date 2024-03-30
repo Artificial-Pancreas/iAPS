@@ -405,3 +405,6 @@
 
 /* Text for cannula age */
 "Cannula age" = "カニューレの年齢"
+
+/* Text for reservoir age */
+"Reservoir age" = "貯留層の年齢"

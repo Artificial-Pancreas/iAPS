@@ -405,3 +405,6 @@
 
 /* Text for cannula age */
 "Cannula age" = "插管年龄"
+
+/* Text for reservoir age */
+"Reservoir age" = "油藏年龄"

@@ -405,3 +405,6 @@
 
 /* Text for cannula age */
 "Cannula age" = "Kanül yaşı"
+
+/* Text for reservoir age */
+"Reservoir age" = "Rezervuar yaşı"

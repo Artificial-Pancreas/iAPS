@@ -405,3 +405,6 @@
 
 /* Text for cannula age */
 "Cannula age" = "عمر القنية"
+
+/* Text for reservoir age */
+"Reservoir age" = "عمر الخزان"

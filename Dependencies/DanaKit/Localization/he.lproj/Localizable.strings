@@ -405,3 +405,6 @@
 
 /* Text for cannula age */
 "Cannula age" = "גיל קנולה"
+
+/* Text for reservoir age */
+"Reservoir age" = "גיל המאגר"

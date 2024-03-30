@@ -405,3 +405,6 @@
 
 /* Text for cannula age */
 "Cannula age" = "Alter der Kanüle"
+
+/* Text for reservoir age */
+"Reservoir age" = "Alter des Reservoirs"
