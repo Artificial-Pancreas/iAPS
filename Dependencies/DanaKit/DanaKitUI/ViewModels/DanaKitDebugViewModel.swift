@@ -24,7 +24,7 @@ class DanaKitDebugViewModel : ObservableObject {
     @Published var isConnectionError = false
     @Published var connectionErrorMessage: String?
     
-    private let log = Logger(category: "DebugView")
+    private let log = DanaLogger(category: "DebugView")
     private var pumpManager: DanaKitPumpManager?
     private var connectedDevice: DanaPumpScan?
     
@@ -137,10 +137,8 @@ class DanaKitDebugViewModel : ObservableObject {
         self.pumpManager?.disconnect(device.peripheral)
     }
     
-    func getLogs() -> String {
-        let logs = log.getDebugLogs()
-        print(logs)
-        return logs
+    func getLogs() -> [URL] {
+        return log.getDebugLogs()
     }
 }
 

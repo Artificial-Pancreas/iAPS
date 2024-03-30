@@ -17,7 +17,7 @@ struct DanaKitSettingsView: View {
     @Environment(\.insulinTintColor) var insulinTintColor
     
     @ObservedObject var viewModel: DanaKitSettingsViewModel
-    @State var loadingLogs = false
+    @State private var isSharePresented: Bool = false
     
     var supportedInsulinTypes: [InsulinType]
     var imageName: String
@@ -215,18 +215,12 @@ struct DanaKitSettingsView: View {
                     }
                 }
                 
-                Button(action: {
-                    shareLogs()
-                }) {
-                    HStack {
-                        Text(LocalizedString("Share Dana pump logs", comment: "DanaKit share logs"))
-                        Spacer()
-                        if self.loadingLogs {
-                            ActivityIndicator(isAnimating: .constant(true), style: .medium)
-                        }
-                    }
+                Button(LocalizedString("Share Dana pump logs", comment: "DanaKit share logs")) {
+                    self.isSharePresented = true
                 }
-                .disabled(self.loadingLogs)
+                .sheet(isPresented: $isSharePresented, onDismiss: { }, content: {
+                    ActivityViewController(activityItems: viewModel.getLogs())
+                })
             }
             
             Section() {
@@ -328,31 +322,6 @@ struct DanaKitSettingsView: View {
         }
         
         return guidanceColors.critical
-    }
-    
-    private func shareLogs() {
-        self.loadingLogs = true
-        DispatchQueue.global(qos: .userInitiated).async {
-            guard let logging = viewModel.getLogs().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-                DispatchQueue.main.async {
-                    self.loadingLogs = false
-                }
-                return
-            }
-            
-            let mailto = "mailto:verhaar.bastiaan@gmail.com?subject=Dana%20logs&body=" + logging
-            guard let url = URL(string: mailto) else {
-                DispatchQueue.main.async {
-                    self.loadingLogs = false
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.loadingLogs = false
-                openURL(url)
-            }
-        }
     }
 }
 

@@ -11,7 +11,7 @@ import os.log
 import SwiftUI
 
 class PeripheralManager: NSObject {
-    private let log = Logger(category: "PeripheralManager")
+    private let log = DanaLogger(category: "PeripheralManager")
     
     private let connectedDevice: CBPeripheral
     private let bluetoothManager: BluetoothManager
@@ -35,6 +35,7 @@ class PeripheralManager: NSObject {
     private let WRITE_CHAR_UUID = CBUUID(string: "FFF2")
     private var writeCharacteristic: CBCharacteristic!
     
+    private var lock: DispatchQueue = DispatchQueue.init(label: "writeQueue")
     private var writeQueue: Dictionary<UInt8, (Timer, CheckedContinuation<(any DanaParsePacketProtocol), Error>)> = [:]
     
     private var historyLog: [HistoryItem] = []
@@ -65,8 +66,13 @@ class PeripheralManager: NSObject {
     
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol)  {
         let command = (UInt16((packet.type ?? DanaPacketType.TYPE_RESPONSE)) << 8) + UInt16(packet.opCode)
-        guard self.writeQueue[packet.opCode] == nil else {
-            throw NSError(domain: "This command is already running. Please wait", code: 0, userInfo: nil)
+        
+        // Add objetc sync to prevent:
+        // -[NSTaggedPointerString objectForKey:]: unrecognized selector sent to instance 0x8000000000000000
+        try lock.sync {
+            guard self.writeQueue[packet.opCode] == nil else {
+                throw NSError(domain: "This command is already running. Please wait", code: 0, userInfo: nil)
+            }
         }
         
         // Make sure we have the correct state
@@ -78,11 +84,11 @@ class PeripheralManager: NSObject {
         
         
         var data = DanaRSEncryption.encodePacket(operationCode: packet.opCode, buffer: packet.data, deviceName: self.deviceName)
-//        log.info("\(#function): Encrypted data: \(data.base64EncodedString())")
+//        log.info("Encrypted data: \(data.base64EncodedString())")
         
         if (self.encryptionMode != .DEFAULT) {
             data = DanaRSEncryption.encodeSecondLevel(data: data)
-//            log.info("\(#function): Second level encrypted data: \(data.base64EncodedString())")
+//            log.info("Second level encrypted data: \(data.base64EncodedString())")
         }
         
         // Now schedule a 6 sec timeout (or 21 when in fetchHistoryMode) for the pump to send its message back
@@ -115,7 +121,7 @@ class PeripheralManager: NSObject {
 extension PeripheralManager : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
-            log.error("\(#function): \(error!.localizedDescription)")
+            log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
@@ -126,7 +132,7 @@ extension PeripheralManager : CBPeripheralDelegate {
         
         let service = peripheral.services?.first(where: { $0.uuid == PeripheralManager.SERVICE_UUID })
         if (service == nil) {
-            log.error("\(#function): Failed to discover dana data service...")
+            log.error("Failed to discover dana data service...")
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
@@ -135,14 +141,14 @@ extension PeripheralManager : CBPeripheralDelegate {
             return
         }
         
-//        log.info("\(#function): Discovered service \(SERVICE_UUID)")
+//        log.info("Discovered service \(SERVICE_UUID)")
         
         peripheral.discoverCharacteristics([READ_CHAR_UUID, WRITE_CHAR_UUID], for: service!)
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard error == nil else {
-            log.error("\(#function): \(error!.localizedDescription)")
+            log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
@@ -156,7 +162,7 @@ extension PeripheralManager : CBPeripheralDelegate {
         self.writeCharacteristic = service.characteristics?.first(where: { $0.uuid == WRITE_CHAR_UUID })
         
         if (self.writeCharacteristic == nil || self.readCharacteristic == nil) {
-            log.error("\(#function): Failed to discover dana write or read characteristic")
+            log.error("Failed to discover dana write or read characteristic")
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
@@ -165,13 +171,13 @@ extension PeripheralManager : CBPeripheralDelegate {
             return
         }
         
-//        log.info("\(#function): Discovered characteristics \(READ_CHAR_UUID) and \(WRITE_CHAR_UUID)")
+//        log.info("Discovered characteristics \(READ_CHAR_UUID) and \(WRITE_CHAR_UUID)")
         peripheral.setNotifyValue(true, for: self.readCharacteristic)
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?)  {
         guard error == nil else {
-            log.error("\(#function): \(error!.localizedDescription)")
+            log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
@@ -180,13 +186,13 @@ extension PeripheralManager : CBPeripheralDelegate {
             return
         }
         
-//        log.info("\(#function): Notifications has been enabled. Sending starting handshake")
+//        log.info("Notifications has been enabled. Sending starting handshake")
         self.sendFirstMessageEncryption()
     }
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil else {
-            log.error("\(#function): \(error!.localizedDescription)")
+            log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
@@ -199,12 +205,12 @@ extension PeripheralManager : CBPeripheralDelegate {
             return
         }
         
-//        log.info("\(#function): Receiving data: \(data.base64EncodedString())")
+//        log.info("Receiving data: \(data.base64EncodedString())")
         self.parseReceivedValue(data)
     }
     
     private func writeQ(_ data: Data) {
-//        log.info("\(#function): Writing data \(data.base64EncodedString())")
+//        log.info("Writing data \(data.base64EncodedString())")
         self.connectedDevice.writeValue(data, for: self.writeCharacteristic, type: .withoutResponse)
     }
 }
@@ -214,21 +220,21 @@ extension PeripheralManager {
     private func sendFirstMessageEncryption() {
         let data = DanaRSEncryption.encodePacket(operationCode: DanaPacketType.OPCODE_ENCRYPTION__PUMP_CHECK, buffer: nil, deviceName: self.deviceName)
         
-//        log.info("\(#function): Sending Initial encryption request. Data: \(data.base64EncodedString())")
+//        log.info("Sending Initial encryption request. Data: \(data.base64EncodedString())")
         self.writeQ(data)
     }
     
     private func sendTimeInfo() {
         let data = DanaRSEncryption.encodePacket(operationCode: DanaPacketType.OPCODE_ENCRYPTION__TIME_INFORMATION, buffer: nil, deviceName: self.deviceName)
         
-//        log.info("\(#function): Sending normal time information. Data: \(data.base64EncodedString())")
+//        log.info("Sending normal time information. Data: \(data.base64EncodedString())")
         self.writeQ(data)
     }
     
     private func sendV3PairingInformation(_ requestNewPairing: UInt8) {
         let data = DanaRSEncryption.encodePacket(operationCode: DanaPacketType.OPCODE_ENCRYPTION__TIME_INFORMATION, buffer: Data([requestNewPairing]), deviceName: self.deviceName)
         
-//        log.info("\(#function): Sending RSv3 time information. Data: \(data.base64EncodedString())")
+//        log.info("Sending RSv3 time information. Data: \(data.base64EncodedString())")
         self.writeQ(data)
     }
     
@@ -242,34 +248,34 @@ extension PeripheralManager {
     private func sendPairingRequest() {
         let data = DanaRSEncryption.encodePacket(operationCode: DanaPacketType.OPCODE_ENCRYPTION__PASSKEY_REQUEST, buffer: nil, deviceName: self.deviceName)
         
-//        log.info("\(#function): Sending pairing request. Data: \(data.base64EncodedString())")
+//        log.info("Sending pairing request. Data: \(data.base64EncodedString())")
         self.writeQ(data)
     }
     
     private func sendEasyMenuCheck() {
         let data = DanaRSEncryption.encodePacket(operationCode: DanaPacketType.OPCODE_ENCRYPTION__GET_EASYMENU_CHECK, buffer: nil, deviceName: self.deviceName)
         
-//        log.info("\(#function): Sending easy menu check. Data: \(data.base64EncodedString())")
+//        log.info("Sending easy menu check. Data: \(data.base64EncodedString())")
         self.writeQ(data)
     }
     
     private func sendBLE5PairingInformation() {
         let data = DanaRSEncryption.encodePacket(operationCode: DanaPacketType.OPCODE_ENCRYPTION__TIME_INFORMATION, buffer: Data([0, 0, 0, 0]), deviceName: self.deviceName)
         
-//        log.info("\(#function): Sending BLE5 time information. Data: \(Data([0, 0, 0, 0]).base64EncodedString())")
+//        log.info("Sending BLE5 time information. Data: \(Data([0, 0, 0, 0]).base64EncodedString())")
         self.writeQ(data)
     }
     
     private func sendPassKeyCheck(_ pairingKey: Data) {
         let data = DanaRSEncryption.encodePacket(operationCode: DanaPacketType.OPCODE_ENCRYPTION__CHECK_PASSKEY, buffer: pairingKey, deviceName: self.deviceName)
         
-//        log.info("\(#function): Sending Passkey check. Data: \(data.base64EncodedString())")
+//        log.info("Sending Passkey check. Data: \(data.base64EncodedString())")
         self.writeQ(data)
     }
     
     /// Used after entering PIN codes (only for DanaRS v3)
     private func finishV3Pairing(_ pairingKey: Data, _ randomPairingKey: Data) {
-        log.info("\(#function): Storing security keys: Pairing key: \(pairingKey.base64EncodedString()), random pairing key: \(randomPairingKey.base64EncodedString())")
+        log.info("Storing security keys: Pairing key: \(pairingKey.base64EncodedString()), random pairing key: \(randomPairingKey.base64EncodedString())")
         DanaRSEncryption.setPairingKeys(pairingKey: pairingKey, randomPairingKey: randomPairingKey, randomSyncKey: 0)
         self.sendV3PairingInformation(0)
     }
@@ -288,7 +294,7 @@ extension PeripheralManager {
             return
         }
         
-        log.error("\(#function): Passkey request failed. Data: \(data.base64EncodedString())")
+        log.error("Passkey request failed. Data: \(data.base64EncodedString())")
         self.bluetoothManager.disconnect(self.connectedDevice)
         
         DispatchQueue.main.async {
@@ -307,7 +313,7 @@ extension PeripheralManager {
         if (data.count == 4 && self.isOk(data)) {
             // response OK v1
             self.encryptionMode = .DEFAULT
-//            log.info("\(#function): Setting encryption mode to DEFAULT")
+//            log.info("Setting encryption mode to DEFAULT")
             
             self.pumpManager.state.ignorePassword = false;
             
@@ -320,7 +326,7 @@ extension PeripheralManager {
         } else if (data.count == 9 && self.isOk(data)) {
             // response OK v3, 2nd layer encryption
             self.encryptionMode = .RSv3
-//            log.info("\(#function): Setting encryption mode to RSv3")
+//            log.info("Setting encryption mode to RSv3")
             
             self.pumpManager.state.ignorePassword = true;
             
@@ -332,7 +338,7 @@ extension PeripheralManager {
             } else if (self.pumpManager.state.hwModel == 0x06) {
                 self.sendEasyMenuCheck()
             } else {
-                log.error("\(#function): Got invalid hwModel \(self.pumpManager.state.hwModel)")
+                log.error("Got invalid hwModel \(self.pumpManager.state.hwModel)")
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -341,13 +347,13 @@ extension PeripheralManager {
             }
         } else if (data.count == 14 && self.isOk(data)) {
             self.encryptionMode = .BLE_5
-//            log.info("\(#function): Setting encryption mode to BLE5")
+//            log.info("Setting encryption mode to BLE5")
             
             self.pumpManager.state.hwModel = data[5]
             self.pumpManager.state.pumpProtocol = data[7]
             
             guard (self.pumpManager.state.hwModel == 0x09 || self.pumpManager.state.hwModel == 0x0a) else {
-                log.error("\(#function): Got invalid hwModel \(self.pumpManager.state.hwModel)")
+                log.error("Got invalid hwModel \(self.pumpManager.state.hwModel)")
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -363,7 +369,7 @@ extension PeripheralManager {
             }
             
             guard ble5Keys.filter({ $0 == 0 }).count == 0 else {
-                log.error("\(#function): Invalid BLE-5 keys. Please unbound device and try again.")
+                log.error("Invalid BLE-5 keys. Please unbound device and try again.")
                 
                 self.pumpManager.disconnect(self.connectedDevice)
                 
@@ -395,17 +401,17 @@ extension PeripheralManager {
             self.pumpManager.state.ble5Keys = ble5Keys
             self.sendBLE5PairingInformation()
         } else if (data.count == 6 && self.isPump(data)) {
-            log.error("\(#function): PUMP_CHECK error. Data: \(data.base64EncodedString())")
+            log.error("PUMP_CHECK error. Data: \(data.base64EncodedString())")
             DispatchQueue.main.async {
                 self.completion(NSError(domain: "PUMP_CHECK error", code: 0, userInfo: nil))
             }
         } else if (data.count == 6 && isBusy(data)) {
-            log.error("\(#function): PUMP_CHECK_BUSY error. Data: \(data.base64EncodedString())")
+            log.error("PUMP_CHECK_BUSY error. Data: \(data.base64EncodedString())")
             DispatchQueue.main.async {
                 self.completion(NSError(domain: "PUMP_CHECK_BUSY error", code: 0, userInfo: nil))
             }
         } else {
-            log.error("\(#function): PUMP_CHECK error, wrong serial number. Data: \(data.base64EncodedString())")
+            log.error("PUMP_CHECK error, wrong serial number. Data: \(data.base64EncodedString())")
             DispatchQueue.main.async {
                 self.completion(NSError(domain: "PUMP_CHECK error, wrong serial number", code: 0, userInfo: nil))
             }
@@ -423,7 +429,7 @@ extension PeripheralManager {
             if (data[2] == 0x00) {
                 let (pairingKey, randomPairingKey) = DanaRSEncryption.getPairingKeys()
                 if (pairingKey.count == 0 || randomPairingKey.count == 0) {
-//                    log.info("\(#function): Device is requesting pincode")
+//                    log.info("Device is requesting pincode")
                     self.promptPincode(nil)
                     return
                 }
@@ -439,7 +445,7 @@ extension PeripheralManager {
             let lowByte = UInt16(data[data.count - 2] & 0xff)
             let password = (highByte + lowByte) ^ 0x0d87
             if (password != self.pumpManager.state.devicePassword && !self.pumpManager.state.ignorePassword) {
-                log.error("\(#function): Invalid password")
+                log.error("Invalid password")
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 DispatchQueue.main.async {
                     self.completion(NSError(domain: "Invalid password", code: 0, userInfo: nil))
@@ -473,7 +479,7 @@ extension PeripheralManager {
                 style: .default,
                 handler: { _ in
                     guard let pin1Str = dialogMessage.textFields?[0].text, let pin2Str = dialogMessage.textFields?[1].text else {
-                        self.log.error("\(#function): Missing textfields")
+                        self.log.error("Missing textfields")
                         return
                     }
                     
@@ -531,12 +537,12 @@ extension PeripheralManager {
     public func updateInitialState() async {
         do {
             self.pumpManager.state.isConnected = true
-//            log.info("\(#function): Sending keep connection")
+//            log.info("Sending keep connection")
             
             let keepConnection = generatePacketGeneralKeepConnection()
             let resultKeepConnection = try await self.writeMessage(keepConnection)
             guard resultKeepConnection.success else {
-                log.error("\(#function): Failed to send keep connection...")
+                log.error("Failed to send keep connection...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -546,12 +552,12 @@ extension PeripheralManager {
             }
             
             
-//            log.info("\(#function): Getting initial state")
+//            log.info("Getting initial state")
             let initialScreenPacket = generatePacketGeneralGetInitialScreenInformation()
             let resultInitialScreenInformation = try await self.writeMessage(initialScreenPacket)
             
             guard resultInitialScreenInformation.success else {
-                log.error("\(#function): Failed to fetch Initial screen...")
+                log.error("Failed to fetch Initial screen...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -562,7 +568,7 @@ extension PeripheralManager {
             
             
             guard let data = resultInitialScreenInformation.data as? PacketGeneralGetInitialScreenInformation else {
-                log.error("\(#function): No data received (initial screen)...")
+                log.error("No data received (initial screen)...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -571,11 +577,11 @@ extension PeripheralManager {
                 return
             }
             
-//            log.info("\(#function): Getting user options")
+//            log.info("Getting user options")
             let userOptionPacket = generatePacketGeneralGetUserOption()
             let userOptionResult = try await self.writeMessage(userOptionPacket)
             guard userOptionResult.success else {
-                log.error("\(#function): Failed to fetch user options...")
+                log.error("Failed to fetch user options...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -585,7 +591,7 @@ extension PeripheralManager {
             }
             
             guard let dataUserOption = userOptionResult.data as? PacketGeneralGetUserOption else {
-                log.error("\(#function): No data received (user option)...")
+                log.error("No data received (user option)...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -594,11 +600,11 @@ extension PeripheralManager {
                 return
             }
             
-//            log.info("\(#function): Getting pump time with timezone")
+//            log.info("Getting pump time with timezone")
             let timeUtcWithTimezonePacket = generatePacketGeneralGetPumpTimeUtcWithTimezone()
             let resultTimeUtcWithTimezone = try await self.writeMessage(timeUtcWithTimezonePacket)
             guard resultInitialScreenInformation.success else {
-                log.error("\(#function): Failed to fetch pump time...")
+                log.error("Failed to fetch pump time...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -609,7 +615,7 @@ extension PeripheralManager {
             
             
             guard let dataTimeUtc = resultTimeUtcWithTimezone.data as? PacketGeneralGetPumpTimeUtcWithTimezone else {
-                log.error("\(#function): No data received (time utc with timezone)...")
+                log.error("No data received (time utc with timezone)...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
@@ -648,14 +654,14 @@ extension PeripheralManager {
             self.pumpManager.state.pumpTime = dataTimeUtc.time
             self.pumpManager.notifyStateDidChange()
             
-            log.info("\(#function): Connection and encryption successful!")
+            log.info("Connection and encryption successful!")
             
             DispatchQueue.main.async {
                 self.completion(nil)
                 self.completion = { _ in }
             }
         } catch {
-            log.error("\(#function): Caught error during sending the message. error: \(error.localizedDescription, privacy: .public)")
+            log.error("Caught error during sending the message. error: \(error.localizedDescription)")
             self.pumpManager.disconnect(self.connectedDevice)
             DispatchQueue.main.async {
                 self.completion(error)
@@ -688,7 +694,7 @@ extension PeripheralManager {
             } else if let indexEncryptedStartByte = self.readBuffer.firstIndex(of: self.ENCRYPTED_START_BYTE) {
                 self.readBuffer = self.readBuffer.subdata(in: indexEncryptedStartByte..<self.readBuffer.count)
             } else {
-                log.error("\(#function): Received invalid packets. Starting bytes do not exists in message. Data: \(self.readBuffer.base64EncodedString())")
+                log.error("Received invalid packets. Starting bytes do not exists in message. Data: \(self.readBuffer.base64EncodedString())")
                 self.readBuffer = Data([])
                 return
             }
@@ -705,21 +711,21 @@ extension PeripheralManager {
             (self.readBuffer[length + 6] == self.PACKET_END_BYTE || self.readBuffer[length + 6] == self.ENCRYPTED_END_BYTE)
           ) else {
             // Invalid packets received...
-            log.error("\(#function): Received invalid packets. Ending bytes do not match. Data: \(self.readBuffer.base64EncodedString())")
+            log.error("Received invalid packets. Ending bytes do not match. Data: \(self.readBuffer.base64EncodedString())")
             self.readBuffer = Data([])
             return
           }
         
-//        log.info("\(#function): Received message! Starting to decrypt data: \(self.readBuffer.base64EncodedString())")
+//        log.info("Received message! Starting to decrypt data: \(self.readBuffer.base64EncodedString())")
         let decryptedData = DanaRSEncryption.decodePacket(buffer: self.readBuffer, deviceName: self.deviceName)
         self.readBuffer = Data([])
         
         guard decryptedData.count > 0 else {
-            log.error("\(#function): Decryption failed...")
+            log.error("Decryption failed...")
             return
         }
         
-//        log.info("\(#function): Decoding successful! Data: \(decryptedData.base64EncodedString())")
+//        log.info("Decoding successful! Data: \(decryptedData.base64EncodedString())")
         if (decryptedData[0] == DanaPacketType.TYPE_ENCRYPTION_RESPONSE) {
             switch(decryptedData[1]) {
             case DanaPacketType.OPCODE_ENCRYPTION__PUMP_CHECK:
@@ -752,13 +758,13 @@ extension PeripheralManager {
                 self.processEasyMenuCheck(decryptedData)
                 return
             default:
-                log.error("\(#function): Received invalid encryption command type \(decryptedData[1])")
+                log.error("Received invalid encryption command type \(decryptedData[1])")
                 return
             }
         }
         
         guard(decryptedData[0] == DanaPacketType.TYPE_RESPONSE || decryptedData[0] == DanaPacketType.TYPE_NOTIFY) else {
-            log.error("\(#function): Received invalid packet type \(decryptedData[0])")
+            log.error("Received invalid packet type \(decryptedData[0])")
             return
         }
         
@@ -768,7 +774,7 @@ extension PeripheralManager {
     private func processMessage(_ data: Data) {
         let message = parseMessage(data: data)
         guard let message = message else {
-            log.error("\(#function): Received unparsable message. Data: \(data.base64EncodedString())")
+            log.error("Received unparsable message. Data: \(data.base64EncodedString())")
             return
         }
         
@@ -795,7 +801,7 @@ extension PeripheralManager {
         
         // Message received and dequeueing timeout
         guard let queueItem = self.writeQueue[message.opCode ?? 0] else {
-            log.error("\(#function): No continuation token found to send this message back...")
+            log.error("No continuation token found to send this message back...")
             return
         }
         

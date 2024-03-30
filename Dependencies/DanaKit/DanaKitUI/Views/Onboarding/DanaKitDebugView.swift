@@ -7,11 +7,11 @@
 //
 
 import SwiftUI
-import os.log
 
 struct DanaKitDebugView: View {
     @Environment(\.openURL) var openURL
     @ObservedObject var viewModel: DanaKitDebugViewModel
+    @State private var isSharePresented: Bool = false
     
     var body: some View {
         VStack {
@@ -55,8 +55,12 @@ struct DanaKitDebugView: View {
             }
             
             HStack {
-                Button("Share logs", action: shareLogs)
-                    .frame(width: 100, height: 100)
+                Button(LocalizedString("Share Dana pump logs", comment: "DanaKit share logs")) {
+                    self.isSharePresented = true
+                }
+                .sheet(isPresented: $isSharePresented, onDismiss: { }, content: {
+                    ActivityViewController(activityItems: viewModel.getLogs())
+                })
             }
         }
         .alert("Device found!",
@@ -100,19 +104,6 @@ struct DanaKitDebugView: View {
                },
                message: { Text("Are you sure you want to set the temp basal to 200% for 1 hour?") }
         )
-    }
-    
-    func shareLogs() {
-        guard let logging = viewModel.getLogs().addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
-            return
-        }
-        
-        let mailto = "mailto:verhaar.bastiaan@gmail.com?subject=Dana%20logs&body=" + logging
-        guard let url = URL(string: mailto) else {
-            return
-        }
-        
-        openURL(url)
     }
 }
 

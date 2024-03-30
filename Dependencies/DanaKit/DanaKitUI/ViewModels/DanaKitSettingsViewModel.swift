@@ -9,7 +9,6 @@
 import SwiftUI
 import LoopKit
 import HealthKit
-import os.log
 
 class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingDeleteConfirmation = false
@@ -33,7 +32,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var isSuspended: Bool = false
     @Published var basalRate: Double?
     
-    private let log = Logger(category: "SettingsView")
+    private let log = DanaLogger(category: "SettingsView")
     private(set) var insulineType: InsulinType
     private(set) var pumpManager: DanaKitPumpManager?
     private var didFinish: (() -> Void)?
@@ -133,7 +132,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.insulineType = type
     }
     
-    func getLogs() -> String {
+    func getLogs() -> [URL] {
         return log.getDebugLogs()
     }
     

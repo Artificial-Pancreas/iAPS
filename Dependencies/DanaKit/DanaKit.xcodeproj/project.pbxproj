@@ -97,6 +97,7 @@
 		B864F7A22B49EF3800C503A2 /* DanaKitSetupCompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B864F7A12B49EF3800C503A2 /* DanaKitSetupCompleteView.swift */; };
 		B871156F2B4C8419004B4A98 /* DanaKitUI.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B885168B2B305E740063402A /* DanaKitUI.xcassets */; };
 		B87115752B4DD0AC004B4A98 /* DanaKitPumpManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87115742B4DD0AC004B4A98 /* DanaKitPumpManagerError.swift */; };
+		B87730952BB862EC00D2C653 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87730942BB862EC00D2C653 /* ActivityViewController.swift */; };
 		B87D571C2B20EEAF00FD82E9 /* Crc.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87D571B2B20EEAF00FD82E9 /* Crc.swift */; };
 		B87E6BAE2B62EEB0001B7FAD /* UnfinalizedDose.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E6BAD2B62EEB0001B7FAD /* UnfinalizedDose.swift */; };
 		B87E6BB02B62EF34001B7FAD /* DanaKitDoseProgressReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87E6BAF2B62EF34001B7FAD /* DanaKitDoseProgressReporter.swift */; };
@@ -239,6 +240,7 @@
 		B864F79F2B49E29700C503A2 /* DanaKitPumpSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitPumpSpeed.swift; sourceTree = "<group>"; };
 		B864F7A12B49EF3800C503A2 /* DanaKitSetupCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitSetupCompleteView.swift; sourceTree = "<group>"; };
 		B87115742B4DD0AC004B4A98 /* DanaKitPumpManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitPumpManagerError.swift; sourceTree = "<group>"; };
+		B87730942BB862EC00D2C653 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		B87D571B2B20EEAF00FD82E9 /* Crc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crc.swift; sourceTree = "<group>"; };
 		B87E6BAD2B62EEB0001B7FAD /* UnfinalizedDose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfinalizedDose.swift; sourceTree = "<group>"; };
 		B87E6BAF2B62EF34001B7FAD /* DanaKitDoseProgressReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitDoseProgressReporter.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 		B885168E2B3062F00063402A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B87730942BB862EC00D2C653 /* ActivityViewController.swift */,
 				B88516982B30D6EC0063402A /* DanaUICoordinator.swift */,
 			);
 			path = ViewController;
@@ -643,6 +646,7 @@
 				B8360AD52B2A349400152188 /* DanaHistoryTemporary.swift in Sources */,
 				B82FA9472B3DF85F004F2AFE /* DanaKitScanViewModel.swift in Sources */,
 				B8360AE32B2A3C3C00152188 /* DanaNotifyDeliveryRateDisplay.swift in Sources */,
+				B87730952BB862EC00D2C653 /* ActivityViewController.swift in Sources */,
 				B8F4E1AC2B83E00C000F4AE1 /* BackgroundTask.swift in Sources */,
 				B87115752B4DD0AC004B4A98 /* DanaKitPumpManagerError.swift in Sources */,
 				B85418AA2B20F52200C3B4D0 /* Common.swift in Sources */,

@@ -7,10 +7,6 @@
 //
 
 import Foundation
-import OSLog
-
 public class DanaKit {
-    private let log = Logger(category: "DanaKit")
-
     init() { }
 }
