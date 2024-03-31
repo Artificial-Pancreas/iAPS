@@ -19,13 +19,19 @@ class DanaLogger {
     }
     
     public func info(_ msg: String, file: String = #file, _ function: String = #function, _ line: Int = #line) {
-        let message = "\(file) - \(function)#\(line): \(msg)"
+        let message = "\(file.file) - \(function)#\(line): \(msg)"
         self.logger.info("\(message, privacy: .public)")
         self.writeToFile(message, .info)
     }
     
+    public func warning(_ msg: String, file: String = #file, _ function: String = #function, _ line: Int = #line) {
+        let message = "\(file.file) - \(function)#\(line): \(msg)"
+        self.logger.warning("\(message, privacy: .public)")
+        self.writeToFile(message, .notice)
+    }
+    
     public func error(_ msg: String, file: String = #file, _ function: String = #function, _ line: Int = #line) {
-        let message = "\(file) - \(function)#\(line): \(msg)"
+        let message = "\(file.file) - \(function)#\(line): \(msg)"
         self.logger.error("\(message, privacy: .public)")
         self.writeToFile(message, .error)
     }
@@ -105,7 +111,7 @@ class DanaLogger {
         case .info:
             return "INFO"
         case .notice:
-            return "DEFAULT"
+            return "WARNING"
         case .error:
             return "ERROR"
         case .fault:
@@ -130,4 +136,8 @@ private extension Data {
             try write(to: fileURL, options: .atomic)
         }
     }
+}
+
+private extension String {
+    var file: String { components(separatedBy: "/").last ?? "" }
 }

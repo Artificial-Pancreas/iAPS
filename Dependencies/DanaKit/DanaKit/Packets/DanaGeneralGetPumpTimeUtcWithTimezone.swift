@@ -20,14 +20,15 @@ func generatePacketGeneralGetPumpTimeUtcWithTimezone() -> DanaGeneratePacket {
 }
 
 func parsePacketGeneralGetPumpTimeUtcWithTimezone(data: Data) -> DanaParsePacket<PacketGeneralGetPumpTimeUtcWithTimezone> {
-    // Convert from UTC
+    let timezoneOffsetInHours = Int(Int8(data[DataStart + 6]))
+    
     let time = DateComponents(
         calendar: .current,
-        timeZone: TimeZone(secondsFromGMT: 0),
+        timeZone: TimeZone(secondsFromGMT: timezoneOffsetInHours * 3600),
         year: 2000 + Int(data[DataStart]),
         month: Int(data[DataStart + 1]),
         day: Int(data[DataStart + 2]),
-        hour: Int(data[DataStart + 3]),
+        hour: Int(data[DataStart + 3]) + timezoneOffsetInHours,
         minute: Int(data[DataStart + 4]),
         second: Int(data[DataStart + 5])
     )

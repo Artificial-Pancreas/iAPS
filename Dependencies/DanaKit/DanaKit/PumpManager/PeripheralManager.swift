@@ -614,7 +614,7 @@ extension PeripheralManager {
             }
             
             
-            guard let dataTimeUtc = resultTimeUtcWithTimezone.data as? PacketGeneralGetPumpTimeUtcWithTimezone else {
+            guard let dataTime = resultTimeUtcWithTimezone.data as? PacketGeneralGetPumpTimeUtcWithTimezone else {
                 log.error("No data received (time utc with timezone)...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
@@ -651,7 +651,7 @@ extension PeripheralManager {
             self.pumpManager.state.targetBg = dataUserOption.targetBg
             self.pumpManager.state.units = dataUserOption.units
             self.pumpManager.state.bolusState = .noBolus
-            self.pumpManager.state.pumpTime = dataTimeUtc.time
+            self.pumpManager.state.pumpTime = dataTime.time
             self.pumpManager.notifyStateDidChange()
             
             log.info("Connection and encryption successful!")
