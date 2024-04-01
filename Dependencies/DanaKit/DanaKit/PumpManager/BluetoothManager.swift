@@ -37,7 +37,6 @@ class BluetoothManager : NSObject {
     private var peripheralManager: PeripheralManager?
     
     private var connectionCompletion: ((Error?) -> Void)?
-    private var connectionTimer: Timer?
     
     private var devices: [DanaPumpScan] = []
     
@@ -92,11 +91,6 @@ class BluetoothManager : NSObject {
                 
 //                self.log.info("Found peripheral! \(peripheral)")
                 self.manager.connect(peripheral, options: nil)
-                
-                // Return with error if we couldnt connect to device within 30 sec
-                self.connectionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false, block: { timer in
-                    self.connectionCompletion?(NSError(domain: "Failed to connect", code: 1))
-                })
             }
             return
         }
@@ -120,11 +114,6 @@ class BluetoothManager : NSObject {
         
         manager.connect(peripheral, options: nil)
         self.connectionCompletion = completion
-        
-        // Return with error if we couldnt connect to device within 30 sec
-        self.connectionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false, block: { timer in
-            self.connectionCompletion?(NSError(domain: "Failed to connect", code: 1))
-        })
     }
     
     func disconnect(_ peripheral: CBPeripheral) {
@@ -195,18 +184,6 @@ extension BluetoothManager : CBCentralManagerDelegate {
         
 //        log.info("\(peripheral)")
         
-        if let connectionTimer = self.connectionTimer {
-            connectionTimer.invalidate()
-            self.connectionTimer = nil
-        } else {
-            // The timer has already been triggered and Loop is completed
-            // Shouldn't happen, but exit at this point...
-            
-            self.log.error("Connection failure. It took longer than 30 sec to make a connection, discard this connection...")
-            self.disconnect(peripheral)
-            return
-        }
-        
         DispatchQueue.main.async {
             self.peripheral = peripheral
             self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, self.connectionCompletion!)
@@ -233,6 +210,5 @@ extension BluetoothManager : CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
         log.info("Device connect error, name: \(peripheral.name ?? "<NO_NAME>"), error: \(error!.localizedDescription)")
-        self.connectionCompletion?(error ?? NSError(domain: "Failed to connect", code: 1))
     }
 }

@@ -1070,41 +1070,57 @@ extension DanaKitPumpManager: PumpManager {
         
         // Device still has an active connection with pump and is probably busy with something
         if DanaKitPumpManager.bluetoothManager.isConnected && DanaKitPumpManager.bluetoothManager.peripheral?.state == .connected {
-            self.logDeviceCommunication("Failed to connect: Already connected", type: .connection)
+            self.logDeviceCommunication("Dana - Failed to connect: Already connected", type: .connection)
             block(.failure)
             
         // We stored the peripheral. We can quickly reconnect
         } else if DanaKitPumpManager.bluetoothManager.peripheral != nil {
+            let connectionTimer = Timer.scheduledTimer(withTimeInterval: 15, repeats: false, block: { timer in
+                self.logDeviceCommunication("Dana - Failed to connect: Timeout reached...", type: .connection)
+                self.log.error("Failed to connect: Timeout reached...")
+                block(.failure)
+            })
+            
             self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { error in
+                connectionTimer.invalidate()
+                
                 if error == nil {
-                    self.logDeviceCommunication("Connected", type: .connection)
+                    self.logDeviceCommunication("Dana - Connected", type: .connection)
                     block(.success)
                 } else {
-                    self.logDeviceCommunication("Failed to connect: " + error!.localizedDescription, type: .connection)
+                    self.logDeviceCommunication("Dana - Failed to connect: " + error!.localizedDescription, type: .connection)
                     block(.failure)
                 }
             }
             // No active connection and no stored peripheral. We have to scan for device before being able to send command
         } else if !DanaKitPumpManager.bluetoothManager.isConnected && self.state.bleIdentifier != nil {
             do {
+                let connectionTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false, block: { timer in
+                    self.logDeviceCommunication("Dana - Failed to connect: Timeout reached...", type: .connection)
+                    self.log.error("Failed to connect: Timeout reached...")
+                    block(.failure)
+                })
+                
                 try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!) { error in
+                    connectionTimer.invalidate()
+                    
                     if error == nil {
-                        self.logDeviceCommunication("Connected", type: .connection)
+                        self.logDeviceCommunication("Dana - Connected", type: .connection)
                         block(.success)
                     } else {
-                        self.logDeviceCommunication("Failed to connect: " + error!.localizedDescription, type: .connection)
+                        self.logDeviceCommunication("Dana - Failed to connect: " + error!.localizedDescription, type: .connection)
                         block(.failure)
                     }
                 }
             } catch {
-                self.logDeviceCommunication("Failed to connect: " + error.localizedDescription, type: .connection)
+                self.logDeviceCommunication("Dana - Failed to connect: " + error.localizedDescription, type: .connection)
                 block(.failure)
             }
             
             // Should never reach, but is only possible if device is not onboard (we have no ble identifier to connect to)
         } else {
             self.log.error("Pump is not onboarded")
-            self.logDeviceCommunication("Pump is not onboarded", type: .connection)
+            self.logDeviceCommunication("Dana - Pump is not onboarded", type: .connection)
             block(.failure)
         }
     }
@@ -1116,7 +1132,7 @@ extension DanaKitPumpManager: PumpManager {
         }
         
         DanaKitPumpManager.bluetoothManager.disconnect(DanaKitPumpManager.bluetoothManager.peripheral!)
-        logDeviceCommunication("Disconnected", type: .connection)
+        logDeviceCommunication("Dana - Disconnected", type: .connection)
     }
     
     private func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
