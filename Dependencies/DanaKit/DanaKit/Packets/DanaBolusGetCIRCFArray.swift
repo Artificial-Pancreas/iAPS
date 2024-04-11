@@ -35,7 +35,7 @@ func generatePacketBolusGetCIRCFArray() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__GET_CIR_CF_ARRAY, data: nil)
 }
 
-func parsePacketBolusGetCIRCFArray(data: Data) -> DanaParsePacket<PacketBolusGetCIRCFArray> {
+func parsePacketBolusGetCIRCFArray(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketBolusGetCIRCFArray> {
     let language = data[DataStart]
     let unit = data[DataStart + 1]
     let morningCIR = data.uint16(at: DataStart + 2)

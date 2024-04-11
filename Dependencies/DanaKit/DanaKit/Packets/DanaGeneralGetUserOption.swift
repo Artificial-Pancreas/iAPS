@@ -48,7 +48,7 @@ func generatePacketGeneralGetUserOption() -> DanaGeneratePacket {
     )
 }
 
-func parsePacketGeneralGetUserOption(data: Data) -> DanaParsePacket<PacketGeneralGetUserOption> {
+func parsePacketGeneralGetUserOption(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetUserOption> {
     return DanaParsePacket(
         success: data[DataStart + 3] >= 5,
         rawData: data,

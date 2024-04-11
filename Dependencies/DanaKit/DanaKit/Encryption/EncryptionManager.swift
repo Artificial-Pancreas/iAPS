@@ -80,14 +80,14 @@ class DanaRSEncryption {
         self.enhancedEncryption = enhancedEncryption
     }
     
-    static func setPairingKeys(pairingKey: Data, randomPairingKey: Data, randomSyncKey: UInt8) {
+    static func setPairingKeys(pairingKey: Data, randomPairingKey: Data, randomSyncKey: UInt8?) {
         self.pairingKey = pairingKey
         self.randomPairingKey = randomPairingKey
         
-        if randomSyncKey == 0 {
+        if randomSyncKey == nil || randomSyncKey == 0 {
             self.randomSyncKey = initialRandomSyncKey(pairingKey: pairingKey)
         } else {
-            self.randomSyncKey = decryptionRandomSyncKey(randomSyncKey: randomSyncKey, randomPairingKey: randomPairingKey)
+            self.randomSyncKey = decryptionRandomSyncKey(randomSyncKey: randomSyncKey!, randomPairingKey: randomPairingKey)
         }
     }
     

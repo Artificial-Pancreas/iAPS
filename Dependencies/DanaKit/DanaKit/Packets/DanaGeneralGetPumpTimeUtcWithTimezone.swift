@@ -19,7 +19,7 @@ func generatePacketGeneralGetPumpTimeUtcWithTimezone() -> DanaGeneratePacket {
     )
 }
 
-func parsePacketGeneralGetPumpTimeUtcWithTimezone(data: Data) -> DanaParsePacket<PacketGeneralGetPumpTimeUtcWithTimezone> {
+func parsePacketGeneralGetPumpTimeUtcWithTimezone(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetPumpTimeUtcWithTimezone> {
     let timezoneOffsetInHours = Int(Int8(bitPattern: data[DataStart + 6]))
     
     let time = DateComponents(

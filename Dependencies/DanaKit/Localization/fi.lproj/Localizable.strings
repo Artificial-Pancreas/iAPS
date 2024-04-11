@@ -52,8 +52,14 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "OK"
 
+/* Cancel button title */
+"Cancel" = "Peruuttaa"
+
 /* Dana-i/RS connecting alert title */
-"Connecting to device" = "Yhdistetään laitteeseen"
+"Scanning" = "Skannaus"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "Yhdistetään"
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Valitse insuliinityyppi, jota käytät tässä pumpussa"
@@ -90,9 +96,6 @@
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "Vastaanotettu virheelliset heksadesimaattiset merkkijonot. Yritä uudelleen"
-
-/* Dana-RS v3 pincode prompt oke */
-"OK" = "Oke"
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Tarkistussumma epäonnistui. Yritä uudelleen"

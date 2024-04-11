@@ -12,6 +12,6 @@ func generatePacketBolusCancelExtended() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__SET_EXTENDED_BOLUS_CANCEL, data: nil)
 }
 
-func parsePacketBolusCancelExtended(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBolusCancelExtended(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

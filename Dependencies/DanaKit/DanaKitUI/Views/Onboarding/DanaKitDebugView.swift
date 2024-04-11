@@ -104,6 +104,24 @@ struct DanaKitDebugView: View {
                },
                message: { Text("Are you sure you want to set the temp basal to 200% for 1 hour?") }
         )
+        .alert(
+            LocalizedString("Dana-RS v3 found!", comment: "Dana-RS v3 found"),
+           isPresented: $viewModel.isPromptingPincode
+        ) {
+            Button(LocalizedString("Cancel", comment: "Cancel button title"), role: .cancel) {
+                viewModel.cancelPinPrompt()
+            }
+            Button(LocalizedString("Oke", comment: "Dana-RS v3 pincode prompt oke"), action: {
+                viewModel.processPinPrompt()
+            })
+            
+            TextField(LocalizedString("Pin 1", comment: "Dana-RS v3 pincode prompt pin 1"), text: $viewModel.pin1)
+            TextField(LocalizedString("Pin 2", comment: "Dana-RS v3 pincode prompt pin 2"), text: $viewModel.pin2)
+        } message: {
+            if let message = $viewModel.pinCodePromptError.wrappedValue {
+                Text(message)
+            }
+        }
     }
 }
 

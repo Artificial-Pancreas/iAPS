@@ -12,6 +12,6 @@ func generatePacketBolusStop() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__SET_STEP_BOLUS_STOP, data: nil)
 }
 
-func parsePacketBolusStop(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBolusStop(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

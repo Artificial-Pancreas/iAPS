@@ -13,7 +13,7 @@ import UserNotifications
 import CoreBluetooth
 import UIKit
 
-private enum ConnectionResult {
+public enum ConnectionResultShort {
     case success
     case failure
 }
@@ -88,8 +88,18 @@ public class DanaKitPumpManager: DeviceManager {
         return lines.joined(separator: "\n")
     }
     
-    public func connect(_ peripheral: CBPeripheral, _ completion: @escaping (Error?) -> Void) {
+    public func connect(_ peripheral: CBPeripheral, _ completion: @escaping (ConnectionResult) -> Void) {
         DanaKitPumpManager.bluetoothManager.connect(peripheral, completion)
+    }
+    
+    public func disconnect() {
+        guard DanaKitPumpManager.bluetoothManager.isConnected else {
+            // Disconnect is not needed
+            return
+        }
+        
+        DanaKitPumpManager.bluetoothManager.disconnect(DanaKitPumpManager.bluetoothManager.peripheral!)
+        logDeviceCommunication("Dana - Disconnected", type: .connection)
     }
     
     public func disconnect(_ peripheral: CBPeripheral) {
@@ -103,6 +113,10 @@ public class DanaKitPumpManager: DeviceManager {
     
     public func stopScan() {
         DanaKitPumpManager.bluetoothManager.stopScan()
+    }
+    
+    func finishV3Pairing(_ pairingKey: Data, _ randomPairingKey: Data) {
+        DanaKitPumpManager.bluetoothManager.finishV3Pairing(pairingKey, randomPairingKey)
     }
     
     // Not persisted
@@ -304,7 +318,7 @@ extension DanaKitPumpManager: PumpManager {
             
             hasHistoryModeBeenActivate = true
             
-            let fetchHistoryPacket = generatePacketHistoryAll(options: PacketHistoryBase(from: state.lastStatusDate))
+            let fetchHistoryPacket = generatePacketHistoryAll(options: PacketHistoryBase(from: state.lastStatusDate, usingUtc: self.state.usingUtc))
             let fetchHistoryResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(fetchHistoryPacket)
             guard fetchHistoryResult.success else {
                 return []
@@ -333,18 +347,23 @@ extension DanaKitPumpManager: PumpManager {
                     }
                     
                 case HistoryCode.RECORD_TYPE_PRIME:
-                    return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Prime \(item.value!)U", type: .prime, alarmType: nil)
+                    if item.value! >= 1 {
+                        // This is a tube refill, not a canulla refill
+                        return nil
+                    }
                     
-                case HistoryCode.RECORD_TYPE_REFILL:
                     if self.state.cannulaDate == nil || item.timestamp > self.state.cannulaDate! {
                         self.state.cannulaDate = item.timestamp
                     }
                     
-                    return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Rewind \(item.value!)U", type: .rewind, alarmType: nil)
+                    return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Prime \(item.value!)U", type: .prime, alarmType: nil)
                     
-                case HistoryCode.RECORD_TYPE_TEMP_BASAL:
-                    // TODO: Find a way to convert % to U/hr
-                    return nil
+                case HistoryCode.RECORD_TYPE_REFILL:
+                    if self.state.reservoirDate == nil || item.timestamp > self.state.reservoirDate! {
+                        self.state.reservoirDate = item.timestamp
+                    }
+                    
+                    return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Rewind \(item.value!)U", type: .rewind, alarmType: nil)
                     
                 default:
                     return nil
@@ -1029,7 +1048,13 @@ extension DanaKitPumpManager: PumpManager {
                 case .success:
                     do {
                         let offset = Date.now.timeIntervalSince(self.state.pumpTime ?? Date.distantPast)
-                        let packet = generatePacketGeneralSetPumpTimeUtcWithTimezone(options: PacketGeneralSetPumpTimeUtcWithTimezone(time: Date.now, zoneOffset: UInt8(round(Double(TimeZone.current.secondsFromGMT(for: Date.now) / 3600)))))
+                        let packet: DanaGeneratePacket
+                        if self.state.usingUtc {
+                            packet = generatePacketGeneralSetPumpTimeUtcWithTimezone(options: PacketGeneralSetPumpTimeUtcWithTimezone(time: Date.now, zoneOffset: UInt8(round(Double(TimeZone.current.secondsFromGMT(for: Date.now) / 3600)))))
+                        } else {
+                            packet = generatePacketGeneralSetPumpTime(options: PacketGeneralSetPumpTime(time: Date.now))
+                        }
+                        
                         let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
                         
                         self.disconnect()
@@ -1066,8 +1091,8 @@ extension DanaKitPumpManager: PumpManager {
         )
     }
     
-    private func ensureConnected(_ completion: @escaping (ConnectionResult) async -> Void) {
-        let block: (ConnectionResult) -> Void = { result in
+    private func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void) {
+        let block: (ConnectionResultShort) -> Void = { result in
             Task {
                 DanaKitPumpManager.bluetoothManager.resetConnectionCompletion()
                 await completion(result)
@@ -1087,14 +1112,21 @@ extension DanaKitPumpManager: PumpManager {
                 block(.failure)
             })
             
-            self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { error in
+            self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { result in
                 connectionTimer.invalidate()
                 
-                if error == nil {
+                switch result {
+                case .success:
                     self.logDeviceCommunication("Dana - Connected", type: .connection)
                     block(.success)
-                } else {
-                    self.logDeviceCommunication("Dana - Failed to connect: " + error!.localizedDescription, type: .connection)
+                case .failure(let err):
+                    self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
+                    block(.failure)
+                case .requestedPincode:
+                    self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
+                    block(.failure)
+                case .invalidBle5Keys:
+                    self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
                     block(.failure)
                 }
             }
@@ -1107,14 +1139,21 @@ extension DanaKitPumpManager: PumpManager {
                     block(.failure)
                 })
                 
-                try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!) { error in
+                try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!) { result in
                     connectionTimer.invalidate()
                     
-                    if error == nil {
+                    switch result {
+                    case .success:
                         self.logDeviceCommunication("Dana - Connected", type: .connection)
                         block(.success)
-                    } else {
-                        self.logDeviceCommunication("Dana - Failed to connect: " + error!.localizedDescription, type: .connection)
+                    case .failure(let err):
+                        self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
+                        block(.failure)
+                    case .requestedPincode:
+                        self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
+                        block(.failure)
+                    case .invalidBle5Keys:
+                        self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
                         block(.failure)
                     }
                 }
@@ -1129,16 +1168,6 @@ extension DanaKitPumpManager: PumpManager {
             self.logDeviceCommunication("Dana - Pump is not onboarded", type: .connection)
             block(.failure)
         }
-    }
-    
-    private func disconnect() {
-        guard DanaKitPumpManager.bluetoothManager.isConnected else {
-            // Disconnect is not needed
-            return
-        }
-        
-        DanaKitPumpManager.bluetoothManager.disconnect(DanaKitPumpManager.bluetoothManager.peripheral!)
-        logDeviceCommunication("Dana - Disconnected", type: .connection)
     }
     
     private func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {

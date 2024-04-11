@@ -21,7 +21,7 @@ func generatePacketGeneralGetShippingInformation() -> DanaGeneratePacket {
     )
 }
 
-func parsePacketGeneralGetShippingInformation(data: Data) -> DanaParsePacket<PacketGeneralGetShippingInformation> {
+func parsePacketGeneralGetShippingInformation(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetShippingInformation> {
     guard data.count >= 18 else {
         return DanaParsePacket(
             success: false,

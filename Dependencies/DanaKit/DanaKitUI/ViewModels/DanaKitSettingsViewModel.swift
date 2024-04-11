@@ -22,7 +22,8 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingSilentTone: Bool = false
     @Published var silentTone: Bool = false
     @Published var basalProfileNumber: UInt8 = 0
-    @Published var cannulaAge: String = ""
+    @Published var cannulaAge: String? = nil
+    @Published var reservoirAge: String? = nil
     
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
@@ -42,9 +43,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     public var pumpModel: String {
         self.pumpManager?.state.getFriendlyDeviceName() ?? ""
     }
-    
-    
-    
+
     public var deviceName: String? {
         self.pumpManager?.state.deviceName
     }
@@ -107,7 +106,11 @@ class DanaKitSettingsViewModel : ObservableObject {
         updateBasalRate()
         
         if let cannulaDate = self.pumpManager?.state.cannulaDate {
-            self.cannulaAge = "\(round(-cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.cannulaAge = "\(String(format: "%.1f", -cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+        }
+        
+        if let reservoirDate = self.pumpManager?.state.reservoirDate {
+            self.reservoirAge = "\(String(format: "%.1f", -reservoirDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
         }
         
         self.basalButtonText = self.updateBasalButtonText()
@@ -116,7 +119,15 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     func stopUsingDana() {
-        self.pumpManager?.notifyDelegateOfDeactivation {
+        guard let pumpManager = self.pumpManager else {
+            return
+        }
+        
+        // reset state
+        pumpManager.state = DanaKitPumpManagerState()
+        pumpManager.notifyStateDidChange()
+        
+        pumpManager.notifyDelegateOfDeactivation {
             DispatchQueue.main.async {
                 self.didFinish?()
             }
@@ -305,6 +316,14 @@ extension DanaKitSettingsViewModel: StateObserver {
         updateBasalRate()
         
         self.basalButtonText = self.updateBasalButtonText()
+        
+        if let cannulaDate = state.cannulaDate {
+            self.cannulaAge = "\(String(format: "%.1f", -cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+        }
+        
+        if let reservoirDate = state.reservoirDate {
+            self.reservoirAge = "\(String(format: "%.1f", -reservoirDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+        }
     }
     
     func deviceScanDidUpdate(_ device: DanaPumpScan) {

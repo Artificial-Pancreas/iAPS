@@ -19,7 +19,7 @@ func generatePacketGeneralGetPumpTime() -> DanaGeneratePacket {
     )
 }
 
-func parsePacketGeneralGetPumpTime(data: Data) -> DanaParsePacket<PacketGeneralGetPumpTime> {
+func parsePacketGeneralGetPumpTime(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetPumpTime> {
     let time = DateComponents(
         year: 2000 + Int(data[DataStart]),
         month: Int(data[DataStart + 1]),

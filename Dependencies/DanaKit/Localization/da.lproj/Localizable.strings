@@ -52,8 +52,14 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "Okay"
 
+/* Cancel button title */
+"Cancel" = "Afbestille"
+
 /* Dana-i/RS connecting alert title */
-"Connecting to device" = "Opretter forbindelse til enhed"
+"Scanning" = "Scanning"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "Tilslutning"
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Vælg den type insulin, du vil bruge i denne pumpe"
@@ -90,9 +96,6 @@
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "Modtog ugyldige hex-strenge. Prøv igen"
-
-/* Dana-RS v3 pincode prompt oke */
-"OK" = "Oke"
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Kontrolsum mislykkedes. Prøv igen"
@@ -401,7 +404,7 @@
 "Signal Loss" = "Signaltab"
 
 /* Text for Day unit */
-"day(s)" = "dage"
+"day(s)" = "dage)"
 
 /* Text for cannula age */
 "Cannula age" = "Kanyle alder"

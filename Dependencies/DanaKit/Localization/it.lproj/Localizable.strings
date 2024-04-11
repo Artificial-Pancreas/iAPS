@@ -52,8 +52,14 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "OK"
 
+/* Cancel button title */
+"Cancel" = "Annulla"
+
 /* Dana-i/RS connecting alert title */
-"Connecting to device" = "Connessione al dispositivo"
+"Scanning" = "Scansione"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "Connessione"
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Seleziona il tipo di insulina che utilizzerai con questo microinfusore"
@@ -90,9 +96,6 @@
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "Ricevute stringhe esadecimali non valide. Riprova"
-
-/* Dana-RS v3 pincode prompt oke */
-"OK" = "Oke"
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Checksum fallito. Riprova"

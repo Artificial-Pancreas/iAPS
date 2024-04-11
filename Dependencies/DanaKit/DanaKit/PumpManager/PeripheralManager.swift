@@ -15,7 +15,7 @@ class PeripheralManager: NSObject {
     
     private let connectedDevice: CBPeripheral
     private let bluetoothManager: BluetoothManager
-    private var completion: (Error?) -> Void
+    private var completion: (ConnectionResult) -> Void
     
     private var pumpManager: DanaKitPumpManager
     private var readBuffer = Data([])
@@ -52,7 +52,7 @@ class PeripheralManager: NSObject {
         }
     }
     
-    public init(_ peripheral: CBPeripheral, _ bluetoothManager: BluetoothManager, _ pumpManager: DanaKitPumpManager,_ completion: @escaping (Error?) -> Void) {
+    public init(_ peripheral: CBPeripheral, _ bluetoothManager: BluetoothManager, _ pumpManager: DanaKitPumpManager,_ completion: @escaping (ConnectionResult) -> Void) {
         self.connectedDevice = peripheral
         self.encryptionMode = .DEFAULT
         self.bluetoothManager = bluetoothManager
@@ -125,7 +125,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
-                self.completion(error!)
+                self.completion(.failure(error!))
             }
             return
         }
@@ -136,12 +136,12 @@ extension PeripheralManager : CBPeripheralDelegate {
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
-                self.completion(NSError(domain: "Failed to discover dana data service...", code: 0, userInfo: nil))
+                self.completion(.failure(NSError(domain: "Failed to discover dana data service...", code: 0, userInfo: nil)))
             }
             return
         }
         
-//        log.info("Discovered service \(SERVICE_UUID)")
+//        log.info("Discovered service \(PeripheralManager.SERVICE_UUID)")
         
         peripheral.discoverCharacteristics([READ_CHAR_UUID, WRITE_CHAR_UUID], for: service!)
     }
@@ -152,7 +152,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
-                self.completion(error!)
+                self.completion(.failure(error!))
             }
             return
         }
@@ -166,7 +166,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
-                self.completion(NSError(domain: "Failed to discover dana write or read characteristic", code: 0, userInfo: nil))
+                self.completion(.failure(NSError(domain: "Failed to discover dana write or read characteristic", code: 0, userInfo: nil)))
             }
             return
         }
@@ -181,7 +181,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
-                self.completion(error!)
+                self.completion(.failure(error!))
             }
             return
         }
@@ -196,7 +196,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             self.bluetoothManager.disconnect(peripheral)
             
             DispatchQueue.main.async {
-                self.completion(error!)
+                self.completion(.failure(error!))
             }
             return
         }
@@ -238,11 +238,24 @@ extension PeripheralManager {
         self.writeQ(data)
     }
     
+    // 0x00 Start encryption, 0x01 Request pairing
     private func sendV3PairingInformationEmpty() {
-        let (pairingKey, randomPairingKey) = DanaRSEncryption.getPairingKeys()
+        var (pairingKey, randomPairingKey) = DanaRSEncryption.getPairingKeys()
+        if pairingKey.isEmpty || randomPairingKey.isEmpty {
+            pairingKey = self.pumpManager.state.pairingKey
+            randomPairingKey = self.pumpManager.state.randomPairingKey
+            
+            if pairingKey.isEmpty || randomPairingKey.isEmpty {
+                self.sendV3PairingInformation(1)
+                return
+            }
+        }
         
-        let command: UInt8 = pairingKey.count == 0 || randomPairingKey.count == 0 ? 1 : 0
-        self.sendV3PairingInformation(command)
+        let randomSyncKey = self.pumpManager.state.randomSyncKey
+//        self.log.info("Setting encryption keys. Pairing key: \(pairingKey.base64EncodedString()), random pairing key: \(randomPairingKey.base64EncodedString()), random sync key: \(randomSyncKey)")
+        DanaRSEncryption.setPairingKeys(pairingKey: pairingKey, randomPairingKey: randomPairingKey, randomSyncKey: randomSyncKey)
+        
+        self.sendV3PairingInformation(0)
     }
     
     private func sendPairingRequest() {
@@ -274,9 +287,13 @@ extension PeripheralManager {
     }
     
     /// Used after entering PIN codes (only for DanaRS v3)
-    private func finishV3Pairing(_ pairingKey: Data, _ randomPairingKey: Data) {
-        log.info("Storing security keys: Pairing key: \(pairingKey.base64EncodedString()), random pairing key: \(randomPairingKey.base64EncodedString())")
-        DanaRSEncryption.setPairingKeys(pairingKey: pairingKey, randomPairingKey: randomPairingKey, randomSyncKey: 0)
+    public func finishV3Pairing(_ pairingKey: Data, _ randomPairingKey: Data) {
+//        log.info("Storing security keys: Pairing key: \(pairingKey.base64EncodedString()), random pairing key: \(randomPairingKey.base64EncodedString())")
+        
+        DanaRSEncryption.setPairingKeys(pairingKey: pairingKey, randomPairingKey: randomPairingKey, randomSyncKey: nil)
+        self.pumpManager.state.pairingKey = pairingKey
+        self.pumpManager.state.randomPairingKey = randomPairingKey
+        
         self.sendV3PairingInformation(0)
     }
     
@@ -298,7 +315,7 @@ extension PeripheralManager {
         self.bluetoothManager.disconnect(self.connectedDevice)
         
         DispatchQueue.main.async {
-            self.completion(NSError(domain: "Passkey request failed", code: 0, userInfo: nil))
+            self.completion(.failure(NSError(domain: "Passkey request failed", code: 0, userInfo: nil)))
         }
     }
     
@@ -313,7 +330,7 @@ extension PeripheralManager {
         if (data.count == 4 && self.isOk(data)) {
             // response OK v1
             self.encryptionMode = .DEFAULT
-//            log.info("Setting encryption mode to DEFAULT")
+//            log.info("Setting encryption mode to DEFAULT. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.ignorePassword = false;
             
@@ -326,12 +343,15 @@ extension PeripheralManager {
         } else if (data.count == 9 && self.isOk(data)) {
             // response OK v3, 2nd layer encryption
             self.encryptionMode = .RSv3
-//            log.info("Setting encryption mode to RSv3")
+//            log.info("Setting encryption mode to RSv3. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.ignorePassword = true;
             
             self.pumpManager.state.hwModel = data[5]
             self.pumpManager.state.pumpProtocol = data[7]
+            
+            // Grab syncKey
+            self.pumpManager.state.randomSyncKey = data[data.count - 1]
             
             if (self.pumpManager.state.hwModel == 0x05) {
                 self.sendV3PairingInformationEmpty()
@@ -342,12 +362,12 @@ extension PeripheralManager {
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil)))
                 }
             }
         } else if (data.count == 14 && self.isOk(data)) {
             self.encryptionMode = .BLE_5
-//            log.info("Setting encryption mode to BLE5")
+//            log.info("Setting encryption mode to BLE5. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.hwModel = data[5]
             self.pumpManager.state.pumpProtocol = data[7]
@@ -357,7 +377,7 @@ extension PeripheralManager {
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil)))
                 }
                 return
             }
@@ -372,28 +392,7 @@ extension PeripheralManager {
                 log.error("Invalid BLE-5 keys. Please unbound device and try again.")
                 
                 self.pumpManager.disconnect(self.connectedDevice)
-                
-                DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Invalid ble5 keys", code: 0, userInfo: nil))
-                    
-                    // Need to manually show error, since pumpDelegate hasnt been attached yet...
-                    let dialogMessage = UIAlertController(
-                        title:LocalizedString("ERROR: Failed to pair device", comment: "Dana-i invalid ble5 keys"),
-                        message: LocalizedString("Failed to pair to ", comment: "Dana-i failed to pair p1") + (self.pumpManager.state.deviceName ?? "<NO_NAME>") + LocalizedString(". Please go to your bluetooth settings, forget this device, and try again", comment: "Dana-i failed to pair p2"),
-                        preferredStyle: .alert)
-                    
-                    dialogMessage.addAction(UIAlertAction(
-                        title: LocalizedString("Oke", comment: "Dana-RS v3 pincode prompt oke"),
-                        style: .default
-                    ))
-                    
-                    guard let view = UIApplication.shared.windows.last?.rootViewController else {
-                        self.log.error("No views are found to prompt ble 5 error")
-                        return
-                    }
-                    
-                    view.present(dialogMessage, animated: true, completion: nil)
-                }
+                self.completion(.invalidBle5Keys)
                 return
             }
             
@@ -403,17 +402,17 @@ extension PeripheralManager {
         } else if (data.count == 6 && self.isPump(data)) {
             log.error("PUMP_CHECK error. Data: \(data.base64EncodedString())")
             DispatchQueue.main.async {
-                self.completion(NSError(domain: "PUMP_CHECK error", code: 0, userInfo: nil))
+                self.completion(.failure(NSError(domain: "PUMP_CHECK error", code: 0, userInfo: nil)))
             }
         } else if (data.count == 6 && isBusy(data)) {
             log.error("PUMP_CHECK_BUSY error. Data: \(data.base64EncodedString())")
             DispatchQueue.main.async {
-                self.completion(NSError(domain: "PUMP_CHECK_BUSY error", code: 0, userInfo: nil))
+                self.completion(.failure(NSError(domain: "PUMP_CHECK_BUSY error", code: 0, userInfo: nil)))
             }
         } else {
             log.error("PUMP_CHECK error, wrong serial number. Data: \(data.base64EncodedString())")
             DispatchQueue.main.async {
-                self.completion(NSError(domain: "PUMP_CHECK error, wrong serial number", code: 0, userInfo: nil))
+                self.completion(.failure(NSError(domain: "PUMP_CHECK error, wrong serial number", code: 0, userInfo: nil)))
             }
         }
     }
@@ -448,7 +447,7 @@ extension PeripheralManager {
                 log.error("Invalid password")
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Invalid password", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "Invalid password", code: 0, userInfo: nil)))
                 }
                 return
             }
@@ -460,66 +459,7 @@ extension PeripheralManager {
     }
     
     private func promptPincode(_ errorMessage: String?) {
-        DispatchQueue.main.async {
-            let dialogMessage = UIAlertController(
-                title: LocalizedString("Dana-RS v3 found!", comment: "Dana-RS v3 found"),
-                message: errorMessage ?? LocalizedString("Pincode required", comment: "Dana-RS v3 pincode prompt body"),
-                preferredStyle: .alert)
-            
-            dialogMessage.addTextField(configurationHandler: { textField in
-                textField.placeholder = LocalizedString("Pin 1", comment: "Dana-RS v3 pincode prompt pin 1")
-            })
-            
-            dialogMessage.addTextField(configurationHandler: { textField in
-                textField.placeholder = LocalizedString("Pin 2", comment: "Dana-RS v3 pincode prompt pin 2")
-            })
-            
-            dialogMessage.addAction(UIAlertAction(
-                title: LocalizedString("Oke", comment: "Dana-RS v3 pincode prompt oke"),
-                style: .default,
-                handler: { _ in
-                    guard let pin1Str = dialogMessage.textFields?[0].text, let pin2Str = dialogMessage.textFields?[1].text else {
-                        self.log.error("Missing textfields")
-                        return
-                    }
-                    
-                    guard pin1Str.count == 12, pin2Str.count == 8 else {
-                        self.promptPincode(LocalizedString("Received invalid pincode lengths. Try again", comment: "Dana-RS v3 pincode prompt error invalid length"))
-                        return
-                    }
-                    
-                    guard let pin1 = Data(hexString: pin1Str), let pin2 = Data(hexString: pin2Str) else {
-                        self.promptPincode(LocalizedString("Received invalid hex strings. Try again", comment: "Dana-RS v3 pincode prompt error invalid hex"))
-                        return
-                    }
-                    
-                    let randomPairingKey = pin2.prefix(3)
-                    let checkSum = pin2.dropFirst(3).prefix(1)
-                    
-                    var pairingKeyCheckSum: UInt8 = 0
-                    for byte in pin1 {
-                        pairingKeyCheckSum ^= byte
-                    }
-                    
-                    for byte in randomPairingKey {
-                        pairingKeyCheckSum ^= byte
-                    }
-                    
-                    guard checkSum.first == pairingKeyCheckSum else {
-                        self.promptPincode(LocalizedString("Checksum failed. Try again", comment: "Dana-RS v3 pincode prompt error checksum failed"))
-                        return
-                    }
-                    
-                    self.finishV3Pairing(pin1, randomPairingKey)
-                }
-            ))
-            
-            guard let view = UIApplication.shared.windows.last?.rootViewController else {
-                return
-            }
-            
-            view.present(dialogMessage, animated: true, completion: nil)
-        }
+        self.completion(.requestedPincode(errorMessage))
     }
     
     private func isOk(_ data: Data) -> Bool {
@@ -546,7 +486,7 @@ extension PeripheralManager {
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Failed to send keep connection", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "Failed to send keep connection", code: 0, userInfo: nil)))
                 }
                 return
             }
@@ -561,7 +501,7 @@ extension PeripheralManager {
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Failed to fetch Initial screen", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "Failed to fetch Initial screen", code: 0, userInfo: nil)))
                 }
                 return
             }
@@ -572,7 +512,7 @@ extension PeripheralManager {
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "No data received (initial screen)", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "No data received (initial screen)", code: 0, userInfo: nil)))
                 }
                 return
             }
@@ -585,7 +525,7 @@ extension PeripheralManager {
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Failed to fetch user options", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "Failed to fetch user options", code: 0, userInfo: nil)))
                 }
                 return
             }
@@ -595,33 +535,64 @@ extension PeripheralManager {
                 self.pumpManager.disconnect(self.connectedDevice)
                 
                 DispatchQueue.main.async {
-                    self.completion(NSError(domain: "No data received (user option)", code: 0, userInfo: nil))
+                    self.completion(.failure(NSError(domain: "No data received (user option)", code: 0, userInfo: nil)))
                 }
                 return
             }
             
 //            log.info("Getting pump time with timezone")
-            let timeUtcWithTimezonePacket = generatePacketGeneralGetPumpTimeUtcWithTimezone()
-            let resultTimeUtcWithTimezone = try await self.writeMessage(timeUtcWithTimezonePacket)
-            guard resultInitialScreenInformation.success else {
-                log.error("Failed to fetch pump time...")
-                self.pumpManager.disconnect(self.connectedDevice)
-                
-                DispatchQueue.main.async {
-                    self.completion(NSError(domain: "Failed to fetch pump time", code: 0, userInfo: nil))
+            let time: Date
+            if self.pumpManager.state.usingUtc {
+                // Only the Dana-i supports command with timezone...
+                let timeUtcWithTimezonePacket = generatePacketGeneralGetPumpTimeUtcWithTimezone()
+                let resultTimeUtcWithTimezone = try await self.writeMessage(timeUtcWithTimezonePacket)
+                guard resultTimeUtcWithTimezone.success else {
+                    log.error("Failed to fetch pump time with utc...")
+                    self.pumpManager.disconnect(self.connectedDevice)
+                    
+                    DispatchQueue.main.async {
+                        self.completion(.failure(NSError(domain: "Failed to fetch pump time with utc", code: 0, userInfo: nil)))
+                    }
+                    return
                 }
-                return
-            }
-            
-            
-            guard let dataTime = resultTimeUtcWithTimezone.data as? PacketGeneralGetPumpTimeUtcWithTimezone else {
-                log.error("No data received (time utc with timezone)...")
-                self.pumpManager.disconnect(self.connectedDevice)
                 
-                DispatchQueue.main.async {
-                    self.completion(NSError(domain: "No data received (time utc with timezone)", code: 0, userInfo: nil))
+                
+                guard let dataTime = resultTimeUtcWithTimezone.data as? PacketGeneralGetPumpTimeUtcWithTimezone else {
+                    log.error("No data received (time utc with timezone)...")
+                    self.pumpManager.disconnect(self.connectedDevice)
+                    
+                    DispatchQueue.main.async {
+                        self.completion(.failure(NSError(domain: "No data received (time utc with timezone)", code: 0, userInfo: nil)))
+                    }
+                    return
                 }
-                return
+                
+                time = dataTime.time
+            } else {
+                let timePacket = generatePacketGeneralGetPumpTime()
+                let resultTime = try await self.writeMessage(timePacket)
+                guard resultTime.success else {
+                    log.error("Failed to fetch pump time...")
+                    self.pumpManager.disconnect(self.connectedDevice)
+                    
+                    DispatchQueue.main.async {
+                        self.completion(.failure(NSError(domain: "Failed to fetch pump time", code: 0, userInfo: nil)))
+                    }
+                    return
+                }
+                
+                
+                guard let dataTime = resultTime.data as? PacketGeneralGetPumpTime else {
+                    log.error("No data received (time utc with timezone)...")
+                    self.pumpManager.disconnect(self.connectedDevice)
+                    
+                    DispatchQueue.main.async {
+                        self.completion(.failure(NSError(domain: "No data received (time)", code: 0, userInfo: nil)))
+                    }
+                    return
+                }
+                
+                time = dataTime.time
             }
             
             self.pumpManager.state.reservoirLevel = data.reservoirRemainingUnits
@@ -651,20 +622,20 @@ extension PeripheralManager {
             self.pumpManager.state.targetBg = dataUserOption.targetBg
             self.pumpManager.state.units = dataUserOption.units
             self.pumpManager.state.bolusState = .noBolus
-            self.pumpManager.state.pumpTime = dataTime.time
+            self.pumpManager.state.pumpTime = time
             self.pumpManager.notifyStateDidChange()
             
             log.info("Connection and encryption successful!")
             
             DispatchQueue.main.async {
-                self.completion(nil)
+                self.completion(.success)
                 self.completion = { _ in }
             }
         } catch {
             log.error("Caught error during sending the message. error: \(error.localizedDescription)")
             self.pumpManager.disconnect(self.connectedDevice)
             DispatchQueue.main.async {
-                self.completion(error)
+                self.completion(.failure(error))
             }
         }
     }
@@ -772,7 +743,7 @@ extension PeripheralManager {
     }
     
     private func processMessage(_ data: Data) {
-        let message = parseMessage(data: data)
+        let message = parseMessage(data: data, usingUtc: self.pumpManager.state.usingUtc)
         guard let message = message else {
             log.error("Received unparsable message. Data: \(data.base64EncodedString())")
             return

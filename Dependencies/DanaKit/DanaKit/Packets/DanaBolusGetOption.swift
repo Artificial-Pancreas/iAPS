@@ -34,7 +34,7 @@ func generatePacketBolusGetOption() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__GET_BOLUS_OPTION, data: nil)
 }
 
-func parsePacketBolusGetOption(data: Data) -> DanaParsePacket<PacketBolusGetOption> {
+func parsePacketBolusGetOption(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketBolusGetOption> {
     let isExtendedBolusEnabled = data[DataStart] == 1
 
     return DanaParsePacket(success: isExtendedBolusEnabled, rawData: data, data: PacketBolusGetOption(

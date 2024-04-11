@@ -12,7 +12,7 @@ struct PacketNotifyDeliveryComplete {
 
 let CommandNotifyDeliveryComplete: UInt16 = (UInt16(DanaPacketType.TYPE_NOTIFY & 0xff) << 8) + UInt16(DanaPacketType.OPCODE_NOTIFY__DELIVERY_COMPLETE & 0xff)
 
-func parsePacketNotifyDeliveryComplete(data: Data) -> DanaParsePacket<PacketNotifyDeliveryComplete> {
+func parsePacketNotifyDeliveryComplete(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketNotifyDeliveryComplete> {
     return DanaParsePacket(
         success: true,
         notifyType: CommandNotifyDeliveryComplete,

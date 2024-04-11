@@ -52,7 +52,7 @@ func generatePacketGeneralSetUserOption(options: PacketGeneralSetUserOption) -> 
     )
 }
 
-func parsePacketGeneralSetUserOption(data: Data) -> DanaParsePacket<Any> {
+func parsePacketGeneralSetUserOption(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(
         success: data[DataStart] == 0,
         rawData: data,

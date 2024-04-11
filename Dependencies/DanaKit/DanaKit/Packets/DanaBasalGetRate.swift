@@ -18,7 +18,7 @@ func generatePacketBasalGetRate() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BASAL__GET_BASAL_RATE, data: nil)
 }
 
-func parsePacketBasalGetRate(data: Data) -> DanaParsePacket<PacketBasalGetRate> {
+func parsePacketBasalGetRate(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketBasalGetRate> {
     let maxBasal = Double(data.uint16(at: DataStart)) / 100.0
     let basalStep = Double(data[DataStart + 2]) / 100.0
 

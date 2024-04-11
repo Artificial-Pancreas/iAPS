@@ -23,7 +23,7 @@ func generatePacketBolusGetCalculationInformation() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__GET_CALCULATION_INFORMATION, data: nil)
 }
 
-func parsePacketBolusGetCalculationInformation(data: Data) -> DanaParsePacket<PacketBolusGetCalculationInformation> {
+func parsePacketBolusGetCalculationInformation(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketBolusGetCalculationInformation> {
     let currentBg = data.uint16(at: DataStart + 1)
     let carbohydrate = data.uint16(at: DataStart + 3)
     let currentTarget = data.uint16(at: DataStart + 5)

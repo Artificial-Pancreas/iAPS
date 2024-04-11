@@ -19,7 +19,7 @@ func generatePacketGeneralGetPumpDecRatio() -> DanaGeneratePacket {
     )
 }
 
-func parsePacketGeneralGetPumpDecRatio(data: Data) -> DanaParsePacket<PacketGeneralGetPumpDecRatio> {
+func parsePacketGeneralGetPumpDecRatio(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetPumpDecRatio> {
     return DanaParsePacket(
         success: true,
         rawData: data,

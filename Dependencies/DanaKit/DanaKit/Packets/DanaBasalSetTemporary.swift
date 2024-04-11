@@ -22,6 +22,6 @@ func generatePacketBasalSetTemporary(options: PacketBasalSetTemporary) -> DanaGe
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BASAL__SET_TEMPORARY_BASAL, data: data)
 }
 
-func parsePacketBasalSetTemporary(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBasalSetTemporary(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

@@ -12,6 +12,6 @@ func generatePacketBasalSetSuspendOn() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BASAL__SET_SUSPEND_ON, data: nil)
 }
 
-func parsePacketBasalSetSuspendOn(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBasalSetSuspendOn(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

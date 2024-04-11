@@ -12,7 +12,7 @@ struct PacketNotifyAlarm {
 
 let CommandNotifyAlarm: UInt16 = (UInt16(DanaPacketType.TYPE_NOTIFY & 0xff) << 8) + UInt16(DanaPacketType.OPCODE_NOTIFY__ALARM & 0xff)
 
-func parsePacketNotifyAlarm(data: Data) -> DanaParsePacket<PacketNotifyAlarm> {
+func parsePacketNotifyAlarm(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketNotifyAlarm> {
     let DANA_NOTIFY_ALARM: [Int: PumpManagerAlert] = [
         0x01: PumpManagerAlert.batteryZeroPercent(data),
         0x02: PumpManagerAlert.pumpError(data),

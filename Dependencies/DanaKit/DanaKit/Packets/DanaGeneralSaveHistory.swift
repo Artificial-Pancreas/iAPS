@@ -30,7 +30,7 @@ func generatePacketGeneralSaveHistory(options: PacketGeneralSaveHistory) -> Dana
     )
 }
 
-func parsePacketGeneralSaveHistory(data: Data) -> DanaParsePacket<Any> {
+func parsePacketGeneralSaveHistory(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(
         success: data[DataStart] == 0,
         rawData: data,

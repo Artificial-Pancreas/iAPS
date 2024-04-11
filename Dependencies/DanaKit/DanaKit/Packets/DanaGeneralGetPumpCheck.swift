@@ -18,7 +18,7 @@ func generatePacketGeneralGetPumpCheck() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_REVIEW__GET_PUMP_CHECK, data: nil)
 }
 
-func parsePacketGeneralGetPumpCheck(data: Data) -> DanaParsePacket<PacketGeneralGetPumpCheck> {
+func parsePacketGeneralGetPumpCheck(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetPumpCheck> {
     return DanaParsePacket(
         success: data[4] < 4, // Unsupported hardware...
         rawData: data,

@@ -22,7 +22,7 @@ func generatePacketBolusGet24CIRCFArray() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__GET_24_CIR_CF_ARRAY, data: nil)
 }
 
-func parsePacketBolusGet24CIRCFArray(data: Data) -> DanaParsePacket<PacketBolusGet24CIRCFArray> {
+func parsePacketBolusGet24CIRCFArray(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketBolusGet24CIRCFArray> {
     var isf: [UInt16] = []
     var ic: [UInt16] = []
     let unit = data[DataStart]

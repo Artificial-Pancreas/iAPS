@@ -32,7 +32,7 @@ func generatePacketLoopHistoryEvents(options: PacketLoopHistoryEvents) -> DanaGe
     )
 }
 
-func parsePacketLoopHistoryEvents(data: Data) -> DanaParsePacket<Any> {
+func parsePacketLoopHistoryEvents(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     // Implement the parse logic as needed
     fatalError("Not implemented")
 }

@@ -38,7 +38,7 @@
 "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Eşleştirme işlemi sırasında, DanaRS v3&#39;ünüz bir eşleştirme istemi gösterecek, iPhone&#39;unuz ise iki eşleştirme kodu istemi gösterecektir. Pompanızda Tamam&#39;ı seçin ve iPhone&#39;unuza iki kodu yazın. Bundan sonra Loop, DanaRS v3&#39;ünüzle iletişim kurmaya hazırdır"
 
 /* Title for dana-i explaination */
-"Setting up Dana-i" = "Dana-i&#39;yi ayarlama"
+"Setting up Dana-i" = "Dana-i&#39;yi kurma"
 
 /* General subtext for dana */
 "After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "İnsülin tipini ve bolus hızını ayarladıktan sonra bulunan tüm Dana pompalarını içeren bir ekran göreceksiniz. Döngüye bağlamak istediğiniz pompayı seçin."
@@ -52,8 +52,14 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "TAMAM"
 
+/* Cancel button title */
+"Cancel" = "İptal etmek"
+
 /* Dana-i/RS connecting alert title */
-"Connecting to device" = "Cihaza bağlanılıyor"
+"Scanning" = "Tarama"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "Bağlanıyor"
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Bu pompada kullanacağınız insülin tipini seçin"
@@ -90,9 +96,6 @@
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "Geçersiz onaltılı dizeler alındı. Tekrar deneyin"
-
-/* Dana-RS v3 pincode prompt oke */
-"OK" = "Oke"
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Sağlama toplamı başarısız oldu. Tekrar deneyin"

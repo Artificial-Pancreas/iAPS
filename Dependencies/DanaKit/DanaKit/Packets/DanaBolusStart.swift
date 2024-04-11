@@ -53,6 +53,6 @@ func generatePacketBolusStart(options: PacketBolusStart) -> DanaGeneratePacket {
  * 0x40 => Speed error
  * 0x80 => Insulin limit violation
  */
-func parsePacketBolusStart(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBolusStart(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

@@ -44,6 +44,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.tempBasalUnits = rawValue["tempBasalUnits"] as? Double
         self.tempBasalDuration = rawValue["tempBasalDuration"] as? Double
         self.ble5Keys = rawValue["ble5Keys"] as? Data ?? Data([0, 0, 0, 0, 0, 0])
+        self.pairingKey = rawValue["pairingKey"] as? Data ?? Data([0, 0, 0, 0, 0, 0])
+        self.randomPairingKey = rawValue["randomPairingKey"] as? Data ?? Data([0, 0, 0])
+        self.randomSyncKey = rawValue["randomSyncKey"] as? UInt8 ?? 0
         self.isTimeDisplay24H = rawValue["isTimeDisplay24H"] as? Bool ?? false
         self.isButtonScrollOnOff = rawValue["isButtonScrollOnOff"] as? Bool ?? false
         self.lcdOnTimeInSec = rawValue["lcdOnTimeInSec"] as? UInt8 ?? 0
@@ -58,7 +61,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.useSilentTones = rawValue["useSilentTones"] as? Bool ?? true
         self.batteryRemaining = rawValue["batteryRemaining"] as? Double ?? 0
         self.basalProfileNumber = rawValue["basalProfileNumber"] as? UInt8 ?? 0
-        self.cannulaDate = rawValue["cannulaDate"] as? Date
+        self.cannulaDate = rawValue["cannulaDate2"] as? Date
+        self.reservoirDate = rawValue["reservoirDate"] as? Date
         
         if let bolusSpeedRaw = rawValue["bolusSpeed"] as? BolusSpeed.RawValue {
             bolusSpeed = BolusSpeed(rawValue: bolusSpeedRaw) ?? .speed12
@@ -104,6 +108,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.bolusState = .noBolus
         self.basalSchedule = basalSchedule ?? []
         self.ble5Keys = Data([0, 0, 0, 0, 0, 0])
+        self.pairingKey = Data([0, 0, 0, 0, 0, 0])
+        self.randomPairingKey = Data([0, 0, 0])
+        self.randomSyncKey = 0
         self.basalDeliveryOrdinal = .active
         self.isTimeDisplay24H = false
         self.isButtonScrollOnOff = false
@@ -147,6 +154,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["tempBasalUnits"] = self.tempBasalUnits
         value["tempBasalDuration"] = self.tempBasalDuration
         value["ble5Keys"] = self.ble5Keys
+        value["pairingKey"] = self.pairingKey
+        value["randomPairingKey"] = self.randomPairingKey
+        value["randomSyncKey"] = self.randomSyncKey
         value["isTimeDisplay24H"] = self.isTimeDisplay24H
         value["isButtonScrollOnOff"] = self.isButtonScrollOnOff
         value["beepAndAlarm"] = self.beepAndAlarm.rawValue
@@ -161,7 +171,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["useSilentTones"] = self.useSilentTones
         value["batteryRemaining"] = self.batteryRemaining
         value["basalProfileNumber"] = self.basalProfileNumber
-        value["cannulaDate"] = self.cannulaDate
+        value["cannulaDate2"] = self.cannulaDate // Migration to new value
+        value["reservoirDate"] = self.reservoirDate
         
         return value
     }
@@ -185,6 +196,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     /// The hardware model of the pump. Dertermines the friendly device name
     public var hwModel: UInt8 = 0x00
+    public var usingUtc: Bool {
+        hwModel >= 7
+    }
     
     /// Pump protocol
     public var pumpProtocol: UInt8 = 0x00
@@ -211,6 +225,10 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     public var ble5Keys: Data = Data([0, 0, 0, 0, 0, 0])
     
+    public var pairingKey: Data = Data([0, 0, 0, 0, 0, 0])
+    public var randomPairingKey: Data = Data([0, 0, 0])
+    public var randomSyncKey: UInt8 = 0
+    
     public var pumpTime: Date? {
         didSet {
             pumpTimeSyncedAt = Date.now
@@ -220,6 +238,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     public var basalProfileNumber: UInt8 = 0
     
+    public var reservoirDate: Date?
     public var cannulaDate: Date?
     
     /// User options

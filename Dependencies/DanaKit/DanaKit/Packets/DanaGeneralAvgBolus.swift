@@ -20,7 +20,7 @@ func generatePacketGeneralAvgBolus() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_REVIEW__BOLUS_AVG, data: nil)
 }
 
-func parsePacketGeneralAvgBolus(data: Data) -> DanaParsePacket<PacketGeneralAvgBolus> {
+func parsePacketGeneralAvgBolus(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralAvgBolus> {
     let checkValue = (Double(1 & (0x000000ff << 8)) + Double(1 & 0x000000ff)) / 100
 
     let bolusAvg03days = Double(data.uint16(at: DataStart)) / 100

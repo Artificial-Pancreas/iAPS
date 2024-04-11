@@ -14,7 +14,7 @@ let CommandGeneralSetPumpTime: UInt16 = (UInt16(DanaPacketType.TYPE_RESPONSE & 0
 
 func generatePacketGeneralSetPumpTime(options: PacketGeneralSetPumpTime) -> DanaGeneratePacket {
     var data = Data(count: 6)
-    data.addDate(at: 0, date: options.time)
+    data.addDate(at: 0, date: options.time, utc: false)
 
     return DanaGeneratePacket(
         opCode: DanaPacketType.OPCODE_OPTION__SET_PUMP_TIME,
@@ -22,7 +22,7 @@ func generatePacketGeneralSetPumpTime(options: PacketGeneralSetPumpTime) -> Dana
     )
 }
 
-func parsePacketGeneralSetPumpTime(data: Data) -> DanaParsePacket<Any> {
+func parsePacketGeneralSetPumpTime(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(
         success: data[DataStart] == 0,
         rawData: data,

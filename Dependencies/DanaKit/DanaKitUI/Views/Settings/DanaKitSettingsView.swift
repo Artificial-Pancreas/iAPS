@@ -120,11 +120,22 @@ struct DanaKitSettingsView: View {
                         .foregroundColor(.secondary)
                 }
                 
-                HStack {
-                    Text(LocalizedString("Cannula age", comment: "Text for cannula age")).foregroundColor(Color.primary)
-                    Spacer()
-                    Text(String(viewModel.cannulaAge))
-                        .foregroundColor(.secondary)
+                if (viewModel.reservoirAge != nil) {
+                    HStack {
+                        Text(LocalizedString("Reservoir age", comment: "Text for reservoir age")).foregroundColor(Color.primary)
+                        Spacer()
+                        Text(String(viewModel.reservoirAge!))
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                if (viewModel.cannulaAge != nil) {
+                    HStack {
+                        Text(LocalizedString("Cannula age", comment: "Text for cannula age")).foregroundColor(Color.primary)
+                        Spacer()
+                        Text(String(viewModel.cannulaAge!))
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
             

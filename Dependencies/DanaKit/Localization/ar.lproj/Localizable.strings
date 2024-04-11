@@ -52,8 +52,14 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "نعم"
 
+/* Cancel button title */
+"Cancel" = "يلغي"
+
 /* Dana-i/RS connecting alert title */
-"Connecting to device" = "متصل بجهاز"
+"Scanning" = "يتم المسح"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "توصيل"
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "حدد نوع الأنسولين الذي ستستخدمه في هذه المضخة"
@@ -90,9 +96,6 @@
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "تم تلقي سلاسل سداسية عشرية غير صالحة. حاول ثانية"
-
-/* Dana-RS v3 pincode prompt oke */
-"OK" = "Oke"
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "فشل المجموع الاختباري. حاول ثانية"
@@ -401,7 +404,7 @@
 "Signal Loss" = "فقدان الإشارة"
 
 /* Text for Day unit */
-"day(s)" = "أيام"
+"day(s)" = "أيام)"
 
 /* Text for cannula age */
 "Cannula age" = "عمر القنية"

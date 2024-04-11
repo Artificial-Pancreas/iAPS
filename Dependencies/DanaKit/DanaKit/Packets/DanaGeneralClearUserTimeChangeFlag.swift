@@ -12,6 +12,6 @@ func generatePacketGeneralClearUserTimeChangeFlag() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_REVIEW__SET_USER_TIME_CHANGE_FLAG_CLEAR, data: nil)
 }
 
-func parsePacketGeneralClearUserTimeChangeFlag(data: Data) -> DanaParsePacket<Any> {
+func parsePacketGeneralClearUserTimeChangeFlag(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

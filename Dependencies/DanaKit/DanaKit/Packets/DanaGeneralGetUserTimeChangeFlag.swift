@@ -19,7 +19,7 @@ func generatePacketGeneralGetUserTimeChangeFlag() -> DanaGeneratePacket {
     )
 }
 
-func parsePacketGeneralGetUserTimeChangeFlag(data: Data) -> DanaParsePacket<PacketGeneralGetUserTimeChangeFlag> {
+func parsePacketGeneralGetUserTimeChangeFlag(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetUserTimeChangeFlag> {
     guard data.count >= 3 else {
         return DanaParsePacket(
             success: false,

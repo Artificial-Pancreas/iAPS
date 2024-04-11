@@ -6,21 +6,21 @@
 //  Copyright © 2023 Randall Knutson. All rights reserved.
 //
 
-func parseMessage(data: Data) -> (any DanaParsePacketProtocol)? {
+func parseMessage(data: Data, usingUtc: Bool) -> (any DanaParsePacketProtocol)? {
     let receivedCommand = (UInt16(data[TypeIndex] & 0xff) << 8) + UInt16(data[OpCodeIndex] & 0xff)
 
     guard let parser = findMessageParser[receivedCommand] else {
         return nil
     }
 
-    var parsedResult = parser(data) as! (any DanaParsePacketProtocol)
+    var parsedResult = parser(data, usingUtc) as! (any DanaParsePacketProtocol)
     parsedResult.command = receivedCommand
     parsedResult.opCode = data[OpCodeIndex] & 0xff
 
     return parsedResult
 }
 
-let findMessageParser: [UInt16: (Data) -> Any] = [
+let findMessageParser: [UInt16: (Data, Bool?) -> Any] = [
     CommandBasalCancelTemporary: parsePacketBasalCancelTemporary,
     CommandBasalGetProfileNumber: parsePacketBasalGetProfileNumber,
     CommandBasalGetRate: parsePacketBasalGetRate,

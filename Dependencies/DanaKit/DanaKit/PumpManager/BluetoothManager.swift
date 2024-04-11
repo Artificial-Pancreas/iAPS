@@ -8,7 +8,13 @@
 
 import CoreBluetooth
 import Foundation
-import os.log
+
+public enum ConnectionResult {
+    case success
+    case requestedPincode(String?)
+    case invalidBle5Keys
+    case failure(Error)
+}
 
 public struct DanaPumpScan {
     let bleIdentifier: String
@@ -36,7 +42,7 @@ class BluetoothManager : NSObject {
     private(set) var peripheral: CBPeripheral?
     private var peripheralManager: PeripheralManager?
     
-    private var connectionCompletion: ((Error?) -> Void)?
+    private var connectionCompletion: ((ConnectionResult) -> Void)?
     
     private var devices: [DanaPumpScan] = []
     
@@ -75,7 +81,7 @@ class BluetoothManager : NSObject {
         log.info("Stopped scanning")
     }
     
-    func connect(_ bleIdentifier: String, _ completion: @escaping (Error?) -> Void) throws {
+    func connect(_ bleIdentifier: String, _ completion: @escaping (ConnectionResult) -> Void) throws {
         guard let identifier = UUID(uuidString: bleIdentifier) else {
             log.error("Invalid identifier - \(bleIdentifier)")
             return
@@ -107,7 +113,7 @@ class BluetoothManager : NSObject {
         }
     }
     
-    func connect(_ peripheral: CBPeripheral, _ completion: @escaping (Error?) -> Void) {
+    func connect(_ peripheral: CBPeripheral, _ completion: @escaping (ConnectionResult) -> Void) {
         if self.peripheral != nil {
             self.disconnect(self.peripheral!)
         }
@@ -139,6 +145,10 @@ class BluetoothManager : NSObject {
     
     func resetConnectionCompletion() {
         self.connectionCompletion = nil
+    }
+    
+    func finishV3Pairing(_ pairingKey: Data, _ randomPairingKey: Data) {
+        peripheralManager?.finishV3Pairing(pairingKey, randomPairingKey)
     }
 }
 

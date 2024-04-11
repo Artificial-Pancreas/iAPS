@@ -52,8 +52,14 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "OK"
 
+/* Cancel button title */
+"Cancel" = "Zrušiť"
+
 /* Dana-i/RS connecting alert title */
-"Connecting to device" = "Pripája sa k zariadeniu"
+"Scanning" = "Skenovanie"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "Pripája sa"
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Vyberte typ inzulínu, ktorý budete v tejto pumpe používať"
@@ -90,9 +96,6 @@
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "Prijaté neplatné hexadecimálne reťazce. Skúste to znova"
-
-/* Dana-RS v3 pincode prompt oke */
-"OK" = "Oke"
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Kontrolný súčet zlyhal. Skúste to znova"
@@ -401,7 +404,7 @@
 "Signal Loss" = "Strata signálu"
 
 /* Text for Day unit */
-"day(s)" = "dni"
+"day(s)" = "dni)"
 
 /* Text for cannula age */
 "Cannula age" = "Vek kanyly"

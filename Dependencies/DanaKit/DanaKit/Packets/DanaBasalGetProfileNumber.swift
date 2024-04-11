@@ -16,6 +16,6 @@ func generatePacketBasalGetProfileNumber() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BASAL__GET_PROFILE_BASAL_RATE, data: nil)
 }
 
-func parsePacketBasalGetProfileNumber(data: Data) -> DanaParsePacket<PacketBasalGetProfileNumber> {
+func parsePacketBasalGetProfileNumber(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketBasalGetProfileNumber> {
     return DanaParsePacket(success: true, rawData: data, data: PacketBasalGetProfileNumber(activeProfile: data[DataStart]))
 }

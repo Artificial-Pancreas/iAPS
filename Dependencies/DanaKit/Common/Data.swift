@@ -30,9 +30,15 @@ extension Data {
         return UInt16(littleEndian: value)
     }
     
-    mutating func addDate(at index: Int, date: Date) {
+    mutating func addDate(at index: Int, date: Date, utc: Bool = true) {
+        var date = date
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: "UTC")!
+        
+        if !utc {
+            let delta = TimeInterval(TimeZone.current.secondsFromGMT(for: date) - TimeZone(identifier: "UTC")!.secondsFromGMT(for: date))
+            date = date.addingTimeInterval(delta)
+        }
         
         self[index] = UInt8((calendar.component(.year, from: date) - 2000) & 0xff)
         self[index + 1] = UInt8(calendar.component(.month, from: date) & 0xff)
@@ -42,7 +48,7 @@ extension Data {
         self[index + 5] = UInt8(calendar.component(.second, from: date) & 0xff)
     }
     
-    func date(at index: Int) -> Date {
+    func date(at index: Int, _ usingUtc: Bool) -> Date {
         let year = 2000 + Int(self[index])
         let month = Int(self[index + 1])
         let day = Int(self[index + 2])
@@ -58,9 +64,13 @@ extension Data {
         components.minute = min
         components.second = sec
 
-        let utcTimeZone = TimeZone(identifier: "UTC")!
         var calendar = Calendar.current
-        calendar.timeZone = utcTimeZone
+        if usingUtc {
+            calendar.timeZone = TimeZone(identifier: "UTC")!
+        } else {
+            calendar.timeZone = TimeZone.current
+        }
+        
         return calendar.date(from: components)!
     }
 }

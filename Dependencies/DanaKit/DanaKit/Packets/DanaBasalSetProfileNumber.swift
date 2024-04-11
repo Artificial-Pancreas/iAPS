@@ -17,6 +17,6 @@ func generatePacketBasalSetProfileNumber(options: PacketBasalSetProfileNumber) -
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BASAL__SET_PROFILE_NUMBER, data: data)
 }
 
-func parsePacketBasalSetProfileNumber(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBasalSetProfileNumber(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

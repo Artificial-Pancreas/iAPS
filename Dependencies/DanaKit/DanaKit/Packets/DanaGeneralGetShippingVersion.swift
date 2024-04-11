@@ -19,7 +19,7 @@ func generatePacketGeneralGetShippingVersion() -> DanaGeneratePacket {
     )
 }
 
-func parsePacketGeneralGetShippingVersion(data: Data) -> DanaParsePacket<PacketGeneralGetShippingVersion> {
+func parsePacketGeneralGetShippingVersion(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetShippingVersion> {
     return DanaParsePacket(
         success: true,
         rawData: data,

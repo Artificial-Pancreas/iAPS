@@ -55,6 +55,6 @@ func generatePacketBolusSetOption(options: PacketBolusSetOption) -> DanaGenerate
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__SET_BOLUS_OPTION, data: data)
 }
 
-func parsePacketBolusSetOption(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBolusSetOption(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }

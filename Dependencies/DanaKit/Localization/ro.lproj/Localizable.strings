@@ -52,8 +52,14 @@
 /* Dana-i oke invalid ble5 keys */
 "OK" = "Bine"
 
+/* Cancel button title */
+"Cancel" = "Anulare"
+
 /* Dana-i/RS connecting alert title */
-"Connecting to device" = "Conectarea la dispozitiv"
+"Scanning" = "Scanare"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "Conectare"
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Selectați tipul de insulină pe care îl veți folosi în această pompă"
@@ -90,9 +96,6 @@
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "S-au primit șiruri hexadecimale nevalide. Încearcă din nou"
-
-/* Dana-RS v3 pincode prompt oke */
-"OK" = "Oke"
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Suma de control a eșuat. Încearcă din nou"
@@ -268,7 +271,7 @@
 "12h notation" = "notație 12h"
 
 /* 24h */
-"24h notation" = "notație 24 de ore"
+"24h notation" = "Notație 24 de ore"
 
 /* Text for Scroll function */
 "Scroll function" = "Funcția de defilare"

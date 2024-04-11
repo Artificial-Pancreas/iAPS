@@ -28,7 +28,7 @@ func generatePacketGeneralGetInitialScreenInformation() -> DanaGeneratePacket {
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_REVIEW__INITIAL_SCREEN_INFORMATION, data: nil)
 }
 
-func parsePacketGeneralGetInitialScreenInformation(data: Data) -> DanaParsePacket<PacketGeneralGetInitialScreenInformation> {
+func parsePacketGeneralGetInitialScreenInformation(data: Data, usingUtc: Bool?) -> DanaParsePacket<PacketGeneralGetInitialScreenInformation> {
     if data.count < 17 {
         return DanaParsePacket(success: false, rawData: data, data: PacketGeneralGetInitialScreenInformation(
             isPumpSuspended: false,

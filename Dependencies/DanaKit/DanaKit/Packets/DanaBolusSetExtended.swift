@@ -22,6 +22,6 @@ func generatePacketBolusSetExtended(options: PacketBolusSetExtended) -> DanaGene
     return DanaGeneratePacket(opCode: DanaPacketType.OPCODE_BOLUS__SET_EXTENDED_BOLUS, data: data)
 }
 
-func parsePacketBolusSetExtended(data: Data) -> DanaParsePacket<Any> {
+func parsePacketBolusSetExtended(data: Data, usingUtc: Bool?) -> DanaParsePacket<Any> {
     return DanaParsePacket(success: data[DataStart] == 0, rawData: data, data: nil)
 }
