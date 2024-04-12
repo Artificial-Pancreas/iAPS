@@ -19,20 +19,19 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
     private var contacts: [ContactTrickEntry] = []
 
-    let coreDataStorage = CoreDataStorage()
+    private let coreDataStorage = CoreDataStorage()
 
     init(resolver: Resolver) {
         super.init()
         injectServices(resolver)
 
-        broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(SettingsObserver.self, observer: self)
 
         contacts = storage.retrieve(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self)
             ?? [ContactTrickEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick))
             ?? []
-        
+
         processQueue.async {
             self.renderContacts()
         }
@@ -40,7 +39,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
     func updateContacts(contacts: [ContactTrickEntry], completion: @escaping (Result<Void, Error>) -> Void) {
         self.contacts = contacts
-        
+
         processQueue.async {
             self.renderContacts()
             completion(.success(()))
@@ -58,13 +57,18 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         let suggestion: Suggestion? = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
 
         let state = ContactTrickState(
-            glucose: glucoseValues.glucose,
+            glucose: bgString(suggestion),
             trend: glucoseValues.trend,
             delta: glucoseValues.delta,
-            glucoseDate: readings.first?.date ?? .distantPast,
             lastLoopDate: suggestion?.timestamp,
             iob: suggestion?.iob,
+            iobText: suggestion?.iob.map { iob in
+                iobFormatter.string(from: iob as NSNumber)!
+            },
             cob: suggestion?.cob,
+            cobText: suggestion?.cob.map { cob in
+                cobFormatter.string(from: cob as NSNumber)!
+            },
             eventualBG: eventualBGString(suggestion),
             maxIOB: settingsManager.preferences.maxIOB,
             maxCOB: settingsManager.preferences.maxCOB
@@ -159,12 +163,22 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         return (glucoseText, directionText, deltaText)
     }
 
+    private func bgString(_ suggestion: Suggestion?) -> String? {
+        guard let bg = suggestion?.bg else {
+            return nil
+        }
+        let units = settingsManager.settings.units
+        return glucoseFormatter.string(
+            from: (units == .mmolL ? bg.asMmolL : bg) as NSNumber
+        )!
+    }
+
     private func eventualBGString(_ suggestion: Suggestion?) -> String? {
         guard let eventualBG = suggestion?.eventualBG else {
             return nil
         }
         let units = settingsManager.settings.units
-        return eventualFormatter.string(
+        return glucoseFormatter.string(
             from: (units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
         )!
     }
@@ -172,7 +186,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.locale = Locale(identifier: "en_US")
         formatter.maximumFractionDigits = 0
         if settingsManager.settings.units == .mmolL {
             formatter.minimumFractionDigits = 1
@@ -182,10 +195,20 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         return formatter
     }
 
-    private var eventualFormatter: NumberFormatter {
+    private var iobFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        formatter.roundingMode = .halfUp
+        return formatter
+    }
+
+    private var cobFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        formatter.roundingMode = .halfUp
         return formatter
     }
 
@@ -199,14 +222,9 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 }
 
 extension BaseContactTrickManager:
-    GlucoseObserver,
     SuggestionObserver,
     SettingsObserver
 {
-    func glucoseDidUpdate(_: [BloodGlucose]) {
-        renderContacts()
-    }
-
     func suggestionDidUpdate(_: Suggestion) {
         renderContacts()
     }

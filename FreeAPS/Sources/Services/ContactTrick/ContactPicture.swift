@@ -285,34 +285,45 @@ struct ContactPicture: View {
 
         guard value != .none else { return }
         if value == .ring {
-            drawRing(ring: .loop, contact: contact, state: state, rect: rect, strokeWidth: 10.0)
+            drawRing(
+                ring: .loop,
+                contact: contact,
+                state: state,
+                rect: CGRect(
+                    x: rect.minX + rect.width * 0.10,
+                    y: rect.minY + rect.height * 0.10,
+                    width: rect.width * 0.80,
+                    height: rect.height * 0.80
+                ),
+                strokeWidth: 10.0
+            )
             return
         }
-        let text: String? = switch value {
+        if let text = switch value {
         case .glucose: state.glucose
         case .eventualBG: state.eventualBG
         case .delta: state.delta
         case .trend: state.trend
-        case .glucoseDate: state.glucoseDate.map { formatter.string(from: $0) }
-        case .lastLoopDate: state.lastLoopDate.map { formatter.string(from: $0) }
-        case .cob: state.cob.map { $0.formatted() }
-        case .iob: state.iob.map { $0.formatted() }
+        case .lastLoopDate: state.lastLoopDate.map({ formatter.string(from: $0) })
+        case .cob: state.cobText
+        case .iob: state.iobText
         default: nil
+        } {
+            drawText(
+                text: text,
+                rect: rect,
+                fitHeigh: fitHeigh,
+                fontName: fontName,
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+                fontTracking: fontTracking,
+                color: color
+            )
         }
-        drawText(
-            text: text,
-            rect: rect,
-            fitHeigh: fitHeigh,
-            fontName: fontName,
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            fontTracking: fontTracking,
-            color: color
-        )
     }
 
     private static func drawText(
-        text: String?,
+        text: String,
         rect: CGRect,
         fitHeigh: Bool,
         fontName: String?,
@@ -338,24 +349,22 @@ struct ContactPicture: View {
 
         var attributes: [NSAttributedString.Key: Any] = makeAttributes(theFontSize)
 
-        if let text {
-            var stringSize = text.size(withAttributes: attributes)
-            while stringSize.width > rect.width * 0.90 || fitHeigh && (stringSize.height > rect.height * 0.95), theFontSize > 50 {
-                theFontSize = theFontSize - 10
-                attributes = makeAttributes(theFontSize)
-                stringSize = text.size(withAttributes: attributes)
-            }
-
-            text.draw(
-                in: CGRectMake(
-                    rect.minX + (rect.width - stringSize.width) / 2,
-                    rect.minY + (rect.height - stringSize.height) / 2,
-                    rect.minX + stringSize.width,
-                    rect.minY + stringSize.height
-                ),
-                withAttributes: attributes
-            )
+        var stringSize = text.size(withAttributes: attributes)
+        while stringSize.width > rect.width * 0.90 || fitHeigh && (stringSize.height > rect.height * 0.95), theFontSize > 50 {
+            theFontSize = theFontSize - 10
+            attributes = makeAttributes(theFontSize)
+            stringSize = text.size(withAttributes: attributes)
         }
+
+        text.draw(
+            in: CGRectMake(
+                rect.minX + (rect.width - stringSize.width) / 2,
+                rect.minY + (rect.height - stringSize.height) / 2,
+                rect.minX + stringSize.width,
+                rect.minY + stringSize.height
+            ),
+            withAttributes: attributes
+        )
     }
 
     private static func drawRing(
@@ -443,8 +452,8 @@ struct ContactPicture: View {
         strokeWidth: Double
     ) {
         if let progress1 = progress1 {
-            let startAngle1: CGFloat = .pi / 2 + .pi / 6
-            let endAngle1: CGFloat = 3 * .pi / 2 - .pi / 8
+            let startAngle1: CGFloat = .pi / 2 + .pi / 5
+            let endAngle1: CGFloat = 3 * .pi / 2 - .pi / 5
             drawGradientArc(
                 rect: rect,
                 progress: progress1,
@@ -456,8 +465,8 @@ struct ContactPicture: View {
             )
         }
         if let progress2 = progress2 {
-            let startAngle2: CGFloat = .pi / 2 - .pi / 6
-            let endAngle2: CGFloat = -.pi / 2 + .pi / 8
+            let startAngle2: CGFloat = .pi / 2 - .pi / 5
+            let endAngle2: CGFloat = -.pi / 2 + .pi / 5
             drawGradientArc(
                 rect: rect,
                 progress: progress2,
@@ -498,36 +507,55 @@ struct ContactPicture: View {
         let center = CGPoint(x: rect.midX, y: rect.midY)
         let radius = min(rect.width, rect.height) / 2 - strokeWidth / 2
 
-        // startAngle - The angle to the starting point of the arc, measured in radians from the positive x-axis.
-        // endAngle - The angle to the end point of the arc, measured in radians from the positive x-axis.
-        if startAngle > endAngle {
-            let progressAngle = startAngle - (startAngle - endAngle) * max(min(progress, 1.0), 0.0)
-            context.addArc(
-                center: center,
-                radius: radius,
-                startAngle: progressAngle,
-                endAngle: startAngle,
-                clockwise: false
-            )
-        } else {
-            let progressAngle = startAngle + (endAngle - startAngle) * max(min(progress, 1.0), 0.0)
-            context.addArc(
-                center: center,
-                radius: radius,
-                startAngle: startAngle,
-                endAngle: progressAngle,
-                clockwise: false
-            )
-        }
+        // angle - The angle to the starting point of the arc, measured in radians from the positive x-axis.
 
         context.setLineWidth(strokeWidth)
         context.setLineCap(.round)
-        let segmentPath = context.path!
-        context.strokePath()
-        context.saveGState()
-        context.addPath(segmentPath)
+
+        let circumference = 2 * .pi * radius
+        let offsetAngle = (strokeWidth / circumference * 1.1) * 2 * .pi
+
+        let (start, middle, end) = if startAngle > endAngle {
+            (
+                endAngle,
+                startAngle - (startAngle - endAngle) * max(min(progress, 1.0), 0.0),
+                startAngle
+            )
+        } else {
+            (
+                startAngle,
+                startAngle + (endAngle - startAngle) * max(min(progress, 1.0), 0.0),
+                endAngle
+            )
+        }
+
+        if start < middle - offsetAngle {
+            let arcPath1 = UIBezierPath()
+            arcPath1.addArc(
+                withCenter: center,
+                radius: radius,
+                startAngle: start,
+                endAngle: middle - offsetAngle,
+                clockwise: true
+            )
+            context.addPath(arcPath1.cgPath)
+        }
+
+        if middle + offsetAngle < end {
+            let arcPath2 = UIBezierPath()
+            arcPath2.addArc(
+                withCenter: center,
+                radius: radius,
+                startAngle: middle + offsetAngle,
+                endAngle: end,
+                clockwise: true
+            )
+            context.addPath(arcPath2.cgPath)
+        }
+
         context.replacePathWithStrokedPath()
         context.clip()
+
         switch gradientDirection {
         case .bottomToTop:
             context.drawLinearGradient(
@@ -545,6 +573,24 @@ struct ContactPicture: View {
                 options: []
             )
         }
+        context.resetClip()
+
+        let circleCenter = CGPoint(
+            x: center.x + radius * cos(middle),
+            y: center.y + radius * sin(middle)
+        )
+
+        context.setLineWidth(strokeWidth * 0.7)
+        context.setStrokeColor(UIColor.white.cgColor)
+        context.addArc(
+            center: circleCenter,
+            radius: 0,
+            startAngle: 0,
+            endAngle: .pi * 2,
+            clockwise: true
+        )
+        context.strokePath()
+
         context.restoreGState()
     }
 
@@ -640,7 +686,8 @@ struct ContactPicture_Previews: PreviewProvider {
                     glucose: "6.8",
                     trend: "↗︎",
                     delta: "+0.2",
-                    cob: 25
+                    cob: 25,
+                    cobText: "25"
                 ))
 
             ).previewDisplayName("bg + trend + delta")
@@ -659,6 +706,7 @@ struct ContactPicture_Previews: PreviewProvider {
                     glucose: "6.8",
                     trend: "↗︎",
                     iob: 6.1,
+                    iobText: "6.1",
                     maxIOB: 8.0
                 ))
             ).previewDisplayName("bg + trend + iob ring")
@@ -723,26 +771,6 @@ struct ContactPicture_Previews: PreviewProvider {
                 contact: .constant(
                     ContactTrickEntry(
                         ring1: .loop,
-                        primary: .glucoseDate,
-                        top: .none,
-                        bottom: .none,
-                        fontSize: 100,
-                        fontWeight: .medium
-                    )
-                ),
-                state: .constant(ContactTrickState(
-                    glucose: "6.8",
-                    trend: "↗︎",
-                    glucoseDate: .now - 3.minutes,
-                    lastLoopDate: .now
-                ))
-
-            ).previewDisplayName("glucoseDate + ring1")
-
-            ContactPicturePreview(
-                contact: .constant(
-                    ContactTrickEntry(
-                        ring1: .loop,
                         primary: .lastLoopDate,
                         top: .none,
                         bottom: .none,
@@ -774,6 +802,7 @@ struct ContactPicture_Previews: PreviewProvider {
                     glucose: "6.8",
                     lastLoopDate: .now,
                     iob: 6.1,
+                    iobText: "6.1",
                     maxIOB: 8.0
                 ))
 
@@ -791,10 +820,35 @@ struct ContactPicture_Previews: PreviewProvider {
                 ),
                 state: .constant(ContactTrickState(
                     iob: 1.5,
-                    cob: 25
+                    iobText: "1.5",
+                    cob: 25,
+                    cobText: "25"
                 ))
 
             ).previewDisplayName("iob + cob")
+
+            ContactPicturePreview(
+                contact: .constant(
+                    ContactTrickEntry(
+                        layout: .single,
+                        ring1: .iobcob,
+                        primary: .none,
+                        ringWidth: 8,
+                        ringGap: 3,
+                        fontSize: 100,
+                        fontWeight: .medium
+                    )
+                ),
+                state: .constant(ContactTrickState(
+                    iob: 1,
+                    iobText: "5.5",
+                    cob: 25,
+                    cobText: "25",
+                    maxIOB: 10,
+                    maxCOB: 120
+                ))
+
+            ).previewDisplayName("iobcob ring")
 
             ContactPicturePreview(
                 contact: .constant(
@@ -807,13 +861,36 @@ struct ContactPicture_Previews: PreviewProvider {
                     )
                 ),
                 state: .constant(ContactTrickState(
-                    iob: 5.5,
-                    cob: 25,
+                    iob: -0.2,
+                    iobText: "0.0",
+                    cob: 0,
+                    cobText: "0",
                     maxIOB: 10,
                     maxCOB: 120
                 ))
 
-            ).previewDisplayName("iobcob ring")
+            ).previewDisplayName("iobcob ring (0/0)")
+
+            ContactPicturePreview(
+                contact: .constant(
+                    ContactTrickEntry(
+                        layout: .single,
+                        ring1: .iobcob,
+                        primary: .none,
+                        fontSize: 100,
+                        fontWeight: .medium
+                    )
+                ),
+                state: .constant(ContactTrickState(
+                    iob: 10,
+                    iobText: "0.0",
+                    cob: 120,
+                    cobText: "0",
+                    maxIOB: 10,
+                    maxCOB: 120
+                ))
+
+            ).previewDisplayName("iobcob ring (max/max)")
 
             ContactPicturePreview(
                 contact: .constant(
@@ -830,7 +907,9 @@ struct ContactPicture_Previews: PreviewProvider {
                     glucose: "6.8",
                     trend: "↗︎",
                     iob: 5.5,
+                    iobText: "5.5",
                     cob: 25,
+                    cobText: "25",
                     maxIOB: 10,
                     maxCOB: 120
                 ))

@@ -8,7 +8,6 @@ enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
     case eventualBG
     case delta
     case trend
-    case glucoseDate
     case lastLoopDate
     case cob
     case iob
@@ -26,8 +25,6 @@ enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
             return NSLocalizedString("Delta", comment: "")
         case .trend:
             return NSLocalizedString("Trend", comment: "")
-        case .glucoseDate:
-            return NSLocalizedString("Glucose date", comment: "")
         case .lastLoopDate:
             return NSLocalizedString("Last loop date", comment: "")
         case .cob:
