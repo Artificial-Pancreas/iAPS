@@ -57,7 +57,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         let suggestion: Suggestion? = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
 
         let state = ContactTrickState(
-            glucose: bgString(suggestion),
+            glucose: glucoseValues.glucose,
             trend: glucoseValues.trend,
             delta: glucoseValues.delta,
             lastLoopDate: suggestion?.timestamp,
@@ -161,16 +161,6 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             } ?? "--"
 
         return (glucoseText, directionText, deltaText)
-    }
-
-    private func bgString(_ suggestion: Suggestion?) -> String? {
-        guard let bg = suggestion?.bg else {
-            return nil
-        }
-        let units = settingsManager.settings.units
-        return glucoseFormatter.string(
-            from: (units == .mmolL ? bg.asMmolL : bg) as NSNumber
-        )!
     }
 
     private func eventualBGString(_ suggestion: Suggestion?) -> String? {
