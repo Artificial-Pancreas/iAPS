@@ -69,13 +69,19 @@ public class DanaKitPumpManager: DeviceManager {
     
     private let basalIntervals: [TimeInterval] = Array(0..<24).map({ TimeInterval(60 * 60 * $0) })
     public var currentBaseBasalRate: Double {
+        guard self.state.basalSchedule.count > 0 else {
+            // Prevent crash if basalSchedule isnt set
+            return 0
+        }
+        
         let now = Date()
         let startOfDay = Calendar.current.startOfDay(for: now)
         let nowTimeInterval = now.timeIntervalSince(startOfDay)
         
         let index = (basalIntervals.firstIndex(where: { $0 > nowTimeInterval}) ?? 24) - 1
-        return self.state.basalSchedule[index]
+        return self.state.basalSchedule.indices.contains(index) ? self.state.basalSchedule[index] : 0
     }
+    
     public var status: PumpManagerStatus {
         return self.status(state)
     }
