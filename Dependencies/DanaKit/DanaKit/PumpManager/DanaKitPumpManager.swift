@@ -452,6 +452,7 @@ extension DanaKitPumpManager: PumpManager {
                             self.notifyStateDidChange()
                             self.disconnect()
                             
+                            self.log.error("Pump rejected command. Data: \(result.rawData.base64EncodedString())")
                             completion(PumpManagerError.uncertainDelivery)
                             return
                         }
@@ -1364,6 +1365,7 @@ extension DanaKitPumpManager {
         // There was a bolus going on, unsure if the bolus is completed...
         self.state.bolusState = .noBolus
         self.state.lastStatusDate = Date.now
+        self.doseEntry = nil
         self.notifyStateDidChange()
         
         self.pumpDelegate.notify { (delegate) in
