@@ -241,11 +241,11 @@ extension PeripheralManager {
     // 0x00 Start encryption, 0x01 Request pairing
     private func sendV3PairingInformationEmpty() {
         var (pairingKey, randomPairingKey) = DanaRSEncryption.getPairingKeys()
-        if pairingKey.isEmpty || randomPairingKey.isEmpty {
+        if pairingKey.filter({ $0 == 0 }).count == 0 || randomPairingKey.filter({ $0 == 0 }).count == 0 {
             pairingKey = self.pumpManager.state.pairingKey
             randomPairingKey = self.pumpManager.state.randomPairingKey
             
-            if pairingKey.isEmpty || randomPairingKey.isEmpty {
+            if pairingKey.filter({ $0 == 0 }).count == 0 || randomPairingKey.filter({ $0 == 0 }).count == 0 {
                 self.sendV3PairingInformation(1)
                 return
             }
