@@ -999,7 +999,7 @@ Enact a temp Basal or a temp target */
 "Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Bólusz mennyisége";
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
