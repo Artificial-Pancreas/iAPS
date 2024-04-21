@@ -20,7 +20,7 @@
 "Save Meal without bolus" = "Save Meal without bolus";
 
 /* Predictions and Meal summary part of the Bolus View. */
-"Status" = "Status";
+"Status" = "Állapot";
 
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount több mint a Max Bólus beállítás! \nBiztos, hogy hozzá szeretnéd adni ";
