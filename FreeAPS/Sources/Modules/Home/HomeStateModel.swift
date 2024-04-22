@@ -74,6 +74,7 @@ extension Home {
         @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = true
         @Published var timeSettings: Bool = true
+        @Published var dontUseBolusCalculator: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -118,6 +119,7 @@ extension Home {
             hours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
             timeSettings = settingsManager.settings.timeSettings
+            dontUseBolusCalculator = settingsManager.settings.dontUseBolusCalculator
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -532,6 +534,7 @@ extension Home.StateModel:
         hours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors
         timeSettings = settingsManager.settings.timeSettings
+        dontUseBolusCalculator = settingsManager.settings.dontUseBolusCalculator
         setupGlucose()
         setupOverrideHistory()
     }

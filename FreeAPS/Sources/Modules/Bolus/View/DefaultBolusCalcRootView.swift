@@ -8,7 +8,11 @@ extension Bolus {
         let resolver: Resolver
         let waitForSuggestion: Bool
         let fetch: Bool
+
         @StateObject var state = StateModel()
+
+        let meal: FetchedResults<Meals>
+        let mealEntries: any View
 
         @State private var isAddInsulinAlertPresented = false
         @State private var presentInfo = false
@@ -19,11 +23,6 @@ extension Bolus {
 
         @Environment(\.colorScheme) var colorScheme
         @FocusState private var isFocused: Bool
-
-        @FetchRequest(
-            entity: Meals.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]
-        ) var meal: FetchedResults<Meals>
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -43,15 +42,11 @@ extension Bolus {
                 Section {
                     if state.waitForSuggestion {
                         Text("Please wait")
-                    } else {
-                        predictionChart
-                    }
+                    } else { predictionChart }
                 } header: { Text("Status") }
 
                 if fetch {
-                    Section {
-                        mealEntries
-                    } // header: { Text("Meal Summary") }
+                    Section { mealEntries.asAny() }
                 }
 
                 Section {
@@ -195,7 +190,7 @@ extension Bolus {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
                 leading: Button {
-                    carbsView()
+                    keepForNextWiew = state.carbsView(fetch: fetch, hasFatOrProtein: hasFatOrProtein, mealSummary: meal)
                 }
                 label: {
                     HStack {
@@ -230,51 +225,6 @@ extension Bolus {
 
         var hasFatOrProtein: Bool {
             ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
-        }
-
-        func carbsView() {
-            if fetch {
-                keepForNextWiew = true
-                state.backToCarbsView(complexEntry: hasFatOrProtein, meal, override: false, deleteNothing: false, editMode: true)
-            } else {
-                state.backToCarbsView(complexEntry: false, meal, override: true, deleteNothing: true, editMode: false)
-            }
-        }
-
-        var mealEntries: some View {
-            VStack {
-                if let carbs = meal.first?.carbs, carbs > 0 {
-                    HStack {
-                        Text("Carbs")
-                        Spacer()
-                        Text(carbs.formatted())
-                        Text("g")
-                    }.foregroundColor(.secondary)
-                }
-                if let fat = meal.first?.fat, fat > 0 {
-                    HStack {
-                        Text("Fat")
-                        Spacer()
-                        Text(fat.formatted())
-                        Text("g")
-                    }.foregroundColor(.secondary)
-                }
-                if let protein = meal.first?.protein, protein > 0 {
-                    HStack {
-                        Text("Protein")
-                        Spacer()
-                        Text(protein.formatted())
-                        Text("g")
-                    }.foregroundColor(.secondary)
-                }
-                if let note = meal.first?.note, note != "" {
-                    HStack {
-                        Text("Note")
-                        Spacer()
-                        Text(note)
-                    }.foregroundColor(.secondary)
-                }
-            }
         }
 
         var bolusInfo: some View {

@@ -17,10 +17,10 @@
 "Continue without bolus" = "Folytatás bólus nélkül";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Mentsd el az ételt bólusz nélkül";
 
 /* Predictions and Meal summary part of the Bolus View. */
-"Status" = "Status";
+"Status" = "Állapot";
 
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount több mint a Max Bólus beállítás! \nBiztos, hogy hozzá szeretnéd adni ";
@@ -65,13 +65,13 @@
 "Agree and continue" = "Elfogadás és folytatás";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "-ból";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "Távoli Bólusz ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "volt beadva";
 
 /* Remote Bolus Alert, Part 3 */
 " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
@@ -182,7 +182,7 @@
 "Delete preset \"%@\"" = "Törölni az előre definiált \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Időtartam";
 
 /*  */
 "Enact Temp Target" = "Átmeneti cél bekapcsolása";
@@ -215,7 +215,7 @@
 "Presets" = "Előbeállítások";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Elment";
 
 /*  */
 "Save as Preset" = "Save as Preset";
@@ -278,13 +278,13 @@
 "Basal Profile" = "Bázis Profil";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Mérték";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Elmentés a pumpán";
 
 /*  */
-"Saving..." = "Saving...";
+"Saving..." = "Mentés...";
 
 /*  */
 "Schedule" = "Ütemezés";
@@ -333,7 +333,7 @@ Enact a temp Basal or a temp target */
 "Enact" = "Beadni";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "Indítás";
 
 /* */
 "Manual Temp Basal" = "Átmeneti Kézi Bázis";
@@ -966,19 +966,19 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Unit override";
 
 /* */
-"Low" = "Low";
+"Low" = "Alacsony";
 
 /* */
-"High" = "High";
+"High" = "Magas";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Nagyon Magas";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Nagyon Alacsony";
 
 /* */
-"glucose" = "glucose";
+"glucose" = "glukóz";
 
 /* Bolus shortcut */
 "Enter a Bolus Amount" = "Enter a Bolus Amount";
@@ -999,7 +999,7 @@ Enact a temp Basal or a temp target */
 "Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Bólusz mennyisége";
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
@@ -1011,7 +1011,7 @@ Enact a temp Basal or a temp target */
 "Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
 
 /* Bolus shortcut. Error */
-"not available" = "not available";
+"not available" = "nem elérhető";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Activate an Override Preset";
@@ -1254,7 +1254,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
 
 /* */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Elmentés a pumpán";
 
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
@@ -1445,6 +1445,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Save as Profile";
 
+/* */
+"Save as preset" = "Save as preset";
+
 /* Alert */
 "Cancel Profile Override" = "Cancel Profile Override?";
 
@@ -1617,10 +1620,10 @@ Enact a temp Basal or a temp target */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Saving...";
+"Saving..." = "Mentés...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Save";
+"Save" = "Elment";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
@@ -1673,7 +1676,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Mérték";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -1760,10 +1763,10 @@ Enact a temp Basal or a temp target */
 "Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Low";
+"Low" = "Alacsony";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "High";
+"High" = "Magas";
 
 /* In Range */
 "In Range" = "In Range";
@@ -1856,7 +1859,7 @@ Enact a temp Basal or a temp target */
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "Időtartam";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -2233,6 +2236,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).";
+
+/* Settings Section */
+"Extra Features" = "Extra Features";
 
 /* UI/UX option */
 "Display Predictions" = "Display Predictions";

@@ -153,7 +153,7 @@
 "Confidence Reminders" = "Påmindelse om succesfulde aktiviteter";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påmindelse om succesfulde aktiviteter er bip fra Pod'en, som kan bruges til at bekræfte valgte kommandoer. når Pod'en ikke er bragt til tavshed.";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfiguration";
@@ -180,20 +180,20 @@
 "Deactivate" = "Deaktiver";
 
 /* Action button description for deactivate while pod still active */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Skub for at Deaktivere Pod";
 
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Deaktiver Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide to Insert Cannula";
+"Slide to Insert Cannula" = "Skub for at indsætte kanyle";
 
 /* */
-"Slide to Deactivate Pod" = "Slide to Deactivate Pod";
+"Slide to Deactivate Pod" = "Skub for at Deaktivere Pod";
 
 /* Label text for step one of insert cannula instructions */
-"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
+"Slide the switch below to start cannula insertion." = "Skub kontakten nedenfor for at starte kanyleindsættelse.";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Deaktiveret";
@@ -285,7 +285,7 @@
 "Fault" = "Fejl";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Fyld en ny Pod med 100 E insulin (lad den blå Pod nåledæksel sidde på). Lyt efter 2 bip.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Afslut deaktivering";
@@ -559,7 +559,7 @@
 "Remove Pump" = "Fjern pumpe";
 
 /* Label text for step two of attach pod instructions */
-"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
+"Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Fjern Pod'ens blå nåledæksel og kontroller kanyle. Fjern derefter papirbagsiden.";
 
 /* Label indicating pod replacement necessary
    The title of the command to replace pod */
@@ -622,6 +622,9 @@
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Indstil midlertidig basalrate";
+
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Din insulindosis justeres ikke automatisk, før den midlertidige basalsats er færdig eller er annulleret.";
 
 /* Title for setup complete screen */
 "Setup Complete" = "Opsætning fuldført";
@@ -778,51 +781,51 @@
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Din Pod leverer muligvis stadig insulin.\nFjern den fra din krop og tryk derefter på \"Fortsæt\".";
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Silenced";
+"Silenced" = "Gjort tavs";
 
 /* Description for SilencePodPreference.disabled */
-"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal driftstilstand, hvor hørbar Pod bip bruges til alle Pod advarsler, og når tillidspåmindelser er aktiveret.";
 
 /* Description for SilencePodPreference.enabled */
-"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod advarsler bruger ingen bip og bekræftelse påmindelse bip er undertrykt. Pod vil kun bippe for fatale Pod fejl og når du spiller test bip.\n\n⚠️Advarsel - Når Pod er lydløs, skal den holdes inden for Bluetooth-rækkevidde af denne enhed for at modtage meddelelser om Pod advarsler.";
 
 /* Help text for Silence Pod view */
 /* navigation title for Silnce Pod" */
 
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
-Silence Pod" = "Silence Pod";
+Silence Pod" = "Lydløs Pod";
 
 /* title for pod details page */
-"Pod Details" = "Pod Details";
+"Pod Details" = "Pod Detaljer";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Previous Pod Details";
+"Previous Pod Details" = "Forrige Pod Detaljer";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "Pump Manager Detaljer";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+"Retrieving Pump Manager Details..." = "Henter Pump Manager Detaljer...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+"Refresh Pump Manager Details" = "Opdater Pump Manager Detaljer";
 
 /* Alert title for error when updating silence pod preference */
-"Failed to update silence pod preference." = "Failed to update silence pod preference.";
+"Failed to update silence pod preference." = "Mislykkedes at opdatere pod stilhed præference.";
 
 /* Section header for diagnostic section */
-"Diagnostics" = "Diagnostics";
+"Diagnostics" = "Diagnostik";
 
 /* Text for read pod status navigation link */
-"Read Pod Status" = "Read Pod Status";
+"Read Pod Status" = "Læs pod-status";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Pod Diagnosticering";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Læs Puls Log Plus";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Læs Aktiveringstid";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Læs Udløste Advarsler";
