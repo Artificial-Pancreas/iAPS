@@ -8,13 +8,154 @@ extension Bolus {
         let fetch: Bool
         @StateObject var state = StateModel()
 
+        @State private var keepForNextWiew: Bool = false
+
+        private var formatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
+        @FetchRequest(
+            entity: Meals.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]
+        ) var meal: FetchedResults<Meals>
+
         var body: some View {
-            if state.useCalc {
+            if state.dontUseBolusCalculator {
+                // Don't compute any recommendation
+                cleanBolusView
+            } else if state.useCalc {
                 // show alternative bolus calc based on toggle in bolus calc settings
-                AlternativeBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch, state: state)
+                AlternativeBolusCalcRootView(
+                    resolver: resolver,
+                    waitForSuggestion: waitForSuggestion,
+                    fetch: fetch,
+                    state: state,
+                    meal: meal,
+                    mealEntries: mealEntries
+                )
             } else {
                 // show iAPS standard bolus calc
-                DefaultBolusCalcRootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch, state: state)
+                DefaultBolusCalcRootView(
+                    resolver: resolver,
+                    waitForSuggestion: waitForSuggestion,
+                    fetch: fetch,
+                    state: state,
+                    meal: meal, mealEntries: mealEntries
+                )
+            }
+        }
+
+        private var cleanBolusView: some View {
+            Form {
+                if fetch {
+                    Section {
+                        mealEntries
+                    } header: { Text("Meal Summary") }
+                }
+
+                Section {
+                    HStack {
+                        Text("Amount")
+                        Spacer()
+                        DecimalTextField(
+                            "0",
+                            value: $state.amount,
+                            formatter: formatter,
+                            cleanInput: true,
+                            useButtons: false
+                        )
+                        Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
+                    }
+                } header: { Text("Bolus") }
+
+                Section {
+                    if state.amount > 0 {
+                        Button {
+                            state.add()
+                            keepForNextWiew = true
+                        }
+                        label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .disabled(state.amount > state.maxBolus)
+                            .listRowBackground((state.amount <= state.maxBolus) ? Color(.systemBlue) : Color(.systemGray4))
+                            .tint(.white)
+                    } else {
+                        Button {
+                            state.hideModal()
+                            keepForNextWiew = true
+                        }
+                        label: {
+                            Text("Continue without bolus")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                    }
+                }
+            }
+            .onDisappear {
+                if fetch, hasFatOrProtein, !keepForNextWiew, state.dontUseBolusCalculator {
+                    state.delete(deleteTwice: true, meal: meal)
+                } else if fetch, !keepForNextWiew, state.dontUseBolusCalculator {
+                    state.delete(deleteTwice: false, meal: meal)
+                }
+            }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .navigationTitle("Enact Bolus")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading: Button {
+                    keepForNextWiew = state.carbsView(fetch: fetch, hasFatOrProtein: hasFatOrProtein, mealSummary: meal)
+                }
+                label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("Meal")
+                    }
+                },
+                trailing: Button { state.hideModal() }
+                label: { Text("Cancel") }
+            )
+        }
+
+        private var hasFatOrProtein: Bool {
+            ((meal.first?.fat ?? 0) > 0) || ((meal.first?.protein ?? 0) > 0)
+        }
+
+        private var mealEntries: some View {
+            VStack {
+                if let carbs = meal.first?.carbs, carbs > 0 {
+                    HStack {
+                        Text("Carbs")
+                        Spacer()
+                        Text(carbs.formatted())
+                        Text("g")
+                    }.foregroundColor(.secondary)
+                }
+                if let fat = meal.first?.fat, fat > 0 {
+                    HStack {
+                        Text("Fat")
+                        Spacer()
+                        Text(fat.formatted())
+                        Text("g")
+                    }.foregroundColor(.secondary)
+                }
+                if let protein = meal.first?.protein, protein > 0 {
+                    HStack {
+                        Text("Protein")
+                        Spacer()
+                        Text(protein.formatted())
+                        Text("g")
+                    }.foregroundColor(.secondary)
+                }
+                if let note = meal.first?.note, note != "" {
+                    HStack {
+                        Text("Note")
+                        Spacer()
+                        Text(note)
+                    }.foregroundColor(.secondary)
+                }
             }
         }
     }

@@ -1445,6 +1445,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Spara som profil";
 
+/* */
+"Save as preset" = "Spara som förval";
+
 /* Alert */
 "Cancel Profile Override" = "Avbryt Profil";
 
@@ -2233,6 +2236,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Den alternativa boluskalkylatorn använder en annan algoritm för beräkning av bolus. För individuell justering kan du ändra justeringsfaktor (standardvärde 0.8) beroende på om du vill få högre (över 1) eller mindre (under 1) bolusrekommendationer.\n\nFö extra feta måltider, tex pizza, finns möjlighet att minska rekommenderad bolus med en annan faktor (standard 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Extra";
 
 /* UI/UX option */
 "Display Predictions" = "Visa prognoser";

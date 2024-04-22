@@ -450,7 +450,7 @@ Enact a temp Basal or a temp target */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Cấu hình bơm";
+"Pump config" = "Cấu hình bơm Insulin";
 
 /*  */
 "Delivery limits" = "Các giới hạn liều tiêm";
@@ -474,7 +474,7 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Cấu hình bơm";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/giờ";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -486,10 +486,10 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " U/giờ";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/hr";
+"%@ U/hr" = "%@ U/giờ";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -504,7 +504,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "U/hr";
+"0 U/hr" = "0 U/giờ";
 
 /* abbreviation for days */
 "d" = "ngày";
@@ -804,7 +804,7 @@ Enact a temp Basal or a temp target */
 "Detected sensor seems not to be a libre 1 sensor!" = "Cảm biến được phát hiện không phải là cảm biến libre 1!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Cảm biến được phát hiện không hợp lệ: %@";
+"Detected sensor is invalid: %@" = "Phát hiện cảm biến không hợp lệ: %@";
 
 /* Low Battery */
 "Low battery" = "Pin yếu";
@@ -966,10 +966,10 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Đơn vị ghi đè";
 
 /* */
-"Low" = "Low";
+"Low" = "Thấp";
 
 /* */
-"High" = "High";
+"High" = "Cao";
 
 /* TIR Chart */
 "Very High" = "Quá cao";
@@ -996,7 +996,7 @@ Enact a temp Basal or a temp target */
 "too small bolus amount" = "lượng bolus quá nhỏ";
 
 /* Bolus shortcut. Error */
-"Bolus Shortcuts are disabled in iAPS settings" = "Phím tắt Bolus bị tắt trong cài đặt iAPS";
+"Bolus Shortcuts are disabled in iAPS settings" = "Phím tắt Bolus bị vô hiệu hóa trong cài đặt iAPS";
 
 /* Bolus shortcut */
 "Bolus Amount in U" = "Lượng Bolus tính bằng U";
@@ -1053,7 +1053,7 @@ Enact a temp Basal or a temp target */
 "Some ui element was incorrectly specified" = "Một vài yếu tố ui đã không được chỉ định";
 
 /* */
-"Success" = "Thành công";
+"Success" = "Success";
 
 /* */
 "Schedules were saved successfully!" = "Lịch trình được lưu thành công!";
@@ -1158,7 +1158,7 @@ Enact a temp Basal or a temp target */
 "Bolus failed" = "Liều bolus thất bại";
 
 /* "Max Bolus Exceeded label" */
-"Max Bolus exceeded!" = "Liều Max Bolus đã vượt quá mong đợi!";
+"Max Bolus exceeded!" = "Đã vượt quá liều Bolus tối đa!";
 
 /* */
 "Bolus failed or inaccurate. Check pump history before repeating." = "Liều bolus thất bại hoặc không chính xác. Kiểm tra lại bơm trước khi lặp lại.";
@@ -1248,10 +1248,10 @@ Enact a temp Basal or a temp target */
 "Dynamic Sensitivity" = "Độ nhạy động";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Chỉ Autotune Insulin cơ bản";
+"Only Autotune Basal Insulin" = "Chỉ Autotune Insulin liều nền(basal)";
 
 /* */
-"Save as your Normal Basal Rates" = "Lưu như liều nền của bạn";
+"Save as your Normal Basal Rates" = "Lưu như liều nền(basal) của bạn";
 
 /* */
 "Save on Pump" = "Lưu vào bơm";
@@ -1445,6 +1445,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Lưu profile";
 
+/* */
+"Save as preset" = "Save as preset";
+
 /* Alert */
 "Cancel Profile Override" = "Hủy bỏ ghi đè?";
 
@@ -1579,13 +1582,13 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Leo: ";
+". Climbing: " = ". Đang leo lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Lao xuóng: ";
+". Falling: " = ". Đang lao xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose cuối cùng > Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
@@ -1656,7 +1659,7 @@ Enact a temp Basal or a temp target */
 "Expiration Reminder" = "Nhắc nhở hết hạn";
 
 /* */
-"Low Reservoir" = "Sắp hết thuốc";
+"Low Reservoir" = "Sắp hết insulin";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "Không có lời nhắc";
@@ -1665,7 +1668,7 @@ Enact a temp Basal or a temp target */
 "Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* */
-"Low Reservoir Reminder" = "Báo nhắc gần hết thuốc";
+"Low Reservoir Reminder" = "Báo nhắc gần hết insulin";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Đảm bảo điện thoại và pod được đặt gần nhau. Nếu kết nối vẫn gặp trở ngại, đặt lại chổ khác.";
@@ -1717,10 +1720,10 @@ Enact a temp Basal or a temp target */
 "Check Cannula" = "Kiểm tra Cannula";
 
 /* */
-"Setup Complete" = "Cấu hình hoàn thành";
+"Setup Complete" = "Cài đặt hoàn thành";
 
 /* */
-"Insulin Suspended" = "Insulin Đã tạm ngưng";
+"Insulin Suspended" = "Đã tạm dừng cấp liều Insulin";
 
 /* Text for suspend resume button when insulin delivery is suspending */
 "Suspending insulin delivery..." = "Đang tạm dừng liều insulin...";
@@ -1757,13 +1760,13 @@ Enact a temp Basal or a temp target */
 "Statistics" = "Thống kê";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Cho phép tải thống kê lên NS";
+"Allow Upload of Statistics to NS" = "Cho phép tải số liệu thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Low";
+"Low" = "Thấp";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "High";
+"High" = "Cao";
 
 /* In Range */
 "In Range" = "In Range";
@@ -1862,13 +1865,13 @@ Enact a temp Basal or a temp target */
 "Display SD instead of CV" = "Hiển thị SD thay vì CV";
 
 /* Description for display SD */
-"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Hiển thị Độ lệch chuẩn (SD) thay vì Hệ số biến thiên (CV) trong statPanel";
+"Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Hiển thị Độ lệch chuẩn (SD) thay vì Hệ số biến thiên (CV) trong bảng điều khiển";
 
 /* How often to update the statistics */
 "Update every number of minutes:" = "Cập nhật theo từng phút:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Mặc định là 20 phút. Tần suất cập nhật và lưu stats.json cũng như tải mảng cuối cùng lên Nightscout khi được bật.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Mặc định là 20 phút. Tần suất cập nhật và lưu statistics.json cũng như tải danh sách cuối cùng lên Nightscout khi được bật.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Past 24 Hours ";
@@ -1892,7 +1895,7 @@ Enact a temp Basal or a temp target */
 "Displays Loop statistics in the statPanel in Home View" = "Hiển thị số liệu thống kê vòng lặp trong bảng điều khiển trong Chế độ xem trang chủ";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Thay đổi đơn vị HbA1c mặc định trong bảng điều khiển. Đơn vị trong bảng điều khiển sẽ được cập nhật với bản cập nhật stats.json tiếp theo";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Thay đổi đơn vị HbA1c mặc định trong bảng điều khiển. Đơn vị trong bảng điều khiển sẽ được cập nhật với bản cập nhật statistics.json tiếp theo";
 
 /* HbA1c for all glucose storage days */
 "all" = "Tất cả";
@@ -1939,7 +1942,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Mặc định là False. Khi được đặt thành True, có thể giảm độ nhạy (tỷ lệ độ nhạy cao hơn) cho mục tiêu tạm thời <= 99. Mục tiêu tạm thời của bạn càng thấp dưới 100 sẽ dẫn đến tỷ lệ kém nhạy hơn (cao hơn), ví dụ: mục tiêu tạm thời là 95 dẫn đến tỷ lệ độ nhạy là 1,09, trong khi 85 kết quả là 1,33 (với Một nửa mục tiêu cơ bản mặc định là 160).";
 
 /* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "Độ nhạy tăng mục tiêu";
+"Sensitivity Raises Target" = "Sensitivity Raises Target";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Khi True, tăng mục tiêu BG khi cảm biến tự động phát hiện độ nhạy";
@@ -2234,6 +2237,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Công cụ tính bolus thay thế mới là một cách tiếp cận khác với công cụ tính bolus mặc định trong iAPS. Nếu bật nút này, bạn sẽ sử dụng máy tính bolus này chứ không phải máy tính iAPS gốc. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng như lẽ ra phải như vậy khi sử dụng smbs (mặc định là 0,8).\n\nBạn cũng có thể thêm tùy chọn trong máy tính bolus của mình để áp dụng một hệ số tùy chỉnh (!) khác ở cuối phép tính, phép tính có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ: Pizza (mặc định là 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Tính năng bổ sung";
 
 /* UI/UX option */
 "Display Predictions" = "Hiển thị dự đoán";

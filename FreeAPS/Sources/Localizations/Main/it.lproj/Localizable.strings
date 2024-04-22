@@ -1013,12 +1013,6 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Error */
 "not available" = "non disponibile";
 
-/* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
-
-/* Bolus shortcut. Error */
-"not available" = "not available";
-
 /* Override Shortcut */
 "Activate an Override Preset" = "Attiva un profilo preimpostato";
 
@@ -1450,6 +1444,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Save as Profile" = "Salva Profilo";
+
+/* */
+"Save as preset" = "Salva come predefinito";
 
 /* Alert */
 "Cancel Profile Override" = "Cancella Profilo";
@@ -2240,6 +2237,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Il nuovo calcolatore alternativo di bolo è un altro approccio al calcolatore di bolo predefinito in iAPS. Se l'interruttore è acceso, si utilizza questa calcolatrice per il bolo e non la calcolatrice iAPS originale. Alla fine del calcolo viene applicato un fattore personalizzato come si suppone che sia quando si utilizza smbs (predefinita 0.8).\n\nPuoi anche aggiungere l'opzione nella calcolatrice del bolo per applicarne un altro (!) fattore personalizzabile al termine del calcolo che potrebbe essere utile per i pasti grassi. es. Pizza (predefinita 0.7).";
+
+/* Settings Section */
+"Extra Features" = "Funzioni aggiuntive";
 
 /* UI/UX option */
 "Display Predictions" = "Mostra Previsioni";

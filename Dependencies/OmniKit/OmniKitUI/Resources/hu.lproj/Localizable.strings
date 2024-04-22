@@ -547,7 +547,7 @@
 "Pump Time" = "Pump Time";
 
 /* Label text for basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Mérték";
 
 /* Label describing time remaining view */
 "Remaining" = "Remaining";
@@ -593,11 +593,11 @@
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "Save";
+"Save" = "Elment";
 
 /* button title for saving low reservoir reminder while saving
    button title for saving scheduled reminder while saving */
-"Saving..." = "Saving...";
+"Saving..." = "Mentés...";
 
 /* The detail text of the basal row when pod is running scheduled basal */
 "Schedule" = "Ütemezés";
@@ -622,6 +622,9 @@
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Set Temporary Basal Rate";
+
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled.";
 
 /* Title for setup complete screen */
 "Setup Complete" = "Setup Complete";
