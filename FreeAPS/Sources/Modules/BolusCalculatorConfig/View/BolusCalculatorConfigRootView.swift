@@ -44,38 +44,16 @@ extension BolusCalculatorConfig {
 
                 if state.useCalc {
                     Section {
-                        HStack {
-                            Toggle(isOn: $state.allowBolusShortcut) {
-                                Text("Allow iOS Bolus Shortcuts").foregroundStyle(state.allowBolusShortcut ? .red : .primary)
-                            }.disabled(isPresented)
-                                ._onBindingChange($state.allowBolusShortcut, perform: { _ in
-                                    if state.allowBolusShortcut {
-                                        confirm = true
-                                        graphics = confirmButton()
-                                        info(
-                                            header: "Allow iOS Bolus Shortcuts",
-                                            body: "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.",
-                                            useGraphics: graphics
-                                        )
-                                    }
-                                })
-                        }
-                        if state.allowBolusShortcut {
+                        Toggle("Apply factor for fatty meals", isOn: $state.fattyMeals)
+                        if state.fattyMeals {
                             HStack {
-                                Text(
-                                    state.allowedRemoteBolusAmount > state.settingsManager.pumpSettings
-                                        .maxBolus ? "Max Bolus exceeded!" :
-                                        "Max allowed bolus amount using shortcuts "
-                                )
-                                .foregroundStyle(
-                                    state.allowedRemoteBolusAmount > state.settingsManager.pumpSettings
-                                        .maxBolus ? .red : .primary
-                                )
+                                Text("Override With A Factor Of ")
                                 Spacer()
-                                DecimalTextField("0", value: $state.allowedRemoteBolusAmount, formatter: conversionFormatter)
+                                DecimalTextField("0.7", value: $state.fattyMealFactor, formatter: conversionFormatter)
                             }
                         }
-                    } header: { Text("Fatty Meals") }
+                    }
+                    header: { Text("Fatty Meals") }
 
                     Section {
                         Toggle("Display Predictions", isOn: $state.displayPredictions)
