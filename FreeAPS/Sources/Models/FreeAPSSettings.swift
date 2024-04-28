@@ -61,7 +61,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var eventualBG: Bool = false
     var minumimPrediction: Bool = false
     var minimumSMB: Decimal = 0.3
-    var useInsulinBars: Bool = true
+    var useInsulinBars: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {

@@ -31,11 +31,6 @@ extension BolusCalculatorConfig {
                     HStack {
                         Toggle("Use Bolus Calculator", isOn: $state.useCalc)
                     }
-                    if state.useCalc {
-                        HStack {
-                            Toggle("Use alternate Bolus Calculator", isOn: $state.useCalc)
-                        }
-                    }
                 }
                 header: { Text("Calculator settings") }
                 footer: {

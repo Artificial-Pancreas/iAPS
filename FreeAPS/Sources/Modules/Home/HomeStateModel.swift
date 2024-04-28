@@ -78,7 +78,7 @@ extension Home {
         @Published var minimumSMB: Decimal = 0.3
         @Published var maxBolus: Decimal = 0
         @Published var maxBolusValue: Decimal = 1
-        @Published var useInsulinBars: Bool = true
+        @Published var useInsulinBars: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 

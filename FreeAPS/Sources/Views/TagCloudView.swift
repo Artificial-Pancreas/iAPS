@@ -62,7 +62,7 @@ struct TagCloudView: View {
                 return .purple
             case textTag where textTag.contains("tdd_factor"),
                  textTag where textTag.contains("Sigmoid function"),
-                 textTag where textTag.contains("Logarithmic formula"),
+                 textTag where textTag.contains("Logarithmic function"),
                  textTag where textTag.contains("AF:"),
                  textTag where textTag.contains("Autosens/Dynamic Limit:"),
                  textTag where textTag.contains("Dynamic ISF/CR"),

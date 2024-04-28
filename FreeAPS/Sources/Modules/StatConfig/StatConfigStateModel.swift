@@ -16,7 +16,7 @@ extension StatConfig {
         @Published var alwaysUseColors: Bool = true
         @Published var timeSettings: Bool = true
         @Published var minimumSMB: Decimal = 0.3
-        @Published var useInsulinBars: Bool = true
+        @Published var useInsulinBars: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
