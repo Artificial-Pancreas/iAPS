@@ -47,7 +47,7 @@
 "Done" = "OK";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Emojis als labels weergeven";
+"Display Emojis as Labels" = "Emoji’s als labels weergeven";
 
 /* Calender Option */
 "Display IOB and COB" = "Geef IOB en COB weer";
@@ -74,7 +74,7 @@
 "was delivered" = "zojuist afgeleverd";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuten geleden, op afstand gestart vanuit Nightscout, door een verzorger of een ouder. Wil je nog steeds een bolus?\n\nDe verwachte uiteindelijke glucose, als je niet bolust, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuten geleden, op afstand gestart vanuit Nightscout, door een verzorger of een ouder. Wil je nog steeds een bolus?\n\nDe verwachte uiteindelijke glucose, als je geen bolus toedient, is: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "De bolus op afstand is zojuist geleverd!";
@@ -194,7 +194,7 @@
 "Basal Insulin and Sensitivity ratio" = "Verhouding basale insuline en gevoeligheid";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefglucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefwaarde bloedglucose.";
 
 /* */
 " Your setting: " = "Jouw instelling: ";
@@ -254,10 +254,10 @@
 "Basal profile" = "Basaal profiel";
 
 /*  */
-"Carb ratio" = "Koolhydraten ratio";
+"Carb ratio" = "Koolhydraat verhouding";
 
 /*  */
-"Delete autotune data" = "Verwijder autotune-gegevens";
+"Delete autotune data" = "Verwijder autotune gegevens";
 
 /*  */
 "Run now" = "Nu uitvoeren";
@@ -290,19 +290,19 @@
 "Schedule" = "Schema";
 
 /*  */
-"starts at" = "Start";
+"starts at" = "begint om";
 
 /* Time basal profile */
 "Time" = "Tijd";
 
 /* */
-"Calculated Ratio" = "Gecalculeerde ratio";
+"Calculated Ratio" = "Berekende verhouding";
 
 /* Carb Ratios header */
 "Carb Ratios" = "Koolhydraten ratio's";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Verhouding";
 
 /*  */
 "Autosens" = "Gevoeligheidsdetectie (Autosens)";

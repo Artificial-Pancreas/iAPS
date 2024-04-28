@@ -42,8 +42,10 @@ extension ISFEditor {
                         header: !state.settingsManager.preferences
                             .useNewFormula ? Text("Autosens") : Text("Dynamic Sensitivity")
                     ) {
-                        let dynamicRatio = state.provider.suggestion?.sensitivityRatio ?? 0
-                        let dynamicISF = state.provider.suggestion?.isf ?? 0
+                        // let dynamicRatio = state.provider.suggestion?.sensitivityRatio ?? 0
+                        let dynamicRatio: Decimal = 0
+                        // let dynamicISF = state.provider.suggestion?.isf ?? 0
+                        let dynamicISF: Decimal = 15
                         HStack {
                             Text("Sensitivity Ratio")
                             Spacer()

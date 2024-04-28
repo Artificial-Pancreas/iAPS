@@ -12,7 +12,8 @@ struct RoundedBackground: ViewModifier {
         content
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                Rectangle()
+                    // RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill()
                     .foregroundColor(color)
             )
@@ -30,7 +31,8 @@ struct CapsulaBackground: ViewModifier {
         content
             .padding()
             .background(
-                Capsule()
+                Rectangle()
+                    // Capsule()
                     .fill()
                     .foregroundColor(color)
             )
@@ -116,7 +118,8 @@ struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        RoundedRectangle(cornerRadius: 15)
+        Rectangle()
+            // RoundedRectangle(cornerRadius: 15)
             .fill(
                 colorScheme == .dark ? .black :
                     Color.white
@@ -140,7 +143,7 @@ struct LoopEllipse: View {
     let stroke: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: 2)
+            .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 1)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
