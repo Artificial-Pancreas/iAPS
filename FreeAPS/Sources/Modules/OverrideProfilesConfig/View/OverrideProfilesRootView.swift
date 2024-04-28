@@ -31,6 +31,13 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -182,6 +189,17 @@ extension OverrideProfilesConfig {
                             )
                             Text("minutes").foregroundColor(.secondary)
                         }
+
+                        HStack {
+                            Text("Max IOB")
+                            DecimalTextField(
+                                "0",
+                                value: $state.maxIOB,
+                                formatter: insulinFormatter,
+                                cleanInput: false
+                            )
+                            Text("U").foregroundColor(.secondary)
+                        }
                     }
 
                     HStack {
@@ -298,6 +316,7 @@ extension OverrideProfilesConfig {
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
             let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
             let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
+            let maxIOB = (preset.maxIOB as Decimal?) != nil ? (preset.maxIOB ?? 0) as Decimal : 999
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
             let dash = crString != "" ? "/" : ""
@@ -317,8 +336,11 @@ extension OverrideProfilesConfig {
                             if smbString != "" { Text(smbString).foregroundColor(.secondary).font(.caption) }
                             if scheduledSMBstring != "" { Text(scheduledSMBstring) }
                             if preset.advancedSettings {
-                                Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
-                                Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
+                                if !preset.smbIsOff {
+                                    Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
+                                    Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
+                                }
+                                Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
                                 Text(isfAndCRstring)
                             }
                             Spacer()

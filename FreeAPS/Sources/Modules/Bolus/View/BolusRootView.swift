@@ -23,28 +23,28 @@ extension Bolus {
         ) var meal: FetchedResults<Meals>
 
         var body: some View {
-            if state.dontUseBolusCalculator {
-                // Don't compute any recommendation
-                cleanBolusView
-            } else if state.useCalc {
-                // show alternative bolus calc based on toggle in bolus calc settings
-                AlternativeBolusCalcRootView(
-                    resolver: resolver,
-                    waitForSuggestion: waitForSuggestion,
-                    fetch: fetch,
-                    state: state,
-                    meal: meal,
-                    mealEntries: mealEntries
-                )
+            if state.useCalc {
+                if state.eventualBG {
+                    DefaultBolusCalcRootView(
+                        resolver: resolver,
+                        waitForSuggestion: waitForSuggestion,
+                        fetch: fetch,
+                        state: state,
+                        meal: meal,
+                        mealEntries: mealEntries
+                    )
+                } else {
+                    AlternativeBolusCalcRootView(
+                        resolver: resolver,
+                        waitForSuggestion: waitForSuggestion,
+                        fetch: fetch,
+                        state: state,
+                        meal: meal,
+                        mealEntries: mealEntries
+                    )
+                }
             } else {
-                // show iAPS standard bolus calc
-                DefaultBolusCalcRootView(
-                    resolver: resolver,
-                    waitForSuggestion: waitForSuggestion,
-                    fetch: fetch,
-                    state: state,
-                    meal: meal, mealEntries: mealEntries
-                )
+                cleanBolusView
             }
         }
 
@@ -95,9 +95,9 @@ extension Bolus {
                 }
             }
             .onDisappear {
-                if fetch, hasFatOrProtein, !keepForNextWiew, state.dontUseBolusCalculator {
+                if fetch, hasFatOrProtein, !keepForNextWiew, !state.useCalc {
                     state.delete(deleteTwice: true, meal: meal)
-                } else if fetch, !keepForNextWiew, state.dontUseBolusCalculator {
+                } else if fetch, !keepForNextWiew, !state.useCalc {
                     state.delete(deleteTwice: false, meal: meal)
                 }
             }

@@ -50,7 +50,7 @@ extension Font {
     static let chartTimeFont = Font.custom("ChartTimeFont", fixedSize: 14)
     static let timeSettingFont = Font.custom("TimeSettingFont", fixedSize: 14)
 
-    static let carbsDotFont = Font.custom("CarbsDotFont", fixedSize: 14)
-    static let bolusDotFont = Font.custom("BolusDotFont", fixedSize: 14)
+    static let carbsDotFont = Font.custom("CarbsDotFont", fixedSize: 12)
+    static let bolusDotFont = Font.custom("BolusDotFont", fixedSize: 12)
     static let announcementSymbolFont = Font.custom("AnnouncementSymbolFont", fixedSize: 14)
 }
