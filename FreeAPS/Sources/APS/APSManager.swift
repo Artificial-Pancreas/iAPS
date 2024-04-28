@@ -7,6 +7,7 @@ import OmniBLE
 import OmniKit
 import RileyLinkKit
 import SwiftDate
+import SwiftUI
 import Swinject
 
 protocol APSManager {
@@ -50,7 +51,7 @@ enum APSError: LocalizedError {
         case let .invalidPumpState(message):
             return "Error: Invalid Pump State: \(message)"
         case let .bolusInProgress(message):
-            return "Error: Pump is Busy. \(message)"
+            return "\(NSLocalizedString("Error: Pump is Busy.", comment: "Pump Error")) \(NSLocalizedString(message, comment: "Pump Error Message"))"
         case let .glucoseError(message):
             return "Error: Invalid glucose: \(message)"
         case let .apsError(message):
@@ -126,7 +127,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        openAPS = OpenAPS(storage: storage, nightscout: nightscout)
+        openAPS = OpenAPS(storage: storage, nightscout: nightscout, pumpStorage: pumpHistoryStorage)
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
 
