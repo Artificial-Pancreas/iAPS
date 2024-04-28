@@ -57,6 +57,13 @@ extension DataTable {
             return formatter
         }
 
+        private var hourFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         var body: some View {
             VStack {
                 Picker("Mode", selection: $state.mode) {
@@ -69,7 +76,8 @@ extension DataTable {
 
                 Form {
                     switch state.mode {
-                    case .treatments: treatmentsList
+                    case .treatments:
+                        treatmentsList
                     case .glucose: glucoseList
                     }
                 }
@@ -112,6 +120,20 @@ extension DataTable {
                         }.frame(maxWidth: .infinity, alignment: .trailing)
                     }).buttonStyle(.borderless)
                 }
+
+                HStack {
+                    HStack {
+                        Text("Total")
+                        Text(insulinFormatter.string(from: (state.tdd.0 + state.tdd.1) as NSNumber) ?? "")
+                        Text("U")
+                    }
+                    Spacer()
+                    HStack {
+                        Text(hourFormatter.string(from: state.tdd.2 as NSNumber) ?? "")
+                        Text("h")
+                    }
+                }.foregroundStyle(.gray)
+
                 if !state.treatments.isEmpty {
                     if !showFutureEntries {
                         ForEach(state.treatments.filter { item in

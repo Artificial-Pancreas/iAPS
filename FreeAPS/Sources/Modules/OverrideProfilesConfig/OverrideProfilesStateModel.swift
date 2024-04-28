@@ -26,7 +26,9 @@ extension OverrideProfilesConfig {
         @Published var uamMinutes: Decimal = 0
         @Published var defaultSmbMinutes: Decimal = 0
         @Published var defaultUamMinutes: Decimal = 0
+        @Published var defaultmaxIOB: Decimal = 0
         @Published var emoji: String = ""
+        @Published var maxIOB: Decimal = 0
 
         @Injected() var broadcaster: Broadcaster!
         @Injected() var ns: NightscoutManager!
@@ -37,6 +39,8 @@ extension OverrideProfilesConfig {
             units = settingsManager.settings.units
             defaultSmbMinutes = settingsManager.preferences.maxSMBBasalMinutes
             defaultUamMinutes = settingsManager.preferences.maxUAMSMBBasalMinutes
+            defaultmaxIOB = settingsManager.preferences.maxIOB
+
             presets = [OverridePresets(context: coredataContext)]
         }
 
@@ -91,6 +95,7 @@ extension OverrideProfilesConfig {
 
                     saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
+                    saveOverride.maxIOB = maxIOB as NSDecimalNumber
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)
@@ -136,6 +141,7 @@ extension OverrideProfilesConfig {
 
                     saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
+                    saveOverride.maxIOB = maxIOB as NSDecimalNumber
                 }
                 try? self.coredataContext.save()
             }
@@ -186,6 +192,7 @@ extension OverrideProfilesConfig {
 
                 saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
                 saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
+                saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB as NSDecimalNumber) as NSDecimalNumber
             }
             // Saves
             coredataContext.perform { try? self.coredataContext.save() }
@@ -224,6 +231,10 @@ extension OverrideProfilesConfig {
                 if (overrideArray.uamMinutes as Decimal?) != nil {
                     uamMinutes = (overrideArray.uamMinutes ?? 30) as Decimal
                 }
+
+                if let maxIOB_ = overrideArray.maxIOB as Decimal? {
+                    maxIOB = maxIOB_ as Decimal
+                }
             }
 
             let overrideTarget = (overrideArray.target ?? 0) as Decimal
@@ -252,6 +263,7 @@ extension OverrideProfilesConfig {
                 advancedSettings = false
                 smbMinutes = defaultSmbMinutes
                 uamMinutes = defaultUamMinutes
+                maxIOB = defaultmaxIOB
             }
         }
 

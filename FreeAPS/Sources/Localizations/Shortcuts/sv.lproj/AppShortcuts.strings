@@ -2,7 +2,7 @@
 "Activate ${applicationName} temporary target" = "${applicationName} tillfälligt målvärde";
 
 /* iAPS Temporary Target shortcut Description */
-"${applicationName} apply a temporary target" = "${applicationName} aktiverare ett tillfälligt målvärde";
+"${applicationName} apply a temporary target" = "${applicationName} aktivera ett tillfälligt målvärde";
 
 /* iAPS Status shortcut */
 "List ${applicationName} state" = "${applicationName} status";
@@ -32,5 +32,4 @@
 "${applicationName} Bolus" = "${applicationName} bolus";
 
 /* iAPS Bolus shortcut description */
-"${applicationName} Tries to Enact a bolus" = "Ger bolus med ${applicationName}";
-
+"${applicationName} Enacts a bolus" = "Ger bolus med ${applicationName}";

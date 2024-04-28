@@ -2,7 +2,7 @@ import Foundation
 
 struct CarbsEntry: JSON, Equatable, Hashable {
     let id: String?
-    let createdAt: Date
+    var createdAt: Date
     let actualDate: Date?
     let carbs: Decimal
     let fat: Decimal?
