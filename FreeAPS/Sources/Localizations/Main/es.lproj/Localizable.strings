@@ -1005,6 +1005,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS Shortcuts";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
 
@@ -1230,6 +1233,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* Online or internal server */
 "Online or internal server" = "Servidor en línea o interno";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Error: Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1524,10 +1533,8 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Watch Config Option */
 "Display Protein & Fat" = "Mostrar proteínas y grasas";
 
-
 /* Time of new meal entry */
 "Now" = "Now";
-
 
 /* Display future data table entries */
 "Show Future" = "Show Future";
