@@ -172,7 +172,7 @@ extension Home {
             return tempTarget.displayName
         }
 
-        var infoPanel: some View {
+        var info: some View {
             HStack(spacing: 10) {
                 ZStack {
                     HStack {
@@ -217,9 +217,20 @@ extension Home {
                         .padding(.trailing, 8)
                     }
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: 30, alignment: .bottom)
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
+        }
+
+        var infoPanel: some View {
+            /* addBackground()
+             .frame(minHeight: 40, maxHeight: 40)
+             .overlay { */
+            info
+                .frame(minHeight: 35, maxHeight: 35)
+            /* }
+                 .clipShape(RoundedRectangle(cornerRadius: 15))
+                 .addShadows()
+                 .padding(.horizontal, 10)
+             // .background(colorScheme == .light ? .gray.opacity(0.1) : .white.opacity(0.05)) */
         }
 
         var mainChart: some View {
@@ -253,7 +264,10 @@ extension Home {
                     displayYgridLines: $state.displayYgridLines,
                     thresholdLines: $state.thresholdLines,
                     triggerUpdate: $triggerUpdate,
-                    overrideHistory: $state.overrideHistory
+                    overrideHistory: $state.overrideHistory,
+                    minimumSMB: $state.minimumSMB,
+                    maxBolus: $state.maxBolus,
+                    maxBolusValue: $state.maxBolusValue, useInsulinBars: $state.useInsulinBars
                 )
             }
             .padding(.bottom, 5)
@@ -303,7 +317,7 @@ extension Home {
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                         Image(systemName: isOverride ? "person.fill" : "person")
                             .symbolRenderingMode(.palette)
-                            .font(.custom("Buttons", size: 30))
+                            .font(.custom("Buttons", size: 28))
                             .foregroundStyle(.purple)
                             .padding(8)
                             .background(isOverride ? .purple.opacity(0.15) : .clear)
@@ -341,17 +355,10 @@ extension Home {
                     }
                     Spacer()
                     Button {
-                        if state.dontUseBolusCalculator {
-                            state.showModal(for: .bolus(
-                                waitForSuggestion: false,
-                                fetch: false
-                            ))
-                        } else {
-                            state.showModal(for: .bolus(
-                                waitForSuggestion: true,
-                                fetch: false
-                            ))
-                        }
+                        state.showModal(for: .bolus(
+                            waitForSuggestion: state.useCalc ? true : false,
+                            fetch: false
+                        ))
                     }
                     label: {
                         Image(systemName: "syringe")
@@ -401,14 +408,12 @@ extension Home {
         var chart: some View {
             addColouredBackground()
                 .overlay {
-                    VStack {
+                    VStack(spacing: 0) {
                         infoPanel
-                        VStack(spacing: 0) {
-                            mainChart
-                            if state.timeSettings {
-                                timeSetting
-                            }
-                        }.chartBackground()
+                        mainChart
+                        if state.timeSettings {
+                            timeSetting
+                        }
                     }
                 }
                 .frame(
@@ -578,9 +583,9 @@ extension Home {
                                     .padding(.bottom, 2)
                             }
                             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                            .padding(.horizontal, 5)
+                            .padding(.horizontal, 10)
                         }
-                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)
+                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, colorScheme == .dark ? 0 : 10)
                 }
                 .clipShape(Rectangle())
         }
@@ -606,18 +611,18 @@ extension Home {
                 VStack {
                     headerView(geo)
                     ScrollView {
-                        VStack(spacing: 0) {
-                            RaisedRectangle()
-                            chart
-                            preview.padding(.top, 15)
-                            loopPreview.padding(.top, 15)
-                        }
+                        chart
+                        preview.padding(.top, 15)
+                        loopPreview.padding(.top, 15)
                     }
                     .scrollIndicators(.hidden)
                     buttonPanel(geo)
                 }
-                .background(.gray.opacity(IAPSconfig.backgroundOpacity * 2))
-                .edgesIgnoringSafeArea(.vertical)
+                .background(
+                    colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
+                        .opacity(IAPSconfig.backgroundOpacity * 2)
+                )
+                .ignoresSafeArea(edges: .vertical)
                 .overlay {
                     if let progress = state.bolusProgress, let amount = state.bolusAmount {
                         ZStack {

@@ -112,6 +112,7 @@ struct PreviewChart: View {
                     y: .value("Percentage", item.percentage),
                     width: .fixed(60)
                 )
+                .cornerRadius(2, style: .continuous)
                 .foregroundStyle(by: .value("Group", item.group))
                 .annotation(position: .trailing) {
                     if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
