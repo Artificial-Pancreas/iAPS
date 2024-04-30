@@ -53,7 +53,7 @@
 "Display IOB and COB" = "Display IOB and COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Confirmar bolo rápidamente";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -393,7 +393,7 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Control a distancia";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Permitir Control Remoto de iAPS";
+"Allow Remote control of iAPS" = "Permitir control remoto de iAPS";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nAhora, por favor, verifique todos sus nuevos ajustes de forma exhaustiva:\n\n* Ajustes Basales\n * Relación de Carbs\n * Objetivos de Glucosa\n * Sensibilidades a la Insulina\n * DAI\n\n en Ajustes de iAPS > Configuración.\n\nConfiguración del perfil incorrecta o inválida podría tener efectos desatrosos.";
@@ -594,10 +594,10 @@ Enact a temp Basal or a temp target */
 "History" = "Historial";
 
 /* Nightscout option */
-"Upload" = "Cargar";
+"Upload" = "Permitir";
 
 /* Nightscout option */
-"Allow Uploads" = "Permitir subida de datos";
+"Allow Uploads" = "Carga de datos";
 
 /* Type of CGM or glucose source */
 "Type" = "Tipo";
@@ -1531,7 +1531,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Predictions" = "Predicciones";
 
 /* Watch Config Option */
-"Display Protein & Fat" = "Mostrar proteínas y grasas";
+"Display Protein & Fat" = "Mostrar Proteínas y Grasas";
 
 /* Time of new meal entry */
 "Now" = "Now";
@@ -1716,7 +1716,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Active Time" = "Tiempo Activo";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Total administrado";
 
 /* */
 "Add Omnipod Dash" = "Add Omnipod Dash";
@@ -1750,25 +1750,25 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* */
 
 
-"Today" = "Today";
+"Today" = "Hoy";
 
 /* */
-"Day" = "Day";
+"Day" = "Día";
 
 /* */
-"Week" = "Week";
+"Week" = "Semana";
 
 /* */
-"Month" = "Month";
+"Month" = "Mes";
 
 /* */
 "Total" = "Total";
 
 /* Headline Statistics */
-"Statistics" = "Statistics";
+"Statistics" = "Estadísticas";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Allow Upload of Statistics to NS";
+"Allow Upload of Statistics to NS" = "Cargar estadísticas a NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Bajo";
@@ -2276,7 +2276,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Home Chart settings " = "Home Chart settings ";
 
 /* UI/UX title */
-"Statistics settings " = "Statistics settings ";
+"Statistics settings " = "Ajustes de estadísticas ";
 
 /* UI/UX title */
 "Override HbA1c Unit" = "Override HbA1c Unit";
