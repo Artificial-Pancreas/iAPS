@@ -258,7 +258,7 @@
 "Expired" = "Caducado";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Caduca";
+"Expires" = "Expira";
 
 /* Alert title for failing to cancel manual basal error */
 "Failed to Cancel Manual Basal" = "No se pudo cancelar la insulina basal manual";
@@ -505,7 +505,7 @@
 "Pod Expires" = "El Pod caduca";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "El Pod caduca en";
+"Pod expires in" = "El Pod expira en";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Detalles de la falla del Pod";
