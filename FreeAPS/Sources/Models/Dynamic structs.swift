@@ -1,6 +1,6 @@
 import Foundation
 
-struct Oref2_variables: JSON, Codable {
+struct DynamicVariables: JSON, Codable {
     var average_total_data: Decimal
     var weightedAverage: Decimal
     var weigthPercentage: Decimal
@@ -25,6 +25,7 @@ struct Oref2_variables: JSON, Codable {
     var smbMinutes: Decimal
     var uamMinutes: Decimal
     var maxIOB: Decimal
+    var disableCGMError: Bool
 
     init(
         average_total_data: Decimal,
@@ -50,7 +51,8 @@ struct Oref2_variables: JSON, Codable {
         end: Decimal,
         smbMinutes: Decimal,
         uamMinutes: Decimal,
-        maxIOB: Decimal
+        maxIOB: Decimal,
+        disableCGMError: Bool
     ) {
         self.average_total_data = average_total_data
         self.weightedAverage = weightedAverage
@@ -76,10 +78,11 @@ struct Oref2_variables: JSON, Codable {
         self.smbMinutes = smbMinutes
         self.uamMinutes = uamMinutes
         self.maxIOB = maxIOB
+        self.disableCGMError = disableCGMError
     }
 }
 
-extension Oref2_variables {
+extension DynamicVariables {
     private enum CodingKeys: String, CodingKey {
         case average_total_data
         case weightedAverage
@@ -105,6 +108,7 @@ extension Oref2_variables {
         case smbMinutes
         case uamMinutes
         case maxIOB
+        case disableCGMError
     }
 }
 
