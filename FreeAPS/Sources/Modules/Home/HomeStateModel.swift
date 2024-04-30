@@ -74,6 +74,11 @@ extension Home {
         @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = true
         @Published var timeSettings: Bool = true
+        @Published var useCalc: Bool = true
+        @Published var minimumSMB: Decimal = 0.3
+        @Published var maxBolus: Decimal = 0
+        @Published var maxBolusValue: Decimal = 1
+        @Published var useInsulinBars: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -118,6 +123,10 @@ extension Home {
             hours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
             timeSettings = settingsManager.settings.timeSettings
+            useCalc = settingsManager.settings.useCalc
+            minimumSMB = settingsManager.settings.minimumSMB
+            maxBolus = settingsManager.pumpSettings.maxBolus
+            useInsulinBars = settingsManager.settings.useInsulinBars
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -325,6 +334,7 @@ extension Home {
                 self.boluses = self.provider.pumpHistory(hours: self.filteredHours).filter {
                     $0.type == .bolus
                 }
+                self.maxBolusValue = self.boluses.compactMap(\.amount).max() ?? 1
             }
         }
 
@@ -532,6 +542,10 @@ extension Home.StateModel:
         hours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors
         timeSettings = settingsManager.settings.timeSettings
+        useCalc = settingsManager.settings.useCalc
+        minimumSMB = settingsManager.settings.minimumSMB
+        maxBolus = settingsManager.pumpSettings.maxBolus
+        useInsulinBars = settingsManager.settings.useInsulinBars
         setupGlucose()
         setupOverrideHistory()
     }

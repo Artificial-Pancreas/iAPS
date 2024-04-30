@@ -47,7 +47,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var confirmBolusFaster: Bool = false
     var onlyAutotuneBasals: Bool = false
     var overrideFactor: Decimal = 0.8
-    var useCalc: Bool = false
+    var useCalc: Bool = true
     var fattyMeals: Bool = false
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
@@ -58,6 +58,11 @@ struct FreeAPSSettings: JSON, Equatable {
     var profilesOrTempTargets: Bool = false
     var allowBolusShortcut: Bool = false
     var allowedRemoteBolusAmount: Decimal = 0.0
+    var eventualBG: Bool = false
+    var minumimPrediction: Bool = false
+    var minimumSMB: Decimal = 0.3
+    var useInsulinBars: Bool = false
+    var disableCGMError: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -297,6 +302,26 @@ extension FreeAPSSettings: Decodable {
 
         if let allowedRemoteBolusAmount = try? container.decode(Decimal.self, forKey: .allowedRemoteBolusAmount) {
             settings.allowedRemoteBolusAmount = allowedRemoteBolusAmount
+        }
+
+        if let eventualBG = try? container.decode(Bool.self, forKey: .eventualBG) {
+            settings.eventualBG = eventualBG
+        }
+
+        if let minumimPrediction = try? container.decode(Bool.self, forKey: .minumimPrediction) {
+            settings.minumimPrediction = minumimPrediction
+        }
+
+        if let minimumSMB = try? container.decode(Decimal.self, forKey: .minimumSMB) {
+            settings.minimumSMB = minimumSMB
+        }
+
+        if let useInsulinBars = try? container.decode(Bool.self, forKey: .useInsulinBars) {
+            settings.useInsulinBars = useInsulinBars
+        }
+
+        if let disableCGMError = try? container.decode(Bool.self, forKey: .disableCGMError) {
+            settings.disableCGMError = disableCGMError
         }
 
         self = settings

@@ -18,6 +18,8 @@ extension DataTable {
         @Published var maxBolus: Decimal = 0
         @Published var externalInsulinAmount: Decimal = 0
         @Published var externalInsulinDate = Date()
+        @Published var tdd: (Decimal, Decimal, Double) = (0, 0, 0)
+        @Published var basalInsulin: Decimal = 0
 
         var units: GlucoseUnits = .mmolL
 
@@ -45,7 +47,6 @@ extension DataTable {
             // Ensure that only one instance of this function can execute at a time by using a serial queue
             processQueue.async {
                 let units = self.settingsManager.settings.units
-                var date = Date.now
                 let carbs = self.provider.carbs()
                     .filter { !($0.isFPU ?? false) }
                     .map {
@@ -144,6 +145,11 @@ extension DataTable {
                     self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume, fpus]
                         .flatMap { $0 }
                         .sorted { $0.date > $1.date }
+                }
+
+                DispatchQueue.main.async {
+                    let increments = self.settingsManager.preferences.bolusIncrement
+                    self.tdd = TotalDailyDose().totalDailyDose(self.provider.pumpHistory(), increment: Double(increments))
                 }
             }
         }

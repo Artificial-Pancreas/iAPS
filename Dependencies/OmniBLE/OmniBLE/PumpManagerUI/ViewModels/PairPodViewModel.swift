@@ -192,7 +192,10 @@ class PairPodViewModel: ObservableObject, Identifiable {
             DispatchQueue.main.async {
                 switch status {
                 case .failure(let error):
-                    if self.autoRetryAttempted {
+                    if self.podPairer.podCommState == .noPod {
+                        let pairAndPrimeError = DashPairingError.pumpManagerError(error)
+                        self.state = .error(pairAndPrimeError)
+                    } else if self.autoRetryAttempted {
                         self.autoRetryAttempted = false // allow for an auto retry on the next user attempt
                         let pairAndPrimeError = DashPairingError.pumpManagerError(error)
                         self.state = .error(pairAndPrimeError)

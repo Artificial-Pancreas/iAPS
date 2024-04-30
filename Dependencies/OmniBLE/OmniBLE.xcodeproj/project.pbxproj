@@ -168,12 +168,11 @@
 		D802CD1027DD99AB0072E3A1 /* CRC16Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD0F27DD99AB0072E3A1 /* CRC16Tests.swift */; };
 		D802CD1227DD9AE10072E3A1 /* BasalScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */; };
 		D845A1372AF89F5500EA0853 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1362AF89F5500EA0853 /* ActivityView.swift */; };
-		D845A1392AF89F6300EA0853 /* FirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1382AF89F6300EA0853 /* FirstAppear.swift */; };
 		D845A13B2AF89F7100EA0853 /* PlayTestBeepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A13A2AF89F7100EA0853 /* PlayTestBeepsView.swift */; };
 		D845A13F2AF89F8400EA0853 /* ReadPodStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A13C2AF89F8400EA0853 /* ReadPodStatusView.swift */; };
 		D845A1412AF89F8400EA0853 /* PumpManagerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A13E2AF89F8400EA0853 /* PumpManagerDetailsView.swift */; };
 		D845A1432AF89F9200EA0853 /* SilencePodSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1422AF89F9200EA0853 /* SilencePodSelectionView.swift */; };
-		D85AEABC2B12D76F00081044 /* PodDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEABB2B12D76F00081044 /* PodDiagnostics.swift */; };
+		D85AEABC2B12D76F00081044 /* PodDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEABB2B12D76F00081044 /* PodDiagnosticsView.swift */; };
 		D85AEAC42B13083F00081044 /* ReadPodInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEAC32B13083F00081044 /* ReadPodInfoView.swift */; };
 		D8896C6227890E6B00E09A96 /* DetailedStatus+OmniBLE.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */; };
 		D895BF5B275DE64000D51FC7 /* StringLengthPrefixEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */; };
@@ -403,12 +402,11 @@
 		D802CD0F27DD99AB0072E3A1 /* CRC16Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRC16Tests.swift; sourceTree = "<group>"; };
 		D802CD1127DD9AE10072E3A1 /* BasalScheduleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasalScheduleTests.swift; sourceTree = "<group>"; };
 		D845A1362AF89F5500EA0853 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
-		D845A1382AF89F6300EA0853 /* FirstAppear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstAppear.swift; sourceTree = "<group>"; };
 		D845A13A2AF89F7100EA0853 /* PlayTestBeepsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayTestBeepsView.swift; sourceTree = "<group>"; };
 		D845A13C2AF89F8400EA0853 /* ReadPodStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadPodStatusView.swift; sourceTree = "<group>"; };
 		D845A13E2AF89F8400EA0853 /* PumpManagerDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PumpManagerDetailsView.swift; sourceTree = "<group>"; };
 		D845A1422AF89F9200EA0853 /* SilencePodSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SilencePodSelectionView.swift; sourceTree = "<group>"; };
-		D85AEABB2B12D76F00081044 /* PodDiagnostics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodDiagnostics.swift; sourceTree = "<group>"; };
+		D85AEABB2B12D76F00081044 /* PodDiagnosticsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodDiagnosticsView.swift; sourceTree = "<group>"; };
 		D85AEAC32B13083F00081044 /* ReadPodInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadPodInfoView.swift; sourceTree = "<group>"; };
 		D8896C6127890E6B00E09A96 /* DetailedStatus+OmniBLE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DetailedStatus+OmniBLE.swift"; sourceTree = "<group>"; };
 		D895BF5A275DE64000D51FC7 /* StringLengthPrefixEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringLengthPrefixEncoding.swift; sourceTree = "<group>"; };
@@ -719,7 +717,6 @@
 				C1F67EB227975E710017487F /* DesignElements */,
 				C1F67E7B27975B830017487F /* ExpirationReminderPickerView.swift */,
 				C1F67E7827975B830017487F /* ExpirationReminderSetupView.swift */,
-				D845A1382AF89F6300EA0853 /* FirstAppear.swift */,
 				C1F67E7D27975B830017487F /* HUDAssets.xcassets */,
 				C1F67E8527975B830017487F /* InsertCannulaView.swift */,
 				C187C190278FCEC9006E3557 /* InsulinTypeConfirmation.swift */,
@@ -733,7 +730,7 @@
 				C1F67E7F27975B830017487F /* PairPodView.swift */,
 				D845A13A2AF89F7100EA0853 /* PlayTestBeepsView.swift */,
 				C1F67E8A27975B830017487F /* PodDetailsView.swift */,
-				D85AEABB2B12D76F00081044 /* PodDiagnostics.swift */,
+				D85AEABB2B12D76F00081044 /* PodDiagnosticsView.swift */,
 				C1F67E8827975B830017487F /* PodSetupView.swift */,
 				D845A13E2AF89F8400EA0853 /* PumpManagerDetailsView.swift */,
 				D85AEAC32B13083F00081044 /* ReadPodInfoView.swift */,
@@ -1060,7 +1057,7 @@
 				10389A3A26FF7841002115E9 /* SetInsulinScheduleCommand.swift in Sources */,
 				D845A13B2AF89F7100EA0853 /* PlayTestBeepsView.swift in Sources */,
 				10389A3826FF7841002115E9 /* DetailedStatus.swift in Sources */,
-				D85AEABC2B12D76F00081044 /* PodDiagnostics.swift in Sources */,
+				D85AEABC2B12D76F00081044 /* PodDiagnosticsView.swift in Sources */,
 				C1F67E9927975B830017487F /* NotificationSettingsView.swift in Sources */,
 				10389A2B26FF7841002115E9 /* PlaceholderMessageBlock.swift in Sources */,
 				10389A3026FF7841002115E9 /* StatusResponse.swift in Sources */,
@@ -1132,7 +1129,6 @@
 				C1F67E9227975B830017487F /* BasalStateView.swift in Sources */,
 				1024E32B27446DB000DE01F2 /* MessagePacket.swift in Sources */,
 				10289E7B2739F886000339E6 /* EapMessage.swift in Sources */,
-				D845A1392AF89F6300EA0853 /* FirstAppear.swift in Sources */,
 				C1C001C127A2349D00533D35 /* OmniBLE.swift in Sources */,
 				10389A3326FF7841002115E9 /* CancelDeliveryCommand.swift in Sources */,
 				C1DBD513282FF79D009FCF74 /* ManualTempBasalEntryView.swift in Sources */,

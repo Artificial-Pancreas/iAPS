@@ -20,6 +20,7 @@ extension OpenAPS {
         static let autosens = "prepare/autosens.js"
         static let profile = "prepare/profile.js"
         static let log = "prepare/log.js"
+        static let string = "prepare/middleware.js"
     }
 
     enum Middleware {
@@ -55,7 +56,7 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
         static let podAge = "monitor/pod-age.json"
-        static let oref2_variables = "monitor/oref2_variables.json"
+        static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
     }
