@@ -528,7 +528,7 @@ Enact a temp Basal or a temp target */
 "Pump" = "Bomba";
 
 /* */
-"Watch" = "Ver";
+"Watch" = "Reloj";
 
 /* */
 "Watch Configuration" = "Configuración del reloj";
@@ -540,7 +540,7 @@ Enact a temp Basal or a temp target */
 "Display on Watch" = "Mostrar en reloj";
 
 /* */
-"Garmin Watch" = "Reloj de Garmin";
+"Garmin Watch" = "Reloj Garmin";
 
 /* */
 "Add devices" = "Añadir dispositivo";
