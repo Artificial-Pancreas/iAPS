@@ -28,6 +28,11 @@ struct WatchState: Codable {
     var useNewCalc: Bool?
     var isf: Decimal?
     var override: String?
+    var target: Decimal?
+    var carbRatio: Decimal?
+    var eventualGlucose: Decimal?
+    var deltaBG: Decimal?
+    var minPredBG: Decimal?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {

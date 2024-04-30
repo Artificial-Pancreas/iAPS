@@ -12,7 +12,7 @@ final class TotalDailyDose {
         let tdd = (bolus: bolus(data), basal: tempBasals(data, increment: increment), hours: hours)
         // Dev testing
         print("Time for TDD: \(-1 * now.timeIntervalSinceNow) seconds")
-        debug(.oref2, "TDD: " + (tdd.basal + tdd.bolus).formatted() + " U; basal: " + tdd.basal.formatted() + " U.")
+        debug(.dynamic, "TDD: " + (tdd.basal + tdd.bolus).formatted() + " U; basal: " + tdd.basal.formatted() + " U.")
         return tdd
     }
 

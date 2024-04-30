@@ -73,7 +73,7 @@ final class OpenAPS {
                 }
 
                 // To do: remove this struct.
-                let oref2_variables = self.oref2Variables(preferencesData)
+                let dynamicVariables = self.dynamicVariables(preferencesData)
 
                 // The Middleware layer. Has anything been updated?
                 let alteredProfile = self.middleware(
@@ -85,7 +85,7 @@ final class OpenAPS {
                     meal: meal,
                     microBolusAllowed: true,
                     reservoir: reservoir,
-                    oref2_variables: oref2_variables
+                    dynamicVariables: dynamicVariables
                 )
 
                 // The OpenAPS JS algorithm layer
@@ -98,7 +98,7 @@ final class OpenAPS {
                     meal: meal,
                     microBolusAllowed: true,
                     reservoir: reservoir,
-                    oref2_variables: oref2_variables
+                    dynamicVariables: dynamicVariables
                 )
 
                 debug(.openAPS, "SUGGESTED: \(suggested)")
@@ -365,7 +365,7 @@ final class OpenAPS {
 
                 try? coredataContext.save()
             } else {
-                debug(.oref2, "Couldn't save suggestion to CoreData")
+                debug(.dynamic, "Couldn't save suggestion to CoreData")
             }
         }
 
@@ -419,16 +419,21 @@ final class OpenAPS {
         let preferences = preferencesData
         guard let pumpData = storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) else { return nil }
 
-        let oref2 = TotalDailyDose().totalDailyDose(pumpData, increment: Double(preferences?.bolusIncrement ?? 0.1))
-        return oref2
+        let tdd = TotalDailyDose().totalDailyDose(pumpData, increment: Double(preferences?.bolusIncrement ?? 0.1))
+        return tdd
     }
 
-    func oref2Variables(_ preferences: Preferences?) -> RawJSON {
+    func dynamicVariables(_ preferences: Preferences?) -> RawJSON {
         coredataContext.performAndWait {
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
             let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
             let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30) as NSDecimalNumber
+
+            let settings = self.loadFileFromStorage(name: FreeAPS.settings)
+            let settingsData = FreeAPSSettings(from: settings)
+            let disableCGMError = settingsData?.disableCGMError ?? false
+
             let cd = CoreDataStorage()
             // TDD
             let uniqueEvents = cd.fetchTDD(interval: DateFilter().tenDays)
@@ -512,7 +517,7 @@ final class OpenAPS {
                 }
             }
 
-            let averages = Oref2_variables(
+            let averages = DynamicVariables(
                 average_total_data: average14,
                 weightedAverage: weighted_average,
                 weigthPercentage: wp,
@@ -536,10 +541,11 @@ final class OpenAPS {
                 end: (overrideArray.first?.end ?? 0) as Decimal,
                 smbMinutes: (overrideArray.first?.smbMinutes ?? smbMinutes) as Decimal,
                 uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal,
-                maxIOB: maxIOB as Decimal
+                maxIOB: maxIOB as Decimal,
+                disableCGMError: disableCGMError
             )
-            storage.save(averages, as: OpenAPS.Monitor.oref2_variables)
-            return self.loadFileFromStorage(name: Monitor.oref2_variables)
+            storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
+            return self.loadFileFromStorage(name: Monitor.dynamicVariables)
         }
     }
 
@@ -636,7 +642,7 @@ final class OpenAPS {
         meal: JSON,
         microBolusAllowed: Bool,
         reservoir: JSON,
-        oref2_variables: JSON
+        dynamicVariables: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -662,7 +668,7 @@ final class OpenAPS {
                     microBolusAllowed,
                     reservoir,
                     Date(),
-                    oref2_variables
+                    dynamicVariables
                 ]
             )
         }
@@ -749,7 +755,7 @@ final class OpenAPS {
         meal: JSON,
         microBolusAllowed: Bool,
         reservoir: JSON,
-        oref2_variables: JSON
+        dynamicVariables: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -771,7 +777,7 @@ final class OpenAPS {
                     microBolusAllowed,
                     reservoir,
                     Date(),
-                    oref2_variables
+                    dynamicVariables
                 ]
             )
         }
