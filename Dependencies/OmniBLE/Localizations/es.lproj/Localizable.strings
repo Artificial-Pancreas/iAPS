@@ -114,7 +114,7 @@
 "Replace Pod" = "Cambie el Pod";
 
 /* Unit for singular day in pod life remaining */
-"day" = "day";
+"day" = "día";
 
 /* Unit for plural days in pod life remaining */
 "days" = "días";
@@ -664,7 +664,7 @@
 "Active Time" = "Tiempo Activo";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Total Delivery";
+"Total Delivery" = "Total administrado";
 
 /* description label for device name pod details row */
 "Device Name" = "Device Name";
