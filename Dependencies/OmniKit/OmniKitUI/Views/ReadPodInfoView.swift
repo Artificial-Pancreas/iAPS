@@ -19,7 +19,7 @@ struct ReadPodInfoView: View {
     var actionString: String    // e.g., "Reading Pulse Log..."
     var failedString: String    // e.g., "Failed to read pulse log."
 
-    var toRun: ((_ completion: @escaping (_ result: Result<String, Error>) -> Void) -> Void)?
+    var action: () async throws -> String
 
     @State private var alertIsPresented: Bool = false
     @State private var displayString: String = ""
@@ -51,7 +51,9 @@ struct ReadPodInfoView: View {
             }
             VStack {
                 Button(action: {
-                    asyncAction()
+                    Task { @MainActor in
+                        await attemptAction()
+                    }
                 }) {
                     Text(buttonText)
                         .actionButtonStyle(.primary)
@@ -66,27 +68,22 @@ struct ReadPodInfoView: View {
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: $alertIsPresented, content: { alert(error: error) })
-        .onFirstAppear {
-            asyncAction()
+        .task {
+            await attemptAction()
         }
     }
 
-    private func asyncAction () {
-        DispatchQueue.global(qos: .utility).async {
-            executing = true
+    private func attemptAction() async {
+        executing = true
+        self.displayString = ""
+        do {
+            self.displayString = try await action()
+        } catch {
             self.displayString = ""
-            toRun?() { (result) in
-                executing = false
-                switch result {
-                case .success(let resultString):
-                    self.displayString = resultString
-                case .failure(let error):
-                    self.displayString = ""
-                    self.error = error
-                    self.alertIsPresented = true
-                }
-            }
+            self.error = error
+            self.alertIsPresented = true
         }
+        executing = false
     }
 
     private var buttonText: String {
@@ -112,7 +109,7 @@ struct ReadPodInfoView_Previews: PreviewProvider {
                 title: "Read Pulse Log",
                 actionString: "Reading Pulse Log...",
                 failedString: "Failed to read pulse log"
-            ) { completion in
+            ) {
                 let podInfoPulseLogRecent = try! PodInfoPulseLogRecent(encodedData: Data([0x50, 0x03, 0x17,
                     0x39, 0x72, 0x58, 0x01,  0x3c, 0x72, 0x43, 0x01,  0x41, 0x72, 0x5a, 0x01,  0x44, 0x71, 0x47, 0x01,
                     0x49, 0x51, 0x59, 0x01,  0x4c, 0x51, 0x44, 0x01,  0x51, 0x73, 0x59, 0x01,  0x54, 0x50, 0x43, 0x01,
@@ -128,7 +125,7 @@ struct ReadPodInfoView_Previews: PreviewProvider {
                     0x21, 0x72, 0x52, 0x00,  0x24, 0x72, 0x40, 0x00,  0x29, 0x71, 0x53, 0x00,  0x2c, 0x50, 0x42, 0x00,
                     0x31, 0x51, 0x55, 0x00,  0x34, 0x50, 0x42, 0x00   ]))
                 let lastPulseNumber = Int(podInfoPulseLogRecent.indexLastEntry)
-                completion(.success(pulseLogString(pulseLogEntries: podInfoPulseLogRecent.pulseLog, lastPulseNumber: lastPulseNumber)))
+                return pulseLogString(pulseLogEntries: podInfoPulseLogRecent.pulseLog, lastPulseNumber: lastPulseNumber)
             }
         }
     }

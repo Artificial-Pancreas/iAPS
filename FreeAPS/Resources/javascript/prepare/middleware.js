@@ -1,10 +1,10 @@
 
-function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = false, reservoir = null, clock = new Date(), oref2_variables) {
+function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = false, reservoir = null, clock = new Date(), dynamicVariables) {
     var clock = new Date();
     var string = "";
     
     try {
-        string = middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, oref2_variables) || "";
+        string = middleware(iob, currenttemp, glucose, profile, autosens, meal, reservoir, clock, dynamicVariables) || "";
         
         if (profile && string != "") {
             profile.mw = string

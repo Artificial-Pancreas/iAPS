@@ -1,13 +1,11 @@
 //для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
 
-function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, oref2_variables) {
+function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, dynamicVariables) {
     
     // Needs to be updated here due to time format).
     clock = new Date()
     
-    var glucose_status = freeaps_glucoseGetLast(glucose);
     var autosens_data = null;
-
     if (autosens) {
         autosens_data = autosens;
     }
@@ -23,71 +21,82 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     }
     
     // Overrides
-    if (oref2_variables && oref2_variables.useOverride) {
-        const factor = oref2_variables.overridePercentage / 100;
+    if (dynamicVariables && dynamicVariables.useOverride) {
+        const factor = dynamicVariables.overridePercentage / 100;
         if (factor != 1) {
             // Basal
             profile.current_basal *= factor;
             // ISF and CR
-            if (oref2_variables.isfAndCr) {
+            if (dynamicVariables.isfAndCr) {
                 profile.sense /= factor;
                 carbRatio /= factor;
             } else {
-                if (oref2_variables.cr) { profile.carbRatio /= factor; }
-                if (oref2_variables.isf) { profile.sens /= factor; }
+                if (dynamicVariables.cr) { profile.carbRatio /= factor; }
+                if (dynamicVariables.isf) { profile.sens /= factor; }
             }
-            console.log("Override Active, " + oref2_variables.overridePercentage + "%");
+            console.log("Override Active, " + dynamicVariables.overridePercentage + "%");
         }
             // SMB Minutes
-        if (oref2_variables.advancedSettings && oref2_variables.smbMinutes !== profile.maxSMBBasalMinutes) {
-            console.log("SMB Max Minutes - setting overriden from " + profile.maxSMBBasalMinutes + " to " + oref2_variables.smbMinutes);
-            profile.maxSMBBasalMinutes = oref2_variables.smbMinutes;
+        if (dynamicVariables.advancedSettings && dynamicVariables.smbMinutes !== profile.maxSMBBasalMinutes) {
+            console.log("SMB Max Minutes - setting overriden from " + profile.maxSMBBasalMinutes + " to " + dynamicVariables.smbMinutes);
+            profile.maxSMBBasalMinutes = dynamicVariables.smbMinutes;
         }
         // UAM Minutes
-        if (oref2_variables.advancedSettings && oref2_variables.uamMinutes !== profile.maxUAMSMBBasalMinutes) {
-            console.log("UAM Max Minutes - setting overriden from " + profile.maxUAMSMBBasalMinutes + " to " + oref2_variables.uamMinutes);
-            profile.maxUAMSMBBasalMinutes = oref2_variables.uamMinutes;
+        if (dynamicVariables.advancedSettings && dynamicVariables.uamMinutes !== profile.maxUAMSMBBasalMinutes) {
+            console.log("UAM Max Minutes - setting overriden from " + profile.maxUAMSMBBasalMinutes + " to " + dynamicVariables.uamMinutes);
+            profile.maxUAMSMBBasalMinutes = dynamicVariables.uamMinutes;
         }
             //Target
-        if (oref2_variables.overrideTarget != 0 && oref2_variables.overrideTarget != 6 && !profile.temptargetSet) {
-            profile.min_bg = oref2_variables.overrideTarget;
+        if (dynamicVariables.overrideTarget != 0 && dynamicVariables.overrideTarget != 6 && !profile.temptargetSet) {
+            profile.min_bg = dynamicVariables.overrideTarget;
             profile.max_bg = profile.min_bg;
-            console.log("Override Active, new glucose target: " + oref2_variables.overrideTarget);
+            console.log("Override Active, new glucose target: " + dynamicVariables.overrideTarget);
         }
         
             //SMBs
-        if (disableSMBs(oref2_variables)) {
+        if (disableSMBs(dynamicVariables)) {
             microbolusAllowed = false;
             console.error("SMBs disabled by Override");
         }
         
         // Max IOB
-        if (oref2_variables.advancedSettings && oref2_variables.maxIOB !== profile.maxIOB) {
-            profile.max_iob = oref2_variables.maxIOB;
+        if (dynamicVariables.advancedSettings && dynamicVariables.maxIOB !== profile.maxIOB) {
+            profile.max_iob = dynamicVariables.maxIOB;
             console.log("Override Active, new maxIOB: " + profile.max_iob);
         }
     }
     
     // Half Basal Target
-    if (oref2_variables.isEnabled) {
-        profile.half_basal_exercise_target = oref2_variables.hbt;
-        console.log("Temp Target active, half_basal_exercise_target: " + oref2_variables.hbt);
+    if (dynamicVariables.isEnabled) {
+        profile.half_basal_exercise_target = dynamicVariables.hbt;
+        console.log("Temp Target active, half_basal_exercise_target: " + dynamicVariables.hbt);
     }
     
     // Dynamic ISF
     if (profile.useNewFormula) {
-        dynisf(profile, autosens_data, oref2_variables, glucose);
+        dynisf(profile, autosens_data, dynamicVariables, glucose);
     } else { console.log("Dynamic ISF disabled in settings."); }
+    
+    // If ignoring flat CGM errors, circumvent also the Oref0 error
+    if (dynamicVariables.disableCGMError) {
+        if (glucose.length > 1 && Math.abs(glucose[0].glucose - glucose[1].glucose) < 5) {
+            if (glucose[1].glucose >= glucose[1].glucose) {
+                glucose[1].glucose -= 5;
+            } else {glucose[1].glucose += 5; }
+            console.log("Flat CGM by-passed.");
+        }
+    }
+    var glucose_status = freeaps_glucoseGetLast(glucose);
     
     return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
 }
 
 // The Dynamic ISF layer
-function dynisf(profile, autosens_data, oref2_variables, glucose) {
+function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     var dynISFenabled = true;
     // One of two exercise settings (they share the same purpose).
     var exerciseSetting = false;
-    if (profile.highTemptargetRaisesSensitivity || profile.exerciseMode || oref2_variables.isEnabled) {
+    if (profile.highTemptargetRaisesSensitivity || profile.exerciseMode || dynamicVariables.isEnabled) {
         exerciseSetting = true;
     }
         
@@ -136,9 +145,9 @@ function dynisf(profile, autosens_data, oref2_variables, glucose) {
 
     // Use a weighted TDD average
     var tdd = 0;
-    const weighted_average = oref2_variables.weightedAverage;
-    const weightPercentage = oref2_variables.weigthPercentage;
-    const average14 = oref2_variables.average_total_data;
+    const weighted_average = dynamicVariables.weightedAverage;
+    const weightPercentage = dynamicVariables.weigthPercentage;
+    const average14 = dynamicVariables.average_total_data;
 
     if (weightPercentage > 0 && weighted_average > 0) {
         tdd = weighted_average;
@@ -225,19 +234,19 @@ function round(value, digits) {
     return Math.round(value * scale) / scale;
 }
 
-function disableSMBs(oref2_variables) {
-    if (oref2_variables.smbIsOff) {
-        if (!oref2_variables.smbIsAlwaysOff) {
+function disableSMBs(dynamicVariables) {
+    if (dynamicVariables.smbIsOff) {
+        if (!dynamicVariables.smbIsAlwaysOff) {
             return true;
         }
         const hour = new Date().getHours();
-        if (oref2_variables.end < oref2_variables.start && hour < 24 && hour > oref2_variables.start) {
-            oref2_variables.end += 24;
+        if (dynamicVariables.end < dynamicVariables.start && hour < 24 && hour > dynamicVariables.start) {
+            dynamicVariables.end += 24;
         }
-        if (hour >= oref2_variables.start && hour <= oref2_variables.end) {
+        if (hour >= dynamicVariables.start && hour <= dynamicVariables.end) {
             return true;
         }
-        if (oref2_variables.end < oref2_variables.start && hour < oref2_variables.end) {
+        if (dynamicVariables.end < dynamicVariables.start && hour < dynamicVariables.end) {
             return true;
         }
     }
