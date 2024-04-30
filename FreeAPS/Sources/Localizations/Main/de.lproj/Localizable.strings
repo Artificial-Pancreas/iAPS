@@ -1234,10 +1234,10 @@ Enact a temp Basal or a temp target */
 "Online or internal server" = "Online oder interner Server";
 
 /* Pump Error Message */
-"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Die neue Empfehlung kann nicht angewendet werden, da zurzeit ein Bolus verabreicht wird. Warten Sie bitte die nächste Schleife ab.";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Error: Pump is Busy.";
+"Error: Pump is Busy." = "Fehler: Die Pumpe ist beschäftigt.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1742,7 +1742,7 @@ Enact a temp Basal or a temp target */
 "Resuming insulin delivery..." = "Insulinabgabe fortsetzen...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Unterbrechung Insulinagabe fehlgeschlagen";
+"Failed to Suspend Insulin Delivery" = "Fehler beim Unterbrechen der Insulinabgabe";
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
