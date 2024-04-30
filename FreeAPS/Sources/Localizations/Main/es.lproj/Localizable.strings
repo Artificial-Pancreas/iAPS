@@ -1003,7 +1003,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Bolus Amount in U" = "Bolus Amount in U";
 
 /* Bolus shortcut. Setting */
-"Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
+"Allow iOS Bolus Shortcuts" = "Permitir bolos con Atajos";
 
 /* Bolus shortcut setting. Header */
 "iOS Shortcuts" = "iOS Shortcuts";
@@ -1367,7 +1367,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Interval In Minutes" = "Intervalo en minutos";
 
 /* Override */
-"Override With A Factor Of " = "Reemplazar con un Factor de ";
+"Override With A Factor Of " = "Factor de corrección";
 
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Permite convertir grasas y proteínas en futuros equivalentes de carbohidratos utilizando la fórmula de kilocalorías de Varsovia dividida por 10.\n\nEsto difunde los glúcidos equivalentes en un ajuste de duración máxima que puede configurarse de 5-12 horas.\n\nLa demora es el tiempo desde ahora hasta la primera entrada futura de carbohidratos.\n\nIntervalo en minutos es cuántos minutos hay entre entradas. Cuanto más corto sea el intervalo, más suave será el resultado, 10, 15, 20, 30 o 60 son opciones razonables.\n\nEl factor de ajuste es cuánto efecto tiene la grasa y la proteína en las entradas. 1.0 tiene efecto completo (método original de Varsovia) y 0.5 es la mitad del efecto. Tenga en cuenta que puede que encuentre que su ratio de carbohidratos usual necesita aumentar a un número mayor si empieza a agregar entradas de grasa y proteínas. Por esta razón, es mejor empezar con un factor de aproximadamente 0,5 para facilitar el ajuste.\n\nAjustes predeterminados: Duración máxima: 8 horas, Intervalo: 30 min, Factor: 0.5, Demora 60 min";
@@ -1376,7 +1376,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount.";
 
 /* FPU Settings Title */
-"Fat and Protein" = "Grasa y proteína";
+"Fat and Protein" = "UGP";
 
 /* Display fat and protein entities */
 "Fat & Protein" = "Grasa y proteína";
@@ -1391,7 +1391,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Protein" = "Proteína";
 
 /* Service Section */
-"Fat And Protein Conversion" = "Conversión de grasa y proteína";
+"Fat And Protein Conversion" = "Conversión de UGPs";
 
 /* Service Section */
 "Profile Override" = "Anulación del perfil";
@@ -1501,7 +1501,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Delete Carb Equivalents?" = "¿Eliminar Equivalentes de Carbohidratos?";
 
 /* */
-"All FPUs of the meal will be deleted." = "Se eliminarán todas las unidades de grasa y proteína (FPU) de la comida.";
+"All FPUs of the meal will be deleted." = "Se eliminarán todas las UGP de la comida.";
 
 /* */
 "Delete Glucose?" = "¿Eliminar glucosa?";
@@ -1531,7 +1531,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Predictions" = "Predicciones";
 
 /* Watch Config Option */
-"Display Protein & Fat" = "Mostrar Proteínas y Grasas";
+"Display Protein & Fat" = "Mostrar Grasa y Proteína";
 
 /* Time of new meal entry */
 "Now" = "Now";
@@ -1995,7 +1995,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Enable UAM" = "Enable UAM";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Con esta opción activada, el algoritmo SMB puede reconocer comidas no anunciadas. Esto es útil si olvida decir a iAPS sobre sus carbohidratos, estima mal sus carbohidratos y los introduce erróneamente en la aplicación, o si una comida con mucha grasa y proteína tiene una duración más larga de lo esperado. Sin ninguna entrada de carbohidratos, UAM puede reconocer aumentos rápidos de glucosa causados por carbohidratos, adrenalina, estrés, etc. e intenta ajustarlo con SMBs. Esto también funciona al contrario: si hay una rápida disminución de la glucosa, puede detener a los SMB antes.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Con esta opción activada, el algoritmo SMB puede reconocer comidas no anunciadas. Esto es útil si olvida decir a iAPS sobre sus carbohidratos, estima mal sus carbohidratos y los introduce erróneamente en la aplicación, o si una comida con mucha grasa y proteína tiene una duración más larga de lo esperado.\n\nSin ninguna entrada de carbohidratos, UAM puede reconocer aumentos rápidos de glucosa causados por carbohidratos, adrenalina, estrés, etc. e intenta ajustarlo con SMBs. Esto también funciona al contrario: si hay una rápida disminución de la glucosa, puede detener a los SMB antes.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Enable SMB With COB";
@@ -2166,7 +2166,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "SMB DeliveryRatio" = "SMB DeliveryRatio";
 
 /* SMB DeliveryRatio */
-"Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution.";
+"Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Valor predeterminado: 0.5\n\nEsta es otra clave de seguridad de OpenAPS, y especifica qué porcentaje del cálculo de la insulina total requerida puede ser entregado como SMB.\n\nAumenta este valor experimental lentamente y con precaución.";
 
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
@@ -2183,7 +2183,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Enable Dynamic ISF" = "Enable Dynamic ISF";
 
 /* Enable Dynamic ISF */
-"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits.";
+"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Calcula un nuevo factor de sensibilidad a la insulina (FSI) en cada ciclo. Dicho FSI se basará en su glucosa actual, dosis total diaria de insulina (DTD, pasadas 24 horas de la última dosis) y un factor de corrección individual (nota: comenzar con 0.5 si se utiliza la función Sigmoid y 0.8 si no lo hace).\n\nPor seguridad, todos los ajustes dinámicos de FSI y RC estarán capados por el límite min/max de Autosens.";
 
 /* Headline Enable Dynamic CR */
 "Enable Dynamic CR" = "Enable Dynamic CR";
@@ -2240,19 +2240,19 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Calculator settings" = "Calculator settings";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
+"Use alternate Bolus Calculator" = "Usar calculadora alternativa";
 
 /* Bolus Calculator Setting */
-"Fatty Meals" = "Fatty Meals";
+"Fatty Meals" = "Comidas grasientas";
 
 /* Bolus Calculator Setting */
-"Apply factor for fatty meals" = "Apply factor for fatty meals";
+"Apply factor for fatty meals" = "Factor para comidas grasientas";
 
 /* Bolus Calculator Footer */
-"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).";
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "La calculadora de bolos alternativa es una alternativa a la calculadora de bolos predeterminada en iAPS. Se puede cambiar entre calculadoras habilitando el botón correspondiente en este menú. Tras el cálculo se aplica un factor de corrección de la misma manera que ocurre con los SMBs (por defecto 0.8).\n\nAdicionalmente, es posible habilitar un segundo factor al final del cálculo que puede ser útil para las comidas más grasientas como la pizza (por defecto 0.7).";
 
 /* Settings Section */
-"Extra Features" = "Extra Features";
+"Extra Features" = "Funciones adicionales";
 
 /* UI/UX option */
 "Display Predictions" = "Display Predictions";
@@ -2299,7 +2299,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Display Time Interval Setting Button" = "Display Time Interval Setting Button";
 
 /* Setting title */
-"Bolus Calculator" = "Bolus Calculator";
+"Bolus Calculator" = "Calculador de bolo";
 
 /* Setting title */
 "Dynamic ISF" = "Dynamic ISF";
