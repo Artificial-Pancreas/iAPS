@@ -5,7 +5,7 @@
 "%@/min" = "%@min";
 
 /* No comment provided by engineer. */
-"Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
+"Are you sure you want to delete this CGM?" = "Voulez-vous vraiment supprimer ce CGM?";
 
 /* No comment provided by engineer. */
 "Bluetooth" = "Bluetooth";
@@ -45,19 +45,19 @@
 "Grace period remaining" = "Période de grâce restante";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "HIGH";
+"HIGH" = "HAUT";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Dernière Connexion";
 
 /* No comment provided by engineer. */
-"Last Reading" = "Last Reading";
+"Last Reading" = "Dernière lecture";
 
 /* Descriptive text on G7StartupView */
 "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS peut lire les données G7 de la CGM mais vous devez toujours utiliser l'application Dexcom G7 pour associer, calibrer et gérer les capteurs.";
 
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "LOW";
+"LOW" = "BAS";
 
 /* title for g7 settings row showing BLE Name */
 "Name" = "Nom";
@@ -90,7 +90,7 @@
 "Sensor Expiration" = "Capteur expiré";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Sensor expired";
+"Sensor expired" = "Capteur expiré";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
 "Sensor expires" = "Capteur expiré";
@@ -108,10 +108,10 @@
 "Time" = "Heure";
 
 /* Field label */
-"Trend" = "Trend";
+"Trend" = "Tendance";
 
 /* title for g7 config settings to upload readings */
-"Upload Readings" = "Upload Readings";
+"Upload Readings" = "Envoyer les données";
 
 /* G7 Progress bar label when sensor in warmup */
 "Warmup completes" = "L'échauffement est terminé";

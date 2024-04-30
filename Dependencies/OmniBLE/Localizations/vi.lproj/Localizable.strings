@@ -320,6 +320,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Cài đặt liều nền tạm thời";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Việc cung cấp insulin của bạn sẽ không được điều chỉnh tự động cho đến khi mức cơ bản tạm thời kết thúc hoặc bị hủy bỏ.";
+
 /* Section header for activity section */
 "Activity" = "Hoạt động";
 
@@ -451,7 +454,7 @@
 "Paired" = "Đã ghép đôi";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Bỏ qua";
+"Cancel" = "Hủy";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Bạn có chắc chắn muốn hủy cấu hình pod?";
@@ -697,7 +700,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Bạn bắt đầu quá trình cài đặt các lời nhắc, đổ đầy thuốc vào pod, ghép đôi thiết bị và gắn pod lên người.";
 
 /* Cancel button title */
-"Cancel" = "Bỏ qua";
+"Cancel" = "Hủy";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Tiếp tục";
@@ -829,3 +832,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Đọc tình trạng pod";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Xong";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Chẩn đoán Pod";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Đọc thời gian kích hoạt";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Đọc cảnh báo được kích hoạt";

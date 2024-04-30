@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Встановити Тимчасову Базальну Швидкість";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Ваша подача інсуліну не буде автоматично скоригована, доки тимчасова базальна доза не закінчиться або не буде скасована.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Налаштування завершено";
 
@@ -814,3 +817,15 @@ Silence Pod" = "Silence Pod";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Отримати статус Pod'у";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Діагностика Pod'у";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Читати Журнал Подій";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Прочитайте час активації";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Читайте Тригерні Сповіщення";

@@ -4,7 +4,7 @@ import SwiftDate
 import Swinject
 
 final class CoreDataStorage {
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     func fetchGlucose(interval: NSDate) -> [Readings] {
         var fetchGlucose = [Readings]()
@@ -20,86 +20,88 @@ final class CoreDataStorage {
         return fetchGlucose
     }
 
-    func fetchLatestOverride() -> [Override] {
-        var overrideArray = [Override]()
+    func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
+        var fetchLoopStats = [LoopStatRecord]()
         coredataContext.performAndWait {
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = 1
-            try? overrideArray = self.coredataContext.fetch(requestOverrides)
-        }
-        return overrideArray
-    }
-
-    func fetchProfile(_ name: String) -> Override? {
-        var presetsArray = [OverridePresets]()
-        var overrideArray = [Override]()
-        var override: Override?
-        coredataContext.performAndWait {
-            let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
-            requestPresets.predicate = NSPredicate(
-                format: "name == %@", name
+            let requestLoopStats = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+            let sort = NSSortDescriptor(key: "start", ascending: false)
+            requestLoopStats.sortDescriptors = [sort]
+            requestLoopStats.predicate = NSPredicate(
+                format: "interval > 0 AND start > %@", interval
             )
-            try? presetsArray = self.coredataContext.fetch(requestPresets)
-
-            guard let preset = presetsArray.first else {
-                return
-            }
-            guard let id = preset.id else {
-                return
-            }
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            requestOverrides.predicate = NSPredicate(
-                format: "id == %@", id
-            )
-            try? overrideArray = self.coredataContext.fetch(requestOverrides)
-
-            guard let override_ = overrideArray.first else {
-                return
-            }
-            override = override_
+            try? fetchLoopStats = self.coredataContext.fetch(requestLoopStats)
         }
-        return override
+        return fetchLoopStats
     }
 
-    func activateOverride(_ override: Override) {
-        var overrideArray = [Override]()
+    func fetchTDD(interval: NSDate) -> [TDD] {
+        var uniqueEvents = [TDD]()
         coredataContext.performAndWait {
-            let save = Override(context: coredataContext)
-            save.date = Date.now
-            save.id = override.id
-            save.end = override.end
-            save.start = override.start
-            save.advancedSettings = override.advancedSettings
-            save.cr = override.cr
-            save.duration = override.duration
-            save.enabled = override.enabled
-            save.indefinite = override.indefinite
-            save.isPreset = override.isPreset
-            save.isf = override.isf
-            save.isfAndCr = override.isfAndCr
-            save.percentage = override.percentage
-            save.smbIsAlwaysOff = override.smbIsAlwaysOff
-            save.smbMinutes = override.smbMinutes
-            save.uamMinutes = override.uamMinutes
-            save.target = override.target
-            try? coredataContext.save()
+            let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
+            requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", interval)
+            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+            requestTDD.sortDescriptors = [sortTDD]
+            try? uniqueEvents = coredataContext.fetch(requestTDD)
         }
+        return uniqueEvents
     }
 
-    func isActive() -> Bool {
-        var overrideArray = [Override]()
+    func fetchTempTargetsSlider() -> [TempTargetsSlider] {
+        var sliderArray = [TempTargetsSlider]()
         coredataContext.performAndWait {
-            let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
-            let sortOverride = NSSortDescriptor(key: "date", ascending: false)
-            requestOverrides.sortDescriptors = [sortOverride]
-            requestOverrides.fetchLimit = 1
-            try? overrideArray = self.coredataContext.fetch(requestOverrides)
+            let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
+            let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
+            requestIsEnbled.sortDescriptors = [sortIsEnabled]
+            // requestIsEnbled.fetchLimit = 1
+            try? sliderArray = coredataContext.fetch(requestIsEnbled)
         }
-        guard let lastOverride = overrideArray.first else {
-            return false
+        return sliderArray
+    }
+
+    func fetchTempTargets() -> [TempTargets] {
+        var tempTargetsArray = [TempTargets]()
+        coredataContext.performAndWait {
+            let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
+            let sortTT = NSSortDescriptor(key: "date", ascending: false)
+            requestTempTargets.sortDescriptors = [sortTT]
+            requestTempTargets.fetchLimit = 1
+            try? tempTargetsArray = coredataContext.fetch(requestTempTargets)
         }
-        return lastOverride.enabled
+        return tempTargetsArray
+    }
+
+    func fetcarbs(interval: NSDate) -> [Carbohydrates] {
+        var carbs = [Carbohydrates]()
+        coredataContext.performAndWait {
+            let requestCarbs = Carbohydrates.fetchRequest() as NSFetchRequest<Carbohydrates>
+            requestCarbs.predicate = NSPredicate(format: "carbs > 0 AND date > %@", interval)
+            let sortCarbs = NSSortDescriptor(key: "date", ascending: true)
+            requestCarbs.sortDescriptors = [sortCarbs]
+            try? carbs = coredataContext.fetch(requestCarbs)
+        }
+        return carbs
+    }
+
+    func fetchStats() -> [StatsData] {
+        var stats = [StatsData]()
+        coredataContext.performAndWait {
+            let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>
+            let sortStats = NSSortDescriptor(key: "lastrun", ascending: false)
+            requestStats.sortDescriptors = [sortStats]
+            requestStats.fetchLimit = 1
+            try? stats = coredataContext.fetch(requestStats)
+        }
+        return stats
+    }
+
+    func fetchInsulinDistribution() -> [InsulinDistribution] {
+        var insulinDistribution = [InsulinDistribution]()
+        coredataContext.performAndWait {
+            let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
+            let sortInsulin = NSSortDescriptor(key: "date", ascending: false)
+            requestInsulinDistribution.sortDescriptors = [sortInsulin]
+            try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
+        }
+        return insulinDistribution
     }
 }

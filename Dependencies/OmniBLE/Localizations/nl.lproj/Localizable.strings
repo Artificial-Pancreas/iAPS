@@ -320,6 +320,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Stel tijdelijke basaal in";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Je insuline levering zal niet automatisch worden aangepast totdat de tijdelijke basaalstand is beëindigd of is geannuleerd.";
+
 /* Section header for activity section */
 "Activity" = "Activiteit";
 
@@ -403,10 +406,10 @@
 "Deactivate Pod" = "Deactiveer Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide om canule in te brengen";
+"Slide to Insert Cannula" = "Schuif om canule in te brengen";
 
 /* */
-"Slide to Deactivate Pod" = "Veeg om Pod te deactiveren";
+"Slide to Deactivate Pod" = "Schuif om de Pod te deactiveren";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactiveren.";
@@ -493,7 +496,7 @@
 "Wait until insertion is completed." = "Wacht tot het inbrengen is voltooid.";
 
 /* Label text for step one of insert cannula instructions */
-"Slide the switch below to start cannula insertion." = "Schuif om canule te starten.";
+"Slide the switch below to start cannula insertion." = "Schuif om de canule te starten.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Ingebracht";
@@ -730,7 +733,7 @@
 "Cancel Manual Basal" = "Annuleer handmatige basaal";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insuline\nOnderbroken";
+"Insulin\nSuspended" = "Insuline\nopgeschort";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Insulinetoediening hervatten";
@@ -829,3 +832,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Lees pompstatus";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "OK";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Diagnostische Pod gegevens";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Pulslog uitlezen";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Activatietijd lezen";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Lees geactiveerde waarschuwingen";

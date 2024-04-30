@@ -8,6 +8,8 @@ struct DateFilter {
     var week = Date().addingTimeInterval(-7.days.timeInterval) as NSDate
     var month = Date().addingTimeInterval(-30.days.timeInterval) as NSDate
     var total = Date().addingTimeInterval(-90.days.timeInterval) as NSDate
+    var tenDays = Date().addingTimeInterval(-10.days.timeInterval) as NSDate
+    var fourteen = Date().addingTimeInterval(-14.days.timeInterval) as NSDate
 }
 
 public enum IAPSconfig {
@@ -18,6 +20,7 @@ public enum IAPSconfig {
     static let shadowOpacity: CGFloat = 0.75
     static let glassShadowOpacity: CGFloat = 0.6
     static let shadowFraction: CGFloat = 2
+    static let minimumCarbEquivalent: Decimal = 0.6
 }
 
 extension Font {

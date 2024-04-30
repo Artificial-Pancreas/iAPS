@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Установить ВБС";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Подача инсулина не будет автоматизирована до тех пор, пока временная базальная скорость не закончится или не будет отменена.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Настройка завершена";
 
@@ -814,3 +817,15 @@ Silence Pod" = "Беззвучный Под";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Получить статус Пода";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Диагностика пода";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Расширенный журнал импульсов";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Прочитать время активации";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Прочитать сработавшие оповещения";

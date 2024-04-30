@@ -320,6 +320,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Set Temporary Basal Rate";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled.";
+
 /* Section header for activity section */
 "Activity" = "Atividade";
 
@@ -439,13 +442,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains.";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
-
-/* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
-
-/* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on).";
 
 /* Label text for step 1 of pair pod instructions */
 "Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the Pod's blue needle cap and check cannula. Then remove paper backing.";
@@ -835,3 +832,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Read Pod Status";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "OK";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Pod Diagnostics";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Read Activation Time";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Read Triggered Alerts";

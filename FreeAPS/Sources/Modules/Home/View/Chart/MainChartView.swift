@@ -639,9 +639,9 @@ struct MainChartView: View {
     private func overridesView(fullSize: CGSize) -> some View {
         ZStack {
             overridesPath
-                .fill(Color.purple.opacity(colorScheme == .light ? 0.1 : 0.3))
+                .fill(Color.violet.opacity(colorScheme == .light ? 0.3 : 0.6))
             overridesPath
-                .stroke(Color.purple.opacity(0.7), lineWidth: 1)
+                .stroke(Color.violet.opacity(0.7), lineWidth: 1)
         }
         .onChange(of: glucose) { _ in
             calculateOverridesRects(fullSize: fullSize)
@@ -1102,19 +1102,21 @@ extension MainChartView {
                     height: 8
                 )
             }
-            if latest?.enabled ?? false {
+            // Display active Override
+            if let last = latest, last.enabled {
                 var old = Array(rects)
-                let duration = Double(latest?.duration ?? 0)
+                let duration = Double(last.duration ?? 0)
+                // Looks better when target isn't == 0 in Home View Main Chart
+                let targetRaw = last.target ?? 0
+                let target = Int(targetRaw) < 6 ? 6 : targetRaw
+
                 if duration > 0 {
                     let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
-                    let plusNow = (latest?.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
+                    let plusNow = (last.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
                     let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
-                        y: glucoseToYCoordinate(
-                            Int(Double(latest?.target ?? 100)),
-                            fullSize: fullSize
-                        ),
+                        y: glucoseToYCoordinate(Int(target), fullSize: fullSize) - 3,
                         width: x2 - x1,
                         height: 8
                     )
@@ -1126,11 +1128,11 @@ extension MainChartView {
                         overridesPath = path
                     }
                 } else {
-                    let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
+                    let x1 = timeToXCoordinate((last.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
                     let x2 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
-                        y: glucoseToYCoordinate(Int(Double(latest?.target ?? 100)), fullSize: fullSize),
+                        y: glucoseToYCoordinate(Int(target), fullSize: fullSize) - 3,
                         width: x2 - x1 + additionalWidth(viewWidth: fullSize.width),
                         height: 8
                     )

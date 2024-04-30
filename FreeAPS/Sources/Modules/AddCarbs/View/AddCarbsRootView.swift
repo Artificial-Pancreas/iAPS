@@ -114,7 +114,7 @@ extension AddCarbs {
 
                 Section {
                     Button { state.add(override, fetch: editMode) }
-                    label: { Text((state.skipBolus && !override && !editMode) ? "Save" : "Continue") }
+                    label: { Text(((state.skipBolus && !override && !editMode) || state.carbs <= 0) ? "Save" : "Continue") }
                         .disabled(empty)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
@@ -132,7 +132,7 @@ extension AddCarbs {
             }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+            .navigationBarItems(trailing: Button("Cancel", action: state.hideModal))
         }
 
         private var presetPopover: some View {
