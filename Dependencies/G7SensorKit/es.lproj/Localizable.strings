@@ -11,7 +11,7 @@
 "Cancel" = "Cancelar";
 
 /* Error description for unreliable state */
-"Glucose data is unavailable" = "Glucose data is unavailable";
+"Glucose data is unavailable" = "Datos de glucosa no disponibles";
 
 /* The description of sensor algorithm state when sensor is ok. */
 "Sensor is OK" = "Sensor is OK";
