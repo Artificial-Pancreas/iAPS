@@ -1547,10 +1547,10 @@ Ajustes predeterminados:\n
 "Now" = "Now";
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Mostrar entradas futuras";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Ocultar entradas futuras";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1689,9 +1689,9 @@ Ajustes predeterminados:\n
 "Low Reservoir Reminder" = "Low Reservoir Reminder";
 
 /* The action string on pod status page when pod data is stale */
-"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area.";
+"Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Asegúrese de que su teléfono y su Pod estén cerca el uno del otro. Si los problemas de comunicación persisten, muévase a otra área.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Cambie el Pod ahora. La administración de insulina se detendrá en %1$@ o cuando no quede más insulina.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Ratio";
@@ -1729,7 +1729,7 @@ Ajustes predeterminados:\n
 "Total Delivery" = "Total administrado";
 
 /* */
-"Add Omnipod Dash" = "Add Omnipod Dash";
+"Add Omnipod Dash" = "Añadir Omnipod Dash";
 
 /* */
 "Insert Cannula" = "Insertar Cánula";
