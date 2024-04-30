@@ -17,7 +17,7 @@
 "Continue without bolus" = "Continuar sin administrar bolo";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Guardar comida sin bolo";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Estado";
@@ -47,16 +47,16 @@
 "Done" = "Hecho";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Mostrar emojis como etiquetas";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Mostrar IaB y CaB";
 
 /* Apple Watch App setting */
 "Confirm Bolus Faster" = "Confirmar bolo rápidamente";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "Configuración de interfaz ";
 
 /*  */
 "Wait please" = "Espere por favor";
@@ -77,7 +77,7 @@
 " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " hace X minutos, activado de forma remota en Nightscout, por un cuidador o un padre. ¿Todavía quieres aplicar el bolo?\n\nSe prevé que la glucosa eventual, si no aplica un bolo, será: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "¡Un Bolo Remoto se acaba de entregar!";
+"A Remote Bolus Was Just Delivered!" = "¡Un bolo remoto se acaba de entregar!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Entregado a las";
@@ -251,7 +251,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Perfil Basal";
+"Basal profile" = "Perfil de basal";
 
 /*  */
 "Carb ratio" = "Ratio de carbohidratos";
@@ -275,7 +275,7 @@
 "Add" = "Añadir";
 
 /*  */
-"Basal Profile" = "Perfil Basal";
+"Basal Profile" = "Perfil de basal";
 
 /* Rate basal profile */
 "Rate" = "Ratio";
@@ -299,7 +299,7 @@
 "Calculated Ratio" = "Ratio Calculado";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Ratios de Carbohidratos";
+"Carb Ratios" = "Ratio de carbohidratos";
 
 /*  */
 "Ratio" = "Ratio";
@@ -311,7 +311,7 @@
 "Calculated Sensitivity" = "Sensibilidad Calculada";
 
 /*  */
-"Insulin Sensitivities" = "Sensibilidades a la insulina";
+"Insulin Sensitivities" = "Factor de sensibilidad";
 
 /* */
 "Sensitivity Ratio" = "Ratio de sensibilidad";
@@ -396,7 +396,7 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Permitir control remoto de iAPS";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nAhora, por favor, verifique todos sus nuevos ajustes de forma exhaustiva:\n\n* Ajustes Basales\n * Relación de Carbs\n * Objetivos de Glucosa\n * Sensibilidades a la Insulina\n * DAI\n\n en Ajustes de iAPS > Configuración.\n\nConfiguración del perfil incorrecta o inválida podría tener efectos desatrosos.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nAhora, por favor, verifique todos sus nuevos ajustes de forma exhaustiva:\n\n* Ajustes Basales\n * Ratio de carbohidratos\n * Objetivos de glucosa\n * Factor de sensibilidad\n * DIA\n\n en Ajustes de iAPS > Configuración.\n\nConfiguración del perfil incorrecta o inválida podría tener efectos desatrosos.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Esto reemplazará algunos o todos los ajustes actuales de la bomba. ¿Está seguro de que desea importar la configuración del perfil de Nightscout?";
@@ -471,7 +471,7 @@ Enact a temp Basal or a temp target */
 "Max Carbs" = "Carbohidratos máximos";
 
 /* */
-"Pump Settings" = "Configuración de la bomba";
+"Pump Settings" = "Límites de la bomba";
 
 /* Insulin unit per hour */
 "U/hr" = "U/h";
@@ -973,40 +973,40 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "High" = "Alto";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Muy alto";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Muy bajo";
 
 /* */
 "glucose" = "glucosa";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Introduzca cantidad de bolo";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Tu glucosa actual es %@. ¿Estás seguro de que quieres administrar %@ U de insulina?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "Un comando de bolo de ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U de insulina enviada(s) a iAPS. Verifique en la aplicación iAPS o en Nightscout si el bolo fue entregado.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "bolo demasiado pequeño";
 
 /* Bolus shortcut. Error */
-"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
+"Bolus Shortcuts are disabled in iAPS settings" = "Los Atajos para bolos están desactivados en los ajustes de iAPS";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Cantidad de bolo en U";
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Permitir bolos con Atajos";
 
 /* Bolus shortcut setting. Header */
-"iOS Shortcuts" = "iOS Shortcuts";
+"iOS Shortcuts" = "Atajos de iOS";
 
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
@@ -1358,22 +1358,32 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Conversion settings" = "Configuración de la conversión";
 
 /* Delay */
-"Delay In Minutes" = "Demora en minutos";
+"Delay In Minutes" = "Demora inicial";
 
 /* Duration */
-"Maximum Duration In Hours" = "Duración máxima en horas";
+"Maximum Duration In Hours" = "Duración máxima";
 
 /* Interval */
-"Interval In Minutes" = "Intervalo en minutos";
+"Interval In Minutes" = "Intervalo entre entradas";
 
 /* Override */
 "Override With A Factor Of " = "Factor de corrección";
 
 /* Description */
-"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Permite convertir grasas y proteínas en futuros equivalentes de carbohidratos utilizando la fórmula de kilocalorías de Varsovia dividida por 10.\n\nEsto difunde los glúcidos equivalentes en un ajuste de duración máxima que puede configurarse de 5-12 horas.\n\nLa demora es el tiempo desde ahora hasta la primera entrada futura de carbohidratos.\n\nIntervalo en minutos es cuántos minutos hay entre entradas. Cuanto más corto sea el intervalo, más suave será el resultado, 10, 15, 20, 30 o 60 son opciones razonables.\n\nEl factor de ajuste es cuánto efecto tiene la grasa y la proteína en las entradas. 1.0 tiene efecto completo (método original de Varsovia) y 0.5 es la mitad del efecto. Tenga en cuenta que puede que encuentre que su ratio de carbohidratos usual necesita aumentar a un número mayor si empieza a agregar entradas de grasa y proteínas. Por esta razón, es mejor empezar con un factor de aproximadamente 0,5 para facilitar el ajuste.\n\nAjustes predeterminados: Duración máxima: 8 horas, Intervalo: 30 min, Factor: 0.5, Demora 60 min";
+"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Permite convertir la ingesta de grasas y proteínas en futuros equivalentes de carbohidratos, utilizando la fórmula de kilocalorías de Varsovia dividida por 10.\n\n
+Ajustes:\n
+* Demora inicial: minutos desde el registro de UGPs hasta la primera entrada futura de carbohidratos.\n
+* Duración máxima: tiempo en horas del efecto de la conversión, con opcion entre 5-12 horas.\n
+* Intervalo entre entradas: frecuencia con la que se registran los cálculos, con opciones de 10, 15, 20, 30 o 60 minutos. Cuanto más bajo el intervalo, más suaves los resultados.\n
+* Factor de corrección: permite controlar el peso de las grasas y proteínas en la conversión. 1.0 representa el efecto completo (método original de Warsaw), mientras que 0.5 reduce el efecto a la mitad. Es posible que la proporción habitual de carbohidratos deba aumentar al incluir entradas con grasas y proteínas. Se recomienda comenzar con un factor de 0.5 y ajustarlo con precaución.\n\n
+Ajustes predeterminados:\n
+* Demora inicial: 60 minutos\n
+* Duración máxima: 8 horas\n
+* Intervalo entre entradas: 30 minutos\n
+* Factor de corrección: 0.5";
 
 /* Fat/Protein additional info */
-"\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount.";
+"\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nNOTA: Equivalentes de carbohidratos muy pequeños (0.6g o menos) serán excluidos y los equivalentes entre 0.6 y 1 se redondearán a 1g. Con un intervalo entre entradas más alto cada entrada, aunque más espaciada, concentra mayor equivalentes de carbohidratos.";
 
 /* FPU Settings Title */
 "Fat and Protein" = "UGP";
@@ -1560,7 +1570,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Glucose, " = "Glucosa, ";
 
 /* */
-"Target Glucose" = "Glucosa objetivo";
+"Target Glucose" = "Objetivo de glucosa";
 
 /* */
 "Percentage setting" = "Ajuste del porcentaje";
@@ -1569,7 +1579,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Insulin Sensitivity" = "Sensibilidad a la insulina";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Glucosa eventual - objetivo) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Pronóstico de glucosa eventual - objetivo de glucosa) / FSI";
 
 /* */
 "Formula:" = "Fórmula:";
@@ -1581,13 +1591,13 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Hide" = "Ocultar";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucosa eventual > glucosa objetivo, pero se prevé que la glucosa caiga primero a ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "El pronóstico de glucosa eventual está por encima del valor objetivo, pero se prevé que primero descienda a  ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "que está por debajo del umbral (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucosa eventual > glucosa objetivo, pero el valor de glucosa está aumentando más lento de lo esperado. Se espera: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "El pronóstico de glucosa eventual está por encima del valor objetivo, pero su valor de glucosa está aumentando más lento de lo esperado. Se espera: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Subiendo: ";
@@ -1599,7 +1609,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 ". Falling: " = ". Descendiendo: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucosa eventual > glucosa objetivo, pero el valor de glucosa está cambiando más rápido de lo esperado. Se espera: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "El pronóstico de glucosa eventual está por encima del valor objetivo, pero el valor de glucosa está cambiando más rápido de lo esperado. Se espera: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Cambiando: ";
@@ -1989,7 +1999,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Unsuspend If No Temp" = "Unsuspend If No Temp";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Muchas personas de vez en cuando se olvidan de reanudar / dejar de suspender su bomba después de volver a conectarla. Si es uno de ellos, y está dispuesto a establecer de manera fiable una basal temporal cero unidades cada vez que suspenda y desconecte su bomba esta característica es para usted. Si está activado, se reanudará / des-suspenderá automáticamente la bomba si se olvida de hacerlo antes de que expire la basal temporal de cero unidades. Mientras la basal temporal de cero unidades siga funcionando, dejará la bomba suspendida.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Muchas personas de vez en cuando se olvidan de reanudar / dejar de suspender su bomba después de volver a conectarla. Si es uno de ellos, y está dispuesto a establecer de manera fiable una basal temporal de cero unidades cada vez que suspenda y desconecte su bomba, esta característica es para usted. Si está activado, se reanudará / des-suspenderá automáticamente la bomba si se olvida de hacerlo antes de que expire la basal temporal de cero unidades. Mientras la basal temporal de cero unidades siga funcionando, dejará la bomba suspendida.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Enable UAM";
@@ -1998,7 +2008,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Con esta opción activada, el algoritmo SMB puede reconocer comidas no anunciadas. Esto es útil si olvida decir a iAPS sobre sus carbohidratos, estima mal sus carbohidratos y los introduce erróneamente en la aplicación, o si una comida con mucha grasa y proteína tiene una duración más larga de lo esperado.\n\nSin ninguna entrada de carbohidratos, UAM puede reconocer aumentos rápidos de glucosa causados por carbohidratos, adrenalina, estrés, etc. e intenta ajustarlo con SMBs. Esto también funciona al contrario: si hay una rápida disminución de la glucosa, puede detener a los SMB antes.";
 
 /* Headline "Enable SMB With COB" */
-"Enable SMB With COB" = "Enable SMB With COB";
+"Enable SMB With COB" = "Habilitar SMBs con CaB";
 
 /* Enable SMB With COB" */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Esto permite el supermicrobolo (SMB) mientras que los glúcidos a bordo (COB) son positivos.";
@@ -2038,23 +2048,23 @@ Con esta característica activada, cualquier objetivo temporal por debajo de 100
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Por defecto es falso. Cambiarlo a verdadero permite cambiar el insulinPeakTime";
 
 /* Headline "Suspend Zeros IOB” */
-"Suspend Zeros IOB" = "Suspend Zeros IOB";
+"Suspend Zeros IOB" = "Suspend Zeros IaB";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Por defecto es falso. Cualquier basal temporal existente durante las horas de suspensión de la bomba se eliminará y se añadirán basales temporales de 0 unidades para negar las tasas basales del perfil durante las horas de suspensión de la bomba.";
 
 /* Headline "Max IOB" */
-"Max IOB" = "Max IOB";
+"Max IOB" = "Máxima insulina a bordo";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB es la cantidad máxima de insulina a bordo de todas las fuentes –tanto la corrección basal (o SMB de la corrección) como la insulina del bolo– que su Circuito Cerrado puede acumular para tratar glucemias por encima del objetivo. A diferencia de los otros dos ajustes de seguridad de OpenAPS (multiplicador_seguridad_max_diario y multiplicador_seguridad_basal_actual), max_iob se establece como un número fijo de unidades de insulina. Por ahora, los bolos manuales NO se limitan con este ajuste.
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Máxima insulina a bordo es la cantidad máxima de insulina dosificada de todas las fuentes –tanto la corrección basal (o SMB de la corrección) como la insulina de bolos– que su Lazo Cerrado puede acumular para tratar glucemias por encima del objetivo. A diferencia de los otros dos ajustes de seguridad de OpenAPS (multiplicador_seguridad_max_diario y multiplicador_seguridad_basal_actual), la máxima IaB se establece como un número fijo de unidades de insulina. Por ahora, los bolos manuales NO se limitan con este ajuste.
 
-Para probar sus diferentes basales durante la noche, puede modificar la configuración max_iob a cero mientras está en Circuito Cerrado. Esto activará el modo de suspensión por glucosa baja mientras prueba sus configuraciones de basal
+Para probar sus diferentes basales durante la noche, puede modificar la configuración de IaB a cero mientras está en Circuito Cerrado. Esto activará el modo de suspensión por glucosa baja mientras prueba sus configuraciones de basal
 
 (Consejo de https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
-"Max Daily Safety Multiplier" = "Max Daily Safety Multiplier";
+"Max Daily Safety Multiplier" = "Multiplicador basal máximo de seguridad";
 
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es un importante límite de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 3. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 3 veces la tasa basal más alta programada en una bomba de usuario o, si está activado, determinado por autotune.";
@@ -2084,7 +2094,7 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Establecer a un número, p. ej. 160, lo que significaría que cuando el objetivo temporal es 160 mg/dL y el modo ejercicio esté activo, proporciona el 50% de la basal a este nivel (120 = 75%; 140 = 60%). Esto puede ser ajustado para darle más control sobre sus modos de ejercicio.";
 
 /* Headline "Max COB" */
-"Max COB" = "Max COB";
+"Max COB" = "CaB máximos";
 
 /* "Max COB" */
 "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
