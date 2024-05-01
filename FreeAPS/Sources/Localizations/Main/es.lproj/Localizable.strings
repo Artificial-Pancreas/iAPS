@@ -940,7 +940,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Glucose Notification visibility" = "Valor de glucosa en sangre en notificaciones";
 
 /* */
-"Always Notify Glucose" = "Notificar siempre la glucosa";
+"Always Notify Glucose" = "Mostrar notificación cada cinco minutos";
 
 /* */
 "Notify per reading" = "Notificar por lectura";
@@ -1099,7 +1099,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Sensor not found" = "Sensor no encontrado";
 
 /* */
-"Also play alert sound" = "Reproducir también sonido de alerta";
+"Also play alert sound" = "Reproducir sonido de alerta";
 
 /* */
 "Notification Settings" = "Configuración de las notificaciones";
@@ -1132,7 +1132,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Battery" = "Batería";
 
 /* */
-"Also add source info" = "Añadir también información de origen";
+"Also add source info" = "Mostrar fuente de datos";
 
 /* */
 "Carbs Required Threshold" = "Umbral de carbohidratos requeridos";
@@ -1150,7 +1150,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Last loop was more than %d min ago" = "El último ciclo fue hace más de %d mins";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Mostrar glucosa en la insignia de la aplicación";
+"Show glucose on the app badge" = "Mostrar valor de glucosa en el icono de la aplicación";
 
 /* */
 "Backfill glucose" = "Rellenar valores de glucosa";
@@ -1198,7 +1198,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Headers for settings ----------------------- */
 "OpenAPS main settings" = "Ajustes principales de OpenAPS";
 
-"OpenAPS SMB settings" = "Ajustes de SMB en OpenAPS";
+"OpenAPS SMB settings" = "Ajustes de SMB de OpenAPS";
 
 "OpenAPS targets settings" = "Ajustes de objetivos de OpenAPS";
 
@@ -2022,7 +2022,7 @@ Consideraciones importantes:
 En resumen, la función \"Reanudar tras fin basal cero\" te brinda una forma automatizada de reactivar tu bomba de insulina utilizando basales temporales de 0 U/h. Esto puede ayudarte a evitar olvidos y mantener un mejor control de tu glucemia.";
 
 /* Headline "Enable UAM" */
-"Enable UAM" = "Enable UAM";
+"Enable UAM" = "Activar UAM";
 
 /* "Enable UAM" */
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Con esta opción activada, el algoritmo SMB puede reconocer comidas no anunciadas. Esto es útil si olvida decir a iAPS sobre sus carbohidratos, estima mal sus carbohidratos y los introduce erróneamente en la aplicación, o si una comida con mucha grasa y proteína tiene una duración más larga de lo esperado.\n\nSin ninguna entrada de carbohidratos, UAM puede reconocer aumentos rápidos de glucosa causados por carbohidratos, adrenalina, estrés, etc. e intenta ajustarlo con SMBs. Esto también funciona al contrario: si hay una rápida disminución de la glucosa, puede detener a los SMB antes.";
@@ -2034,29 +2034,29 @@ En resumen, la función \"Reanudar tras fin basal cero\" te brinda una forma aut
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Esto permite el supermicrobolo (SMB) mientras que los glúcidos a bordo (COB) son positivos.";
 
 /* Headline "Enable SMB With Temptarget” */
-"Enable SMB With Temptarget" = "Enable SMB With Temptarget";
+"Enable SMB With Temptarget" = "Habilitar SMBs con objetivos temporales";
 
 /* "Enable SMB With Temptarget” */
 "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Esto activa supermicrobolos (SMB) con 'Comer Pronto' o basales temporales bajas. 
 Con esta característica activada, cualquier objetivo temporal por debajo de 100mg/dL, tal como un objetivo temporal de 99 (u 80, el objetivo típico de 'Comer Pronto') se permitirán SMB.";
 
 /* Headline "Enable SMB Always" */
-"Enable SMB Always" = "Enable SMB Always";
+"Enable SMB Always" = "Habilitar SMBs siempre";
 
 /* "Enable SMB Always" */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Por defecto es falso. Cuando es verdadero, activa siempre el supermicrobolo (a menos que esté desactivado por un objetivo temporal alto).";
 
 /* Headline "Enable SMB After Carbs" */
-"Enable SMB After Carbs" = "Enable SMB After Carbs";
+"Enable SMB After Carbs" = "Habilitar SMBs después de carbohidratos";
 
 /* "Enable SMB After Carbs" */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Por defecto es falso. Cuando es verdadero, habilita supermicrobolos (SMB) durante 6h después de la ingesta de carbohidratos, incluso con 0 carbohidratos a bordo (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+"Allow SMB With High Temptarget" = "Permitir SMBs con objetivo temporal alto";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Allow SMB With High Temptarget";
+"Allow SMB With High Temptarget" = "Permitir SMBs con objetivo temporal alto";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Por defecto es falso. Cuando es verdadero, permite supermicrobolos (si se habilita de otra manera) incluso con objetivos temporales altos.";
@@ -2111,13 +2111,13 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es otro límite importante de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 4. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 4 veces la tasa basal más alta programada en una bomba de usuario o, si está activado, determinado por autotune.";
 
 /* Headline "Autosens Max" */
-"Autosens Max" = "Autosens Max";
+"Autosens Max" = "Autosens Máximo";
 
 /* "Autosens Max" */
 "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Este es un multiplicador límite para autosens (y autotune) para establecer un límite máximo del 20% sobre cuanto el ratio de autosens, que a su vez determina cuán altos autosens pueden ajustar basales, cuán bajo puede ajustar ISF, y cuán bajo puede establecer el objetivo de glucosa.";
 
 /* Headline "Autosens Min" */
-"Autosens Min" = "Autosens Min";
+"Autosens Min" = "Autosens Mínimo";
 
 /* "Autosens Min" */
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "El otro lado de los límites de seguridad de Autosens, poniendo un tope a cuán bajo Autosens puede ajustar basales, y cuán alto puede ajustar el factor de sensibilidad de la insulina y los objetivos de glucosa.";
@@ -2141,10 +2141,24 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "El retardo de bolos se realiza después de suministrar un bolo para comer, para que el Lazo no contrarreste con basales temporales bajas cuando acaba de comer. Por ejemplo, con el valor predeterminado de 2, y siendo la duración de la insulina activa (DIA) de 3 horas, el retardo del bolo se realizará gradualmente durante 1.5 horas (3DIA/2).";
 
 /* Headline "Min 5m Carbimpact" */
-"Min 5m Carbimpact" = "Min 5m Carbimpact";
+"Min 5m Carbimpact" = "Impacto mínimo carbohidratos 5min";
 
 /* "Min 5m Carbimpact" */
-"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Este es un ajuste para el impacto de absorción de carbohidratos por defecto cada 5 minutos. El valor por defecto es de 8 mg/dL/5min. Esto afecta a la rapidez con que se reducen los COB en situaciones en las que la absorción de glúcidos no es visible en las variaciones de glucosa. El valor por defecto de 8 mg/dL/5min corresponde a una tasa mínima de absorción de carbohidratos de 24g/h con factor de sensibilidad de carbohidratos (CSF) de 4 mg/dL/g.";
+"This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Valor manual alternativo utilizado por en iAPS para estimar la absorción de carbohidratos cuando no puede determinarse de las lecturas de glucosa.
+
+¿Cómo funciona?
+Cuando el sistema no puede detectar la absorción de carbohidratos, se asume que los carbohidratos aumentarán el azúcar en sangre en 8 mg/dL cada 5 minutos. La cantidad real de carbohidratos absorbidos se estima en función de tu ratio de sensibilidad a los carbohidratos (CSF), que se calcula mediante la fórmula CSF = ISF / ICR, donde:
+• ISF (Índice de sensibilidad a la insulina): La cantidad de azúcar en sangre que reduce una unidad de insulina en una hora.
+• ICR (Índice de carbohidratos): La cantidad de azúcar en sangre que aumenta un gramo de carbohidrato.
+
+Ejemplo:
+Si tu CSF es de 4 mg/dL/g, el valor predeterminado de 8 mg/dL/5min corresponde a una tasa mínima de absorción de carbohidratos de 24 g/hora.
+
+Efectos de aumentar el valor:
+Se estimará una mayor absorción de carbohidratos, lo que puede llevar a una disminución más rápida de los carbohidratos en sangre (COB). Si el ajuste se aumenta demasiado, se podría sobreestimar la absorción de carbohidratos, lo que podría provocar una disminución excesiva de los COB y un mayor peligro de hipoglucemia.
+
+Efectos de disminuir el valor:
+Se estimará una menor absorción de carbohidratos, lo que puede llevar a una disminución más lenta de los COB. Si el ajuste se disminuye demasiado, se podría subestimar la absorción de carbohidratos, lo que podría provocar una disminución insuficiente del COB y un mayor riesgo de hiperglucemia.";
 
 /* Headline "Autotune ISF Adjustment Fraction" */
 "Autotune ISF Adjustment Fraction" = "Fracción de ajuste del FSI de Autotune";
@@ -2178,16 +2192,16 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Por defecto comienza en 30. Este es el máximo de minutos de basal que UAM puede entregar como un solo SMB cuando la insulina activa excede los carbohidratos activos. Esto da la capacidad de hacer UAM más o menos agresivo si lo desea. Se recomienda que el valor se establezca a partir de 30, en línea con el valor predeterminado, y si decide aumentar este valor, hacerlo en incrementos de no más de 15 minutos, vigilando de cerca los efectos de los cambios. Reducir el valor hará que UAM inyecte menos insulina para cada SMB. No se recomienda establecer este valor superior a 60 minutos, ya que esto puede afectar a la capacidad del algoritmo de suspender la basal temporalmente. También se recomienda que Pushover sea usado cuando se establece que el valor es mayor de lo predeterminado, para que las alertas se generen para cualquier bajo o alto previsto.";
 
 /* Headline "SMB Interval" */
-"SMB Interval" = "SMB Interval";
+"SMB Interval" = "Intervalo entre SMBs";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimum duration in minutes for new SMB since last SMB or manual bolus";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Duración mínima en minutos para un nuevo SMB desde el último SMB o bolo manual";
 
 /* Headline "Bolus Increment" */
-"Bolus Increment" = "Bolus Increment";
+"Bolus Increment" = "Granularidad mínima de bolo";
 
 /* "Bolus Increment" */
-"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Cantidad mínima administrada por SMB. La cantidad mínima para las bombas Omnipod es de 0,05U, mientras que para las bombas Medtronic difiere para varios modelos, desde 0,025U a 0,10U. Por favor, compruebe la cantidad mínima de bolo que puede ser entregada por su bomba. El valor predeterminado es 0,1.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Efecto pico de la insulina";
@@ -2208,7 +2222,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Por defecto es 1.3. Aumenta el objetivo en esta cantidad al montar un lazo con los datos sin procesar/ruidosos del MCG";
 
 /* Headline "SMB DeliveryRatio" */
-"SMB DeliveryRatio" = "SMB DeliveryRatio";
+"SMB DeliveryRatio" = "Porcentaje entrega SMB";
 
 /* SMB DeliveryRatio */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Valor predeterminado: 0.5\n\nEsta es otra clave de seguridad de OpenAPS, y especifica qué porcentaje del cálculo de la insulina total requerida puede ser entregado como SMB.\n\nAumenta este valor experimental lentamente y con precaución.";
@@ -2359,7 +2373,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Show Live activity" = "Show Live activity";
 
 /* Live Activity Footer */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
 
 /* Live Activity Footer when off */
 "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
@@ -2389,10 +2403,10 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Enable SMB With High BG";
+"Enable SMB With High BG" = "Habilitar SMBs con glucemia alta";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Habilita SMB cuando se detecta una glucemia alta, basado en el valor de la configuración (ajustes o perfil)";
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Dynamic settings";
