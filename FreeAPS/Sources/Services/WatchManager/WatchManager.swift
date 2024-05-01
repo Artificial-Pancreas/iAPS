@@ -61,9 +61,13 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             let coreDataStorage = CoreDataStorage()
             let reasons = coreDataStorage.fetchReason()
 
-            self.state.isf = (reasons?.isf ?? 15) as Decimal
-            self.state.target = (reasons?.target ?? 100) as Decimal
-            self.state.carbRatio = (reasons?.cr ?? 30) as Decimal
+            if let reason = reasons {
+                self.state.isf = (reason.isf ?? 15) as Decimal
+                self.state.target = (reason.target ?? 100) as Decimal
+                self.state.carbRatio = (reason.cr ?? 30) as Decimal
+                self.state.minPredBG = (reason.minPredBG ?? 0) as Decimal
+            }
+
             self.state.eventualGlucose = Decimal(self.suggestion?.eventualBG ?? 0)
 
             let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
@@ -160,7 +164,6 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
             if useNewCalc {
                 self.state.deltaBG = self.getDeltaBG(readings)
-                self.state.minPredBG = (reasons?.minPredBG ?? 0) as Decimal
                 self.state.bolusRecommended = self.roundBolus(max(self.roundBolus(max(self.newBolusCalc(delta: readings), 0)), 0))
             } else {
                 self.state.bolusRecommended = 0
@@ -171,8 +174,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     }
 
     private func getDeltaBG(_ glucose: [Readings]) -> Decimal? {
-        guard let lastGlucose = glucose.first, glucose.count >= 3 else { return nil }
-        return Decimal(lastGlucose.glucose + glucose[2].glucose) / 2 -
+        guard let lastGlucose = glucose.first, glucose.count >= 4 else { return nil }
+        return Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
             (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
     }
 
