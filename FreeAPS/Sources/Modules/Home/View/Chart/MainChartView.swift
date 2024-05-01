@@ -384,6 +384,7 @@ struct MainChartView: View {
                     fpuView(fullSize: fullSize)
                     bolusView(fullSize: fullSize)
                     if smooth { unSmoothedGlucoseView(fullSize: fullSize) }
+                    else { connectingGlucoseLinesView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
@@ -456,6 +457,26 @@ struct MainChartView: View {
             }
         }
         .fill(Color.darkGreen)
+        .onChange(of: glucose) { _ in
+            update(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) { _ in
+            update(fullSize: fullSize)
+        }
+        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            update(fullSize: fullSize)
+        }
+    }
+
+    private func connectingGlucoseLinesView(fullSize: CGSize) -> some View {
+        Path { path in
+            var lines: [CGPoint] = []
+            for rect in glucoseDots {
+                lines.append(CGPoint(x: rect.midX, y: rect.midY))
+            }
+            path.addLines(lines)
+        }
+        .stroke(Color.loopGreen, lineWidth: 0.5)
         .onChange(of: glucose) { _ in
             update(fullSize: fullSize)
         }
@@ -760,7 +781,7 @@ extension MainChartView {
         calculationQueue.async {
             let dots = isManual.concurrentMap { value -> CGRect in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
-                return CGRect(x: position.x - 2, y: position.y - 2, width: 14, height: 14)
+                return CGRect(x: position.x - 6, y: position.y - 6, width: 14, height: 14)
             }
 
             let range = self.getGlucoseYRange(fullSize: fullSize)
@@ -776,7 +797,7 @@ extension MainChartView {
         calculationQueue.async {
             let dots = isManual.concurrentMap { value -> CGRect in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
-                return CGRect(x: position.x, y: position.y, width: 10, height: 10)
+                return CGRect(x: position.x - 4, y: position.y - 4, width: 10, height: 10)
             }
 
             let range = self.getGlucoseYRange(fullSize: fullSize)
