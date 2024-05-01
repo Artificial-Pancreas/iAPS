@@ -50,7 +50,7 @@
 "Display Emojis as Labels" = "Mostrar emojis como etiquetas";
 
 /* Calender Option */
-"Display IOB and COB" = "Mostrar IaB y CaB";
+"Display IOB and COB" = "Mostrar IOB y COB";
 
 /* Apple Watch App setting */
 "Confirm Bolus Faster" = "Confirmar bolo rápidamente";
@@ -281,7 +281,7 @@
 "Rate" = "Ratio";
 
 /*  */
-"Save on Pump" = "Guardar en Bomba";
+"Save on Pump" = "Guardar en la bomba";
 
 /*  */
 "Saving..." = "Guardando...";
@@ -296,7 +296,7 @@
 "Time" = "Tiempo";
 
 /* */
-"Calculated Ratio" = "Ratio Calculado";
+"Calculated Ratio" = "Ratio calculado";
 
 /* Carb Ratios header */
 "Carb Ratios" = "Ratio de carbohidratos";
@@ -308,7 +308,7 @@
 "Autosens" = "Autosens";
 
 /*  */
-"Calculated Sensitivity" = "Sensibilidad Calculada";
+"Calculated Sensitivity" = "Sensibilidad calculada";
 
 /*  */
 "Insulin Sensitivities" = "Factor de sensibilidad";
@@ -396,16 +396,16 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Permitir control remoto de iAPS";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nAhora, por favor, verifique todos sus nuevos ajustes de forma exhaustiva:\n\n* Ajustes Basales\n * Ratio de carbohidratos\n * Objetivos de glucosa\n * Factor de sensibilidad\n * DIA\n\n en Ajustes de iAPS > Configuración.\n\nConfiguración del perfil incorrecta o inválida podría tener efectos desatrosos.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nAhora, por favor, verifique todos sus nuevos ajustes de forma exhaustiva:\n\n* Ajustes de basal\n * Ratios de carbohidratos\n * Objetivos de glucosa\n * Factores de sensibilidad\n * DIA\n\n en los ajustes de iAPS > Configuración.\n\nUna configuración incorrecta o inválida del perfil podría tener consecuencias indeseadas.";
 
 /* Profile Import Alert */
-"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Esto reemplazará algunos o todos los ajustes actuales de la bomba. ¿Está seguro de que desea importar la configuración del perfil de Nightscout?";
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Esto remplazará algunos o todos los ajustes actuales de la bomba. ¿Está seguro de que desea importar la configuración del perfil de Nightscout?";
 
 /* Import Error */
 "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nConfiguración basal de Nightscout inválida. \n\nImportación cancelada. ¡Compruebe la configuración basal de su perfil de Nightscout!";
 
 /* Import Error */
-"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nConfiguración importada pero las Basales no se pudieron guardar en la bomba (Sin bomba). Revisa la configuración basal y pulsa \"Guardar en la bomba\" para sincronizar la nueva configuración basal";
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nConfiguración importada pero las basales no se pudieron guardar en la bomba (no se encuentra bomba). Revisa la configuración basal y pulsa \"Guardar en la bomba\" para sincronizar la nueva configuración basal";
 
 /* Import Error Headline */
 "Import Error" = "Error de Importación";
@@ -555,7 +555,7 @@ Enact a temp Basal or a temp target */
 "Steps" = "Pasos";
 
 /* */
-"ISF" = "ISF (Factor Sensibilidad Insulina)";
+"ISF" = "FSI";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "La aplicación Garmin Connect debe estar instalada para usar con iAPS.\n Vaya a la App Store para descargarla";
@@ -754,7 +754,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "No Libre Transmitter Selected" = "Ningún Transmisor Libre seleccionado";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Eliminar el gestor de MCG e iniciar de nuevo. Sus credenciales libreoopweb se conservarán";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Elimine el gestor de MCG e inicie de nuevo. Sus credenciales libreoopweb se conservarán";
 
 /* Invalid libre checksum */
 "Invalid libre checksum" = "Suma de verificación del Libre no válida";
@@ -1238,7 +1238,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Error: Pump is Busy.";
+"Error: Pump is Busy." = "Error: bomba ocupada.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1264,7 +1264,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Save as your Normal Basal Rates" = "Guardar como tus ratios basales normales";
 
 /* */
-"Save on Pump" = "Guardar en Bomba";
+"Save on Pump" = "Guardar en la bomba";
 
 /* Debug option view Pump History */
 "Pump History" = "Historial de la bomba";
@@ -1276,13 +1276,13 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Temp targets" = "Objetivos temporales";
 
 /* Debug option view Meal */
-"Meal" = "Meal";
+"Meal" = "Comida";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Pump profile";
+"Pump profile" = "Perfil de la bomba";
 
 /* Debug option view Profile */
-"Profile" = "Profile";
+"Profile" = "Perfil";
 
 /* Debug option view Enacted */
 "Enacted" = "Enacted";
@@ -1310,13 +1310,13 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Connect to Apple Health";
+"Connect to Apple Health" = "Conectar con Apple Salud";
 
 /* Show when have not permissions for writing to Health */
-"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Para escribir datos en Apple Health debes dar permisos en Ajustes > Salud > Acceso a datos";
+"For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Para escribir datos en la app Salud debes dar primero permisos en Ajustes > Salud > Acceso a Datos y Dispositivos";
 
 /* */
-"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Esto permite a iAPS leer y escribir en Apple Heath. También debe dar permisos en Ajustes > Salud > Acceso a datos. Si ingresas un valor de glucosa en Apple Health, abre iAPS para confirmar que aparece.";
+"This allows iAPS to read from and write to Apple Heath. You must also give permissions in Settings > Health > Data Access. If you enter a glucose value into Apple Health, open iAPS to confirm it shows up." = "Esto permite a iAPS leer y escribir en la app Salud de Apple. También debe dar permisos en Ajustes > Salud > Acceso a datos. Si ingresaste un valor de glucosa en la app Salud, revisa iAPS para confirmar que aparece.";
 
 /* New ALerts ------------------------- */
 /* Info title */
@@ -1787,7 +1787,7 @@ Ajustes predeterminados:\n
 "High" = "Alto";
 
 /* In Range */
-"In Range" = "In Range";
+"In Range" = "En objetivo";
 
 /* Display % */
 "Change HbA1c Unit" = "Change HbA1c Unit";
@@ -1826,7 +1826,7 @@ Ajustes predeterminados:\n
 "Average" = "Media";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "Tiempo en rango";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Average Interval";
@@ -1984,7 +1984,7 @@ Ajustes predeterminados:\n
 "Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Por defecto es falso. Cuando es verdadero, el objetivo temporal alto > 105 mg/dL ajusta el factor de sensibilidad para el modo ejercicio. Sinónimo de objetivotemp_alto_incrementa_sensibilidad";
 
 /* Headline "Wide BG Target Range" */
-"Wide BG Target Range" = "Wide BG Target Range";
+"Wide BG Target Range" = "Objetivo de glucosa amplio";
 
 /* "Wide BG Target Range" */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Por defecto es falso, lo que significa que por defecto sólo el extremo bajo del rango objetivo de glucosa en la bomba se utiliza como objetivo en OpenAPS. Esta es una característica de seguridad para prevenir objetivos demasiado amplios y resultados menos óptimos. Por lo tanto, el extremo más alto del rango objetivo sólo es usado para evitar sobre-correcciones del asistente de bolos. Use wide_bg_target_range: true para forzar temporizaciones neutrales sobre un rango más amplio de valores eventuales de glucosa.";
@@ -2008,7 +2008,7 @@ Ajustes predeterminados:\n
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Con esta opción activada, el algoritmo SMB puede reconocer comidas no anunciadas. Esto es útil si olvida decir a iAPS sobre sus carbohidratos, estima mal sus carbohidratos y los introduce erróneamente en la aplicación, o si una comida con mucha grasa y proteína tiene una duración más larga de lo esperado.\n\nSin ninguna entrada de carbohidratos, UAM puede reconocer aumentos rápidos de glucosa causados por carbohidratos, adrenalina, estrés, etc. e intenta ajustarlo con SMBs. Esto también funciona al contrario: si hay una rápida disminución de la glucosa, puede detener a los SMB antes.";
 
 /* Headline "Enable SMB With COB" */
-"Enable SMB With COB" = "Habilitar SMBs con CaB";
+"Enable SMB With COB" = "Habilitar SMBs con COB";
 
 /* Enable SMB With COB" */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "Esto permite el supermicrobolo (SMB) mientras que los glúcidos a bordo (COB) son positivos.";
@@ -2048,7 +2048,7 @@ Con esta característica activada, cualquier objetivo temporal por debajo de 100
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Por defecto es falso. Cambiarlo a verdadero permite cambiar el insulinPeakTime";
 
 /* Headline "Suspend Zeros IOB” */
-"Suspend Zeros IOB" = "Suspend Zeros IaB";
+"Suspend Zeros IOB" = "Suspend Zeros IOB";
 
 /* "Suspend Zeros IOB” */
 "Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Por defecto es falso. Cualquier basal temporal existente durante las horas de suspensión de la bomba se eliminará y se añadirán basales temporales de 0 unidades para negar las tasas basales del perfil durante las horas de suspensión de la bomba.";
@@ -2057,9 +2057,9 @@ Con esta característica activada, cualquier objetivo temporal por debajo de 100
 "Max IOB" = "Máxima insulina a bordo";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Máxima insulina a bordo es la cantidad máxima de insulina dosificada de todas las fuentes –tanto la corrección basal (o SMB de la corrección) como la insulina de bolos– que su Lazo Cerrado puede acumular para tratar glucemias por encima del objetivo. A diferencia de los otros dos ajustes de seguridad de OpenAPS (multiplicador_seguridad_max_diario y multiplicador_seguridad_basal_actual), la máxima IaB se establece como un número fijo de unidades de insulina. Por ahora, los bolos manuales NO se limitan con este ajuste.
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Máxima insulina a bordo es la cantidad máxima de insulina dosificada de todas las fuentes –tanto la corrección basal (o SMB de la corrección) como la insulina de bolos– que su Lazo Cerrado puede acumular para tratar glucemias por encima del objetivo. A diferencia de los otros dos ajustes de seguridad de OpenAPS (multiplicador_seguridad_max_diario y multiplicador_seguridad_basal_actual), la máxima IOB se establece como un número fijo de unidades de insulina. Por ahora, los bolos manuales NO se limitan con este ajuste.
 
-Para probar sus diferentes basales durante la noche, puede modificar la configuración de IaB a cero mientras está en Circuito Cerrado. Esto activará el modo de suspensión por glucosa baja mientras prueba sus configuraciones de basal
+Para probar sus diferentes basales durante la noche, puede modificar la configuración de IOB a cero mientras está en Lazo Cerrado. Esto activará el modo de suspensión por glucosa baja mientras prueba sus configuraciones de basal
 
 (Consejo de https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
@@ -2094,7 +2094,7 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Establecer a un número, p. ej. 160, lo que significaría que cuando el objetivo temporal es 160 mg/dL y el modo ejercicio esté activo, proporciona el 50% de la basal a este nivel (120 = 75%; 140 = 60%). Esto puede ser ajustado para darle más control sobre sus modos de ejercicio.";
 
 /* Headline "Max COB" */
-"Max COB" = "CaB máximos";
+"Max COB" = "COB máximos";
 
 /* "Max COB" */
 "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
@@ -2103,7 +2103,7 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
 
 /* "Bolus Snooze DIA Divisor" */
-"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "El retardo de bolos se realiza después de suministrar un bolo para comer, para que el Lazo no contrarreste con basales temporales bajas cuando acaba de comer. Por ejemplo, con el valor predeterminado de 2, y siendo la duración de la insulina activa (DIA) de 3 horas, el retardo del del bolo se realizará gradualmente durante 1.5 horas (3DIA % 2).";
+"Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "El retardo de bolos se realiza después de suministrar un bolo para comer, para que el Lazo no contrarreste con basales temporales bajas cuando acaba de comer. Por ejemplo, con el valor predeterminado de 2, y siendo la duración de la insulina activa (DIA) de 3 horas, el retardo del bolo se realizará gradualmente durante 1.5 horas (3DIA/2).";
 
 /* Headline "Min 5m Carbimpact" */
 "Min 5m Carbimpact" = "Min 5m Carbimpact";
@@ -2112,7 +2112,7 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Este es un ajuste para el impacto de absorción de carbohidratos por defecto cada 5 minutos. El valor por defecto es de 8 mg/dL/5min. Esto afecta a la rapidez con que se reducen los COB en situaciones en las que la absorción de glúcidos no es visible en las variaciones de glucosa. El valor por defecto de 8 mg/dL/5min corresponde a una tasa mínima de absorción de carbohidratos de 24g/h con factor de sensibilidad de carbohidratos (CSF) de 4 mg/dL/g.";
 
 /* Headline "Autotune ISF Adjustment Fraction" */
-"Autotune ISF Adjustment Fraction" = "Autotune ISF Adjustment Fraction";
+"Autotune ISF Adjustment Fraction" = "Fracción de ajuste del FSI de Autotune";
 
 /* "Autotune ISF Adjustment Fraction" */
 "The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "El valor por defecto de 0.5 para esta característica mantiene el factor de sensibilidad a la insulina (ISF) de Autotune cerca del factor de sensibilidad a la insulina de la bomba a través de un promedio ponderado de fullNewISF y pumpISF. 
@@ -2158,7 +2158,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Insulin Peak Time" = "Insulin Peak Time";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tiempo del máximo efecto de disminución de glucosa de la insulina, en minutos";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tiempo del máximo efecto de disminución de glucosa de la insulina, en minutos. Atención: el algoritmo Oref asume para la insulina ultra-rápida (Lyumjev) y rápida (Fiasp) unas curvas de tiempo pico de la insulina mínimas de 35 y 50 mins, y máximas de 100 y 120 mins, respectivamente. Utilizar un tiempo de efecto diferente fuera de estos límites resultará en problemas con iAPS, cálculos entre ciclos más largos y posiblemente errores de Lazo (en rojo).";
 
 /* Headline "Carbs Req Threshold" */
 "Carbs Req Threshold" = "Carbs Req Threshold";
@@ -2167,7 +2167,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Gramos de carbsReq para activar un Pushover. Por defecto es 1 (para 1 gramo de hidratos de carbono). Se puede aumentar si sólo quiere obtener Pushovers con carbsReq en X umbral.";
 
 /* Headline "Noisy CGM Target Multiplier" */
-"Noisy CGM Target Multiplier" = "Noisy CGM Target Multiplier";
+"Noisy CGM Target Multiplier" = "Multiplicador objetivo del MCG ruidoso";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Por defecto es 1.3. Aumenta el objetivo en esta cantidad al montar un lazo con los datos sin procesar/ruidosos del MCG";
@@ -2181,34 +2181,34 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
+"Adjust Dynamic ISF constant" = "Ajustar constante de FSI dinámico";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
+"Adjust Dynamic ISF constant" = "Ajustar constante de FSI dinámico";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Enable Dynamic ISF";
+"Enable Dynamic ISF" = "Habilitar FSI dinámico";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Enable Dynamic ISF";
+"Enable Dynamic ISF" = "Habilitar FSI dinámico";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Calcula un nuevo factor de sensibilidad a la insulina (FSI) en cada ciclo. Dicho FSI se basará en su glucosa actual, dosis total diaria de insulina (DTD, pasadas 24 horas de la última dosis) y un factor de corrección individual (nota: comenzar con 0.5 si se utiliza la función Sigmoid y 0.8 si no lo hace).\n\nPor seguridad, todos los ajustes dinámicos de FSI y RC estarán capados por el límite min/max de Autosens.";
 
 /* Headline Enable Dynamic CR */
-"Enable Dynamic CR" = "Enable Dynamic CR";
+"Enable Dynamic CR" = "Habilitar RC dinámico";
 
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)";
 
 /* Enable Dyn ISF */
-"Activate Dynamic Sensitivity (ISF)" = "Activate Dynamic Sensitivity (ISF)";
+"Activate Dynamic Sensitivity (ISF)" = "Activar factor de sensibilidad (FSI) dinámico";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Activar ratio de carbohidratos (RC) dinámico";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
+"Adjust Dynamic ISF constant" = "Ajustar constante de FSI dinámico";
 
 /* Adjust Dynamic ISF constant */
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
@@ -2229,7 +2229,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Threshold Setting" = "Threshold Setting";
 
 /* Dynamic ISF Setting Title */
-"Minimum Threshold Setting" = "Minimum Threshold Setting";
+"Minimum Threshold Setting" = "Ajuste de umbral mínimo";
 
 /* Minimum Threshold Setting, Part 1 */
 "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ";
@@ -2312,7 +2312,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Bolus Calculator" = "Calculador de bolo";
 
 /* Setting title */
-"Dynamic ISF" = "Dynamic ISF";
+"Dynamic ISF" = "FSI dinámico";
 
 /* Notification option */
 "Live Activity" = "Live Activity";
