@@ -964,7 +964,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Misc" = "Varios";
 
 /* */
-"Unit override" = "Sobreescribir unidad";
+"Unit override" = "Sobrescribir unidad";
 
 /* */
 "Low" = "Bajo";
@@ -1018,31 +1018,31 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "not available" = "not available";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Activar preajuste de sobrescritura";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Permitir activar un preajuste de sobrescritura.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "¿Qué preajuste de sobrescritura desea activar?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "¿Está seguro de que quiere activar el preajuste de sobrescritura %@?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "El preajuste de sobrescritura";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "está activo ahora";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Cancelar sobrescritura activa";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Sobrescritura cancelada";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Activa un preajuste de sobrescritura %@";
 
 /* */
 "Schedule " = "Programa ";
@@ -1404,27 +1404,27 @@ Ajustes predeterminados:\n
 "Fat And Protein Conversion" = "Conversión de UGPs";
 
 /* Service Section */
-"Profile Override" = "Anulación del perfil";
+"Profile Override" = "Sobrescritura del perfil";
 
 /* */
-"Override Profiles" = "Sobreescritura de Perfil";
+"Override Profiles" = "Sobrescritura de perfil";
 
 /* */
 "Normal " = "Normal ";
 
-"Currently no Override active" = "Actualmente no hay ninguna sobrescritura activa";
+"Currently no Override active" = "Actualmente no hay sobrescritura activa";
 
 /* */
 "Total Insulin Adjustment" = "Ajuste total de insulina";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Reemplaza tu perfil basal, ISF, CR y objetivo";
+"Override your Basal, ISF, CR and Target profiles" = "Sobrescribir perfil de basal, FSI, RC y glucosa objetivo";
 
 /* */
 "Enable indefinitely" = "Habilitar indefinidamente";
 
 /* */
-"Override Profile target" = "Sobreescribir el objetivo del perfil";
+"Override Profile target" = "Sobrescribir objetivo de glucosa del perfil";
 
 /* */
 "Disable SMBs" = "Deshabilitar SMBs";
@@ -1469,7 +1469,7 @@ Ajustes predeterminados:\n
 "Save as preset" = "Save as preset";
 
 /* Alert */
-"Cancel Profile Override" = "Cancel Profile Override";
+"Cancel Profile Override" = "Cancelar preajuste de sobrescritura";
 
 /* Alert */
 "Cancel Temp Target" = "Cancelar objetivo temporal";
@@ -1484,13 +1484,13 @@ Ajustes predeterminados:\n
 "Start Profile" = "Iniciar perfil";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Su dosis basal de insulina se ajustará con el porcentaje de ajuste temporal. En consecuencia, su factor de sensibilidad a la insulina (ISF) y su índice glucémico (CR) se ajustarán en sentido inverso al mismo porcentaje.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Su dosis basal de insulina se ajustará con el porcentaje de preajuste temporal. En consecuencia, su factor de sensibilidad a la insulina (FSI) y su ratio de carbohidratos (RC) se ajustarán en sentido inverso a dicho porcentaje.";
 
 /* */
-"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Al iniciar esta anulación, se modificarán tus perfiles y/o tu glucosa objetivo utilizados para el lazo cerrado durante toda la duración seleccionada. Al tocar \"Iniciar perfil\", se iniciará tu nuevo perfil o se editará tu perfil activo actual.";
+"Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Al iniciar esta sobrescritura, se modificarán sus perfiles y/o su objetivo de glucosa utilizados para el lazo cerrado durante la duración seleccionada. Al tocar \"Iniciar perfil\", se iniciará su nuevo perfil o editará su perfil activo actual.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Sobreescribir el objetivo del perfil";
+"Override Profile Target" = "Sobrescribir objetivo de glucosa del perfil";
 
 /* Alert string. Keep spaces. */
 " SMBs are disabled either by schedule or during the entire duration." = " Los SMB están desactivados ya sea por horario o durante toda la duración.";
@@ -1913,7 +1913,7 @@ Ajustes predeterminados:\n
 "Displays Loop statistics in the statPanel in Home View" = "Muestra las estadísticas del lazo cerrado en el panel de estado en la vista de inicio";
 
 /* Description for Override HbA1c unit */
-"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Cambiar las unidad por defecto de HbA1c en el panel de estadísticas. Las unidades serán actualizadas en dicho panel de estadísticas en la próxima actualización del fichero estadísticas.json";
+"Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Cambiar las unidad por defecto de HbA1c en el panel de estadísticas. Las unidades serán actualizadas en dicho panel de estadísticas en la próxima actualización del fichero statistics.json";
 
 /* HbA1c for all glucose storage days */
 "all" = "todos";
@@ -2289,7 +2289,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Statistics settings " = "Ajustes de estadísticas ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Override HbA1c Unit";
+"Override HbA1c Unit" = "Sobrescribir unidad de HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
