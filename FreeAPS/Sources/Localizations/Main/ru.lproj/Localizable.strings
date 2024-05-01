@@ -1004,6 +1004,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Разрешить iOS команды для болюса";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS Shortcuts";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Если включить, то появится возможность использовать приложение \"Команды\" iOS и ее автоматизацию для запуска болюсного введения в iAPS\n\nОбратите внимание, что команды iOS также работают с Siri!\n\nЕсли вам необходимо использовать болюсные команды, пожалуйста, не забудьте отключить настройку прослушивания \"Привет, Сири\" в настройках iPhone Siri, чтобы избежать случайной активации болюса с помощью Siri.\nЕсли вы не отключите \"Привет, Сири\", ярлык \"iAPS болюс\" может быть активирован произнесением \"Привет, Сири, iAPS болюс\".\n\nПри запуске с помощью Siri у вас будет запрошен размер болюса и подтверждение, прежде чем команда на ввод болюса будет отправлена в iAPS.";
 
@@ -1229,6 +1232,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Онлайн или внутренний сервер";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Error: Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1532,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Отображать белки и жиры";
 
-
 /* Time of new meal entry */
 "Now" = "Сейчас";
-
 
 /* Display future data table entries */
 "Show Future" = "Показать будущее";

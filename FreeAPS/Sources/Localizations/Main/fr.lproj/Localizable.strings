@@ -1004,6 +1004,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Autoriser les raccourcis de Bolus dans iOS";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "Raccourcis d'iOS";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Si vous activez ce paramètre, vous pouvez utiliser les raccourcis iOS et ses automatisations pour déclencher un bolus dans iAPS.\n\nNotez que les raccourcis iOS fonctionnent également avec Siri !\n\nSi vous voulez utiliser des raccourcis de bolus, veuillez envisager de désactiver le paramètre 'Utiliser \"Dis Siri\"' dans les paramètres Siri de l'iPhone, afin d'éviter toute activation involontaire d'un bolus avec Siri.\nSi vous ne désactivez pas \"Dis Siri\", le raccourci bolus iAPS peut être déclenché avec la phrase \"Dis Siri, bolus iAPS\".\n\nLorsque déclenché avec Siri, vous devez fournir une quantité et une confirmation avant que la commande de bolus ne puisse être envoyée à iAPS.";
 
@@ -1229,6 +1232,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Serveur en ligne ou interne";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Impossible d'appliquer la nouvelle recommandation, car l'administration d'un bolus est en cours. Attendez la prochaine boucle.";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Erreur: La pompe est occupée.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1532,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Afficher les protéines et graisses";
 
-
 /* Time of new meal entry */
 "Now" = "Maintenant";
-
 
 /* Display future data table entries */
 "Show Future" = "Afficher le futur";
@@ -1620,10 +1627,10 @@ Enact a temp Basal or a temp target */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Les rappels de confiance sont des bips émis par le Pod qui peuvent être utilisés pour confirmer l'exécution des commandes sélectionnées.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Enregistrement en cours...";
+"Saving..." = "Sauvegarde...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Enregistrer";
+"Save" = "Sauvegarder";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Impossible de mettre à jour les préférences de rappel de confiance.";
@@ -1676,7 +1683,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Changez de Pod maintenant. La distribution d'insuline s'arrêtera dans %1$@ ou quand il n'y aura plus d'insuline.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Débit";
+"Rate" = "Taux";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ pour %2$@";

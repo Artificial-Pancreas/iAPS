@@ -45,7 +45,7 @@
 "Grace period remaining" = "Grace period remaining";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "HIGH";
+"HIGH" = "ALTO";
 
 /* title for g7 settings row showing sensor last connect time */
 "Last Connect" = "Last Connect";
@@ -54,10 +54,10 @@
 "Last Reading" = "Last Reading";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS puede leer datos del G7, pero deberá utilizar la aplicación Dexcom G7 para emparejar, calibrar y otras gestiones del sensor.";
 
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "LOW";
+"LOW" = "BAJO";
 
 /* title for g7 settings row showing BLE Name */
 "Name" = "Nombre";
