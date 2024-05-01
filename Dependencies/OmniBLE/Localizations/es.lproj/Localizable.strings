@@ -15,7 +15,7 @@
 "Pod Expired" = "Pod expirado";
 
 /* Alert content title for lowReservoir pod alert */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Reservorio bajo";
 
 /* Alert content title for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Suspend In Progress Reminder";
@@ -234,7 +234,7 @@
 "No Insulin" = "No Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Insulina suspendida";
 
 /* Status highlight when communications with the pod haven't happened recently. */
 "Signal Loss" = "Signal Loss";
@@ -385,7 +385,7 @@
 "2 hours" = "2 horas";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
+"Failed to Suspend Insulin Delivery" = "No se pudo suspender la administración de insulina";
 
 /* Alert title for resume error */
 "Failed to Resume Insulin Delivery" = "Failed to Resume Insulin Delivery";
@@ -502,7 +502,7 @@
 "Inserted" = "Inserted";
 
 /* Check Cannula */
-"Check Cannula" = "Check Cannula";
+"Check Cannula" = "Revise la cánula";
 
 /* */
 "Is the cannula inserted properly?" = "Is the cannula inserted properly?";
@@ -532,7 +532,7 @@
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Su Pod está listo para usar.\n\n%1$@ le recordará cambiar su Pod antes de que caduque.  Puede cambiar esto a un momento más conveniente para usted.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Recordatorio programado";
 
 /* Label for expiration reminder row */
 "Time" = "Tiempo";
@@ -541,10 +541,10 @@
 "Finish Setup" = "Finish Setup";
 
 /* */
-"Setup Complete" = "Setup Complete";
+"Setup Complete" = "Configuración completada";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Sin recordatorio";
 
 /* Error message description for PeripheralManagerError.notReady */
 "Peripheral Not Ready" = "Peripheral Not Ready";
@@ -574,7 +574,7 @@
 "This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Recordatorio programado";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
@@ -591,7 +591,7 @@
 "Time" = "Tiempo";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Sin recordatorio";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Recordatorio de reservorio bajo";
@@ -626,33 +626,33 @@
 "U/hr" = "U/h";
 
 /* Summary string for temporary basal rate configuration page */
-"%1$@ for %2$@" = "%1$@ for %2$@";
+"%1$@ for %2$@" = "%1$@ para %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS no ajustará automáticamente su administración de insulina hasta que el actual ratio de insulina basal temporal finalice o sea cancelado.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Set Temporary Basal";
+"Set Temporary Basal" = "Establecer basal temporal";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Temporary Basal";
+"Temporary Basal" = "Basal temporal";
 
 /* Alert title for a failure to set temporary basal */
-"Temporary Basal Failed" = "Temporary Basal Failed";
+"Temporary Basal Failed" = "Basal temporal fallida";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Unable to set a temporary basal rate: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "No se ha podido establecer una basal temporal: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Unable to set a temporary basal rate: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "No se ha podido establecer una basal temporal: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Missing Config";
+"Missing Config" = "Configuración faltante";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Este gestor de bomba no ha sido configurado con una tasa basal máxima porque fue añadido antes de que basal manual temporal fuese una funcionalidad. Por favor, vaya a 'Configuración de terapia -> Límites de administración' y establezca una nueva tasa basal máxima.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Expiration Reminder Default";
+"Expiration Reminder Default" = "Recordatorio de expiración predeterminado";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Información del Pod anterior";
@@ -721,7 +721,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Low Reservoir";
+"Low Reservoir" = "Reservorio bajo";
 
 /* */
 "Save" = "Guardar";
@@ -736,7 +736,7 @@
 "Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text for suspend resume button when insulin delivery is suspended */
-"Resume Insulin Delivery" = "Resume Insulin Delivery";
+"Resume Insulin Delivery" = "Reanudar administración de insulina";
 
 /* Recovery suggestion when no pod is available */
 "Make sure your pod is nearby and try again." = "Make sure your pod is nearby and try again.";
@@ -748,10 +748,10 @@
 "Suspended At" = "Suspended At";
 
 /* Text for suspend resume button when insulin delivery is resuming */
-"Resuming insulin delivery..." = "Resuming insulin delivery...";
+"Resuming insulin delivery..." = "Reanudando administración de insulina...";
 
 /* Text for suspend resume button when insulin delivery is suspending */
-"Suspending insulin delivery..." = "Suspending insulin delivery...";
+"Suspending insulin delivery..." = "Suspendiendo administración de insulina...";
 
 /* Error message for PodCommsError.noPodsFound */
 "No pods found" = "No pods found";
