@@ -218,7 +218,7 @@
 "Save" = "Guardar";
 
 /*  */
-"Save as Preset" = "Guardar como Ajuste Predefinido";
+"Save as Preset" = "Guardar como preajuste";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Eliminar Ajuste Predefinido";
@@ -639,7 +639,7 @@ Enact a temp Basal or a temp target */
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configurar Transmisor Libre";
+"Configure Libre Transmitter" = "Configurar transmisor Libre";
 
 /* */
 "Calibrations" = "Calibraciones";
@@ -751,7 +751,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Please turn on Bluetooth" = "Por favor, active el Bluetooth";
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "Ningún Transmisor Libre seleccionado";
+"No Libre Transmitter Selected" = "Ningún transmisor Libre seleccionado";
 
 /* Delete Transmitter and start anew. */
 "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Elimine el gestor de MCG e inicie de nuevo. Sus credenciales libreoopweb se conservarán";
@@ -1235,7 +1235,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Online or internal server" = "Servidor en línea o interno";
 
 /* Pump Error Message */
-"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "No se ha ejecutado el cálculo recomendado para el nuevo ciclo porque hay un bolo en progreso. Espere al siguiente ciclo del lazo";
 
 /* Pump Error */
 "Error: Pump is Busy." = "Error: bomba ocupada.";
@@ -1261,7 +1261,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Only Autotune Basal Insulin" = "Sólo Insulina Basal de Autotune";
 
 /* */
-"Save as your Normal Basal Rates" = "Guardar como tus ratios basales normales";
+"Save as your Normal Basal Rates" = "Guardar ratios como perfil basal actual";
 
 /* */
 "Save on Pump" = "Guardar en la bomba";
@@ -1285,13 +1285,13 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Profile" = "Perfil";
 
 /* Debug option view Enacted */
-"Enacted" = "Enacted";
+"Enacted" = "Ejecutado";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Announcements";
+"Announcements" = "Anuncios";
 
 /* Debug option view Enacted announcements announcements (from NS) */
-"Enacted announcements" = "Enacted announcements";
+"Enacted announcements" = "Anuncios ejecutados";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1466,7 +1466,7 @@ Ajustes predeterminados:\n
 "Save as Profile" = "Guardar como perfil";
 
 /* */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Guardar como preajuste";
 
 /* Alert */
 "Cancel Profile Override" = "Cancelar preajuste de sobrescritura";
@@ -1535,7 +1535,7 @@ Ajustes predeterminados:\n
 "Save and continue" = "Guardar y continuar";
 
 /* */
-"Save as Preset" = "Guardar como Ajuste Predefinido";
+"Save as Preset" = "Guardar como preajuste";
 
 /* */
 "Predictions" = "Predicciones";
@@ -1686,7 +1686,7 @@ Ajustes predeterminados:\n
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Recordatorio de reservorio bajo";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Asegúrese de que su teléfono y su Pod estén cerca el uno del otro. Si los problemas de comunicación persisten, muévase a otra área.";
@@ -2042,7 +2042,7 @@ Con esta característica activada, cualquier objetivo temporal por debajo de 100
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Por defecto es falso. Cuando es verdadero, permite supermicrobolos (si se habilita de otra manera) incluso con objetivos temporales altos.";
 
 /* Headline "Use Custom Peak Time” */
-"Use Custom Peak Time" = "Use Custom Peak Time";
+"Use Custom Peak Time" = "Personalizar tiempo de efecto pico";
 
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Por defecto es falso. Cambiarlo a verdadero permite cambiar el insulinPeakTime";
@@ -2155,7 +2155,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1.";
 
 /* Headline "Insulin Peak Time" */
-"Insulin Peak Time" = "Insulin Peak Time";
+"Insulin Peak Time" = "Efecto pico de la insulina";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tiempo del máximo efecto de disminución de glucosa de la insulina, en minutos. Atención: el algoritmo Oref asume para la insulina ultra-rápida (Lyumjev) y rápida (Fiasp) unas curvas de tiempo pico de la insulina mínimas de 35 y 50 mins, y máximas de 100 y 120 mins, respectivamente. Utilizar un tiempo de efecto diferente fuera de estos límites resultará en problemas con iAPS, cálculos entre ciclos más largos y posiblemente errores de Lazo (en rojo).";
@@ -2232,7 +2232,7 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Minimum Threshold Setting" = "Ajuste de umbral mínimo";
 
 /* Minimum Threshold Setting, Part 1 */
-"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is ";
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Esta opción le permite elegir un nivel por debajo del cual no se administrará insulina.\n\nEl umbral está utilizando la mayor cantidad de la configuración de su umbral y el umbral calculado:\n\nObjetivo de glucosa - (Objetivo de glucosa - 40) / 2\n, utilizando mg/dl como unidad de medición.\n\nPor ejemplo, si tu objetivo de glucosa es ";
 
 /* Minimum Threshold Setting, Part 2 */
 "the threshold will be " = "the threshold will be ";
