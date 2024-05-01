@@ -8,11 +8,10 @@ function generate(pumphistory_data, profile_data, clock_data, glucose_data, basa
     var carb_data = {};
     if (carbhistory) {
         carb_data = carbhistory;
-        /* A fix to make all iAPS carb equivalents compatible with the Oref0 meal module.
-         Unfortunately the Oref0 gets slow when there are several carb entries and super slow when there are many.
-         Uncomment below to use this temporary fix. */
         
-        //carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
+        /* A tempory fix to make all iAPS carb equivalents compatible with the Oref0 meal module.
+         Unfortunately the Oref0 slows down when there are several carb entries and gets super slow when there are many (like when lots of FPUs). Hence this fix will slow down this module even more */
+        carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
     }
 
     if (typeof basalprofile_data[0] === 'undefined') {

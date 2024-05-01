@@ -105,8 +105,8 @@ extension Bolus {
 
         func getDeltaBG() {
             let glucose = provider.fetchGlucose()
-            guard let lastGlucose = glucose.first, glucose.count >= 3 else { return }
-            deltaBG = Decimal(lastGlucose.glucose + glucose[2].glucose) / 2 -
+            guard let lastGlucose = glucose.first, glucose.count >= 4 else { return }
+            deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
                 (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
         }
 
