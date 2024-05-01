@@ -1234,7 +1234,7 @@ Enact a temp Basal or a temp target */
 "Online or internal server" = "Online eller intern server";
 
 /* Pump Error Message */
-"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan inte utföra ny loop-rekommendation just nu, pga en pågående bolus. Vänta till nästa loop";
 
 /* Pump Error */
 "Error: Pump is Busy." = "Fel: pump är upptagen.";
