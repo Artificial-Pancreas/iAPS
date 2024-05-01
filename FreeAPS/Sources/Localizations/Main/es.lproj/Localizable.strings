@@ -1009,13 +1009,13 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "iOS Shortcuts" = "Atajos de iOS";
 
 /* Bolus shortcut. Pop-up */
-"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Si habilita esta configuración, podrá usar los atajos de iOS y sus automatizaciones para activar un bolo en iAPS.\n\n¡Tenga en cuenta que los atajos de iOS también funcionan con Siri!\n\nSi necesita usar Atajos para administrar bolos, asegúrese de desactivar la función de escucha 'Oye Siri' en la configuración del iPhone para evitar cualquier interacción involuntaria.\nSi no desactivas 'Oye Siri', el acceso directo a bolos en iAPS se puede activar con la expresión 'Oye Siri, iAPS Bolus'.\n\nCuando se active Siri, le pedirá una cantidad de insulina y una confirmación antes de que el comando de bolo pueda enviarse a iAPS.";
 
 /* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+"Max allowed bolus amount using shortcuts " = "Máxima cantidad de bolo permitida con Atajos";
 
 /* Bolus shortcut. Error */
-"not available" = "not available";
+"not available" = "no disponible";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Activar preajuste de sobrescritura";
