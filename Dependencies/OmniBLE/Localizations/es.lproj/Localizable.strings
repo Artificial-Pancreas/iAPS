@@ -354,7 +354,7 @@
 "No, Keep Pump As Is" = "No, Keep Pump As Is";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
-"Remove Pump" = "Remove Pump";
+"Remove Pump" = "Retire la bomba";
 
 /* Message for Omnipod DASH PumpManager deletion action sheet */
 "Are you sure you want to stop using Omnipod DASH?" = "¿Seguro que quiere dejar de usar Omnipod DASH?";
@@ -412,7 +412,7 @@
 "Slide to Deactivate Pod" = "Deslizar para desactivar Pod";
 
 /* Deactivate pod action button accessibility label while deactivating */
-"Deactivating." = "Deactivating.";
+"Deactivating." = "Desactivando.";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
 "Pod deactivated successfully. Continue." = "Pod desactivado correctamente. Continúe.";
@@ -448,7 +448,7 @@
 "Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Retire la tapa azul de la aguja del Pod y compruebe la cánula. A continuación, retire el envoltorio de papel de la parte de atrás.";
 
 /* Label text for step 2 of pair pod instructions */
-"Listen for 2 beeps." = "Listen for 2 beeps.";
+"Listen for 2 beeps." = "Escuche 2 pitidos.";
 
 /* Label text indicating pairing finished.*/
 "Paired" = "Paired";
@@ -469,7 +469,7 @@
 "No, Continue With Pod" = "No, continuar con el Pod";
 
 /* Label text for step one of attach pod instructions */
-"Prepare site." = "Prepare site.";
+"Prepare site." = "Prepare la zona.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Revise el Pod, aplíquelo y, a continuación, asegure que este está bien adherido.";
@@ -517,16 +517,16 @@
 "No" = "No";
 
 /* Pod pairing action button text while pairing */
-"Pairing..." = "Pairing...";
+"Pairing..." = "Emparejando...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "Purgando...";
 
 /* */
 "Deactivating..." = "Desactivando...";
 
 /* Pod state when pod has been deactivated */
-"Deactivated" = "Deactivated";
+"Deactivated" = "Desactivado";
 
 /* Format string for instructions for setup complete view. (1: app name) */
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Su Pod está listo para usar.\n\n%1$@ le recordará cambiar su Pod antes de que caduque.  Puede cambiar esto a un momento más conveniente para usted.";
@@ -658,7 +658,7 @@
 "Previous Pod Information" = "Información del Pod anterior";
 
 /* Text shown in insulin remaining space when no pod is paired (Please keep the '\n' while translating!) */
-"No\nDelivery" = "No\nDelivery";
+"No\nDelivery" = "Sin\nadministración";
 
 /* description label for active time pod details row */
 "Active Time" = "Tiempo Activo";
@@ -667,19 +667,19 @@
 "Total Delivery" = "Total administrado";
 
 /* description label for device name pod details row */
-"Device Name" = "Device Name";
+"Device Name" = "Nombre del dispositivo";
 
 /* description label for lot number pod details row */
-"Lot Number" = "Lot Number";
+"Lot Number" = "Número de lote";
 
 /* description label for sequence number pod details row */
-"Sequence Number" = "Sequence Number";
+"Sequence Number" = "Número de secuencia";
 
 /* description label for firmware version pod details row */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Versión del firmware";
 
 /* description label for ble firmware version pod details row */
-"BLE Firmware Version" = "BLE Firmware Version";
+"BLE Firmware Version" = "Versión del firmware BLE";
 
 /* description label for activated at timne pod details row */
 "Pod Activated" = "Pod Activated";
@@ -688,7 +688,7 @@
 "Active Time" = "Tiempo Activo";
 
 /* description label for last status date pod details row */
-"Last Status" = "Last Status";
+"Last Status" = "Último estado";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Pod Fault Details";
@@ -799,7 +799,7 @@
 "%@ ago" = "Hace %@";
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Silenced";
+"Silenced" = "Silenciado";
 
 /* Description for SilencePodPreference.disabled */
 "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
