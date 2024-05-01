@@ -339,19 +339,19 @@
 "Adjusting Pump Time..." = "Adjusting Pump Time...";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Sincronizar con la hora actual";
 
 /* Label for PumpManager deletion button */
-"Switch to other insulin delivery device" = "Switch to other insulin delivery device";
+"Switch to other insulin delivery device" = "Cambiar a otra bomba de insulina";
 
 /* Title for pod sync time action sheet. */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "La hora de la bomba es diferente de la hora actual. ¿Desea actualizar la hora de su bomba a la hora actual?";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Sí, sincronizar con la hora actual";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "No, mantenga la bomba como está";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
 "Remove Pump" = "Retire la bomba";
@@ -363,26 +363,26 @@
 "Delete Omnipod DASH" = "Eliminar Omnipod DASH";
 
 /* Text for confidence reminders navigation link" */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "Tipo de Insulina";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "Sincronizar con la hora actual";
 
 /* Title for suspend duration selection action sheet */
 "Suspend Delivery" = "Suspender la infusión";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
+"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "La administración de insulina se detendrá hasta que la reanude manualmente. ¿Cuándo desea que iAPS le recuerde que debe reanudar la infusión?";
 
 /* Button text for 30 minute suspend duration */
-"30 minutes" = "30 minutes";
+"30 minutes" = "30 minutos";
 
 /* Button text for 1 hour suspend duration" */
-"1 hour" = "1 hour";
+"1 hour" = "1 hora";
 /* Button text for 1 hour 30 minute suspend duration */
-"1 hour 30 minutes" = "1 hour 30 minutes";
+"1 hour 30 minutes" = "1 hora 30 minutos";
 /* Button text for 2 hour suspend duration */
-"2 hours" = "2 hours";
+"2 hours" = "2 horas";
 
 /* Alert title for suspend error */
 "Failed to Suspend Insulin Delivery" = "Failed to Suspend Insulin Delivery";
@@ -594,7 +594,7 @@
 "No Reminder" = "No Reminder";
 
 /* Label for low reservoir reminder row */
-"Low Reservoir Reminder" = "Low Reservoir Reminder";
+"Low Reservoir Reminder" = "Recordatorio de reservorio bajo";
 
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Asegúrese de que su teléfono y su Pod estén cerca el uno del otro. Si los problemas de comunicación persisten, muévase a otra área.";
