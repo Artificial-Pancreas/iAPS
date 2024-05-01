@@ -19,7 +19,6 @@ extension PreferencesEditor {
             } didSet: { [weak self] _ in
                 self?.provider.migrateUnits()
             }
-
             let mainFields = [
                 Field(
                     displayName: NSLocalizedString("Max IOB", comment: "Max IOB"),

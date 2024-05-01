@@ -6,9 +6,10 @@ import Swinject
 struct PredictionView: View {
     @Binding var predictions: Predictions?
     @Binding var units: GlucoseUnits
-    @Binding var eventualBG: Int
+    @Binding var eventualBG: Decimal
     @Binding var target: Decimal
     @Binding var displayPredictions: Bool
+    @Binding var currentGlucose: Decimal
 
     private enum Config {
         static let height: CGFloat = 160
@@ -21,11 +22,10 @@ struct PredictionView: View {
                 chart()
             }
             HStack {
-                let conversion = units == .mmolL ? 0.0555 : 1
                 Text("Eventual Glucose")
                 Spacer()
                 Text(
-                    (Double(eventualBG) * conversion)
+                    Double(eventualBG)
                         .formatted(.number.grouping(.never).rounded().precision(.fractionLength(units == .mmolL ? 1 : 0)))
                 )
                 Text(units.rawValue).foregroundStyle(.secondary)
@@ -61,6 +61,14 @@ struct PredictionView: View {
             }
             startIndex += 1
         } while startIndex < count
+
+        let maximum = max(
+            data.map(\.cob).max() ?? 0,
+            data.map(\.iob).max() ?? 0,
+            data.map(\.uam).max() ?? 0,
+            data.map(\.zt).max() ?? 0
+        )
+
         // Chart
         return Chart(data) {
             // Remove 0 (empty) values
@@ -100,14 +108,37 @@ struct PredictionView: View {
                 .foregroundStyle(Color(.ZT))
                 .lineStyle(StrokeStyle(lineWidth: Config.lineWidth))
             }
+
+            let insulin = [
+                GlucoseData(glucose: Double(target), type: "Target", time: Date.now),
+                GlucoseData(glucose: Double(eventualBG), type: "Eventual Glucose", time: data.last?.date ?? .distantFuture)
+            ]
+            let requiresInsulin = insulin[1].glucose > insulin[0].glucose
+
+            if requiresInsulin {
+                ForEach(insulin) { datapoint in
+                    AreaMark(
+                        x: .value("Time", datapoint.time),
+                        yStart: .value("Target", insulin[0].glucose),
+                        yEnd: .value("Eventual Glucose", datapoint.glucose)
+                    ).foregroundStyle(Color(.insulin).opacity(0.3))
+                }
+            }
+
+            RuleMark(y: .value("Target", target))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [4])).foregroundStyle(Color(.loopGreen))
         }
+        .chartYScale(
+            domain: (40 * conversion) ... max(maximum + 20 * conversion, 140 * conversion)
+        )
         .frame(minHeight: Config.height)
         .chartForegroundStyleScale([
             "IOB": Color(.insulin),
             "UAM": .uam,
             "COB": Color(.loopYellow),
-            "ZT": .zt
+            "ZT": .zt,
+            "Target": Color(.loopGreen)
         ])
-        .chartYAxisLabel(NSLocalizedString("Glucose, ", comment: "") + units.rawValue, alignment: .center)
+        .chartYAxisLabel(NSLocalizedString("Predictions", comment: "") + ", " + units.rawValue, alignment: .center)
     }
 }

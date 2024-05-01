@@ -83,10 +83,10 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             var insulinRequired = self.suggestion?.insulinReq ?? 0
 
             var double: Decimal = 2
-            if self.suggestion?.manualBolusErrorString == 0 {
-                insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
-                double = 1
-            }
+            /* if self.suggestion?.manualBolusErrorString == 0 {
+                 insulinRequired = self.suggestion?.insulinForManualBolus ?? 0
+                 double = 1
+             } */
 
             self.state.useNewCalc = self.settingsManager.settings.useCalc
 
@@ -160,7 +160,8 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
             self.state.eventualBGRaw = eBG
 
-            self.state.isf = self.suggestion?.isf
+            // self.state.isf = self.suggestion?.isf
+            self.state.isf = 15
 
             let overrideArray = overrideStorage.fetchLatestOverride()
 
@@ -274,8 +275,10 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             conversion = 0.0555
         }
         let isf = state.isf ?? 0
-        let target = suggestion?.current_target ?? 0
-        let carbratio = suggestion?.carbRatio ?? 0
+        // let target = suggestion?.current_target ?? 0
+        let target: Decimal = 100
+        // let carbratio = suggestion?.carbRatio ?? 0
+        let carbratio: Decimal = 0
         let bg = delta.first?.glucose ?? 0
         let cob = state.cob ?? 0
         let iob = state.iob ?? 0
