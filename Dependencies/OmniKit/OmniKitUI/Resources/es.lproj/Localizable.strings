@@ -333,7 +333,7 @@
 "Insulin Delivered" = "Insulina Administrada";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Administración de insulina";
 
 /* The action string on pod status page when pod faulted */
 "Insulin delivery stopped. Change Pod now." = "El suministro de insulina se detuvo. Cambiar Pod ahora.";
