@@ -1951,7 +1951,11 @@ Ajustes predeterminados:\n
 "High Temptarget Raises Sensitivity" = "Objetivo temporal elevado aumenta la sensibilidad";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Por defecto 'Falso'. Cuando se cambia a 'Verdadero', aumenta la sensibilidad (menor proporción de sensibilidad) para objetivos temporales fijados en >= 111. Sinónimo de modo ejercicio. Cuanto mayor sea su objetivo temporal superior a 110, resultará en relaciones más sensibles (más bajas), p.ej., objetivo temporal de 120 resulta en una proporción de sensibilidad de 0.75, mientras que 140 resultaría en 0.6 (con un valor por defecto de objetivo basal de 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Sinónimo de 'Modo Ejercicio'.
+
+Por defecto deshabilitado. Cuando se habilita, aumenta la sensibilidad (menor factor de sensibilidad) para objetivos temporales mayor o igual a 111. 
+
+Cuanto mayor sea su objetivo temporal superior a 110, resultará en ratios más sensibles (más bajos), p.ej., objetivo temporal de 120 calcula un factor de sensibilidad de 0.75, mientras que 140 resultaría en 0.6 (con un valor por defecto de 'Objetivo basal medio durante el ejercicio' de 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
 "Low Temptarget Lowers Sensitivity" = "Objetivo temporal bajo reduce la sensibilidad";
@@ -2123,16 +2127,28 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "El otro lado de los límites de seguridad de Autosens, poniendo un tope a cuán bajo Autosens puede ajustar basales, y cuán alto puede ajustar el factor de sensibilidad de la insulina y los objetivos de glucosa.";
 
 /* Headline "Half Basal Exercise Target" */
-"Half Basal Exercise Target" = "Half Basal Exercise Target";
+"Half Basal Exercise Target" = "Objetivo basal medio durante el ejercicio";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Establecer a un número, p. ej. 160, lo que significaría que cuando el objetivo temporal es 160 mg/dL y el modo ejercicio esté activo, proporciona el 50% de la basal a este nivel (120 = 75%; 140 = 60%). Esto puede ser ajustado para darle más control sobre sus modos de ejercicio.";
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Permite controlar la reducción de la insulina basal cuando utilizas el \"modo ejercicio\" o cuando se establecen objetivos altos de glucosa.
+
+La fórmula:
+
+(valorBasalMedio - 100) / ((valorBasalMedio - 100) + (objetivoTemp - 100)) 
+
+permite calcular el porcentaje exacto de reducción basal para cualquier combinación de \"Objetivo basal medio durante el ejercicio\" y objetivo temporal.
+
+Establecer a un número, p. ej. 160, significaría que cuando el objetivo temporal es 160 mg/dL y el modo ejercicio esté activo, proporciona el 50% de la basal a este nivel (objetivo temp. 120 = 75%; 140 = 60%). Esto puede ser ajustado para darle más control sobre sus modos de ejercicio.";
 
 /* Headline "Max COB" */
 "Max COB" = "COB máximos";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "El valor por defecto de COB máximos es 120 gramos.
+
+Si se introducen más carbohidratos en una o varias entradas, iAPS limitará los COB al valor máximo de COB y lo mantendrá en éste valor (COBmax) hasta que los carbohidratos introducidos anteriormente hayan demostrado ser absorbidos. 
+
+Esencialmente, esto limita la funcionalidad UAM (carbs. o UGP no anunciadas) como límite de seguridad contra extraños cálculos de COB debido a datos inconsistentes.";
 
 /* Headline "Bolus Snooze DIA Divisor" */
 "Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
