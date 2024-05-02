@@ -950,7 +950,7 @@ extension MainChartView {
             let dots = values.map { value -> CGRect in
                 let position = predictionToCoordinate(value, fullSize: fullSize, index: index)
                 index += 1
-                return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
+                return CGRect(x: position.x - 2, y: position.y - 2, width: 3, height: 3)
             }
             DispatchQueue.main.async {
                 predictionDots[type] = dots
