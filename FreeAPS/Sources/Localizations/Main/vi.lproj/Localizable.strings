@@ -311,7 +311,7 @@
 "Calculated Sensitivity" = "Độ nhạy được tính toán";
 
 /*  */
-"Insulin Sensitivities" = "Độ nhạy của Insulin";
+"Insulin Sensitivities" = "Độ nhạy Insulin";
 
 /* */
 "Sensitivity Ratio" = "Tỷ lệ độ nhạy";
@@ -708,7 +708,7 @@ Enact a temp Basal or a temp target */
 "Remove" = "Loại bỏ";
 
 /* */
-"Remove Last" = "Loại bỏ mục sau cùng";
+"Remove Last" = "Loại bỏ mục gần nhất";
 
 /* */
 "Remove All" = "Loại bỏ tất cả";
@@ -852,7 +852,7 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Thông tin cảm biến";
 
 /* */
-"Sensor Age" = "Thời gian sử dụng sensor";
+"Sensor Age" = "Thời gian sử dụng cảm biến";
 
 /* */
 "Sensor Age Left" = "Thời gian còn lại của cảm biến";
@@ -1003,6 +1003,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Cho phép phím tắt Bolus của iOS";
+
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "Phím tắt iOS";
 
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Nếu bật cài đặt này, bạn sẽ có thể sử dụng các phím tắt iOS và tính năng tự động hóa của nó để kích hoạt bolus trong iAPS.\n\nLưu ý rằng các phím tắt iOS cũng hoạt động với Siri!\n\nNếu bạn cần sử dụng Phím tắt Bolus, hãy đảm bảo để tắt cài đặt nghe 'Hey Siri' trong cài đặt Siri của iPhone, để tránh bất kỳ sự kích hoạt vô ý nào của bolus với Siri.\nNếu bạn không tắt 'Hey Siri' thì phím tắt bolus iAPS có thể được kích hoạt bằng câu nói 'Hey Siri, iAPS Bolus'.\n\nKhi được kích hoạt bằng Siri, bạn sẽ được yêu cầu cung cấp số lượng và xác nhận trước khi lệnh truyền nhanh có thể được gửi tới iAPS.";
@@ -1229,6 +1232,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Máy chủ trực tuyến hoặc nội bộ";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Không thể thực hiện đề xuất chu kỳ vòng lặp mới vì đang tiến hành một đợt Bolus. Đợi chu kỳ vòng lặp tiếp theo";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Lỗi: Máy bơm đang bận.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1532,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Hiển thị chất đạm và chất béo";
 
-
 /* Time of new meal entry */
 "Now" = "Bây giờ";
-
 
 /* Display future data table entries */
 "Show Future" = "Hiển thị tương lai";
@@ -2023,7 +2030,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được kích hoạt khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
 
 /* Headline "Use Custom Peak Time” */
-"Use Custom Peak Time" = "Sử dụng giờ cao điểm tùy chỉnh";
+"Use Custom Peak Time" = "Tuỳ chỉnh đỉnh của Insulin";
 
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Mặc định là False. Đặt thành True cho phép thay đổi đỉnh của insulin";
@@ -2047,7 +2054,7 @@ Enact a temp Basal or a temp target */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Đây là giới hạn an toàn quan trọng của OpenAPS. Cài đặt mặc định (có thể không cần điều chỉnh) là 3. Điều này có nghĩa là OpenAPS sẽ không bao giờ được phép đặt tốc độ cơ bản tạm thời cao hơn 3 lần tốc độ cơ bản hàng giờ cao nhất được lập trình trong máy bơm của người dùng hoặc, nếu được bật, sẽ được xác định bằng autotune.";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Hệ số an toàn cơ bản hiện tại";
+"Current Basal Safety Multiplier" = "Hệ số an toàn cơ bản(basal) hiện tại";
 
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Đây là một giới hạn an toàn quan trọng khác của OpenAPS. Cài đặt mặc định (cũng khó có thể cần điều chỉnh) là 4. Điều này có nghĩa là OpenAPS sẽ không bao giờ được phép đặt tốc độ cơ bản tạm thời cao hơn 4 lần tốc độ cơ bản hàng giờ hiện tại được lập trình trong máy bơm của người dùng hoặc, nếu được bật, được xác định bằng autotune.";
@@ -2304,7 +2311,7 @@ Enact a temp Basal or a temp target */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa";
 
 /* Live Activity Footer when off */
-"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Để bật các hoạt động trực tiếp, hãy đi tới ứng dụng Cài đặt -> iAPS -> BẬT Hoạt động trực tiếp.\n\n";
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Các hoạt động trực tiếp được TẮT trong cài đặt hệ thống. Để bật các hoạt động trực tiếp, hãy đi tới ứng dụng Cài đặt -> iAPS -> BẬT Hoạt động trực tiếp.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Trung bình có trọng số của TDD. Trọng lượng trong 24 giờ qua:";

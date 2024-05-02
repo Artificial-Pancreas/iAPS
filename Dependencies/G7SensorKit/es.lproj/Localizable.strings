@@ -2,7 +2,7 @@
 "Dexcom G7" = "Dexcom G7";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS puede leer datos del G7, pero deberá utilizar la aplicación Dexcom G7 para emparejar, calibrar y otras gestiones del sensor.";
 
 /* Button title for starting setup */
 "Continue" = "Continuar";
@@ -11,7 +11,7 @@
 "Cancel" = "Cancelar";
 
 /* Error description for unreliable state */
-"Glucose data is unavailable" = "Glucose data is unavailable";
+"Glucose data is unavailable" = "Datos de glucosa no disponibles";
 
 /* The description of sensor algorithm state when sensor is ok. */
 "Sensor is OK" = "Sensor is OK";
@@ -81,10 +81,10 @@
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "LOW";
+"LOW" = "BAJO";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "HIGH";
+"HIGH" = "ALTO";
 
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
 "%@/min" = "%@/min";

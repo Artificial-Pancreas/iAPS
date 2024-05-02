@@ -1004,6 +1004,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Erlaube iOS Bolus Kurzbefehle";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS-Kurzbefehle";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
 
@@ -1229,6 +1232,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Online oder interner Server";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Die neue Empfehlung kann nicht angewendet werden, da zurzeit ein Bolus verabreicht wird. Warten Sie bitte die nächste Schleife ab.";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Fehler: Die Pumpe ist beschäftigt.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1532,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Zeige Eiweiß & Fett";
 
-
 /* Time of new meal entry */
 "Now" = "Jetzt";
-
 
 /* Display future data table entries */
 "Show Future" = "Zeige Eintragungen in der Zukunft";
@@ -1735,7 +1742,7 @@ Enact a temp Basal or a temp target */
 "Resuming insulin delivery..." = "Insulinabgabe fortsetzen...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Unterbrechung Insulinagabe fehlgeschlagen";
+"Failed to Suspend Insulin Delivery" = "Fehler beim Unterbrechen der Insulinabgabe";
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/

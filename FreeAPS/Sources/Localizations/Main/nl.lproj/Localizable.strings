@@ -1004,6 +1004,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "iOS bolus snelkoppelingen toestaan";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS Snelkoppelingen";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Als je deze instelling aanzet kun je iOS sneltoetsen en de bijbehorende automatiseringen gebruiken om een bolus te activeren in iAPS.\n\nLet op: iOS sneltoetsen werken ook met Siri!\n\nAls je bolus snelkoppelingen wilt gebruiken, zorg er dan voor dat je 'Hey Siri' uitzet in de iPhone Siri instellingen, om te voorkomen dat je per ongeluk een bolus activeert met Siri.\n\nAls je 'Hey Siri' niet uitschakelt, kan de iAPS bolussnelkoppeling worden geactiveerd met de uitspraak 'Hey Siri, iAPS Bolus'. Als je de bolus snelkoppeling met Siri activeert, word je gevraagd om een hoeveelheid en een bevestiging voordat het bolus commando naar iAPS kan worden gestuurd.";
 
@@ -1229,6 +1232,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Online of interne server";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loopcyclus advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende cyclus";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Fout: Pomp is bezig.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1532,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Toon vet en eiwit";
 
-
 /* Time of new meal entry */
 "Now" = "Nu";
-
 
 /* Display future data table entries */
 "Show Future" = "Toon toekomstig";
