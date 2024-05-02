@@ -1048,7 +1048,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Schedule " = "Programa ";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "horarios de guardado seleccionados";
 
 /* */
 "Error" = "Error";
@@ -1307,7 +1307,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "Apple Salud";
 
 /* */
 "Connect to Apple Health" = "Conectar con Apple Salud";
@@ -2105,10 +2105,10 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es un importante límite de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 3. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 3 veces la tasa basal más alta programada en una bomba de usuario o, si está activado, determinado por autotune.";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Current Basal Safety Multiplier";
+"Current Basal Safety Multiplier" = "Multiplicador basal actual de seguridad";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es otro límite importante de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 4. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 4 veces la tasa basal más alta programada en una bomba de usuario o, si está activado, determinado por autotune.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es otro límite importante de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 4. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 4 veces la tasa basal actual programada en una bomba de usuario o, si está habilitado, determinado por Autotune.";
 
 /* Headline "Autosens Max" */
 "Autosens Max" = "Autosens Máximo";
@@ -2426,7 +2426,7 @@ Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o 
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Habilita SMB cuando se detecta una glucemia alta, basado en el valor de la configuración (ajustes o perfil)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamic settings";
+"Dynamic settings" = "Ajustes dinámicos";
 
 /* Insulin curve */
 "Insulin curve" = "Curva de insulina";
