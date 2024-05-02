@@ -2370,31 +2370,48 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
 
 /* Notification option */
-"Show Live activity" = "Show Live activity";
+"Show Live activity" = "Mostrar Live Activity";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
 
 /* Live Activity Footer when off */
-"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live Activity está desactivado en los ajustes del sistema. Para habilitar Live Activity, vaya a la app Ajustes del teléfono, busque iAPS y encienda el botón de Live Activities para otorgar permisos.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
-"Weighted Average of TDD. Weight of past 24 hours:" = "Weighted Average of TDD. Weight of past 24 hours:";
+"Weighted Average of TDD. Weight of past 24 hours:" = "Peso de las últimas 24 horas en la media ponderada de TDD";
 
 /* Weight of past 24 hours of insulin */
-"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).";
+"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "El valor debe estar entre 0 y 1, siendo mayor que 0.
+
+Por defecto es 0.65, lo que significa que el 65% del cálculo de la dosis basal se basa en la TDD de las últimas 24 horas y el 35% restante se basa en la media de TDD de las últimas 2 semanas.
+
+Su configuración permite controlar la sensibilidad de los ajustes basales:
+- El valor más alto (1) significa que los ajustes se basan exclusivamente en la TDD de las últimas 24 horas, reaccionando más rápido a cambios recientes en tus necesidades de insulina. Esto puede resultar en ajustes más diversos. Para evitar fluctuaciones repentinas después de comer mucho, por ejemplo, se utiliza un promedio de TDD de las últimas 2 horas en lugar del valor actual de TDD (que en este momento serían las últimas 24 horas).
+- Un valor más cercano a 0 significa que los ajustes se basan principalmente en el promedio de TDD de las últimas 2 semanas, proporcionando cambios más graduales y estables.
+
+En resumen, este valor determina qué porcentaje de tu TDD reciente se tiene en cuenta para ajustar la dosis basal, permitiéndote controlar la rapidez y la magnitud de estos ajustes.";
 
 /* Headline "Adjust basal" */
-"Adjust basal" = "Adjust basal";
+"Adjust basal" = "Permitir ajustar basal dinámicamente";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD";
+"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Permite el ajuste de basal dinámico con un factor = TDD actual / TDD promedio 7 días
+
+";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Max Delta-BG Threshold SMB";
+"Max Delta-BG Threshold SMB" = "Diferencia máxima glucosa deshabilita SMBs";
 
 /* Max Delta-BG Threshold SMB */
-"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
+"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Por defecto es 0,2 (20%). 
+
+Límite de seguridad que analiza la diferencia entre las dos últimas lecturas de glucosa en sangre. Si la diferencia porcentual supera el valor guardado, iAPS asume que la última lectura es incorrecta y, en consecuencia, suspende la entrega del SMB. Por debajo de dicho cambio porcentual máximo positivo del nivel de glucosa se seguirán usando SMB
+
+• Existe un límite superior máximo de 0,4, o 40% de variabilidad, como medida de seguridad.
+• Para usuarios de lazo cerrado completo con UAM activado, un valor de 0,3 (30%) es recomendable.
+
+Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o en los logs (p. ej.: maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
 "... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
