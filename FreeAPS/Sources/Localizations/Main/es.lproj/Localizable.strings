@@ -2151,7 +2151,7 @@ Si se introducen más carbohidratos en una o varias entradas, iAPS limitará los
 Esencialmente, esto limita la funcionalidad UAM (carbs. o UGP no anunciadas) como límite de seguridad contra extraños cálculos de COB debido a datos inconsistentes.";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
+"Bolus Snooze DIA Divisor" = "Posponer Bolo (Obsoleto)";
 
 /* "Bolus Snooze DIA Divisor" */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "El retardo de bolos se realiza después de suministrar un bolo para comer, para que el Lazo no contrarreste con basales temporales bajas cuando acaba de comer. Por ejemplo, con el valor predeterminado de 2, y siendo la duración de la insulina activa (DIA) de 3 horas, el retardo del bolo se realizará gradualmente durante 1.5 horas (3DIA/2).";
@@ -2184,19 +2184,21 @@ Se estimará una menor absorción de carbohidratos, lo que puede llevar a una di
 Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad de Autotune (fullNewISF), mientras que 0 mantendría el factor de sensibilidad de la bomba (pumpISF).";
 
 /* Headline "Remaining Carbs Fraction" */
-"Remaining Carbs Fraction" = "Remaining Carbs Fraction";
+"Remaining Carbs Fraction" = "Ratio de COB restantes";
 
 /* "Remaining Carbs Fraction" */
-"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Esta es la fracción de los carbohidratos que suponemos se absorberán durante 4h si todavía no vemos absorción de carbohidratos.";
+"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Esta es el ratio de carbohidratos que suponemos se absorberán durante 4 horas si todavía no vemos dicha absorción de carbohidratos. 
+
+Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos de COB de iAPS. Esta funcionalidad está estrechamente ligada con 'Límite de COB restantes'.";
 
 /* Headline "Remaining Carbs Cap" */
-"Remaining Carbs Cap" = "Remaining Carbs Cap";
+"Remaining Carbs Cap" = "Límite de COB restantes";
 
 /* "Remaining Carbs Cap" */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Esta es la cantidad máxima de carbohidratos que suponemos se absorberán durante 4h si todavía no vemos absorción de carbohidratos.";
 
 /* Headline ”Max SMB Basal Minutes" */
-"Max SMB Basal Minutes" = "Max SMB Basal Minutes";
+"Max SMB Basal Minutes" = "Máximo tiempo de basal en SMB";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Por defecto comienza en 30. Este es el máximo de minutos de basal que se puede entregar como un solo SMB con COB no cubiertos. Esto da la capacidad de hacer los SMB más agresivos si lo desea. Se recomienda que el valor se establezca a partir de 30, en línea con el valor predeterminado, y si decide aumentar este valor, hacerlo en incrementos de no más de 15 minutos, vigilando de cerca los efectos de los cambios. No se recomienda establecer este valor superior a 90 minutos, ya que esto puede afectar a la capacidad del algoritmo para poner suspender la basal temporalmente. Se recomienda también usar Pushover cuando se establezca un valor mayor que el predeterminado, para que las alarmas se generen para cualquier hipo o hiper prevista.";
