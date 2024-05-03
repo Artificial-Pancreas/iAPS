@@ -29,6 +29,7 @@ extension OverrideProfilesConfig {
         @Published var defaultmaxIOB: Decimal = 0
         @Published var emoji: String = ""
         @Published var maxIOB: Decimal = 0
+        @Published var overrideMaxIOB: Bool = false
 
         @Injected() var broadcaster: Broadcaster!
         @Injected() var ns: NightscoutManager!
@@ -96,6 +97,7 @@ extension OverrideProfilesConfig {
                     saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                     saveOverride.maxIOB = maxIOB as NSDecimalNumber
+                    saveOverride.overrideMaxIOB = overrideMaxIOB
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)
@@ -142,6 +144,7 @@ extension OverrideProfilesConfig {
                     saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                     saveOverride.maxIOB = maxIOB as NSDecimalNumber
+                    saveOverride.overrideMaxIOB = overrideMaxIOB
                 }
                 try? self.coredataContext.save()
             }
@@ -193,6 +196,7 @@ extension OverrideProfilesConfig {
                 saveOverride.smbMinutes = (profile.smbMinutes ?? 0) as NSDecimalNumber
                 saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
                 saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB as NSDecimalNumber) as NSDecimalNumber
+                saveOverride.overrideMaxIOB = profile.overrideMaxIOB
             }
             // Saves
             coredataContext.perform { try? self.coredataContext.save() }
@@ -203,6 +207,7 @@ extension OverrideProfilesConfig {
 
         func savedSettings() {
             guard let overrideArray = OverrideStorage().fetchLatestOverride().first else {
+                defaults()
                 return
             }
             isEnabled = overrideArray.enabled
@@ -213,6 +218,7 @@ extension OverrideProfilesConfig {
             advancedSettings = overrideArray.advancedSettings
             isfAndCr = overrideArray.isfAndCr
             smbIsAlwaysOff = overrideArray.smbIsAlwaysOff
+            overrideMaxIOB = overrideArray.overrideMaxIOB
 
             if advancedSettings {
                 if !isfAndCr {
@@ -253,31 +259,11 @@ extension OverrideProfilesConfig {
             }
             if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
 
-            if !isEnabled {
-                _indefinite = true
-                percentage = 100
-                duration = 0
-                target = 0
-                override_target = false
-                smbIsOff = false
-                advancedSettings = false
-                smbMinutes = defaultSmbMinutes
-                uamMinutes = defaultUamMinutes
-                maxIOB = defaultmaxIOB
-            }
+            if !isEnabled { defaults() }
         }
 
         func cancelProfile() {
-            _indefinite = true
-            isEnabled = false
-            percentage = 100
-            duration = 0
-            target = 0
-            override_target = false
-            smbIsOff = false
-            advancedSettings = false
-            smbMinutes = defaultSmbMinutes
-            uamMinutes = defaultUamMinutes
+            defaults()
 
             let storage = OverrideStorage()
 
@@ -287,6 +273,20 @@ extension OverrideProfilesConfig {
             if let last = last_, let duration = duration_ {
                 ns.editOverride(name ?? "", duration, last.date ?? Date.now)
             }
+        }
+
+        private func defaults() {
+            _indefinite = true
+            percentage = 100
+            duration = 0
+            target = 0
+            override_target = false
+            smbIsOff = false
+            advancedSettings = false
+            smbMinutes = defaultSmbMinutes
+            uamMinutes = defaultUamMinutes
+            maxIOB = defaultmaxIOB
+            overrideMaxIOB = false
         }
     }
 }

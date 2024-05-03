@@ -7,9 +7,12 @@ struct PredictionView: View {
     @Binding var predictions: Predictions?
     @Binding var units: GlucoseUnits
     @Binding var eventualBG: Decimal
+    @Binding var useEventualBG: Bool
     @Binding var target: Decimal
     @Binding var displayPredictions: Bool
     @Binding var currentGlucose: Decimal
+
+    @Environment(\.colorScheme) var colorScheme
 
     private enum Config {
         static let height: CGFloat = 160
@@ -69,6 +72,16 @@ struct PredictionView: View {
             data.map(\.zt).max() ?? 0
         )
 
+        let insulin = [
+            GlucoseData(glucose: Double(target), type: "Target", time: Date.now),
+            GlucoseData(glucose: Double(eventualBG), type: "Eventual Glucose", time: data.last?.date ?? .distantFuture)
+        ]
+        let notZeroInsulin = (insulin[1].glucose != insulin[0].glucose) && useEventualBG
+        let requiresInsulin = (insulin[1].glucose > insulin[0].glucose) && useEventualBG
+
+        let insulinString = requiresInsulin ? "Insulin" : notZeroInsulin ? "-Insulin" : ""
+        let insulinColor: Color = requiresInsulin ? .minus : notZeroInsulin ? .red : .clear
+
         // Chart
         return Chart(data) {
             // Remove 0 (empty) values
@@ -109,22 +122,21 @@ struct PredictionView: View {
                 .lineStyle(StrokeStyle(lineWidth: Config.lineWidth))
             }
 
-            let insulin = [
-                GlucoseData(glucose: Double(target), type: "Target", time: Date.now),
-                GlucoseData(glucose: Double(eventualBG), type: "Eventual Glucose", time: data.last?.date ?? .distantFuture)
-            ]
-            let requiresInsulin = insulin[1].glucose > insulin[0].glucose
-
-            if requiresInsulin {
+            if notZeroInsulin, useEventualBG {
                 ForEach(insulin) { datapoint in
                     AreaMark(
                         x: .value("Time", datapoint.time),
-                        yStart: .value("Target", insulin[0].glucose),
-                        yEnd: .value("Eventual Glucose", datapoint.glucose)
-                    ).foregroundStyle(Color(.insulin).opacity(0.3))
+                        yStart: requiresInsulin ? .value("Target", insulin[0].glucose) :
+                            .value("Eventual Glucose", datapoint.glucose),
+                        yEnd: requiresInsulin ? .value("Eventual Glucose", datapoint.glucose) :
+                            .value("Target", insulin[0].glucose)
+                    )
+                    .foregroundStyle(
+                        requiresInsulin ? Color(.minus).opacity(colorScheme == .light ? 0.6 : 0.7) : Color(.red)
+                            .opacity(colorScheme == .dark ? 0.6 : 0.75)
+                    )
                 }
             }
-
             RuleMark(y: .value("Target", target))
                 .lineStyle(StrokeStyle(lineWidth: 1, dash: [4])).foregroundStyle(Color(.loopGreen))
         }
@@ -137,7 +149,8 @@ struct PredictionView: View {
             "UAM": .uam,
             "COB": Color(.loopYellow),
             "ZT": .zt,
-            "Target": Color(.loopGreen)
+            "Target": Color(.loopGreen),
+            insulinString: insulinColor
         ])
         .chartYAxisLabel(NSLocalizedString("Predictions", comment: "") + ", " + units.rawValue, alignment: .center)
     }
