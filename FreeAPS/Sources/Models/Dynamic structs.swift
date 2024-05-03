@@ -25,6 +25,7 @@ struct DynamicVariables: JSON, Codable {
     var smbMinutes: Decimal
     var uamMinutes: Decimal
     var maxIOB: Decimal
+    var overrideMaxIOB: Bool
     var disableCGMError: Bool
 
     init(
@@ -52,6 +53,7 @@ struct DynamicVariables: JSON, Codable {
         smbMinutes: Decimal,
         uamMinutes: Decimal,
         maxIOB: Decimal,
+        overrideMaxIOB: Bool,
         disableCGMError: Bool
     ) {
         self.average_total_data = average_total_data
@@ -78,6 +80,7 @@ struct DynamicVariables: JSON, Codable {
         self.smbMinutes = smbMinutes
         self.uamMinutes = uamMinutes
         self.maxIOB = maxIOB
+        self.overrideMaxIOB = overrideMaxIOB
         self.disableCGMError = disableCGMError
     }
 }
@@ -108,6 +111,7 @@ extension DynamicVariables {
         case smbMinutes
         case uamMinutes
         case maxIOB
+        case overrideMaxIOB
         case disableCGMError
     }
 }
