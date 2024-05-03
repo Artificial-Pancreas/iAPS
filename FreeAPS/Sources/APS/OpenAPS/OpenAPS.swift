@@ -459,6 +459,7 @@ final class OpenAPS {
             var overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
             var unlimited = overrideArray.first?.indefinite ?? true
             var disableSMBs = overrideArray.first?.smbIsOff ?? false
+            let overrideMaxIOB = overrideArray.first?.overrideMaxIOB ?? false
             let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0) as NSDecimalNumber
 
             if indeces == 0 {
@@ -542,6 +543,7 @@ final class OpenAPS {
                 smbMinutes: (overrideArray.first?.smbMinutes ?? smbMinutes) as Decimal,
                 uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal,
                 maxIOB: maxIOB as Decimal,
+                overrideMaxIOB: overrideMaxIOB,
                 disableCGMError: disableCGMError
             )
             storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)

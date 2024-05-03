@@ -60,7 +60,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         }
         
         // Max IOB
-        if (dynamicVariables.advancedSettings && dynamicVariables.maxIOB !== profile.maxIOB) {
+        if (dynamicVariables.advancedSettings && dynamicVariables.overrideMaxIOB) {
             profile.max_iob = dynamicVariables.maxIOB;
             console.log("Override Active, new maxIOB: " + profile.max_iob);
         }
