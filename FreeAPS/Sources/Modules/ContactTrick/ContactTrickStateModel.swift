@@ -32,7 +32,7 @@ enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
         case .iob:
             return NSLocalizedString("IOB", comment: "")
         case .ring:
-            return NSLocalizedString("Ring", comment: "")
+            return NSLocalizedString("Loop status", comment: "")
         }
     }
 }

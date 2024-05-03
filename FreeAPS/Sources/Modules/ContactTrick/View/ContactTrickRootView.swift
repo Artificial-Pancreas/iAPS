@@ -203,18 +203,10 @@ extension ContactTrick {
                     }
                 }
 
-                Section(header: Text("Rings")) {
+                Section(header: Text("Ring")) {
                     Picker(
                         selection: $entry.ring1,
                         label: Text("Outer")
-                    ) {
-                        ForEach(ContactTrickLargeRing.allCases) { v in
-                            Text(v.displayName).tag(v)
-                        }
-                    }
-                    Picker(
-                        selection: $entry.ring2,
-                        label: Text("Inner")
                     ) {
                         ForEach(ContactTrickLargeRing.allCases) { v in
                             Text(v.displayName).tag(v)

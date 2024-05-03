@@ -66,26 +66,7 @@ struct ContactPicture: View {
             drawRing(ring: contact.ring1, contact: contact, state: state, rect: ringRect, strokeWidth: width * ringWidth)
         }
 
-        if contact.ring1 != .none || contact.ring2 != .none {
-            rect = CGRect(
-                x: rect.minX + width * (ringWidth + ringGap),
-                y: rect.minY + height * (ringWidth + ringGap),
-                width: rect.width - width * (ringWidth + ringGap) * 2,
-                height: rect.height - height * (ringWidth + ringGap) * 2
-            )
-        }
-
-        if contact.ring2 != .none {
-            let ringRect = CGRect(
-                x: rect.minX + width * ringGap,
-                y: rect.minY + height * ringGap,
-                width: rect.width - width * ringGap * 2,
-                height: rect.height - width * ringGap * 2
-            )
-            drawRing(ring: contact.ring2, contact: contact, state: state, rect: ringRect, strokeWidth: width * ringWidth)
-        }
-
-        if contact.ring2 != .none {
+        if contact.ring1 != .none {
             rect = CGRect(
                 x: rect.minX + width * (ringWidth + ringGap),
                 y: rect.minY + height * (ringWidth + ringGap),
@@ -127,7 +108,7 @@ struct ContactPicture: View {
                 sqrt(radius * radius - (bottomHeight + primaryHeight / 2) * (bottomHeight + primaryHeight / 2))
 
             if contact.bottom != .none, contact.top == .none,
-               contact.ring1 == .iob || contact.ring1 == .cob || contact.ring1 == .iobcob, contact.ring2 == .none
+               contact.ring1 == .iob || contact.ring1 == .cob || contact.ring1 == .iobcob
             {
                 bottomWidth = bottomWidth + width * ringWidth * 2
                 bottomHeight = bottomHeight + height * ringWidth * 2
@@ -790,7 +771,6 @@ struct ContactPicture_Previews: PreviewProvider {
                 contact: .constant(
                     ContactTrickEntry(
                         ring1: .loop,
-                        ring2: .iob,
                         primary: .glucose,
                         top: .none,
                         bottom: .none,

@@ -3,7 +3,6 @@ struct ContactTrickEntry: JSON, Equatable {
     var enabled: Bool = false
     var layout: ContactTrickLayout = .single
     var ring1: ContactTrickLargeRing = .none
-    var ring2: ContactTrickLargeRing = .none
     var primary: ContactTrickValue = .glucose
     var top: ContactTrickValue = .none
     var bottom: ContactTrickValue = .none
@@ -31,7 +30,6 @@ extension ContactTrickEntry {
         case enabled
         case layout
         case ring1
-        case ring2
         case primary
         case top
         case bottom
@@ -51,7 +49,6 @@ extension ContactTrickEntry {
         let enabled = try container.decodeIfPresent(Bool.self, forKey: .enabled) ?? false
         let layout = try container.decodeIfPresent(ContactTrickLayout.self, forKey: .layout) ?? .single
         let ring1 = try container.decodeIfPresent(ContactTrickLargeRing.self, forKey: .ring1) ?? .none
-        let ring2 = try container.decodeIfPresent(ContactTrickLargeRing.self, forKey: .ring2) ?? .none
         let primary = try container.decodeIfPresent(ContactTrickValue.self, forKey: .primary) ?? .glucose
         let top = try container.decodeIfPresent(ContactTrickValue.self, forKey: .top) ?? .none
         let bottom = try container.decodeIfPresent(ContactTrickValue.self, forKey: .bottom) ?? .none
@@ -69,7 +66,6 @@ extension ContactTrickEntry {
             enabled: enabled,
             layout: layout,
             ring1: ring1,
-            ring2: ring2,
             primary: primary,
             top: top,
             bottom: bottom,
