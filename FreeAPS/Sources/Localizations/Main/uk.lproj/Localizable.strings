@@ -1004,6 +1004,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Дозволити ярлик Болюсу iOS";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "Ярлики iOS";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Якщо ви ввімкнете це налаштування, ви зможете використовувати ярлики iOS та їх автоматичні засоби для запуску болюсу в iAPS.\n\nЗверніть увагу, що ярлики iOS також працюють із Siri!\n\nЯкщо вам потрібно використовувати ярлики болюсу, переконайтеся, що щоб вимкнути прослуховування параметра «Привіт, Сірі» в налаштуваннях iPhone Siri, щоб уникнути будь-якої випадкової активації болюсу за допомогою Siri.\nЯкщо ви не вимкнете «Привіт, Сірі», ярлик болюсу iAPS можна запустити за допомогою виголошення «Привіт». Siri, iAPS Bolus'.\n\nПісля запуску за допомогою Siri вам буде запропоновано ввести суму та підтвердження, перш ніж команду болюсу можна буде надіслати в iAPS.";
 
@@ -1229,6 +1232,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Онлайн або внутрішній сервер";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Неможливо виконати рекомендацію щодо нового циклу петлі, оскільки триває болюс. Зачекайте наступного циклу петлі";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Помилка: Помпа зайнята.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1532,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Показати білок і жир";
 
-
 /* Time of new meal entry */
 "Now" = "Щойно";
-
 
 /* Display future data table entries */
 "Show Future" = "Показати Майбутнє";
