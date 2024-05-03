@@ -76,8 +76,8 @@ struct PredictionView: View {
             GlucoseData(glucose: Double(target), type: "Target", time: Date.now),
             GlucoseData(glucose: Double(eventualBG), type: "Eventual Glucose", time: data.last?.date ?? .distantFuture)
         ]
-        let notZeroInsulin = insulin[1].glucose != insulin[0].glucose
-        let requiresInsulin = insulin[1].glucose > insulin[0].glucose
+        let notZeroInsulin = (insulin[1].glucose != insulin[0].glucose) && useEventualBG
+        let requiresInsulin = (insulin[1].glucose > insulin[0].glucose) && useEventualBG
 
         let insulinString = requiresInsulin ? "Insulin" : notZeroInsulin ? "-Insulin" : ""
         let insulinColor: Color = requiresInsulin ? .minus : notZeroInsulin ? .red : .clear
