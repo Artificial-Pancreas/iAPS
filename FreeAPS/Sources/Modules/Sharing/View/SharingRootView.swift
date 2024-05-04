@@ -48,7 +48,7 @@ extension Sharing {
 
                 if !state.uploadStats {
                     Section {
-                        Toggle("Just version number", isOn: $state.uploadVersion)
+                        Toggle("Just iAPS version number", isOn: $state.uploadVersion)
                     } header: { Text("Share Bare Minimum") }
                 }
 
