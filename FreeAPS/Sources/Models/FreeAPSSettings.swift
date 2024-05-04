@@ -62,7 +62,11 @@ struct FreeAPSSettings: JSON, Equatable {
     var minumimPrediction: Bool = false
     var minimumSMB: Decimal = 0.3
     var useInsulinBars: Bool = false
-    var disableCGMError: Bool = false
+    var disableCGMError: Bool = true
+    var uploadVersion: Bool = true
+    var birtDate = Date.now
+    // var sex: Sex = .secret
+    var sexSetting: Int = 3
 }
 
 extension FreeAPSSettings: Decodable {
@@ -322,6 +326,18 @@ extension FreeAPSSettings: Decodable {
 
         if let disableCGMError = try? container.decode(Bool.self, forKey: .disableCGMError) {
             settings.disableCGMError = disableCGMError
+        }
+
+        if let uploadVersion = try? container.decode(Bool.self, forKey: .uploadVersion) {
+            settings.uploadVersion = uploadVersion
+        }
+
+        if let birtDate = try? container.decode(Date.self, forKey: .birtDate) {
+            settings.birtDate = birtDate
+        }
+
+        if let sexSetting = try? container.decode(Int.self, forKey: .sexSetting) {
+            settings.sexSetting = sexSetting
         }
 
         self = settings

@@ -183,7 +183,6 @@ extension Bolus {
                 label: { Text("Cancel") }
             )
             .popup(isPresented: presentInfo, alignment: .bottom, direction: .bottom, type: .default) {
-                // GlucoseTrendView(insulinRequired: $state.insulinCalculated)
                 formulasView()
             }
         }

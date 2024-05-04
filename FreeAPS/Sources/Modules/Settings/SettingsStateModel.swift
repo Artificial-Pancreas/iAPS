@@ -9,7 +9,7 @@ extension Settings {
         @Published var closedLoop = false
         @Published var debugOptions = false
         @Published var animatedBackground = false
-        @Published var disableCGMError = false
+        @Published var disableCGMError = true
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
