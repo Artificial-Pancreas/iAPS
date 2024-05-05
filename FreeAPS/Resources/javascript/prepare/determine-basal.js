@@ -29,7 +29,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
             // ISF and CR
             if (dynamicVariables.isfAndCr) {
                 profile.sense /= factor;
-                carbRatio /= factor;
+                profile.carbRatio /= factor;
             } else {
                 if (dynamicVariables.cr) { profile.carbRatio /= factor; }
                 if (dynamicVariables.isf) { profile.sens /= factor; }

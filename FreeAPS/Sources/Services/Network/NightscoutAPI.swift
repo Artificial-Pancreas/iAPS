@@ -16,6 +16,7 @@ class NightscoutAPI {
         static let treatmentsPath = "/api/v1/treatments.json"
         static let statusPath = "/api/v1/devicestatus.json"
         static let profilePath = "/api/v1/profile.json"
+        static let sharePath = "/upload.php"
         static let retryCount = 2
         static let timeout: TimeInterval = 60
     }
@@ -490,20 +491,17 @@ extension NightscoutAPI {
     }
 
     func uploadStats(_ stats: NightscoutStatistics) -> AnyPublisher<Void, Swift.Error> {
+        let statURL = IAPSconfig.statURL
         var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.statusPath
+        components.scheme = statURL.scheme
+        components.host = statURL.host
+        components.port = statURL.port
+        components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
         request.httpBody = try! JSONCoding.encoder.encode(stats)
         request.httpMethod = "POST"
 

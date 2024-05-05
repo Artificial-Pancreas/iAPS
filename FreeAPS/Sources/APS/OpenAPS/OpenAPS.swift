@@ -432,7 +432,7 @@ final class OpenAPS {
 
             let settings = self.loadFileFromStorage(name: FreeAPS.settings)
             let settingsData = FreeAPSSettings(from: settings)
-            let disableCGMError = settingsData?.disableCGMError ?? false
+            let disableCGMError = settingsData?.disableCGMError ?? true
 
             let cd = CoreDataStorage()
             // TDD

@@ -59,6 +59,7 @@ extension Settings {
                     Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
+                    Text("Sharing").navigationLink(to: .sharing, from: self)
                 } header: { Text("Extra Features") }
 
                 Section {

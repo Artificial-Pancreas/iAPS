@@ -77,6 +77,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var keychain: Keychain!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
@@ -965,17 +966,11 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON for upload to NS.
     private func statistics() {
-        let now = Date()
+        let stats = CoreDataStorage().fetchStats()
+        // Only save and upload twice per day
+        guard (-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 12 else { return }
+
         if settingsManager.settings.uploadStats {
-            let hour = Calendar.current.component(.hour, from: now)
-            guard hour > 20 else {
-                return
-            }
-
-            let stats = CoreDataStorage().fetchStats()
-            // Only save and upload once per day
-            guard (-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 22 else { return }
-
             let units = settingsManager.settings.units
             let preferences = settingsManager.preferences
 
@@ -1012,27 +1007,7 @@ final class BaseAPSManager: APSManager, Injectable {
             let build = Bundle.main.buildVersionNumber
 
             // Read branch information from branch.txt instead of infoDictionary
-            var branch = "Unknown"
-            if let branchFileURL = Bundle.main.url(forResource: "branch", withExtension: "txt"),
-               let branchFileContent = try? String(contentsOf: branchFileURL)
-            {
-                let lines = branchFileContent.components(separatedBy: .newlines)
-                for line in lines {
-                    let components = line.components(separatedBy: "=")
-                    if components.count == 2 {
-                        let key = components[0].trimmingCharacters(in: .whitespaces)
-                        let value = components[1].trimmingCharacters(in: .whitespaces)
-
-                        if key == "BRANCH" {
-                            branch = value
-                            break
-                        }
-                    }
-                }
-            } else {
-                branch = "Unknown"
-            }
-
+            let branch = branch()
             let copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
             let pump_ = pumpManager?.localizedTitle ?? ""
             let cgm = settingsManager.settings.cgm
@@ -1226,17 +1201,55 @@ final class BaseAPSManager: APSManager, Injectable {
                     LoopCycles: loopstat,
                     Insulin: insulin,
                     Variance: variance
-                )
+                ),
+                id: getIdentifier(),
+                dob: settingsManager.settings.birtDate,
+                sex: settingsManager.settings.sexSetting
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
+            saveStatUploadCount()
+        } else if settingsManager.settings.uploadVersion {
+            let json = BareMinimum(
+                id: getIdentifier(),
+                created_at: Date.now,
+                Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch()
+            )
+            nightscout.uploadVersion(json: json)
+            saveStatUploadCount()
+        }
+    }
 
-            coredataContext.performAndWait { [self] in
-                let saveStatsCoreData = StatsData(context: self.coredataContext)
-                saveStatsCoreData.lastrun = Date()
-                try? self.coredataContext.save()
+    private func getIdentifier() -> String {
+        var identfier = keychain.getValue(String.self, forKey: IAPSconfig.id) ?? ""
+        guard identfier.count > 1 else {
+            identfier = UUID().uuidString
+            keychain.setValue(identfier, forKey: IAPSconfig.id)
+            return identfier
+        }
+        return identfier
+    }
+
+    private func branch() -> String {
+        var branch = "Unknown"
+        if let branchFileURL = Bundle.main.url(forResource: "branch", withExtension: "txt"),
+           let branchFileContent = try? String(contentsOf: branchFileURL)
+        {
+            let lines = branchFileContent.components(separatedBy: .newlines)
+            for line in lines {
+                let components = line.components(separatedBy: "=")
+                if components.count == 2 {
+                    let key = components[0].trimmingCharacters(in: .whitespaces)
+                    let value = components[1].trimmingCharacters(in: .whitespaces)
+
+                    if key == "BRANCH" {
+                        branch = value
+                        break
+                    }
+                }
             }
         }
+        return branch
     }
 
     private func loopStats(loopStatRecord: LoopStats) {
@@ -1249,6 +1262,14 @@ final class BaseAPSManager: APSManager, Injectable {
             nLS.duration = loopStatRecord.duration ?? 0.0
             nLS.interval = loopStatRecord.interval ?? 0.0
 
+            try? self.coredataContext.save()
+        }
+    }
+
+    private func saveStatUploadCount() {
+        coredataContext.performAndWait { [self] in
+            let saveStatsCoreData = StatsData(context: self.coredataContext)
+            saveStatsCoreData.lastrun = Date()
             try? self.coredataContext.save()
         }
     }

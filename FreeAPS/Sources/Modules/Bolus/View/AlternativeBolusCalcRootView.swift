@@ -72,28 +72,30 @@ extension Bolus {
                 }
 
                 Section {
-                    HStack {
-                        Button(action: {
-                            showInfo.toggle()
-                        }, label: {
-                            Image(systemName: "info.bubble")
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
-                            Text("Calculations")
-                        })
-                            .foregroundStyle(.blue)
-                            .font(.footnote)
-                            .buttonStyle(PlainButtonStyle())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        if state.fattyMeals {
-                            Spacer()
-                            Toggle(isOn: $state.useFattyMealCorrectionFactor) {
-                                Text("Fatty Meal")
-                            }
-                            .toggleStyle(CheckboxToggleStyle())
-                            .font(.footnote)
-                            .onChange(of: state.useFattyMealCorrectionFactor) { _ in
-                                state.insulinCalculated = state.calculateInsulin()
+                    if !state.waitForSuggestion {
+                        HStack {
+                            Button(action: {
+                                showInfo.toggle()
+                            }, label: {
+                                Image(systemName: "info.bubble")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                                Text("Calculations")
+                            })
+                                .foregroundStyle(.blue)
+                                .font(.footnote)
+                                .buttonStyle(PlainButtonStyle())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            if state.fattyMeals {
+                                Spacer()
+                                Toggle(isOn: $state.useFattyMealCorrectionFactor) {
+                                    Text("Fatty Meal")
+                                }
+                                .toggleStyle(CheckboxToggleStyle())
+                                .font(.footnote)
+                                .onChange(of: state.useFattyMealCorrectionFactor) { _ in
+                                    state.insulinCalculated = state.calculateInsulin()
+                                }
                             }
                         }
                     }
