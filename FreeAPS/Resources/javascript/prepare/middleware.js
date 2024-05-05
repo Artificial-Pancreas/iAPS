@@ -9,6 +9,11 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         if (profile && string != "") {
             profile.mw = string
         }
+        
+        if (profile.tddAdjBasal && dynamicVariables.average_total_data != 0) {
+            profile.tdd_factor = Math.round((dynamicVariables.weightedAverage / dynamicVariables.average_total_data) * 100) / 100;
+        }
+        
         return profile;
     } catch (error) {
         console.log("Invalid middleware: " + error);
