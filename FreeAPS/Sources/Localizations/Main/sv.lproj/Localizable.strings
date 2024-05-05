@@ -1926,7 +1926,7 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Woman";
+"Woman" = "Kvinna";
 
 /* */
 "Man" = "Man";
@@ -1935,16 +1935,16 @@ Enact a temp Basal or a temp target */
 "Other" = "Annan";
 
 /* */
-"Secret" = "Secret";
+"Secret" = "Hemligt";
 
 /* */
-"Birth Date" = "Birth Date";
+"Birth Date" = "Födelsedatum";
 
 /* */
-"Share all of your Statistics" = "Share all of your Statistics";
+"Share all of your Statistics" = "Dela all statistik";
 
 /* */
-"Just iAPS version number" = "Just iAPS version number";
+"Just iAPS version number" = "Endast appversion";
 
 /* */
 "Share Bare Minimum" = "Share Bare Minimum";
@@ -1959,7 +1959,7 @@ Enact a temp Basal or a temp target */
 "Your identifier" = "Your identifier";
 
 /* */
-"Share your data anonymously" = "Share your data anonymously";
+"Share your data anonymously" = "Dela data anonymt";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
