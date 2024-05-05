@@ -438,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Add Medtronic" = "Medtronic toevoegen";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Omnipod toevoegen";
+"Add Omnipod" = "Omnipod Eros toevoegen";
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";

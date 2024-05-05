@@ -27,7 +27,7 @@
 "Below 50 units" = "Alle 50 yksikköä";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Lisäannos";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
 "Bolus in progress" = "Bolus vireillä";

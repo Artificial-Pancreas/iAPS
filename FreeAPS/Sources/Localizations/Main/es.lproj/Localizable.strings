@@ -1048,7 +1048,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Schedule " = "Programa ";
 
 /* */
-"tapped save schedules" = "tapped save schedules";
+"tapped save schedules" = "horarios de guardado seleccionados";
 
 /* */
 "Error" = "Error";
@@ -1307,7 +1307,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
-"Apple Health" = "Apple Health";
+"Apple Health" = "Apple Salud";
 
 /* */
 "Connect to Apple Health" = "Conectar con Apple Salud";
@@ -1951,7 +1951,11 @@ Ajustes predeterminados:\n
 "High Temptarget Raises Sensitivity" = "Objetivo temporal elevado aumenta la sensibilidad";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Por defecto 'Falso'. Cuando se cambia a 'Verdadero', aumenta la sensibilidad (menor proporción de sensibilidad) para objetivos temporales fijados en >= 111. Sinónimo de modo ejercicio. Cuanto mayor sea su objetivo temporal superior a 110, resultará en relaciones más sensibles (más bajas), p.ej., objetivo temporal de 120 resulta en una proporción de sensibilidad de 0.75, mientras que 140 resultaría en 0.6 (con un valor por defecto de objetivo basal de 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Sinónimo de 'Modo Ejercicio'.
+
+Por defecto deshabilitado. Cuando se habilita, aumenta la sensibilidad (menor factor de sensibilidad) para objetivos temporales mayor o igual a 111. 
+
+Cuanto mayor sea su objetivo temporal superior a 110, resultará en ratios más sensibles (más bajos), p.ej., objetivo temporal de 120 calcula un factor de sensibilidad de 0.75, mientras que 140 resultaría en 0.6 (con un valor por defecto de 'Objetivo basal medio durante el ejercicio' de 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
 "Low Temptarget Lowers Sensitivity" = "Objetivo temporal bajo reduce la sensibilidad";
@@ -2105,10 +2109,10 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es un importante límite de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 3. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 3 veces la tasa basal más alta programada en una bomba de usuario o, si está activado, determinado por autotune.";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Current Basal Safety Multiplier";
+"Current Basal Safety Multiplier" = "Multiplicador basal actual de seguridad";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es otro límite importante de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 4. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 4 veces la tasa basal más alta programada en una bomba de usuario o, si está activado, determinado por autotune.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Este es otro límite importante de seguridad de OpenAPS. La configuración predeterminada (que es poco probable que necesite ajustarse) es 4. Esto significa que OpenAPS nunca podrá establecer una tasa basal temporal que sea más de 4 veces la tasa basal actual programada en una bomba de usuario o, si está habilitado, determinado por Autotune.";
 
 /* Headline "Autosens Max" */
 "Autosens Max" = "Autosens Máximo";
@@ -2123,19 +2127,31 @@ Para probar sus diferentes basales durante la noche, puede modificar la configur
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "El otro lado de los límites de seguridad de Autosens, poniendo un tope a cuán bajo Autosens puede ajustar basales, y cuán alto puede ajustar el factor de sensibilidad de la insulina y los objetivos de glucosa.";
 
 /* Headline "Half Basal Exercise Target" */
-"Half Basal Exercise Target" = "Half Basal Exercise Target";
+"Half Basal Exercise Target" = "Objetivo basal medio durante el ejercicio";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Establecer a un número, p. ej. 160, lo que significaría que cuando el objetivo temporal es 160 mg/dL y el modo ejercicio esté activo, proporciona el 50% de la basal a este nivel (120 = 75%; 140 = 60%). Esto puede ser ajustado para darle más control sobre sus modos de ejercicio.";
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Permite controlar la reducción de la insulina basal cuando utilizas el \"modo ejercicio\" o cuando se establecen objetivos altos de glucosa.
+
+La fórmula:
+
+(valorBasalMedio - 100) / ((valorBasalMedio - 100) + (objetivoTemp - 100)) 
+
+permite calcular el porcentaje exacto de reducción basal para cualquier combinación de \"Objetivo basal medio durante el ejercicio\" y objetivo temporal.
+
+Establecer a un número, p. ej. 160, significaría que cuando el objetivo temporal es 160 mg/dL y el modo ejercicio esté activo, proporciona el 50% de la basal a este nivel (objetivo temp. 120 = 75%; 140 = 60%). Esto puede ser ajustado para darle más control sobre sus modos de ejercicio.";
 
 /* Headline "Max COB" */
 "Max COB" = "COB máximos";
 
 /* "Max COB" */
-"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)";
+"The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "El valor por defecto de COB máximos es 120 gramos.
+
+Si se introducen más carbohidratos en una o varias entradas, iAPS limitará los COB al valor máximo de COB y lo mantendrá en éste valor (COBmax) hasta que los carbohidratos introducidos anteriormente hayan demostrado ser absorbidos. 
+
+Esencialmente, esto limita la funcionalidad UAM (carbs. o UGP no anunciadas) como límite de seguridad contra extraños cálculos de COB debido a datos inconsistentes.";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Bolus Snooze DIA Divisor";
+"Bolus Snooze DIA Divisor" = "Posponer Bolo (Obsoleto)";
 
 /* "Bolus Snooze DIA Divisor" */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "El retardo de bolos se realiza después de suministrar un bolo para comer, para que el Lazo no contrarreste con basales temporales bajas cuando acaba de comer. Por ejemplo, con el valor predeterminado de 2, y siendo la duración de la insulina activa (DIA) de 3 horas, el retardo del bolo se realizará gradualmente durante 1.5 horas (3DIA/2).";
@@ -2168,19 +2184,21 @@ Se estimará una menor absorción de carbohidratos, lo que puede llevar a una di
 Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad de Autotune (fullNewISF), mientras que 0 mantendría el factor de sensibilidad de la bomba (pumpISF).";
 
 /* Headline "Remaining Carbs Fraction" */
-"Remaining Carbs Fraction" = "Remaining Carbs Fraction";
+"Remaining Carbs Fraction" = "Ratio de COB restantes";
 
 /* "Remaining Carbs Fraction" */
-"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Esta es la fracción de los carbohidratos que suponemos se absorberán durante 4h si todavía no vemos absorción de carbohidratos.";
+"This is the fraction of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Esta es el ratio de carbohidratos que suponemos se absorberán durante 4 horas si todavía no vemos dicha absorción de carbohidratos. 
+
+Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos de COB de iAPS. Esta funcionalidad está estrechamente ligada con 'Límite de COB restantes'.";
 
 /* Headline "Remaining Carbs Cap" */
-"Remaining Carbs Cap" = "Remaining Carbs Cap";
+"Remaining Carbs Cap" = "Límite de COB restantes";
 
 /* "Remaining Carbs Cap" */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Esta es la cantidad máxima de carbohidratos que suponemos se absorberán durante 4h si todavía no vemos absorción de carbohidratos.";
 
 /* Headline ”Max SMB Basal Minutes" */
-"Max SMB Basal Minutes" = "Max SMB Basal Minutes";
+"Max SMB Basal Minutes" = "Máximo tiempo de basal en SMB";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Por defecto comienza en 30. Este es el máximo de minutos de basal que se puede entregar como un solo SMB con COB no cubiertos. Esto da la capacidad de hacer los SMB más agresivos si lo desea. Se recomienda que el valor se establezca a partir de 30, en línea con el valor predeterminado, y si decide aumentar este valor, hacerlo en incrementos de no más de 15 minutos, vigilando de cerca los efectos de los cambios. No se recomienda establecer este valor superior a 90 minutos, ya que esto puede afectar a la capacidad del algoritmo para poner suspender la basal temporalmente. Se recomienda también usar Pushover cuando se establezca un valor mayor que el predeterminado, para que las alarmas se generen para cualquier hipo o hiper prevista.";
@@ -2370,31 +2388,48 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
 
 /* Notification option */
-"Show Live activity" = "Show Live activity";
+"Show Live activity" = "Mostrar Live Activity";
 
 /* Live Activity Footer */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
 
 /* Live Activity Footer when off */
-"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n";
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live Activity está desactivado en los ajustes del sistema. Para habilitar Live Activity, vaya a la app Ajustes del teléfono, busque iAPS y encienda el botón de Live Activities para otorgar permisos.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
-"Weighted Average of TDD. Weight of past 24 hours:" = "Weighted Average of TDD. Weight of past 24 hours:";
+"Weighted Average of TDD. Weight of past 24 hours:" = "Peso de las últimas 24 horas en la media ponderada de TDD";
 
 /* Weight of past 24 hours of insulin */
-"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment).";
+"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "El valor debe estar entre 0 y 1, siendo mayor que 0.
+
+Por defecto es 0.65, lo que significa que el 65% del cálculo de la dosis basal se basa en la TDD de las últimas 24 horas y el 35% restante se basa en la media de TDD de las últimas 2 semanas.
+
+Su configuración permite controlar la sensibilidad de los ajustes basales:
+- El valor más alto (1) significa que los ajustes se basan exclusivamente en la TDD de las últimas 24 horas, reaccionando más rápido a cambios recientes en tus necesidades de insulina. Esto puede resultar en ajustes más diversos. Para evitar fluctuaciones repentinas después de comer mucho, por ejemplo, se utiliza un promedio de TDD de las últimas 2 horas en lugar del valor actual de TDD (que en este momento serían las últimas 24 horas).
+- Un valor más cercano a 0 significa que los ajustes se basan principalmente en el promedio de TDD de las últimas 2 semanas, proporcionando cambios más graduales y estables.
+
+En resumen, este valor determina qué porcentaje de tu TDD reciente se tiene en cuenta para ajustar la dosis basal, permitiéndote controlar la rapidez y la magnitud de estos ajustes.";
 
 /* Headline "Adjust basal" */
-"Adjust basal" = "Adjust basal";
+"Adjust basal" = "Permitir ajustar basal dinámicamente";
 
 /* Enable adjustment of basal profile */
-"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD";
+"Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Permite el ajuste de basal dinámico con un factor = TDD actual / TDD promedio 7 días
+
+";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Max Delta-BG Threshold SMB";
+"Max Delta-BG Threshold SMB" = "Diferencia máxima glucosa deshabilita SMBs";
 
 /* Max Delta-BG Threshold SMB */
-"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
+"Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Por defecto es 0,2 (20%). 
+
+Límite de seguridad que analiza la diferencia entre las dos últimas lecturas de glucosa en sangre. Si la diferencia porcentual supera el valor guardado, iAPS asume que la última lectura es incorrecta y, en consecuencia, suspende la entrega del SMB. Por debajo de dicho cambio porcentual máximo positivo del nivel de glucosa se seguirán usando SMB
+
+• Existe un límite superior máximo de 0,4, o 40% de variabilidad, como medida de seguridad.
+• Para usuarios de lazo cerrado completo con UAM activado, un valor de 0,3 (30%) es recomendable.
+
+Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o en los logs (p. ej.: maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
 "... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
@@ -2409,10 +2444,10 @@ Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad d
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Habilita SMB cuando se detecta una glucemia alta, basado en el valor de la configuración (ajustes o perfil)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamic settings";
+"Dynamic settings" = "Ajustes dinámicos";
 
 /* Insulin curve */
-"Insulin curve" = "Insulin curve";
+"Insulin curve" = "Curva de insulina";
 
 /* Headline "Adjustment Factor" */
-"Adjustment Factor" = "Adjustment Factor";
+"Adjustment Factor" = "Factor de ajuste";

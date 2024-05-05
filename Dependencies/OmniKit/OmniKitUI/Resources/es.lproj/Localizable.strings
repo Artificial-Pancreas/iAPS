@@ -187,13 +187,13 @@
 "Deactivate Pod" = "Desactivar Pod";
 
 /* */
-"Slide to Insert Cannula" = "Slide to Insert Cannula";
+"Slide to Insert Cannula" = "Deslizar para insertar cánula";
 
 /* */
 "Slide to Deactivate Pod" = "Deslice para desactivar el Pod";
 
 /* Label text for step one of insert cannula instructions */
-"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
+"Slide the switch below to start cannula insertion." = "Deslice el botón de abajo para iniciar la inserción de la cánula.";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Pod desactivado";
@@ -333,7 +333,7 @@
 "Insulin Delivered" = "Insulina Administrada";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Administración de insulina";
 
 /* The action string on pod status page when pod faulted */
 "Insulin delivery stopped. Change Pod now." = "El suministro de insulina se detuvo. Cambiar Pod ahora.";
@@ -624,7 +624,7 @@
 "Set Temporary Basal Rate" = "Establecer tasa basal temporal";
 
 /* Description text on manual temp basal action sheet */
-"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled.";
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Su entrega insulina no se ajustará automáticamente hasta que la basal temporal termine o sea cancelada.";
 
 /* Title for setup complete screen */
 "Setup Complete" = "Instalación completada";
@@ -802,18 +802,18 @@ Silence Pod" = "Silenciar Pod";
 "Previous Pod Details" = "Detalles del Pod anterior";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "Detalles del gestor de la bomba";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+"Retrieving Pump Manager Details..." = "Recuperando detalles del gestor de la bomba...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+"Refresh Pump Manager Details" = "Actualizar detalles del gestor de la bomba";
 
 /* Alert title for error when updating silence pod preference */
 "Failed to update silence pod preference." = "Error al actualizar las preferencias de sonido del Pod.";
 
 /* Section header for diagnostic section */
-"Diagnostics" = "Diagnostics";
+"Diagnostics" = "Diagnósticos";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Obtener estado del Pod";
@@ -822,10 +822,10 @@ Silence Pod" = "Silenciar Pod";
 "Pod Diagnostics" = "Diagnóstico del Pod";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Leer registro de pulso extendido";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Leer el tiempo de activación";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Leer alertas activadas";
