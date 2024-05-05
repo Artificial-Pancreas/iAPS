@@ -1950,13 +1950,13 @@ Enact a temp Basal or a temp target */
 "Share Bare Minimum" = "Dela endast ett minimum";
 
 /* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Varje information du väljer att dela laddas upp anonymt. För att förhindra dubbletter av uppladdningar identifieras datan med en unik slumpmässig sträng som sparas på telefonen.";
 
 /* */
-"Tap to display" = "Tap to display";
+"Tap to display" = "Tryck för att visa";
 
 /* */
-"Your identifier" = "Your identifier";
+"Your identifier" = "Din identifierare";
 
 /* */
 "Share your data anonymously" = "Dela data anonymt";
