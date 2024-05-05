@@ -9,6 +9,7 @@ extension Settings {
         @Published var closedLoop = false
         @Published var debugOptions = false
         @Published var animatedBackground = false
+        @Published var disableCGMError = true
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -18,6 +19,7 @@ extension Settings {
         override func subscribe() {
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
+            subscribeSetting(\.disableCGMError, on: $disableCGMError) { disableCGMError = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
 
@@ -77,10 +79,6 @@ extension Settings {
         func deleteOverrides() {
             nightscoutManager.deleteAllNSoverrrides() // For testing
         }
-
-        /* func deleteOverride() {
-             nightscoutManager.deleteOverride() // For testing
-         } */
     }
 }
 
@@ -88,5 +86,6 @@ extension Settings.StateModel: SettingsObserver {
     func settingsDidChange(_ settings: FreeAPSSettings) {
         closedLoop = settings.closedLoop
         debugOptions = settings.debugOptions
+        disableCGMError = settings.disableCGMError
     }
 }

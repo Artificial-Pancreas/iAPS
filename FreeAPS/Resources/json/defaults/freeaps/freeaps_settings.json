@@ -34,7 +34,7 @@
   "overrideHbA1cUnit" : false,
   "high" : 145,
   "low" : 70,
-  "uploadStats" : true,
+  "uploadStats" : false,
   "hours" : 6,
   "xGridLines" : true,
   "yGridLines" : true,
@@ -52,5 +52,15 @@
   "useLiveActivity" : false,
   "useTargetButton" : false,
   "alwaysUseColors" : true,
-  "timeSettings" : true
+  "timeSettings" : true,
+  "disableCGMError" : true,
+  "allowBolusShortcut": false,
+  "profilesOrTempTargets": true,
+  "allowedRemoteBolusAmount": 0.0,
+  "eventualBG": true,
+  "minumimPrediction": true,
+  "minimumSMB": 0.3,
+  "useInsulinBars": false,
+  "uploadVersion": true,
+  "birtDate": new Date()
 }

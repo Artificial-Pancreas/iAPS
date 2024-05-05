@@ -18,6 +18,9 @@ struct Statistics: JSON, Equatable {
     var Carbs_24h: Decimal
     var GlucoseStorage_Days: Decimal
     var Statistics: Stats
+    var id: String
+    var dob: Date
+    var sex: Int
 
     init(
         created_at: Date,
@@ -36,7 +39,10 @@ struct Statistics: JSON, Equatable {
         peakActivityTime: Decimal,
         Carbs_24h: Decimal,
         GlucoseStorage_Days: Decimal,
-        Statistics: Stats
+        Statistics: Stats,
+        id: String,
+        dob: Date,
+        sex: Int
     ) {
         self.created_at = created_at
         self.iPhone = iPhone
@@ -55,6 +61,9 @@ struct Statistics: JSON, Equatable {
         self.Carbs_24h = Carbs_24h
         self.GlucoseStorage_Days = GlucoseStorage_Days
         self.Statistics = Statistics
+        self.id = id
+        self.dob = dob
+        self.sex = sex
     }
 
     static func == (lhs: Statistics, rhs: Statistics) -> Bool {
@@ -85,6 +94,9 @@ extension Statistics {
         case Carbs_24h
         case GlucoseStorage_Days
         case Statistics
+        case id
+        case dob
+        case sex
     }
 }
 

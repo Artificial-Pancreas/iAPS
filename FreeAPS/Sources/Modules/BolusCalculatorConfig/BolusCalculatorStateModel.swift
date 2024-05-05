@@ -15,7 +15,7 @@ extension BolusCalculatorConfig {
 
         override func subscribe() {
             subscribeSetting(\.overrideFactor, on: $overrideFactor, initial: {
-                let value = max(min($0, 1.5), 0.1)
+                let value = max(min($0, 2), 0.1)
                 overrideFactor = value
             }, map: {
                 $0
@@ -27,7 +27,7 @@ extension BolusCalculatorConfig {
             subscribeSetting(\.minumimPrediction, on: $minumimPrediction) { minumimPrediction = $0 }
             subscribeSetting(\.displayPredictions, on: $displayPredictions) { displayPredictions = $0 }
             subscribeSetting(\.fattyMealFactor, on: $fattyMealFactor, initial: {
-                let value = max(min($0, 1.2), 0.1)
+                let value = max(min($0, 1.5), 0.1)
                 fattyMealFactor = value
             }, map: {
                 $0

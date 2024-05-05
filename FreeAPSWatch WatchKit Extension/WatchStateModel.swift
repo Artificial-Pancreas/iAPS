@@ -61,6 +61,11 @@ class WatchStateModel: NSObject, ObservableObject {
     @Published var pendingBolus: Double?
     @Published var isf: Decimal?
     @Published var override: String?
+    @Published var target: Decimal?
+    @Published var carbRatio: Decimal?
+    @Published var eventualGlucose: Decimal?
+    @Published var deltaBG: Decimal?
+    @Published var minPredBG: Decimal?
 
     private var lifetime = Set<AnyCancellable>()
     private var confirmationTimeout: AnyCancellable?
@@ -196,6 +201,11 @@ class WatchStateModel: NSObject, ObservableObject {
         profilesOrTempTargets = state.profilesOrTempTargets ?? true
         useNewCalc = state.useNewCalc ?? false
         isf = state.isf
+        target = state.target
+        carbRatio = state.carbRatio
+        deltaBG = state.deltaBG
+        minPredBG = state.minPredBG
+
         override = state.override
     }
 }
