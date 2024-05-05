@@ -15,6 +15,7 @@ extension Sharing {
         @StateObject var state = StateModel()
 
         @State private var display: Bool = false
+        @State private var copied: Bool = false
 
         let dateRange: ClosedRange<Date> = {
             let calendar = Calendar.current
@@ -58,8 +59,8 @@ extension Sharing {
                         Text(
                             "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone."
                         )
-                        Text("https://iaps-stats.hub.org")
-                            .multilineTextAlignment(.center)
+                        /* Text("https://iaps-stats.hub.org")
+                         .multilineTextAlignment(.center) */
                     }
                 }
 
@@ -68,10 +69,18 @@ extension Sharing {
                         Text(display ? state.identfier : "Tap to display")
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .onTapGesture {
-                        display.toggle()
+                    .onTapGesture { display.toggle() }
+                    .onLongPressGesture {
+                        if display {
+                            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                            impactHeavy.impactOccurred()
+                            UIPasteboard.general.string = state.identfier
+                            copied = true
+                        }
                     }
-                } header: { Text("Your identifier") }
+                }
+                header: { Text("Your identifier") }
+                footer: { Text((copied && display) ? "Copied" : "") }
             }
             .onAppear {
                 configureView()
