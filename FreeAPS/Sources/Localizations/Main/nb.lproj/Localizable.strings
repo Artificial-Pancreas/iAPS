@@ -1923,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Eksperimentell";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Utjevning av blodsukkerverdi";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Woman";
 
+/* */
+"Man" = "Man";
+
+/* */
+"Other" = "Annet";
+
+/* */
+"Secret" = "Secret";
+
+/* */
+"Birth Date" = "Birth Date";
+
+/* */
+"Share all of your Statistics" = "Share all of your Statistics";
+
+/* */
+"Just iAPS version number" = "Just iAPS version number";
+
+/* */
+"Share Bare Minimum" = "Share Bare Minimum";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+
+/* */
+"Tap to display" = "Tap to display";
+
+/* */
+"Your identifier" = "Your identifier";
+
+/* */
+"Share your data anonymously" = "Share your data anonymously";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
