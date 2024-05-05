@@ -67,12 +67,11 @@ struct TagCloudView: View {
                  textTag where textTag.contains("Autosens/Dynamic Limit:"),
                  textTag where textTag.contains("Dynamic ISF/CR"),
                  textTag where textTag.contains("Dynamic Ratio"),
+                 textTag where textTag.contains("Basal Adjustment"),
                  textTag where textTag.contains("Basal ratio"):
                 return .purple
             case textTag where textTag.contains("Middleware:"):
                 return .red
-            /* case textTag where textTag.contains("SMB Ratio"):
-             return .orange */
             default:
                 return .insulin
             }

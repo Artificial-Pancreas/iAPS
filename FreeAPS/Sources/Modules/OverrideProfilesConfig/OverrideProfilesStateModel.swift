@@ -283,6 +283,7 @@ extension OverrideProfilesConfig {
             override_target = false
             smbIsOff = false
             advancedSettings = false
+            isfAndCr = true
             smbMinutes = defaultSmbMinutes
             uamMinutes = defaultUamMinutes
             maxIOB = defaultmaxIOB
