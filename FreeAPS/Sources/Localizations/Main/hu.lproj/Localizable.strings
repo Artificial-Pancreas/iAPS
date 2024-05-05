@@ -1319,7 +1319,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Info";
+"Info" = "Infó";
 
 /* Warning title */
 "Warning" = "Warning";
@@ -1524,7 +1524,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Szűrőbeállítás mentése";
 
 /* */
 "Predictions" = "Predictions";
@@ -1923,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimental";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Nő";
 
+/* */
+"Man" = "Férfi";
+
+/* */
+"Other" = "Egyéb";
+
+/* */
+"Secret" = "Titok";
+
+/* */
+"Birth Date" = "Születési dátum";
+
+/* */
+"Share all of your Statistics" = "Összes statisztika megosztása";
+
+/* */
+"Just iAPS version number" = "Csak az iAPS verzió száma";
+
+/* */
+"Share Bare Minimum" = "Lehető legkevesebb adat megosztása";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Minden egyes megosztani kívánt információ névtelenül kerül feltöltésre. A duplikált feltöltések elkerülése érdekében az adatokat egy egyedi, véletlenszerű karakterlánc azonosítja, amelyet a telefonján tárolunk.";
+
+/* */
+"Tap to display" = "Érintsd meg a megjelenítéshez";
+
+/* */
+"Your identifier" = "Az ön azonosítója";
+
+/* */
+"Share your data anonymously" = "Névtelen adatmegosztás";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
