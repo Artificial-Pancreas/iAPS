@@ -76,6 +76,8 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             } else { preferences.insulinPeakTime = 55; }
         }
     }
+    
+    var tdd_factor = { };
 
     var inputs = { };
     //add all preferences to the inputs
@@ -95,6 +97,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.temptargets = temptargets_data;
     inputs.model = model_data;
     inputs.autotune = autotune_data;
+    inputs.tddFactor = tdd_factor;
     
     if (autotune_data) {
         if (autotune_data.basalprofile) { inputs.basals = autotune_data.basalprofile; }

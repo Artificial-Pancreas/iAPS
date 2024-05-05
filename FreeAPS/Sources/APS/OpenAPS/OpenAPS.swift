@@ -296,6 +296,10 @@ final class OpenAPS {
                 } else {
                     insertedResons += ", Dynamic ISF/CR: On/Off"
                 }
+                if let tddFactor = readMiddleware(json: profile, variable: "tdd_factor"), tddFactor.count > 1 {
+                    insertedResons += ", Basal Adjustment: \(tddFactor)"
+                }
+
                 insertedResons += tddString
                 reasonString.insert(contentsOf: insertedResons, at: startIndex)
                 // Autosens
