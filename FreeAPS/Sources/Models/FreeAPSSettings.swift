@@ -36,7 +36,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
     var low: Decimal = 70
-    var uploadStats: Bool = true
+    var uploadStats: Bool = false
     var hours: Int = 6
     var xGridLines: Bool = true
     var yGridLines: Bool = true
