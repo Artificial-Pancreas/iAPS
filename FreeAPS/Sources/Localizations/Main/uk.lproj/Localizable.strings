@@ -1923,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Експериментальний";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Гладке Значення Глюкози";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Жінка";
 
+/* */
+"Man" = "Чоловік";
+
+/* */
+"Other" = "Інше";
+
+/* */
+"Secret" = "Секретний ключ";
+
+/* */
+"Birth Date" = "Дата народження";
+
+/* */
+"Share all of your Statistics" = "Поділіться своєю Статистикою";
+
+/* */
+"Just iAPS version number" = "Номер версії iAPS";
+
+/* */
+"Share Bare Minimum" = "Мінімум розподілу";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Кожна інформація, якою ви вирішите поділитися, завантажується анонімно. Щоб запобігти повторним завантаженням, дані ідентифікуються за допомогою унікального випадкового рядка, збереженого на вашому телефоні.";
+
+/* */
+"Tap to display" = "Натисніть для відображення";
+
+/* */
+"Your identifier" = "Ваш ідентифікатор";
+
+/* */
+"Share your data anonymously" = "Надсилайте свої дані анонімно";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */

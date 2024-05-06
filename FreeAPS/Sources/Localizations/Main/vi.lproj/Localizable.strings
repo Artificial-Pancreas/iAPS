@@ -1923,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Thực hiện";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Giá trị Glucose mịn";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Nữ";
 
+/* */
+"Man" = "Nam";
+
+/* */
+"Other" = "Khác";
+
+/* */
+"Secret" = "Bí mật";
+
+/* */
+"Birth Date" = "Ngày sinh";
+
+/* */
+"Share all of your Statistics" = "Chia sẻ tất cả số liệu thống kê của bạn";
+
+/* */
+"Just iAPS version number" = "Chỉ phiên bản iAPS";
+
+/* */
+"Share Bare Minimum" = "Chia sẻ ở mức tối thiểu";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Mọi thông tin bạn chọn chia sẻ đều được tải lên ẩn danh. Để tránh tải lên trùng lặp, dữ liệu được xác định bằng một chuỗi ngẫu nhiên duy nhất được lưu trên điện thoại của bạn.";
+
+/* */
+"Tap to display" = "Chạm để hiển thị";
+
+/* */
+"Your identifier" = "Thẻ căn cước của bạn";
+
+/* */
+"Share your data anonymously" = "Chia sẻ dữ liệu của bạn ẩn danh";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
