@@ -60,11 +60,9 @@ extension Settings {
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
                     Text("Sharing").navigationLink(to: .sharing, from: self)
+                    Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                 } header: { Text("Extra Features") }
 
-                Section {
-                    Text("Contact trick").navigationLink(to: .contactTrick, from: self)
-                }
                 Section {
                     Toggle("Debug options", isOn: $state.debugOptions)
                     if state.debugOptions {

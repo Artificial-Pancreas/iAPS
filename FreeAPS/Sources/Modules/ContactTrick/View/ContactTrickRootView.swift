@@ -65,10 +65,18 @@ extension ContactTrick {
                         )
                     }
                 }
+
+                Section {}
+                footer: {
+                    Text(
+                        "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget."
+                    )
+                    .frame(maxWidth: .infinity, alignment: .center)
+                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
-            .navigationTitle("Contact Trick")
+            .navigationTitle("Contact Image")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
                 trailing: EditButton()
@@ -332,7 +340,7 @@ extension ContactTrick {
                 let display = if let emailAddress = contact.emailAddresses.first {
                     "\(emailAddress.value)"
                 } else {
-                    "\(contact.familyName) \(contact.givenName))"
+                    "\(contact.familyName) \(contact.givenName)"
                 }
                 if display.isEmpty {
                     parent.entry.displayName = "Unnamed contact"
