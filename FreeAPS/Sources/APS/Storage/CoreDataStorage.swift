@@ -129,4 +129,12 @@ final class CoreDataStorage {
         }
         return suggestion.first
     }
+
+    func saveStatUploadCount() {
+        coredataContext.performAndWait { [self] in
+            let saveStatsCoreData = StatsData(context: self.coredataContext)
+            saveStatsCoreData.lastrun = Date()
+            try? self.coredataContext.save()
+        }
+    }
 }
