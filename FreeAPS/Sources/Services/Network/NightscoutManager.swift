@@ -413,8 +413,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Statistics uploaded")
+                        CoreDataStorage().saveStatUploadCount()
                     case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
+                        debug(.nightscout, "Statistics upload failed" + error.localizedDescription)
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
@@ -436,8 +437,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Version uploaded")
+                        CoreDataStorage().saveStatUploadCount()
                     case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
+                        debug(.nightscout, "Version upload failed" + error.localizedDescription)
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)

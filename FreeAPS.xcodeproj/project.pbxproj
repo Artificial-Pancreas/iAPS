@@ -425,6 +425,16 @@
 		E4984C5262A90469788754BB /* PreferencesEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8BA8533F56BC55748CA877 /* PreferencesEditorProvider.swift */; };
 		E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F48C3AC770D4CCD0EA2B0C2 /* AddCarbsDataFlow.swift */; };
 		E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */; };
+		F2159A4A2BA60A6000A0B716 /* ContactTrickDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */; };
+		F2159A4C2BA60A8E00A0B716 /* ContactTrickRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A4B2BA60A8E00A0B716 /* ContactTrickRootView.swift */; };
+		F2159A4E2BA60AC000A0B716 /* ContactTrickProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A4D2BA60AC000A0B716 /* ContactTrickProvider.swift */; };
+		F2159A502BA60AE400A0B716 /* ContactTrickStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A4F2BA60AE400A0B716 /* ContactTrickStateModel.swift */; };
+		F2159A522BA60F7A00A0B716 /* FontWeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A512BA60F7A00A0B716 /* FontWeight.swift */; };
+		F2159A542BA6207F00A0B716 /* ContactTrickEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A532BA6207F00A0B716 /* ContactTrickEntry.swift */; };
+		F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A562BA6239F00A0B716 /* ContactTrickManager.swift */; };
+		F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A582BA78B7400A0B716 /* ContactTrickState.swift */; };
+		F2159A5B2BA7939C00A0B716 /* ContactPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */; };
+		F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F270F68C2BAE374C00F6D8DD /* FontTracking.swift */; };
 		F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */; };
 		F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */; };
 		F816825E28DB441200054060 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816825D28DB441200054060 /* HeartBeatManager.swift */; };
@@ -1014,6 +1024,16 @@
 		E625985B47742D498CB1681A /* NotificationsConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationsConfigProvider.swift; sourceTree = "<group>"; };
 		E68CDC1E5C438D1BEAD4CF24 /* LibreConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LibreConfigStateModel.swift; sourceTree = "<group>"; };
 		E9AAB83FB6C3B41EFD1846A0 /* AddTempTargetRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddTempTargetRootView.swift; sourceTree = "<group>"; };
+		F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickDataFlow.swift; sourceTree = "<group>"; };
+		F2159A4B2BA60A8E00A0B716 /* ContactTrickRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickRootView.swift; sourceTree = "<group>"; };
+		F2159A4D2BA60AC000A0B716 /* ContactTrickProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickProvider.swift; sourceTree = "<group>"; };
+		F2159A4F2BA60AE400A0B716 /* ContactTrickStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickStateModel.swift; sourceTree = "<group>"; };
+		F2159A512BA60F7A00A0B716 /* FontWeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontWeight.swift; sourceTree = "<group>"; };
+		F2159A532BA6207F00A0B716 /* ContactTrickEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickEntry.swift; sourceTree = "<group>"; };
+		F2159A562BA6239F00A0B716 /* ContactTrickManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickManager.swift; sourceTree = "<group>"; };
+		F2159A582BA78B7400A0B716 /* ContactTrickState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTrickState.swift; sourceTree = "<group>"; };
+		F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPicture.swift; sourceTree = "<group>"; };
+		F270F68C2BAE374C00F6D8DD /* FontTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTracking.swift; sourceTree = "<group>"; };
 		F816825D28DB441200054060 /* HeartBeatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		F816825F28DB441800054060 /* BluetoothTransmitter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetoothTransmitter.swift; sourceTree = "<group>"; };
 		F90692A9274B7AAE0037068D /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
@@ -1369,6 +1389,7 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F2159A472BA60A0300A0B716 /* ContactTrick */,
 				19F191D92BE4F93400F6297E /* Sharing */,
 				195D80B22AF696EE00D25097 /* Dynamic */,
 				190EBCC229FF134900BA767D /* StatConfig */,
@@ -1510,6 +1531,7 @@
 		3811DE9125C9D88200A708ED /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F2159A552BA6238D00A0B716 /* ContactTrick */,
 				6B1A8D2C2B156EC100E76752 /* LiveActivity */,
 				CEB434E128B8F9BC00B70274 /* Bluetooth */,
 				F90692A8274B7A980037068D /* HealthKit */,
@@ -1844,6 +1866,9 @@
 				193F6CDC2A512C8F001240FD /* Loops.swift */,
 				CC6C406D2ACDD69E009B8058 /* RawFetchedProfile.swift */,
 				192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */,
+				F2159A512BA60F7A00A0B716 /* FontWeight.swift */,
+				F2159A532BA6207F00A0B716 /* ContactTrickEntry.swift */,
+				F270F68C2BAE374C00F6D8DD /* FontTracking.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2497,6 +2522,35 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		F2159A472BA60A0300A0B716 /* ContactTrick */ = {
+			isa = PBXGroup;
+			children = (
+				F2159A482BA60A1600A0B716 /* View */,
+				F2159A492BA60A6000A0B716 /* ContactTrickDataFlow.swift */,
+				F2159A4D2BA60AC000A0B716 /* ContactTrickProvider.swift */,
+				F2159A4F2BA60AE400A0B716 /* ContactTrickStateModel.swift */,
+			);
+			path = ContactTrick;
+			sourceTree = "<group>";
+		};
+		F2159A482BA60A1600A0B716 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F2159A4B2BA60A8E00A0B716 /* ContactTrickRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F2159A552BA6238D00A0B716 /* ContactTrick */ = {
+			isa = PBXGroup;
+			children = (
+				F2159A562BA6239F00A0B716 /* ContactTrickManager.swift */,
+				F2159A582BA78B7400A0B716 /* ContactTrickState.swift */,
+				F2159A5A2BA7939C00A0B716 /* ContactPicture.swift */,
+			);
+			path = ContactTrick;
+			sourceTree = "<group>";
+		};
 		F5DE2E6D7B2133BBD3353DC7 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -2898,6 +2952,7 @@
 				38E44539274E411700EC9A94 /* Disk+UIImage.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
 				38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */,
+				F2159A542BA6207F00A0B716 /* ContactTrickEntry.swift in Sources */,
 				38569348270B5DFB0002C50D /* GlucoseSource.swift in Sources */,
 				CEB434E328B8F9DB00B70274 /* BluetoothStateManager.swift in Sources */,
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
@@ -2995,16 +3050,19 @@
 				38E98A2525F52C9300C0CED0 /* IssueReporter.swift in Sources */,
 				190EBCC429FF136900BA767D /* StatConfigDataFlow.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
+				F2159A5B2BA7939C00A0B716 /* ContactPicture.swift in Sources */,
 				3811DE4325C9D4A100A708ED /* SettingsProvider.swift in Sources */,
 				45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */,
 				3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */,
 				CE7CA34E2A064973004BE681 /* AppShortcuts.swift in Sources */,
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
+				F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */,
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
 				195F00482B5C267D00DAC71A /* DescriptionView.swift in Sources */,
 				19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */,
 				1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */,
+				F2159A522BA60F7A00A0B716 /* FontWeight.swift in Sources */,
 				CE2FAD3A297D93F0001A872C /* BloodGlucoseExtensions.swift in Sources */,
 				38E4453A274E411700EC9A94 /* Disk+[UIImage].swift in Sources */,
 				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
@@ -3043,6 +3101,7 @@
 				F90692D1274B99B60037068D /* HealthKitProvider.swift in Sources */,
 				19F95FF729F10FEE00314DDC /* StatStateModel.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,
+				F270F68D2BAE374C00F6D8DD /* FontTracking.swift in Sources */,
 				8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */,
 				195D80B42AF6973A00D25097 /* DynamicRootView.swift in Sources */,
 				389442CB25F65F7100FA1F27 /* NightscoutTreatment.swift in Sources */,
@@ -3093,6 +3152,7 @@
 				CE7CA3562A064973004BE681 /* StateIntentRequest.swift in Sources */,
 				E4984C5262A90469788754BB /* PreferencesEditorProvider.swift in Sources */,
 				DD399FB31EACB9343C944C4C /* PreferencesEditorStateModel.swift in Sources */,
+				F2159A4E2BA60AC000A0B716 /* ContactTrickProvider.swift in Sources */,
 				19E1F7EA29D082ED005C8D20 /* IconConfigProvider.swift in Sources */,
 				44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */,
 				E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */,
@@ -3110,9 +3170,11 @@
 				BD2FF1A02AE29D43005D1C5D /* CheckboxToggleStyle.swift in Sources */,
 				E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */,
 				919DBD08F13BAFB180DF6F47 /* AddTempTargetStateModel.swift in Sources */,
+				F2159A4A2BA60A6000A0B716 /* ContactTrickDataFlow.swift in Sources */,
 				8BC2F5A29AD1ED08AC0EE013 /* AddTempTargetRootView.swift in Sources */,
 				38A00B1F25FC00F7006BC0B0 /* Autotune.swift in Sources */,
 				38AAF85525FFF846004AF583 /* CurrentGlucoseView.swift in Sources */,
+				F2159A4C2BA60A8E00A0B716 /* ContactTrickRootView.swift in Sources */,
 				041D1E995A6AE92E9289DC49 /* BolusDataFlow.swift in Sources */,
 				23888883D4EA091C88480FF2 /* BolusProvider.swift in Sources */,
 				38E98A2D25F52DC400C0CED0 /* NSLocking+Extensions.swift in Sources */,
@@ -3135,6 +3197,7 @@
 				38E4453B274E411700EC9A94 /* Disk+VolumeInformation.swift in Sources */,
 				7BCFACB97C821041BA43A114 /* ManualTempBasalRootView.swift in Sources */,
 				38E44534274E411700EC9A94 /* Disk+InternalHelpers.swift in Sources */,
+				F2159A592BA78B7400A0B716 /* ContactTrickState.swift in Sources */,
 				38A00B2325FC2B55006BC0B0 /* LRUCache.swift in Sources */,
 				1924F72C2BA35AE5006644EE /* TotalDailyDose.swift in Sources */,
 				3083261C4B268E353F36CD0B /* AutotuneConfigDataFlow.swift in Sources */,
@@ -3151,6 +3214,7 @@
 				38569349270B5DFB0002C50D /* AppGroupSource.swift in Sources */,
 				F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */,
 				BA00D96F7B2FF169A06FB530 /* CGMStateModel.swift in Sources */,
+				F2159A502BA60AE400A0B716 /* ContactTrickStateModel.swift in Sources */,
 				61962FCAF8A2D222553AC5A3 /* LibreConfigDataFlow.swift in Sources */,
 				BD7DA9A52AE06DFC00601B20 /* BolusCalculatorConfigDataFlow.swift in Sources */,
 				6EADD581738D64431902AC0A /* LibreConfigProvider.swift in Sources */,

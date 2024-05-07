@@ -16,7 +16,11 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: (pathData) => {
+        return pathData.chunk.name.replace(/[A-Z]/g, function(match) {
+            return '-' + match.toLowerCase();
+        }) + '.js';
+    },
     libraryTarget: 'var',
     library: 'freeaps_[name]'
   },
