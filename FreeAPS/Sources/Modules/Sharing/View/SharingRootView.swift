@@ -59,8 +59,8 @@ extension Sharing {
                         Text(
                             "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone."
                         )
-                        /* Text("https://iaps-stats.hub.org")
-                         .multilineTextAlignment(.center) */
+                        Text("https://open-iaps.app/statistics")
+                            .multilineTextAlignment(.center)
                     }
                 }
 
