@@ -136,5 +136,6 @@ final class CoreDataStorage {
             saveStatsCoreData.lastrun = Date()
             try? self.coredataContext.save()
         }
+        UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
     }
 }
