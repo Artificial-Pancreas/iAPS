@@ -96,7 +96,7 @@
 "Insulin\nSuspended" = "Insulina Suspendida";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Administración de insulina";
 
 /* Instructions on selecting an insulin data source */
 "Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "La entrega de insulina puede ser determinada por la microinfusora interpretando los eventos históricos o comparando el volúmen del reservorio sobre el tiempo. Leer los eventos históricos permite una gráfica de status mas exacta y permite subir tratamientos actualizados a Nightscout, con el costo de una menor duración de la batería y la posiblidad de mayores errores de radio comparado con leer solamente el volúmen del reservorio. Si la fuente seleccionada no puede ser utilizada por cualquier motivo, el sistema intentará utilizar la otra opción.";
@@ -123,14 +123,14 @@
 "No, Keep Pump As Is" = "No, mantenga la bomba como está";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "En la bomba, vaya a la pantalla de buscar dispositivo y seleccione \"Buscar dispositivo\".\n\nMenú principal >\nUtilidades >\nConectar dispositivos >\nOtros dispositivos >\nOn >\nBuscar dispositivo";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
 "Preferred Data Source" = "Fuente de Datos Preferida";
 
 /* Text for medtronic pump battery percent remaining */
-"Pump Battery Remaining" = "Pump Battery Remaining";
+"Pump Battery Remaining" = "Batería restante de la bomba";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump battery type */
@@ -203,7 +203,7 @@
 "U/hr" = "U/hra";
 
 /* Text to indicate battery percentage is unknown */
-"unknown" = "unknown";
+"unknown" = "desconocido";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Desconocido";

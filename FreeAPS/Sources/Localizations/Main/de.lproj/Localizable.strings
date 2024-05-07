@@ -1263,7 +1263,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Als deine normalen Basalraten speichern";
 
 /* */
-"Save on Pump" = "Auf Pumpe speichern";
+"Save on Pump" = "Auf der Pumpe speichern";
 
 /* Debug option view Pump History */
 "Pump History" = "Insulinpumpen-Speicher";
@@ -1524,7 +1524,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Speichern und weiter";
 
 /* */
-"Save as Preset" = "Speichern als Voreinstellung";
+"Save as Preset" = "Als Voreinstellung speichern";
 
 /* */
 "Predictions" = "Prognosen";
@@ -1923,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimentell";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Glätten der Glukosewerte";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Frau";
 
+/* */
+"Man" = "Mann";
+
+/* */
+"Other" = "Sonstiges";
+
+/* */
+"Secret" = "Geheim-Schlüssel";
+
+/* */
+"Birth Date" = "Geburtsdatum";
+
+/* */
+"Share all of your Statistics" = "Alle meine Statistiken teilen";
+
+/* */
+"Just iAPS version number" = "Nur iAPS Versionsnummer";
+
+/* */
+"Share Bare Minimum" = "Nur das absolute Minimum teilen";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Alle Informationen, die Sie freigeben möchten, werden anonym hochgeladen. Um doppeltes Hochladen zu verhindern, werden die Daten mit einer eindeutigen, zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird.";
+
+/* */
+"Tap to display" = "Tippen, um anzuzeigen";
+
+/* */
+"Your identifier" = "Ihr Identifikator";
+
+/* */
+"Share your data anonymously" = "Daten anonym teilen";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */

@@ -438,7 +438,7 @@ Enact a temp Basal or a temp target */
 "Add Medtronic" = "Medtronic toevoegen";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Omnipod toevoegen";
+"Add Omnipod" = "Omnipod Eros toevoegen";
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
@@ -1923,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimenteel";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Vloeiende glucosewaarde";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Vrouw";
 
+/* */
+"Man" = "Man";
+
+/* */
+"Other" = "Anders";
+
+/* */
+"Secret" = "Geheim";
+
+/* */
+"Birth Date" = "Geboortedatum";
+
+/* */
+"Share all of your Statistics" = "Deel al je statistieken";
+
+/* */
+"Just iAPS version number" = "Alleen iAPS versienummer";
+
+/* */
+"Share Bare Minimum" = "Deel alleen het minimale";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Alle informatie die je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je apparaat is opgeslagen.";
+
+/* */
+"Tap to display" = "Tik om weer te geven";
+
+/* */
+"Your identifier" = "Jouw identificatie";
+
+/* */
+"Share your data anonymously" = "Deel je gegevens anoniem";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */

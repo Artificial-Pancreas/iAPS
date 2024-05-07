@@ -4,20 +4,20 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Lisää insuliinia ilman varsinaista bonuksen lisäystä";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Lisää %@ ilman bolusta";
 
-"Bolus" = "Bolus";
+"Bolus" = "Lisäannos";
 
 "Close" = "Sulje";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Jatka ilman lisäannosta";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Tallenna ateria ilman bolusta";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Tila";
@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nMäärä on isompi kuin sinun maksimi Bolus asetus\nOletko varma, että haluat lisätä ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Lisää bonus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Lisää bonus";
 
 /*  */
 "Insulin recommended" = "Suositeltu insuliini";
@@ -47,13 +47,13 @@
 "Done" = "Valmis";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Näytä etiketissä emojit";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Näytä IOB ja COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Vahvista Bolus Nopeammaksi";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -65,31 +65,31 @@
 "Agree and continue" = "Hyväksy ja jatka";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "jostakin";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "Etä Bolus ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "on toimitettu";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuutti sitten, trikkeröity etänä Nightscoutissa, huoltaja tai vanhempi. Haluatko silti antaa boluksen? \n\n Ennustettu lopullinen verensokeri, jos et anna bolusta, ja: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "Etä bolus on juuri toimitettu!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Annettu klo";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Ehdotettu klo";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Error at" = "Virhe klo";
 
 /* Bolus View Meal Summary Header */
-"Meal Summary" = "Meal Summary";
+"Meal Summary" = "Aterian yhteenveto";
 
 /* Bolus View Meal Edit Meal Button */
 "Edit Meal" = "Muokkaa ateriaa";
@@ -110,16 +110,16 @@
 "Full Bolus" = "Täysi bolus";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fraction";
+"Fraction" = "Jae";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fatty Meal Factor";
+"Fatty Meal Factor" = "Rasvaisen aterian kerroin";
 
 /* For the  Bolus View pop-up */
 "Result" = "Tulos";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Syöttämäsi määeä on rajoitettu maksimi Bolus asetuksen mukaan %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Jatka";
@@ -128,16 +128,16 @@
 "Home" = "Koti";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "silmukointi";
 
 /* min ago since last loop */
 "min ago" = "minuuttia sitten";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Ei ehdotuksia";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Vaihda pumppu";
 
 /* Add carbs screen */
 "Add Carbs" = "Lisää hiilihydraatit";
@@ -179,19 +179,19 @@
 "Delete" = "Poista";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Poista esiasetus \"%@\"";
 
 /* Duration of target temp or temp basal */
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Aktivoi väliaikainen tavoite";
 
 /* */
 "Target" = "Tavoite";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Perusinsuliinin ja herkkyyden suhde";
 
 /* */
 "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
@@ -1923,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimental";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Woman";
 
+/* */
+"Man" = "Man";
+
+/* */
+"Other" = "Other";
+
+/* */
+"Secret" = "Secret";
+
+/* */
+"Birth Date" = "Birth Date";
+
+/* */
+"Share all of your Statistics" = "Share all of your Statistics";
+
+/* */
+"Just iAPS version number" = "Just iAPS version number";
+
+/* */
+"Share Bare Minimum" = "Share Bare Minimum";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+
+/* */
+"Tap to display" = "Tap to display";
+
+/* */
+"Your identifier" = "Your identifier";
+
+/* */
+"Share your data anonymously" = "Share your data anonymously";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
