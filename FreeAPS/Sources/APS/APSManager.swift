@@ -967,8 +967,12 @@ final class BaseAPSManager: APSManager, Injectable {
     // Add to statistics.JSON for upload to NS.
     private func statistics() {
         let stats = CoreDataStorage().fetchStats()
+        let newVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
+
         // Only save and upload twice per day
-        guard (-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 12 else { return }
+        guard ((-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 8) || newVersion else {
+            return
+        }
 
         if settingsManager.settings.uploadStats {
             let units = settingsManager.settings.units
@@ -1208,7 +1212,6 @@ final class BaseAPSManager: APSManager, Injectable {
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
-            saveStatUploadCount()
         } else if settingsManager.settings.uploadVersion {
             let json = BareMinimum(
                 id: getIdentifier(),
@@ -1216,7 +1219,6 @@ final class BaseAPSManager: APSManager, Injectable {
                 Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch()
             )
             nightscout.uploadVersion(json: json)
-            saveStatUploadCount()
         }
     }
 
@@ -1262,14 +1264,6 @@ final class BaseAPSManager: APSManager, Injectable {
             nLS.duration = loopStatRecord.duration ?? 0.0
             nLS.interval = loopStatRecord.interval ?? 0.0
 
-            try? self.coredataContext.save()
-        }
-    }
-
-    private func saveStatUploadCount() {
-        coredataContext.performAndWait { [self] in
-            let saveStatsCoreData = StatsData(context: self.coredataContext)
-            saveStatsCoreData.lastrun = Date()
             try? self.coredataContext.save()
         }
     }
