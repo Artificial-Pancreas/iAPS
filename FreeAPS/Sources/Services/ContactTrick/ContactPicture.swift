@@ -280,7 +280,7 @@ struct ContactPicture: View {
             )
             return
         }
-        if let text = switch value {
+        let text: String? = switch value {
         case .glucose: state.glucose
         case .eventualBG: state.eventualBG
         case .delta: state.delta
@@ -289,7 +289,9 @@ struct ContactPicture: View {
         case .cob: state.cobText
         case .iob: state.iobText
         default: nil
-        } {
+        }
+
+        if let text = text {
             drawText(
                 text: text,
                 rect: rect,
