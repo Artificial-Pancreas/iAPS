@@ -9,7 +9,7 @@ struct ContactTrickEntry: JSON, Equatable, Hashable {
     var darkMode: Bool = true
     var ringWidth: Int = 7
     var ringGap: Int = 2
-    var fontSize: Int = 200
+    var fontSize: Int = 300
     var fontName: String = "Default Font"
     var fontWeight: FontWeight = .medium
     var fontTracking: FontTracking = .normal

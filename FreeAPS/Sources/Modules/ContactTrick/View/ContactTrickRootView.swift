@@ -185,7 +185,7 @@ extension ContactTrick {
         @Binding var entry: ContactTrickEntry
         @State private var availableFonts: [String]? = nil
 
-        private let fontSizes: [Int] = [70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230]
+        private let fontSizes: [Int] = [100, 120, 130, 140, 160, 180, 200, 225, 250, 275, 300, 350, 400]
         private let ringWidths: [Int] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
         private let ringGaps: [Int] = [0, 1, 2, 3, 4, 5]
 

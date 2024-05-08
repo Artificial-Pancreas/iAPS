@@ -19,8 +19,8 @@ struct ContactPicture: View {
         contact: ContactTrickEntry,
         state: ContactTrickState
     ) -> UIImage {
-        let width = 512.0
-        let height = 512.0
+        let width = 1024.0
+        let height = 1024.0
         var rect = CGRect(x: 0, y: 0, width: width, height: height)
         let textColor: Color = contact.darkMode ?
             Color(red: 250 / 256, green: 250 / 256, blue: 250 / 256) :
@@ -31,6 +31,10 @@ struct ContactPicture: View {
         let fontWeight = contact.fontWeight.toUI()
 
         UIGraphicsBeginImageContext(rect.size)
+        if let context = UIGraphicsGetCurrentContext() {
+            context.setShouldAntialias(true)
+            context.setAllowsAntialiasing(true)
+        }
 
         let ringWidth = Double(contact.ringWidth) / 100.0
         let ringGap = Double(contact.ringGap) / 100.0
@@ -284,6 +288,11 @@ struct ContactPicture: View {
         default: nil
         }
 
+        let textColor: Color = switch value {
+        case .cob: .loopYellow
+        default: color
+        }
+
         if let text = text {
             drawText(
                 text: text,
@@ -293,7 +302,7 @@ struct ContactPicture: View {
                 fontSize: fontSize,
                 fontWeight: fontWeight,
                 fontTracking: fontTracking,
-                color: color
+                color: textColor
             )
         }
     }
