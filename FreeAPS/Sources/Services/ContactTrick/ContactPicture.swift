@@ -390,7 +390,7 @@ struct ContactPicture: View {
                 drawProgressBar(
                     rect: rect,
                     progress: Double(cob) / Double(state.maxCOB),
-                    colors: [contact.darkMode ? .green : .green, contact.darkMode ? .pink : .red],
+                    colors: [.loopYellow, .red],
                     strokeWidth: strokeWidth
                 )
             }
@@ -401,7 +401,7 @@ struct ContactPicture: View {
                     progress1: state.iob.map { Double($0) / Double(state.maxIOB) },
                     progress2: state.cob.map { Double($0) / Double(state.maxCOB) },
                     colors1: [contact.darkMode ? .blue : .blue, contact.darkMode ? .pink : .red],
-                    colors2: [contact.darkMode ? .green : .green, contact.darkMode ? .pink : .red],
+                    colors2: [.loopYellow, .red],
                     strokeWidth: strokeWidth
                 )
             }
