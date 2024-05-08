@@ -321,7 +321,7 @@
 "Set Temporary Basal Rate" = "Temporäre Basalrate setzen";
 
 /* Description text on manual temp basal action sheet */
-"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled.";
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Ihre Insulinabgabe wird nicht automatisch angepasst, bis die temporäre Basalrate beendet oder abgebrochen wird.";
 
 /* Section header for activity section */
 "Activity" = "Aktivität";
