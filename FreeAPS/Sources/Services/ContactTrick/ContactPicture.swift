@@ -322,14 +322,14 @@ struct ContactPicture: View {
 
         func makeAttributes(_ size: Int) -> [NSAttributedString.Key: Any] {
             let font = if let fontName {
-                UIFont(name: fontName, size: CGFloat(size)) ?? UIFont.systemFont(ofSize: CGFloat(size))
+                UIFont(name: fontName, size: CGFloat(size)) ?? UIFont.systemFont(ofSize: CGFloat(size), weight: fontWeight)
             } else {
                 UIFont.systemFont(ofSize: CGFloat(size), weight: fontWeight)
             }
             return [
                 .font: font,
                 .foregroundColor: UIColor(color),
-                .tracking: fontTracking.value
+                .tracking: fontTracking.value * Double(fontSize)
             ]
         }
 
