@@ -15,15 +15,17 @@ extension ContactTrick {
             Form {
                 switch authorization {
                 case .authorized:
+                    if state.changed {
+                        Section {
+                            Text(
+                                "Don't forget to save your changes."
+                            )
+                            .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                    }
                     Section(header: Text("Contacts")) {
                         list
                         addButton
-                    }
-                    Section {
-                        Text(
-                            "Don't forget to save your changes."
-                        )
-                        .frame(maxWidth: .infinity, alignment: .center)
                     }
                     Section {
                         HStack {
@@ -34,7 +36,7 @@ extension ContactTrick {
                             label: {
                                 Text(state.syncInProgress ? "Saving..." : "Save")
                             }
-                            .disabled(state.syncInProgress)
+                            .disabled(state.syncInProgress || !state.changed)
                         }
                     }
 
@@ -90,7 +92,10 @@ extension ContactTrick {
         }
 
         private func contactSettings(for index: Int) -> some View {
-            EntryView(entry: $state.items[index].entry)
+            EntryView(entry: Binding(
+                get: { state.items[index].entry },
+                set: { newValue in state.update(index, newValue) }
+            ))
         }
 
         static let previewState = ContactTrickState(
@@ -136,7 +141,7 @@ extension ContactTrick {
         }
 
         private func onDelete(offsets: IndexSet) {
-            state.items.remove(atOffsets: offsets)
+            state.remove(atOffsets: offsets)
         }
     }
 

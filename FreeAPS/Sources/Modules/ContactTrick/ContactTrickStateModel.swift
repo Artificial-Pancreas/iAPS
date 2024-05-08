@@ -78,8 +78,9 @@ enum ContactTrickLargeRing: String, JSON, CaseIterable, Identifiable, Codable {
 
 extension ContactTrick {
     final class StateModel: BaseStateModel<Provider> {
-        @Published var syncInProgress = false
-        @Published var items: [Item] = []
+        @Published private(set) var syncInProgress = false
+        @Published private(set) var items: [Item] = []
+        @Published private(set) var changed: Bool = false
 
         override func subscribe() {
             items = provider.contacts.enumerated().map { index, contact in
@@ -88,6 +89,7 @@ extension ContactTrick {
                     entry: contact
                 )
             }
+            changed = false
         }
 
         func add() {
@@ -97,6 +99,17 @@ extension ContactTrick {
             )
 
             items.append(newItem)
+            changed = true
+        }
+
+        func update(_ atIndex: Int, _ value: ContactTrickEntry) {
+            items[atIndex].entry = value
+            changed = true
+        }
+
+        func remove(atOffsets: IndexSet) {
+            items.remove(atOffsets: atOffsets)
+            changed = true
         }
 
         func save() {
@@ -108,6 +121,7 @@ extension ContactTrick {
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
                     self.syncInProgress = false
+                    self.changed = false
                 } receiveValue: { contacts in
                     contacts.enumerated().forEach { index, item in
                         self.items[index].entry = item
