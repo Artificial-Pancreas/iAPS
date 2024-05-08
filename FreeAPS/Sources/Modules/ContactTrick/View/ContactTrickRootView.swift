@@ -15,19 +15,16 @@ extension ContactTrick {
             Form {
                 switch authorization {
                 case .authorized:
-                    if state.changed {
-                        Section {
-                            Text(
-                                "Don't forget to save your changes."
-                            )
-                            .frame(maxWidth: .infinity, alignment: .center)
-                        }
-                    }
                     Section(header: Text("Contacts")) {
                         list
                         addButton
                     }
-                    Section {
+                    Section(
+                        header: state.changed ?
+                            Text("Don't forget to save your changes.")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundStyle(.primary) : nil
+                    ) {
                         HStack {
                             if state.syncInProgress {
                                 ProgressView().padding(.trailing, 10)
@@ -37,6 +34,7 @@ extension ContactTrick {
                                 Text(state.syncInProgress ? "Saving..." : "Save")
                             }
                             .disabled(state.syncInProgress || !state.changed)
+                            .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
 

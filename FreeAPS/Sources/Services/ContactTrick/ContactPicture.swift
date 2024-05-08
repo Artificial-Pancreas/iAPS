@@ -70,7 +70,7 @@ struct ContactPicture: View {
             let centerY = rect.minY + rect.height / 2
             let radius = min(rect.width, rect.height) / 2
 
-            let primaryHeight = radius * 0.8
+            var primaryHeight = radius * 0.8
             let topHeight = radius * 0.5
             var bottomHeight = radius * 0.5
 
@@ -84,36 +84,43 @@ struct ContactPicture: View {
             }
 
             let topY = primaryY - topHeight
-            let bottomY = primaryY + primaryHeight
+            var bottomY = primaryY + primaryHeight
 
-            let primaryWidth = 2 * sqrt(radius * radius - (primaryHeight / 2) * (primaryHeight / 2))
-
+            let primaryWidth = 2 * sqrt(radius * radius - (primaryHeight * 0.5) * (primaryHeight * 0.5))
             let topWidth = 2 *
-                sqrt(radius * radius - (topHeight + primaryHeight / 2) * (topHeight + primaryHeight / 2))
+                sqrt(radius * radius - (topHeight + primaryHeight * 0.5) * (topHeight + primaryHeight * 0.5))
             var bottomWidth = 2 *
-                sqrt(radius * radius - (bottomHeight + primaryHeight / 2) * (bottomHeight + primaryHeight / 2))
+                sqrt(radius * radius - (bottomHeight + primaryHeight * 0.5) * (bottomHeight + primaryHeight * 0.5))
 
-            if contact.bottom != .none, contact.top == .none,
-               contact.ring1 == .iob || contact.ring1 == .cob || contact.ring1 == .iobcob
-            {
-                bottomWidth = bottomWidth + width * ringWidth * 2
-                bottomHeight = bottomHeight + height * ringWidth * 2
+            if contact.bottom != .none, contact.top == .none {
+                // move things around a little bit to give more space to the bottom area
+                if contact.ring1 == .iob || contact.ring1 == .cob || contact.ring1 == .iobcob ||
+                    (contact.bottom == .trend && contact.ring1 == .loop)
+                {
+                    bottomHeight = bottomHeight + height * ringWidth * 2
+                    bottomWidth = bottomWidth + width * ringWidth * 2
+                } else if contact.ring1 == .loop {
+                    primaryHeight = primaryHeight - height * ringWidth
+                    bottomY = primaryY + primaryHeight
+                    bottomHeight = bottomHeight + height * ringWidth * 2
+                    bottomWidth = bottomWidth + width * ringWidth * 2
+                }
             }
 
             let primaryRect = (showTop || showBottom) ? CGRect(
-                x: centerX - primaryWidth / 2,
+                x: centerX - primaryWidth * 0.5,
                 y: primaryY,
                 width: primaryWidth,
                 height: primaryHeight
             ) : rect
             let topRect = CGRect(
-                x: centerX - topWidth / 2,
+                x: centerX - topWidth * 0.5,
                 y: topY,
                 width: topWidth,
                 height: topHeight
             )
             let bottomRect = CGRect(
-                x: centerX - bottomWidth / 2,
+                x: centerX - bottomWidth * 0.5,
                 y: bottomY,
                 width: bottomWidth,
                 height: bottomHeight
