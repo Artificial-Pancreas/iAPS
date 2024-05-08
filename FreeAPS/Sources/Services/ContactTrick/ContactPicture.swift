@@ -129,7 +129,7 @@ struct ContactPicture: View {
                 width: bottomWidth,
                 height: bottomHeight
             )
-            let secondaryFontSize = Int(Double(contact.fontSize) * 0.90)
+            let secondaryFontSize = contact.secondaryFontSize
 
             displayPiece(
                 value: contact.primary,
@@ -195,7 +195,8 @@ struct ContactPicture: View {
                 width: rectangleWidth,
                 height: rectangleHeight
             )
-            let splitFontSize = Int(Double(contact.fontSize) * 0.80)
+            let topFontSize = contact.fontSize
+            let bottomFontSize = contact.secondaryFontSize
 
             displayPiece(
                 value: contact.top,
@@ -204,7 +205,7 @@ struct ContactPicture: View {
                 rect: topRect,
                 fitHeigh: true,
                 fontName: contact.fontName,
-                fontSize: splitFontSize,
+                fontSize: topFontSize,
                 fontWeight: fontWeight,
                 fontTracking: contact.fontTracking,
                 color: textColor
@@ -216,7 +217,7 @@ struct ContactPicture: View {
                 rect: bottomRect,
                 fitHeigh: true,
                 fontName: contact.fontName,
-                fontSize: splitFontSize,
+                fontSize: bottomFontSize,
                 fontWeight: fontWeight,
                 fontTracking: contact.fontTracking,
                 color: textColor

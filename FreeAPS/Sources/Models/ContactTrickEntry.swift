@@ -10,6 +10,7 @@ struct ContactTrickEntry: JSON, Equatable, Hashable {
     var ringWidth: Int = 7
     var ringGap: Int = 2
     var fontSize: Int = 300
+    var secondaryFontSize: Int = 250
     var fontName: String = "Default Font"
     var fontWeight: FontWeight = .medium
     var fontTracking: FontTracking = .normal
@@ -35,6 +36,7 @@ extension ContactTrickEntry {
         case ringWidth
         case ringGap
         case fontSize
+        case secondaryFontSize
         case fontName
         case fontWeight
         case fontTracking
@@ -51,7 +53,8 @@ extension ContactTrickEntry {
         let darkMode = try container.decodeIfPresent(Bool.self, forKey: .darkMode) ?? true
         let ringWidth = try container.decodeIfPresent(Int.self, forKey: .ringWidth) ?? 7
         let ringGap = try container.decodeIfPresent(Int.self, forKey: .ringGap) ?? 2
-        let fontSize = try container.decodeIfPresent(Int.self, forKey: .fontSize) ?? 100
+        let fontSize = try container.decodeIfPresent(Int.self, forKey: .fontSize) ?? 300
+        let secondaryFontSize = try container.decodeIfPresent(Int.self, forKey: .secondaryFontSize) ?? 250
         let fontName = try container.decodeIfPresent(String.self, forKey: .fontName) ?? "Default Font"
         let fontWeight = try container.decodeIfPresent(FontWeight.self, forKey: .fontWeight) ?? .regular
         let fontTracking = try container.decodeIfPresent(FontTracking.self, forKey: .fontTracking) ?? .normal
@@ -67,6 +70,7 @@ extension ContactTrickEntry {
             ringWidth: ringWidth,
             ringGap: ringGap,
             fontSize: fontSize,
+            secondaryFontSize: secondaryFontSize,
             fontName: fontName,
             fontWeight: fontWeight,
             fontTracking: fontTracking
