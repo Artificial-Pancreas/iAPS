@@ -16,23 +16,23 @@ enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
     var displayName: String {
         switch self {
         case .none:
-            return NSLocalizedString("None", comment: "")
+            return NSLocalizedString("NoneContactValue", comment: "")
         case .glucose:
-            return NSLocalizedString("Glucose", comment: "")
+            return NSLocalizedString("GlucoseContactValue", comment: "")
         case .eventualBG:
-            return NSLocalizedString("Eventual BG", comment: "")
+            return NSLocalizedString("EventualBGContactValue", comment: "")
         case .delta:
-            return NSLocalizedString("Delta", comment: "")
+            return NSLocalizedString("DeltaContactValue", comment: "")
         case .trend:
-            return NSLocalizedString("Trend", comment: "")
+            return NSLocalizedString("TrendContactValue", comment: "")
         case .lastLoopDate:
-            return NSLocalizedString("Last loop date", comment: "")
+            return NSLocalizedString("LastLoopTimeContactValue", comment: "")
         case .cob:
-            return NSLocalizedString("COB", comment: "")
+            return NSLocalizedString("COBContactValue", comment: "")
         case .iob:
-            return NSLocalizedString("IOB", comment: "")
+            return NSLocalizedString("IOBContactValue", comment: "")
         case .ring:
-            return NSLocalizedString("Loop status", comment: "")
+            return NSLocalizedString("LoopStatusContactValue", comment: "")
         }
     }
 }
@@ -63,49 +63,56 @@ enum ContactTrickLargeRing: String, JSON, CaseIterable, Identifiable, Codable {
     var displayName: String {
         switch self {
         case .none:
-            return NSLocalizedString("Don't show", comment: "")
+            return NSLocalizedString("DontShowRing", comment: "")
         case .loop:
-            return NSLocalizedString("Loop status", comment: "")
+            return NSLocalizedString("LoopStatusRing", comment: "")
         case .iob:
-            return NSLocalizedString("IOB", comment: "")
+            return NSLocalizedString("IOBRing", comment: "")
         case .cob:
-            return NSLocalizedString("COB", comment: "")
+            return NSLocalizedString("COBRing", comment: "")
         case .iobcob:
-            return NSLocalizedString("IOB+COB", comment: "")
+            return NSLocalizedString("IOB+COBRing", comment: "")
         }
     }
 }
 
 extension ContactTrick {
     final class StateModel: BaseStateModel<Provider> {
-        @Published var syncInProgress = false
-        @Published var items: [Item] = []
+        @Published private(set) var syncInProgress = false
+        @Published private(set) var items: [Item] = []
+        @Published private(set) var changed: Bool = false
+
+        var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
+            units = settingsManager.settings.units
             items = provider.contacts.enumerated().map { index, contact in
                 Item(
                     index: index,
                     entry: contact
                 )
             }
+            changed = false
         }
 
         func add() {
             let newItem = Item(
                 index: items.count,
-                entry: ContactTrickEntry(
-                    enabled: false,
-                    layout: .single,
-                    contactId: nil,
-                    displayName: nil,
-                    darkMode: true,
-                    fontSize: 100,
-                    fontName: "Default Font",
-                    fontWeight: .medium
-                )
+                entry: ContactTrickEntry()
             )
 
             items.append(newItem)
+            changed = true
+        }
+
+        func update(_ atIndex: Int, _ value: ContactTrickEntry) {
+            items[atIndex].entry = value
+            changed = true
+        }
+
+        func remove(atOffsets: IndexSet) {
+            items.remove(atOffsets: atOffsets)
+            changed = true
         }
 
         func save() {
@@ -116,9 +123,13 @@ extension ContactTrick {
             provider.saveContacts(contacts)
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
-                    print("saved!")
                     self.syncInProgress = false
-                } receiveValue: {}
+                    self.changed = false
+                } receiveValue: { contacts in
+                    contacts.enumerated().forEach { index, item in
+                        self.items[index].entry = item
+                    }
+                }
                 .store(in: &lifetime)
         }
     }
