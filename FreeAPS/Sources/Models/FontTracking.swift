@@ -11,13 +11,13 @@ enum FontTracking: String, JSON, Identifiable, CaseIterable, Codable {
     var displayName: String {
         switch self {
         case .tighter:
-            NSLocalizedString("Tighter", comment: "")
+            NSLocalizedString("TighterFontTracking", comment: "")
         case .tight:
-            NSLocalizedString("Tight", comment: "")
+            NSLocalizedString("TightFontTracking", comment: "")
         case .normal:
-            NSLocalizedString("Normal", comment: "")
+            NSLocalizedString("NormalFontTracking", comment: "")
         case .wide:
-            NSLocalizedString("Wide", comment: "")
+            NSLocalizedString("WideFontTracking", comment: "")
         }
     }
 

@@ -156,7 +156,7 @@ extension ContactTrick {
         var body: some View {
             HStack {
                 Text(
-                    "Contact: iAPS \(index + 1)"
+                    NSLocalizedString("Contact", comment: "") + ": " + "iAPS \(index + 1)"
                 )
                 .font(.body)
                 .minimumScaleFactor(0.5)
