@@ -11,13 +11,12 @@ extension ContactTrick {
                 ?? []
         }
 
-        func saveContacts(_ contacts: [ContactTrickEntry]) -> AnyPublisher<Void, Error> {
+        func saveContacts(_ contacts: [ContactTrickEntry]) -> AnyPublisher<[ContactTrickEntry], Error> {
             Future { promise in
-                self.storage.save(contacts, as: OpenAPS.Settings.contactTrick)
                 self.contactTrickManager.updateContacts(contacts: contacts) { result in
                     switch result {
-                    case .success:
-                        promise(.success(()))
+                    case let .success(updated):
+                        promise(.success(updated))
                     case let .failure(error):
                         promise(.failure(error))
                     }
