@@ -46,6 +46,20 @@ final class CoreDataStorage {
         return uniqueEvents
     }
 
+    func saveTDD(_ insulin: (bolus: Decimal, basal: Decimal, hours: Double)) {
+        coredataContext.perform {
+            let saveToTDD = TDD(context: self.coredataContext)
+            saveToTDD.timestamp = Date.now
+            saveToTDD.tdd = (insulin.basal + insulin.bolus) as NSDecimalNumber?
+            let saveToInsulin = InsulinDistribution(context: self.coredataContext)
+            saveToInsulin.bolus = insulin.bolus as NSDecimalNumber?
+            // saveToInsulin.scheduledBasal = (suggestion.insulin?.scheduled_basal ?? 0) as NSDecimalNumber?
+            saveToInsulin.tempBasal = insulin.basal as NSDecimalNumber?
+            saveToInsulin.date = Date()
+            try? self.coredataContext.save()
+        }
+    }
+
     func fetchTempTargetsSlider() -> [TempTargetsSlider] {
         var sliderArray = [TempTargetsSlider]()
         coredataContext.performAndWait {
@@ -103,5 +117,25 @@ final class CoreDataStorage {
             try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
         }
         return insulinDistribution
+    }
+
+    func fetchReason() -> Reasons? {
+        var suggestion = [Reasons]()
+        coredataContext.performAndWait {
+            let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestReasons.sortDescriptors = [sort]
+            try? suggestion = coredataContext.fetch(requestReasons)
+        }
+        return suggestion.first
+    }
+
+    func saveStatUploadCount() {
+        coredataContext.performAndWait { [self] in
+            let saveStatsCoreData = StatsData(context: self.coredataContext)
+            saveStatsCoreData.lastrun = Date()
+            try? self.coredataContext.save()
+        }
+        UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
     }
 }

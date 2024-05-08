@@ -157,12 +157,11 @@
 		CEF2639B29D88516009921F1 /* OmniKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C124016C29C7D87A00B32844 /* OmniKit.framework */; };
 		D845A1352AF89DEC00EA0853 /* SilencePodPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1342AF89DEC00EA0853 /* SilencePodPreference.swift */; };
 		D845A1462AF8A4DA00EA0853 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1452AF8A4DA00EA0853 /* ActivityView.swift */; };
-		D845A1482AF8A4E400EA0853 /* FirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1472AF8A4E400EA0853 /* FirstAppear.swift */; };
 		D845A14A2AF8A4EF00EA0853 /* PlayTestBeepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1492AF8A4EF00EA0853 /* PlayTestBeepsView.swift */; };
 		D845A14E2AF8A4FB00EA0853 /* ReadPodStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A14B2AF8A4FB00EA0853 /* ReadPodStatusView.swift */; };
 		D845A1502AF8A4FB00EA0853 /* PumpManagerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A14D2AF8A4FB00EA0853 /* PumpManagerDetailsView.swift */; };
 		D845A1522AF8A51000EA0853 /* SilencePodSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845A1512AF8A51000EA0853 /* SilencePodSelectionView.swift */; };
-		D85AEAC82B1403C000081044 /* PodDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEAC72B1403C000081044 /* PodDiagnostics.swift */; };
+		D85AEAC82B1403C000081044 /* PodDiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEAC72B1403C000081044 /* PodDiagnosticsView.swift */; };
 		D85AEACA2B1403CB00081044 /* ReadPodInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85AEAC92B1403CB00081044 /* ReadPodInfoView.swift */; };
 		D8DA5CCB2B49EDD400C54E6C /* SlideButton in Frameworks */ = {isa = PBXBuildFile; productRef = D8DA5CCA2B49EDD400C54E6C /* SlideButton */; };
 /* End PBXBuildFile section */
@@ -412,12 +411,11 @@
 		CEC751E229D88392006E9D24 /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D845A1342AF89DEC00EA0853 /* SilencePodPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SilencePodPreference.swift; sourceTree = "<group>"; };
 		D845A1452AF8A4DA00EA0853 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
-		D845A1472AF8A4E400EA0853 /* FirstAppear.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstAppear.swift; sourceTree = "<group>"; };
 		D845A1492AF8A4EF00EA0853 /* PlayTestBeepsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayTestBeepsView.swift; sourceTree = "<group>"; };
 		D845A14B2AF8A4FB00EA0853 /* ReadPodStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadPodStatusView.swift; sourceTree = "<group>"; };
 		D845A14D2AF8A4FB00EA0853 /* PumpManagerDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PumpManagerDetailsView.swift; sourceTree = "<group>"; };
 		D845A1512AF8A51000EA0853 /* SilencePodSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SilencePodSelectionView.swift; sourceTree = "<group>"; };
-		D85AEAC72B1403C000081044 /* PodDiagnostics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodDiagnostics.swift; sourceTree = "<group>"; };
+		D85AEAC72B1403C000081044 /* PodDiagnosticsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodDiagnosticsView.swift; sourceTree = "<group>"; };
 		D85AEAC92B1403CB00081044 /* ReadPodInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadPodInfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -712,7 +710,6 @@
 				C124023129C7DA9700B32844 /* DesignElements */,
 				C124023A29C7DA9700B32844 /* ExpirationReminderPickerView.swift */,
 				C124024529C7DA9700B32844 /* ExpirationReminderSetupView.swift */,
-				D845A1472AF8A4E400EA0853 /* FirstAppear.swift */,
 				C124023629C7DA9700B32844 /* InsertCannulaView.swift */,
 				C124023C29C7DA9700B32844 /* InsulinTypeConfirmation.swift */,
 				C124023529C7DA9700B32844 /* LowReservoirReminderEditView.swift */,
@@ -724,7 +721,7 @@
 				C124024329C7DA9700B32844 /* PairPodView.swift */,
 				D845A1492AF8A4EF00EA0853 /* PlayTestBeepsView.swift */,
 				C124024829C7DA9700B32844 /* PodDetailsView.swift */,
-				D85AEAC72B1403C000081044 /* PodDiagnostics.swift */,
+				D85AEAC72B1403C000081044 /* PodDiagnosticsView.swift */,
 				C124024129C7DA9700B32844 /* PodSetupView.swift */,
 				D845A14D2AF8A4FB00EA0853 /* PumpManagerDetailsView.swift */,
 				D85AEAC92B1403CB00081044 /* ReadPodInfoView.swift */,
@@ -1157,7 +1154,6 @@
 				C12EDA0E29C7DEFD00435701 /* NumberFormatter.swift in Sources */,
 				D845A1522AF8A51000EA0853 /* SilencePodSelectionView.swift in Sources */,
 				C12EDA1229C7DF4B00435701 /* IdentifiableClass.swift in Sources */,
-				D845A1482AF8A4E400EA0853 /* FirstAppear.swift in Sources */,
 				C124027529C7DA9700B32844 /* OmnipodSettingsViewModel.swift in Sources */,
 				C124029729C7DA9700B32844 /* OmnipodUICoordinator.swift in Sources */,
 				C124028429C7DA9700B32844 /* ManualTempBasalEntryView.swift in Sources */,
@@ -1170,7 +1166,7 @@
 				D845A14A2AF8A4EF00EA0853 /* PlayTestBeepsView.swift in Sources */,
 				C124026F29C7DA9700B32844 /* PairPodViewModel.swift in Sources */,
 				C124026E29C7DA9700B32844 /* FrameworkLocalText.swift in Sources */,
-				D85AEAC82B1403C000081044 /* PodDiagnostics.swift in Sources */,
+				D85AEAC82B1403C000081044 /* PodDiagnosticsView.swift in Sources */,
 				C124028F29C7DA9700B32844 /* PodDetailsView.swift in Sources */,
 				C124028629C7DA9700B32844 /* NotificationSettingsView.swift in Sources */,
 				C124027D29C7DA9700B32844 /* InsertCannulaView.swift in Sources */,

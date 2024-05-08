@@ -32,5 +32,5 @@
 "${applicationName} Bolus" = "${applicationName} Bolus";
 
 /* iAPS Bolus shortcut description */
-"${applicationName} Tries to Enact a bolus" = "${applicationName} Tries to Enact a bolus";
+"${applicationName} Enacts a bolus" = "${applicationName} Enacts a bolus";
 

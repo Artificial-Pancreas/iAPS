@@ -1004,6 +1004,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Consenti i comandi rapidi iOS per il Bolo";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "scorciatoie iOS";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Se abiliti questa impostazione potrai utilizzare i comandi rapidi iOS e le sue automazioni per attivare un bolo in iAPS. \n\nFai attenzione che i comandi rapidi iOS funzionano anche con Siri! \n\nSe devi utilizzare i comandi rapidi iOS per il Bolo, assicurati di disattivare l'ascolto dell'impostazione 'Ehi Siri' nelle impostazioni Siri dell'iPhone, per evitare qualsiasi attivazione involontaria di un bolo con Siri. \nSe non disabiliti 'Ehi Siri', il comando rapido iOS del bolo iAPS può essere attivato con la frase 'Ehi Siri, iAPS Bolus'. \n\nQuando viene attivato con Siri ti verrà chiesta una quantità e una conferma prima che il comando del bolo possa essere inviato a iAPS.";
 
@@ -1229,6 +1232,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Server online o interno";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Non è possibile attuare un nuovo ciclo loop, perché un bolo è in corso. Attendere il ciclo loop successivo";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Errore: la pompa sta già lavorando.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1532,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Mostra Proteine & Grassi";
 
-
 /* Time of new meal entry */
 "Now" = "Adesso";
-
 
 /* Display future data table entries */
 "Show Future" = "Visualizza Futuro";
@@ -1916,9 +1923,45 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Sperimentale";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Valori Glicemici Levigati";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Donna";
 
+/* */
+"Man" = "Uomo";
+
+/* */
+"Other" = "Altro";
+
+/* */
+"Secret" = "Segreto";
+
+/* */
+"Birth Date" = "Data di nascita";
+
+/* */
+"Share all of your Statistics" = "Condividi tutte le tue statistiche";
+
+/* */
+"Just iAPS version number" = "Solo il numero di versione iAPS";
+
+/* */
+"Share Bare Minimum" = "Condividi Minimo Nullo";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Ogni bit di informazioni che si sceglie di condividere viene caricato in modo anonimo. Per evitare duplicati di caricamenti, i dati sono identificati con una stringa casuale univoca salvata sul telefono.";
+
+/* */
+"Tap to display" = "Tocca per visualizzare";
+
+/* */
+"Your identifier" = "Il tuo identificativo";
+
+/* */
+"Share your data anonymously" = "Condividi i tuoi dati in modo anonimo";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */

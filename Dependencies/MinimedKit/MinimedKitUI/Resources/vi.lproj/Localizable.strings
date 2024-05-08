@@ -90,7 +90,7 @@
 "Fetching pump model…" = "Đang lấy model bơm…";
 
 /* The title of the cell showing the pump firmware version */
-"Firmware Version" = "Chương trình cơ sở";
+"Firmware Version" = "Phiên bản phần mềm";
 
 /* Text shown in insulin delivery space when insulin suspended */
 "Insulin\nSuspended" = "Insulin\n Đã tạm ngưng";
