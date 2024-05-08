@@ -147,7 +147,7 @@
 "Checking..." = "Đang kiểm tra...";
 
 /* Title for uncertainty recovered screen */
-"Comms Recovered" = "Comms Recovered";
+"Comms Recovered" = "Đã khôi phục được";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Lời nhắc độ tin cậy";
@@ -535,10 +535,10 @@
 "Primed" = "Đã được mồi";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Đang priming. Xin chờ.";
+"Priming. Please wait." = "Đang mồi. Xin chờ.";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "Đang mồi...";
 
 /* The text of the loading label when priming */
 "Priming…" = "Đang mồi…";

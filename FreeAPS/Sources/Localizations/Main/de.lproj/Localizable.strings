@@ -1020,16 +1020,16 @@ Enact a temp Basal or a temp target */
 "Activate an Override Preset" = "Activate an Override Preset";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Erlaube die Aktivierung einer Voreinstellung zu überschreiben.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Welche Voreinstellung möchten Sie aktivieren?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Sind Sie sicher, dass Sie die Überschreibungsvoreinstellung %@ aktivieren wollen?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Die Profilüberschreibung";
 
 /* Override Shortcut */
 "is now activated" = "ist jetzt aktiv";
@@ -1038,7 +1038,7 @@ Enact a temp Basal or a temp target */
 "Cancel active override" = "Profilüberschreibung abbrechen";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Überschreibung abgebrochen";
 
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Activates an %@ Override Preset";
@@ -1455,7 +1455,7 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Als Profil speichern";
 
 /* */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Speichern als Voreinstellung";
 
 /* Alert */
 "Cancel Profile Override" = "Profilüberschreibung abbrechen?";
@@ -2281,7 +2281,7 @@ Enact a temp Basal or a temp target */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Der neue alternative Bolusrechner ist ein anderer Ansatz als der Standard-Bolusrechner in iAPS. Wenn die Umschaltfunktion aktiviert ist, wird dieser Bolusrechner und nicht der ursprüngliche iAPS-Rechner verwendet. Am Ende der Berechnung wird ein benutzerdefinierter Faktor angewandt, wie es bei der Verwendung von smbs der Fall sein sollte (Standardwert 0,8).\n\nSie können in Ihrem Bolusrechner auch die Option hinzufügen, am Ende der Berechnung einen weiteren (!) benutzerdefinierten Faktor anzuwenden, der für fetthaltige Mahlzeiten, z. B. Pizza, nützlich sein könnte (Standardwert 0,7).";
 
 /* Settings Section */
-"Extra Features" = "Extra Features";
+"Extra Features" = "Zusätzliche Funktionen";
 
 /* UI/UX option */
 "Display Predictions" = "Prognosen anzeigen";
