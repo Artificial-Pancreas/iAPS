@@ -18,6 +18,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadGlucose()
     func uploadManualGlucose()
     func uploadStatistics(dailystat: Statistics)
+    func uploadVersion(json: BareMinimum)
     func uploadPreferences(_ preferences: Preferences)
     func uploadProfileAndSettings(_: Bool)
     func uploadOverride(_ profile: String, _ duration: Double, _ date: Date)
@@ -399,10 +400,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func uploadStatistics(dailystat: Statistics) {
         let stats = NightscoutStatistics(
-            dailystats: dailystat
+            dailystats: dailystat, justVersion: nil
         )
 
-        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+        guard let nightscout = nightscoutAPI else {
             return
         }
 
@@ -412,8 +413,33 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Statistics uploaded")
+                        CoreDataStorage().saveStatUploadCount()
                     case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
+                        debug(.nightscout, "Statistics upload failed" + error.localizedDescription)
+                    }
+                } receiveValue: {}
+                .store(in: &self.lifetime)
+        }
+    }
+
+    func uploadVersion(json: BareMinimum) {
+        let stats = NightscoutStatistics(
+            dailystats: nil, justVersion: json
+        )
+
+        guard let nightscout = nightscoutAPI else {
+            return
+        }
+
+        processQueue.async {
+            nightscout.uploadStats(stats)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Version uploaded")
+                        CoreDataStorage().saveStatUploadCount()
+                    case let .failure(error):
+                        debug(.nightscout, "Version upload failed" + error.localizedDescription)
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)

@@ -75,7 +75,13 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
                 Math.max(35, Math.min(preferences.insulinPeakTime, 100));
             } else { preferences.insulinPeakTime = 55; }
         }
+        // Migrate missing conversion from original freeaps
+        if (preferences.resistanceLowersTarget) {
+            preferences.resistance_lowers_target = true;
+        }
     }
+    
+    var tdd_factor = { };
 
     var inputs = { };
     //add all preferences to the inputs
@@ -84,7 +90,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
         inputs[pref] = preferences[pref];
       }
     }
-
+    
     inputs.max_iob = inputs.max_iob || 0;
     //set these after to make sure nothing happens if they are also set in preferences
     inputs.settings = pumpsettings_data;
@@ -95,7 +101,8 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.temptargets = temptargets_data;
     inputs.model = model_data;
     inputs.autotune = autotune_data;
-
+    inputs.tddFactor = tdd_factor;
+    
     if (autotune_data) {
         if (autotune_data.basalprofile) { inputs.basals = autotune_data.basalprofile; }
         if (!freeaps.onlyAutotuneBasals) {
