@@ -172,6 +172,7 @@ extension ContactTrick {
                     }
                 }
                 .fixedSize(horizontal: true, vertical: false)
+                .padding(.horizontal, 30)
             }
             .frame(maxWidth: .infinity)
         }
