@@ -23,10 +23,10 @@ enum FontTracking: String, JSON, Identifiable, CaseIterable, Codable {
 
     var value: Double {
         switch self {
-        case .tighter: -0.05
-        case .tight: -0.025
+        case .tighter: -0.07
+        case .tight: -0.04
         case .normal: 0
-        case .wide: 0.05
+        case .wide: 0.04
         }
     }
 }

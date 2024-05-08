@@ -82,7 +82,10 @@ extension ContactTrick {
         @Published private(set) var items: [Item] = []
         @Published private(set) var changed: Bool = false
 
+        var units: GlucoseUnits = .mmolL
+
         override func subscribe() {
+            self.units = settingsManager.settings.units
             items = provider.contacts.enumerated().map { index, contact in
                 Item(
                     index: index,
