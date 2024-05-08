@@ -36,7 +36,7 @@
 "Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
 
 /* Delivery status when bolusing */
-"Bolusing" = "Đang tiến hành bolus";
+"Bolusing" = "Đang bolus";
 
 /* Delivery status when bolusing and temp basal is running */
 "Bolusing with temp basal" = "Đang thực hiện liều basal tạm thời";
