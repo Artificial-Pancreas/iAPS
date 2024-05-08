@@ -93,16 +93,7 @@ extension ContactTrick {
         func add() {
             let newItem = Item(
                 index: items.count,
-                entry: ContactTrickEntry(
-                    enabled: false,
-                    layout: .single,
-                    contactId: nil,
-                    displayName: nil,
-                    darkMode: true,
-                    fontSize: 100,
-                    fontName: "Default Font",
-                    fontWeight: .medium
-                )
+                entry: ContactTrickEntry()
             )
 
             items.append(newItem)
@@ -116,9 +107,12 @@ extension ContactTrick {
             provider.saveContacts(contacts)
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
-                    print("saved!")
                     self.syncInProgress = false
-                } receiveValue: {}
+                } receiveValue: { contacts in
+                    contacts.enumerated().forEach { index, item in
+                        self.items[index].entry = item
+                    }
+                }
                 .store(in: &lifetime)
         }
     }

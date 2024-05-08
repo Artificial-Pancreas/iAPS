@@ -15,19 +15,12 @@ struct ContactPicture: View {
         return formatter
     }()
 
-    private static let numberFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.decimalSeparator = "."
-        return formatter
-    }()
-
     static func getImage(
         contact: ContactTrickEntry,
         state: ContactTrickState
     ) -> UIImage {
-        let width = 256.0
-        let height = 256.0
+        let width = 512.0
+        let height = 512.0
         var rect = CGRect(x: 0, y: 0, width: width, height: height)
         let textColor: Color = contact.darkMode ?
             Color(red: 250 / 256, green: 250 / 256, blue: 250 / 256) :
@@ -41,32 +34,25 @@ struct ContactPicture: View {
 
         let ringWidth = Double(contact.ringWidth) / 100.0
         let ringGap = Double(contact.ringGap) / 100.0
-
-        rect = CGRect(
-            x: rect.minX + width * ringGap,
-            y: rect.minY + height * ringGap,
-            width: rect.width - width * ringGap * 2,
-            height: rect.height - height * ringGap * 2
-        )
+        let outerGap = 0.03
 
         if contact.ring1 != .none {
             rect = CGRect(
-                x: rect.minX + width * ringGap,
-                y: rect.minY + height * ringGap,
-                width: rect.width - width * ringGap * 2,
-                height: rect.height - height * ringGap * 2
+                x: rect.minX + width * outerGap,
+                y: rect.minY + height * outerGap,
+                width: rect.width - width * outerGap * 2,
+                height: rect.height - height * outerGap * 2
             )
 
             let ringRect = CGRect(
-                x: rect.minX + width * ringGap,
-                y: rect.minY + height * ringGap,
-                width: rect.width - width * ringGap * 2,
-                height: rect.height - width * ringGap * 2
+                x: rect.minX + width * ringWidth * 0.5,
+                y: rect.minY + height * ringWidth * 0.5,
+                width: rect.width - width * ringWidth,
+                height: rect.height - height * ringWidth
             )
-            drawRing(ring: contact.ring1, contact: contact, state: state, rect: ringRect, strokeWidth: width * ringWidth)
-        }
 
-        if contact.ring1 != .none {
+            drawRing(ring: contact.ring1, contact: contact, state: state, rect: ringRect, strokeWidth: width * ringWidth)
+
             rect = CGRect(
                 x: rect.minX + width * (ringWidth + ringGap),
                 y: rect.minY + height * (ringWidth + ringGap),
@@ -375,7 +361,7 @@ struct ContactPicture: View {
 
             context.strokePath()
         case .iob:
-            if let iob = state.iob {
+            if let iob = state.iob, state.maxIOB > 0.1 {
                 drawProgressBar(
                     rect: rect,
                     progress: Double(iob) / Double(state.maxIOB),
@@ -384,7 +370,7 @@ struct ContactPicture: View {
                 )
             }
         case .cob:
-            if let cob = state.cob {
+            if let cob = state.cob, state.maxCOB > 0.01 {
                 drawProgressBar(
                     rect: rect,
                     progress: Double(cob) / Double(state.maxCOB),
@@ -393,14 +379,16 @@ struct ContactPicture: View {
                 )
             }
         case .iobcob:
-            drawDoubleProgressBar(
-                rect: rect,
-                progress1: state.iob.map { Double($0) / Double(state.maxIOB) },
-                progress2: state.cob.map { Double($0) / Double(state.maxCOB) },
-                colors1: [contact.darkMode ? .blue : .blue, contact.darkMode ? .pink : .red],
-                colors2: [contact.darkMode ? .green : .green, contact.darkMode ? .pink : .red],
-                strokeWidth: strokeWidth
-            )
+            if state.maxIOB > 0.01, state.maxCOB > 0.01 {
+                drawDoubleProgressBar(
+                    rect: rect,
+                    progress1: state.iob.map { Double($0) / Double(state.maxIOB) },
+                    progress2: state.cob.map { Double($0) / Double(state.maxCOB) },
+                    colors1: [contact.darkMode ? .blue : .blue, contact.darkMode ? .pink : .red],
+                    colors2: [contact.darkMode ? .green : .green, contact.darkMode ? .pink : .red],
+                    strokeWidth: strokeWidth
+                )
+            }
         default:
             break
         }
@@ -672,7 +660,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     cob: 25,
                     cobText: "25"
                 ))
-
             ).previewDisplayName("bg + trend + delta")
 
             ContactPicturePreview(
@@ -728,7 +715,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     trend: "→",
                     lastLoopDate: .now
                 ))
-
             ).previewDisplayName("bg + trend + ring1")
 
             ContactPicturePreview(
@@ -747,7 +733,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     lastLoopDate: .now - 7.minutes,
                     eventualBG: "6.2"
                 ))
-
             ).previewDisplayName("bg + eventual + ring1")
 
             ContactPicturePreview(
@@ -766,7 +751,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     trend: "↗︎",
                     lastLoopDate: .now - 2.minutes
                 ))
-
             ).previewDisplayName("lastLoopDate + ring1")
 
             ContactPicturePreview(
@@ -787,7 +771,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     iobText: "6.1",
                     maxIOB: 8.0
                 ))
-
             ).previewDisplayName("bg + ring1 + ring2")
 
             ContactPicturePreview(
@@ -806,7 +789,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     cob: 25,
                     cobText: "25"
                 ))
-
             ).previewDisplayName("iob + cob")
 
             ContactPicturePreview(
@@ -829,7 +811,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     maxIOB: 10,
                     maxCOB: 120
                 ))
-
             ).previewDisplayName("iobcob ring")
 
             ContactPicturePreview(
@@ -850,7 +831,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     maxIOB: 10,
                     maxCOB: 120
                 ))
-
             ).previewDisplayName("iobcob ring (0/0)")
 
             ContactPicturePreview(
@@ -871,7 +851,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     maxIOB: 10,
                     maxCOB: 120
                 ))
-
             ).previewDisplayName("iobcob ring (max/max)")
 
             ContactPicturePreview(
@@ -895,7 +874,6 @@ struct ContactPicture_Previews: PreviewProvider {
                     maxIOB: 10,
                     maxCOB: 120
                 ))
-
             ).previewDisplayName("bg + trend + iobcob ring")
         }
     }

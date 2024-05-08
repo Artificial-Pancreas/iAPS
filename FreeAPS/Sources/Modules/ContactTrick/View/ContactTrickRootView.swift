@@ -20,6 +20,12 @@ extension ContactTrick {
                         addButton
                     }
                     Section {
+                        Text(
+                            "Don't forget to save your changes."
+                        )
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    Section {
                         HStack {
                             if state.syncInProgress {
                                 ProgressView().padding(.trailing, 10)
@@ -28,40 +34,40 @@ extension ContactTrick {
                             label: {
                                 Text(state.syncInProgress ? "Saving..." : "Save")
                             }
-                            .disabled(state.syncInProgress || state.items.isEmpty)
+                            .disabled(state.syncInProgress)
                         }
                     }
 
                 case .notDetermined:
                     Section {
                         Text(
-                            "Need to ask for contacts access"
+                            "iAPS needs access to your contacts for this feature to work"
                         )
                     }
                     Section {
                         Button(action: onRequestContactsAccess) {
-                            Text("Grant access to contacts")
+                            Text("Grant iAPS access to contacts")
                         }
                     }
 
                 case .denied:
                     Section {
                         Text(
-                            "Contacts access denied"
+                            "Access to contacts denied"
                         )
                     }
 
                 case .restricted:
                     Section {
                         Text(
-                            "Contacts access - restricted (parental control?)"
+                            "Access to contacts is restricted (parental control?)"
                         )
                     }
 
                 @unknown default:
                     Section {
                         Text(
-                            "Contacts access - unknown"
+                            "Access to contacts - unknown state"
                         )
                     }
                 }
@@ -87,25 +93,25 @@ extension ContactTrick {
             EntryView(entry: $state.items[index].entry)
         }
 
+        static let previewState = ContactTrickState(
+            glucose: "6,8",
+            trend: "↗︎",
+            delta: "0,3",
+            lastLoopDate: .now,
+            iob: 6.1,
+            iobText: "6,1",
+            cob: 27.0,
+            cobText: "27",
+            eventualBG: "8,9",
+            maxIOB: 12.0,
+            maxCOB: 120.0
+        )
+
         private var list: some View {
             List {
-                ForEach(state.items.indexed(), id: \.1.id) { index, _ in
+                ForEach(state.items.indexed(), id: \.1.id) { index, item in
                     NavigationLink(destination: contactSettings(for: index)) {
-                        HStack {
-                            Text(
-                                state.items[index].entry.displayName ?? "Contact not selected"
-                            )
-                            .font(.body)
-                            .minimumScaleFactor(0.5)
-                            .lineLimit(1)
-
-                            Spacer()
-
-                            Text(
-                                state.items[index].entry.primary.displayName
-                            )
-                            .foregroundColor(.accentColor)
-                        }
+                        EntryListView(entry: .constant(item.entry), index: .constant(index))
                     }
                     .moveDisabled(true)
                 }
@@ -134,27 +140,69 @@ extension ContactTrick {
         }
     }
 
+    struct EntryListView: View {
+        @Binding var entry: ContactTrickEntry
+        @Binding var index: Int
+        @State private var refreshKey = UUID()
+
+        var body: some View {
+            HStack {
+                Text(
+                    "Contact: iAPS \(index + 1)"
+                )
+                .font(.body)
+                .minimumScaleFactor(0.5)
+                .lineLimit(1)
+
+                Spacer()
+
+                VStack {
+                    GeometryReader { geometry in
+                        ZStack {
+                            Image(uiImage: ContactPicture.getImage(contact: entry, state: RootView.previewState))
+                                .resizable()
+                                .aspectRatio(1, contentMode: .fit)
+                                .frame(width: geometry.size.height, height: geometry.size.height)
+                                .clipShape(Circle())
+                            Circle()
+                                .stroke(lineWidth: 2)
+                                .foregroundColor(.white)
+                        }
+                        .frame(width: geometry.size.height, height: geometry.size.height)
+                    }
+                }
+                .fixedSize(horizontal: true, vertical: false)
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+
     struct EntryView: View {
         @Binding var entry: ContactTrickEntry
-        @State private var showContactPicker = false
         @State private var availableFonts: [String]? = nil
 
-        private let fontSizes: [Int] = [70, 80, 90, 100, 110, 120, 130, 140, 150]
+        private let fontSizes: [Int] = [70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230]
         private let ringWidths: [Int] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
         private let ringGaps: [Int] = [0, 1, 2, 3, 4, 5]
 
         var body: some View {
+            Section {
+                HStack {
+                    ZStack {
+                        Image(uiImage: ContactPicture.getImage(contact: entry, state: RootView.previewState))
+                            .resizable()
+                            .aspectRatio(1, contentMode: .fit)
+                            .frame(width: 64, height: 64)
+                            .clipShape(Circle())
+                        Circle()
+                            .stroke(lineWidth: 2)
+                            .foregroundColor(.white)
+                    }
+                    .frame(width: 64, height: 64)
+                }
+            }
             Form {
                 Section {
-                    if let displayName = entry.displayName {
-                        Text(displayName)
-                    }
-                    Button(entry.contactId == nil ? "Select contact" : "Change contact") {
-                        showContactPicker = true
-                    }
-                }
-                Section {
-                    Toggle("Enabled", isOn: $entry.enabled)
                     Picker(
                         selection: $entry.layout,
                         label: Text("Layout")
@@ -291,10 +339,6 @@ extension ContactTrick {
                     Toggle("Dark mode", isOn: $entry.darkMode)
                 }
             }
-//            .navigationTitle(entry.displayName ?? "Contact not selected")
-            .fullScreenCover(isPresented: $showContactPicker) {
-                ContactPicker(entry: $entry)
-            }
         }
 
         private func loadFonts() {
@@ -310,44 +354,6 @@ extension ContactTrick {
                 }
             }
             availableFonts = data
-        }
-    }
-
-    struct ContactPicker: UIViewControllerRepresentable {
-        @Binding var entry: ContactTrickEntry
-
-        func makeUIViewController(context: Context) -> CNContactPickerViewController {
-            let picker = CNContactPickerViewController()
-            picker.delegate = context.coordinator
-            return picker
-        }
-
-        func updateUIViewController(_: CNContactPickerViewController, context _: Context) {}
-
-        func makeCoordinator() -> Coordinator {
-            Coordinator(self)
-        }
-
-        class Coordinator: NSObject, CNContactPickerDelegate {
-            var parent: ContactPicker
-
-            init(_ parent: ContactPicker) {
-                self.parent = parent
-            }
-
-            func contactPicker(_: CNContactPickerViewController, didSelect contact: CNContact) {
-                parent.entry.contactId = contact.identifier
-                let display = if let emailAddress = contact.emailAddresses.first {
-                    "\(emailAddress.value)"
-                } else {
-                    "\(contact.familyName) \(contact.givenName)"
-                }
-                if display.isEmpty {
-                    parent.entry.displayName = "Unnamed contact"
-                } else {
-                    parent.entry.displayName = display
-                }
-            }
         }
     }
 }
