@@ -171,7 +171,7 @@
 "Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Không pod";
+"No Pod" = "Không có pod";
 
 /* Pod life HUD view label */
 "Fault" = "Lỗi";
