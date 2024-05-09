@@ -284,9 +284,6 @@
 "Save on Pump" = "Lưu vào bơm";
 
 /*  */
-"Saving..." = "Đang lưu...";
-
-/*  */
 "Schedule" = "Lịch trình";
 
 /*  */
@@ -1960,6 +1957,158 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Chia sẻ dữ liệu của bạn ẩn danh";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Danh bạ";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Danh bạ";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Đừng quên lưu các thay đổi của bạn.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS cần quyền truy cập vào danh bạ của bạn để tính năng này hoạt động";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Cấp quyền truy cập iAPS vào danh bạ";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Quyền truy cập vào danh bạ bị từ chối";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Quyền truy cập vào danh bạ bị hạn chế (kiểm soát của phụ huynh?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Trạng thái không xác định - Quyền truy cập vào danh bạ";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Bạn có thể sử dụng Hình ảnh liên hệ để nhận các bản cập nhật trực tiếp từ iAPS cho tổ hợp Danh bạ trên Apple Watch và/hoặc tiện ích Danh bạ trên iPhone của bạn.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Hình ảnh danh bạ";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Bố cục";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Single";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Split";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Không hiển thị";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Trạng thái vòng lặp";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "IOB";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "COB";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Primary";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Top";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Bottom";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Ring";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Outer";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Width";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Gap";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Font";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Size";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Secondary size";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Đang theo dõi";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Weight";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Chế độ tối";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Tighter";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Tight";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "Normal";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Rộng";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Phông nền sáng";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Binh thường";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Trung bình";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Đậm nhẹ";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Đậm";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Đen";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Không";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Đường huyết";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Kết quả BG";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Chênh lệch";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Xu hướng Glucose";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Thời gian vòng lặp cuối cùng";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "COB";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "IOB";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Trạng thái vòng lặp";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
