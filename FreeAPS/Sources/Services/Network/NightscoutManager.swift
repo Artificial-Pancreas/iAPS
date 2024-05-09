@@ -181,7 +181,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     }
                 }
             receiveValue: { a in
-                CoreDataStorage().saveVNr(a.main)
+                CoreDataStorage().saveVNr(a)
             }
             .store(in: &self.lifetime)
         }

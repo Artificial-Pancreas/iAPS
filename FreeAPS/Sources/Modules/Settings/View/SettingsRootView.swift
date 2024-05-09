@@ -33,10 +33,17 @@ extension Settings {
                             )
                         }
 
-                        if let latest = fetchedVersionNumber.first, (latest.nr ?? "") > state.versionNumber {
-                            Text("Latest version on GitHub: " + (latest.nr ?? "") + "\n")
-                                .foregroundStyle(.orange).bold()
-                                .multilineTextAlignment(.leading)
+                        if let latest = fetchedVersionNumber.first,
+                           (latest.nr ?? "") > state
+                           .versionNumber ||
+                           ((latest.nr ?? "") < state.versionNumber && (latest.dev ?? "") > state.versionNumber)
+                        {
+                            Text(
+                                "Latest version on GitHub: " +
+                                    ((latest.nr ?? "") < state.versionNumber ? (latest.dev ?? "") : (latest.nr ?? "")) + "\n"
+                            )
+                            .foregroundStyle(.orange).bold()
+                            .multilineTextAlignment(.leading)
                         }
                     }
                 }

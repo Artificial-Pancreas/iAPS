@@ -139,11 +139,12 @@ final class CoreDataStorage {
         UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
     }
 
-    func saveVNr(_ string: String?) {
-        if let realString = string {
+    func saveVNr(_ versions: Version?) {
+        if let version = versions {
             coredataContext.performAndWait { [self] in
                 let saveNr = VNr(context: self.coredataContext)
-                saveNr.nr = realString
+                saveNr.nr = version.main
+                saveNr.dev = version.dev
                 saveNr.date = Date.now
                 try? self.coredataContext.save()
             }
