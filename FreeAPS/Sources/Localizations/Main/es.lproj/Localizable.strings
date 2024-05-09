@@ -4,10 +4,10 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Añadir insulinar sin administrar bolo";
+"Add insulin without actually bolusing" = "Añadir insulina sin administrar bolo";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Añada %@ sin bolo";
+"Add %@ without bolusing" = "Añadir %@ sin bolo";
 
 "Bolus" = "Bolo";
 
@@ -1934,10 +1934,10 @@ Ajustes predeterminados:\n
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Woman";
+"Woman" = "Mujer";
 
 /* */
-"Man" = "Man";
+"Man" = "Hombre";
 
 /* */
 "Other" = "Otro";
@@ -1946,54 +1946,54 @@ Ajustes predeterminados:\n
 "Secret" = "Secret";
 
 /* */
-"Birth Date" = "Birth Date";
+"Birth Date" = "Fecha de nacimiento";
 
 /* */
-"Share all of your Statistics" = "Share all of your Statistics";
+"Share all of your Statistics" = "Comparte todas las estadísticas";
 
 /* */
-"Just iAPS version number" = "Just iAPS version number";
+"Just iAPS version number" = "Sólo el número de versión iAPS";
 
 /* */
-"Share Bare Minimum" = "Share Bare Minimum";
+"Share Bare Minimum" = "Compartir lo mínimo";
 
 /* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Todo registro de información que elija compartir se hace de forma anónima. Para evitar subidas de información duplicadas, los datos se identifican con un identificador único aleatorio guardado en su teléfono.";
 
 /* */
-"Tap to display" = "Tap to display";
+"Tap to display" = "Pulsa para mostrar";
 
 /* */
-"Your identifier" = "Your identifier";
+"Your identifier" = "Su identificador";
 
 /* */
-"Share your data anonymously" = "Share your data anonymously";
+"Share your data anonymously" = "Comparta sus datos anónimamente";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Contacto";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Contactos";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "No olvides guardar tus cambios.";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "iAPS necesita acceso a tus contactos para habilitar esta función";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "Conceder acceso de iAPS a los contactos";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Acceso a contactos denegado";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "El acceso a los contactos está restringido (¿control parental?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Acceso a contactos - estado desconocido";
 
 /* Contact Image, settings, short description of the feature */
 "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
