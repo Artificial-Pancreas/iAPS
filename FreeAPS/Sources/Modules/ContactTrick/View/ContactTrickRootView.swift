@@ -93,28 +93,32 @@ extension ContactTrick {
             EntryView(entry: Binding(
                 get: { state.items[index].entry },
                 set: { newValue in state.update(index, newValue) }
-            ))
+            ), previewState: previewState)
         }
 
-        static let previewState = ContactTrickState(
-            glucose: "6,8",
-            trend: "↗︎",
-            delta: "0,3",
-            lastLoopDate: .now,
-            iob: 6.1,
-            iobText: "6,1",
-            cob: 27.0,
-            cobText: "27",
-            eventualBG: "8,9",
-            maxIOB: 12.0,
-            maxCOB: 120.0
-        )
+        var previewState: ContactTrickState {
+            let units = state.units
+
+            return ContactTrickState(
+                glucose: units == .mmolL ? "6,8" : "127",
+                trend: "↗︎",
+                delta: units == .mmolL ? "+0,3" : "+7",
+                lastLoopDate: .now,
+                iob: 6.1,
+                iobText: "6,1",
+                cob: 27.0,
+                cobText: "27",
+                eventualBG: units == .mmolL ? "8,9" : "163",
+                maxIOB: 12.0,
+                maxCOB: 120.0
+            )
+        }
 
         private var list: some View {
             List {
                 ForEach(state.items.indexed(), id: \.1.id) { index, item in
                     NavigationLink(destination: contactSettings(for: index)) {
-                        EntryListView(entry: .constant(item.entry), index: .constant(index))
+                        EntryListView(entry: .constant(item.entry), index: .constant(index), previewState: previewState)
                     }
                     .moveDisabled(true)
                 }
@@ -147,11 +151,12 @@ extension ContactTrick {
         @Binding var entry: ContactTrickEntry
         @Binding var index: Int
         @State private var refreshKey = UUID()
+        let previewState: ContactTrickState
 
         var body: some View {
             HStack {
                 Text(
-                    "Contact: iAPS \(index + 1)"
+                    NSLocalizedString("Contact", comment: "") + ": " + "iAPS \(index + 1)"
                 )
                 .font(.body)
                 .minimumScaleFactor(0.5)
@@ -162,7 +167,10 @@ extension ContactTrick {
                 VStack {
                     GeometryReader { geometry in
                         ZStack {
-                            Image(uiImage: ContactPicture.getImage(contact: entry, state: RootView.previewState))
+                            Circle()
+                                .fill(entry.darkMode ? .black : .white)
+                                .foregroundColor(.white)
+                            Image(uiImage: ContactPicture.getImage(contact: entry, state: previewState))
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fit)
                                 .frame(width: geometry.size.height, height: geometry.size.height)
@@ -184,6 +192,7 @@ extension ContactTrick {
     struct EntryView: View {
         @Binding var entry: ContactTrickEntry
         @State private var availableFonts: [String]? = nil
+        let previewState: ContactTrickState
 
         private let fontSizes: [Int] = [100, 120, 130, 140, 160, 180, 200, 225, 250, 275, 300, 350, 400]
         private let ringWidths: [Int] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -193,7 +202,10 @@ extension ContactTrick {
             Section {
                 HStack {
                     ZStack {
-                        Image(uiImage: ContactPicture.getImage(contact: entry, state: RootView.previewState))
+                        Circle()
+                            .fill(entry.darkMode ? .black : .white)
+                            .foregroundColor(.white)
+                        Image(uiImage: ContactPicture.getImage(contact: entry, state: previewState))
                             .resizable()
                             .aspectRatio(1, contentMode: .fit)
                             .frame(width: 64, height: 64)

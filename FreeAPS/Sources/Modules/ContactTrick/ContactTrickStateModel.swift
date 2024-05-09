@@ -16,23 +16,23 @@ enum ContactTrickValue: String, JSON, CaseIterable, Identifiable, Codable {
     var displayName: String {
         switch self {
         case .none:
-            return NSLocalizedString("None", comment: "")
+            return NSLocalizedString("NoneContactValue", comment: "")
         case .glucose:
-            return NSLocalizedString("Glucose", comment: "")
+            return NSLocalizedString("GlucoseContactValue", comment: "")
         case .eventualBG:
-            return NSLocalizedString("Eventual BG", comment: "")
+            return NSLocalizedString("EventualBGContactValue", comment: "")
         case .delta:
-            return NSLocalizedString("Delta", comment: "")
+            return NSLocalizedString("DeltaContactValue", comment: "")
         case .trend:
-            return NSLocalizedString("Trend", comment: "")
+            return NSLocalizedString("TrendContactValue", comment: "")
         case .lastLoopDate:
-            return NSLocalizedString("Last loop date", comment: "")
+            return NSLocalizedString("LastLoopTimeContactValue", comment: "")
         case .cob:
-            return NSLocalizedString("COB", comment: "")
+            return NSLocalizedString("COBContactValue", comment: "")
         case .iob:
-            return NSLocalizedString("IOB", comment: "")
+            return NSLocalizedString("IOBContactValue", comment: "")
         case .ring:
-            return NSLocalizedString("Loop status", comment: "")
+            return NSLocalizedString("LoopStatusContactValue", comment: "")
         }
     }
 }
@@ -63,15 +63,15 @@ enum ContactTrickLargeRing: String, JSON, CaseIterable, Identifiable, Codable {
     var displayName: String {
         switch self {
         case .none:
-            return NSLocalizedString("Don't show", comment: "")
+            return NSLocalizedString("DontShowRing", comment: "")
         case .loop:
-            return NSLocalizedString("Loop status", comment: "")
+            return NSLocalizedString("LoopStatusRing", comment: "")
         case .iob:
-            return NSLocalizedString("IOB", comment: "")
+            return NSLocalizedString("IOBRing", comment: "")
         case .cob:
-            return NSLocalizedString("COB", comment: "")
+            return NSLocalizedString("COBRing", comment: "")
         case .iobcob:
-            return NSLocalizedString("IOB+COB", comment: "")
+            return NSLocalizedString("IOB+COBRing", comment: "")
         }
     }
 }
@@ -82,7 +82,10 @@ extension ContactTrick {
         @Published private(set) var items: [Item] = []
         @Published private(set) var changed: Bool = false
 
+        var units: GlucoseUnits = .mmolL
+
         override func subscribe() {
+            units = settingsManager.settings.units
             items = provider.contacts.enumerated().map { index, contact in
                 Item(
                     index: index,
