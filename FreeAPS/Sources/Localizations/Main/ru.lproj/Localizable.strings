@@ -1923,66 +1923,66 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Woman";
+"Woman" = "Женский";
 
 /* */
-"Man" = "Man";
+"Man" = "Мужской";
 
 /* */
 "Other" = "Прочее";
 
 /* */
-"Secret" = "Secret";
+"Secret" = "Скрыть";
 
 /* */
-"Birth Date" = "Birth Date";
+"Birth Date" = "День рождения";
 
 /* */
-"Share all of your Statistics" = "Share all of your Statistics";
+"Share all of your Statistics" = "Делиться всей Вашей статистикой";
 
 /* */
-"Just iAPS version number" = "Just iAPS version number";
+"Just iAPS version number" = "Только номер версии iAPS";
 
 /* */
-"Share Bare Minimum" = "Share Bare Minimum";
+"Share Bare Minimum" = "Минимально делиться";
 
 /* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Любая информация, которой вы хотите поделиться, загружается анонимно. Чтобы предотвратить повторную загрузку, данные идентифицируются с помощью уникальной случайной строки, сохраненной на вашем телефоне.";
 
 /* */
-"Tap to display" = "Tap to display";
+"Tap to display" = "Нажать для отображения";
 
 /* */
-"Your identifier" = "Your identifier";
+"Your identifier" = "Ваш идентификатор";
 
 /* */
-"Share your data anonymously" = "Share your data anonymously";
+"Share your data anonymously" = "Делитесь данными анонимно";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Контакт";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Контакты";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "Не забудьте сохранить внесенные изменения.";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "Для работы этой функции iAPS необходим доступ к вашим контактам";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "Предоставить iAPS доступ к контактам";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Доступ к контактам был запрещен";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "Доступ к контактам ограничен (родительский контроль?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Доступ к контактам - неизвестное состояние";
 
 /* Contact Image, settings, short description of the feature */
 "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
