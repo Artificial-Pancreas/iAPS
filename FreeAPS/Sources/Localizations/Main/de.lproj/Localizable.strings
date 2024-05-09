@@ -1961,58 +1961,58 @@ Enact a temp Basal or a temp target */
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Kontakt";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Kontakte";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "Vergessen Sie nicht, Ihre Änderungen zu speichern.";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "iAPS benötigt Zugriff auf Ihre Kontakte, um diese Funktion zu nutzen";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "iAPS den Zugriff auf Kontakte gewähren";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Zugriff auf Kontakte verweigert";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "Der Zugriff auf Kontakte ist eingeschränkt (elterliche Kontrolle?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Zugriff auf Kontakte - unbekannter Status";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Ein Kontaktbild kann verwendet werden, um Live-Updates von iAPS auf Ihre Apple Watch Kontakt Komplikation und/oder Ihr iPhone Kontakt Widget zu erhalten.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Contact Image";
+"Contact Image" = "Kontaktbild";
 
 /* Contact Image, settings, label for the layout picker */
 "Layout" = "Layout";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Single";
+"Single" = "Einzeln";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Split";
+"Split" = "Geteilt";
 
 /* Contact Image, settings, outer ring - don't show */
-"DontShowRing" = "Don't show";
+"DontShowRing" = "Nicht anzeigen";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop status";
+"LoopStatusRing" = "Schleifenstatus";
 
 /* Contact Image, settings, outer ring - IOB */
-"IOBRing" = "IOB";
+"IOBRing" = "Restinsulin (IOB)";
 
 /* Contact Image, settings, outer ring - COB */
-"COBRing" = "COB";
+"COBRing" = "Rest-Kohlenhydrate (COB)";
 
 /* Contact Image, settings, outer ring - IOB+COB */
-"IOB+COBRing" = "IOB+COB";
+"IOB+COBRing" = "Restinsulin (IOB) + Rest-Kohlenhydrate (COB)";
 
 /* Contact Image, settings, label for the primary value picker */
 "Primary" = "Primary";
@@ -2027,22 +2027,22 @@ Enact a temp Basal or a temp target */
 "Ring" = "Ring";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Outer";
+"Outer" = "Äußere";
 
 /* Contact Image, settings, label for the ring width picker */
-"Width" = "Width";
+"Width" = "Breite";
 
 /* Contact Image, settings, label for the ring gap picker */
-"Gap" = "Gap";
+"Gap" = "Abstand";
 
 /* Contact Image, settings, header for the font section */
-"Font" = "Font";
+"Font" = "Schriftart";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Größe";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Sekundäre Größe";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
 "Tracking" = "Tracking";
@@ -2051,37 +2051,37 @@ Enact a temp Basal or a temp target */
 "Weight" = "Weight";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Dunkelmodus";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Enger";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Eng";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "im Zielbereich";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Breit";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Leicht";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Normal";
 
 /* Contact Image, settings, medium font weight */
 "MediumFontWeight" = "Medium";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Halbfett";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Fett";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Schwarz";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Keiner";
@@ -2090,25 +2090,25 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Blutzucker";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Erwarteter BZ";
 
 /* Contact Image, settings, Delta (data to display) */
-"DeltaContactValue" = "Delta";
+"DeltaContactValue" = "Differenz";
 
 /* Contact Image, settings, Trend (data to display) */
 "TrendContactValue" = "Trend";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Letzte Schleifenzeit";
 
 /* Contact Image, settings, COB (data to display) */
-"COBContactValue" = "COB";
+"COBContactValue" = "Rest-Kohlenhydrate (COB)";
 
 /* Contact Image, settings, IOB (data to display) */
-"IOBContactValue" = "IOB";
+"IOBContactValue" = "Restinsulin (IOB)";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop status";
+"LoopStatusContactValue" = "Schleifenstatus";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
