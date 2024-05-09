@@ -1961,127 +1961,127 @@ Enact a temp Basal or a temp target */
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Névjegy";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Névjegyek";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "Ne felejtse el elmenteni a változtatásokat.";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "Az iAPS-nek hozzáférésre van szüksége a névjegyeihez ahhoz, hogy ez a funkció működjön";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "iAPS-hozzáférés biztosítása a névjegyeihez";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Névjegyeihez való hozzáférés megtagadva";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "A névjegyeihez való hozzáférés korlátozott (szülői felügyelet?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Hozzáférés a névjegyeihez - ismeretlen állapot";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A névjegy képe segítségével élő frissítéseket kaphat az iAPS-től az Apple Watch névjegy komplikációjára és/vagy az iPhone névjegy widgetjére.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Contact Image";
+"Contact Image" = "Profil kép";
 
 /* Contact Image, settings, label for the layout picker */
-"Layout" = "Layout";
+"Layout" = "Elrendezés";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Single";
+"Single" = "Egyedülálló";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Split";
+"Split" = "Szétválaszt";
 
 /* Contact Image, settings, outer ring - don't show */
-"DontShowRing" = "Don't show";
+"DontShowRing" = "Ne mutasd";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop status";
+"LoopStatusRing" = "Loop állapota";
 
 /* Contact Image, settings, outer ring - IOB */
-"IOBRing" = "IOB";
+"IOBRing" = "Aktív inzulin (IOB)";
 
 /* Contact Image, settings, outer ring - COB */
-"COBRing" = "COB";
+"COBRing" = "Aktív szénhidrát (COB)";
 
 /* Contact Image, settings, outer ring - IOB+COB */
 "IOB+COBRing" = "IOB+COB";
 
 /* Contact Image, settings, label for the primary value picker */
-"Primary" = "Primary";
+"Primary" = "Elsődleges";
 
 /* Contact Image, settings, label for the top value picker */
-"Top" = "Top";
+"Top" = "Felső";
 
 /* Contact Image, settings, label for the bottom value picker */
-"Bottom" = "Bottom";
+"Bottom" = "Alsó";
 
 /* Contact Image, settings, header for the outer ring section */
-"Ring" = "Ring";
+"Ring" = "Gyűrű";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Outer";
+"Outer" = "Külső";
 
 /* Contact Image, settings, label for the ring width picker */
-"Width" = "Width";
+"Width" = "Szélesség";
 
 /* Contact Image, settings, label for the ring gap picker */
-"Gap" = "Gap";
+"Gap" = "Rés";
 
 /* Contact Image, settings, header for the font section */
-"Font" = "Font";
+"Font" = "Betűtípus";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Méret";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Másodlagos méret";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Tracking";
+"Tracking" = "Követés";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Súly";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Sötét mód";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Szorosabb";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Szoros";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Normal";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Széles";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Könnyű";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Hagyományos";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Közepes";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Félkövér";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Kövér";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Fekete";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "None";
@@ -2090,7 +2090,7 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Glükóz";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Végleges BG";
 
 /* Contact Image, settings, Delta (data to display) */
 "DeltaContactValue" = "Delta";
@@ -2099,16 +2099,16 @@ Enact a temp Basal or a temp target */
 "TrendContactValue" = "Trend";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Utolsó loop ideje";
 
 /* Contact Image, settings, COB (data to display) */
-"COBContactValue" = "COB";
+"COBContactValue" = "Aktív szénhidrát (COB)";
 
 /* Contact Image, settings, IOB (data to display) */
-"IOBContactValue" = "IOB";
+"IOBContactValue" = "Aktív inzulin (IOB)";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop status";
+"LoopStatusContactValue" = "Loop állapota";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
