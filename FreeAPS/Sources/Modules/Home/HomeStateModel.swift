@@ -16,6 +16,7 @@ extension Home {
         @Published var isManual: [BloodGlucose] = []
         @Published var announcement: [Announcement] = []
         @Published var suggestion: Suggestion?
+        @Published var reasons: [Reasons] = []
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
@@ -99,6 +100,7 @@ extension Home {
             setupLoopStats()
 
             suggestion = provider.suggestion
+            reasons = provider.reasons()
             overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
@@ -470,6 +472,13 @@ extension Home {
                 self.timeZone = self.provider.pumpTimeZone()
             }
         }
+        
+        private func setupReasons() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.reasons = self.provider.reasons()
+            }
+        }
 
         func openCGM() {
             guard var url = nightscoutManager.cgmURL else { return }
@@ -522,6 +531,7 @@ extension Home.StateModel:
         setStatusTitle()
         setupOverrideHistory()
         setupLoopStats()
+        setupReasons()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -579,6 +589,7 @@ extension Home.StateModel:
         setStatusTitle()
         setupOverrideHistory()
         setupLoopStats()
+        setupReasons()
     }
 
     func pumpBatteryDidChange(_: Battery) {
