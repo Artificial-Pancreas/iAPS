@@ -138,4 +138,27 @@ final class CoreDataStorage {
         }
         UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
     }
+
+    func saveVNr(_ string: String?) {
+        if let realString = string {
+            coredataContext.performAndWait { [self] in
+                let saveNr = VNr(context: self.coredataContext)
+                saveNr.nr = realString
+                saveNr.date = Date.now
+                try? self.coredataContext.save()
+            }
+        }
+    }
+
+    func fetchVNr() -> VNr? {
+        var nr = [VNr]()
+        coredataContext.performAndWait {
+            let requestNr = VNr.fetchRequest() as NSFetchRequest<VNr>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestNr.sortDescriptors = [sort]
+            requestNr.fetchLimit = 1
+            try? nr = coredataContext.fetch(requestNr)
+        }
+        return nr.first
+    }
 }
