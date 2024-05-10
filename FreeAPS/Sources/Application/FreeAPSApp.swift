@@ -86,9 +86,6 @@ import Swinject
         let userDefaults = UserDefaults.standard
         var version = userDefaults.string(forKey: IAPSconfig.version) ?? ""
 
-        print("Version: " + version)
-        print("Version bundle " + (Bundle.main.releaseVersionNumber ?? ""))
-
         guard version.count > 1, version == (Bundle.main.releaseVersionNumber ?? "") else {
             version = Bundle.main.releaseVersionNumber ?? ""
             userDefaults.set(version, forKey: IAPSconfig.version)

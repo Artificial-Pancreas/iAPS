@@ -181,7 +181,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     }
                 }
             receiveValue: { a in
-                print("Fetched version: " + a.dev)
                 CoreDataStorage().saveVNr(a)
             }
             .store(in: &self.lifetime)
