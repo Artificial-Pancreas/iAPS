@@ -1960,6 +1960,9 @@ Połączono z Nightscout!";
 /* */
 "Share your data anonymously" = "Share your data anonymously";
 
+/* Setting Title */
+"Sharing" = "Sharing";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
