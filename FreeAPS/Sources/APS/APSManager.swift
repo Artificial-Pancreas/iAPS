@@ -1235,7 +1235,8 @@ final class BaseAPSManager: APSManager, Injectable {
     private func versionCheack() {
         if Date.now.hour % 2 == 0 {
             if let last = CoreDataStorage().fetchVNr(),
-               (last.date ?? .distantFuture) > Date.now.addingTimeInterval(-1.hours.timeInterval) {
+               (last.date ?? .distantFuture) > Date.now.addingTimeInterval(-1.hours.timeInterval)
+            {
                 nightscout.fetchVersion()
             }
         }
