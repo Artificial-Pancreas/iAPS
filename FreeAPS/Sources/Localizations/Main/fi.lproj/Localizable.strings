@@ -167,7 +167,7 @@
 "Cancel" = "Peru";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Peruuta väliaikainen tavoite";
 
 /* Custom temp target */
 "Custom" = "Muokattu";
@@ -182,7 +182,7 @@
 "Delete preset \"%@\"" = "Poista esiasetus \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Kesto";
 
 /*  */
 "Enact Temp Target" = "Aktivoi väliaikainen tavoite";
@@ -194,7 +194,7 @@
 "Basal Insulin and Sensitivity ratio" = "Perusinsuliinin ja herkkyyden suhde";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Alempi asetus \"puolikkaasta perusinsuliinista\" vähentää perusinsuliinia ja nostaa insuliinin herkkyysarvoa aikaisemmin alemmassa tavoitesokeritasossa.";
 
 /* */
 " Your setting: " = " Your setting: ";
@@ -1458,7 +1458,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Cancel Profile Override";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Peruuta väliaikainen tavoite";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
@@ -1863,7 +1863,7 @@ Enact a temp Basal or a temp target */
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "Kesto";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
