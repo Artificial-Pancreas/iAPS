@@ -1014,7 +1014,7 @@ Enact a temp Basal or a temp target */
 "not available" = "nicht verfügbar";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Eine Überschreibungsvorgabe aktivieren";
 
 /* Override Shortcut */
 "Allow to activate an overrride preset." = "Erlaube die Aktivierung einer Voreinstellung zu überschreiben.";
