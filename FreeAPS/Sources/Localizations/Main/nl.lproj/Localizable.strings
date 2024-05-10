@@ -23,7 +23,7 @@
 "Status" = "Status";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWeet je zeker dat je deze hoeveelheid wilt toedienen? \nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWaarschuw bij toedienen van een hoge hoeveelheid zonder te bolussen ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWeet je zeker dat je deze hoeveelheid wilt toedienen? \nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWaarschuw bij toedienen van een hoge hoeveelheid zonder een bolus toe te dienen ";
 
 /* Header */
 "Enact Bolus" = "Bolus geven";

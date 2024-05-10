@@ -1985,7 +1985,7 @@ Enact a temp Basal or a temp target */
 "Access to contacts - unknown state" = "Åtkomst till kontakter - okänt tillstånd";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "En kontaktbild kan användas för att få live-uppdateringar från iAPS till din Apple Watch - kontaktkomplikation och / eller till din iPhone kontakt-widget.";
 
 /* Contact Image, settings, main header */
 "Contact Image" = "Kontaktbild";
@@ -2042,34 +2042,34 @@ Enact a temp Basal or a temp target */
 "Size" = "Storlek";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Sekundär storlek";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Tracking";
+"Tracking" = "Mellanrum";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Vikt";
 
 /* Contact Image, settings, label for the dark-mode switcher */
 "Dark mode" = "Mörkt läge";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Tätare";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Tätt";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Normalvärde";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Bred";
 
 /* Contact Image, settings, light font weight */
 "LightFontWeight" = "Lätt";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Reguljär";
 
 /* Contact Image, settings, medium font weight */
 "MediumFontWeight" = "Medium";
@@ -2090,16 +2090,16 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Glukos";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Blodsockerprognos";
 
 /* Contact Image, settings, Delta (data to display) */
-"DeltaContactValue" = "Delta";
+"DeltaContactValue" = "Förändring";
 
 /* Contact Image, settings, Trend (data to display) */
 "TrendContactValue" = "Trend";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Senaste loop";
 
 /* Contact Image, settings, COB (data to display) */
 "COBContactValue" = "COB";
