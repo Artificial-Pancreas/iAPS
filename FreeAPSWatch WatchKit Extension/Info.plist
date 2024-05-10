@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
-	<string>Bla bla Record Health</string>
+	<string>For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Bla bla Share Health</string>
+	<string>For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Bla bla Update Health</string>
+	<string>For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionAttributes</key>
