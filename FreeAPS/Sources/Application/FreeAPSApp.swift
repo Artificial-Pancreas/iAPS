@@ -85,13 +85,16 @@ import Swinject
     private func isNewVersion() {
         let userDefaults = UserDefaults.standard
         var version = userDefaults.string(forKey: IAPSconfig.version) ?? ""
-        guard version.count > 1, version == Bundle.main.releaseVersionNumber ?? "" else {
+
+        print("Version: " + version)
+        print("Version bundle " + (Bundle.main.releaseVersionNumber ?? ""))
+
+        guard version.count > 1, version == (Bundle.main.releaseVersionNumber ?? "") else {
             version = Bundle.main.releaseVersionNumber ?? ""
             userDefaults.set(version, forKey: IAPSconfig.version)
             userDefaults.set(true, forKey: IAPSconfig.newVersion)
             debug(.default, "Running new version: \(version)")
             return
         }
-        userDefaults.set(false, forKey: IAPSconfig.newVersion)
     }
 }
