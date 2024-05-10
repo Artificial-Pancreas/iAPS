@@ -19,6 +19,7 @@
 		190EBCC829FF13AA00BA767D /* StatConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC729FF13AA00BA767D /* StatConfigStateModel.swift */; };
 		190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */; };
 		190F8CF72BC6F70800EDB473 /* IllustrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F8CF62BC6F70800EDB473 /* IllustrationView.swift */; };
+		191A9D162BED00A500028D48 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A9D152BED00A500028D48 /* Version.swift */; };
 		191F62682AD6B05A004D7911 /* NightscoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191F62672AD6B05A004D7911 /* NightscoutSettings.swift */; };
 		1920BF5D2B9DF53200E861FE /* BolusShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */; };
 		19229B962AFBB84800CD91CA /* Predictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19229B952AFBB84800CD91CA /* Predictions.swift */; };
@@ -564,6 +565,7 @@
 		190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatConfigRootView.swift; sourceTree = "<group>"; };
 		190F8CF62BC6F70800EDB473 /* IllustrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllustrationView.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		191A9D152BED00A500028D48 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		191F62672AD6B05A004D7911 /* NightscoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutSettings.swift; sourceTree = "<group>"; };
 		1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusShortcut.swift; sourceTree = "<group>"; };
 		192202902BAB567800B95BE8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1869,6 +1871,7 @@
 				F2159A512BA60F7A00A0B716 /* FontWeight.swift */,
 				F2159A532BA6207F00A0B716 /* ContactTrickEntry.swift */,
 				F270F68C2BAE374C00F6D8DD /* FontTracking.swift */,
+				191A9D152BED00A500028D48 /* Version.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2958,6 +2961,7 @@
 				3811DE4225C9D4A100A708ED /* SettingsDataFlow.swift in Sources */,
 				3811DE2525C9D48300A708ED /* MainRootView.swift in Sources */,
 				CE94598229E9E3D30047C9C6 /* WatchConfigProvider.swift in Sources */,
+				191A9D162BED00A500028D48 /* Version.swift in Sources */,
 				38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */,
 				3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */,
 				FE41E4D629463EE20047FD55 /* NightscoutPreferences.swift in Sources */,
