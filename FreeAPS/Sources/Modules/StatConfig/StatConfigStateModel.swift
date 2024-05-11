@@ -15,6 +15,8 @@ extension StatConfig {
         @Published var hours: Decimal = 6
         @Published var alwaysUseColors: Bool = true
         @Published var timeSettings: Bool = true
+        @Published var minimumSMB: Decimal = 0.3
+        @Published var useInsulinBars: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -32,6 +34,7 @@ extension StatConfig {
             subscribeSetting(\.useTargetButton, on: $useTargetButton) { useTargetButton = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
+            subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
@@ -52,6 +55,12 @@ extension StatConfig {
             subscribeSetting(\.hours, on: $hours.map(Int.init), initial: {
                 let value = max(min($0, 24), 2)
                 hours = Decimal(value)
+            }, map: {
+                $0
+            })
+
+            subscribeSetting(\.minimumSMB, on: $minimumSMB, initial: {
+                minimumSMB = max(min($0, 10), 0)
             }, map: {
                 $0
             })

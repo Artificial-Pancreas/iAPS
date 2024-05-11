@@ -59,6 +59,8 @@ extension Settings {
                     Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
+                    Text("Sharing").navigationLink(to: .sharing, from: self)
+                    Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                 } header: { Text("Extra Features") }
 
                 Section {
@@ -71,22 +73,18 @@ extension Settings {
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                             }
-
-                            HStack {
-                                Text("Delete All NS Overrides")
-                                Button("Delete") { state.deleteOverrides() }
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .buttonStyle(.borderedProminent)
-                                    .tint(.red)
-                            } /*
-
+                            /*
                              HStack {
-                                 Text("Delete latest NS Override")
-                                 Button("Delete") { state.deleteOverride() }
+                                 Text("Delete All NS Overrides")
+                                 Button("Delete") { state.deleteOverrides() }
                                      .frame(maxWidth: .infinity, alignment: .trailing)
                                      .buttonStyle(.borderedProminent)
                                      .tint(.red)
-                             } */
+                             }*/
+
+                            HStack {
+                                Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
+                            }
                         }
                         Group {
                             Text("Preferences")

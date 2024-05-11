@@ -24,6 +24,13 @@ extension StatConfig {
             return formatter
         }
 
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -37,7 +44,15 @@ extension StatConfig {
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)
                     }
+                    Toggle("Use insulin bars", isOn: $state.useInsulinBars)
+                    HStack {
+                        Text("Hide the bolus amount strings when amount is under")
+                        Spacer()
+                        DecimalTextField("0.2", value: $state.minimumSMB, formatter: insulinFormatter)
+                        Text("U").foregroundColor(.secondary)
+                    }
                     Toggle("Display Time Interval Setting Button", isOn: $state.timeSettings)
+
                 } header: { Text("Home Chart settings ") }
 
                 Section {

@@ -284,9 +284,6 @@
 "Save on Pump" = "Auf Pumpe speichern";
 
 /*  */
-"Saving..." = "Speichern...";
-
-/*  */
 "Schedule" = "Zeitplan";
 
 /*  */
@@ -984,25 +981,28 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Gib einen Bolus ein";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Deine aktuelle Glukose ist %@. Bist du sicher, dass du einen Bolus von %@ U Insulin geben willst?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "Ein Bolus Befehl von ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U des Insulins wurde an iAPS geschickt. Überprüfen Sie in iAPS App oder in Nightscout ob der Bolus verabreicht wurde.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "zu kleine Bolus Menge";
 
 /* Bolus shortcut. Error */
 "Bolus Shortcuts are disabled in iAPS settings" = "Bolus Kurzbefehle sind in den iAPS-Einstellungen deaktiviert";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Bolus Menge in U";
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Erlaube iOS Bolus Kurzbefehle";
+
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS-Kurzbefehle";
 
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
@@ -1017,16 +1017,16 @@ Enact a temp Basal or a temp target */
 "Activate an Override Preset" = "Activate an Override Preset";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Erlaube die Aktivierung einer Voreinstellung zu überschreiben.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Welche Voreinstellung möchten Sie aktivieren?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Sind Sie sicher, dass Sie die Überschreibungsvoreinstellung %@ aktivieren wollen?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Die Profilüberschreibung";
 
 /* Override Shortcut */
 "is now activated" = "ist jetzt aktiv";
@@ -1035,7 +1035,7 @@ Enact a temp Basal or a temp target */
 "Cancel active override" = "Profilüberschreibung abbrechen";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Überschreibung abgebrochen";
 
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Activates an %@ Override Preset";
@@ -1229,6 +1229,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Online oder interner Server";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Die neue Empfehlung kann nicht angewendet werden, da zurzeit ein Bolus verabreicht wird. Warten Sie bitte die nächste Schleife ab.";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Fehler: Die Pumpe ist beschäftigt.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1446,7 +1452,7 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Als Profil speichern";
 
 /* */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Speichern als Voreinstellung";
 
 /* Alert */
 "Cancel Profile Override" = "Profilüberschreibung abbrechen?";
@@ -1523,10 +1529,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Zeige Eiweiß & Fett";
 
-
 /* Time of new meal entry */
 "Now" = "Jetzt";
-
 
 /* Display future data table entries */
 "Show Future" = "Zeige Eintragungen in der Zukunft";
@@ -1735,7 +1739,7 @@ Enact a temp Basal or a temp target */
 "Resuming insulin delivery..." = "Insulinabgabe fortsetzen...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Unterbrechung Insulinagabe fehlgeschlagen";
+"Failed to Suspend Insulin Delivery" = "Fehler beim Unterbrechen der Insulinabgabe";
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
@@ -1916,9 +1920,197 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimentell";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Glätten der Glukosewerte";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Frau";
 
+/* */
+"Man" = "Mann";
+
+/* */
+"Other" = "Sonstiges";
+
+/* */
+"Secret" = "Geheim-Schlüssel";
+
+/* */
+"Birth Date" = "Geburtsdatum";
+
+/* */
+"Share all of your Statistics" = "Alle meine Statistiken teilen";
+
+/* */
+"Just iAPS version number" = "Nur iAPS Versionsnummer";
+
+/* */
+"Share Bare Minimum" = "Nur das absolute Minimum teilen";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Alle Informationen, die Sie freigeben möchten, werden anonym hochgeladen. Um doppeltes Hochladen zu verhindern, werden die Daten mit einer eindeutigen, zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird.";
+
+/* */
+"Tap to display" = "Tippen, um anzuzeigen";
+
+/* */
+"Your identifier" = "Ihr Identifikator";
+
+/* */
+"Share your data anonymously" = "Daten anonym teilen";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Kontakt";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Kontakte";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Vergessen Sie nicht, Ihre Änderungen zu speichern.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS benötigt Zugriff auf Ihre Kontakte, um diese Funktion zu nutzen";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "iAPS den Zugriff auf Kontakte gewähren";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Zugriff auf Kontakte verweigert";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Der Zugriff auf Kontakte ist eingeschränkt (elterliche Kontrolle?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Zugriff auf Kontakte - unbekannter Status";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Ein Kontaktbild kann verwendet werden, um Live-Updates von iAPS auf Ihre Apple Watch Kontakt Komplikation und/oder Ihr iPhone Kontakt Widget zu erhalten.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Kontaktbild";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Layout";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Einzeln";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Geteilt";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Nicht anzeigen";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Schleifenstatus";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "Restinsulin (IOB)";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "Rest-Kohlenhydrate (COB)";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "Restinsulin (IOB) + Rest-Kohlenhydrate (COB)";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Primary";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Top";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Bottom";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Ring";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Äußere";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Breite";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Abstand";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Schriftart";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Größe";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Sekundäre Größe";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Tracking";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Gewicht";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Dunkelmodus";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Enger";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Eng";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "im Zielbereich";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Breit";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Leicht";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Normal";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Medium";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Halbfett";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Fett";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Schwarz";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Keiner";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Blutzucker";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Erwarteter BZ";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Differenz";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Trend";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Letzte Schleifenzeit";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "Rest-Kohlenhydrate (COB)";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "Restinsulin (IOB)";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Schleifenstatus";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
@@ -2238,7 +2430,7 @@ Enact a temp Basal or a temp target */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Der neue alternative Bolusrechner ist ein anderer Ansatz als der Standard-Bolusrechner in iAPS. Wenn die Umschaltfunktion aktiviert ist, wird dieser Bolusrechner und nicht der ursprüngliche iAPS-Rechner verwendet. Am Ende der Berechnung wird ein benutzerdefinierter Faktor angewandt, wie es bei der Verwendung von smbs der Fall sein sollte (Standardwert 0,8).\n\nSie können in Ihrem Bolusrechner auch die Option hinzufügen, am Ende der Berechnung einen weiteren (!) benutzerdefinierten Faktor anzuwenden, der für fetthaltige Mahlzeiten, z. B. Pizza, nützlich sein könnte (Standardwert 0,7).";
 
 /* Settings Section */
-"Extra Features" = "Extra Features";
+"Extra Features" = "Zusätzliche Funktionen";
 
 /* UI/UX option */
 "Display Predictions" = "Prognosen anzeigen";

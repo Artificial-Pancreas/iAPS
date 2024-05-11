@@ -171,7 +171,7 @@
 "Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Không pod";
+"No Pod" = "Không có pod";
 
 /* Pod life HUD view label */
 "Fault" = "Lỗi";
@@ -623,7 +623,7 @@
 "Rate" = "Tỷ lệ";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/giờ";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ cho %2$@";

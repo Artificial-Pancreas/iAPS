@@ -100,7 +100,7 @@
 "Updating diagnostic LEDs mode" = "Actualización del modo LED de diagnóstico";
 
 /* The title of the cell showing uptime */
-"Uptime" = "Uptime";
+"Uptime" = "Tiempo de actividad";
 
 /* The title of the cell showing ORL */
 "Voltage" = "Voltaje";
