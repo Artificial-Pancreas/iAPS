@@ -1969,6 +1969,9 @@ Ajustes predeterminados:\n
 /* */
 "Share your data anonymously" = "Comparta sus datos anónimamente";
 
+/* Setting Title */
+"Sharing" = "Sharing";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
