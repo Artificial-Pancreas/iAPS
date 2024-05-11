@@ -284,9 +284,6 @@
 "Save on Pump" = "Elmentés a pumpán";
 
 /*  */
-"Saving..." = "Mentés...";
-
-/*  */
 "Schedule" = "Ütemezés";
 
 /*  */
@@ -1004,6 +1001,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS Shortcuts";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
 
@@ -1229,6 +1229,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Online or internal server";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Error: Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1529,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Display Protein & Fat";
 
-
 /* Time of new meal entry */
 "Now" = "Now";
-
 
 /* Display future data table entries */
 "Show Future" = "Show Future";
@@ -1916,9 +1920,200 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimental";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Nő";
 
+/* */
+"Man" = "Férfi";
+
+/* */
+"Other" = "Egyéb";
+
+/* */
+"Secret" = "Titok";
+
+/* */
+"Birth Date" = "Születési dátum";
+
+/* */
+"Share all of your Statistics" = "Összes statisztika megosztása";
+
+/* */
+"Just iAPS version number" = "Csak az iAPS verzió száma";
+
+/* */
+"Share Bare Minimum" = "Lehető legkevesebb adat megosztása";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Minden egyes megosztani kívánt információ névtelenül kerül feltöltésre. A duplikált feltöltések elkerülése érdekében az adatokat egy egyedi, véletlenszerű karakterlánc azonosítja, amelyet a telefonján tárolunk.";
+
+/* */
+"Tap to display" = "Érintsd meg a megjelenítéshez";
+
+/* */
+"Your identifier" = "Az ön azonosítója";
+
+/* */
+"Share your data anonymously" = "Névtelen adatmegosztás";
+
+/* Setting Title */
+"Sharing" = "Megosztás";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Névjegy";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Névjegyek";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Ne felejtse el elmenteni a változtatásokat.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "Az iAPS-nek hozzáférésre van szüksége a névjegyeihez ahhoz, hogy ez a funkció működjön";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "iAPS-hozzáférés biztosítása a névjegyeihez";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Névjegyeihez való hozzáférés megtagadva";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "A névjegyeihez való hozzáférés korlátozott (szülői felügyelet?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Hozzáférés a névjegyeihez - ismeretlen állapot";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A névjegy képe segítségével élő frissítéseket kaphat az iAPS-től az Apple Watch névjegy komplikációjára és/vagy az iPhone névjegy widgetjére.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Profil kép";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Elrendezés";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Egyedülálló";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Szétválaszt";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Ne mutasd";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Loop állapota";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "Aktív inzulin (IOB)";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "Aktív szénhidrát (COB)";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Elsődleges";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Felső";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Alsó";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Gyűrű";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Külső";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Szélesség";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Rés";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Betűtípus";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Méret";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Másodlagos méret";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Követés";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Súly";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Sötét mód";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Szorosabb";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Szoros";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "Normal";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Széles";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Könnyű";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Hagyományos";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Közepes";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Félkövér";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Kövér";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Fekete";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "None";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Glükóz";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Végleges BG";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Delta";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Trend";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Utolsó loop ideje";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "Aktív szénhidrát (COB)";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "Aktív inzulin (IOB)";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Loop állapota";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */

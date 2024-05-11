@@ -4,20 +4,20 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "Lisää insuliinia ilman varsinaista bonuksen lisäystä";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "Lisää %@ ilman bolusta";
 
-"Bolus" = "Bolus";
+"Bolus" = "Lisäannos";
 
 "Close" = "Sulje";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "Jatka ilman lisäannosta";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Tallenna ateria ilman bolusta";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Tila";
@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nMäärä on isompi kuin sinun maksimi Bolus asetus\nOletko varma, että haluat lisätä ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "Lisää bonus";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "Lisää bonus";
 
 /*  */
 "Insulin recommended" = "Suositeltu insuliini";
@@ -47,13 +47,13 @@
 "Done" = "Valmis";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Näytä etiketissä emojit";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Näytä IOB ja COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Vahvista Bolus Nopeammaksi";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -65,31 +65,31 @@
 "Agree and continue" = "Hyväksy ja jatka";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "jostakin";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "Etä Bolus ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "on toimitettu";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuutti sitten, trikkeröity etänä Nightscoutissa, huoltaja tai vanhempi. Haluatko silti antaa boluksen? \n\n Ennustettu lopullinen verensokeri, jos et anna bolusta, ja: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "Etä bolus on juuri toimitettu!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "Annettu klo";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "Ehdotettu klo";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Error at" = "Virhe klo";
 
 /* Bolus View Meal Summary Header */
-"Meal Summary" = "Meal Summary";
+"Meal Summary" = "Aterian yhteenveto";
 
 /* Bolus View Meal Edit Meal Button */
 "Edit Meal" = "Muokkaa ateriaa";
@@ -110,16 +110,16 @@
 "Full Bolus" = "Täysi bolus";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fraction";
+"Fraction" = "Jae";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fatty Meal Factor";
+"Fatty Meal Factor" = "Rasvaisen aterian kerroin";
 
 /* For the  Bolus View pop-up */
 "Result" = "Tulos";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Syöttämäsi määeä on rajoitettu maksimi Bolus asetuksen mukaan %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Jatka";
@@ -128,16 +128,16 @@
 "Home" = "Koti";
 
 /* Looping in progress */
-"looping" = "looping";
+"looping" = "silmukointi";
 
 /* min ago since last loop */
 "min ago" = "minuuttia sitten";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "Ei ehdotuksia";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "Vaihda pumppu";
 
 /* Add carbs screen */
 "Add Carbs" = "Lisää hiilihydraatit";
@@ -167,7 +167,7 @@
 "Cancel" = "Peru";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Peruuta väliaikainen tavoite";
 
 /* Custom temp target */
 "Custom" = "Muokattu";
@@ -179,58 +179,58 @@
 "Delete" = "Poista";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "Poista esiasetus \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Kesto";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Aktivoi väliaikainen tavoite";
 
 /* */
 "Target" = "Tavoite";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "Perusinsuliinin ja herkkyyden suhde";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Alempi asetus \"puolikkaasta perusinsuliinista\" vähentää perusinsuliinia ja nostaa insuliinin herkkyysarvoa aikaisemmin alemmassa tavoitesokeritasossa.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Asetuksesi: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max rajoittaa maksimiarvon";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Syötä esiasetuksen nimi";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Nimi";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minuuttia";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Esiasetukset";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Tallenna";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Tallenna esiasetuksena";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Poista esiasetus";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Poistetaanko esiasetus '%@'?";
 
 /* Button */
-"No" = "No";
+"No" = "Ei";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Kyllä";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -239,10 +239,10 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Yläraja";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "varten";
 
 /*  Temp target set for ... minutes */
 "min" = "min.";
@@ -251,58 +251,55 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Perusinsuliiniprofiili";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Hiilihydraattisuhde";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Poista autotune tiedot";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Suorita nyt";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Edellinen ajo";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Herkkyys";
 
 /*  */
 "Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Lisää";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Perusinsuliiniprofiili";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Arvo";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Tallenna pumppuun";
 
 /*  */
-"Saving..." = "Saving...";
+"Schedule" = "Aikataulu";
 
 /*  */
-"Schedule" = "Schedule";
-
-/*  */
-"starts at" = "starts at";
+"starts at" = "aloitusaika";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Aika";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Laskettu suhde";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Hiilihydraattisuhde";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Suhde";
 
 /*  */
 "Autosens" = "Autosens";
@@ -314,13 +311,13 @@
 "Insulin Sensitivities" = "Insuliinin herkkyys";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Herkkyyssuhde";
 
 /*  */
 "Dismiss" = "Hylkää";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Tärkeä viesti";
 
 /*  */
 "Amount" = "Määrä";
@@ -333,55 +330,55 @@ Enact a temp Basal or a temp target */
 "Enact" = "Aktivoi";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "Aloita";
 
 /* */
 "Manual Temp Basal" = "Väliaikainen basaali";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Salli lataaminen";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API-salasana";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Yhdistä";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Yhdistetty!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Yhdistetään...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Virheellinen URL-osoite";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Paikallinen verensokerin lähde";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscoutin Asetukset";
 
 /*  */
-"Port" = "Port";
+"Port" = "Portti";
 
 /*  */
-"URL" = "URL";
+"URL" = "URL-osoite";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Käytä paikallista verensokeripalvelinta";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Tämä mahdollistaa tilastojen lähettämisen Nightscoutiin, jota voidaan käyttää yhteisön tilastoja ja väestökehitystä koskevassa hankkeessa.\n\nOsallistuminen yhteisön tilastoihin on vapaaehtoista ja se edellyttää erillistä rekisteröitymistä:\n";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Muokkaa asetuksia";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Verensokeriyksikkö";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Määritykset";
 
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Recommended Insulin Fraction";
@@ -1004,6 +1001,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS Shortcuts";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
 
@@ -1230,6 +1230,12 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online or internal server";
 
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Error: Pump is Busy.";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1254,7 +1260,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
 
 /* */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Tallenna pumppuun";
 
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
@@ -1452,7 +1458,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Cancel Profile Override";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Peruuta väliaikainen tavoite";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
@@ -1515,7 +1521,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Tallenna esiasetuksena";
 
 /* */
 "Predictions" = "Predictions";
@@ -1523,10 +1529,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Display Protein & Fat";
 
-
 /* Time of new meal entry */
 "Now" = "Now";
-
 
 /* Display future data table entries */
 "Show Future" = "Show Future";
@@ -1623,7 +1627,7 @@ Enact a temp Basal or a temp target */
 "Saving..." = "Saving...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Save";
+"Save" = "Tallenna";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
@@ -1676,7 +1680,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Arvo";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -1859,7 +1863,7 @@ Enact a temp Basal or a temp target */
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "Kesto";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -1916,9 +1920,200 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimental";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Woman";
 
+/* */
+"Man" = "Man";
+
+/* */
+"Other" = "Other";
+
+/* */
+"Secret" = "Secret";
+
+/* */
+"Birth Date" = "Birth Date";
+
+/* */
+"Share all of your Statistics" = "Share all of your Statistics";
+
+/* */
+"Just iAPS version number" = "Just iAPS version number";
+
+/* */
+"Share Bare Minimum" = "Share Bare Minimum";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+
+/* */
+"Tap to display" = "Tap to display";
+
+/* */
+"Your identifier" = "Your identifier";
+
+/* */
+"Share your data anonymously" = "Share your data anonymously";
+
+/* Setting Title */
+"Sharing" = "Sharing";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Contact";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Contacts";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Don't forget to save your changes.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Access to contacts denied";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Access to contacts - unknown state";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Contact Image";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Layout";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Single";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Split";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Don't show";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Loop status";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "IOB";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "COB";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Primary";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Top";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Bottom";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Ring";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Outer";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Width";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Gap";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Font";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Size";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Secondary size";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Tracking";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Weight";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Dark mode";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Tighter";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Tight";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "Normal";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Wide";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Light";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Regular";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Medium";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Semibold";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Bold";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Black";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Ei mitään";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Glucose";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Eventual BG";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Delta";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Trend";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Last loop time";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "COB";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "IOB";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Loop status";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */

@@ -129,4 +129,37 @@ final class CoreDataStorage {
         }
         return suggestion.first
     }
+
+    func saveStatUploadCount() {
+        coredataContext.performAndWait { [self] in
+            let saveStatsCoreData = StatsData(context: self.coredataContext)
+            saveStatsCoreData.lastrun = Date()
+            try? self.coredataContext.save()
+        }
+        UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
+    }
+
+    func saveVNr(_ versions: Version?) {
+        if let version = versions {
+            coredataContext.performAndWait { [self] in
+                let saveNr = VNr(context: self.coredataContext)
+                saveNr.nr = version.main
+                saveNr.dev = version.dev
+                saveNr.date = Date.now
+                try? self.coredataContext.save()
+            }
+        }
+    }
+
+    func fetchVNr() -> VNr? {
+        var nr = [VNr]()
+        coredataContext.performAndWait {
+            let requestNr = VNr.fetchRequest() as NSFetchRequest<VNr>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestNr.sortDescriptors = [sort]
+            requestNr.fetchLimit = 1
+            try? nr = coredataContext.fetch(requestNr)
+        }
+        return nr.first
+    }
 }

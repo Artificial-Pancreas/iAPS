@@ -21,6 +21,10 @@ public enum IAPSconfig {
     static let glassShadowOpacity: CGFloat = 0.6
     static let shadowFraction: CGFloat = 2
     static let minimumCarbEquivalent: Decimal = 0.6
+    static let id = "iAPS.identifier"
+    static let version = "iAPS.version"
+    static let newVersion = "iAPS.newVersion"
+    static let statURL = URL(string: "https://submit.open-iaps.app")!
 }
 
 extension Font {

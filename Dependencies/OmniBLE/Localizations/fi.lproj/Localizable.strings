@@ -129,7 +129,7 @@
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "minuuttia";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -294,7 +294,7 @@
 "Resume" = "Resume";
 
 /* */
-"Bolus" = "Bolus";
+"Bolus" = "Lisäannos";
 
 /* */
 "Cancel Bolus" = "Cancel Bolus";
@@ -511,10 +511,10 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "Kyllä";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Ei";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
@@ -535,7 +535,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
-"Time" = "Time";
+"Time" = "Aika";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Finish Setup";
@@ -588,7 +588,7 @@
 "Notification Settings" = "Notification Settings";
 
 /* Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "Aika";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -620,7 +620,7 @@
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Arvo";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -724,7 +724,7 @@
 "Low Reservoir" = "Low Reservoir";
 
 /* */
-"Save" = "Save";
+"Save" = "Tallenna";
 
 /* hr (short for hour) */
 "hr" = "hr";

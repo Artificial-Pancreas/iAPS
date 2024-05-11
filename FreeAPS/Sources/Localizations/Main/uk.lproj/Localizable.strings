@@ -284,9 +284,6 @@
 "Save on Pump" = "Зберегти на Помпі";
 
 /*  */
-"Saving..." = "Збереження...";
-
-/*  */
 "Schedule" = "Розклад";
 
 /*  */
@@ -1004,6 +1001,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Дозволити ярлик Болюсу iOS";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "Ярлики iOS";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Якщо ви ввімкнете це налаштування, ви зможете використовувати ярлики iOS та їх автоматичні засоби для запуску болюсу в iAPS.\n\nЗверніть увагу, що ярлики iOS також працюють із Siri!\n\nЯкщо вам потрібно використовувати ярлики болюсу, переконайтеся, що щоб вимкнути прослуховування параметра «Привіт, Сірі» в налаштуваннях iPhone Siri, щоб уникнути будь-якої випадкової активації болюсу за допомогою Siri.\nЯкщо ви не вимкнете «Привіт, Сірі», ярлик болюсу iAPS можна запустити за допомогою виголошення «Привіт». Siri, iAPS Bolus'.\n\nПісля запуску за допомогою Siri вам буде запропоновано ввести суму та підтвердження, перш ніж команду болюсу можна буде надіслати в iAPS.";
 
@@ -1229,6 +1229,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Онлайн або внутрішній сервер";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Неможливо виконати рекомендацію щодо нового циклу петлі, оскільки триває болюс. Зачекайте наступного циклу петлі";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Помилка: Помпа зайнята.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1523,10 +1529,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Показати білок і жир";
 
-
 /* Time of new meal entry */
 "Now" = "Щойно";
-
 
 /* Display future data table entries */
 "Show Future" = "Показати Майбутнє";
@@ -1916,9 +1920,200 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Експериментальний";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Гладке Значення Глюкози";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Жінка";
 
+/* */
+"Man" = "Чоловік";
+
+/* */
+"Other" = "Інше";
+
+/* */
+"Secret" = "Секретний ключ";
+
+/* */
+"Birth Date" = "Дата народження";
+
+/* */
+"Share all of your Statistics" = "Поділіться своєю Статистикою";
+
+/* */
+"Just iAPS version number" = "Номер версії iAPS";
+
+/* */
+"Share Bare Minimum" = "Мінімум розподілу";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Кожна інформація, якою ви вирішите поділитися, завантажується анонімно. Щоб запобігти повторним завантаженням, дані ідентифікуються за допомогою унікального випадкового рядка, збереженого на вашому телефоні.";
+
+/* */
+"Tap to display" = "Натисніть для відображення";
+
+/* */
+"Your identifier" = "Ваш ідентифікатор";
+
+/* */
+"Share your data anonymously" = "Надсилайте свої дані анонімно";
+
+/* Setting Title */
+"Sharing" = "Поширити";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Контакт";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Контакти";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Не забудьте зберегти зміни!";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "Для роботи цієї функції iAPS потрібен доступ до ваших контактів";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Надати iAPS доступ до контактів";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Доступ до контактів заборонено";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Доступ до контактів обмежений (батьківський контроль?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Доступ до контактів - невідомий стан";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Зображення контакту можна використовувати для отримання поточних оновлень від iAPS для вашої складності контактів Apple Watch та/або віджета контактів iPhone.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Зображення контакту";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Макет";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Одиночний";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Розділити";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Не показувати";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Статус петлі";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "IOB";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "COB";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Основний";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Вгору";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Внизу";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Дзвінок";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Зовнішній";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Ширина";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Проміжок";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Шрифт";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Розмір";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Додатковий розмір";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Відстеження";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Вага";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Темний режим";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Вантаж";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Щільний";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "Нормальний";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Широкий";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Світлий";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Звичайний";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Середня";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Напівжирний";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Жирний";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Чорна";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Жоден";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Глюкоза";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Подіївний BG";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Дельта";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Тренди";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Час останньої петлі";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "COB";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "IOB";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Статус петлі";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */

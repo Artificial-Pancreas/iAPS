@@ -56,6 +56,7 @@ import Swinject
             .default,
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
+        isNewVersion()
         loadServices()
     }
 
@@ -78,6 +79,19 @@ import Swinject
         case "device-select-resp":
             resolver.resolve(NotificationCenter.self)!.post(name: .openFromGarminConnect, object: url)
         default: break
+        }
+    }
+
+    private func isNewVersion() {
+        let userDefaults = UserDefaults.standard
+        var version = userDefaults.string(forKey: IAPSconfig.version) ?? ""
+
+        guard version.count > 1, version == (Bundle.main.releaseVersionNumber ?? "") else {
+            version = Bundle.main.releaseVersionNumber ?? ""
+            userDefaults.set(version, forKey: IAPSconfig.version)
+            userDefaults.set(true, forKey: IAPSconfig.newVersion)
+            debug(.default, "Running new version: \(version)")
+            return
         }
     }
 }

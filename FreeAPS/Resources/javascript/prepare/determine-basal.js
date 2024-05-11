@@ -1,7 +1,6 @@
 //для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
 
 function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, dynamicVariables) {
-    
     // Needs to be updated here due to time format).
     clock = new Date()
     
@@ -29,9 +28,9 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
             // ISF and CR
             if (dynamicVariables.isfAndCr) {
                 profile.sense /= factor;
-                carbRatio /= factor;
+                profile.carb_ratio /= factor;
             } else {
-                if (dynamicVariables.cr) { profile.carbRatio /= factor; }
+                if (dynamicVariables.cr) { profile.carb_ratio /= factor; }
                 if (dynamicVariables.isf) { profile.sens /= factor; }
             }
             console.log("Override Active, " + dynamicVariables.overridePercentage + "%");
@@ -60,7 +59,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         }
         
         // Max IOB
-        if (dynamicVariables.advancedSettings && dynamicVariables.maxIOB !== profile.maxIOB) {
+        if (dynamicVariables.advancedSettings && dynamicVariables.overrideMaxIOB) {
             profile.max_iob = dynamicVariables.maxIOB;
             console.log("Override Active, new maxIOB: " + profile.max_iob);
         }

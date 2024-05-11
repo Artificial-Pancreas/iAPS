@@ -183,7 +183,6 @@ extension Bolus {
                 label: { Text("Cancel") }
             )
             .popup(isPresented: presentInfo, alignment: .bottom, direction: .bottom, type: .default) {
-                // GlucoseTrendView(insulinRequired: $state.insulinCalculated)
                 formulasView()
             }
         }
@@ -195,7 +194,8 @@ extension Bolus {
         var predictionChart: some View {
             ZStack {
                 PredictionView(
-                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG, target: $state.target,
+                    predictions: $state.predictions, units: $state.units, eventualBG: $state.evBG,
+                    useEventualBG: $state.eventualBG, target: $state.target,
                     displayPredictions: $state.displayPredictions, currentGlucose: $state.currentBG
                 )
             }

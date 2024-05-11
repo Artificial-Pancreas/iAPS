@@ -296,6 +296,10 @@ final class OpenAPS {
                 } else {
                     insertedResons += ", Dynamic ISF/CR: On/Off"
                 }
+                if let tddFactor = readMiddleware(json: profile, variable: "tdd_factor"), tddFactor.count > 1 {
+                    insertedResons += ", Basal Adjustment: \(tddFactor)"
+                }
+
                 insertedResons += tddString
                 reasonString.insert(contentsOf: insertedResons, at: startIndex)
                 // Autosens
@@ -432,7 +436,7 @@ final class OpenAPS {
 
             let settings = self.loadFileFromStorage(name: FreeAPS.settings)
             let settingsData = FreeAPSSettings(from: settings)
-            let disableCGMError = settingsData?.disableCGMError ?? false
+            let disableCGMError = settingsData?.disableCGMError ?? true
 
             let cd = CoreDataStorage()
             // TDD
@@ -459,6 +463,7 @@ final class OpenAPS {
             var overridePercentage = Decimal(overrideArray.first?.percentage ?? 100)
             var unlimited = overrideArray.first?.indefinite ?? true
             var disableSMBs = overrideArray.first?.smbIsOff ?? false
+            let overrideMaxIOB = overrideArray.first?.overrideMaxIOB ?? false
             let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0) as NSDecimalNumber
 
             if indeces == 0 {
@@ -542,6 +547,7 @@ final class OpenAPS {
                 smbMinutes: (overrideArray.first?.smbMinutes ?? smbMinutes) as Decimal,
                 uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal,
                 maxIOB: maxIOB as Decimal,
+                overrideMaxIOB: overrideMaxIOB,
                 disableCGMError: disableCGMError
             )
             storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)

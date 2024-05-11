@@ -385,7 +385,7 @@
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "minuuttia";
 
 /* Alert title for missing temp basal configuration */
 "Missing Config" = "Missing Config";
@@ -399,7 +399,7 @@
 "Next" = "Next";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "Ei";
 
 /* Text shown in insulin remaining space when no pod is paired */
 "No\nDelivery" = "No\nDelivery";
@@ -547,7 +547,7 @@
 "Pump Time" = "Pump Time";
 
 /* Label text for basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Arvo";
 
 /* Label describing time remaining view */
 "Remaining" = "Jäljellä";
@@ -763,7 +763,7 @@
 "Wait until insertion is completed." = "Wait until insertion is completed.";
 
 /* Button label for user to answer cannula was properly inserted */
-"Yes" = "Yes";
+"Yes" = "Kyllä";
 
 /* Button title for confirm deactivation option */
 "Yes, Deactivate Pod" = "Yes, Deactivate Pod";
