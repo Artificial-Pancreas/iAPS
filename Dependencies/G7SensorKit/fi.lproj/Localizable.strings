@@ -45,14 +45,14 @@
 
 "Last Reading" = "Last Reading";
 
-"Time" = "Time";
+"Time" = "Aika";
 
 "Trend" = "Trend";
 
 "Bluetooth" = "Bluetooth";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "Nimi";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "Scanning";
