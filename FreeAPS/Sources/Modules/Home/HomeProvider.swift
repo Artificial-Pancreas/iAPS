@@ -28,6 +28,10 @@ extension Home {
         var enactedSuggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
+        
+        func reasons() -> [Reasons] {
+            CoreDataStorage().fetchReasons(interval: DateFilter().day)
+        }
 
         func pumpTimeZone() -> TimeZone? {
             apsManager.pumpManager?.status.timeZone

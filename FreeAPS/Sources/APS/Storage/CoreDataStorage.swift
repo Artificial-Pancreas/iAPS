@@ -129,6 +129,20 @@ final class CoreDataStorage {
         }
         return suggestion.first
     }
+    
+    func fetchReasons(interval: NSDate) -> [Reasons] {
+        var reasonArray = [Reasons]()
+        coredataContext.performAndWait {
+            let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestReasons.sortDescriptors = [sort]
+            requestReasons.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? reasonArray = self.coredataContext.fetch(requestReasons)
+        }
+        return reasonArray
+    }
 
     func saveStatUploadCount() {
         coredataContext.performAndWait { [self] in
