@@ -1958,6 +1958,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Share your data anonymously" = "Chia sẻ dữ liệu của bạn ẩn danh";
 
+/* Setting Title */
+"Sharing" = "Chia sẻ";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 

@@ -1316,7 +1316,7 @@ Enact a temp Basal or a temp target */
 
 /* New ALerts ------------------------- */
 /* Info title */
-"Info" = "Infó";
+"Info" = "Info";
 
 /* Warning title */
 "Warning" = "Warning";
@@ -1957,6 +1957,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Névtelen adatmegosztás";
+
+/* Setting Title */
+"Sharing" = "Megosztás";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
