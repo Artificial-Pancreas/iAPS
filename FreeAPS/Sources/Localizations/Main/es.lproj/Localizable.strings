@@ -2062,40 +2062,40 @@ Ajustes predeterminados:\n
 "Tracking" = "Espaciado horizontal";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Capitalización";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Modo oscuro";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Menor separación ";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Sin separación";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Normal";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Más separación";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Suave";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Normal";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Medio";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Seminegrita";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Negrita";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Negra";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Ninguno";
@@ -2104,7 +2104,7 @@ Ajustes predeterminados:\n
 "GlucoseContactValue" = "Glucosa";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Glucemia eventual";
 
 /* Contact Image, settings, Delta (data to display) */
 "DeltaContactValue" = "Delta";
@@ -2113,7 +2113,7 @@ Ajustes predeterminados:\n
 "TrendContactValue" = "Tendencia";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Última hora del lazo";
 
 /* Contact Image, settings, COB (data to display) */
 "COBContactValue" = "COB";
@@ -2392,7 +2392,7 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Por defecto comienza en 30. Este es el máximo de minutos de basal que se puede entregar como un solo SMB con COB no cubiertos. Esto da la capacidad de hacer los SMB más agresivos si lo desea. Se recomienda que el valor se establezca a partir de 30, en línea con el valor predeterminado, y si decide aumentar este valor, hacerlo en incrementos de no más de 15 minutos, vigilando de cerca los efectos de los cambios. No se recomienda establecer este valor superior a 90 minutos, ya que esto puede afectar a la capacidad del algoritmo para poner suspender la basal temporalmente. Se recomienda también usar Pushover cuando se establezca un valor mayor que el predeterminado, para que las alarmas se generen para cualquier hipo o hiper prevista.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Max UAM SMB Basal Minutes";
+"Max UAM SMB Basal Minutes" = "Máximo tiempo de basal en SMB de UAM";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Por defecto comienza en 30. Este es el máximo de minutos de basal que UAM puede entregar como un solo SMB cuando la insulina activa excede los carbohidratos activos. Esto da la capacidad de hacer UAM más o menos agresivo si lo desea. Se recomienda que el valor se establezca a partir de 30, en línea con el valor predeterminado, y si decide aumentar este valor, hacerlo en incrementos de no más de 15 minutos, vigilando de cerca los efectos de los cambios. Reducir el valor hará que UAM inyecte menos insulina para cada SMB. No se recomienda establecer este valor superior a 60 minutos, ya que esto puede afectar a la capacidad del algoritmo de suspender la basal temporalmente. También se recomienda que Pushover sea usado cuando se establece que el valor es mayor de lo predeterminado, para que las alertas se generen para cualquier bajo o alto previsto.";
@@ -2416,7 +2416,7 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tiempo del máximo efecto de disminución de glucosa de la insulina, en minutos. Atención: el algoritmo Oref asume para la insulina ultra-rápida (Lyumjev) y rápida (Fiasp) unas curvas de tiempo pico de la insulina mínimas de 35 y 50 mins, y máximas de 100 y 120 mins, respectivamente. Utilizar un tiempo de efecto diferente fuera de estos límites resultará en problemas con iAPS, cálculos entre ciclos más largos y posiblemente errores de Lazo (en rojo).";
 
 /* Headline "Carbs Req Threshold" */
-"Carbs Req Threshold" = "Carbs Req Threshold";
+"Carbs Req Threshold" = "Umbral de carbohidratos requeridos";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Gramos de carbsReq para activar un Pushover. Por defecto es 1 (para 1 gramo de hidratos de carbono). Se puede aumentar si sólo quiere obtener Pushovers con carbsReq en X umbral.";
@@ -2490,19 +2490,19 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Esta opción le permite elegir un nivel por debajo del cual no se administrará insulina.\n\nEl umbral está utilizando la mayor cantidad de la configuración de su umbral y el umbral calculado:\n\nObjetivo de glucosa - (Objetivo de glucosa - 40) / 2\n, utilizando mg/dl como unidad de medición.\n\nPor ejemplo, si tu objetivo de glucosa es ";
 
 /* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "the threshold will be ";
+"the threshold will be " = "el límite será ";
 
 /* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "unless your threshold setting is set higher:";
+"unless your threshold setting is set higher:" = "a menos que la configuración de umbral sea más alta:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Setting";
+"Setting" = "Configuración";
 
 /* Threshold Table Columns Title */
-"Threshold" = "Threshold";
+"Threshold" = "Limite";
 
 /* Header */
-"Calculator settings" = "Calculator settings";
+"Calculator settings" = "Ajustes de la calculadora";
 
 /* Bolus Calculator Setting */
 "Use alternate Bolus Calculator" = "Usar calculadora alternativa";
@@ -2520,10 +2520,10 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Extra Features" = "Funciones adicionales";
 
 /* UI/UX option */
-"Display Predictions" = "Display Predictions";
+"Display Predictions" = "Mostrar predicciones";
 
 /* UI/UX option */
-"Smaller iPhone Screens" = "Smaller iPhone Screens";
+"Smaller iPhone Screens" = "Pantallas de iPhone más pequeñas";
 
 /* UI/UX option */
 "Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
