@@ -993,7 +993,7 @@ Enact a temp Basal or a temp target */
 "too small bolus amount" = "zu kleine Bolus Menge";
 
 /* Bolus shortcut. Error */
-"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Kurzbefehle sind in den iAPS-Einstellungen deaktiviert";
+"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Kurzbefehle sind in den iAPS Einstellungen deaktiviert";
 
 /* Bolus shortcut */
 "Bolus Amount in U" = "Bolus Menge in U";
@@ -1002,13 +1002,13 @@ Enact a temp Basal or a temp target */
 "Allow iOS Bolus Shortcuts" = "Erlaube iOS Bolus Kurzbefehle";
 
 /* Bolus shortcut setting. Header */
-"iOS Shortcuts" = "iOS-Kurzbefehle";
+"iOS Shortcuts" = "iOS Kurzbefehle";
 
 /* Bolus shortcut. Pop-up */
-"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Wenn Sie diese Einstellung aktivieren, können Sie mit iOS-Verknüpfungen und deren Automatisierungen einen Bolus in iAPS auslösen.\n\nBedenken Sie, dass die iOS Kurzbehehle auch mit Siri funktionieren!\n\nWenn Sie Bolus Kurzbefehle verwenden möchten, bitte vergewissern Sie sich, die \"Hey Siri\"-Einstellung in den iPhone Siri Einstellungen auszuschalten, um unbeabsichtigte Aktivierungen eines Bolus mit Siri zu vermeiden.\nWenn Sie 'Hey Siri' nicht deaktivieren, kann der iAPS bolus Kurzbefehl mit der Äußerung 'Hey Siri, iAPS Bolus' ausgelöst werden.\n\nWenn durch Siri ausgelöst, werden Sie nach einem Menge und einer Bestätigung gefragt, bevor der Bolus-Befehl an iAPS gesendet werden kann.";
 
 /* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+"Max allowed bolus amount using shortcuts " = "Maximal erlaubter Bolus durch Kurzbefehle ";
 
 /* Bolus shortcut. Error */
 "not available" = "nicht verfügbar";
@@ -1923,10 +1923,10 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Frau";
+"Woman" = "Weiblich";
 
 /* */
-"Man" = "Mann";
+"Man" = "Männlich";
 
 /* */
 "Other" = "Sonstiges";
@@ -1959,7 +1959,7 @@ Enact a temp Basal or a temp target */
 "Share your data anonymously" = "Daten anonym teilen";
 
 /* Setting Title */
-"Sharing" = "Sharing";
+"Sharing" = "Datenübermittlung";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
