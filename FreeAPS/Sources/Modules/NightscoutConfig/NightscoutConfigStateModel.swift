@@ -212,7 +212,7 @@ extension NightscoutConfig {
 
                         let sensitivities = fetchedProfile.sens.map { sensitivity -> InsulinSensitivityEntry in
                             InsulinSensitivityEntry(
-                                sensitivity: self.units == .mmolL ? sensitivity.value : sensitivity.value.asMgdL,
+                                sensitivity: sensitivity.value,
                                 offset: self.offset(sensitivity.time) / 60,
                                 start: sensitivity.time
                             )
@@ -233,8 +233,8 @@ extension NightscoutConfig {
                         let targets = fetchedProfile.target_low
                             .map { target -> BGTargetEntry in
                                 BGTargetEntry(
-                                    low: self.units == .mmolL ? target.value : target.value.asMgdL,
-                                    high: self.units == .mmolL ? target.value : target.value.asMgdL,
+                                    low: target.value,
+                                    high: target.value,
                                     start: target.time,
                                     offset: self.offset(target.time) / 60
                                 ) }

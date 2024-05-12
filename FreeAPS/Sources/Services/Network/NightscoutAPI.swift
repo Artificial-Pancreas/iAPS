@@ -497,7 +497,7 @@ extension NightscoutAPI {
         components.scheme = statURL.scheme
         components.host = statURL.host
         components.port = statURL.port
-        components.path = Config.versionPath
+        components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
