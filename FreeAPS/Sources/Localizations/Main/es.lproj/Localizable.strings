@@ -1943,7 +1943,7 @@ Ajustes predeterminados:\n
 "Other" = "Otro";
 
 /* */
-"Secret" = "Secret";
+"Secret" = "Anónimo";
 
 /* */
 "Birth Date" = "Fecha de nacimiento";
@@ -1970,7 +1970,7 @@ Ajustes predeterminados:\n
 "Share your data anonymously" = "Comparta sus datos anónimamente";
 
 /* Setting Title */
-"Sharing" = "Sharing";
+"Sharing" = "Compartir";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -1999,7 +1999,7 @@ Ajustes predeterminados:\n
 "Access to contacts - unknown state" = "Acceso a contactos - estado desconocido";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Se puede utilizar una imagen de contacto para obtener actualizaciones en vivo de iAPS en las complicación de contacto de Apple Watch y/o el widget de contactos de su iPhone.";
 
 /* Contact Image, settings, main header */
 "Contact Image" = "Contact Image";
