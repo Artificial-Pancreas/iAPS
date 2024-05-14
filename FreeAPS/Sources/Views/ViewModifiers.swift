@@ -12,7 +12,8 @@ struct RoundedBackground: ViewModifier {
         content
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                Rectangle()
+                    // RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill()
                     .foregroundColor(color)
             )
@@ -30,10 +31,21 @@ struct CapsulaBackground: ViewModifier {
         content
             .padding()
             .background(
-                Capsule()
+                Rectangle()
+                    // Capsule()
                     .fill()
                     .foregroundColor(color)
             )
+    }
+}
+
+struct CompactSectionSpacing: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            return content
+                .listSectionSpacing(.compact)
+        } else {
+            return content }
     }
 }
 
@@ -106,7 +118,8 @@ struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        RoundedRectangle(cornerRadius: 15)
+        Rectangle()
+            // RoundedRectangle(cornerRadius: 15)
             .fill(
                 colorScheme == .dark ? .black :
                     Color.white
@@ -130,7 +143,7 @@ struct LoopEllipse: View {
     let stroke: Color
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: 2)
+            .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 1)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
@@ -153,6 +166,21 @@ struct HeaderBackground: View {
     var body: some View {
         Rectangle()
             .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1))
+    }
+}
+
+struct ClockOffset: View {
+    let mdtPump: Bool
+    var body: some View {
+        ZStack {
+            Image(systemName: "clock.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 20)
+                .symbolRenderingMode(.palette)
+                .foregroundStyle(Color(.warning))
+                .offset(x: 10, y: !mdtPump ? -20 : -13)
+        }
     }
 }
 
@@ -290,6 +318,10 @@ extension View {
         onTapGesture {
             view.state.showModal(for: screen)
         }
+    }
+
+    func compactSectionSpacing() -> some View {
+        modifier(CompactSectionSpacing())
     }
 
     func asAny() -> AnyView { .init(self) }

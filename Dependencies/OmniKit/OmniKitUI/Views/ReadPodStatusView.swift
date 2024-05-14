@@ -15,7 +15,7 @@ struct ReadPodStatusView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    var toRun: ((_ completion: @escaping (_ result: PumpManagerResult<DetailedStatus>) -> Void) -> Void)?
+    var getDetailedStatus: () async throws -> DetailedStatus
 
     private let title = LocalizedString("Read Pod Status", comment: "navigation title for read pod status")
     private let actionString = LocalizedString("Reading Pod Status...", comment: "button title when executing read pod status")
@@ -23,7 +23,7 @@ struct ReadPodStatusView: View {
 
     @State private var alertIsPresented: Bool = false
     @State private var displayString: String = ""
-    @State private var error: LocalizedError? = nil
+    @State private var error: Error? = nil
     @State private var executing: Bool = false
     @State private var showActivityView: Bool = false
 
@@ -47,7 +47,9 @@ struct ReadPodStatusView: View {
             }
             VStack {
                 Button(action: {
-                    asyncAction()
+                    Task { @MainActor in
+                        await fetchDetailedStatus()
+                    }
                 }) {
                     Text(buttonText)
                         .actionButtonStyle(.primary)
@@ -62,26 +64,22 @@ struct ReadPodStatusView: View {
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: $alertIsPresented, content: { alert(error: error) })
-        .onFirstAppear {
-            asyncAction()
+        .task {
+            await fetchDetailedStatus()
         }
     }
 
-    private func asyncAction () {
-        DispatchQueue.global(qos: .utility).async {
+    private func fetchDetailedStatus() async {
+        do {
             executing = true
             self.displayString = ""
-            toRun?() { (result) in
-                executing = false
-                switch result {
-                case .success(let detailedStatus):
-                    self.displayString = podStatusString(status: detailedStatus)
-                case .failure(let error):
-                    self.error = error
-                    self.alertIsPresented = true
-                }
-            }
+            let detailedStatus = try await getDetailedStatus()
+            self.displayString = podStatusString(status: detailedStatus)
+        } catch {
+            self.error = error
+            self.alertIsPresented = true
         }
+        executing = false
     }
 
     private var buttonText: String {
@@ -161,9 +159,7 @@ struct ReadPodStatusView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             let detailedStatus = try! DetailedStatus(encodedData: Data([0x02, 0x0d, 0x00, 0x00, 0x00, 0x0e, 0x00, 0xc3, 0x6a, 0x02, 0x07, 0x03, 0xff, 0x02, 0x09, 0x20, 0x00, 0x28, 0x99, 0x08, 0x00, 0x82]))
-            ReadPodStatusView() { completion in
-                completion(.success(detailedStatus))
-            }
+            ReadPodStatusView() { detailedStatus }
         }
     }
 }

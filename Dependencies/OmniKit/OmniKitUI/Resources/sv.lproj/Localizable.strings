@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Ange temporär basaldos";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Din insulintillförsel kommer inte att justeras automatiskt förrän den tillfälliga manella basaldosen avslutas eller avbryts.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Inställning klar";
 
@@ -814,3 +817,15 @@ Silence Pod" = "Tysta podden";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Läd poddstatus";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Poddiagnostik";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Läs pulslogg plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Läs aktiveringstid";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Läs utlösta varningar";

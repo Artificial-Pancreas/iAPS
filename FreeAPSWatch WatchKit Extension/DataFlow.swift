@@ -17,15 +17,22 @@ struct WatchState: Codable {
     var iob: Decimal?
     var cob: Decimal?
     var tempTargets: [TempTargetWatchPreset] = []
+    var overrides: [OverridePresets_] = []
     var bolusAfterCarbs: Bool?
     var eventualBG: String?
     var eventualBGRaw: String?
     var displayOnWatch: AwConfig?
     var displayFatAndProteinOnWatch: Bool?
     var confirmBolusFaster: Bool?
+    var profilesOrTempTargets: Bool?
     var useNewCalc: Bool?
     var isf: Decimal?
     var override: String?
+    var target: Decimal?
+    var carbRatio: Decimal?
+    var eventualGlucose: Decimal?
+    var deltaBG: Decimal?
+    var minPredBG: Decimal?
 }
 
 struct TempTargetWatchPreset: Codable, Identifiable {
@@ -33,4 +40,11 @@ struct TempTargetWatchPreset: Codable, Identifiable {
     let id: String
     let description: String
     let until: Date?
+}
+
+struct OverridePresets_: Codable, Identifiable {
+    let name: String
+    let id: String
+    let until: Date?
+    let description: String
 }

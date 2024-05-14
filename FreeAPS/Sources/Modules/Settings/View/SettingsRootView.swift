@@ -59,6 +59,8 @@ extension Settings {
                     Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
+                    Text("Sharing").navigationLink(to: .sharing, from: self)
+                    Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                 } header: { Text("Extra Features") }
 
                 Section {
@@ -70,6 +72,18 @@ extension Settings {
                                 Button("Upload") { state.uploadProfileAndSettings(true) }
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
+                            }
+                            /*
+                             HStack {
+                                 Text("Delete All NS Overrides")
+                                 Button("Delete") { state.deleteOverrides() }
+                                     .frame(maxWidth: .infinity, alignment: .trailing)
+                                     .buttonStyle(.borderedProminent)
+                                     .tint(.red)
+                             }*/
+
+                            HStack {
+                                Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
                             }
                         }
                         Group {
@@ -104,6 +118,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
                             Text("Enacted announcements")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
+                            Text("Overrides Not Uploaded")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.notUploadedOverrides), from: self)
                             Text("Autotune")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
                             Text("Glucose")

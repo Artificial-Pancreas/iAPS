@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Temporärere Basalrate setzen";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Ihre Insulinabgabe wird nicht automatisch angepasst, bis die temporäre Basalrate beendet oder abgebrochen wird.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Einrichtung abgeschlossen";
 
@@ -814,3 +817,15 @@ Silence Pod" = "Stille Pod";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Pod-Status ablesen";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Diagnose-Infos";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Erweiterten Impuls-Log lesen";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Aktivierungsinformationen";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Ausgelöste Warnungen";

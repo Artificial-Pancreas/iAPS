@@ -1,0 +1,20 @@
+/* Privacy - NFC Scan Usage Description */
+"NFCReaderUsageDescription" = "NFC wordt gebruikt om Libre sensoren te scannen.";
+
+/* Privacy - Bluetooth Always Usage Description */
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met insulinepomp en continue glucose monitor apparaten";
+
+/* Privacy - Bluetooth Peripheral Usage Description */
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth wordt gebruikt om te communiceren met de insuline pomp en de continue glucose monitor";
+
+/* Privacy - Face ID Usage Description */
+"NSFaceIDUsageDescription" = "Voor geautoriseerde toegang tot bolus";
+
+/* Privacy - Calendars Usage Description */
+"NSCalendarsUsageDescription" = "Agenda wordt gebruikt om nieuwe glucose gebeurtenissen aan te maken.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Apple Gezondheid wordt gebruikt om bloedglucose, insuline en koolhydraten op te slaan";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Apple Gezondheid wordt gebruikt om bloedglucose, insuline en koolhydraten op te slaan";

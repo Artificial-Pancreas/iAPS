@@ -76,7 +76,7 @@ final class BaseAnnouncementsStorage: AnnouncementsStorage, Injectable {
         }
         let enactedEventsLast = enactedEvents.first
 
-        if -1 * (enactedEventsLast?.createdAt ?? .distantPast).timeIntervalSinceNow.minutes < 10 {
+        if -1 * (enactedEventsLast?.createdAt ?? .distantPast).timeIntervalSinceNow.minutes <= 10 {
             return enactedEventsLast
         }
         return nil

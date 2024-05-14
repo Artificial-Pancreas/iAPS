@@ -8,6 +8,8 @@ struct DateFilter {
     var week = Date().addingTimeInterval(-7.days.timeInterval) as NSDate
     var month = Date().addingTimeInterval(-30.days.timeInterval) as NSDate
     var total = Date().addingTimeInterval(-90.days.timeInterval) as NSDate
+    var tenDays = Date().addingTimeInterval(-10.days.timeInterval) as NSDate
+    var fourteen = Date().addingTimeInterval(-14.days.timeInterval) as NSDate
 }
 
 public enum IAPSconfig {
@@ -18,6 +20,11 @@ public enum IAPSconfig {
     static let shadowOpacity: CGFloat = 0.75
     static let glassShadowOpacity: CGFloat = 0.6
     static let shadowFraction: CGFloat = 2
+    static let minimumCarbEquivalent: Decimal = 0.6
+    static let id = "iAPS.identifier"
+    static let version = "iAPS.version"
+    static let newVersion = "iAPS.newVersion"
+    static let statURL = URL(string: "https://submit.open-iaps.app")!
 }
 
 extension Font {
@@ -47,7 +54,7 @@ extension Font {
     static let chartTimeFont = Font.custom("ChartTimeFont", fixedSize: 14)
     static let timeSettingFont = Font.custom("TimeSettingFont", fixedSize: 14)
 
-    static let carbsDotFont = Font.custom("CarbsDotFont", fixedSize: 14)
-    static let bolusDotFont = Font.custom("BolusDotFont", fixedSize: 14)
+    static let carbsDotFont = Font.custom("CarbsDotFont", fixedSize: 12)
+    static let bolusDotFont = Font.custom("BolusDotFont", fixedSize: 12)
     static let announcementSymbolFont = Font.custom("AnnouncementSymbolFont", fixedSize: 14)
 }

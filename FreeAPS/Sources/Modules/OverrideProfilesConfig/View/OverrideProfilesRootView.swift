@@ -31,6 +31,13 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -182,10 +189,29 @@ extension OverrideProfilesConfig {
                             )
                             Text("minutes").foregroundColor(.secondary)
                         }
+
+                        HStack {
+                            Toggle(isOn: $state.overrideMaxIOB) {
+                                Text("Override Max IOB")
+                            }
+                        }
+
+                        if state.overrideMaxIOB {
+                            HStack {
+                                Text("Max IOB")
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.maxIOB,
+                                    formatter: insulinFormatter,
+                                    cleanInput: false
+                                )
+                                Text("U").foregroundColor(.secondary)
+                            }
+                        }
                     }
 
                     HStack {
-                        Button("Start new Profile") {
+                        Button("Start") {
                             showAlert.toggle()
                             alertSring = "\(state.percentage.formatted(.number)) %, " +
                                 (
@@ -261,16 +287,18 @@ extension OverrideProfilesConfig {
                         "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage."
                     )
                 }
-                Section {
-                    Button("Return to Normal") {
-                        state.cancelProfile()
-                        dismiss()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .buttonStyle(BorderlessButtonStyle())
-                    .disabled(!state.isEnabled)
-                    .tint(.red)
-                } footer: { Text("").padding(.bottom, 150) }
+                if state.isEnabled {
+                    Section {
+                        Button("Cancel Profile Override") {
+                            state.cancelProfile()
+                            dismiss()
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .buttonStyle(BorderlessButtonStyle())
+                        .disabled(!state.isEnabled)
+                        .tint(.red)
+                    } footer: { Text("").padding(.bottom, 150) }
+                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
@@ -285,9 +313,6 @@ extension OverrideProfilesConfig {
             let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
             let duration = (preset.duration ?? 0) as Decimal
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
-            let identifier = ((preset.emoji ?? "") == "") || (preset.emoji?.isEmpty ?? true) ||
-                (preset.emoji ?? "") == "\u{0022}\u{0022}" ?
-                "" : preset.emoji!
             let percent = preset.percentage / 100
             let perpetual = preset.indefinite
             let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
@@ -296,6 +321,7 @@ extension OverrideProfilesConfig {
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
             let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
             let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
+            let maxIOB = preset.overrideMaxIOB ? (preset.maxIOB ?? 999) as Decimal : 999
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
             let dash = crString != "" ? "/" : ""
@@ -315,8 +341,11 @@ extension OverrideProfilesConfig {
                             if smbString != "" { Text(smbString).foregroundColor(.secondary).font(.caption) }
                             if scheduledSMBstring != "" { Text(scheduledSMBstring) }
                             if preset.advancedSettings {
-                                Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
-                                Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
+                                if !preset.smbIsOff {
+                                    Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
+                                    Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
+                                }
+                                Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
                                 Text(isfAndCRstring)
                             }
                             Spacer()
@@ -335,13 +364,16 @@ extension OverrideProfilesConfig {
         }
 
         private func unChanged() -> Bool {
-            let isChanged = (state.percentage == 100 && !state.override_target && !state.smbIsOff && !state.advancedSettings) ||
+            let isChanged = (
+                state.percentage == 100 && !state.override_target && !state.smbIsOff && !state
+                    .advancedSettings && !state.overrideMaxIOB
+            ) ||
                 (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0) ||
                 (
                     state.percentage == 100 && !state.override_target && !state.smbIsOff && state.isf && state.cr && state
-                        .smbMinutes == state.defaultSmbMinutes && state.uamMinutes == state.defaultUamMinutes
+                        .smbMinutes == state.defaultSmbMinutes && state.uamMinutes == state.defaultUamMinutes && !state
+                        .overrideMaxIOB
                 )
-
             return isChanged
         }
 

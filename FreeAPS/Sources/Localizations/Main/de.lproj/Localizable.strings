@@ -16,6 +16,12 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Ohne Bolusabgabe fortfahren";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Mahlzeit ohne Bolus speichern";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Status";
+
 /* Alert when adding large amount without bolusing */
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nEingegebener Bolus ist größer als Max Bolus Einstellung! \nTrotzdem hinzufügen? ";
 
@@ -40,6 +46,18 @@
 /* Button */
 "Done" = "Fertig";
 
+/* Calender Option */
+"Display Emojis as Labels" = "Emojis als Etiketten benutzen";
+
+/* Calender Option */
+"Display IOB and COB" = "IOB und COB anzeigen";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Bolus schneller bestätigen";
+
+/* Setting Section */
+"UI/UX" = "Benutzeroberfläche / Benutzerfreundlichkeit";
+
 /*  */
 "Wait please" = "Bitte warten";
 
@@ -48,6 +66,18 @@
 
 /* Bolus progress view */
 "of" = "von";
+
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "Ein entfernter Bolus ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "wurde inijiziert";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " Minuten seit des Auslösens auf Entfernung via Nightscout, von einem Betreuer oder einem Elternteil. Möchtest du immer noch einen Bolus?\n\nDer vorhergesagte Blutzucker ohne weiteren Bolus ist: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "Ein Remote Bolus wurde gerade abgegeben!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Letzte Berechnung um";
@@ -254,9 +284,6 @@
 "Save on Pump" = "Auf Pumpe speichern";
 
 /*  */
-"Saving..." = "Speichern...";
-
-/*  */
 "Schedule" = "Zeitplan";
 
 /*  */
@@ -301,6 +328,9 @@
 /* Enact
 Enact a temp Basal or a temp target */
 "Enact" = "Starten";
+
+/* Start a temp target or a profile override */
+"Start" = "Starten";
 
 /* */
 "Manual Temp Basal" = "Manuelle Temporäre Basalrate";
@@ -359,6 +389,9 @@ Enact a temp Basal or a temp target */
 /* Allow remote control from NS */
 "Remote control" = "Fernbedienung";
 
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Erlaube Fernsteuerung von iAPS";
+
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nBitte überprüfen Sie jetzt alle Ihre neuen Einstellungen gründlich:\n\n* Basaleinstellungen\n * Carb Ratios\n * Glukose-Ziele\n * Insulinempfindlichkeiten\n * DIA\n\n in iAPS-Einstellungen > Konfiguration.\n\nSchlechte oder ungültige Profileinstellungen können abscheuliche Effekte haben.";
 
@@ -406,6 +439,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator hinzufügen";
+
+/* View/Header when pod expired */
+"Replace" = "Pod ersetzen!";
 
 /* Insulin model */
 "Model" = "Modell";
@@ -932,8 +968,77 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "Hoch";
 
+/* TIR Chart */
+"Very High" = "Sehr hoch";
+
+/* TIR Chart */
+"Very Low" = "Sehr niedrig";
+
 /* */
 "glucose" = "Blutzucker";
+
+/* Bolus shortcut */
+"Enter a Bolus Amount" = "Gib einen Bolus ein";
+
+/* Bolus shortcut */
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Deine aktuelle Glukose ist %@. Bist du sicher, dass du einen Bolus von %@ U Insulin geben willst?";
+
+/* Bolus shortcut */
+"A bolus command of " = "Ein Bolus Befehl von ";
+
+/* Bolus shortcut */
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U des Insulins wurde an iAPS geschickt. Überprüfen Sie in iAPS App oder in Nightscout ob der Bolus verabreicht wurde.";
+
+/* Bolus shortcut. Error */
+"too small bolus amount" = "zu kleine Bolus Menge";
+
+/* Bolus shortcut. Error */
+"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Kurzbefehle sind in den iAPS-Einstellungen deaktiviert";
+
+/* Bolus shortcut */
+"Bolus Amount in U" = "Bolus Menge in U";
+
+/* Bolus shortcut. Setting */
+"Allow iOS Bolus Shortcuts" = "Erlaube iOS Bolus Kurzbefehle";
+
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS-Kurzbefehle";
+
+/* Bolus shortcut. Pop-up */
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
+
+/* Bolus shortcut. Setting */
+"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+
+/* Bolus shortcut. Error */
+"not available" = "nicht verfügbar";
+
+/* Override Shortcut */
+"Activate an Override Preset" = "Activate an Override Preset";
+
+/* Override Shortcut */
+"Allow to activate an overrride preset." = "Erlaube die Aktivierung einer Voreinstellung zu überschreiben.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Welche Voreinstellung möchten Sie aktivieren?";
+
+/* Override Shortcut */
+"Are you sure you want to activate the Override Preset %@?" = "Sind Sie sicher, dass Sie die Überschreibungsvoreinstellung %@ aktivieren wollen?";
+
+/* Override Shortcut */
+"The Profile Override" = "Die Profilüberschreibung";
+
+/* Override Shortcut */
+"is now activated" = "ist jetzt aktiv";
+
+/* Override Shortcut */
+"Cancel active override" = "Profilüberschreibung abbrechen";
+
+/* Override Shortcut */
+"Override canceled" = "Überschreibung abgebrochen";
+
+/* Override Shortcut */
+"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
 
 /* */
 "Schedule " = "Zeitplan ";
@@ -1125,6 +1230,12 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online oder interner Server";
 
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Die neue Empfehlung kann nicht angewendet werden, da zurzeit ein Bolus verabreicht wird. Warten Sie bitte die nächste Schleife ab.";
+
+/* Pump Error */
+"Error: Pump is Busy." = "Fehler: Die Pumpe ist beschäftigt.";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1257,6 +1368,9 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Ermöglicht die Umwandlung von Fett und Eiweiß in zukünftige Kohlenhydratäquivalente unter Verwendung der Warschauer Formel (Kilokalorien geteilt durch 10). Dadurch werden die Kohlenhydratäquivalente über eine maximale Dauer verteilt, die zwischen 5 und 12 Stunden eingestellt werden kann. Je kürzer das Intervall, desto gleichmäßiger das Ergebnis. 10, 15, 20, 30 oder 60 sind eine vernünftige Wahl.\n\nAnpassungsfaktor gibt an, wie stark sich Fett und Eiweiß auf die Einträge auswirken. 1,0 entspricht der vollen Wirkung (ursprüngliche Warschauer Methode) und 0,5 der halben Wirkung. Beachten Sie, dass Ihr normales Kohlenhydratverhältnis möglicherweise auf eine größere Zahl ansteigen muss, wenn Sie beginnen, Fett- und Eiweißeinträge hinzuzufügen. Aus diesem Grund ist es am besten, mit einem Faktor von etwa 0,5 zu beginnen, um den Einstieg zu erleichtern.\n\nStandardeinstellungen: Zeit Cap: 8 h, Interval: 30 min, Faktor: 0,5, Verzögerung: 60 min";
 
+/* Fat/Protein additional info */
+"\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount.";
+
 /* FPU Settings Title */
 "Fat and Protein" = "Fett und Eiweiß";
 
@@ -1337,6 +1451,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Als Profil speichern";
 
+/* */
+"Save as preset" = "Speichern als Voreinstellung";
+
 /* Alert */
 "Cancel Profile Override" = "Profilüberschreibung abbrechen?";
 
@@ -1411,6 +1528,15 @@ Enact a temp Basal or a temp target */
 
 /* Watch Config Option */
 "Display Protein & Fat" = "Zeige Eiweiß & Fett";
+
+/* Time of new meal entry */
+"Now" = "Jetzt";
+
+/* Display future data table entries */
+"Show Future" = "Zeige Eintragungen in der Zukunft";
+
+/* Hide future data table entries */
+"Hide Future" = "Zukünftige Dateneinträge ausblenden";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1613,7 +1739,7 @@ Enact a temp Basal or a temp target */
 "Resuming insulin delivery..." = "Insulinabgabe fortsetzen...";
 
 /* Alert title for suspend error */
-"Failed to Suspend Insulin Delivery" = "Unterbrechung Insulinagabe fehlgeschlagen";
+"Failed to Suspend Insulin Delivery" = "Fehler beim Unterbrechen der Insulinabgabe";
 
 //* -----------------------------------------------------------------------*/
 /* ----------------------Statistics strings -------------------------------*/
@@ -1684,6 +1810,12 @@ Enact a temp Basal or a temp target */
 
 /* Average BG = */
 "Average" = "Mittelwert";
+
+/* TIR Preview Headline */
+"Time In Range" = "Zeit im Zielbereich";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Durchschnittliches Zeitintervall";
 
 /* Median BG */
 "Median" = "Median";
@@ -1788,9 +1920,197 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimentell";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Glätten der Glukosewerte";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Woman" = "Frau";
 
+/* */
+"Man" = "Mann";
+
+/* */
+"Other" = "Sonstiges";
+
+/* */
+"Secret" = "Geheim-Schlüssel";
+
+/* */
+"Birth Date" = "Geburtsdatum";
+
+/* */
+"Share all of your Statistics" = "Alle meine Statistiken teilen";
+
+/* */
+"Just iAPS version number" = "Nur iAPS Versionsnummer";
+
+/* */
+"Share Bare Minimum" = "Nur das absolute Minimum teilen";
+
+/* */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Alle Informationen, die Sie freigeben möchten, werden anonym hochgeladen. Um doppeltes Hochladen zu verhindern, werden die Daten mit einer eindeutigen, zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird.";
+
+/* */
+"Tap to display" = "Tippen, um anzuzeigen";
+
+/* */
+"Your identifier" = "Ihr Identifikator";
+
+/* */
+"Share your data anonymously" = "Daten anonym teilen";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Kontakt";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Kontakte";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Vergessen Sie nicht, Ihre Änderungen zu speichern.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS benötigt Zugriff auf Ihre Kontakte, um diese Funktion zu nutzen";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "iAPS den Zugriff auf Kontakte gewähren";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Zugriff auf Kontakte verweigert";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Der Zugriff auf Kontakte ist eingeschränkt (elterliche Kontrolle?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Zugriff auf Kontakte - unbekannter Status";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Ein Kontaktbild kann verwendet werden, um Live-Updates von iAPS auf Ihre Apple Watch Kontakt Komplikation und/oder Ihr iPhone Kontakt Widget zu erhalten.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Kontaktbild";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Layout";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Einzeln";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Geteilt";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Nicht anzeigen";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Schleifenstatus";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "Restinsulin (IOB)";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "Rest-Kohlenhydrate (COB)";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "Restinsulin (IOB) + Rest-Kohlenhydrate (COB)";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Primary";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Top";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Bottom";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Ring";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Äußere";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Breite";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Abstand";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Schriftart";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Größe";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Sekundäre Größe";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Tracking";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Gewicht";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Dunkelmodus";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Enger";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Eng";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "im Zielbereich";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Breit";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Leicht";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Normal";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Medium";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Halbfett";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Fett";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Schwarz";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Keiner";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Blutzucker";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Erwarteter BZ";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Differenz";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Trend";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Letzte Schleifenzeit";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "Rest-Kohlenhydrate (COB)";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "Restinsulin (IOB)";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Schleifenstatus";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
@@ -2029,16 +2349,16 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
+"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
+"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Aktiviere Dynamic ISF";
+"Enable Dynamic ISF" = "Dynamischen Insulinempfindlichkeitsfaktor (ISF) aktivieren";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Aktiviere Dynamic ISF";
+"Enable Dynamic ISF" = "Dynamischen Insulinempfindlichkeitsfaktor (ISF) aktivieren";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Berechnen Sie bei jedem Loop-Zyklus eine neue Insulinempfindlichkeitseinstellung (ISF). Die neue ISF basiert auf Ihrem aktuellen Blutzucker, der täglichen Gesamtinsulindosis (TDD, alle in den letzten 24 Stunden abgegebenen Insuline) und einem individuellen Anpassungsfaktor (die Empfehlung für den Anfang ist 0,5, wenn Sie die Sigmoid-Funktion verwenden, und 0,8, wenn nicht).\n\nAlle dynamischen ISF- und CR-Anpassungen werden durch Ihre autosens.min/max-Grenzwerte begrenzt.";
@@ -2056,10 +2376,10 @@ Enact a temp Basal or a temp target */
 "Activate Dynamic Carb Ratio (CR)" = "Dynamisches Carb Ratio (CR) aktivieren";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Dynamic ISF-Konstante anpassen";
+"Adjust Dynamic ISF constant" = "Dynamische ISF-Konstante anpassen";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula threre is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuelle Anpassung der berechneten dynamischen Verhältnisse. Die Voreinstellung ist 0,5. Je höher der Wert, desto größer ist die Korrektur Ihres ISF/CR für einen hohen oder niedrigen Blutzuckerwert. Die maximale/minimale Korrektur wird durch die Min/Max-Einstellungen von Autosens bestimmt.\n\nFür die Sigmoid-Funktion wird für den Anfang ein Anpassungsfaktor von 0,4 - 0,5 empfohlen.\n\nFür die logarithmische Formel gibt es weniger Konsens, aber ein Wert von 0,8 ist wahrscheinlich für die meisten erwachsenen Benutzer angemessen. Für jüngere Anwender wird empfohlen, bei der logaritmischen Formel noch niedriger anzusetzen, um eine zu aggressive Behandlung zu vermeiden.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuelle Anpassung der berechneten dynamischen Verhältnisse. Die Voreinstellung ist 0,5. Je höher der Wert, desto größer ist die Korrektur Ihres ISF/CR für einen hohen oder niedrigen Blutzuckerwert. Die maximale/minimale Korrektur wird durch die Min/Max-Einstellungen von Autosens bestimmt.\n\nFür die Sigmoid-Funktion wird für den Anfang ein Anpassungsfaktor von 0,4 - 0,5 empfohlen.\n\nFür die logarithmische Formel gibt es weniger Konsens, aber ein Wert von 0,8 ist wahrscheinlich für die meisten erwachsenen Benutzer angemessen. Für jüngere Anwender wird empfohlen, bei der logaritmischen Formel noch niedriger anzusetzen, um eine zu aggressive Behandlung zu vermeiden.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Sigmoid-Funktion verwenden";
@@ -2108,6 +2428,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Der neue alternative Bolusrechner ist ein anderer Ansatz als der Standard-Bolusrechner in iAPS. Wenn die Umschaltfunktion aktiviert ist, wird dieser Bolusrechner und nicht der ursprüngliche iAPS-Rechner verwendet. Am Ende der Berechnung wird ein benutzerdefinierter Faktor angewandt, wie es bei der Verwendung von smbs der Fall sein sollte (Standardwert 0,8).\n\nSie können in Ihrem Bolusrechner auch die Option hinzufügen, am Ende der Berechnung einen weiteren (!) benutzerdefinierten Faktor anzuwenden, der für fetthaltige Mahlzeiten, z. B. Pizza, nützlich sein könnte (Standardwert 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Zusätzliche Funktionen";
 
 /* UI/UX option */
 "Display Predictions" = "Prognosen anzeigen";
@@ -2163,13 +2486,13 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Live-Aktivitäten";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Die Live-Aktivität zeigt die Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel (falls verfügbar)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live-Aktivität zeigt den Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel an (falls verfügbar)";
 
 /* Notification option */
 "Show Live activity" = "Live Aktivitäten anzeigen";
 
 /* Live Activity Footer */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Die Live-Aktivität zeigt die Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel (falls verfügbar)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live-Aktivität zeigt den Blutzucker live auf dem Sperrbildschirm und auf der dynamischen Insel an (falls verfügbar)";
 
 /* Live Activity Footer when off */
 "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live-Aktivitäten werden in den Systemeinstellungen AUS aktiviert. Um Live-Aktivitäten zu aktivieren, gehen Sie zu Einstellungen -> iAPS -> Live-Aktivitäten einschalten.\n\n";
