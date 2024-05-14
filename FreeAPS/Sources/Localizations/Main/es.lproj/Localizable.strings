@@ -56,7 +56,7 @@
 "Confirm Bolus Faster" = "Confirmar bolo rápidamente";
 
 /* Setting Section */
-"UI/UX" = "Configuración de interfaz ";
+"UI/UX" = "Interfaz";
 
 /*  */
 "Wait please" = "Espere por favor";
@@ -2497,10 +2497,24 @@ Nota: para los usuarios más jóvenes que utilicen la fórmula logarítmica, se 
 "Safety" = "Seguridad";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Utiliza la función Sigmoid para el cálculo del FSI (y para el RC, cuando está habilitado), en lugar de la fórmula logarítmica por defecto. 
+
+Nota: el ajuste de 'FSI dinámico' debe estar activado en el menú 'Ajustes -> Funciones adicionales'.
+
+El valor ajusta la pendiente de la curva (donde el eje Y representa el factor FSI dinámico y el eje X la glucosa en sangre). Un valor más bajo ==> curva menos pronunciada == menor agresividad.
+
+Los valores mínimo y máximo de Autosens determinan tanto los límites mín/máx del cálculo de FSI dinámico como cuánto se ajusta el FSI dinámico. 
+
+Si el valor que definimos representa la pendiente de la curva, los límites mínimo y máximo de Autosens definen la altura de la gráfica (o intervalo Y, donde Y es el ISF dinámico). 
+
+La curva siempre tendrá una forma de Sigmoid, sin importar qué valores mín/máx se utilicen para Autosens, lo que significa que estos valores tienen grandes consecuencias para el resultado del cálculo de ISF dinámico. 
+
+Advertencia: por favor, tenga cuidado de no establecer un valor Autosens.máx demasiado alto. Con una configuración apropiada de sus FSI, probablemente nunca necesite que dicho valor sea superior a 1,5.
+
+Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función Sigmoid.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting" = "Valores máximos de configuración";
 
 /* Dynamic ISF Setting Title */
 "Minimum Threshold Setting" = "Ajuste de umbral mínimo";
@@ -2545,19 +2559,19 @@ Nota: para los usuarios más jóvenes que utilicen la fórmula logarítmica, se 
 "Smaller iPhone Screens" = "Pantallas de iPhone más pequeñas";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
+"Display and allow Fat and Protein entries" = "Habilitar y mostrar Unidades de Grasa y Proteína";
 
 /* UI/UX option */
-"Add Meal View settings " = "Add Meal View settings ";
+"Add Meal View settings " = "Añadir configuración de Vista de Comida ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Display Temp Targets Button";
+"Display Temp Targets Button" = "Mostrar botón de objetivos temporales";
 
 /* UI/UX option */
-"Home View Button Panel " = "Home View Button Panel ";
+"Home View Button Panel " = "Botones principales";
 
 /* UI/UX title */
-"Home Chart settings " = "Home Chart settings ";
+"Home Chart settings " = "Gráfica principal ";
 
 /* UI/UX title */
 "Statistics settings " = "Ajustes de estadísticas ";
@@ -2566,21 +2580,21 @@ Nota: para los usuarios más jóvenes que utilicen la fórmula logarítmica, se 
 "Override HbA1c Unit" = "Cambiar unidad de HbA1c";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+"In case you're using both profiles and temp targets" = "En caso de que estés usando tanto perfiles como objetivos temporales :)";
 
 /* UI/UX option */
-"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+"Always Color Glucose Value (green, yellow etc)" = "Colorear el valor de la glucosa (verde, amarillo)";
 
 /* UI/UX option */
-"Header settings" = "Header settings";
+"Header settings" = "Ajustes de cabecera";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Por defecto, solamente se coloreará de rojo el valor de glucosa que sea inferior o superior al valor definido en 'Ajustes -> Notificaciones'.";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+"Horizontal Scroll View Visible hours" = "Intervalo de tiempo visible";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+"Display Time Interval Setting Button" = "Botón de intervalo de horas visibles";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
