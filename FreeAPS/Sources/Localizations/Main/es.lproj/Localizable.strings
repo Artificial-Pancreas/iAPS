@@ -2368,8 +2368,9 @@ Se estimará una menor absorción de carbohidratos, lo que puede llevar a una di
 "Autotune ISF Adjustment Fraction" = "Fracción de ajuste del FSI de Autotune";
 
 /* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "El valor por defecto de 0.5 para esta característica mantiene el factor de sensibilidad a la insulina (ISF) de Autotune cerca del factor de sensibilidad a la insulina de la bomba a través de un promedio ponderado de fullNewISF y pumpISF. 
-Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad de Autotune (fullNewISF), mientras que 0 mantendría el factor de sensibilidad de la bomba (pumpISF).";
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "La configuración (por defecto 0,5) de esta característica mantiene el factor de sensibilidad a la insulina (FSI) de Autotune más cercano al factor de sensibilidad a la insulina de la bomba (bombaFSI) a través de una media entre el nuevo FSI y bombaFSI.
+
+Un '1' de valor permite un ajuste completo con el nuevo factor de sensibilidad de Autotune (nuevoFSI), mientras que 0 mantendría el factor de sensibilidad de la bomba (bombaFSI).";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Ratio de COB restantes";
@@ -2454,7 +2455,16 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Enable Dynamic CR" = "Habilitar RC dinámico";
 
 /* Enable Dynamic CR */
-"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)";
+"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Habilita el cálculo dinámico del ratio de carbohidratos. El ratio dinámico será usado para el cálculo del RC de la siguiente manera:
+
+Cuando el ratio es > 1:
+dinRC = (nuevoRatio - 1) / 2 + 1
+
+Cuando el ratio es < 1:
+dinRC = RC/dinRC
+
+Advertencia: no usar junto con un valor de \"fracción de insulina\" > 2.
+";
 
 /* Enable Dyn ISF */
 "Activate Dynamic Sensitivity (ISF)" = "Activar factor de sensibilidad (FSI) dinámico";
@@ -2466,7 +2476,16 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Adjust Dynamic ISF constant" = "Ajustar constante de FSI dinámico";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Ajuste individual de los factores dinámicos calculados. 
+Por defecto es 0,5. 
+
+Cuanto mayor sea el valor, mayor será la corrección de su FSI/RC para una glucosa en sangre alta o baja. La corrección máxima/mínima está determinada por los ajustes de Autosens mín/máx.
+
+Con la función Sigmoid habilitada, se recomienda empezar con una configuración de 0,4 - 0,5.
+
+Con la fórmula logarítmica hay menos consenso, pero comenzando con aproximadamente 0,7- 0,8 es probablemente apropiado para la mayoría de los usuarios adultos. 
+
+Nota: para los usuarios más jóvenes que utilicen la fórmula logarítmica, se recomienda empezar con valores aún más precavidos (0,5 - 0,6), para evitar un tratamiento excesivamente agresivo.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Usar función de Sigmoid";
