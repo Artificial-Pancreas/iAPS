@@ -80,6 +80,8 @@ extension Home {
         @Published var maxBolus: Decimal = 0
         @Published var maxBolusValue: Decimal = 1
         @Published var useInsulinBars: Bool = false
+        @Published var iobData: [IOBData] = [IOBData(date: Date(), iob: 0, cob: 0, id: UUID())]
+        @Published var neg: Int = 0
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -98,6 +100,7 @@ extension Home {
             setupCurrentPumpTimezone()
             setupOverrideHistory()
             setupLoopStats()
+            setupReasons()
 
             suggestion = provider.suggestion
             reasons = provider.reasons()
@@ -472,11 +475,17 @@ extension Home {
                 self.timeZone = self.provider.pumpTimeZone()
             }
         }
-        
+
         private func setupReasons() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.reasons = self.provider.reasons()
+                self.iobData =
+                    self.reasons.map {
+                        iob -> IOBData in
+                        IOBData(date: iob.date ?? Date(), iob: (iob.iob ?? 0) as Decimal, cob: (iob.cob ?? 0) as Decimal)
+                    }
+                neg = iobData.filter({ $0.iob < 0 }).count * 5
             }
         }
 
@@ -558,6 +567,7 @@ extension Home.StateModel:
         useInsulinBars = settingsManager.settings.useInsulinBars
         setupGlucose()
         setupOverrideHistory()
+        setupReasons()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {

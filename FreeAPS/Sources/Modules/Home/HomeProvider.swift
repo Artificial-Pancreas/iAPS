@@ -28,7 +28,7 @@ extension Home {
         var enactedSuggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
-        
+
         func reasons() -> [Reasons] {
             CoreDataStorage().fetchReasons(interval: DateFilter().day)
         }
@@ -70,9 +70,10 @@ extension Home {
             tempTargetsStorage.current()
         }
 
-        func carbs(hours: Int) -> [CarbsEntry] {
+        func carbs(hours _: Int) -> [CarbsEntry] {
             carbsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+                $0.createdAt > carbsStorage.syncDate()
+                // $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
             }
         }
 

@@ -94,7 +94,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     self.storage.transaction { storage in
                         storage.append(futureCarbArray, to: file, uniqBy: \.id)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .filter { $0.createdAt > syncDate() }
                             .sorted { $0.createdAt > $1.createdAt } ?? []
                         storage.save(Array(uniqEvents), as: file)
                     }
@@ -121,7 +121,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     self.storage.transaction { storage in
                         storage.append(entries, to: file, uniqBy: \.createdAt)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .filter { $0.createdAt > syncDate() }
                             .sorted { $0.createdAt > $1.createdAt } ?? []
                         storage.save(Array(uniqEvents), as: file)
                     }
@@ -129,7 +129,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     self.storage.transaction { storage in
                         storage.append(onlyCarbs, to: file, uniqBy: \.id)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                            .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
+                            .filter { $0.createdAt > syncDate() }
                             .sorted { $0.createdAt > $1.createdAt } ?? []
                         storage.save(Array(uniqEvents), as: file)
                     }

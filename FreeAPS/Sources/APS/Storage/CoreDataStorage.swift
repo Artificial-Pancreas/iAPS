@@ -129,7 +129,7 @@ final class CoreDataStorage {
         }
         return suggestion.first
     }
-    
+
     func fetchReasons(interval: NSDate) -> [Reasons] {
         var reasonArray = [Reasons]()
         coredataContext.performAndWait {
