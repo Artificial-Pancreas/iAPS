@@ -26,6 +26,7 @@ protocol NightscoutManager: GlucoseSource {
     func deleteAllNSoverrrides()
     func deleteOverride()
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date)
+    func fetchVersion()
     var cgmURL: URL? { get }
 }
 
@@ -163,6 +164,27 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         return nightscout.fetchCarbs(sinceDate: since)
             .replaceError(with: [])
             .eraseToAnyPublisher()
+    }
+
+    func fetchVersion() {
+        guard let nightscout = nightscoutAPI, isNetworkReachable else {
+            return
+        }
+        processQueue.async {
+            nightscout.fetchVersion()
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Version fetched from " + IAPSconfig.statURL.absoluteString)
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                }
+            receiveValue: { a in
+                CoreDataStorage().saveVNr(a)
+            }
+            .store(in: &self.lifetime)
+        }
     }
 
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never> {
@@ -414,6 +436,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         debug(.nightscout, "Statistics uploaded")
                         CoreDataStorage().saveStatUploadCount()
+                        UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
                     case let .failure(error):
                         debug(.nightscout, "Statistics upload failed" + error.localizedDescription)
                     }
@@ -438,6 +461,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         debug(.nightscout, "Version uploaded")
                         CoreDataStorage().saveStatUploadCount()
+                        UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
                     case let .failure(error):
                         debug(.nightscout, "Version upload failed" + error.localizedDescription)
                     }

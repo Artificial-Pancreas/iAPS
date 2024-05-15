@@ -1958,52 +1958,55 @@ Enact a temp Basal or a temp target */
 /* */
 "Share your data anonymously" = "Надсилайте свої дані анонімно";
 
+/* Setting Title */
+"Sharing" = "Поширити";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Контакт";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Контакти";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "Не забудьте зберегти зміни!";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "Для роботи цієї функції iAPS потрібен доступ до ваших контактів";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "Надати iAPS доступ до контактів";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Доступ до контактів заборонено";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "Доступ до контактів обмежений (батьківський контроль?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Доступ до контактів - невідомий стан";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Зображення контакту можна використовувати для отримання поточних оновлень від iAPS для вашої складності контактів Apple Watch та/або віджета контактів iPhone.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Contact Image";
+"Contact Image" = "Зображення контакту";
 
 /* Contact Image, settings, label for the layout picker */
-"Layout" = "Layout";
+"Layout" = "Макет";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Single";
+"Single" = "Одиночний";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Split";
+"Split" = "Розділити";
 
 /* Contact Image, settings, outer ring - don't show */
-"DontShowRing" = "Don't show";
+"DontShowRing" = "Не показувати";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop status";
+"LoopStatusRing" = "Статус петлі";
 
 /* Contact Image, settings, outer ring - IOB */
 "IOBRing" = "IOB";
@@ -2015,73 +2018,73 @@ Enact a temp Basal or a temp target */
 "IOB+COBRing" = "IOB+COB";
 
 /* Contact Image, settings, label for the primary value picker */
-"Primary" = "Primary";
+"Primary" = "Основний";
 
 /* Contact Image, settings, label for the top value picker */
-"Top" = "Top";
+"Top" = "Вгору";
 
 /* Contact Image, settings, label for the bottom value picker */
-"Bottom" = "Bottom";
+"Bottom" = "Внизу";
 
 /* Contact Image, settings, header for the outer ring section */
-"Ring" = "Ring";
+"Ring" = "Дзвінок";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Outer";
+"Outer" = "Зовнішній";
 
 /* Contact Image, settings, label for the ring width picker */
-"Width" = "Width";
+"Width" = "Ширина";
 
 /* Contact Image, settings, label for the ring gap picker */
-"Gap" = "Gap";
+"Gap" = "Проміжок";
 
 /* Contact Image, settings, header for the font section */
-"Font" = "Font";
+"Font" = "Шрифт";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Розмір";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Додатковий розмір";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Tracking";
+"Tracking" = "Відстеження";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Вага";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Темний режим";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Вантаж";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Щільний";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Нормальний";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Широкий";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Світлий";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Звичайний";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Середня";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Напівжирний";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Жирний";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Чорна";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Жоден";
@@ -2090,16 +2093,16 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Глюкоза";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Подіївний BG";
 
 /* Contact Image, settings, Delta (data to display) */
-"DeltaContactValue" = "Delta";
+"DeltaContactValue" = "Дельта";
 
 /* Contact Image, settings, Trend (data to display) */
 "TrendContactValue" = "Тренди";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Час останньої петлі";
 
 /* Contact Image, settings, COB (data to display) */
 "COBContactValue" = "COB";
@@ -2108,7 +2111,7 @@ Enact a temp Basal or a temp target */
 "IOBContactValue" = "IOB";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop status";
+"LoopStatusContactValue" = "Статус петлі";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs

@@ -179,4 +179,9 @@
         <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="722095800" usesScalarValueType="NO"/>
         <attribute name="hours" optional="YES" attributeType="Integer 16" defaultValueString="6" usesScalarValueType="YES"/>
     </entity>
+    <entity name="VNr" representedClassName="VNr" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dev" optional="YES" attributeType="String"/>
+        <attribute name="nr" optional="YES" attributeType="String"/>
+    </entity>
 </model>

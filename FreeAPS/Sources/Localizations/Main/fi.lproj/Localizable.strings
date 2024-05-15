@@ -167,7 +167,7 @@
 "Cancel" = "Peru";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Peruuta väliaikainen tavoite";
 
 /* Custom temp target */
 "Custom" = "Muokattu";
@@ -182,7 +182,7 @@
 "Delete preset \"%@\"" = "Poista esiasetus \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "Kesto";
 
 /*  */
 "Enact Temp Target" = "Aktivoi väliaikainen tavoite";
@@ -194,43 +194,43 @@
 "Basal Insulin and Sensitivity ratio" = "Perusinsuliinin ja herkkyyden suhde";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Alempi asetus \"puolikkaasta perusinsuliinista\" vähentää perusinsuliinia ja nostaa insuliinin herkkyysarvoa aikaisemmin alemmassa tavoitesokeritasossa.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " Asetuksesi: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max rajoittaa maksimiarvon";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "Syötä esiasetuksen nimi";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "Nimi";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "minuuttia";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "Esiasetukset";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "Tallenna";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Tallenna esiasetuksena";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "Poista esiasetus";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "Poistetaanko esiasetus '%@'?";
 
 /* Button */
-"No" = "No";
+"No" = "Ei";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "Kyllä";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -239,10 +239,10 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Yläraja";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "varten";
 
 /*  Temp target set for ... minutes */
 "min" = "min.";
@@ -251,55 +251,55 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Perusinsuliiniprofiili";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "Hiilihydraattisuhde";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "Poista autotune tiedot";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "Suorita nyt";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "Edellinen ajo";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "Herkkyys";
 
 /*  */
 "Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "Lisää";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Perusinsuliiniprofiili";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "Arvo";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Tallenna pumppuun";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "Aikataulu";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "aloitusaika";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "Aika";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "Laskettu suhde";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Hiilihydraattisuhde";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Suhde";
 
 /*  */
 "Autosens" = "Autosens";
@@ -311,13 +311,13 @@
 "Insulin Sensitivities" = "Insuliinin herkkyys";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "Herkkyyssuhde";
 
 /*  */
 "Dismiss" = "Hylkää";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "Tärkeä viesti";
 
 /*  */
 "Amount" = "Määrä";
@@ -330,55 +330,55 @@ Enact a temp Basal or a temp target */
 "Enact" = "Aktivoi";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "Aloita";
 
 /* */
 "Manual Temp Basal" = "Väliaikainen basaali";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "Salli lataaminen";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "API-salasana";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "Yhdistä";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "Yhdistetty!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "Yhdistetään...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "Virheellinen URL-osoite";
 
 /*  */
-"Local glucose source" = "Local glucose source";
+"Local glucose source" = "Paikallinen verensokerin lähde";
 
 /* Header */
-"Nightscout Config" = "Nightscout Config";
+"Nightscout Config" = "Nightscoutin Asetukset";
 
 /*  */
-"Port" = "Port";
+"Port" = "Portti";
 
 /*  */
-"URL" = "URL";
+"URL" = "URL-osoite";
 
 /**/
-"Use local glucose server" = "Use local glucose server";
+"Use local glucose server" = "Käytä paikallista verensokeripalvelinta";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Tämä mahdollistaa tilastojen lähettämisen Nightscoutiin, jota voidaan käyttää yhteisön tilastoja ja väestökehitystä koskevassa hankkeessa.\n\nOsallistuminen yhteisön tilastoihin on vapaaehtoista ja se edellyttää erillistä rekisteröitymistä:\n";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Muokkaa asetuksia";
 
 /* */
-"Glucose units" = "Glucose units";
+"Glucose units" = "Verensokeriyksikkö";
 
 /*  */
-"Preferences" = "Preferences";
+"Preferences" = "Määritykset";
 
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Recommended Insulin Fraction";
@@ -1260,7 +1260,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
 
 /* */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "Tallenna pumppuun";
 
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
@@ -1458,7 +1458,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Cancel Profile Override";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "Peruuta väliaikainen tavoite";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
@@ -1521,7 +1521,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "Tallenna esiasetuksena";
 
 /* */
 "Predictions" = "Predictions";
@@ -1627,7 +1627,7 @@ Enact a temp Basal or a temp target */
 "Saving..." = "Saving...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Save";
+"Save" = "Tallenna";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
@@ -1680,7 +1680,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "Arvo";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -1863,7 +1863,7 @@ Enact a temp Basal or a temp target */
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "Kesto";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -1957,6 +1957,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Share your data anonymously";
+
+/* Setting Title */
+"Sharing" = "Sharing";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */

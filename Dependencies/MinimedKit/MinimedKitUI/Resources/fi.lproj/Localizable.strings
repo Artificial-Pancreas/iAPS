@@ -114,7 +114,7 @@
 "Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models.";
 
 /* Value string for MySentry config when MySentry is not being used */
-"No" = "No";
+"No" = "Ei";
 
 /* Message display when no response from tuning pump */
 "No response" = "Ei vastausta";
@@ -214,7 +214,7 @@
 "Use MySentry" = "Use MySentry";
 
 /* Value string for MySentry config when MySentry is being used */
-"Yes" = "Yes";
+"Yes" = "Kyllä";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Yes, Sync to Current Time";
