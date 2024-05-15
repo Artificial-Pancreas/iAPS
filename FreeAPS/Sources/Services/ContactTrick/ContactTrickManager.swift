@@ -89,9 +89,13 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
                 maxCOB: settingsManager.preferences.maxCOB
             )
 
-            contacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
+            let newContacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
 
-            storage.save(contacts, as: OpenAPS.Settings.contactTrick)
+            if newContacts != contacts {
+                // when we create new contacts we store the IDs, in that case we need to write into the settings storage
+                storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
+            }
+            contacts = newContacts
         }
 
         workItem = DispatchWorkItem(block: {
