@@ -321,7 +321,7 @@
 "Set Temporary Basal Rate" = "Nastavenie dočasnej bazálnej sadzby";
 
 /* Description text on manual temp basal action sheet */
-"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled.";
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nezruší.";
 
 /* Section header for activity section */
 "Activity" = "Aktivita";
@@ -837,13 +837,13 @@
 "Done" = "Hotovo";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "Pod diagnostiky";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "Čítať protokol pulzov";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "Čas aktivácie čítania";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "Čítanie spustených upozornení";
