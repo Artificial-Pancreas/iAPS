@@ -65,32 +65,38 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             workItem.cancel()
         }
 
-        let readings = coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
-        let glucoseValues = glucoseText(readings)
+        if contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            let readings = coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+            let glucoseValues = glucoseText(readings)
 
-        let suggestion: Suggestion? = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
+            let suggestion: Suggestion? = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
 
-        let state = ContactTrickState(
-            glucose: glucoseValues.glucose,
-            trend: glucoseValues.trend,
-            delta: glucoseValues.delta,
-            lastLoopDate: suggestion?.timestamp,
-            iob: suggestion?.iob,
-            iobText: suggestion?.iob.map { iob in
-                iobFormatter.string(from: iob as NSNumber)!
-            },
-            cob: suggestion?.cob,
-            cobText: suggestion?.cob.map { cob in
-                cobFormatter.string(from: cob as NSNumber)!
-            },
-            eventualBG: eventualBGString(suggestion),
-            maxIOB: settingsManager.preferences.maxIOB,
-            maxCOB: settingsManager.preferences.maxCOB
-        )
+            let state = ContactTrickState(
+                glucose: glucoseValues.glucose,
+                trend: glucoseValues.trend,
+                delta: glucoseValues.delta,
+                lastLoopDate: suggestion?.timestamp,
+                iob: suggestion?.iob,
+                iobText: suggestion?.iob.map { iob in
+                    iobFormatter.string(from: iob as NSNumber)!
+                },
+                cob: suggestion?.cob,
+                cobText: suggestion?.cob.map { cob in
+                    cobFormatter.string(from: cob as NSNumber)!
+                },
+                eventualBG: eventualBGString(suggestion),
+                maxIOB: settingsManager.preferences.maxIOB,
+                maxCOB: settingsManager.preferences.maxCOB
+            )
 
-        contacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
+            let newContacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
 
-        storage.save(contacts, as: OpenAPS.Settings.contactTrick)
+            if newContacts != contacts {
+                // when we create new contacts we store the IDs, in that case we need to write into the settings storage
+                storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
+            }
+            contacts = newContacts
+        }
 
         workItem = DispatchWorkItem(block: {
             print("in renderContacts, no updates received for more than 5 minutes")
