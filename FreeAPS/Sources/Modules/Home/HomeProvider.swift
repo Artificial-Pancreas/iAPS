@@ -70,10 +70,9 @@ extension Home {
             tempTargetsStorage.current()
         }
 
-        func carbs(hours _: Int) -> [CarbsEntry] {
+        func carbs(hours: Int) -> [CarbsEntry] {
             carbsStorage.recent().filter {
-                $0.createdAt > carbsStorage.syncDate()
-                // $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
             }
         }
 
