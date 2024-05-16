@@ -16,7 +16,6 @@ extension Home {
         @Published var isManual: [BloodGlucose] = []
         @Published var announcement: [Announcement] = []
         @Published var suggestion: Suggestion?
-        @Published var reasons: [Reasons] = []
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
@@ -80,7 +79,7 @@ extension Home {
         @Published var maxBolus: Decimal = 0
         @Published var maxBolusValue: Decimal = 1
         @Published var useInsulinBars: Bool = false
-        @Published var iobData: [IOBData] = []
+        @Published var iobData: [IOBData]?
         @Published var neg: Int = 0
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -100,10 +99,10 @@ extension Home {
             setupCurrentPumpTimezone()
             setupOverrideHistory()
             setupLoopStats()
-            setupReasons()
+            setupData()
 
+            iobData = provider.reasons()
             suggestion = provider.suggestion
-            reasons = provider.reasons()
             overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
@@ -476,16 +475,13 @@ extension Home {
             }
         }
 
-        private func setupReasons() {
+        private func setupData() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.reasons = self.provider.reasons()
-                self.iobData =
-                    self.reasons.map {
-                        iob -> IOBData in
-                        IOBData(date: iob.date ?? Date(), iob: (iob.iob ?? 0) as Decimal, cob: (iob.cob ?? 0) as Decimal)
-                    }
-                neg = iobData.filter({ $0.iob < 0 }).count * 5
+                if let data = self.provider.reasons() {
+                    self.iobData = data
+                    neg = data.filter({ $0.iob < 0 }).count * 5
+                }
             }
         }
 
@@ -540,7 +536,7 @@ extension Home.StateModel:
         setStatusTitle()
         setupOverrideHistory()
         setupLoopStats()
-        setupReasons()
+        setupData()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -567,7 +563,7 @@ extension Home.StateModel:
         useInsulinBars = settingsManager.settings.useInsulinBars
         setupGlucose()
         setupOverrideHistory()
-        setupReasons()
+        setupData()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -599,7 +595,7 @@ extension Home.StateModel:
         setStatusTitle()
         setupOverrideHistory()
         setupLoopStats()
-        setupReasons()
+        setupData()
     }
 
     func pumpBatteryDidChange(_: Battery) {

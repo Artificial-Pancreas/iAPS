@@ -487,7 +487,7 @@ extension Home {
 
         var activeView: some View {
             addBackground()
-                .frame(minHeight: 320)
+                .frame(minHeight: 340)
                 .overlay {
                     ActiveView(data: $state.iobData, neg: $state.neg)
                 }
@@ -625,7 +625,7 @@ extension Home {
                         chart
                         preview.padding(.top, 15)
                         loopPreview.padding(.top, 15)
-                        if state.iobData.count > 3 {
+                        if let data = state.iobData, data.count > 3 {
                             activeView.padding(.top, 15)
                         }
                     }

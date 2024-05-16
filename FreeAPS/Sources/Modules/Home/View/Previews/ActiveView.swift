@@ -2,7 +2,7 @@ import Charts
 import SwiftUI
 
 struct ActiveView: View {
-    @Binding var data: [IOBData]
+    @Binding var data: [IOBData]?
     @Binding var neg: Int
 
     private var formatter: NumberFormatter {
@@ -15,22 +15,24 @@ struct ActiveView: View {
 
     var body: some View {
         VStack {
-            Text("Active Carbohydrates").foregroundStyle(.secondary).padding(.top, 10)
-            cobView.frame(maxHeight: 100)
-            padding(.vertical, 10)
-            Text("Active Insulin").foregroundStyle(.secondary)
-            iobView.frame(maxHeight: 100)
-            sumView().frame(maxHeight: 100).padding(.bottom, 10)
+            if let chartData = data {
+                Text("Active Carbohydrates").foregroundStyle(.secondary).padding(.top, 10)
+                cobView(data: chartData).frame(maxHeight: 100)
+                padding(.vertical, 10)
+                Text("Active Insulin").foregroundStyle(.secondary)
+                iobView(data: chartData).frame(maxHeight: 100)
+                sumView().frame(maxHeight: 100).padding(.bottom, 10)
+            }
         }
     }
 
-    var cobView: some View {
+    @ViewBuilder private func cobView(data: [IOBData]) -> some View {
         // let maximum = max(0, (data.map(\.cob).max() ?? 0) * 1.1)
 
-        Chart(data) { datapoint in
+        Chart(data) { // datapoint in
             AreaMark(
-                x: .value("Time", datapoint.date),
-                y: .value("COB", datapoint.cob)
+                x: .value("" /* "Time" */, $0.date),
+                y: .value("" /* "COB" */, $0.cob)
             ).foregroundStyle(Color(.loopYellow))
         }
         .chartYAxis {
@@ -46,14 +48,14 @@ struct ActiveView: View {
          ) */
     }
 
-    var iobView: some View {
+    @ViewBuilder private func iobView(data: [IOBData]) -> some View {
         // let minimum = min(0, (data.map(\.iob).min() ?? 0) * 1.2)
         // let maximum = (data.map(\.iob).max() ?? 0) * 1.1
 
-        Chart(data) { datapoint in
+        Chart(data) { // datapoint in
             AreaMark(
-                x: .value("Time", datapoint.date),
-                y: .value("IOB", datapoint.iob)
+                x: .value("" /* "Time" */, $0.date),
+                y: .value("" /* "IOB" */, $0.iob)
             ).foregroundStyle(Color(.insulin))
         }
         .chartXAxis {
