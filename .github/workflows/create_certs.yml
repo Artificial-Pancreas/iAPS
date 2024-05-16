@@ -12,7 +12,7 @@ jobs:
   certificates:
     name: Create Certificates
     needs: validate
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       # Uncomment to manually select Xcode version if needed
       - name: Select Xcode version
@@ -20,7 +20,7 @@ jobs:
       
       # Checks-out the repo
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
