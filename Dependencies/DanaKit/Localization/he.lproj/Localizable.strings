@@ -1,0 +1,413 @@
+/* Generic loading text */
+"loading" = "טוען"
+
+/* Title for DanaKitSetupView */
+"Dana-i/RS Setup" = "הגדרת Dana-i/RS"
+
+/* Subtitle for DanaKitSetupView */
+"Select your pump" = "בחר את המשאבה שלך"
+
+/* danaRS v1 option text for DanaKitSetupView */
+"DanaRS-v1" = "DanaRS-v1"
+
+/* danaRS v3 option text for DanaKitSetupView */
+"DanaRS-v3" = "DanaRS-v3"
+
+/* dana-i option text for DanaKitSetupView */
+"Dana-i" = "דנה-אי"
+
+/* Title for danars v1 explaination */
+"Setting up DanaRS v1" = "הגדרת DanaRS v1"
+
+/* Subtext for danars v1 */
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "במהלך תהליך ההתאמה, ה-DanaRS v3 שלך יציג הנחית התאמה ואילו ה-iPhone שלך ​​יציג הנחיה לקוד התאמה. במשאבה, בחר אישור והקלד את הקוד באייפון. לאחר מכן, Loop מוכן לתקשר עם DanaRS v1 שלך"
+
+/* check password text for danars v1 */
+"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "לפני שמתחילים בתהליך ההתאמה, מומלץ לבדוק, ובמידת הצורך לעדכן, את סיסמת המשאבה. אתה יכול לעשות זאת על ידי מעבר להגדרות המשאבה -&gt; הגדרות משתמש -&gt; סיסמה. סיסמת ברירת המחדל היא 1234, אם זו הסיסמה שלך, אנא שקול לשנות אותה"
+
+/* Title for danars v1 password */
+"Password DanaRS v1" = "סיסמה DanaRS v1"
+
+/* password placeholder danars v1 */
+"Fill in password" = "מלא סיסמה"
+
+/* Title for danars v3 explaination */
+"Setting up DanaRS v3" = "הגדרת DanaRS v3"
+
+/* Subtext for danars v3 */
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "במהלך תהליך ההתאמה, ה-DanaRS v3 שלך יציג בקשת התאמה ואילו ה-iPhone שלך ​​יציג הנחיה לשני קודי התאמה. במשאבה, בחר אישור והקלד את שני הקודים באייפון שלך. לאחר מכן, Loop מוכן לתקשר עם ה-DanaRS v3 שלך"
+
+/* Title for dana-i explaination */
+"Setting up Dana-i" = "הגדרת Dana-i"
+
+/* General subtext for dana */
+"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "לאחר הגדרת סוג האינסולין ומהירות הבולוס, תראה מסך עם כל משאבות דנה שנמצאו. בחר את המשאבה שברצונך לקשר עם Loop."
+
+/* Subtext for dana-i */
+"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, Loop is ready to communicate with your Dana-i" = "במהלך תהליך ההתאמה, ה-Dana-i שלך יציג הנחית התאמה ואילו ה-iPhone שלך ​​יציג הנחיה לקוד התאמה. בשאיבה, בחר אישור והקלד את הקוד בן 6 הספרות במסך באייפון שלך. לאחר מכן, Loop מוכן לתקשר עם ה-Dana-i שלך"
+
+/* Dana-i/RS invalid ble5 keys */
+"ERROR: Failed to pair device" = "שגיאה: התאמת המכשיר נכשלה"
+
+/* Dana-i oke invalid ble5 keys */
+"OK" = "בסדר"
+
+/* Cancel button title */
+"Cancel" = "לְבַטֵל"
+
+/* Dana-i/RS connecting alert title */
+"Scanning" = "סריקה"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "מְקַשֵׁר"
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using in this pump" = "בחר את סוג האינסולין שבו תשתמש במשאבה זו"
+
+/* Title for Dana-i/RS PumpManager deletion action sheet. */
+"Remove Pump" = "הסר את המשאבה"
+
+/* Message for Dana-i/RS PumpManager deletion action sheet */
+"Are you sure you want to stop using Dana-i/RS?" = "האם אתה בטוח שברצונך להפסיק להשתמש ב-Dana-i/RS?"
+
+/* Button text to confirm Dana-i/RS PumpManager deletion */
+"Delete pump" = "מחק משאבה"
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "מחק משאבה"
+
+/* Connection error message */
+"Error while connecting to device" = "שגיאה בעת התחברות למכשיר"
+
+/* Dana-RS v3 found */
+"Dana-RS v3 found!" = "Dana-RS v3 נמצא!"
+
+/* Dana-RS v3 pincode prompt body */
+"Pincode required" = "נדרש פיקוד"
+
+/* Dana-RS v3 pincode prompt pin 1 */
+"Pin 1" = "סיכה 1"
+
+/* Dana-RS v3 pincode prompt pin 2 */
+"Pin 2" = "סיכה 2"
+
+/* Dana-RS v3 pincode prompt error invalid length */
+"Received invalid pincode lengths. Try again" = "קיבלו אורכי פיקוד לא חוקיים. נסה שוב"
+
+/* Dana-RS v3 pincode prompt error invalid hex */
+"Received invalid hex strings. Try again" = "התקבלו מחרוזות hex לא חוקיות. נסה שוב"
+
+/* Dana-RS v3 pincode prompt error checksum failed */
+"Checksum failed. Try again" = "סכום הבדיקה נכשל. נסה שוב"
+
+/* Title for delivery speed */
+"Delivery speed" = "מהירות משלוח"
+
+/* Dana bolus speed 12u per min */
+"12 sec/U" = "12 שניות/U"
+
+/* Dana bolus speed 30u per min */
+"30 sec/U" = "30 שניות/U"
+
+/* Dana bolus speed 60u per min */
+"60 sec/U" = "60 שניות/U"
+
+/* Dana delivery speed body */
+"The Dana pumps support different delivery speeds. You can set it up here" = "משאבות דנה תומכות במהירויות משלוח שונות. אתה יכול להגדיר את זה כאן"
+
+/* Text for finish button */
+"Finish" = "סיים"
+
+/* Dana setup complete p1 */
+"Your " = "שֶׁלְךָ "
+
+/* Dana setup complete p2 */
+" is ready to be used!" = " מוכן לשימוש!"
+
+/* Dana setup SMB setting */
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "הערה: למשאבת Dana יש הגדרה מיוחדת המאפשרת לך להשתיק את צפצופים של משאבת Dana. כדי לאפשר זאת, אנא צור קשר עם מפיץ דנה שלך"
+
+/* Error description when no dana connected */
+"Failed to make a connection" = "יצירת החיבור נכשלה"
+
+/* Error description when failed temp adjustment */
+"Failed to adjust temp basal" = "התאמת הטמפ&#39; הבסיסית נכשלה"
+
+/* Error description when failed suspension adjustment */
+"Failed to adjust suspension" = "התאמת ההשעיה נכשלה"
+
+/* Error description when failed generating basal program */
+"Failed to generate Dana basal program" = "יצירת התוכנית הבסיסית של דנה נכשלה"
+
+/* Error description when failed basal adjustment */
+"Failed to adjust basal" = "התאמת הבסיס נכשלה"
+
+/* Error description when pump time failed to sync */
+"Failed to adjust pump time" = "התאמת זמן המשאבה נכשלה"
+
+/* Error description when trying to set temp basal */
+"Setting temp basal is not supported at this time" = "הגדרת הבסיס הטמפ&#39; אינה נתמכת בשלב זה"
+
+/* Error description when pump is suspended */
+"The insulin delivery has been suspend. Action failed" = "מתן האינסולין הושעה. פעולה: נכשל"
+
+/* Error description when pump is busy (with bolussing probably) */
+"Action has been canceled, because the pump is busy" = "הפעולה בוטלה, כי המשאבה תפוסה"
+
+/* dana AB limitation warning title */
+"Only Automatic Bolus is supported" = "רק בולוס אוטומטי נתמך"
+
+/* dana AB limitation warning body */
+"Please consider changing your dosing strategy in the setting menu" = "אנא שקול לשנות את אסטרטגיית המינון שלך בתפריט ההגדרות"
+
+/* Dana settings resume delivery */
+"Resume delivery" = "המשך משלוח"
+
+/* Dana settings suspend delivery */
+"Suspend delivery" = "השעיית משלוח"
+
+/* Dana settings stop temp basal */
+"Stop temp basal" = "עצור את הבסיס הזמני"
+
+/* Text for confidence reminders navigation link */
+"Insulin Type" = "סוג אינסולין"
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "בזאל מתוזמן";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "מתן אינסולין";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "אינסולין\nמושעה";
+
+/* Text shown in basal rate space when delivery status is unknown */
+"Unknown" = "לא ידוע";
+
+/* Units for showing temp basal rate */
+"U/hr" = "U/hr";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "אינסולין שנותר";
+
+/* Text for Dana pump name */
+"Pump name" = "שם המשאבה"
+
+/* Text for hardware model */
+"Hardware model" = "דגם חומרה"
+
+/* Text for firmware version */
+"Firmware version" = "גרסת קושחה"
+
+/* DanaKit sync pump */
+"Sync pump data" = "סנכרון נתוני משאבה"
+
+/* Text for last sync */
+"Last sync" = "סנכרון אחרון"
+
+/* Text for pump time */
+"Pump time" = "זמן משאבה"
+
+/* Label for syncing the time on the pump */
+"Sync Pump time" = "זמן משאבת סנכרון"
+
+/* Alert content title for timeOffsetChangeDetected pod alert
+   Title for pod sync time action sheet.
+   title for time change detected notice */
+"Time Change Detected" = "זוהה שינוי בזמן"
+
+/* Message for pod sync time action sheet */
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "השעה במשאבה שלך שונה מהשעה הנוכחית. האם ברצונך לעדכן את השעה במשאבה לשעה הנוכחית?"
+
+/* description for time change detected notice */
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "השעה במשאבה שלך שונה מהשעה הנוכחית. הזמן של המשאבה שלך שולט בהגדרות הטיפול המתוכנן שלך. גלול מטה לשורת זמן משאבה כדי לסקור את הפרש הזמן ולהגדיר את המשאבה שלך.";
+
+/* Button text to confirm pump time sync */
+"Yes, Sync to Current Time" = "כן, סנכרן לשעה נוכחית"
+
+/* Button text to cancel pump time sync */
+"No, Keep Pump As Is" = "לא, שמור את המשאבה כפי שהיא"
+
+/* Pump Event title for UnfinalizedDose with doseType of .bolus */
+"Bolus" = "בולוס";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "טמפ בזאל";
+
+/* Pump Event title for UnfinalizedDose with doseType of .basal */
+"Basal" = "בזאלי";
+
+/* Pump Event title for UnfinalizedDose with doseType of .resume */
+"Resume" = "קורות חיים";
+
+/* Pump Event title for UnfinalizedDose with doseType of .suspend */
+"Suspend" = "לְהַשְׁעוֹת";
+
+/* Title for user options */
+"User options" = "אפשרויות משתמש"
+
+/* DanaKit share logs */
+"Share Dana pump logs" = "שתף יומני משאבת דנה"
+
+/* Loading */
+"Loading" = "טוען"
+
+/* Text for save button */
+"Save" = "להציל"
+
+/* Text for 24h display */
+"24h display" = "תצוגה של 24 שעות"
+
+/* Description for 24h display */
+"Should time be display in 12h or 24h" = "הזמן אמור להיות מוצג ב-12 או 24 שעות"
+
+/* text on */
+"On" = "עַל"
+
+/* text off */
+"Off" = "כבוי"
+
+/* 12h */
+"12h notation" = "סימון 12 שעות"
+
+/* 24h */
+"24h notation" = "סימון 24 שעות"
+
+/* Text for Scroll function */
+"Scroll function" = "פונקציית גלילה"
+
+/* text for second */
+"sec" = "שניות"
+
+/* backlightOnTimeInSec */
+"Backlight on time" = "תאורה אחורית בזמן"
+
+/* lcdOnTimeInSec */
+"Lcd on time" = "LCD בזמן"
+
+/* beepAndAlarm */
+"Alarm beeps" = "אזעקה מצפצפת"
+
+/* beepAndAlarm.sound */
+"Sound" = "נשמע"
+
+/* beepAndAlarm.vibration */
+"Vibration" = "רֶטֶט"
+
+/* beepAndAlarm.both */
+"Both" = "שניהם"
+
+/* Alert title for batteryZeroPercent */
+"Pump battery 0%" = "סוללת משאבה 0%"
+
+/* Alert body for batteryZeroPercent */
+"Pump battery is empty. Replace it now!" = "סוללת המשאבה ריקה. החלף אותו עכשיו!"
+
+/* Alert title for pumpError */
+"Pump error" = "שגיאת משאבה"
+
+/* Alert body for pumpError */
+"Check the pump and try again" = "בדוק את המשאבה ונסה שוב"
+
+/* Alert title for occlusion */
+"Occlusion" = "סְפִיגָה"
+
+/* Alert body for occlusion */
+"Check the reservoir and infus and try again" = "בדוק את המאגר והעירוי ונסה שוב"
+
+/* Alert title for lowBattery */
+"Low pump battery" = "סוללת משאבה נמוכה"
+
+/* Alert body for lowBattery */
+"Pump battery needs to be replaced soon" = "יש להחליף את סוללת המשאבה בקרוב"
+
+/* Alert title for shutdown */
+"Pump shutdown" = "כיבוי משאבה"
+
+/* Alert body for shutdown */
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "לא היו אינטראקציות עם המשאבה במשך זמן רב מדי. או השבת את הפונקציה הזו במשאבה או עשה אינטראקציה עם המשאבה"
+
+/* Alert title for basalCompare */
+"Basal Compare" = "Basal Compare"
+
+/* Alert title for bloodSugarMeasure */
+"Blood glucose Measure" = "מדידת גלוקוז בדם"
+
+/* Alert title for remainingInsulinLevel */
+"Remaining insulin level" = "רמת האינסולין שנותרה"
+
+/* Alert title for emptyReservoir */
+"Empty reservoir" = "מאגר ריק"
+
+/* Alert body for emptyReservoir */
+"Reservoir is empty. Replace it now!" = "המאגר ריק. החלף אותו עכשיו!"
+
+/* Alert title for emptyReservoir */
+"Check chaft" = "בדוק צ&#39;פט"
+
+/* Alert body for checkShaft */
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "המשאבה זיהתה בעיה עם המט שלה. אנא הסר את המאגר, בדוק הכל ונסה שוב"
+
+/* Alert title for basalMax */
+"Basal limit reached" = "הגבול הבסיסי הגיע"
+
+/* Alert body for basalMax */
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "הגבול הבסיסי היומי שלך הגיע. אנא צור קשר עם מפיץ דנה שלך כדי להגדיל את המגבלה"
+
+/* Alert title for dailyMax */
+"Daily limit reached" = "הגעת למגבלה היומית"
+
+/* Alert body for basalMax */
+"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "גבול האינסולין היומי שלך הגיע. אנא צור קשר עם מפיץ דנה שלך כדי להגדיל את המגבלה"
+
+/* Alert title for bloodSugarCheckMiss */
+"Missed Blood glucose check" = "פספסה בדיקת גלוקוז בדם"
+
+/* Alert body for bloodSugarCheckMiss */
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "תזכורת לבדיקת רמת הסוכר בדם הוגדרה במשאבה שלך והיא מופעלת. אנא הסר אותו או תן את רמת הגלוקוז שלך למשאבה"
+
+/* Alert title for unknown */
+"Unknown error" = "שגיאה לא ידועה"
+
+/* Alert body for unknown */
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "אירעה שגיאה לא ידועה במהלך עיבוד ההתראה מהמשאבה. נא לדווח על כך"
+
+/* The title of the pump information section in DanaKit settings */
+"Pump information" = "מידע על משאבה"
+
+/* Title for silent tone action sheet */
+"Toggle silent tone?" = "להחליף צליל שקט?"
+
+/* Button text to cancel silent tone */
+"No, Keep as is" = "לא, שמור כפי שהוא"
+
+/* Button text to disable silent tone */
+"Yes, Disable silent tones" = "כן, השבת צלילים שקטים"
+
+/* Button text to enable silent tone */
+"Yes, Enable silent tones" = "כן, אפשר צלילים שקטים"
+
+/* Description for basal profile number */
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "הגדר את הפרופיל הבסיסי שבו המשאבה צריכה להשתמש. שימו לב, זה יחליף את הפרופיל שנמצא במשאבה, עם זה ב-Loop"
+
+
+/* Error message for reservoir view when reservoir empty
+   Status highlight message for emptyReservoir alarm.
+   Status highlight that a pump is out of insulin. */
+"No Insulin" = "אין אינסולין"
+
+/* Status highlight that insulin delivery was suspended. */
+"Insulin Suspended" = "אינסולין מושעה"
+
+/* Error message for reservoir view during general pod fault
+   Status highlight when communications with the pod haven't happened recently. */
+"Signal Loss" = "אובדן אות"
+
+/* Text for Day unit */
+"day(s)" = "ימים"
+
+/* Text for cannula age */
+"Cannula age" = "גיל קנולה"
+
+/* Text for reservoir age */
+"Reservoir age" = "גיל המאגר"

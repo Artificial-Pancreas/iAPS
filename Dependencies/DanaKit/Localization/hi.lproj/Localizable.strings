@@ -1,0 +1,413 @@
+/* Generic loading text */
+"loading" = "लोड हो रहा है"
+
+/* Title for DanaKitSetupView */
+"Dana-i/RS Setup" = "दाना-आई/आरएस सेटअप"
+
+/* Subtitle for DanaKitSetupView */
+"Select your pump" = "अपना पंप चुनें"
+
+/* danaRS v1 option text for DanaKitSetupView */
+"DanaRS-v1" = "दानाआरएस-v1"
+
+/* danaRS v3 option text for DanaKitSetupView */
+"DanaRS-v3" = "दानाआरएस-v3"
+
+/* dana-i option text for DanaKitSetupView */
+"Dana-i" = "दाना-आई"
+
+/* Title for danars v1 explaination */
+"Setting up DanaRS v1" = "DanaRS v1 की स्थापना"
+
+/* Subtext for danars v1 */
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "पेयरिंग प्रक्रिया के दौरान, आपका DanaRS v3 पेयरिंग प्रॉम्प्ट दिखाएगा जबकि आपका iPhone पेयरिंग कोड के लिए प्रॉम्प्ट दिखाएगा। अपने पंप पर, OK चुनें और अपने iPhone पर कोड टाइप करें। उसके बाद, Loop आपके DanaRS v1 के साथ संवाद करने के लिए तैयार है"
+
+/* check password text for danars v1 */
+"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "पेयरिंग प्रक्रिया शुरू करने से पहले, पंप पासवर्ड की जांच करना और यदि आवश्यक हो तो उसे अपडेट करना अनुशंसित है। आप पंप सेटिंग्स -&gt; उपयोगकर्ता सेटिंग्स -&gt; पासवर्ड पर जाकर ऐसा कर सकते हैं। डिफ़ॉल्ट पासवर्ड 1234 है, अगर यह आपका पासवर्ड है, तो कृपया इसे बदलने पर विचार करें"
+
+/* Title for danars v1 password */
+"Password DanaRS v1" = "पासवर्ड DanaRS v1"
+
+/* password placeholder danars v1 */
+"Fill in password" = "पासवर्ड भरें"
+
+/* Title for danars v3 explaination */
+"Setting up DanaRS v3" = "DanaRS v3 की स्थापना"
+
+/* Subtext for danars v3 */
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "पेयरिंग प्रक्रिया के दौरान, आपका DanaRS v3 एक पेयरिंग प्रॉम्प्ट दिखाएगा जबकि आपका iPhone दो पेयरिंग कोड के लिए प्रॉम्प्ट दिखाएगा। अपने पंप पर, OK चुनें और अपने iPhone पर दो कोड टाइप करें। उसके बाद, लूप आपके DanaRS v3 के साथ संवाद करने के लिए तैयार है"
+
+/* Title for dana-i explaination */
+"Setting up Dana-i" = "दाना-आई की स्थापना"
+
+/* General subtext for dana */
+"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "इंसुलिन का प्रकार और बोलस स्पीड सेट करने के बाद, आपको सभी पाए गए दाना पंपों के साथ एक स्क्रीन दिखाई देगी। उस पंप का चयन करें जिसे आप लूप से जोड़ना चाहते हैं।"
+
+/* Subtext for dana-i */
+"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, Loop is ready to communicate with your Dana-i" = "पेयरिंग प्रक्रिया के दौरान, आपका Dana-i पेयरिंग प्रॉम्प्ट दिखाएगा जबकि आपका iPhone पेयरिंग कोड के लिए प्रॉम्प्ट दिखाएगा। अपने पंप पर, OK चुनें और अपने iPhone पर स्क्रीन पर 6-अंकीय कोड टाइप करें। उसके बाद, Loop आपके Dana-i के साथ संवाद करने के लिए तैयार है"
+
+/* Dana-i/RS invalid ble5 keys */
+"ERROR: Failed to pair device" = "त्रुटि: डिवाइस को युग्मित करने में विफल"
+
+/* Dana-i oke invalid ble5 keys */
+"OK" = "ठीक है"
+
+/* Cancel button title */
+"Cancel" = "रद्द करना"
+
+/* Dana-i/RS connecting alert title */
+"Scanning" = "स्कैनिंग"
+
+/* Dana-i/RS connecting alert title */
+"Connecting" = "कनेक्ट"
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using in this pump" = "इस पंप में आप जिस प्रकार का इंसुलिन उपयोग करेंगे उसका चयन करें"
+
+/* Title for Dana-i/RS PumpManager deletion action sheet. */
+"Remove Pump" = "पंप हटाएँ"
+
+/* Message for Dana-i/RS PumpManager deletion action sheet */
+"Are you sure you want to stop using Dana-i/RS?" = "क्या आप वाकई दाना-आई/आरएस का उपयोग बंद करना चाहते हैं?"
+
+/* Button text to confirm Dana-i/RS PumpManager deletion */
+"Delete pump" = "पंप हटाएं"
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "पंप हटाएं"
+
+/* Connection error message */
+"Error while connecting to device" = "डिवाइस से कनेक्ट करते समय त्रुटि"
+
+/* Dana-RS v3 found */
+"Dana-RS v3 found!" = "दाना-आरएस v3 मिला!"
+
+/* Dana-RS v3 pincode prompt body */
+"Pincode required" = "पिनकोड आवश्यक"
+
+/* Dana-RS v3 pincode prompt pin 1 */
+"Pin 1" = "पिन 1"
+
+/* Dana-RS v3 pincode prompt pin 2 */
+"Pin 2" = "पिन 2"
+
+/* Dana-RS v3 pincode prompt error invalid length */
+"Received invalid pincode lengths. Try again" = "अमान्य पिनकोड लंबाई प्राप्त हुई। पुनः प्रयास करें"
+
+/* Dana-RS v3 pincode prompt error invalid hex */
+"Received invalid hex strings. Try again" = "अमान्य हेक्स स्ट्रिंग प्राप्त हुई। पुनः प्रयास करें"
+
+/* Dana-RS v3 pincode prompt error checksum failed */
+"Checksum failed. Try again" = "चेकसम विफल हुआ। पुनः प्रयास करें"
+
+/* Title for delivery speed */
+"Delivery speed" = "वितरण गति"
+
+/* Dana bolus speed 12u per min */
+"12 sec/U" = "12 सेकंड/यू"
+
+/* Dana bolus speed 30u per min */
+"30 sec/U" = "30 सेकंड/यू"
+
+/* Dana bolus speed 60u per min */
+"60 sec/U" = "60 सेकंड/यू"
+
+/* Dana delivery speed body */
+"The Dana pumps support different delivery speeds. You can set it up here" = "दाना पंप अलग-अलग डिलीवरी स्पीड को सपोर्ट करते हैं। आप इसे यहाँ सेट कर सकते हैं"
+
+/* Text for finish button */
+"Finish" = "खत्म करना"
+
+/* Dana setup complete p1 */
+"Your " = "आपका "
+
+/* Dana setup complete p2 */
+" is ready to be used!" = " उपयोग के लिए तैयार है!"
+
+/* Dana setup SMB setting */
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "नोट: आपके दाना पंप में एक विशेष सेटिंग है जो आपको अपने दाना पंप बीप को शांत करने की अनुमति देती है। इसे सक्षम करने के लिए, कृपया अपने दाना वितरक से संपर्क करें"
+
+/* Error description when no dana connected */
+"Failed to make a connection" = "कनेक्शन बनाने में विफल"
+
+/* Error description when failed temp adjustment */
+"Failed to adjust temp basal" = "अस्थायी बेसल समायोजित करने में विफल"
+
+/* Error description when failed suspension adjustment */
+"Failed to adjust suspension" = "निलंबन समायोजित करने में विफल"
+
+/* Error description when failed generating basal program */
+"Failed to generate Dana basal program" = "दाना बेसल प्रोग्राम बनाने में विफल"
+
+/* Error description when failed basal adjustment */
+"Failed to adjust basal" = "बेसल समायोजित करने में विफल"
+
+/* Error description when pump time failed to sync */
+"Failed to adjust pump time" = "पंप समय समायोजित करने में विफल"
+
+/* Error description when trying to set temp basal */
+"Setting temp basal is not supported at this time" = "इस समय अस्थायी बेसल सेटिंग समर्थित नहीं है"
+
+/* Error description when pump is suspended */
+"The insulin delivery has been suspend. Action failed" = "इंसुलिन वितरण स्थगित कर दिया गया है। कार्रवाई विफल रही"
+
+/* Error description when pump is busy (with bolussing probably) */
+"Action has been canceled, because the pump is busy" = "कार्रवाई रद्द कर दी गई है, क्योंकि पंप व्यस्त है"
+
+/* dana AB limitation warning title */
+"Only Automatic Bolus is supported" = "केवल स्वचालित बोलस समर्थित है"
+
+/* dana AB limitation warning body */
+"Please consider changing your dosing strategy in the setting menu" = "कृपया सेटिंग मेनू में अपनी खुराक रणनीति बदलने पर विचार करें"
+
+/* Dana settings resume delivery */
+"Resume delivery" = "डिलीवरी फिर से शुरू करें"
+
+/* Dana settings suspend delivery */
+"Suspend delivery" = "डिलीवरी स्थगित करें"
+
+/* Dana settings stop temp basal */
+"Stop temp basal" = "अस्थायी बेसल रोकें"
+
+/* Text for confidence reminders navigation link */
+"Insulin Type" = "इंसुलिन का प्रकार"
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "अनुसूचित बेसल";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "इंसुलिन वितरण";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "इंसुलिन\nनिलंबित";
+
+/* Text shown in basal rate space when delivery status is unknown */
+"Unknown" = "अज्ञात";
+
+/* Units for showing temp basal rate */
+"U/hr" = "यू/घंटा";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "शेष इंसुलिन";
+
+/* Text for Dana pump name */
+"Pump name" = "पंप का नाम"
+
+/* Text for hardware model */
+"Hardware model" = "हार्डवेयर मॉडल"
+
+/* Text for firmware version */
+"Firmware version" = "प्रक्रिया यंत्र सामग्री संस्करण"
+
+/* DanaKit sync pump */
+"Sync pump data" = "पंप डेटा सिंक करें"
+
+/* Text for last sync */
+"Last sync" = "अंतिम सिंक"
+
+/* Text for pump time */
+"Pump time" = "पम्प समय"
+
+/* Label for syncing the time on the pump */
+"Sync Pump time" = "सिंक पंप समय"
+
+/* Alert content title for timeOffsetChangeDetected pod alert
+   Title for pod sync time action sheet.
+   title for time change detected notice */
+"Time Change Detected" = "समय परिवर्तन का पता चला"
+
+/* Message for pod sync time action sheet */
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "आपके पंप पर समय वर्तमान समय से अलग है। क्या आप अपने पंप पर समय को वर्तमान समय के अनुसार अपडेट करना चाहते हैं?"
+
+/* description for time change detected notice */
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "आपके पंप पर समय वर्तमान समय से अलग है। आपके पंप का समय आपकी शेड्यूल की गई थेरेपी सेटिंग को नियंत्रित करता है। समय के अंतर की समीक्षा करने और अपने पंप को कॉन्फ़िगर करने के लिए पंप समय पंक्ति तक नीचे स्क्रॉल करें।";
+
+/* Button text to confirm pump time sync */
+"Yes, Sync to Current Time" = "हां, वर्तमान समय से समन्वयित करें"
+
+/* Button text to cancel pump time sync */
+"No, Keep Pump As Is" = "नहीं, पम्प को वैसे ही रहने दें"
+
+/* Pump Event title for UnfinalizedDose with doseType of .bolus */
+"Bolus" = "सांस";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "अस्थायी बेसल";
+
+/* Pump Event title for UnfinalizedDose with doseType of .basal */
+"Basal" = "बुनियादी";
+
+/* Pump Event title for UnfinalizedDose with doseType of .resume */
+"Resume" = "फिर शुरू करना";
+
+/* Pump Event title for UnfinalizedDose with doseType of .suspend */
+"Suspend" = "निलंबित करें";
+
+/* Title for user options */
+"User options" = "उपयोगकर्ता विकल्प"
+
+/* DanaKit share logs */
+"Share Dana pump logs" = "दाना पंप लॉग साझा करें"
+
+/* Loading */
+"Loading" = "लोड हो रहा है"
+
+/* Text for save button */
+"Save" = "बचाना"
+
+/* Text for 24h display */
+"24h display" = "24 घंटे का प्रदर्शन"
+
+/* Description for 24h display */
+"Should time be display in 12h or 24h" = "क्या समय 12 घंटे या 24 घंटे में प्रदर्शित होना चाहिए"
+
+/* text on */
+"On" = "पर"
+
+/* text off */
+"Off" = "बंद"
+
+/* 12h */
+"12h notation" = "12h संकेतन"
+
+/* 24h */
+"24h notation" = "24 घंटे का अंकन"
+
+/* Text for Scroll function */
+"Scroll function" = "स्क्रॉल फ़ंक्शन"
+
+/* text for second */
+"sec" = "सेकंड"
+
+/* backlightOnTimeInSec */
+"Backlight on time" = "समय पर बैकलाइट"
+
+/* lcdOnTimeInSec */
+"Lcd on time" = "एलसीडी समय पर"
+
+/* beepAndAlarm */
+"Alarm beeps" = "अलार्म बीप"
+
+/* beepAndAlarm.sound */
+"Sound" = "आवाज़"
+
+/* beepAndAlarm.vibration */
+"Vibration" = "कंपन"
+
+/* beepAndAlarm.both */
+"Both" = "दोनों"
+
+/* Alert title for batteryZeroPercent */
+"Pump battery 0%" = "पंप बैटरी 0%"
+
+/* Alert body for batteryZeroPercent */
+"Pump battery is empty. Replace it now!" = "पंप की बैटरी ख़त्म हो गई है। इसे तुरंत बदलें!"
+
+/* Alert title for pumpError */
+"Pump error" = "पंप त्रुटि"
+
+/* Alert body for pumpError */
+"Check the pump and try again" = "पंप की जांच करें और पुनः प्रयास करें"
+
+/* Alert title for occlusion */
+"Occlusion" = "रोड़ा"
+
+/* Alert body for occlusion */
+"Check the reservoir and infus and try again" = "जलाशय और इन्फ्यूस की जांच करें और पुनः प्रयास करें"
+
+/* Alert title for lowBattery */
+"Low pump battery" = "पम्प बैटरी कम"
+
+/* Alert body for lowBattery */
+"Pump battery needs to be replaced soon" = "पंप की बैटरी को जल्द ही बदलने की जरूरत है"
+
+/* Alert title for shutdown */
+"Pump shutdown" = "पंप बंद"
+
+/* Alert body for shutdown */
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "बहुत समय से पंप के साथ कोई इंटरेक्शन नहीं हुआ है। या तो पंप में इस फ़ंक्शन को अक्षम करें या पंप के साथ इंटरैक्ट करें"
+
+/* Alert title for basalCompare */
+"Basal Compare" = "बेसल तुलना"
+
+/* Alert title for bloodSugarMeasure */
+"Blood glucose Measure" = "रक्त ग्लूकोज माप"
+
+/* Alert title for remainingInsulinLevel */
+"Remaining insulin level" = "शेष इंसुलिन स्तर"
+
+/* Alert title for emptyReservoir */
+"Empty reservoir" = "खाली जलाशय"
+
+/* Alert body for emptyReservoir */
+"Reservoir is empty. Replace it now!" = "जलाशय खाली है। इसे अभी बदलें!"
+
+/* Alert title for emptyReservoir */
+"Check chaft" = "चैक चैफ्ट"
+
+/* Alert body for checkShaft */
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "पंप ने अपने चैफ्ट में कोई समस्या पाई है। कृपया जलाशय को हटाएँ, सब कुछ जाँचें और फिर से प्रयास करें"
+
+/* Alert title for basalMax */
+"Basal limit reached" = "बेसल सीमा तक पहुँच गया"
+
+/* Alert body for basalMax */
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "आपकी दैनिक बेसल सीमा पूरी हो गई है। कृपया सीमा बढ़ाने के लिए अपने दाना वितरक से संपर्क करें"
+
+/* Alert title for dailyMax */
+"Daily limit reached" = "दैनिक सीमा पूरी हो गई"
+
+/* Alert body for basalMax */
+"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "आपकी दैनिक इंसुलिन सीमा पूरी हो गई है। कृपया सीमा बढ़ाने के लिए अपने दाना वितरक से संपर्क करें"
+
+/* Alert title for bloodSugarCheckMiss */
+"Missed Blood glucose check" = "रक्त ग्लूकोज की जांच न कराना"
+
+/* Alert body for bloodSugarCheckMiss */
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "आपके पंप में ब्लड ग्लूकोज चेक रिमाइंडर सेट किया गया है और यह चालू हो गया है। कृपया इसे हटा दें या पंप को अपना ग्लूकोज लेवल दें"
+
+/* Alert title for unknown */
+"Unknown error" = "अज्ञात त्रुटि"
+
+/* Alert body for unknown */
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "पंप से अलर्ट संसाधित करते समय एक अज्ञात त्रुटि हुई है। कृपया इसकी रिपोर्ट करें"
+
+/* The title of the pump information section in DanaKit settings */
+"Pump information" = "पंप जानकारी"
+
+/* Title for silent tone action sheet */
+"Toggle silent tone?" = "मौन टोन टॉगल करें?"
+
+/* Button text to cancel silent tone */
+"No, Keep as is" = "नहीं, इसे ऐसे ही रखें"
+
+/* Button text to disable silent tone */
+"Yes, Disable silent tones" = "हां, मूक टोन अक्षम करें"
+
+/* Button text to enable silent tone */
+"Yes, Enable silent tones" = "हां, शांत स्वर सक्षम करें"
+
+/* Description for basal profile number */
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "पंप द्वारा उपयोग की जाने वाली बेसल प्रोफ़ाइल सेट करें। ध्यान दें, यह पंप में मौजूद प्रोफ़ाइल को लूप में मौजूद प्रोफ़ाइल से अधिलेखित कर देगा"
+
+
+/* Error message for reservoir view when reservoir empty
+   Status highlight message for emptyReservoir alarm.
+   Status highlight that a pump is out of insulin. */
+"No Insulin" = "कोई इंसुलिन नहीं"
+
+/* Status highlight that insulin delivery was suspended. */
+"Insulin Suspended" = "इंसुलिन निलम्बित"
+
+/* Error message for reservoir view during general pod fault
+   Status highlight when communications with the pod haven't happened recently. */
+"Signal Loss" = "सिग्नल हानि"
+
+/* Text for Day unit */
+"day(s)" = "दिन"
+
+/* Text for cannula age */
+"Cannula age" = "प्रवेशनी आयु"
+
+/* Text for reservoir age */
+"Reservoir age" = "जलाशय की आयु"
