@@ -50,6 +50,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var useCalc: Bool = true
     var fattyMeals: Bool = false
     var fattyMealFactor: Decimal = 0.7
+    var autoFatReductionFactor: Decimal = 0.8
+    var fattyAutomaticToggle: Bool = false
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = false
     var useTargetButton: Bool = false
@@ -169,8 +171,15 @@ extension FreeAPSSettings: Decodable {
             settings.fattyMeals = fattyMeals
         }
 
+        if let fattyAutomaticToggle = try? container.decode(Bool.self, forKey: .fattyAutomaticToggle) {
+            settings.fattyAutomaticToggle = fattyAutomaticToggle
+        }
+
         if let fattyMealFactor = try? container.decode(Decimal.self, forKey: .fattyMealFactor) {
             settings.fattyMealFactor = fattyMealFactor
+        }
+        if let autoFatReductionFactor = try? container.decode(Decimal.self, forKey: .autoFatReductionFactor) {
+            settings.autoFatReductionFactor = autoFatReductionFactor
         }
 
         if let overrideFactor = try? container.decode(Decimal.self, forKey: .overrideFactor) {

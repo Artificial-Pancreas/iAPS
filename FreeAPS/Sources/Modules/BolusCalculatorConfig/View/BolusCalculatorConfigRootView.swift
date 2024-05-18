@@ -57,11 +57,26 @@ extension BolusCalculatorConfig {
                         Toggle("Apply factor for fatty meals", isOn: $state.fattyMeals)
                         if state.fattyMeals {
                             HStack {
-                                Text("Override With A Factor Of ")
+                                Text(state.fattyAutomaticToggle ? "Automatic Setting" : "Manual Setting")
+                                Spacer()
+                                Toggle("", isOn: $state.fattyAutomaticToggle)
+                            }
+                            if !state.fattyAutomaticToggle { HStack {
+                                Text("Manual override with a factor of ")
                                 Spacer()
                                 DecimalTextField("0.7", value: $state.fattyMealFactor, formatter: conversionFormatter)
-                            }
-                        }
+                            }} else {
+                                HStack {
+                                    Text("Automatically reduce X percent per g of fat")
+                                    Spacer()
+                                    DecimalTextField(
+                                        "0.80",
+                                        value: $state.autoFatReductionFactor,
+                                        formatter: conversionFormatter
+                                    )
+                                }
+
+                            }}
                     }
                     header: { Text("Fatty Meals") }
 

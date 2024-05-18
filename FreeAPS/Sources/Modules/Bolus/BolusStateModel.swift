@@ -53,8 +53,10 @@ extension Bolus {
         @Published var fraction: Decimal = 0
         @Published var useCalc: Bool = true
         @Published var fattyMeals: Bool = false
+        @Published var fattyAutomaticToggle: Bool = false
         @Published var fattyMealFactor: Decimal = 0
         @Published var useFattyMealCorrectionFactor: Bool = false
+        @Published var autoFatReductionFactor: Decimal = 0
         @Published var displayPredictions: Bool = true
 
         @Published var meal: [CarbsEntry]?
@@ -78,7 +80,9 @@ extension Bolus {
             fraction = settings.settings.overrideFactor
             useCalc = settings.settings.useCalc
             fattyMeals = settings.settings.fattyMeals
+            fattyAutomaticToggle = settings.settings.fattyAutomaticToggle
             fattyMealFactor = settings.settings.fattyMealFactor
+            autoFatReductionFactor = settings.settings.autoFatReductionFactor
             eventualBG = settings.settings.eventualBG
             displayPredictions = settings.settings.displayPredictions
             bolusIncrement = settings.preferences.bolusIncrement
