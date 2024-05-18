@@ -2,7 +2,7 @@ import Charts
 import SwiftUI
 
 struct ActiveView: View {
-    @Binding var data: [IOBData]?
+    @Binding var data: [IOBData]
     @Binding var neg: Int
 
     private var formatter: NumberFormatter {
@@ -15,24 +15,23 @@ struct ActiveView: View {
 
     var body: some View {
         VStack {
-            if let chartData = data {
-                Text("Active Carbohydrates").foregroundStyle(.secondary).padding(.top, 10)
-                cobView(data: chartData).frame(maxHeight: 100)
-                padding(.vertical, 10)
-                Text("Active Insulin").foregroundStyle(.secondary)
-                iobView(data: chartData).frame(maxHeight: 100)
-                sumView().frame(maxHeight: 100).padding(.bottom, 10)
-            }
+            Text("Active Carbohydrates").foregroundStyle(.secondary).padding(.top, 10)
+            // Text("Test: \(data.first?.cob ?? 0)")
+            cobView().frame(maxHeight: 100).padding(.vertical, 10)
+            Text("Active Insulin").foregroundStyle(.secondary)
+            // Text("Test: \(data.first?.iob ?? 0)")
+            iobView().frame(maxHeight: 100)
+            sumView().frame(maxHeight: 100).padding(.bottom, 10)
         }
     }
 
-    @ViewBuilder private func cobView(data: [IOBData]) -> some View {
+    @ViewBuilder private func cobView() -> some View {
         let maximum = max(0, (data.map(\.cob).max() ?? 0) * 1.1)
 
         Chart(data) { // datapoint in
             AreaMark(
-                x: .value("" /* "Time" */, $0.date),
-                y: .value("" /* "COB" */, $0.cob)
+                x: .value("Time", $0.date),
+                y: .value("COB", $0.cob)
             ).foregroundStyle(Color(.loopYellow))
         }
         .chartYAxis {
@@ -46,16 +45,19 @@ struct ActiveView: View {
         .chartYScale(
             domain: 0 ... maximum
         )
+        .chartXScale(
+            domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
+        )
     }
 
-    @ViewBuilder private func iobView(data: [IOBData]) -> some View {
+    @ViewBuilder private func iobView() -> some View {
         let minimum = min(0, (data.map(\.iob).min() ?? 0) * 1.2)
         let maximum = (data.map(\.iob).max() ?? 0) * 1.1
 
         Chart(data) { // datapoint in
             AreaMark(
-                x: .value("" /* "Time" */, $0.date),
-                y: .value("" /* "IOB" */, $0.iob)
+                x: .value("Time", $0.date),
+                y: .value("IOB", $0.iob)
             ).foregroundStyle(Color(.insulin))
         }
         .chartXAxis {
@@ -69,6 +71,9 @@ struct ActiveView: View {
         }
         .chartYScale(
             domain: minimum ... maximum
+        )
+        .chartXScale(
+            domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
         )
     }
 

@@ -79,7 +79,7 @@ extension Home {
         @Published var maxBolus: Decimal = 0
         @Published var maxBolusValue: Decimal = 1
         @Published var useInsulinBars: Bool = false
-        @Published var iobData: [IOBData]?
+        @Published var iobData: [IOBData] = []
         @Published var neg: Int = 0
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext

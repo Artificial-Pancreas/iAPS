@@ -625,8 +625,8 @@ extension Home {
                         chart
                         preview.padding(.top, 15)
                         loopPreview.padding(.top, 15)
-                        if let data = state.iobData, data.count > 3 {
-                            activeView.padding(.top, 15)
+                        if state.iobData.count > 5 {
+                            activeView // .padding(.top, 15)
                         }
                     }
                     .scrollIndicators(.hidden)
