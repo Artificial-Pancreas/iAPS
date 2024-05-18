@@ -79,6 +79,8 @@ extension Home {
         @Published var maxBolus: Decimal = 0
         @Published var maxBolusValue: Decimal = 1
         @Published var useInsulinBars: Bool = false
+        @Published var iobData: [IOBData] = []
+        @Published var neg: Int = 0
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -97,7 +99,9 @@ extension Home {
             setupCurrentPumpTimezone()
             setupOverrideHistory()
             setupLoopStats()
+            setupData()
 
+            // iobData = provider.reasons()
             suggestion = provider.suggestion
             overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
@@ -471,6 +475,17 @@ extension Home {
             }
         }
 
+        private func setupData() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                if let data = self.provider.reasons() {
+                    self.iobData = data
+                    neg = data.filter({ $0.iob < 0 }).count * 5
+                    print("DATA: " + data.debugDescription)
+                }
+            }
+        }
+
         func openCGM() {
             guard var url = nightscoutManager.cgmURL else { return }
 
@@ -522,6 +537,7 @@ extension Home.StateModel:
         setStatusTitle()
         setupOverrideHistory()
         setupLoopStats()
+        setupData()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -548,6 +564,7 @@ extension Home.StateModel:
         useInsulinBars = settingsManager.settings.useInsulinBars
         setupGlucose()
         setupOverrideHistory()
+        setupData()
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
@@ -579,6 +596,7 @@ extension Home.StateModel:
         setStatusTitle()
         setupOverrideHistory()
         setupLoopStats()
+        setupData()
     }
 
     func pumpBatteryDidChange(_: Battery) {

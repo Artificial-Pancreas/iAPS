@@ -485,6 +485,17 @@ extension Home {
                 }
         }
 
+        var activeView: some View {
+            addBackground()
+                .frame(minHeight: 340)
+                .overlay {
+                    ActiveView(data: $state.iobData, neg: $state.neg)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+        }
+
         var loopPreview: some View {
             addBackground()
                 .frame(minHeight: 190)
@@ -614,6 +625,9 @@ extension Home {
                         chart
                         preview.padding(.top, 15)
                         loopPreview.padding(.top, 15)
+                        if state.iobData.count > 5 {
+                            activeView // .padding(.top, 15)
+                        }
                     }
                     .scrollIndicators(.hidden)
                     buttonPanel(geo)
