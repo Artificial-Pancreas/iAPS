@@ -10,8 +10,8 @@ extension BolusCalculatorConfig {
         @Published var displayPredictions: Bool = true
         @Published var allowBolusShortcut: Bool = false
         @Published var allowedRemoteBolusAmount: Decimal = 0
-        @Published var eventualBG: Bool = false
-        @Published var minumimPrediction: Bool = false
+        @Published var eventualBG: Bool = true
+        @Published var minumimPrediction: Bool = true
 
         override func subscribe() {
             subscribeSetting(\.overrideFactor, on: $overrideFactor, initial: {
