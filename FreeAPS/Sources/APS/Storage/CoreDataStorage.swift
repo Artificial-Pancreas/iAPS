@@ -39,7 +39,7 @@ final class CoreDataStorage {
         coredataContext.performAndWait {
             let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
             requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", interval)
-            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
             requestTDD.sortDescriptors = [sortTDD]
             try? uniqueEvents = coredataContext.fetch(requestTDD)
         }
