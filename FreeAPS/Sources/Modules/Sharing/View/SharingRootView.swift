@@ -33,17 +33,18 @@ extension Sharing {
             Form {
                 Section {
                     Toggle("Share all of your Statistics", isOn: $state.uploadStats)
-
-                    Picker("Sex", selection: $state.sex) {
-                        ForEach(Sex.allCases) { sex in
-                            Text(NSLocalizedString(sex.rawValue, comment: "")).tag(Optional(sex.rawValue))
+                    if state.uploadStats {
+                        Picker("Sex", selection: $state.sex) {
+                            ForEach(Sex.allCases) { sex in
+                                Text(NSLocalizedString(sex.rawValue, comment: "")).tag(Optional(sex.rawValue))
+                            }
+                        }.onChange(of: state.sex) { _ in
+                            state.saveSetting()
                         }
-                    }.onChange(of: state.sex) { _ in
-                        state.saveSetting()
-                    }
-                    HStack {
-                        DatePicker("Birth Date", selection: $state.birtDate, in: dateRange, displayedComponents: [.date])
-                            .datePickerStyle(.compact)
+                        HStack {
+                            DatePicker("Birth Date", selection: $state.birtDate, in: dateRange, displayedComponents: [.date])
+                                .datePickerStyle(.compact)
+                        }
                     }
                 } header: { Text("Statistics") }
 
@@ -82,6 +83,7 @@ extension Sharing {
                 header: { Text("Your identifier") }
                 footer: { Text((copied && display) ? "Copied" : "") }
             }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView()
                 state.savedSettings()
