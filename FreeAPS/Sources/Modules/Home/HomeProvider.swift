@@ -32,18 +32,18 @@ extension Home {
         func reasons() -> [IOBData]? {
             let reasons = CoreDataStorage().fetchReasons(interval: DateFilter().day)
 
-            if reasons.count > 3 {
-                let iobData = reasons.compactMap {
-                    entry -> IOBData in
-                    IOBData(
-                        date: entry.date ?? Date(),
-                        iob: (entry.iob ?? 0) as Decimal,
-                        cob: (entry.cob ?? 0) as Decimal
-                    )
-                }
-                return iobData
+            guard reasons.count > 3 else {
+                return nil
             }
-            return nil
+
+            return reasons.compactMap {
+                entry -> IOBData in
+                IOBData(
+                    date: entry.date ?? Date(),
+                    iob: (entry.iob ?? 0) as Decimal,
+                    cob: (entry.cob ?? 0) as Decimal
+                )
+            }
         }
 
         func pumpTimeZone() -> TimeZone? {

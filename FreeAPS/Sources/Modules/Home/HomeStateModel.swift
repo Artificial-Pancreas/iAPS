@@ -101,7 +101,7 @@ extension Home {
             setupLoopStats()
             setupData()
 
-            iobData = provider.reasons()
+            // iobData = provider.reasons()
             suggestion = provider.suggestion
             overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
@@ -481,6 +481,7 @@ extension Home {
                 if let data = self.provider.reasons() {
                     self.iobData = data
                     neg = data.filter({ $0.iob < 0 }).count * 5
+                    print("DATA: " + data.debugDescription)
                 }
             }
         }

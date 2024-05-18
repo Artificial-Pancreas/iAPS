@@ -27,7 +27,7 @@ struct ActiveView: View {
     }
 
     @ViewBuilder private func cobView(data: [IOBData]) -> some View {
-        // let maximum = max(0, (data.map(\.cob).max() ?? 0) * 1.1)
+        let maximum = max(0, (data.map(\.cob).max() ?? 0) * 1.1)
 
         Chart(data) { // datapoint in
             AreaMark(
@@ -43,14 +43,14 @@ struct ActiveView: View {
                 AxisGridLine()
             }
         }
-        /* .chartYScale(
-             domain: 0 ... maximum
-         ) */
+        .chartYScale(
+            domain: 0 ... maximum
+        )
     }
 
     @ViewBuilder private func iobView(data: [IOBData]) -> some View {
-        // let minimum = min(0, (data.map(\.iob).min() ?? 0) * 1.2)
-        // let maximum = (data.map(\.iob).max() ?? 0) * 1.1
+        let minimum = min(0, (data.map(\.iob).min() ?? 0) * 1.2)
+        let maximum = (data.map(\.iob).max() ?? 0) * 1.1
 
         Chart(data) { // datapoint in
             AreaMark(
@@ -67,9 +67,9 @@ struct ActiveView: View {
         .chartYAxis {
             AxisMarks(values: .automatic(desiredCount: 3))
         }
-        /* .chartYScale(
-             domain: minimum ... maximum
-         ) */
+        .chartYScale(
+            domain: minimum ... maximum
+        )
     }
 
     @ViewBuilder private func sumView() -> some View {
