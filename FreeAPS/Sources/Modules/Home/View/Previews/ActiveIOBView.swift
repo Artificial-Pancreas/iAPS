@@ -17,7 +17,7 @@ struct ActiveIOBView: View {
 
     var body: some View {
         VStack {
-            Text("Active Insulin").padding(.top, 20)
+            Text("Active Insulin").font(.previewHeadline).padding(.top, 20)
             iobView().frame(maxHeight: 200).padding(.horizontal, 20)
             sumView().frame(maxHeight: 100).padding(.vertical, 20)
         }.dynamicTypeSize(...DynamicTypeSize.medium)
