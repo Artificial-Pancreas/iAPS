@@ -36,7 +36,7 @@ struct ActiveIOBView: View {
         }
         .chartXAxis {
             AxisMarks(values: .stride(by: .hour, count: 2)) { _ in
-                AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .omitted)))
+                AxisValueLabel(format: .dateTime.hour(.defaultDigits(amPM: .omitted)).locale(Locale(identifier: "sv"))) // Force 24h. Not pretty.
                 AxisGridLine()
             }
         }
