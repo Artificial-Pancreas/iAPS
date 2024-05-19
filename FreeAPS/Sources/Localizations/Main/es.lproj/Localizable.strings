@@ -2606,7 +2606,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Live Activity" = "Live Activity";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
 
 /* Notification option */
 "Show Live activity" = "Mostrar Live Activity";
