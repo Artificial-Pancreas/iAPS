@@ -639,8 +639,6 @@ extension Home {
                         if state.iobData.count > 5 {
                             activeCOBView.padding(.top, 15)
                             activeIOBView.padding(.top, 15)
-
-                            // activeView.padding(.top, 15)
                         }
                     }
                     .scrollIndicators(.hidden)
