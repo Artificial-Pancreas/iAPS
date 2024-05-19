@@ -20,7 +20,7 @@ struct ActiveIOBView: View {
             Text("Active Insulin").padding(.top, 20)
             iobView().frame(maxHeight: 200).padding(.horizontal, 20)
             sumView().frame(maxHeight: 100).padding(.vertical, 20)
-        }
+        }.dynamicTypeSize(...DynamicTypeSize.medium)
     }
 
     @ViewBuilder private func iobView() -> some View {
@@ -38,8 +38,8 @@ struct ActiveIOBView: View {
             AxisMarks(values: .stride(by: .hour, count: 2)) { _ in
                 AxisValueLabel(
                     format: .dateTime.hour(.defaultDigits(amPM: .omitted))
-                        .locale(Locale(identifier: "sv"))
-                ) // Force 24h. Not pretty.
+                        .locale(Locale(identifier: "sv")) // Force 24h. Not pretty.
+                )
                 AxisGridLine()
             }
         }
@@ -81,6 +81,5 @@ struct ActiveIOBView: View {
             }
         }
         .padding(.horizontal, 20)
-        .dynamicTypeSize(...DynamicTypeSize.small)
     }
 }
