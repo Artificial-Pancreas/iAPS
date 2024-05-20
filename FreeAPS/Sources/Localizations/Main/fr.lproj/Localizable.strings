@@ -1923,28 +1923,28 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Woman";
+"Woman" = "Femme";
 
 /* */
-"Man" = "Man";
+"Man" = "Homme";
 
 /* */
 "Other" = "Autre";
 
 /* */
-"Secret" = "Secret";
+"Secret" = "Confidentiel";
 
 /* */
-"Birth Date" = "Birth Date";
+"Birth Date" = "Date de naissance";
 
 /* */
-"Share all of your Statistics" = "Share all of your Statistics";
+"Share all of your Statistics" = "Partagez vos statistiques";
 
 /* */
-"Just iAPS version number" = "Just iAPS version number";
+"Just iAPS version number" = "Juste le numéro de version iAPS";
 
 /* */
-"Share Bare Minimum" = "Share Bare Minimum";
+"Share Bare Minimum" = "Partager le minimum";
 
 /* */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
