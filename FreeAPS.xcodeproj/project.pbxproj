@@ -20,6 +20,7 @@
 		190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */; };
 		190F8CF72BC6F70800EDB473 /* IllustrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F8CF62BC6F70800EDB473 /* IllustrationView.swift */; };
 		191A9D162BED00A500028D48 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A9D152BED00A500028D48 /* Version.swift */; };
+		191A9D182BED24B000028D48 /* ActiveIOBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A9D172BED24B000028D48 /* ActiveIOBView.swift */; };
 		191F62682AD6B05A004D7911 /* NightscoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191F62672AD6B05A004D7911 /* NightscoutSettings.swift */; };
 		1920BF5D2B9DF53200E861FE /* BolusShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */; };
 		19229B962AFBB84800CD91CA /* Predictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19229B952AFBB84800CD91CA /* Predictions.swift */; };
@@ -58,6 +59,7 @@
 		19DA48E829CD339B00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		19DA48E929CD339C00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		19DA48EA29CD339C00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
+		19DB70A72BF8F01E00C05381 /* ActiveCOBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB70A62BF8F01E00C05381 /* ActiveCOBView.swift */; };
 		19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */; };
 		19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */; };
 		19DC678329CA677D00FD9EC4 /* OverrideProfilesStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */; };
@@ -566,6 +568,7 @@
 		190F8CF62BC6F70800EDB473 /* IllustrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllustrationView.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		191A9D152BED00A500028D48 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		191A9D172BED24B000028D48 /* ActiveIOBView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveIOBView.swift; sourceTree = "<group>"; };
 		191F62672AD6B05A004D7911 /* NightscoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutSettings.swift; sourceTree = "<group>"; };
 		1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusShortcut.swift; sourceTree = "<group>"; };
 		192202902BAB567800B95BE8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -669,6 +672,7 @@
 		19D466A929AA3099004D5F33 /* FPUConfigRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigRootView.swift; sourceTree = "<group>"; };
 		19D4E4EA29FC6A9F00351451 /* Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Charts.swift; sourceTree = "<group>"; };
 		19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		19DB70A62BF8F01E00C05381 /* ActiveCOBView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCOBView.swift; sourceTree = "<group>"; };
 		19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesDataFlow.swift; sourceTree = "<group>"; };
 		19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesProvider.swift; sourceTree = "<group>"; };
 		19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesStateModel.swift; sourceTree = "<group>"; };
@@ -1213,6 +1217,8 @@
 			children = (
 				19AEF4312B1F5A98006FFE8B /* TIRView.swift */,
 				194D7E6D2B974F9F007A38C1 /* LoopsView.swift */,
+				191A9D172BED24B000028D48 /* ActiveIOBView.swift */,
+				19DB70A62BF8F01E00C05381 /* ActiveCOBView.swift */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
@@ -2954,6 +2960,7 @@
 				38192E04261B82FA0094D973 /* ReachabilityManager.swift in Sources */,
 				38E44539274E411700EC9A94 /* Disk+UIImage.swift in Sources */,
 				388E595C25AD948C0019842D /* FreeAPSApp.swift in Sources */,
+				191A9D182BED24B000028D48 /* ActiveIOBView.swift in Sources */,
 				38FEF3FC2737E53800574A46 /* MainStateModel.swift in Sources */,
 				F2159A542BA6207F00A0B716 /* ContactTrickEntry.swift in Sources */,
 				38569348270B5DFB0002C50D /* GlucoseSource.swift in Sources */,
@@ -3082,6 +3089,7 @@
 				38A43598262E0E4900E80935 /* FetchAnnouncementsManager.swift in Sources */,
 				642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */,
 				190F8CF72BC6F70800EDB473 /* IllustrationView.swift in Sources */,
+				19DB70A72BF8F01E00C05381 /* ActiveCOBView.swift in Sources */,
 				BD7DA9AC2AE06EB900601B20 /* BolusCalculatorConfigRootView.swift in Sources */,
 				AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */,
 				53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */,
