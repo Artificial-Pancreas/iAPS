@@ -58,6 +58,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         settingsManager.settings.isUploadEnabled
     }
 
+    private var isStatsUploadEnabled: Bool {
+        settingsManager.settings.uploadStats
+    }
+
     private var isUploadGlucoseEnabled: Bool {
         settingsManager.settings.uploadGlucose
     }
@@ -730,7 +734,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             store: [defaultProfile: ps]
         )
 
-        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
+        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled || isStatsUploadEnabled else {
             return
         }
 
@@ -754,18 +758,35 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
         } else {
-            processQueue.async {
-                nightscout.uploadProfile(p)
-                    .sink { completion in
-                        switch completion {
-                        case .finished:
-                            self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
-                            debug(.nightscout, "Profile uploaded")
-                        case let .failure(error):
-                            debug(.nightscout, error.localizedDescription)
-                        }
-                    } receiveValue: {}
-                    .store(in: &self.lifetime)
+            if isUploadEnabled {
+                processQueue.async {
+                    nightscout.uploadProfile(p)
+                        .sink { completion in
+                            switch completion {
+                            case .finished:
+                                self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                                debug(.nightscout, "Profile uploaded")
+                            case let .failure(error):
+                                debug(.nightscout, error.localizedDescription)
+                            }
+                        } receiveValue: {}
+                        .store(in: &self.lifetime)
+                }
+            }
+            if isStatsUploadEnabled {
+                processQueue.async {
+                    nightscout.uploadSettingsToDatabase(p)
+                        .sink { completion in
+                            switch completion {
+                            case .finished:
+                                self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                                debug(.nightscout, "Settings uploaded to database")
+                            case let .failure(error):
+                                debug(.nightscout, error.localizedDescription)
+                            }
+                        } receiveValue: {}
+                        .store(in: &self.lifetime)
+                }
             }
         }
     }

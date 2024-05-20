@@ -630,6 +630,28 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
+    func uploadSettingsToDatabase(_ profile: NightscoutProfileStore) -> AnyPublisher<Void, Swift.Error> {
+        let statURL = IAPSconfig.statURL
+        var components = URLComponents()
+        components.scheme = statURL.scheme
+        components.host = statURL.host
+        components.port = statURL.port
+        components.path = Config.sharePath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpBody = try! JSONCoding.encoder.encode(profile)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
     func uploadPreferences(_ preferences: Preferences) -> AnyPublisher<Void, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
