@@ -559,20 +559,18 @@ extension NightscoutAPI {
     }
 
     func uploadPrefs(_ prefs: NightscoutPreferences) -> AnyPublisher<Void, Swift.Error> {
+        let statURL = IAPSconfig.statURL
         var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.statusPath
+        components.scheme = statURL.scheme
+        components.host = statURL.host
+        components.port = statURL.port
+        components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
         request.httpBody = try! JSONCoding.encoder.encode(prefs)
         request.httpMethod = "POST"
 
@@ -583,20 +581,18 @@ extension NightscoutAPI {
     }
 
     func uploadSettings(_ settings: NightscoutSettings) -> AnyPublisher<Void, Swift.Error> {
+        let statURL = IAPSconfig.statURL
         var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.statusPath
+        components.scheme = statURL.scheme
+        components.host = statURL.host
+        components.port = statURL.port
+        components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
         request.httpBody = try! JSONCoding.encoder.encode(settings)
         request.httpMethod = "POST"
 
@@ -621,6 +617,28 @@ extension NightscoutAPI {
         if let secret = secret {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
+        request.httpBody = try! JSONCoding.encoder.encode(profile)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadSettingsToDatabase(_ profile: NightscoutProfileStore) -> AnyPublisher<Void, Swift.Error> {
+        let statURL = IAPSconfig.statURL
+        var components = URLComponents()
+        components.scheme = statURL.scheme
+        components.host = statURL.host
+        components.port = statURL.port
+        components.path = Config.sharePath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
         request.httpBody = try! JSONCoding.encoder.encode(profile)
         request.httpMethod = "POST"
 

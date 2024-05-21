@@ -1,6 +1,7 @@
 import Foundation
 
 struct NightscoutSettings: JSON {
-    let report = "settings"
+    var report = "settings"
     let settings: FreeAPSSettings?
+    let enteredBy: String
 }
