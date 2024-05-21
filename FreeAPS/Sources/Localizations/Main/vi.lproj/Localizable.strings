@@ -245,7 +245,7 @@
 "for" = "của";
 
 /*  Temp target set for ... minutes */
-"min" = "phút";
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";
@@ -471,7 +471,7 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Cấu hình bơm";
 
 /* Insulin unit per hour */
-"U/hr" = "U/giờ";
+"U/hr" = "U/hr";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -483,10 +483,10 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/giờ";
+" U/hr" = " U/hr";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/giờ";
+"%@ U/hr" = "%@ U/hr";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -501,7 +501,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/giờ";
+"0 U/hr" = "U/hr";
 
 /* abbreviation for days */
 "d" = "ngày";
@@ -627,7 +627,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Đã xử lý";
 
 /* " min" in Treatments list */
-" min" = " phút";
+" min" = " min";
 
 /* */
 "Unable to change anything" = "Không thể thay đổi";
