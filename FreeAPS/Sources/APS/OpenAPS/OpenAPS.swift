@@ -397,20 +397,17 @@ final class OpenAPS {
 
     private func readMiddleware(json: RawJSON, variable: String) -> String? {
         if let string = json.debugDescription.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
-            let targetComponents = string.components(separatedBy: ":")
-            if targetComponents.count == 2 {
-                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                    .replacingOccurrences(of: "\\n", with: "")
-                    .replacingOccurrences(of: "\\", with: "")
-                    .replacingOccurrences(of: "}", with: "")
-                    .replacingOccurrences(
-                        of: "\"",
-                        with: "",
-                        options: NSString.CompareOptions.literal,
-                        range: nil
-                    )
-                return trimmedString
-            }
+            let trimmedString = string.suffix(max(string.count - 14, 0)).trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "\\n", with: "")
+                .replacingOccurrences(of: "\\", with: "")
+                .replacingOccurrences(of: "}", with: "")
+                .replacingOccurrences(
+                    of: "\"",
+                    with: "",
+                    options: NSString.CompareOptions.literal,
+                    range: nil
+                )
+            return trimmedString
         }
         return nil
     }
