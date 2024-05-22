@@ -56,13 +56,9 @@ extension Sharing {
 
                 Section {}
                 footer: {
-                    VStack {
-                        Text(
-                            "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone."
-                        )
-                        Text("https://open-iaps.app/statistics")
-                            .multilineTextAlignment(.center)
-                    }
+                    Text(
+                        "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone."
+                    )
                 }
 
                 Section {
@@ -82,6 +78,12 @@ extension Sharing {
                 }
                 header: { Text("Your identifier") }
                 footer: { Text((copied && display) ? "Copied" : "") }
+
+                Section {}
+                footer: {
+                    Text("https://open-iaps.app/statistics")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {

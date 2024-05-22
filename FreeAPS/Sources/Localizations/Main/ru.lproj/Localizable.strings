@@ -1923,87 +1923,90 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Woman";
+"Woman" = "Женский";
 
 /* */
-"Man" = "Man";
+"Man" = "Мужской";
 
 /* */
 "Other" = "Прочее";
 
 /* */
-"Secret" = "Secret";
+"Secret" = "Скрыть";
 
 /* */
-"Birth Date" = "Birth Date";
+"Birth Date" = "День рождения";
 
 /* */
-"Share all of your Statistics" = "Share all of your Statistics";
+"Share all of your Statistics" = "Делиться всей Вашей статистикой";
 
 /* */
-"Just iAPS version number" = "Just iAPS version number";
+"Just iAPS version number" = "Только номер версии iAPS";
 
 /* */
-"Share Bare Minimum" = "Share Bare Minimum";
+"Share Bare Minimum" = "Минимально делиться";
 
 /* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Любая информация, которой вы хотите поделиться, загружается анонимно. Чтобы предотвратить повторную загрузку, данные идентифицируются с помощью уникальной случайной строки, сохраненной на вашем телефоне.";
 
 /* */
-"Tap to display" = "Tap to display";
+"Tap to display" = "Нажать для отображения";
 
 /* */
-"Your identifier" = "Your identifier";
+"Your identifier" = "Ваш идентификатор";
 
 /* */
-"Share your data anonymously" = "Share your data anonymously";
+"Share your data anonymously" = "Делитесь данными анонимно";
+
+/* Setting Title */
+"Sharing" = "Делиться статистикой";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Контакт";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Контакты";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "Не забудьте сохранить внесенные изменения.";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "Для работы этой функции iAPS необходим доступ к вашим контактам";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "Предоставить iAPS доступ к контактам";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Доступ к контактам был запрещен";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "Доступ к контактам ограничен (родительский контроль?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Доступ к контактам - неизвестное состояние";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Изображение контакта можно использовать для получения обновлений от iAPS в режиме реального времени на Apple Watch контакт ярлыке и/или на iPhone контакт виджете.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Contact Image";
+"Contact Image" = "Изображение контакта";
 
 /* Contact Image, settings, label for the layout picker */
-"Layout" = "Layout";
+"Layout" = "Расположение";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Single";
+"Single" = "Одиночный";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Split";
+"Split" = "Раздельный";
 
 /* Contact Image, settings, outer ring - don't show */
-"DontShowRing" = "Don't show";
+"DontShowRing" = "Не отображать";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop status";
+"LoopStatusRing" = "Статус петли";
 
 /* Contact Image, settings, outer ring - IOB */
 "IOBRing" = "IOB";
@@ -2015,73 +2018,73 @@ Enact a temp Basal or a temp target */
 "IOB+COBRing" = "IOB+COB";
 
 /* Contact Image, settings, label for the primary value picker */
-"Primary" = "Primary";
+"Primary" = "Основной";
 
 /* Contact Image, settings, label for the top value picker */
-"Top" = "Top";
+"Top" = "Сверху";
 
 /* Contact Image, settings, label for the bottom value picker */
-"Bottom" = "Bottom";
+"Bottom" = "Снизу";
 
 /* Contact Image, settings, header for the outer ring section */
-"Ring" = "Ring";
+"Ring" = "Кольцо";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Outer";
+"Outer" = "Вид";
 
 /* Contact Image, settings, label for the ring width picker */
-"Width" = "Width";
+"Width" = "Ширина";
 
 /* Contact Image, settings, label for the ring gap picker */
-"Gap" = "Gap";
+"Gap" = "Разрыв";
 
 /* Contact Image, settings, header for the font section */
-"Font" = "Font";
+"Font" = "Шрифт";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Размер";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Второй размер";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Tracking";
+"Tracking" = "Плотность";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Толщина";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Ночной режим";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Более плотно";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Плотно";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Норма";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Широко";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Светлый";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Нормальный";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Средний";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Полужирный";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Жирный";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Очень жирный";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Не подан";
@@ -2090,16 +2093,16 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Глюкоза";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Предполагаемая ГК";
 
 /* Contact Image, settings, Delta (data to display) */
-"DeltaContactValue" = "Delta";
+"DeltaContactValue" = "Дельта";
 
 /* Contact Image, settings, Trend (data to display) */
 "TrendContactValue" = "Тенденция";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Время последней петли";
 
 /* Contact Image, settings, COB (data to display) */
 "COBContactValue" = "COB";
@@ -2108,7 +2111,7 @@ Enact a temp Basal or a temp target */
 "IOBContactValue" = "IOB";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop status";
+"LoopStatusContactValue" = "Статус петли";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs

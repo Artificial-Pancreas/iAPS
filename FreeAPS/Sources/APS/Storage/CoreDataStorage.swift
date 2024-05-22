@@ -39,7 +39,7 @@ final class CoreDataStorage {
         coredataContext.performAndWait {
             let requestTDD = TDD.fetchRequest() as NSFetchRequest<TDD>
             requestTDD.predicate = NSPredicate(format: "timestamp > %@ AND tdd > 0", interval)
-            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: true)
+            let sortTDD = NSSortDescriptor(key: "timestamp", ascending: false)
             requestTDD.sortDescriptors = [sortTDD]
             try? uniqueEvents = coredataContext.fetch(requestTDD)
         }
@@ -130,6 +130,20 @@ final class CoreDataStorage {
         return suggestion.first
     }
 
+    func fetchReasons(interval: NSDate) -> [Reasons] {
+        var reasonArray = [Reasons]()
+        coredataContext.performAndWait {
+            let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestReasons.sortDescriptors = [sort]
+            requestReasons.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? reasonArray = self.coredataContext.fetch(requestReasons)
+        }
+        return reasonArray
+    }
+
     func saveStatUploadCount() {
         coredataContext.performAndWait { [self] in
             let saveStatsCoreData = StatsData(context: self.coredataContext)
@@ -137,5 +151,29 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
         UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
+    }
+
+    func saveVNr(_ versions: Version?) {
+        if let version = versions {
+            coredataContext.performAndWait { [self] in
+                let saveNr = VNr(context: self.coredataContext)
+                saveNr.nr = version.main
+                saveNr.dev = version.dev
+                saveNr.date = Date.now
+                try? self.coredataContext.save()
+            }
+        }
+    }
+
+    func fetchVNr() -> VNr? {
+        var nr = [VNr]()
+        coredataContext.performAndWait {
+            let requestNr = VNr.fetchRequest() as NSFetchRequest<VNr>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestNr.sortDescriptors = [sort]
+            requestNr.fetchLimit = 1
+            try? nr = coredataContext.fetch(requestNr)
+        }
+        return nr.first
     }
 }

@@ -275,7 +275,7 @@ final class OpenAPS {
                 tddString = ", "
             }
             // Dynamic
-            if preferences?.useNewFormula ?? false {
+            if let notDisabled = readJSON(json: profile, variable: "useNewFormula"), Bool(notDisabled) ?? false {
                 var insertedResons = "Dynamic Ratio: \(isf)"
                 if let algorithm = readJSON(json: profile, variable: "sigmoid"), Bool(algorithm) ?? false {
                     insertedResons += ", Sigmoid function"
@@ -397,20 +397,17 @@ final class OpenAPS {
 
     private func readMiddleware(json: RawJSON, variable: String) -> String? {
         if let string = json.debugDescription.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
-            let targetComponents = string.components(separatedBy: ":")
-            if targetComponents.count == 2 {
-                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespacesAndNewlines)
-                    .replacingOccurrences(of: "\\n", with: "")
-                    .replacingOccurrences(of: "\\", with: "")
-                    .replacingOccurrences(of: "}", with: "")
-                    .replacingOccurrences(
-                        of: "\"",
-                        with: "",
-                        options: NSString.CompareOptions.literal,
-                        range: nil
-                    )
-                return trimmedString
-            }
+            let trimmedString = string.suffix(max(string.count - 14, 0)).trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "\\n", with: "")
+                .replacingOccurrences(of: "\\", with: "")
+                .replacingOccurrences(of: "}", with: "")
+                .replacingOccurrences(
+                    of: "\"",
+                    with: "",
+                    options: NSString.CompareOptions.literal,
+                    range: nil
+                )
+            return trimmedString
         }
         return nil
     }
@@ -721,8 +718,8 @@ final class OpenAPS {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Bundle.profile))
             worker.evaluate(script: Script(name: Prepare.profile))
+            worker.evaluate(script: Script(name: Bundle.profile))
             return worker.call(
                 function: Function.generate,
                 with: [
@@ -755,6 +752,7 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Prepare.string))
 
             if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {

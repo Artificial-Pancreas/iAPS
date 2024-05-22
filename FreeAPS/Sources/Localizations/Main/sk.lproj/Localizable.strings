@@ -17,7 +17,7 @@
 "Continue without bolus" = "Pokračovať bez dávky";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "Uložiť jedlo bez bolusu";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "Stav";
@@ -47,13 +47,13 @@
 "Done" = "Hotovo";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "Zobrazenie emotikonov ako štítkov";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "Zobrazenie IOB a COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "Rýchlejšie potvrdenie podania dávky";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -330,7 +330,7 @@ Enact a temp Basal or a temp target */
 "Enact" = "Vykonať";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "Štart";
 
 /* */
 "Manual Temp Basal" = "Manuálny dočasný bazál";
@@ -441,7 +441,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Pridať simulátor";
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Vymeniť";
 
 /* Insulin model */
 "Model" = "Model";
@@ -969,10 +969,10 @@ Enact a temp Basal or a temp target */
 "High" = "Vysoká";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Veľmi vysoké";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Veľmi nízke";
 
 /* */
 "glucose" = "glukóza";
@@ -999,10 +999,10 @@ Enact a temp Basal or a temp target */
 "Bolus Amount in U" = "Bolus Amount in U";
 
 /* Bolus shortcut. Setting */
-"Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
+"Allow iOS Bolus Shortcuts" = "Povoliť iOS Bolus Skratky";
 
 /* Bolus shortcut setting. Header */
-"iOS Shortcuts" = "iOS Shortcuts";
+"iOS Shortcuts" = "skratky pre iOS";
 
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
@@ -1011,10 +1011,10 @@ Enact a temp Basal or a temp target */
 "Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
 
 /* Bolus shortcut. Error */
-"not available" = "not available";
+"not available" = "nie je k dispozícii";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Aktivácia predvoľby Override";
 
 /* Override Shortcut */
 "Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
@@ -1029,10 +1029,10 @@ Enact a temp Basal or a temp target */
 "The Profile Override" = "The Profile Override";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "je teraz aktivovaný";
 
 /* Override Shortcut */
-"Cancel active override" = "Cancel active override";
+"Cancel active override" = "Zrušiť prepísanie profilu";
 
 /* Override Shortcut */
 "Override canceled" = "Override canceled";
@@ -1452,7 +1452,7 @@ Enact a temp Basal or a temp target */
 "Save as Profile" = "Uložiť ako profil";
 
 /* */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Uložiť ako predvoľbu";
 
 /* Alert */
 "Cancel Profile Override" = "Zrušiť prepísanie profilu?";
@@ -1530,7 +1530,7 @@ Enact a temp Basal or a temp target */
 "Display Protein & Fat" = "Zobrazenie bielkovín a tukov";
 
 /* Time of new meal entry */
-"Now" = "Now";
+"Now" = "Teraz";
 
 /* Display future data table entries */
 "Show Future" = "Show Future";
@@ -1812,7 +1812,7 @@ Enact a temp Basal or a temp target */
 "Average" = "Priemerný";
 
 /* TIR Preview Headline */
-"Time In Range" = "Time In Range";
+"Time In Range" = "Čas v rozmedzí";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Average Interval";
@@ -1923,25 +1923,25 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Woman";
+"Woman" = "Žena";
 
 /* */
-"Man" = "Man";
+"Man" = "Muž";
 
 /* */
 "Other" = "Iné";
 
 /* */
-"Secret" = "Secret";
+"Secret" = "Tajomstvo";
 
 /* */
-"Birth Date" = "Birth Date";
+"Birth Date" = "Dátum narodenia";
 
 /* */
 "Share all of your Statistics" = "Share all of your Statistics";
 
 /* */
-"Just iAPS version number" = "Just iAPS version number";
+"Just iAPS version number" = "Len číslo verzie iAPS";
 
 /* */
 "Share Bare Minimum" = "Share Bare Minimum";
@@ -1957,6 +1957,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Share your data anonymously";
+
+/* Setting Title */
+"Sharing" = "Sharing";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -1997,13 +2000,13 @@ Enact a temp Basal or a temp target */
 "Single" = "Single";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Split";
+"Split" = "Rozdelenie";
 
 /* Contact Image, settings, outer ring - don't show */
-"DontShowRing" = "Don't show";
+"DontShowRing" = "Nezobrazovať";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop status";
+"LoopStatusRing" = "Loop stav";
 
 /* Contact Image, settings, outer ring - IOB */
 "IOBRing" = "IOB";
@@ -2015,28 +2018,28 @@ Enact a temp Basal or a temp target */
 "IOB+COBRing" = "IOB+COB";
 
 /* Contact Image, settings, label for the primary value picker */
-"Primary" = "Primary";
+"Primary" = "Primárne";
 
 /* Contact Image, settings, label for the top value picker */
-"Top" = "Top";
+"Top" = "Hore";
 
 /* Contact Image, settings, label for the bottom value picker */
-"Bottom" = "Bottom";
+"Bottom" = "Dole";
 
 /* Contact Image, settings, header for the outer ring section */
 "Ring" = "Ring";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Outer";
+"Outer" = "Vonkajšie";
 
 /* Contact Image, settings, label for the ring width picker */
-"Width" = "Width";
+"Width" = "Šírka";
 
 /* Contact Image, settings, label for the ring gap picker */
-"Gap" = "Gap";
+"Gap" = "Medzera";
 
 /* Contact Image, settings, header for the font section */
-"Font" = "Font";
+"Font" = "Písma";
 
 /* Contact Image, settings, label for the font size picker */
 "Size" = "Size";
@@ -2048,7 +2051,7 @@ Enact a temp Basal or a temp target */
 "Tracking" = "Tracking";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Váha";
 
 /* Contact Image, settings, label for the dark-mode switcher */
 "Dark mode" = "Dark mode";
@@ -2081,7 +2084,7 @@ Enact a temp Basal or a temp target */
 "BoldFontWeight" = "Bold";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Čierna";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Žiadny";
@@ -2108,7 +2111,7 @@ Enact a temp Basal or a temp target */
 "IOBContactValue" = "IOB";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop status";
+"LoopStatusContactValue" = "Loop stav";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2430,7 +2433,7 @@ Enact a temp Basal or a temp target */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Nová alternatívna bolusová kalkulačka je ďalším prístupom k predvolenej bolusovej kalkulačke v systéme iAPS. Ak je prepínač zapnutý, používate túto kalkulačku bolusu a nie pôvodnú kalkulačku iAPS. Na konci výpočtu sa použije vlastný faktor, ako to má byť pri používaní smbs (predvolene 0,8).\n\nV kalkulačke bolusu môžete tiež pridať možnosť použiť na konci výpočtu ďalší (!) prispôsobiteľný faktor, ktorý by mohol byť užitočný pre tučné jedlá, napr. pizzu (predvolene 0,7).";
 
 /* Settings Section */
-"Extra Features" = "Extra Features";
+"Extra Features" = "Ďalšie funkcie";
 
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";
