@@ -186,6 +186,7 @@ extension Bolus {
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: { [weak self] _ in
                     guard let self = self else { return }
+                    self.notActive()
                     self.apsManager.enactBolus(amount: maxAmount, isSMB: false)
                     self.showModal(for: nil)
                 }
@@ -287,6 +288,18 @@ extension Bolus {
                 }
             }
             return nil
+        }
+
+        func notActive() {
+            let defaults = UserDefaults.standard
+            defaults.set(false, forKey: IAPSconfig.inBolusView)
+            print("Active: NO") // For testing
+        }
+
+        func viewActive() {
+            let defaults = UserDefaults.standard
+            defaults.set(true, forKey: IAPSconfig.inBolusView)
+            print("Active: YES") // For testing
         }
 
         private func prepareData() {
