@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "¡La cantidad es mayor que el ajuste del bolo máximo!\n ¿Está seguro de que desea añadir ";
 
 /* Header */
-"Enact Bolus" = "Administrar Bolo";
+"Enact Bolus" = "Administrar bolo";
 
 /* Button */
-"Enact bolus" = "Administrar Bolo";
+"Enact bolus" = "Administrar bolo";
 
 /*  */
 "Insulin recommended" = "Insulina recomendada";
@@ -68,13 +68,13 @@
 "of" = "de";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "Un Bolo Remoto ";
+"A Remote Bolus " = "Un bolo remoto ";
 
 /* Remote Bolus Alert, Part 2 */
 "was delivered" = "fue entregado";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " hace X minutos, activado de forma remota en Nightscout, por un cuidador o un padre. ¿Todavía quieres aplicar el bolo?\n\nSe prevé que la glucosa eventual, si no aplica un bolo, será: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " hace X minutos, activado de forma remota en NightScout, por un cuidador o un padre. ¿Todavía quieres aplicar el bolo?\n\nSe prevé que la glucosa eventual, si no aplica un bolo, será: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "¡Un bolo remoto se acaba de entregar!";
@@ -510,7 +510,7 @@ Enact a temp Basal or a temp target */
 "h" = "h";
 
 /* abbreviation for minutes */
-"m" = "mn";
+"m" = "min";
 
 /*  */
 "Closed loop" = "Lazo cerrado";
