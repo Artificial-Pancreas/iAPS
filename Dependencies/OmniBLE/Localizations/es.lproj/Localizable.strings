@@ -706,7 +706,7 @@
 "Continue" = "Continuar";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "¿Saltear el onboarding de Omnipod?";
+"Skip Omnipod Onboarding?" = "¿Omitir la inicialización de Omnipod?";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "La aplicación le avisa con antelación de la expiración del Pod.\n\nDeslice para establecer el número de horas de antelación que le gustaría tener.";
