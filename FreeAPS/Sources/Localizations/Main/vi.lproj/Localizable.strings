@@ -1595,7 +1595,7 @@ Enact a temp Basal or a temp target */
 ". Falling: " = ". Đang lao xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose cuối cùng lớn hơn Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Đang thay đổi: ";
@@ -2413,7 +2413,7 @@ Enact a temp Basal or a temp target */
 "unless your threshold setting is set higher:" = "trừ khi cài đặt ngưỡng của bạn được đặt cao hơn:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Thiết lập";
+"Setting" = "Cài đặt";
 
 /* Threshold Table Columns Title */
 "Threshold" = "Ngưỡng";
