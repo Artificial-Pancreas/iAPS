@@ -657,7 +657,7 @@
 "Suspending insulin delivery..." = "Suspendiendo la administración de insulina...";
 
 /* Title text for the button to delete Omnipod PumpManager */
-"Switch from Omnipod Pumps" = "Cambiar de Omnipod";
+"Switch from Omnipod Pumps" = "Cambiar bomba de Omnipod";
 
 /* Label for PumpManager deletion button */
 "Switch to other insulin delivery device" = "Cambiar a otro dispositivo de administración de insulina";
