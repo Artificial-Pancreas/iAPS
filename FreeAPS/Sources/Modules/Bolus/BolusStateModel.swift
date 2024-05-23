@@ -289,6 +289,18 @@ extension Bolus {
             return nil
         }
 
+        func notActive() {
+            let defaults = UserDefaults.standard
+            defaults.set(false, forKey: IAPSconfig.inBolusView)
+            print("Active: NO") // For testing
+        }
+
+        func viewActive() {
+            let defaults = UserDefaults.standard
+            defaults.set(true, forKey: IAPSconfig.inBolusView)
+            print("Active: YES") // For testing
+        }
+
         private func prepareData() {
             if !eventualBG {
                 var prepareData = [

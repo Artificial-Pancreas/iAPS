@@ -154,6 +154,7 @@ extension Bolus {
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView {
+                    state.viewActive()
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
                 }
@@ -179,7 +180,10 @@ extension Bolus {
                         Text("Meal")
                     }
                 },
-                trailing: Button { state.hideModal() }
+                trailing: Button {
+                    state.hideModal()
+                    state.notActive()
+                }
                 label: { Text("Cancel") }
             )
             .popup(isPresented: presentInfo, alignment: .bottom, direction: .bottom, type: .default) {

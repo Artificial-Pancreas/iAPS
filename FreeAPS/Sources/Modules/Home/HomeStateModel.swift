@@ -487,9 +487,6 @@ extension Home {
                         ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
                     })?.tdd ?? 0) as Decimal
                     tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
-
-                    print("Yesterday: \(yesterday)")
-                    print("Today: \((tdds.first?.tdd ?? 0) as Decimal)")
                 }
             }
         }
