@@ -74,7 +74,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     // Dynamic ISF
     if (profile.useNewFormula) {
         dynisf(profile, autosens_data, dynamicVariables, glucose);
-    } else { console.log("Dynamic ISF disabled in settings."); }
+    }
     
     // If ignoring flat CGM errors, circumvent also the Oref0 error
     if (dynamicVariables.disableCGMError) {
@@ -92,6 +92,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
 
 // The Dynamic ISF layer
 function dynisf(profile, autosens_data, dynamicVariables, glucose) {
+    console.log("Starting dynamic ISF layer.");
     var dynISFenabled = true;
     // One of two exercise settings (they share the same purpose).
     var exerciseSetting = false;

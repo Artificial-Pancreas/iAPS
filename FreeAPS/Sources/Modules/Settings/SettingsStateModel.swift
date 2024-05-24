@@ -17,6 +17,7 @@ extension Settings {
         private(set) var copyrightNotice = ""
 
         override func subscribe() {
+            nightscoutManager.fetchVersion()
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
             subscribeSetting(\.disableCGMError, on: $disableCGMError) { disableCGMError = $0 }

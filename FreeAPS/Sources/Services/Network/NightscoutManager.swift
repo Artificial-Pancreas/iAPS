@@ -26,6 +26,7 @@ protocol NightscoutManager: GlucoseSource {
     func deleteAllNSoverrrides()
     func deleteOverride()
     func editOverride(_ profile: String, _ duration_: Double, _ date: Date)
+    func fetchVersion()
     var cgmURL: URL? { get }
 }
 
@@ -55,6 +56,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     private var isUploadEnabled: Bool {
         settingsManager.settings.isUploadEnabled
+    }
+
+    private var isStatsUploadEnabled: Bool {
+        settingsManager.settings.uploadStats
     }
 
     private var isUploadGlucoseEnabled: Bool {
@@ -163,6 +168,27 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         return nightscout.fetchCarbs(sinceDate: since)
             .replaceError(with: [])
             .eraseToAnyPublisher()
+    }
+
+    func fetchVersion() {
+        guard let nightscout = nightscoutAPI, isNetworkReachable else {
+            return
+        }
+        processQueue.async {
+            nightscout.fetchVersion()
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.nightscout, "Version fetched from " + IAPSconfig.statURL.absoluteString)
+                    case let .failure(error):
+                        debug(.nightscout, error.localizedDescription)
+                    }
+                }
+            receiveValue: { a in
+                CoreDataStorage().saveVNr(a)
+            }
+            .store(in: &self.lifetime)
+        }
     }
 
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never> {
@@ -414,6 +440,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         debug(.nightscout, "Statistics uploaded")
                         CoreDataStorage().saveStatUploadCount()
+                        UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
                     case let .failure(error):
                         debug(.nightscout, "Statistics upload failed" + error.localizedDescription)
                     }
@@ -438,6 +465,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     case .finished:
                         debug(.nightscout, "Version uploaded")
                         CoreDataStorage().saveStatUploadCount()
+                        UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
                     case let .failure(error):
                         debug(.nightscout, "Version upload failed" + error.localizedDescription)
                     }
@@ -448,10 +476,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func uploadPreferences(_ preferences: Preferences) {
         let prefs = NightscoutPreferences(
-            preferences: settingsManager.preferences
+            preferences: settingsManager.preferences, enteredBy: getIdentifier()
         )
 
-        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+        guard let nightscout = nightscoutAPI, isStatsUploadEnabled else {
             return
         }
 
@@ -460,7 +488,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        debug(.nightscout, "Preferences uploaded")
+                        debug(.nightscout, "Preferences uploaded to database")
                         self.storage.save(preferences, as: OpenAPS.Nightscout.uploadedPreferences)
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
@@ -472,10 +500,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
     func uploadSettings(_ settings: FreeAPSSettings) {
         let sets = NightscoutSettings(
-            settings: settingsManager.settings
+            settings: settingsManager.settings, enteredBy: getIdentifier()
         )
 
-        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+        guard let nightscout = nightscoutAPI, isStatsUploadEnabled else {
             return
         }
 
@@ -484,7 +512,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 .sink { completion in
                     switch completion {
                     case .finished:
-                        debug(.nightscout, "Settings uploaded")
+                        debug(.nightscout, "Settings uploaded to database")
                         self.storage.save(settings, as: OpenAPS.Nightscout.uploadedSettings)
                     case let .failure(error):
                         debug(.nightscout, error.localizedDescription)
@@ -706,7 +734,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             store: [defaultProfile: ps]
         )
 
-        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled else {
+        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled || isStatsUploadEnabled else {
             return
         }
 
@@ -730,18 +758,39 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
         } else {
-            processQueue.async {
-                nightscout.uploadProfile(p)
-                    .sink { completion in
-                        switch completion {
-                        case .finished:
-                            self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
-                            debug(.nightscout, "Profile uploaded")
-                        case let .failure(error):
-                            debug(.nightscout, error.localizedDescription)
-                        }
-                    } receiveValue: {}
-                    .store(in: &self.lifetime)
+            if isUploadEnabled {
+                processQueue.async {
+                    nightscout.uploadProfile(p)
+                        .sink { completion in
+                            switch completion {
+                            case .finished:
+                                self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                                debug(.nightscout, "Profile uploaded")
+                            case let .failure(error):
+                                debug(.nightscout, error.localizedDescription)
+                            }
+                        } receiveValue: {}
+                        .store(in: &self.lifetime)
+                }
+            }
+            if isStatsUploadEnabled {
+                var q = p
+                q.enteredBy = getIdentifier()
+                processQueue.async {
+                    nightscout.uploadSettingsToDatabase(q)
+                        .sink { completion in
+                            switch completion {
+                            case .finished:
+                                debug(.nightscout, "Profiles uploaded to database")
+                                if !self.isUploadEnabled {
+                                    self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
+                                }
+                            case let .failure(error):
+                                debug(.nightscout, error.localizedDescription)
+                            }
+                        } receiveValue: {}
+                        .store(in: &self.lifetime)
+                }
             }
         }
     }
@@ -749,6 +798,16 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     func uploadGlucose() {
         uploadGlucose(glucoseStorage.nightscoutGlucoseNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedGlucose)
         uploadTreatments(glucoseStorage.nightscoutCGMStateNotUploaded(), fileToSave: OpenAPS.Nightscout.uploadedCGMState)
+    }
+
+    private func getIdentifier() -> String {
+        var identfier = keychain.getValue(String.self, forKey: IAPSconfig.id) ?? ""
+        guard identfier.count > 1 else {
+            identfier = UUID().uuidString
+            keychain.setValue(identfier, forKey: IAPSconfig.id)
+            return identfier
+        }
+        return identfier
     }
 
     func uploadManualGlucose() {

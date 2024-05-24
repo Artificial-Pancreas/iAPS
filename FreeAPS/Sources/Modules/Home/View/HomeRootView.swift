@@ -485,6 +485,28 @@ extension Home {
                 }
         }
 
+        var activeIOBView: some View {
+            addBackground()
+                .frame(minHeight: 340)
+                .overlay {
+                    ActiveIOBView(data: $state.iobData, neg: $state.neg, tddChange: $state.tddChange)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+        }
+
+        var activeCOBView: some View {
+            addBackground()
+                .frame(minHeight: 250)
+                .overlay {
+                    ActiveCOBView(data: $state.iobData)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+        }
+
         var loopPreview: some View {
             addBackground()
                 .frame(minHeight: 190)
@@ -614,6 +636,10 @@ extension Home {
                         chart
                         preview.padding(.top, 15)
                         loopPreview.padding(.top, 15)
+                        if state.iobData.count > 5 {
+                            activeCOBView.padding(.top, 15)
+                            activeIOBView.padding(.top, 15)
+                        }
                     }
                     .scrollIndicators(.hidden)
                     buttonPanel(geo)

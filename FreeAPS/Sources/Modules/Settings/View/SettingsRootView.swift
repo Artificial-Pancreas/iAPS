@@ -8,21 +8,42 @@ extension Settings {
         @StateObject var state = StateModel()
         @State private var showShareSheet = false
 
+        @FetchRequest(
+            entity: VNr.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
+                format: "nr != %@", "" as String
+            )
+        ) var fetchedVersionNumber: FetchedResults<VNr>
+
         var body: some View {
             Form {
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
                 header: {
-                    if let expirationDate = Bundle.main.profileExpiration {
-                        Text(
-                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
-                                "\nBuild Expires: " + expirationDate
-                        ).textCase(nil)
-                    } else {
-                        Text(
-                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
-                        )
+                    VStack(alignment: .leading) {
+                        if let expirationDate = Bundle.main.profileExpiration {
+                            Text(
+                                "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
+                                    "\nBuild Expires: " + expirationDate
+                            ).textCase(nil)
+                        } else {
+                            Text(
+                                "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
+                            )
+                        }
+
+                        if let latest = fetchedVersionNumber.first,
+                           ((latest.nr ?? "") > state.versionNumber) ||
+                           ((latest.nr ?? "") < state.versionNumber && (latest.dev ?? "") > state.versionNumber)
+                        {
+                            Text(
+                                "Latest version on GitHub: " +
+                                    ((latest.nr ?? "") < state.versionNumber ? (latest.dev ?? "") : (latest.nr ?? "")) + "\n"
+                            )
+                            .foregroundStyle(.orange).bold()
+                            .multilineTextAlignment(.leading)
+                        }
                     }
                 }
 

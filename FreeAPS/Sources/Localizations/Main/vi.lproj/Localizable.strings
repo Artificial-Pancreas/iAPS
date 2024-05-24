@@ -245,7 +245,7 @@
 "for" = "của";
 
 /*  Temp target set for ... minutes */
-"min" = "phút";
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";
@@ -471,7 +471,7 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Cấu hình bơm";
 
 /* Insulin unit per hour */
-"U/hr" = "U/giờ";
+"U/hr" = "U/hr";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -483,10 +483,10 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/giờ";
+" U/hr" = " U/hr";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/giờ";
+"%@ U/hr" = "%@ U/hr";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -501,7 +501,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/giờ";
+"0 U/hr" = "U/hr";
 
 /* abbreviation for days */
 "d" = "ngày";
@@ -627,7 +627,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Đã xử lý";
 
 /* " min" in Treatments list */
-" min" = " phút";
+" min" = " min";
 
 /* */
 "Unable to change anything" = "Không thể thay đổi";
@@ -1254,10 +1254,10 @@ Enact a temp Basal or a temp target */
 "Dynamic Sensitivity" = "Độ nhạy động";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Chỉ Autotune Insulin liều nền(basal)";
+"Only Autotune Basal Insulin" = "Chỉ Autotune Insulin liều nền";
 
 /* */
-"Save as your Normal Basal Rates" = "Lưu như liều nền(basal) của bạn";
+"Save as your Normal Basal Rates" = "Lưu như liều nền của bạn";
 
 /* */
 "Save on Pump" = "Lưu vào bơm";
@@ -1393,7 +1393,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Mô tả ghi đè";
 
 /* */
-"Override Profiles" = "Chế độ ghi đè";
+"Override Profiles" = "Cài đặt ghi đè";
 
 /* */
 "Normal " = "Bình thường ";
@@ -1404,13 +1404,13 @@ Enact a temp Basal or a temp target */
 "Total Insulin Adjustment" = "Tổng số điều chỉnh Insulin";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Ghi đè Basal, ISF, CR và Target của bạn";
+"Override your Basal, ISF, CR and Target profiles" = "Chồng liều Basal, ISF, CR và mục tiêu";
 
 /* */
 "Enable indefinitely" = "Kích hoạt vô thời hạn";
 
 /* */
-"Override Profile target" = "Mục tiêu của ghi đè";
+"Override Profile target" = "Mục tiêu ghi đè";
 
 /* */
 "Disable SMBs" = "Vô hiệu hóa SMBs";
@@ -1577,25 +1577,25 @@ Enact a temp Basal or a temp target */
 "Hide" = "Ẩn";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "nằm dưới Ngưỡng của bạn (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose tăng chậm hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng Glucose tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Đang leo lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Đang lao xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose cuối cùng > Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Đang thay đổi: ";
@@ -1957,6 +1957,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Chia sẻ dữ liệu của bạn ẩn danh";
+
+/* Setting Title */
+"Sharing" = "Chia sẻ";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -2410,7 +2413,7 @@ Enact a temp Basal or a temp target */
 "unless your threshold setting is set higher:" = "trừ khi cài đặt ngưỡng của bạn được đặt cao hơn:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Thiết lập";
+"Setting" = "Cài đặt";
 
 /* Threshold Table Columns Title */
 "Threshold" = "Ngưỡng";
