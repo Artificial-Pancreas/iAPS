@@ -293,7 +293,7 @@ final class OpenAPS {
                     insertedResons += ", Dynamic ISF/CR: On/Off"
                 }
                 if let tddFactor = readMiddleware(json: profile, variable: "tdd_factor"), tddFactor.count > 1 {
-                    insertedResons += ", Basal Adjustment: \(tddFactor)"
+                    insertedResons += ", Basal Adjustment: \(tddFactor.suffix(max(tddFactor.count - 6, 0)))"
                 }
 
                 insertedResons += tddString
