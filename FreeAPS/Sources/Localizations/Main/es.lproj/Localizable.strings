@@ -4,10 +4,10 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Añadir insulinar sin administrar bolo";
+"Add insulin without actually bolusing" = "Añadir insulina sin administrar bolo";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Añada %@ sin bolo";
+"Add %@ without bolusing" = "Añadir %@ sin bolo";
 
 "Bolus" = "Bolo";
 
@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "¡La cantidad es mayor que el ajuste del bolo máximo!\n ¿Está seguro de que desea añadir ";
 
 /* Header */
-"Enact Bolus" = "Administrar Bolo";
+"Enact Bolus" = "Administrar bolo";
 
 /* Button */
-"Enact bolus" = "Administrar Bolo";
+"Enact bolus" = "Administrar bolo";
 
 /*  */
 "Insulin recommended" = "Insulina recomendada";
@@ -56,7 +56,7 @@
 "Confirm Bolus Faster" = "Confirmar bolo rápidamente";
 
 /* Setting Section */
-"UI/UX" = "Configuración de interfaz ";
+"UI/UX" = "Interfaz";
 
 /*  */
 "Wait please" = "Espere por favor";
@@ -68,13 +68,13 @@
 "of" = "de";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "Un Bolo Remoto ";
+"A Remote Bolus " = "Un bolo remoto ";
 
 /* Remote Bolus Alert, Part 2 */
 "was delivered" = "fue entregado";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " hace X minutos, activado de forma remota en Nightscout, por un cuidador o un padre. ¿Todavía quieres aplicar el bolo?\n\nSe prevé que la glucosa eventual, si no aplica un bolo, será: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " hace X minutos, activado de forma remota en NightScout, por un cuidador o un padre. ¿Todavía quieres aplicar el bolo?\n\nSe prevé que la glucosa eventual, si no aplica un bolo, será: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "¡Un bolo remoto se acaba de entregar!";
@@ -287,7 +287,7 @@
 "Schedule" = "Programación";
 
 /*  */
-"starts at" = "comienza a las";
+"starts at" = "desde las";
 
 /* Time basal profile */
 "Time" = "Tiempo";
@@ -510,7 +510,7 @@ Enact a temp Basal or a temp target */
 "h" = "h";
 
 /* abbreviation for minutes */
-"m" = "mn";
+"m" = "min";
 
 /*  */
 "Closed loop" = "Lazo cerrado";
@@ -1934,87 +1934,90 @@ Ajustes predeterminados:\n
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* */
 
-"Woman" = "Woman";
+"Woman" = "Mujer";
 
 /* */
-"Man" = "Man";
+"Man" = "Hombre";
 
 /* */
 "Other" = "Otro";
 
 /* */
-"Secret" = "Secret";
+"Secret" = "Anónimo";
 
 /* */
-"Birth Date" = "Birth Date";
+"Birth Date" = "Fecha de nacimiento";
 
 /* */
-"Share all of your Statistics" = "Share all of your Statistics";
+"Share all of your Statistics" = "Comparte todas las estadísticas";
 
 /* */
-"Just iAPS version number" = "Just iAPS version number";
+"Just iAPS version number" = "Sólo el número de versión iAPS";
 
 /* */
-"Share Bare Minimum" = "Share Bare Minimum";
+"Share Bare Minimum" = "Compartir lo mínimo";
 
 /* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Todo registro de información que elija compartir se hace de forma anónima. Para evitar subidas de información duplicadas, los datos se identifican con un identificador único aleatorio guardado en su teléfono.";
 
 /* */
-"Tap to display" = "Tap to display";
+"Tap to display" = "Pulsa para mostrar";
 
 /* */
-"Your identifier" = "Your identifier";
+"Your identifier" = "Su identificador";
 
 /* */
-"Share your data anonymously" = "Share your data anonymously";
+"Share your data anonymously" = "Comparta sus datos anónimamente";
+
+/* Setting Title */
+"Sharing" = "Compartir";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Contacto";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Contactos";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "No olvides guardar tus cambios.";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "iAPS necesita acceso a tus contactos para habilitar esta función";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "Conceder acceso de iAPS a los contactos";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Acceso a contactos denegado";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "El acceso a los contactos está restringido (¿control parental?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Acceso a contactos - estado desconocido";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Se puede utilizar una imagen de contacto para obtener actualizaciones en vivo de iAPS en las complicación de contacto de Apple Watch y/o el widget de contactos de su iPhone.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Contact Image";
+"Contact Image" = "Imagen de contacto";
 
 /* Contact Image, settings, label for the layout picker */
-"Layout" = "Layout";
+"Layout" = "Diseño";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Single";
+"Single" = "Individual";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Split";
+"Split" = "Dividido";
 
 /* Contact Image, settings, outer ring - don't show */
-"DontShowRing" = "Don't show";
+"DontShowRing" = "No mostrar";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop status";
+"LoopStatusRing" = "Estado del lazo";
 
 /* Contact Image, settings, outer ring - IOB */
 "IOBRing" = "IOB";
@@ -2026,73 +2029,73 @@ Ajustes predeterminados:\n
 "IOB+COBRing" = "IOB+COB";
 
 /* Contact Image, settings, label for the primary value picker */
-"Primary" = "Primary";
+"Primary" = "Principal";
 
 /* Contact Image, settings, label for the top value picker */
-"Top" = "Top";
+"Top" = "Parte superior";
 
 /* Contact Image, settings, label for the bottom value picker */
-"Bottom" = "Bottom";
+"Bottom" = "Parte inferior";
 
 /* Contact Image, settings, header for the outer ring section */
-"Ring" = "Ring";
+"Ring" = "Anillo";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Outer";
+"Outer" = "Exterior";
 
 /* Contact Image, settings, label for the ring width picker */
-"Width" = "Width";
+"Width" = "Ancho";
 
 /* Contact Image, settings, label for the ring gap picker */
-"Gap" = "Gap";
+"Gap" = "Separación";
 
 /* Contact Image, settings, header for the font section */
-"Font" = "Font";
+"Font" = "Tipo de letra";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Tamaño";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Tamaño secundario";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Tracking";
+"Tracking" = "Espaciado horizontal";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Capitalización";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Modo oscuro";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Menor separación ";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Sin separación";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Normal";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Más separación";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Suave";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Normal";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Medio";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Seminegrita";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Negrita";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Negra";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Ninguno";
@@ -2101,7 +2104,7 @@ Ajustes predeterminados:\n
 "GlucoseContactValue" = "Glucosa";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Glucemia eventual";
 
 /* Contact Image, settings, Delta (data to display) */
 "DeltaContactValue" = "Delta";
@@ -2110,7 +2113,7 @@ Ajustes predeterminados:\n
 "TrendContactValue" = "Tendencia";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Última hora del lazo";
 
 /* Contact Image, settings, COB (data to display) */
 "COBContactValue" = "COB";
@@ -2119,7 +2122,7 @@ Ajustes predeterminados:\n
 "IOBContactValue" = "IOB";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop status";
+"LoopStatusContactValue" = "Estado del lazo";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2365,8 +2368,9 @@ Se estimará una menor absorción de carbohidratos, lo que puede llevar a una di
 "Autotune ISF Adjustment Fraction" = "Fracción de ajuste del FSI de Autotune";
 
 /* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "El valor por defecto de 0.5 para esta característica mantiene el factor de sensibilidad a la insulina (ISF) de Autotune cerca del factor de sensibilidad a la insulina de la bomba a través de un promedio ponderado de fullNewISF y pumpISF. 
-Un 1.0 de valor permite un ajuste completo con el nuevo factor de sensibilidad de Autotune (fullNewISF), mientras que 0 mantendría el factor de sensibilidad de la bomba (pumpISF).";
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "La configuración (por defecto 0,5) de esta característica mantiene el factor de sensibilidad a la insulina (FSI) de Autotune más cercano al factor de sensibilidad a la insulina de la bomba (bombaFSI) a través de una media entre el nuevo FSI y bombaFSI.
+
+Un '1' de valor permite un ajuste completo con el nuevo factor de sensibilidad de Autotune (nuevoFSI), mientras que 0 mantendría el factor de sensibilidad de la bomba (bombaFSI).";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Ratio de COB restantes";
@@ -2389,7 +2393,7 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Por defecto comienza en 30. Este es el máximo de minutos de basal que se puede entregar como un solo SMB con COB no cubiertos. Esto da la capacidad de hacer los SMB más agresivos si lo desea. Se recomienda que el valor se establezca a partir de 30, en línea con el valor predeterminado, y si decide aumentar este valor, hacerlo en incrementos de no más de 15 minutos, vigilando de cerca los efectos de los cambios. No se recomienda establecer este valor superior a 90 minutos, ya que esto puede afectar a la capacidad del algoritmo para poner suspender la basal temporalmente. Se recomienda también usar Pushover cuando se establezca un valor mayor que el predeterminado, para que las alarmas se generen para cualquier hipo o hiper prevista.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Max UAM SMB Basal Minutes";
+"Max UAM SMB Basal Minutes" = "Máximo tiempo de basal en SMB de UAM";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Por defecto comienza en 30. Este es el máximo de minutos de basal que UAM puede entregar como un solo SMB cuando la insulina activa excede los carbohidratos activos. Esto da la capacidad de hacer UAM más o menos agresivo si lo desea. Se recomienda que el valor se establezca a partir de 30, en línea con el valor predeterminado, y si decide aumentar este valor, hacerlo en incrementos de no más de 15 minutos, vigilando de cerca los efectos de los cambios. Reducir el valor hará que UAM inyecte menos insulina para cada SMB. No se recomienda establecer este valor superior a 60 minutos, ya que esto puede afectar a la capacidad del algoritmo de suspender la basal temporalmente. También se recomienda que Pushover sea usado cuando se establece que el valor es mayor de lo predeterminado, para que las alertas se generen para cualquier bajo o alto previsto.";
@@ -2413,7 +2417,7 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tiempo del máximo efecto de disminución de glucosa de la insulina, en minutos. Atención: el algoritmo Oref asume para la insulina ultra-rápida (Lyumjev) y rápida (Fiasp) unas curvas de tiempo pico de la insulina mínimas de 35 y 50 mins, y máximas de 100 y 120 mins, respectivamente. Utilizar un tiempo de efecto diferente fuera de estos límites resultará en problemas con iAPS, cálculos entre ciclos más largos y posiblemente errores de Lazo (en rojo).";
 
 /* Headline "Carbs Req Threshold" */
-"Carbs Req Threshold" = "Carbs Req Threshold";
+"Carbs Req Threshold" = "Umbral de carbohidratos requeridos";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Gramos de carbsReq para activar un Pushover. Por defecto es 1 (para 1 gramo de hidratos de carbono). Se puede aumentar si sólo quiere obtener Pushovers con carbsReq en X umbral.";
@@ -2451,7 +2455,16 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Enable Dynamic CR" = "Habilitar RC dinámico";
 
 /* Enable Dynamic CR */
-"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)";
+"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Habilita el cálculo dinámico del ratio de carbohidratos. El ratio dinámico será usado para el cálculo del RC de la siguiente manera:
+
+Cuando el ratio es > 1:
+dinRC = (nuevoRatio - 1) / 2 + 1
+
+Cuando el ratio es < 1:
+dinRC = RC/dinRC
+
+Advertencia: no usar junto con un valor de \"fracción de insulina\" > 2.
+";
 
 /* Enable Dyn ISF */
 "Activate Dynamic Sensitivity (ISF)" = "Activar factor de sensibilidad (FSI) dinámico";
@@ -2463,7 +2476,16 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Adjust Dynamic ISF constant" = "Ajustar constante de FSI dinámico";
 
 /* Adjust Dynamic ISF constant */
-"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Ajuste individual de los factores dinámicos calculados. 
+Por defecto es 0,5. 
+
+Cuanto mayor sea el valor, mayor será la corrección de su FSI/RC para una glucosa en sangre alta o baja. La corrección máxima/mínima está determinada por los ajustes de Autosens mín/máx.
+
+Con la función Sigmoid habilitada, se recomienda empezar con una configuración de 0,4 - 0,5.
+
+Con la fórmula logarítmica hay menos consenso, pero comenzando con aproximadamente 0,7- 0,8 es probablemente apropiado para la mayoría de los usuarios adultos. 
+
+Nota: para los usuarios más jóvenes que utilicen la fórmula logarítmica, se recomienda empezar con valores aún más precavidos (0,5 - 0,6), para evitar un tratamiento excesivamente agresivo.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Usar función de Sigmoid";
@@ -2475,10 +2497,24 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Safety" = "Seguridad";
 
 /* Use Sigmoid Function */
-"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function.";
+"Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Utiliza la función Sigmoid para el cálculo del FSI (y para el RC, cuando está habilitado), en lugar de la fórmula logarítmica por defecto. 
+
+Nota: el ajuste de 'FSI dinámico' debe estar activado en el menú 'Ajustes -> Funciones adicionales'.
+
+El valor ajusta la pendiente de la curva (donde el eje Y representa el factor FSI dinámico y el eje X la glucosa en sangre). Un valor más bajo ==> curva menos pronunciada == menor agresividad.
+
+Los valores mínimo y máximo de Autosens determinan tanto los límites mín/máx del cálculo de FSI dinámico como cuánto se ajusta el FSI dinámico. 
+
+Si el valor que definimos representa la pendiente de la curva, los límites mínimo y máximo de Autosens definen la altura de la gráfica (o intervalo Y, donde Y es el ISF dinámico). 
+
+La curva siempre tendrá una forma de Sigmoid, sin importar qué valores mín/máx se utilicen para Autosens, lo que significa que estos valores tienen grandes consecuencias para el resultado del cálculo de ISF dinámico. 
+
+Advertencia: por favor, tenga cuidado de no establecer un valor Autosens.máx demasiado alto. Con una configuración apropiada de sus FSI, probablemente nunca necesite que dicho valor sea superior a 1,5.
+
+Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función Sigmoid.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting" = "Valores máximos de configuración";
 
 /* Dynamic ISF Setting Title */
 "Minimum Threshold Setting" = "Ajuste de umbral mínimo";
@@ -2487,19 +2523,19 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Esta opción le permite elegir un nivel por debajo del cual no se administrará insulina.\n\nEl umbral está utilizando la mayor cantidad de la configuración de su umbral y el umbral calculado:\n\nObjetivo de glucosa - (Objetivo de glucosa - 40) / 2\n, utilizando mg/dl como unidad de medición.\n\nPor ejemplo, si tu objetivo de glucosa es ";
 
 /* Minimum Threshold Setting, Part 2 */
-"the threshold will be " = "the threshold will be ";
+"the threshold will be " = "el límite será ";
 
 /* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "unless your threshold setting is set higher:";
+"unless your threshold setting is set higher:" = "a menos que la configuración de umbral sea más alta:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Setting";
+"Setting" = "Configuración";
 
 /* Threshold Table Columns Title */
-"Threshold" = "Threshold";
+"Threshold" = "Limite";
 
 /* Header */
-"Calculator settings" = "Calculator settings";
+"Calculator settings" = "Ajustes de la calculadora";
 
 /* Bolus Calculator Setting */
 "Use alternate Bolus Calculator" = "Usar calculadora alternativa";
@@ -2517,25 +2553,25 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Extra Features" = "Funciones adicionales";
 
 /* UI/UX option */
-"Display Predictions" = "Display Predictions";
+"Display Predictions" = "Mostrar predicciones";
 
 /* UI/UX option */
-"Smaller iPhone Screens" = "Smaller iPhone Screens";
+"Smaller iPhone Screens" = "Pantallas de iPhone más pequeñas";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Display and allow Fat and Protein entries";
+"Display and allow Fat and Protein entries" = "Habilitar y mostrar Unidades de Grasa y Proteína";
 
 /* UI/UX option */
-"Add Meal View settings " = "Add Meal View settings ";
+"Add Meal View settings " = "Añadir configuración de Vista de Comida ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Display Temp Targets Button";
+"Display Temp Targets Button" = "Mostrar botón de objetivos temporales";
 
 /* UI/UX option */
-"Home View Button Panel " = "Home View Button Panel ";
+"Home View Button Panel " = "Botones principales";
 
 /* UI/UX title */
-"Home Chart settings " = "Home Chart settings ";
+"Home Chart settings " = "Gráfica principal ";
 
 /* UI/UX title */
 "Statistics settings " = "Ajustes de estadísticas ";
@@ -2544,21 +2580,21 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Override HbA1c Unit" = "Cambiar unidad de HbA1c";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "In case you're using both profiles and temp targets";
+"In case you're using both profiles and temp targets" = "En caso de que estés usando tanto perfiles como objetivos temporales :)";
 
 /* UI/UX option */
-"Always Color Glucose Value (green, yellow etc)" = "Always Color Glucose Value (green, yellow etc)";
+"Always Color Glucose Value (green, yellow etc)" = "Colorear el valor de la glucosa (verde, amarillo)";
 
 /* UI/UX option */
-"Header settings" = "Header settings";
+"Header settings" = "Ajustes de cabecera";
 /* UI/UX option */
-"Normally glucose is colored red only when over or under your notification limits for high/low" = "Normally glucose is colored red only when over or under your notification limits for high/low";
+"Normally glucose is colored red only when over or under your notification limits for high/low" = "Por defecto, solamente se coloreará de rojo el valor de glucosa que sea inferior o superior al valor definido en 'Ajustes -> Notificaciones'.";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontal Scroll View Visible hours";
+"Horizontal Scroll View Visible hours" = "Intervalo de tiempo visible";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+"Display Time Interval Setting Button" = "Botón de intervalo de horas visibles";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
@@ -2570,7 +2606,7 @@ Se recomienda mantener en el valor por defecto 1 para no impactar los cálculos 
 "Live Activity" = "Live Activity";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
 
 /* Notification option */
 "Show Live activity" = "Mostrar Live Activity";
@@ -2617,10 +2653,10 @@ Límite de seguridad que analiza la diferencia entre las dos últimas lecturas d
 Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o en los logs (p. ej.: maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "...cuando la glucosa (mg/dL) sea mayor a:";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
-"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.";
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Fija el umbral por encima del cual se habilita esta funcionalidad. Si la glucemia supera dicho valor, se habilitarán los SMBs";
 
 /* Headline "Enable SMB With High BG" */
 "Enable SMB With High BG" = "Habilitar SMBs con glucemia alta";

@@ -282,7 +282,6 @@ struct MainChartView: View {
                         .onChange(of: screenHours) { _ in
                             scroll.scrollTo(Config.endID, anchor: .trailing)
                         }
-
                         .onAppear {
                             // add trigger to the end of main queue
                             DispatchQueue.main.async {
