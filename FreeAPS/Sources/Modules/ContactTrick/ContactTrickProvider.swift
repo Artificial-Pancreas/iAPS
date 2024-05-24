@@ -6,9 +6,7 @@ extension ContactTrick {
         private let processQueue = DispatchQueue(label: "ContactTrickProvider.processQueue")
 
         var contacts: [ContactTrickEntry] {
-            storage.retrieve(OpenAPS.Settings.contactTrick, as: [ContactTrickEntry].self)
-                ?? [ContactTrickEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.contactTrick))
-                ?? []
+            contactTrickManager.currentContacts
         }
 
         func saveContacts(_ contacts: [ContactTrickEntry]) -> AnyPublisher<[ContactTrickEntry], Error> {
