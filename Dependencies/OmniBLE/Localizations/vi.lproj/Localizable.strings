@@ -388,7 +388,7 @@
 "Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Không thể tiêm insulin trở lại";
+"Failed to Resume Insulin Delivery" = "Không thể tiếp tục cung cấp insulin";
 
 /* Alert title for time sync error */
 "Failed to Set Pump Time" = "Không thể cài đặt thời gian cho bơm";
@@ -406,7 +406,7 @@
 "Deactivate Pod" = "Hủy kích hoạt Pod";
 
 /* */
-"Slide to Insert Cannula" = "Trượt để chèn ống thông";
+"Slide to Insert Cannula" = "Trượt để chèn Cannula";
 
 /* */
 "Slide to Deactivate Pod" = "Trượt để vô hiệu hóa Pod";
@@ -415,7 +415,7 @@
 "Deactivating." = "Đang hủy kích hoạt.";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
-"Pod deactivated successfully. Continue." = "Pod hủy kích hoạt thành công. Tiếp tục.";
+"Pod deactivated successfully. Continue." = "Đã huỷ kích hoạt Pod thành công. Tiếp tục.";
 
 /* Action button description for deactivate after failed attempt */
 "Retry" = "Thử lại";
@@ -424,7 +424,7 @@
 "Continue" = "Tiếp tục";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Đã xảy ra sự cố khi giao tiếp với Pod. Nếu sự cố này vẫn tiếp diễn, hãy nhấn vào Discard Pod. Sau đó, bạn có thể kích hoạt Pod mới.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Đã xảy ra sự cố khi giao tiếp với Pod. Nếu sự cố này vẫn tiếp diễn, hãy nhấn vào Loại bỏ pod. Sau đó, bạn có thể kích hoạt Pod mới.";
 
 /* Text for discard pod button */
 "Discard Pod" = "Loại bỏ pod";
@@ -623,7 +623,7 @@
 "Rate" = "Tỷ lệ";
 
 /* Insulin unit per hour */
-"U/hr" = "U/giờ";
+"U/hr" = "U/hr";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ cho %2$@";
