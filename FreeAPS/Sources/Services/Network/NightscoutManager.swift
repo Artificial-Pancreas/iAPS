@@ -429,9 +429,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             dailystats: dailystat, justVersion: nil
         )
 
-        guard let nightscout = nightscoutAPI else {
-            return
-        }
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
 
         processQueue.async {
             nightscout.uploadStats(stats)
