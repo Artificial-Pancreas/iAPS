@@ -479,9 +479,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             preferences: settingsManager.preferences, enteredBy: getIdentifier()
         )
 
-        guard let nightscout = nightscoutAPI, isStatsUploadEnabled else {
-            return
-        }
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
 
         processQueue.async {
             nightscout.uploadPrefs(prefs)
@@ -503,9 +501,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             settings: settingsManager.settings, enteredBy: getIdentifier()
         )
 
-        guard let nightscout = nightscoutAPI, isStatsUploadEnabled else {
-            return
-        }
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
 
         processQueue.async {
             nightscout.uploadSettings(sets)
@@ -734,9 +730,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             store: [defaultProfile: ps]
         )
 
-        guard let nightscout = nightscoutAPI, isNetworkReachable, isUploadEnabled || isStatsUploadEnabled else {
-            return
-        }
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
 
         // UPLOAD PREFERNCES WHEN CHANGED
         if let uploadedPreferences = storage.retrieve(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
