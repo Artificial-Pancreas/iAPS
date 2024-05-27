@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Handlingen er blevet annulleret, fordi pumpen er optaget"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "En bolus-timeout er aktiv. Sløjfecyklussen kan ikke afsluttes, før timeout er inaktiv"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Den maksimale bolusgrænse er nået. Prøv venligst et lavere beløb eller øg grænsen"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Den maksimale daglige insulingrænse er nået. Prøv venligst et lavere beløb eller øg grænsen"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Kun automatisk bolus understøttes"
 
@@ -256,7 +265,7 @@
 "Save" = "Gemme"
 
 /* Text for 24h display */
-"24h display" = "24 timers visning"
+"24h display" = "24 timers display"
 
 /* Description for 24h display */
 "Should time be display in 12h or 24h" = "Skal tiden vises om 12 timer eller 24 timer"
@@ -370,7 +379,7 @@
 "Unknown error" = "Ukendt fejl"
 
 /* Alert body for unknown */
-"An unknown error has occurred during processing the alert from the pump. Please report this" = "Der er opstået en ukendt fejl under behandlingen af ​​advarslen fra pumpen. Meld venligst dette"
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "Der er opstået en ukendt fejl under behandlingen af ​​advarslen fra pumpen. Rapportér venligst dette"
 
 /* The title of the pump information section in DanaKit settings */
 "Pump information" = "Pumpeoplysninger"

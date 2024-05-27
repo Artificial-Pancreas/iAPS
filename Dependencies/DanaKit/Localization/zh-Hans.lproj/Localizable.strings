@@ -20,7 +20,7 @@
 "Setting up DanaRS v1" = "设置 DanaRS v1"
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "在配对过程中，您的 DanaRS v3 将显示配对提示，而您的 iPhone 将显示配对代码提示。在您的泵上，选择“确定”，然后在您的 iPhone 上输入代码。之后，Loop 即可与您的 DanaRS v1 进行通信"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "在配对过程中，您的 DanaRS v3 将显示配对提示，而您的 iPhone 将显示配对代码提示。在您的泵上，选择“确定”，然后在您的 iPhone 上输入代码。之后，Loop 即可与您的 DanaRS v1 通信"
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "在开始配对过程之前，建议检查泵密码，如果需要，请更新。您可以通过泵设置 -&gt; 用户设置 -&gt; 密码来执行此操作。默认密码为 1234，如果这是您的密码，请考虑更改它"
@@ -153,6 +153,15 @@
 
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "由于泵正忙，操作已取消"
+
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "bolus 超时处于活动状态。循环周期无法完成，直到超时处于非活动状态"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "已达到最大剂量限制。请尝试降低剂量或增加限制"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "已达到每日胰岛素最高限量。请尝试降低剂量或增加限量"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "仅支持自动推注"

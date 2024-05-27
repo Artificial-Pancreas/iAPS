@@ -20,7 +20,7 @@
 "Setting up DanaRS v1" = "הגדרת DanaRS v1"
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "במהלך תהליך ההתאמה, ה-DanaRS v3 שלך יציג הנחית התאמה ואילו ה-iPhone שלך ​​יציג הנחיה לקוד התאמה. במשאבה, בחר אישור והקלד את הקוד באייפון. לאחר מכן, Loop מוכן לתקשר עם DanaRS v1 שלך"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "במהלך תהליך ההתאמה, ה-DanaRS v3 שלך יציג הנחית התאמה ואילו ה-iPhone שלך ​​יציג הנחיה לקוד התאמה. במשאבה, בחר אישור והקלד את הקוד באייפון. לאחר מכן, Loop מוכן לתקשר עם ה-DanaRS v1 שלך"
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "לפני שמתחילים בתהליך ההתאמה, מומלץ לבדוק, ובמידת הצורך לעדכן, את סיסמת המשאבה. אתה יכול לעשות זאת על ידי מעבר להגדרות המשאבה -&gt; הגדרות משתמש -&gt; סיסמה. סיסמת ברירת המחדל היא 1234, אם זו הסיסמה שלך, אנא שקול לשנות אותה"
@@ -153,6 +153,15 @@
 
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "הפעולה בוטלה, כי המשאבה תפוסה"
+
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "פסק זמן בולוס פעיל. לא ניתן להשלים את מחזור הלולאה עד שפסק הזמן אינו פעיל"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "הגעת למגבלת הבולוס המקסימלית. אנא נסה סכום נמוך יותר או הגדל את המגבלה"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "הגיעה לגבול האינסולין היומי המקסימלי. אנא נסה סכום נמוך יותר או הגדל את המגבלה"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "רק בולוס אוטומטי נתמך"

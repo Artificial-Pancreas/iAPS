@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Action has been canceled, because the pump is busy"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "The max bolus limit is reached. Please try a lower amount or increase the limit"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "The max daily insulin limit is reached. Please try a lower amount or increase the limit"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Only Automatic Bolus is supported"
 

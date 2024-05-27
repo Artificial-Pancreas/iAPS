@@ -16,6 +16,9 @@ public enum DanaKitPumpManagerError {
     case failedBasalAdjustment
     case failedTimeAdjustment
     case unsupportedTempBasal(_ duration: TimeInterval)
+    case bolusTimeoutActive
+    case bolusMaxViolation
+    case bolusInsulinLimitViolation
     case unknown(_ message: String)
 }
 
@@ -41,6 +44,12 @@ extension DanaKitPumpManagerError: LocalizedError {
             return LocalizedString("Failed to adjust pump time", comment: "Error description when pump time failed to sync")
         case .pumpIsBusy:
             return LocalizedString("Action has been canceled, because the pump is busy", comment: "Error description when pump is busy (with bolussing probably)")
+        case .bolusTimeoutActive:
+            return LocalizedString("A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive", comment: "Error description when pump has an active blockage")
+        case .bolusMaxViolation:
+            return LocalizedString("The max bolus limit is reached. Please try a lower amount or increase the limit", comment: "Error description when pump has reached the bolus max")
+        case .bolusInsulinLimitViolation:
+            return LocalizedString("The max daily insulin limit is reached. Please try a lower amount or increase the limit", comment: "Error description when pump has reached the daily max")
         case .unknown(let message):
             return "Unknown error occured: \(message)"
         }

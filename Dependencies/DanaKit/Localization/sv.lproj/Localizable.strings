@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Åtgärden har avbrutits eftersom pumpen är upptagen"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "En bolus timeout är aktiv. Slingcykeln kan inte slutföras förrän timeouten är inaktiv"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Den maximala bolusgränsen har uppnåtts. Försök med ett lägre belopp eller höj gränsen"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Den maximala dagliga insulingränsen är nådd. Försök med ett lägre belopp eller höj gränsen"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Endast automatisk bolus stöds"
 
@@ -209,7 +218,7 @@
 "Pump time" = "Pumptid"
 
 /* Label for syncing the time on the pump */
-"Sync Pump time" = "Synk pumptid"
+"Sync Pump time" = "Synkronisera pumptid"
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.

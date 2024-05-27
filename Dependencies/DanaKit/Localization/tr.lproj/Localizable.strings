@@ -38,7 +38,7 @@
 "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Eşleştirme işlemi sırasında, DanaRS v3&#39;ünüz bir eşleştirme istemi gösterecek, iPhone&#39;unuz ise iki eşleştirme kodu istemi gösterecektir. Pompanızda Tamam&#39;ı seçin ve iPhone&#39;unuza iki kodu yazın. Bundan sonra Loop, DanaRS v3&#39;ünüzle iletişim kurmaya hazırdır"
 
 /* Title for dana-i explaination */
-"Setting up Dana-i" = "Dana-i&#39;yi kurma"
+"Setting up Dana-i" = "Dana-i&#39;yi ayarlama"
 
 /* General subtext for dana */
 "After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "İnsülin tipini ve bolus hızını ayarladıktan sonra bulunan tüm Dana pompalarını içeren bir ekran göreceksiniz. Döngüye bağlamak istediğiniz pompayı seçin."
@@ -153,6 +153,15 @@
 
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Pompa meşgul olduğundan işlem iptal edildi"
+
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Bolus zaman aşımı etkin. Zaman aşımı etkin olmayana kadar döngü döngüsü tamamlanamaz"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Maksimum bolus sınırına ulaşıldı. Lütfen daha düşük bir miktar deneyin veya limiti artırın"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Maksimum günlük insülin sınırına ulaşıldı. Lütfen daha düşük bir miktar deneyin veya limiti artırın"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Yalnızca Otomatik Bolus desteklenir"

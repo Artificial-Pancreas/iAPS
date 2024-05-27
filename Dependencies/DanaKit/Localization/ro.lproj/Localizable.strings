@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Acțiunea a fost anulată, deoarece pompa este ocupată"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "O perioadă de expirare a bolusului este activă. Ciclul buclei nu poate fi finalizat până când expirarea este inactivă"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Limita maximă a bolusului este atinsă. Vă rugăm să încercați o sumă mai mică sau măriți limita"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Limita maximă zilnică de insulină este atinsă. Vă rugăm să încercați o sumă mai mică sau măriți limita"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Numai Bolus automat este acceptat"
 
@@ -271,7 +280,7 @@
 "12h notation" = "notație 12h"
 
 /* 24h */
-"24h notation" = "Notație 24 de ore"
+"24h notation" = "notație 24 de ore"
 
 /* Text for Scroll function */
 "Scroll function" = "Funcția de defilare"

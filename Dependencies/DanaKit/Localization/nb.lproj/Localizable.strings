@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Handlingen er avbrutt fordi pumpen er opptatt"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "En bolus-tidsavbrudd er aktiv. Sløyfesyklusen kan ikke fullføres før tidsavbruddet er inaktivt"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Den maksimale bolusgrensen er nådd. Prøv et lavere beløp eller øk grensen"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Den maksimale daglige insulingrensen er nådd. Prøv et lavere beløp eller øk grensen"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Kun automatisk bolus støttes"
 
@@ -188,7 +197,7 @@
 "U/hr" = "U/t";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin gjenværende";
+"Insulin Remaining" = "Insulin som gjenstår";
 
 /* Text for Dana pump name */
 "Pump name" = "Pumpenavn"
@@ -301,7 +310,7 @@
 "Pump battery 0%" = "Pumpebatteri 0 %"
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Pumpebatteriet er tomt. Bytt den nå!"
+"Pump battery is empty. Replace it now!" = "Pumpebatteriet er tomt. Bytt den ut nå!"
 
 /* Alert title for pumpError */
 "Pump error" = "Pumpefeil"

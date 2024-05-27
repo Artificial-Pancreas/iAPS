@@ -125,7 +125,7 @@
 " is ready to be used!" = " is klaar voor gebruik!"
 
 /* Dana setup SMB setting */
-"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Opmerking: Uw Dana-pomp heeft een speciale instelling waarmee u de pieptonen van uw Dana-pomp kunt uitschakelen. Neem contact op met uw Dana-distributeur om dit mogelijk te maken"
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Opmerking: Uw Dana-pomp heeft een speciale instelling waarmee u de pieptonen van uw Dana-pomp kunt uitschakelen. Neem hiervoor contact op met uw Dana-distributeur"
 
 /* Error description when no dana connected */
 "Failed to make a connection" = "Kan geen verbinding maken"
@@ -153,6 +153,15 @@
 
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Actie is geannuleerd, omdat de pomp bezet is"
+
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Er is een bolustime-out actief. De loop cyclus kan pas worden voltooid als de time-out inactief is"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "De maximale boluslimiet is bereikt. Probeer een lager bedrag of verhoog de limiet"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "De maximale dagelijkse insulinelimiet is bereikt. Probeer een lager bedrag of verhoog de limiet"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Alleen automatische bolus wordt ondersteund"
@@ -301,7 +310,7 @@
 "Pump battery 0%" = "Pompbatterij 0%"
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Pompbatterij is leeg. Vervang het nu!"
+"Pump battery is empty. Replace it now!" = "Pompbatterij is leeg. Vervang hem nu!"
 
 /* Alert title for pumpError */
 "Pump error" = "Pompfout"
