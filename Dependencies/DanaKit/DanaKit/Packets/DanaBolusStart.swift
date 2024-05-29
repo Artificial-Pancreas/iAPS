@@ -6,8 +6,6 @@
 //  Copyright © 2023 Randall Knutson. All rights reserved.
 //
 
-import LoopKit
-
 public enum BolusSpeed: UInt8 {
     case speed12 = 0
     case speed30 = 1

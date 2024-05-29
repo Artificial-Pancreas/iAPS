@@ -7,7 +7,6 @@
 //  Copyright © 2021 LoopKit Authors. All rights reserved.
 //
 
-import BackgroundTasks
 import HealthKit
 import LoopKit
 import UserNotifications
