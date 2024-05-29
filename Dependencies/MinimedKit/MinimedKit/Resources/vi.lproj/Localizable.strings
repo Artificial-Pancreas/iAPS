@@ -11,7 +11,7 @@
 "Alkaline" = "Alkaline";
 
 /* The format string description of a BasalProfileStartPumpEvent. (1: The index of the profile)(2: The basal rate) */
-"Basal Profile %1$@: %2$@ U/hour" = "Hồ sơ Basal %1$@: %2$@ U/giờ";
+"Basal Profile %1$@: %2$@ U/hour" = "Hồ sơ liều Basal %1$@: %2$@ U/giờ";
 
 /* Pump error code when bolus is in progress */
 "Bolus in progress" = "Liều Bolus đang được thực hiện";
@@ -35,7 +35,7 @@
 "Event History" = "Lược sử tác vụ trước đó";
 
 /* Format string for failure reason. (1: The operation being performed) (2: The response data) */
-"Invalid response during %1$@: %2$@" = "Phản ứng không phù hợp trong khoảng %1$@: %2$@";
+"Invalid response during %1$@: %2$@" = "Phản hồi không xác định trong %1$@: %2$@";
 
 /* Describing the battery chemistry as Lithium */
 "Lithium" = "Lithium";
