@@ -96,14 +96,15 @@ extension AutotuneConfig {
                             .foregroundColor(.red)
                     }
 
-                    Section {
-                        Button {
-                            replaceAlert = true
-                        }
-                        label: { Text("Save as your Normal Basal Rates") }
-                    } header: {
-                        Text("Save on Pump")
-                    }
+                    /*
+                     Section {
+                         Button {
+                             replaceAlert = true
+                         }
+                         label: { Text("Save as your Normal Basal Rates") }
+                     } header: {
+                         Text("Save on Pump")
+                     }*/
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
