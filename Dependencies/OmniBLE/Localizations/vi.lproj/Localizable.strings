@@ -18,7 +18,7 @@
 "Low Reservoir" = "Sắp hết thuốc";
 
 /* Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Tạm dừng lời nhắc đang tiến hành";
 
 /* Alert content title for suspendEnded pod alert */
 "Resume Insulin" = "Tiếp tục lại việc tiêm insulin";
@@ -45,7 +45,7 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin hoặc ít hơn còn lại trong Pod. Thay Pod ngay.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Tạm dừng lời nhắc đang tiến hành";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Thời gian tạm ngưng insulin đã kết thúc.\n\n Bạn có thể phục hồi việc tiêm thuốc từ màn hình chính hoặc từ màn hình cài đặt bơm. Sẽ có thông báo nhắc trong vòng 15 phút.";
