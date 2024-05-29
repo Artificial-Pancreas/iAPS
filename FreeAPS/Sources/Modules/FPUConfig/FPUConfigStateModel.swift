@@ -9,7 +9,7 @@ extension FPUConfig {
 
         override func subscribe() {
             subscribeSetting(\.timeCap, on: $timeCap.map(Int.init), initial: {
-                let value = max(min($0, 12), 5)
+                let value = max(min($0, 12), 3)
                 timeCap = Decimal(value)
             }, map: {
                 $0
@@ -23,7 +23,7 @@ extension FPUConfig {
             })
 
             subscribeSetting(\.delay, on: $delay.map(Int.init), initial: {
-                let value = max(min($0, 120), 60)
+                let value = max(min($0, 120), 10)
                 delay = Decimal(value)
             }, map: {
                 $0

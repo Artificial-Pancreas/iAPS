@@ -6,6 +6,7 @@ import Swinject
 
 protocol ContactTrickManager {
     func updateContacts(contacts: [ContactTrickEntry], completion: @escaping (Result<[ContactTrickEntry], Error>) -> Void)
+    var currentContacts: [ContactTrickEntry] { get }
 }
 
 final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
@@ -19,6 +20,10 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
     private var knownIds: [String] = []
     private var contacts: [ContactTrickEntry] = []
+
+    var currentContacts: [ContactTrickEntry] {
+        contacts
+    }
 
     private let coreDataStorage = CoreDataStorage()
 
@@ -36,7 +41,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         knownIds = contacts.compactMap(\.contactId)
 
         processQueue.async {
-            self.renderContacts()
+            self.renderContacts(forceSave: false)
         }
     }
 
@@ -54,13 +59,13 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
                     print("contacts cleanup, failed to delete contact \(contactId)")
                 }
             }
-            self.renderContacts()
+            self.renderContacts(forceSave: true)
             self.knownIds = self.contacts.compactMap(\.contactId)
             completion(.success(self.contacts))
         }
     }
 
-    private func renderContacts() {
+    private func renderContacts(forceSave: Bool) {
         if let workItem = workItem, !workItem.isCancelled {
             workItem.cancel()
         }
@@ -91,7 +96,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
             let newContacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
 
-            if newContacts != contacts {
+            if forceSave || newContacts != contacts {
                 // when we create new contacts we store the IDs, in that case we need to write into the settings storage
                 storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
             }
@@ -100,7 +105,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
         workItem = DispatchWorkItem(block: {
             print("in renderContacts, no updates received for more than 5 minutes")
-            self.renderContacts()
+            self.renderContacts(forceSave: false)
         })
         DispatchQueue.main.asyncAfter(deadline: .now() + 5 * 60 + 15, execute: workItem!)
     }
@@ -325,10 +330,10 @@ extension BaseContactTrickManager:
     SettingsObserver
 {
     func suggestionDidUpdate(_: Suggestion) {
-        renderContacts()
+        renderContacts(forceSave: false)
     }
 
     func settingsDidChange(_: FreeAPSSettings) {
-        renderContacts()
+        renderContacts(forceSave: false)
     }
 }
