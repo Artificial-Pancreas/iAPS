@@ -46,14 +46,6 @@ public class DanaKitPumpManager: DeviceManager {
         
         DanaKitPumpManager.bluetoothManager.pumpManagerDelegate = self
         
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.danakit.background-task.connection-timeout", using: DispatchQueue.main) {_ in
-            self.logDeviceCommunication("Dana - Failed to connect: Timeout reached...", type: .connection)
-            self.log.error("Failed to connect: Timeout reached...")
-            
-            self.connectionCallback?(.failure)
-            self.connectionCallback = nil
-        }
-        
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         nc.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -1185,52 +1177,55 @@ extension DanaKitPumpManager: PumpManager {
             
         // We stored the peripheral. We can quickly reconnect
         } else if DanaKitPumpManager.bluetoothManager.peripheral != nil {
-            do {
-                let request = BGProcessingTaskRequest(identifier: "com.danakit.background-task.connection-timeout")
-                request.earliestBeginDate = Date(timeIntervalSinceNow: .seconds(15)) // 15 sec connection timeout
-                try BGTaskScheduler.shared.submit(request)
-            } catch { }
+            self.startTimeout(seconds: TimeInterval.seconds(15))
             
             self.connect(DanaKitPumpManager.bluetoothManager.peripheral!) { result in
-                BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: "com.danakit.background-task.connection-timeout")
+                guard let connectionCallback = self.connectionCallback else {
+                    // We've already hit the timeout function above
+                    // Exit if we every hit this...
+                    return
+                }
+                
                 switch result {
                 case .success:
                     self.logDeviceCommunication("Dana - Connected", type: .connection)
-                    self.connectionCallback?(.success)
+                    connectionCallback(.success)
                 case .failure(let err):
                     self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
-                    self.connectionCallback?(.failure)
+                    connectionCallback(.failure)
                 case .requestedPincode:
                     self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
-                    self.connectionCallback?(.failure)
+                    connectionCallback(.failure)
                 case .invalidBle5Keys:
                     self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
-                    self.connectionCallback?(.failure)
+                    connectionCallback(.failure)
                 }
             }
             // No active connection and no stored peripheral. We have to scan for device before being able to send command
         } else if !DanaKitPumpManager.bluetoothManager.isConnected && self.state.bleIdentifier != nil {
             do {
-                let request = BGProcessingTaskRequest(identifier: "com.danakit.background-task.connection-timeout")
-                request.earliestBeginDate = Date(timeIntervalSinceNow: .seconds(30)) // 30 sec connection timeout
-                try BGTaskScheduler.shared.submit(request)
+                self.startTimeout(seconds: TimeInterval.seconds(30))
                 
                 try DanaKitPumpManager.bluetoothManager.connect(self.state.bleIdentifier!) { result in
-                    BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: "com.danakit.background-task.connection-timeout")
+                    guard let connectionCallback = self.connectionCallback else {
+                        // We've already hit the timeout function above
+                        // Exit if we every hit this...
+                        return
+                    }
                     
                     switch result {
                     case .success:
                         self.logDeviceCommunication("Dana - Connected", type: .connection)
-                        self.connectionCallback?(.success)
+                        connectionCallback(.success)
                     case .failure(let err):
                         self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
-                        self.connectionCallback?(.failure)
+                        connectionCallback(.failure)
                     case .requestedPincode:
                         self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
-                        self.connectionCallback?(.failure)
+                        connectionCallback(.failure)
                     case .invalidBle5Keys:
                         self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
-                        self.connectionCallback?(.failure)
+                        connectionCallback(.failure)
                     }
                 }
             } catch {
@@ -1245,7 +1240,23 @@ extension DanaKitPumpManager: PumpManager {
             self.connectionCallback?(.failure)
         }
     }
-    
+
+    private func startTimeout(seconds: TimeInterval) {
+        Task {
+            do {
+                try await Task.sleep(nanoseconds: UInt64(seconds) * 1000000000)
+                guard self.connectionCallback != nil else {
+                    return
+                }
+                
+                self.logDeviceCommunication("Dana - Failed to connect: Timeout reached...", type: .connection)
+                self.log.error("Failed to connect: Timeout reached...")
+                
+                self.connectionCallback?(.failure)
+                self.connectionCallback = nil
+            } catch{}
+        }
+    }
     private func logDeviceCommunication(_ message: String, type: DeviceLogEntryType = .send) {
         let address = String(format: "%04X", self.state.bleIdentifier ?? "")
         // Not dispatching here; if delegate queue is blocked, timestamps will be delayed
