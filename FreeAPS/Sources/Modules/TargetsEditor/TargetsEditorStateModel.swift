@@ -43,8 +43,6 @@ extension TargetsEditor {
                 high = low
             }
 
-            print("LOW: \(low)")
-
             let newItem = Item(lowIndex: low, highIndex: high, timeIndex: time)
 
             items.append(newItem)
@@ -70,7 +68,6 @@ extension TargetsEditor {
                 let uniq = Array(Set(self.items))
                 let sorted = uniq.sorted { $0.timeIndex < $1.timeIndex }
                     .map { item -> Item in
-                        // guard item.highIndex >= item.lowIndex else { return item }
                         Item(lowIndex: item.lowIndex, highIndex: item.highIndex, timeIndex: item.timeIndex)
                     }
                 sorted.first?.timeIndex = 0
