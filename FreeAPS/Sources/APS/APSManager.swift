@@ -1207,7 +1207,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     Variance: variance
                 ),
                 id: getIdentifier(),
-                dob: settingsManager.settings.birtDate,
+                dob: settingsManager.settings.birthDate,
                 sex: settingsManager.settings.sexSetting
             )
             storage.save(dailystat, as: file)
