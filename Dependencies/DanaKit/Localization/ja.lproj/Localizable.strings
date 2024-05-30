@@ -17,7 +17,7 @@
 "Dana-i" = "ダナ・イ"
 
 /* Title for danars v1 explaination */
-"Setting up DanaRS v1" = "DanaRS v1 の設定"
+"Setting up DanaRS v1" = "DanaRS v1 のセットアップ"
 
 /* Subtext for danars v1 */
 "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "ペアリングプロセス中、DanaRS v3 にはペアリングプロンプトが表示され、iPhone にはペアリングコードのプロンプトが表示されます。ポンプで [OK] を選択し、iPhone にコードを入力します。その後、Loop は DanaRS v1 と通信する準備が整います。"
@@ -153,6 +153,15 @@
 
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "ポンプがビジー状態のため、アクションはキャンセルされました"
+
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "ボーラスタイムアウトが有効です。タイムアウトが無効になるまでループサイクルは完了しません。"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "最大ボーラス制限に達しました。量を減らすか、制限を増やしてください。"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "1 日のインスリンの上限に達しました。量を減らすか、上限を増やしてください。"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "自動ボーラスのみがサポートされています"

@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Hành động đã bị hủy vì máy bơm đang bận"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Thời gian chờ truyền nhanh đang hoạt động. Chu kỳ vòng lặp không thể hoàn thành cho đến khi hết thời gian chờ không hoạt động"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Đã đạt đến giới hạn bolus tối đa. Vui lòng thử số tiền thấp hơn hoặc tăng giới hạn"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Đã đạt đến giới hạn insulin tối đa hàng ngày. Vui lòng thử số tiền thấp hơn hoặc tăng giới hạn"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Chỉ hỗ trợ Bolus tự động"
 

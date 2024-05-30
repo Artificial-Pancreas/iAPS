@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "L&#39;azione è stata annullata perché la pompa è occupata"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "È attivo un timeout del bolo. Il ciclo del loop non può essere completato finché il timeout non è inattivo"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "È stato raggiunto il limite massimo del bolo. Prova con un importo inferiore o aumenta il limite"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "È stato raggiunto il limite massimo giornaliero di insulina. Prova con un importo inferiore o aumenta il limite"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "È supportato solo il bolo automatico"
 
@@ -220,7 +229,7 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "L&#39;ora visualizzata sul microinfusore è diversa dall&#39;ora corrente. Vuoi aggiornare l&#39;ora del tuo microinfusore all&#39;ora corrente?"
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "L&#39;ora visualizzata sul microinfusore è diversa dall&#39;ora corrente. Il tempo del microinfusore controlla le impostazioni della terapia programmata. Scorri verso il basso fino alla riga Orario pompa per verificare la differenza oraria e configurare la pompa.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "L&#39;ora visualizzata sul microinfusore è diversa dall&#39;ora corrente. Il tempo del microinfusore controlla le impostazioni della terapia programmata. Scorri verso il basso fino alla riga Orario pompa per verificare la differenza oraria e configurare la tua pompa.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Sì, sincronizza con l&#39;ora corrente"

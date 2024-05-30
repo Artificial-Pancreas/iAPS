@@ -517,84 +517,6 @@ extension PeripheralManager {
                 return
             }
             
-//            log.info("Getting user options")
-            let userOptionPacket = generatePacketGeneralGetUserOption()
-            let userOptionResult = try await self.writeMessage(userOptionPacket)
-            guard userOptionResult.success else {
-                log.error("Failed to fetch user options...")
-                self.pumpManager.disconnect(self.connectedDevice)
-                
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "Failed to fetch user options", code: 0, userInfo: nil)))
-                }
-                return
-            }
-            
-            guard let dataUserOption = userOptionResult.data as? PacketGeneralGetUserOption else {
-                log.error("No data received (user option)...")
-                self.pumpManager.disconnect(self.connectedDevice)
-                
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "No data received (user option)", code: 0, userInfo: nil)))
-                }
-                return
-            }
-            
-//            log.info("Getting pump time with timezone")
-            let time: Date
-            if self.pumpManager.state.usingUtc {
-                // Only the Dana-i supports command with timezone...
-                let timeUtcWithTimezonePacket = generatePacketGeneralGetPumpTimeUtcWithTimezone()
-                let resultTimeUtcWithTimezone = try await self.writeMessage(timeUtcWithTimezonePacket)
-                guard resultTimeUtcWithTimezone.success else {
-                    log.error("Failed to fetch pump time with utc...")
-                    self.pumpManager.disconnect(self.connectedDevice)
-                    
-                    DispatchQueue.main.async {
-                        self.completion(.failure(NSError(domain: "Failed to fetch pump time with utc", code: 0, userInfo: nil)))
-                    }
-                    return
-                }
-                
-                
-                guard let dataTime = resultTimeUtcWithTimezone.data as? PacketGeneralGetPumpTimeUtcWithTimezone else {
-                    log.error("No data received (time utc with timezone)...")
-                    self.pumpManager.disconnect(self.connectedDevice)
-                    
-                    DispatchQueue.main.async {
-                        self.completion(.failure(NSError(domain: "No data received (time utc with timezone)", code: 0, userInfo: nil)))
-                    }
-                    return
-                }
-                
-                time = dataTime.time
-            } else {
-                let timePacket = generatePacketGeneralGetPumpTime()
-                let resultTime = try await self.writeMessage(timePacket)
-                guard resultTime.success else {
-                    log.error("Failed to fetch pump time...")
-                    self.pumpManager.disconnect(self.connectedDevice)
-                    
-                    DispatchQueue.main.async {
-                        self.completion(.failure(NSError(domain: "Failed to fetch pump time", code: 0, userInfo: nil)))
-                    }
-                    return
-                }
-                
-                
-                guard let dataTime = resultTime.data as? PacketGeneralGetPumpTime else {
-                    log.error("No data received (time utc with timezone)...")
-                    self.pumpManager.disconnect(self.connectedDevice)
-                    
-                    DispatchQueue.main.async {
-                        self.completion(.failure(NSError(domain: "No data received (time)", code: 0, userInfo: nil)))
-                    }
-                    return
-                }
-                
-                time = dataTime.time
-            }
-            
             self.pumpManager.state.reservoirLevel = data.reservoirRemainingUnits
             self.pumpManager.state.batteryRemaining = data.batteryRemaining
             self.pumpManager.state.isPumpSuspended = data.isPumpSuspended
@@ -608,21 +530,7 @@ extension PeripheralManager {
             
             self.pumpManager.state.basalDeliveryOrdinal = data.isTempBasalInProgress ? .tempBasal :
                                                             data.isPumpSuspended ? .suspended : .active
-            self.pumpManager.state.lowReservoirRate = dataUserOption.lowReservoirRate
-            self.pumpManager.state.isTimeDisplay24H = dataUserOption.isTimeDisplay24H
-            self.pumpManager.state.isButtonScrollOnOff = dataUserOption.isButtonScrollOnOff
-            self.pumpManager.state.beepAndAlarm = dataUserOption.beepAndAlarm
-            self.pumpManager.state.lcdOnTimeInSec = dataUserOption.lcdOnTimeInSec
-            self.pumpManager.state.backlightOnTimInSec = dataUserOption.backlightOnTimInSec
-            self.pumpManager.state.selectedLanguage = dataUserOption.selectedLanguage
-            self.pumpManager.state.units = dataUserOption.units
-            self.pumpManager.state.shutdownHour = dataUserOption.shutdownHour
-            self.pumpManager.state.cannulaVolume = dataUserOption.cannulaVolume
-            self.pumpManager.state.refillAmount = dataUserOption.refillAmount
-            self.pumpManager.state.targetBg = dataUserOption.targetBg
-            self.pumpManager.state.units = dataUserOption.units
             self.pumpManager.state.bolusState = .noBolus
-            self.pumpManager.state.pumpTime = time
             self.pumpManager.notifyStateDidChange()
             
             log.info("Connection and encryption successful!")

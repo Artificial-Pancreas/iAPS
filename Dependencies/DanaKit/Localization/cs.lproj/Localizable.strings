@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Akce byla zrušena, protože čerpadlo je zaneprázdněné"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Je aktivní časový limit bolusu. Cyklus smyčky nelze dokončit, dokud není časový limit neaktivní"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Byl dosažen limit maximálního bolusu. Zkuste prosím nižší částku nebo zvyšte limit"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Je dosažen maximální denní limit inzulínu. Zkuste prosím nižší částku nebo zvyšte limit"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Podporován je pouze automatický bolus"
 
@@ -220,7 +229,7 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na pumpě se liší od aktuálního času. Chcete aktualizovat čas na pumpě na aktuální čas?"
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpě se liší od aktuálního času. Čas pumpy řídí nastavení naplánované terapie. Přejděte dolů na řádek Čas pumpy, abyste si prohlédli časový rozdíl a nakonfigurovali pumpu.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpě se liší od aktuálního času. Čas pumpy řídí nastavení naplánované terapie. Přejděte dolů na řádek Čas pumpy a zkontrolujte časový rozdíl a nakonfigurujte pumpu.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Ano, synchronizovat s aktuálním časem"

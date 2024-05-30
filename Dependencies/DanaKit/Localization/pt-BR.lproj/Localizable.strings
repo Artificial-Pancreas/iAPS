@@ -35,7 +35,7 @@
 "Setting up DanaRS v3" = "Configurando o DanaRS v3"
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Durante o processo de emparelhamento, seu DanaRS v3 mostrará um aviso de emparelhamento enquanto o seu iPhone mostrará um aviso para dois códigos de emparelhamento. Na sua bomba, selecione OK e digite os dois códigos no seu iPhone. Depois disso, o Loop está pronto para se comunicar com o seu DanaRS v3"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Durante o processo de emparelhamento, seu DanaRS v3 mostrará um prompt de emparelhamento enquanto seu iPhone mostrará um prompt para dois códigos de emparelhamento. Na sua bomba, selecione OK e digite os dois códigos no seu iPhone. Depois disso, o Loop está pronto para se comunicar com o seu DanaRS v3"
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Configurando Dana-i"
@@ -153,6 +153,15 @@
 
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "A ação foi cancelada porque a bomba está ocupada"
+
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Um tempo limite de bolus está ativo. O ciclo de loop não pode ser concluído até que o tempo limite esteja inativo"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "O limite máximo de bolus foi atingido. Tente um valor menor ou aumente o limite"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "O limite máximo diário de insulina foi atingido. Tente um valor menor ou aumente o limite"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Somente Bolus Automático é suportado"

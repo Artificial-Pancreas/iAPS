@@ -101,7 +101,7 @@
 "Checksum failed. Try again" = "Tarkistussumma epäonnistui. Yritä uudelleen"
 
 /* Title for delivery speed */
-"Delivery speed" = "Toimitusnopeus"
+"Delivery speed" = "Toimituksen nopeus"
 
 /* Dana bolus speed 12u per min */
 "12 sec/U" = "12 s/U"
@@ -153,6 +153,15 @@
 
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Toiminto on peruutettu, koska pumppu on varattu"
+
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Boluksen aikakatkaisu on aktiivinen. Silmukkasykliä ei voida suorittaa loppuun ennen kuin aikakatkaisu on passiivinen"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Boluksen enimmäisraja on saavutettu. Kokeile pienempää määrää tai nosta rajaa"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Päivittäinen insuliiniraja on saavutettu. Kokeile pienempää määrää tai nosta rajaa"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Vain automaattinen bolus on tuettu"
@@ -217,7 +226,7 @@
 "Time Change Detected" = "Aikamuutos havaittu"
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pumpun aika eroaa nykyisestä ajasta. Haluatko päivittää pumpun kellonajan nykyiseen aikaan?"
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pumpun aika eroaa nykyisestä ajasta. Haluatko päivittää pumpun ajan nykyiseen aikaan?"
 
 /* description for time change detected notice */
 "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Pumpun aika eroaa nykyisestä ajasta. Pumpun aika ohjaa ajoitettuja hoitoasetuksiasi. Vieritä alas Pumpun aika -riville nähdäksesi aikaeron ja määrittääksesi pumpun.";

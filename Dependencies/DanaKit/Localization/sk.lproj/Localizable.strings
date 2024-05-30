@@ -154,6 +154,15 @@
 /* Error description when pump is busy (with bolussing probably) */
 "Action has been canceled, because the pump is busy" = "Akcia bola zrušená, pretože čerpadlo je zaneprázdnené"
 
+/* Error description when pump has an active blockage */
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Je aktívny časový limit bolusu. Cyklus slučky nie je možné dokončiť, kým časový limit nie je aktívny"
+
+/* Error description when pump has reached the bolus max */
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Bol dosiahnutý maximálny bolusový limit. Skúste nižšiu sumu alebo zvýšte limit"
+
+/* Error description when pump has reached the daily max */
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Je dosiahnutý maximálny denný limit inzulínu. Skúste nižšiu sumu alebo zvýšte limit"
+
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Podporovaný je iba automatický bolus"
 
