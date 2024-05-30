@@ -936,7 +936,7 @@ Enact a temp Basal or a temp target */
 "Glucose Notification visibility" = "Khả năng hiển thị thông báo Glucose";
 
 /* */
-"Always Notify Glucose" = "Luôn thông báo Glucose";
+"Always Notify Glucose" = "Luôn thông báo đường huyết";
 
 /* */
 "Notify per reading" = "Thông báo cho mỗi lần đọc";
