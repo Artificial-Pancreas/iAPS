@@ -389,7 +389,7 @@
 "Time Change Detected" = "Cambio de hora detectado";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
-"Time to replace your pod! Your pod will expire in %1$@" = "Es hora de reemplazar el pod! El pod expira en %1$@";
+"Time to replace your pod! Your pod will expire in %1$@" = "¡Es hora de reemplazar el Pod! Expira en %1$@";
 
 /* Error message for PodCommsError.tooManyPodsFound */
 "Too many pods found" = "Se encontraron demasiados Pods";

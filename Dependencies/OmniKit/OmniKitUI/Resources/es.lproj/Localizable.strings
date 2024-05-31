@@ -276,7 +276,7 @@
 "Failed to update confidence reminder preference." = "No se ha podido actualizar la preferencia de recordatorio de confianza.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "No se ha podido actualizar el recordatorio de Expiración";
+"Failed to Update Expiration Reminder" = "No se ha podido actualizar el recordatorio de expiración";
 
 /* Alert title for error when updating low reservoir reminder */
 "Failed to Update Low Reservoir Reminder" = "No se ha podido actualizar el recordatorio de Reserva Baja";
@@ -467,7 +467,7 @@
 "Play Test Beeps" = "Tocar Pitidos de Prueba";
 
 /* Progress message for play test beeps. */
-"Play Test Beeps…" = "Tocar Pitidos de Prueba...";
+"Play Test Beeps…" = "Tocar pitidos de prueba…";
 
 /* Alert message body for confirm pod attachment */
 "Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Compruebe que el Pod está bien adherido a su cuerpo.\n\nLa cánula sólo puede insertarse una vez con cada Pod. Pulse \"Confirmar\" cuando el Pod esté ya bien adherido a su cuerpo.";
@@ -657,7 +657,7 @@
 "Suspending insulin delivery..." = "Suspendiendo la administración de insulina...";
 
 /* Title text for the button to delete Omnipod PumpManager */
-"Switch from Omnipod Pumps" = "Cambiar de Omnipod";
+"Switch from Omnipod Pumps" = "Cambiar bomba de Omnipod";
 
 /* Label for PumpManager deletion button */
 "Switch to other insulin delivery device" = "Cambiar a otro dispositivo de administración de insulina";

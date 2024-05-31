@@ -161,7 +161,11 @@ extension OverrideProfilesConfig {
             let last = OverrideStorage().fetchLatestOverride().last
             let lastPreset = OverrideStorage().isPresetName()
             if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
-                ns.editOverride((last?.isPreset ?? false) ? lastPreset! : "Custom", duration, alreadyActive.date ?? Date.now)
+                ns.editOverride(
+                    (last?.isPreset ?? false) ? (lastPreset ?? "Override") : "Custom",
+                    duration,
+                    alreadyActive.date ?? Date.now
+                )
             }
             // New Override properties
             let saveOverride = Override(context: coredataContext)

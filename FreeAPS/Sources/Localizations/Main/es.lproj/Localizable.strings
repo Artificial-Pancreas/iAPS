@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "¡La cantidad es mayor que el ajuste del bolo máximo!\n ¿Está seguro de que desea añadir ";
 
 /* Header */
-"Enact Bolus" = "Administrar Bolo";
+"Enact Bolus" = "Administrar bolo";
 
 /* Button */
-"Enact bolus" = "Administrar Bolo";
+"Enact bolus" = "Administrar bolo";
 
 /*  */
 "Insulin recommended" = "Insulina recomendada";
@@ -68,13 +68,13 @@
 "of" = "de";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "Un Bolo Remoto ";
+"A Remote Bolus " = "Un bolo remoto ";
 
 /* Remote Bolus Alert, Part 2 */
 "was delivered" = "fue entregado";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " hace X minutos, activado de forma remota en Nightscout, por un cuidador o un padre. ¿Todavía quieres aplicar el bolo?\n\nSe prevé que la glucosa eventual, si no aplica un bolo, será: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " hace X minutos, activado de forma remota en NightScout, por un cuidador o un padre. ¿Todavía quieres aplicar el bolo?\n\nSe prevé que la glucosa eventual, si no aplica un bolo, será: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "¡Un bolo remoto se acaba de entregar!";
@@ -287,7 +287,7 @@
 "Schedule" = "Programación";
 
 /*  */
-"starts at" = "comienza a las";
+"starts at" = "desde las";
 
 /* Time basal profile */
 "Time" = "Tiempo";
@@ -510,7 +510,7 @@ Enact a temp Basal or a temp target */
 "h" = "h";
 
 /* abbreviation for minutes */
-"m" = "mn";
+"m" = "min";
 
 /*  */
 "Closed loop" = "Lazo cerrado";
@@ -2606,7 +2606,7 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Live Activity" = "Live Activity";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
 
 /* Notification option */
 "Show Live activity" = "Mostrar Live Activity";
@@ -2653,10 +2653,10 @@ Límite de seguridad que analiza la diferencia entre las dos últimas lecturas d
 Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o en los logs (p. ej.: maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... When Blood Glucose Is Over (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "...cuando la glucosa (mg/dL) sea mayor a:";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
-"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.";
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Fija el umbral por encima del cual se habilita esta funcionalidad. Si la glucemia supera dicho valor, se habilitarán los SMBs";
 
 /* Headline "Enable SMB With High BG" */
 "Enable SMB With High BG" = "Habilitar SMBs con glucemia alta";
