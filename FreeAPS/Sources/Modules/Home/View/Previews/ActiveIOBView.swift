@@ -31,7 +31,7 @@ struct ActiveIOBView: View {
         VStack {
             Text("Active Insulin").font(.previewHeadline).padding(.top, 20)
             iobView().frame(maxHeight: 200).padding(.horizontal, 20)
-            sumView().frame(maxHeight: 170).padding(.vertical, 20)
+            sumView().frame(maxHeight: 250).padding(.vertical, 30)
         }.dynamicTypeSize(...DynamicTypeSize.medium)
     }
 
@@ -85,6 +85,12 @@ struct ActiveIOBView: View {
                 formula: NSLocalizedString(" U", comment: ""),
                 insulin: tddAverage,
                 color: Color(.insulin)
+            ),
+            BolusSummary(
+                variable: "",
+                formula: "",
+                insulin: .zero,
+                color: Color(.clear)
             ),
             BolusSummary(
                 variable: NSLocalizedString("Average Insulin past 24h", comment: ""),

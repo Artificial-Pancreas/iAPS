@@ -487,7 +487,7 @@ extension Home {
 
         var activeIOBView: some View {
             addBackground()
-                .frame(minHeight: 410)
+                .frame(minHeight: 500)
                 .overlay {
                     ActiveIOBView(
                         data: $state.iobData,
