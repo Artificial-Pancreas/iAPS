@@ -14,10 +14,10 @@ struct ActiveCOBView: View {
 
     var body: some View {
         VStack {
-            Text("Active Carbohydrates").padding(.top, 20)
+            Text("Active Carbohydrates").font(.previewHeadline).padding(.top, 20)
             cobView().frame(maxHeight: 150).padding(.vertical, 10).padding(.horizontal, 20)
                 .padding(.bottom, 10)
-        }
+        }.dynamicTypeSize(...DynamicTypeSize.medium)
     }
 
     @ViewBuilder private func cobView() -> some View {
@@ -36,8 +36,8 @@ struct ActiveCOBView: View {
             AxisMarks(values: .stride(by: .hour, count: 2)) { _ in
                 AxisValueLabel(
                     format: .dateTime.hour(.defaultDigits(amPM: .omitted))
-                        .locale(Locale(identifier: "sv"))
-                ) // Force 24h
+                        .locale(Locale(identifier: "sv")) // Force 24h
+                )
                 AxisGridLine()
             }
         }

@@ -69,7 +69,7 @@
 "Pod expires in" = "El Pod expira en";
 
 /* */
-"Pod Expires" = "El Pod expira";
+"Pod Expires" = "Pod expira";
 
 /* */
 "Pod Activated" = "Pod activado";
@@ -270,7 +270,7 @@
 "Skipping Play Test Beeps due to bolus still in progress." = "Omitiendo sonidos de prueba por bolo aún en curso.";
 
 /* */
-"Play Test Beeps" = "Tocar Pitidos de Prueba";
+"Play Test Beeps" = "Tocar pitidos de prueba";
 
 /* */
 "Skipping Read Pulse Log due to bolus still in progress." = "Omitiendo lectura de registro de pulso por bolo aún en curso.";
@@ -706,7 +706,7 @@
 "Continue" = "Continuar";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "¿Saltear el onboarding de Omnipod?";
+"Skip Omnipod Onboarding?" = "¿Omitir la inicialización de Omnipod?";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "La aplicación le avisa con antelación de la expiración del Pod.\n\nDeslice para establecer el número de horas de antelación que le gustaría tener.";

@@ -185,7 +185,7 @@
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Chấp nhận mục tiêu tạm thời";
+"Enact Temp Target" = "Hủy bỏ mục tiêu tạm thời";
 
 /* */
 "Target" = "Mục tiêu";
@@ -245,7 +245,7 @@
 "for" = "của";
 
 /*  Temp target set for ... minutes */
-"min" = "phút";
+"min" = "min";
 
 /*  */
 "Autotune" = "Autotune";
@@ -263,7 +263,7 @@
 "Run now" = "Chạy ngay";
 
 /*  */
-"Last run" = "Chạy lần trước";
+"Last run" = "Lần chạy gần nhất";
 
 /*  */
 "Sensitivity" = "Độ nhạy";
@@ -393,7 +393,7 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Cho phép điều khiển iAPS từ xa";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Cài đặt liều nền\n * Tỷ lệ Carb\n * Mục tiêu đường huyết \n * Độ nhạy của Insulin\n * Thời gian hoạt động của insulin\n\n trong iAPS Cài đặt > Cấu hình.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n trong iAPS Cài đặt > Cấu hình.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.\n.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Việc này có thể thay thế một vài hoặc tất cả những cấu hình bơm hiện tại của bạn. Bạn có chắc bạn muốn nhập cấu hình từ Nightscout?";
@@ -471,7 +471,7 @@ Enact a temp Basal or a temp target */
 "Pump Settings" = "Cấu hình bơm";
 
 /* Insulin unit per hour */
-"U/hr" = "U/giờ";
+"U/hr" = "U/hr";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -483,10 +483,10 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/giờ";
+" U/hr" = " U/hr";
 
 /* Number of units per hour*/
-"%@ U/hr" = "%@ U/giờ";
+"%@ U/hr" = "%@ U/hr";
 
 /* Number of units insulin delivered */
 "%@ U" = "%@ U";
@@ -501,7 +501,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/giờ";
+"0 U/hr" = "U/hr";
 
 /* abbreviation for days */
 "d" = "ngày";
@@ -627,7 +627,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Đã xử lý";
 
 /* " min" in Treatments list */
-" min" = " phút";
+" min" = " min";
 
 /* */
 "Unable to change anything" = "Không thể thay đổi";
@@ -684,7 +684,7 @@ Enact a temp Basal or a temp target */
 "mg/dL" = "mg/dL";
 
 /* */
-"Add calibration" = "Thêm kết quả hiệu chuẩn";
+"Add calibration" = "Thêm hiệu chuẩn";
 
 /* When adding capillary glucose meater reading */
 "Meter glucose" = "Máy đo đường huyết";
@@ -834,7 +834,7 @@ Enact a temp Basal or a temp target */
 "Snooze Alerts" = "Báo lại cảnh báo";
 
 /* */
-"Last measurement" = "Lần đo cuối cùng";
+"Last measurement" = "Lần đo gần nhất";
 
 /* */
 "Sensor Footer checksum" = "Tổng kiểm tra cảm biến";
@@ -1254,10 +1254,10 @@ Enact a temp Basal or a temp target */
 "Dynamic Sensitivity" = "Độ nhạy động";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Chỉ Autotune Insulin liều nền(basal)";
+"Only Autotune Basal Insulin" = "Chỉ Autotune Insulin liều nền";
 
 /* */
-"Save as your Normal Basal Rates" = "Lưu như liều nền(basal) của bạn";
+"Save as your Normal Basal Rates" = "Lưu như liều nền của bạn";
 
 /* */
 "Save on Pump" = "Lưu vào bơm";
@@ -1393,7 +1393,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Mô tả ghi đè";
 
 /* */
-"Override Profiles" = "Chế độ ghi đè";
+"Override Profiles" = "Cài đặt ghi đè";
 
 /* */
 "Normal " = "Bình thường ";
@@ -1404,13 +1404,13 @@ Enact a temp Basal or a temp target */
 "Total Insulin Adjustment" = "Tổng số điều chỉnh Insulin";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Ghi đè Basal, ISF, CR và Target của bạn";
+"Override your Basal, ISF, CR and Target profiles" = "Chồng liều Basal, ISF, CR và mục tiêu";
 
 /* */
 "Enable indefinitely" = "Kích hoạt vô thời hạn";
 
 /* */
-"Override Profile target" = "Mục tiêu của ghi đè";
+"Override Profile target" = "Mục tiêu ghi đè";
 
 /* */
 "Disable SMBs" = "Vô hiệu hóa SMBs";
@@ -1577,25 +1577,25 @@ Enact a temp Basal or a temp target */
 "Hide" = "Ẩn";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "nằm dưới Ngưỡng của bạn (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose tăng chậm hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng Glucose tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Đang leo lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Đang lao xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose cuối cùng > Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Đang thay đổi: ";
@@ -2099,7 +2099,7 @@ Enact a temp Basal or a temp target */
 "DeltaContactValue" = "Chênh lệch";
 
 /* Contact Image, settings, Trend (data to display) */
-"TrendContactValue" = "Xu hướng Glucose";
+"TrendContactValue" = "Xu hướng";
 
 /* Contact Image, settings, Last loop time (data to display) */
 "LastLoopTimeContactValue" = "Thời gian vòng lặp cuối cùng";
@@ -2137,7 +2137,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Mặc định là False. Khi được đặt thành True, có thể giảm độ nhạy (tỷ lệ độ nhạy cao hơn) cho mục tiêu tạm thời <= 99. Mục tiêu tạm thời của bạn càng thấp dưới 100 sẽ dẫn đến tỷ lệ kém nhạy hơn (cao hơn), ví dụ: mục tiêu tạm thời là 95 dẫn đến tỷ lệ độ nhạy là 1,09, trong khi 85 kết quả là 1,33 (với Một nửa mục tiêu cơ bản mặc định là 160).";
 
 /* Headline ”Sensitivity Raises Target" */
-"Sensitivity Raises Target" = "Sensitivity Raises Target";
+"Sensitivity Raises Target" = "Độ nhạy tăng mục tiêu";
 
 /* ”Sensitivity Raises Target" */
 "When true, raises BG target when autosens detects sensitivity" = "Khi True, tăng mục tiêu BG khi cảm biến tự động phát hiện độ nhạy";
@@ -2413,7 +2413,7 @@ Enact a temp Basal or a temp target */
 "unless your threshold setting is set higher:" = "trừ khi cài đặt ngưỡng của bạn được đặt cao hơn:";
 
 /* Threshold Table Columns Title */
-"Setting" = "Thiết lập";
+"Setting" = "Cài đặt";
 
 /* Threshold Table Columns Title */
 "Threshold" = "Ngưỡng";

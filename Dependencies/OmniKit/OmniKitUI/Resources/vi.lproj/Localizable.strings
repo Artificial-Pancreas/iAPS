@@ -666,7 +666,7 @@
 "Sync to Current Time" = "Đồng bộ thời gian hiện tại";
 
 /* Title of button to sync basal profile from pod */
-"Sync With Pod" = "Sync với Pod";
+"Sync With Pod" = "Đồng bộ dữ liệu với pod";
 
 /* Label text for step one of insert cannula instructions */
 "Tap below to start cannula insertion." = "Chạm phía dưới để bắt đầu gắn cannula.";
@@ -696,7 +696,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Ứng dụng nhắc nhở bạn khi lượng insulin trong pod đạt đến mức này.";
 
 /* Description text for critical alerts */
-"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Lời nhắc ở trên sẽ không phát ra âm thanh nếu thiết bị của bạn ở trạng thái Silent hoặc Do Not Disturb.\n\n Có nhiều cách cảnh báo khác nhau phát ra âm thanh ngay cả khi thiết bị của bạn ở trạng thái Silent hoặc Do Not Disturb.";
+"The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Lời nhắc ở trên sẽ không phát ra âm thanh nếu thiết bị của bạn ở trạng thái Silent hoặc Do Not Disturb.\n\n Có nhiều cách cảnh báo khác nhau phát ra âm thanh ngay cả khi thiết bị của bạn ở trạng thái im lặng hoặc không làm phiền.";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Bạn có muốn cập nhật thời gian trên máy bơm của mình đến thời điểm hiện tại không?";
