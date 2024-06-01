@@ -224,7 +224,7 @@ function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     // Basal Adjustment
     if (profile.tddAdjBasal && dynISFenabled) {
         profile.current_basal *= tdd_factor;
-        console.log("Dynamic ISF. Basal adjusted with TDD factor: " + round(tdd_factor, 1));
+        console.log("Dynamic ISF. Basal adjusted with TDD factor: " + round(tdd_factor, 2));
     }
 }
 
