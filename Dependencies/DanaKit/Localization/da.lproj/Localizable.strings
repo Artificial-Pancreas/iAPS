@@ -41,10 +41,10 @@
 "Setting up Dana-i" = "Opsætning af Dana-i"
 
 /* General subtext for dana */
-"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "Efter opsætning af insulintype og bolushastighed, vil du se en skærm med alle fundne Dana-pumper. Vælg den pumpe, du vil forbinde med Loop."
+"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with %1$@." = "Efter opsætning af insulintype og bolushastighed, vil du se en skærm med alle fundne Dana-pumper. Vælg den pumpe, du vil linke til %1$@."
 
 /* Subtext for dana-i */
-"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, Loop is ready to communicate with your Dana-i" = "Under parringsprocessen vil din Dana-i vise en parringsprompt, mens din iPhone viser en prompt om en parringskode. På din pumpe skal du vælge OK og indtaste den 6-cifrede kode på skærmen på din iPhone. Herefter er Loop klar til at kommunikere med din Dana-i"
+"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Under parringsprocessen vil din Dana-i vise en parringsprompt, mens din iPhone viser en prompt om en parringskode. På din pumpe skal du vælge OK og indtaste den 6-cifrede kode på skærmen på din iPhone. Derefter er %1$@ klar til at kommunikere med din Dana-i"
 
 /* Dana-i/RS invalid ble5 keys */
 "ERROR: Failed to pair device" = "FEJL: Enheden kunne ikke parres"
@@ -265,7 +265,7 @@
 "Save" = "Gemme"
 
 /* Text for 24h display */
-"24h display" = "24 timers display"
+"24h display" = "24 timers visning"
 
 /* Description for 24h display */
 "Should time be display in 12h or 24h" = "Skal tiden vises om 12 timer eller 24 timer"
@@ -397,7 +397,7 @@
 "Yes, Enable silent tones" = "Ja, Aktiver tavse toner"
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "Indstil den basalprofil pumpen skal bruge. Bemærk, at den vil overskrive den profil, der er i pumpen, med den i Loop"
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Indstil den basalprofil pumpen skal bruge. Bemærk, at den vil overskrive profilen, der er i pumpen, med den i %1$@"
 
 
 /* Error message for reservoir view when reservoir empty

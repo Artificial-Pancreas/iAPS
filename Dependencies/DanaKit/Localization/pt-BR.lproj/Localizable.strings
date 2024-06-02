@@ -35,16 +35,16 @@
 "Setting up DanaRS v3" = "Configurando o DanaRS v3"
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Durante o processo de emparelhamento, seu DanaRS v3 mostrará um prompt de emparelhamento enquanto seu iPhone mostrará um prompt para dois códigos de emparelhamento. Na sua bomba, selecione OK e digite os dois códigos no seu iPhone. Depois disso, o Loop está pronto para se comunicar com o seu DanaRS v3"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Durante o processo de emparelhamento, seu DanaRS v3 mostrará um aviso de emparelhamento enquanto o seu iPhone mostrará um aviso para dois códigos de emparelhamento. Na sua bomba, selecione OK e digite os dois códigos no seu iPhone. Depois disso, o Loop está pronto para se comunicar com o seu DanaRS v3"
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Configurando Dana-i"
 
 /* General subtext for dana */
-"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "Depois de configurar o tipo de insulina e a velocidade do bolus, você verá uma tela com todas as bombas Dana encontradas. Selecione a bomba que deseja vincular ao Loop."
+"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with %1$@." = "Depois de configurar o tipo de insulina e a velocidade do bolus, você verá uma tela com todas as bombas Dana encontradas. Selecione a bomba que deseja vincular a %1$@."
 
 /* Subtext for dana-i */
-"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, Loop is ready to communicate with your Dana-i" = "Durante o processo de emparelhamento, seu Dana-i mostrará um aviso de emparelhamento enquanto o seu iPhone mostrará um aviso de código de emparelhamento. Na sua bomba, selecione OK e digite o código de 6 dígitos na tela do seu iPhone. Depois disso, o Loop está pronto para se comunicar com o seu Dana-i"
+"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Durante o processo de emparelhamento, seu Dana-i mostrará um aviso de emparelhamento enquanto o seu iPhone mostrará um aviso de código de emparelhamento. Na sua bomba, selecione OK e digite o código de 6 dígitos na tela do seu iPhone. Depois disso, %1$@ estará pronto para se comunicar com seu Dana-i"
 
 /* Dana-i/RS invalid ble5 keys */
 "ERROR: Failed to pair device" = "ERRO: Falha ao emparelhar o dispositivo"
@@ -161,7 +161,7 @@
 "The max bolus limit is reached. Please try a lower amount or increase the limit" = "O limite máximo de bolus foi atingido. Tente um valor menor ou aumente o limite"
 
 /* Error description when pump has reached the daily max */
-"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "O limite máximo diário de insulina foi atingido. Tente um valor menor ou aumente o limite"
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "O limite diário máximo de insulina foi atingido. Tente um valor menor ou aumente o limite"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Somente Bolus Automático é suportado"
@@ -397,7 +397,7 @@
 "Yes, Enable silent tones" = "Sim, ativar tons silenciosos"
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "Defina o perfil basal que a bomba deve usar. Observe que ele irá sobrescrever o perfil que está na bomba, pelo que está no Loop"
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Defina o perfil basal que a bomba deve usar. Observe que isso irá sobrescrever o perfil que está na bomba, pelo perfil em %1$@"
 
 
 /* Error message for reservoir view when reservoir empty

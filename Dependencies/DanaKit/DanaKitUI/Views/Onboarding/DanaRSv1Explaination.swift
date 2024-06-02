@@ -11,6 +11,7 @@ import LoopKitUI
 
 struct DanaRSv1Explaination: View {
     @Environment(\.dismissAction) private var dismiss
+    @Environment(\.appName) private var appName
     
     let nextAction: () -> Void
     
@@ -23,7 +24,7 @@ struct DanaRSv1Explaination: View {
                     Text(LocalizedString("Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it", comment: "check password text for danars v1"))
                         .padding(.bottom)
                     
-                    Text(LocalizedString("After setting up the insulin type and bolus speed, you will see all the found Dana pumps. Select the pump you want to link with Loop.", comment: "General subtext for dana"))
+                    Text(String(format: LocalizedString("After setting up the insulin type and bolus speed, you will see all the found Dana pumps. Select the pump you want to link with %1$@.", comment: "General subtext for dana (1: appName)"), appName))
                     
                     HStack {
                         Spacer()
@@ -35,7 +36,7 @@ struct DanaRSv1Explaination: View {
                     }
                     .padding(.vertical, 10)
                     
-                    Text(LocalizedString("During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1", comment: "Subtext for danars v1"))
+                    Text(String(format: LocalizedString("During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1", comment: "Subtext for danars v1 (1: appName)"), appName))
                     
                     Spacer()
                 }
