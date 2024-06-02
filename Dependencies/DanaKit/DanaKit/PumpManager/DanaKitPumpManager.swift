@@ -862,7 +862,7 @@ extension DanaKitPumpManager: PumpManager {
                                 preconditionFailure("pumpManagerDelegate cannot be nil")
                             }
                             
-                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)], lastReconciliation: Date.now, completion: { (error) in
+                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)], lastReconciliation: self.state.lastStatusDate, completion: { (error) in
                                 completion(nil)
                             })
                         }
@@ -911,10 +911,10 @@ extension DanaKitPumpManager: PumpManager {
                                 preconditionFailure("pumpManagerDelegate cannot be nil")
                             }
                             
-                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.resume(dose: dose)], lastReconciliation: Date.now, completion: { (error) in
-                                completion(nil)
-                            })
+                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.resume(dose: dose)], lastReconciliation: self.state.lastStatusDate, replacePendingEvents: true, completion: { _ in })
                         }
+
+                        completion(nil)
                     } catch {
                         self.disconnect()
                         
