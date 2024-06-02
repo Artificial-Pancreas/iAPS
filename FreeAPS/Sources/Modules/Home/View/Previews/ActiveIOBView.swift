@@ -128,11 +128,19 @@ struct ActiveIOBView: View {
 
         Grid {
             ForEach(insulinData) { entry in
+
                 GridRow(alignment: .firstTextBaseline) {
                     Text(entry.variable).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
                     Text("")
-                    Text(((isTDD(entry.insulin) ? tddFormatter : formatter).string(for: entry.insulin) ?? "") + entry.formula)
+                    if entry.insulin > 0 {
+                        Text(
+                            ((isTDD(entry.insulin) ? tddFormatter : formatter).string(for: entry.insulin) ?? "") + entry
+                                .formula
+                        )
                         .bold(entry == entries.first).foregroundStyle(entry.color)
+                    } else if entry.variable != "" {
+                        Text("--").foregroundStyle(.secondary)
+                    }
                 }
             }
         }
