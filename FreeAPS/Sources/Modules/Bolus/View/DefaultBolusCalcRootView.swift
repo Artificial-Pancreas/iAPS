@@ -31,6 +31,13 @@ extension Bolus {
             return formatter
         }
 
+        private var loopFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
+
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -129,6 +136,13 @@ extension Bolus {
                             .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
                             .tint(.white)
                     }
+                    footer: {
+                        if (-1 * state.loopDate.timeIntervalSinceNow / 60) > state.loopReminder, let string = state.lastLoop() {
+                            Text(NSLocalizedString(string, comment: "Bolus View footer"))
+                                .padding(.top, 20).multilineTextAlignment(.center)
+                                .foregroundStyle(.orange)
+                        }
+                    }
                     .alert(isPresented: $isRemoteBolusAlertPresented) {
                         remoteBolusAlert!
                     }
@@ -147,6 +161,13 @@ extension Bolus {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .listRowBackground(Color(.systemBlue))
                             .tint(.white)
+                    }
+                    footer: {
+                        if abs(state.loopDate.timeIntervalSinceNow / 60) > state.loopReminder, let string = state.lastLoop() {
+                            Text(NSLocalizedString(string, comment: "Bolus View footer"))
+                                .padding(.top, 20).multilineTextAlignment(.center)
+                                .foregroundStyle(.orange)
+                        }
                     }
                 }
             }
