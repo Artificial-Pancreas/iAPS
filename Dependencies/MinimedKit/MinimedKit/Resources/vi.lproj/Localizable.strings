@@ -11,7 +11,7 @@
 "Alkaline" = "Alkaline";
 
 /* The format string description of a BasalProfileStartPumpEvent. (1: The index of the profile)(2: The basal rate) */
-"Basal Profile %1$@: %2$@ U/hour" = "Hồ sơ Basal %1$@: %2$@ U/giờ";
+"Basal Profile %1$@: %2$@ U/hour" = "Hồ sơ liều Basal %1$@: %2$@ U/giờ";
 
 /* Pump error code when bolus is in progress */
 "Bolus in progress" = "Liều Bolus đang được thực hiện";
@@ -23,19 +23,19 @@
 "Command refused" = "Lệnh bị từ chối";
 
 /* No comment provided by engineer. */
-"Comms with another pump detected" = "Comms cho bơm khác được phát hiện.";
+"Comms with another pump detected" = "Liên lạc cho bơm khác được phát hiện.";
 
 /* Error description */
-"Decoding Error" = "Đang giải mã bị lỗi";
+"Decoding Error" = "Lỗi giải mã";
 
 /* Error description */
-"Device Error" = "Thiết bị lỗi";
+"Device Error" = "Lỗi thiết bị";
 
 /* Describing the pump history insulin data source */
 "Event History" = "Lược sử tác vụ trước đó";
 
 /* Format string for failure reason. (1: The operation being performed) (2: The response data) */
-"Invalid response during %1$@: %2$@" = "Phản ứng không phù hợp trong khoảng %1$@: %2$@";
+"Invalid response during %1$@: %2$@" = "Phản hồi không xác định trong %1$@: %2$@";
 
 /* Describing the battery chemistry as Lithium */
 "Lithium" = "Lithium";
@@ -44,7 +44,7 @@
 "Make sure your RileyLink is nearby and powered on" = "Đảm bảo RileyLink bên cạnh và đã được bật";
 
 /* Pump error code describing max setting exceeded */
-"Max setting exceeded" = "Cài đặt tối đa vượt giới hạn";
+"Max setting exceeded" = "Đã vượt quá cài đặt tối đa";
 
 /* Pump title (1: model number) */
 "Minimed %@" = "Minimed %@";
@@ -59,7 +59,7 @@
 "Pump did not respond" = "Bơm không phản hồi";
 
 /* Error description */
-"Pump Error" = "Bơm lỗi";
+"Pump Error" = "Lỗi bơm";
 
 /* No comment provided by engineer. */
 "Pump is suspended" = "Bơm đang tạm ngưng";
