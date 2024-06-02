@@ -84,6 +84,17 @@ extension Sharing {
                     Text("https://open-iaps.app/statistics")
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
+
+                Section {}
+                footer: {
+                    let statisticsLink = URL(string: "https://open-iaps.app/user/" + state.identfier)!
+
+                    Button("View Personal Statistics") {
+                        UIApplication.shared.open(statisticsLink, options: [:], completionHandler: nil)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .font(.system(size: 15))
+                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
