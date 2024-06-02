@@ -42,7 +42,7 @@ extension Sharing {
                             state.saveSetting()
                         }
                         HStack {
-                            DatePicker("Birth Date", selection: $state.birtDate, in: dateRange, displayedComponents: [.date])
+                            DatePicker("Birth Date", selection: $state.birthDate, in: dateRange, displayedComponents: [.date])
                                 .datePickerStyle(.compact)
                         }
                     }
