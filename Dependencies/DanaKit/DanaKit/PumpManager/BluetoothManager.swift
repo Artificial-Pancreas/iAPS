@@ -93,9 +93,8 @@ class BluetoothManager : NSObject {
         if let peripheral = peripherals.first {
             DispatchQueue.main.async {
                 self.peripheral = peripheral
-                self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, self.connectionCompletion!)
+                self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, completion)
                 
-//                self.log.info("Found peripheral! \(peripheral)")
                 self.manager.connect(peripheral, options: nil)
             }
             return
@@ -192,11 +191,17 @@ extension BluetoothManager : CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         
-//        log.info("\(peripheral)")
+        guard let connectionCompletion = self.connectionCompletion else {
+            log.error("No connection callback found... Timeout hit probably")
+            self.disconnect(peripheral)
+            
+            return
+        }
+        
         
         DispatchQueue.main.async {
             self.peripheral = peripheral
-            self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, self.connectionCompletion!)
+            self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, connectionCompletion)
             
             self.pumpManagerDelegate?.state.deviceName = peripheral.name
             self.pumpManagerDelegate?.state.bleIdentifier = peripheral.identifier.uuidString

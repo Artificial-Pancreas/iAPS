@@ -15,7 +15,7 @@ class PeripheralManager: NSObject {
     
     private let connectedDevice: CBPeripheral
     private let bluetoothManager: BluetoothManager
-    private var completion: (ConnectionResult) -> Void
+    private var completion: ((ConnectionResult) -> Void)?
     
     private var pumpManager: DanaKitPumpManager
     private var readBuffer = Data([])
@@ -116,6 +116,17 @@ class PeripheralManager: NSObject {
             }
         }
     }
+    
+    private func connectionFailure(_ error: any Error) {
+        guard let completion = self.completion else {
+            self.bluetoothManager.disconnect(self.connectedDevice)
+            return
+        }
+        
+        DispatchQueue.main.async {
+            completion(.failure(error))
+        }
+    }
 }
 
 extension PeripheralManager : CBPeripheralDelegate {
@@ -124,9 +135,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
-            DispatchQueue.main.async {
-                self.completion(.failure(error!))
-            }
+            connectionFailure(error!)
             return
         }
         
@@ -135,9 +144,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             log.error("Failed to discover dana data service...")
             self.bluetoothManager.disconnect(peripheral)
             
-            DispatchQueue.main.async {
-                self.completion(.failure(NSError(domain: "Failed to discover dana data service...", code: 0, userInfo: nil)))
-            }
+            connectionFailure(NSError(domain: "Failed to discover dana data service...", code: 0, userInfo: nil))
             return
         }
         
@@ -151,9 +158,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
-            DispatchQueue.main.async {
-                self.completion(.failure(error!))
-            }
+            connectionFailure(error!)
             return
         }
         
@@ -165,9 +170,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             log.error("Failed to discover dana write or read characteristic")
             self.bluetoothManager.disconnect(peripheral)
             
-            DispatchQueue.main.async {
-                self.completion(.failure(NSError(domain: "Failed to discover dana write or read characteristic", code: 0, userInfo: nil)))
-            }
+            connectionFailure(NSError(domain: "Failed to discover dana write or read characteristic", code: 0, userInfo: nil))
             return
         }
         
@@ -180,9 +183,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
-            DispatchQueue.main.async {
-                self.completion(.failure(error!))
-            }
+            connectionFailure(error!)
             return
         }
         
@@ -195,9 +196,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             log.error("\(error!.localizedDescription)")
             self.bluetoothManager.disconnect(peripheral)
             
-            DispatchQueue.main.async {
-                self.completion(.failure(error!))
-            }
+            connectionFailure(error!)
             return
         }
         
@@ -314,9 +313,7 @@ extension PeripheralManager {
         log.error("Passkey request failed. Data: \(data.base64EncodedString())")
         self.bluetoothManager.disconnect(self.connectedDevice)
         
-        DispatchQueue.main.async {
-            self.completion(.failure(NSError(domain: "Passkey request failed", code: 0, userInfo: nil)))
-        }
+        connectionFailure(NSError(domain: "Passkey request failed", code: 0, userInfo: nil))
     }
     
     private func processPairingRequest2(_ data: Data) {
@@ -361,9 +358,7 @@ extension PeripheralManager {
                 log.error("Got invalid hwModel \(self.pumpManager.state.hwModel)")
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil)))
-                }
+                connectionFailure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil))
             }
         } else if (data.count == 14 && self.isOk(data)) {
             self.encryptionMode = .BLE_5
@@ -376,9 +371,7 @@ extension PeripheralManager {
                 log.error("Got invalid hwModel \(self.pumpManager.state.hwModel)")
                 self.bluetoothManager.disconnect(self.connectedDevice)
                 
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil)))
-                }
+                connectionFailure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil))
                 return
             }
             
@@ -392,7 +385,11 @@ extension PeripheralManager {
                 log.error("Invalid BLE-5 keys. Please unbound device and try again.")
                 
                 self.pumpManager.disconnect(self.connectedDevice)
-                self.completion(.invalidBle5Keys)
+                guard let completion = self.completion else {
+                    return
+                }
+                
+                completion(.invalidBle5Keys)
                 return
             }
             
@@ -401,19 +398,13 @@ extension PeripheralManager {
             self.sendBLE5PairingInformation()
         } else if (data.count == 6 && self.isPump(data)) {
             log.error("PUMP_CHECK error. Data: \(data.base64EncodedString())")
-            DispatchQueue.main.async {
-                self.completion(.failure(NSError(domain: "PUMP_CHECK error", code: 0, userInfo: nil)))
-            }
+            connectionFailure(NSError(domain: "PUMP_CHECK error", code: 0, userInfo: nil))
         } else if (data.count == 6 && isBusy(data)) {
             log.error("PUMP_CHECK_BUSY error. Data: \(data.base64EncodedString())")
-            DispatchQueue.main.async {
-                self.completion(.failure(NSError(domain: "PUMP_CHECK_BUSY error", code: 0, userInfo: nil)))
-            }
+            connectionFailure(NSError(domain: "PUMP_CHECK_BUSY error", code: 0, userInfo: nil))
         } else {
             log.error("PUMP_CHECK error, wrong serial number. Data: \(data.base64EncodedString())")
-            DispatchQueue.main.async {
-                self.completion(.failure(NSError(domain: "PUMP_CHECK error, wrong serial number", code: 0, userInfo: nil)))
-            }
+            connectionFailure(NSError(domain: "PUMP_CHECK error, wrong serial number", code: 0, userInfo: nil))
         }
     }
     
@@ -446,9 +437,8 @@ extension PeripheralManager {
             if (password != self.pumpManager.state.devicePassword && !self.pumpManager.state.ignorePassword) {
                 log.error("Invalid password")
                 self.bluetoothManager.disconnect(self.connectedDevice)
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "Invalid password", code: 0, userInfo: nil)))
-                }
+                
+                connectionFailure(NSError(domain: "Invalid password", code: 0, userInfo: nil))
                 return
             }
             
@@ -459,7 +449,11 @@ extension PeripheralManager {
     }
     
     private func promptPincode(_ errorMessage: String?) {
-        self.completion(.requestedPincode(errorMessage))
+        guard let completion = self.completion else {
+            return
+        }
+        
+        completion(.requestedPincode(errorMessage))
     }
     
     private func isOk(_ data: Data) -> Bool {
@@ -485,9 +479,7 @@ extension PeripheralManager {
                 log.error("Failed to send keep connection...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "Failed to send keep connection", code: 0, userInfo: nil)))
-                }
+                connectionFailure(NSError(domain: "Failed to send keep connection", code: 0, userInfo: nil))
                 return
             }
             
@@ -500,9 +492,7 @@ extension PeripheralManager {
                 log.error("Failed to fetch Initial screen...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "Failed to fetch Initial screen", code: 0, userInfo: nil)))
-                }
+                connectionFailure(NSError(domain: "Failed to fetch Initial screen", code: 0, userInfo: nil))
                 return
             }
             
@@ -511,9 +501,7 @@ extension PeripheralManager {
                 log.error("No data received (initial screen)...")
                 self.pumpManager.disconnect(self.connectedDevice)
                 
-                DispatchQueue.main.async {
-                    self.completion(.failure(NSError(domain: "No data received (initial screen)", code: 0, userInfo: nil)))
-                }
+                connectionFailure(NSError(domain: "No data received (initial screen)", code: 0, userInfo: nil))
                 return
             }
             
@@ -536,15 +524,13 @@ extension PeripheralManager {
             log.info("Connection and encryption successful!")
             
             DispatchQueue.main.async {
-                self.completion(.success)
-                self.completion = { _ in }
+                self.completion?(.success)
+                self.completion = nil
             }
         } catch {
             log.error("Caught error during sending the message. error: \(error.localizedDescription)")
             self.pumpManager.disconnect(self.connectedDevice)
-            DispatchQueue.main.async {
-                self.completion(.failure(error))
-            }
+            connectionFailure(error)
         }
     }
 }
