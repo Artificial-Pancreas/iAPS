@@ -65,7 +65,7 @@
 "Agree and continue" = "Zustimmen und fortfahren";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Externes Insulin hinzufügen";
 
 /* Bolus progress view */
 "of" = "von";
@@ -119,7 +119,7 @@
 "Fatty Meal Factor" = "Faktor für fettige Mahlzeit";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Kohlenhydrate und früheres Insulin werden in die Glukosevorhersage einbezogen.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Ergebnis";
