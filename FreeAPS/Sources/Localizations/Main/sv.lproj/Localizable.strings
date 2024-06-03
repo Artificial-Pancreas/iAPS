@@ -65,7 +65,7 @@
 "Agree and continue" = "Godkänn och fortsätt";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Lägg till externt insulin";
 
 /* Bolus progress view */
 "of" = "av";
@@ -119,7 +119,7 @@
 "Fatty Meal Factor" = "Fettrik måltidsfaktor";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Kolhydrater och tidigare insulin ingår i blodsockerprognos.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Resultat";
