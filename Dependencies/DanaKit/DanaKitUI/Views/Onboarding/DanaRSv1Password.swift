@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKitUI
 import Combine
 
-struct DanaRSvv1Password: View {
+struct DanaRSv1Password: View {
     @Environment(\.dismissAction) private var dismiss
     
     @State var password: UInt16?
@@ -53,5 +53,5 @@ struct DanaRSvv1Password: View {
 }
 
 #Preview {
-    DanaRSvv1Password(nextAction: { _ in })
+    DanaRSv1Password(nextAction: { _ in })
 }
