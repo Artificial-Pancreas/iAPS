@@ -78,7 +78,7 @@ public struct MockPumpManagerState: Equatable {
                 let rateGroup3 = (100...350).map { Double($0) / 10 }
                 return rateGroup1 + rateGroup2 + rateGroup3
             case .dana:
-                return (0...300).map { Double($0) / 100 }
+                return (0...1600).map { Double($0) / 100 }
             case .custom:
                 return nil
             }
@@ -98,8 +98,8 @@ public struct MockPumpManagerState: Equatable {
                 // 0.1 units for rates between 10-35 U/h
                 return "0-1-10-35 by 0.025|0.05|0.1"
             case .dana:
-                // 0.01 units for rates between 0.01-3U/hr
-                return "0.01-3 by 0.01"
+                // 0.01 units for rates between 0.01-16U/hr
+                return "0.01-16 by 0.01"
             case .custom:
                 return nil
             }
