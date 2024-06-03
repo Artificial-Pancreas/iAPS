@@ -34,7 +34,7 @@ public struct MockPumpManagerState: Equatable {
                     return scaledRanges.map { Double($0) / Double(scale) }
                 }
             case .dana:
-                return (1...300).map { Double($0) / 10 }
+                return (1...800).map { Double($0) / 10 }
             case .custom:
                 return nil
             }
@@ -54,8 +54,8 @@ public struct MockPumpManagerState: Equatable {
                 // 0.1 units for rates between 10-25 U/h
                 return "0-1-10-25 by 0.025|0.05|0.1"
             case .dana:
-                // 0.1 units for volumes between 0.1-25U
-                return "0.1-30 by 0.1"
+                // 0.1 units for volumes between 0.1-80U
+                return "0.1-80 by 0.1"
             case .custom:
                 return nil
             }
