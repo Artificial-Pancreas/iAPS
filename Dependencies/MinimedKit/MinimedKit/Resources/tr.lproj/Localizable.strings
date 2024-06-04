@@ -50,10 +50,10 @@
 "Minimed %@" = "Minimed %@";
 
 /* Generic title of the minimed pump manager */
-"Minimed 500/700 Series" = "Minimed 500/700 Series";
+"Minimed 500/700 Series" = "Minimed 500/700 Serisi";
 
 /* Describing the North America pump region */
-"North America" = "North America";
+"North America" = "Kuzey Amerika";
 
 /* No comment provided by engineer. */
 "Pump did not respond" = "Pompa yanıt vermedi";
@@ -95,4 +95,4 @@
 "Unknown response during %1$@: %2$@" = "%1$@: %2$@ sırasında bilinmeyen yanıt";
 
 /* Describing the worldwide pump region */
-"World-Wide" = "World-Wide";
+"World-Wide" = "Dünya Çapında";
