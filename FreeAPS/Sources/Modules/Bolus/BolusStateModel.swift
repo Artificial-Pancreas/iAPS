@@ -358,5 +358,11 @@ extension Bolus.StateModel: SuggestionObserver {
         }
         setupInsulinRequired()
         loopDate = apsManager.lastLoopDate
+
+        if abs(now.timeIntervalSinceNow / 60) > loopReminder * 1.5 {
+            hideModal()
+            notActive()
+            debug(.apsManager, "Force Closing Bolus View", printToConsole: true)
+        }
     }
 }
