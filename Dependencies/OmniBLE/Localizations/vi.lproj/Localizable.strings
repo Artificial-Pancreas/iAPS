@@ -90,7 +90,7 @@
 "The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod.";
 
 /* Footer text for scheduled reminder area */
-"The expiration reminder time for the current Pod." = "The expiration reminder time for the current Pod.";
+"The expiration reminder time for the current Pod." = "Thời gian nhắc nhở hết hạn cho Pod hiện tại.";
 
 /* Footer text for low reservoir value row */
 "The app notifies you when the amount of insulin in the Pod reaches this level." = "The app notifies you when the amount of insulin in the Pod reaches this level.";
