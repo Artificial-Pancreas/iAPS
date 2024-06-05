@@ -65,7 +65,7 @@
 "Agree and continue" = "Прийняти та Продовжити";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Записувати зовнішній інсулін";
 
 /* Bolus progress view */
 "of" = "із";
@@ -119,7 +119,7 @@
 "Fatty Meal Factor" = "Фактор жирної їжі";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Вуглеводи та раніше введений інсулін враховуються при прогнозуванні рівня глюкози у крові.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Результат";
