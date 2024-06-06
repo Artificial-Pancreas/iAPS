@@ -41,10 +41,10 @@
 "Setting up Dana-i" = "Nastavení Dana-i"
 
 /* General subtext for dana */
-"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "Po nastavení typu inzulínu a rychlosti bolusu se zobrazí obrazovka se všemi nalezenými pumpami Dana. Vyberte čerpadlo, které chcete propojit se smyčkou."
+"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with %1$@." = "Po nastavení typu inzulínu a rychlosti bolusu se zobrazí obrazovka se všemi nalezenými pumpami Dana. Vyberte čerpadlo, které chcete propojit s %1$@."
 
 /* Subtext for dana-i */
-"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, Loop is ready to communicate with your Dana-i" = "Během procesu párování váš Dana-i zobrazí výzvu k párování, zatímco váš iPhone zobrazí výzvu k zadání párovacího kódu. Na pumpě vyberte OK a zadejte 6místný kód na obrazovce vašeho iPhone. Poté je Loop připraven komunikovat s vaším Dana-i"
+"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Během procesu párování váš Dana-i zobrazí výzvu k párování, zatímco váš iPhone zobrazí výzvu k zadání párovacího kódu. Na pumpě vyberte OK a zadejte 6místný kód na obrazovce vašeho iPhone. Poté je %1$@ připraveno komunikovat s vaším Dana-i"
 
 /* Dana-i/RS invalid ble5 keys */
 "ERROR: Failed to pair device" = "CHYBA: Párování zařízení se nezdařilo"
@@ -161,7 +161,7 @@
 "The max bolus limit is reached. Please try a lower amount or increase the limit" = "Byl dosažen limit maximálního bolusu. Zkuste prosím nižší částku nebo zvyšte limit"
 
 /* Error description when pump has reached the daily max */
-"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Je dosažen maximální denní limit inzulínu. Zkuste prosím nižší částku nebo zvyšte limit"
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Je dosažen maximální denní limit inzulinu. Zkuste prosím nižší částku nebo zvyšte limit"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Podporován je pouze automatický bolus"
@@ -229,7 +229,7 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na pumpě se liší od aktuálního času. Chcete aktualizovat čas na pumpě na aktuální čas?"
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpě se liší od aktuálního času. Čas pumpy řídí nastavení naplánované terapie. Přejděte dolů na řádek Čas pumpy a zkontrolujte časový rozdíl a nakonfigurujte pumpu.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpě se liší od aktuálního času. Čas pumpy řídí nastavení naplánované terapie. Přejděte dolů na řádek Čas pumpy, abyste si prohlédli časový rozdíl a nakonfigurovali pumpu.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Ano, synchronizovat s aktuálním časem"
@@ -397,7 +397,7 @@
 "Yes, Enable silent tones" = "Ano, Povolit tiché tóny"
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "Nastavte bazální profil, který má pumpa používat. Všimněte si, že přepíše profil, který je v pumpě, profilem v Loop"
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Nastavte bazální profil, který má pumpa používat. Pamatujte, že přepíše profil, který je v pumpě, profilem v %1$@"
 
 
 /* Error message for reservoir view when reservoir empty

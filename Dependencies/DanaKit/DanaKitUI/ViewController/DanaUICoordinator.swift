@@ -111,6 +111,8 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
     }
     
     private func hostingController<Content: View>(rootView: Content) -> DismissibleHostingController {
+        let rootView = rootView
+            .environment(\.appName, Bundle.main.bundleDisplayName)
         return DismissibleHostingController(rootView: rootView, colorPalette: colorPalette)
     }
     
@@ -126,7 +128,7 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             let view = DanaRSv1Explaination(nextAction: self.stepFinished)
             return hostingController(rootView: view)
         case .danarsv1Password:
-            let view = DanaRSvv1Password(nextAction: { password in
+            let view = DanaRSv1Password(nextAction: { password in
                 guard let pumpManager = self.pumpManager else {
                     self.stepFinished()
                     return

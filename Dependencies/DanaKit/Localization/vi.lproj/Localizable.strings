@@ -41,10 +41,10 @@
 "Setting up Dana-i" = "Thiết lập Dana-i"
 
 /* General subtext for dana */
-"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "Sau khi thiết lập loại insulin và tốc độ truyền nhanh, bạn sẽ thấy một màn hình hiển thị tất cả các máy bơm Dana được tìm thấy. Chọn máy bơm bạn muốn liên kết với Loop."
+"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with %1$@." = "Sau khi thiết lập loại insulin và tốc độ truyền nhanh, bạn sẽ thấy một màn hình hiển thị tất cả các máy bơm Dana được tìm thấy. Chọn máy bơm bạn muốn liên kết với %1$@."
 
 /* Subtext for dana-i */
-"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, Loop is ready to communicate with your Dana-i" = "Trong quá trình ghép nối, Dana-i của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc về mã ghép nối. Khi bạn bơm, chọn OK và nhập mã gồm 6 chữ số vào màn hình trên iPhone của bạn. Sau đó, Loop sẵn sàng liên lạc với Dana-i của bạn"
+"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Trong quá trình ghép nối, Dana-i của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc về mã ghép nối. Khi bạn bơm, chọn OK và nhập mã gồm 6 chữ số vào màn hình trên iPhone của bạn. Sau đó, %1$@ sẵn sàng liên lạc với Dana-i của bạn"
 
 /* Dana-i/RS invalid ble5 keys */
 "ERROR: Failed to pair device" = "LỖI: Không thể ghép nối thiết bị"
@@ -397,7 +397,7 @@
 "Yes, Enable silent tones" = "Có, Bật âm im lặng"
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "Đặt cấu hình cơ bản mà máy bơm nên sử dụng. Lưu ý rằng nó sẽ ghi đè lên cấu hình trong máy bơm bằng cấu hình trong Loop"
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Đặt cấu hình cơ bản mà máy bơm nên sử dụng. Lưu ý rằng nó sẽ ghi đè lên cấu hình trong máy bơm, bằng cấu hình trong %1$@"
 
 
 /* Error message for reservoir view when reservoir empty

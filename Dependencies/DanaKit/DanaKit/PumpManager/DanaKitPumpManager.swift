@@ -296,8 +296,23 @@ extension DanaKitPumpManager: PumpManager {
                 await self.syncUserOptions()
                 await self.syncTime()
                 let events = await self.syncHistory()
-                self.state.lastStatusDate = Date.now
                 
+                // Sync the pump time
+                do {
+                    let timePacket = self.state.usingUtc ? generatePacketGeneralGetPumpTimeUtcWithTimezone() : generatePacketGeneralGetPumpTime()
+                    let timeResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(timePacket)
+                    
+                    if timeResult.success {
+                        let date = self.state.usingUtc ? (timeResult.data as! PacketGeneralGetPumpTimeUtcWithTimezone).time : (timeResult.data as! PacketGeneralGetPumpTime).time
+                        self.state.lastStatusPumpDateTime = date
+                    } else {
+                        self.state.lastStatusPumpDateTime = Date.now
+                    }
+                } catch {
+                    self.state.lastStatusPumpDateTime = Date.now
+                }
+                
+                self.state.lastStatusDate = Date.now
                 self.disconnect()
                 
                 self.issueHeartbeatIfNeeded()
@@ -396,7 +411,7 @@ extension DanaKitPumpManager: PumpManager {
             
             hasHistoryModeBeenActivate = true
             
-            let fetchHistoryPacket = generatePacketHistoryAll(options: PacketHistoryBase(from: state.lastStatusDate, usingUtc: self.state.usingUtc))
+            let fetchHistoryPacket = generatePacketHistoryAll(options: PacketHistoryBase(from: state.lastStatusPumpDateTime, usingUtc: self.state.usingUtc))
             let fetchHistoryResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(fetchHistoryPacket)
             guard fetchHistoryResult.success else {
                 return []
@@ -862,7 +877,7 @@ extension DanaKitPumpManager: PumpManager {
                                 preconditionFailure("pumpManagerDelegate cannot be nil")
                             }
                             
-                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)], lastReconciliation: Date.now, completion: { (error) in
+                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)], lastReconciliation: self.state.lastStatusDate, completion: { (error) in
                                 completion(nil)
                             })
                         }
@@ -911,10 +926,10 @@ extension DanaKitPumpManager: PumpManager {
                                 preconditionFailure("pumpManagerDelegate cannot be nil")
                             }
                             
-                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.resume(dose: dose)], lastReconciliation: Date.now, completion: { (error) in
-                                completion(nil)
-                            })
+                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.resume(dose: dose)], lastReconciliation: self.state.lastStatusDate, completion: { _ in })
                         }
+
+                        completion(nil)
                     } catch {
                         self.disconnect()
                         

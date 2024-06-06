@@ -110,6 +110,7 @@
 		B88516992B30D6EC0063402A /* DanaUICoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88516982B30D6EC0063402A /* DanaUICoordinator.swift */; };
 		B885169B2B30D8140063402A /* DanaKitDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B885169A2B30D8140063402A /* DanaKitDebugView.swift */; };
 		B8A0163F2B433E000054AECA /* InsulinTypeConfirmation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8A0163E2B433E000054AECA /* InsulinTypeConfirmation.swift */; };
+		B8AACBAD2C0CB1C600271724 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8AACBAC2C0CB1C600271724 /* Bundle.swift */; };
 		B8DCDA022B6FE75500120011 /* DanaKitUserSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DCDA012B6FE75500120011 /* DanaKitUserSettingsViewModel.swift */; };
 		B8DCDA052B6FE78400120011 /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DCDA042B6FE78400120011 /* PickerView.swift */; };
 		B8DCDA072B6FE7BA00120011 /* DanaKitUserSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8DCDA062B6FE7BA00120011 /* DanaKitUserSettingsView.swift */; };
@@ -254,6 +255,7 @@
 		B88516982B30D6EC0063402A /* DanaUICoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaUICoordinator.swift; sourceTree = "<group>"; };
 		B885169A2B30D8140063402A /* DanaKitDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitDebugView.swift; sourceTree = "<group>"; };
 		B8A0163E2B433E000054AECA /* InsulinTypeConfirmation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsulinTypeConfirmation.swift; sourceTree = "<group>"; };
+		B8AACBAC2C0CB1C600271724 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		B8DCDA012B6FE75500120011 /* DanaKitUserSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitUserSettingsViewModel.swift; sourceTree = "<group>"; };
 		B8DCDA042B6FE78400120011 /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		B8DCDA062B6FE7BA00120011 /* DanaKitUserSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitUserSettingsView.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				B81E9D072B669B6700AB6AA1 /* PumpAlarmType.swift */,
 				B80C73D82B7D5AFB00821A38 /* TimeInterval.swift */,
 				B8F4E1AB2B83E00C000F4AE1 /* BackgroundTask.swift */,
+				B8AACBAC2C0CB1C600271724 /* Bundle.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -708,6 +711,7 @@
 				B8360AB12B2A2A1900152188 /* DanaGeneralGetUserTimeChangeFlag.swift in Sources */,
 				B8F4DC9A2B93499900AB00E6 /* DanaIExplainationView.swift in Sources */,
 				B8360AC12B2A2DA600152188 /* DanaHistoryAll.swift in Sources */,
+				B8AACBAD2C0CB1C600271724 /* Bundle.swift in Sources */,
 				B8F4DCB82B97300F00AB00E6 /* InsulinTypeView.swift in Sources */,
 				B8360AE22B2A3C3C00152188 /* DanaNotifyMissedBolus.swift in Sources */,
 				B8360ADD2B2A3A1600152188 /* DanaNotifyDeliveryComplete.swift in Sources */,

@@ -11,6 +11,7 @@ import LoopKitUI
 
 struct BasalProfileView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.appName) var appName
     
     private var currentValue: Binding<Int> {
         Binding(
@@ -61,7 +62,7 @@ struct BasalProfileView: View {
             .bold()
             .padding(.horizontal)
         
-        Text(LocalizedString("Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop", comment: "Description for basal profile number"))
+        Text(String(format: LocalizedString("Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@", comment: "Description for basal profile number (1: appName)"), appName))
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal)
         

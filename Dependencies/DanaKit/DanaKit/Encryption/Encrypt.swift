@@ -6,10 +6,6 @@
 //  Copyright © 2023 Randall Knutson. All rights reserved.
 //
 
-// TEMP logging
-import os.log
-// END TEMP
-
 let timeInformationEnhancedEncryption2Lookup: [UInt8] = [
     0,
     0x17 ^ 0x1a,

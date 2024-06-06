@@ -213,17 +213,15 @@ struct DanaKitSettingsView: View {
                         .foregroundColor(viewModel.showPumpTimeSyncWarning ? guidanceColors.warning : .secondary)
                 }
                 
-                if viewModel.showPumpTimeSyncWarning {
-                    Button(action: {
-                        viewModel.showingTimeSyncConfirmation = true
-                    }) {
-                        Text(LocalizedString("Sync Pump time", comment: "Label for syncing the time on the pump"))
-                            .foregroundColor(.accentColor)
-                    }
-                    .disabled(viewModel.isSyncing)
-                    .actionSheet(isPresented: $viewModel.showingTimeSyncConfirmation) {
-                        syncPumpTime
-                    }
+                Button(action: {
+                    viewModel.showingTimeSyncConfirmation = true
+                }) {
+                    Text(LocalizedString("Sync Pump time", comment: "Label for syncing the time on the pump"))
+                        .foregroundColor(.accentColor)
+                }
+                .disabled(viewModel.isSyncing)
+                .actionSheet(isPresented: $viewModel.showingTimeSyncConfirmation) {
+                    syncPumpTime
                 }
                 
                 Button(LocalizedString("Share Dana pump logs", comment: "DanaKit share logs")) {

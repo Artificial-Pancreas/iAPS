@@ -20,7 +20,7 @@
 "Setting up DanaRS v1" = "Asennetaan DanaRS v1"
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Pariliitoksen muodostusprosessin aikana DanaRS v3 näyttää pariliitoskehotteen, kun taas iPhone näyttää pariliitoskoodin kehotteen. Valitse pumpussasi OK ja kirjoita koodi iPhonellasi. Sen jälkeen Loop on valmis kommunikoimaan DanaRS v1:n kanssa"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Pariliitoksen muodostusprosessin aikana DanaRS v3 näyttää pariliitoskehotteen, kun taas iPhone näyttää pariliitoskoodin kehotteen. Valitse pumpussasi OK ja kirjoita koodi iPhoneen. Sen jälkeen Loop on valmis kommunikoimaan DanaRS v1:n kanssa"
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Ennen pariliitosprosessin aloittamista on suositeltavaa tarkistaa pumpun salasana ja tarvittaessa päivittää se. Voit tehdä tämän siirtymällä kohtaan Pumpun asetukset -&gt; Käyttäjäasetukset -&gt; Salasana. Oletussalasana on 1234, jos tämä on salasanasi, harkitse sen vaihtamista"
@@ -41,10 +41,10 @@
 "Setting up Dana-i" = "Asetetaan Dana-i"
 
 /* General subtext for dana */
-"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with Loop." = "Kun olet määrittänyt insuliinityypin ja bolusnopeuden, näet näytön, jossa on kaikki löydetyt Dana-pumput. Valitse pumppu, jonka haluat yhdistää Loopiin."
+"After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with %1$@." = "Kun olet määrittänyt insuliinityypin ja bolusnopeuden, näet näytön, jossa on kaikki löydetyt Dana-pumput. Valitse pumppu, jonka haluat yhdistää kohteeseen %1$@."
 
 /* Subtext for dana-i */
-"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, Loop is ready to communicate with your Dana-i" = "Parinmuodostusprosessin aikana Dana-i näyttää pariliitoskehotteen, kun taas iPhone näyttää pariliitoskoodin kehotteen. Valitse pumpulla OK ja kirjoita 6-numeroinen koodi iPhonen näyttöön. Sen jälkeen Loop on valmis kommunikoimaan Dana-i:n kanssa"
+"During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Parinmuodostusprosessin aikana Dana-i näyttää pariliitoskehotteen, kun taas iPhone näyttää pariliitoskoodin kehotteen. Valitse pumpulla OK ja kirjoita 6-numeroinen koodi iPhonen näyttöön. Sen jälkeen %1$@ on valmis kommunikoimaan Dana-i:n kanssa"
 
 /* Dana-i/RS invalid ble5 keys */
 "ERROR: Failed to pair device" = "VIRHE: Laitteen yhdistäminen epäonnistui"
@@ -226,7 +226,7 @@
 "Time Change Detected" = "Aikamuutos havaittu"
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pumpun aika eroaa nykyisestä ajasta. Haluatko päivittää pumpun ajan nykyiseen aikaan?"
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pumpun aika eroaa nykyisestä ajasta. Haluatko päivittää pumpun kellonajan nykyiseen aikaan?"
 
 /* description for time change detected notice */
 "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Pumpun aika eroaa nykyisestä ajasta. Pumpun aika ohjaa ajoitettuja hoitoasetuksiasi. Vieritä alas Pumpun aika -riville nähdäksesi aikaeron ja määrittääksesi pumpun.";
@@ -397,7 +397,7 @@
 "Yes, Enable silent tones" = "Kyllä, ota äänettömät äänet käyttöön"
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in Loop" = "Aseta perusprofiili, jota pumpun tulee käyttää. Huomaa, että se korvaa pumpussa olevan profiilin silmukassa olevan profiilin kanssa"
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Aseta perusprofiili, jota pumpun tulee käyttää. Huomaa, että se korvaa pumpussa olevan profiilin kohdassa %1$@"
 
 
 /* Error message for reservoir view when reservoir empty
