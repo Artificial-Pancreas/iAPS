@@ -27,6 +27,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     public init(rawValue: RawValue) {
         self.lastStatusDate = rawValue["lastStatusDate"] as? Date ?? Date().addingTimeInterval(.hours(-8))
+        self.lastStatusPumpDateTime = rawValue["lastStatusPumpDateTime"] as? Date ?? self.lastStatusDate
         self.deviceName = rawValue["deviceName"] as? String
         self.bleIdentifier = rawValue["bleIdentifier"] as? String
         self.isConnected = false // To prevent having an old isConnected state
@@ -95,6 +96,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     public init(basalSchedule: [Double]? = nil) {
         self.lastStatusDate = Date().addingTimeInterval(.hours(-8))
+        self.lastStatusPumpDateTime = self.lastStatusDate
         self.isConnected = false // To prevent having an old isConnected state
         self.reservoirLevel = 0
         self.hwModel = 0
@@ -134,6 +136,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         var value: [String : Any] = [:]
         
         value["lastStatusDate"] = self.lastStatusDate
+        value["lastStatusPumpDateTime"] = self.lastStatusPumpDateTime
         value["deviceName"] = self.deviceName
         value["bleIdentifier"] = self.bleIdentifier
         value["reservoirLevel"] = self.reservoirLevel
@@ -179,6 +182,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     /// The last moment this state has been updated (only for relavant values like isConnected or reservoirLevel)
     public var lastStatusDate: Date = Date().addingTimeInterval(.hours(-8))
+    public var lastStatusPumpDateTime: Date
     
     public var isOnBoarded = false
     
@@ -286,8 +290,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
             return false
         }
         
-        // Allow a 5 sec diff in time
-        return abs(syncedAt.timeIntervalSince1970 - pumpTime.timeIntervalSince1970) > 5
+        // Allow a 15 sec diff in time
+        return abs(syncedAt.timeIntervalSince1970 - pumpTime.timeIntervalSince1970) > 15
     }
     
     mutating func resetState() {

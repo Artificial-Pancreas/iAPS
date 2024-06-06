@@ -119,15 +119,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     func stopUsingDana() {
-        guard let pumpManager = self.pumpManager else {
-            return
-        }
-        
-        // reset state
-        pumpManager.state = DanaKitPumpManagerState()
-        pumpManager.notifyStateDidChange()
-        
-        pumpManager.notifyDelegateOfDeactivation {
+        self.pumpManager?.notifyDelegateOfDeactivation {
             DispatchQueue.main.async {
                 self.didFinish?()
             }
