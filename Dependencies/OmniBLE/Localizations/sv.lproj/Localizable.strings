@@ -80,6 +80,9 @@
 /* */
 "Confidence Reminders" = "Bekräftelseljud";
 
+/* */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Pausa insulintillförsel";
 
