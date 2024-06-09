@@ -81,12 +81,6 @@ extension Sharing {
 
                 Section {}
                 footer: {
-                    Text("https://open-iaps.app/statistics")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                }
-
-                Section {}
-                footer: {
                     let statisticsLink = URL(string: "https://open-iaps.app/user/" + state.identfier)!
 
                     Button("View Personal Statistics") {
