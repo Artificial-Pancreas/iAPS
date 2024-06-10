@@ -1416,7 +1416,6 @@ extension DanaKitPumpManager {
         }
         
         self.state.bolusState = .noBolus
-        self.state.lastStatusDate = Date.now
         self.notifyStateDidChange()
         
         self.bolusCompleted?.resume()
