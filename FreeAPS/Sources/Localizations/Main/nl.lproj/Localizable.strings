@@ -65,7 +65,7 @@
 "Agree and continue" = "Akkoord en doorgaan";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Externe insuline registreren";
 
 /* Bolus progress view */
 "of" = "van";
@@ -119,7 +119,7 @@
 "Fatty Meal Factor" = "Vette maaltijd factor";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Koolhydraten en vorige insuline zijn opgenomen in de uiteindelijke glucosevoorspelling.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Resultaat";
