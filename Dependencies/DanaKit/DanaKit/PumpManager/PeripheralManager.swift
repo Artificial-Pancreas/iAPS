@@ -468,7 +468,7 @@ extension PeripheralManager {
         return data[2] == busyCharCodes[0] && data[3] == busyCharCodes[1] && data[4] == busyCharCodes[2] && data[5] == busyCharCodes[3]
     }
     
-    public func updateInitialState() async {
+    private func updateInitialState() async {
         do {
             self.pumpManager.state.isConnected = true
 //            log.info("Sending keep connection")

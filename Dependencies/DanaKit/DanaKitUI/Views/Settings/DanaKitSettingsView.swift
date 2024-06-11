@@ -56,6 +56,24 @@ struct DanaKitSettingsView: View {
                     ])
     }
     
+    var bleModeSwitch: ActionSheet {
+        ActionSheet(title: Text(LocalizedString("Toggle Bluetooth mode", comment: "Title for bluetooth mode action sheet")),
+                                message: Text(LocalizedString("WARNING: Please don't use this until you've read the documentation", comment: "Warning message continuous mode")),
+                    buttons: [
+                        .default(Text(LocalizedString("What is this?", comment: "Button text to get help about Continuous mode"))) {
+                            // TODO: Switch to official docs once PR is live
+                            openURL(URL(string: "https://bastiaanv.github.io/loopdocs/troubleshooting/overview/")!)
+                        },
+                        .default(Text(viewModel.isUsingContinuousMode ?
+                                      LocalizedString("Yes, Switch to interactive mode", comment: "Button text to disable continuous mode") :
+                                      LocalizedString("Yes, Switch to continuous mode", comment: "Button text to enable continuous mode")
+                                 )) {
+                            self.viewModel.toggleBleMode()
+                        },
+                        .cancel(Text(LocalizedString("No, Keep as is", comment: "Button text to cancel silent tone")))
+                    ])
+    }
+    
     var body: some View {
         List {
             Section() {
@@ -113,11 +131,41 @@ struct DanaKitSettingsView: View {
                 }
                 .disabled(viewModel.isUpdatingPumpState || viewModel.isSyncing)
                 
-                HStack {
-                    Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
-                    Spacer()
-                    Text(String(viewModel.formatDate(viewModel.lastSync)))
-                        .foregroundColor(.secondary)
+                if (viewModel.isUsingContinuousMode) {
+                    Button(action: {
+                        viewModel.toggleConnection()
+                    }) {
+                        HStack {
+                            Text(viewModel.isConnected ?
+                                 LocalizedString("Disconnect", comment: "DanaKit disconnect") :
+                                 LocalizedString("Reconnect", comment: "DanaKit reconnect")
+                            )
+                            Spacer()
+                            if viewModel.isTogglingConnection {
+                                ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                            }
+                        }
+                    }
+                    .disabled(viewModel.isTogglingConnection)
+                    
+                    HStack {
+                        Text(LocalizedString("Status", comment: "Text for status")).foregroundColor(Color.primary)
+                        Spacer()
+                        HStack(spacing: 10) {
+                            Text("Connected")
+                                .foregroundColor(.secondary)
+                            Circle()
+                                .fill(viewModel.isConnected ? .green : .red)
+                                .frame(width: 20, height: 20)
+                        }
+                    }
+                } else {
+                    HStack {
+                        Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
+                        Spacer()
+                        Text(String(viewModel.formatDate(viewModel.lastSync)))
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
                 if (viewModel.reservoirAge != nil) {
@@ -157,14 +205,6 @@ struct DanaKitSettingsView: View {
                             .foregroundColor(.secondary)
                         }
                 }
-                NavigationLink(destination: viewModel.basalProfileView) {
-                    HStack {
-                        Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
-                        Spacer()
-                        Text(viewModel.transformBasalProfile(viewModel.basalProfileNumber))
-                            .foregroundColor(.secondary)
-                    }
-                }
                 NavigationLink(destination: viewModel.userOptionsView) {
                     Text(LocalizedString("User options", comment: "Title for user options"))
                         .foregroundColor(Color.primary)
@@ -194,6 +234,18 @@ struct DanaKitSettingsView: View {
                     Text(LocalizedString("Firmware version", comment: "Text for firmware version")).foregroundColor(Color.primary)
                     Spacer()
                     Text(String(viewModel.firmwareVersion ?? 0))
+                        .foregroundColor(.secondary)
+                }
+                .onLongPressGesture(perform: {
+                    viewModel.showingBleModeSwitch = true
+                })
+                .actionSheet(isPresented: $viewModel.showingBleModeSwitch) {
+                    bleModeSwitch
+                }
+                HStack {
+                    Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
+                    Spacer()
+                    Text(viewModel.transformBasalProfile(viewModel.basalProfileNumber))
                         .foregroundColor(.secondary)
                 }
                 HStack {

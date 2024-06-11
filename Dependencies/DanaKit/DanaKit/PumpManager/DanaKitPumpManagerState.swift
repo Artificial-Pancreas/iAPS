@@ -28,6 +28,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public init(rawValue: RawValue) {
         self.lastStatusDate = rawValue["lastStatusDate"] as? Date ?? Date().addingTimeInterval(.hours(-8))
         self.lastStatusPumpDateTime = rawValue["lastStatusPumpDateTime"] as? Date ?? self.lastStatusDate
+        self.isUsingContinuousMode = rawValue["isUsingContinuousMode"] as? Bool ?? false
         self.deviceName = rawValue["deviceName"] as? String
         self.bleIdentifier = rawValue["bleIdentifier"] as? String
         self.isConnected = false // To prevent having an old isConnected state
@@ -130,6 +131,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.useSilentTones = false
         self.batteryRemaining = 0
         self.cannulaDate = nil
+        self.isUsingContinuousMode = false
     }
     
     public var rawValue: RawValue {
@@ -176,6 +178,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["basalProfileNumber"] = self.basalProfileNumber
         value["cannulaDate2"] = self.cannulaDate // Migration to new value
         value["reservoirDate"] = self.reservoirDate
+        value["isUsingContinuousMode"] = self.isUsingContinuousMode
         
         return value
     }
@@ -185,6 +188,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     public var lastStatusPumpDateTime: Date
     
     public var isOnBoarded = false
+    public var isUsingContinuousMode = false
     
     /// The name of the device. Needed for en/de-crypting messages
     public var deviceName: String? = nil

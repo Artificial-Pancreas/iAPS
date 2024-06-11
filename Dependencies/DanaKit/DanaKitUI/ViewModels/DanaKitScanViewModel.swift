@@ -128,7 +128,9 @@ class DanaKitScanViewModel : ObservableObject {
             return
         }
         
-        self.pumpManager?.finishV3Pairing(pin1, randomPairingKey)
+        do {
+            try self.pumpManager?.finishV3Pairing(pin1, randomPairingKey)
+        } catch {}
     }
 }
 
