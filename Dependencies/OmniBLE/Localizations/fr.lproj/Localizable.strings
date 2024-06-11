@@ -96,7 +96,7 @@
 "The app notifies you when the amount of insulin in the Pod reaches this level." = "L'application vous avertit quand la quantité d'insuline restante dans le Pod atteint cette limite.";
 
 /* Description text for critical alerts */
-"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced.";
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Les rappels ci-dessus ne sonneront pas dans l'application si votre appareil est en mode Silencieux ou Ne pas déranger. Il existent d'autres alertes critiques de Pod qui sonneront dans l'application même si votre appareil est en mode Silent ou Ne pas déranger.\n\nLe Pod lui-même utilisera également des bips audibles pour tous les rappels et alertes de Pod, sauf si le Pod est réglé sur Silencieux.";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Suspendre l'administration d'insuline";
