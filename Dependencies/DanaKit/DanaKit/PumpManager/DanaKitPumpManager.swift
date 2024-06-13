@@ -294,25 +294,17 @@ extension DanaKitPumpManager: PumpManager {
                 return
             case .success:
                 await self.syncUserOptions()
-                await self.syncTime()
                 let events = await self.syncHistory()
                 
-                // Sync the pump time
-                do {
-                    let timePacket = self.state.usingUtc ? generatePacketGeneralGetPumpTimeUtcWithTimezone() : generatePacketGeneralGetPumpTime()
-                    let timeResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(timePacket)
-                    
-                    if timeResult.success {
-                        let date = self.state.usingUtc ? (timeResult.data as! PacketGeneralGetPumpTimeUtcWithTimezone).time : (timeResult.data as! PacketGeneralGetPumpTime).time
-                        self.state.lastStatusPumpDateTime = date
-                    } else {
-                        self.state.lastStatusPumpDateTime = Date.now
-                    }
-                } catch {
-                    self.state.lastStatusPumpDateTime = Date.now
+                let pumpTime = await self.fetchPumpTime()
+                if let pumpTime = pumpTime {
+                    self.state.pumpTimeSyncedAt = Date.now
+                    self.state.pumpTime = pumpTime
                 }
                 
+                self.state.lastStatusPumpDateTime = pumpTime ?? Date.now
                 self.state.lastStatusDate = Date.now
+                
                 self.disconnect()
                 
                 self.issueHeartbeatIfNeeded()
@@ -357,46 +349,22 @@ extension DanaKitPumpManager: PumpManager {
         }
     }
 
-    private func syncTime() async {
+    private func fetchPumpTime() async -> Date? {
         do {
-            if self.state.usingUtc {
-                // Only the Dana-i supports command with timezone...
-                let timeUtcWithTimezonePacket = generatePacketGeneralGetPumpTimeUtcWithTimezone()
-                let resultTimeUtcWithTimezone = try await DanaKitPumpManager.bluetoothManager.writeMessage(timeUtcWithTimezonePacket)
-                guard resultTimeUtcWithTimezone.success else {
-                    log.error("Failed to fetch pump time with utc...")
-                    self.disconnect()
-                    return
-                }
-                
-                
-                guard let dataTime = resultTimeUtcWithTimezone.data as? PacketGeneralGetPumpTimeUtcWithTimezone else {
-                    log.error("No data received (time utc with timezone)...")
-                    self.disconnect()
-                    return
-                }
-                
-                self.state.pumpTime = dataTime.time
+            let timePacket = self.state.usingUtc ? generatePacketGeneralGetPumpTimeUtcWithTimezone() : generatePacketGeneralGetPumpTime()
+            let timeResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(timePacket)
+            
+            if timeResult.success {
+                let date = self.state.usingUtc ? 
+                    (timeResult.data as? PacketGeneralGetPumpTimeUtcWithTimezone)?.time: (timeResult.data as? PacketGeneralGetPumpTime)?.time
+                return date
             } else {
-                let timePacket = generatePacketGeneralGetPumpTime()
-                let resultTime = try await DanaKitPumpManager.bluetoothManager.writeMessage(timePacket)
-                guard resultTime.success else {
-                    log.error("Failed to fetch pump time...")
-                    self.disconnect()
-                    return
-                }
-                
-                
-                guard let dataTime = resultTime.data as? PacketGeneralGetPumpTime else {
-                    log.error("No data received (time utc with timezone)...")
-                    self.disconnect()
-                    return
-                }
-                
-                self.state.pumpTime = dataTime.time
+                self.log.error("Failed to fetch pump time...")
+                return nil
             }
         } catch {
             self.log.error("Failed to sync time: \(error.localizedDescription)")
+            return nil
         }
     }
     
@@ -544,9 +512,11 @@ extension DanaKitPumpManager: PumpManager {
                             return
                         }
                         
+                        self.state.lastStatusPumpDateTime = (await self.fetchPumpTime()) ?? Date.now
+                        self.state.lastStatusDate = Date.now
+                        
                         self.doseEntry = UnfinalizedDose(units: units, duration: duration, activationType: activationType, insulinType: self.state.insulinType!)
                         self.doseReporter = DanaKitDoseProgressReporter(total: units)
-                        self.state.lastStatusDate = Date()
                         self.state.bolusState = .inProgress
                         self.notifyStateDidChange()
                         
@@ -606,9 +576,7 @@ extension DanaKitPumpManager: PumpManager {
         do {
             let packet = generatePacketBolusStop()
             let result = try await DanaKitPumpManager.bluetoothManager.writeMessage(packet)
-            
-            self.disconnect()
-            
+
             if (!result.success) {
                 self.state.bolusState = oldBolusState
                 self.notifyStateDidChange()
@@ -617,8 +585,10 @@ extension DanaKitPumpManager: PumpManager {
                 return
             }
             
-            // Increase status update date, to prevent double bolus entries
+            self.state.lastStatusPumpDateTime = (await self.fetchPumpTime()) ?? Date.now
             self.state.lastStatusDate = Date.now
+            
+            self.disconnect()
             self.state.bolusState = .noBolus
             self.notifyStateDidChange()
             
@@ -1388,7 +1358,6 @@ extension DanaKitPumpManager {
         }
         
         self.state.bolusState = .noBolus
-        self.state.lastStatusDate = Date.now
         self.notifyStateDidChange()
         
         self.bolusCompleted?.resume()
@@ -1415,36 +1384,39 @@ extension DanaKitPumpManager {
     }
     
     func notifyBolusDone(deliveredUnits: Double) {
-        self.state.bolusState = .noBolus
-        self.state.lastStatusDate = Date.now
-        self.notifyStateDidChange()
-        
-        self.bolusCompleted?.resume()
-        
-        delegateQueue.asyncAfter(deadline: .now() + 1) {
-            // Always try to disconnect when this event happens
-            self.disconnect()
+        Task {
+            self.state.bolusState = .noBolus
+            self.state.lastStatusPumpDateTime = (await self.fetchPumpTime()) ?? Date.now
+            self.state.lastStatusDate = Date.now
+            self.notifyStateDidChange()
+            
+            self.bolusCompleted?.resume()
+            
+            delegateQueue.asyncAfter(deadline: .now() + 1) {
+                // Always try to disconnect when this event happens
+                self.disconnect()
+            }
+            
+            guard let doseEntry = self.doseEntry else {
+                return
+            }
+            
+            doseEntry.deliveredUnits = deliveredUnits
+            
+            let dose = doseEntry.toDoseEntry()
+            self.doseEntry = nil
+            self.doseReporter = nil
+            
+            guard let dose = dose else {
+                return
+            }
+            
+            self.pumpDelegate.notify { (delegate) in
+                delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.bolus(dose: dose, units: deliveredUnits)], lastReconciliation: Date.now, completion: { _ in })
+            }
+            
+            self.notifyStateDidChange()
         }
-        
-        guard let doseEntry = self.doseEntry else {
-            return
-        }
-        
-        doseEntry.deliveredUnits = deliveredUnits
-        
-        let dose = doseEntry.toDoseEntry()
-        self.doseEntry = nil
-        self.doseReporter = nil
-        
-        guard let dose = dose else {
-            return
-        }
-        
-        self.pumpDelegate.notify { (delegate) in
-            delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.bolus(dose: dose, units: deliveredUnits)], lastReconciliation: Date.now, completion: { _ in })
-        }
-        
-        self.notifyStateDidChange()
     }
     
     func checkBolusDone() {
