@@ -355,10 +355,11 @@ extension DanaKitPumpManager: PumpManager {
             let timeResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(timePacket)
             
             if timeResult.success {
-                let date = self.state.usingUtc ? (timeResult.data as! PacketGeneralGetPumpTimeUtcWithTimezone).time : (timeResult.data as! PacketGeneralGetPumpTime).time
+                let date = self.state.usingUtc ? 
+                    (timeResult.data as? PacketGeneralGetPumpTimeUtcWithTimezone)?.time: (timeResult.data as? PacketGeneralGetPumpTime)?.time
                 return date
             } else {
-                self.log.error("Failed to fetch pump time with utc...")
+                self.log.error("Failed to fetch pump time...")
                 return nil
             }
         } catch {
