@@ -420,3 +420,24 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Reservoir age"
+
+/* Text for status */
+"Status" = "Status"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Disconnecting..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Reconnecting..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Disconnect from pump"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Reconnect tp pump"
+
+/* DanaKit disconnected */
+"Disconnected" = "Disconnected"
+
+/* DanaKit connected */
+"Connected" = "Connected"

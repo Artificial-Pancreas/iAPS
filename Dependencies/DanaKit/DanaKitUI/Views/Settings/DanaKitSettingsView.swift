@@ -137,8 +137,8 @@ struct DanaKitSettingsView: View {
                     }) {
                         HStack {
                             Text(viewModel.isConnected ?
-                                 LocalizedString("Disconnect", comment: "DanaKit disconnect") :
-                                 LocalizedString("Reconnect", comment: "DanaKit reconnect")
+                                 LocalizedString("Disconnect from pump", comment: "DanaKit disconnect") :
+                                 LocalizedString("Reconnect to pump", comment: "DanaKit reconnect")
                             )
                             Spacer()
                             if viewModel.isTogglingConnection {
@@ -152,11 +152,8 @@ struct DanaKitSettingsView: View {
                         Text(LocalizedString("Status", comment: "Text for status")).foregroundColor(Color.primary)
                         Spacer()
                         HStack(spacing: 10) {
-                            Text("Connected")
-                                .foregroundColor(.secondary)
-                            Circle()
-                                .fill(viewModel.isConnected ? .green : .red)
-                                .frame(width: 20, height: 20)
+                            continuousConnectionStatusText
+                            continuousConnectionStatusIcon
                         }
                     }
                 } else {
@@ -361,6 +358,30 @@ struct DanaKitSettingsView: View {
                 }
             }
         }
+    }
+    
+    var continuousConnectionStatusText: some View {
+        if viewModel.isTogglingConnection {
+            if viewModel.isConnected {
+                return Text(LocalizedString("Disconnecting...", comment: "DanaKit disconnecting"))
+            } else {
+                return Text(LocalizedString("Reconnecting...", comment: "DanaKit reconnecting"))
+            }
+        } else {
+            if viewModel.isConnected {
+                return Text(LocalizedString("Connected", comment: "DanaKit connected"))
+            } else {
+                return Text(LocalizedString("Disconnected", comment: "DanaKit disconnected"))
+            }
+        }
+    }
+    
+    var continuousConnectionStatusIcon: some View {
+        var color = viewModel.isTogglingConnection ? Color.orange : viewModel.isConnected ? Color.green : Color.red
+        
+        return Circle()
+            .fill(color)
+            .frame(width: 10, height: 10)
     }
     
     var deliverySectionTitle: String {

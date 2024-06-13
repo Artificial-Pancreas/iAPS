@@ -16,7 +16,6 @@
 		B802D4E12C15F80A00B92C35 /* ContinousBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B802D4E02C15F80A00B92C35 /* ContinousBluetoothManager.swift */; };
 		B802D4E32C17737B00B92C35 /* InteractiveBluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B802D4E22C17737B00B92C35 /* InteractiveBluetoothManager.swift */; };
 		B80C73D92B7D5AFB00821A38 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80C73D82B7D5AFB00821A38 /* TimeInterval.swift */; };
-		B80EC4AE2B45EFDD005E2A1A /* LoadingModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80EC4AD2B45EFDD005E2A1A /* LoadingModal.swift */; };
 		B80EC4B02B45F66E005E2A1A /* DanaKitSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80EC4AF2B45F66E005E2A1A /* DanaKitSettingsView.swift */; };
 		B80EC4B22B45F681005E2A1A /* DanaKitSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80EC4B12B45F681005E2A1A /* DanaKitSettingsViewModel.swift */; };
 		B8179E5A2B20F2A10049EEE7 /* OSLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8179E592B20F2A10049EEE7 /* OSLog.swift */; };
@@ -144,7 +143,6 @@
 		B802D4E02C15F80A00B92C35 /* ContinousBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinousBluetoothManager.swift; sourceTree = "<group>"; };
 		B802D4E22C17737B00B92C35 /* InteractiveBluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveBluetoothManager.swift; sourceTree = "<group>"; };
 		B80C73D82B7D5AFB00821A38 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
-		B80EC4AD2B45EFDD005E2A1A /* LoadingModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingModal.swift; sourceTree = "<group>"; };
 		B80EC4AF2B45F66E005E2A1A /* DanaKitSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitSettingsView.swift; sourceTree = "<group>"; };
 		B80EC4B12B45F681005E2A1A /* DanaKitSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DanaKitSettingsViewModel.swift; sourceTree = "<group>"; };
 		B8179E592B20F2A10049EEE7 /* OSLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLog.swift; sourceTree = "<group>"; };
@@ -475,7 +473,6 @@
 				B8F4DC952B93407F00AB00E6 /* Onboarding */,
 				B88516902B30638D0063402A /* DanaKitReservoirView.swift */,
 				B88516922B30C6DA0063402A /* DanaKitReservoirView.xib */,
-				B80EC4AD2B45EFDD005E2A1A /* LoadingModal.swift */,
 				B85335D92B58599300DB470A /* ReservoirView.swift */,
 				B8F4DC972B9340EB00AB00E6 /* Image.swift */,
 				B8F4DCAF2B971A9F00AB00E6 /* ContinueButton.swift */,
@@ -675,7 +672,6 @@
 				B8360AA92B2A28CE00152188 /* DanaGeneralGetPumpTimeUtcWithTimezone.swift in Sources */,
 				B8360A912B2643C900152188 /* DanaBolusSet24CIRCFArray.swift in Sources */,
 				B80EC4B22B45F681005E2A1A /* DanaKitSettingsViewModel.swift in Sources */,
-				B80EC4AE2B45EFDD005E2A1A /* LoadingModal.swift in Sources */,
 				B8DCDA052B6FE78400120011 /* PickerView.swift in Sources */,
 				B81C52242B30E95E00FB801D /* IdentifiableClass.swift in Sources */,
 				B8360ABB2B2A2C7300152188 /* DanaGeneralSetPumpTimeUtcWithTimezone.swift in Sources */,

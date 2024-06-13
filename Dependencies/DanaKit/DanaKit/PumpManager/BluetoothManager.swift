@@ -49,7 +49,7 @@ protocol BluetoothManager : AnyObject, CBCentralManagerDelegate {
     
     var devices: [DanaPumpScan] { get set }
     
-    func disconnect(_ peripheral: CBPeripheral) -> Void
+    func disconnect(_ peripheral: CBPeripheral, force: Bool) -> Void
 }
 
 extension BluetoothManager {
@@ -113,7 +113,7 @@ extension BluetoothManager {
     
     func connect(_ peripheral: CBPeripheral, _ completion: @escaping (ConnectionResult) -> Void) {
         if self.peripheral != nil {
-            self.disconnect(self.peripheral!)
+            self.disconnect(self.peripheral!, force: true)
         }
         
         manager.connect(peripheral, options: nil)
@@ -292,7 +292,7 @@ extension BluetoothManager {
         
         guard let connectionCompletion = self.connectionCompletion else {
             log.error("No connection callback found... Timeout hit probably")
-            self.disconnect(peripheral)
+            self.disconnect(peripheral, force: true)
             
             return
         }

@@ -10,7 +10,11 @@ import Foundation
 import CoreBluetooth
 
 class ContinousBluetoothManager : NSObject, BluetoothManager {
-    weak var pumpManagerDelegate: DanaKitPumpManager?
+    var pumpManagerDelegate: DanaKitPumpManager? {
+        didSet {
+            self.autoConnectUUID = self.pumpManagerDelegate?.state.bleIdentifier
+        }
+    }
     
     var autoConnectUUID: String? = nil
     var connectionCompletion: ((ConnectionResult) -> Void)? = nil
@@ -32,12 +36,63 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         }
     }
     
-    func disconnect(_ peripheral: CBPeripheral) {
-        // Don't do anything since we are in continuous mode
+    private func keepConnectionAlive() async {
+        do {
+            try await Task.sleep(nanoseconds: 45000000000) // Sleep for 45sec
+            
+            let keepAlivePacket = generatePacketGeneralKeepConnection()
+            let result = try await self.writeMessage(keepAlivePacket)
+            guard result.success else {
+                self.log.error("Pump rejected keepAlive request: \(result.rawData.base64EncodedString())")
+                return
+            }
+            
+            Task {
+                await self.keepConnectionAlive()
+            }
+        } catch {
+            self.log.error("Failed to keep connection alive: \(error.localizedDescription)")
+        }
+    }
+    
+    public func reconnect() {
+        if self.autoConnectUUID != nil && !self.isConnected {
+            do {
+                self.log.info("Auto-connect to \(String(describing: self.autoConnectUUID))")
+                try self.connect(self.autoConnectUUID!) { result in
+                    switch(result) {
+                    case .success:
+                        Task {
+                            await self.keepConnectionAlive()
+                        }
+                        break;
+                    default:
+                        self.log.error("Failed to do auto connection: \(result)")
+                    }
+                }
+            } catch {
+                log.error("Failed to auto connect: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func disconnect(_ peripheral: CBPeripheral, force: Bool) {
+        guard force else {
+            return
+        }
+        
+        self.autoConnectUUID = nil
+        
+        logDeviceCommunication("Dana - Disconnected", type: .connection)
+        self.manager.cancelPeripheralConnection(peripheral)
     }
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         self.bleCentralManagerDidUpdateState(central)
+        
+        if central.state == .poweredOn {
+            self.reconnect()
+        }
     }
     
     func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {

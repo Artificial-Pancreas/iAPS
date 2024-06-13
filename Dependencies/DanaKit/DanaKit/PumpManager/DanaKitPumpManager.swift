@@ -99,17 +99,17 @@ public class DanaKitPumpManager: DeviceManager {
         self.bluetooth.connect(peripheral, completion)
     }
     
-    public func disconnect() {
+    public func disconnect(_ force: Bool = false) {
         guard self.bluetooth.isConnected else {
             // Disconnect is not needed
             return
         }
         
-        self.bluetooth.disconnect(self.bluetooth.peripheral!)
+        self.bluetooth.disconnect(self.bluetooth.peripheral!, force: force)
     }
     
-    public func disconnect(_ peripheral: CBPeripheral) {
-        self.bluetooth.disconnect(peripheral)
+    public func disconnect(_ peripheral: CBPeripheral, _ force: Bool = false) {
+        self.bluetooth.disconnect(peripheral, force: force)
         self.state.resetState()
     }
     
@@ -140,6 +140,23 @@ public class DanaKitPumpManager: DeviceManager {
                 delegate?.pumpManagerBLEHeartbeatDidFire(self)
             }
             self.lastHeartbeat = Date()
+        }
+    }
+    
+    public func toggleBluetoothMode() {
+        self.state.isUsingContinuousMode = !self.state.isUsingContinuousMode
+        
+        self.bluetooth = self.state.isUsingContinuousMode ? ContinousBluetoothManager() : InteractiveBluetoothManager()
+        self.bluetooth.pumpManagerDelegate = self
+        
+        self.notifyStateDidChange()
+    }
+    
+    public func reconnect() {
+        if let bluetoothManager = self.bluetooth as? ContinousBluetoothManager {
+            bluetoothManager.reconnect()
+        } else {
+            self.log.error("Cannot reconnect in interactive mode, please use Coninuous mode for this or just the ensurePumpConnected function")
         }
     }
     

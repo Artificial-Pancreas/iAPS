@@ -118,8 +118,9 @@ class PeripheralManager: NSObject {
     }
     
     private func connectionFailure(_ error: any Error) {
+        self.bluetoothManager.disconnect(self.connectedDevice, force: true)
+        
         guard let completion = self.completion else {
-            self.bluetoothManager.disconnect(self.connectedDevice)
             return
         }
         
@@ -133,8 +134,6 @@ extension PeripheralManager : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard error == nil else {
             log.error("\(error!.localizedDescription)")
-            self.bluetoothManager.disconnect(peripheral)
-            
             connectionFailure(error!)
             return
         }
@@ -142,8 +141,6 @@ extension PeripheralManager : CBPeripheralDelegate {
         let service = peripheral.services?.first(where: { $0.uuid == PeripheralManager.SERVICE_UUID })
         if (service == nil) {
             log.error("Failed to discover dana data service...")
-            self.bluetoothManager.disconnect(peripheral)
-            
             connectionFailure(NSError(domain: "Failed to discover dana data service...", code: 0, userInfo: nil))
             return
         }
@@ -156,8 +153,6 @@ extension PeripheralManager : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         guard error == nil else {
             log.error("\(error!.localizedDescription)")
-            self.bluetoothManager.disconnect(peripheral)
-            
             connectionFailure(error!)
             return
         }
@@ -168,8 +163,6 @@ extension PeripheralManager : CBPeripheralDelegate {
         
         if (self.writeCharacteristic == nil || self.readCharacteristic == nil) {
             log.error("Failed to discover dana write or read characteristic")
-            self.bluetoothManager.disconnect(peripheral)
-            
             connectionFailure(NSError(domain: "Failed to discover dana write or read characteristic", code: 0, userInfo: nil))
             return
         }
@@ -181,8 +174,6 @@ extension PeripheralManager : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?)  {
         guard error == nil else {
             log.error("\(error!.localizedDescription)")
-            self.bluetoothManager.disconnect(peripheral)
-            
             connectionFailure(error!)
             return
         }
@@ -194,8 +185,6 @@ extension PeripheralManager : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard error == nil else {
             log.error("\(error!.localizedDescription)")
-            self.bluetoothManager.disconnect(peripheral)
-            
             connectionFailure(error!)
             return
         }
@@ -311,8 +300,6 @@ extension PeripheralManager {
         }
         
         log.error("Passkey request failed. Data: \(data.base64EncodedString())")
-        self.bluetoothManager.disconnect(self.connectedDevice)
-        
         connectionFailure(NSError(domain: "Passkey request failed", code: 0, userInfo: nil))
     }
     
@@ -356,8 +343,6 @@ extension PeripheralManager {
                 self.sendEasyMenuCheck()
             } else {
                 log.error("Got invalid hwModel \(self.pumpManager.state.hwModel)")
-                self.bluetoothManager.disconnect(self.connectedDevice)
-                
                 connectionFailure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil))
             }
         } else if (data.count == 14 && self.isOk(data)) {
@@ -369,8 +354,6 @@ extension PeripheralManager {
             
             guard (self.pumpManager.state.hwModel == 0x09 || self.pumpManager.state.hwModel == 0x0a) else {
                 log.error("Got invalid hwModel \(self.pumpManager.state.hwModel)")
-                self.bluetoothManager.disconnect(self.connectedDevice)
-                
                 connectionFailure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil))
                 return
             }
@@ -436,8 +419,6 @@ extension PeripheralManager {
             let password = (highByte + lowByte) ^ 0x0d87
             if (password != self.pumpManager.state.devicePassword && !self.pumpManager.state.ignorePassword) {
                 log.error("Invalid password")
-                self.bluetoothManager.disconnect(self.connectedDevice)
-                
                 connectionFailure(NSError(domain: "Invalid password", code: 0, userInfo: nil))
                 return
             }

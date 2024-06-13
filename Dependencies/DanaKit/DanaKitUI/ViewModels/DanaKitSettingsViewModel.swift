@@ -144,18 +144,16 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     func toggleBleMode() {
+        self.pumpManager?.toggleBluetoothMode()
+    }
+    
+    func toggleConnection() {
         guard let pumpManager = self.pumpManager else {
             return
         }
         
-        pumpManager.state.isUsingContinuousMode = !pumpManager.state.isUsingContinuousMode
-        self.isUsingContinuousMode = pumpManager.state.isUsingContinuousMode
-        log.error("TODO")
-    }
-    
-    func toggleConnection() {
         self.isTogglingConnection = true
-        log.error("TODO")
+        pumpManager.reconnect()
     }
     
     func formatDate(_ date: Date?) -> String {

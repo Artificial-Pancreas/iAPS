@@ -33,7 +33,7 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
         }
     }
     
-    func disconnect(_ peripheral: CBPeripheral) {
+    func disconnect(_ peripheral: CBPeripheral, force: Bool) {
         self.autoConnectUUID = nil
         
         logDeviceCommunication("Dana - Disconnected", type: .connection)
