@@ -7,7 +7,7 @@ extension Sharing {
 
         @Published var uploadStats: Bool = false
         @Published var identfier: String = ""
-        @Published var birtDate = Date()
+        @Published var birthDate = Date.distantPast
         @Published var uploadVersion: Bool = true
         @Published var sexSetting: Int = 3
         @Published var sex: Sex = .secret
@@ -16,7 +16,7 @@ extension Sharing {
             uploadStats = settingsManager.settings.uploadStats
             subscribeSetting(\.uploadStats, on: $uploadStats) { uploadStats = $0 }
             subscribeSetting(\.uploadVersion, on: $uploadVersion) { uploadVersion = $0 }
-            subscribeSetting(\.birtDate, on: $birtDate) { birtDate = $0 }
+            subscribeSetting(\.birthDate, on: $birthDate) { birthDate = $0 }
             subscribeSetting(\.sexSetting, on: $sexSetting) { sexSetting = $0 }
             identfier = getIdentifier()
         }

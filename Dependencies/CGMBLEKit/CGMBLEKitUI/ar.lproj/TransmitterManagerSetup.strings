@@ -1,20 +1,20 @@
 /* Class = "UILabel"; text = "Credentials"; ObjectID = "5oU-vK-JHQ"; */
-"5oU-vK-JHQ.text" = "Credentials";
+"5oU-vK-JHQ.text" = "بيانات التسجيل";
 
 /* Class = "UITableViewController"; title = "Transmitter Setup"; ObjectID = "Dds-49-o7G"; */
-"Dds-49-o7G.title" = "Transmitter Setup";
+"Dds-49-o7G.title" = "إعداد جهاز الإرسال";
 
 /* Class = "UILabel"; text = "Detail"; ObjectID = "GOT-KQ-cEh"; */
 "GOT-KQ-cEh.text" = "تفاصيل";
 
 /* Class = "UITableViewSection"; footerTitle = "The transmitter ID can be found printed on the back of the device, on the side of the box it came in, and from within the settings menus of the receiver and mobile app."; ObjectID = "Qub-6B-0aB"; */
-"Qub-6B-0aB.footerTitle" = "The transmitter ID can be found printed on the back of the device, on the side of the box it came in, and from within the settings menus of the receiver and mobile app.";
+"Qub-6B-0aB.footerTitle" = "يمكن العثور على معرف جهاز الإرسال مطبوعا على الجزء الخلفي من الجهاز، على جانب الصندوق الذي أتى به، ومن داخل قوائم الإعدادات الخاصة بالمستلم والتطبيق الموبايل.";
 
 /* Class = "UITableViewSection"; headerTitle = "Transmitter ID"; ObjectID = "Qub-6B-0aB"; */
 "Qub-6B-0aB.headerTitle" = "Transmitter ID";
 
 /* Class = "UITableViewSection"; footerTitle = "Data can be downloaded over the Internet from Share when the transmitter connection fails."; ObjectID = "k1N-Rg-XDy"; */
-"k1N-Rg-XDy.footerTitle" = "Data can be downloaded over the Internet from Share when the transmitter connection fails.";
+"k1N-Rg-XDy.footerTitle" = "يمكن تحميل البيانات عبر الإنترنت من تطبيق Share عند فشل اتصال المرسل.";
 
 /* Class = "UITableViewSection"; headerTitle = "Dexcom Share"; ObjectID = "k1N-Rg-XDy"; */
 "k1N-Rg-XDy.headerTitle" = "Dexcom Share";

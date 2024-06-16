@@ -81,7 +81,7 @@
 "Disabled" = "Vô hiệu hóa";
 
 /* Description for Empty reservoir pod fault */
-"Empty reservoir" = "Ngăn chứa insulin rỗng";
+"Empty reservoir" = "Hết insulin";
 
 /* Error message shown when empty response from pod was received */
 "Empty response from pod" = "Không có phản hồi từ pod";

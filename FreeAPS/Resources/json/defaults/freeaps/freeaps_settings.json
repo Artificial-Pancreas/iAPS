@@ -62,5 +62,5 @@
   "minimumSMB": 0.3,
   "useInsulinBars": false,
   "uploadVersion": true,
-  "birtDate": new Date()
+  "birthDate": Date.distantPast
 }

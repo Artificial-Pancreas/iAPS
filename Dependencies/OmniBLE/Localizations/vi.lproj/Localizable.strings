@@ -18,7 +18,7 @@
 "Low Reservoir" = "Sắp hết thuốc";
 
 /* Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Tạm dừng lời nhắc đang tiến hành";
 
 /* Alert content title for suspendEnded pod alert */
 "Resume Insulin" = "Tiếp tục lại việc tiêm insulin";
@@ -45,7 +45,7 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin hoặc ít hơn còn lại trong Pod. Thay Pod ngay.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Tạm dừng lời nhắc đang tiến hành";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Thời gian tạm ngưng insulin đã kết thúc.\n\n Bạn có thể phục hồi việc tiêm thuốc từ màn hình chính hoặc từ màn hình cài đặt bơm. Sẽ có thông báo nhắc trong vòng 15 phút.";
@@ -79,6 +79,24 @@
 
 /* */
 "Confidence Reminders" = "Confidence Reminders";
+
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Lời nhắc là những tiếng bíp từ Pod có thể được sử dụng để xác nhận các lệnh đã chọn khi Pod không ở chế độ im lặng.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Lời nhắc Pod";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Ứng dụng cấu hình lời nhắc trên pod để thông báo trước cho bạn khi pod hết hạn. Đặt số giờ bạn muốn cấu hình khi ghép nối pod mới.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Thời gian nhắc nhở hết hạn cho Pod hiện tại.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "Ứng dụng nhắc nhở bạn khi lượng insulin trong pod đạt đến mức này.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Lời nhắc ở trên sẽ không phát ra âm thanh nếu thiết bị của bạn ở trạng thái Silent hoặc Do Not Disturb.\n\n Có nhiều cách cảnh báo khác nhau phát ra âm thanh ngay cả khi thiết bị của bạn ở trạng thái im lặng hoặc không làm phiền.";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Tạm dừng insulin";
@@ -388,7 +406,7 @@
 "Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Không thể tiêm insulin trở lại";
+"Failed to Resume Insulin Delivery" = "Không thể tiếp tục cung cấp insulin";
 
 /* Alert title for time sync error */
 "Failed to Set Pump Time" = "Không thể cài đặt thời gian cho bơm";
@@ -406,7 +424,7 @@
 "Deactivate Pod" = "Hủy kích hoạt Pod";
 
 /* */
-"Slide to Insert Cannula" = "Trượt để chèn ống thông";
+"Slide to Insert Cannula" = "Trượt để chèn Cannula";
 
 /* */
 "Slide to Deactivate Pod" = "Trượt để vô hiệu hóa Pod";
@@ -415,7 +433,7 @@
 "Deactivating." = "Đang hủy kích hoạt.";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
-"Pod deactivated successfully. Continue." = "Pod hủy kích hoạt thành công. Tiếp tục.";
+"Pod deactivated successfully. Continue." = "Đã huỷ kích hoạt Pod thành công. Tiếp tục.";
 
 /* Action button description for deactivate after failed attempt */
 "Retry" = "Thử lại";
@@ -424,7 +442,7 @@
 "Continue" = "Tiếp tục";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Đã xảy ra sự cố khi giao tiếp với Pod. Nếu sự cố này vẫn tiếp diễn, hãy nhấn vào Discard Pod. Sau đó, bạn có thể kích hoạt Pod mới.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Đã xảy ra sự cố khi giao tiếp với Pod. Nếu sự cố này vẫn tiếp diễn, hãy nhấn vào Loại bỏ pod. Sau đó, bạn có thể kích hoạt Pod mới.";
 
 /* Text for discard pod button */
 "Discard Pod" = "Loại bỏ pod";
@@ -623,7 +641,7 @@
 "Rate" = "Tỷ lệ";
 
 /* Insulin unit per hour */
-"U/hr" = "U/giờ";
+"U/hr" = "U/hr";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ cho %2$@";
@@ -721,7 +739,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Ứng dụng sẽ thông báo khi lượng insulin trong Pod đạt đến mức này (50-10 U).\n\n Kéo xuống để chọn số Unit mà bạn muốn để nhận thông báo.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Sắp hết thuốc";
+"Low Reservoir" = "Sắp hết insulin";
 
 /* */
 "Save" = "Lưu";

@@ -293,7 +293,7 @@ final class OpenAPS {
                     insertedResons += ", Dynamic ISF/CR: On/Off"
                 }
                 if let tddFactor = readMiddleware(json: profile, variable: "tdd_factor"), tddFactor.count > 1 {
-                    insertedResons += ", Basal Adjustment: \(tddFactor)"
+                    insertedResons += ", Basal Adjustment: \(tddFactor.suffix(max(tddFactor.count - 6, 0)))"
                 }
 
                 insertedResons += tddString
@@ -441,8 +441,23 @@ final class OpenAPS {
             // Temp Target
             let tempTargetsArray = cd.fetchTempTargets()
 
-            let total = uniqueEvents.compactMap({ each in each.tdd as? Decimal ?? 0 }).reduce(0, +)
-            var indeces = uniqueEvents.count
+            // Time adjusted average
+            var time = uniqueEvents.first?.timestamp ?? .distantPast
+            var data_ = [tddData(date: time, tdd: (uniqueEvents.first?.tdd ?? 0) as Decimal)]
+
+            for a in uniqueEvents {
+                if a.timestamp ?? .distantFuture <= time.addingTimeInterval(-24.hours.timeInterval) {
+                    let b = tddData(
+                        date: a.timestamp ?? .distantFuture,
+                        tdd: (a.tdd ?? 0) as Decimal
+                    )
+                    data_.append(b)
+                    time = a.timestamp ?? .distantPast
+                }
+            }
+            let total = data_.map(\.tdd).reduce(0, +)
+            let indeces = data_.count
+
             // Only fetch once. Use same (previous) fetch
             let twoHoursArray = uniqueEvents
                 .filter({ ($0.timestamp ?? Date()) >= Date.now.addingTimeInterval(-2.hours.timeInterval) })
@@ -459,9 +474,6 @@ final class OpenAPS {
             let overrideMaxIOB = overrideArray.first?.overrideMaxIOB ?? false
             let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0) as NSDecimalNumber
 
-            if indeces == 0 {
-                indeces = 1
-            }
             if nrOfIndeces == 0 {
                 nrOfIndeces = 1
             }
