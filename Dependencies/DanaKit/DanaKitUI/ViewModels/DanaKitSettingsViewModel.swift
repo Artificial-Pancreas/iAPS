@@ -132,34 +132,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     func scheduleDisconnectNotification(_ duration: TimeInterval) {
-        let content = UNMutableNotificationContent()
-        content.title = LocalizedString("Pump is still disconnected", comment: "Title disconnect reminder notification")
-        content.body = LocalizedString("Your pump is still disconnected after the set period!", comment: "Body disconnect reminder notification")
-        
-        let dateTime = Date.now.addingTimeInterval(duration)
-        
-        var dateComponents = DateComponents()
-        dateComponents.calendar = Calendar.current
-        dateComponents.year = Calendar.current.component(.year, from: dateTime)
-        dateComponents.month = Calendar.current.component(.month, from: dateTime)
-        dateComponents.day = Calendar.current.component(.day, from: dateTime)
-        dateComponents.hour = Calendar.current.component(.hour, from: dateTime)
-        dateComponents.minute = Calendar.current.component(.minute, from: dateTime)
-        dateComponents.second = Calendar.current.component(.second, from: dateTime)
-        
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: DanaKit.disconnectReminderNotificationUUID, content: content, trigger: trigger)
-        
-        // Schedule the request with the system.
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.add(request) { error in
-            guard let error = error else {
-                return
-            }
-            
-            self.log.error("Failed to enable notifications: \(error.localizedDescription)")
-        }
-        
+        NotificationHelper.setDisconnectReminder(duration)
         self.pumpManager?.disconnect(true)
     }
     
