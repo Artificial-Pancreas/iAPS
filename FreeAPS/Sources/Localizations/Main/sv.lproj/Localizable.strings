@@ -47,7 +47,7 @@
 "Done" = "Klar";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Senast loop var för %@ minuter sedan. Slutför eller stäng denna vy så att nästa loop-cykel kan köras";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Visa Emojis";
