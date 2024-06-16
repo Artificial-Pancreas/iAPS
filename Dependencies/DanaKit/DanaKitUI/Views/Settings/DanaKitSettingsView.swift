@@ -62,7 +62,7 @@ struct DanaKitSettingsView: View {
                     buttons: [
                         .default(Text(LocalizedString("What is this?", comment: "Button text to get help about Continuous mode"))) {
                             // TODO: Switch to official docs once PR is live
-                            openURL(URL(string: "https://bastiaanv.github.io/loopdocs/troubleshooting/overview/")!)
+                            openURL(URL(string: "https://bastiaanv.github.io/loopdocs/troubleshooting/dana-heartbeat/")!)
                         },
                         .default(Text(viewModel.isUsingContinuousMode ?
                                       LocalizedString("Yes, Switch to interactive mode", comment: "Button text to disable continuous mode") :
@@ -71,6 +71,29 @@ struct DanaKitSettingsView: View {
                             self.viewModel.toggleBleMode()
                         },
                         .cancel(Text(LocalizedString("No, Keep as is", comment: "Button text to cancel silent tone")))
+                    ])
+    }
+    
+    var disconnectReminder: ActionSheet {
+        ActionSheet(title: Text(LocalizedString("Set reminder for disconnect", comment: "Title disconnect reminder sheet")),
+                                message: Text(LocalizedString("Do you wish to receive a notification when the pump is longer disconnected for a specific time?", comment: "body disconnect reminder sheet")),
+                    buttons: [
+                        .default(Text(LocalizedString("Yes, 5 minutes", comment: "Button text to 5 min"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(5))
+                        },
+                        .default(Text(LocalizedString("Yes, 15 minutes", comment: "Button text to 15 min"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(15))
+                        },
+                        .default(Text(LocalizedString("Yes, 30 minutes", comment: "Button text to 30 min"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(30))
+                        },
+                        .default(Text(LocalizedString("Yes, 1 hour", comment: "Button text to 1h"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(60))
+                        },
+                        .default(Text(LocalizedString("No, just disconnect", comment: "Button text to just disconnect"))) {
+                            viewModel.forceDisconnect()
+                        },
+                        .cancel(Text(LocalizedString("Cancel", comment: "Button text to cancel")))
                     ])
     }
     
@@ -131,22 +154,37 @@ struct DanaKitSettingsView: View {
                 }
                 .disabled(viewModel.isUpdatingPumpState || viewModel.isSyncing)
                 
-                if (viewModel.isUsingContinuousMode) {
-                    Button(action: {
-                        viewModel.toggleConnection()
-                    }) {
-                        HStack {
-                            Text(viewModel.isConnected ?
-                                 LocalizedString("Disconnect from pump", comment: "DanaKit disconnect") :
-                                 LocalizedString("Reconnect to pump", comment: "DanaKit reconnect")
-                            )
-                            Spacer()
-                            if viewModel.isTogglingConnection {
-                                ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                if viewModel.isUsingContinuousMode {
+                    if !viewModel.isConnected {
+                        Button(action: {
+                            viewModel.reconnect()
+                        }) {
+                            HStack {
+                                Text(LocalizedString("Reconnect to pump", comment: "DanaKit reconnect"))
+                                Spacer()
+                                if viewModel.isTogglingConnection {
+                                    ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                                }
                             }
                         }
+                        .disabled(viewModel.isTogglingConnection)
+                    } else {
+                        Button(action: {
+                            viewModel.showingDisconnectReminder = true
+                        }) {
+                            HStack {
+                                Text(LocalizedString("Disconnect from pump", comment: "DanaKit disconnect"))
+                                Spacer()
+                                if viewModel.isTogglingConnection {
+                                    ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                                }
+                            }
+                        }
+                        .disabled(viewModel.isTogglingConnection)
+                        .actionSheet(isPresented: $viewModel.showingDisconnectReminder) {
+                            disconnectReminder
+                        }
                     }
-                    .disabled(viewModel.isTogglingConnection)
                     
                     HStack {
                         Text(LocalizedString("Status", comment: "Text for status")).foregroundColor(Color.primary)
@@ -156,13 +194,13 @@ struct DanaKitSettingsView: View {
                             continuousConnectionStatusIcon
                         }
                     }
-                } else {
-                    HStack {
-                        Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
-                        Spacer()
-                        Text(String(viewModel.formatDate(viewModel.lastSync)))
-                            .foregroundColor(.secondary)
-                    }
+                }
+                
+                HStack {
+                    Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
+                    Spacer()
+                    Text(String(viewModel.formatDate(viewModel.lastSync)))
+                        .foregroundColor(.secondary)
                 }
                 
                 if (viewModel.reservoirAge != nil) {

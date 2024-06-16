@@ -14,6 +14,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingDeleteConfirmation = false
     @Published var showingBleModeSwitch = false
     @Published var showingTimeSyncConfirmation = false
+    @Published var showingDisconnectReminder = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
     @Published var isUsingContinuousMode: Bool = false
@@ -130,6 +131,42 @@ class DanaKitSettingsViewModel : ObservableObject {
         }
     }
     
+    func scheduleDisconnectNotification(_ duration: TimeInterval) {
+        let content = UNMutableNotificationContent()
+        content.title = LocalizedString("Pump is still disconnected", comment: "Title disconnect reminder notification")
+        content.body = LocalizedString("Your pump is still disconnected after the set period!", comment: "Body disconnect reminder notification")
+        
+        let dateTime = Date.now.addingTimeInterval(duration)
+        
+        var dateComponents = DateComponents()
+        dateComponents.calendar = Calendar.current
+        dateComponents.year = Calendar.current.component(.year, from: dateTime)
+        dateComponents.month = Calendar.current.component(.month, from: dateTime)
+        dateComponents.day = Calendar.current.component(.day, from: dateTime)
+        dateComponents.hour = Calendar.current.component(.hour, from: dateTime)
+        dateComponents.minute = Calendar.current.component(.minute, from: dateTime)
+        dateComponents.second = Calendar.current.component(.second, from: dateTime)
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: DanaKit.disconnectReminderNotificationUUID, content: content, trigger: trigger)
+        
+        // Schedule the request with the system.
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { error in
+            guard let error = error else {
+                return
+            }
+            
+            self.log.error("Failed to enable notifications: \(error.localizedDescription)")
+        }
+        
+        self.pumpManager?.disconnect(true)
+    }
+    
+    func forceDisconnect() {
+        self.pumpManager?.disconnect(true)
+    }
+    
     func didChangeInsulinType(_ newType: InsulinType?) {
         guard let type = newType else {
             return
@@ -147,13 +184,17 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.pumpManager?.toggleBluetoothMode()
     }
     
-    func toggleConnection() {
+    func reconnect() {
         guard let pumpManager = self.pumpManager else {
             return
         }
         
         self.isTogglingConnection = true
-        pumpManager.reconnect()
+        pumpManager.reconnect { _ in
+            DispatchQueue.main.async {
+                self.isTogglingConnection = false
+            }
+        }
     }
     
     func formatDate(_ date: Date?) -> String {
@@ -182,7 +223,10 @@ class DanaKitSettingsViewModel : ObservableObject {
         pumpManager.syncPump { date in
             DispatchQueue.main.async {
                 self.isSyncing = false
-                self.lastSync = date
+                
+                if let date = date {
+                    self.lastSync = date
+                }
             }
         }
     }

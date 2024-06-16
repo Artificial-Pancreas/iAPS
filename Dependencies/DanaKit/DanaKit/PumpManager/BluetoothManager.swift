@@ -50,6 +50,7 @@ protocol BluetoothManager : AnyObject, CBCentralManagerDelegate {
     var devices: [DanaPumpScan] { get set }
     
     func disconnect(_ peripheral: CBPeripheral, force: Bool) -> Void
+    func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String) -> Void
 }
 
 extension BluetoothManager {
@@ -120,6 +121,10 @@ extension BluetoothManager {
         self.connectionCompletion = completion
     }
     
+    func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) -> Void {
+        self.ensureConnected(completion, identifier)
+    }
+    
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol) {
         guard let peripheralManager = self.peripheralManager else {
             throw NSError(domain: "No connected device", code: 0, userInfo: nil)
@@ -139,92 +144,8 @@ extension BluetoothManager {
         
         peripheralManager.finishV3Pairing(pairingKey, randomPairingKey)
     }
-    
-    func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) {
-        self.connectionCallback[identifier] = { result in
-            Task {
-                self.resetConnectionCompletion()
-                self.connectionCallback[identifier] = nil
-                await completion(result)
-            }
-        }
-        
-        // Device still has an active connection with pump and is probably busy with something
-        if self.isConnected {
-            if self.pumpManagerDelegate?.state.isUsingContinuousMode ?? false {
-                self.logDeviceCommunication("Dana - Connected", type: .connection)
-                self.connectionCallback[identifier]!(.success)
-            } else {
-                self.logDeviceCommunication("Dana - Failed to connect: Already connected", type: .connection)
-                self.connectionCallback[identifier]!(.failure)
-            }
-        // We stored the peripheral. We can quickly reconnect
-        } else if self.peripheral != nil {
-            self.startTimeout(seconds: TimeInterval.seconds(15), identifier)
-            
-            self.connect(self.peripheral!) { result in
-                guard let connectionCallback = self.connectionCallback[identifier] else {
-                    // We've already hit the timeout function above
-                    // Exit if we every hit this...
-                    return
-                }
-                
-                switch result {
-                case .success:
-                    self.logDeviceCommunication("Dana - Connected", type: .connection)
-                    connectionCallback(.success)
-                case .failure(let err):
-                    self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
-                    connectionCallback(.failure)
-                case .requestedPincode:
-                    self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
-                    connectionCallback(.failure)
-                case .invalidBle5Keys:
-                    self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
-                    connectionCallback(.failure)
-                }
-            }
-            // No active connection and no stored peripheral. We have to scan for device before being able to send command
-        } else if !self.isConnected && self.pumpManagerDelegate?.state.bleIdentifier != nil {
-            do {
-                self.startTimeout(seconds: TimeInterval.seconds(30), identifier)
-                
-                try self.connect(self.pumpManagerDelegate!.state.bleIdentifier!) { result in
-                    guard let connectionCallback = self.connectionCallback[identifier] else {
-                        // We've already hit the timeout function above
-                        // Exit if we every hit this...
-                        return
-                    }
-                    
-                    switch result {
-                    case .success:
-                        self.logDeviceCommunication("Dana - Connected", type: .connection)
-                        connectionCallback(.success)
-                    case .failure(let err):
-                        self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
-                        connectionCallback(.failure)
-                    case .requestedPincode:
-                        self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
-                        connectionCallback(.failure)
-                    case .invalidBle5Keys:
-                        self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
-                        connectionCallback(.failure)
-                    }
-                }
-            } catch {
-                self.logDeviceCommunication("Dana - Failed to connect: " + error.localizedDescription, type: .connection)
-                self.connectionCallback[identifier]?(.failure)
-            }
-            
-            // Should never reach, but is only possible if device is not onboard (we have no ble identifier to connect to)
-        } else {
-            self.log.error("Pump is not onboarded")
-            self.logDeviceCommunication("Dana - Pump is not onboarded", type: .connection)
-            self.connectionCallback[identifier]!(.failure)
-        }
-    }
 
-    private func startTimeout(seconds: TimeInterval, _ identifier: String) {
+    internal func startTimeout(seconds: TimeInterval, _ identifier: String) {
         Task {
             do {
                 try await Task.sleep(nanoseconds: UInt64(seconds) * 1000000000)

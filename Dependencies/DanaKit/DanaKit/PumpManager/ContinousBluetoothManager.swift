@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import UserNotifications
 
 class ContinousBluetoothManager : NSObject, BluetoothManager {
     var pumpManagerDelegate: DanaKitPumpManager? {
@@ -55,23 +56,51 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         }
     }
     
-    public func reconnect() {
-        if self.autoConnectUUID != nil && !self.isConnected {
-            do {
-                self.log.info("Auto-connect to \(String(describing: self.autoConnectUUID))")
-                try self.connect(self.autoConnectUUID!) { result in
-                    switch(result) {
-                    case .success:
-                        Task {
-                            await self.keepConnectionAlive()
-                        }
-                        break;
-                    default:
-                        self.log.error("Failed to do auto connection: \(result)")
+    public func reconnect(_ callback: @escaping (Bool) -> Void) {
+        if self.autoConnectUUID == nil {
+            self.autoConnectUUID = self.pumpManagerDelegate?.state.bleIdentifier
+        }
+        
+        guard let autoConnect = self.autoConnectUUID, !self.isConnected else {
+            self.log.error("Invalid state... autoConnect: \(String(describing: self.autoConnectUUID)), isConnected: \(self.isConnected)")
+            callback(false)
+            return
+        }
+        
+        do {
+            try self.connect(autoConnect) { result in
+                switch(result) {
+                case .success:
+                    Task {
+                        await self.keepConnectionAlive()
+                        callback(true)
                     }
+                    break;
+                default:
+                    self.log.error("Failed to do auto connection: \(result)")
+                    callback(false)
                 }
-            } catch {
-                log.error("Failed to auto connect: \(error.localizedDescription)")
+            }
+        } catch {
+            log.error("Failed to auto connect: \(error.localizedDescription)")
+            callback(false)
+        }
+    }
+    
+    func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) {
+        Task {
+            // Device still has an active connection with pump and is probably busy with something
+            if self.isConnected {
+                self.resetConnectionCompletion()
+                await completion(.success)
+                
+                // We aren't connected, the user has probably disconnected the pump by hand
+            } else {
+                self.log.error("Device not connected...")
+                self.logDeviceCommunication("Dana - Pump is not connected. Please reconnect to pump before doing any operations", type: .connection)
+                
+                self.resetConnectionCompletion()
+                await completion(.failure)
             }
         }
     }
@@ -91,7 +120,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         self.bleCentralManagerDidUpdateState(central)
         
         if central.state == .poweredOn {
-            self.reconnect()
+            self.reconnect{ _ in }
         }
     }
     
@@ -105,6 +134,9 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         self.bleCentralManager(central, didConnect: peripheral)
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.removeDeliveredNotifications(withIdentifiers: [DanaKit.disconnectReminderNotificationUUID])
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {

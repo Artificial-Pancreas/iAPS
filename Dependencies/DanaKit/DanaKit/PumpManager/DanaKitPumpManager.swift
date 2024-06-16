@@ -152,11 +152,14 @@ public class DanaKitPumpManager: DeviceManager {
         self.notifyStateDidChange()
     }
     
-    public func reconnect() {
+    public func reconnect(_ callback: @escaping (Bool) -> Void) {
         if let bluetoothManager = self.bluetooth as? ContinousBluetoothManager {
-            bluetoothManager.reconnect()
+            bluetoothManager.reconnect { result in
+                callback(result)
+            }
         } else {
             self.log.error("Cannot reconnect in interactive mode, please use Coninuous mode for this or just the ensurePumpConnected function")
+            callback(false)
         }
     }
     
@@ -1299,12 +1302,6 @@ extension DanaKitPumpManager {
         self.notifyStateDidChange()
         
         self.bolusCompleted?.resume()
-        
-        let dose = doseEntry.toDoseEntry()
-        let deliveredUnits = doseEntry.deliveredUnits
-        
-        self.doseEntry = nil
-        self.doseReporter = nil
         
         // We dont store the bolus or anything
         // The ensurePumpData will make sure everything is up-to-date
