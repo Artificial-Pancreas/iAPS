@@ -340,7 +340,7 @@
 "Basal Compare" = "Bazal Karşılaştırma"
 
 /* Alert title for bloodSugarMeasure */
-"Blood glucose Measure" = "Kan Şekeri Ölçümü"
+"Blood glucose Measure" = "Kan şekeri ölçümü"
 
 /* Alert title for remainingInsulinLevel */
 "Remaining insulin level" = "Kalan insülin seviyesi"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Rezervuar yaşı"
+
+/* Text for status */
+"Status" = "Durum"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Bağlantı kesiliyor..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Yeniden bağlanılıyor..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Pompayla bağlantıyı kesin"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Tp pompasını yeniden bağlayın"
+
+/* DanaKit disconnected */
+"Disconnected" = "Bağlantı kesildi"
+
+/* DanaKit connected */
+"Connected" = "Bağlı"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pompanın bağlantısı hala kesik"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Ayarlanan sürenin sonunda pompanızın bağlantısı hala kesik!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Bağlantıyı kesmek için hatırlatıcı ayarla"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Pompanın bağlantısı belirli bir süreliğine kesildiğinde bildirim almak ister misiniz?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Evet, 5 dakika"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Evet, 15 dakika"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Evet, 30 dakika"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Evet, 1 saat"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Hayır, sadece bağlantıyı kes"

@@ -92,7 +92,7 @@
 "Pin 2" = "Pin 2"
 
 /* Dana-RS v3 pincode prompt error invalid length */
-"Received invalid pincode lengths. Try again" = "Fick ogiltiga pinkodlängder. Försök igen"
+"Received invalid pincode lengths. Try again" = "Mottog ogiltiga pinkodlängder. Försök igen"
 
 /* Dana-RS v3 pincode prompt error invalid hex */
 "Received invalid hex strings. Try again" = "Mottog ogiltiga hexsträngar. Försök igen"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Reservoarålder"
+
+/* Text for status */
+"Status" = "Status"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Kopplar från..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Återansluter..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Koppla bort från pumpen"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Återanslut tp-pumpen"
+
+/* DanaKit disconnected */
+"Disconnected" = "Osammanhängande"
+
+/* DanaKit connected */
+"Connected" = "Ansluten"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pumpen är fortfarande frånkopplad"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Din pump är fortfarande frånkopplad efter den inställda perioden!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Ställ in påminnelse för frånkoppling"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Vill du få ett meddelande när pumpen är längre bortkopplad under en viss tid?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Ja, 5 minuter"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Ja, 15 minuter"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Ja, 30 minuter"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Ja, 1 timme"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Nej, bara koppla ur"

@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Vârsta rezervorului"
+
+/* Text for status */
+"Status" = "stare"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Se deconectează..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Se reconecta..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Deconectați de la pompă"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Reconectați pompa tp"
+
+/* DanaKit disconnected */
+"Disconnected" = "Deconectat"
+
+/* DanaKit connected */
+"Connected" = "Conectat"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pompa este încă deconectată"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Pompa dvs. este încă deconectată după perioada stabilită!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Setați memento pentru deconectare"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Doriți să primiți o notificare când pompa este deconectată mai mult pentru o anumită perioadă de timp?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Da, 5 minute"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Da, 15 minute"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Da, 30 de minute"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Da, 1 ora"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Nu, doar deconectați-vă"
