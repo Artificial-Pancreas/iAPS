@@ -33,6 +33,11 @@ extension Bolus {
                         meal: meal,
                         mealEntries: mealEntries
                     )
+                    .onDisappear {
+                        if state.eventualBG {
+                            state.notActive()
+                        }
+                    }
                 } else {
                     AlternativeBolusCalcRootView(
                         resolver: resolver,
@@ -42,6 +47,11 @@ extension Bolus {
                         meal: meal,
                         mealEntries: mealEntries
                     )
+                    .onDisappear {
+                        if !state.eventualBG {
+                            state.notActive()
+                        }
+                    }
                 }
             } else {
                 cleanBolusView
@@ -99,6 +109,9 @@ extension Bolus {
                     state.delete(deleteTwice: true, meal: meal)
                 } else if fetch, !keepForNextWiew, !state.useCalc {
                     state.delete(deleteTwice: false, meal: meal)
+                }
+                if !state.useCalc {
+                    state.notActive()
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
