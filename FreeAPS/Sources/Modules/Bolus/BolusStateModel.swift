@@ -66,6 +66,18 @@ extension Bolus {
         @Published var bolusIncrement: Decimal = 0.1
         @Published var eventualBG: Bool = false
         @Published var minimumPrediction: Bool = false
+        @Published var closedLoop: Bool = false
+        @Published var loopDate: Date = .distantFuture
+        @Published var now = Date.now
+
+        let loopReminder: CGFloat = 20
+
+        private var loopFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
 
         override func subscribe() {
             setupInsulinRequired()
@@ -82,6 +94,8 @@ extension Bolus {
             eventualBG = settings.settings.eventualBG
             displayPredictions = settings.settings.displayPredictions
             bolusIncrement = settings.preferences.bolusIncrement
+            closedLoop = settings.settings.closedLoop
+            loopDate = apsManager.lastLoopDate
 
             if waitForSuggestionInitial {
                 apsManager.determineBasal()
@@ -94,6 +108,7 @@ extension Bolus {
                             self.insulinRecommended = 0
                         }
                     }.store(in: &lifetime)
+                loopDate = apsManager.lastLoopDate
             }
             if let notNilSugguestion = provider.suggestion {
                 suggestion = notNilSugguestion
@@ -289,6 +304,18 @@ extension Bolus {
             return nil
         }
 
+        func notActive() {
+            let defaults = UserDefaults.standard
+            defaults.set(false, forKey: IAPSconfig.inBolusView)
+            // print("Active: NO") // For testing
+        }
+
+        func viewActive() {
+            let defaults = UserDefaults.standard
+            defaults.set(true, forKey: IAPSconfig.inBolusView)
+            // print("Active: YES") // For testing
+        }
+
         private func prepareData() {
             if !eventualBG {
                 var prepareData = [
@@ -308,6 +335,15 @@ extension Bolus {
             }
         }
 
+        func lastLoop() -> String? {
+            guard closedLoop else { return nil }
+            guard abs(now.timeIntervalSinceNow / 60) > loopReminder else { return nil }
+            let minAgo = abs(loopDate.timeIntervalSinceNow / 60)
+
+            let stringAgo = loopFormatter.string(from: minAgo as NSNumber) ?? ""
+            return "Last loop \(stringAgo) minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run"
+        }
+
         private func roundBolus(_ amount: Decimal) -> Decimal {
             // Account for increments (don't use the APSManager function as that gets too slow)
             Decimal(round(Double(amount / bolusIncrement))) * bolusIncrement
@@ -321,5 +357,12 @@ extension Bolus.StateModel: SuggestionObserver {
             self.waitForSuggestion = false
         }
         setupInsulinRequired()
+        loopDate = apsManager.lastLoopDate
+
+        if abs(loopDate.timeIntervalSinceNow / 60) > loopReminder * 1.5, abs(now.timeIntervalSinceNow / 60) > loopReminder {
+            hideModal()
+            notActive()
+            debug(.apsManager, "Force Closing Bolus View", printToConsole: true)
+        }
     }
 }

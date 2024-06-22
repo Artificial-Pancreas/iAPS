@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Promemoria Di Sicurezza";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "I promemoria di fiducia sono segnali acustici emessi dal Pod che possono essere utilizzati per confermare i comandi selezionati quando il Pod non è silenziato.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Promemoria Pod";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "L'app configura un promemoria sul Pod per notificarti in anticipo della scadenza del Pod. Puoi impostare il numero di ore di preavviso che desideri configurare quando abbini un nuovo Pod.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Il promemoria di scadenza per l'attuale pod.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "L'App ti avvisa quando la quantità d'insulina nel Pod raggiunge questo livello.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "I promemoria qui sopra non suoneranno se il dispositivo è in modalità silenzioso o non disturbare. Ci sono altri avvisi e avvisi di pod critici che suoneranno anche se il dispositivo è impostato in modalità silenzioso o non disturbare. \n\n Il pod emetterà avvisi sonori per tutti gli avvisi del pod tranne quando il pod stesso è silenziato.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Sospendi diffusione di Insulina";
 

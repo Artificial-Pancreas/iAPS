@@ -1856,7 +1856,7 @@ extension OmnipodPumpManager: PumpManager {
                 state.bolusEngageState = .engaging
             })
 
-            if case .some(.suspended) = self.state.podState?.suspendState {
+            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended != false {
                 self.log.error("enactBolus: returning pod suspended error for bolus")
                 completion(.deviceState(PodCommsError.podSuspended))
                 return
@@ -1995,7 +1995,7 @@ extension OmnipodPumpManager: PumpManager {
                 return
             }
 
-            if case (.suspended) = podState.suspendState {
+            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended != false {
                 self.log.info("Not enacting temp basal because podState indicates pod is suspended.")
                 completion(.deviceState(PodCommsError.podSuspended))
                 return
@@ -2504,7 +2504,9 @@ extension OmnipodPumpManager {
             if alert.alertIdentifier == alertIdentifier || alert.repeatingAlertIdentifier == alertIdentifier {
                 // If this alert was triggered by the pod find the slot to clear it.
                 if let slot = alert.triggeringSlot {
-                    if case .some(.suspended) = self.state.podState?.suspendState, slot == .slot6SuspendTimeExpired {
+                    if (self.state.podState?.isSuspended == true || self.state.podState?.lastDeliveryStatusReceived?.suspended == true) &&
+                        slot == .slot6SuspendTimeExpired
+                    {
                         // Don't clear this pod alert here with the pod still suspended so that the suspend time expired
                         // pod alert beeping will continue until the pod is resumed which will then deactivate this alert.
                         log.default("Skipping acknowledgement of suspend time expired alert with a suspended pod")
