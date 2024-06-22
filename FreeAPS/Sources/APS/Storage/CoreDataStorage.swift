@@ -176,4 +176,34 @@ final class CoreDataStorage {
         }
         return nr.first
     }
+
+    func fetchMealPreset(_ name: String) -> Presets? {
+        var presetsArray = [Presets]()
+        var preset: Presets?
+        coredataContext.performAndWait {
+            let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
+            requestPresets.predicate = NSPredicate(
+                format: "dish == %@", name
+            )
+            try? presetsArray = self.coredataContext.fetch(requestPresets)
+
+            guard let mealPreset = presetsArray.first else {
+                return
+            }
+            preset = mealPreset
+        }
+        return preset
+    }
+
+    func fetchMealPresets() -> [Presets] {
+        var presetsArray = [Presets]()
+        coredataContext.performAndWait {
+            let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
+            requestPresets.predicate = NSPredicate(
+                format: "dish != %@", "" as String
+            )
+            try? presetsArray = self.coredataContext.fetch(requestPresets)
+        }
+        return presetsArray
+    }
 }
