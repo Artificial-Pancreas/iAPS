@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Готово";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Останній цикл %@ хвилин тому. Завершіть або скасуйте цю транзакцію прийому їжі/болюсу, щоб запустити наступний цикл циклу";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Відображати Emojis як Мітки";
 
