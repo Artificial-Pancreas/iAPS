@@ -307,13 +307,13 @@ extension Bolus {
         func notActive() {
             let defaults = UserDefaults.standard
             defaults.set(false, forKey: IAPSconfig.inBolusView)
-            //print("Active: NO") // For testing
+            // print("Active: NO") // For testing
         }
 
         func viewActive() {
             let defaults = UserDefaults.standard
             defaults.set(true, forKey: IAPSconfig.inBolusView)
-            //print("Active: YES") // For testing
+            // print("Active: YES") // For testing
         }
 
         private func prepareData() {
@@ -359,7 +359,7 @@ extension Bolus.StateModel: SuggestionObserver {
         setupInsulinRequired()
         loopDate = apsManager.lastLoopDate
 
-        if abs(loopDate.timeIntervalSinceNow / 60) > loopReminder * 1.5 {
+        if abs(loopDate.timeIntervalSinceNow / 60) > loopReminder * 1.5, abs(now.timeIntervalSinceNow / 60) > loopReminder {
             hideModal()
             notActive()
             debug(.apsManager, "Force Closing Bolus View", printToConsole: true)
