@@ -44,7 +44,7 @@
 "Make sure your RileyLink is nearby and powered on" = "Đảm bảo RileyLink bên cạnh và đã được bật";
 
 /* Pump error code describing max setting exceeded */
-"Max setting exceeded" = "Đã vượt quá cài đặt tối đa";
+"Max setting exceeded" = "Cài đặt tối đa vượt giới hạn";
 
 /* Pump title (1: model number) */
 "Minimed %@" = "Minimed %@";
@@ -59,7 +59,7 @@
 "Pump did not respond" = "Bơm không phản hồi";
 
 /* Error description */
-"Pump Error" = "Lỗi bơm";
+"Pump Error" = "Bơm lỗi";
 
 /* No comment provided by engineer. */
 "Pump is suspended" = "Bơm đang tạm ngưng";

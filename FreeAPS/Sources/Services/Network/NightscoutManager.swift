@@ -750,9 +750,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
         } else {
-            if isUploadEnabled {
+            if let ns = nightscoutAPI, isUploadEnabled {
                 processQueue.async {
-                    nightscout.uploadProfile(p)
+                    ns.uploadProfile(p)
                         .sink { completion in
                             switch completion {
                             case .finished:
