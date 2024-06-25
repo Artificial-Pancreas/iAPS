@@ -61,6 +61,7 @@ extension StatConfig {
                 footer: { Text("In case you're using both profiles and temp targets") }
 
                 Section {
+                    Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
                 } header: { Text("Header settings") }
                 footer: { Text("Normally glucose is colored red only when over or under your notification limits for high/low") }

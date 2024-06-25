@@ -1,3 +1,4 @@
+import Charts
 import CoreData
 import SpriteKit
 import SwiftDate
@@ -13,7 +14,12 @@ extension Home {
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
         @State var triggerUpdate = false
+        @State var scrollOffset = CGFloat.zero
+        @State var display = false
 
+        @Namespace var scrollSpace
+
+        let scrollAmount: CGFloat = 290
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
 
         @Environment(\.managedObjectContext) var moc
@@ -221,16 +227,8 @@ extension Home {
         }
 
         var infoPanel: some View {
-            /* addBackground()
-             .frame(minHeight: 40, maxHeight: 40)
-             .overlay { */
             info
                 .frame(minHeight: 35, maxHeight: 35)
-            /* }
-                 .clipShape(RoundedRectangle(cornerRadius: 15))
-                 .addShadows()
-                 .padding(.horizontal, 10)
-             // .background(colorScheme == .light ? .gray.opacity(0.1) : .white.opacity(0.05)) */
         }
 
         var mainChart: some View {
@@ -288,8 +286,8 @@ extension Home {
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
                                 .frame(
-                                    width: IAPSconfig.buttonSize * 0.9,
-                                    height: IAPSconfig.buttonSize
+                                    width: IAPSconfig.buttonSize * 0.8,
+                                    height: IAPSconfig.buttonSize * 0.9
                                 )
                                 .foregroundColor(.gray)
                         }
@@ -411,15 +409,9 @@ extension Home {
                     VStack(spacing: 0) {
                         infoPanel
                         mainChart
-                        if state.timeSettings {
-                            timeSetting
-                        }
                     }
                 }
-                .frame(
-                    minHeight: UIScreen.main.bounds
-                        .height / (state.timeSettings ? 1.50 : fontSize < .extraExtraLarge ? 1.46 : 1.49)
-                )
+                .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? 1.66 : 1.68))
         }
 
         var carbsAndInsulinView: some View {
@@ -487,7 +479,7 @@ extension Home {
 
         var activeIOBView: some View {
             addBackground()
-                .frame(minHeight: 500)
+                .frame(minHeight: 430)
                 .overlay {
                     ActiveIOBView(
                         data: $state.iobData,
@@ -507,7 +499,7 @@ extension Home {
 
         var activeCOBView: some View {
             addBackground()
-                .frame(minHeight: 250)
+                .frame(minHeight: 230)
                 .overlay {
                     ActiveCOBView(data: $state.iobData)
                 }
@@ -596,7 +588,8 @@ extension Home {
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
             addHeaderBackground()
                 .frame(
-                    maxHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo.safeAreaInsets.top
+                    maxHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo
+                        .safeAreaInsets.top
                 )
                 .overlay {
                     VStack {
@@ -616,9 +609,68 @@ extension Home {
                             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                             .padding(.horizontal, 10)
                         }
-                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, colorScheme == .dark ? 0 : 10)
+                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)
                 }
                 .clipShape(Rectangle())
+        }
+
+        @ViewBuilder private func glucoseHeaderView() -> some View {
+            addHeaderBackground()
+                .frame(maxHeight: 90)
+                .overlay {
+                    VStack {
+                        ZStack {
+                            glucosePreview.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                                .dynamicTypeSize(...DynamicTypeSize.medium)
+                        }
+                    }
+                }
+                .clipShape(Rectangle())
+        }
+
+        var glucosePreview: some View {
+            let data = state.glucose
+            let minimum = data.compactMap(\.glucose).min() ?? 0
+            let minimumRange = Double(minimum) * 0.8
+            let maximum = Double(data.compactMap(\.glucose).max() ?? 0) * 1.1
+
+            let high = state.highGlucose
+            let low = state.lowGlucose
+
+            return Chart(data) {
+                PointMark(
+                    x: .value("Time", $0.dateString),
+                    y: .value("Glucose", Double($0.glucose ?? 0) * (state.units == .mmolL ? 0.0555 : 1.0))
+                )
+                .foregroundStyle(
+                    Decimal($0.glucose ?? 0) > high ? Color(.yellow) : Decimal($0.glucose ?? 0) < low ? Color(.red) :
+                        Color(.darkGreen)
+                )
+                .symbolSize(7)
+            }
+            .chartXAxis {
+                AxisMarks(values: .stride(by: .hour, count: 2)) { _ in
+                    AxisValueLabel(
+                        format: .dateTime.hour(.defaultDigits(amPM: .omitted))
+                            .locale(Locale(identifier: "sv"))
+                    )
+                    AxisGridLine()
+                }
+            }
+            .chartYAxis {
+                AxisMarks(values: .automatic(desiredCount: 3))
+            }
+            .chartYScale(
+                domain: minimumRange * (state.units == .mmolL ? 0.0555 : 1.0) ... maximum * (state.units == .mmolL ? 0.0555 : 1.0)
+            )
+            .chartXScale(
+                domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
+            )
+            .frame(maxHeight: 70)
+            .padding(.leading, 30)
+            .padding(.trailing, 32)
+            .padding(.top, 10)
+            .padding(.bottom, 10)
         }
 
         var timeSetting: some View {
@@ -639,18 +691,41 @@ extension Home {
 
         var body: some View {
             GeometryReader { geo in
-                VStack {
+                VStack(spacing: 0) {
                     headerView(geo)
+                    if !state.skipGlucoseChart, scrollOffset > scrollAmount {
+                        glucoseHeaderView()
+                            .transition(.move(edge: .top))
+                    }
+
                     ScrollView {
-                        chart
-                        preview.padding(.top, 15)
-                        loopPreview.padding(.top, 15)
-                        if state.iobData.count > 5 {
-                            activeCOBView.padding(.top, 15)
-                            activeIOBView.padding(.top, 15)
+                        ScrollViewReader { _ in
+                            LazyVStack {
+                                chart
+                                if state.timeSettings { timeSetting }
+                                preview // .padding(.top, 15)
+                                loopPreview.padding(.top, 15)
+                                if state.iobData.count > 5 {
+                                    activeCOBView.padding(.top, 15)
+                                    activeIOBView.padding(.top, 15)
+                                }
+                            }
+                            .background(GeometryReader { geo in
+                                let offset = -geo.frame(in: .named(scrollSpace)).minY
+                                Color.clear
+                                    .preference(
+                                        key: ScrollViewOffsetPreferenceKey.self,
+                                        value: offset
+                                    )
+                            })
                         }
                     }
-                    .scrollIndicators(.hidden)
+                    .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { value in
+                        scrollOffset = value
+                        if !state.skipGlucoseChart, scrollOffset > scrollAmount {
+                            display.toggle()
+                        }
+                    }
                     buttonPanel(geo)
                 }
                 .background(
