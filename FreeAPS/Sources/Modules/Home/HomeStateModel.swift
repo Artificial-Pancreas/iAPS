@@ -88,6 +88,7 @@ extension Home {
         @Published var tdd2DaysAgo: Decimal = 0
         @Published var tdd3DaysAgo: Decimal = 0
         @Published var tddActualAverage: Decimal = 0
+        @Published var skipGlucoseChart: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -139,6 +140,7 @@ extension Home {
             minimumSMB = settingsManager.settings.minimumSMB
             maxBolus = settingsManager.pumpSettings.maxBolus
             useInsulinBars = settingsManager.settings.useInsulinBars
+            skipGlucoseChart = settingsManager.settings.skipGlucoseChart
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -589,6 +591,7 @@ extension Home.StateModel:
         minimumSMB = settingsManager.settings.minimumSMB
         maxBolus = settingsManager.pumpSettings.maxBolus
         useInsulinBars = settingsManager.settings.useInsulinBars
+        skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         setupGlucose()
         setupOverrideHistory()
         setupData()
