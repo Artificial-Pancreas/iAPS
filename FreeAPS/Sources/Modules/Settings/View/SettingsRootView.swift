@@ -33,7 +33,9 @@ extension Settings {
                             )
                         }
 
-                        if let latest = fetchedVersionNumber.first, (latest.nr ?? "") > state.versionNumber
+                        if let latest = fetchedVersionNumber.first,
+                           ((latest.nr ?? "") > state.versionNumber) ||
+                           ((latest.nr ?? "") < state.versionNumber && (latest.dev ?? "") > state.versionNumber)
                         {
                             Text(
                                 "Latest version on GitHub: " +

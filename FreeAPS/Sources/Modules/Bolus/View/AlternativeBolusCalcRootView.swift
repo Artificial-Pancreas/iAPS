@@ -168,6 +168,13 @@ extension Bolus {
                             .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
                             .tint(.white)
                     }
+                    footer: {
+                        if (-1 * state.loopDate.timeIntervalSinceNow / 60) > state.loopReminder, let string = state.lastLoop() {
+                            Text(NSLocalizedString(string, comment: "Bolus View footer"))
+                                .padding(.top, 20).multilineTextAlignment(.center)
+                                .foregroundStyle(.orange)
+                        }
+                    }
                 }
 
                 if state.amount <= 0 {
@@ -184,6 +191,13 @@ extension Bolus {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .listRowBackground(Color(.systemBlue))
                         .tint(.white)
+                    }
+                    footer: {
+                        if (-1 * state.loopDate.timeIntervalSinceNow / 60) > state.loopReminder, let string = state.lastLoop() {
+                            Text(NSLocalizedString(string, comment: "Bolus View footer"))
+                                .padding(.top, 20).multilineTextAlignment(.center)
+                                .foregroundStyle(.orange)
+                        }
                     }
                 }
             }
@@ -204,11 +218,15 @@ extension Bolus {
                         Text("Meal")
                     }
                 },
-                trailing: Button { state.hideModal() }
+                trailing: Button {
+                    state.hideModal()
+                    state.notActive()
+                }
                 label: { Text("Cancel") }
             )
             .onAppear {
                 configureView {
+                    state.viewActive()
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
                     state.insulinCalculated = state.calculateInsulin()

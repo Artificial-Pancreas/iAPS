@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Kész";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Display Emojis as Labels";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Elfogadás és folytatás";
+
+/* */
+"Log external insulin" = "Log external insulin";
 
 /* Bolus progress view */
 "of" = "-ból";
@@ -114,6 +120,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Zsíros étel faktor";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Eredmény";

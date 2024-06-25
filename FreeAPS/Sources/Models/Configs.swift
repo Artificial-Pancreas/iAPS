@@ -25,6 +25,7 @@ public enum IAPSconfig {
     static let id = "iAPS.identifier"
     static let version = "iAPS.version"
     static let newVersion = "iAPS.newVersion"
+    static let inBolusView = "iAPS.inBolusView"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
 }
 

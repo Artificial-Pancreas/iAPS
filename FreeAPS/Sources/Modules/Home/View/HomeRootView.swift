@@ -487,9 +487,18 @@ extension Home {
 
         var activeIOBView: some View {
             addBackground()
-                .frame(minHeight: 340)
+                .frame(minHeight: 500)
                 .overlay {
-                    ActiveIOBView(data: $state.iobData, neg: $state.neg, tddChange: $state.tddChange)
+                    ActiveIOBView(
+                        data: $state.iobData,
+                        neg: $state.neg,
+                        tddChange: $state.tddChange,
+                        tddAverage: $state.tddAverage,
+                        tddYesterday: $state.tddYesterday,
+                        tdd2DaysAgo: $state.tdd2DaysAgo,
+                        tdd3DaysAgo: $state.tdd3DaysAgo,
+                        tddActualAverage: $state.tddActualAverage
+                    )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()

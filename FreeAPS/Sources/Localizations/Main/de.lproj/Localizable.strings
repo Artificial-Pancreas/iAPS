@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Fertig";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Emojis als Etiketten benutzen";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Zustimmen und fortfahren";
+
+/* */
+"Log external insulin" = "Externes Insulin hinzufügen";
 
 /* Bolus progress view */
 "of" = "von";
@@ -114,6 +120,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Faktor für fettige Mahlzeit";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Kohlenhydrate und früheres Insulin werden in die Glukosevorhersage einbezogen.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Ergebnis";
