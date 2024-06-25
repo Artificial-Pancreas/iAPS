@@ -203,9 +203,9 @@ struct MainChartView: View {
                 update(fullSize: geo.size)
             }
         }
-        /*.onTapGesture {
-            legends.toggle()
-        }*/
+        /* .onTapGesture {
+             legends.toggle()
+         } */
     }
 
     var legendPanel: some View {

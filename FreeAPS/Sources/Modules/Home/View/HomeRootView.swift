@@ -411,7 +411,7 @@ extension Home {
                         mainChart
                     }
                 }
-                .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? 1.66 : 1.68))
+                .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? 1.62 : 1.65))
         }
 
         var carbsAndInsulinView: some View {
@@ -683,7 +683,7 @@ extension Home {
                 Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
             }
             .buttonStyle(.borderless)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(colorScheme == .dark ? .primary : Color(.darkGray))
             .font(.timeSettingFont)
             .padding(.vertical, 15)
             .background(TimeEllipse(characters: string.count))
@@ -703,7 +703,7 @@ extension Home {
                             LazyVStack {
                                 chart
                                 if state.timeSettings { timeSetting }
-                                preview // .padding(.top, 15)
+                                preview.padding(.top, 5)
                                 loopPreview.padding(.top, 15)
                                 if state.iobData.count > 5 {
                                     activeCOBView.padding(.top, 15)
