@@ -432,12 +432,13 @@ final class OpenAPS {
             let disableCGMError = settingsData?.disableCGMError ?? true
 
             let cd = CoreDataStorage()
+            let os = OverrideStorage()
             // TDD
             let uniqueEvents = cd.fetchTDD(interval: DateFilter().tenDays)
             // Temp Targets using slider
             let sliderArray = cd.fetchTempTargetsSlider()
             // Overrides
-            let overrideArray = OverrideStorage().fetchNumberOfOverrides(numbers: 2)
+            let overrideArray = os.fetchNumberOfOverrides(numbers: 2)
             // Temp Target
             let tempTargetsArray = cd.fetchTempTargets()
 
@@ -473,6 +474,11 @@ final class OpenAPS {
             var disableSMBs = overrideArray.first?.smbIsOff ?? false
             let overrideMaxIOB = overrideArray.first?.overrideMaxIOB ?? false
             let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0) as NSDecimalNumber
+
+            var name = ""
+            if useOverride, overrideArray.first?.isPreset ?? false, let overridePreset = os.isPresetName() {
+                name = overridePreset
+            }
 
             if nrOfIndeces == 0 {
                 nrOfIndeces = 1
@@ -553,7 +559,8 @@ final class OpenAPS {
                 uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal,
                 maxIOB: maxIOB as Decimal,
                 overrideMaxIOB: overrideMaxIOB,
-                disableCGMError: disableCGMError
+                disableCGMError: disableCGMError,
+                preset: name
             )
             storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
             return self.loadFileFromStorage(name: Monitor.dynamicVariables)
