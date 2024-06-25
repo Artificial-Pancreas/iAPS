@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Xong";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Vòng lặp gần nhất %@ phút trước. Hoàn thành hoặc hủy giao dịch bữa ăn/bữa ăn nhanh này để cho phép chạy chu kỳ vòng lặp tiếp theo";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Hiển thị biểu tượng cảm xúc";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Đồng ý và tiếp tục";
+
+/* */
+"Log external insulin" = "Liều insulin tiêm ngoài";
 
 /* Bolus progress view */
 "of" = "của";
@@ -114,6 +120,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Chỉ số bữa ăn nhiều chất béo";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs và insulin trước đó được đưa vào dự đoán lượng đường cuối cùng.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Kết quả";
@@ -936,7 +945,7 @@ Enact a temp Basal or a temp target */
 "Glucose Notification visibility" = "Khả năng hiển thị thông báo Glucose";
 
 /* */
-"Always Notify Glucose" = "Luôn thông báo Glucose";
+"Always Notify Glucose" = "Luôn thông báo đường huyết";
 
 /* */
 "Notify per reading" = "Thông báo cho mỗi lần đọc";
@@ -1228,7 +1237,7 @@ Enact a temp Basal or a temp target */
 "Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Kết nối trực tiếp với bộ phát Libre 1 hoặc cảm biến Libre 2 của Châu Âu";
 
 /* Online or internal server */
-"Online or internal server" = "Máy chủ trực tuyến hoặc nội bộ";
+"Online or internal server" = "Trực tuyến hoặc máy chủ nội bộ";
 
 /* Pump Error Message */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Không thể thực hiện đề xuất chu kỳ vòng lặp mới vì đang tiến hành một đợt Bolus. Đợi chu kỳ vòng lặp tiếp theo";
@@ -1245,7 +1254,7 @@ Enact a temp Basal or a temp target */
 "NS Upload Profile" = "Tải hồ sơ lên NS";
 
 /* Debug option view NS Uploaded Profile */
-"NS Uploaded Profile" = "Hồ sơ đã tải lên NS";
+"NS Uploaded Profile" = "Đã tải hồ sơ lên NS";
 
 /* Debug option view Autosense */
 "Autosense" = "Autosense";
@@ -1586,13 +1595,13 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng Glucose tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
-". Climbing: " = ". Đang leo lên: ";
+". Climbing: " = ". Đang tăng lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-". Falling: " = ". Đang lao xuống: ";
+". Falling: " = ". Đang giảm xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
@@ -1967,7 +1976,7 @@ Enact a temp Basal or a temp target */
 "Contact" = "Danh bạ";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Danh bạ";
+"Contacts" = "Contacts";
 
 /* Contact Image, settings, save your changes reminedr */
 "Don't forget to save your changes." = "Đừng quên lưu các thay đổi của bạn.";
@@ -2215,10 +2224,10 @@ Enact a temp Basal or a temp target */
 "Allow SMB With High Temptarget" = "Cho phép SMB với mục tiêu tạm thời cao";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được kích hoạt khác) ngay cả với mục tiêu nhiệt độ cao (> 100 mg/dl).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được kích hoạt khác) ngay cả với mục tiêu tạm thời cao (> 100 mg/dl).";
 
 /* Headline "Use Custom Peak Time” */
-"Use Custom Peak Time" = "Tuỳ chỉnh đỉnh của Insulin";
+"Use Custom Peak Time" = "Tuỳ chỉnh đỉnh Insulin";
 
 /* "Use Custom Peak Time” */
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Mặc định là False. Đặt thành True cho phép thay đổi đỉnh của insulin";
@@ -2242,7 +2251,7 @@ Enact a temp Basal or a temp target */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Đây là giới hạn an toàn quan trọng của OpenAPS. Cài đặt mặc định (có thể không cần điều chỉnh) là 3. Điều này có nghĩa là OpenAPS sẽ không bao giờ được phép đặt tốc độ cơ bản tạm thời cao hơn 3 lần tốc độ cơ bản hàng giờ cao nhất được lập trình trong máy bơm của người dùng hoặc, nếu được bật, sẽ được xác định bằng autotune.";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Hệ số an toàn cơ bản(basal) hiện tại";
+"Current Basal Safety Multiplier" = "Hệ số an toàn liều cơ bản hiện tại";
 
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Đây là một giới hạn an toàn quan trọng khác của OpenAPS. Cài đặt mặc định (cũng khó có thể cần điều chỉnh) là 4. Điều này có nghĩa là OpenAPS sẽ không bao giờ được phép đặt tốc độ cơ bản tạm thời cao hơn 4 lần tốc độ cơ bản hàng giờ hiện tại được lập trình trong máy bơm của người dùng hoặc, nếu được bật, được xác định bằng autotune.";
@@ -2263,8 +2272,8 @@ Enact a temp Basal or a temp target */
 "Half Basal Exercise Target" = "Mục tiêu tập thể dục 1/2 liều cơ bản";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Đặt thành một số, ví dụ: 160, có nghĩa là khi mục tiêu tạm thời là 160 mg/dL và tập thể dục_mode=true, hãy chạy 50% cơ bản ở mức này (120 = 75%; 140 = 60%). Điều này có thể được điều chỉnh để giúp bạn kiểm soát nhiều hơn các chế độ tập luyện của mình.
-\"Mục tiêu tập thể dục nửa cơ bản\".";
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Đặt thành một số, ví dụ: 160, có nghĩa là khi mục tiêu tạm thời là 160 mg/dL và tập exercise_mode=true, hãy chạy 50% cơ bản ở mức này (120 = 75%; 140 = 60%). Điều này có thể được điều chỉnh để giúp bạn kiểm soát nhiều hơn các chế độ tập luyện của mình.
+\"Mục tiêu tập thể dục 1/2 liều cơ bản\".";
 
 /* Headline "Max COB" */
 "Max COB" = "COB tối đa";
@@ -2342,7 +2351,7 @@ Enact a temp Basal or a temp target */
 "Noisy CGM Target Multiplier" = "Hệ số mục tiêu CGM Noisy";
 
 /* "Noisy CGM Target Multiplier" */
-"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Mặc định là 1.3. Tăng mục tiêu lên số lượng này khi lặp lại dữ liệu CGM thô/noisy";
+"Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Mặc định là 1.3. Tăng mục tiêu lên số lượng này khi lặp lại dữ liệu CGM raw/noisy";
 
 /* Headline "SMB DeliveryRatio" */
 "SMB DeliveryRatio" = "Tỷ lệ phân phối SMB";
@@ -2419,7 +2428,7 @@ Enact a temp Basal or a temp target */
 "Threshold" = "Ngưỡng";
 
 /* Header */
-"Calculator settings" = "Thiết lập tính toán";
+"Calculator settings" = "Cài đặt tính toán";
 
 /* Bolus Calculator Setting */
 "Use alternate Bolus Calculator" = "Sử dụng Máy tính Bolus thay thế";

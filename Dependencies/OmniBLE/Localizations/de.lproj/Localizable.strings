@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Pumpe Bestätigungstöne";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Vertrauenserinnerungen sind Pieptöne vom Pod, die verwendet werden können, um ausgewählte Befehle zu bestätigen.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Pod Erinnerungen";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Die App konfiguriert eine Erinnerung auf dem Pod, um Dich vor Ablauf des Pods zu benachrichtigen. Legen die Anzahl der Stunden fest, die Du vor Ablauf des Pods benachrichtigt werden möchtest.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Die Ablauf-Erinnerung für den aktuellen Pod.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "Die App benachrichtigt dich, wenn die Insulinmenge im Pod diesen Wert unterschreitet.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Die obigen Erinnerungen ertönen nicht, wenn sich Dein Gerät im Lautlos- oder Nicht-Stören-Modus befindet.\n\nEs gibt andere kritische Pod-Warnungen und -Alarme, die auch dann ertönen, wenn Dein Gerät auf „Lautlos“ oder „Nicht stören“ eingestellt ist.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Insulinabgabe unterbrechen";
 
