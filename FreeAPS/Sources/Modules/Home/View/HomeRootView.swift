@@ -286,7 +286,7 @@ extension Home {
                                 .symbolRenderingMode(.hierarchical)
                                 .resizable()
                                 .frame(
-                                    width: IAPSconfig.buttonSize * 0.8,
+                                    width: IAPSconfig.buttonSize * 0.85,
                                     height: IAPSconfig.buttonSize * 0.9
                                 )
                                 .foregroundColor(.gray)
@@ -636,6 +636,7 @@ extension Home {
 
             let high = state.highGlucose
             let low = state.lowGlucose
+            let veryHigh = 198
 
             return Chart(data) {
                 PointMark(
@@ -643,8 +644,8 @@ extension Home {
                     y: .value("Glucose", Double($0.glucose ?? 0) * (state.units == .mmolL ? 0.0555 : 1.0))
                 )
                 .foregroundStyle(
-                    Decimal($0.glucose ?? 0) > high ? Color(.yellow) : Decimal($0.glucose ?? 0) < low ? Color(.red) :
-                        Color(.darkGreen)
+                    (($0.glucose ?? 0) > veryHigh || Decimal($0.glucose ?? 0) < low) ? Color(.red) : Decimal($0.glucose ?? 0) >
+                        high ? Color(.yellow) : Color(.darkGreen)
                 )
                 .symbolSize(7)
             }
