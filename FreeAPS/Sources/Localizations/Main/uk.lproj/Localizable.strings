@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Готово";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Останній цикл %@ хвилин тому. Завершіть або скасуйте цю транзакцію прийому їжі/болюсу, щоб запустити наступний цикл циклу";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Відображати Emojis як Мітки";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Прийняти та Продовжити";
+
+/* */
+"Log external insulin" = "Записувати зовнішній інсулін";
 
 /* Bolus progress view */
 "of" = "із";
@@ -114,6 +120,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Фактор жирної їжі";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Вуглеводи та раніше введений інсулін враховуються при прогнозуванні рівня глюкози у крові.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Результат";

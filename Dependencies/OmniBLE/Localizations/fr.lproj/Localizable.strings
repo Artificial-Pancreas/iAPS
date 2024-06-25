@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Rappels de confiance";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Les rappels de confiance sont des bips émis par le Pod qui peuvent être utilisés pour confirmer l'exécution des commandes sélectionnées.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Rappels du Pod";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "L'application configure un rappel enregistré sur le Pod pour vous avertir à l'avance de son expiration. Au moment de l'appairage d'un nouveau Pod, définissez le nombre d'heures de préavis que vous souhaitez.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Le temps de rappel d'expiration pour le Pod actuel.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "L'application vous avertit quand la quantité d'insuline restante dans le Pod atteint cette limite.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Les rappels ci-dessus ne sonneront pas dans l'application si votre appareil est en mode Silencieux ou Ne pas déranger. Il existent d'autres alertes critiques de Pod qui sonneront dans l'application même si votre appareil est en mode Silent ou Ne pas déranger.\n\nLe Pod lui-même utilisera également des bips audibles pour tous les rappels et alertes de Pod, sauf si le Pod est réglé sur Silencieux.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Suspendre l'administration d'insuline";
 

@@ -59,3 +59,8 @@ struct IOBData: Identifiable {
     var cob: Decimal
     var id = UUID()
 }
+
+struct tddData {
+    var date: Date
+    var tdd: Decimal
+}

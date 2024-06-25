@@ -66,6 +66,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         settingsManager.settings.uploadGlucose
     }
 
+    private var isVersionUploadEnabled: Bool {
+        settingsManager.settings.uploadVersion
+    }
+
     private var nightscoutAPI: NightscoutAPI? {
         guard let urlString = keychain.getValue(String.self, forKey: NightscoutConfig.Config.urlKey),
               let url = URL(string: urlString),
@@ -171,9 +175,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchVersion() {
-        guard let nightscout = nightscoutAPI, isNetworkReachable else {
+        guard isStatsUploadEnabled || isVersionUploadEnabled, isNetworkReachable else {
             return
         }
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
         processQueue.async {
             nightscout.fetchVersion()
                 .sink { completion in
@@ -750,9 +755,9 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         {
             NSLog("NightscoutManager uploadProfile, no profile change")
         } else {
-            if isUploadEnabled {
+            if let ns = nightscoutAPI, isUploadEnabled {
                 processQueue.async {
-                    nightscout.uploadProfile(p)
+                    ns.uploadProfile(p)
                         .sink { completion in
                             switch completion {
                             case .finished:
