@@ -404,14 +404,17 @@ extension Home {
         }
 
         var chart: some View {
-            addColouredBackground()
+            let ratio = state.timeSettings ? 1.61 : 1.44
+            let ratio2 = state.timeSettings ? 1.65 : 1.51
+
+            return addColouredBackground()
                 .overlay {
                     VStack(spacing: 0) {
                         infoPanel
                         mainChart
                     }
                 }
-                .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? 1.62 : 1.65))
+                .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? ratio : ratio2))
         }
 
         var carbsAndInsulinView: some View {
@@ -704,7 +707,7 @@ extension Home {
                             LazyVStack {
                                 chart
                                 if state.timeSettings { timeSetting }
-                                preview.padding(.top, 5)
+                                preview.padding(.top, state.timeSettings ? 5 : 15)
                                 loopPreview.padding(.top, 15)
                                 if state.iobData.count > 5 {
                                     activeCOBView.padding(.top, 15)
