@@ -94,7 +94,11 @@ final class OpenAPS {
 
                 // Update Suggestion
                 if var suggestion = Suggestion(from: suggested) {
-                    // Add some reasons
+                    // Process any eventual middleware basal rate
+                    if let newSuggestion = self.overrideBasal(alteredProfile: alteredProfile, oref0Suggestion: suggestion) {
+                        suggestion = newSuggestion
+                    }
+                    // Add some reasons, when needed
                     suggestion.reason = self.reasons(
                         reason: suggestion.reason,
                         suggestion: suggestion,
@@ -304,7 +308,7 @@ final class OpenAPS {
             }
         }
 
-        // Dsiplay either Target or Override (where target is included).
+        // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
         if targetGlucose != nil, let or = OverrideStorage().fetchLatestOverride().first, or.enabled {
             var orString = ", Override:"
@@ -370,6 +374,23 @@ final class OpenAPS {
         }
 
         return reasonString
+    }
+
+    private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
+        guard let changeRate = readJSON(json: alteredProfile, variable: "set_basal"), Bool(changeRate) ?? false,
+              let basal_rate_is = readJSON(json: alteredProfile, variable: "basal_rate") else { return nil }
+
+        var returnSuggestion = oref0Suggestion
+        let basal_rate = Decimal(string: basal_rate_is) ?? 0
+        returnSuggestion.rate = basal_rate
+        returnSuggestion.duration = 30
+        var reasonString = oref0Suggestion.reason
+        let endIndex = reasonString.endIndex
+        let insertedResons: String = reasonString + "\n\nBasal Rate overridden in middleware to: \(basal_rate) U/h"
+        reasonString.insert(contentsOf: insertedResons, at: endIndex)
+        returnSuggestion.reason = reasonString
+
+        return returnSuggestion
     }
 
     private func readJSON(json: RawJSON, variable: String) -> String? {

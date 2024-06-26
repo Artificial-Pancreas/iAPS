@@ -279,20 +279,20 @@ extension Home {
                 let isOverride = fetchedPercent.first?.enabled ?? false
                 let isTarget = (state.tempTarget != nil)
                 HStack {
-                    Button { state.showModal(for: .dataTable) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
-                            Image(systemName: "book")
-                                .symbolRenderingMode(.hierarchical)
-                                .resizable()
-                                .frame(
-                                    width: IAPSconfig.buttonSize * 0.85,
-                                    height: IAPSconfig.buttonSize * 0.9
-                                )
-                                .foregroundColor(.gray)
-                        }
-                    }.buttonStyle(.borderless)
-                    Spacer()
+                    /* Button { state.showModal(for: .dataTable) }
+                     label: {
+                         ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
+                             Image(systemName: "book")
+                                 .symbolRenderingMode(.hierarchical)
+                                 .resizable()
+                                 .frame(
+                                     width: IAPSconfig.buttonSize * 0.85,
+                                     height: IAPSconfig.buttonSize * 0.9
+                                 )
+                                 .foregroundColor(.gray)
+                         }
+                     }.buttonStyle(.borderless)
+                     Spacer() */
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
