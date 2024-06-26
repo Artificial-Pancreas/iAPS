@@ -6,8 +6,8 @@ struct Suggestion: JSON, Equatable {
     let insulinReq: Decimal?
     let eventualBG: Int?
     let sensitivityRatio: Decimal?
-    let rate: Decimal?
-    let duration: Int?
+    var rate: Decimal?
+    var duration: Int?
     let iob: Decimal?
     let cob: Decimal?
     var predictions: Predictions?
