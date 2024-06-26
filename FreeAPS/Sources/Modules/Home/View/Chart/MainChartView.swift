@@ -255,7 +255,7 @@ struct MainChartView: View {
                     }
                 }
             }
-            .padding(.bottom, 10)
+            .padding(.bottom, 8)
         }
     }
 
