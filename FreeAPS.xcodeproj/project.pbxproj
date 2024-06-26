@@ -27,6 +27,7 @@
 		192424CB2B7A64E70063CBF0 /* NIghtscoutExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */; };
 		1924F72C2BA35AE5006644EE /* TotalDailyDose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1924F72B2BA35AE5006644EE /* TotalDailyDose.swift */; };
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
+		192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */; };
 		1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Dynamic structs.swift */; };
 		193F6CDD2A512C8F001240FD /* Loops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193F6CDC2A512C8F001240FD /* Loops.swift */; };
 		194297512B815938006B8A0B /* OverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194297502B815938006B8A0B /* OverridesView.swift */; };
@@ -600,6 +601,7 @@
 		1927C8FA2744612500347C69 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1927C8FB2744612600347C69 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1927C8FE274489BA00347C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsShortcuts.swift; sourceTree = "<group>"; };
 		192E77322B9F40C7004F4822 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		192E77462B9F4CF1004F4822 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		192E77472B9F4CF3004F4822 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
@@ -1211,6 +1213,14 @@
 				1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */,
 			);
 			path = Bolus;
+			sourceTree = "<group>";
+		};
+		192A9A102C0F5284000BBC29 /* Meals */ = {
+			isa = PBXGroup;
+			children = (
+				192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */,
+			);
+			path = Meals;
 			sourceTree = "<group>";
 		};
 		192F0FF5276AC36D0085BE4D /* Recovered References */ = {
@@ -2413,6 +2423,7 @@
 				196579A52B924BD400642E8E /* Overrides */,
 				1920BF5B2B9DF4B900E861FE /* Bolus */,
 				CE7CA3452A064973004BE681 /* TempPresets */,
+				192A9A102C0F5284000BBC29 /* Meals */,
 				CE7CA34B2A064973004BE681 /* State */,
 			);
 			path = Shortcuts;
@@ -3247,6 +3258,7 @@
 				CE94598729E9E4110047C9C6 /* WatchConfigRootView.swift in Sources */,
 				903D18976088B09110BCBE29 /* LibreConfigStateModel.swift in Sources */,
 				9050F378F0063C064D7FFC86 /* LibreConfigRootView.swift in Sources */,
+				192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */,
 				B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */,
 				320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */,
 				19E1F7E829D082D0005C8D20 /* IconConfigDataFlow.swift in Sources */,
