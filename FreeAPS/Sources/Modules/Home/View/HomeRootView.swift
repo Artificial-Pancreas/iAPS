@@ -595,7 +595,7 @@ extension Home {
                                     .frame(maxHeight: .infinity, alignment: .bottom)
                                     .padding(.bottom, 2)
                             }
-                            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                            .dynamicTypeSize(...DynamicTypeSize.xLarge)
                             .padding(.horizontal, 10)
                         }
                     }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)

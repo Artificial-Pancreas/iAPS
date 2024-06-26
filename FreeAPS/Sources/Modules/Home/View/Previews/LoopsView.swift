@@ -34,7 +34,7 @@ struct LoopsView: View {
         }
         .padding(.top, 20)
         .padding(.bottom, 15)
-        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
+        .dynamicTypeSize(...DynamicTypeSize.xLarge)
     }
 
     func loopChart(percentage: Double) -> some View {
