@@ -24,6 +24,7 @@ struct PreviewChart: View {
             let group: String
             let percentage: Decimal
             let id: UUID
+            let offset: CGFloat
         }
 
         let separator: Decimal = 4
@@ -36,13 +37,15 @@ struct PreviewChart: View {
                     comment: ""
                 ),
                 percentage: fetched[4].decimal,
-                id: UUID()
+                id: UUID(),
+                offset: -5
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
-                id: UUID()
+                id: UUID(),
+                offset: 0
             ),
             TIRinPercent(
                 type: "TIR",
@@ -51,25 +54,29 @@ struct PreviewChart: View {
                     comment: ""
                 ),
                 percentage: fetched[0].decimal,
-                id: UUID()
+                id: UUID(),
+                offset: -15
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
-                id: UUID()
+                id: UUID(),
+                offset: 0
             ),
             TIRinPercent(
                 type: "TIR",
                 group: NSLocalizedString("In Range", comment: ""),
                 percentage: fetched[1].decimal,
-                id: UUID()
+                id: UUID(),
+                offset: 0
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
-                id: UUID()
+                id: UUID(),
+                offset: 0
             ),
             TIRinPercent(
                 type: "TIR",
@@ -78,13 +85,15 @@ struct PreviewChart: View {
                     comment: ""
                 ),
                 percentage: fetched[2].decimal,
-                id: UUID()
+                id: UUID(),
+                offset: 5
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
-                id: UUID()
+                id: UUID(),
+                offset: 0
             ),
             TIRinPercent(
                 type: "TIR",
@@ -93,7 +102,8 @@ struct PreviewChart: View {
                     comment: ""
                 ),
                 percentage: fetched[3].decimal,
-                id: UUID()
+                id: UUID(),
+                offset: 0
             )
         ]
 
@@ -137,6 +147,7 @@ struct PreviewChart: View {
                             }
                             Text(item.group)
                         }
+                        .offset(x: 0, y: item.offset)
                         .font(.loopFont)
                         .padding(.leading, 10)
                     } else if item.group == NSLocalizedString(
@@ -151,6 +162,7 @@ struct PreviewChart: View {
                             }
                             Text(item.group)
                         }
+                        .offset(x: 0, y: item.offset)
                         .font(.loopFont)
                         .padding(.leading, 10)
                     } else if item.group == NSLocalizedString(
@@ -165,7 +177,7 @@ struct PreviewChart: View {
                             }
                             Text(item.group)
                         }
-                        .offset(x: 0, y: -5)
+                        .offset(x: 0, y: item.offset)
                         .font(.loopFont)
                         .padding(.leading, 10)
                     } else if item.group == NSLocalizedString(
@@ -180,7 +192,7 @@ struct PreviewChart: View {
                             }
                             Text(item.group)
                         }
-                        .offset(x: 0, y: 5)
+                        .offset(x: 0, y: item.offset)
                         .font(.loopFont)
                         .padding(.leading, 10)
                     }
@@ -214,7 +226,7 @@ struct PreviewChart: View {
             .offset(x: -UIScreen.main.bounds.width / 5, y: 0)
         }.frame(maxHeight: 200)
             .padding(.top, 20)
-            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
+            .dynamicTypeSize(...DynamicTypeSize.xLarge)
     }
 
     private func previewTir() -> [(decimal: Decimal, string: String)] {
