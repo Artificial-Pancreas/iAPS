@@ -279,20 +279,6 @@ extension Home {
                 let isOverride = fetchedPercent.first?.enabled ?? false
                 let isTarget = (state.tempTarget != nil)
                 HStack {
-                    Button { state.showModal(for: .dataTable) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .leading, vertical: .bottom)) {
-                            Image(systemName: "book")
-                                .symbolRenderingMode(.hierarchical)
-                                .resizable()
-                                .frame(
-                                    width: IAPSconfig.buttonSize * 0.85,
-                                    height: IAPSconfig.buttonSize * 0.9
-                                )
-                                .foregroundColor(.gray)
-                        }
-                    }.buttonStyle(.borderless)
-                    Spacer()
                     Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                     label: {
                         ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
@@ -312,6 +298,31 @@ extension Home {
                         }
                     }.buttonStyle(.borderless)
                     Spacer()
+                    Button {
+                        state.showModal(for: .bolus(
+                            waitForSuggestion: state.useCalc ? true : false,
+                            fetch: false
+                        ))
+                    }
+                    label: {
+                        Image(systemName: "syringe")
+                            .renderingMode(.template)
+                            .font(.custom("Buttons", size: 24))
+                    }
+                    .buttonStyle(.borderless)
+                    .foregroundColor(.insulin)
+                    Spacer()
+                    if state.allowManualTemp {
+                        Button { state.showModal(for: .manualTempBasal) }
+                        label: {
+                            Image("bolus1")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
+                        }
+                        .foregroundColor(.insulin)
+                        Spacer()
+                    }
                     ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                         Image(systemName: isOverride ? "person.fill" : "person")
                             .symbolRenderingMode(.palette)
@@ -352,31 +363,6 @@ extension Home {
                             }
                     }
                     Spacer()
-                    Button {
-                        state.showModal(for: .bolus(
-                            waitForSuggestion: state.useCalc ? true : false,
-                            fetch: false
-                        ))
-                    }
-                    label: {
-                        Image(systemName: "syringe")
-                            .renderingMode(.template)
-                            .font(.custom("Buttons", size: 24))
-                    }
-                    .buttonStyle(.borderless)
-                    .foregroundColor(.insulin)
-                    Spacer()
-                    if state.allowManualTemp {
-                        Button { state.showModal(for: .manualTempBasal) }
-                        label: {
-                            Image("bolus1")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                        }
-                        .foregroundColor(.insulin)
-                        Spacer()
-                    }
                     Button { state.showModal(for: .settings) }
                     label: {
                         Image(systemName: "gear")
