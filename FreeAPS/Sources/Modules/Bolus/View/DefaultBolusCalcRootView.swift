@@ -64,7 +64,7 @@ extension Bolus {
                 if fetch {
                     Section {
                         mealEntries.asAny()
-                    } // header: { Text("Meal Summary") }
+                    }
                 }
 
                 Section {
@@ -76,19 +76,39 @@ extension Bolus {
                         }
                     } else {
                         HStack {
-                            Text("Insulin recommended")
-                            Image(systemName: "info.bubble")
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.primary, .blue)
-                                .onTapGesture {
-                                    presentInfo.toggle()
+                            Button(action: {
+                                presentInfo.toggle()
+                            }, label: {
+                                Image(systemName: "info.bubble")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                                    .font(.infoSymbolFont)
+                                Text("Calculations")
+                            })
+                                .foregroundStyle(.blue)
+                                .font(.footnote)
+                                .buttonStyle(PlainButtonStyle())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            if state.fattyMeals {
+                                Spacer()
+                                Toggle(isOn: $state.useFattyMealCorrectionFactor) {
+                                    Text("Fatty Meal")
                                 }
+                                .toggleStyle(CheckboxToggleStyle())
+                                .font(.footnote)
+                                .onChange(of: state.useFattyMealCorrectionFactor) { _ in
+                                    state.insulinCalculated = state.calculateInsulin()
+                                }
+                            }
+                        }
 
+                        HStack {
+                            Text("Insulin recommended")
                             Spacer()
 
                             Text(
                                 formatter
-                                    .string(from: state.insulinCalculated as NSNumber)! +
+                                    .string(from: state.insulinCalculated as NSNumber) ?? "" +
                                     NSLocalizedString(" U", comment: "Insulin unit")
                             ).foregroundColor(.secondary)
                                 .onTapGesture {
