@@ -2489,7 +2489,7 @@ Enact a temp Basal or a temp target */
 "Display Time Interval Setting Button" = "Anzeigeintervall Einstellungs-Button";
 
 /* UI/UX option */
-"Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
+"Never display the small glucose chart when scrolling" = "Beim Scrollen nie das kleine Glukosediagramm anzeigen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
