@@ -163,8 +163,8 @@ struct PreviewChart: View {
                 .clipShape(
                     UnevenRoundedRectangle(
                         topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
-                        bottomLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
-                        bottomTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                        bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                        bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
                         topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
                     )
                 )
