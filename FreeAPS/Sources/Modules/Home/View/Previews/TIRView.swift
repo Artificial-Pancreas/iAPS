@@ -19,16 +19,6 @@ struct PreviewChart: View {
     var body: some View {
         let fetched = previewTir()
 
-        struct TIRinPercent: Identifiable {
-            let type: String
-            let group: String
-            let percentage: Decimal
-            let id: UUID
-            let offset: CGFloat
-            var first: Bool
-            var last: Bool
-        }
-
         let separator: Decimal = 3
 
         var data: [TIRinPercent] = [
@@ -127,28 +117,8 @@ struct PreviewChart: View {
             )
         ]
 
-        // Arrange the data array
-        var a = false
-        for index in 0 ..< 3 {
-            if data[index].percentage == 0 {
-                data.remove(at: index + 1)
-            } else if !a {
-                data[index].first = true
-                a = true
-            }
-        }
-        if data.last?.group == "Separator" {
-            data.remove(at: data.endIndex - 1)
-        }
-        data.removeAll(where: { $0.percentage <= 0 })
-        if (data.last?.percentage ?? 0) > 0, data.last?.group != "Separator" {
-            data[data.endIndex - 1].last = true
-        } else {
-            data.remove(at: data.endIndex - 1)
-            data[data.endIndex - 1].last = true
-        }
-        data[0].first = true
-        data[data.endIndex - 1].last = true
+        // Preapre the data array
+        data = prepareData(data_: data)
 
         return VStack {
             Text("Time In Range").padding(.bottom, 10).font(.previewHeadline)
@@ -312,4 +282,60 @@ struct PreviewChart: View {
 
         return array
     }
+
+    private func prepareData(data_: [TIRinPercent]) -> [TIRinPercent] {
+        var data = data_
+
+        // Remove separators when needed
+        for index in 0 ..< data.count - 2 {
+            if index < data.count - 1 {
+                if data[index].percentage == 0 {
+                    if index + 1 < data.count {
+                        data.remove(at: index + 1)
+                    } else { data.remove(at: data.count - 1) }
+                }
+            }
+        }
+
+        if data.last?.group == "Separator" || (data.last?.percentage ?? 0) <= 0 {
+            data = data.dropLast()
+            // data.remove(at: data.count - 1)
+        }
+
+        // Remove double separators
+        var c = false
+        for index in 0 ..< data.count - 1 {
+            if data[index].group == "Separator" {
+                if c {
+                    data.remove(at: index)
+                }
+                c = true
+            } else { c = false }
+        }
+
+        data.removeAll(where: { $0.percentage <= 0 })
+
+        // Update properties?
+        if (data.last?.percentage ?? 0) > 0, data.last?.group != "Separator" {
+            data[data.count - 1].last = true
+        } else {
+            data = data.dropLast()
+            data[data.count - 1].last = true
+        }
+
+        data[0].first = true
+        data[data.count - 1].last = true
+
+        return data
+    }
+}
+
+struct TIRinPercent: Identifiable {
+    let type: String
+    let group: String
+    let percentage: Decimal
+    let id: UUID
+    let offset: CGFloat
+    var first: Bool
+    var last: Bool
 }
