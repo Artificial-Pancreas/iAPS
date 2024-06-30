@@ -162,10 +162,10 @@ struct PreviewChart: View {
                 .foregroundStyle(by: .value("Group", item.group))
                 .clipShape(
                     UnevenRoundedRectangle(
-                        topLeadingRadius: item.last ? 4 : 0,
-                        bottomLeadingRadius: item.first ? 4 : 0,
-                        bottomTrailingRadius: item.first ? 4 : 0,
-                        topTrailingRadius: item.last ? 4 : 0
+                        topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                        bottomLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                        bottomTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                        topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
                     )
                 )
                 .annotation(position: .trailing) {
