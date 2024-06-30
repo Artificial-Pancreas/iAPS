@@ -62,7 +62,7 @@ extension Sharing {
                 Section {}
                 footer: {
                     Text(
-                        "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone."
+                        "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token."
                     )
                 }
 
@@ -81,7 +81,7 @@ extension Sharing {
                         }
                     }
                 }
-                header: { Text("\nYour identifier and recovery token") }
+                header: { Text("\nYour recovery token") }
 
                 footer: {
                     Text((copied && display) ? "" : display ? "Long press to copy" : "")
