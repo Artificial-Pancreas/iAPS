@@ -86,7 +86,7 @@ struct PreviewChart: View {
                 ),
                 percentage: fetched[2].decimal,
                 id: UUID(),
-                offset: 5
+                offset: 15
             ),
             TIRinPercent(
                 type: "TIR",
@@ -103,7 +103,7 @@ struct PreviewChart: View {
                 ),
                 percentage: fetched[3].decimal,
                 id: UUID(),
-                offset: 0
+                offset: 5
             )
         ]
 

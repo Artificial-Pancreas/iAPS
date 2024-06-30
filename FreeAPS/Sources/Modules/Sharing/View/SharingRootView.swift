@@ -47,6 +47,11 @@ extension Sharing {
                         }
                     }
                 } header: { Text("Statistics") }
+                footer: {
+                    Text(
+                        "\nIf you enable \"Share all statisitcs\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view."
+                    )
+                }
 
                 if !state.uploadStats {
                     Section {
@@ -76,8 +81,13 @@ extension Sharing {
                         }
                     }
                 }
-                header: { Text("Your identifier") }
-                footer: { Text((copied && display) ? "Copied" : "") }
+                header: { Text("\nYour identifier and recovery token") }
+
+                footer: {
+                    Text((copied && display) ? "" : display ? "Long press to copy" : "")
+                        .foregroundStyle((display && !copied) ? .blue : .secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
 
                 Section {}
                 footer: {
