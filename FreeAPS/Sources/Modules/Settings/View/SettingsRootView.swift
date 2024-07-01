@@ -413,7 +413,7 @@ extension Settings {
                 // iAPS Settings
                 if let freeapsSettings = state.freeapsSettings {
                     Section {
-                        Text(trim(freeapsSettings.rawJSON.debugDescription)).font(.previewSmall)
+                        Text(trim(freeapsSettings.rawJSON.debugDescription)).font(.settingsListed)
                     } header: {
                         Text("iAPS Settings")
                     }
@@ -422,7 +422,7 @@ extension Settings {
                 // OpenAPS Settings
                 if let settings = state.settings {
                     Section {
-                        Text(trim(settings.rawJSON.debugDescription)).font(.previewSmall)
+                        Text(trim(settings.rawJSON.debugDescription)).font(.settingsListed)
                     } header: {
                         Text("OpenAPS Settings")
                     }
