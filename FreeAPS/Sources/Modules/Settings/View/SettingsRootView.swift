@@ -262,7 +262,7 @@ extension Settings {
                         .font(.previewHeadline).frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom, 40)
 
-                    Text("Do you have any settings you want to import?").font(.previewNormal)
+                    Text("Do you have any settings you want to import?\n").font(.previewNormal)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .textCase(nil)
@@ -270,7 +270,7 @@ extension Settings {
             }
             footer: {
                 Text(
-                    "\n\nIf you've previously made any backup of your settings and statistics to the online database you now can choose to import all of these settings to iAPS using your recovery token (your identifier). The recovery token you can find on your old phone in the Sharing settings.\n\nIf you don't have any settings saved to import make sure to enable the setting \"Share all statistics\" in the Sharing settings later, as this will enable daily auto backups of your current settings and statistics."
+                    "\n\nIf you've previously made any backup of your settings and statistics to the online database you now can choose to import all of these settings to iAPS using your recovery token. The recovery token you can find in your old iAPS app in the Sharing settings.\n\nIf you don't have any settings saved to import make sure to enable the setting \"Share all statistics\" in the Sharing settings later, as this will enable daily auto backups of your current settings and statistics."
                 )
                 .textCase(nil)
                 .font(.previewNormal)
@@ -331,6 +331,9 @@ extension Settings {
                                 rate: basal.value
                             )
                         })
+
+                        let units: String = state.freeapsSettings?.units.rawValue ?? "mmol/l"
+
                         Section {
                             ForEach(basals_, id: \.start) { item in
                                 HStack {
@@ -341,7 +344,7 @@ extension Settings {
                                 }
                             }
                         } header: {
-                            Text("Basals").foregroundStyle(.blue).textCase(nil)
+                            Text("Basals")
                         }
 
                         // CRs
@@ -355,9 +358,10 @@ extension Settings {
                                     Text(item.start)
                                     Spacer()
                                     Text(item.ratio.formatted())
+                                    Text("g/U")
                                 }
                             }
-                        } header: { Text("Carb Ratios").foregroundStyle(.blue).textCase(nil) }
+                        } header: { Text("Carb Ratios") }
 
                         // ISFs
                         Section {
@@ -375,10 +379,11 @@ extension Settings {
                                     Text(item.start)
                                     Spacer()
                                     Text(item.sensitivity.formatted())
+                                    Text(units + "/U")
                                 }
                             }
                         } header: {
-                            Text("Insulin Sensitivities").foregroundStyle(.blue).textCase(nil)
+                            Text("Insulin Sensitivities")
                         }
 
                         // Targets
@@ -398,29 +403,28 @@ extension Settings {
                                     Text(item.start)
                                     Spacer()
                                     Text(item.low.formatted())
+                                    Text(units)
                                 }
                             }
-                        } header: { Text("Targets").foregroundStyle(.blue).textCase(nil) }
+                        } header: { Text("Targets") }
                     }
                 }
 
                 // iAPS Settings
                 if let freeapsSettings = state.freeapsSettings {
                     Section {
-                        Text(trim(freeapsSettings.rawJSON.debugDescription))
+                        Text(trim(freeapsSettings.rawJSON.debugDescription)).font(.previewSmall)
                     } header: {
-                        Text("iAPS Settings").foregroundStyle(.blue).textCase(nil)
+                        Text("iAPS Settings")
                     }
                 }
 
                 // OpenAPS Settings
                 if let settings = state.settings {
                     Section {
-                        Text(
-                            trim(settings.rawJSON.debugDescription)
-                        )
+                        Text(trim(settings.rawJSON.debugDescription)).font(.previewSmall)
                     } header: {
-                        Text("OpenAPS Settings").foregroundStyle(.blue).textCase(nil)
+                        Text("OpenAPS Settings")
                     }
                 }
 
@@ -585,15 +589,16 @@ extension Settings {
                     options: NSString.CompareOptions.literal,
                     range: nil
                 )
-                .replacingOccurrences(of: ",", with: "\n")
                 .replacingOccurrences(of: "[", with: "\n")
                 .replacingOccurrences(of: "]", with: "\n")
-                .replacingOccurrences(of: "basal", with: "Basal Rates")
-                .replacingOccurrences(of: "sens", with: "Sensitivities")
                 .replacingOccurrences(of: "dia", with: "DIA")
-                .replacingOccurrences(of: "carbratio", with: "Carb ratios")
+            let data = trim.components(separatedBy: ",").sorted { $0.count < $1.count }
+                .debugDescription.replacingOccurrences(of: ",", with: "\n")
+                .replacingOccurrences(of: "[", with: "")
+                .replacingOccurrences(of: "]", with: "")
+                .replacingOccurrences(of: "\"", with: "")
 
-            return trim
+            return data
         }
     }
 }

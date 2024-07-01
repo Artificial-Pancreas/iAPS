@@ -46,7 +46,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=preferences"
+        components.path = "/download.php?token=" + token + "&section=settings"
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true

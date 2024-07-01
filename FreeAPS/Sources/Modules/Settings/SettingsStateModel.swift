@@ -230,6 +230,7 @@ extension Settings {
                             start: sensitivity.time
                         )
                     }
+
                     let isfs_ = InsulinSensitivities(
                         units: preferredUnit,
                         userPrefferedUnits: preferredUnit,
