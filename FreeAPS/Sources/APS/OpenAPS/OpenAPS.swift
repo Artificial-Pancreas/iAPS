@@ -274,7 +274,7 @@ final class OpenAPS {
             if let total = tdd {
                 let round = round(Double((total.bolus + total.basal) * 10)) / 10
                 let bolus = Int(total.bolus * 100 / ((total.bolus + total.basal) != 0 ? total.bolus + total.basal : 1))
-                tddString = ", TDD: \(round) U, \(bolus) % Bolus, "
+                tddString = ", Insulin past 24h: \(round) U, \(bolus) % Bolus, "
             } else {
                 tddString = ", "
             }
