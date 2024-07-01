@@ -1,7 +1,7 @@
 import Foundation
 
 struct NightscoutStatistics: JSON {
-    let report = "statistics"
+    var report = "statistics"
     let dailystats: Statistics?
     let justVersion: BareMinimum?
 }

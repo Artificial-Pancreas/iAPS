@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BGaverages" representedClassName="BGaverages" syncable="YES" codeGenerationType="class">
         <attribute name="average" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="average_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -70,6 +70,10 @@
     <entity name="NotUploaded" representedClassName="NotUploaded" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Onboarding" representedClassName="Onboarding" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="firstRun" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
     </entity>
     <entity name="Override" representedClassName="Override" syncable="YES" codeGenerationType="class">
         <attribute name="advancedSettings" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

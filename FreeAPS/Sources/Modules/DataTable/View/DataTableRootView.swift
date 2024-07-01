@@ -134,6 +134,19 @@ extension DataTable {
                     }
                 }.foregroundStyle(.gray)
 
+                HStack {
+                    HStack {
+                        Text("Today")
+                        Text(insulinFormatter.string(from: (state.insulinToday.0 + state.tdd.1) as NSNumber) ?? "")
+                        Text("U")
+                    }
+                    Spacer()
+                    HStack {
+                        Text(hourFormatter.string(from: state.insulinToday.2 as NSNumber) ?? "")
+                        Text("h")
+                    }
+                }.foregroundStyle(.gray)
+
                 if !state.treatments.isEmpty {
                     if !showFutureEntries {
                         ForEach(state.treatments.filter { item in
