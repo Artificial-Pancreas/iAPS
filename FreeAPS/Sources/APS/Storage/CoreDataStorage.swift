@@ -206,4 +206,25 @@ final class CoreDataStorage {
         }
         return presetsArray
     }
+
+    func fetchOnbarding() -> Bool {
+        var firstRun = true
+        coredataContext.performAndWait {
+            let requestBool = Onboarding.fetchRequest() as NSFetchRequest<Onboarding>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestBool.sortDescriptors = [sort]
+            requestBool.fetchLimit = 1
+            try? firstRun = self.coredataContext.fetch(requestBool).first?.firstRun ?? true
+        }
+        return firstRun
+    }
+
+    func saveOnbarding() {
+        coredataContext.performAndWait { [self] in
+            let save = Onboarding(context: self.coredataContext)
+            save.firstRun = false
+            save.date = Date.now
+            try? self.coredataContext.save()
+        }
+    }
 }

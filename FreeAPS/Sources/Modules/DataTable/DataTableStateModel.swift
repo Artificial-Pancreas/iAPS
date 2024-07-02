@@ -19,6 +19,7 @@ extension DataTable {
         @Published var externalInsulinAmount: Decimal = 0
         @Published var externalInsulinDate = Date()
         @Published var tdd: (Decimal, Decimal, Double) = (0, 0, 0)
+        @Published var insulinToday: (Decimal, Decimal, Double) = (0, 0, 0)
         @Published var basalInsulin: Decimal = 0
 
         var units: GlucoseUnits = .mmolL
@@ -150,6 +151,7 @@ extension DataTable {
                 DispatchQueue.main.async {
                     let increments = self.settingsManager.preferences.bolusIncrement
                     self.tdd = TotalDailyDose().totalDailyDose(self.provider.pumpHistory(), increment: Double(increments))
+                    self.insulinToday = TotalDailyDose().insulinToday(self.provider.pumpHistory(), increment: Double(increments))
                 }
             }
         }
