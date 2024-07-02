@@ -52,9 +52,12 @@ extension Database {
         request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .customISO8601
+        
         return service.run(request)
             .retry(Config.retryCount)
-            .decode(type: FreeAPSSettings.self, decoder: JSONDecoder())
+            .decode(type: FreeAPSSettings.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
 
