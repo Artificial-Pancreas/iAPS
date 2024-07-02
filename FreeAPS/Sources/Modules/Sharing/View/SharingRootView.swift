@@ -32,7 +32,7 @@ extension Sharing {
         var body: some View {
             Form {
                 Section {
-                    Toggle("Share and Backup all of your Statistics and Settings", isOn: $state.uploadStats)
+                    Toggle("Share and Backup all of your Settings and Statistics", isOn: $state.uploadStats)
                     if state.uploadStats {
                         Picker("Sex", selection: $state.sex) {
                             ForEach(Sex.allCases) { sex in
@@ -105,7 +105,7 @@ extension Sharing {
                 configureView()
                 state.savedSettings()
             }
-            .navigationBarTitle("Share your data anonymously")
+            .navigationBarTitle("Share and Backup")
         }
     }
 }

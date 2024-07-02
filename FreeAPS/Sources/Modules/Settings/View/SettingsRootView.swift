@@ -282,7 +282,7 @@ extension Settings {
                 TextField("Token", text: $state.token)
             }
             header: {
-                Text("Enter your recovery token").foregroundStyle(.primary).textCase(nil).font(.previewNormal)
+                Text("Enter your recovery token")
                     .frame(maxWidth: .infinity, alignment: .center)
             }
             footer: {
