@@ -32,7 +32,7 @@ extension Sharing {
         var body: some View {
             Form {
                 Section {
-                    Toggle("Share all of your Statistics", isOn: $state.uploadStats)
+                    Toggle("Share and Backup all of your Settings and Statistics", isOn: $state.uploadStats)
                     if state.uploadStats {
                         Picker("Sex", selection: $state.sex) {
                             ForEach(Sex.allCases) { sex in
@@ -46,10 +46,10 @@ extension Sharing {
                                 .datePickerStyle(.compact)
                         }
                     }
-                } header: { Text("Statistics") }
+                } header: { Text("Upload Settings and Statistics") }
                 footer: {
                     Text(
-                        "\nIf you enable \"Share all statisitcs\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view."
+                        "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view."
                     )
                 }
 
@@ -105,7 +105,7 @@ extension Sharing {
                 configureView()
                 state.savedSettings()
             }
-            .navigationBarTitle("Share your data anonymously")
+            .navigationBarTitle("Share and Backup")
         }
     }
 }

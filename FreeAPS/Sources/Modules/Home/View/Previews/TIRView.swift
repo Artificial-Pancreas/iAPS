@@ -19,15 +19,7 @@ struct PreviewChart: View {
     var body: some View {
         let fetched = previewTir()
 
-        struct TIRinPercent: Identifiable {
-            let type: String
-            let group: String
-            let percentage: Decimal
-            let id: UUID
-            let offset: CGFloat
-        }
-
-        let separator: Decimal = 4
+        let separator: Decimal = 3
 
         var data: [TIRinPercent] = [
             TIRinPercent(
@@ -38,14 +30,18 @@ struct PreviewChart: View {
                 ),
                 percentage: fetched[4].decimal,
                 id: UUID(),
-                offset: -5
+                offset: -5,
+                first: true,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
                 id: UUID(),
-                offset: 0
+                offset: 0,
+                first: false,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
@@ -55,28 +51,36 @@ struct PreviewChart: View {
                 ),
                 percentage: fetched[0].decimal,
                 id: UUID(),
-                offset: -15
+                offset: -10,
+                first: false,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
                 id: UUID(),
-                offset: 0
+                offset: 0,
+                first: false,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
                 group: NSLocalizedString("In Range", comment: ""),
                 percentage: fetched[1].decimal,
                 id: UUID(),
-                offset: 0
+                offset: 0,
+                first: false,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
                 id: UUID(),
-                offset: 0
+                offset: 0,
+                first: false,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
@@ -86,14 +90,18 @@ struct PreviewChart: View {
                 ),
                 percentage: fetched[2].decimal,
                 id: UUID(),
-                offset: 15
+                offset: 10,
+                first: false,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
                 group: "Separator",
                 percentage: separator,
                 id: UUID(),
-                offset: 0
+                offset: 0,
+                first: false,
+                last: false
             ),
             TIRinPercent(
                 type: "TIR",
@@ -103,15 +111,14 @@ struct PreviewChart: View {
                 ),
                 percentage: fetched[3].decimal,
                 id: UUID(),
-                offset: 5
+                offset: 5,
+                first: false,
+                last: true
             )
         ]
 
-        for index in 0 ..< 3 {
-            if data[index].percentage == 0 {
-                data.remove(at: index + 1)
-            }
-        }
+        // Preapre the data array
+        data = prepareData(data_: data)
 
         return VStack {
             Text("Time In Range").padding(.bottom, 10).font(.previewHeadline)
@@ -122,8 +129,15 @@ struct PreviewChart: View {
                     y: .value("Percentage", item.percentage),
                     width: .fixed(60)
                 )
-                .cornerRadius(2, style: .continuous)
                 .foregroundStyle(by: .value("Group", item.group))
+                .clipShape(
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                        bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                        bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                        topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
+                    )
+                )
                 .annotation(position: .trailing) {
                     if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
                         HStack {
@@ -268,4 +282,60 @@ struct PreviewChart: View {
 
         return array
     }
+
+    private func prepareData(data_: [TIRinPercent]) -> [TIRinPercent] {
+        var data = data_
+
+        // Remove separators when needed
+        for index in 0 ..< data.count - 2 {
+            if index < data.count - 1 {
+                if data[index].percentage == 0 {
+                    if index + 1 < data.count {
+                        data.remove(at: index + 1)
+                    } else { data.remove(at: data.count - 1) }
+                }
+            }
+        }
+
+        if data.last?.group == "Separator" || (data.last?.percentage ?? 0) <= 0 {
+            data = data.dropLast()
+            // data.remove(at: data.count - 1)
+        }
+
+        // Remove double separators
+        var c = false
+        for index in 0 ..< data.count - 1 {
+            if data[index].group == "Separator" {
+                if c {
+                    data.remove(at: index)
+                }
+                c = true
+            } else { c = false }
+        }
+
+        data.removeAll(where: { $0.percentage <= 0 })
+
+        // Update properties?
+        if (data.last?.percentage ?? 0) > 0, data.last?.group != "Separator" {
+            data[data.count - 1].last = true
+        } else {
+            data = data.dropLast()
+            data[data.count - 1].last = true
+        }
+
+        data[0].first = true
+        data[data.count - 1].last = true
+
+        return data
+    }
+}
+
+struct TIRinPercent: Identifiable {
+    let type: String
+    let group: String
+    let percentage: Decimal
+    let id: UUID
+    let offset: CGFloat
+    var first: Bool
+    var last: Bool
 }
