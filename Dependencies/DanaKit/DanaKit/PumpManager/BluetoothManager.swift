@@ -113,7 +113,7 @@ extension BluetoothManager {
     }
     
     func connect(_ peripheral: CBPeripheral, _ completion: @escaping (ConnectionResult) -> Void) {
-        if self.peripheral != nil {
+        if self.peripheral?.state == .connected {
             self.disconnect(self.peripheral!, force: true)
         }
         

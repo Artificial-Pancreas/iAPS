@@ -39,7 +39,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var basalRate: Double?
     
     private let log = DanaLogger(category: "SettingsView")
-    private(set) var insulineType: InsulinType
+    private(set) var insulinType: InsulinType
     private(set) var pumpManager: DanaKitPumpManager?
     private var didFinish: (() -> Void)?
     private(set) var userOptionsView: DanaKitUserSettingsView
@@ -97,7 +97,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         
         self.isUsingContinuousMode = self.pumpManager?.state.isUsingContinuousMode ?? false
         self.isConnected = self.pumpManager?.state.isConnected ?? false
-        self.insulineType = self.pumpManager?.state.insulinType ?? .novolog
+        self.insulinType = self.pumpManager?.state.insulinType ?? .novolog
         self.bolusSpeed = self.pumpManager?.state.bolusSpeed ?? .speed12
         self.lastSync = self.pumpManager?.state.lastStatusDate
         self.reservoirLevel = self.pumpManager?.state.reservoirLevel
@@ -146,7 +146,8 @@ class DanaKitSettingsViewModel : ObservableObject {
         }
         
         self.pumpManager?.state.insulinType = type
-        self.insulineType = type
+        self.pumpManager?.notifyStateDidChange()
+        self.insulinType = type
     }
     
     func getLogs() -> [URL] {
@@ -155,6 +156,11 @@ class DanaKitSettingsViewModel : ObservableObject {
     
     func toggleBleMode() {
         self.pumpManager?.toggleBluetoothMode()
+        self.isTogglingConnection = true;
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.isTogglingConnection = false;
+        }
     }
     
     func reconnect() {
@@ -331,7 +337,7 @@ extension DanaKitSettingsViewModel: StateObserver {
     func stateDidUpdate(_ state: DanaKitPumpManagerState, _ oldState: DanaKitPumpManagerState) {
         self.isUsingContinuousMode = state.isUsingContinuousMode
         self.isConnected = state.isConnected
-        self.insulineType = state.insulinType ?? .novolog
+        self.insulinType = state.insulinType ?? .novolog
         self.bolusSpeed = state.bolusSpeed
         self.lastSync = state.lastStatusDate
         self.reservoirLevel = state.reservoirLevel

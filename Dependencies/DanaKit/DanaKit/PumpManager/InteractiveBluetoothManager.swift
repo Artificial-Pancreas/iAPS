@@ -74,7 +74,7 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
                 }
             }
             // No active connection and no stored peripheral. We have to scan for device before being able to send command
-        } else if !self.isConnected && self.pumpManagerDelegate?.state.bleIdentifier != nil {
+        } else if self.pumpManagerDelegate?.state.bleIdentifier != nil {
             do {
                 self.startTimeout(seconds: TimeInterval.seconds(30), identifier)
                 

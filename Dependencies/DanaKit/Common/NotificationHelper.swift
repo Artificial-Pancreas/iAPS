@@ -14,6 +14,7 @@ fileprivate var logger = DanaLogger(category: "NotificationHelper")
 public enum NotificationHelper {
     private enum Identifiers: String {
         case disconnectedReminder = "com.bastiaanv.continuous-ble.disconnect-reminder"
+        case disconnectWarning = "com.bastiaanv.continuous-ble.disconnect-warning"
     }
     
     public static func setDisconnectReminder(_ after: TimeInterval) {
@@ -24,6 +25,28 @@ public enum NotificationHelper {
 
             addRequest(identifier: .disconnectedReminder, content: content, triggerAfter: after)
         }
+    }
+    
+    public static func clearDisconnectReminder() {
+        let center = UNUserNotificationCenter.current()
+        center.removeDeliveredNotifications(withIdentifiers: [Identifiers.disconnectedReminder.rawValue])
+        center.removePendingNotificationRequests(withIdentifiers: [Identifiers.disconnectedReminder.rawValue])
+    }
+    
+    public static func setDisconnectWarning() {
+        ensureCanSendNotification {
+            let content = UNMutableNotificationContent()
+            content.title = LocalizedString("Pump is disconnected", comment: "Title disconnect warning notification")
+            content.body = LocalizedString("Your pump is disconnected longer than 5 minutes!", comment: "Body disconnect warning notification")
+
+            addRequest(identifier: .disconnectWarning, content: content, triggerAfter: .minutes(5))
+        }
+    }
+    
+    public static func clearDisconnectWarning() {
+        let center = UNUserNotificationCenter.current()
+        center.removeDeliveredNotifications(withIdentifiers: [Identifiers.disconnectWarning.rawValue])
+        center.removePendingNotificationRequests(withIdentifiers: [Identifiers.disconnectWarning.rawValue])
     }
     
     private static func addRequest(identifier: Identifiers, content: UNMutableNotificationContent, triggerAfter: TimeInterval? = nil, deleteOld: Bool = false) {

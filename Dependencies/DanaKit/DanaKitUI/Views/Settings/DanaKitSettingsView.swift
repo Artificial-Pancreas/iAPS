@@ -224,11 +224,11 @@ struct DanaKitSettingsView: View {
             
             Section(header: SectionHeader(label: LocalizedString("Configuration", comment: "The title of the configuration section in DanaKit settings")))
             {
-                NavigationLink(destination: InsulinTypeView(initialValue: viewModel.insulineType, supportedInsulinTypes: supportedInsulinTypes, didConfirm: viewModel.didChangeInsulinType)) {
+                NavigationLink(destination: InsulinTypeView(initialValue: viewModel.insulinType, supportedInsulinTypes: supportedInsulinTypes, didConfirm: viewModel.didChangeInsulinType)) {
                     HStack {
                         Text(LocalizedString("Insulin Type", comment: "Text for confidence reminders navigation link")).foregroundColor(Color.primary)
                         Spacer()
-                        Text(viewModel.insulineType.brandName)
+                        Text(viewModel.insulinType.brandName)
                             .foregroundColor(.secondary)
                         }
                 }

@@ -39,8 +39,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     
     private func keepConnectionAlive() async {
         do {
-            try await Task.sleep(nanoseconds: 45000000000) // Sleep for 45sec
-            
+            self.log.info("Sending keep alive message")
             let keepAlivePacket = generatePacketGeneralKeepConnection()
             let result = try await self.writeMessage(keepAlivePacket)
             guard result.success else {
@@ -49,6 +48,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
             }
             
             Task {
+                try await Task.sleep(nanoseconds: 30000000000) // Sleep for 30sec
                 await self.keepConnectionAlive()
             }
         } catch {
@@ -57,12 +57,34 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     }
     
     public func reconnect(_ callback: @escaping (Bool) -> Void) {
+        guard !self.isConnected else{
+            callback(true)
+            return
+        }
+        
         if self.autoConnectUUID == nil {
             self.autoConnectUUID = self.pumpManagerDelegate?.state.bleIdentifier
         }
         
-        guard let autoConnect = self.autoConnectUUID, !self.isConnected else {
-            self.log.error("Invalid state... autoConnect: \(String(describing: self.autoConnectUUID)), isConnected: \(self.isConnected)")
+        if self.peripheral != nil {
+            self.connect(self.peripheral!) { result in
+                switch(result) {
+                case .success:
+                    Task {
+                        await self.keepConnectionAlive()
+                        callback(true)
+                    }
+                    break;
+                default:
+                    self.log.error("Failed to reconnect: \(result)")
+                    callback(false)
+                }
+            }
+            return
+        }
+        
+        guard let autoConnect = self.autoConnectUUID else {
+            self.log.error("No autoConnect: \(String(describing: self.autoConnectUUID))")
             callback(false)
             return
         }
@@ -92,10 +114,11 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
             // Device still has an active connection with pump and is probably busy with something
             if self.isConnected {
                 self.resetConnectionCompletion()
+                self.logDeviceCommunication("Dana - Connection is ok!", type: .connection)
                 await completion(.success)
                 
-                // We aren't connected, the user has probably disconnected the pump by hand
             } else {
+                // We aren't connected, the user has probably disconnected the pump by hand
                 self.log.error("Device not connected...")
                 self.logDeviceCommunication("Dana - Pump is not connected. Please reconnect to pump before doing any operations", type: .connection)
                 
@@ -119,8 +142,14 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         self.bleCentralManagerDidUpdateState(central)
         
-        if central.state == .poweredOn {
-            self.reconnect{ _ in }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            if central.state == .poweredOn {
+                self.reconnect { result in
+                    if result {
+                        self.pumpManagerDelegate?.syncPump { _ in }
+                    }
+                }
+            }
         }
     }
     
@@ -135,12 +164,27 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         self.bleCentralManager(central, didConnect: peripheral)
         
-        let notificationCenter = UNUserNotificationCenter.current()
-        notificationCenter.removeDeliveredNotifications(withIdentifiers: [DanaKit.disconnectReminderNotificationUUID])
+        NotificationHelper.clearDisconnectWarning()
+        NotificationHelper.clearDisconnectReminder()
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         self.bleCentralManager(central, didDisconnectPeripheral: peripheral, error: error)
+        
+        if let autoConnectUUID = self.autoConnectUUID {
+            do {
+                self.log.info("Connection lost. Trying to reconnect...")
+                NotificationHelper.setDisconnectWarning()
+                
+                if self.peripheral?.identifier.uuidString == autoConnectUUID {
+                    self.connect(self.peripheral!) { _ in }
+                } else {
+                    try self.connect(autoConnectUUID) { _ in }
+                }
+            } catch {
+                self.log.error("Failed to auto reconnect: \(error.localizedDescription)")
+            }
+        }
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
