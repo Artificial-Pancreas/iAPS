@@ -17,6 +17,7 @@ extension StatConfig {
         @Published var timeSettings: Bool = true
         @Published var minimumSMB: Decimal = 0.3
         @Published var useInsulinBars: Bool = false
+        @Published var skipGlucoseChart: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -28,6 +29,7 @@ extension StatConfig {
             subscribeSetting(\.xGridLines, on: $xGridLines) { xGridLines = $0 }
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
             subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
+            subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { skipGlucoseChart = $0 }
             subscribeSetting(\.timeSettings, on: $timeSettings) { timeSettings = $0 }
             subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { alwaysUseColors = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }

@@ -31,6 +31,7 @@ public enum IAPSconfig {
 
 extension Font {
     static let buttonFont = Font.custom("TimeButtonFont", fixedSize: 14) // Same as Eventual BG size
+    static let infoSymbolFont = Font.custom("TimeButtonFont", fixedSize: 16) // Same as Eventual BG size
 
     static let loopFont = Font.custom("LoopFont", size: 13) // Loop min ago
     static let statusFont = Font.custom("StatusFont", size: 16) // IOB, COB etc.

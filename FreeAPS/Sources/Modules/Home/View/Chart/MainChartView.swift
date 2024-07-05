@@ -119,7 +119,7 @@ struct MainChartView: View {
     @State private var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
-    @State private var legends: Bool = false
+    @State private var legends: Bool = true
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -203,9 +203,9 @@ struct MainChartView: View {
                 update(fullSize: geo.size)
             }
         }
-        .onTapGesture {
-            legends.toggle()
-        }
+        /* .onTapGesture {
+             legends.toggle()
+         } */
     }
 
     var legendPanel: some View {
@@ -255,7 +255,7 @@ struct MainChartView: View {
                     }
                 }
             }
-            .padding(.bottom, 20)
+            .padding(.bottom, 8)
         }
     }
 

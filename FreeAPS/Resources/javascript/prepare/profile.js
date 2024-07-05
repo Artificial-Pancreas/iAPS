@@ -82,6 +82,8 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     }
     
     var tdd_factor = { };
+    var set_basal = false;
+    var basal_rate = { };
 
     var inputs = { };
     //add all preferences to the inputs
@@ -108,6 +110,8 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.model = model_data;
     inputs.autotune = autotune_data;
     inputs.tddFactor = tdd_factor;
+    inputs.set_basal = set_basal;
+    inputs.basal_rate = basal_rate;
     
     if (autotune_data) {
         if (autotune_data.basalprofile) { inputs.basals = autotune_data.basalprofile; }
