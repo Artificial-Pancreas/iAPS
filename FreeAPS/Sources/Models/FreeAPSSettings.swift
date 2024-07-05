@@ -64,6 +64,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useInsulinBars: Bool = false
     var disableCGMError: Bool = true
     var uploadVersion: Bool = true
+    var skipGlucoseChart: Bool = false
     var birthDate = Date.distantPast
     // var sex: Sex = .secret
     var sexSetting: Int = 3
@@ -330,6 +331,10 @@ extension FreeAPSSettings: Decodable {
 
         if let uploadVersion = try? container.decode(Bool.self, forKey: .uploadVersion) {
             settings.uploadVersion = uploadVersion
+        }
+
+        if let skipGlucoseChart = try? container.decode(Bool.self, forKey: .skipGlucoseChart) {
+            settings.skipGlucoseChart = skipGlucoseChart
         }
 
         if let birthDate = try? container.decode(Date.self, forKey: .birthDate) {
