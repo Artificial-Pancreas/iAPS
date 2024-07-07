@@ -94,7 +94,11 @@ final class OpenAPS {
 
                 // Update Suggestion
                 if var suggestion = Suggestion(from: suggested) {
-                    // Add some reasons
+                    // Process any eventual middleware basal rate
+                    if let newSuggestion = self.overrideBasal(alteredProfile: alteredProfile, oref0Suggestion: suggestion) {
+                        suggestion = newSuggestion
+                    }
+                    // Add some reasons, when needed
                     suggestion.reason = self.reasons(
                         reason: suggestion.reason,
                         suggestion: suggestion,
@@ -304,7 +308,7 @@ final class OpenAPS {
             }
         }
 
-        // Dsiplay either Target or Override (where target is included).
+        // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
         if targetGlucose != nil, let or = OverrideStorage().fetchLatestOverride().first, or.enabled {
             var orString = ", Override:"
@@ -372,6 +376,23 @@ final class OpenAPS {
         return reasonString
     }
 
+    private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
+        guard let changeRate = readJSON(json: alteredProfile, variable: "set_basal"), Bool(changeRate) ?? false,
+              let basal_rate_is = readJSON(json: alteredProfile, variable: "basal_rate") else { return nil }
+
+        var returnSuggestion = oref0Suggestion
+        let basal_rate = Decimal(string: basal_rate_is) ?? 0
+        returnSuggestion.rate = basal_rate
+        returnSuggestion.duration = 30
+        var reasonString = oref0Suggestion.reason
+        let endIndex = reasonString.endIndex
+        let insertedResons: String = reasonString + "\n\nBasal Rate overridden in middleware to: \(basal_rate) U/h"
+        reasonString.insert(contentsOf: insertedResons, at: endIndex)
+        returnSuggestion.reason = reasonString
+
+        return returnSuggestion
+    }
+
     private func readJSON(json: RawJSON, variable: String) -> String? {
         if let string = json.debugDescription.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
             let targetComponents = string.components(separatedBy: ":")
@@ -432,12 +453,13 @@ final class OpenAPS {
             let disableCGMError = settingsData?.disableCGMError ?? true
 
             let cd = CoreDataStorage()
+            let os = OverrideStorage()
             // TDD
             let uniqueEvents = cd.fetchTDD(interval: DateFilter().tenDays)
             // Temp Targets using slider
             let sliderArray = cd.fetchTempTargetsSlider()
             // Overrides
-            let overrideArray = OverrideStorage().fetchNumberOfOverrides(numbers: 2)
+            let overrideArray = os.fetchNumberOfOverrides(numbers: 2)
             // Temp Target
             let tempTargetsArray = cd.fetchTempTargets()
 
@@ -473,6 +495,11 @@ final class OpenAPS {
             var disableSMBs = overrideArray.first?.smbIsOff ?? false
             let overrideMaxIOB = overrideArray.first?.overrideMaxIOB ?? false
             let maxIOB = overrideArray.first?.maxIOB ?? (preferences?.maxIOB ?? 0) as NSDecimalNumber
+
+            var name = ""
+            if useOverride, overrideArray.first?.isPreset ?? false, let overridePreset = os.isPresetName() {
+                name = overridePreset
+            }
 
             if nrOfIndeces == 0 {
                 nrOfIndeces = 1
@@ -553,7 +580,8 @@ final class OpenAPS {
                 uamMinutes: (overrideArray.first?.uamMinutes ?? uamMinutes) as Decimal,
                 maxIOB: maxIOB as Decimal,
                 overrideMaxIOB: overrideMaxIOB,
-                disableCGMError: disableCGMError
+                disableCGMError: disableCGMError,
+                preset: name
             )
             storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
             return self.loadFileFromStorage(name: Monitor.dynamicVariables)

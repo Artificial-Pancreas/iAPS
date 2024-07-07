@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Terminé";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "%@ minutes depuis la dernière boucle. Terminez ou annulez cette transaction de repas / bolus pour permettre le prochain cycle de boucle de s'exécuter";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Afficher des émojis en tant qu'étiquettes";
 
