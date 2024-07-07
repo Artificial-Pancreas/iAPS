@@ -87,6 +87,11 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     }
     var glucose_status = freeaps_glucoseGetLast(glucose);
     
+    // In case Basal Rate been set in midleware
+    if (profile.set_basal && profile.basal_rate) {
+        console.log("Basal Rate set by middleware to " + profile.basal_rate + " U/h.");
+    }
+    
     return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
 }
 

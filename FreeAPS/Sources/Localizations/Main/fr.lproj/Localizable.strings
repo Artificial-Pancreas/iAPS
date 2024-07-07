@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Terminé";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "%@ minutes depuis la dernière boucle. Terminez ou annulez cette transaction de repas / bolus pour permettre le prochain cycle de boucle de s'exécuter";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Afficher des émojis en tant qu'étiquettes";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Accepter et continuer";
+
+/* */
+"Log external insulin" = "Journaliser l'insuline externe";
 
 /* Bolus progress view */
 "of" = "de";
@@ -114,6 +120,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Facteur de farine grasse";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Les glucides et l'insuline antérieure sont inclus dans la prédiction du taux de glucose éventuel.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Résultat";
@@ -1550,7 +1559,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Glycémie éventuelle";
 
 /* */
-"Please wait" = "Patientez s''il vous plait";
+"Please wait" = "Patientez s'il vous plait";
 
 /* */
 "Glucose, " = "Glycémie, ";

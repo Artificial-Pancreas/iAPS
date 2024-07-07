@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Нагадування про Верифікацію";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Нагадування Pod";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Програма налаштовує нагадування на телефоні, щоб повідомити вас про закінчення терміну дії Pod. Встановіть кількість годин попереднього повідомлення, яку потрібно зберегти при поєднанні нового Pod.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Нагадування про закінчення дії поточного Pod.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "Програма повідомить вас, коли кількість інсуліну в Pod досягне цього рівня.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Вказані вище нагадування не звучатимуть у програмі, якщо пристрій знаходиться в режимі \"Без звуку\" або \"Не турбувати\". Існують інші важливі оповіщення Pod, які будуть звучати в програмі, навіть якщо на пристрої встановлено режим \"Без звуку\" або \"Не турбувати\", коли Pod заглушено.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Призупинити Введення Інсуліну";
 
@@ -585,7 +603,7 @@
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "Нагадування вище не звучатимуть, якщо ваш пристрій перебуває в беззвучному режимі або режимі «Не турбувати».\n\nІснують інші важливі сповіщення та будильники Podʼу, які лунатимуть, навіть якщо на пристрої встановлено режим «Без звуку» або «Не турбувати».";
 /* navigation title for notification settings */
-"Notification Settings" = "Параметри Сповіщень";
+"Notification Settings" = "Параметри сповіщень";
 
 /* Label for scheduled reminder value row */
 "Time" = "Час";

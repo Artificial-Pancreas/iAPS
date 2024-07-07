@@ -25,11 +25,13 @@ public enum IAPSconfig {
     static let id = "iAPS.identifier"
     static let version = "iAPS.version"
     static let newVersion = "iAPS.newVersion"
+    static let inBolusView = "iAPS.inBolusView"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
 }
 
 extension Font {
     static let buttonFont = Font.custom("TimeButtonFont", fixedSize: 14) // Same as Eventual BG size
+    static let infoSymbolFont = Font.custom("TimeButtonFont", fixedSize: 16) // Same as Eventual BG size
 
     static let loopFont = Font.custom("LoopFont", size: 13) // Loop min ago
     static let statusFont = Font.custom("StatusFont", size: 16) // IOB, COB etc.
