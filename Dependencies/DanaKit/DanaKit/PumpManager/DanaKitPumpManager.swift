@@ -370,7 +370,7 @@ extension DanaKitPumpManager: PumpManager {
     private func fetchPumpTime() async -> Date? {
         do {
             let timePacket = self.state.usingUtc ? generatePacketGeneralGetPumpTimeUtcWithTimezone() : generatePacketGeneralGetPumpTime()
-            let timeResult = try await DanaKitPumpManager.bluetoothManager.writeMessage(timePacket)
+            let timeResult = try await bluetooth.writeMessage(timePacket)
             
             if timeResult.success {
                 let date = self.state.usingUtc ? 
