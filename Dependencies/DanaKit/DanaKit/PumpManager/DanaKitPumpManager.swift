@@ -170,9 +170,9 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public static var onboardingSupportedBolusVolumes: [Double] {
-        // 0.10 units for rates between 0.10-30U
+        // 0.05 units for rates between 0.05-30U
         // 0 is not a supported bolus volume
-        return (1...300).map { Double($0) / 10 }
+        return (1...600).map { Double($0) / 20 }
     }
     
     public static var onboardingSupportedMaximumBolusVolumes: [Double] {
