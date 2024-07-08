@@ -1049,6 +1049,18 @@ Enact a temp Basal or a temp target */
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Activates an %@ Override Preset";
 
+/* Meal Prestes Shortcut */
+"Which meal preset would you like to use?" = "Which meal preset would you like to use?";
+
+/* Meal Prestes Shortcut */
+"Are you sure you want to use the meal preset %@?" = "Are you sure you want to use the meal preset %@?";
+
+/* Meal Prestes Shortcut */
+"The Meal" = "The Meal";
+
+/* Meal Prestes Shortcut */
+"has been added to iAPS" = "has been added to iAPS";
+
 /* */
 "Schedule " = "Schedule ";
 
@@ -2493,6 +2505,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";

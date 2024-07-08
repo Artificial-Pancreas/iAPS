@@ -1049,6 +1049,18 @@ Enact a temp Basal or a temp target */
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Aktiverar en %@ - profil";
 
+/* Meal Prestes Shortcut */
+"Which meal preset would you like to use?" = "Vilken måltid vill du lägga till?";
+
+/* Meal Prestes Shortcut */
+"Are you sure you want to use the meal preset %@?" = "Är du säker att du vill lägga till måltiden %@?";
+
+/* Meal Prestes Shortcut */
+"The Meal" = "Måltiden";
+
+/* Meal Prestes Shortcut */
+"has been added to iAPS" = "har lagt till i iAPS";
+
 /* */
 "Schedule " = "Schema ";
 

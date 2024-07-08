@@ -15,7 +15,7 @@ struct ActiveCOBView: View {
     var body: some View {
         VStack {
             Text("Active Carbohydrates").font(.previewHeadline).padding(.top, 20)
-            cobView().frame(maxHeight: 150).padding(.vertical, 10).padding(.horizontal, 20)
+            cobView().frame(maxHeight: 130).padding(.vertical, 10).padding(.horizontal, 20)
                 .padding(.bottom, 10)
         }.dynamicTypeSize(...DynamicTypeSize.medium)
     }

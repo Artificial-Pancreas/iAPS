@@ -47,6 +47,12 @@ final class TotalDailyDose {
         } else { return 0 }
     }
 
+    func insulinToday(_ data: [PumpHistoryEvent], increment: Double) -> (bolus: Decimal, basal: Decimal, hours: Double) {
+        let filtered = data.filter({ $0.timestamp > Calendar.current.startOfDay(for: Date()) })
+
+        return totalDailyDose(filtered, increment: increment)
+    }
+
     // All delivered boli (manual, external and SMBs)
     private func bolus(_ data: [PumpHistoryEvent]) -> Decimal {
         data.compactMap(\.amount).reduce(0, +)
