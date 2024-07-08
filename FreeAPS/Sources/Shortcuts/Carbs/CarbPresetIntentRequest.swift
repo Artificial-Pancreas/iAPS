@@ -4,7 +4,7 @@ import Foundation
 @available(iOS 16.0,*) final class CarbPresetIntentRequest: BaseIntentsRequest {
     func addCarbs(_ quantityCarbs: Double, _ quantityFat: Double, _ quantityProtein: Double, _ dateAdded: Date) throws -> String {
         guard quantityCarbs >= 0.0 || quantityFat >= 0.0 || quantityProtein >= 0.0 else {
-            return "no adding carbs in iAPS"
+            return "no carbs or carb equivalents to add"
         }
 
         let carbs = min(Decimal(quantityCarbs), settingsManager.settings.maxCarbs)

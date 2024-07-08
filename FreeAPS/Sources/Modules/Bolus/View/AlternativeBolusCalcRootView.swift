@@ -80,6 +80,7 @@ extension Bolus {
                                 Image(systemName: "info.bubble")
                                     .symbolRenderingMode(.palette)
                                     .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                                    .font(.infoSymbolFont)
                                 Text("Calculations")
                             })
                                 .foregroundStyle(.blue)
