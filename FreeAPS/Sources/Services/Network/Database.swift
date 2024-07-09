@@ -20,12 +20,12 @@ class Database {
 }
 
 extension Database {
-    func fetchPreferences() -> AnyPublisher<Preferences, Swift.Error> {
+    func fetchPreferences(_ name: String) -> AnyPublisher<Preferences, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=preferences"
+        components.path = "/download.php?token=" + token + "&section=preferences&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true
@@ -41,12 +41,12 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
-    func fetchSettings() -> AnyPublisher<FreeAPSSettings, Swift.Error> {
+    func fetchSettings(_ name: String) -> AnyPublisher<FreeAPSSettings, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=settings"
+        components.path = "/download.php?token=" + token + "&section=settings&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true
@@ -54,19 +54,19 @@ extension Database {
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .customISO8601
-        
+
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: FreeAPSSettings.self, decoder: decoder)
             .eraseToAnyPublisher()
     }
 
-    func fetchProfile() -> AnyPublisher<DatabaseProfileStore, Swift.Error> {
+    func fetchProfile(_ name: String) -> AnyPublisher<NightscoutProfileStore, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=profile"
+        components.path = "/download.php?token=" + token + "&section=profile&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
@@ -74,7 +74,43 @@ extension Database {
 
         return service.run(request)
             .retry(Config.retryCount)
-            .decode(type: DatabaseProfileStore.self, decoder: JSONCoding.decoder)
+            .decode(type: NightscoutProfileStore.self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
+    func fetchPumpSettings(_ name: String) -> AnyPublisher<PumpSettings, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = "/download.php?token=" + token + "&section=pumpSettings&profile=" + name
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        let decoder = JSONDecoder()
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: PumpSettings.self, decoder: decoder)
+            .eraseToAnyPublisher()
+    }
+
+    func fetchTempTargets(_ name: String) -> AnyPublisher<DatabaseTempTargets, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = "/download.php?token=" + token + "&section=tempTargets&profile=" + name
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: DatabaseTempTargets.self, decoder: JSONCoding.decoder)
             .eraseToAnyPublisher()
     }
 
@@ -174,6 +210,48 @@ extension Database {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         request.httpBody = try! JSONCoding.encoder.encode(settings)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadPumpSettings(_ settings: DatabasePumpSettings) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.sharePath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpBody = try! JSONCoding.encoder.encode(settings)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploadTempTargets(_ targets: DatabaseTempTargets) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.sharePath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpBody = try! JSONCoding.encoder.encode(targets)
         request.httpMethod = "POST"
 
         return service.run(request)

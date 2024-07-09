@@ -37,7 +37,7 @@
   "maxUAMSMBBasalMinutes": 80,
   "adv_target_adjustments": false,
   "remainingCarbsFraction": 1,
-  "resistanceLowersTarget": false,
+  "resistance_lowers_target": false,
   "rewind_resets_autosens": false,
   "enableSMB_high_bg_target": 110,
   "noisyCGMTargetMultiplier": 1.3,

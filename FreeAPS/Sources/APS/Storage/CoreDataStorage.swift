@@ -227,4 +227,70 @@ final class CoreDataStorage {
             try? self.coredataContext.save()
         }
     }
+
+    func startOnbarding() {
+        coredataContext.performAndWait { [self] in
+            let save = Onboarding(context: self.coredataContext)
+            save.firstRun = true
+            save.date = Date.now
+            try? self.coredataContext.save()
+        }
+    }
+
+    func fetchSettingProfileName() -> String? {
+        var presetsArray: String?
+        coredataContext.performAndWait {
+            let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            try? presetsArray = self.coredataContext.fetch(requestProfiles).first?.name
+        }
+        return presetsArray
+    }
+
+    func fetchUniqueSettingProfileName(_ name: String) -> Bool {
+        var presetsArray: Profiles?
+        coredataContext.performAndWait {
+            let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            requestProfiles.predicate = NSPredicate(
+                format: "uploaded == true && name == %@", name as String
+            )
+            try? presetsArray = self.coredataContext.fetch(requestProfiles).first
+        }
+        return (presetsArray != nil)
+    }
+
+    func saveProfileSettingName(name: String) {
+        coredataContext.perform { [self] in
+            let save = Profiles(context: self.coredataContext)
+            save.name = name
+            save.date = Date.now
+            try? self.coredataContext.save()
+        }
+    }
+
+    func profileSettingUploaded(name: String) {
+        // Avoid duplicates
+        if !fetchUniqueSettingProfileName(name) {
+            coredataContext.perform { [self] in
+                let save = Profiles(context: self.coredataContext)
+                save.name = name
+                save.date = Date.now
+                save.uploaded = true
+                try? self.coredataContext.save()
+            }
+        }
+    }
+
+    func activeProfile(name: String) {
+        coredataContext.perform { [self] in
+            let save = ActiveProfile(context: self.coredataContext)
+            save.name = name
+            save.date = Date.now
+            save.active = true
+            try? self.coredataContext.save()
+        }
+    }
 }

@@ -22,9 +22,3 @@ struct FetchedNightscoutProfile: JSON {
     let carbratio: [NightscoutTimevalue]
     let units: String
 }
-
-struct DatabaseProfileStore: JSON {
-    let units: String
-    let enteredBy: String
-    let store: [String: ScheduledNightscoutProfile]
-}
