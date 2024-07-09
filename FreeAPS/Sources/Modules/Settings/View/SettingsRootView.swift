@@ -7,6 +7,7 @@ extension Settings {
         let resolver: Resolver
         @StateObject var state = StateModel()
         @State private var showShareSheet = false
+        @State private var viewInt = 0
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -15,7 +16,32 @@ extension Settings {
             )
         ) var fetchedVersionNumber: FetchedResults<VNr>
 
+        @FetchRequest(
+            entity: Onboarding.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var onboardingDone: FetchedResults<Onboarding>
+
+        private var GlucoseFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
+        @State var selectedProfile = ""
+        @State var int = 0
+        @State var inSitu = false
+        @State var id = ""
+
         var body: some View {
+            if onboardingDone.first?.firstRun ?? false {
+                ProfilePicker.RootView(resolver: resolver, int: $int, profile: $selectedProfile, inSitu: $inSitu, id_: $id)
+            } else {
+                settingsView
+            }
+        }
+
+        var settingsView: some View {
             Form {
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
@@ -75,6 +101,10 @@ extension Settings {
                 } header: { Text("OpenAPS") }
 
                 Section {
+                    Text("Saved Settings").navigationLink(to: .profiles, from: self)
+                } header: { Text("Profiles") }
+
+                Section {
                     Text("UI/UX").navigationLink(to: .statisticsConfig, from: self)
                     Text("App Icons").navigationLink(to: .iconConfig, from: self)
                     Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
@@ -89,22 +119,31 @@ extension Settings {
                     if state.debugOptions {
                         Group {
                             HStack {
-                                Text("NS Upload Profile and Settings")
+                                Text("Upload Profile and Settings")
                                 Button("Upload") { state.uploadProfileAndSettings(true) }
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                             }
                             /*
                              HStack {
-                                 Text("Delete All NS Overrides")
-                                 Button("Delete") { state.deleteOverrides() }
-                                     .frame(maxWidth: .infinity, alignment: .trailing)
-                                     .buttonStyle(.borderedProminent)
-                                     .tint(.red)
+                             Text("Delete All NS Overrides")
+                             Button("Delete") { state.deleteOverrides() }
+                             .frame(maxWidth: .infinity, alignment: .trailing)
+                             .buttonStyle(.borderedProminent)
+                             .tint(.red)
                              }*/
 
                             HStack {
                                 Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
+                            }
+
+                            HStack {
+                                Text("Start Onboarding")
+                                Button("Start") {
+                                    state.startOnboarding()
+                                }
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .buttonStyle(.borderedProminent)
                             }
                         }
                         Group {

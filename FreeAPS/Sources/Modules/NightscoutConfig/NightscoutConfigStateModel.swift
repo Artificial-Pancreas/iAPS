@@ -261,7 +261,7 @@ extension NightscoutConfig {
                         let syncValues = basals.map {
                             RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
                         }
-                        // SSAVE TO STORAGE. SAVE TO PUMP (LoopKit)
+                        // SAVE TO STORAGE. SAVE TO PUMP (LoopKit)
                         pump.syncBasalRateSchedule(items: syncValues) { result in
                             switch result {
                             case .success:
@@ -272,8 +272,6 @@ extension NightscoutConfig {
                                 debug(.service, "Settings have been imported and the Basals saved to pump!")
                                 // DIA. Save if changed.
                                 let dia = fetchedProfile.dia
-                                print("dia: " + dia.description)
-                                print("pump dia: " + self.dia.description)
                                 if dia != self.dia, dia >= 0 {
                                     let file = PumpSettings(
                                         insulinActionCurve: dia,
