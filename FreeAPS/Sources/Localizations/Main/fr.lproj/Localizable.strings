@@ -2051,49 +2051,49 @@ Enact a temp Basal or a temp target */
 "Font" = "Police de caractères";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Taille";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Taille secondaire";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Tracking";
+"Tracking" = "Espacement";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Poids";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Mode sombre";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Très serré";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Serré";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Normal";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Large";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Léger";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Régulier";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Moyen";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Semi-gras";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Gras";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Noir";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Aucun";
@@ -2102,16 +2102,16 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Glycémie";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Taux de glucose éventuel";
 
 /* Contact Image, settings, Delta (data to display) */
-"DeltaContactValue" = "Delta";
+"DeltaContactValue" = "Écart";
 
 /* Contact Image, settings, Trend (data to display) */
 "TrendContactValue" = "Tendance";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Heure de la dernière boucle";
 
 /* Contact Image, settings, COB (data to display) */
 "COBContactValue" = "Glucides actifs (COB)";
@@ -2182,10 +2182,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "La valeur par défaut est faux, de sorte que iAPS définisse une valeur basal dès qu'il le peut, donc il sera plus facile de voir si le système fonctionne, même lorsque vous êtes hors ligne. Cela signifie qu'OpenAPS définira une valeur basale « neutre » (identique à votre basal par défaut) si aucun ajustement n'est nécessaire. Ceci est un ancien paramètre d'OpenAPS afin de minimiser les sons et les notifications de la 'rig', qui pouvaient vous réveiller pendant la nuit. ";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Annuler la suspension si aucune température";
+"Unsuspend If No Temp" = "Annuler la suspension à la fin du temporaire zéro";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "De nombreuses personnes oublient parfois de reprendre / désuspendre leur pompe après la reconnexion. Si vous êtes l'un d'eux, et que vous êtes définissez un basal temporaire à zéro chaque fois que vous suspendez ou débranchez votre pompe, cette fonction peut être pertinente. Si cette option est activée, elle reprendra automatiquement le basal en cours si vous oubliez de reprendre votre pompe. Tant que la valeur temporaire de basal est de zéro, elle laissera la pompe suspendue.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "De nombreuses personnes oublient parfois de reprendre / désuspendre leur pompe après la reconnexion. Si vous êtes l'un d'eux, et que vous êtes prêt à définir de manière fiable un basal temporaire zéro à chaque fois que vous suspendez et débranchez votre pompe, cette fonctionnalité peut être pertinente. Si cette option est activée, elle reprendra automatiquement le fonctionnement de votre pompe si vous oubliez de le faire avant l'expiration du basal temporaire à zéro que vous avez programmé. Tant que le basal temporaire à zéro est toujours en cours d'exécution, la pompe restera suspendue.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Activer UAM";
