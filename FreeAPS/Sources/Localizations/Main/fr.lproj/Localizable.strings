@@ -2469,7 +2469,7 @@ Enact a temp Basal or a temp target */
 "Statistics settings " = "Paramètres des statistiques ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Outrepasser l'unité HbA1c";
+"Override HbA1c Unit" = "Convertir l'unité HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Si vous utilisez à la fois des profils et des cibles temporaires";
