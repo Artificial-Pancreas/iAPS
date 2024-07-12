@@ -47,7 +47,7 @@
 "Done" = "Fertig";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Letzte Loop-Schleife vor %@ Minuten. Berechnung des (Mahlzeiten-)Bolus abschließen oder abbrechen, um den nächsten Schleifendurchlauf zu ermöglichen.";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Emojis als Etiketten benutzen";
@@ -2487,6 +2487,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Anzeigeintervall Einstellungs-Button";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Beim Scrollen nie das kleine Glukosediagramm anzeigen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
