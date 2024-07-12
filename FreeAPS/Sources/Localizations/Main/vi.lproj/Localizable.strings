@@ -414,10 +414,10 @@ Enact a temp Basal or a temp target */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\n Các cấu hình đã được nhập nhưng liều nền không được lưu vào bơm (không có bơm). Kiểm tra cấu hình liều nền của bạn và nhấn 'Lưu vào bơm' để đồng hóa cấu hình liều nền mới";
 
 /* Import Error Headline */
-"Import Error" = "Cập nhật lỗi";
+"Import Error" = "Nhập lỗi";
 
 /* */
-"Yes, Import" = "Đồng ý, hãy cập nhật";
+"Yes, Import" = "Đồng ý, hãy nhập";
 
 /* */
 "Import settings from Nightscout" = "Nhập cấu hình từ Nightscout";
@@ -513,13 +513,13 @@ Enact a temp Basal or a temp target */
 "0 U/hr" = "U/hr";
 
 /* abbreviation for days */
-"d" = "ngày";
+"d" = "d";
 
 /* abbreviation for hours */
-"h" = "giờ";
+"h" = "h";
 
 /* abbreviation for minutes */
-"m" = "phút";
+"m" = "m";
 
 /*  */
 "Closed loop" = "Vòng lặp kín";
@@ -2075,25 +2075,25 @@ Enact a temp Basal or a temp target */
 "NormalFontTracking" = "Normal";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Rộng";
+"WideFontTracking" = "Wide";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Phông nền sáng";
+"LightFontWeight" = "Light";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Binh thường";
+"RegularFontWeight" = "Regular";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Trung bình";
+"MediumFontWeight" = "Medium";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Đậm nhẹ";
+"SemiboldFontWeight" = "Semibold";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Đậm";
+"BoldFontWeight" = "Bold";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Đen";
+"BlackFontWeight" = "Black";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Không";
@@ -2131,7 +2131,7 @@ Enact a temp Basal or a temp target */
 "Rewind Resets Autosens" = "Rewind sẽ thiết lập lại Autosens";
 
 /* ”Rewind Resets Autosens” */
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại tỷ lệ cảm biến tự động về mức trung tính khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi địa điểm có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình một cách độc lập với những thay đổi ở địa điểm, bạn có thể cân nhắc việc tắt tính năng này.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại tỷ lệ cảm biến tự động về mức trung tính khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi điểm gắn có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình một cách độc lập với những thay đổi ở địa điểm, bạn có thể cân nhắc việc tắt tính năng này.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
 "High Temptarget Raises Sensitivity" = "Mục tiêu tạm thời cao sẽ làm tăng độ nhạy";
@@ -2179,7 +2179,7 @@ Enact a temp Basal or a temp target */
 "Skip Neutral Temps" = "Bỏ qua liều tạm thời trung lập";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Mặc định là False, do đó iAPS sẽ đặt liều tạm thời bất cứ khi nào có thể, do đó, sẽ dễ dàng hơn để xem hệ thống có hoạt động hay không, ngay cả khi bạn ngoại tuyến. Điều này có nghĩa là OpenAPS sẽ đặt Liều tạm thời “trung tính” (giống như Liều tạm thời cơ bản mặc định của bạn) nếu không cần điều chỉnh. Đây là cài đặt cũ để OpenAPS có các tùy chọn giảm thiểu âm thanh và thông báo từ 'âm mưu' có thể đánh thức bạn vào ban đêm. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Mặc định là False, do đó iAPS sẽ đặt liều tạm thời bất cứ khi nào có thể, do đó, sẽ dễ dàng hơn để xem hệ thống có hoạt động hay không, ngay cả khi bạn ngoại tuyến. Điều này có nghĩa là OpenAPS sẽ đặt Liều tạm thời “trung tính” (giống như Liều tạm thời cơ bản mặc định của bạn) nếu không cần điều chỉnh. Đây là cài đặt cũ để OpenAPS có các tùy chọn giảm thiểu âm thanh và thông báo từ 'rig' có thể đánh thức bạn vào ban đêm. ";
 
 /* Headline "Unsuspend If No Temp” */
 "Unsuspend If No Temp" = "Bỏ tạm dừng nếu không có tạm thời";
@@ -2203,7 +2203,7 @@ Enact a temp Basal or a temp target */
 "Enable SMB With Temptarget" = "Kích hoạt SMB với mục tiêu tạm thời";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép Super Micro Bolus (SMB) đạt được mục tiêu ăn sớm / nhiệt độ thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép Super Micro Bolus (SMB) đạt được mục tiêu ăn sớm / liều tạm thời thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
 
 /* Headline "Enable SMB Always" */
 "Enable SMB Always" = "Luôn bật SMB";
