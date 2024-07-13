@@ -2489,6 +2489,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Mostra Pulsante Impostazione nell'intervallo di tempo";
 
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Non visualizzare mai il grafico piccolo del glucosio durante lo scorrimento";
+
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
 

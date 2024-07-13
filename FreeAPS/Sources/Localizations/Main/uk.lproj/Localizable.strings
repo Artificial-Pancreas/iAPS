@@ -2488,6 +2488,9 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Відображення Кнопки Налаштування Інтервалу Часу";
 
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Ніколи не відображайте маленьку діаграму рівня глюкози під час прокручування";
+
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
 
