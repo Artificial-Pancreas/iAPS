@@ -14,6 +14,7 @@ extension PumpSettingsEditor {
             maxBasal = settings.maxBasal
             maxBolus = settings.maxBolus
             dia = settings.insulinActionCurve
+            maxCarbs = settingsManager.settings.maxCarbs
             subscribeSetting(\.maxCarbs, on: $maxCarbs) { maxCarbs = $0 }
         }
 
