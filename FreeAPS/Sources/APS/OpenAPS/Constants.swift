@@ -94,6 +94,8 @@ extension OpenAPS {
         static let notUploadedOverrides = "upload/not-uploaded-overrides.json"
         static let uploadedPumpSettings = "upload/uploaded-pump_settings.json"
         static let uploadedTempTargetsDatabase = "upload/uploaded-temptargets_database.json"
+        static let uploadedMealPresets = "upload/uploaded-meal-presets.json"
+        static let uploadedOverridePresets = "upload/uploaded-override-presets.json"
     }
 
     enum FreeAPS {

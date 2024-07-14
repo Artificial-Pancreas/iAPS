@@ -21,6 +21,11 @@ extension Settings {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var onboardingDone: FetchedResults<Onboarding>
 
+        @FetchRequest(
+            entity: ActiveProfile.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var currentProfile: FetchedResults<ActiveProfile>
+
         private var GlucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -34,8 +39,15 @@ extension Settings {
         @State var id = ""
 
         var body: some View {
-            if onboardingDone.first?.firstRun ?? false {
-                ProfilePicker.RootView(resolver: resolver, int: $int, profile: $selectedProfile, inSitu: $inSitu, id_: $id)
+            if onboardingDone.first?.firstRun ?? true {
+                Restore.RootView(
+                    resolver: resolver,
+                    int: $int,
+                    profile: $selectedProfile,
+                    inSitu: $inSitu,
+                    id_: $id,
+                    uniqueID: state.getIdentifier()
+                )
             } else {
                 settingsView
             }
@@ -88,6 +100,11 @@ extension Settings {
                 } header: { Text("Services") }
 
                 Section {
+                    Text("\(currentProfile.first?.name ?? "default")").foregroundStyle(.green).bold()
+                        .navigationLink(to: .profiles, from: self)
+                } header: { Text("Configuration Profiles") }
+
+                Section {
                     Text("Pump Settings").navigationLink(to: .pumpSettingsEditor, from: self)
                     Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
                     Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)
@@ -99,10 +116,6 @@ extension Settings {
                     Text("OpenAPS").navigationLink(to: .preferencesEditor, from: self)
                     Text("Autotune").navigationLink(to: .autotuneConfig, from: self)
                 } header: { Text("OpenAPS") }
-
-                Section {
-                    Text("Saved Settings").navigationLink(to: .profiles, from: self)
-                } header: { Text("Profiles") }
 
                 Section {
                     Text("UI/UX").navigationLink(to: .statisticsConfig, from: self)

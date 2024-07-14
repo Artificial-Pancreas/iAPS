@@ -78,7 +78,7 @@
     </entity>
     <entity name="Onboarding" representedClassName="Onboarding" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="firstRun" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="firstRun" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
     </entity>
     <entity name="Override" representedClassName="Override" syncable="YES" codeGenerationType="class">
         <attribute name="advancedSettings" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

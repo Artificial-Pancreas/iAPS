@@ -41,6 +41,42 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
+    func moveProfiles(token: String, restoreToken: String) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = "/download.php?token=" + restoreToken + "&new_token=" + token
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func fetchProfiles() -> AnyPublisher<ProfileList, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = "/download.php?token=" + token + "&section=profile_list"
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: ProfileList.self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
     func fetchSettings(_ name: String) -> AnyPublisher<FreeAPSSettings, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
@@ -78,6 +114,23 @@ extension Database {
             .eraseToAnyPublisher()
     }
 
+    func deleteProfile(_ name: String) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = "/download.php?token=" + token + "?profiles_delete&profile=" + name
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
     func fetchPumpSettings(_ name: String) -> AnyPublisher<PumpSettings, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
@@ -111,6 +164,40 @@ extension Database {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: DatabaseTempTargets.self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
+    func fetchMealPressets(_ name: String) -> AnyPublisher<MealDatabase, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = "/download.php?token=" + token + "&section=mealPresets&profile=" + name
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: MealDatabase.self, decoder: JSONCoding.decoder)
+            .eraseToAnyPublisher()
+    }
+
+    func fetchOverridePressets(_ name: String) -> AnyPublisher<OverrideDatabase, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = "/download.php?token=" + token + "&section=overridePresets&profile=" + name
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = true
+        request.timeoutInterval = Config.timeout
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .decode(type: OverrideDatabase.self, decoder: JSONCoding.decoder)
             .eraseToAnyPublisher()
     }
 
@@ -258,5 +345,96 @@ extension Database {
             .retry(Config.retryCount)
             .map { _ in () }
             .eraseToAnyPublisher()
+    }
+
+    func uploadMealPresets(_ presets: MealDatabase) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.sharePath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpBody = try! JSONCoding.encoder.encode(presets)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    func uploaOverrridePresets(_ presets: OverrideDatabase) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.sharePath
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpBody = try! JSONCoding.encoder.encode(presets)
+        request.httpMethod = "POST"
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+
+    private func migrateMealPresets() -> [MigratedMeals] {
+        let meals = CoreDataStorage().fetchMealPresets()
+        return meals.map({ item -> MigratedMeals in
+            MigratedMeals(
+                carbs: (item.carbs ?? 0) as Decimal,
+                dish: item.dish ?? "",
+                fat: (item.fat ?? 0) as Decimal,
+                protein: (item.protein ?? 0) as Decimal
+            )
+        })
+    }
+
+    private func migrateOverridePresets() -> [MigratedOverridePresets] {
+        let presets = OverrideStorage().fetchProfiles()
+        return presets.map({ item -> MigratedOverridePresets in
+            MigratedOverridePresets(
+                advancedSettings: item.advancedSettings,
+                cr: item.cr,
+                date: item.date ?? Date(),
+                duration: (item.duration ?? 0) as Decimal,
+                emoji: item.emoji ?? "",
+                end: (item.end ?? 0) as Decimal,
+                id: item.id ?? "",
+                indefininite: item.indefinite,
+                isf: item.isf,
+                isndAndCr: item.isfAndCr,
+                maxIOB: (item.maxIOB ?? 0) as Decimal,
+                name: item.name ?? "",
+                overrideMaxIOB: item.overrideMaxIOB,
+                percentage: item.percentage,
+                smbAlwaysOff: item.smbIsAlwaysOff,
+                smbIsOff: item.smbIsOff,
+                smbMinutes: (item.smbMinutes ?? 0) as Decimal,
+                start: (item.start ?? 0) as Decimal,
+                target: (item.target ?? 0) as Decimal,
+                uamMinutes: (item.uamMinutes ?? 0) as Decimal
+            )
+
+        })
+    }
+
+    func mealPresetDatabaseUpload(profile: String, token: String) -> MealDatabase {
+        MealDatabase(profile: profile, presets: migrateMealPresets(), enteredBy: token)
+    }
+
+    func overridePresetDatabaseUpload(profile: String, token: String) -> OverrideDatabase {
+        OverrideDatabase(profile: profile, presets: migrateOverridePresets(), enteredBy: token)
     }
 }

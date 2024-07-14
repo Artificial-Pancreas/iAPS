@@ -113,7 +113,7 @@ extension Screen {
         case .sharing:
             Sharing.RootView(resolver: resolver)
         case .profiles:
-            Profiles.RootView(resolver: resolver)
+            ProfilePicker.RootView(resolver: resolver)
         }
     }
 

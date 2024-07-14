@@ -1,31 +1,18 @@
-import Combine
 import Foundation
-import LoopKit
 import Swinject
 
 extension ProfilePicker {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var keychain: Keychain!
         @Injected() var storage: FileStorage!
-        @Injected() var apsManager: APSManager!
 
         @Published var name: String = ""
         @Published var backup: Bool = false
 
         let coreData = CoreDataStorage()
 
-        func save(_ name: String) {
-            coreData.saveProfileSettingName(name: name)
-        }
-
-        func saveFile(_ file: JSON, filename: String) {
-            let s = BaseFileStorage()
-            s.save(file, as: filename)
-        }
-
-        func apsM(resolver: Resolver) -> APSManager! {
-            let a = BaseAPSManager(resolver: resolver)
-            return a
+        func save(_ name_: String) {
+            coreData.saveProfileSettingName(name: name_)
         }
 
         override func subscribe() {
@@ -44,6 +31,23 @@ extension ProfilePicker {
 
         func activeProfile(_ selectedProfile: String) {
             coreData.activeProfile(name: selectedProfile)
+        }
+
+        func deleteProfileFromDatabase(name: String) {
+            let database = Database(token: getIdentifier())
+
+            database.deleteProfile(name)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.service, "Profiles \(name) deleted from database")
+
+                    case let .failure(error):
+                        debug(.service, "Failed deleting \(name) from database. " + error.localizedDescription)
+                    }
+                }
+            receiveValue: {}
+                .store(in: &lifetime)
         }
     }
 }

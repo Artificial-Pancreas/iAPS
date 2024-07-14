@@ -50,3 +50,51 @@ struct Loaded {
     var carbratios = false
     var basalProfiles = false
 }
+
+struct ProfileList: JSON {
+    var profiles: String
+}
+
+struct MigratedMeals: Codable {
+    var carbs: Decimal
+    var dish: String
+    var fat: Decimal
+    var protein: Decimal
+}
+
+struct MigratedOverridePresets: Codable {
+    var advancedSettings: Bool
+    var cr: Bool
+    var date: Date
+    var duration: Decimal
+    var emoji: String
+    var end: Decimal
+    var id: String
+    var indefininite: Bool
+    var isf: Bool
+    var isndAndCr: Bool
+    var maxIOB: Decimal
+    var name: String
+    var overrideMaxIOB: Bool
+    var percentage: Double
+    var smbAlwaysOff: Bool
+    var smbIsOff: Bool
+    var smbMinutes: Decimal
+    var start: Decimal
+    var target: Decimal
+    var uamMinutes: Decimal
+}
+
+struct MealDatabase: JSON {
+    var report = "mealPresets"
+    var profile: String
+    var presets: [MigratedMeals]
+    let enteredBy: String
+}
+
+struct OverrideDatabase: JSON {
+    var report = "overridePresets"
+    var profile: String
+    var presets: [MigratedOverridePresets]
+    let enteredBy: String
+}

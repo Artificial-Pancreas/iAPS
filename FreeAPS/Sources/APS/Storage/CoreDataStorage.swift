@@ -238,12 +238,27 @@ final class CoreDataStorage {
     }
 
     func fetchSettingProfileName() -> String? {
+        if let profile = fetchActiveProfile() {
+            return profile.name ?? "default"
+        }
+
         var presetsArray: String?
         coredataContext.performAndWait {
             let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
             try? presetsArray = self.coredataContext.fetch(requestProfiles).first?.name
+        }
+        return presetsArray
+    }
+
+    func fetchSettingProfileNames() -> [Profiles]? {
+        var presetsArray: [Profiles]?
+        coredataContext.performAndWait {
+            let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            try? presetsArray = self.coredataContext.fetch(requestProfiles)
         }
         return presetsArray
     }
@@ -271,12 +286,27 @@ final class CoreDataStorage {
         }
     }
 
+    func migrateProfileSettingName(name: String) {
+        coredataContext.perform { [self] in
+            let save = Profiles(context: self.coredataContext)
+            save.name = name
+            save.date = Date.now
+            save.uploaded = true
+            try? self.coredataContext.save()
+        }
+    }
+
     func profileSettingUploaded(name: String) {
+        var profile: String = name
+        if profile.isEmpty {
+            profile = "default"
+        }
+
         // Avoid duplicates
         if !fetchUniqueSettingProfileName(name) {
             coredataContext.perform { [self] in
                 let save = Profiles(context: self.coredataContext)
-                save.name = name
+                save.name = profile
                 save.date = Date.now
                 save.uploaded = true
                 try? self.coredataContext.save()
@@ -292,5 +322,27 @@ final class CoreDataStorage {
             save.active = true
             try? self.coredataContext.save()
         }
+    }
+
+    func checkIfActiveProfile() -> Bool {
+        var presetsArray = [ActiveProfile]()
+        coredataContext.performAndWait {
+            let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+        }
+        return (presetsArray.first?.active ?? false)
+    }
+
+    func fetchActiveProfile() -> ActiveProfile? {
+        var presetsArray = [ActiveProfile]()
+        coredataContext.performAndWait {
+            let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+        }
+        return presetsArray.first
     }
 }

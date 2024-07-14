@@ -11,7 +11,7 @@ protocol FileStorage {
     func remove(_ name: String)
     func rename(_ name: String, to newName: String)
     func transaction(_ exec: (FileStorage) -> Void)
-    func retrieveTwice<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
+    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
 
     func urlFor(file: String) -> URL?
 }
@@ -44,7 +44,7 @@ final class BaseFileStorage: FileStorage {
         }
     }
 
-    func retrieveTwice<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
+    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
         if let loaded = retrieve(name, as: type) {
             return loaded
         }
