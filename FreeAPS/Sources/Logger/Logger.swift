@@ -144,11 +144,11 @@ final class Logger {
         fileprivate var log: OSLog {
             let subsystem = Bundle.main.bundleIdentifier!
             switch self {
-            case .default: return OSLog.default
+            case .default,
+                 .dynamic: return OSLog.default
             case .apsManager,
                  .businessLogic,
                  .deviceManager,
-                 .dynamic,
                  .nightscout,
                  .openAPS,
                  .service:

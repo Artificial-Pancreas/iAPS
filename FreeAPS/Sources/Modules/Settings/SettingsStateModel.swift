@@ -1,3 +1,5 @@
+import Combine
+import LoopKit
 import SwiftUI
 
 extension Settings {
@@ -5,6 +7,8 @@ extension Settings {
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
         @Injected() private var nightscoutManager: NightscoutManager!
+        @Injected() private var storage: FileStorage!
+        @Injected() private var apsManager: APSManager!
 
         @Published var closedLoop = false
         @Published var debugOptions = false
@@ -18,6 +22,7 @@ extension Settings {
 
         override func subscribe() {
             nightscoutManager.fetchVersion()
+
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
             subscribeSetting(\.disableCGMError, on: $disableCGMError) { disableCGMError = $0 }
@@ -25,7 +30,6 @@ extension Settings {
             broadcaster.register(SettingsObserver.self, observer: self)
 
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-
             versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
 
             // Read branch information from the branch.txt instead of infoDictionary
@@ -79,6 +83,22 @@ extension Settings {
 
         func deleteOverrides() {
             nightscoutManager.deleteAllNSoverrrides() // For testing
+        }
+
+        func startOnboarding() {
+            CoreDataStorage().startOnbarding()
+        }
+
+        func getIdentifier() -> String {
+            let keychain = BaseKeychain()
+
+            var identfier = keychain.getValue(String.self, forKey: IAPSconfig.id) ?? ""
+            guard identfier.count > 1 else {
+                identfier = UUID().uuidString
+                keychain.setValue(identfier, forKey: IAPSconfig.id)
+                return identfier
+            }
+            return identfier
         }
     }
 }
