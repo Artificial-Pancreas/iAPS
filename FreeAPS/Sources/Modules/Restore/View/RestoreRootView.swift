@@ -743,7 +743,7 @@ extension Restore {
                     switch completion {
                     case .finished:
                         debug(.service, "Settings fetched from database. Profile: \(name)")
-                            self.freeapsSettingsOK = true
+                        self.freeapsSettingsOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
                     }
