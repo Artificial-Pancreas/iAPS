@@ -309,9 +309,9 @@ extension PeripheralManager {
     private func processConnectResponse(_ data: Data) {
         if (data.count == 4 && self.isOk(data)) {
             // response OK v1
+            self.log.info("Setting encryption mode to DEFAULT")
             self.encryptionMode = .DEFAULT
             DanaRSEncryption.setEnhancedEncryption(EncryptionType.DEFAULT.rawValue)
-//            log.info("Setting encryption mode to DEFAULT. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.ignorePassword = false;
             
@@ -323,9 +323,9 @@ extension PeripheralManager {
             }
         } else if (data.count == 9 && self.isOk(data)) {
             // response OK v3, 2nd layer encryption
+            log.info("Setting encryption mode to RSv3")
             self.encryptionMode = .RSv3
             DanaRSEncryption.setEnhancedEncryption(EncryptionType.RSv3.rawValue)
-//            log.info("Setting encryption mode to RSv3. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.ignorePassword = true;
             
@@ -344,9 +344,9 @@ extension PeripheralManager {
                 connectionFailure(NSError(domain: "Invalid hwModel", code: 0, userInfo: nil))
             }
         } else if (data.count == 14 && self.isOk(data)) {
+            log.info("Setting encryption mode to BLE5")
             self.encryptionMode = .BLE_5
             DanaRSEncryption.setEnhancedEncryption(EncryptionType.BLE_5.rawValue)
-//            log.info("Setting encryption mode to BLE5. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.hwModel = data[5]
             self.pumpManager.state.pumpProtocol = data[7]
@@ -542,8 +542,9 @@ extension PeripheralManager {
             } else if let indexEncryptedStartByte = self.readBuffer.firstIndex(of: self.ENCRYPTED_START_BYTE) {
                 self.readBuffer = self.readBuffer.subdata(in: indexEncryptedStartByte..<self.readBuffer.count)
             } else {
-                log.error("Received invalid packets. Starting bytes do not exists in message. Data: \(self.readBuffer.base64EncodedString())")
+                log.error("Received invalid packets. Starting bytes do not exists in message. Encryption mode possibly wrong Data: \(self.readBuffer.base64EncodedString())")
                 self.readBuffer = Data([])
+                self.bluetoothManager.disconnect(self.connectedDevice, force: true)
                 return
             }
         }

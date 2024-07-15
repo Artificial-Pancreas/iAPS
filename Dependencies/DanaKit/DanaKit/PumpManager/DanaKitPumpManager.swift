@@ -293,6 +293,13 @@ extension DanaKitPumpManager: PumpManager {
     }
     
     public func ensureCurrentPumpData(completion: ((Date?) -> Void)?) {
+        if self.bluetooth as? ContinousBluetoothManager != nil {
+            // Always update status in Continous mode
+            // During interactive mode, the most important data is fetched during the connection initialization
+            syncPump(completion)
+            return
+        }
+
         guard Date.now.timeIntervalSince(self.state.lastStatusDate) > .minutes(6) else {
             self.log.info("Skipping status update because pumpData is fresh: \(Date.now.timeIntervalSince(self.state.lastStatusDate)) sec")
             completion?(self.state.lastStatusDate)
@@ -312,7 +319,7 @@ extension DanaKitPumpManager: PumpManager {
                 completion?(nil)
                 return
             case .success:
-                if let continousBluetooth = self.bluetooth as? ContinousBluetoothManager {
+                if self.bluetooth as? ContinousBluetoothManager != nil {
                     await self.updateInitialState()
                 }
                 
