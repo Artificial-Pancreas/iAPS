@@ -84,7 +84,9 @@ extension ProfilePicker {
                         } else {
                             ForEach(uploaded) { profile in
                                 profilesView(for: profile)
-                            }.onDelete(perform: removeProfile)
+                                    .deleteDisabled(profile.name == "default")
+                            }
+                            .onDelete(perform: removeProfile)
                         }
                     }
                 } header: {
@@ -152,6 +154,7 @@ extension ProfilePicker {
             let database = Database(token: state.getIdentifier())
             for index in offsets {
                 let profile = profiles[index]
+
                 database.deleteProfile(profile.name ?? "")
                     .sink { completion in
                         switch completion {
