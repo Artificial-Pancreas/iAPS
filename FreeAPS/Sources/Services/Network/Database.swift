@@ -119,7 +119,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "?profiles_delete&profile=" + name
+        components.path = "/download.php?token=" + token + "&profiles_delete&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true
