@@ -65,8 +65,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var disableCGMError: Bool = true
     var uploadVersion: Bool = true
     var skipGlucoseChart: Bool = false
-    var birthDate = Date.distantPast
-    // var sex: Sex = .secret
+    var birthDate: Date = .distantPast
     var sexSetting: Int = 3
 }
 
