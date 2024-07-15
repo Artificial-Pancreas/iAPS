@@ -421,56 +421,56 @@ extension Restore {
                     HStack {
                         Text("Basals")
                         Spacer()
-                        Text(basalsOK ? "OK" : "Wait...")
+                        Text(basalsOK ? "OK" : "No")
                             .foregroundStyle(basalsOK ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Carb Ratios")
                         Spacer()
-                        Text(crsOK ? "OK" : "Wait...")
+                        Text(crsOK ? "OK" : "No")
                             .foregroundStyle(crsOK ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Insulin Sensitivites")
                         Spacer()
-                        Text(isfsOK ? "OK" : "Wait...")
+                        Text(isfsOK ? "OK" : "No")
                             .foregroundStyle(isfsOK ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Targets")
                         Spacer()
-                        Text(targetsOK ? "OK" : "Wait...")
+                        Text(targetsOK ? "OK" : "No")
                             .foregroundStyle(targetsOK ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Pump Settings")
                         Spacer()
-                        Text(pumpSettingsOK ? "OK" : "Wait...")
+                        Text(pumpSettingsOK ? "OK" : "No")
                             .foregroundStyle(pumpSettingsOK ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Temp Targets")
                         Spacer()
-                        Text(tempTargetsOK ? "OK" : "Wait...")
+                        Text(tempTargetsOK ? "OK" : "No")
                             .foregroundStyle(tempTargetsOK ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Preferences")
                         Spacer()
-                        Text(settingsOK ? "OK" : "Wait...")
+                        Text(settingsOK ? "OK" : "No")
                             .foregroundStyle(settingsOK ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("iAPS Settings")
                         Spacer()
-                        Text(freeapsSettingsOK ? "OK" : "Wait...")
+                        Text(freeapsSettingsOK ? "OK" : "No")
                             .foregroundStyle(freeapsSettingsOK ? Color(.darkGreen) : .red)
                     }
 
@@ -478,14 +478,14 @@ extension Restore {
                         HStack {
                             Text("Meal Presets")
                             Spacer()
-                            Text(mealPresetsOK ? "OK" : "Wait...")
+                            Text(mealPresetsOK ? "OK" : "No")
                                 .foregroundStyle(mealPresetsOK ? Color(.darkGreen) : .red)
                         }
 
                         HStack {
                             Text("Override Presets")
                             Spacer()
-                            Text(overridePresetsOK ? "OK" : "Wait...")
+                            Text(overridePresetsOK ? "OK" : "No")
                                 .foregroundStyle(overridePresetsOK ? Color(.darkGreen) : .red)
                         }
                     }
@@ -533,56 +533,56 @@ extension Restore {
                     HStack {
                         Text("Basals")
                         Spacer()
-                        Text(basalsSaved ? "Saved" : "Wait...")
+                        Text(basalsSaved ? "Saved" : "No")
                             .foregroundStyle(basalsSaved ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Carb Ratios")
                         Spacer()
-                        Text(crsOKSaved ? "Saved" : "Wait...")
+                        Text(crsOKSaved ? "Saved" : "No")
                             .foregroundStyle(crsOKSaved ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Insulin Sensitivites")
                         Spacer()
-                        Text(isfsSaved ? "Saved" : "Wait...")
+                        Text(isfsSaved ? "Saved" : "No")
                             .foregroundStyle(isfsSaved ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Targets")
                         Spacer()
-                        Text(targetsSaved ? "Saved" : "Wait...")
+                        Text(targetsSaved ? "Saved" : "No")
                             .foregroundStyle(targetsSaved ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Pump Settings")
                         Spacer()
-                        Text(pumpSettingsSaved ? "Saved" : "Wait...")
+                        Text(pumpSettingsSaved ? "Saved" : "No")
                             .foregroundStyle(pumpSettingsSaved ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Temp Targets")
                         Spacer()
-                        Text(tempTargetsSaved ? "Saved" : "Wait...")
+                        Text(tempTargetsSaved ? "Saved" : "No")
                             .foregroundStyle(tempTargetsSaved ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("Preferences")
                         Spacer()
-                        Text(settingsSaved ? "Saved" : "Wait...")
+                        Text(settingsSaved ? "Saved" : "No")
                             .foregroundStyle(settingsSaved ? Color(.darkGreen) : .red)
                     }
 
                     HStack {
                         Text("iAPS Settings")
                         Spacer()
-                        Text(freeapsSettingsSaved ? "Saved" : "Wait...")
+                        Text(freeapsSettingsSaved ? "Saved" : "No")
                             .foregroundStyle(freeapsSettingsSaved ? Color(.darkGreen) : .red)
                     }
 
@@ -590,14 +590,14 @@ extension Restore {
                         HStack {
                             Text("Meal Presets")
                             Spacer()
-                            Text(mealPresetsSaved ? "Saved" : "Wait...")
+                            Text(mealPresetsSaved ? "Saved" : "No")
                                 .foregroundStyle(mealPresetsSaved ? Color(.darkGreen) : .red)
                         }
 
                         HStack {
                             Text("Override Presets")
                             Spacer()
-                            Text(overridePresetsSaved ? "Saved" : "Wait...")
+                            Text(overridePresetsSaved ? "Saved" : "No")
                                 .foregroundStyle(overridePresetsSaved ? Color(.darkGreen) : .red)
                         }
                     }
