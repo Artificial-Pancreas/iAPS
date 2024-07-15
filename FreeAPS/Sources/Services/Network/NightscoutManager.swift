@@ -70,7 +70,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         settingsManager.settings.uploadGlucose
     }
 
-    private var name: String? {
+    private var name: String {
         CoreDataStorage().fetchSettingProfileName()
     }
 
@@ -581,7 +581,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     switch completion {
                     case .finished:
                         debug(.nightscout, "Override presets uploaded to database. Profile: \(presets.profile)")
-                        self.storage.save(presets, as: OpenAPS.Nightscout.uploadedMealPresets)
+                        self.storage.save(presets, as: OpenAPS.Nightscout.uploadedOverridePresets)
                         self.saveToCoreData(presets.profile)
                     case let .failure(error):
                         debug(.nightscout, "Override presets failed to upload to database " + error.localizedDescription)
@@ -743,7 +743,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         let token = getIdentifier()
-        let profile = name
 
         let sens = sensitivities?.sensitivities.map { item -> NightscoutTimevalue in
             NightscoutTimevalue(
@@ -834,7 +833,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 units: nsUnits,
                 enteredBy: NigtscoutTreatment.local,
                 store: [defaultProfile: ps],
-                profile: profile ?? "default"
+                profile: name
             )
 
             let q = NightscoutProfileStore(
@@ -844,7 +843,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 units: nsUnits,
                 enteredBy: NigtscoutTreatment.local,
                 store: [defaultProfile: ps],
-                profile: profile ?? "default"
+                profile: name
             )
 
             // UPLOAD Profiles WHEN CHANGED
@@ -905,7 +904,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         {
             NSLog("NightscoutManager Preferences, preferences unchanged")
         } else {
-            let prefs = NightscoutPreferences(preferences: preferences, enteredBy: token, profile: profile)
+            let prefs = NightscoutPreferences(preferences: preferences, enteredBy: token, profile: name)
             uploadPreferences(prefs)
         }
 
@@ -927,7 +926,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                uploadedSettings.rawJSON.sorted() == pumpSettings.rawJSON.sorted(), !force
             {
                 NSLog("PumpSettings unchanged")
-            } else { uploadPumpSettingsToDatabase(pumpSettings, token: token, name: profile) }
+            } else { uploadPumpSettingsToDatabase(pumpSettings, token: token, name: name) }
 
         } else {
             debug(.nightscout, "UploadPumpSettings: error opening pump settings")
@@ -942,14 +941,14 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 uploadedTempTargets.rawJSON.sorted() == tempTargets.rawJSON.sorted(), !force
             {
                 NSLog("Temp targets unchanged")
-            } else { uploadTempTargetsToDatabase(tempTargets, token: token, name: profile) }
+            } else { uploadTempTargetsToDatabase(tempTargets, token: token, name: name) }
 
         } else {
             debug(.nightscout, "UploadPumpSettings: error opening pump settings")
         }
 
         // Upload Meal Presets when needed
-        let mealPresets = Database(token: token).mealPresetDatabaseUpload(profile: profile ?? "default", token: token)
+        let mealPresets = Database(token: token).mealPresetDatabaseUpload(profile: name, token: token)
         if !mealPresets.presets.isEmpty {
             if let uploadedMealPresets = storage.retrieveFile(OpenAPS.Nightscout.uploadedMealPresets, as: MealDatabase.self),
                mealPresets.rawJSON.sorted() == uploadedMealPresets.rawJSON.sorted(), !force
@@ -961,7 +960,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         // Upload Override Presets when needed
-        let overridePresets = Database(token: token).overridePresetDatabaseUpload(profile: profile ?? "default", token: token)
+        let overridePresets = Database(token: token).overridePresetDatabaseUpload(profile: name, token: token)
         if !overridePresets.presets.isEmpty {
             if let uploadedOverridePresets = storage.retrieveFile(
                 OpenAPS.Nightscout.uploadedOverridePresets,

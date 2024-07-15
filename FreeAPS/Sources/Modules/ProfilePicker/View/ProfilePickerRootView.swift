@@ -58,7 +58,7 @@ extension ProfilePicker {
 
                 footer: {
                     Text(
-                        "Your active profile is updated and uploaded to cloud automatically whenever settings are changed and on a daily basis, provided backup is enabled."
+                        "Updates and uploads to the cloud automatically whenever settings are changed and on a daily basis, provided backup is enabled."
                     )
                 }
 
@@ -111,7 +111,7 @@ extension ProfilePicker {
                     .listRowBackground(state.backup ? Color(.systemBlue) : Color(.systemGray4))
                     .tint(.white)
 
-                } header: { Text("Force Backup now") }
+                } header: { Text("Backup now") }
 
                 footer: {
                     if !state.backup {

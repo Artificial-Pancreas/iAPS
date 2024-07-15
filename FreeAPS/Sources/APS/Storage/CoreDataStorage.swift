@@ -237,19 +237,8 @@ final class CoreDataStorage {
         }
     }
 
-    func fetchSettingProfileName() -> String? {
-        if let profile = fetchActiveProfile() {
-            return profile.name ?? "default"
-        }
-
-        var presetsArray: String?
-        coredataContext.performAndWait {
-            let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
-            let sort = NSSortDescriptor(key: "date", ascending: false)
-            requestProfiles.sortDescriptors = [sort]
-            try? presetsArray = self.coredataContext.fetch(requestProfiles).first?.name
-        }
-        return presetsArray
+    func fetchSettingProfileName() -> String {
+        fetchActiveProfile()
     }
 
     func fetchSettingProfileNames() -> [Profiles]? {
@@ -335,7 +324,7 @@ final class CoreDataStorage {
         return (presetsArray.first?.active ?? false)
     }
 
-    func fetchActiveProfile() -> ActiveProfile? {
+    func fetchActiveProfile() -> String {
         var presetsArray = [ActiveProfile]()
         coredataContext.performAndWait {
             let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
@@ -343,6 +332,6 @@ final class CoreDataStorage {
             requestProfiles.sortDescriptors = [sort]
             try? presetsArray = self.coredataContext.fetch(requestProfiles)
         }
-        return presetsArray.first
+        return presetsArray.first?.name ?? "default"
     }
 }

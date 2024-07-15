@@ -28,7 +28,6 @@ extension Database {
         components.path = "/download.php?token=" + token + "&section=preferences&profile=" + name
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -49,7 +48,6 @@ extension Database {
         components.path = "/download.php?token=" + restoreToken + "&new_token=" + token
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         request.httpMethod = "POST"
@@ -68,7 +66,6 @@ extension Database {
         components.path = "/download.php?token=" + token + "&section=profile_list"
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -85,7 +82,6 @@ extension Database {
         components.path = "/download.php?token=" + token + "&section=settings&profile=" + name
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         let decoder = JSONDecoder()
@@ -122,7 +118,6 @@ extension Database {
         components.path = "/download.php?token=" + token + "&section=profiles_delete&profile=" + name
 
         var request = URLRequest(url: components.url!)
-        //request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -175,7 +170,6 @@ extension Database {
         components.path = "/download.php?token=" + token + "&section=mealPresets&profile=" + name
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = true
         request.timeoutInterval = Config.timeout
 
         return service.run(request)
@@ -209,7 +203,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -230,7 +223,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try! JSONCoding.encoder.encode(stats)
@@ -271,7 +263,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -292,7 +283,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -313,7 +303,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -334,7 +323,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -355,7 +343,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -376,7 +363,6 @@ extension Database {
         components.path = Config.sharePath
 
         var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
         request.timeoutInterval = Config.timeout
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 

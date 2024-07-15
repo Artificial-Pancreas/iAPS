@@ -200,6 +200,13 @@ extension Settings {
                         }
 
                         Group {
+                            Text("Override Presets uploaded")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedOverridePresets), from: self)
+                            Text("Meal Presets uploaded")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedMealPresets), from: self)
+                        }
+
+                        Group {
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")

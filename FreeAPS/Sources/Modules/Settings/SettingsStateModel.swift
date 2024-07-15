@@ -8,7 +8,6 @@ extension Settings {
         @Injected() private var fileManager: FileManager!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var storage: FileStorage!
-        @Injected() private var apsManager: APSManager!
 
         @Published var closedLoop = false
         @Published var debugOptions = false

@@ -418,80 +418,104 @@ extension Restore {
                         }.foregroundStyle(.secondary)
                     }
 
-                    HStack {
-                        Text("Basals")
-                        Spacer()
-                        Text(basalsOK ? "OK" : "No")
-                            .foregroundStyle(basalsOK ? Color(.darkGreen) : .red)
+                    if basalsOK {
+                        HStack {
+                            Text("Basals")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
-                    HStack {
-                        Text("Carb Ratios")
-                        Spacer()
-                        Text(crsOK ? "OK" : "No")
-                            .foregroundStyle(crsOK ? Color(.darkGreen) : .red)
+                    if crsOK {
+                        HStack {
+                            Text("Carb Ratios")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
-                    HStack {
-                        Text("Insulin Sensitivites")
-                        Spacer()
-                        Text(isfsOK ? "OK" : "No")
-                            .foregroundStyle(isfsOK ? Color(.darkGreen) : .red)
+                    if isfsOK {
+                        HStack {
+                            Text("Insulin Sensitivites")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
-                    HStack {
-                        Text("Targets")
-                        Spacer()
-                        Text(targetsOK ? "OK" : "No")
-                            .foregroundStyle(targetsOK ? Color(.darkGreen) : .red)
+                    if targetsOK {
+                        HStack {
+                            Text("Targets")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
-                    HStack {
-                        Text("Pump Settings")
-                        Spacer()
-                        Text(pumpSettingsOK ? "OK" : "No")
-                            .foregroundStyle(pumpSettingsOK ? Color(.darkGreen) : .red)
+                    if pumpSettingsOK {
+                        HStack {
+                            Text("Pump Settings")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
-                    HStack {
-                        Text("Temp Targets")
-                        Spacer()
-                        Text(tempTargetsOK ? "OK" : "No")
-                            .foregroundStyle(tempTargetsOK ? Color(.darkGreen) : .red)
+                    if tempTargetsOK {
+                        HStack {
+                            Text("Temp Targets")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
-                    HStack {
-                        Text("Preferences")
-                        Spacer()
-                        Text(settingsOK ? "OK" : "No")
-                            .foregroundStyle(settingsOK ? Color(.darkGreen) : .red)
+                    if settingsOK {
+                        HStack {
+                            Text("Preferences")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
-                    HStack {
-                        Text("iAPS Settings")
-                        Spacer()
-                        Text(freeapsSettingsOK ? "OK" : "No")
-                            .foregroundStyle(freeapsSettingsOK ? Color(.darkGreen) : .red)
+                    if freeapsSettingsOK {
+                        HStack {
+                            Text("iAPS Settings")
+                            Spacer()
+                            Text("OK")
+                                .foregroundStyle(Color(.darkGreen))
+                        }
                     }
 
                     if displayCoreData {
-                        HStack {
-                            Text("Meal Presets")
-                            Spacer()
-                            Text(mealPresetsOK ? "OK" : "No")
-                                .foregroundStyle(mealPresetsOK ? Color(.darkGreen) : .red)
+                        if mealPresetsOK {
+                            HStack {
+                                Text("Meal Presets")
+                                Spacer()
+                                Text("OK")
+                                    .foregroundStyle(Color(.darkGreen))
+                            }
                         }
 
-                        HStack {
-                            Text("Override Presets")
-                            Spacer()
-                            Text(overridePresetsOK ? "OK" : "No")
-                                .foregroundStyle(overridePresetsOK ? Color(.darkGreen) : .red)
+                        if overridePresetsOK {
+                            HStack {
+                                Text("Override Presets")
+                                Spacer()
+                                Text("OK")
+                                    .foregroundStyle(Color(.darkGreen))
+                            }
                         }
                     }
 
                 } header: {
                     Text("Fetching settings...").font(.previewNormal)
+                }
+
+                footer: {
+                    !allDone ? Text("Fetching can take up to a few seconds") : nil
                 }
 
                 if !allDone {
@@ -530,75 +554,95 @@ extension Restore {
         private var savedView: some View {
             Group {
                 Section {
-                    HStack {
-                        Text("Basals")
-                        Spacer()
-                        Text(basalsSaved ? "Saved" : "No")
-                            .foregroundStyle(basalsSaved ? Color(.darkGreen) : .red)
+                    if basalsOK {
+                        HStack {
+                            Text("Basals")
+                            Spacer()
+                            Text(basalsSaved ? "Saved" : "No")
+                                .foregroundStyle(basalsSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
-                    HStack {
-                        Text("Carb Ratios")
-                        Spacer()
-                        Text(crsOKSaved ? "Saved" : "No")
-                            .foregroundStyle(crsOKSaved ? Color(.darkGreen) : .red)
+                    if crsOK {
+                        HStack {
+                            Text("Carb Ratios")
+                            Spacer()
+                            Text(crsOKSaved ? "Saved" : "No")
+                                .foregroundStyle(crsOKSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
-                    HStack {
-                        Text("Insulin Sensitivites")
-                        Spacer()
-                        Text(isfsSaved ? "Saved" : "No")
-                            .foregroundStyle(isfsSaved ? Color(.darkGreen) : .red)
+                    if isfsOK {
+                        HStack {
+                            Text("Insulin Sensitivites")
+                            Spacer()
+                            Text(isfsSaved ? "Saved" : "No")
+                                .foregroundStyle(isfsSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
-                    HStack {
-                        Text("Targets")
-                        Spacer()
-                        Text(targetsSaved ? "Saved" : "No")
-                            .foregroundStyle(targetsSaved ? Color(.darkGreen) : .red)
+                    if targetsOK {
+                        HStack {
+                            Text("Targets")
+                            Spacer()
+                            Text(targetsSaved ? "Saved" : "No")
+                                .foregroundStyle(targetsSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
-                    HStack {
-                        Text("Pump Settings")
-                        Spacer()
-                        Text(pumpSettingsSaved ? "Saved" : "No")
-                            .foregroundStyle(pumpSettingsSaved ? Color(.darkGreen) : .red)
+                    if pumpSettingsOK {
+                        HStack {
+                            Text("Pump Settings")
+                            Spacer()
+                            Text(pumpSettingsSaved ? "Saved" : "No")
+                                .foregroundStyle(pumpSettingsSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
-                    HStack {
-                        Text("Temp Targets")
-                        Spacer()
-                        Text(tempTargetsSaved ? "Saved" : "No")
-                            .foregroundStyle(tempTargetsSaved ? Color(.darkGreen) : .red)
+                    if tempTargetsOK {
+                        HStack {
+                            Text("Temp Targets")
+                            Spacer()
+                            Text(tempTargetsSaved ? "Saved" : "No")
+                                .foregroundStyle(tempTargetsSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
-                    HStack {
-                        Text("Preferences")
-                        Spacer()
-                        Text(settingsSaved ? "Saved" : "No")
-                            .foregroundStyle(settingsSaved ? Color(.darkGreen) : .red)
+                    if settingsOK {
+                        HStack {
+                            Text("Preferences")
+                            Spacer()
+                            Text(settingsSaved ? "Saved" : "No")
+                                .foregroundStyle(settingsSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
-                    HStack {
-                        Text("iAPS Settings")
-                        Spacer()
-                        Text(freeapsSettingsSaved ? "Saved" : "No")
-                            .foregroundStyle(freeapsSettingsSaved ? Color(.darkGreen) : .red)
+                    if freeapsSettingsOK {
+                        HStack {
+                            Text("iAPS Settings")
+                            Spacer()
+                            Text(freeapsSettingsSaved ? "Saved" : "No")
+                                .foregroundStyle(freeapsSettingsSaved ? Color(.darkGreen) : .red)
+                        }
                     }
 
                     if displayCoreData {
-                        HStack {
-                            Text("Meal Presets")
-                            Spacer()
-                            Text(mealPresetsSaved ? "Saved" : "No")
-                                .foregroundStyle(mealPresetsSaved ? Color(.darkGreen) : .red)
+                        if mealPresetsOK {
+                            HStack {
+                                Text("Meal Presets")
+                                Spacer()
+                                Text(mealPresetsSaved ? "Saved" : "No")
+                                    .foregroundStyle(mealPresetsSaved ? Color(.darkGreen) : .red)
+                            }
                         }
 
-                        HStack {
-                            Text("Override Presets")
-                            Spacer()
-                            Text(overridePresetsSaved ? "Saved" : "No")
-                                .foregroundStyle(overridePresetsSaved ? Color(.darkGreen) : .red)
+                        if overridePresetsOK {
+                            HStack {
+                                Text("Override Presets")
+                                Spacer()
+                                Text(overridePresetsSaved ? "Saved" : "No")
+                                    .foregroundStyle(overridePresetsSaved ? Color(.darkGreen) : .red)
+                            }
                         }
                     }
 
@@ -630,7 +674,11 @@ extension Restore {
             (
                 basalsOK && isfsOK && crsOK && freeapsSettingsOK && settingsOK && targetsOK && pumpSettingsOK && tempTargetsOK &&
                     mealPresetsOK && overridePresetsOK
-            )
+            ) ||
+                (
+                    inSitu && basalsOK && isfsOK && crsOK && freeapsSettingsOK && settingsOK && targetsOK && pumpSettingsOK &&
+                        tempTargetsOK
+                )
         }
 
         private var noneFetched: Bool {
@@ -642,10 +690,12 @@ extension Restore {
 
         private func importSettings(id: String) {
             var profile_ = "default"
-            if !profile.isEmpty, profile != profile_, inSitu {
+            if inSitu {
                 profile_ = profile
-            } else if let name = CoreDataStorage().fetchSettingProfileName(), inSitu {
-                profile_ = name
+            }
+            // To not overwrite any eventual other current profile with the default settings when force onbarding (or testing)
+            if profile_ == "default" {
+                state.activeProfile(profile_)
             }
 
             fetchPreferences(token: id, name: profile_)
@@ -993,9 +1043,7 @@ extension Restore {
             verifyTempTargets()
             verifyMealPresets()
             verifyOverridePresets()
-            if !profile.isEmpty {
-                state.activeProfile(profile)
-            }
+            state.activeProfile(profile)
         }
 
         private func trim(_ string: String) -> String {
