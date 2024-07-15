@@ -28,12 +28,17 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     
     var peripheral: CBPeripheral?
     var peripheralManager: PeripheralManager?
+    var forcedDisconnect = false
+    
+    public var isConnected: Bool {
+        self.manager.state == .poweredOn && self.peripheral?.state == .connected && self.pumpManagerDelegate?.state.isConnected ?? false
+    }
     
     override init() {
         super.init()
         
         managerQueue.sync {
-            self.manager = CBCentralManager(delegate: self, queue: managerQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "com.DanaKit"])
+            self.manager = CBCentralManager(delegate: self, queue: managerQueue)
         }
     }
     
@@ -56,12 +61,21 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         }
     }
     
+    func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol) {
+        guard let peripheralManager = self.peripheralManager, isConnected else {
+            throw NSError(domain: "No connected device", code: 0, userInfo: nil)
+        }
+        
+        return try await peripheralManager.writeMessage(packet)
+    }
+    
     public func reconnect(_ callback: @escaping (Bool) -> Void) {
         guard !self.isConnected else{
             callback(true)
             return
         }
         
+        NotificationHelper.setDisconnectWarning()
         if self.autoConnectUUID == nil {
             self.autoConnectUUID = self.pumpManagerDelegate?.state.bleIdentifier
         }
@@ -70,6 +84,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
             self.connect(self.peripheral!) { result in
                 switch(result) {
                 case .success:
+                    self.forcedDisconnect = false
                     Task {
                         await self.keepConnectionAlive()
                         callback(true)
@@ -93,6 +108,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
             try self.connect(autoConnect) { result in
                 switch(result) {
                 case .success:
+                    self.forcedDisconnect = false
                     Task {
                         await self.keepConnectionAlive()
                         callback(true)
@@ -110,19 +126,39 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     }
     
     func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) {
-        Task {
-            // Device still has an active connection with pump and is probably busy with something
-            if self.isConnected {
-                self.resetConnectionCompletion()
-                self.logDeviceCommunication("Dana - Connection is ok!", type: .connection)
+        if self.isConnected {
+            self.resetConnectionCompletion()
+            self.logDeviceCommunication("Dana - Connection is ok!", type: .connection)
+            Task {
                 await completion(.success)
-                
-            } else {
-                // We aren't connected, the user has probably disconnected the pump by hand
-                self.log.error("Device not connected...")
-                self.logDeviceCommunication("Dana - Pump is not connected. Please reconnect to pump before doing any operations", type: .connection)
+            }
+            
+        } else if !self.forcedDisconnect {
+            self.reconnect { result in
+                guard result else {
+                    self.log.error("Failed to reconnect")
+                    self.logDeviceCommunication("Dana - Couldn't reconnect", type: .connection)
+                    
+                    self.resetConnectionCompletion()
+                    Task {
+                        await completion(.failure)
+                    }
+                    return
+                }
                 
                 self.resetConnectionCompletion()
+                self.logDeviceCommunication("Dana - Reconnected!", type: .connection)
+                Task {
+                    await completion(.success)
+                }
+            }
+        } else {
+            // We aren't connected, the user has disconnected the pump by hand
+            self.log.warning("Device is forced disconnected...")
+            self.logDeviceCommunication("Dana - Pump is not connected. Please reconnect to pump before doing any operations", type: .connection)
+            
+            self.resetConnectionCompletion()
+            Task {
                 await completion(.failure)
             }
         }
@@ -134,6 +170,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         }
         
         self.autoConnectUUID = nil
+        self.forcedDisconnect = true
         
         logDeviceCommunication("Dana - Disconnected", type: .connection)
         self.manager.cancelPeripheralConnection(peripheral)
@@ -145,9 +182,11 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             if central.state == .poweredOn {
                 self.reconnect { result in
-                    if result {
-                        self.pumpManagerDelegate?.syncPump { _ in }
+                    guard result else {
+                        return
                     }
+
+                    self.pumpManagerDelegate?.syncPump { _ in }
                 }
             }
         }
@@ -171,19 +210,17 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         self.bleCentralManager(central, didDisconnectPeripheral: peripheral, error: error)
         
-        if let autoConnectUUID = self.autoConnectUUID {
-            do {
-                self.log.info("Connection lost. Trying to reconnect...")
-                NotificationHelper.setDisconnectWarning()
-                
-                if self.peripheral?.identifier.uuidString == autoConnectUUID {
-                    self.connect(self.peripheral!) { _ in }
-                } else {
-                    try self.connect(autoConnectUUID) { _ in }
-                }
-            } catch {
-                self.log.error("Failed to auto reconnect: \(error.localizedDescription)")
+        guard !self.forcedDisconnect else {
+            // Dont reconnect if the user has manually disconnected
+            return
+        }
+        
+        self.reconnect { result in
+            guard result else {
+                return
             }
+
+            self.pumpManagerDelegate?.syncPump { _ in }
         }
     }
     

@@ -42,6 +42,7 @@ protocol BluetoothManager : AnyObject, CBCentralManagerDelegate {
     var managerQueue: DispatchQueue { get }
     var pumpManagerDelegate: DanaKitPumpManager? { get set }
     
+    var isConnected: Bool { get }
     var autoConnectUUID: String? { get set }
     
     var connectionCompletion: ((ConnectionResult) -> Void)? { get set }
@@ -49,15 +50,12 @@ protocol BluetoothManager : AnyObject, CBCentralManagerDelegate {
     
     var devices: [DanaPumpScan] { get set }
     
+    func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol)
     func disconnect(_ peripheral: CBPeripheral, force: Bool) -> Void
     func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String) -> Void
 }
 
 extension BluetoothManager {
-    public var isConnected: Bool {
-        self.peripheral?.state == .connected
-    }
-    
     func startScan() throws {
         guard self.manager.state == .poweredOn else {
             throw NSError(domain: "Invalid bluetooth state. State: " + String(self.manager.state.rawValue), code: 0, userInfo: nil)
@@ -123,14 +121,6 @@ extension BluetoothManager {
     
     func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) -> Void {
         self.ensureConnected(completion, identifier)
-    }
-    
-    func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol) {
-        guard let peripheralManager = self.peripheralManager else {
-            throw NSError(domain: "No connected device", code: 0, userInfo: nil)
-        }
-        
-        return try await peripheralManager.writeMessage(packet)
     }
     
     func resetConnectionCompletion() {
@@ -213,11 +203,12 @@ extension BluetoothManager {
         
         guard let connectionCompletion = self.connectionCompletion else {
             log.error("No connection callback found... Timeout hit probably")
-            self.disconnect(peripheral, force: true)
+            self.disconnect(peripheral, force: false)
             
             return
         }
         
+        log.info("Connected to pump!")
         self.peripheral = peripheral
         self.peripheralManager = PeripheralManager(peripheral, self, self.pumpManagerDelegate!, connectionCompletion)
         

@@ -35,6 +35,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.reservoirLevel = rawValue["reservoirLevel"] as? Double ?? 0
         self.hwModel = rawValue["hwModel"] as? UInt8 ?? 0
         self.pumpProtocol = rawValue["pumpProtocol"] as? UInt8 ?? 0
+        self.encryptionMode = rawValue["encryptionMode"] as? UInt8 ?? DanaKitPumpManagerState.getEncryptionMode(hwModel)
         self.isInFetchHistoryMode = rawValue["isInFetchHistoryMode"] != nil
         self.ignorePassword = rawValue["ignorePassword"] as? Bool ?? false
         self.devicePassword = rawValue["devicePassword"] as? UInt16 ?? 0
@@ -102,6 +103,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.reservoirLevel = 0
         self.hwModel = 0
         self.pumpProtocol = 0
+        self.encryptionMode = 0
         self.isInFetchHistoryMode = false
         self.ignorePassword = false
         self.devicePassword = 0
@@ -144,6 +146,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["reservoirLevel"] = self.reservoirLevel
         value["hwModel"] = self.hwModel
         value["pumpProtocol"] = self.pumpProtocol
+        value["encryptionMode"] = self.encryptionMode
         value["isInFetchHistoryMode"] = self.isInFetchHistoryMode
         value["ignorePassword"] = self.ignorePassword
         value["devicePassword"] = self.devicePassword
@@ -210,6 +213,7 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     
     /// Pump protocol
     public var pumpProtocol: UInt8 = 0x00
+    public var encryptionMode: UInt8 = 0x00 // 0x00 = DEFAULT, 0x01 = RS, 0x02 = BLE5
     
     public var bolusSpeed: BolusSpeed = .speed12
     
@@ -375,6 +379,21 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         }
         
         return output
+    }
+    
+    private static func getEncryptionMode(_ hwModel: UInt8) -> UInt8 {
+        if hwModel < 0x04 {
+            // DEFAULT -> DanaR
+            return 0
+        }
+        
+        if hwModel <= 0x07 {
+            // DanaRS & Dana-i (BLE4)
+            return 1
+        }
+        
+        // Dana-i (BLE5)
+        return 2
     }
 }
 

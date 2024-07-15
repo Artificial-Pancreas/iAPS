@@ -25,6 +25,10 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
     var peripheral: CBPeripheral?
     var peripheralManager: PeripheralManager?
     
+    public var isConnected: Bool {
+        self.manager.state == .poweredOn && self.peripheral?.state == .connected
+    }
+    
     override init() {
         super.init()
         
@@ -111,6 +115,14 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
             self.logDeviceCommunication("Dana - Pump is not onboarded", type: .connection)
             self.connectionCallback[identifier]!(.failure)
         }
+    }
+    
+    func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol) {
+        guard let peripheralManager = self.peripheralManager else {
+            throw NSError(domain: "No connected device", code: 0, userInfo: nil)
+        }
+        
+        return try await peripheralManager.writeMessage(packet)
     }
     
     func disconnect(_ peripheral: CBPeripheral, force: Bool) {

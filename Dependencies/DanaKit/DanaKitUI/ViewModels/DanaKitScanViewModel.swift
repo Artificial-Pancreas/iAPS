@@ -74,10 +74,12 @@ class DanaKitScanViewModel : ObservableObject {
             
         case .failure(let e):
             self.isConnecting = false
+            self.isConnectionError = true
             self.connectionErrorMessage = e.localizedDescription
             
         case .invalidBle5Keys:
             self.isConnecting = false
+            self.isConnectionError = true
             self.connectionErrorMessage = LocalizedString("Failed to pair to ", comment: "Dana-i failed to pair p1") + (self.pumpManager?.state.deviceName ?? "<NO_NAME>") + LocalizedString(". Please go to your bluetooth settings, forget this device, and try again", comment: "Dana-i failed to pair p2")
             
         case .requestedPincode(let message):

@@ -40,11 +40,7 @@ class PeripheralManager: NSObject {
     
     private var historyLog: [HistoryItem] = []
     
-    private var encryptionMode: EncryptionType = .DEFAULT {
-        didSet {
-            DanaRSEncryption.setEnhancedEncryption(encryptionMode.rawValue)
-        }
-    }
+    private var encryptionMode: EncryptionType = .DEFAULT
     
     private var deviceName: String {
         get {
@@ -71,7 +67,7 @@ class PeripheralManager: NSObject {
         // -[NSTaggedPointerString objectForKey:]: unrecognized selector sent to instance 0x8000000000000000
         try lock.sync {
             guard self.writeQueue[packet.opCode] == nil else {
-                throw NSError(domain: "This command is already running. Please wait", code: 0, userInfo: nil)
+                throw NSError(domain: "This command is already running. Please wait - Operation code: \(packet.opCode)", code: 0, userInfo: nil)
             }
         }
         
@@ -96,7 +92,7 @@ class PeripheralManager: NSObject {
         // If this timeout expired, disconnect from the pump and prompt an error...
         let isHistoryPacket = self.isHistoryPacket(opCode: command)
         return try await withCheckedThrowingContinuation { continuation in
-            let sendingTimer = Timer.scheduledTimer(withTimeInterval: !isHistoryPacket ? 6 : 21, repeats: false) { _ in
+            let sendingTimer = Timer.scheduledTimer(withTimeInterval: !isHistoryPacket ? .seconds(6) : .seconds(21), repeats: false) { _ in
                 guard let queueItem = self.writeQueue[packet.opCode] else {
                     return
                 }
@@ -314,6 +310,7 @@ extension PeripheralManager {
         if (data.count == 4 && self.isOk(data)) {
             // response OK v1
             self.encryptionMode = .DEFAULT
+            DanaRSEncryption.setEnhancedEncryption(EncryptionType.DEFAULT.rawValue)
 //            log.info("Setting encryption mode to DEFAULT. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.ignorePassword = false;
@@ -327,6 +324,7 @@ extension PeripheralManager {
         } else if (data.count == 9 && self.isOk(data)) {
             // response OK v3, 2nd layer encryption
             self.encryptionMode = .RSv3
+            DanaRSEncryption.setEnhancedEncryption(EncryptionType.RSv3.rawValue)
 //            log.info("Setting encryption mode to RSv3. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.ignorePassword = true;
@@ -347,6 +345,7 @@ extension PeripheralManager {
             }
         } else if (data.count == 14 && self.isOk(data)) {
             self.encryptionMode = .BLE_5
+            DanaRSEncryption.setEnhancedEncryption(EncryptionType.BLE_5.rawValue)
 //            log.info("Setting encryption mode to BLE5. Data: " + data.base64EncodedString())
             
             self.pumpManager.state.hwModel = data[5]
@@ -449,19 +448,22 @@ extension PeripheralManager {
         return data[2] == busyCharCodes[0] && data[3] == busyCharCodes[1] && data[4] == busyCharCodes[2] && data[5] == busyCharCodes[3]
     }
     
-    private func updateInitialState() async {
+    public func updateInitialState() async {
         do {
             self.pumpManager.state.isConnected = true
 //            log.info("Sending keep connection")
             
-            let keepConnection = generatePacketGeneralKeepConnection()
-            let resultKeepConnection = try await self.writeMessage(keepConnection)
-            guard resultKeepConnection.success else {
-                log.error("Failed to send keep connection...")
-                self.pumpManager.disconnect(self.connectedDevice)
-                
-                connectionFailure(NSError(domain: "Failed to send keep connection", code: 0, userInfo: nil))
-                return
+            // ContinousBluetoothManager sends its own
+            if (self.bluetoothManager as? InteractiveBluetoothManager) != nil {
+                let keepConnection = generatePacketGeneralKeepConnection()
+                let resultKeepConnection = try await self.writeMessage(keepConnection)
+                guard resultKeepConnection.success else {
+                    log.error("Failed to send keep connection...")
+                    self.pumpManager.disconnect(self.connectedDevice)
+                    
+                    connectionFailure(NSError(domain: "Failed to send keep connection", code: 0, userInfo: nil))
+                    return
+                }
             }
             
             
@@ -646,7 +648,7 @@ extension PeripheralManager {
         }
         
         // Message received and dequeueing timeout
-        guard let queueItem = self.writeQueue[message.opCode ?? 0] else {
+        guard let opCode = message.opCode, let queueItem = self.writeQueue[opCode] else {
             log.error("No continuation token found to send this message back...")
             return
         }
@@ -656,6 +658,7 @@ extension PeripheralManager {
         if let data = message.data as? HistoryItem {
             if data.code == HistoryCode.RECORD_TYPE_DONE_UPLOAD {
                 queueItem.1.resume(returning: DanaParsePacket<[HistoryItem]>(success: true, rawData: Data([]), data: self.historyLog.map({ $0 })))
+                self.writeQueue[opCode] = nil
                 self.historyLog = []
             } else {
                 self.historyLog.append(data)
@@ -665,7 +668,7 @@ extension PeripheralManager {
         }
         
         queueItem.1.resume(returning: message)
-        self.writeQueue[message.opCode ?? 0] = nil
+        self.writeQueue[opCode] = nil
     }
     
     private func isHistoryPacket(opCode: UInt16) -> Bool {

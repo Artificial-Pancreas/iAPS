@@ -40,6 +40,7 @@ public class DanaKitPumpManager: DeviceManager {
     init(state: DanaKitPumpManagerState, dateGenerator: @escaping () -> Date = Date.init) {
         self.state = state
         self.oldState = DanaKitPumpManagerState(rawValue: state.rawValue)
+        DanaRSEncryption.setEnhancedEncryption(self.state.encryptionMode)
         
         self.bluetooth = self.state.isUsingContinuousMode ? ContinousBluetoothManager() : InteractiveBluetoothManager()
         self.bluetooth.pumpManagerDelegate = self
@@ -311,6 +312,10 @@ extension DanaKitPumpManager: PumpManager {
                 completion?(nil)
                 return
             case .success:
+                if let continousBluetooth = self.bluetooth as? ContinousBluetoothManager {
+                    await self.updateInitialState()
+                }
+                
                 await self.syncUserOptions()
                 let events = await self.syncHistory()
                 
@@ -322,7 +327,6 @@ extension DanaKitPumpManager: PumpManager {
                 
                 self.state.lastStatusPumpDateTime = pumpTime ?? Date.now
                 self.state.lastStatusDate = Date.now
-                
                 self.disconnect()
                 
                 self.issueHeartbeatIfNeeded()
@@ -366,20 +370,23 @@ extension DanaKitPumpManager: PumpManager {
             self.log.error("Failed to sync user options: \(error.localizedDescription)")
         }
     }
-
+    
     private func fetchPumpTime() async -> Date? {
         do {
             let timePacket = self.state.usingUtc ? generatePacketGeneralGetPumpTimeUtcWithTimezone() : generatePacketGeneralGetPumpTime()
-            let timeResult = try await bluetooth.writeMessage(timePacket)
+            let timeResult = try await self.bluetooth.writeMessage(timePacket)
             
-            if timeResult.success {
-                let date = self.state.usingUtc ? 
-                    (timeResult.data as? PacketGeneralGetPumpTimeUtcWithTimezone)?.time: (timeResult.data as? PacketGeneralGetPumpTime)?.time
-                return date
-            } else {
-                self.log.error("Failed to fetch pump time...")
+            guard timeResult.success else {
+                self.log.error("Failed to fetch pump time with utc...")
                 return nil
             }
+            
+            let date = self.state.usingUtc ? (timeResult.data as? PacketGeneralGetPumpTimeUtcWithTimezone)?.time : (timeResult.data as? PacketGeneralGetPumpTime)?.time
+            guard let date = date else {
+                return nil
+            }
+            
+            return date
         } catch {
             self.log.error("Failed to sync time: \(error.localizedDescription)")
             return nil
@@ -462,6 +469,42 @@ extension DanaKitPumpManager: PumpManager {
         }
     }
     
+    private func updateInitialState() async -> Void {
+        do {
+            let initialScreenPacket = generatePacketGeneralGetInitialScreenInformation()
+            let resultInitialScreenInformation = try await self.bluetooth.writeMessage(initialScreenPacket)
+            
+            guard resultInitialScreenInformation.success else {
+                log.error("Failed to fetch Initial screen...")
+                self.disconnect()
+                return
+            }
+            
+            guard let data = resultInitialScreenInformation.data as? PacketGeneralGetInitialScreenInformation else {
+                log.error("No data received (initial screen)...")
+                self.disconnect()
+                return
+            }
+            
+            self.state.reservoirLevel = data.reservoirRemainingUnits
+            self.state.batteryRemaining = data.batteryRemaining
+            self.state.isPumpSuspended = data.isPumpSuspended
+            self.state.isTempBasalInProgress = data.isTempBasalInProgress
+            
+            if self.state.basalDeliveryOrdinal != .suspended && data.isPumpSuspended {
+                // Suspended has been enabled via the pump
+                // We cannot be sure at what point it has been enabled...
+                self.state.basalDeliveryDate = Date.now
+            }
+            
+            self.state.basalDeliveryOrdinal = data.isTempBasalInProgress ? .tempBasal :
+            data.isPumpSuspended ? .suspended : .active
+            self.state.bolusState = .noBolus
+        } catch {
+            log.error("Error while updating initial state: \(error.localizedDescription)")
+        }
+    }
+    
     public func createBolusProgressReporter(reportingOn dispatchQueue: DispatchQueue) -> DoseProgressReporter? {
         return doseReporter
     }
@@ -530,6 +573,7 @@ extension DanaKitPumpManager: PumpManager {
                             return
                         }
                         
+                        // Sync the pump time
                         self.state.lastStatusPumpDateTime = (await self.fetchPumpTime()) ?? Date.now
                         self.state.lastStatusDate = Date.now
                         
@@ -603,6 +647,7 @@ extension DanaKitPumpManager: PumpManager {
                 return
             }
             
+            // Sync the pump time
             self.state.lastStatusPumpDateTime = (await self.fetchPumpTime()) ?? Date.now
             self.state.lastStatusDate = Date.now
             
@@ -1217,11 +1262,11 @@ extension DanaKitPumpManager {
         let identifier = Alert.Identifier(managerIdentifier: self.managerIdentifier, alertIdentifier: alert.identifier)
         let loopAlert = Alert(identifier: identifier, foregroundContent: alert.foregroundContent, backgroundContent: alert.backgroundContent, trigger: .immediate)
         
-        let event = NewPumpEvent(date: Date(), dose: nil, raw: alert.raw, title: "Alarm: \(alert.foregroundContent.title)", type: .alarm, alarmType: alert.type)
+        let event = NewPumpEvent(date: Date.now, dose: nil, raw: alert.raw, title: "Alarm: \(alert.foregroundContent.title)", type: .alarm, alarmType: alert.type)
         
         self.pumpDelegate.notify { delegate in
             delegate?.issueAlert(loopAlert)
-            delegate?.pumpManager(self, hasNewPumpEvents: [event], lastReconciliation: Date(), completion: { _ in })
+            delegate?.pumpManager(self, hasNewPumpEvents: [event], lastReconciliation: Date.now, completion: { _ in })
         }
     }
     
@@ -1234,15 +1279,17 @@ extension DanaKitPumpManager {
     }
     
     func notifyBolusError() {
-        guard let doseEntry = self.doseEntry, self.state.bolusState != .noBolus else {
+        guard self.doseEntry != nil, self.state.bolusState != .noBolus else {
             // Ignore if no bolus is going
             return
         }
         
         self.state.bolusState = .noBolus
+        self.state.lastStatusDate = Date.now
         self.notifyStateDidChange()
         
         self.bolusCompleted?.resume()
+        self.bolusCompleted = nil
         
         // We dont store the bolus or anything
         // The ensurePumpData will make sure everything is up-to-date
@@ -1262,11 +1309,13 @@ extension DanaKitPumpManager {
     func notifyBolusDone(deliveredUnits: Double) {
         Task {
             self.state.bolusState = .noBolus
+            
             self.state.lastStatusPumpDateTime = (await self.fetchPumpTime()) ?? Date.now
             self.state.lastStatusDate = Date.now
             self.notifyStateDidChange()
-            
+
             self.bolusCompleted?.resume()
+            self.bolusCompleted = nil
             
             delegateQueue.asyncAfter(deadline: .now() + 1) {
                 // Always try to disconnect when this event happens
@@ -1301,8 +1350,9 @@ extension DanaKitPumpManager {
             return
         }
         
-        self.log.error("Bolus was not completed... \(doseEntry.deliveredUnits)U of the \(doseEntry.value)U")
+        self.log.warning("Bolus was not completed... \(doseEntry.deliveredUnits)U of the \(doseEntry.value)U")
         self.bolusCompleted?.resume()
+        self.bolusCompleted = nil
         
         // There was a bolus going on, unsure if the bolus is completed...
         self.state.bolusState = .noBolus
