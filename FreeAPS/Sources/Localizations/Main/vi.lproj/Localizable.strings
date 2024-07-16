@@ -348,7 +348,7 @@ Enact a temp Basal or a temp target */
 "Allow uploads" = "Cho phép tải lên";
 
 /* API secret in NS */
-"API secret" = "Khóa API";
+"API secret" = "API secret";
 
 /* Connect to NS */
 "Connect" = "Kết nối";
@@ -1194,7 +1194,7 @@ Enact a temp Basal or a temp target */
 "Animated Background" = "Nền màn hình động";
 
 /* Sensor day(s) */
-" day(s)" = " ngày(s)";
+" day(s)" = " day(s)";
 
 /* Option to show HR in Watch app*/
 "Display HR on Watch" = "Hiển thị trên đồng hồ";
@@ -1724,10 +1724,10 @@ Enact a temp Basal or a temp target */
 "Total Delivery" = "Tổng liều";
 
 /* */
-"Add Omnipod Dash" = "Thay Omnipod Dash";
+"Add Omnipod Dash" = "Thêm Omnipod Dash";
 
 /* */
-"Insert Cannula" = "Thay Cannula";
+"Insert Cannula" = "Lắp Cannula";
 
 /* */
 "Check Cannula" = "Kiểm tra Cannula";
@@ -2185,7 +2185,7 @@ Enact a temp Basal or a temp target */
 "Unsuspend If No Temp" = "Bỏ tạm dừng nếu không có tạm thời";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Nhiều người thỉnh thoảng quên tiếp tục/hủy tạm dừng máy bơm sau khi kết nối lại. Nếu bạn là một trong số họ và sẵn sàng đặt nhiệt độ cơ bản bằng 0 một cách đáng tin cậy bất cứ khi nào tạm dừng và ngắt kết nối máy bơm của mình, thì tính năng này sẽ hỗ trợ bạn. Nếu được bật, nó sẽ tự động tiếp tục/hủy tạm dừng máy bơm nếu bạn quên làm như vậy trước khi hết tạm thời 0. Miễn là tạm thời bằng 0 vẫn đang chạy, nó sẽ khiến máy bơm bị treo.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Nhiều người thỉnh thoảng quên tiếp tục/hủy tạm dừng máy bơm sau khi kết nối lại. Nếu bạn là một trong số họ và sẵn sàng đặt liều tạm thời cơ bản bằng 0 một cách đáng tin cậy bất cứ khi nào tạm dừng và ngắt kết nối máy bơm của mình, thì tính năng này sẽ hỗ trợ bạn. Nếu được bật, nó sẽ tự động tiếp tục/hủy tạm dừng máy bơm nếu bạn quên làm như vậy trước khi hết tạm thời 0. Miễn là tạm thời bằng 0 vẫn đang chạy, nó sẽ khiến máy bơm bị treo.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Kích hoạt UAM";
@@ -2502,7 +2502,7 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Hoạt động trực tiếp";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa và năng động (nếu có)";
 
 /* Notification option */
 "Show Live activity" = "Hiển thị hoạt động trực tiếp";
