@@ -37,11 +37,29 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
         }
     }
     
+    deinit {
+        self.manager = nil
+    }
+    
     func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) {
         self.connectionCallback[identifier] = { result in
             Task {
                 self.resetConnectionCompletion()
                 self.connectionCallback[identifier] = nil
+                
+                if result == .success {
+                    do {
+                        self.log.info("Sending keep alive message")
+                        
+                        let keepAlivePacket = generatePacketGeneralKeepConnection()
+                        let _ = try await self.writeMessage(keepAlivePacket)
+                    } catch {
+                        self.log.error("Failed to send Keep alive message: \(error.localizedDescription)")
+                    }
+                    
+                    await self.updateInitialState()
+                }
+                
                 await completion(result)
             }
         }

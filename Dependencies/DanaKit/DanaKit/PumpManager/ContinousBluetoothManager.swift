@@ -42,14 +42,22 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         }
     }
     
+    deinit {
+        self.manager = nil
+    }
+    
     private func keepConnectionAlive() async {
         do {
-            self.log.info("Sending keep alive message")
-            let keepAlivePacket = generatePacketGeneralKeepConnection()
-            let result = try await self.writeMessage(keepAlivePacket)
-            guard result.success else {
-                self.log.error("Pump rejected keepAlive request: \(result.rawData.base64EncodedString())")
-                return
+            if self.pumpManagerDelegate?.status.bolusState == .noBolus {
+                self.log.info("Sending keep alive message")
+                let keepAlivePacket = generatePacketGeneralKeepConnection()
+                let result = try await self.writeMessage(keepAlivePacket)
+                guard result.success else {
+                    self.log.error("Pump rejected keepAlive request: \(result.rawData.base64EncodedString())")
+                    return
+                }
+            } else {
+                self.log.info("Skip sending keep alive message. Reason: bolus is running")
             }
             
             Task {
@@ -130,6 +138,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
             self.resetConnectionCompletion()
             self.logDeviceCommunication("Dana - Connection is ok!", type: .connection)
             Task {
+                await self.updateInitialState()
                 await completion(.success)
             }
             
@@ -149,6 +158,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                 self.resetConnectionCompletion()
                 self.logDeviceCommunication("Dana - Reconnected!", type: .connection)
                 Task {
+                    await self.updateInitialState()
                     await completion(.success)
                 }
             }
@@ -186,6 +196,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                         return
                     }
 
+                    self.log.info("Reconnected and sync pump data!")
                     self.pumpManagerDelegate?.syncPump { _ in }
                 }
             }
@@ -220,6 +231,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                 return
             }
 
+            self.log.info("Reconnected and sync pump data!")
             self.pumpManagerDelegate?.syncPump { _ in }
         }
     }

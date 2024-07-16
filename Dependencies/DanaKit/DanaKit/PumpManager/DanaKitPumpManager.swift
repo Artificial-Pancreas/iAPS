@@ -294,7 +294,13 @@ extension DanaKitPumpManager: PumpManager {
     
     public func ensureCurrentPumpData(completion: ((Date?) -> Void)?) {
         guard Date.now.timeIntervalSince(self.state.lastStatusDate) > .minutes(4) else {
-            self.log.info("Skipping status update because pumpData is fresh: \(Date.now.timeIntervalSince(self.state.lastStatusDate)) sec")
+            self.log.warning("Skipping status update because pumpData is fresh: \(Date.now.timeIntervalSince(self.state.lastStatusDate)) sec")
+            completion?(self.state.lastStatusDate)
+            return
+        }
+        
+        if self.bluetooth as? ContinousBluetoothManager != nil && self.status.bolusState != .noBolus {
+            self.log.warning("Skipping status update because bolus is running...")
             completion?(self.state.lastStatusDate)
             return
         }
@@ -312,10 +318,6 @@ extension DanaKitPumpManager: PumpManager {
                 completion?(nil)
                 return
             case .success:
-                if self.bluetooth as? ContinousBluetoothManager != nil {
-                    await self.updateInitialState()
-                }
-                
                 await self.syncUserOptions()
                 let events = await self.syncHistory()
                 
@@ -338,6 +340,7 @@ extension DanaKitPumpManager: PumpManager {
                     delegate?.pumpManagerDidUpdateState(self)
                 }
                 
+                self.log.info("Sync successful!")
                 completion?(Date.now)
             }
         }
@@ -469,42 +472,6 @@ extension DanaKitPumpManager: PumpManager {
         }
     }
     
-    private func updateInitialState() async -> Void {
-        do {
-            let initialScreenPacket = generatePacketGeneralGetInitialScreenInformation()
-            let resultInitialScreenInformation = try await self.bluetooth.writeMessage(initialScreenPacket)
-            
-            guard resultInitialScreenInformation.success else {
-                log.error("Failed to fetch Initial screen...")
-                self.disconnect()
-                return
-            }
-            
-            guard let data = resultInitialScreenInformation.data as? PacketGeneralGetInitialScreenInformation else {
-                log.error("No data received (initial screen)...")
-                self.disconnect()
-                return
-            }
-            
-            self.state.reservoirLevel = data.reservoirRemainingUnits
-            self.state.batteryRemaining = data.batteryRemaining
-            self.state.isPumpSuspended = data.isPumpSuspended
-            self.state.isTempBasalInProgress = data.isTempBasalInProgress
-            
-            if self.state.basalDeliveryOrdinal != .suspended && data.isPumpSuspended {
-                // Suspended has been enabled via the pump
-                // We cannot be sure at what point it has been enabled...
-                self.state.basalDeliveryDate = Date.now
-            }
-            
-            self.state.basalDeliveryOrdinal = data.isTempBasalInProgress ? .tempBasal :
-            data.isPumpSuspended ? .suspended : .active
-            self.state.bolusState = .noBolus
-        } catch {
-            log.error("Error while updating initial state: \(error.localizedDescription)")
-        }
-    }
-    
     public func createBolusProgressReporter(reportingOn dispatchQueue: DispatchQueue) -> DoseProgressReporter? {
         return doseReporter
     }
@@ -522,7 +489,7 @@ extension DanaKitPumpManager: PumpManager {
     
     public func enactBolus(units: Double, activationType: BolusActivationType, completion: @escaping (PumpManagerError?) -> Void) {
         guard self.state.bolusState == .noBolus else {
-            self.log.error("Pump already busy bolossing")
+            self.log.error("Pump already busy bolussing")
             completion(.deviceState(DanaKitPumpManagerError.pumpIsBusy))
             return
         }
@@ -764,7 +731,7 @@ extension DanaKitPumpManager: PumpManager {
                                 return
                             }
                             
-                            self.log.info("Succesfully canceled old temp basal")
+                            self.log.info("Successfully canceled old temp basal")
                         }
                         
                         if (duration < .ulpOfOne) {
@@ -782,7 +749,7 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("Succesfully cancelled temp basal")
+                            self.log.info("Successfully cancelled temp basal")
                             completion(nil)
                             
                         } else if duration == .minutes(15) {
@@ -807,7 +774,7 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("Succesfully started 15 min temp basal")
+                            self.log.info("Successfully started 15 min temp basal")
                             completion(nil)
                             
                         } else if duration == .minutes(30) {
@@ -832,12 +799,13 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("Succesfully started 30 min temp basal")
+                            self.log.info("Successfully started 30 min temp basal")
                             completion(nil)
                             
                             // Full hour
                         } else {
-                            let packet = generatePacketBasalSetTemporary(options: PacketBasalSetTemporary(temporaryBasalRatio: UInt8(percentage), temporaryBasalDuration: UInt8(floor(duration / .hours(1)))))
+                            let durationInHours = UInt8(floor(duration / .hours(1)))
+                            let packet = generatePacketBasalSetTemporary(options: PacketBasalSetTemporary(temporaryBasalRatio: UInt8(percentage), temporaryBasalDuration: durationInHours))
                             let result = try await self.bluetooth.writeMessage(packet)
                             self.disconnect()
                             
@@ -858,7 +826,7 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)], lastReconciliation: Date.now, completion: { _ in })
                             }
                             
-                            self.log.info("Succesfully started full hourly temp basal")
+                            self.log.info("Successfully started \(durationInHours)h temp basal")
                             completion(nil)
                         }
                     } catch {
@@ -910,10 +878,10 @@ extension DanaKitPumpManager: PumpManager {
                                 preconditionFailure("pumpManagerDelegate cannot be nil")
                             }
                             
-                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)], lastReconciliation: self.state.lastStatusDate, completion: { (error) in
-                                completion(nil)
-                            })
+                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)], lastReconciliation: self.state.lastStatusDate, completion: { _ in })
                         }
+                        
+                        completion(nil)
                     } catch {
                         self.disconnect()
                         
@@ -1025,10 +993,10 @@ extension DanaKitPumpManager: PumpManager {
                                 preconditionFailure("pumpManagerDelegate cannot be nil")
                             }
                             
-                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)], lastReconciliation: Date.now, completion: { (error) in
-                                completion(.success(schedule))
-                            })
+                            delegate.pumpManager(self, hasNewPumpEvents: [NewPumpEvent.basal(dose: dose)], lastReconciliation: Date.now, completion: { _ in })
                         }
+                        
+                        completion(.success(schedule))
                     } catch {
                         self.disconnect()
                         

@@ -159,6 +159,55 @@ extension BluetoothManager {
         self.pumpManagerDelegate?.pumpDelegate.delegate?.deviceManager(self.pumpManagerDelegate!, logEventForDeviceIdentifier: address, type: type, message: message, completion: nil)
     }
     
+    internal func updateInitialState() async -> Void {
+        guard let pumpManagerDelegate = self.pumpManagerDelegate else {
+            log.error("No pumpManager available...")
+            return
+        }
+        
+        guard let peripheral = self.peripheral else {
+            log.error("No peripheral available...")
+            return
+        }
+        
+        do {
+            self.log.info("Sending getInitialScreenInformation")
+            let initialScreenPacket = generatePacketGeneralGetInitialScreenInformation()
+            let resultInitialScreenInformation = try await self.writeMessage(initialScreenPacket)
+            
+            guard resultInitialScreenInformation.success else {
+                log.error("Failed to fetch Initial screen...")
+                self.disconnect(peripheral, force: true)
+                return
+            }
+            
+            guard let data = resultInitialScreenInformation.data as? PacketGeneralGetInitialScreenInformation else {
+                log.error("No data received (initial screen)...")
+                self.disconnect(peripheral, force: true)
+                return
+            }
+            
+            pumpManagerDelegate.state.reservoirLevel = data.reservoirRemainingUnits
+            pumpManagerDelegate.state.batteryRemaining = data.batteryRemaining
+            pumpManagerDelegate.state.isPumpSuspended = data.isPumpSuspended
+            pumpManagerDelegate.state.isTempBasalInProgress = data.isTempBasalInProgress
+            
+            if pumpManagerDelegate.state.basalDeliveryOrdinal != .suspended && data.isPumpSuspended {
+                // Suspended has been enabled via the pump
+                // We cannot be sure at what point it has been enabled...
+                pumpManagerDelegate.state.basalDeliveryDate = Date.now
+            }
+            
+            pumpManagerDelegate.state.basalDeliveryOrdinal = data.isTempBasalInProgress ? .tempBasal :
+                                                                data.isPumpSuspended ? .suspended : .active
+            pumpManagerDelegate.state.bolusState = .noBolus
+            
+            pumpManagerDelegate.notifyStateDidChange()
+        } catch {
+            log.error("Error while updating initial state: \(error.localizedDescription)")
+        }
+    }
+    
 }
 
 // MARK: Central manager functions
