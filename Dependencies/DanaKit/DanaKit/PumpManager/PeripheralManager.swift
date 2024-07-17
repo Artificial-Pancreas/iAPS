@@ -40,8 +40,6 @@ class PeripheralManager: NSObject {
     
     private var historyLog: [HistoryItem] = []
     
-    private var encryptionMode: EncryptionType = .DEFAULT
-    
     private var deviceName: String {
         get {
             return self.pumpManager.state.deviceName ?? ""
@@ -50,7 +48,6 @@ class PeripheralManager: NSObject {
     
     public init(_ peripheral: CBPeripheral, _ bluetoothManager: BluetoothManager, _ pumpManager: DanaKitPumpManager,_ completion: @escaping (ConnectionResult) -> Void) {
         self.connectedDevice = peripheral
-        self.encryptionMode = .DEFAULT
         self.bluetoothManager = bluetoothManager
         self.pumpManager = pumpManager
         self.completion = completion
@@ -80,11 +77,11 @@ class PeripheralManager: NSObject {
         
         
         var data = DanaRSEncryption.encodePacket(operationCode: packet.opCode, buffer: packet.data, deviceName: self.deviceName)
-//        log.info("Encrypted data: \(data.base64EncodedString())")
+        log.info("Sending opCode: \(packet.opCode), encrypted data: \(data.base64EncodedString()), randomSyncKey: \(DanaRSEncryption.randomSyncKey)")
         
-        if (self.encryptionMode != .DEFAULT) {
+        if (DanaRSEncryption.enhancedEncryption != EncryptionType.DEFAULT.rawValue) {
             data = DanaRSEncryption.encodeSecondLevel(data: data)
-//            log.info("Second level encrypted data: \(data.base64EncodedString())")
+            log.info("Second level encrypted data: \(data.base64EncodedString())")
         }
         
         // Now schedule a 6 sec timeout (or 21 when in fetchHistoryMode) for the pump to send its message back
@@ -288,7 +285,7 @@ extension PeripheralManager {
     }
     
     private func processEasyMenuCheck(_ data: Data) {
-        if (self.encryptionMode == .RSv3) {
+        if (DanaRSEncryption.enhancedEncryption == EncryptionType.RSv3.rawValue) {
             self.sendV3PairingInformationEmpty()
         } else {
             self.sendTimeInfo()
@@ -316,7 +313,6 @@ extension PeripheralManager {
         if (data.count == 4 && self.isOk(data)) {
             // response OK v1
             self.log.info("Setting encryption mode to DEFAULT")
-            self.encryptionMode = .DEFAULT
             DanaRSEncryption.setEnhancedEncryption(EncryptionType.DEFAULT.rawValue)
             
             self.pumpManager.state.ignorePassword = false;
@@ -330,7 +326,6 @@ extension PeripheralManager {
         } else if (data.count == 9 && self.isOk(data)) {
             // response OK v3, 2nd layer encryption
             log.info("Setting encryption mode to RSv3")
-            self.encryptionMode = .RSv3
             DanaRSEncryption.setEnhancedEncryption(EncryptionType.RSv3.rawValue)
             
             self.pumpManager.state.ignorePassword = true;
@@ -351,7 +346,6 @@ extension PeripheralManager {
             }
         } else if (data.count == 14 && self.isOk(data)) {
             log.info("Setting encryption mode to BLE5")
-            self.encryptionMode = .BLE_5
             DanaRSEncryption.setEnhancedEncryption(EncryptionType.BLE_5.rawValue)
             
             self.pumpManager.state.hwModel = data[5]
@@ -397,10 +391,10 @@ extension PeripheralManager {
     }
     
     private func processEncryptionResponse(_ data: Data) {
-        if (self.encryptionMode == .BLE_5) {
+        if (DanaRSEncryption.enhancedEncryption == EncryptionType.BLE_5.rawValue) {
             self.finishConnection()
             
-        } else if (self.encryptionMode == .RSv3) {
+        } else if (DanaRSEncryption.enhancedEncryption == EncryptionType.RSv3.rawValue) {
             // data[2] : 0x00 OK  0x01 Error, No pairing
             if (data[2] == 0x00) {
                 let (pairingKey, randomPairingKey) = DanaRSEncryption.getPairingKeys()
@@ -463,7 +457,7 @@ extension PeripheralManager {
 extension PeripheralManager {
     private func parseReceivedValue(_ receievedData: Data) {
         var data = receievedData
-        if (self.pumpManager.state.isConnected && self.encryptionMode != .DEFAULT) {
+        if (self.pumpManager.state.isConnected && DanaRSEncryption.enhancedEncryption != EncryptionType.DEFAULT.rawValue) {
             data = DanaRSEncryption.decodeSecondLevel(data: data)
         }
         

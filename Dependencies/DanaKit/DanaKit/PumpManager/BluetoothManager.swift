@@ -56,9 +56,10 @@ protocol BluetoothManager : AnyObject, CBCentralManagerDelegate {
 }
 
 extension BluetoothManager {
-    func startScan() throws {
+    func startScan() {
         guard self.manager.state == .poweredOn else {
-            throw NSError(domain: "Invalid bluetooth state. State: " + String(self.manager.state.rawValue), code: 0, userInfo: nil)
+            log.error("Invalid bluetooth state. State: \(self.manager.state.rawValue)")
+            return
         }
         
         guard !self.manager.isScanning else {
@@ -99,7 +100,7 @@ extension BluetoothManager {
         }
         
         self.autoConnectUUID = bleIdentifier
-        try self.startScan()
+        self.startScan()
         
         // throw error if device could not be found after 10 sec
         Task {
