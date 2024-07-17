@@ -58,15 +58,11 @@ class PeripheralManager: NSObject {
     }
     
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol)  {
-        let command = (UInt16((packet.type ?? DanaPacketType.TYPE_RESPONSE)) << 8) + UInt16(packet.opCode)
-        
-        // Add objetc sync to prevent:
-        // -[NSTaggedPointerString objectForKey:]: unrecognized selector sent to instance 0x8000000000000000
-        try lock.sync {
-            guard self.writeQueue[packet.opCode] == nil else {
-                throw NSError(domain: "This command is already running. Please wait - Operation code: \(packet.opCode)", code: 0, userInfo: nil)
-            }
+        guard self.writeQueue[packet.opCode] == nil else {
+            throw NSError(domain: "This command is already running. Please wait - Operation code: \(packet.opCode)", code: 0, userInfo: nil)
         }
+        
+        let command = (UInt16((packet.type ?? DanaPacketType.TYPE_RESPONSE)) << 8) + UInt16(packet.opCode)
         
         // Make sure we have the correct state
         if (packet.opCode == CommandGeneralSetHistoryUploadMode && packet.data != nil) {
@@ -77,11 +73,11 @@ class PeripheralManager: NSObject {
         
         
         var data = DanaRSEncryption.encodePacket(operationCode: packet.opCode, buffer: packet.data, deviceName: self.deviceName)
-        log.info("Sending opCode: \(packet.opCode), encrypted data: \(data.base64EncodedString()), randomSyncKey: \(DanaRSEncryption.randomSyncKey)")
+        self.log.info("Sending opCode: \(packet.opCode), encrypted data: \(data.base64EncodedString()), randomSyncKey: \(DanaRSEncryption.randomSyncKey)")
         
         if (DanaRSEncryption.enhancedEncryption != EncryptionType.DEFAULT.rawValue) {
             data = DanaRSEncryption.encodeSecondLevel(data: data)
-            log.info("Second level encrypted data: \(data.base64EncodedString())")
+            self.log.info("Second level encrypted data: \(data.base64EncodedString())")
         }
         
         // Now schedule a 6 sec timeout (or 21 when in fetchHistoryMode) for the pump to send its message back
@@ -458,12 +454,14 @@ extension PeripheralManager {
     private func parseReceivedValue(_ receievedData: Data) {
         var data = receievedData
         if (self.pumpManager.state.isConnected && DanaRSEncryption.enhancedEncryption != EncryptionType.DEFAULT.rawValue) {
+            self.log.info("Second lvl decryption")
             data = DanaRSEncryption.decodeSecondLevel(data: data)
         }
         
         self.readBuffer.append(data)
-        guard (self.readBuffer.count >= 6) else {
+        guard self.readBuffer.count >= 6 else {
             // Buffer is not ready to be processed
+            self.log.warning("Buffer not ready yet: \(self.readBuffer.base64EncodedString())")
             return
         }
         
@@ -487,6 +485,7 @@ extension PeripheralManager {
         let length = Int(self.readBuffer[2])
         guard (length + 7 == self.readBuffer.count) else {
             // Not all packets have been received yet...
+            self.log.warning("ot all packets have been received yet - Should be: \(length + 7), currently: \(self.readBuffer.count)")
             return
         }
         
