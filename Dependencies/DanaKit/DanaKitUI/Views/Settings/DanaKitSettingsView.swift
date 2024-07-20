@@ -56,6 +56,47 @@ struct DanaKitSettingsView: View {
                     ])
     }
     
+    var bleModeSwitch: ActionSheet {
+        ActionSheet(title: Text(LocalizedString("Toggle Bluetooth mode", comment: "Title for bluetooth mode action sheet")),
+                                message: Text(LocalizedString("WARNING: Please don't use this until you've read the documentation", comment: "Warning message continuous mode")),
+                    buttons: [
+                        .default(Text(LocalizedString("What is this?", comment: "Button text to get help about Continuous mode"))) {
+                            // TODO: Switch to official docs once PR is live
+                            openURL(URL(string: "https://bastiaanv.github.io/loopdocs/troubleshooting/dana-heartbeat/")!)
+                        },
+                        .default(Text(viewModel.isUsingContinuousMode ?
+                                      LocalizedString("Yes, Switch to interactive mode", comment: "Button text to disable continuous mode") :
+                                      LocalizedString("Yes, Switch to continuous mode", comment: "Button text to enable continuous mode")
+                                 )) {
+                            self.viewModel.toggleBleMode()
+                        },
+                        .cancel(Text(LocalizedString("No, Keep as is", comment: "Button text to cancel silent tone")))
+                    ])
+    }
+    
+    var disconnectReminder: ActionSheet {
+        ActionSheet(title: Text(LocalizedString("Set reminder for disconnect", comment: "Title disconnect reminder sheet")),
+                                message: Text(LocalizedString("Do you wish to receive a notification when the pump is longer disconnected for a specific time?", comment: "body disconnect reminder sheet")),
+                    buttons: [
+                        .default(Text(LocalizedString("Yes, 5 minutes", comment: "Button text to 5 min"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(5))
+                        },
+                        .default(Text(LocalizedString("Yes, 15 minutes", comment: "Button text to 15 min"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(15))
+                        },
+                        .default(Text(LocalizedString("Yes, 30 minutes", comment: "Button text to 30 min"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(30))
+                        },
+                        .default(Text(LocalizedString("Yes, 1 hour", comment: "Button text to 1h"))) {
+                            viewModel.scheduleDisconnectNotification(.minutes(60))
+                        },
+                        .default(Text(LocalizedString("No, just disconnect", comment: "Button text to just disconnect"))) {
+                            viewModel.forceDisconnect()
+                        },
+                        .cancel(Text(LocalizedString("Cancel", comment: "Button text to cancel")))
+                    ])
+    }
+    
     var body: some View {
         List {
             Section() {
@@ -113,6 +154,48 @@ struct DanaKitSettingsView: View {
                 }
                 .disabled(viewModel.isUpdatingPumpState || viewModel.isSyncing)
                 
+                if viewModel.isUsingContinuousMode {
+                    if !viewModel.isConnected {
+                        Button(action: {
+                            viewModel.reconnect()
+                        }) {
+                            HStack {
+                                Text(LocalizedString("Reconnect to pump", comment: "DanaKit reconnect"))
+                                Spacer()
+                                if viewModel.isTogglingConnection {
+                                    ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                                }
+                            }
+                        }
+                        .disabled(viewModel.isTogglingConnection)
+                    } else {
+                        Button(action: {
+                            viewModel.showingDisconnectReminder = true
+                        }) {
+                            HStack {
+                                Text(LocalizedString("Disconnect from pump", comment: "DanaKit disconnect"))
+                                Spacer()
+                                if viewModel.isTogglingConnection {
+                                    ActivityIndicator(isAnimating: .constant(true), style: .medium)
+                                }
+                            }
+                        }
+                        .disabled(viewModel.isTogglingConnection)
+                        .actionSheet(isPresented: $viewModel.showingDisconnectReminder) {
+                            disconnectReminder
+                        }
+                    }
+                    
+                    HStack {
+                        Text(LocalizedString("Status", comment: "Text for status")).foregroundColor(Color.primary)
+                        Spacer()
+                        HStack(spacing: 10) {
+                            continuousConnectionStatusText
+                            continuousConnectionStatusIcon
+                        }
+                    }
+                }
+                
                 HStack {
                     Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
                     Spacer()
@@ -141,11 +224,11 @@ struct DanaKitSettingsView: View {
             
             Section(header: SectionHeader(label: LocalizedString("Configuration", comment: "The title of the configuration section in DanaKit settings")))
             {
-                NavigationLink(destination: InsulinTypeView(initialValue: viewModel.insulineType, supportedInsulinTypes: supportedInsulinTypes, didConfirm: viewModel.didChangeInsulinType)) {
+                NavigationLink(destination: InsulinTypeView(initialValue: viewModel.insulinType, supportedInsulinTypes: supportedInsulinTypes, didConfirm: viewModel.didChangeInsulinType)) {
                     HStack {
                         Text(LocalizedString("Insulin Type", comment: "Text for confidence reminders navigation link")).foregroundColor(Color.primary)
                         Spacer()
-                        Text(viewModel.insulineType.brandName)
+                        Text(viewModel.insulinType.brandName)
                             .foregroundColor(.secondary)
                         }
                 }
@@ -156,14 +239,6 @@ struct DanaKitSettingsView: View {
                         Text(viewModel.bolusSpeed.format())
                             .foregroundColor(.secondary)
                         }
-                }
-                NavigationLink(destination: viewModel.basalProfileView) {
-                    HStack {
-                        Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
-                        Spacer()
-                        Text(viewModel.transformBasalProfile(viewModel.basalProfileNumber))
-                            .foregroundColor(.secondary)
-                    }
                 }
                 NavigationLink(destination: viewModel.userOptionsView) {
                     Text(LocalizedString("User options", comment: "Title for user options"))
@@ -194,6 +269,18 @@ struct DanaKitSettingsView: View {
                     Text(LocalizedString("Firmware version", comment: "Text for firmware version")).foregroundColor(Color.primary)
                     Spacer()
                     Text(String(viewModel.firmwareVersion ?? 0))
+                        .foregroundColor(.secondary)
+                }
+                .onLongPressGesture(perform: {
+                    viewModel.showingBleModeSwitch = true
+                })
+                .actionSheet(isPresented: $viewModel.showingBleModeSwitch) {
+                    bleModeSwitch
+                }
+                HStack {
+                    Text(LocalizedString("Basal profile", comment: "Text for Basal profile")).foregroundColor(Color.primary)
+                    Spacer()
+                    Text(viewModel.transformBasalProfile(viewModel.basalProfileNumber))
                         .foregroundColor(.secondary)
                 }
                 HStack {
@@ -309,6 +396,30 @@ struct DanaKitSettingsView: View {
                 }
             }
         }
+    }
+    
+    var continuousConnectionStatusText: some View {
+        if viewModel.isTogglingConnection {
+            if viewModel.isConnected {
+                return Text(LocalizedString("Disconnecting...", comment: "DanaKit disconnecting"))
+            } else {
+                return Text(LocalizedString("Reconnecting...", comment: "DanaKit reconnecting"))
+            }
+        } else {
+            if viewModel.isConnected {
+                return Text(LocalizedString("Connected", comment: "DanaKit connected"))
+            } else {
+                return Text(LocalizedString("Disconnected", comment: "DanaKit disconnected"))
+            }
+        }
+    }
+    
+    var continuousConnectionStatusIcon: some View {
+        var color = viewModel.isTogglingConnection ? Color.orange : viewModel.isConnected ? Color.green : Color.red
+        
+        return Circle()
+            .fill(color)
+            .frame(width: 10, height: 10)
     }
     
     var deliverySectionTitle: String {

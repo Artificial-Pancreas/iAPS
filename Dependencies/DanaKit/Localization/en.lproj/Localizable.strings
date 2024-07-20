@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Reservoir age"
+
+/* Text for status */
+"Status" = "Status"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Disconnecting..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Reconnecting..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Disconnect from pump"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Reconnect tp pump"
+
+/* DanaKit disconnected */
+"Disconnected" = "Disconnected"
+
+/* DanaKit connected */
+"Connected" = "Connected"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pump is still disconnected"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Your pump is still disconnected after the set period!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Set reminder for disconnect"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Do you wish to receive a notification when the pump is longer disconnected for a specific time?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Yes, 5 minutes"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Yes, 15 minutes"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Yes, 30 minutes"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Yes, 1 hour"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "No, just disconnect"

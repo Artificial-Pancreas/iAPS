@@ -20,7 +20,7 @@
 "Setting up DanaRS v1" = "设置 DanaRS v1"
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "在配对过程中，您的 DanaRS v3 将显示配对提示，而您的 iPhone 将显示配对代码提示。在您的泵上，选择“确定”，然后在您的 iPhone 上输入代码。之后，Loop 即可与您的 DanaRS v1 进行通信"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "在配对过程中，您的 DanaRS v3 将显示配对提示，而您的 iPhone 将显示配对代码提示。在您的泵上，选择“确定”，然后在您的 iPhone 上输入代码。之后，Loop 即可与您的 DanaRS v1 通信"
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "在开始配对过程之前，建议检查泵密码，如果需要，请更新。您可以通过泵设置 -&gt; 用户设置 -&gt; 密码来执行此操作。默认密码为 1234，如果这是您的密码，请考虑更改它"
@@ -128,7 +128,7 @@
 "Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "注意：您的 Dana 泵具有特殊设置，可让您关闭 Dana 泵蜂鸣声。要启用此功能，请联系您的 Dana 经销商"
 
 /* Error description when no dana connected */
-"Failed to make a connection" = "连接失败"
+"Failed to make a connection" = "无法建立连接"
 
 /* Error description when failed temp adjustment */
 "Failed to adjust temp basal" = "调整基础体温失败"
@@ -361,7 +361,7 @@
 "Basal limit reached" = "已达到基础极限"
 
 /* Alert body for basalMax */
-"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "您的每日基础剂量已达到上限。请联系您的 Dana 经销商以增加上限"
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "您的每日基础剂量已达到上限。请联系您的 Dana 经销商以提高上限"
 
 /* Alert title for dailyMax */
 "Daily limit reached" = "已达到每日限额"
@@ -373,7 +373,7 @@
 "Missed Blood glucose check" = "错过血糖检查"
 
 /* Alert body for bloodSugarCheckMiss */
-"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "您的泵中已设置血糖检查提醒并已触发。请将其移除或将您的血糖水平提供给泵"
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "您的泵中已设置血糖检查提醒，并且已触发。请将其移除或将您的血糖水平提供给泵"
 
 /* Alert title for unknown */
 "Unknown error" = "未知错误"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "储层年龄"
+
+/* Text for status */
+"Status" = "地位"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "正在断开连接..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "正在重新连接..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "断开与泵的连接"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "重新连接 TP 泵"
+
+/* DanaKit disconnected */
+"Disconnected" = "断开连接"
+
+/* DanaKit connected */
+"Connected" = "连接的"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "泵仍处于断开状态"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "您的泵在设定的时间段后仍处于断开状态！"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "设置断开连接的提醒"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "当泵断开连接特定时间后，您是否希望收到通知？"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "是的，5分钟"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "是的，15分钟"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "是的，30 分钟"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "是的，1 小时"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "否，只需断开连接"

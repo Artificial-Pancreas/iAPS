@@ -41,12 +41,8 @@ class DanaKitScanViewModel : ObservableObject {
         self.pumpManager?.addScanDeviceObserver(self, queue: .main)
         self.pumpManager?.addStateObserver(self, queue: .main)
         
-        do {
-            try self.pumpManager?.startScan()
-            self.isScanning = true
-        } catch {
-            log.error("\(#function): Failed to start scan action: \(error.localizedDescription)")
-        }
+        self.pumpManager?.startScan()
+        self.isScanning = true
     }
     
     func connect(_ item: ScanResultItem) {
@@ -74,10 +70,12 @@ class DanaKitScanViewModel : ObservableObject {
             
         case .failure(let e):
             self.isConnecting = false
+            self.isConnectionError = true
             self.connectionErrorMessage = e.localizedDescription
             
         case .invalidBle5Keys:
             self.isConnecting = false
+            self.isConnectionError = true
             self.connectionErrorMessage = LocalizedString("Failed to pair to ", comment: "Dana-i failed to pair p1") + (self.pumpManager?.state.deviceName ?? "<NO_NAME>") + LocalizedString(". Please go to your bluetooth settings, forget this device, and try again", comment: "Dana-i failed to pair p2")
             
         case .requestedPincode(let message):
@@ -128,7 +126,9 @@ class DanaKitScanViewModel : ObservableObject {
             return
         }
         
-        self.pumpManager?.finishV3Pairing(pin1, randomPairingKey)
+        do {
+            try self.pumpManager?.finishV3Pairing(pin1, randomPairingKey)
+        } catch {}
     }
 }
 

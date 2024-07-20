@@ -161,7 +161,7 @@
 "The max bolus limit is reached. Please try a lower amount or increase the limit" = "O limite máximo de bolus foi atingido. Tente um valor menor ou aumente o limite"
 
 /* Error description when pump has reached the daily max */
-"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "O limite diário máximo de insulina foi atingido. Tente um valor menor ou aumente o limite"
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "O limite máximo diário de insulina foi atingido. Tente um valor menor ou aumente o limite"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Somente Bolus Automático é suportado"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Idade do reservatório"
+
+/* Text for status */
+"Status" = "Status"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Desconectando..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Reconectando..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Desconecte da bomba"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Reconecte a bomba tp"
+
+/* DanaKit disconnected */
+"Disconnected" = "Desconectado"
+
+/* DanaKit connected */
+"Connected" = "Conectado"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "A bomba ainda está desconectada"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Sua bomba ainda está desconectada após o período definido!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Definir lembrete para desconexão"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Deseja receber uma notificação quando a bomba estiver desligada por mais tempo por um período específico?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Sim, 5 minutos"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Sim, 15 minutos"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Sim, 30 minutos"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Sim, 1 hora"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Não, apenas desconecte"

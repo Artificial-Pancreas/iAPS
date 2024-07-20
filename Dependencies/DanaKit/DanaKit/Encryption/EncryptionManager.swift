@@ -7,7 +7,7 @@
 //
 
 class DanaRSEncryption {
-    private static var enhancedEncryption: UInt8 = 0
+    public static var enhancedEncryption: UInt8 = 0
     private static var isEncryptionMode: Bool = true
     
     // Length 2
@@ -25,7 +25,7 @@ class DanaRSEncryption {
     
     // Length: 3
     private static var randomPairingKey: Data = Data()
-    private static var randomSyncKey: UInt8 = 0
+    public static var randomSyncKey: UInt8 = 0
     
     // Length: 6
     private static var ble5Key: Data = Data()
