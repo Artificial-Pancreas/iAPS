@@ -2605,6 +2605,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Botón de intervalo de horas visibles";
 
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
+
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
 

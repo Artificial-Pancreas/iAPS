@@ -2489,6 +2489,9 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Nút cài đặt khoảng thời gian hiển thị";
 
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Không bao giờ hiển thị biểu đồ glucose nhỏ khi cuộn";
+
 /* Setting title */
 "Bolus Calculator" = "Tính toán Bolus";
 
