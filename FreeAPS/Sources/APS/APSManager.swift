@@ -43,6 +43,9 @@ enum APSError: LocalizedError {
     case apsError(message: String)
     case deviceSyncError(message: String)
     case manualBasalTemp(message: String)
+    case activeBolusViewBolus
+    case activeBolusViewBasal
+    case activeBolusViewBasalandBolus
 
     var errorDescription: String? {
         switch self {
@@ -60,6 +63,12 @@ enum APSError: LocalizedError {
             return "Sync error: \(message)"
         case let .manualBasalTemp(message):
             return "Manual Basal Temp : \(message)"
+        case .activeBolusViewBolus:
+            return "Suggested SMB not enacted while in Bolus View"
+        case .activeBolusViewBasal:
+            return "Suggested Temp Basal (when > 0) not enacted while in Bolus View"
+        case .activeBolusViewBasalandBolus:
+            return "Suggested Temp Basal (when > 0) and SMB not enacted while in Bolus View"
         }
     }
 }
@@ -552,6 +561,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 processError(error)
                 return
             }
+
+            guard !activeBolusView() else {
+                debug(.apsManager, "Not enacting while in Bolus View")
+                processError(APSError.activeBolusViewBolus)
+                return
+            }
+
             let roundedAmount = pump.roundToSupportedBolusVolume(units: Double(amount))
             pump.enactBolus(units: roundedAmount, activationType: .manualRecommendationAccepted) { error in
                 if let error = error {
@@ -614,6 +630,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 processError(error)
                 return
             }
+
+            guard !activeBolusView() || (activeBolusView() && rate == 0) else {
+                debug(.apsManager, "Not enacting while in Bolus View")
+                processError(APSError.activeBolusViewBasal)
+                return
+            }
+
             // unable to do temp basal during manual temp basal 😁
             if isManualTempBasal {
                 processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
@@ -753,6 +776,14 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
+
+            guard !self.activeBolusView() || (self.activeBolusView() && rate == 0) else {
+                if let units = suggested.units {
+                    return Fail(error: APSError.activeBolusViewBasalandBolus).eraseToAnyPublisher()
+                }
+                return Fail(error: APSError.activeBolusViewBasal).eraseToAnyPublisher()
+            }
+
             return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in
                 let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
                 self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
@@ -765,12 +796,18 @@ final class BaseAPSManager: APSManager, Injectable {
             if let error = self.verifyStatus() {
                 return Fail(error: error).eraseToAnyPublisher()
             }
+
             guard let units = suggested.units else {
                 // It is OK, no bolus required
                 debug(.apsManager, "No bolus required")
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
+
+            guard !self.activeBolusView() else {
+                return Fail(error: APSError.activeBolusViewBolus).eraseToAnyPublisher()
+            }
+
             return pump.enactBolus(units: Double(units), automatic: true).map { _ in
                 self.bolusProgress.send(0)
                 self.bolusAmount.send(units)
@@ -1207,7 +1244,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     Variance: variance
                 ),
                 id: getIdentifier(),
-                dob: settingsManager.settings.birtDate,
+                dob: settingsManager.settings.birthDate,
                 sex: settingsManager.settings.sexSetting
             )
             storage.save(dailystat, as: file)
@@ -1240,6 +1277,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 nightscout.fetchVersion()
             }
         }
+    }
+
+    private func activeBolusView() -> Bool {
+        let defaults = UserDefaults.standard
+        return defaults.bool(forKey: IAPSconfig.inBolusView)
     }
 
     private func branch() -> String {

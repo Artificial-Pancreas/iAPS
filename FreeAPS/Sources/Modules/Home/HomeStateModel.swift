@@ -16,6 +16,7 @@ extension Home {
         @Published var isManual: [BloodGlucose] = []
         @Published var announcement: [Announcement] = []
         @Published var suggestion: Suggestion?
+        @Published var dynamicVariables: DynamicVariables?
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
@@ -82,6 +83,12 @@ extension Home {
         @Published var iobData: [IOBData] = []
         @Published var neg: Int = 0
         @Published var tddChange: Decimal = 0
+        @Published var tddAverage: Decimal = 0
+        @Published var tddYesterday: Decimal = 0
+        @Published var tdd2DaysAgo: Decimal = 0
+        @Published var tdd3DaysAgo: Decimal = 0
+        @Published var tddActualAverage: Decimal = 0
+        @Published var skipGlucoseChart: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -104,6 +111,7 @@ extension Home {
 
             // iobData = provider.reasons()
             suggestion = provider.suggestion
+            dynamicVariables = provider.dynamicVariables
             overrideHistory = provider.overrideHistory()
             uploadStats = settingsManager.settings.uploadStats
             enactedSuggestion = provider.enactedSuggestion
@@ -132,6 +140,7 @@ extension Home {
             minimumSMB = settingsManager.settings.minimumSMB
             maxBolus = settingsManager.pumpSettings.maxBolus
             useInsulinBars = settingsManager.settings.useInsulinBars
+            skipGlucoseChart = settingsManager.settings.skipGlucoseChart
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -482,14 +491,26 @@ extension Home {
                 if let data = self.provider.reasons() {
                     self.iobData = data
                     neg = data.filter({ $0.iob < 0 }).count * 5
-                    let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().twoDays)
+                    let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
                     let yesterday = (tdds.first(where: {
                         ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
                     })?.tdd ?? 0) as Decimal
+                    let oneDaysAgo = CoreDataStorage().fetchTDD(interval: DateFilter().today).last
                     tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
+                    tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
+                    tdd2DaysAgo = (tdds.first(where: {
+                        ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
+                            .addingTimeInterval(-1.days.timeInterval)
+                    })?.tdd ?? 0) as Decimal
+                    tdd3DaysAgo = (tdds.first(where: {
+                        ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
+                            .addingTimeInterval(-2.days.timeInterval)
+                    })?.tdd ?? 0) as Decimal
 
-                    print("Yesterday: \(yesterday)")
-                    print("Today: \((tdds.first?.tdd ?? 0) as Decimal)")
+                    if let tdds_ = self.provider.dynamicVariables {
+                        tddAverage = ((tdds.first?.tdd ?? 0) as Decimal) - tdds_.average_total_data
+                        tddActualAverage = tdds_.average_total_data
+                    }
                 }
             }
         }
@@ -570,6 +591,7 @@ extension Home.StateModel:
         minimumSMB = settingsManager.settings.minimumSMB
         maxBolus = settingsManager.pumpSettings.maxBolus
         useInsulinBars = settingsManager.settings.useInsulinBars
+        skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         setupGlucose()
         setupOverrideHistory()
         setupData()

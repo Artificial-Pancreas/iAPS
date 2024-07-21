@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Hotovo";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Zobrazenie emotikonov ako štítkov";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Súhlasím a pokračovať";
+
+/* */
+"Log external insulin" = "Log external insulin";
 
 /* Bolus progress view */
 "of" = "z";
@@ -114,6 +120,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Faktor mastného jedla";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Výsledok";
@@ -2478,6 +2487,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Tlačidlo nastavenia časového intervalu zobrazenia";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";

@@ -15,6 +15,10 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
 
+        var dynamicVariables: DynamicVariables? {
+            storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
+        }
+
         let overrideStorage = OverrideStorage()
 
         func overrides() -> [Override] {

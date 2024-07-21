@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Klar";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Senast loop var för %@ minuter sedan. Slutför eller stäng denna vy så att nästa loop-cykel kan köras";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Visa Emojis";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Godkänn och fortsätt";
+
+/* */
+"Log external insulin" = "Lägg till externt insulin";
 
 /* Bolus progress view */
 "of" = "av";
@@ -114,6 +120,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Fettrik måltidsfaktor";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Kolhydrater och tidigare insulin ingår i blodsockerprognos.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Resultat";
@@ -2478,6 +2487,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Visa knapp för tidsintervell";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Dölj det lilla glukosdiagrammet när du scrollar";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";

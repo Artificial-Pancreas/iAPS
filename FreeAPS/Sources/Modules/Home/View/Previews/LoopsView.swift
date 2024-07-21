@@ -34,7 +34,7 @@ struct LoopsView: View {
         }
         .padding(.top, 20)
         .padding(.bottom, 15)
-        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
+        .dynamicTypeSize(...DynamicTypeSize.xLarge)
     }
 
     func loopChart(percentage: Double) -> some View {
@@ -45,6 +45,14 @@ struct LoopsView: View {
                 )
                 .foregroundStyle(
                     percentage >= 90 ? Color(.darkGreen) : percentage >= 75 ? .orange : .red
+                )
+                .clipShape(
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: 4,
+                        bottomLeadingRadius: 4,
+                        bottomTrailingRadius: 4,
+                        topTrailingRadius: 4
+                    )
                 )
                 .annotation(position: .overlay) {
                     Text(percentage.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " %")

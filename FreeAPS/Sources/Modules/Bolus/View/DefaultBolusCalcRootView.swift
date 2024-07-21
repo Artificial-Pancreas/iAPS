@@ -31,6 +31,13 @@ extension Bolus {
             return formatter
         }
 
+        private var loopFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            return formatter
+        }
+
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -57,7 +64,7 @@ extension Bolus {
                 if fetch {
                     Section {
                         mealEntries.asAny()
-                    } // header: { Text("Meal Summary") }
+                    }
                 }
 
                 Section {
@@ -69,19 +76,39 @@ extension Bolus {
                         }
                     } else {
                         HStack {
-                            Text("Insulin recommended")
-                            Image(systemName: "info.bubble")
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.primary, .blue)
-                                .onTapGesture {
-                                    presentInfo.toggle()
+                            Button(action: {
+                                presentInfo.toggle()
+                            }, label: {
+                                Image(systemName: "info.bubble")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(colorScheme == .light ? .black : .white, .blue)
+                                    .font(.infoSymbolFont)
+                                Text("Calculations")
+                            })
+                                .foregroundStyle(.blue)
+                                .font(.footnote)
+                                .buttonStyle(PlainButtonStyle())
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            if state.fattyMeals {
+                                Spacer()
+                                Toggle(isOn: $state.useFattyMealCorrectionFactor) {
+                                    Text("Fatty Meal")
                                 }
+                                .toggleStyle(CheckboxToggleStyle())
+                                .font(.footnote)
+                                .onChange(of: state.useFattyMealCorrectionFactor) { _ in
+                                    state.insulinCalculated = state.calculateInsulin()
+                                }
+                            }
+                        }
 
+                        HStack {
+                            Text("Insulin recommended")
                             Spacer()
 
                             Text(
                                 formatter
-                                    .string(from: state.insulinCalculated as NSNumber)! +
+                                    .string(from: state.insulinCalculated as NSNumber) ?? "" +
                                     NSLocalizedString(" U", comment: "Insulin unit")
                             ).foregroundColor(.secondary)
                                 .onTapGesture {
@@ -129,6 +156,13 @@ extension Bolus {
                             .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
                             .tint(.white)
                     }
+                    footer: {
+                        if (-1 * state.loopDate.timeIntervalSinceNow / 60) > state.loopReminder, let string = state.lastLoop() {
+                            Text(NSLocalizedString(string, comment: "Bolus View footer"))
+                                .padding(.top, 20).multilineTextAlignment(.center)
+                                .foregroundStyle(.orange)
+                        }
+                    }
                     .alert(isPresented: $isRemoteBolusAlertPresented) {
                         remoteBolusAlert!
                     }
@@ -148,12 +182,20 @@ extension Bolus {
                             .listRowBackground(Color(.systemBlue))
                             .tint(.white)
                     }
+                    footer: {
+                        if abs(state.loopDate.timeIntervalSinceNow / 60) > state.loopReminder, let string = state.lastLoop() {
+                            Text(NSLocalizedString(string, comment: "Bolus View footer"))
+                                .padding(.top, 20).multilineTextAlignment(.center)
+                                .foregroundStyle(.orange)
+                        }
+                    }
                 }
             }
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView {
+                    state.viewActive()
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
                 }
@@ -179,7 +221,10 @@ extension Bolus {
                         Text("Meal")
                     }
                 },
-                trailing: Button { state.hideModal() }
+                trailing: Button {
+                    state.hideModal()
+                    state.notActive()
+                }
                 label: { Text("Cancel") }
             )
             .popup(isPresented: presentInfo, alignment: .bottom, direction: .bottom, type: .default) {

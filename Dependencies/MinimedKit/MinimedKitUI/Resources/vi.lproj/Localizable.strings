@@ -35,7 +35,7 @@
 "Best Frequency" = "Tần số tối ưu";
 
 /* The format string describing pump bolusing state: (1: bolusing) */
-"Bolusing: %1$@\n" = "Đang tiêm liều bolus: %1$@\n";
+"Bolusing: %1$@\n" = "Đang thực hiện bolus %1$@\n";
 
 /* Cancel button title */
 "Cancel" = "Hủy bỏ";

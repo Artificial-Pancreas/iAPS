@@ -27,6 +27,7 @@
 		192424CB2B7A64E70063CBF0 /* NIghtscoutExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */; };
 		1924F72C2BA35AE5006644EE /* TotalDailyDose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1924F72B2BA35AE5006644EE /* TotalDailyDose.swift */; };
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
+		192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */; };
 		1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Dynamic structs.swift */; };
 		193F6CDD2A512C8F001240FD /* Loops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193F6CDC2A512C8F001240FD /* Loops.swift */; };
 		194297512B815938006B8A0B /* OverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194297502B815938006B8A0B /* OverridesView.swift */; };
@@ -51,6 +52,7 @@
 		19A910382A24EF3200C8951B /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910372A24EF3200C8951B /* ChartsView.swift */; };
 		19AEF4322B1F5A98006FFE8B /* TIRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AEF4312B1F5A98006FFE8B /* TIRView.swift */; };
 		19B0EF2128F6D66200069496 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B0EF2028F6D66200069496 /* Statistics.swift */; };
+		19C14F442C29807C009A7E07 /* ScrollOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C14F432C29807C009A7E07 /* ScrollOffset.swift */; };
 		19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */; };
 		19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */; };
 		19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */; };
@@ -595,6 +597,7 @@
 		1927C8FA2744612500347C69 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1927C8FB2744612600347C69 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1927C8FE274489BA00347C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsShortcuts.swift; sourceTree = "<group>"; };
 		192E77322B9F40C7004F4822 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		192E77462B9F4CF1004F4822 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		192E77472B9F4CF3004F4822 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
@@ -664,6 +667,7 @@
 		19A910372A24EF3200C8951B /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		19AEF4312B1F5A98006FFE8B /* TIRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIRView.swift; sourceTree = "<group>"; };
 		19B0EF2028F6D66200069496 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		19C14F432C29807C009A7E07 /* ScrollOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffset.swift; sourceTree = "<group>"; };
 		19C166682756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19C166692756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigDataFlow.swift; sourceTree = "<group>"; };
@@ -1202,6 +1206,14 @@
 				1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */,
 			);
 			path = Bolus;
+			sourceTree = "<group>";
+		};
+		192A9A102C0F5284000BBC29 /* Meals */ = {
+			isa = PBXGroup;
+			children = (
+				192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */,
+			);
+			path = Meals;
 			sourceTree = "<group>";
 		};
 		192F0FF5276AC36D0085BE4D /* Recovered References */ = {
@@ -1910,6 +1922,7 @@
 				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
+				19C14F432C29807C009A7E07 /* ScrollOffset.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2401,6 +2414,7 @@
 				196579A52B924BD400642E8E /* Overrides */,
 				1920BF5B2B9DF4B900E861FE /* Bolus */,
 				CE7CA3452A064973004BE681 /* TempPresets */,
+				192A9A102C0F5284000BBC29 /* Meals */,
 				CE7CA34B2A064973004BE681 /* State */,
 			);
 			path = Shortcuts;
@@ -3027,6 +3041,7 @@
 				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
+				19C14F442C29807C009A7E07 /* ScrollOffset.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
@@ -3233,6 +3248,7 @@
 				CE94598729E9E4110047C9C6 /* WatchConfigRootView.swift in Sources */,
 				903D18976088B09110BCBE29 /* LibreConfigStateModel.swift in Sources */,
 				9050F378F0063C064D7FFC86 /* LibreConfigRootView.swift in Sources */,
+				192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */,
 				B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */,
 				320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */,
 				19E1F7E829D082D0005C8D20 /* IconConfigDataFlow.swift in Sources */,

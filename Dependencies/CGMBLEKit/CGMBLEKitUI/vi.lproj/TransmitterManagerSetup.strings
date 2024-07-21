@@ -14,7 +14,7 @@
 "Qub-6B-0aB.headerTitle" = "Số ID của Transmitter";
 
 /* Class = "UITableViewSection"; footerTitle = "Data can be downloaded over the Internet from Share when the transmitter connection fails."; ObjectID = "k1N-Rg-XDy"; */
-"k1N-Rg-XDy.footerTitle" = "Dữ liệu có thể được tải xuống qua đường truyền Internet trên ứng dụng Share khi kết nối với transmitter bị đứt.";
+"k1N-Rg-XDy.footerTitle" = "Dữ liệu có thể được tải xuống qua Internet từ Chia sẻ khi kết nối bộ phát không thành công.";
 
 /* Class = "UITableViewSection"; headerTitle = "Dexcom Share"; ObjectID = "k1N-Rg-XDy"; */
 "k1N-Rg-XDy.headerTitle" = "Dữ liệu từ Dexcom Share";
