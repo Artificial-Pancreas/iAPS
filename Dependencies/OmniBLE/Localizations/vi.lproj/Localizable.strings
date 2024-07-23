@@ -57,7 +57,7 @@
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Thời gian trên bơm khác so với thời gian thực tế. Bạn có thể xem thời gian trên bơm và sync thời gian hiện hành trong cài đặt.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Thời gian tạm dừng hết. Mở ứng dụng và tiếp tục lại.";
+"Suspension time is up. Open the app and resume." = "Đã hết thời gian tạm dừng. Mở ứng dụng và tiếp tục.";
 
 /* Action button default text for PodAlerts */
 "Ok" = "Ok";
@@ -237,7 +237,7 @@
 "No Pod" = "Không pod";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "Hết thuốc";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "Pod đã hết hạn";
@@ -249,7 +249,7 @@
 "Pod Error" = "Lỗi Pod";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "Hết thuốc";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulin Đã tạm ngưng";
@@ -273,7 +273,7 @@
 "Checking..." = "Đang kiểm tra...";
 
 /* */
-"Check cannula insertion finished" = "Kiểm tra việc gắn cannula hoàn tất";
+"Check cannula insertion finished" = "Kiểm tra việc gắn cannula đã hoàn tất";
 
 /* */
 "Get pod status" = "Lấy thông tin pod";
@@ -538,7 +538,7 @@
 "Pairing..." = "Đang ghép đôi...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "Đang chuẩn bị...";
 
 /* */
 "Deactivating..." = "Đang hủy kích hoạt...";
@@ -706,7 +706,7 @@
 "Active Time" = "Thời gian Hoạt động";
 
 /* description label for last status date pod details row */
-"Last Status" = "Trạng thái cuối";
+"Last Status" = "Trạng thái gần nhất";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Thông tin lỗi Pod";
@@ -838,12 +838,12 @@
 "Previous Pod Details" = "Thông tin của Pod trước đó";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Chi tiết về Trình quản lý Máy bơm";
+"Pump Manager Details" = "Chi tiết về Trình quản lý Bơm";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Trình quản lý máy bơm...";
+"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Trình quản lý Bơm...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Làm mới Chi tiết về Trình quản lý Máy bơm";
+"Refresh Pump Manager Details" = "Làm mới Chi tiết về Trình quản lý Bơm";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Chẩn đoán";
