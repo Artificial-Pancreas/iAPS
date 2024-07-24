@@ -423,13 +423,13 @@ Enact a temp Basal or a temp target */
 "Import settings from Nightscout" = "Nhập cấu hình từ Nightscout";
 
 /* */
-"Import settings?" = "Nhập các cấu hình?";
+"Import settings?" = "Nhập các cài đặt?";
 
 /* */
 "Import from Nightscout" = "Nhập từ Nightscout";
 
 /* */
-"Settings imported" = "Các cấu hình đã được nhập";
+"Settings imported" = "Các cài đặt đã được nhập";
 
 /* Import Error */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Đơn vị glucose không khớp trong Cài đặt Nightscout và Pump. Nhập cấu hình bị hủy bỏ.";
