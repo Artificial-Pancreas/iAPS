@@ -1930,45 +1930,66 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Làm mịn Glucose";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Chia sẻ";
+
+/* Share and Backup page header */
+"Share and Backup" = "Share and Backup";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Upload settings and statistics";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+
+/* Title of dropdown menu */
+"Sex" = "Sex";
+
+/* Sex dropdown menu option */
 "Woman" = "Nữ";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Nam";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Khác";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Bí mật";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Ngày sinh";
 
-/* */
-"Share all of your Statistics" = "Chia sẻ tất cả số liệu thống kê của bạn";
+/* Share and Backup info text */
+"If you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database./n/nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "If you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database./n/nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
-/* */
-"Just iAPS version number" = "Chỉ phiên bản iAPS";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Chia sẻ ở mức tối thiểu";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Mọi thông tin bạn chọn chia sẻ đều được tải lên ẩn danh. Để tránh tải lên trùng lặp, dữ liệu được xác định bằng một chuỗi ngẫu nhiên duy nhất được lưu trên điện thoại của bạn.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Chỉ phiên bản iAPS";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+
+/* Token section title */
+"Your recovery token" = "Your recovery token";
+
+/* Token display button */
 "Tap to display" = "Chạm để hiển thị";
+
+/* Token copy button */
+"Long press to copy" = "Long press to copy";
+
+/* Link to statistics button */
+"View Personal Statistics" = "View Personal Statistics";
 
 /* */
 "Your identifier" = "Mã định danh của bạn";
 
 /* */
 "Share your data anonymously" = "Chia sẻ dữ liệu của bạn ẩn danh";
-
-/* Setting Title */
-"Sharing" = "Chia sẻ";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
