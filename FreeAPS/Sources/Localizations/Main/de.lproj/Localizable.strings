@@ -1935,16 +1935,16 @@ Enact a temp Basal or a temp target */
 "Sharing" = "Datenübermittlung";
 
 /* Share and Backup page header */
-"Share and Backup" = "Share and Backup";
+"Share and Backup" = "Teilen und Backup";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload settings and statistics" = "Einstellungen und Statistiken hochladen";
 
 /* On-off toggle */
-"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+"Share and Backup all of your Settings and Statistics" = "Teilen und sichern Sie alle Ihre Einstellungen und Statistiken";
 
 /* Title of dropdown menu */
-"Sex" = "Sex";
+"Sex" = "Geschlecht";
 
 /* Sex dropdown menu option */
 "Woman" = "Weiblich";
@@ -1974,16 +1974,16 @@ Enact a temp Basal or a temp target */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
 
 /* Token section title */
-"Your recovery token" = "Your recovery token";
+"Your recovery token" = "Ihr Wiederherstellungs-Token";
 
 /* Token display button */
 "Tap to display" = "Tippen, um anzuzeigen";
 
 /* Token copy button */
-"Long press to copy" = "Long press to copy";
+"Long press to copy" = "Zum Kopieren lange drücken";
 
 /* Link to statistics button */
-"View Personal Statistics" = "View Personal Statistics";
+"View Personal Statistics" = "Persönliche Statistiken anzeigen";
 
 /* */
 "Your identifier" = "Ihr Identifikator";
