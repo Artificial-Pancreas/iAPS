@@ -112,7 +112,6 @@ final class Logger {
     static let deviceManager = Logger(category: .deviceManager, reporter: baseReporter)
     static let apsManager = Logger(category: .apsManager, reporter: baseReporter)
     static let nightscout = Logger(category: .nightscout, reporter: baseReporter)
-    static let dynamic = Logger(category: .dynamic, reporter: baseReporter)
 
     enum Category: String {
         case `default`
@@ -131,13 +130,13 @@ final class Logger {
         var logger: Logger {
             switch self {
             case .default: return .default
-            case .service: return .service
+            case .dynamic,
+                 .service: return .service
             case .businessLogic: return .businessLogic
             case .openAPS: return .openAPS
             case .deviceManager: return .deviceManager
             case .apsManager: return .apsManager
             case .nightscout: return .nightscout
-            case .dynamic: return .dynamic
             }
         }
 

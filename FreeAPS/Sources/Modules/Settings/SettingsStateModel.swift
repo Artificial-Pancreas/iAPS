@@ -1,3 +1,5 @@
+import Combine
+import LoopKit
 import SwiftUI
 
 extension Settings {
@@ -5,6 +7,7 @@ extension Settings {
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
         @Injected() private var nightscoutManager: NightscoutManager!
+        @Injected() private var storage: FileStorage!
 
         @Published var closedLoop = false
         @Published var debugOptions = false
@@ -25,7 +28,6 @@ extension Settings {
             broadcaster.register(SettingsObserver.self, observer: self)
 
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-
             versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
 
             // Read branch information from the branch.txt instead of infoDictionary
@@ -79,6 +81,14 @@ extension Settings {
 
         func deleteOverrides() {
             nightscoutManager.deleteAllNSoverrrides() // For testing
+        }
+
+        func startOnboarding() {
+            CoreDataStorage().startOnbarding()
+        }
+
+        func getIdentifier() -> String {
+            Token().getIdentifier()
         }
     }
 }

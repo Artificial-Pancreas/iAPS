@@ -538,6 +538,10 @@ extension Home {
             let ratio = min(c / (target + c - 100), maxValue)
             return (ratio * 100)
         }
+
+        func getIdentifier() -> String {
+            Token().getIdentifier()
+        }
     }
 }
 
