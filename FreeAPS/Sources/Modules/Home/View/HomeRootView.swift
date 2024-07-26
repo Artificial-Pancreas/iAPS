@@ -363,7 +363,20 @@ extension Home {
                             }
                     }
                     Spacer()
-                    Button { state.showModal(for: .settings) }
+                    Button {
+                        /* if CoreDataStorage().fetchOnbarding() {
+                             state
+                                 .showModal(for: .restore(
+                                     int: 0,
+                                     profile: "default",
+                                     inSitu: false,
+                                     id_: "",
+                                     uniqueID: state.getIdentifier()
+                                 ))
+                         } else { */
+                        state.showModal(for: .settings)
+                        // }
+                    }
                     label: {
                         Image(systemName: "gear")
                             .renderingMode(.template)

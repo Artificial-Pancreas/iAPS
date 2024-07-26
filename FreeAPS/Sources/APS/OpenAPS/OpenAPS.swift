@@ -274,7 +274,7 @@ final class OpenAPS {
             if let total = tdd {
                 let round = round(Double((total.bolus + total.basal) * 10)) / 10
                 let bolus = Int(total.bolus * 100 / ((total.bolus + total.basal) != 0 ? total.bolus + total.basal : 1))
-                tddString = ", TDD: \(round) U, \(bolus) % Bolus, "
+                tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus, "
             } else {
                 tddString = ", "
             }
@@ -335,6 +335,19 @@ final class OpenAPS {
             reasonString.insert(contentsOf: ", SMB Ratio: \(smbRatio)", at: index)
         }
 
+        // Active Configuration profile
+        let active = CoreDataStorage().fetchActiveProfile()
+        if active != "default" {
+            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: -1)
+            reasonString.insert(contentsOf: ", Configuration: \(active)", at: index)
+        }
+
+        // SMBs Disabled?
+        if let required = suggestion.insulinReq, required > 0, (suggestion.units ?? 0) <= 0 {
+            let index = reasonString.endIndex
+            reasonString.insert(contentsOf: " SMBs Disabled.", at: index)
+        }
+
         // Middleware
         if targetGlucose != nil, let middlewareString = readMiddleware(json: profile, variable: "mw"),
            middlewareString.count > 2
@@ -343,12 +356,6 @@ final class OpenAPS {
             if middlewareString != "Nothing changed" {
                 reasonString.insert(contentsOf: ", Middleware: \(middlewareString)", at: index)
             }
-        }
-
-        // SMBs Disabled?
-        if let required = suggestion.insulinReq, required > 0, (suggestion.units ?? 0) <= 0 {
-            let index = reasonString.endIndex
-            reasonString.insert(contentsOf: " SMBs Disabled.", at: index)
         }
 
         // Save Suggestion to CoreData
