@@ -27,12 +27,8 @@ extension ProfilePicker {
             )
         ) var currentProfile: FetchedResults<ActiveProfile>
 
-        @State var onboardingView = false
         @State var selectedProfile = ""
-        @State var int = 2
-        @State var inSitu = true
         @State var id = ""
-
         @State var lifetime = Lifetime()
 
         var body: some View {
@@ -84,7 +80,7 @@ extension ProfilePicker {
                         } else {
                             ForEach(uploaded) { profile in
                                 profilesView(for: profile)
-                                    .deleteDisabled(profile.name == "default")
+                                    .deleteDisabled(profile.name == "default" || profile.name == currentProfile.first?.name ?? "")
                             }
                             .onDelete(perform: removeProfile)
                         }
@@ -99,7 +95,7 @@ extension ProfilePicker {
                 Section {
                     Button("Upload now") {
                         // If no profiles saved yet
-                        if (profiles.first?.name ?? "NoneXXX") == "NoneXXX" {
+                        if (profiles.first?.name ?? "NoneXXX") == "NoneXXX" || (profiles.first?.name ?? "default" == "default") {
                             state.save("default")
                             state.activeProfile("default")
                         }
@@ -123,16 +119,6 @@ extension ProfilePicker {
             .onAppear { configureView() }
             .navigationTitle("Profiles")
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $onboardingView) {
-                Restore.RootView(
-                    resolver: resolver,
-                    int: $int,
-                    profile: $selectedProfile,
-                    inSitu: $inSitu,
-                    id_: $id,
-                    uniqueID: id
-                )
-            }
         }
 
         @ViewBuilder private func profilesView(for preset: Profiles) -> some View {
@@ -141,11 +127,15 @@ extension ProfilePicker {
             } else {
                 Text(preset.name ?? "")
                     .foregroundStyle(.blue)
-                    .padding(.trailing, 40)
+                    .navigationLink(to: .restore(
+                        int: 2,
+                        profile: preset.name ?? "",
+                        inSitu: true,
+                        id_: state.getIdentifier(),
+                        uniqueID: state.getIdentifier()
+                    ), from: self)
                     .onTapGesture {
                         selectedProfile = preset.name ?? ""
-                        id = state.getIdentifier()
-                        onboardingView.toggle()
                     }
             }
         }

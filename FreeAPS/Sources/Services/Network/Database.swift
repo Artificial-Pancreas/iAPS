@@ -9,6 +9,8 @@ class Database {
     private enum Config {
         static let sharePath = "/upload.php"
         static let versionPath = "/vcheck.php"
+        static let download = "/download.php?token="
+        static let profileList = "&section=profile_list"
         static let retryCount = 2
         static let timeout: TimeInterval = 60
     }
@@ -25,7 +27,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=preferences&profile=" + name
+        components.path = Config.download + token + "&section=preferences&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -33,10 +35,6 @@ extension Database {
         return service.run(request)
             .retry(Config.retryCount)
             .decode(type: Preferences.self, decoder: JSONCoding.decoder)
-            /* .catch { error -> AnyPublisher<Preferences, Swift.Error> in
-                 warning(.nightscout, "Preferences fetching error: \(error.localizedDescription) \(request)")
-                 return Just(Preferences()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
-             } */
             .eraseToAnyPublisher()
     }
 
@@ -45,12 +43,10 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + restoreToken + "&new_token=" + token
+        components.path = Config.download + restoreToken + "&new_token=" + token
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
-
-        request.httpMethod = "POST"
 
         return service.run(request)
             .retry(Config.retryCount)
@@ -63,7 +59,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=profile_list"
+        components.path = Config.download + token + Config.profileList
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -79,7 +75,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=settings&profile=" + name
+        components.path = Config.download + token + "&section=settings&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -98,7 +94,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=profile&profile=" + name
+        components.path = Config.download + token + "&section=profile&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = false
@@ -115,7 +111,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=profiles_delete&profile=" + name
+        components.path = Config.download + token + "&section=profiles_delete&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -131,7 +127,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=pumpSettings&profile=" + name
+        components.path = Config.download + token + "&section=pumpSettings&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true
@@ -150,7 +146,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=tempTargets&profile=" + name
+        components.path = Config.download + token + "&section=tempTargets&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true
@@ -167,7 +163,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=mealPresets&profile=" + name
+        components.path = Config.download + token + "&section=mealPresets&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -183,7 +179,7 @@ extension Database {
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
-        components.path = "/download.php?token=" + token + "&section=overridePresets&profile=" + name
+        components.path = Config.download + token + "&section=overridePresets&profile=" + name
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true

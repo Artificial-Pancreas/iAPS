@@ -496,7 +496,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                         self.storage.save(preferences, as: OpenAPS.Nightscout.uploadedPreferences)
                         self.saveToCoreData(preferences.profile ?? "default")
                     case let .failure(error):
-                        debug(.nightscout, error.localizedDescription)
+                        debug(.nightscout, "Preferences failed to upload to database " + error.localizedDescription)
                     }
                 } receiveValue: {}
                 .store(in: &self.lifetime)
@@ -898,12 +898,18 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         // UPLOAD PREFERNCES WHEN CHANGED
-        if let uploadedPreferences = storage.retrieve(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
-           let unWrappedPreferences = preferences, uploadedPreferences.rawJSON.sorted() == unWrappedPreferences.rawJSON.sorted(),
-           !force
+        if let uploadedPreferences = storage.retrieveFile(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
+           let unWrappedPreferences = preferences
         {
-            NSLog("NightscoutManager Preferences, preferences unchanged")
-        } else {
+            if uploadedPreferences.rawJSON.sorted() != unWrappedPreferences.rawJSON.sorted() ||
+                force
+            {
+                let prefs = NightscoutPreferences(preferences: unWrappedPreferences, enteredBy: token, profile: name)
+                uploadPreferences(prefs)
+            } else {
+                NSLog("NightscoutManager Preferences, preferences unchanged")
+            }
+        } else if loaded.preferences {
             let prefs = NightscoutPreferences(preferences: preferences, enteredBy: token, profile: name)
             uploadPreferences(prefs)
         }

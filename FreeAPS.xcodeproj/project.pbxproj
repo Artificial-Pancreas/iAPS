@@ -28,6 +28,7 @@
 		1920BF5D2B9DF53200E861FE /* BolusShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1920BF5C2B9DF53200E861FE /* BolusShortcut.swift */; };
 		19229B962AFBB84800CD91CA /* Predictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19229B952AFBB84800CD91CA /* Predictions.swift */; };
 		1922ACBD2C30B25300B28CF3 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1922ACBC2C30B25300B28CF3 /* Database.swift */; };
+		192365422C4FE6EB0038AFC4 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192365412C4FE6EB0038AFC4 /* Token.swift */; };
 		192424CB2B7A64E70063CBF0 /* NIghtscoutExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */; };
 		1924F72C2BA35AE5006644EE /* TotalDailyDose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1924F72B2BA35AE5006644EE /* TotalDailyDose.swift */; };
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
@@ -586,6 +587,7 @@
 		192202902BAB567800B95BE8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19229B952AFBB84800CD91CA /* Predictions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Predictions.swift; sourceTree = "<group>"; };
 		1922ACBC2C30B25300B28CF3 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		192365412C4FE6EB0038AFC4 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		192424CA2B7A64E70063CBF0 /* NIghtscoutExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NIghtscoutExercise.swift; sourceTree = "<group>"; };
 		1924F72B2BA35AE5006644EE /* TotalDailyDose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalDailyDose.swift; sourceTree = "<group>"; };
 		1927C8E92744611700347C69 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1969,6 +1971,7 @@
 				3811DE5725C9D4D500A708ED /* ProgressBar.swift */,
 				3811DE5525C9D4D500A708ED /* Publisher.swift */,
 				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
+				192365412C4FE6EB0038AFC4 /* Token.swift */,
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
 				E06B9119275B5EEA003C04B6 /* Array+Extension.swift */,
 				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
@@ -3150,6 +3153,7 @@
 				72F1BD388F42FCA6C52E4500 /* ConfigEditorProvider.swift in Sources */,
 				E39E418C56A5A46B61D960EE /* ConfigEditorStateModel.swift in Sources */,
 				45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */,
+				192365422C4FE6EB0038AFC4 /* Token.swift in Sources */,
 				CE7CA3532A064973004BE681 /* tempPresetIntent.swift in Sources */,
 				D6DEC113821A7F1056C4AA1E /* NightscoutConfigDataFlow.swift in Sources */,
 				38E98A3025F52FF700C0CED0 /* Config.swift in Sources */,

@@ -16,7 +16,7 @@ protocol FileStorage {
     func urlFor(file: String) -> URL?
 }
 
-final class BaseFileStorage: FileStorage {
+final class BaseFileStorage: FileStorage, Injectable {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseFileStorage.processQueue", qos: .utility)
 
     func save<Value: JSON>(_ value: Value, as name: String) {

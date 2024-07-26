@@ -7,7 +7,6 @@ extension Settings {
         let resolver: Resolver
         @StateObject var state = StateModel()
         @State private var showShareSheet = false
-        @State private var viewInt = 0
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -17,14 +16,14 @@ extension Settings {
         ) var fetchedVersionNumber: FetchedResults<VNr>
 
         @FetchRequest(
-            entity: Onboarding.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var onboardingDone: FetchedResults<Onboarding>
-
-        @FetchRequest(
             entity: ActiveProfile.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var currentProfile: FetchedResults<ActiveProfile>
+
+        @FetchRequest(
+            entity: Onboarding.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var onboarded: FetchedResults<Onboarding>
 
         private var GlucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -33,21 +32,10 @@ extension Settings {
             return formatter
         }
 
-        @State var selectedProfile = ""
-        @State var int = 0
-        @State var inSitu = false
-        @State var id = ""
-
         var body: some View {
-            if onboardingDone.first?.firstRun ?? true {
-                Restore.RootView(
-                    resolver: resolver,
-                    int: $int,
-                    profile: $selectedProfile,
-                    inSitu: $inSitu,
-                    id_: $id,
-                    uniqueID: state.getIdentifier()
-                )
+            if onboarded.first?.firstRun ?? true {
+                Restore.RootView(resolver: resolver, int: 0, profile: "default", inSitu: false, id_: "", uniqueID: "")
+
             } else {
                 settingsView
             }
@@ -150,14 +138,16 @@ extension Settings {
                                 Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
                             }
 
-                            HStack {
-                                Text("Start Onboarding")
-                                Button("Start") {
-                                    state.startOnboarding()
-                                }
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                .buttonStyle(.borderedProminent)
-                            }
+                            // HStack {
+                            Text("Test Onboarding")
+                                .navigationLink(to: .restore(
+                                    int: 0,
+                                    profile: "default",
+                                    inSitu: true,
+                                    id_: "",
+                                    uniqueID: state.getIdentifier()
+                                ), from: self)
+                                .foregroundStyle(.blue)
                         }
                         Group {
                             Text("Preferences")
@@ -236,7 +226,10 @@ extension Settings {
                 ShareSheet(activityItems: state.logItems())
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+                state.closedLoop = state.settingsManager.settings.closedLoop // Remove later. Test
+            }
             .navigationTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.inline)

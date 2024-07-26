@@ -3,8 +3,7 @@ import Swinject
 
 extension ProfilePicker {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var keychain: Keychain!
-        @Injected() var storage: FileStorage!
+        // @Injected() var keychain: Keychain!
 
         @Published var name: String = ""
         @Published var backup: Bool = false
@@ -20,13 +19,7 @@ extension ProfilePicker {
         }
 
         func getIdentifier() -> String {
-            var identfier = keychain.getValue(String.self, forKey: IAPSconfig.id) ?? ""
-            guard identfier.count > 1 else {
-                identfier = UUID().uuidString
-                keychain.setValue(identfier, forKey: IAPSconfig.id)
-                return identfier
-            }
-            return identfier
+            Token().getIdentifier()
         }
 
         func activeProfile(_ selectedProfile: String) {

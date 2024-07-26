@@ -5,10 +5,11 @@ extension Restore {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
-        @Binding var int: Int
-        @Binding var profile: String
-        @Binding var inSitu: Bool
-        @Binding var id_: String
+
+        let int: Int
+        let profile: String
+        let inSitu: Bool
+        let id_: String
         var uniqueID: String
 
         @Environment(\.dismiss) private var dismiss
@@ -69,9 +70,11 @@ extension Restore {
 
         @State var profileList: String?
 
-        @State var viewInt = 0
+        @State var page = 0
         @State var token: String = ""
         @State var lifetime = Lifetime()
+
+        @State var errorString = ""
 
         var fetchedVersionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
 
@@ -84,31 +87,30 @@ extension Restore {
 
         var body: some View {
             Form {
-                if viewInt == 0 {
+                if page == 0 {
                     onboarding
-                } else if viewInt == 1 {
+                } else if page == 1 {
                     tokenView
                     if token != "" {
                         startImportView
                     }
-                } else if viewInt == 2 {
+                } else if page == 2 {
                     importedView
-                } else if viewInt == 3 {
+                } else if page == 3 {
                     fetchingView
                     listFetchedView
-                } else if viewInt == 4 {
+                } else if page == 4 {
                     savedView
                 }
             }
-            .navigationTitle("Onboarding")
+            .navigationTitle(!inSitu ? "Onboarding" : "Switch Configuration")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Cancel") {
-                reset()
-                onboardingDone()
+                close()
             })
-            .navigationBarItems(leading: viewInt > 0 ? Button("Back") { viewInt -= 1 } : nil)
+            .navigationBarItems(leading: (page > 0 && !inSitu) ? Button("Back") { page -= 1 } : nil)
             .onAppear {
-                viewInt = int
+                page = int
                 if inSitu {
                     importSettings(id: id_)
                 }
@@ -118,7 +120,7 @@ extension Restore {
         private var onboarding: some View {
             Section {
                 HStack {
-                    Button { viewInt += 1 }
+                    Button { page += 1 }
                     label: { Text("Yes") }
                         .buttonStyle(.borderless)
                         .padding(.leading, 10)
@@ -173,7 +175,7 @@ extension Restore {
             Section {
                 Button {
                     importSettings(id: token)
-                    viewInt += 1
+                    page += 1
                 }
                 label: {
                     Text("Start import").frame(maxWidth: .infinity, alignment: .center)
@@ -184,9 +186,9 @@ extension Restore {
         }
 
         private func migrateProfiles() {
-            if state.fetchSettingProfileNames().isNilOrEmpty {
+            if !inSitu, (state.fetchSettingProfileNames()?.first?.name ?? "EMPTY_XXX") == "EMPTY_XXX" {
+                state.activeProfile("default")
                 changeToken(restoreToken: token)
-                retrieveProfiles(restoreToken: token)
             }
         }
 
@@ -397,10 +399,10 @@ extension Restore {
 
                 Button {
                     save()
-                    viewInt += 1
+                    page += 1
                     migrateProfiles()
                 }
-                label: { Text("Save settings") }
+                label: { Text(inSitu ? "Confirm" : "Save settings") }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .listRowBackground(Color(.systemBlue))
                     .tint(.white)
@@ -529,19 +531,14 @@ extension Restore {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .listRowBackground(Color(.systemBlue))
                             .tint(.white)
-                    }
+                    } footer: { errorString.isNotEmpty ? Text(errorString).textCase(nil).foregroundStyle(.orange) : nil }
                 }
 
                 Button {
                     if noneFetched {
-                        if int == 2 {
-                            onboardingDone()
-                            dismiss()
-                        } else {
-                            reset()
-                        }
+                        close()
                     } else {
-                        viewInt += 1
+                        page += 1
                     }
                 }
                 label: { Text("Continue") }
@@ -650,24 +647,12 @@ extension Restore {
                     Text("Saving settings...").font(.previewNormal)
                 }
 
-                Button {
-                    if int == 2 {
-                        onboardingDone()
-                        dismiss()
-                    } else {
-                        reset()
-                        onboardingDone()
-                    }
-                }
+                Button { close() }
                 label: { Text("OK") }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .listRowBackground(Color(.systemBlue))
                     .tint(.white)
             }
-        }
-
-        private func reset() {
-            viewInt = 0
         }
 
         private var allDone: Bool {
@@ -682,25 +667,22 @@ extension Restore {
         }
 
         private var noneFetched: Bool {
-            (
-                !basalsOK && !isfsOK && !crsOK && !freeapsSettingsOK && !settingsOK && !targetsOK && !pumpSettingsOK &&
-                    !tempTargetsOK && !mealPresetsOK && !overridePresetsOK
-            )
+            !basalsOK && !isfsOK && !crsOK && !freeapsSettingsOK && !settingsOK && !targetsOK && !pumpSettingsOK &&
+                !tempTargetsOK && !mealPresetsOK && !overridePresetsOK
         }
 
         private func importSettings(id: String) {
             var profile_ = "default"
             if inSitu {
                 profile_ = profile
-            }
-            // To not overwrite any eventual other current profile with the default settings when force onbarding (or testing)
-            if profile_ == "default" {
-                state.activeProfile(profile_)
+            } else if profile_ == "default" {
+                // To not overwrite any eventual other current profile with the default settings when force onbarding (or testing)
+                state.activeProfile("default")
             }
 
-            fetchPreferences(token: id, name: profile_)
-            fetchSettings(token: id, name: profile_)
             fetchProfiles(token: id, name: profile_)
+            fetchSettings(token: id, name: profile_)
+            fetchPreferences(token: id, name: profile_)
             fetchPumpSettings(token: id, name: profile_)
             fetchTempTargets(token: id, name: profile_)
             // CoreData
@@ -708,9 +690,17 @@ extension Restore {
             fetchOverridePresets(token: id, name: profile_)
         }
 
+        private func addError(_ error: String) {
+            if errorString.isEmpty {
+                errorString += error
+            }
+        }
+
         private func close() {
-            reset()
             onboardingDone()
+            if inSitu {
+                dismiss()
+            }
         }
 
         private var displayCoreData: Bool {
@@ -726,16 +716,19 @@ extension Restore {
         }
 
         func changeToken(restoreToken: String) {
-            if token != restoreToken {
-                let database = Database(token: token)
-                database.moveProfiles(token: token, restoreToken: restoreToken)
+            let newToken = state.getIdentifier()
+            if newToken != restoreToken {
+                let database = Database(token: newToken)
+                database.moveProfiles(token: newToken, restoreToken: restoreToken)
                     .sink { completion in
                         switch completion {
                         case .finished:
                             debug(.service, "List of profiles moved to a new token")
+                            self.retrieveProfiles(restoreToken: newToken)
                             self.fetchProfiles()
                         case let .failure(error):
                             debug(.service, "Failed moving profiles to a new token " + error.localizedDescription)
+                            addError(error.localizedDescription)
                         }
                     }
                 receiveValue: {}
@@ -759,8 +752,8 @@ extension Restore {
                             debug(.service, "default is current profile")
                         }
                     case let .failure(error):
-                        debug(.service, "Failed fetching List of profiles from database")
-                        debug(.service, error.localizedDescription)
+                        debug(.service, "Failed fetching List of profiles from database " + error.localizedDescription)
+                        addError(error.localizedDescription)
                     }
                 }
             receiveValue: { self.profileList = $0.profiles }
@@ -778,11 +771,11 @@ extension Restore {
                         self.settingsOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
+                        addError("Preferences: " + error.localizedDescription)
                     }
                 }
-            receiveValue: { self.settings = $0
-            }
-            .store(in: &lifetime)
+            receiveValue: { self.settings = $0 }
+                .store(in: &lifetime)
         }
 
         private func fetchSettings(token: String, name: String) {
@@ -796,6 +789,7 @@ extension Restore {
                         self.freeapsSettingsOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
+                        addError("iAPS Settings: " + error.localizedDescription)
                     }
                 }
             receiveValue: {
@@ -819,6 +813,7 @@ extension Restore {
                         self.diaOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
+                        errorString += error.localizedDescription
                         print("Profiles: No")
                     }
                 }
@@ -838,12 +833,11 @@ extension Restore {
                         self.pumpSettingsOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
+                        addError("Pump Settings: " + error.localizedDescription)
                     }
                 }
-            receiveValue: {
-                self.pumpSettings = $0
-            }
-            .store(in: &lifetime)
+            receiveValue: { self.pumpSettings = $0 }
+                .store(in: &lifetime)
         }
 
         private func fetchTempTargets(token: String, name: String) {
@@ -857,6 +851,7 @@ extension Restore {
                         self.tempTargetsOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
+                        addError("Temp Targets: " + error.localizedDescription)
                     }
                 }
             receiveValue: {
@@ -876,6 +871,7 @@ extension Restore {
                         self.mealPresetsOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
+                        addError(error.localizedDescription)
                     }
                 }
             receiveValue: {
@@ -895,6 +891,7 @@ extension Restore {
                         self.overridePresetsOK = true
                     case let .failure(error):
                         debug(.service, error.localizedDescription)
+                        addError(error.localizedDescription)
                     }
                 }
             receiveValue: {
@@ -917,7 +914,7 @@ extension Restore {
                     })
 
                     state.saveFile(basals_, filename: OpenAPS.Settings.basalProfile)
-                    debug(.service, "Imported Basals have been saved to file storage.")
+                    debug(.service, "Imported Basals have been saved to file storage, profile: \(fetchedProfiles.profile ?? "").")
                     basalsSaved = true
 
                     // Glucoce Unit
@@ -940,7 +937,7 @@ extension Restore {
 
                     state.saveFile(isfs_, filename: OpenAPS.Settings.insulinSensitivities)
 
-                    debug(.service, "Imported ISFs have been saved to file storage.")
+                    debug(.service, "Imported ISFs have been saved to file storage, profile: \(fetchedProfiles.profile ?? "").")
                     isfsSaved = true
 
                     // CRs
@@ -955,7 +952,7 @@ extension Restore {
                     let crs_ = CarbRatios(units: CarbUnit.grams, schedule: carbRatios)
 
                     state.saveFile(crs_, filename: OpenAPS.Settings.carbRatios)
-                    debug(.service, "Imported CRs have been saved to file storage.")
+                    debug(.service, "Imported CRs have been saved to file storage, profile: \(fetchedProfiles.profile ?? "").")
                     crsOKSaved = true
 
                     // Targets
@@ -971,7 +968,10 @@ extension Restore {
                     let targets_ = BGTargets(units: preferredUnit, userPrefferedUnits: preferredUnit, targets: glucoseTargets)
 
                     state.saveFile(targets_, filename: OpenAPS.Settings.bgTargets)
-                    debug(.service, "Imported Targets have been saved to file storage.")
+                    debug(
+                        .service,
+                        "Imported Targets have been saved to file storage, profile: \(fetchedProfiles.profile ?? "")."
+                    )
                     targetsSaved = true
                 }
             }
@@ -981,7 +981,7 @@ extension Restore {
             if let fetchedSettings = freeapsSettings {
                 state.saveFile(fetchedSettings, filename: OpenAPS.FreeAPS.settings)
                 freeapsSettingsSaved = true
-                debug(.service, "Imported iAPS Settings have been saved to file storage.")
+                debug(.service, "Imported iAPS Settings have been saved to file storage, profile: \(profile).")
             }
         }
 
@@ -989,7 +989,7 @@ extension Restore {
             if let fetchedSettings = settings {
                 state.saveFile(fetchedSettings, filename: OpenAPS.Settings.preferences)
                 settingsSaved = true
-                debug(.service, "Imported Preferences have been saved to file storage.")
+                debug(.service, "Imported Preferences have been saved to file storage, profile: \(profile).")
             }
         }
 
@@ -997,7 +997,7 @@ extension Restore {
             if let fetchedSettings = pumpSettings {
                 state.saveFile(fetchedSettings, filename: OpenAPS.Settings.settings)
                 pumpSettingsSaved = true
-                debug(.service, "Imported Pump settings have been saved to file storage.")
+                debug(.service, "Imported Pump settings have been saved to file storage, profile: \(profile).")
             }
         }
 
@@ -1005,23 +1005,23 @@ extension Restore {
             if let fetchedTargets = tempTargets {
                 state.saveFile(fetchedTargets, filename: OpenAPS.Settings.tempTargets)
                 tempTargetsSaved = true
-                debug(.service, "Imported Temp targets have been saved to file storage.")
+                debug(.service, "Imported Temp targets have been saved to file storage, profile: \(profile).")
             }
         }
 
         private func verifyMealPresets() {
             if let mealPresets = mealPresets, !inSitu, savedMeals.isEmpty {
                 state.saveMealPresets(mealPresets)
-                debug(.service, "Imported Meal presets have been saved to CoreData.")
                 mealPresetsSaved = true
+                debug(.service, "Imported Meal presets have been saved to CoreData, profile: \(profile).")
             }
         }
 
         private func verifyOverridePresets() {
             if let overridePresets = overridePresets, !inSitu, overrides.isEmpty {
                 state.saveOverridePresets(overridePresets)
-                debug(.service, "Imported Override presets have been saved to CoreData.")
                 overridePresetsSaved = true
+                debug(.service, "Imported Override presets have been saved to CoreData, profile: \(profile).")
             }
         }
 

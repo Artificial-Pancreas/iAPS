@@ -1,14 +1,24 @@
-import Combine
 import Foundation
+import SwiftUI
 import Swinject
 
 extension Restore {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var storage: FileStorage!
-
         @Published var name: String = ""
         @Published var backup: Bool = false
         @Published var basalsSaved = false
+
+        /*
+         @Published var glucoseBadge = false
+         @Published var glucoseNotificationsAlways = false
+         @Published var useAlarmSound = false
+         @Published var addSourceInfoToGlucoseNotifications = false
+         @Published var lowGlucose: Decimal = 0
+         @Published var highGlucose: Decimal = 0
+         @Published var carbsRequiredThreshold: Decimal = 0
+         @Published var useLiveActivity = false
+         @Published var units: GlucoseUnits = .mmolL
+         @Published var closedLoop = false*/
 
         let coreData = CoreDataStorage()
         let overrrides = OverrideStorage()
@@ -73,6 +83,10 @@ extension Restore {
                 }
                 try? self.coredataContext.save()
             }
+        }
+
+        func getIdentifier() -> String {
+            Token().getIdentifier()
         }
     }
 }
