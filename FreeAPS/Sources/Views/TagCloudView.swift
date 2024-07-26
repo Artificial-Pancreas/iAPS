@@ -58,7 +58,7 @@ struct TagCloudView: View {
             case textTag where textTag.contains("SMB Delivery Ratio:"):
                 return .uam
             case textTag where textTag.contains("Bolus"),
-                 textTag where textTag.contains("TDD:"):
+                 textTag where textTag.contains("Insulin 24h:"):
                 return .purple
             case textTag where textTag.contains("tdd_factor"),
                  textTag where textTag.contains("Sigmoid function"),
@@ -72,6 +72,8 @@ struct TagCloudView: View {
                 return .purple
             case textTag where textTag.contains("Middleware:"):
                 return .red
+            case textTag where textTag.contains("Configuration:"):
+                return Color(.darkGreen)
             default:
                 return .insulin
             }

@@ -62,4 +62,6 @@ extension Font {
     static let carbsDotFont = Font.custom("CarbsDotFont", fixedSize: 12)
     static let bolusDotFont = Font.custom("BolusDotFont", fixedSize: 12)
     static let announcementSymbolFont = Font.custom("AnnouncementSymbolFont", fixedSize: 14)
+
+    static let settingsListed = Font.custom("settingsListed", fixedSize: 15)
 }
