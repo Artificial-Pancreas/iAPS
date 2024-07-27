@@ -1935,16 +1935,16 @@ Enact a temp Basal or a temp target */
 "Sharing" = "Поширити";
 
 /* Share and Backup page header */
-"Share and Backup" = "Share and Backup";
+"Share and Backup" = "Поділитися та створити Резервну копію";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload settings and statistics" = "Звантажити налаштування та статистику";
 
 /* On-off toggle */
-"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+"Share and Backup all of your Settings and Statistics" = "Поділитись та зробити Резервну копію всіх ваших Налаштувань та Статистики";
 
 /* Title of dropdown menu */
-"Sex" = "Sex";
+"Sex" = "Стать";
 
 /* Sex dropdown menu option */
 "Woman" = "Жінка";
@@ -1962,7 +1962,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Дата народження";
 
 /* Share and Backup info text */
-"If you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database./n/nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "If you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database./n/nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
+"If you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database./n/nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "Якщо ви ввімкнете «Надати спільний доступ і створити Резервну копію», щоденні резервні копії ваших налаштувань і статистики створюватимуться в онлайновій базі даних./n/nОбов’язково скопіюйте та збережіть токен відновлення нижче. Токен відновлення потрібен для імпорту ваших налаштувань на інший телефон під час перегляду адаптації.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Мінімум розподілу";
@@ -1971,19 +1971,19 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Номер версії iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Кожна інформація, якою ви вирішите поділитися, завантажується анонімно. Щоб запобігти повторним завантаженням, дані ідентифікуються за допомогою унікального випадкового рядка, збереженого на вашому телефоні, токена відновлення.";
 
 /* Token section title */
-"Your recovery token" = "Your recovery token";
+"Your recovery token" = "Ваш токен для відновлення";
 
 /* Token display button */
 "Tap to display" = "Натисніть для відображення";
 
 /* Token copy button */
-"Long press to copy" = "Long press to copy";
+"Long press to copy" = "Утримуйте для копіювання";
 
 /* Link to statistics button */
-"View Personal Statistics" = "View Personal Statistics";
+"View Personal Statistics" = "Переглянути Персональну Статистику";
 
 /* */
 "Your identifier" = "Ваш ідентифікатор";
