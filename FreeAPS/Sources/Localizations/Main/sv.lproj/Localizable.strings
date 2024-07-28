@@ -1935,16 +1935,16 @@ Enact a temp Basal or a temp target */
 "Sharing" = "Delning";
 
 /* Share and Backup page header */
-"Share and Backup" = "Share and Backup";
+"Share and Backup" = "Dela och säkerhetskopiera";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload settings and statistics" = "Ladda upp inställningar och statistik";
 
 /* On-off toggle */
-"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+"Share and Backup all of your Settings and Statistics" = "Dela och säkerhetskopiera alla dina inställningar och statistik";
 
 /* Title of dropdown menu */
-"Sex" = "Sex";
+"Sex" = "Kön";
 
 /* Sex dropdown menu option */
 "Woman" = "Kvinna";
@@ -1974,16 +1974,16 @@ Enact a temp Basal or a temp target */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
 
 /* Token section title */
-"Your recovery token" = "Your recovery token";
+"Your recovery token" = "Din återställningsnyckel";
 
 /* Token display button */
 "Tap to display" = "Tryck för att visa";
 
 /* Token copy button */
-"Long press to copy" = "Long press to copy";
+"Long press to copy" = "Tryck länge för att kopiera";
 
 /* Link to statistics button */
-"View Personal Statistics" = "View Personal Statistics";
+"View Personal Statistics" = "Visa personlig statistik";
 
 /* */
 "Your identifier" = "Din identifierare";
