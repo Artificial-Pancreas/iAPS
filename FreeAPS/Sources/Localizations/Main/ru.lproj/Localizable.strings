@@ -1935,10 +1935,10 @@ Enact a temp Basal or a temp target */
 "Sharing" = "Делиться статистикой";
 
 /* Share and Backup page header */
-"Share and Backup" = "Share and Backup";
+"Share and Backup" = "Общий доступ и хранение";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload settings and statistics" = "Выгружать настройки и статистику";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
