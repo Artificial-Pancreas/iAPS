@@ -67,6 +67,8 @@ public struct OmnipodPumpManagerState: RawRepresentable, Equatable {
 
     internal var tempBasalEngageState: EngageablePumpState = .stable
 
+    internal var lastStatusChange: Date = .distantPast
+
     internal var lastPumpDataReportDate: Date?
     
     internal var insulinType: InsulinType?
