@@ -30,7 +30,7 @@
 
 /* Navigation bar title for G7SettingsView
    Title on WelcomeView */
-"Dexcom G7" = "Dexcom G7";
+"Dexcom G7" = "ديكسكوم G7";
 
 /* No comment provided by engineer. */
 "Done" = "Done";
@@ -54,7 +54,7 @@
 "Last Reading" = "Last Reading";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "يمكن لـ iAPS قراءة بيانات G7، ولكن لا يزال عليك استخدام تطبيق ديكسكوم G7 للإقران والمعايرة وإدارة المستشعرات الأخرى.";
 
 /* String displayed instead of a glucose value below the CGM range */
 "LOW" = "LOW";
