@@ -2129,7 +2129,7 @@ Enact a temp Basal or a temp target */
 "DeltaContactValue" = "Delta";
 
 /* Contact Image, settings, Trend (data to display) */
-"TrendContactValue" = "Trend";
+"TrendContactValue" = "إتجاه";
 
 /* Contact Image, settings, Last loop time (data to display) */
 "LastLoopTimeContactValue" = "Last loop time";
