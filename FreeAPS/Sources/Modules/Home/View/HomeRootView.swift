@@ -48,6 +48,11 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
 
+        @FetchRequest(
+            entity: Onboarding.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var onboarded: FetchedResults<Onboarding>
+
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -692,64 +697,102 @@ extension Home {
             .background(TimeEllipse(characters: string.count))
         }
 
+        func onboardingView(token: String) -> some View {
+            Restore.RootView(
+                resolver: resolver,
+                int: 0,
+                profile: "default",
+                inSitu: false,
+                id_: token,
+                uniqueID: token,
+                openAPS: nil
+            )
+        }
+
+        func importResetSettingsView(token: String, settings: Preferences) -> some View {
+            Restore.RootView(
+                resolver: resolver,
+                int: -1,
+                profile: "default",
+                inSitu: false,
+                id_: token,
+                uniqueID: token,
+                openAPS: settings
+            )
+        }
+
         var body: some View {
             GeometryReader { geo in
-                VStack(spacing: 0) {
-                    headerView(geo)
-                    if !state.skipGlucoseChart, scrollOffset > scrollAmount {
-                        glucoseHeaderView()
-                            .transition(.move(edge: .top))
+                if onboarded.first?.firstRun ?? true {
+                    let token = state.token()
+                    if let openAPSSettings = state.openAPSSettings {
+                        importResetSettingsView(token: token, settings: openAPSSettings)
+                    } else {
+                        onboardingView(token: token)
                     }
-
-                    ScrollView {
-                        ScrollViewReader { _ in
-                            LazyVStack {
-                                chart
-                                if state.timeSettings { timeSetting }
-                                preview.padding(.top, state.timeSettings ? 5 : 15)
-                                loopPreview.padding(.top, 15)
-                                if state.iobData.count > 5 {
-                                    activeCOBView.padding(.top, 15)
-                                    activeIOBView.padding(.top, 15)
-                                }
-                            }
-                            .background(GeometryReader { geo in
-                                let offset = -geo.frame(in: .named(scrollSpace)).minY
-                                Color.clear
-                                    .preference(
-                                        key: ScrollViewOffsetPreferenceKey.self,
-                                        value: offset
-                                    )
-                            })
-                        }
-                    }
-                    .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { value in
-                        scrollOffset = value
+                } else {
+                    VStack(spacing: 0) {
+                        headerView(geo)
                         if !state.skipGlucoseChart, scrollOffset > scrollAmount {
-                            display.toggle()
+                            glucoseHeaderView()
+                                .transition(.move(edge: .top))
                         }
+
+                        ScrollView {
+                            ScrollViewReader { _ in
+                                LazyVStack {
+                                    chart
+                                    if state.timeSettings { timeSetting }
+                                    preview.padding(.top, state.timeSettings ? 5 : 15)
+                                    loopPreview.padding(.top, 15)
+                                    if state.iobData.count > 5 {
+                                        activeCOBView.padding(.top, 15)
+                                        activeIOBView.padding(.top, 15)
+                                    }
+                                }
+                                .background(GeometryReader { geo in
+                                    let offset = -geo.frame(in: .named(scrollSpace)).minY
+                                    Color.clear
+                                        .preference(
+                                            key: ScrollViewOffsetPreferenceKey.self,
+                                            value: offset
+                                        )
+                                })
+                            }
+                        }
+                        .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { value in
+                            scrollOffset = value
+                            if !state.skipGlucoseChart, scrollOffset > scrollAmount {
+                                display.toggle()
+                            }
+                        }
+                        buttonPanel(geo)
                     }
-                    buttonPanel(geo)
-                }
-                .background(
-                    colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
-                        .opacity(IAPSconfig.backgroundOpacity * 2)
-                )
-                .ignoresSafeArea(edges: .vertical)
-                .overlay {
-                    if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(.gray.opacity(0.8))
-                                .frame(width: 320, height: 60)
-                            bolusProgressView(progress: progress, amount: amount)
+                    .background(
+                        colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
+                            .opacity(IAPSconfig.backgroundOpacity * 2)
+                    )
+                    .ignoresSafeArea(edges: .vertical)
+                    .overlay {
+                        if let progress = state.bolusProgress, let amount = state.bolusAmount {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(.gray.opacity(0.8))
+                                    .frame(width: 320, height: 60)
+                                bolusProgressView(progress: progress, amount: amount)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .offset(x: 0, y: -100)
                         }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .offset(x: 0, y: -100)
                     }
                 }
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+                if onboarded.first?.firstRun ?? true {
+                    state.fetchPreferences()
+                }
+            }
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
@@ -772,7 +815,6 @@ extension Home {
                             }
                     )
             }
-            .onAppear(perform: configureView)
         }
 
         private var popup: some View {

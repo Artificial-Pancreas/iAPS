@@ -20,11 +20,6 @@ extension Settings {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var currentProfile: FetchedResults<ActiveProfile>
 
-        @FetchRequest(
-            entity: Onboarding.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var onboarded: FetchedResults<Onboarding>
-
         private var GlucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -33,15 +28,6 @@ extension Settings {
         }
 
         var body: some View {
-            if onboarded.first?.firstRun ?? true {
-                Restore.RootView(resolver: resolver, int: 0, profile: "default", inSitu: false, id_: "", uniqueID: "")
-
-            } else {
-                settingsView
-            }
-        }
-
-        var settingsView: some View {
             Form {
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)

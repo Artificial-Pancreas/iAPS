@@ -11,6 +11,7 @@ extension Restore {
         let inSitu: Bool
         let id_: String
         var uniqueID: String
+        var openAPS: Preferences?
 
         @Environment(\.dismiss) private var dismiss
 
@@ -87,7 +88,9 @@ extension Restore {
 
         var body: some View {
             Form {
-                if page == 0 {
+                if page == -1 {
+                    importResetSettingsView
+                } else if page == 0 {
                     onboarding
                 } else if page == 1 {
                     tokenView
@@ -111,9 +114,47 @@ extension Restore {
             .navigationBarItems(leading: (page > 0 && !inSitu) ? Button("Back") { page -= 1 } : nil)
             .onAppear {
                 page = int
-                if inSitu {
+                if inSitu, int != -1 {
                     importSettings(id: id_)
                 }
+            }
+        }
+
+        private var importResetSettingsView: some View {
+            Section {
+                HStack {
+                    Button {
+                        importOpenAPSOnly()
+                        page = 2
+                    }
+                    label: { Text("Yes") }
+                        .buttonStyle(.borderless)
+                        .padding(.leading, 10)
+
+                    Spacer()
+
+                    Button {
+                        close()
+                    }
+                    label: { Text("No") }
+                        .buttonStyle(.borderless)
+                        .tint(.red)
+                        .padding(.trailing, 10)
+                }
+            } header: {
+                VStack {
+                    Text("Welcome to iAPS, v\(fetchedVersionNumber)!")
+                        .font(.previewHeadline).frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.bottom, 40)
+
+                    Text(
+                        "In this new version your OpenAPS settings have been reset to default settings, due to a resolved Type error issue.\n\nFortunately you have a backup of your old OpenAPS settings in the cloud.\n\nDo you want to try to restore these settings now?\n"
+                    )
+                    .font(.previewNormal)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .textCase(nil)
+                .foregroundStyle(.primary)
             }
         }
 
@@ -513,7 +554,7 @@ extension Restore {
                     }
 
                 } header: {
-                    Text("Fetching settings...").font(.previewNormal)
+                    Text(!allDone ? "Fetching settings..." : "Settings fetched").font(.previewNormal)
                 }
 
                 footer: {
@@ -644,7 +685,7 @@ extension Restore {
                     }
 
                 } header: {
-                    Text("Saving settings...").font(.previewNormal)
+                    Text(!allSaved ? "Saving settings..." : "Settings saved").font(.previewNormal)
                 }
 
                 Button { close() }
@@ -664,6 +705,12 @@ extension Restore {
                     inSitu && basalsOK && isfsOK && crsOK && freeapsSettingsOK && settingsOK && targetsOK && pumpSettingsOK &&
                         tempTargetsOK
                 )
+                ||
+                int == -1 && settingsOK
+        }
+
+        private var allSaved: Bool {
+            settingsSaved && int == -1
         }
 
         private var noneFetched: Bool {
@@ -688,6 +735,11 @@ extension Restore {
             // CoreData
             fetchMealPresets(token: id, name: profile_)
             fetchOverridePresets(token: id, name: profile_)
+        }
+
+        private func importOpenAPSOnly() {
+            settings = openAPS
+            settingsOK = true
         }
 
         private func addError(_ error: String) {
