@@ -367,7 +367,7 @@ final class OpenAPS {
         // Active Configuration profile
         let active = CoreDataStorage().fetchActiveProfile()
         if active != "default" {
-            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: -1)
+            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: 0)
             reasonString.insert(contentsOf: ", Configuration: \(active)", at: index)
         }
 

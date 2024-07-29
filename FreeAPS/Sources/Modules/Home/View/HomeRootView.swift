@@ -45,6 +45,11 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
 
+        @FetchRequest(
+            entity: Onboarding.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var onboarded: FetchedResults<Onboarding>
+
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -692,8 +697,40 @@ extension Home {
             .background(TimeEllipse(characters: string.count))
         }
 
+        func onboardingView(token: String) -> some View {
+            Restore.RootView(
+                resolver: resolver,
+                int: 0,
+                profile: "default",
+                inSitu: false,
+                id_: token,
+                uniqueID: token,
+                openAPS: nil
+            )
+        }
+
+        func importResetSettingsView(token: String, settings: Preferences) -> some View {
+            Restore.RootView(
+                resolver: resolver,
+                int: -1,
+                profile: "default",
+                inSitu: false,
+                id_: token,
+                uniqueID: token,
+                openAPS: settings
+            )
+        }
+
         var body: some View {
             GeometryReader { geo in
+            if onboarded.first?.firstRun ?? true {
+                    let token = state.token()
+                    if let openAPSSettings = state.openAPSSettings {
+                        importResetSettingsView(token: token, settings: openAPSSettings)
+                    } else {
+                        onboardingView(token: token)
+                    }
+                } else {
                 VStack(spacing: 0) {
                     // Header View
                     headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 59 : 0)
@@ -748,12 +785,16 @@ extension Home {
                                 .frame(width: 320, height: 60)
                             bolusProgressView(progress: progress, amount: amount)
                         }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .offset(x: 0, y: -100)
                     }
                 }
+                }
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+                if onboarded.first?.firstRun ?? true {
+                    state.fetchPreferences()
+                }
+            }
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
@@ -776,7 +817,6 @@ extension Home {
                             }
                     )
             }
-            .onAppear(perform: configureView)
         }
 
         private var popup: some View {

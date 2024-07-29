@@ -7,7 +7,6 @@ extension Settings {
         @Injected() private var broadcaster: Broadcaster!
         @Injected() private var fileManager: FileManager!
         @Injected() private var nightscoutManager: NightscoutManager!
-        @Injected() private var storage: FileStorage!
 
         @Published var closedLoop = false
         @Published var debugOptions = false
