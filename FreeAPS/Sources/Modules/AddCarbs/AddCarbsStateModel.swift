@@ -252,11 +252,10 @@ extension AddCarbs {
 
             os.overrideFromPreset(override, UUID().uuidString)
             // Upload to Nightscout
-            let currentActiveOveride = os.fetchLatestOverride().first
             nightscoutManager.uploadOverride(
                 "📉",
                 Double(45),
-                currentActiveOveride?.date ?? Date.now
+                override.date ?? Date.now
             )
         }
     }
