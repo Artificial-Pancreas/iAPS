@@ -1962,7 +1962,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "День рождения";
 
 /* Share and Backup info text */
-"If you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database./n/nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "Если вы включите функцию \"Общий доступ и резервное копирование\", то ежедневные резервные копии ваших настроек и статистики будут сохраняться в онлайн-базе данных./n/nОбязательно скопируйте и сохраните свой токен восстановления, указанный ниже. Токен восстановления необходим для импорта настроек на другой телефон при использовании встроенного режима просмотра.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Минимально делиться";
