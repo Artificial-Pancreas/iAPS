@@ -217,6 +217,29 @@ extension AddCarbs {
         private func hypo() {
             let os = OverrideStorage()
 
+            // Cancel any eventual Other Override already active
+            if let activeOveride = os.fetchLatestOverride().first {
+                let presetName = os.isPresetName()
+                // Is the Override a Preset?
+                if let preset = presetName {
+                    if let duration = os.cancelProfile() {
+                        // Update in Nightscout
+                        nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                    }
+                } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                    }
+                } else {
+                    let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
+                        .formatted() + " %" : "Custom"
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                    }
+                }
+            }
+
+            // Enable New Override
             let override = OverridePresets(context: coredataContextBackground)
             override.percentage = 90
             override.smbIsOff = true
@@ -228,6 +251,7 @@ extension AddCarbs {
             override.indefinite = false
 
             os.overrideFromPreset(override, UUID().uuidString)
+            // Upload to Nightscout
             let currentActiveOveride = os.fetchLatestOverride().first
             nightscoutManager.uploadOverride(
                 "📉",
