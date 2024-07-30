@@ -1971,19 +1971,19 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Juste le numéro de version iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Toutes les informations que vous choisissez de partager sont téléchargées de façon anonyme. Pour éviter les doublons, vos données sont identifiées avec une chaîne aléatoire unique enregistrée sur votre téléphone : le jeton de récupération.";
 
 /* Token section title */
-"Your recovery token" = "Your recovery token";
+"Your recovery token" = "Votre jeton de récupération";
 
 /* Token display button */
 "Tap to display" = "Appuyer pour afficher";
 
 /* Token copy button */
-"Long press to copy" = "Long press to copy";
+"Long press to copy" = "Appuyez longuement pour copier";
 
 /* Link to statistics button */
-"View Personal Statistics" = "View Personal Statistics";
+"View Personal Statistics" = "Consulter les statistiques personnelles";
 
 /* */
 "Your identifier" = "Votre identifiant";
