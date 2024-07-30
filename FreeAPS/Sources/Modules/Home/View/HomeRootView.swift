@@ -780,7 +780,7 @@ extension Home {
                         .font(.suggestionError)
                         .padding(.bottom, 4)
                         .padding(.top, 8)
-                    Text(errorMessage).font(.buttonFont).foregroundColor(.loopRed)
+                    Text(errorMessage).font(.suggestionError).fontWeight(.semibold).foregroundColor(.orange)
                 } else if let suggestion = state.suggestion, (suggestion.bg ?? 100) == 400 {
                     Text("Invalid CGM reading (HIGH).").font(.suggestionError).bold().foregroundColor(.loopRed).padding(.top, 8)
                     Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
