@@ -697,14 +697,14 @@ extension Home {
             .background(TimeEllipse(characters: string.count))
         }
 
-        func onboardingView(token: String) -> some View {
+        func onboardingView() -> some View {
             Restore.RootView(
                 resolver: resolver,
                 int: 0,
                 profile: "default",
                 inSitu: false,
-                id_: token,
-                uniqueID: token,
+                id_: "",
+                uniqueID: "",
                 openAPS: nil
             )
         }
@@ -725,10 +725,11 @@ extension Home {
             GeometryReader { geo in
             if onboarded.first?.firstRun ?? true {
                     let token = state.token()
-                    if let openAPSSettings = state.openAPSSettings {
+                    // If old iAPS user
+                    if let openAPSSettings = state.openAPSSettings, !fetchedPercent.isEmpty, !fetchedProfiles.isEmpty {
                         importResetSettingsView(token: token, settings: openAPSSettings)
                     } else {
-                        onboardingView(token: token)
+                        onboardingView()
                     }
                 } else {
                 VStack(spacing: 0) {
