@@ -725,10 +725,11 @@ extension Home {
             GeometryReader { geo in
                 if onboarded.first?.firstRun ?? true {
                     let token = state.token()
-                    // If old iAPS user
-                    if let openAPSSettings = state.openAPSSettings, !fetchedPercent.isEmpty, !fetchedProfiles.isEmpty {
+                    // If old iAPS user pre v4.9.0 (not perfect yet)
+                    if state.glucose.isNotEmpty, state.iobData.isNotEmpty, let openAPSSettings = state.openAPSSettings {
                         importResetSettingsView(token: token, settings: openAPSSettings)
                     } else {
+                        // New iAPS user
                         onboardingView()
                     }
                 } else {
