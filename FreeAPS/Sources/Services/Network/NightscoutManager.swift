@@ -452,6 +452,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                         debug(.nightscout, "Statistics uploaded")
                         CoreDataStorage().saveStatUploadCount()
                         UserDefaults.standard.set(false, forKey: IAPSconfig.newVersion)
+                        self.uploadProfileAndSettings(true)
                     case let .failure(error):
                         debug(.nightscout, "Statistics upload failed" + error.localizedDescription)
                     }
