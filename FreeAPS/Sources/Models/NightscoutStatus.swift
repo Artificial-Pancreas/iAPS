@@ -52,4 +52,5 @@ struct NightscoutProfileStore: JSON {
     let units: String
     var enteredBy: String
     let store: [String: ScheduledNightscoutProfile]
+    let profile: String?
 }
