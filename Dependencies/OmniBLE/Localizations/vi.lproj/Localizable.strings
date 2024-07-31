@@ -9,7 +9,7 @@
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Alert content title for userPodExpiration pod alert */
-"Pod Expiration Reminder" = "Lời Nhắc Pod Hết hạn";
+"Pod Expiration Reminder" = "Nhắc nhở hết hạn";
 
 /* Alert content title for podExpiring pod alert */
 "Pod Expired" = "Pod đã hết hạn";
@@ -18,7 +18,7 @@
 "Low Reservoir" = "Sắp hết thuốc";
 
 /* Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Tạm dừng lời nhắc đang tiến hành";
+"Suspend In Progress Reminder" = "Đang tiến hành tạm dừng lời nhắc";
 
 /* Alert content title for suspendEnded pod alert */
 "Resume Insulin" = "Tiếp tục lại việc tiêm insulin";
@@ -27,7 +27,7 @@
 "Pod Pairing Incomplete" = "Pod ghép nối không thành công";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
-"Time Change Detected" = "Thay đổi thời gian được phát hiện";
+"Time Change Detected" = "Đã phát hiện thay đổi thời gian";
 
 /* Alert content body for multiCommand pod alert */
 "Multiple Command Alert" = "Multiple Command Alert";
@@ -45,19 +45,19 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin hoặc ít hơn còn lại trong Pod. Thay Pod ngay.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Tạm dừng lời nhắc đang tiến hành";
+"Suspend In Progress Reminder" = "Đang tiến hành tạm dừng lời nhắc";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Thời gian tạm ngưng insulin đã kết thúc.\n\n Bạn có thể phục hồi việc tiêm thuốc từ màn hình chính hoặc từ màn hình cài đặt bơm. Sẽ có thông báo nhắc trong vòng 15 phút.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Đề nghị hoàn thành ghép đôi pod.";
+"Please finish pairing your pod." = "Vui lòng hoàn tất việc ghép nối pod của bạn.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Thời gian trên bơm khác so với thời gian thực tế. Bạn có thể xem thời gian trên bơm và sync thời gian hiện hành trong cài đặt.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Thời gian tạm dừng hết. Mở ứng dụng và tiếp tục lại.";
+"Suspension time is up. Open the app and resume." = "Đã hết thời gian tạm dừng. Mở ứng dụng và tiếp tục.";
 
 /* Action button default text for PodAlerts */
 "Ok" = "Ok";
@@ -237,7 +237,7 @@
 "No Pod" = "Không pod";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "Hết thuốc";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "Pod đã hết hạn";
@@ -249,7 +249,7 @@
 "Pod Error" = "Lỗi Pod";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "Hết thuốc";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulin Đã tạm ngưng";
@@ -273,7 +273,7 @@
 "Checking..." = "Đang kiểm tra...";
 
 /* */
-"Check cannula insertion finished" = "Kiểm tra việc gắn cannula hoàn tất";
+"Check cannula insertion finished" = "Kiểm tra việc gắn cannula đã hoàn tất";
 
 /* */
 "Get pod status" = "Lấy thông tin pod";
@@ -538,7 +538,7 @@
 "Pairing..." = "Đang ghép đôi...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "Đang chuẩn bị...";
 
 /* */
 "Deactivating..." = "Đang hủy kích hoạt...";
@@ -706,7 +706,7 @@
 "Active Time" = "Thời gian Hoạt động";
 
 /* description label for last status date pod details row */
-"Last Status" = "Trạng thái cuối";
+"Last Status" = "Trạng thái gần nhất";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Thông tin lỗi Pod";
@@ -838,12 +838,12 @@
 "Previous Pod Details" = "Thông tin của Pod trước đó";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Chi tiết về Trình quản lý Máy bơm";
+"Pump Manager Details" = "Chi tiết về Trình quản lý Bơm";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Trình quản lý máy bơm...";
+"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Trình quản lý Bơm...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Làm mới Chi tiết về Trình quản lý Máy bơm";
+"Refresh Pump Manager Details" = "Làm mới Chi tiết về Trình quản lý Bơm";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Chẩn đoán";
