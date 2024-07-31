@@ -24,6 +24,7 @@ extension AddCarbs {
         @Published var summary: String = ""
         @Published var skipBolus: Bool = false
         @Published var hypoTreatment: Bool = false
+        @Published var disableHypoTreatment: Bool = false
 
         let now = Date.now
 
@@ -35,6 +36,7 @@ extension AddCarbs {
             maxCarbs = settings.settings.maxCarbs
             skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
             useFPUconversion = settingsManager.settings.useFPUconversion
+            disableHypoTreatment = settingsManager.settings.disableHypoTreatment
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
