@@ -47,7 +47,7 @@
 "Done" = "Fertig";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Letzte Loop-Schleife vor %@ Minuten. Berechnung des (Mahlzeiten-)Bolus abschließen oder abbrechen, um den nächsten Schleifendurchlauf zu ermöglichen.";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Emojis als Etiketten benutzen";
@@ -1930,36 +1930,60 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Glätten der Glukosewerte";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Datenübermittlung";
+
+/* Share and Backup page header */
+"Share and Backup" = "Teilen und Backup";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Einstellungen und Statistiken hochladen";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Teilen und sichern Sie alle Ihre Einstellungen und Statistiken";
+
+/* Title of dropdown menu */
+"Sex" = "Geschlecht";
+
+/* Sex dropdown menu option */
 "Woman" = "Weiblich";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Männlich";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Sonstiges";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Geheim-Schlüssel";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Geburtsdatum";
 
-/* */
-"Share all of your Statistics" = "Alle meine Statistiken teilen";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
-/* */
-"Just iAPS version number" = "Nur iAPS Versionsnummer";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Nur das absolute Minimum teilen";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Alle Informationen, die Sie freigeben möchten, werden anonym hochgeladen. Um doppeltes Hochladen zu verhindern, werden die Daten mit einer eindeutigen, zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Nur iAPS Versionsnummer";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+
+/* Token section title */
+"Your recovery token" = "Ihr Wiederherstellungs-Token";
+
+/* Token display button */
 "Tap to display" = "Tippen, um anzuzeigen";
+
+/* Token copy button */
+"Long press to copy" = "Zum Kopieren lange drücken";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Persönliche Statistiken anzeigen";
 
 /* */
 "Your identifier" = "Ihr Identifikator";
@@ -2487,6 +2511,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Anzeigeintervall Einstellungs-Button";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Beim Scrollen nie das kleine Glukosediagramm anzeigen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
