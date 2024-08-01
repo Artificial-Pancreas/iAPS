@@ -11,11 +11,12 @@ protocol FileStorage {
     func remove(_ name: String)
     func rename(_ name: String, to newName: String)
     func transaction(_ exec: (FileStorage) -> Void)
+    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
 
     func urlFor(file: String) -> URL?
 }
 
-final class BaseFileStorage: FileStorage {
+final class BaseFileStorage: FileStorage, Injectable {
     private let processQueue = DispatchQueue.markedQueue(label: "BaseFileStorage.processQueue", qos: .utility)
 
     func save<Value: JSON>(_ value: Value, as name: String) {
@@ -41,6 +42,15 @@ final class BaseFileStorage: FileStorage {
             }
             return String(data: data, encoding: .utf8)
         }
+    }
+
+    func retrieveFile<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
+        if let loaded = retrieve(name, as: type) {
+            return loaded
+        }
+        let file = retrieveRaw(name) ?? OpenAPS.defaults(for: name)
+        save(file, as: name)
+        return retrieve(name, as: type)
     }
 
     func append<Value: JSON>(_ newValue: Value, to name: String) {

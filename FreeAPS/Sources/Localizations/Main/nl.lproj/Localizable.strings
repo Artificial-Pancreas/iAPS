@@ -260,7 +260,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basaal profiel";
+"Basal profile" = "Basaalprofiel";
 
 /*  */
 "Carb ratio" = "Koolhydraat verhouding";
@@ -284,7 +284,7 @@
 "Add" = "Toevoegen";
 
 /*  */
-"Basal Profile" = "Basaal profiel";
+"Basal Profile" = "Basaalprofiel";
 
 /* Rate basal profile */
 "Rate" = "Waarde";
@@ -363,7 +363,7 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "Ongeldige URL";
 
 /*  */
-"Local glucose source" = "Lokale glucose bron";
+"Local glucose source" = "Lokale glucosebron";
 
 /* Header */
 "Nightscout Config" = "Nightscout instellingen";
@@ -1930,36 +1930,60 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Vloeiende glucosewaarde";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Delen van statistieken";
+
+/* Share and Backup page header */
+"Share and Backup" = "Share and Backup";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Upload settings and statistics";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+
+/* Title of dropdown menu */
+"Sex" = "Sex";
+
+/* Sex dropdown menu option */
 "Woman" = "Vrouw";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Man";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Anders";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Geheim";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Geboortedatum";
 
-/* */
-"Share all of your Statistics" = "Deel al je statistieken";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
-/* */
-"Just iAPS version number" = "Alleen iAPS versienummer";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Deel alleen het minimale";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Alle informatie die je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je apparaat is opgeslagen.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Alleen iAPS versienummer";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+
+/* Token section title */
+"Your recovery token" = "Your recovery token";
+
+/* Token display button */
 "Tap to display" = "Tik om weer te geven";
+
+/* Token copy button */
+"Long press to copy" = "Long press to copy";
+
+/* Link to statistics button */
+"View Personal Statistics" = "View Personal Statistics";
 
 /* */
 "Your identifier" = "Jouw identificatie";
@@ -2491,6 +2515,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Knop voor tijdinterval weergeven";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Laat de kleine glucosegrafiek nooit zien tijdens het scrollen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
