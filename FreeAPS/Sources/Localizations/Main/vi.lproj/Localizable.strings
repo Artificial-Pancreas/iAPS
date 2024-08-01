@@ -1935,16 +1935,16 @@ Enact a temp Basal or a temp target */
 "Sharing" = "Chia sẻ";
 
 /* Share and Backup page header */
-"Share and Backup" = "Share and Backup";
+"Share and Backup" = "Chia sẻ và sao lưu";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload settings and statistics" = "Tải lên cài đặt và số liệu thống kê";
 
 /* On-off toggle */
-"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+"Share and Backup all of your Settings and Statistics" = "Chia sẻ và sao lưu tất cả các thiết lập và số liệu thống kê của bạn";
 
 /* Title of dropdown menu */
-"Sex" = "Sex";
+"Sex" = "Giới tính";
 
 /* Sex dropdown menu option */
 "Woman" = "Nữ";
@@ -1962,7 +1962,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Ngày sinh";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nNếu bạn bật \"Chia sẻ và Sao lưu\", các bản sao lưu hàng ngày của cài đặt và số liệu thống kê của bạn sẽ được thực hiện vào cơ sở dữ liệu trực tuyến.\n\nHãy đảm bảo sao chép và lưu mã thông báo khôi phục của bạn bên dưới. Mã thông báo khôi phục là bắt buộc để nhập cài đặt của bạn vào điện thoại khác khi sử dụng chế độ xem tích hợp.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Chia sẻ ở mức tối thiểu";
@@ -1971,19 +1971,19 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Chỉ phiên bản iAPS";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Mọi thông tin bạn chọn chia sẻ đều được tải lên ẩn danh. Để ngăn chặn việc tải lên trùng lặp, dữ liệu được xác định bằng một chuỗi ngẫu nhiên duy nhất được lưu trên điện thoại của bạn, mã thông báo khôi phục.";
 
 /* Token section title */
-"Your recovery token" = "Your recovery token";
+"Your recovery token" = "Mã thông báo khôi phục của bạn";
 
 /* Token display button */
 "Tap to display" = "Chạm để hiển thị";
 
 /* Token copy button */
-"Long press to copy" = "Long press to copy";
+"Long press to copy" = "Nhấn và giữ để sao chép";
 
 /* Link to statistics button */
-"View Personal Statistics" = "View Personal Statistics";
+"View Personal Statistics" = "Xem Thống kê cá nhân";
 
 /* */
 "Your identifier" = "Mã định danh của bạn";
