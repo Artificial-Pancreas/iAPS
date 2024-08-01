@@ -209,12 +209,9 @@ extension DataTable {
 
             let saveToJSON = BloodGlucose(
                 _id: id,
-                direction: nil,
+                sgv: Int(glucose),
                 date: Decimal(now.timeIntervalSince1970) * 1000,
                 dateString: now,
-                unfiltered: nil,
-                filtered: nil,
-                noise: nil,
                 glucose: Int(glucose),
                 type: GlucoseType.manual.rawValue
             )
