@@ -274,6 +274,10 @@ extension Home {
                         // Update in Nightscout
                         nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
                     }
+                } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                    }
                 } else {
                     let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                         .formatted() + " %" : "Custom"

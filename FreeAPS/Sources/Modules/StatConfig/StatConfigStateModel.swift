@@ -18,6 +18,7 @@ extension StatConfig {
         @Published var minimumSMB: Decimal = 0.3
         @Published var useInsulinBars: Bool = false
         @Published var skipGlucoseChart: Bool = false
+        @Published var disableHypoTreatment: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -37,6 +38,7 @@ extension StatConfig {
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
             subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
+            subscribeSetting(\.disableHypoTreatment, on: $disableHypoTreatment) { disableHypoTreatment = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
