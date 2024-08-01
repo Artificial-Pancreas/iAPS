@@ -1930,36 +1930,60 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Valeur Glycémie lisse";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Partage";
+
+/* Share and Backup page header */
+"Share and Backup" = "Partage et sauvegarde";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Téléverser vos paramètres et statistiques";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Partager et sauvegarder tous vos paramètres et statistiques";
+
+/* Title of dropdown menu */
+"Sex" = "Sexe biologique";
+
+/* Sex dropdown menu option */
 "Woman" = "Femme";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Homme";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Autre";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Confidentiel";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Date de naissance";
 
-/* */
-"Share all of your Statistics" = "Partagez vos statistiques";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
-/* */
-"Just iAPS version number" = "Juste le numéro de version iAPS";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Partager le minimum";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Chaque parcelle d'information que vous choisissez de partager et téléverser anonymement. Pour éviter les doublons, les données sont identifiées avec une chaine unique aléatoire enregistrée sur votre téléphone.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Juste le numéro de version iAPS";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Toutes les informations que vous choisissez de partager sont téléchargées de façon anonyme. Pour éviter les doublons, vos données sont identifiées avec une chaîne aléatoire unique enregistrée sur votre téléphone : le jeton de récupération.";
+
+/* Token section title */
+"Your recovery token" = "Votre jeton de récupération";
+
+/* Token display button */
 "Tap to display" = "Appuyer pour afficher";
+
+/* Token copy button */
+"Long press to copy" = "Appuyez longuement pour copier";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Consulter les statistiques personnelles";
 
 /* */
 "Your identifier" = "Votre identifiant";
@@ -1997,103 +2021,103 @@ Enact a temp Basal or a temp target */
 "Access to contacts - unknown state" = "Accès aux contacts - état inconnu";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Une image de contact peut être utilisée pour obtenir des mises à jour en direct d'iAPS vers votre complication de contact Apple Watch et/ou votre widget de contact pour iPhone.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Contact Image";
+"Contact Image" = "Image de contact";
 
 /* Contact Image, settings, label for the layout picker */
-"Layout" = "Layout";
+"Layout" = "Affichage";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Single";
+"Single" = "Simple";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Split";
+"Split" = "Double";
 
 /* Contact Image, settings, outer ring - don't show */
-"DontShowRing" = "Don't show";
+"DontShowRing" = "Ne pas afficher";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop status";
+"LoopStatusRing" = "État de la boucle";
 
 /* Contact Image, settings, outer ring - IOB */
-"IOBRing" = "IOB";
+"IOBRing" = "Insuline active (IOB)";
 
 /* Contact Image, settings, outer ring - COB */
-"COBRing" = "COB";
+"COBRing" = "Glucides actifs (COB)";
 
 /* Contact Image, settings, outer ring - IOB+COB */
-"IOB+COBRing" = "IOB+COB";
+"IOB+COBRing" = "Insuline active + Glucides actifs";
 
 /* Contact Image, settings, label for the primary value picker */
-"Primary" = "Primary";
+"Primary" = "Principal";
 
 /* Contact Image, settings, label for the top value picker */
-"Top" = "Top";
+"Top" = "En haut";
 
 /* Contact Image, settings, label for the bottom value picker */
-"Bottom" = "Bottom";
+"Bottom" = "En bas";
 
 /* Contact Image, settings, header for the outer ring section */
-"Ring" = "Ring";
+"Ring" = "Anneau";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Outer";
+"Outer" = "Anneau extérieur";
 
 /* Contact Image, settings, label for the ring width picker */
-"Width" = "Width";
+"Width" = "Largeur";
 
 /* Contact Image, settings, label for the ring gap picker */
-"Gap" = "Gap";
+"Gap" = "Espacement";
 
 /* Contact Image, settings, header for the font section */
-"Font" = "Font";
+"Font" = "Police de caractères";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Taille";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Taille secondaire";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Tracking";
+"Tracking" = "Espacement";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Weight";
+"Weight" = "Poids";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Mode sombre";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Très serré";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Serré";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Normal";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Large";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Léger";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Régulier";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Moyen";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Semi-gras";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Gras";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
-"BlackFontWeight" = "Black";
+"BlackFontWeight" = "Noir";
 
 /* Contact Image, settings, don't display any value */
 "NoneContactValue" = "Aucun";
@@ -2102,25 +2126,25 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Glycémie";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Taux de glucose éventuel";
 
 /* Contact Image, settings, Delta (data to display) */
-"DeltaContactValue" = "Delta";
+"DeltaContactValue" = "Écart";
 
 /* Contact Image, settings, Trend (data to display) */
 "TrendContactValue" = "Tendance";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Last loop time";
+"LastLoopTimeContactValue" = "Heure de la dernière boucle";
 
 /* Contact Image, settings, COB (data to display) */
-"COBContactValue" = "COB";
+"COBContactValue" = "Glucides actifs (COB)";
 
 /* Contact Image, settings, IOB (data to display) */
-"IOBContactValue" = "IOB";
+"IOBContactValue" = "Insuline active (IOB)";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop status";
+"LoopStatusContactValue" = "État de la boucle";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2182,10 +2206,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "La valeur par défaut est faux, de sorte que iAPS définisse une valeur basal dès qu'il le peut, donc il sera plus facile de voir si le système fonctionne, même lorsque vous êtes hors ligne. Cela signifie qu'OpenAPS définira une valeur basale « neutre » (identique à votre basal par défaut) si aucun ajustement n'est nécessaire. Ceci est un ancien paramètre d'OpenAPS afin de minimiser les sons et les notifications de la 'rig', qui pouvaient vous réveiller pendant la nuit. ";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Annuler la suspension si aucune température";
+"Unsuspend If No Temp" = "Annuler la suspension à la fin du temporaire zéro";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "De nombreuses personnes oublient parfois de reprendre / désuspendre leur pompe après la reconnexion. Si vous êtes l'un d'eux, et que vous êtes définissez un basal temporaire à zéro chaque fois que vous suspendez ou débranchez votre pompe, cette fonction peut être pertinente. Si cette option est activée, elle reprendra automatiquement le basal en cours si vous oubliez de reprendre votre pompe. Tant que la valeur temporaire de basal est de zéro, elle laissera la pompe suspendue.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "De nombreuses personnes oublient parfois de reprendre / désuspendre leur pompe après la reconnexion. Si vous êtes l'un d'eux, et que vous êtes prêt à définir de manière fiable un basal temporaire zéro à chaque fois que vous suspendez et débranchez votre pompe, cette fonctionnalité peut être pertinente. Si cette option est activée, elle reprendra automatiquement le fonctionnement de votre pompe si vous oubliez de le faire avant l'expiration du basal temporaire à zéro que vous avez programmé. Tant que le basal temporaire à zéro est toujours en cours d'exécution, la pompe restera suspendue.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Activer UAM";
@@ -2469,7 +2493,7 @@ Enact a temp Basal or a temp target */
 "Statistics settings " = "Paramètres des statistiques ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Outrepasser l'unité HbA1c";
+"Override HbA1c Unit" = "Convertir l'unité HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Si vous utilisez à la fois des profils et des cibles temporaires";
@@ -2487,6 +2511,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Afficher le bouton de réglage des heures visibles";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Ne jamais afficher le petit graphique de glucose lors du défilement";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";

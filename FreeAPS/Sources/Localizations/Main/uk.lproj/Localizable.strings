@@ -1930,36 +1930,60 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Гладке Значення Глюкози";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Поширити";
+
+/* Share and Backup page header */
+"Share and Backup" = "Поділитися та створити Резервну копію";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Звантажити налаштування та статистику";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Поділитись та зробити Резервну копію всіх ваших Налаштувань та Статистики";
+
+/* Title of dropdown menu */
+"Sex" = "Стать";
+
+/* Sex dropdown menu option */
 "Woman" = "Жінка";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Чоловік";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Інше";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Секретний ключ";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Дата народження";
 
-/* */
-"Share all of your Statistics" = "Поділіться своєю Статистикою";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
-/* */
-"Just iAPS version number" = "Номер версії iAPS";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Мінімум розподілу";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Кожна інформація, якою ви вирішите поділитися, завантажується анонімно. Щоб запобігти повторним завантаженням, дані ідентифікуються за допомогою унікального випадкового рядка, збереженого на вашому телефоні.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Номер версії iAPS";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Кожна інформація, якою ви вирішите поділитися, завантажується анонімно. Щоб запобігти повторним завантаженням, дані ідентифікуються за допомогою унікального випадкового рядка, збереженого на вашому телефоні, токена відновлення.";
+
+/* Token section title */
+"Your recovery token" = "Ваш токен для відновлення";
+
+/* Token display button */
 "Tap to display" = "Натисніть для відображення";
+
+/* Token copy button */
+"Long press to copy" = "Утримуйте для копіювання";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Переглянути Персональну Статистику";
 
 /* */
 "Your identifier" = "Ваш ідентифікатор";
@@ -2487,6 +2511,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Відображення Кнопки Налаштування Інтервалу Часу";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Ніколи не відображайте маленьку діаграму рівня глюкози під час прокручування";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";

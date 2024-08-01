@@ -1,5 +1,5 @@
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@ دقيقة";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "هل أنت متأكد أنك تريد حذف هذا CGM؟";
@@ -54,7 +54,7 @@ Title text for the button to remove a CGM from Loop */
 "Transmitter ID" = "Transmitter ID";
 
 /* Title describing glucose trend */
-"Trend" = "Trend";
+"Trend" = "إتجاه";
 
 /* The title text for the upload glucose switch cell */
-"Upload Readings" = "Upload Readings";
+"Upload Readings" = "رفع القراءات";
