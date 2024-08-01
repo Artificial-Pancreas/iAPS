@@ -129,18 +129,14 @@ extension AddCarbs {
                         ) }
                         .disabled(empty)
                         .frame(maxWidth: .infinity, alignment: .center)
-                }
-                footer: {
-                    state.hypoTreatment ? Text("Skipping Bolus View because of hypo")
-                        .frame(maxWidth: .infinity, alignment: .center) : nil
-                }
-                .listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
-                .tint(.white)
+                }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
+                    .tint(.white)
 
                 Section {
                     mealPresets
                 }
             }
+            .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView {
