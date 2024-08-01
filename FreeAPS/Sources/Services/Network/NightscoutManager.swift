@@ -964,25 +964,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             } else {
                 uploadMealPresetsToDatabase(mealPresets, token: token)
             }
-            if isStatsUploadEnabled {
-                var q = p
-                q.enteredBy = getIdentifier()
-                processQueue.async {
-                    nightscout.uploadSettingsToDatabase(q)
-                        .sink { completion in
-                            switch completion {
-                            case .finished:
-                                debug(.nightscout, "Profiles uploaded to database")
-                                if !self.isUploadEnabled {
-                                    self.storage.save(p, as: OpenAPS.Nightscout.uploadedProfile)
-                                }
-                            case let .failure(error):
-                                debug(.nightscout, error.localizedDescription)
-                            }
-                        } receiveValue: {}
-                        .store(in: &self.lifetime)
-                }
-            }
         }
 
         // Upload Override Presets when needed
