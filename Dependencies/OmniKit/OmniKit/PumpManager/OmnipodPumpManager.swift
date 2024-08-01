@@ -146,13 +146,25 @@ public class OmnipodPumpManager: RileyLinkPumpManager {
     private func setStateWithResult<ReturnType>(_ changes: (_ state: inout OmnipodPumpManagerState) -> ReturnType) -> ReturnType {
         var oldValue: OmnipodPumpManagerState!
         var returnType: ReturnType!
+        var shouldNotifyStatusUpdate = false
+        var oldStatus: PumpManagerStatus?
+
         let newValue = lockedState.mutate { (state) in
             oldValue = state
-            returnType = changes(&state)
-        }
+            let oldStatusEvaluationDate = state.lastStatusChange
+            let oldHighlight = buildPumpStatusHighlight(for: oldValue, andDate: oldStatusEvaluationDate)
+            oldStatus = status(for: oldValue, at: oldStatusEvaluationDate)
 
-        guard oldValue != newValue else {
-            return returnType
+            returnType = changes(&state)
+
+            let newStatusEvaluationDate = Date()
+            let newStatus = status(for: state, at: newStatusEvaluationDate)
+            let newHighlight = buildPumpStatusHighlight(for: state, andDate: newStatusEvaluationDate)
+
+            if oldStatus != newStatus || oldHighlight != newHighlight {
+                shouldNotifyStatusUpdate = true
+                state.lastStatusChange = newStatusEvaluationDate
+            }
         }
 
         if oldValue.podState != newValue.podState {
@@ -173,25 +185,19 @@ public class OmnipodPumpManager: RileyLinkPumpManager {
             }
         }
 
-
         // Ideally we ensure that oldValue.rawValue != newValue.rawValue, but the types aren't
         // defined as equatable
         pumpDelegate.notify { (delegate) in
             delegate?.pumpManagerDidUpdateState(self)
         }
 
-        let oldStatus = status(for: oldValue)
-        let newStatus = status(for: newValue)
-
-        let oldHighlight = buildPumpStatusHighlight(for: oldValue)
-        let newHighlight = buildPumpStatusHighlight(for: newValue)
-
-        if oldStatus != newStatus || oldHighlight != newHighlight {
+        if let oldStatus = oldStatus, shouldNotifyStatusUpdate {
             notifyStatusObservers(oldStatus: oldStatus)
         }
 
         return returnType
     }
+
     private let lockedState: Locked<OmnipodPumpManagerState>
 
     private let statusObservers = WeakSynchronizedSet<PumpManagerStatusObserver>()
@@ -431,13 +437,13 @@ extension OmnipodPumpManager {
         }
     }
 
-    private func status(for state: OmnipodPumpManagerState) -> PumpManagerStatus {
+    private func status(for state: OmnipodPumpManagerState, at date: Date = Date()) -> PumpManagerStatus {
         return PumpManagerStatus(
             timeZone: state.timeZone,
             device: device(for: state),
             pumpBatteryChargeRemaining: nil,
-            basalDeliveryState: basalDeliveryState(for: state),
-            bolusState: bolusState(for: state),
+            basalDeliveryState: basalDeliveryState(for: state, at: date),
+            bolusState: bolusState(for: state, at: date),
             insulinType: state.insulinType,
             deliveryIsUncertain: state.podState?.needsCommsRecovery == true
         )
@@ -469,7 +475,7 @@ extension OmnipodPumpManager {
         }
     }
 
-    private func basalDeliveryState(for state: OmnipodPumpManagerState) -> PumpManagerStatus.BasalDeliveryState {
+    private func basalDeliveryState(for state: OmnipodPumpManagerState, at date: Date = Date()) -> PumpManagerStatus.BasalDeliveryState {
         guard let podState = state.podState else {
             return .active(.distantPast)
         }
@@ -496,7 +502,7 @@ extension OmnipodPumpManager {
         case .disengaging:
             return .cancelingTempBasal
         case .stable:
-            if let tempBasal = podState.unfinalizedTempBasal {
+            if let tempBasal = podState.unfinalizedTempBasal, !tempBasal.isFinished(at: date) {
                 return .tempBasal(DoseEntry(tempBasal))
             }
             switch podState.suspendState {
@@ -508,7 +514,7 @@ extension OmnipodPumpManager {
         }
     }
 
-    private func bolusState(for state: OmnipodPumpManagerState) -> PumpManagerStatus.BolusState {
+    private func bolusState(for state: OmnipodPumpManagerState, at date: Date = Date()) -> PumpManagerStatus.BolusState {
         guard let podState = state.podState else {
             return .noBolus
         }
@@ -519,7 +525,7 @@ extension OmnipodPumpManager {
         case .disengaging:
             return .canceling
         case .stable:
-            if let bolus = podState.unfinalizedBolus, !bolus.isFinished() {
+            if let bolus = podState.unfinalizedBolus, !bolus.isFinished(at: date) {
                 return .inProgress(DoseEntry(bolus))
             }
         }
@@ -1856,8 +1862,8 @@ extension OmnipodPumpManager: PumpManager {
                 state.bolusEngageState = .engaging
             })
 
-            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended != false {
-                self.log.error("enactBolus: returning pod suspended error for bolus")
+            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended == true {
+                self.log.error("Not enacting bolus because podState or last status received indicates pod is suspended")
                 completion(.deviceState(PodCommsError.podSuspended))
                 return
             }
@@ -1995,8 +2001,8 @@ extension OmnipodPumpManager: PumpManager {
                 return
             }
 
-            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended != false {
-                self.log.info("Not enacting temp basal because podState indicates pod is suspended.")
+            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended == true {
+                self.log.info("Not enacting temp basal because podState or last status received indicates pod is suspended")
                 completion(.deviceState(PodCommsError.podSuspended))
                 return
             }

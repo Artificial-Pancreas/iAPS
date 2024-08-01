@@ -68,7 +68,7 @@ extension Sharing {
 
                 Section {
                     HStack {
-                        Text(display ? state.identfier : "Tap to display")
+                        Text(display ? state.identfier : NSLocalizedString("Tap to display", comment: "Token display button"))
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                     .onTapGesture { display.toggle() }
@@ -81,7 +81,7 @@ extension Sharing {
                         }
                     }
                 }
-                header: { Text("\nYour recovery token") }
+                header: { Text("Your recovery token") }
 
                 footer: {
                     Text((copied && display) ? "" : display ? "Long press to copy" : "")

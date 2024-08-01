@@ -1930,36 +1930,60 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Megosztás";
+
+/* Share and Backup page header */
+"Share and Backup" = "Share and Backup";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Upload settings and statistics";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+
+/* Title of dropdown menu */
+"Sex" = "Sex";
+
+/* Sex dropdown menu option */
 "Woman" = "Nő";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Férfi";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Egyéb";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Titok";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Születési dátum";
 
-/* */
-"Share all of your Statistics" = "Összes statisztika megosztása";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
-/* */
-"Just iAPS version number" = "Csak az iAPS verzió száma";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Lehető legkevesebb adat megosztása";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Minden egyes megosztani kívánt információ névtelenül kerül feltöltésre. A duplikált feltöltések elkerülése érdekében az adatokat egy egyedi, véletlenszerű karakterlánc azonosítja, amelyet a telefonján tárolunk.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Csak az iAPS verzió száma";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+
+/* Token section title */
+"Your recovery token" = "Your recovery token";
+
+/* Token display button */
 "Tap to display" = "Érintsd meg a megjelenítéshez";
+
+/* Token copy button */
+"Long press to copy" = "Long press to copy";
+
+/* Link to statistics button */
+"View Personal Statistics" = "View Personal Statistics";
 
 /* */
 "Your identifier" = "Az ön azonosítója";
@@ -2487,6 +2511,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Display Time Interval Setting Button";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Soha ne jelenítse meg a kis glükózdiagramot görgetés közben";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";

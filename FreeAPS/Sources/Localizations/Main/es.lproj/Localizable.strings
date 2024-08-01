@@ -1941,36 +1941,60 @@ Ajustes predeterminados:\n
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Suavizar valores de glucosa";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Compartir";
+
+/* Share and Backup page header */
+"Share and Backup" = "Share and Backup";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Upload settings and statistics";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+
+/* Title of dropdown menu */
+"Sex" = "Sex";
+
+/* Sex dropdown menu option */
 "Woman" = "Mujer";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Hombre";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Otro";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Anónimo";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Fecha de nacimiento";
 
-/* */
-"Share all of your Statistics" = "Comparte todas las estadísticas";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
-/* */
-"Just iAPS version number" = "Sólo el número de versión iAPS";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Compartir lo mínimo";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Todo registro de información que elija compartir se hace de forma anónima. Para evitar subidas de información duplicadas, los datos se identifican con un identificador único aleatorio guardado en su teléfono.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Sólo el número de versión iAPS";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+
+/* Token section title */
+"Your recovery token" = "Your recovery token";
+
+/* Token display button */
 "Tap to display" = "Pulsa para mostrar";
+
+/* Token copy button */
+"Long press to copy" = "Long press to copy";
+
+/* Link to statistics button */
+"View Personal Statistics" = "View Personal Statistics";
 
 /* */
 "Your identifier" = "Su identificador";
@@ -2604,6 +2628,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Botón de intervalo de horas visibles";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";

@@ -552,6 +552,12 @@ public class PodCommsSession {
                     log.default("bolus: pod is still bolusing")
                     return DeliveryCommandResult.certainFailure(error: .unfinalizedBolus)
                 }
+                // If the pod setup is complete, also confirm that the pod is indeed not suspended
+                if podState.setupProgress == .completed && statusResponse.deliveryStatus.suspended {
+                    log.default("bolus: pod is suspended")
+                    return DeliveryCommandResult.certainFailure(error: .podSuspended)
+                }
+                log.default("bolus: get status response verifies pod is not bolusing and not suspended")
             } else {
                 log.default("bolus: failed to read pod status to verify there is no bolus running")
                 return DeliveryCommandResult.certainFailure(error: .noResponse)
