@@ -1243,7 +1243,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Неможливо виконати рекомендацію щодо нового циклу петлі, оскільки триває болюс. Зачекайте наступного циклу петлі";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Помилка: Помпа зайнята.";
+"Status: Pump is Busy." = "Помилка: Помпа зайнята.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */

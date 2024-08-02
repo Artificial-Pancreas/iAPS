@@ -1243,7 +1243,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Không thể thực hiện đề xuất chu kỳ vòng lặp mới vì đang tiến hành một đợt Bolus. Đợi chu kỳ vòng lặp tiếp theo";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Lỗi: Máy bơm đang bận.";
+"Status: Pump is Busy." = "Lỗi: Máy bơm đang bận.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */

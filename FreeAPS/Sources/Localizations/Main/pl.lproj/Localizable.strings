@@ -1245,7 +1245,7 @@ Połączono z Nightscout!";
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Error: Pump is Busy.";
+"Status: Pump is Busy." = "Status: Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */

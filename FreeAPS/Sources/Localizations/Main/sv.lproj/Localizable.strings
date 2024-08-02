@@ -1243,7 +1243,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan inte utföra ny loop-rekommendation just nu, pga en pågående bolus. Vänta till nästa loop";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Fel: pump är upptagen.";
+"Status: Pump is Busy." = "Fel: pump är upptagen.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
