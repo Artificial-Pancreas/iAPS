@@ -112,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Vette maaltijd";
 
+/* Bolus option */
+"Hypo Treatment" = "Hypo Treatment";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Volledige bolus";
 
@@ -2515,6 +2518,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Laat de kleine glucosegrafiek nooit zien tijdens het scrollen";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
