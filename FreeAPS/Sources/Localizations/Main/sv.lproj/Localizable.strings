@@ -113,7 +113,7 @@
 "Fatty Meal" = "Fet mat";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Behandling av lågt blodsocker";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Total mängd";
@@ -2516,7 +2516,7 @@ Enact a temp Basal or a temp target */
 "Never display the small glucose chart when scrolling" = "Dölj det lilla glukosdiagrammet när du scrollar";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Disable Hypo Treatments";
+"Disable Hypo Treatments" = "Visa inte behandling av lågt blodsocker";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
