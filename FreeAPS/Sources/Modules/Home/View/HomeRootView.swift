@@ -528,7 +528,7 @@ extension Home {
                                         Text(name).font(.statusFont).foregroundStyle(.secondary)
                                     }
                                 }
-                            }
+                            } else { Text("📉") } // Hypo Treatment is not actually a preset
                         } else if override.percentage != 100 {
                             Text(override.percentage.formatted() + " %").font(.statusFont).foregroundStyle(.secondary)
                         } else if override.smbIsOff, !override.smbIsAlwaysOff {
