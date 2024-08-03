@@ -56,10 +56,9 @@ protocol BluetoothManager : AnyObject, CBCentralManagerDelegate {
 }
 
 extension BluetoothManager {
-    func startScan() {
+    func startScan() throws {
         guard self.manager.state == .poweredOn else {
-            log.error("Invalid bluetooth state. State: \(self.manager.state.rawValue)")
-            return
+            throw NSError(domain: "Invalid bluetooth state. State: " + String(self.manager.state.rawValue), code: 0, userInfo: nil)
         }
         
         guard !self.manager.isScanning else {
@@ -100,7 +99,7 @@ extension BluetoothManager {
         }
         
         self.autoConnectUUID = bleIdentifier
-        self.startScan()
+        try self.startScan()
         
         // throw error if device could not be found after 10 sec
         Task {
@@ -217,11 +216,6 @@ extension BluetoothManager {
         dispatchPrecondition(condition: .onQueue(managerQueue))
         
         log.info("\(String(describing: central.state.rawValue))")
-    }
-    
-    func bleCentralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-        dispatchPrecondition(condition: .onQueue(managerQueue))
-        log.info("\(dict)")
     }
     
     func bleCentralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {

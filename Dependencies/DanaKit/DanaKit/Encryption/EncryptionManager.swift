@@ -6,6 +6,8 @@
 //  Copyright © 2023 Randall Knutson. All rights reserved.
 //
 
+
+let log = DanaLogger(category: "ENCRYPTION")
 class DanaRSEncryption {
     public static var enhancedEncryption: UInt8 = 0
     private static var isEncryptionMode: Bool = true
@@ -45,6 +47,7 @@ class DanaRSEncryption {
         let result = encryptSecondLevel(&params)
         
         self.randomSyncKey = result.randomSyncKey
+        log.info("Random sync key (encrypt): \(self.randomSyncKey)")
         return result.buffer
     }
     
@@ -72,6 +75,7 @@ class DanaRSEncryption {
         let result = decryptSecondLevel(&params)
         
         self.randomSyncKey = result.randomSyncKey
+        log.info("Random sync key (decrypt): \(self.randomSyncKey)")
         return result.buffer
     }
     
@@ -89,6 +93,8 @@ class DanaRSEncryption {
         } else {
             self.randomSyncKey = decryptionRandomSyncKey(randomSyncKey: randomSyncKey!, randomPairingKey: randomPairingKey)
         }
+        
+        log.info("Random sync key(set): \(self.randomSyncKey)")
     }
     
     static func getPairingKeys() -> (Data, Data) {

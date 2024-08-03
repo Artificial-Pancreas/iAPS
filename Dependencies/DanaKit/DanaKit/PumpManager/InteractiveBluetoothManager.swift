@@ -154,10 +154,6 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
         self.bleCentralManagerDidUpdateState(central)
     }
     
-    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-        self.bleCentralManager(central, willRestoreState: dict)
-    }
-    
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         self.bleCentralManager(central, didDiscover: peripheral, advertisementData: advertisementData, rssi: RSSI)
     }

@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import BackgroundTasks
 import UserNotifications
 
 class ContinousBluetoothManager : NSObject, BluetoothManager {
@@ -46,6 +47,17 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         self.manager = nil
     }
     
+    private func handleBackgroundTask() {
+        Task {
+            while isConnected {
+                await keepConnectionAlive()
+                try await Task.sleep(nanoseconds: 60_000_000_000) // 60 seconds
+            }
+
+            self.logger.warning("Existed background job. Not connected anymore")
+        }
+    }
+    
     private func keepConnectionAlive() async {
         do {
             if self.pumpManagerDelegate?.status.bolusState == .noBolus {
@@ -58,11 +70,6 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                 }
             } else {
                 self.log.info("Skip sending keep alive message. Reason: bolus is running")
-            }
-            
-            Task {
-                try await Task.sleep(nanoseconds: 30000000000) // Sleep for 30sec
-                await self.keepConnectionAlive()
             }
         } catch {
             self.log.error("Failed to keep connection alive: \(error.localizedDescription)")
@@ -94,7 +101,8 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                 case .success:
                     self.forcedDisconnect = false
                     Task {
-                        await self.keepConnectionAlive()
+                        await self.updateInitialState()
+                        self.handleBackgroundTask()
                         callback(true)
                     }
                     break;
@@ -118,7 +126,8 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                 case .success:
                     self.forcedDisconnect = false
                     Task {
-                        await self.keepConnectionAlive()
+                        await self.updateInitialState()
+                        self.handleBackgroundTask()
                         callback(true)
                     }
                     break;
@@ -201,10 +210,6 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                 }
             }
         }
-    }
-    
-    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-        self.bleCentralManager(central, willRestoreState: dict)
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
