@@ -40,7 +40,12 @@ class DanaKitDebugViewModel : ObservableObject {
     }
     
     func scan() {
-        self.pumpManager?.startScan()
+        do {
+            try self.pumpManager?.startScan()
+        } catch {
+            self.isPresentingScanningErrorAlert = true
+            self.scanningErrorMessage = error.localizedDescription
+        }
     }
     
     func connect() {

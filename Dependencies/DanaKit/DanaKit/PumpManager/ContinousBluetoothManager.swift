@@ -54,7 +54,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                 try await Task.sleep(nanoseconds: 60_000_000_000) // 60 seconds
             }
 
-            self.logger.warning("Existed background job. Not connected anymore")
+            self.log.warning("Existed background job. Not connected anymore")
         }
     }
     

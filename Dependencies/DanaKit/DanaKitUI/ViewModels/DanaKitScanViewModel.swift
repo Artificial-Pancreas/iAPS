@@ -41,8 +41,12 @@ class DanaKitScanViewModel : ObservableObject {
         self.pumpManager?.addScanDeviceObserver(self, queue: .main)
         self.pumpManager?.addStateObserver(self, queue: .main)
         
-        self.pumpManager?.startScan()
-        self.isScanning = true
+        do {
+            try self.pumpManager?.startScan()
+            self.isScanning = true
+        } catch {
+            self.log.error("Failed to start scanning: \(error.localizedDescription)")
+        }
     }
     
     func connect(_ item: ScanResultItem) {

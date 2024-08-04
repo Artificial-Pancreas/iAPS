@@ -113,8 +113,8 @@ public class DanaKitPumpManager: DeviceManager {
         self.state.resetState()
     }
     
-    public func startScan() {
-        self.bluetooth.startScan()
+    public func startScan() throws {
+        try self.bluetooth.startScan()
     }
     
     public func stopScan() {
