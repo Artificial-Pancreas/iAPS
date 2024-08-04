@@ -113,7 +113,7 @@
 "Fatty Meal" = "Bữa ăn nhiều chất béo";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Điều trị hạ đường huyết";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Liều bolus đầy đủ";
@@ -2517,7 +2517,7 @@ Enact a temp Basal or a temp target */
 "Never display the small glucose chart when scrolling" = "Không bao giờ hiển thị biểu đồ glucose nhỏ khi cuộn";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Disable Hypo Treatments";
+"Disable Hypo Treatments" = "Vô hiệu hóa điều trị hạ đường huyết";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán Bolus";
