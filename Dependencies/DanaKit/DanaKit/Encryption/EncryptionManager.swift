@@ -7,7 +7,6 @@
 //
 
 
-let log = DanaLogger(category: "ENCRYPTION")
 class DanaRSEncryption {
     public static var enhancedEncryption: UInt8 = 0
     private static var isEncryptionMode: Bool = true
@@ -27,7 +26,7 @@ class DanaRSEncryption {
     
     // Length: 3
     private static var randomPairingKey: Data = Data()
-    public static var randomSyncKey: UInt8 = 0
+    public private(set) static var randomSyncKey: UInt8 = 0
     
     // Length: 6
     private static var ble5Key: Data = Data()
@@ -47,7 +46,6 @@ class DanaRSEncryption {
         let result = encryptSecondLevel(&params)
         
         self.randomSyncKey = result.randomSyncKey
-        log.info("Random sync key (encrypt): \(self.randomSyncKey)")
         return result.buffer
     }
     
@@ -75,7 +73,6 @@ class DanaRSEncryption {
         let result = decryptSecondLevel(&params)
         
         self.randomSyncKey = result.randomSyncKey
-        log.info("Random sync key (decrypt): \(self.randomSyncKey)")
         return result.buffer
     }
     
@@ -93,8 +90,6 @@ class DanaRSEncryption {
         } else {
             self.randomSyncKey = decryptionRandomSyncKey(randomSyncKey: randomSyncKey!, randomPairingKey: randomPairingKey)
         }
-        
-        log.info("Random sync key(set): \(self.randomSyncKey)")
     }
     
     static func getPairingKeys() -> (Data, Data) {
