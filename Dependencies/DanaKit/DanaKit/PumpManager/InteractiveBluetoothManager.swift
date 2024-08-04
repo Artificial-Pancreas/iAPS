@@ -33,7 +33,7 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
         super.init()
         
         managerQueue.sync {
-            self.manager = CBCentralManager(delegate: self, queue: managerQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "com.DanaKit"])
+            self.manager = CBCentralManager(delegate: self, queue: managerQueue)
         }
     }
     
