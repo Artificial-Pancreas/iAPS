@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Vek nádrže"
+
+/* Text for status */
+"Status" = "Postavenie"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Odpája sa..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Opätovné pripojenie..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Odpojte od čerpadla"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Znovu pripojte čerpadlo tp"
+
+/* DanaKit disconnected */
+"Disconnected" = "Odpojené"
+
+/* DanaKit connected */
+"Connected" = "Pripojené"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Čerpadlo je stále odpojené"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Vaša pumpa je po nastavenom čase stále odpojená!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Nastaviť pripomienku na odpojenie"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Chcete dostávať upozornenie, keď je pumpa dlhšie odpojená na určitý čas?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Áno, 5 minút"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Áno, 15 minút"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Áno, 30 minút"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Áno, 1 hodinu"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Nie, stačí sa odpojiť"

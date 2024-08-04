@@ -49,7 +49,7 @@ final class TotalDailyDose {
 
     func insulinToday(_ data: [PumpHistoryEvent], increment: Double) -> (bolus: Decimal, basal: Decimal, hours: Double) {
         let filtered = data.filter({ $0.timestamp > Calendar.current.startOfDay(for: Date()) })
-        
+
         return totalDailyDose(filtered, increment: increment)
     }
 

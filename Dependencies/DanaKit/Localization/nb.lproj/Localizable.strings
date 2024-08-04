@@ -310,7 +310,7 @@
 "Pump battery 0%" = "Pumpebatteri 0 %"
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Pumpebatteriet er tomt. Bytt den ut nå!"
+"Pump battery is empty. Replace it now!" = "Pumpebatteriet er tomt. Bytt den nå!"
 
 /* Alert title for pumpError */
 "Pump error" = "Pumpefeil"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Reservoar alder"
+
+/* Text for status */
+"Status" = "Status"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Kobler fra ..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Kobler på nytt ..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Koble fra pumpen"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Koble til tp-pumpen igjen"
+
+/* DanaKit disconnected */
+"Disconnected" = "Koblet fra"
+
+/* DanaKit connected */
+"Connected" = "Tilkoblet"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pumpen er fortsatt frakoblet"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Pumpen din er fortsatt frakoblet etter den innstilte perioden!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Still inn påminnelse for frakobling"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Ønsker du å motta et varsel når pumpen er lenger frakoblet for en bestemt tid?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Ja, 5 minutter"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Ja, 15 minutter"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Ja, 30 minutter"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Ja, 1 time"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Nei, bare koble fra"

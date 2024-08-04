@@ -173,7 +173,7 @@
 "Resume delivery" = "配達を再開する"
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "配信を一時停止する"
+"Suspend delivery" = "配送を一時停止する"
 
 /* Dana settings stop temp basal */
 "Stop temp basal" = "一時基礎インスリン投与中止"
@@ -223,7 +223,7 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "時間の変更が検出されました"
+"Time Change Detected" = "時間変更が検出されました"
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "ポンプの時刻が現在の時刻と異なります。ポンプの時刻を現在の時刻に更新しますか?"
@@ -361,7 +361,7 @@
 "Basal limit reached" = "基礎制限に達した"
 
 /* Alert body for basalMax */
-"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "1日の基礎摂取量制限に達しました。制限値を増やすには、Dana販売店にお問い合わせください。"
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "1日の基礎用量の上限に達しました。上限を増やすには、Danaの販売代理店にお問い合わせください。"
 
 /* Alert title for dailyMax */
 "Daily limit reached" = "1日の制限に達しました"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "貯留層年齢"
+
+/* Text for status */
+"Status" = "状態"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "切断しています..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "再接続しています..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "ポンプから切断"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "TPポンプを再接続する"
+
+/* DanaKit disconnected */
+"Disconnected" = "切断"
+
+/* DanaKit connected */
+"Connected" = "接続"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "ポンプはまだ切断されています"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "設定された期間が経過しても、ポンプはまだ切断されています。"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "切断のリマインダーを設定する"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "ポンプが一定時間切断されたときに通知を受け取りますか?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "はい、5分です"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "はい、15分です"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "はい、30分"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "はい、1時間"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "いいえ、切断するだけです"

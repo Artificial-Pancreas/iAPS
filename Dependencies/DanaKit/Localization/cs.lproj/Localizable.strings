@@ -161,7 +161,7 @@
 "The max bolus limit is reached. Please try a lower amount or increase the limit" = "Byl dosažen limit maximálního bolusu. Zkuste prosím nižší částku nebo zvyšte limit"
 
 /* Error description when pump has reached the daily max */
-"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Je dosažen maximální denní limit inzulinu. Zkuste prosím nižší částku nebo zvyšte limit"
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Je dosažen maximální denní limit inzulínu. Zkuste prosím nižší částku nebo zvyšte limit"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Podporován je pouze automatický bolus"
@@ -229,7 +229,7 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na pumpě se liší od aktuálního času. Chcete aktualizovat čas na pumpě na aktuální čas?"
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpě se liší od aktuálního času. Čas pumpy řídí nastavení naplánované terapie. Přejděte dolů na řádek Čas pumpy, abyste si prohlédli časový rozdíl a nakonfigurovali pumpu.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpě se liší od aktuálního času. Čas pumpy řídí nastavení naplánované terapie. Přejděte dolů na řádek Čas pumpy a zkontrolujte časový rozdíl a nakonfigurujte pumpu.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Ano, synchronizovat s aktuálním časem"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Stáří nádrže"
+
+/* Text for status */
+"Status" = "Postavení"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Odpojování..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Opětovné připojení..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Odpojit od čerpadla"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Znovu připojte čerpadlo tp"
+
+/* DanaKit disconnected */
+"Disconnected" = "Odpojeno"
+
+/* DanaKit connected */
+"Connected" = "Připojeno"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Čerpadlo je stále odpojeno"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Vaše pumpa je po nastavené době stále odpojená!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Nastavit připomenutí pro odpojení"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Přejete si obdržet upozornění, když je čerpadlo delší dobu odpojeno?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Ano, 5 minut"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Ano, 15 minut"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Ano, 30 minut"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Ano, 1 hodinu"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Ne, stačí se odpojit"

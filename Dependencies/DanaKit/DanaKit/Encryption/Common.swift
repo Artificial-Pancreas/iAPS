@@ -8,6 +8,10 @@
 
 // exec_get_enc_packet_passkey(char*, Int, char*)
 func encodePacketPassKey(buffer: inout Data, passkeySecret: Data) -> Data {
+    guard passkeySecret.count != 0 else {
+        return buffer
+    }
+    
     for i in 0..<(buffer.count - 5) {
         buffer[i + 3] ^= passkeySecret[(i + 1) % 2]
     }
@@ -28,6 +32,10 @@ func encodePacketPassKeySerialNumber(value: UInt8, deviceName: String) -> UInt8 
 
 // exec_get_enc_packet_password
 func encodePacketPassword(buffer: inout Data, passwordSecret: Data) -> Data {
+    guard passwordSecret.count == 2 else {
+        return buffer
+    }
+    
     let tmp = passwordSecret[0] &+ passwordSecret[1]
     for i in 3..<(buffer.count - 2) {
         buffer[i] ^= tmp

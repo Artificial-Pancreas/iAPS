@@ -241,7 +241,7 @@
 "Bolus" = "Bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp Basaal";
+"Temp Basal" = "Temp basaal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basaal";
@@ -349,7 +349,7 @@
 "Empty reservoir" = "Leeg reservoir"
 
 /* Alert body for emptyReservoir */
-"Reservoir is empty. Replace it now!" = "Reservoir is leeg. Vervang het nu!"
+"Reservoir is empty. Replace it now!" = "Reservoir is leeg. Vervang hem nu!"
 
 /* Alert title for emptyReservoir */
 "Check chaft" = "Controleer chaft"
@@ -397,7 +397,7 @@
 "Yes, Enable silent tones" = "Ja, stille tonen inschakelen"
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Stel het basaalprofiel in dat de pomp moet gebruiken. Houd er rekening mee dat het profiel in de pomp wordt overschreven, met dat in %1$@"
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Stel het basaalprofiel in dat de pomp moet gebruiken. Houd er rekening mee dat het profiel in de pomp wordt overschreven met dat in %1$@"
 
 
 /* Error message for reservoir view when reservoir empty
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Reservoir leeftijd"
+
+/* Text for status */
+"Status" = "Toestand"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Verbinding verbreken..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Opnieuw verbinding maken..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Koppel los van de pomp"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Sluit de tp-pomp opnieuw aan"
+
+/* DanaKit disconnected */
+"Disconnected" = "Losgekoppeld"
+
+/* DanaKit connected */
+"Connected" = "Verbonden"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pomp is nog steeds losgekoppeld"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Uw pomp is na de ingestelde periode nog steeds uitgeschakeld!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Herinnering instellen voor het verbreken van de verbinding"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Wilt u een melding ontvangen wanneer de pomp voor een bepaalde tijd langer uitgeschakeld is?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Ja, 5 minuten"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Ja, 15 minuten"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Ja, 30 minuten"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Ja, 1 uur"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Nee, gewoon de verbinding verbreken"

@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Âge du réservoir"
+
+/* Text for status */
+"Status" = "Statut"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Déconnexion..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Reconnexion..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Débrancher de la pompe"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Rebrancher la pompe TP"
+
+/* DanaKit disconnected */
+"Disconnected" = "Débranché"
+
+/* DanaKit connected */
+"Connected" = "Connecté"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "La pompe est toujours déconnectée"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Votre pompe est toujours déconnectée après la période programmée !"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Définir un rappel pour la déconnexion"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Souhaitez-vous recevoir une notification lorsque la pompe est déconnectée plus longtemps pendant une durée déterminée ?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Oui, 5 minutes"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Oui, 15 minutes"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Oui, 30 minutes"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Oui, 1 heure"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Non, déconnecte-toi simplement"

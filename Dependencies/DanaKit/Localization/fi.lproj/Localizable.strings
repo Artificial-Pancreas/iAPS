@@ -20,10 +20,10 @@
 "Setting up DanaRS v1" = "Asennetaan DanaRS v1"
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Pariliitoksen muodostusprosessin aikana DanaRS v3 näyttää pariliitoskehotteen, kun taas iPhone näyttää pariliitoskoodin kehotteen. Valitse pumpussasi OK ja kirjoita koodi iPhoneen. Sen jälkeen Loop on valmis kommunikoimaan DanaRS v1:n kanssa"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Pariliitoksen muodostusprosessin aikana DanaRS v3 näyttää pariliitoskehotteen, kun taas iPhone näyttää pariliitoskoodin kehotteen. Valitse pumpussasi OK ja kirjoita koodi iPhonellasi. Sen jälkeen Loop on valmis kommunikoimaan DanaRS v1:n kanssa"
 
 /* check password text for danars v1 */
-"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Ennen pariliitosprosessin aloittamista on suositeltavaa tarkistaa pumpun salasana ja tarvittaessa päivittää se. Voit tehdä tämän siirtymällä kohtaan Pumpun asetukset -&gt; Käyttäjäasetukset -&gt; Salasana. Oletussalasana on 1234, jos tämä on salasanasi, harkitse sen vaihtamista"
+"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Ennen pariliitosprosessin aloittamista on suositeltavaa tarkistaa ja tarvittaessa päivittää pumpun salasana. Voit tehdä tämän siirtymällä kohtaan Pumpun asetukset -&gt; Käyttäjäasetukset -&gt; Salasana. Oletussalasana on 1234, jos tämä on salasanasi, harkitse sen vaihtamista"
 
 /* Title for danars v1 password */
 "Password DanaRS v1" = "Salasana DanaRS v1"
@@ -131,7 +131,7 @@
 "Failed to make a connection" = "Yhteyden muodostaminen epäonnistui"
 
 /* Error description when failed temp adjustment */
-"Failed to adjust temp basal" = "Temp-basaalin säätäminen epäonnistui"
+"Failed to adjust temp basal" = "Temp basaalin säätäminen epäonnistui"
 
 /* Error description when failed suspension adjustment */
 "Failed to adjust suspension" = "Jousituksen säätäminen epäonnistui"
@@ -370,7 +370,7 @@
 "Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Päivittäinen insuliinirajasi on saavutettu. Ota yhteyttä Dana-jälleenmyyjään rajan nostamiseksi"
 
 /* Alert title for bloodSugarCheckMiss */
-"Missed Blood glucose check" = "Verensokerin mittaus jäi väliin"
+"Missed Blood glucose check" = "Verensokerimittaus jäi väliin"
 
 /* Alert body for bloodSugarCheckMiss */
 "A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Verensokerin tarkistusmuistutus on asetettu pumppuusi ja se laukeaa. Poista se tai anna glukoositasosi pumpulle"
@@ -397,7 +397,7 @@
 "Yes, Enable silent tones" = "Kyllä, ota äänettömät äänet käyttöön"
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Aseta perusprofiili, jota pumpun tulee käyttää. Huomaa, että se korvaa pumpussa olevan profiilin kohdassa %1$@"
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Aseta perusprofiili, jota pumpun tulee käyttää. Huomaa, että se korvaa pumpussa olevan profiilin profiililla %1$@"
 
 
 /* Error message for reservoir view when reservoir empty
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Säiliön ikä"
+
+/* Text for status */
+"Status" = "Tila"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Katkaistaan..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Yhdistetään uudelleen..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Irrota pumpusta"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Kytke tp-pumppu uudelleen"
+
+/* DanaKit disconnected */
+"Disconnected" = "Yhteys katkaistu"
+
+/* DanaKit connected */
+"Connected" = "Yhdistetty"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pumppu on edelleen irti"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Pumppu on edelleen irti asetetun ajan jälkeen!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Aseta muistutus yhteyden katkeamisesta"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Haluatko saada ilmoituksen, kun pumppu on pidempään irti tietyn ajan?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Kyllä, 5 minuuttia"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Kyllä, 15 minuuttia"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Kyllä, 30 minuuttia"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Kyllä, 1 tunti"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Ei, vain katkaise yhteys"

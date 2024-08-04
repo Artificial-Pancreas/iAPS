@@ -12,10 +12,15 @@ import HealthKit
 
 class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingDeleteConfirmation = false
+    @Published var showingBleModeSwitch = false
     @Published var showingTimeSyncConfirmation = false
+    @Published var showingDisconnectReminder = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
+    @Published var isUsingContinuousMode: Bool = false
     @Published var isUpdatingPumpState: Bool = false
+    @Published var isConnected: Bool = false
+    @Published var isTogglingConnection: Bool = false
     @Published var isSyncing: Bool = false
     @Published var lastSync: Date? = nil
     @Published var batteryLevel: Double = 0
@@ -34,11 +39,10 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var basalRate: Double?
     
     private let log = DanaLogger(category: "SettingsView")
-    private(set) var insulineType: InsulinType
+    private(set) var insulinType: InsulinType
     private(set) var pumpManager: DanaKitPumpManager?
     private var didFinish: (() -> Void)?
     private(set) var userOptionsView: DanaKitUserSettingsView
-    private(set) var basalProfileView: BasalProfileView
 
     public var pumpModel: String {
         self.pumpManager?.state.getFriendlyDeviceName() ?? ""
@@ -90,9 +94,10 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.didFinish = didFinish
         
         self.userOptionsView = DanaKitUserSettingsView(viewModel: DanaKitUserSettingsViewModel(self.pumpManager))
-        self.basalProfileView = BasalProfileView(viewModel: BasalProfileViewModel(self.pumpManager))
         
-        self.insulineType = self.pumpManager?.state.insulinType ?? .novolog
+        self.isUsingContinuousMode = self.pumpManager?.state.isUsingContinuousMode ?? false
+        self.isConnected = self.pumpManager?.state.isConnected ?? false
+        self.insulinType = self.pumpManager?.state.insulinType ?? .novolog
         self.bolusSpeed = self.pumpManager?.state.bolusSpeed ?? .speed12
         self.lastSync = self.pumpManager?.state.lastStatusDate
         self.reservoirLevel = self.pumpManager?.state.reservoirLevel
@@ -126,17 +131,49 @@ class DanaKitSettingsViewModel : ObservableObject {
         }
     }
     
+    func scheduleDisconnectNotification(_ duration: TimeInterval) {
+        NotificationHelper.setDisconnectReminder(duration)
+        self.pumpManager?.disconnect(true)
+    }
+    
+    func forceDisconnect() {
+        self.pumpManager?.disconnect(true)
+    }
+    
     func didChangeInsulinType(_ newType: InsulinType?) {
         guard let type = newType else {
             return
         }
         
         self.pumpManager?.state.insulinType = type
-        self.insulineType = type
+        self.pumpManager?.notifyStateDidChange()
+        self.insulinType = type
     }
     
     func getLogs() -> [URL] {
         return log.getDebugLogs()
+    }
+    
+    func toggleBleMode() {
+        self.pumpManager?.toggleBluetoothMode()
+        self.isTogglingConnection = true;
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            self.isTogglingConnection = false;
+        }
+    }
+    
+    func reconnect() {
+        guard let pumpManager = self.pumpManager else {
+            return
+        }
+        
+        self.isTogglingConnection = true
+        pumpManager.reconnect { _ in
+            DispatchQueue.main.async {
+                self.isTogglingConnection = false
+            }
+        }
     }
     
     func formatDate(_ date: Date?) -> String {
@@ -165,7 +202,10 @@ class DanaKitSettingsViewModel : ObservableObject {
         pumpManager.syncPump { date in
             DispatchQueue.main.async {
                 self.isSyncing = false
-                self.lastSync = date
+                
+                if let date = date {
+                    self.lastSync = date
+                }
             }
         }
     }
@@ -295,7 +335,9 @@ class DanaKitSettingsViewModel : ObservableObject {
 
 extension DanaKitSettingsViewModel: StateObserver {
     func stateDidUpdate(_ state: DanaKitPumpManagerState, _ oldState: DanaKitPumpManagerState) {
-        self.insulineType = state.insulinType ?? .novolog
+        self.isUsingContinuousMode = state.isUsingContinuousMode
+        self.isConnected = state.isConnected
+        self.insulinType = state.insulinType ?? .novolog
         self.bolusSpeed = state.bolusSpeed
         self.lastSync = state.lastStatusDate
         self.reservoirLevel = state.reservoirLevel
