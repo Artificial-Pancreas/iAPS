@@ -112,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Pasto Grasso";
 
+/* Bolus option */
+"Hypo Treatment" = "Hypo Treatment";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Bolo Completo";
 
@@ -2512,6 +2515,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Non visualizzare mai il grafico piccolo del glucosio durante lo scorrimento";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";

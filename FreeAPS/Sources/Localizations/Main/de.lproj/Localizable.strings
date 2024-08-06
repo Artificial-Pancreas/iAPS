@@ -112,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Fettige Mahlzeit";
 
+/* Bolus option */
+"Hypo Treatment" = "Hypo Treatment";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Voller Bolus";
 
@@ -2511,6 +2514,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Beim Scrollen nie das kleine Glukosediagramm anzeigen";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
