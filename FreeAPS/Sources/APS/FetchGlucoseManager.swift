@@ -131,7 +131,14 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         debug(.deviceManager, "New glucose found")
 
         // filter the data if it is the case
-        if settingsManager.settings.smoothGlucose {
+        if settingsManager.settings
+            .smoothGlucose ||
+            (
+                settingsManager.settings
+                    .smoothGlucose && settingsManager.settings.smoothGlucoseScheduleIsOn && settingsManager.settings
+                    .smoothGlucose24 > Date.now
+            )
+        {
             // limit to 30 minutes of previous BG Data
             let oldGlucoses = glucoseStorage.recent().filter {
                 $0.dateString.addingTimeInterval(31 * 60) > Date()

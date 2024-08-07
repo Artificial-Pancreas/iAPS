@@ -108,6 +108,7 @@ extension Home {
             setupOverrideHistory()
             setupLoopStats()
             setupData()
+            setupSmoothing()
 
             // iobData = provider.reasons()
             suggestion = provider.suggestion
@@ -124,7 +125,6 @@ extension Home {
             manualTempBasal = apsManager.isManualTempBasal
             setStatusTitle()
             setupCurrentTempTarget()
-            smooth = settingsManager.settings.smoothGlucose
             maxValue = settingsManager.preferences.autosensMax
             lowGlucose = settingsManager.settings.low
             highGlucose = settingsManager.settings.high
@@ -489,6 +489,13 @@ extension Home {
             }
         }
 
+        private func setupSmoothing() {
+            smooth = settingsManager.settings.smoothGlucose
+            if smooth, settingsManager.settings.smoothGlucoseScheduleIsOn, settingsManager.settings.smoothGlucose24 < Date.now {
+                smooth = false
+            }
+        }
+
         private func setupData() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -580,7 +587,7 @@ extension Home.StateModel:
         units = settingsManager.settings.units
         animatedBackground = settingsManager.settings.animatedBackground
         manualTempBasal = apsManager.isManualTempBasal
-        smooth = settingsManager.settings.smoothGlucose
+        setupSmoothing()
         lowGlucose = settingsManager.settings.low
         highGlucose = settingsManager.settings.high
         overrideUnit = settingsManager.settings.overrideHbA1cUnit

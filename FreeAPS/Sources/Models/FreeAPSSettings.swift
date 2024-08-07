@@ -32,6 +32,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var delay: Int = 60
     var useAppleHealth: Bool = false
     var smoothGlucose: Bool = false
+    var smoothGlucose24 = Date.distantPast
+    var smoothGlucoseScheduleIsOn: Bool = false
+    var schedule: SmoothingSchedule = .never
     var displayOnWatch: AwConfig = .BGTarget
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
@@ -66,7 +69,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var uploadVersion: Bool = true
     var skipGlucoseChart: Bool = false
     var birthDate = Date.distantPast
-    // var sex: Sex = .secret
     var sexSetting: Int = 3
     var disableHypoTreatment: Bool = false
 }
@@ -129,6 +131,10 @@ extension FreeAPSSettings: Decodable {
 
         if let cgm = try? container.decode(CGMType.self, forKey: .cgm) {
             settings.cgm = cgm
+        }
+
+        if let schedule = try? container.decode(SmoothingSchedule.self, forKey: .schedule) {
+            settings.schedule = schedule
         }
 
         if let uploadGlucose = try? container.decode(Bool.self, forKey: .uploadGlucose) {
@@ -224,6 +230,14 @@ extension FreeAPSSettings: Decodable {
 
         if let smoothGlucose = try? container.decode(Bool.self, forKey: .smoothGlucose) {
             settings.smoothGlucose = smoothGlucose
+        }
+
+        if let smoothGlucose24 = try? container.decode(Date.self, forKey: .smoothGlucose24) {
+            settings.smoothGlucose24 = smoothGlucose24
+        }
+
+        if let smoothGlucoseScheduleIsOn = try? container.decode(Bool.self, forKey: .smoothGlucoseScheduleIsOn) {
+            settings.smoothGlucoseScheduleIsOn = smoothGlucoseScheduleIsOn
         }
 
         if let low = try? container.decode(Decimal.self, forKey: .low) {

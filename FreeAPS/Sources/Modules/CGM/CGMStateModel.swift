@@ -15,6 +15,8 @@ extension CGM {
         // @Published var transmitterID = ""
         @Published var uploadGlucose = true
         @Published var smoothGlucose = false
+        @Published var smoothGlucoseScheduleIsOn: Bool = false
+        @Published var smoothGlucose24 = Date.distantPast
         @Published var createCalendarEvents = false
         @Published var displayCalendarIOBandCOB = false
         @Published var displayCalendarEmojis = false
@@ -22,6 +24,8 @@ extension CGM {
         @Published var currentCalendarID: String = ""
         @Persisted(key: "CalendarManager.currentCalendarID") var storedCalendarID: String? = nil
         @Published var cgmTransmitterDeviceAddress: String? = nil
+
+        @Published var schedule: SmoothingSchedule = .never
 
         override func subscribe() {
             cgm = settingsManager.settings.cgm
@@ -32,7 +36,10 @@ extension CGM {
             subscribeSetting(\.useCalendar, on: $createCalendarEvents) { createCalendarEvents = $0 }
             subscribeSetting(\.displayCalendarIOBandCOB, on: $displayCalendarIOBandCOB) { displayCalendarIOBandCOB = $0 }
             subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { displayCalendarEmojis = $0 }
-            subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
+            subscribeSetting(\.smoothGlucose, on: $smoothGlucose) { smoothGlucose = $0 }
+            subscribeSetting(\.smoothGlucose24, on: $smoothGlucose24) { smoothGlucose24 = $0 }
+            subscribeSetting(\.smoothGlucoseScheduleIsOn, on: $smoothGlucoseScheduleIsOn) { smoothGlucoseScheduleIsOn = $0 }
+            subscribeSetting(\.schedule, on: $schedule) { schedule = $0 }
 
             $cgm
                 .removeDuplicates()
