@@ -82,3 +82,6 @@ fastlane/FastlaneRunner
 ConfigOverride.xcconfig
 
 branch.txt
+package-lock.json
+node_modules
+oref0

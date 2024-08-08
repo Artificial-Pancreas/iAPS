@@ -120,5 +120,15 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             if (autotune_data.carb_ratio) { inputs.carbratio.schedule[0].ratio = autotune_data.carb_ratio; }
         }
     }
-    return freeaps_profile(inputs);
+
+    var logs = { err: null, stdout: null }
+    var profile = freeaps_profile(logs, inputs);
+    logs.err && console.error(logs.err)
+    logs.stdout && console.error(logs.stdout)
+
+    if (typeof profile !== 'object') {
+        return;
+    }
+
+    return profile;
 }
