@@ -23,14 +23,16 @@ module.exports = {
             return '-' + match.toLowerCase();
         }) + '.js';
     },
-    libraryTarget: 'var',
-    library: 'freeaps_[name]'
+    library: {
+        type: 'var',
+        name: 'freeaps_[name]'
+    }
   },
   optimization: {
-    sideEffects: true,
     minimize: true,
     minimizer: [new TerserPlugin({
         extractComments: false,
+        parallel: true,
         terserOptions: {
             format: {
                 comments: false,
