@@ -121,7 +121,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
         }
     }
 
-    var logs = { err: null, stdout: null }
+    var logs = { err: '', stdout: '', return_val: 0 }
     var profile = freeaps_profile(logs, inputs);
     logs.err && console.error(logs.err)
     logs.stdout && console.error(logs.stdout)
