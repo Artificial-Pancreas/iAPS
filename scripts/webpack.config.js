@@ -1,7 +1,7 @@
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
 
-const libPath = process.env['OREF0_DIST_PATH'] || './oref0/lib'
+const libPath = process.env['OREF0_DIST_PATH'] || './lib'
 
 module.exports = {
   mode: 'production',
