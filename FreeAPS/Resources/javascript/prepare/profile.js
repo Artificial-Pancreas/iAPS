@@ -127,14 +127,20 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
         freeaps_profile.defaults(),
         {
             type: 'iAPS', // attribute to override defaults
-            // iAPS settings
+            // +++++ iAPS settings
+            // smb_delivery_ratio: included in the current oref0 PR (https://github.com/openaps/oref0/pull/1465/files)
             smb_delivery_ratio: 0.5,
             adjustmentFactor: 1,
             useNewFormula: false,
             enableDynamicCR: false,
             sigmoid: false,
             weightPercentage: 0.65,
-            tddAdjBasal: false
+            tddAdjBasal: false,
+            // threshold_setting: temporary fix to test thomasvargiu/iAPS#original-oref0 branch before build.
+            // We can remove it after merged and after build the new original bundles
+            // because it's included in the current oref0 PR (https://github.com/openaps/oref0/pull/1465/files)
+            // currently (2024-08-09) this settings probably doesn't work in the current iAPS main/dev branch
+            threshold_setting: 60
         }
     )
 
