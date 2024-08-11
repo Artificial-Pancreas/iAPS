@@ -105,3 +105,10 @@ enum GlucoseDataError: Error {
     case noData
     case unreliableData
 }
+
+enum SmoothingSchedule: String, JSON, CaseIterable, Identifiable {
+    case oneDays
+    case twoDays
+    case never
+    var id: Self { self }
+}

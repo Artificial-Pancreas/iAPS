@@ -10,6 +10,13 @@ extension CGM {
 
         // @AppStorage(UserDefaults.BTKey.cgmTransmitterDeviceAddress.rawValue) private var cgmTransmitterDeviceAddress: String? = nil
 
+        private var formatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
         var body: some View {
             NavigationView {
                 Form {
@@ -79,12 +86,48 @@ extension CGM {
                         }
                     }
 
-                    Section(header: Text("Experimental")) {
+                    Section {
                         Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
+
+                        if state.smoothGlucose {
+                            Picker("Toggle it off in", selection: $state.schedule) {
+                                Text("24 hours").tag(SmoothingSchedule.oneDays)
+                                Text("Two days").tag(SmoothingSchedule.twoDays)
+                                Text("Never").tag(SmoothingSchedule.never)
+                            }._onBindingChange($state.schedule) { schedule in
+                                switch schedule {
+                                case .oneDays:
+                                    state.smoothGlucoseScheduleIsOn = true
+                                    state.smoothGlucose24 = Date.now.addingTimeInterval(24.hours.timeInterval)
+                                case .twoDays:
+                                    state.smoothGlucoseScheduleIsOn = true
+                                    state.smoothGlucose24 = Date.now.addingTimeInterval(2.days.timeInterval)
+                                case .never:
+                                    state.smoothGlucoseScheduleIsOn = false
+                                }
+                            }
+                        }
+                    }
+                    header: { Text("Smooth Glucose Value") }
+                    footer: {
+                        (
+                            state
+                                .schedule != .never && state.smoothGlucose
+                        ) ?
+                            Text(
+                                NSLocalizedString("Countdown hours: ", comment: "Hours left of CGM smoothing") + (
+                                    formatter
+                                        .string(from: abs(state.smoothGlucose24.timeIntervalSinceNow / 3600) as NSNumber) ?? ""
+                                )
+                            ).frame(maxWidth: .infinity, alignment: .trailing) :
+                            nil
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                .onAppear(perform: configureView)
+                .onAppear {
+                    configureView()
+                    fetchCurrentSchedule()
+                }
                 .navigationTitle("CGM")
                 .navigationBarTitleDisplayMode(.inline)
                 .sheet(isPresented: $setupCGM) {
@@ -113,6 +156,16 @@ extension CGM {
                 .onChange(of: state.setupCGM) { setupCGM in
                     self.setupCGM = setupCGM
                 }
+                .onChange(of: state.smoothGlucose) { smoothing in
+                    if !smoothing { state.schedule = .never }
+                }
+            }
+        }
+
+        private func fetchCurrentSchedule() {
+            if state.smoothGlucose, state.smoothGlucoseScheduleIsOn, state.smoothGlucose24 <= Date.now {
+                state.smoothGlucose = false
+                state.schedule = .never
             }
         }
     }

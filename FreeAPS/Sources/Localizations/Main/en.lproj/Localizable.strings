@@ -1936,7 +1936,19 @@ Enact a temp Basal or a temp target */
     
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Smooth Glucose Value";
-  
+
+/* Hours left of CGM smoothing */
+"Countdown hours: " = "Countdown hours: ";
+
+/* Title. Turn off CGM smoothing in ... */
+"Toggle it off in" = "Toggle it off in";
+
+/* Picker selection. Turn off CGM smoothing in ... */
+"Two days" = "Two days";
+
+/* Picker selection. Never turn off the CGM smoothing */
+"Never" = "Never";
+
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 
 /* Setting Title */
