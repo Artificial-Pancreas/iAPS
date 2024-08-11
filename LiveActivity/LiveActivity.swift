@@ -78,23 +78,21 @@ struct LiveActivity: Widget {
         let stack = HStack(spacing: spacing) {
             Text(bgText)
 
-            if size != .compact || size != .minimal, !context.isStale {
-                if let direction = directionText {
-                    let text = Text(direction)
-                    switch size {
-                    case .minimal:
-                        let scaledText = text.scaleEffect(x: 0.7, y: 0.7, anchor: .leading)
-                        if let warnColor {
-                            scaledText.foregroundStyle(warnColor)
-                        } else {
-                            scaledText
-                        }
-                    case .compact:
-                        text.scaleEffect(x: 0.8, y: 0.8, anchor: .leading).padding(.trailing, -3)
-
-                    case .expanded:
-                        text.scaleEffect(x: 0.7, y: 0.7, anchor: .center).padding(.trailing, -5)
+            if let direction = directionText {
+                let text = Text(direction)
+                switch size {
+                case .minimal:
+                    let scaledText = text.scaleEffect(x: 0.7, y: 0.7, anchor: .leading)
+                    if let warnColor {
+                        scaledText.foregroundStyle(warnColor)
+                    } else {
+                        scaledText
                     }
+                case .compact:
+                    text.scaleEffect(x: 0.8, y: 0.8, anchor: .leading).padding(.trailing, -3)
+
+                case .expanded:
+                    text.scaleEffect(x: 0.7, y: 0.7, anchor: .center).padding(.trailing, -5)
                 }
             }
         }
@@ -134,7 +132,6 @@ struct LiveActivity: Widget {
             // Lock screen/banner UI goes here
             VStack(spacing: 2) {
                 ZStack {
-                    // Text("iAPS").font(.caption).bold().frame(maxWidth: .infinity, alignment: .center)
                     updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
