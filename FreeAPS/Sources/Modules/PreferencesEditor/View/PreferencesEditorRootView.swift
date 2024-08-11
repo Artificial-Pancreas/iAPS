@@ -71,6 +71,29 @@ extension PreferencesEditor {
                                     }
                                 }
                             }
+
+                            // Exceptions. Below a FreeAPS setting added.
+                            if field.displayName == NSLocalizedString("Max COB", comment: "Max COB") {
+                                HStack {
+                                    ZStack {
+                                        Button("", action: {
+                                            infoButtonPressed = InfoText(
+                                                description: NSLocalizedString(
+                                                    "Maximum amount of carbs (g) you can add each entry",
+                                                    comment: "Max carbs description"
+                                                ),
+                                                oref0Variable: NSLocalizedString("Max Carbs", comment: "Max setting")
+                                            )
+                                        })
+                                        Text("Max Carbs")
+                                    }
+                                    DecimalTextField(
+                                        "0",
+                                        value: self.$state.maxCarbs,
+                                        formatter: formatter
+                                    )
+                                }
+                            }
                         }
                     }
                 }
