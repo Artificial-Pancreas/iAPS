@@ -45,6 +45,8 @@ extension LiveActivityAttributes.ContentState {
         let change = Self.formatGlucose(Int((bg?.glucose ?? 0) - (prev?.glucose ?? 0)), mmol: mmol, forceSign: true)
         let cobString = Self.carbFormatter((suggestion.cob ?? 0) as NSNumber)
         let iobString = Self.formatter((suggestion.iob ?? 0) as NSNumber)
+        let eventual = Self.formatGlucose(suggestion.eventualBG ?? 100, mmol: mmol, forceSign: false)
+        let mmol = mmol
 
         self.init(
             bg: formattedBG,
@@ -53,7 +55,9 @@ extension LiveActivityAttributes.ContentState {
             date: bg?.date ?? Date.now,
             iob: iobString,
             cob: cobString,
-            loopDate: suggestion.timestamp ?? Date.now
+            loopDate: suggestion.timestamp ?? Date.now,
+            eventual: eventual,
+            mmol: mmol
         )
     }
 }
@@ -184,7 +188,7 @@ extension LiveActivityAttributes.ContentState {
                         date: Date.now,
                         iob: "--",
                         cob: "--",
-                        loopDate: Date.now
+                        loopDate: Date.now, eventual: "--", mmol: false
                     ),
                     staleDate: Date.now.addingTimeInterval(60)
                 )

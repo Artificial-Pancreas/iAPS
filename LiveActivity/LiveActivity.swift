@@ -119,7 +119,7 @@ struct LiveActivity: Widget {
 
     private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
         let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
-        let color: Color = timeAgo > 7 ? .orange : timeAgo > 20 ? .red : .green
+        let color: Color = timeAgo > 7 ? .loopYellow : timeAgo > 20 ? .loopRed : .loopGreen
         return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
     }
 
@@ -156,6 +156,19 @@ struct LiveActivity: Widget {
                         emptyText
                     }
                 }
+                HStack {
+                    Spacer()
+                    Text(NSLocalizedString("Eventual Glucose", comment: ""))
+                    Spacer()
+                    Text(context.state.eventual)
+                    Text(context.state.mmol ? NSLocalizedString(
+                        "mmol/L",
+                        comment: "The short unit display string for millimoles of glucose per liter"
+                    ) : NSLocalizedString(
+                        "mg/dL",
+                        comment: "The short unit display string for milligrams of glucose per decilter"
+                    )).foregroundStyle(.secondary)
+                }.padding(.top, 10)
             }
             .privacySensitive()
             .padding(.vertical, 10).padding(.horizontal, 15)
@@ -244,7 +257,7 @@ private extension LiveActivityAttributes.ContentState {
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now
+            loopDate: Date.now, eventual: "100", mmol: false
         )
     }
 
@@ -256,7 +269,7 @@ private extension LiveActivityAttributes.ContentState {
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now
+            loopDate: Date.now, eventual: "100", mmol: false
         )
     }
 
@@ -268,7 +281,7 @@ private extension LiveActivityAttributes.ContentState {
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now
+            loopDate: Date.now, eventual: "100", mmol: false
         )
     }
 
@@ -281,7 +294,7 @@ private extension LiveActivityAttributes.ContentState {
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now
+            loopDate: Date.now, eventual: "100", mmol: false
         )
     }
 
@@ -293,7 +306,7 @@ private extension LiveActivityAttributes.ContentState {
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now
+            loopDate: Date.now, eventual: "100", mmol: false
         )
     }
 }
@@ -315,6 +328,6 @@ struct LoopActivity: View {
     let compact: Bool
     var body: some View {
         Circle()
-            .stroke(stroke, lineWidth: compact ? 1.5 : 3)
+            .stroke(stroke, lineWidth: compact ? 1.5 : 3.5)
     }
 }

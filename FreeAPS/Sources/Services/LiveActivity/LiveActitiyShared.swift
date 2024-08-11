@@ -10,6 +10,8 @@ struct LiveActivityAttributes: ActivityAttributes {
         let iob: String
         let cob: String
         let loopDate: Date
+        let eventual: String
+        let mmol: Bool
     }
 
     let startDate: Date
