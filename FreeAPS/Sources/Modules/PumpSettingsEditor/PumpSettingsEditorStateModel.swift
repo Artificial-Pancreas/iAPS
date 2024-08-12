@@ -5,8 +5,6 @@ extension PumpSettingsEditor {
         @Published var maxBasal: Decimal = 0.0
         @Published var maxBolus: Decimal = 0.0
         @Published var dia: Decimal = 0.0
-        @Published var maxCarbs: Decimal = 1000
-
         @Published var syncInProgress = false
 
         override func subscribe() {
@@ -14,7 +12,6 @@ extension PumpSettingsEditor {
             maxBasal = settings.maxBasal
             maxBolus = settings.maxBolus
             dia = settings.insulinActionCurve
-            subscribeSetting(\.maxCarbs, on: $maxCarbs) { maxCarbs = $0 }
         }
 
         func save() {
