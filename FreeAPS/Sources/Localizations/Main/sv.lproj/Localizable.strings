@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "Max Carbs" = "Max antal kolhydrater";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "Maximal antal kolhydrater (g) du kan lägga till varje måltid";
 
 /* */
 "Pump Settings" = "Pumpinställningar";
