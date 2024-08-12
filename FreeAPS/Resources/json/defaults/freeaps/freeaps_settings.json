@@ -40,7 +40,7 @@
   "yGridLines" : true,
   "oneDimensionalGraph" : false,
   "rulerMarks" : false,
-  "maxCarbs" : 1000,
+  "maxCarbs" : 200,
   "displayFatAndProteinOnWatch" : false,
   "confirmBolusFaster" : false,
   "onlyAutotuneBasals" : false,

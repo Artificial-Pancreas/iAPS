@@ -9,11 +9,13 @@ extension PreferencesEditor {
         @Published var sections: [FieldSection] = []
         @Published var useAlternativeBolusCalc: Bool = false
         @Published var units: GlucoseUnits = .mmolL
+        @Published var maxCarbs: Decimal = 200
 
         override func subscribe() {
             preferences = provider.preferences
             units = settingsManager.settings.units
 
+            subscribeSetting(\.maxCarbs, on: $maxCarbs) { maxCarbs = $0 }
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
                 unitsIndex = $0 == .mgdL ? 0 : 1
             } didSet: { [weak self] _ in
