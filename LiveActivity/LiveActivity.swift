@@ -106,7 +106,7 @@ struct LiveActivity: Widget {
             Text(context.state.iob)
             Text(" U")
         }
-        .foregroundStyle(.blue)
+        .foregroundStyle(.insulin)
     }
 
     private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
@@ -114,7 +114,7 @@ struct LiveActivity: Widget {
             Text(context.state.cob)
             Text(" g")
         }
-        .foregroundStyle(.orange)
+        .foregroundStyle(.loopYellow)
     }
 
     private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
@@ -137,9 +137,9 @@ struct LiveActivity: Widget {
                 }
                 HStack {
                     VStack {
-                        loop(context: context, size: 20).offset(x: 0, y: 2)
+                        loop(context: context, size: 22)
                         emptyText
-                    }
+                    }.offset(x: 0, y: 2)
                     Spacer()
                     VStack {
                         bgAndTrend(context: context, size: .expanded).0.font(.title)
@@ -328,6 +328,6 @@ struct LoopActivity: View {
     let compact: Bool
     var body: some View {
         Circle()
-            .stroke(stroke, lineWidth: compact ? 1.5 : 3.5)
+            .stroke(stroke, lineWidth: compact ? 1.5 : 3)
     }
 }
