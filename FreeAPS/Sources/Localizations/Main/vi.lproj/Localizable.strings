@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "Max Carbs" = "Khối lượng carbs tối đa";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "Lượng carbs tối đa (g) bạn có thể thêm vào mỗi mục nhập";
 
 /* */
 "Pump Settings" = "Cấu hình bơm";
