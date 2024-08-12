@@ -481,6 +481,9 @@ Połączono z Nightscout!";
 /* Max setting */
 "Max Carbs" = "Max Carbs";
 
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+
 /* */
 "Pump Settings" = "Pump Settings";
 
