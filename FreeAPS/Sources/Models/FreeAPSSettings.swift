@@ -67,6 +67,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var skipGlucoseChart: Bool = false
     var birthDate: Date = .distantPast
     var sexSetting: Int = 3
+    var disableHypoTreatment: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -342,6 +343,10 @@ extension FreeAPSSettings: Decodable {
 
         if let sexSetting = try? container.decode(Int.self, forKey: .sexSetting) {
             settings.sexSetting = sexSetting
+        }
+
+        if let disableHypoTreatment = try? container.decode(Bool.self, forKey: .disableHypoTreatment) {
+            settings.disableHypoTreatment = disableHypoTreatment
         }
 
         self = settings
