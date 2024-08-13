@@ -35,7 +35,7 @@ extension LiveActivityAttributes.ContentState {
         return formatter.string(from: string) ?? ""
     }
 
-    init?(new bg: Readings?, prev: Readings?, mmol: Bool, suggestion: Suggestion) {
+    init?(new bg: Readings?, prev: Readings?, mmol: Bool, suggestion: Suggestion, loopDate: Date) {
         guard let glucose = bg?.glucose else {
             return nil
         }
@@ -55,7 +55,7 @@ extension LiveActivityAttributes.ContentState {
             date: bg?.date ?? Date.now,
             iob: iobString,
             cob: cobString,
-            loopDate: suggestion.timestamp ?? Date.now,
+            loopDate: loopDate,
             eventual: eventual,
             mmol: mmol
         )
@@ -96,6 +96,7 @@ extension LiveActivityAttributes.ContentState {
 
     private var currentActivity: ActiveActivity?
     private var latestGlucose: Readings?
+    private var loopDate: Date?
     private var suggestion: Suggestion?
 
     init(resolver: Resolver) {
@@ -236,14 +237,16 @@ extension LiveActivityBridge: SuggestionObserver {
         }
         defer { self.suggestion = suggestion }
 
-        let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter().twoHours)
+        let cd = CoreDataStorage()
+        let glucose = cd.fetchGlucose(interval: DateFilter().twoHours)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
             new: glucose.first,
             prev: prev,
             mmol: settings.units == .mmolL,
-            suggestion: suggestion
+            suggestion: suggestion,
+            loopDate: settings.closedLoop ? (cd.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion.timestamp ?? .distantPast
         ) else {
             return
         }
