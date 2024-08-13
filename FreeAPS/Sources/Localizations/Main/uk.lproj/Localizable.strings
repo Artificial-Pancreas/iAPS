@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "Max Carbs" = "Максимум вуглеводів";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "Максимальна кількість вуглеводів (г), яку можна додати для кожного запису";
 
 /* */
 "Pump Settings" = "Налаштування Помпи";
