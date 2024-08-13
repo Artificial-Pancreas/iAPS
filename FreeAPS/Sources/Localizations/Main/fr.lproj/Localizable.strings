@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "Max Carbs" = "Glucides max";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Quantité maximale de glucides (g) vous pouvez ajouter chaque entrée";
+"Maximum amount of carbs (g) you can add each entry" = "Quantité maximale de glucides (g) que vous pouvez ajouter à chaque entrée";
 
 /* */
 "Pump Settings" = "Paramètres de la pompe";
