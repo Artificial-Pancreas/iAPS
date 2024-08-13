@@ -516,7 +516,7 @@ Enact a temp Basal or a temp target */
 "g" = "g";
 
 /* when 0 U/hr */
-"0 U/hr" = "U/hr";
+"0 U/hr" = "0 U/hr";
 
 /* abbreviation for days */
 "d" = "d";
@@ -1562,7 +1562,7 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nNhấn 'Thêm' để tiếp tục với số lượng đã chọn.";
 
 /* */
-"Eventual Glucose" = "Glucose hiện tại";
+"Eventual Glucose" = "Eventual Glucose";
 
 /* */
 "Please wait" = "Vui lòng chờ";
@@ -1592,25 +1592,25 @@ Enact a temp Basal or a temp target */
 "Hide" = "Ẩn";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "nằm dưới Ngưỡng của bạn (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng Glucose tăng chậm hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, nhưng Glucose tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Đang tăng lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Đang giảm xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại lớn hơn Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Đang thay đổi: ";
