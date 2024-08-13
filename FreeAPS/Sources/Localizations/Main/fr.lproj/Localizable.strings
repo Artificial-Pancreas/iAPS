@@ -112,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Repas gras";
 
+/* Bolus option */
+"Hypo Treatment" = "Traitement d'hypoglycémie";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Bolus entier";
 
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Glucides max";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Quantité maximale de glucides (g) que vous pouvez ajouter à chaque entrée";
 
 /* */
 "Pump Settings" = "Paramètres de la pompe";
@@ -1962,7 +1968,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Date de naissance";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nSi vous activez \"Partage et Sauvegarde\", des sauvegardes quotidiennes de vos paramètres et statistiques seront effectuées dans la base de données en ligne.\n\nAssurez-vous de copier et d'enregistrer votre jeton de récupération ci-dessous. Le jeton de récupération est requis pour importer vos paramètres sur un autre téléphone lorsque vous utilisez le tutoriel de mise en marche.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Partager le minimum";
@@ -2511,6 +2517,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Ne jamais afficher le petit graphique de glucose lors du défilement";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Désactiver les traitements d'hypoglycémie";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";

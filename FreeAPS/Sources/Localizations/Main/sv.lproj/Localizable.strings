@@ -112,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Fet mat";
 
+/* Bolus option */
+"Hypo Treatment" = "Behandling av lågt blodsocker";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Total mängd";
 
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximal antal kolhydrater (g) du kan lägga till varje måltid";
 
 /* */
 "Pump Settings" = "Pumpinställningar";
@@ -2511,6 +2517,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Dölj det lilla glukosdiagrammet när du scrollar";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Visa inte behandling av lågt blodsocker";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
