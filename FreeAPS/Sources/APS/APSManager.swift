@@ -829,7 +829,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 let saveLastLoop = LastLoop(context: self.coredataContext)
                 saveLastLoop.iob = (enacted.iob ?? 0) as NSDecimalNumber
                 saveLastLoop.cob = (enacted.cob ?? 0) as NSDecimalNumber
-                saveLastLoop.timestamp = (enacted.timestamp ?? .distantPast) as Date
+                saveLastLoop.timestamp = received ? enacted.timestamp : CoreDataStorage().fetchLastLoop()?
+                    .timestamp ?? .distantPast
                 try? self.coredataContext.save()
             }
 
