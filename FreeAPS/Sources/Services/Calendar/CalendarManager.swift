@@ -106,7 +106,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
 
         // Latest Loop data (from CoreData)
         var freshLoop: Double = 20
-        var lastLoop = [LastLoop]()
+        let lastLoop = [LastLoop]()
         if displeyCOBandIOB || displayEmojis {
             freshLoop = -1 * (CoreDataStorage().fetchLastLoop()?.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
         }

@@ -104,6 +104,7 @@ extension LiveActivityAttributes.ContentState {
 
         injectServices(resolver)
         broadcaster.register(SuggestionObserver.self, observer: self)
+        broadcaster.register(EnactedSuggestionObserver.self, observer: self)
 
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didEnterBackgroundNotification,
@@ -225,7 +226,38 @@ extension LiveActivityAttributes.ContentState {
 }
 
 @available(iOS 16.2, *)
-extension LiveActivityBridge: SuggestionObserver {
+extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
+    func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
+        guard settings.useLiveActivity else {
+            if currentActivity != nil {
+                Task {
+                    await self.endActivity()
+                }
+            }
+            return
+        }
+        defer { self.suggestion = suggestion }
+
+        let cd = CoreDataStorage()
+        let glucose = cd.fetchGlucose(interval: DateFilter().twoHours)
+        let prev = glucose.count > 1 ? glucose[1] : glucose.first
+
+        guard let content = LiveActivityAttributes.ContentState(
+            new: glucose.first,
+            prev: prev,
+            mmol: settings.units == .mmolL,
+            suggestion: suggestion,
+            loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
+                (cd.fetchLastLoop()?.timestamp ?? .distantPast)
+        ) else {
+            return
+        }
+
+        Task {
+            await self.pushUpdate(content)
+        }
+    }
+
     func suggestionDidUpdate(_ suggestion: Suggestion) {
         guard settings.useLiveActivity else {
             if currentActivity != nil {
