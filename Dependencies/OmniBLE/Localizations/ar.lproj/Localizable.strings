@@ -852,7 +852,7 @@
 "Read Pod Status" = "Read Pod Status";
 
 /* Title of done button on OmnipodSettingsView */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Title for the pod diagnostic view */
 "Pod Diagnostics" = "Pod Diagnostics";
