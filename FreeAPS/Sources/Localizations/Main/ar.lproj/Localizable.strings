@@ -4,35 +4,36 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "إضافة الأنسولين دون تنفيذ الجرعة";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "إضافة %@ دون تنفيذ الجرعة";
 
-"Bolus" = "Bolus";
+"Bolus" = "الجرعة";
 
-"Close" = "Close";
+"Close" = "إغلاق";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "متابعة دون ضخ جرعة";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "إضافة وجبة دون ضخ جرعة";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "الحالة";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nالكمية أكثر من الحد الأقصى المحدد للجرعة! 
+\nهل أنت متيقِّن أنك تريد إضافة ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "ضخ الجرعة";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "ضخ الجرعة";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "الإنسولين الموصى به";
 
 /*  */
 "Insulin required" = "Insulin required";
