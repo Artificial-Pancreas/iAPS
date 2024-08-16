@@ -36,22 +36,22 @@
 "Insulin recommended" = "الإنسولين الموصى به";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "الإنسولين المطلوب";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "المقترحات";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "مسح";
 
 /* Button */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "آخر دورة قبل %@ دقيقة. أكمل أو ألغِ هذه الوجبة/الجرعة للسماح بتشغيل الدورة التالية";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "عرض الرموز التعبيرية كتسميات";
 
 /* Calender Option */
 "Display IOB and COB" = "Display IOB and COB";
