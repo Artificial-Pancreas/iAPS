@@ -571,11 +571,11 @@ extension Home {
             }
         }
 
-        @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
+        @ViewBuilder private func headerView(_ geo: GeometryProxy, extra: CGFloat) -> some View {
             addHeaderBackground()
                 .frame(
-                    maxHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top : 135 + geo
-                        .safeAreaInsets.top
+                    maxHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top + extra : 135 + geo
+                        .safeAreaInsets.top + extra
                 )
                 .overlay {
                     VStack {
@@ -595,6 +595,10 @@ extension Home {
                             .dynamicTypeSize(...DynamicTypeSize.xLarge)
                             .padding(.horizontal, 10)
                         }
+
+                        // Small glucose View, past 24 hours.
+                        if extra > 0 { glucoseHeaderView() }
+
                     }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)
                 }
                 .clipShape(Rectangle())
@@ -679,11 +683,7 @@ extension Home {
         var body: some View {
             GeometryReader { geo in
                 VStack(spacing: 0) {
-                    headerView(geo)
-                    if displayGlucose {
-                        glucoseHeaderView()
-                            .transition(.slideIn)
-                    }
+                    headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 98 : 0)
                     ScrollView {
                         VStack {
                             chart
