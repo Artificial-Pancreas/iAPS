@@ -16,10 +16,7 @@ extension Home {
         @State var triggerUpdate = false
         @State var scrollOffset = CGFloat.zero
         @State var display = false
-
-        @Namespace var scrollSpace
-
-        let scrollAmount: CGFloat = 290
+        @State var displayGlucose = false
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
 
         @Environment(\.managedObjectContext) var moc
@@ -683,39 +680,35 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     headerView(geo)
-                    if !state.skipGlucoseChart, scrollOffset > scrollAmount {
+                    if displayGlucose {
                         glucoseHeaderView()
-                            .transition(.move(edge: .top))
+                            .transition(.slideIn)
                     }
-
                     ScrollView {
-                        ScrollViewReader { _ in
-                            LazyVStack {
-                                chart
-                                if state.timeSettings { timeSetting }
-                                preview.padding(.top, state.timeSettings ? 5 : 15)
-                                loopPreview.padding(.top, 15)
-                                if state.iobData.count > 5 {
-                                    activeCOBView.padding(.top, 15)
-                                    activeIOBView.padding(.top, 15)
-                                }
+                        VStack {
+                            chart
+                            if state.timeSettings { timeSetting }
+                            preview.padding(.top, state.timeSettings ? 5 : 15)
+                            loopPreview.padding(.top, 15)
+                            if state.iobData.count > 5 {
+                                activeCOBView.padding(.top, 15)
+                                activeIOBView.padding(.top, 15)
                             }
-                            .background(GeometryReader { geo in
-                                let offset = -geo.frame(in: .named(scrollSpace)).minY
+                        }.background {
+                            GeometryReader { proxy in
+                                let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
                                 Color.clear
-                                    .preference(
-                                        key: ScrollViewOffsetPreferenceKey.self,
-                                        value: offset
-                                    )
-                            })
+                                    .onChange(of: scrollPosition) { y in
+                                        if y < -850, state.iobData.count > 5 {
+                                            withAnimation(.linear(duration: 0.15)) {
+                                                displayGlucose = true
+                                            }
+                                        } else { withAnimation(.linear(duration: 0.10)) { displayGlucose = false } }
+                                    }
+                            }
                         }
-                    }
-                    .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { value in
-                        scrollOffset = value
-                        if !state.skipGlucoseChart, scrollOffset > scrollAmount {
-                            display.toggle()
-                        }
-                    }
+
+                    }.coordinateSpace(name: "HomeScrollView")
                     buttonPanel(geo)
                 }
                 .background(
@@ -787,5 +780,14 @@ extension Home {
                 }
             }
         }
+    }
+}
+
+extension AnyTransition {
+    static var slideIn: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: .top).combined(with: .opacity),
+            removal: .move(edge: .top).combined(with: .opacity)
+        )
     }
 }
