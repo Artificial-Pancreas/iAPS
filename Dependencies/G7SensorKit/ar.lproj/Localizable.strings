@@ -8,7 +8,7 @@
 "Continue" = "Continue";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "قراءات السكر غير متوفرة";
