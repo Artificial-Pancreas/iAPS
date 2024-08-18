@@ -56,7 +56,7 @@
 "Configuration" = "المعطيات";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Connect";
+"Connect" = "توصيل";
 
 /* Text for continue button */
 "Continue" = "Continue";
