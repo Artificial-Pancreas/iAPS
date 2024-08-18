@@ -2,7 +2,7 @@
 "—" = "—";
 
 /* Format string for last status date on pod details screen */
-"%@ ago" = "%@ ago";
+"%@ ago" = "منذ ‭%@";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
