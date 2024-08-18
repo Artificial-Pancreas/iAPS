@@ -17,9 +17,110 @@ struct PreviewChart: View {
     }
 
     var body: some View {
+        let padding: CGFloat = 40
+        // Prepare the chart data
+        let data = prepareData()
+
+        return VStack {
+            HStack {
+                Text("Today")
+            }.padding(.bottom, 15).font(.previewHeadline)
+
+            HStack {
+                Chart(data) { item in
+                    BarMark(
+                        x: .value("TIR", item.type),
+                        y: .value("Percentage", item.percentage),
+                        width: .fixed(65)
+                    )
+                    .foregroundStyle(by: .value("Group", item.group))
+                    .clipShape(
+                        UnevenRoundedRectangle(
+                            topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                            bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                            bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                            topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
+                        )
+                    )
+                }
+                .chartForegroundStyleScale([
+                    NSLocalizedString(
+                        "Low",
+                        comment: ""
+                    ): .red,
+                    NSLocalizedString("In Range", comment: ""): .darkGreen,
+                    NSLocalizedString(
+                        "High",
+                        comment: ""
+                    ): .yellow,
+                    NSLocalizedString(
+                        "Very High",
+                        comment: ""
+                    ): .red,
+                    NSLocalizedString(
+                        "Very Low",
+                        comment: ""
+                    ): .darkRed,
+                    "Separator": colorScheme == .dark ? .black : .white
+                ])
+                .chartXAxis(.hidden)
+                .chartYAxis(.hidden)
+                .chartLegend(.hidden)
+                .padding(.bottom, 15)
+                .padding(.leading, padding)
+                .frame(maxWidth: (UIScreen.main.bounds.width / 5) + padding)
+
+                sumView(data)
+            }
+
+        }.frame(maxHeight: 200)
+            .padding(.top, 20)
+            .dynamicTypeSize(...DynamicTypeSize.xLarge)
+    }
+
+    private func previewTir() -> [(decimal: Decimal, string: String)] {
+        let hypoLimit = Int(lowLimit)
+        let hyperLimit = Int(highLimit)
+
+        let glucose = readings
+
+        let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
+        let totalReadings = justGlucoseArray.count
+
+        let hyperArray = glucose.filter({ $0.glucose >= hyperLimit })
+        let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
+        var hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
+
+        let hypoArray = glucose.filter({ $0.glucose <= hypoLimit })
+        let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
+        var hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
+
+        let veryHighArray = glucose.filter({ $0.glucose > 197 })
+        let veryHighReadings = veryHighArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryHighPercentage = Double(veryHighReadings) / Double(totalReadings) * 100
+
+        let veryLowArray = glucose.filter({ $0.glucose < 60 })
+        let veryLowReadings = veryLowArray.compactMap({ each in each.glucose as Int16 }).count
+        let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
+
+        hypoPercentage -= veryLowPercentage
+        hyperPercentage -= veryHighPercentage
+
+        let tir = 100 - (hypoPercentage + hyperPercentage + veryHighPercentage + veryLowPercentage)
+
+        var array: [(decimal: Decimal, string: String)] = []
+        array.append((decimal: Decimal(hypoPercentage), string: "Low"))
+        array.append((decimal: Decimal(tir), string: "NormaL"))
+        array.append((decimal: Decimal(hyperPercentage), string: "High"))
+        array.append((decimal: Decimal(veryHighPercentage), string: "Very High"))
+        array.append((decimal: Decimal(veryLowPercentage), string: "Very Low"))
+
+        return array
+    }
+
+    private func prepareData() -> [TIRinPercent] {
         let fetched = previewTir()
         let separator: Decimal = 2
-
         var data: [TIRinPercent] = [
             TIRinPercent(
                 type: "TIR",
@@ -116,107 +217,6 @@ struct PreviewChart: View {
             )
         ]
 
-        // Prepare the data array
-        data = prepareData(data_: data)
-
-        return VStack {
-            Text("Time In Range").padding(.bottom, 10).font(.previewHeadline)
-
-            HStack {
-                Chart(data) { item in
-                    BarMark(
-                        x: .value("TIR", item.type),
-                        y: .value("Percentage", item.percentage),
-                        width: .fixed(65)
-                    )
-                    .foregroundStyle(by: .value("Group", item.group))
-                    .clipShape(
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
-                            bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
-                            bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
-                            topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
-                        )
-                    )
-                }
-                .chartForegroundStyleScale([
-                    NSLocalizedString(
-                        "Low",
-                        comment: ""
-                    ): .red,
-                    NSLocalizedString("In Range", comment: ""): .darkGreen,
-                    NSLocalizedString(
-                        "High",
-                        comment: ""
-                    ): .yellow,
-                    NSLocalizedString(
-                        "Very High",
-                        comment: ""
-                    ): .red,
-                    NSLocalizedString(
-                        "Very Low",
-                        comment: ""
-                    ): .darkRed,
-                    "Separator": colorScheme == .dark ? .black : .white
-                ])
-                .chartXAxis(.hidden)
-                .chartYAxis(.hidden)
-                .chartLegend(.hidden)
-                .padding(.bottom, 15)
-                .padding(.leading, 60)
-                .frame(maxWidth: (UIScreen.main.bounds.width / 5) + 60)
-
-                sumView(data)
-            }
-
-        }.frame(maxHeight: 200)
-            .padding(.top, 20)
-            .dynamicTypeSize(...DynamicTypeSize.xLarge)
-    }
-
-    private func previewTir() -> [(decimal: Decimal, string: String)] {
-        let hypoLimit = Int(lowLimit)
-        let hyperLimit = Int(highLimit)
-
-        let glucose = readings
-
-        let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
-        let totalReadings = justGlucoseArray.count
-
-        let hyperArray = glucose.filter({ $0.glucose >= hyperLimit })
-        let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
-        var hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
-
-        let hypoArray = glucose.filter({ $0.glucose <= hypoLimit })
-        let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
-        var hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
-
-        let veryHighArray = glucose.filter({ $0.glucose > 197 })
-        let veryHighReadings = veryHighArray.compactMap({ each in each.glucose as Int16 }).count
-        let veryHighPercentage = Double(veryHighReadings) / Double(totalReadings) * 100
-
-        let veryLowArray = glucose.filter({ $0.glucose < 60 })
-        let veryLowReadings = veryLowArray.compactMap({ each in each.glucose as Int16 }).count
-        let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
-
-        hypoPercentage -= veryLowPercentage
-        hyperPercentage -= veryHighPercentage
-
-        let tir = 100 - (hypoPercentage + hyperPercentage + veryHighPercentage + veryLowPercentage)
-
-        var array: [(decimal: Decimal, string: String)] = []
-        array.append((decimal: Decimal(hypoPercentage), string: "Low"))
-        array.append((decimal: Decimal(tir), string: "NormaL"))
-        array.append((decimal: Decimal(hyperPercentage), string: "High"))
-        array.append((decimal: Decimal(veryHighPercentage), string: "Very High"))
-        array.append((decimal: Decimal(veryLowPercentage), string: "Very Low"))
-
-        return array
-    }
-
-    private func prepareData(data_: [TIRinPercent]) -> [TIRinPercent] {
-        var data = data_
-
         // Remove separators when needed
         for index in 0 ..< data.count - 2 {
             if index < data.count - 1 {
@@ -262,6 +262,7 @@ struct PreviewChart: View {
 
     @ViewBuilder private func sumView(_ data: [TIRinPercent]) -> some View {
         let entries = data.reversed()
+        let padding: CGFloat = 100
         Grid {
             ForEach(entries) { entry in
                 if entry.group != "Separator" {
@@ -277,7 +278,7 @@ struct PreviewChart: View {
                                 entry
                                     .group == NSLocalizedString("In Range", comment: "") ? .primary : .secondary
                             )
-                            .padding(.bottom, entries.count != 1 ? 80 / Double(entries.count) : 0)
+                            .padding(.bottom, entries.count != 1 ? padding / Double(entries.count) : 0)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }

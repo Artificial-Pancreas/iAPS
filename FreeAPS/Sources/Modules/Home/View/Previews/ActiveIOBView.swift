@@ -93,7 +93,7 @@ struct ActiveIOBView: View {
                 color: Color(.clear)
             ),
             BolusSummary(
-                variable: NSLocalizedString("Average Insulin past 24h", comment: ""),
+                variable: NSLocalizedString("Average Insulin 10 days", comment: ""),
                 formula: NSLocalizedString(" U", comment: ""),
                 insulin: tddActualAverage,
                 color: .secondary
