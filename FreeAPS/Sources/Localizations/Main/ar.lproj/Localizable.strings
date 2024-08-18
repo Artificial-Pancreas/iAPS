@@ -336,7 +336,7 @@
 "Amount" = "الكمية";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "إلغاء الضخ المؤقت للإنسولين القاعدي";
 
 /* Enact
 Enact a temp Basal or a temp target */
