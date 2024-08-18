@@ -12,7 +12,7 @@ struct LoopsView: View {
             let readings = loopStatistics.1
             let percentage = loopStatistics.2
 
-            Text(NSLocalizedString("Loops", comment: "") + " / " + NSLocalizedString("Readings", comment: ""))
+            Text(NSLocalizedString("Loops", comment: ""))
                 .padding(.bottom, 10).font(.previewHeadline)
 
             loopChart(percentage: percentage)

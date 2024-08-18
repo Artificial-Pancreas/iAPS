@@ -681,8 +681,8 @@ extension Home {
                         VStack {
                             chart
                             if state.timeSettings, !displayGlucose { timeSetting }
-                            preview.padding(.top, state.timeSettings ? 5 : 15)
-                            loopPreview.padding(.top, 15)
+                            preview.padding(.top, state.timeSettings ? 5 : 15).padding(.horizontal, 15)
+                            loopPreview.padding(15)
                             if state.iobData.count > 5 {
                                 activeCOBView.padding(.top, viewPadding)
                                 activeIOBView.padding(.top, viewPadding)
