@@ -8,7 +8,7 @@
 "Cancel" = "إلغاء";
 
 /* Title describing glucose date */
-"Date" = "Date";
+"Date" = "التاريخ";
 
 /* Button title to delete CGM
 Title text for the button to remove a CGM from Loop */
