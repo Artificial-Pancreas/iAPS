@@ -814,7 +814,7 @@
 "Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
 
 /* DASH Pod time ago since last status */
-"%@ ago" = "%@ ago";
+"%@ ago" = "منذ ‭%@";
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
