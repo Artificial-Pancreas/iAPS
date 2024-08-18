@@ -18,8 +18,7 @@ struct PreviewChart: View {
 
     var body: some View {
         let fetched = previewTir()
-
-        let separator: Decimal = 3
+        let separator: Decimal = 2
 
         var data: [TIRinPercent] = [
             TIRinPercent(
@@ -117,127 +116,59 @@ struct PreviewChart: View {
             )
         ]
 
-        // Preapre the data array
+        // Prepare the data array
         data = prepareData(data_: data)
 
         return VStack {
             Text("Time In Range").padding(.bottom, 10).font(.previewHeadline)
 
-            Chart(data) { item in
-                BarMark(
-                    x: .value("TIR", item.type),
-                    y: .value("Percentage", item.percentage),
-                    width: .fixed(60)
-                )
-                .foregroundStyle(by: .value("Group", item.group))
-                .clipShape(
-                    UnevenRoundedRectangle(
-                        topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
-                        bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
-                        bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
-                        topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
+            HStack {
+                Chart(data) { item in
+                    BarMark(
+                        x: .value("TIR", item.type),
+                        y: .value("Percentage", item.percentage),
+                        width: .fixed(65)
                     )
-                )
-                .annotation(position: .trailing) {
-                    if item.group == NSLocalizedString("In Range", comment: ""), item.percentage > 0 {
-                        HStack {
-                            if item.percentage < 1 {
-                                Text("< 1%")
-                            } else {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                            }
-                            Text(item.group)
-                        }.font(.previewNormal)
-                            .padding(.leading, 10)
-                    } else if item.group == NSLocalizedString(
+                    .foregroundStyle(by: .value("Group", item.group))
+                    .clipShape(
+                        UnevenRoundedRectangle(
+                            topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                            bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                            bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                            topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
+                        )
+                    )
+                }
+                .chartForegroundStyleScale([
+                    NSLocalizedString(
                         "Low",
                         comment: ""
-                    ), item.percentage > 0.0 {
-                        HStack {
-                            if item.percentage < 1 {
-                                Text("< 1%")
-                            } else {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                            }
-                            Text(item.group)
-                        }
-                        .offset(x: 0, y: item.offset)
-                        .font(.loopFont)
-                        .padding(.leading, 10)
-                    } else if item.group == NSLocalizedString(
+                    ): .red,
+                    NSLocalizedString("In Range", comment: ""): .darkGreen,
+                    NSLocalizedString(
                         "High",
                         comment: ""
-                    ), item.percentage > 0 {
-                        HStack {
-                            if item.percentage < 1 {
-                                Text("< 1%")
-                            } else {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                            }
-                            Text(item.group)
-                        }
-                        .offset(x: 0, y: item.offset)
-                        .font(.loopFont)
-                        .padding(.leading, 10)
-                    } else if item.group == NSLocalizedString(
+                    ): .yellow,
+                    NSLocalizedString(
                         "Very High",
                         comment: ""
-                    ), item.percentage > 0 {
-                        HStack {
-                            if item.percentage < 1 {
-                                Text("< 1%")
-                            } else {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                            }
-                            Text(item.group)
-                        }
-                        .offset(x: 0, y: item.offset)
-                        .font(.loopFont)
-                        .padding(.leading, 10)
-                    } else if item.group == NSLocalizedString(
+                    ): .red,
+                    NSLocalizedString(
                         "Very Low",
                         comment: ""
-                    ), item.percentage > 0 {
-                        HStack {
-                            if item.percentage < 1 {
-                                Text("< 1%")
-                            } else {
-                                Text((tirFormatter.string(from: item.percentage as NSNumber) ?? "") + "%")
-                            }
-                            Text(item.group)
-                        }
-                        .offset(x: 0, y: item.offset)
-                        .font(.loopFont)
-                        .padding(.leading, 10)
-                    }
-                }
+                    ): .darkRed,
+                    "Separator": colorScheme == .dark ? .black : .white
+                ])
+                .chartXAxis(.hidden)
+                .chartYAxis(.hidden)
+                .chartLegend(.hidden)
+                .padding(.bottom, 15)
+                .padding(.leading, 60)
+                .frame(maxWidth: (UIScreen.main.bounds.width / 5) + 60)
+
+                sumView(data)
             }
-            .chartForegroundStyleScale([
-                NSLocalizedString(
-                    "Low",
-                    comment: ""
-                ): .red,
-                NSLocalizedString("In Range", comment: ""): .darkGreen,
-                NSLocalizedString(
-                    "High",
-                    comment: ""
-                ): .yellow,
-                NSLocalizedString(
-                    "Very High",
-                    comment: ""
-                ): .red,
-                NSLocalizedString(
-                    "Very Low",
-                    comment: ""
-                ): .darkRed,
-                "Separator": colorScheme == .dark ? .black : .white
-            ])
-            .chartXAxis(.hidden)
-            .chartYAxis(.hidden)
-            .chartLegend(.hidden)
-            .padding(.bottom, 15)
-            .frame(maxWidth: UIScreen.main.bounds.width / 5)
-            .offset(x: -UIScreen.main.bounds.width / 5, y: 0)
+
         }.frame(maxHeight: 200)
             .padding(.top, 20)
             .dynamicTypeSize(...DynamicTypeSize.xLarge)
@@ -327,6 +258,33 @@ struct PreviewChart: View {
         data[data.count - 1].last = true
 
         return data
+    }
+
+    @ViewBuilder private func sumView(_ data: [TIRinPercent]) -> some View {
+        let entries = data.reversed()
+        Grid {
+            ForEach(entries) { entry in
+                if entry.group != "Separator" {
+                    GridRow(alignment: .firstTextBaseline) {
+                        if entry.percentage != 0 {
+                            HStack {
+                                Text((tirFormatter.string(for: entry.percentage) ?? "") + "%")
+                                Text(entry.group)
+                            }.font(
+                                entry.group == NSLocalizedString("In Range", comment: "") ? .previewHeadline : .previewSmall
+                            )
+                            .foregroundStyle(
+                                entry
+                                    .group == NSLocalizedString("In Range", comment: "") ? .primary : .secondary
+                            )
+                            .padding(.bottom, entries.count != 1 ? 80 / Double(entries.count) : 0)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                }
+            }
+        }
+        .dynamicTypeSize(...DynamicTypeSize.large)
     }
 }
 

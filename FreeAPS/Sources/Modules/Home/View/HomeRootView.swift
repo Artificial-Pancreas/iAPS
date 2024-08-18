@@ -18,6 +18,7 @@ extension Home {
         @State var display = false
         @State var displayGlucose = false
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
+        let viewPadding: CGFloat = 5
 
         @Environment(\.managedObjectContext) var moc
         @Environment(\.colorScheme) var colorScheme
@@ -390,7 +391,7 @@ extension Home {
             let ratio = state.timeSettings ? 1.61 : 1.44
             let ratio2 = state.timeSettings ? 1.65 : 1.51
 
-            return addColouredBackground()
+            return addColouredBackground().addShadows()
                 .overlay {
                     VStack(spacing: 0) {
                         infoPanel
@@ -403,13 +404,13 @@ extension Home {
         var carbsAndInsulinView: some View {
             HStack {
                 if let settings = state.settingsManager {
-                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.6
+                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
                     let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 0.97))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1 /* 0.97 */ ))
                         TestTube(
                             opacity: opacity,
                             amount: fill,
@@ -429,7 +430,7 @@ extension Home {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 0.98))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1 /* 0.98 */ ))
                         TestTube(
                             opacity: opacity,
                             amount: fill,
@@ -465,7 +466,7 @@ extension Home {
 
         var activeIOBView: some View {
             addBackground()
-                .frame(minHeight: 430)
+                .frame(minHeight: 410)
                 .overlay {
                     ActiveIOBView(
                         data: $state.iobData,
@@ -485,7 +486,7 @@ extension Home {
 
         var activeCOBView: some View {
             addBackground()
-                .frame(minHeight: 230)
+                .frame(minHeight: 190)
                 .overlay {
                     ActiveCOBView(data: $state.iobData)
                 }
@@ -496,7 +497,7 @@ extension Home {
 
         var loopPreview: some View {
             addBackground()
-                .frame(minHeight: 190)
+                .frame(minHeight: 160)
                 .overlay {
                     LoopsView(loopStatistics: $state.loopStatistics)
                 }
@@ -605,17 +606,10 @@ extension Home {
         }
 
         @ViewBuilder private func glucoseHeaderView() -> some View {
-            addHeaderBackground()
-                .frame(maxHeight: 90)
-                .overlay {
-                    VStack {
-                        ZStack {
-                            glucosePreview.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                                .dynamicTypeSize(...DynamicTypeSize.medium)
-                        }
-                    }
-                }
-                .clipShape(Rectangle())
+            ZStack {
+                glucosePreview
+                    .dynamicTypeSize(...DynamicTypeSize.medium)
+            }
         }
 
         var glucosePreview: some View {
@@ -637,7 +631,7 @@ extension Home {
                     (($0.glucose ?? 0) > veryHigh || Decimal($0.glucose ?? 0) < low) ? Color(.red) : Decimal($0.glucose ?? 0) >
                         high ? Color(.yellow) : Color(.darkGreen)
                 )
-                .symbolSize(7)
+                .symbolSize(5)
             }
             .chartXAxis {
                 AxisMarks(values: .stride(by: .hour, count: 2)) { _ in
@@ -660,8 +654,7 @@ extension Home {
             .frame(maxHeight: 70)
             .padding(.leading, 30)
             .padding(.trailing, 32)
-            .padding(.top, 10)
-            .padding(.bottom, 10)
+            .padding(.top, 15)
         }
 
         var timeSetting: some View {
@@ -683,27 +676,28 @@ extension Home {
         var body: some View {
             GeometryReader { geo in
                 VStack(spacing: 0) {
-                    headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 98 : 0)
+                    headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 93 : 0)
                     ScrollView {
                         VStack {
                             chart
-                            if state.timeSettings { timeSetting }
+                            if state.timeSettings, !displayGlucose { timeSetting }
                             preview.padding(.top, state.timeSettings ? 5 : 15)
-                            loopPreview.padding(.top, 15)
+                            loopPreview.padding(.top, viewPadding)
                             if state.iobData.count > 5 {
-                                activeCOBView.padding(.top, 15)
-                                activeIOBView.padding(.top, 15)
+                                activeCOBView.padding(.top, viewPadding)
+                                activeIOBView.padding(.top, viewPadding)
                             }
                         }.background {
                             GeometryReader { proxy in
                                 let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
+                                let yThreshold: CGFloat = state.timeSettings ? -500 : -560
                                 Color.clear
                                     .onChange(of: scrollPosition) { y in
-                                        if y < -850, state.iobData.count > 5 {
-                                            withAnimation(.linear(duration: 0.15)) {
-                                                displayGlucose = true
-                                            }
-                                        } else { withAnimation(.linear(duration: 0.10)) { displayGlucose = false } }
+                                        if y < yThreshold, state.iobData.count > 5, !state.skipGlucoseChart {
+                                            withAnimation(.easeOut(duration: 0.15)) { displayGlucose = true }
+                                        } else {
+                                            withAnimation(.easeOut(duration: 0.10)) { displayGlucose = false }
+                                        }
                                     }
                             }
                         }
@@ -784,7 +778,7 @@ extension Home {
 }
 
 extension AnyTransition {
-    static var slideIn: AnyTransition {
+    static var slideDownAndUp: AnyTransition {
         .asymmetric(
             insertion: .move(edge: .top).combined(with: .opacity),
             removal: .move(edge: .top).combined(with: .opacity)
