@@ -17,11 +17,10 @@ struct PreviewChart: View {
     }
 
     var body: some View {
-        let padding: CGFloat = 40
-        // Prepare the chart data
-        let data = prepareData()
-
-        return VStack {
+        VStack {
+            let padding: CGFloat = 40
+            // Prepare the chart data
+            let data = prepareData()
             HStack {
                 Text("Today")
             }.padding(.bottom, 15).font(.previewHeadline)
@@ -70,12 +69,43 @@ struct PreviewChart: View {
                 .padding(.leading, padding)
                 .frame(maxWidth: (UIScreen.main.bounds.width / 5) + padding)
 
-                sumView(data)
+                sumView(data).offset(x: 0, y: -7)
             }
 
-        }.frame(maxHeight: 200)
+        }.frame(maxHeight: 180)
             .padding(.top, 20)
             .dynamicTypeSize(...DynamicTypeSize.xLarge)
+    }
+
+    @ViewBuilder private func sumView(_ data: [TIRinPercent]) -> some View {
+        let entries = data.reversed().filter { $0.group != "Separator" }
+        let padding: CGFloat = entries.count == 5 ? 4 : 35 / CGFloat(entries.count)
+        Grid {
+            ForEach(entries) { entry in
+                if entry.group != "Separator" {
+                    GridRow(alignment: .firstTextBaseline) {
+                        if entry.percentage != 0 {
+                            HStack {
+                                Text((tirFormatter.string(for: entry.percentage) ?? "") + "%")
+                                Text(entry.group)
+                            }.font(
+                                entry.group == NSLocalizedString("In Range", comment: "") ? .previewHeadline : .previewSmall
+                            )
+                            .foregroundStyle(
+                                entry
+                                    .group == NSLocalizedString("In Range", comment: "") ? .primary : .secondary
+                            )
+                            .padding(
+                                .bottom,
+                                (entries.count > 1 && entry.group != entries[entries.count - 1].group) ? padding : 0
+                            )
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                }
+            }
+        }
+        .dynamicTypeSize(...DynamicTypeSize.medium)
     }
 
     private func previewTir() -> [(decimal: Decimal, string: String)] {
@@ -258,34 +288,6 @@ struct PreviewChart: View {
         data[data.count - 1].last = true
 
         return data
-    }
-
-    @ViewBuilder private func sumView(_ data: [TIRinPercent]) -> some View {
-        let entries = data.reversed()
-        let padding: CGFloat = 100
-        Grid {
-            ForEach(entries) { entry in
-                if entry.group != "Separator" {
-                    GridRow(alignment: .firstTextBaseline) {
-                        if entry.percentage != 0 {
-                            HStack {
-                                Text((tirFormatter.string(for: entry.percentage) ?? "") + "%")
-                                Text(entry.group)
-                            }.font(
-                                entry.group == NSLocalizedString("In Range", comment: "") ? .previewHeadline : .previewSmall
-                            )
-                            .foregroundStyle(
-                                entry
-                                    .group == NSLocalizedString("In Range", comment: "") ? .primary : .secondary
-                            )
-                            .padding(.bottom, entries.count != 1 ? padding / Double(entries.count) : 0)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }
-                }
-            }
-        }
-        .dynamicTypeSize(...DynamicTypeSize.large)
     }
 }
 
