@@ -4,56 +4,57 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "إضافة الأنسولين دون تنفيذ الجرعة";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "إضافة %@ دون تنفيذ الجرعة";
 
-"Bolus" = "Bolus";
+"Bolus" = "الجرعة";
 
-"Close" = "Close";
+"Close" = "إغلاق";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "متابعة دون ضخ جرعة";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "إضافة وجبة دون ضخ جرعة";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "الحالة";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nالكمية أكثر من الحد الأقصى المحدد للجرعة! 
+\nهل أنت متيقِّن أنك تريد إضافة ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "ضخ الجرعة";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "ضخ الجرعة";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "الإنسولين الموصى به";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "الإنسولين المطلوب";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "المقترحات";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "مسح";
 
 /* Button */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "آخر دورة قبل %@ دقيقة. أكمل أو ألغِ هذه الوجبة/الجرعة للسماح بتشغيل الدورة التالية";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "عرض الرموز التعبيرية كتسميات";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "عرض IOB و COB";
 
 /* Apple Watch App setting */
 "Confirm Bolus Faster" = "Confirm Bolus Faster";
@@ -62,28 +63,28 @@
 "UI/UX" = "UI/UX";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "انتظر من فضلك";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "الموافقة والمتابعة";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "سجل الأنسولين الخارجي";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "من";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "جرعة عن بعد ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "تم تسليمها";
 
 /* Remote Bolus Alert, Part 3 */
 " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "تم تسليم الجرعة عن بعد للتو!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Enacted at";
@@ -95,115 +96,115 @@
 "Error at" = "Error at";
 
 /* Bolus View Meal Summary Header */
-"Meal Summary" = "Meal Summary";
+"Meal Summary" = "موجز الوجبة";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Edit Meal";
+"Edit Meal" = "تعديل الوجبة";
 
 /* Bolus View Meal Add Meal Button */
-"Add Meal" = "Add Meal";
+"Add Meal" = "إضافة وجبة";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolus Summary";
+"Bolus Summary" = "موجز الجرعات";
 
 /* For the  Bolus View pop-up */
-"Calculations" = "Calculations";
+"Calculations" = "حساب";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal" = "Fatty Meal";
+"Fatty Meal" = "وجبة دهنية";
 
 /* Bolus option */
 "Hypo Treatment" = "Hypo Treatment";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Full Bolus";
+"Full Bolus" = "جرعة كاملة";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fraction";
+"Fraction" = "جزء";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fatty Meal Factor";
+"Fatty Meal Factor" = "عامل الوجبة الدهنية";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "الكربونات والأنسولين السابقة مدرجة في التنبؤ بالجلوكوز في نهاية المطاف.";
 
 /* For the  Bolus View pop-up */
-"Result" = "Result";
+"Result" = "النتيجة";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "تم تحديد المبلغ الذي أدخلته من خلال إعدادتك القصوى Bols %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Continue";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "الرئيسية";
 
 /* Looping in progress */
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "قبل دقيقة";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "لا اقتراحات";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "استبدال البود";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "إضافة كربونات";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "إضافة كربونات ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "كمية الكاربوهيدرات";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "جرام";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "الكاربوهيدرات المطلوبة";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "الوجبات المحفوظة";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "هل أنت متأكد؟";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "الهدف السفلي";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /*  */
 "Cancel Temp Target" = "Cancel Temp Target";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "مخصص";
 
 /*  */
-"Date" = "Date";
+"Date" = "التاريخ";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "حذف";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "حذف الإعداد المسبق \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "المدة";
 
 /*  */
 "Enact Temp Target" = "Enact Temp Target";
 
 /* */
-"Target" = "Target";
+"Target" = "الهدف";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "نسبة الإنسولين الأساسي والحساسية";
 
 /* */
 "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
@@ -326,44 +327,44 @@
 "Sensitivity Ratio" = "Sensitivity Ratio";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "تجاهل";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "رسالة مهمة";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "الكمية";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "إلغاء الضخ المؤقت للإنسولين القاعدي";
 
 /* Enact
 Enact a temp Basal or a temp target */
 "Enact" = "Enact";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "إبدأ";
 
 /* */
 "Manual Temp Basal" = "Manual Temp Basal";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "السماح بالتحميل";
 
 /* API secret in NS */
 "API secret" = "API secret";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "توصيل";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "متصل!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "الاتصال جارِ...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "عنوان URL غير صحيح";
 
 /*  */
 "Local glucose source" = "Local glucose source";
@@ -375,7 +376,7 @@ Enact a temp Basal or a temp target */
 "Port" = "Port";
 
 /*  */
-"URL" = "URL";
+"URL" = "عنوان الرابط";
 
 /**/
 "Use local glucose server" = "Use local glucose server";
@@ -384,7 +385,7 @@ Enact a temp Basal or a temp target */
 "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "تحرير إعدادات json";
 
 /* */
 "Glucose units" = "Glucose units";
@@ -1878,7 +1879,7 @@ Enact a temp Basal or a temp target */
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "المدة";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";

@@ -312,7 +312,7 @@
 "Resume" = "Resume";
 
 /* */
-"Bolus" = "Bolus";
+"Bolus" = "الجرعة";
 
 /* */
 "Cancel Bolus" = "Cancel Bolus";
@@ -472,7 +472,7 @@
 "Paired" = "Paired";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -718,7 +718,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Continue";
@@ -814,7 +814,7 @@
 "Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
 
 /* DASH Pod time ago since last status */
-"%@ ago" = "%@ ago";
+"%@ ago" = "منذ ‭%@";
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -852,7 +852,7 @@
 "Read Pod Status" = "Read Pod Status";
 
 /* Title of done button on OmnipodSettingsView */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Title for the pod diagnostic view */
 "Pod Diagnostics" = "Pod Diagnostics";

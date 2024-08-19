@@ -11,7 +11,7 @@
 "Bluetooth" = "البلوتوث";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* No comment provided by engineer. */
 "Configuration" = "Configuration";
@@ -33,7 +33,7 @@
 "Dexcom G7" = "ديكسكوم G7";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Field label */
 "Glucose" = "Glucose";
@@ -99,7 +99,7 @@
 "Sensor failed" = "فشل الحساس";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Start sensor";
+"Sensor Start" = "بدء الحساس";
 
 /* G7 Status highlight text for signal loss */
 "Signal\nLoss" = "فقدان الإشارة\n";

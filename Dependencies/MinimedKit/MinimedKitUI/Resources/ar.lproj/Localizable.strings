@@ -47,7 +47,7 @@
 "Changing" = "Changing";
 
 /* Progress message for changing pump time. */
-"Changing time…" = "Changing time…";
+"Changing time…" = "تغيير الوقت…";
 
 /* Instructions on selecting battery chemistry type */
 "Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "Choose the type of battery you are using in your pump for better alerting about low battery conditions.";
@@ -56,7 +56,7 @@
 "Configuration" = "المعطيات";
 
 /* Button title to connect to pump during setup */
-"Connect" = "Connect";
+"Connect" = "توصيل";
 
 /* Text for continue button */
 "Continue" = "Continue";

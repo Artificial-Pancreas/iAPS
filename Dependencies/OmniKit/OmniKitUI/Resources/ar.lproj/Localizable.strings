@@ -2,7 +2,7 @@
 "—" = "—";
 
 /* Format string for last status date on pod details screen */
-"%@ ago" = "%@ ago";
+"%@ ago" = "منذ ‭%@";
 
 /* Unit format string for an RSSI value in decibles */
 "%@ dB" = "%@ dB";
@@ -84,7 +84,7 @@
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
 
 /* Confirmation message for shutting down a pod */
-"Are you sure you want to shutdown this pod?" = "Are you sure you want to shutdown this pod?";
+"Are you sure you want to shutdown this pod?" = "هل أنت متأكد من أنك تريد إيقاف هذه المضخة؟";
 
 /* No comment provided by engineer. */
 "Are you sure you want to skip Omnipod Onboarding?" = "Are you sure you want to skip Omnipod Onboarding?";
@@ -102,7 +102,7 @@
 "Attemping to re-establish communication" = "Attemping to re-establish communication";
 
 /* Back button text on DeliveryUncertaintyRecoveryView */
-"Back" = "Back";
+"Back" = "رجوع";
 
 /* The title of the cell showing pod basal status */
 "Basal Delivery" = "Basal Delivery";
@@ -129,10 +129,10 @@
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Change Time Zone";
+"Change Time Zone" = "تغيير المنطقة الزمنية";
 
 /* Progress message for changing pod time. */
-"Changing time…" = "Changing time…";
+"Changing time…" = "تغيير الوقت…";
 
 /* Title for check cannula screen */
 "Check Cannula" = "Check Cannula";
@@ -147,7 +147,7 @@
 "Checking..." = "Checking...";
 
 /* Title for uncertainty recovered screen */
-"Comms Recovered" = "Comms Recovered";
+"Comms Recovered" = "تم استرداد الاتصال";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Confidence Reminders";
@@ -228,7 +228,7 @@
 "Discard Pod" = "Discard Pod";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Enable Bolus Beeps";
@@ -255,10 +255,10 @@
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* The title of the cell showing the pod expiration after expiry */
-"Expired" = "Expired";
+"Expired" = "منتهي";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Expires";
+"Expires" = "الانتهاء";
 
 /* Alert title for failing to cancel manual basal error */
 "Failed to Cancel Manual Basal" = "Failed to Cancel Manual Basal";
@@ -276,7 +276,7 @@
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Failed to Update Expiration Reminder";
+"Failed to Update Expiration Reminder" = "فشل في تحديث تذكير انتهاء صلاحية";
 
 /* Alert title for error when updating low reservoir reminder */
 "Failed to Update Low Reservoir Reminder" = "Failed to Update Low Reservoir Reminder";
