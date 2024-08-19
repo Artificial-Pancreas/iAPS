@@ -144,9 +144,9 @@ extension LiveActivityAttributes.ContentState {
         // only do this if there is no current activity or the current activity is older than 1h
         if settings.useLiveActivity {
             if currentActivity?.needsRecreation() ?? true,
-               let suggestion = storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
-            {
+               let suggestion = storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self), let enactedSuggestion = storage.retrieveFile(OpenAPS.Enact.enacted, as: Suggestion.self) {
                 suggestionDidUpdate(suggestion)
+                enactedSuggestionDidUpdate(enactedSuggestion)
             }
         } else {
             Task {
