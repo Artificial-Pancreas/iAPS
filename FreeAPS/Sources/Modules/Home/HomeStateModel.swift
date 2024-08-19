@@ -81,6 +81,8 @@ extension Home {
         @Published var maxBolusValue: Decimal = 1
         @Published var useInsulinBars: Bool = false
         @Published var iobData: [IOBData] = []
+        @Published var carbData: Decimal = 0
+        @Published var iobs: Decimal = 0
         @Published var neg: Int = 0
         @Published var tddChange: Decimal = 0
         @Published var tddAverage: Decimal = 0
@@ -494,6 +496,8 @@ extension Home {
                 guard let self = self else { return }
                 if let data = self.provider.reasons() {
                     self.iobData = data
+                    self.carbData = data.map(\.cob).reduce(0, +)
+                    self.iobs = data.map(\.iob).reduce(0, +)
                     neg = data.filter({ $0.iob < 0 }).count * 5
                     let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
                     let yesterday = (tdds.first(where: {
