@@ -676,18 +676,28 @@ extension Home {
         var body: some View {
             GeometryReader { geo in
                 VStack(spacing: 0) {
+                    // Header View
                     headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 93 : 0)
                     ScrollView {
                         VStack {
+                            // Main Chart
                             chart
+                            // Adjust hours visible (X-Axis)
                             if state.timeSettings, !displayGlucose { timeSetting }
+                            //TIR Chart
                             preview.padding(.top, (state.timeSettings && !displayGlucose) ? 5 : 15).padding(.horizontal, 15)
+                            // Loops Chart
                             loopPreview.padding(15)
-                            if state.iobData.count > 5 {
+                            // COB Chart
+                            if state.carbData > 0 {
                                 activeCOBView
-                                activeIOBView.padding(.top, viewPadding)
+                            }
+                            // IOB Chart
+                            if state.iobs > 0 {
+                                activeIOBView.padding(.top, state.carbData > 0 ? viewPadding : 0)
                             }
                         }.background {
+                            // Track vertical scroll
                             GeometryReader { proxy in
                                 let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
                                 let yThreshold: CGFloat = state.timeSettings ? -500 : -560
@@ -703,6 +713,7 @@ extension Home {
                         }
 
                     }.coordinateSpace(name: "HomeScrollView")
+                    // Buttons
                     buttonPanel(geo)
                 }
                 .background(
