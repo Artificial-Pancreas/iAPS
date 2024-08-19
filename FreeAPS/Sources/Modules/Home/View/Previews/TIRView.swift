@@ -108,49 +108,43 @@ struct PreviewChart: View {
         .dynamicTypeSize(...DynamicTypeSize.medium)
     }
 
-    private func previewTir() -> [(decimal: Decimal, string: String)] {
+    private func previewTir() -> [(double: Double, string: String)] {
         let hypoLimit = Int(lowLimit)
         let hyperLimit = Int(highLimit)
-
         let glucose = readings
-
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let totalReadings = justGlucoseArray.count
-
         let hyperArray = glucose.filter({ $0.glucose >= hyperLimit })
         let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
-        var hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
-
+        var hyperPercentage = round(Double(hyperReadings) / Double(totalReadings) * 100)
         let hypoArray = glucose.filter({ $0.glucose <= hypoLimit })
         let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
-        var hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
-
+        var hypoPercentage = round(Double(hypoReadings) / Double(totalReadings) * 100)
         let veryHighArray = glucose.filter({ $0.glucose > 197 })
         let veryHighReadings = veryHighArray.compactMap({ each in each.glucose as Int16 }).count
-        let veryHighPercentage = Double(veryHighReadings) / Double(totalReadings) * 100
-
+        let veryHighPercentage = round(Double(veryHighReadings) / Double(totalReadings) * 100)
         let veryLowArray = glucose.filter({ $0.glucose < 60 })
         let veryLowReadings = veryLowArray.compactMap({ each in each.glucose as Int16 }).count
-        let veryLowPercentage = Double(veryLowReadings) / Double(totalReadings) * 100
+        let veryLowPercentage = round(Double(veryLowReadings) / Double(totalReadings) * 100)
 
         hypoPercentage -= veryLowPercentage
         hyperPercentage -= veryHighPercentage
 
-        let tir = 100 - (hypoPercentage + hyperPercentage + veryHighPercentage + veryLowPercentage)
+        let tir = round(100 - (hypoPercentage + hyperPercentage + veryHighPercentage + veryLowPercentage))
 
-        var array: [(decimal: Decimal, string: String)] = []
-        array.append((decimal: Decimal(hypoPercentage), string: "Low"))
-        array.append((decimal: Decimal(tir), string: "NormaL"))
-        array.append((decimal: Decimal(hyperPercentage), string: "High"))
-        array.append((decimal: Decimal(veryHighPercentage), string: "Very High"))
-        array.append((decimal: Decimal(veryLowPercentage), string: "Very Low"))
+        var array: [(double: Double, string: String)] = []
+        array.append((double: hypoPercentage, string: "Low"))
+        array.append((double: tir, string: "NormaL"))
+        array.append((double: hyperPercentage, string: "High"))
+        array.append((double: veryHighPercentage, string: "Very High"))
+        array.append((double: veryLowPercentage, string: "Very Low"))
 
         return array
     }
 
     private func prepareData() -> [TIRinPercent] {
         let fetched = previewTir()
-        let separator: Decimal = 2
+        let separator: Double = 2
         var data: [TIRinPercent] = [
             TIRinPercent(
                 type: "TIR",
@@ -158,7 +152,7 @@ struct PreviewChart: View {
                     "Very Low",
                     comment: ""
                 ),
-                percentage: fetched[4].decimal,
+                percentage: fetched[4].double,
                 id: UUID(),
                 offset: -5,
                 first: true,
@@ -179,7 +173,7 @@ struct PreviewChart: View {
                     "Low",
                     comment: ""
                 ),
-                percentage: fetched[0].decimal,
+                percentage: fetched[0].double,
                 id: UUID(),
                 offset: -10,
                 first: false,
@@ -197,7 +191,7 @@ struct PreviewChart: View {
             TIRinPercent(
                 type: "TIR",
                 group: NSLocalizedString("In Range", comment: ""),
-                percentage: fetched[1].decimal,
+                percentage: fetched[1].double,
                 id: UUID(),
                 offset: 0,
                 first: false,
@@ -218,7 +212,7 @@ struct PreviewChart: View {
                     "High",
                     comment: ""
                 ),
-                percentage: fetched[2].decimal,
+                percentage: fetched[2].double,
                 id: UUID(),
                 offset: 10,
                 first: false,
@@ -239,7 +233,7 @@ struct PreviewChart: View {
                     "Very High",
                     comment: ""
                 ),
-                percentage: fetched[3].decimal,
+                percentage: fetched[3].double,
                 id: UUID(),
                 offset: 5,
                 first: false,
@@ -294,7 +288,7 @@ struct PreviewChart: View {
 struct TIRinPercent: Identifiable {
     let type: String
     let group: String
-    let percentage: Decimal
+    let percentage: Double
     let id: UUID
     let offset: CGFloat
     var first: Bool
