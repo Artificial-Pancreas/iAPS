@@ -1,45 +1,45 @@
 /* Description for an inactive alert modifier */
-" (inactive)" = " (inactive)";
+" (inactive)" = "(غير نشط)";
 
 /* Format string for low battery alert body for RileyLink. (1: device name) */
-"\"%1$@\" has a low battery" = "\"%1$@\" has a low battery";
+"\"%1$@\" has a low battery" = "%1$@\" بطارية منخفضة";
 
 /* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
+"%@ dB" = "%@ ديسيبل";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin or less remaining in Pod. Change Pod soon.";
 
 /* Format string for activation time exceeded
    Pod state when activation not completed in the time allowed */
-"Activation time exceeded" = "Activation time exceeded";
+"Activation time exceeded" = "تجاوز الوقت المحدد للتفعيل";
 
 /* Description for auto-off */
-"Auto-off" = "Auto-Off";
+"Auto-off" = "إيقاف تلقائي";
 
 /* Description for auto-off alarm */
-"Auto-off alarm" = "Auto-off alarm";
+"Auto-off alarm" = "إيقاف تلقائي للمنبه";
 
 /* Pod state when basal initialized */
-"Basal initialized" = "Basal initialized";
+"Basal initialized" = "تهيئة الانسولين القاعدي";
 
 /* Pod state when running below fifty units */
-"Below 50 units" = "Below 50 units";
+"Below 50 units" = "أقل من 50 وحدة";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "الجرعة";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
-"Bolus in progress" = "Bolus in progress";
+"Bolus in progress" = "جرعة قيد التنفيذ";
 
 /* The format string describing a bolus. (1: The amount delivered)(2: Start time of the dose)(3: duration)(4: scheduled certainty) */
-"Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
+"Bolus: %1$@U %2$@ %3$@ %4$@" = "جرعة: %1$@U %2$@ %3$@ %4$@";
 
 /* Delivery status when bolusing */
 "Bolusing" = "Bolusing";
 
 /* Delivery status when bolusing and temp basal is running */
-"Bolusing with temp basal" = "Bolusing with temp basal";
+"Bolusing with temp basal" = "جرعة مع انسولين قاعدي مؤقت";
 
 /* Pod state when inserting cannula */
 "Cannula inserting" = "Cannula inserting";
