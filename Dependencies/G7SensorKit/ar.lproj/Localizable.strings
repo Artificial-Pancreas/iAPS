@@ -126,4 +126,4 @@
 "Sensor\nIssue" = "مشكلة في المستشعر\n";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "إحماء\nالمستشعر";
