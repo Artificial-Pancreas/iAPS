@@ -14,7 +14,7 @@
 "Basal Profile %1$@: %2$@ U/hour" = "ملف تعريف القاعدي %1$@: %2$@ U/hour";
 
 /* Pump error code when bolus is in progress */
-"Bolus in progress" = "Bolus in progress";
+"Bolus in progress" = "جرعة قيد التنفيذ";
 
 /* Suggestions for diagnosing a command refused pump error */
 "Check that the pump is not suspended or priming, or has a percent temp basal type" = "Check that the pump is not suspended or priming, or has a percent temp basal type";
