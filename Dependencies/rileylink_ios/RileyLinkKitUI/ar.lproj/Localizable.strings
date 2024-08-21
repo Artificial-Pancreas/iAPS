@@ -1,5 +1,5 @@
 /* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
+"%@ dB" = "%@ ديسيبل";
 
 /* Unit format string for an value in percent */
 "%@%%" = "%@%%";
