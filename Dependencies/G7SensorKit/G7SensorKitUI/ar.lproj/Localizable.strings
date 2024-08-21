@@ -84,7 +84,7 @@
 "Sensor\nIssue" = "مشكلة في المستشعر\n";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "إحماء\nالمستشعر";
 
 /* title for g7 settings row showing sensor expiration time */
 "Sensor Expiration" = "إنتهت صلاحية المستشعر";
