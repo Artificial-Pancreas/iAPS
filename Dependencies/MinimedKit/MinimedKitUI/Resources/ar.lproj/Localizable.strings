@@ -1,5 +1,5 @@
 /* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
+"%@ dB" = "%@ ديسيبل";
 
 /* Format string for reservoir volume. (1: The localized volume) */
 "%@U" = "%@U";
