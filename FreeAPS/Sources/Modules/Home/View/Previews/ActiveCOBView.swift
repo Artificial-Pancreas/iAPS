@@ -26,7 +26,7 @@ struct ActiveCOBView: View {
             AreaMark(
                 x: .value("Time", $0.date),
                 y: .value("COB", $0.cob)
-            ).foregroundStyle(Color(.loopYellow).gradient) }
+            ).foregroundStyle(Color(.loopYellow).gradient).opacity(0.8) }
             .chartYAxis {
                 AxisMarks(values: .automatic(desiredCount: 3))
             }
