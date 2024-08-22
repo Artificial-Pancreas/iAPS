@@ -817,139 +817,139 @@ Enact a temp Basal or a temp target */
 "Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "المستشعر المكتشف غير صالح: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "البطارية منخفضة";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "مستشعر غير صالح";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "تغيير جهاز الاستشعار";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "ستنتهي صلاحية المستشعر قريبا";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "البطارية منخفضه %@، إشحن جهازك %@ في أقرب وقت ممكن";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "جاري إستخراج بيانات المعايرة من المستشعر";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "المستشعر سينتهي قريباً";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "المستشعر الحالي سينتهي قريباً! عمر المستشعر المتبقي %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
+"Libre Bluetooth" = "بلوتوث ليبري";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "إغفاء التنبيهات";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "القياس الأخير";
 
 /* */
 "Sensor Footer checksum" = "Sensor Footer checksum";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "آخر تنبؤ بمستوى الجلوكوز في الدم";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "معدل الجلوكوز الحالي";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "معلومات المستشعر";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "عمر المستشعر";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "عمر المستشعر المتبقي";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "وقت انتهاء المستشعر";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "حالة المستشعر";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "الرقم التسلسلي للمستشعر";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "معلومات المُرسل";
 
 /* */
-"Hardware" = "Hardware";
+"Hardware" = "العتاد";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "البرنامج الثابت";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "حالة الإتصال";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "نوع جهاز الإرسال";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "نوع المستشعر";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "عوامل معايرة المصنع";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "صالح لتذييل الصفحة";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "تعديل المعايرات";
 
 /* */
 "edit calibration clicked" = "edit calibration clicked";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "حذف المستشعر";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "هل أنت متأكد من أنك تريد إزالة هذا المستشعر من لووب؟";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "لا يوجد تراجع!";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "متقدم";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "التنبيهات";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "إعدادات الجلوكوز";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "الإشعارات";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "تصدير السجلات";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "التصدير غير متوفر";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "تصدير السجل يتطلب iOS 15";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "فهمت ذلك!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "تم الحفظ في %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "لا توجد سجلات متاحة";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "وضوح إشعار مستوى الجلوكوز";
 
 /* */
 "Always Notify Glucose" = "Always Notify Glucose";
