@@ -26,16 +26,16 @@
 "Comms with another pump detected" = "Liên lạc cho bơm khác được phát hiện.";
 
 /* Error description */
-"Decoding Error" = "Lỗi giải mã";
+"Decoding Error" = "Đang giải mã bị lỗi";
 
 /* Error description */
-"Device Error" = "Lỗi thiết bị";
+"Device Error" = "Thiết bị lỗi";
 
 /* Describing the pump history insulin data source */
 "Event History" = "Lược sử tác vụ trước đó";
 
 /* Format string for failure reason. (1: The operation being performed) (2: The response data) */
-"Invalid response during %1$@: %2$@" = "Phản hồi không xác định trong %1$@: %2$@";
+"Invalid response during %1$@: %2$@" = "Phản ứng không phù hợp trong khoảng %1$@: %2$@";
 
 /* Describing the battery chemistry as Lithium */
 "Lithium" = "Lithium";
@@ -62,7 +62,7 @@
 "Pump Error" = "Bơm lỗi";
 
 /* No comment provided by engineer. */
-"Pump is suspended" = "Bơm đang tạm ngưng";
+"Pump is suspended" = "Bơm đã tạm ngưng";
 
 /* No comment provided by engineer. */
 "Pump responded unexpectedly" = "Bơm phản ứng bất ngờ";
