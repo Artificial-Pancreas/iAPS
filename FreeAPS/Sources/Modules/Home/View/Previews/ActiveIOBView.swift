@@ -57,12 +57,6 @@ struct ActiveIOBView: View {
                 ).foregroundStyle(by: .value("Time", "IOB > 0"))
             }
             ForEach(negIOBData) { item in
-                LineMark(
-                    x: .value("Time", item.date),
-                    y: .value("IOB", item.iob)
-                ).foregroundStyle(by: .value("Time", "Line IOB < 0"))
-                    .lineStyle(StrokeStyle(lineWidth: 0.8))
-
                 AreaMark(
                     x: .value("Time", item.date),
                     yStart: .value("IOB", 0),
@@ -82,7 +76,7 @@ struct ActiveIOBView: View {
                 ),
                 "IOB < 0": LinearGradient(
                     gradient: Gradient(colors: [
-                        Color.red.opacity(0.7),
+                        Color.red.opacity(1),
                         Color.red.opacity(1)
                     ]),
                     startPoint: .bottom,
@@ -92,14 +86,6 @@ struct ActiveIOBView: View {
                     gradient: Gradient(colors: [
                         Color.insulin.opacity(1),
                         Color.insulin.opacity(1)
-                    ]),
-                    startPoint: .top,
-                    endPoint: .bottom
-                ),
-                "Line IOB < 0": LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color.red.opacity(1),
-                        Color.red.opacity(1)
                     ]),
                     startPoint: .top,
                     endPoint: .bottom
