@@ -218,7 +218,7 @@
 "Device Information" = "Device Information";
 
 /* Header for devices section of RileyLinkSetupView */
-"Devices" = "Devices";
+"Devices" = "الأجهزة";
 
 /* Title text for button to disable bolus beeps */
 "Disable Bolus Beeps" = "Disable Bolus Beeps";
