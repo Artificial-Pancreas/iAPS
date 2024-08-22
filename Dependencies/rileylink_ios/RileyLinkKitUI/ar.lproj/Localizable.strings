@@ -38,7 +38,7 @@
 "Device" = "Device";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "Devices";
+"Devices" = "الأجهزة";
 
 /* The disconnected state */
 "Disconnected" = "Disconnected";
