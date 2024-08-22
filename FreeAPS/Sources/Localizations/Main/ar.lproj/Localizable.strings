@@ -309,22 +309,22 @@
 "Calculated Ratio" = "النسبة المحسوبة";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "معاملات الكارب";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "النسبة";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "حساسية الانسولين التلقائية";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "الحساسية المحسوبة";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "حساسية الأنسولين";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "معدل الحساسية";
 
 /*  */
 "Dismiss" = "تجاهل";
@@ -340,19 +340,19 @@
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "فعل";
 
 /* Start a temp target or a profile override */
 "Start" = "إبدأ";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "إنسولين قاعدي يدوي مؤقت";
 
 /* Allow uploads to different services */
 "Allow uploads" = "السماح بالتحميل";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "سر API";
 
 /* Connect to NS */
 "Connect" = "توصيل";
@@ -514,163 +514,163 @@ Enact a temp Basal or a temp target */
 " g" = " g";
 
 /* The short unit display string for grams */
-"g" = "g";
+"g" = "ج";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 وحدة/ساعة";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "يوم";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "س";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "د";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "حلقة مغلقة";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "الأجهزة";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "المضخة";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "ساعه";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "اعدادات الساعة";
 
 /* */
-"Apple Watch" = "Apple Watch";
+"Apple Watch" = "ساعة أبل";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "عرض على الساعة";
 
 /* */
-"Garmin Watch" = "Garmin Watch";
+"Garmin Watch" = "ساعة جارمين";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "إضافة أجهزة";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "هدف الجلوكوز";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "معدل ضربات القلب";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "الخطوات";
 
 /* */
-"ISF" = "ISF";
+"ISF" = "عامل حساسية الأنسولين";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "جارمين غير متاح";
 
 /*  */
-"Services" = "Services";
+"Services" = "الخدمات";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "الإعدادات";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "النسبة المئوية للبولوس الموصى بها";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "شارك السجلات";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "هدف مرتفع";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "هدف منخفض";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "يضخ";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "المضخة معلقة";
 
 /* */
-"Middleware" = "Middleware";
+"Middleware" = "الوسطاء";
 
 /* Header */
-"History" = "History";
+"History" = "السّجل";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "رفع";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "السماح بالرفع";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "النّوع";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "مستشعر الجلوكوز";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "معرف المرسل";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "أخرى";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "تعيين أهداف المؤقتة مسبقاً على الايفون أولاً";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "جارٍ التحديث...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "الأهداف المؤقتة";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "حذف النشويات؟";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "حذف الإنسولين؟";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "العلاجات";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " د";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "غير قادر على تغيير أي شيء";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "ضبط مرسل ليبري";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "المعايرة";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "إنشاء أحداث في التقويم";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "التقويم";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "تلقائي";
 
 /* External insulin treatments */
 "External" = "External";
 
 /* */
-"Other" = "Other";
+"Other" = "أخرى";
 
 /* */
 "Libre Transmitter" = "Libre Transmitter";
@@ -1960,7 +1960,7 @@ Enact a temp Basal or a temp target */
 "Man" = "Man";
 
 /* Sex dropdown menu option */
-"Other" = "Other";
+"Other" = "أخرى";
 
 /* Sex dropdown menu option */
 "Secret" = "Secret";
