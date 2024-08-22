@@ -45,14 +45,14 @@
 
 "Last Reading" = "آخر قراءة";
 
-"Time" = "Time";
+"Time" = "الوقت";
 
 "Trend" = "إتجاه";
 
 "Bluetooth" = "البلوتوث";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "الاسم";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "يتم المسح";
