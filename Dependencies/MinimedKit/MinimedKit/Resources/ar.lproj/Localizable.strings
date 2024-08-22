@@ -41,7 +41,7 @@
 "Lithium" = "ليثيوم";
 
 /* Recovery suggestion */
-"Make sure your RileyLink is nearby and powered on" = "Make sure your RileyLink is nearby and powered on";
+"Make sure your RileyLink is nearby and powered on" = "تأكد من أن RileyLink الخاص بك قريب ويعمل";
 
 /* Pump error code describing max setting exceeded */
 "Max setting exceeded" = "تم تجاوز الحد الأقصى للإعدادات";
