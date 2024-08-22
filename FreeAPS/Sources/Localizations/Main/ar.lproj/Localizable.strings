@@ -952,19 +952,19 @@ Enact a temp Basal or a temp target */
 "Glucose Notification visibility" = "وضوح إشعار مستوى الجلوكوز";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "الاشعار بمستوى الجلوكوز دائمًا";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "إشعار لكل قراءة";
 
 /* */
-"Value" = "Value";
+"Value" = "القيمة";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "إضافة بطارية الهاتف";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "إضافة بطارية جهاز الإرسال";
 
 /* */
 "Also vibrate" = "Also vibrate";
@@ -1111,16 +1111,16 @@ Enact a temp Basal or a temp target */
 "Sensor not found" = "Sensor not found";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "تشغيل التنبيه الصوتي أيضا";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "إعدادات الإشعارات";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "الأجهزة التي تم العثور عليها: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "خيارات الإملاء العكسية";
 
 /* */
 "Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
