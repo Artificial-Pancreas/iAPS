@@ -57,10 +57,10 @@
 "Display IOB and COB" = "عرض IOB و COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "تفعيل خاصية تأكيد البولوس بشكل اسرع";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "اعدادات واجهة/تجربة المستخدم";
 
 /*  */
 "Wait please" = "انتظر من فضلك";
@@ -87,13 +87,13 @@
 "A Remote Bolus Was Just Delivered!" = "تم تسليم الجرعة عن بعد للتو!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "تم تفيعله";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "تم اقتراحه";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Error at" = "خطأ عند";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "موجز الوجبة";
@@ -114,7 +114,7 @@
 "Fatty Meal" = "وجبة دهنية";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "علاج إنخفاض";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "جرعة كاملة";
@@ -180,7 +180,7 @@
 "Cancel" = "إلغاء";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "إلغاء الهدف المؤقت";
 
 /* Custom temp target */
 "Custom" = "مخصص";
@@ -198,7 +198,7 @@
 "Duration" = "المدة";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "تفعيل الهدف المؤقت";
 
 /* */
 "Target" = "الهدف";
@@ -207,43 +207,43 @@
 "Basal Insulin and Sensitivity ratio" = "نسبة الإنسولين الأساسي والحساسية";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "إعداد 'نصف الهدف الأساسي' سوف يقلل من القاعدي و يرفع من (حساسية الانسولين) في وقت أسبق، عند مستوى جلكوز مستهدف أقل.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " الإعدادات الخاصة بك: ";
 
 /* */
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "أدخل اسم التعيين المسبق";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "الاسم";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "دقائق";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "التعيينات المسبقة";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "إحفظ";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "حفظ كتعيين مسبق";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "حذف التعيين المسبق";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "حذف التعيين المسبق '%@'؟";
 
 /* Button */
-"No" = "No";
+"No" = "لا";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "نعم";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -252,61 +252,61 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "الحد الاعلى من الهدف";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "لـ";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "د";
 
 /*  */
-"Autotune" = "Autotune";
+"Autotune" = "ضبط الانسولين التلقائي";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "ملف الانسولين القاعدي";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "معامل الكارب";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "حذف بيانات ضبط الانسولين التلقائي";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "نفذ الأن";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "آخر تنفيذ";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "حساسية";
 
 /*  */
 "Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "أضف";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "ملف الانسولين القاعدي";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "معدّل";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "الحفظ في المضخة";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "الجدول";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "يبدأ عند";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "الوقت";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "النسبة المحسوبة";
 
 /* Carb Ratios header */
 "Carb Ratios" = "Carb Ratios";
@@ -1276,7 +1276,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
 
 /* */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "الحفظ في المضخة";
 
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
@@ -1306,7 +1306,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Enacted announcements";
 
 /* Debug option view Autotune */
-"Autotune" = "Autotune";
+"Autotune" = "ضبط الانسولين التلقائي";
 
 /* Debug option view Target presets */
 "Target presets" = "Target presets";
@@ -1474,7 +1474,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Cancel Profile Override";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "إلغاء الهدف المؤقت";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
@@ -1537,7 +1537,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "حفظ كتعيين مسبق";
 
 /* */
 "Predictions" = "Predictions";
@@ -1643,7 +1643,7 @@ Enact a temp Basal or a temp target */
 "Saving..." = "Saving...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Save";
+"Save" = "إحفظ";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
@@ -1696,7 +1696,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "معدّل";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
