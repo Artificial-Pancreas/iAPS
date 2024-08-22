@@ -165,7 +165,7 @@
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -345,7 +345,7 @@
 "Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
