@@ -76,7 +76,7 @@
 "Scan for new sensor" = "البحث عن مستشعر جديد";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "حذف المستشعر";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
