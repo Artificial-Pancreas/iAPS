@@ -78,7 +78,7 @@
 "Adjusting Pump Time..." = "Adjusting Pump Time...";
 
 /* The title of the cell showing alarm status */
-"Alarms" = "Alarms";
+"Alarms" = "التنبيهات";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
