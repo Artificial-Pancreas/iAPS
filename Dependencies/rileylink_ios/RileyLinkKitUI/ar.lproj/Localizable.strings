@@ -71,7 +71,7 @@
 "Low Battery Alert" = "Low Battery Alert";
 
 /* The title of the cell showing device name */
-"Name" = "Name";
+"Name" = "الاسم";
 
 /* Detail text when battery alert disabled.
    Text indicating LED Mode is off */
