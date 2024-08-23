@@ -40,6 +40,7 @@ extension Font {
     static let previewSmall = Font.custom("PreviewSmallFont", size: 14)
     static let previewNormal = Font.custom("PreviewNormalFont", size: 16)
     static let previewHeadline = Font.custom("PreviewHeadlineFont", size: 18)
+    static let previewExtraBig = Font.custom("PreviewHeadlineFont", size: 20)
     static let extraSmall = Font.custom("ExtraSmallFont", size: 12)
 
     static let suggestionHeadline = Font.custom("SuggestionHeadlineFont", fixedSize: 20)

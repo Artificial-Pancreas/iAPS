@@ -119,7 +119,7 @@ struct LiveActivity: Widget {
 
     private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
         let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
-        let color: Color = timeAgo > 7 ? .loopYellow : timeAgo > 20 ? .loopRed : .loopGreen
+        let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
         return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
     }
 

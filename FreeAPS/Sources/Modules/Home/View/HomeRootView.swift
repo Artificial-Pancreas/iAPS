@@ -413,13 +413,13 @@ extension Home {
         var carbsAndInsulinView: some View {
             HStack {
                 if let settings = state.settingsManager {
-                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.6
+                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
                     let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 0.97))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1 /* 0.97 */ ))
                         TestTube(
                             opacity: opacity,
                             amount: fill,
@@ -439,7 +439,7 @@ extension Home {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 0.98))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1 /* 0.98 */ ))
                         TestTube(
                             opacity: opacity,
                             amount: fill,
@@ -639,7 +639,7 @@ extension Home {
                     (($0.glucose ?? 0) > veryHigh || Decimal($0.glucose ?? 0) < low) ? Color(.red) : Decimal($0.glucose ?? 0) >
                         high ? Color(.yellow) : Color(.darkGreen)
                 )
-                .symbolSize(7)
+                .symbolSize(5)
             }
             .chartXAxis {
                 AxisMarks(values: .stride(by: .hour, count: 2)) { _ in
@@ -662,8 +662,7 @@ extension Home {
             .frame(maxHeight: 70)
             .padding(.leading, 30)
             .padding(.trailing, 32)
-            .padding(.top, 10)
-            .padding(.bottom, 10)
+            .padding(.top, 15)
         }
 
         var timeSetting: some View {
@@ -831,5 +830,14 @@ extension Home {
                 }
             }
         }
+    }
+}
+
+extension AnyTransition {
+    static var slideDownAndUp: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: .top).combined(with: .opacity),
+            removal: .move(edge: .top).combined(with: .opacity)
+        )
     }
 }
