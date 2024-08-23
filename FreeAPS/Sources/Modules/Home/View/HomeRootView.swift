@@ -16,6 +16,8 @@ extension Home {
         @State var triggerUpdate = false
         @State var display = false
         @State var displayGlucose = false
+
+        @State var displayGlucose = false
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
 

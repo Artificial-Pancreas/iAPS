@@ -1283,8 +1283,8 @@
 			children = (
 				19AEF4312B1F5A98006FFE8B /* TIRView.swift */,
 				194D7E6D2B974F9F007A38C1 /* LoopsView.swift */,
-				191A9D172BED24B000028D48 /* ActiveIOBView.swift */,
 				19DB70A62BF8F01E00C05381 /* ActiveCOBView.swift */,
+				191A9D172BED24B000028D48 /* ActiveIOBView.swift */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
@@ -2992,7 +2992,6 @@
 				19E1F7EF29D08EBA005C8D20 /* IconConfigRootWiew.swift in Sources */,
 				1967DFC229D053D300759F30 /* IconImage.swift in Sources */,
 				382C134B25F14E3700715CE1 /* BGTargets.swift in Sources */,
-				19493A3B2C5997AD00EC83A7 /* Database.swift in Sources */,
 				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
 				38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */,
 				38AEE75225F022080013F05B /* SettingsManager.swift in Sources */,
@@ -3248,7 +3247,6 @@
 				19E1F7EA29D082ED005C8D20 /* IconConfigProvider.swift in Sources */,
 				44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */,
 				E97285ED9B814CD5253C6658 /* AddCarbsDataFlow.swift in Sources */,
-				19493A3D2C59987700EC83A7 /* DatabaseModels.swift in Sources */,
 				CE48C86428CA69D5007C0598 /* OmniBLEPumpManagerExtensions.swift in Sources */,
 				38E8755427561E9800975559 /* DataFlow.swift in Sources */,
 				38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */,
