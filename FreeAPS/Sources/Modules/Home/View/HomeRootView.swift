@@ -276,102 +276,105 @@ extension Home {
                     .frame(height: 50 + geo.safeAreaInsets.bottom)
                 let isOverride = fetchedPercent.first?.enabled ?? false
                 let isTarget = (state.tempTarget != nil)
-                HStack {
-                    Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
-                    label: {
-                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                            Image(systemName: "fork.knife")
-                                .renderingMode(.template)
-                                .font(.custom("Buttons", size: 24))
-                                .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
-                                .padding(8)
-                                .foregroundColor(.loopYellow)
-                            if let carbsReq = state.carbsRequired {
-                                Text(numberFormatter.string(from: carbsReq as NSNumber)!)
-                                    .font(.caption)
-                                    .foregroundColor(.white)
-                                    .padding(4)
-                                    .background(Capsule().fill(Color.red))
-                            }
-                        }
-                    }.buttonStyle(.borderless)
-                    Spacer()
-                    Button {
-                        state.showModal(for: .bolus(
-                            waitForSuggestion: state.useCalc ? true : false,
-                            fetch: false
-                        ))
-                    }
-                    label: {
-                        Image(systemName: "syringe")
-                            .renderingMode(.template)
-                            .font(.custom("Buttons", size: 24))
-                    }
-                    .buttonStyle(.borderless)
-                    .foregroundColor(.insulin)
-                    Spacer()
-                    if state.allowManualTemp {
-                        Button { state.showModal(for: .manualTempBasal) }
+                VStack {
+                    Divider()
+                    HStack {
+                        Button { state.showModal(for: .addCarbs(editMode: false, override: false)) }
                         label: {
-                            Image("bolus1")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
-                        }
-                        .foregroundColor(.insulin)
-                        Spacer()
-                    }
-                    ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
-                        Image(systemName: isOverride ? "person.fill" : "person")
-                            .symbolRenderingMode(.palette)
-                            .font(.custom("Buttons", size: 28))
-                            .foregroundStyle(.purple)
-                            .padding(8)
-                            .background(isOverride ? .purple.opacity(0.15) : .clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                    .onTapGesture {
-                        if isOverride {
-                            showCancelAlert.toggle()
-                        } else {
-                            state.showModal(for: .overrideProfilesConfig)
-                        }
-                    }
-                    .onLongPressGesture {
-                        state.showModal(for: .overrideProfilesConfig)
-                    }
-                    if state.useTargetButton {
-                        Spacer()
-                        Image(systemName: "target")
-                            .renderingMode(.template)
-                            .font(.custom("Buttons", size: 24))
-                            .padding(8)
-                            .foregroundColor(.loopGreen)
-                            .background(isTarget ? .green.opacity(0.15) : .clear)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .onTapGesture {
-                                if isTarget {
-                                    showCancelTTAlert.toggle()
-                                } else {
-                                    state.showModal(for: .addTempTarget)
+                            ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                                Image(systemName: "fork.knife")
+                                    .renderingMode(.template)
+                                    .font(.custom("Buttons", size: 24))
+                                    .foregroundColor(colorScheme == .dark ? .loopYellow : .orange)
+                                    .padding(8)
+                                    .foregroundColor(.loopYellow)
+                                if let carbsReq = state.carbsRequired {
+                                    Text(numberFormatter.string(from: carbsReq as NSNumber)!)
+                                        .font(.caption)
+                                        .foregroundColor(.white)
+                                        .padding(4)
+                                        .background(Capsule().fill(Color.red))
                                 }
                             }
-                            .onLongPressGesture {
-                                state.showModal(for: .addTempTarget)
+                        }.buttonStyle(.borderless)
+                        Spacer()
+                        Button {
+                            state.showModal(for: .bolus(
+                                waitForSuggestion: state.useCalc ? true : false,
+                                fetch: false
+                            ))
+                        }
+                        label: {
+                            Image(systemName: "syringe")
+                                .renderingMode(.template)
+                                .font(.custom("Buttons", size: 24))
+                        }
+                        .buttonStyle(.borderless)
+                        .foregroundColor(.insulin)
+                        Spacer()
+                        if state.allowManualTemp {
+                            Button { state.showModal(for: .manualTempBasal) }
+                            label: {
+                                Image("bolus1")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: IAPSconfig.buttonSize, height: IAPSconfig.buttonSize, alignment: .bottom)
                             }
+                            .foregroundColor(.insulin)
+                            Spacer()
+                        }
+                        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
+                            Image(systemName: isOverride ? "person.fill" : "person")
+                                .symbolRenderingMode(.palette)
+                                .font(.custom("Buttons", size: 28))
+                                .foregroundStyle(.purple)
+                                .padding(8)
+                                .background(isOverride ? .purple.opacity(0.15) : .clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+                        .onTapGesture {
+                            if isOverride {
+                                showCancelAlert.toggle()
+                            } else {
+                                state.showModal(for: .overrideProfilesConfig)
+                            }
+                        }
+                        .onLongPressGesture {
+                            state.showModal(for: .overrideProfilesConfig)
+                        }
+                        if state.useTargetButton {
+                            Spacer()
+                            Image(systemName: "target")
+                                .renderingMode(.template)
+                                .font(.custom("Buttons", size: 24))
+                                .padding(8)
+                                .foregroundColor(.loopGreen)
+                                .background(isTarget ? .green.opacity(0.15) : .clear)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .onTapGesture {
+                                    if isTarget {
+                                        showCancelTTAlert.toggle()
+                                    } else {
+                                        state.showModal(for: .addTempTarget)
+                                    }
+                                }
+                                .onLongPressGesture {
+                                    state.showModal(for: .addTempTarget)
+                                }
+                        }
+                        Spacer()
+                        Button { state.showModal(for: .settings) }
+                        label: {
+                            Image(systemName: "gear")
+                                .renderingMode(.template)
+                                .font(.custom("Buttons", size: 24))
+                        }
+                        .buttonStyle(.borderless)
+                        .foregroundColor(.gray)
                     }
-                    Spacer()
-                    Button { state.showModal(for: .settings) }
-                    label: {
-                        Image(systemName: "gear")
-                            .renderingMode(.template)
-                            .font(.custom("Buttons", size: 24))
-                    }
-                    .buttonStyle(.borderless)
-                    .foregroundColor(.gray)
+                    .padding(.horizontal, state.allowManualTemp ? 5 : 24)
+                    .padding(.bottom, geo.safeAreaInsets.bottom)
                 }
-                .padding(.horizontal, state.allowManualTemp ? 5 : 24)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
@@ -466,7 +469,7 @@ extension Home {
 
         var activeIOBView: some View {
             addBackground()
-                .frame(minHeight: 410)
+                .frame(minHeight: 405)
                 .overlay {
                     ActiveIOBView(
                         data: $state.iobData,
@@ -596,11 +599,10 @@ extension Home {
                             .dynamicTypeSize(...DynamicTypeSize.xLarge)
                             .padding(.horizontal, 10)
                         }
-
                         // Small glucose View, past 24 hours.
                         if extra > 0 { glucoseHeaderView() }
-
-                    }.padding(.top, geo.safeAreaInsets.top).padding(.bottom, 10)
+                        Divider()
+                    }.padding(.top, geo.safeAreaInsets.top)
                 }
                 .clipShape(Rectangle())
         }
@@ -682,9 +684,10 @@ extension Home {
                         VStack {
                             // Main Chart
                             chart
+
                             // Adjust hours visible (X-Axis)
                             if state.timeSettings, !displayGlucose { timeSetting }
-                            //TIR Chart
+                            // TIR Chart
                             preview.padding(.top, (state.timeSettings && !displayGlucose) ? 5 : 15).padding(.horizontal, 15)
                             // Loops Chart
                             loopPreview.padding(15)

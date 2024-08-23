@@ -36,16 +36,62 @@ struct ActiveIOBView: View {
     }
 
     @ViewBuilder private func iobView() -> some View {
-        let minimum = data.map(\.iob).min() ?? 0
+        // Data
+        let negIOBData = negIOBdata(data)
+        // Domain
+        let minimum = min(data.map(\.iob).min() ?? 0, negIOBData.map(\.iob).min() ?? 0)
         let minimumRange = min(0, minimum * 1.3)
         let maximum = (data.map(\.iob).max() ?? 0) * 1.1
 
-        Chart(data) {
-            AreaMark(
-                x: .value("Time", $0.date),
-                y: .value("IOB", $0.iob)
-            ).foregroundStyle(Color(.insulin))
+        Chart {
+            ForEach(data) { item in
+                LineMark(
+                    x: .value("Time", item.date),
+                    y: .value("IOB", item.iob)
+                ).foregroundStyle(by: .value("Time", "Line IOB > 0"))
+                    .lineStyle(StrokeStyle(lineWidth: 0.8))
+
+                AreaMark(
+                    x: .value("Time", item.date),
+                    y: .value("IOB", item.iob)
+                ).foregroundStyle(by: .value("Time", "IOB > 0"))
+            }
+            ForEach(negIOBData) { item in
+                AreaMark(
+                    x: .value("Time", item.date),
+                    yStart: .value("IOB", 0),
+                    yEnd: .value("IOB", item.iob)
+                ).foregroundStyle(by: .value("Time", "IOB < 0"))
+            }
         }
+        .chartForegroundStyleScale(
+            [
+                "IOB > 0": LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.insulin.opacity(1),
+                        Color.insulin.opacity(0.4)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                ),
+                "IOB < 0": LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.red.opacity(1),
+                        Color.red.opacity(1)
+                    ]),
+                    startPoint: .bottom,
+                    endPoint: .top
+                ),
+                "Line IOB > 0": LinearGradient(
+                    gradient: Gradient(colors: [
+                        Color.insulin.opacity(1),
+                        Color.insulin.opacity(1)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            ]
+        )
         .chartXAxis {
             AxisMarks(values: .stride(by: .hour, count: 2)) { _ in
                 AxisValueLabel(
@@ -64,6 +110,7 @@ struct ActiveIOBView: View {
         .chartXScale(
             domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
         )
+        .chartLegend(.hidden)
     }
 
     @ViewBuilder private func sumView() -> some View {
@@ -157,5 +204,22 @@ struct ActiveIOBView: View {
             return data.dropFirst().map({ a -> BolusSummary in a })
         }
         return data
+    }
+
+    private func negIOBdata(_ data: [IOBData]) -> [IOBData] {
+        var array = [IOBData]()
+        var previous = data.first
+        for item in data {
+            if item.iob < 0 {
+                if previous?.iob ?? 0 >= 0 {
+                    array.append(IOBData(date: previous?.date ?? .distantPast, iob: 0, cob: 0))
+                }
+                array.append(IOBData(date: item.date, iob: item.iob, cob: 0))
+            } else if previous?.iob ?? 0 < 0 {
+                array.append(IOBData(date: item.date, iob: 0, cob: 0))
+            }
+            previous = item
+        }
+        return array
     }
 }
