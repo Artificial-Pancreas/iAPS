@@ -8,7 +8,7 @@
 "Cancel" = "إلغاء";
 
 /* Title describing glucose date */
-"Date" = "Date";
+"Date" = "التاريخ";
 
 /* Button title to delete CGM
 Title text for the button to remove a CGM from Loop */
@@ -51,7 +51,7 @@ Title text for the button to remove a CGM from Loop */
 "Transmitter Age" = "عمر جهاز الإرسال";
 
 /* The title text for the Dexcom G5/G6 transmitter ID config value */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "معرف المرسل";
 
 /* Title describing glucose trend */
 "Trend" = "إتجاه";
