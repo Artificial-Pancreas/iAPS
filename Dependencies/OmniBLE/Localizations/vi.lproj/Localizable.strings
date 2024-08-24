@@ -9,7 +9,7 @@
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Alert content title for userPodExpiration pod alert */
-"Pod Expiration Reminder" = "Nhắc nhở hết hạn";
+"Pod Expiration Reminder" = "Lời Nhắc Pod Hết hạn";
 
 /* Alert content title for podExpiring pod alert */
 "Pod Expired" = "Pod đã hết hạn";
@@ -51,7 +51,7 @@
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Thời gian tạm ngưng insulin đã kết thúc.\n\n Bạn có thể phục hồi việc tiêm thuốc từ màn hình chính hoặc từ màn hình cài đặt bơm. Sẽ có thông báo nhắc trong vòng 15 phút.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Vui lòng hoàn tất việc ghép nối pod của bạn.";
+"Please finish pairing your pod." = "Đề nghị hoàn thành ghép đôi pod.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Thời gian trên bơm khác so với thời gian thực tế. Bạn có thể xem thời gian trên bơm và sync thời gian hiện hành trong cài đặt.";
@@ -406,7 +406,7 @@
 "Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Không thể tiếp tục cung cấp insulin";
+"Failed to Resume Insulin Delivery" = "Không thể tiêm insulin trở lại";
 
 /* Alert title for time sync error */
 "Failed to Set Pump Time" = "Không thể cài đặt thời gian cho bơm";
@@ -433,7 +433,7 @@
 "Deactivating." = "Đang hủy kích hoạt.";
 
 /* Deactivate pod action button accessibility label when deactivation complete */
-"Pod deactivated successfully. Continue." = "Đã huỷ kích hoạt Pod thành công. Tiếp tục.";
+"Pod deactivated successfully. Continue." = "Pod hủy kích hoạt thành công. Tiếp tục.";
 
 /* Action button description for deactivate after failed attempt */
 "Retry" = "Thử lại";
