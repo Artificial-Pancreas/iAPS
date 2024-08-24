@@ -116,6 +116,9 @@
 /* Bolus option */
 "Hypo Treatment" = "علاج إنخفاض";
 
+/* Bolus option */
+"Hypo Treatment" = "Hypo Treatment";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "جرعة كاملة";
 
