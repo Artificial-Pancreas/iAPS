@@ -75,7 +75,7 @@
 "Pod Activated" = "Pod Activated";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "إعدادات الإشعارات";
 
 /* */
 "Confidence Reminders" = "Confidence Reminders";
@@ -147,7 +147,7 @@
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "دقائق";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulin Delivery";
@@ -165,7 +165,7 @@
 "Device Details" = "Device Details";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Finish deactivation";
@@ -312,7 +312,7 @@
 "Resume" = "Resume";
 
 /* */
-"Bolus" = "Bolus";
+"Bolus" = "الجرعة";
 
 /* */
 "Cancel Bolus" = "Cancel Bolus";
@@ -345,7 +345,7 @@
 "Activity" = "Activity";
 
 /* Section header for configuration section */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* Title for previous pod page */
 "Previous Pod" = "Previous Pod";
@@ -472,7 +472,7 @@
 "Paired" = "Paired";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
@@ -529,10 +529,10 @@
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
 
 /* Button label for user to answer cannula was properly inserted  */
-"Yes" = "Yes";
+"Yes" = "نعم";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "لا";
 
 /* Pod pairing action button text while pairing */
 "Pairing..." = "Pairing...";
@@ -553,7 +553,7 @@
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Label for expiration reminder row */
-"Time" = "Time";
+"Time" = "الوقت";
 
 /* Action button title to continue at Setup Complete */
 "Finish Setup" = "Finish Setup";
@@ -603,10 +603,10 @@
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
 /* navigation title for notification settings */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "إعدادات الإشعارات";
 
 /* Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "الوقت";
 
 /* Value text for no expiration reminder */
 "No Reminder" = "No Reminder";
@@ -638,7 +638,7 @@
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "معدّل";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -718,7 +718,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Continue";
@@ -742,7 +742,7 @@
 "Low Reservoir" = "Low Reservoir";
 
 /* */
-"Save" = "Save";
+"Save" = "إحفظ";
 
 /* hr (short for hour) */
 "hr" = "hr";
@@ -814,7 +814,7 @@
 "Wait for existing temp basal to finish, or suspend to cancel" = "Wait for existing temp basal to finish, or suspend to cancel";
 
 /* DASH Pod time ago since last status */
-"%@ ago" = "%@ ago";
+"%@ ago" = "منذ ‭%@";
 
 /* Title string for SilencePodPreference.enabled */
 "Silenced" = "Silenced";
@@ -852,7 +852,7 @@
 "Read Pod Status" = "Read Pod Status";
 
 /* Title of done button on OmnipodSettingsView */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Title for the pod diagnostic view */
 "Pod Diagnostics" = "Pod Diagnostics";
