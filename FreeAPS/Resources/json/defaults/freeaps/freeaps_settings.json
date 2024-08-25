@@ -65,4 +65,5 @@
   "individualAdjustmentFactor": 0.5,
   "displayFatAndProteinOnWatch": true,
   "addSourceInfoToGlucoseNotifications": false
+  "displayDelta": false
 }

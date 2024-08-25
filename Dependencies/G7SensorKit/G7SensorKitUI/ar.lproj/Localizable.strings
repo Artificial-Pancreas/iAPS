@@ -11,10 +11,10 @@
 "Bluetooth" = "البلوتوث";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* No comment provided by engineer. */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* title for g7 settings connection status when connected */
 "Connected" = "Connected";
@@ -26,14 +26,14 @@
 "Continue" = "Continue";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "حذف المستشعر";
 
 /* Navigation bar title for G7SettingsView
    Title on WelcomeView */
 "Dexcom G7" = "ديكسكوم G7";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Field label */
 "Glucose" = "Glucose";
@@ -60,7 +60,7 @@
 "LOW" = "منخفض";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "الاسم";
 
 /* No comment provided by engineer. */
 "Scan for new sensor" = "البحث عن مستشعر جديد";
@@ -84,7 +84,7 @@
 "Sensor\nIssue" = "مشكلة في المستشعر\n";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "إحماء\nالمستشعر";
 
 /* title for g7 settings row showing sensor expiration time */
 "Sensor Expiration" = "إنتهت صلاحية المستشعر";
@@ -99,13 +99,13 @@
 "Sensor failed" = "فشل الحساس";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Start sensor";
+"Sensor Start" = "بدء الحساس";
 
 /* G7 Status highlight text for signal loss */
 "Signal\nLoss" = "فقدان الإشارة\n";
 
 /* Field label */
-"Time" = "Time";
+"Time" = "الوقت";
 
 /* Field label */
 "Trend" = "إتجاه";

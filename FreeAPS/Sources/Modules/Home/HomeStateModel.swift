@@ -92,6 +92,7 @@ extension Home {
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
         @Published var openAPSSettings: Preferences?
+        @Published var displayDelta: Bool = true
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -144,6 +145,7 @@ extension Home {
             maxBolus = settingsManager.pumpSettings.maxBolus
             useInsulinBars = settingsManager.settings.useInsulinBars
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
+            displayDelta = settingsManager.settings.displayDelta
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -626,6 +628,7 @@ extension Home.StateModel:
         maxBolus = settingsManager.pumpSettings.maxBolus
         useInsulinBars = settingsManager.settings.useInsulinBars
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
+        displayDelta = settingsManager.settings.displayDelta
         setupGlucose()
         setupOverrideHistory()
         setupData()

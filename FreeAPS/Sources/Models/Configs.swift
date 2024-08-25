@@ -49,6 +49,7 @@ extension Font {
     static let suggestionSmallParts = Font.custom("SuggestionSmallPartsFont", fixedSize: 16)
 
     static let glucoseFont = Font.custom("SuggestionSmallPartsFont", size: 45)
+    static let glucoseFontMdDl = Font.custom("SuggestionSmallPartsFont", size: 40)
     static let glucoseSmallFont = Font.custom("SuggestionSmallPartsFont", size: 24)
 
     static let bolusProgressStopFont = Font.custom("BolusProgressStop", fixedSize: 24)
