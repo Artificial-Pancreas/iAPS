@@ -688,9 +688,9 @@ extension Home {
                             // Adjust hours visible (X-Axis)
                             if state.timeSettings, !displayGlucose { timeSetting }
                             // TIR Chart
-                            preview.padding(.top, (state.timeSettings && !displayGlucose) ? 5 : 15).padding(.horizontal, 15)
+                            preview.padding(.top, (state.timeSettings && !displayGlucose) ? 5 : 15)
                             // Loops Chart
-                            loopPreview.padding(15)
+                            loopPreview.padding(.vertical, 15)
                             // COB Chart
                             if state.carbData > 0 {
                                 activeCOBView
