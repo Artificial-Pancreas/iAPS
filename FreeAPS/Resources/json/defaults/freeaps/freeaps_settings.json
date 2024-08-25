@@ -23,6 +23,7 @@
   "uploadStats": true,
   "useAutotune": false,
   "useCalendar": false,
+  "displayDelta": false,
   "debugOptions": false,
   "displayDelta": false,
   "glucoseBadge": true,
