@@ -98,7 +98,8 @@ extension Home {
                 alarm: $state.alarm,
                 lowGlucose: $state.lowGlucose,
                 highGlucose: $state.highGlucose,
-                alwaysUseColors: $state.alwaysUseColors
+                alwaysUseColors: $state.alwaysUseColors,
+                displayDelta: $state.displayDelta
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -391,8 +392,8 @@ extension Home {
         }
 
         var chart: some View {
-            let ratio = state.timeSettings ? 1.61 : 1.44
-            let ratio2 = state.timeSettings ? 1.65 : 1.51
+            let ratio = state.timeSettings ? 1.71 : 1.54
+            let ratio2 = state.timeSettings ? 1.75 : 1.61
 
             return addColouredBackground().addShadows()
                 .overlay {
@@ -409,11 +410,12 @@ extension Home {
                 if let settings = state.settingsManager {
                     let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
                     let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
+                    // Carbs on Board
                     HStack {
                         let substance = Double(state.suggestion?.cob ?? 0)
                         let max = max(Double(settings.preferences.maxCOB), 1)
                         let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1 /* 0.97 */ ))
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1))
                         TestTube(
                             opacity: opacity,
                             amount: fill,
@@ -429,11 +431,12 @@ extension Home {
                             Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
                         }.offset(x: 0, y: 5)
                     }
+                    // Insulin on Board
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
                         let max = max(Double(settings.preferences.maxIOB), 1)
-                        let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1 /* 0.98 */ ))
+                        let fraction: Double = 1 - abs(substance) / max
+                        let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
                         TestTube(
                             opacity: opacity,
                             amount: fill,
@@ -578,19 +581,17 @@ extension Home {
         @ViewBuilder private func headerView(_ geo: GeometryProxy, extra: CGFloat) -> some View {
             addHeaderBackground()
                 .frame(
-                    maxHeight: fontSize < .extraExtraLarge ? 125 + geo.safeAreaInsets.top + extra : 135 + geo
+                    maxHeight: fontSize < .extraExtraLarge ? 150 + geo.safeAreaInsets.top + extra : 160 + geo
                         .safeAreaInsets.top + extra
                 )
                 .overlay {
                     VStack {
                         ZStack {
-                            glucoseView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top).padding(.top, 10)
+                            glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
+                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading).padding(20)
                             HStack {
                                 carbsAndInsulinView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
-                                Spacer()
-                                loopView.frame(maxHeight: .infinity, alignment: .bottom).padding(.bottom, 3)
-                                    .offset(x: -2, y: 0) // To do: Remove all offsets, if possible.
                                 Spacer()
                                 pumpView
                                     .frame(maxHeight: .infinity, alignment: .bottom)

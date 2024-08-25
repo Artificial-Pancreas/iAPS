@@ -167,7 +167,7 @@ struct LoopEllipse: View {
             .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 1)
             .background(
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.white).opacity(colorScheme == .light ? 0.2 : 0.08)
+                    .fill(colorScheme == .light ? .white : .black)
             )
     }
 }

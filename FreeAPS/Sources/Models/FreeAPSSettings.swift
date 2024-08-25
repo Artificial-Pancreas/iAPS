@@ -69,6 +69,7 @@ struct FreeAPSSettings: JSON, Equatable {
     // var sex: Sex = .secret
     var sexSetting: Int = 3
     var disableHypoTreatment: Bool = false
+    var displayDelta: Bool = true
 }
 
 extension FreeAPSSettings: Decodable {
@@ -348,6 +349,10 @@ extension FreeAPSSettings: Decodable {
 
         if let disableHypoTreatment = try? container.decode(Bool.self, forKey: .disableHypoTreatment) {
             settings.disableHypoTreatment = disableHypoTreatment
+        }
+
+        if let displayDelta = try? container.decode(Bool.self, forKey: .displayDelta) {
+            settings.displayDelta = displayDelta
         }
 
         self = settings
