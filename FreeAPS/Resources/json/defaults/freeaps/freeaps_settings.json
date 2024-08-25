@@ -23,6 +23,7 @@
   "uploadStats": true,
   "useAutotune": false,
   "useCalendar": false,
+  "displayDelta": false,
   "debugOptions": false,
   "glucoseBadge": true,
   "timeSettings": true,
@@ -65,5 +66,4 @@
   "individualAdjustmentFactor": 0.5,
   "displayFatAndProteinOnWatch": true,
   "addSourceInfoToGlucoseNotifications": false
-  "displayDelta": false
 }
