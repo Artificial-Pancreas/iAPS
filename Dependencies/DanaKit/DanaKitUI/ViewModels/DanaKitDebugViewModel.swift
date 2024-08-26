@@ -114,7 +114,9 @@ class DanaKitDebugViewModel : ObservableObject {
             return
         }
         
-        self.pumpManager?.finishV3Pairing(pin1, randomPairingKey)
+        do {
+            try self.pumpManager?.finishV3Pairing(pin1, randomPairingKey)
+        } catch { }
     }
     
     func bolusModal() {

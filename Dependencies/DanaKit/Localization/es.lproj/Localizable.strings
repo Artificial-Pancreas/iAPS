@@ -164,7 +164,7 @@
 "The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Se alcanza el límite máximo diario de insulina. Pruebe con una cantidad menor o aumente el límite"
 
 /* dana AB limitation warning title */
-"Only Automatic Bolus is supported" = "Solo se admite el bolo automático"
+"Only Automatic Bolus is supported" = "Solo se admite bolo automático"
 
 /* dana AB limitation warning body */
 "Please consider changing your dosing strategy in the setting menu" = "Considere cambiar su estrategia de dosificación en el menú de configuración."
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Edad del yacimiento"
+
+/* Text for status */
+"Status" = "Estado"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Desconectando..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Reconectando..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Desconectar de la bomba"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Vuelva a conectar la bomba tp"
+
+/* DanaKit disconnected */
+"Disconnected" = "Desconectado"
+
+/* DanaKit connected */
+"Connected" = "Conectado"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "La bomba sigue desconectada"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "¡Su bomba sigue desconectada después del período establecido!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Establecer recordatorio para desconectar"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "¿Desea recibir una notificación cuando la bomba ya esté desconectada por un tiempo específico?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Si, 5 minutos"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Si, 15 minutos"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Si, 30 minutos"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Si, 1 hora"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "No, solo desconecta"

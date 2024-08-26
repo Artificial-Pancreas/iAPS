@@ -47,7 +47,7 @@
 "During the pairing process, your Dana-i will show a pairing prompt while you iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "במהלך תהליך ההתאמה, ה-Dana-i שלך יציג הנחית התאמה ואילו ה-iPhone שלך ​​יציג הנחיה לקוד התאמה. בשאיבה, בחר אישור והקלד את הקוד בן 6 הספרות במסך באייפון שלך. לאחר מכן, %1$@ מוכן לתקשר עם ה-Dana-i שלך"
 
 /* Dana-i/RS invalid ble5 keys */
-"ERROR: Failed to pair device" = "שגיאה: התאמת המכשיר נכשלה"
+"ERROR: Failed to pair device" = "שגיאה: צימוד המכשיר נכשל"
 
 /* Dana-i oke invalid ble5 keys */
 "OK" = "בסדר"
@@ -158,10 +158,10 @@
 "A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "פסק זמן בולוס פעיל. לא ניתן להשלים את מחזור הלולאה עד שפסק הזמן אינו פעיל"
 
 /* Error description when pump has reached the bolus max */
-"The max bolus limit is reached. Please try a lower amount or increase the limit" = "הגעת למגבלת הבולוס המקסימלית. נסה סכום נמוך יותר או הגדל את המגבלה"
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "הגעת למגבלת הבולוס המקסימלית. אנא נסה סכום נמוך יותר או הגדל את המגבלה"
 
 /* Error description when pump has reached the daily max */
-"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "הגיעה לגבול האינסולין היומי המקסימלי. אנא נסה סכום נמוך יותר או הגדל את המגבלה"
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "הגעת למגבלת האינסולין היומית המקסימלית. אנא נסה סכום נמוך יותר או הגדל את המגבלה"
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "רק בולוס אוטומטי נתמך"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "גיל המאגר"
+
+/* Text for status */
+"Status" = "סטָטוּס"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "מתנתק..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "מתחבר מחדש..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "נתק מהמשאבה"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "חבר מחדש את משאבת tp"
+
+/* DanaKit disconnected */
+"Disconnected" = "מְנוּתָק"
+
+/* DanaKit connected */
+"Connected" = "מְחוּבָּר"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "המשאבה עדיין מנותקת"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "המשאבה שלך עדיין מנותקת לאחר התקופה שנקבעה!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "הגדר תזכורת לניתוק"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "האם ברצונך לקבל הודעה כאשר המשאבה מנותקת זמן רב יותר לזמן מסוים?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "כן, 5 דקות"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "כן, 15 דקות"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "כן, 30 דקות"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "כן, שעה אחת"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "לא, פשוט תתנתק"

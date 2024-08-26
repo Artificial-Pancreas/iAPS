@@ -158,7 +158,7 @@
 "A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Thời gian chờ truyền nhanh đang hoạt động. Chu kỳ vòng lặp không thể hoàn thành cho đến khi hết thời gian chờ không hoạt động"
 
 /* Error description when pump has reached the bolus max */
-"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Đã đạt đến giới hạn bolus tối đa. Vui lòng thử số tiền thấp hơn hoặc tăng giới hạn"
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Đã đạt tới giới hạn bolus tối đa. Vui lòng thử số tiền thấp hơn hoặc tăng giới hạn"
 
 /* Error description when pump has reached the daily max */
 "The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Đã đạt đến giới hạn insulin tối đa hàng ngày. Vui lòng thử số tiền thấp hơn hoặc tăng giới hạn"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Tuổi hồ chứa"
+
+/* Text for status */
+"Status" = "Trạng thái"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Đang ngắt kết nối..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Đang kết nối lại..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Ngắt kết nối khỏi máy bơm"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Kết nối lại máy bơm tp"
+
+/* DanaKit disconnected */
+"Disconnected" = "Đã ngắt kết nối"
+
+/* DanaKit connected */
+"Connected" = "Đã kết nối"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Máy bơm vẫn bị ngắt kết nối"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Máy bơm của bạn vẫn bị ngắt kết nối sau khoảng thời gian đã đặt!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Đặt lời nhắc ngắt kết nối"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Bạn có muốn nhận được thông báo khi máy bơm bị ngắt kết nối lâu hơn trong một thời gian cụ thể không?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Vâng, 5 phút"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Vâng, 15 phút"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Vâng, 30 phút"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Có, 1 giờ"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Không, chỉ cần ngắt kết nối"

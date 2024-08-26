@@ -158,7 +158,7 @@
 "A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Тайм-аут болюса активен. Цикл цикла не может быть завершен, пока тайм-аут не станет неактивным."
 
 /* Error description when pump has reached the bolus max */
-"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Достигнут максимальный предел болюса. Попробуйте уменьшить сумму или увеличить лимит."
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Достигнут максимальный предел болюса. Пожалуйста, попробуйте уменьшить сумму или увеличить лимит."
 
 /* Error description when pump has reached the daily max */
 "The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Достигнут максимальный дневной лимит инсулина. Попробуйте уменьшить сумму или увеличить лимит."
@@ -295,7 +295,7 @@
 "Lcd on time" = "ЖК вовремя"
 
 /* beepAndAlarm */
-"Alarm beeps" = "Звуковые сигналы"
+"Alarm beeps" = "Звуковой сигнал тревоги"
 
 /* beepAndAlarm.sound */
 "Sound" = "Звук"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Возраст резервуара"
+
+/* Text for status */
+"Status" = "Положение дел"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Отключение..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Повторное подключение..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Отсоединить от насоса"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Подсоедините насос ТП"
+
+/* DanaKit disconnected */
+"Disconnected" = "Отключено"
+
+/* DanaKit connected */
+"Connected" = "Связанный"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Насос все еще отключен"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Ваш насос по-прежнему отключен по истечении установленного периода времени!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Установить напоминание об отключении"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Хотите ли вы получать уведомление, когда насос будет отключен в течение определенного времени?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Да, 5 минут"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Да, 15 минут"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Да, 30 минут"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Да, 1 час"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Нет, просто отключи"

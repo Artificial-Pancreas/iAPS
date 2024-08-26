@@ -35,7 +35,7 @@
 "Setting up DanaRS v3" = "Opsætning af DanaRS v3"
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Under parringsprocessen vil din DanaRS v3 vise en parringsprompt, mens din iPhone viser en prompt om to parringskoder. På din pumpe skal du vælge OK og indtaste de to koder på din iPhone. Herefter er Loop klar til at kommunikere med din DanaRS v3"
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Under parringsprocessen vil din DanaRS v3 vise en parringsprompt, mens din iPhone vil vise en prompt om to parringskoder. På din pumpe skal du vælge OK og indtaste de to koder på din iPhone. Herefter er Loop klar til at kommunikere med din DanaRS v3"
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Opsætning af Dana-i"
@@ -334,7 +334,7 @@
 "Pump shutdown" = "Pumpestop"
 
 /* Alert body for shutdown */
-"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Der har ikke været nogen interaktioner med pumpen for længe. Deaktiver enten denne funktion i pumpen eller interager med pumpen"
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Der har ikke været nogen interaktion med pumpen for længe. Deaktiver enten denne funktion i pumpen eller interager med pumpen"
 
 /* Alert title for basalCompare */
 "Basal Compare" = "Basal Sammenlign"
@@ -379,7 +379,7 @@
 "Unknown error" = "Ukendt fejl"
 
 /* Alert body for unknown */
-"An unknown error has occurred during processing the alert from the pump. Please report this" = "Der er opstået en ukendt fejl under behandlingen af ​​advarslen fra pumpen. Rapportér venligst dette"
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "Der er opstået en ukendt fejl under behandlingen af ​​advarslen fra pumpen. Meld venligst dette"
 
 /* The title of the pump information section in DanaKit settings */
 "Pump information" = "Pumpeoplysninger"
@@ -420,3 +420,51 @@
 
 /* Text for reservoir age */
 "Reservoir age" = "Reservoarets alder"
+
+/* Text for status */
+"Status" = "Status"
+
+/* DanaKit disconnecting */
+"Disconnecting..." = "Afbryder forbindelsen..."
+
+/* DanaKit connecting */
+"Reconnecting..." = "Genopretter forbindelse..."
+
+/* DanaKit disconnect */
+"Disconnect from pump" = "Frakobl pumpen"
+
+/* DanaKit connect */
+"Reconnect tp pump" = "Tilslut tp-pumpen igen"
+
+/* DanaKit disconnected */
+"Disconnected" = "Afbrudt"
+
+/* DanaKit connected */
+"Connected" = "Forbundet"
+
+/* Title disconnect reminder notification */
+"Pump is still disconnected" = "Pumpen er stadig afbrudt"
+
+/* Body disconnect reminder notification" */
+"Your pump is still disconnected after the set period!" = "Din pumpe er stadig afbrudt efter den indstillede periode!"
+
+/* Title disconnect reminder sheet */
+"Set reminder for disconnect" = "Indstil påmindelse om afbrydelse"
+
+/* body disconnect reminder sheet */
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Ønsker du at modtage en besked, når pumpen er længere frakoblet i et bestemt tidsrum?"
+
+/* Button text to 5 min */
+"Yes, 5 minutes" = "Ja, 5 minutter"
+
+/* Button text to 15 min */
+"Yes, 15 minutes" = "Ja, 15 minutter"
+
+/* Button text to 30 min */
+"Yes, 30 minutes" = "Ja, 30 minutter"
+
+/* Button text to 1h */
+"Yes, 1 hour" = "Ja, 1 time"
+
+/* Button text to just disconnect */
+"No, just disconnect" = "Nej, bare afbryd"
