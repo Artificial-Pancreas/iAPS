@@ -91,7 +91,7 @@ extension Home {
         @Published var tdd3DaysAgo: Decimal = 0
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
-        @Published var displayDelta: Bool = true
+        @Published var displayDelta: Bool = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
