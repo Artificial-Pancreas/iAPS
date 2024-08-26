@@ -139,6 +139,7 @@ extension Home {
                     state.setupPump = true
                 }
             }
+            .offset(y: 1)
         }
 
         var loopView: some View {
@@ -158,6 +159,7 @@ extension Home {
                 impactHeavy.impactOccurred()
                 state.runLoop()
             }
+            .offset(x: 28, y: -2)
         }
 
         var tempBasalString: String? {
@@ -460,6 +462,7 @@ extension Home {
                     }
                 }
             }
+            .offset(y: 5)
         }
 
         var preview: some View {
@@ -594,14 +597,13 @@ extension Home {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading).padding(20)
+                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading).padding(.leading, 10)
                             HStack {
                                 carbsAndInsulinView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
                                 Spacer()
                                 pumpView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
-                                    .padding(.bottom, 2)
                             }
                             .dynamicTypeSize(...DynamicTypeSize.xLarge)
                             .padding(.horizontal, 10)
