@@ -14,7 +14,6 @@ extension Home {
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
         @State var triggerUpdate = false
-        @State var scrollOffset = CGFloat.zero
         @State var display = false
         @State var displayGlucose = false
         let buttonFont = Font.custom("TimeButtonFont", size: 14)

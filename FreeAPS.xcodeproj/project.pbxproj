@@ -55,7 +55,6 @@
 		19A910382A24EF3200C8951B /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910372A24EF3200C8951B /* ChartsView.swift */; };
 		19AEF4322B1F5A98006FFE8B /* TIRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AEF4312B1F5A98006FFE8B /* TIRView.swift */; };
 		19B0EF2128F6D66200069496 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B0EF2028F6D66200069496 /* Statistics.swift */; };
-		19C14F442C29807C009A7E07 /* ScrollOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C14F432C29807C009A7E07 /* ScrollOffset.swift */; };
 		19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */; };
 		19D466A529AA2BD4004D5F33 /* FPUConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A429AA2BD4004D5F33 /* FPUConfigProvider.swift */; };
 		19D466A729AA2C22004D5F33 /* FPUConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D466A629AA2C22004D5F33 /* FPUConfigStateModel.swift */; };
@@ -669,7 +668,6 @@
 		19A910372A24EF3200C8951B /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		19AEF4312B1F5A98006FFE8B /* TIRView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIRView.swift; sourceTree = "<group>"; };
 		19B0EF2028F6D66200069496 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
-		19C14F432C29807C009A7E07 /* ScrollOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffset.swift; sourceTree = "<group>"; };
 		19C166682756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		19C166692756EFBD00ED12E3 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		19D466A229AA2B80004D5F33 /* FPUConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPUConfigDataFlow.swift; sourceTree = "<group>"; };
@@ -1921,7 +1919,6 @@
 				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
-				19C14F432C29807C009A7E07 /* ScrollOffset.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3042,7 +3039,6 @@
 				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
-				19C14F442C29807C009A7E07 /* ScrollOffset.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
 				38A9260525F012D8009E3739 /* CarbRatios.swift in Sources */,
