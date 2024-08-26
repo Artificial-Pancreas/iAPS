@@ -112,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Жирна їжа";
 
+/* Bolus option */
+"Hypo Treatment" = "Гіпотерапія";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Повний болюс";
 
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Максимум вуглеводів";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Максимальна кількість вуглеводів (г), яку можна додати для кожного запису";
 
 /* */
 "Pump Settings" = "Налаштування Помпи";
@@ -1962,7 +1968,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Дата народження";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nЯкщо ви ввімкнете «Поділитися та створити резервну копію», щоденні резервні копії ваших налаштувань і статистики будуть створені в онлайн-базі даних.\n\nОбов’язково скопіюйте та збережіть токен відновлення нижче. Токен відновлення потрібен для імпорту ваших налаштувань на інший телефон під час перегляду адаптації.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Мінімум розподілу";
@@ -2511,6 +2517,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Ніколи не відображайте маленьку діаграму рівня глюкози під час прокручування";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Вимкнути гіпотерапію";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";

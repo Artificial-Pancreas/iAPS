@@ -72,6 +72,7 @@ struct PumpView: View {
                     .frame(maxHeight: 15)
                     .foregroundColor(batteryColor)
                     .offset(x: 0, y: -4)
+                    .shadow(radius: 2)
                     .overlay {
                         if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                             ClockOffset(mdtPump: true)
@@ -85,6 +86,7 @@ struct PumpView: View {
                     .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
                     .foregroundColor(colorScheme == .dark ? .secondary : .white)
                     .offset(x: 0, y: -5)
+                    .shadow(radius: 2)
                     .overlay {
                         if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                             ClockOffset(mdtPump: false)
