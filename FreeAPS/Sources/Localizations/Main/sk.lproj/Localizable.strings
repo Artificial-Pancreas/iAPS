@@ -112,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Mastné jedlo";
 
+/* Bolus option */
+"Hypo Treatment" = "Hypo Treatment";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Celková dávka";
 
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Maximum sacharidov";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
 
 /* */
 "Pump Settings" = "Nastavenia pumpy";
@@ -2511,6 +2517,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";

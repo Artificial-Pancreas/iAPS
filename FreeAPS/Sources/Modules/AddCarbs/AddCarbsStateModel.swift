@@ -7,6 +7,8 @@ extension AddCarbs {
         @Injected() var carbsStorage: CarbsStorage!
         @Injected() var apsManager: APSManager!
         @Injected() var settings: SettingsManager!
+        @Injected() var nightscoutManager: NightscoutManager!
+
         @Published var carbs: Decimal = 0
         @Published var date = Date()
         @Published var protein: Decimal = 0
@@ -21,16 +23,20 @@ extension AddCarbs {
         @Published var id_: String = ""
         @Published var summary: String = ""
         @Published var skipBolus: Bool = false
+        @Published var hypoTreatment: Bool = false
+        @Published var disableHypoTreatment: Bool = false
 
         let now = Date.now
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+        let coredataContextBackground = CoreDataStack.shared.persistentContainer.newBackgroundContext()
 
         override func subscribe() {
             carbsRequired = provider.suggestion?.carbsReq
             maxCarbs = settings.settings.maxCarbs
             skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
             useFPUconversion = settingsManager.settings.useFPUconversion
+            disableHypoTreatment = settingsManager.settings.disableHypoTreatment
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
@@ -54,7 +60,9 @@ extension AddCarbs {
             )]
             carbsStorage.storeCarbs(carbsToStore)
 
-            if skipBolus, !continue_, !fetch {
+            if hypoTreatment { hypo() }
+
+            if (skipBolus && !continue_ && !fetch) || hypoTreatment {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {
@@ -206,6 +214,51 @@ extension AddCarbs {
                 }
                 print("meals 1: ID: " + (save.id ?? "").description + " FPU ID: " + (save.fpuID ?? "").description)
             }
+        }
+
+        private func hypo() {
+            let os = OverrideStorage()
+
+            // Cancel any eventual Other Override already active
+            if let activeOveride = os.fetchLatestOverride().first {
+                let presetName = os.isPresetName()
+                // Is the Override a Preset?
+                if let preset = presetName {
+                    if let duration = os.cancelProfile() {
+                        // Update in Nightscout
+                        nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                    }
+                } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                    }
+                } else {
+                    let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
+                        .formatted() + " %" : "Custom"
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                    }
+                }
+            }
+
+            // Enable New Override
+            let override = OverridePresets(context: coredataContextBackground)
+            override.percentage = 90
+            override.smbIsOff = true
+            override.duration = 45
+            override.name = "📉"
+            override.advancedSettings = true
+            override.target = 117
+            override.date = Date.now
+            override.indefinite = false
+
+            os.overrideFromPreset(override, UUID().uuidString)
+            // Upload to Nightscout
+            nightscoutManager.uploadOverride(
+                "📉",
+                Double(45),
+                override.date ?? Date.now
+            )
         }
     }
 }
