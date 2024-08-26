@@ -101,7 +101,7 @@ struct CurrentGlucoseView: View {
                 .offset(x: offset, y: 10)
         }
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 120, y: -6)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 120, y: -7)
     }
 
     private var adjustments: (degree: Double, x: CGFloat, y: CGFloat) {
