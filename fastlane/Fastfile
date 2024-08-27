@@ -31,6 +31,7 @@ platform :ios do
 
     sh "pwd"
     sh "ls scripts"
+    sh "which sh"
     sh "env"
    
     sh "scripts/CreateConfigOverride.sh", "#{APP_IDENTIFIER}"
