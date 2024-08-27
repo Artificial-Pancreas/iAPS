@@ -29,9 +29,7 @@ platform :ios do
   lane :build_iAPS do
     setup_ci if ENV['CI']
    
-    before_all do
-      sh "./scripts/CreateConfigOverride.sh", "#{APP_IDENTIFIER}"
-    end
+    sh "./scripts/CreateConfigOverride.sh", "#{APP_IDENTIFIER}"
  
     update_project_team(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
