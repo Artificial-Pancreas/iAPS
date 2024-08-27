@@ -29,11 +29,6 @@ platform :ios do
   lane :build_iAPS do
     setup_ci if ENV['CI']
 
-    sh "pwd"
-    sh "ls scripts"
-    sh "which sh"
-    sh "env"
-   
     sh "scripts/CreateConfigOverride.sh", "#{APP_IDENTIFIER}"
  
     update_project_team(
