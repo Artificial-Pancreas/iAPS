@@ -30,6 +30,8 @@ platform :ios do
     setup_ci if ENV['CI']
 
     sh "pwd"
+    sh "ls scripts"
+    sh "env"
    
     sh "scripts/CreateConfigOverride.sh", "#{APP_IDENTIFIER}"
  
