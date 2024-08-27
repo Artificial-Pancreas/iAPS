@@ -30,7 +30,7 @@ platform :ios do
     setup_ci if ENV['CI']
    
     before_all do
-      sh "./scripts/CreateOverride.sh", "#{APP_IDENTIFIER}"
+      sh "./scripts/CreateConfigOverride.sh", "#{APP_IDENTIFIER}"
     end
  
     update_project_team(
