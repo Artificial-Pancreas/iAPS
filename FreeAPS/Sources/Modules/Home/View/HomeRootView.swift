@@ -396,8 +396,8 @@ extension Home {
         }
 
         var chart: some View {
-            let ratio = state.timeSettings ? 1.71 : 1.54
-            let ratio2 = state.timeSettings ? 1.75 : 1.61
+            let ratio = state.timeSettings ? 1.73 : 1.56
+            let ratio2 = state.timeSettings ? 1.77 : 1.63
 
             return addColouredBackground().shadow(radius: 3, y: 3)
                 .overlay {
@@ -591,10 +591,10 @@ extension Home {
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy, extra: CGFloat) -> some View {
             let scrolling: Bool = extra > 0
-            let height: CGFloat = scrolling ? 155 : 165
+            let height: CGFloat = scrolling ? 170 : 170
             addHeaderBackground()
                 .frame(
-                    maxHeight: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top + extra : height + 10 + geo
+                    height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top + extra : height + 10 + geo
                         .safeAreaInsets.top + extra
                 )
                 .clipShape(Rectangle())
@@ -670,7 +670,7 @@ extension Home {
             .chartXScale(
                 domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
             )
-            .frame(maxHeight: 70)
+            .frame(height: 70)
             .padding(.leading, 30)
             .padding(.trailing, 32)
             .padding(.top, 15)
@@ -696,7 +696,7 @@ extension Home {
             GeometryReader { geo in
                 VStack(spacing: 0) {
                     // Header View
-                    headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 69 : 0)
+                    headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 59 : 0)
                     ScrollView {
                         VStack {
                             // Main Chart
