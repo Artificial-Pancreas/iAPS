@@ -2522,7 +2522,7 @@ Enact a temp Basal or a temp target */
 "Disable Hypo Treatments" = "Visa inte behandling av lågt blodsocker";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Display Glucose Delta";
+"Display Glucose Delta" = "Visa exakt glukosförändring";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
