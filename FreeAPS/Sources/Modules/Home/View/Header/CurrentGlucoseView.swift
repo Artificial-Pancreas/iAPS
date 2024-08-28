@@ -2,7 +2,6 @@ import SwiftUI
 
 struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
-    @Binding var timerDate: Date
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
     @Binding var alarm: GlucoseAlarm?
@@ -21,8 +20,20 @@ struct CurrentGlucoseView: View {
         if units == .mmolL {
             formatter.minimumFractionDigits = 1
             formatter.maximumFractionDigits = 1
+            formatter.roundingMode = .halfUp
         }
-        formatter.roundingMode = .halfUp
+        return formatter
+    }
+
+    private var manualGlucoseFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        if units == .mmolL {
+            formatter.minimumFractionDigits = 1
+            formatter.maximumFractionDigits = 1
+            formatter.roundingMode = .ceiling
+        }
         return formatter
     }
 
@@ -39,7 +50,7 @@ struct CurrentGlucoseView: View {
             formatter.decimalSeparator = "."
         }
         formatter.maximumFractionDigits = 1
-        formatter.positivePrefix = " "
+        formatter.positivePrefix = "+"
         formatter.negativePrefix = "-"
         return formatter
     }
@@ -59,17 +70,18 @@ struct CurrentGlucoseView: View {
     }
 
     var body: some View {
-        loopedGlucose
+        glucoseView
             .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xLarge)
     }
 
-    var loopedGlucose: some View {
+    var glucoseView: some View {
         ZStack {
             if let recent = recentGlucose {
-                if displayDelta, let deltaInt = delta, abs(deltaInt) > 1 { deltaView(deltaInt) }
+                if displayDelta, let deltaInt = delta, !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
                 VStack(spacing: 15) {
+                    let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
                     if let string = recent.glucose.map({
-                        glucoseFormatter
+                        formatter
                             .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber) ?? "" })
                     {
                         glucoseText(string).asAny()

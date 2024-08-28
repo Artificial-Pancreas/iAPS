@@ -14,7 +14,6 @@ extension Home {
         @State var showCancelAlert = false
         @State var showCancelTTAlert = false
         @State var triggerUpdate = false
-        @State var scrollOffset = CGFloat.zero
         @State var display = false
         @State var displayGlucose = false
 
@@ -98,7 +97,6 @@ extension Home {
         var glucoseView: some View {
             CurrentGlucoseView(
                 recentGlucose: $state.recentGlucose,
-                timerDate: $state.timerDate,
                 delta: $state.glucoseDelta,
                 units: $state.units,
                 alarm: $state.alarm,

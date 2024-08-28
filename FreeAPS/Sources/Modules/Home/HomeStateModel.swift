@@ -92,7 +92,7 @@ extension Home {
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
         @Published var openAPSSettings: Preferences?
-        @Published var displayDelta: Bool = true
+        @Published var displayDelta: Bool =
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
