@@ -97,6 +97,9 @@ struct CurrentGlucoseView: View {
                         .offset(x: 2, y: fontSize >= .extraLarge ? -3 : 0)
                     }
                 }
+            } else {
+                glucoseText("--").asAny()
+                    .background { glucoseDrop }
             }
         }
     }
