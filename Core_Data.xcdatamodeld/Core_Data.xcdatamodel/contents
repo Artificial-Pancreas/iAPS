@@ -160,6 +160,7 @@
         <attribute name="cob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="cr" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="737559660" usesScalarValueType="NO"/>
+        <attribute name="eventualBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>

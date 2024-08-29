@@ -157,12 +157,12 @@ extension Home {
                 impactHeavy.impactOccurred()
                 state.runLoop()
             }
-            .offset(x: 28, y: -2)
+            .offset(y: 10)
         }
 
-        var tempBasalString: String? {
+        var tempBasalString: String {
             guard let tempRate = state.tempRate else {
-                return nil
+                return "?" + NSLocalizedString(" U/hr", comment: "Unit per hour with space")
             }
             let rateString = numberFormatter.string(from: tempRate as NSNumber) ?? "0"
             var manualBasalString = ""
@@ -190,7 +190,7 @@ extension Home {
                         if state.pumpSuspended {
                             Text("Pump suspended")
                                 .font(.extraSmall).bold().foregroundColor(.loopGray)
-                        } else if let tempBasalString = tempBasalString {
+                        } else {
                             Text(tempBasalString)
                                 .font(.statusFont).bold()
                                 .foregroundColor(.insulin)
@@ -212,28 +212,32 @@ extension Home {
                 }
 
                 ZStack {
-                    if let eventualBG = state.eventualBG {
-                        HStack {
-                            Text("⇢").font(.statusFont).foregroundStyle(.secondary)
+                    HStack {
+                        Text("⇢").font(.statusFont).foregroundStyle(.secondary)
 
-                            // Image(systemName: "arrow.forward")
+                        if let eventualBG = state.eventualBG {
                             Text(
                                 fetchedTargetFormatter.string(
                                     from: (state.units == .mmolL ? eventualBG.asMmolL : Decimal(eventualBG)) as NSNumber
-                                )!
+                                ) ?? ""
                             ).font(.statusFont).foregroundColor(colorScheme == .dark ? .white : .black)
-                            Text(state.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
+                        } else {
+                            Text("?").font(.statusFont).foregroundStyle(.secondary)
                         }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, 8)
+                        Text(state.units.rawValue).font(.system(size: 12)).foregroundStyle(.secondary)
                     }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing, 8)
                 }
-            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            }
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         var infoPanel: some View {
-            info
-                .frame(minHeight: 35, maxHeight: 35)
+            info.frame(height: 26)
+                .background {
+                    InfoPanelBackground(colorScheme: colorScheme)
+                }
         }
 
         var mainChart: some View {
@@ -398,15 +402,12 @@ extension Home {
         }
 
         var chart: some View {
-            let ratio = state.timeSettings ? 1.71 : 1.54
-            let ratio2 = state.timeSettings ? 1.75 : 1.61
+            let ratio = state.timeSettings ? 1.73 : 1.56
+            let ratio2 = state.timeSettings ? 1.77 : 1.63
 
-            return addColouredBackground().addShadows()
+            return addColouredBackground().shadow(radius: 3, y: 3)
                 .overlay {
-                    VStack(spacing: 0) {
-                        infoPanel
-                        mainChart
-                    }
+                    mainChart
                 }
                 .frame(minHeight: UIScreen.main.bounds.height / (fontSize < .extraExtraLarge ? ratio : ratio2))
         }
@@ -414,6 +415,7 @@ extension Home {
         var carbsAndInsulinView: some View {
             HStack {
                 if let settings = state.settingsManager {
+                    // A temporary ugly(?) workaround for displaying last real IOB and COB computation
                     let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
                     let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
                     // Carbs on Board
@@ -431,9 +433,13 @@ extension Home {
                         .frame(width: 12, height: 38)
                         .offset(x: 0, y: -5)
                         HStack(spacing: 0) {
-                            Text(
-                                numberFormatter.string(from: (state.suggestion?.cob ?? 0) as NSNumber) ?? "0"
-                            ).font(.statusFont).bold()
+                            if let loop = state.suggestion, let cob = loop.cob {
+                                Text(numberFormatter.string(from: cob as NSNumber) ?? "0")
+                                    .font(.statusFont).bold()
+                                // Display last loop, unless very old
+                            } else {
+                                Text("?").font(.statusFont).bold()
+                            }
                             Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
                         }.offset(x: 0, y: 5)
                     }
@@ -452,9 +458,13 @@ extension Home {
                         .frame(width: 12, height: 38)
                         .offset(x: 0, y: -5)
                         HStack(spacing: 0) {
-                            Text(
-                                numberFormatter.string(from: (state.suggestion?.iob ?? 0) as NSNumber) ?? "0"
-                            ).font(.statusFont).bold()
+                            if let loop = state.suggestion, let iob = loop.iob {
+                                Text(
+                                    numberFormatter.string(from: iob as NSNumber) ?? "0"
+                                ).font(.statusFont).bold()
+                            } else {
+                                Text("?").font(.statusFont).bold()
+                            }
                             Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                         }.offset(x: 0, y: 5)
                     }
@@ -586,16 +596,20 @@ extension Home {
         }
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy, extra: CGFloat) -> some View {
+            let scrolling: Bool = extra > 0
+            let height: CGFloat = scrolling ? 170 : 170
             addHeaderBackground()
                 .frame(
-                    maxHeight: fontSize < .extraExtraLarge ? 150 + geo.safeAreaInsets.top + extra : 160 + geo
+                    height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top + extra : height + 10 + geo
                         .safeAreaInsets.top + extra
                 )
+                .clipShape(Rectangle())
                 .overlay {
                     VStack {
                         ZStack {
                             glucoseView.frame(maxHeight: .infinity, alignment: .center).offset(y: -5)
-                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading).padding(.leading, 10)
+                            loopView.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                                .padding(.leading, 32).padding(.top, 20)
                             HStack {
                                 carbsAndInsulinView
                                     .frame(maxHeight: .infinity, alignment: .bottom)
@@ -607,11 +621,13 @@ extension Home {
                             .padding(.horizontal, 10)
                         }
                         // Small glucose View, past 24 hours.
-                        if extra > 0 { glucoseHeaderView() }
-                        Divider()
+                        if displayGlucose { glucoseHeaderView() }
+
+                        if !scrolling {
+                            infoPanel
+                        }
                     }.padding(.top, geo.safeAreaInsets.top)
                 }
-                .clipShape(Rectangle())
         }
 
         @ViewBuilder private func glucoseHeaderView() -> some View {
@@ -660,7 +676,7 @@ extension Home {
             .chartXScale(
                 domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now
             )
-            .frame(maxHeight: 70)
+            .frame(height: 70)
             .padding(.leading, 30)
             .padding(.trailing, 32)
             .padding(.top, 15)
@@ -719,7 +735,8 @@ extension Home {
                     }
                 } else {
                     VStack(spacing: 0) {
-                        headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 93 : 0)
+                        // Header View
+                        headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 59 : 0)
                         ScrollView {
                             VStack {
                                 // Main Chart
@@ -745,15 +762,17 @@ extension Home {
                                     let yThreshold: CGFloat = state.timeSettings ? -500 : -560
                                     Color.clear
                                         .onChange(of: scrollPosition) { y in
-                                            if y < yThreshold, state.iobData.count > 5, !state.skipGlucoseChart {
-                                                withAnimation(.easeOut(duration: 0.15)) { displayGlucose = true }
+                                            if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
+                                                withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
                                             } else {
-                                                withAnimation(.easeOut(duration: 0.10)) { displayGlucose = false }
+                                                withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
                                             }
                                         }
                                 }
                             }
+
                         }.coordinateSpace(name: "HomeScrollView")
+                        // Buttons
                         buttonPanel(geo)
                     }
                     .background(
@@ -769,8 +788,6 @@ extension Home {
                                     .frame(width: 320, height: 60)
                                 bolusProgressView(progress: progress, amount: amount)
                             }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .offset(x: 0, y: -100)
                         }
                     }
                 }
@@ -830,14 +847,5 @@ extension Home {
                 }
             }
         }
-    }
-}
-
-extension AnyTransition {
-    static var slideDownAndUp: AnyTransition {
-        .asymmetric(
-            insertion: .move(edge: .top).combined(with: .opacity),
-            removal: .move(edge: .top).combined(with: .opacity)
-        )
     }
 }
