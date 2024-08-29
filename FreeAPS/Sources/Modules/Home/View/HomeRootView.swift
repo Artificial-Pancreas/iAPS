@@ -17,7 +17,6 @@ extension Home {
         @State var display = false
         @State var displayGlucose = false
 
-        @State var displayGlucose = false
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
 
@@ -725,7 +724,7 @@ extension Home {
 
         var body: some View {
             GeometryReader { geo in
-            if onboarded.first?.firstRun ?? true {
+                if onboarded.first?.firstRun ?? true {
                     let token = state.token()
                     // If old iAPS user pre v4.9.0 (not perfect yet)
                     if state.glucose.isNotEmpty, state.iobData.isNotEmpty, let openAPSSettings = state.openAPSSettings {
@@ -735,62 +734,62 @@ extension Home {
                         onboardingView()
                     }
                 } else {
-                VStack(spacing: 0) {
-                    // Header View
-                    headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 59 : 0)
-                    ScrollView {
-                        VStack {
-                            // Main Chart
-                            chart
-                            // Adjust hours visible (X-Axis)
-                            if state.timeSettings, !displayGlucose { timeSetting }
-                            // TIR Chart
-                            preview.padding(.top, (state.timeSettings && !displayGlucose) ? 5 : 15)
-                            // Loops Chart
-                            loopPreview.padding(.vertical, 15)
-                            // COB Chart
-                            if state.carbData > 0 {
-                                activeCOBView
-                            }
-                            // IOB Chart
-                            if state.iobs > 0 {
-                                activeIOBView.padding(.top, state.carbData > 0 ? viewPadding : 0)
-                            }
-                        }.background {
-                            // Track vertical scroll
-                            GeometryReader { proxy in
-                                let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
-                                let yThreshold: CGFloat = state.timeSettings ? -500 : -560
-                                Color.clear
-                                    .onChange(of: scrollPosition) { y in
-                                        if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
-                                            withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
-                                        } else {
-                                            withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
+                    VStack(spacing: 0) {
+                        // Header View
+                        headerView(geo, extra: (displayGlucose && !state.skipGlucoseChart) ? 59 : 0)
+                        ScrollView {
+                            VStack {
+                                // Main Chart
+                                chart
+                                // Adjust hours visible (X-Axis)
+                                if state.timeSettings, !displayGlucose { timeSetting }
+                                // TIR Chart
+                                preview.padding(.top, (state.timeSettings && !displayGlucose) ? 5 : 15)
+                                // Loops Chart
+                                loopPreview.padding(.vertical, 15)
+                                // COB Chart
+                                if state.carbData > 0 {
+                                    activeCOBView
+                                }
+                                // IOB Chart
+                                if state.iobs > 0 {
+                                    activeIOBView.padding(.top, state.carbData > 0 ? viewPadding : 0)
+                                }
+                            }.background {
+                                // Track vertical scroll
+                                GeometryReader { proxy in
+                                    let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
+                                    let yThreshold: CGFloat = state.timeSettings ? -500 : -560
+                                    Color.clear
+                                        .onChange(of: scrollPosition) { y in
+                                            if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
+                                                withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
+                                            } else {
+                                                withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
+                                            }
                                         }
-                                    }
+                                }
                             }
-                        }
 
-                    }.coordinateSpace(name: "HomeScrollView")
-                    // Buttons
-                    buttonPanel(geo)
-                }
-                .background(
-                    colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
-                        .opacity(IAPSconfig.backgroundOpacity * 2)
-                )
-                .ignoresSafeArea(edges: .vertical)
-                .overlay {
-                    if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(.gray.opacity(0.8))
-                                .frame(width: 320, height: 60)
-                            bolusProgressView(progress: progress, amount: amount)
+                        }.coordinateSpace(name: "HomeScrollView")
+                        // Buttons
+                        buttonPanel(geo)
+                    }
+                    .background(
+                        colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
+                            .opacity(IAPSconfig.backgroundOpacity * 2)
+                    )
+                    .ignoresSafeArea(edges: .vertical)
+                    .overlay {
+                        if let progress = state.bolusProgress, let amount = state.bolusAmount {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(.gray.opacity(0.8))
+                                    .frame(width: 320, height: 60)
+                                bolusProgressView(progress: progress, amount: amount)
+                            }
                         }
                     }
-                }
                 }
             }
             .onAppear {
