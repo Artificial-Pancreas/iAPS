@@ -788,6 +788,8 @@ extension Home {
                                     .frame(width: 320, height: 60)
                                 bolusProgressView(progress: progress, amount: amount)
                             }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .offset(x: 0, y: -100)
                         }
                     }
                 }
