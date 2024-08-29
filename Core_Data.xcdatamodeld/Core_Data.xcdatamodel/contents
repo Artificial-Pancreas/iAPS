@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES" codeGenerationType="class">
+        <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="BGaverages" representedClassName="BGaverages" syncable="YES" codeGenerationType="class">
         <attribute name="average" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="average_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -71,6 +76,10 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Onboarding" representedClassName="Onboarding" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="firstRun" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Override" representedClassName="Override" syncable="YES" codeGenerationType="class">
         <attribute name="advancedSettings" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="cr" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -126,6 +135,11 @@
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
+    <entity name="Profiles" representedClassName="Profiles" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="uploaded" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Protein" representedClassName="Protein" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enteredBy" optional="YES" attributeType="String"/>
@@ -146,6 +160,7 @@
         <attribute name="cob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="cr" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="737559660" usesScalarValueType="NO"/>
+        <attribute name="eventualBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>

@@ -3,9 +3,6 @@ import CoreData
 import Foundation
 import LoopKit
 import LoopKitUI
-import OmniBLE
-import OmniKit
-import RileyLinkKit
 import SwiftDate
 import SwiftUI
 import Swinject
@@ -832,7 +829,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 let saveLastLoop = LastLoop(context: self.coredataContext)
                 saveLastLoop.iob = (enacted.iob ?? 0) as NSDecimalNumber
                 saveLastLoop.cob = (enacted.cob ?? 0) as NSDecimalNumber
-                saveLastLoop.timestamp = (enacted.timestamp ?? .distantPast) as Date
+                saveLastLoop.timestamp = received ? enacted.timestamp : CoreDataStorage().fetchLastLoop()?
+                    .timestamp ?? .distantPast
                 try? self.coredataContext.save()
             }
 
@@ -1330,26 +1328,11 @@ final class BaseAPSManager: APSManager, Injectable {
         bolusReporter?.addObserver(self)
     }
 
-    private func updateStatus() {
-        debug(.apsManager, "force update status")
-        guard let pump = pumpManager else {
-            return
-        }
-
-        if let omnipod = pump as? OmnipodPumpManager {
-            omnipod.getPodStatus { _ in }
-        }
-        if let omnipodBLE = pump as? OmniBLEPumpManager {
-            omnipodBLE.getPodStatus { _ in }
-        }
-    }
-
     private func clearBolusReporter() {
         bolusReporter?.removeObserver(self)
         bolusReporter = nil
         processQueue.asyncAfter(deadline: .now() + 0.5) {
             self.bolusProgress.send(nil)
-            self.updateStatus()
         }
     }
 }

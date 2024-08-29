@@ -88,10 +88,10 @@
 
 /* The title of the section for orangelink commands
    The title of the section for rileylink commands */
-"Test Commands" = "Thử nghiệm câu lệnh";
+"Test Commands" = "Kiểm tra câu lệnh";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Thử nghiệm độ rung";
+"Test Vibration" = "Kiểm tra độ rung";
 
 /* The title of the command to update diagnostic LEDs */
 "Toggle Diagnostic LEDs" = "Cho phép chuẩn đoán LEDs";

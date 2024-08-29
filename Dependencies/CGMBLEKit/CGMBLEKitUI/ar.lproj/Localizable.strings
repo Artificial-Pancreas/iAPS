@@ -1,5 +1,5 @@
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@ دقيقة";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "هل أنت متأكد أنك تريد حذف هذا CGM؟";
@@ -8,7 +8,7 @@
 "Cancel" = "إلغاء";
 
 /* Title describing glucose date */
-"Date" = "Date";
+"Date" = "التاريخ";
 
 /* Button title to delete CGM
 Title text for the button to remove a CGM from Loop */
@@ -51,10 +51,10 @@ Title text for the button to remove a CGM from Loop */
 "Transmitter Age" = "عمر جهاز الإرسال";
 
 /* The title text for the Dexcom G5/G6 transmitter ID config value */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "معرف المرسل";
 
 /* Title describing glucose trend */
-"Trend" = "Trend";
+"Trend" = "إتجاه";
 
 /* The title text for the upload glucose switch cell */
-"Upload Readings" = "Upload Readings";
+"Upload Readings" = "رفع القراءات";

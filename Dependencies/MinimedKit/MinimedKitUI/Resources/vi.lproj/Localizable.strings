@@ -35,7 +35,7 @@
 "Best Frequency" = "Tần số tối ưu";
 
 /* The format string describing pump bolusing state: (1: bolusing) */
-"Bolusing: %1$@\n" = "Đang thực hiện bolus %1$@\n";
+"Bolusing: %1$@\n" = "Đang tiêm liều bolus: %1$@\n";
 
 /* Cancel button title */
 "Cancel" = "Hủy bỏ";
@@ -99,7 +99,7 @@
 "Insulin Delivery" = "Khối lượng tiêm insulin";
 
 /* Instructions on selecting an insulin data source */
-"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "Việc tiêm insulin có thể được quyết định từ bơm bằng cách kết hợp giải thuật dữ liệu của người sử dụng và so sánh với khối lượngngăn chứa insulin theo thời gian. Việc đọc các dữ liệu cũ sẽ đảm bảo biểu đồ đường huyết luôn được tính chính xác và tải dữ liệu điều trị cập nhật lên Nightscout, nhưng lại tăng việc tiêu hao pin cũng như lỗi giao tiếp tần số radio cao hơn việc chỉ đọc mỗi dữ liệu ngăn chứa insulin. Trong trường hợp nguồn dữ liệu không được lựa chọn vì bất kỳ lý do gì thì phần mềm sẽ quay sang lựa chọn khác.";
+"Insulin delivery can be determined from the pump by either interpreting the event history or comparing the reservoir volume over time. Reading event history allows for a more accurate status graph and uploading up-to-date treatment data to Nightscout, at the cost of faster pump battery drain and the possibility of a higher radio error rate compared to reading only reservoir volume. If the selected source cannot be used for any reason, the system will attempt to fall back to the other option." = "Việc tiêm insulin có thể được quyết định từ bơm bằng cách kết hợp giải thuật dữ liệu của người sử dụng và so sánh với khối lượng ngăn chứa insulin theo thời gian. Việc đọc các dữ liệu cũ sẽ đảm bảo biểu đồ đường huyết luôn được tính chính xác và tải dữ liệu điều trị cập nhật lên Nightscout, nhưng lại tăng việc tiêu hao pin cũng như lỗi giao tiếp tần số radio cao hơn việc chỉ đọc mỗi dữ liệu ngăn chứa insulin. Trong trường hợp nguồn dữ liệu không được lựa chọn vì bất kỳ lý do gì thì phần mềm sẽ quay sang lựa chọn khác.";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Insulin còn lại";
@@ -123,8 +123,7 @@
 "No, Keep Pump As Is" = "Không, Giữ nguyên máy bơm";
 
 /* Pump find device instruction */
-"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Trên máy bơm của bạn, hãy đi tới \"Find Device\". Chọn Main Menu >\Utilities >\\Connect Devices >\\Other Devices >\\On >\\Find Device.
-Bơm sẽ tìm thấy chỉ định";
+"On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "Trên máy bơm của bạn, hãy đi tới \"Find Device\". Chọn Main Menu >\Utilities >\\Connect Devices >\\Other Devices >\\On >\\Find Device";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
