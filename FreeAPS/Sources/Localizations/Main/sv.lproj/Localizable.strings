@@ -92,7 +92,7 @@
 "Suggested at" = "Föreslaget vid";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fel vid";
+"Status at" = "Status kl";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Måltidssammanfattning";
@@ -1249,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan inte utföra ny loop-rekommendation just nu, pga en pågående bolus. Vänta till nästa loop";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Fel: pump är upptagen.";
+"Pump is Busy." = "Pump är upptagen.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
