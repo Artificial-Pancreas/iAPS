@@ -120,5 +120,42 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             if (autotune_data.carb_ratio) { inputs.carbratio.schedule[0].ratio = autotune_data.carb_ratio; }
         }
     }
-    return freeaps_profile(inputs);
+
+    // merge oref0 defaults with iAPS ones
+    const defaults = Object.assign(
+        {},
+        freeaps_profile.defaults(),
+        {
+            type: 'iAPS', // attribute to override defaults
+            // +++++ iAPS settings
+            // smb_delivery_ratio: included in the current oref0 PR (https://github.com/openaps/oref0/pull/1465/files)
+            smb_delivery_ratio: 0.5,
+            adjustmentFactor: 1,
+            useNewFormula: false,
+            enableDynamicCR: false,
+            sigmoid: false,
+            weightPercentage: 0.65,
+            tddAdjBasal: false,
+            // threshold_setting: temporary fix to test thomasvargiu/iAPS#original-oref0 branch before build.
+            // We can remove it after merged and after build the new original bundles
+            // because it's included in the current oref0 PR (https://github.com/openaps/oref0/pull/1465/files)
+            // currently (2024-08-09) this settings probably doesn't work in the current iAPS main/dev branch
+            threshold_setting: 60
+        }
+    )
+
+    var logs = { err: '', stdout: '', return_val: 0 };
+    var profile = freeaps_profile(logs, inputs, defaults);
+    if (logs.err.length > 0) {
+        console.error(logs.err);
+    }
+    if (logs.stdout.length > 0) {
+        console.error(logs.stdout);
+    }
+
+    if (typeof profile !== 'object') {
+        return;
+    }
+
+    return profile;
 }
