@@ -329,6 +329,11 @@ final class OpenAPS {
                     insertedResons += ", Basal Adjustment: \(tddFactor.suffix(max(tddFactor.count - 6, 0)))"
                 }
 
+                // Include old ISF, before adjustment
+                if isf != 1, let oldISF = readMiddleware(json: profile, variable: "old_isf") {
+                    reasonString = reasonString.replacingOccurrences(of: "ISF:", with: "ISF: \(String(oldISF.suffix(3))) →")
+                }
+
                 insertedResons += tddString
                 reasonString.insert(contentsOf: insertedResons, at: startIndex)
                 // Autosens

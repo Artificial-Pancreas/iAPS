@@ -99,6 +99,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
 function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     console.log("Starting dynamic ISF layer.");
     var dynISFenabled = true;
+    
     // One of two exercise settings (they share the same purpose).
     var exerciseSetting = false;
     if (profile.highTemptargetRaisesSensitivity || profile.exerciseMode || dynamicVariables.isEnabled) {
