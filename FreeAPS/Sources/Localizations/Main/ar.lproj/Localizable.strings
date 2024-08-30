@@ -116,9 +116,6 @@
 /* Bolus option */
 "Hypo Treatment" = "علاج إنخفاض";
 
-/* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
-
 /* For the  Bolus View pop-up */
 "Full Bolus" = "جرعة كاملة";
 
@@ -2524,6 +2521,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Disable Hypo Treatments" = "Disable Hypo Treatments";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
