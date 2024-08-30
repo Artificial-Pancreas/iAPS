@@ -2521,6 +2521,9 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Disable Hypo Treatments" = "Вимкнути гіпотерапію";
 
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
+
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
 

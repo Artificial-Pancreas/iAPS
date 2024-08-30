@@ -2522,6 +2522,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 /* UI/UX option */
 "Disable Hypo Treatments" = "Disabilita trattamenti Ipoglicemie";
 
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
+
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
 

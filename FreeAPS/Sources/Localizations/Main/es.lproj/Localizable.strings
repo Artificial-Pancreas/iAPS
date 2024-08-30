@@ -2638,6 +2638,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 /* UI/UX option */
 "Disable Hypo Treatments" = "Disable Hypo Treatments";
 
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
+
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
 

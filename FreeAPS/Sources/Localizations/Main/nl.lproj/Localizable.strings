@@ -2525,6 +2525,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* UI/UX option */
 "Disable Hypo Treatments" = "Hypobehandelingen uitschakelen";
 
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
 
