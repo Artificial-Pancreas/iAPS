@@ -2522,7 +2522,7 @@ Enact a temp Basal or a temp target */
 "Disable Hypo Treatments" = "Hypo Behandlung deaktivieren";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Display Glucose Delta";
+"Display Glucose Delta" = "Glukose-Delta anzeigen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
