@@ -92,7 +92,7 @@
 "Suggested at" = "Предложено в";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Статус в";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Итог питания";
@@ -113,7 +113,7 @@
 "Fatty Meal" = "Жирная пища";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Гипогликемия";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Полный болюс";
