@@ -85,6 +85,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     var set_basal = false;
     var basal_rate = { };
     var old_isf = { };
+    var old_cr = { };
     
     var inputs = { };
     //add all preferences to the inputs
@@ -114,6 +115,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.set_basal = set_basal;
     inputs.basal_rate = basal_rate;
     inputs.old_isf = old_isf;
+    inputs.old_cr = old_cr;
     
     
     if (autotune_data) {
