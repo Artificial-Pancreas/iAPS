@@ -17,6 +17,7 @@ class DanaKitUserSettingsViewModel : ObservableObject {
     @Published var beepAndAlarm: BeepAlarmType
     @Published var lcdOnTimeInSec: UInt8
     @Published var backlightOnTimeInSec: UInt8
+    @Published var refillAmount: UInt16
     
     private let pumpManager: DanaKitPumpManager?
     
@@ -29,6 +30,7 @@ class DanaKitUserSettingsViewModel : ObservableObject {
         self.beepAndAlarm = self.pumpManager?.state.beepAndAlarm ?? .sound
         self.lcdOnTimeInSec = self.pumpManager?.state.lcdOnTimeInSec ?? 0
         self.backlightOnTimeInSec = self.pumpManager?.state.backlightOnTimInSec ?? 0
+        self.refillAmount = self.pumpManager?.state.refillAmount ?? 0
     }
     
     func storeUserOption() {
@@ -48,7 +50,7 @@ class DanaKitUserSettingsViewModel : ObservableObject {
             shutdownHour: pumpManager.state.shutdownHour,
             lowReservoirRate: self.lowReservoirRate,
             cannulaVolume: pumpManager.state.cannulaVolume,
-            refillAmount: pumpManager.state.refillAmount,
+            refillAmount: self.refillAmount,
             targetBg: pumpManager.state.targetBg
         )
         
