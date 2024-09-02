@@ -106,16 +106,10 @@ final class BaseCalendarManager: CalendarManager, Injectable {
 
         // Latest Loop data (from CoreData)
         var freshLoop: Double = 20
-        var lastLoop = [LastLoop]()
-        if displeyCOBandIOB || displayEmojis {
-            coredataContext.performAndWait {
-                let requestLastLoop = LastLoop.fetchRequest() as NSFetchRequest<LastLoop>
-                let sortLoops = NSSortDescriptor(key: "timestamp", ascending: false)
-                requestLastLoop.sortDescriptors = [sortLoops]
-                requestLastLoop.fetchLimit = 1
-                try? lastLoop = coredataContext.fetch(requestLastLoop)
-            }
-            freshLoop = -1 * (lastLoop.first?.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
+        var lastLoop: LastLoop?
+        if displeyCOBandIOB || displayEmojis, let recentLoop = CoreDataStorage().fetchLastLoop() {
+            lastLoop = recentLoop
+            freshLoop = -1 * (recentLoop.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
         }
 
         var glucoseIcon = "🟢"
@@ -137,8 +131,8 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                     .string(from: Double(settingsManager.settings.units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
             } ?? "--"
 
-        let iobText = iobFormatter.string(from: (lastLoop.first?.iob ?? 0) as NSNumber) ?? ""
-        let cobText = cobFormatter.string(from: (lastLoop.first?.cob ?? 0) as NSNumber) ?? ""
+        let iobText = lastLoop != nil ? (iobFormatter.string(from: (lastLoop?.iob ?? 0) as NSNumber) ?? "") : ""
+        let cobText = lastLoop != nil ? (cobFormatter.string(from: (lastLoop?.cob ?? 0) as NSNumber) ?? "") : ""
 
         var glucoseDisplayText = displayEmojis ? glucoseIcon + " " : ""
         glucoseDisplayText += glucoseText + " " + directionText + " " + deltaText

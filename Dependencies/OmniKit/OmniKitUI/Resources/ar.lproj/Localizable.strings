@@ -2,10 +2,10 @@
 "—" = "—";
 
 /* Format string for last status date on pod details screen */
-"%@ ago" = "%@ ago";
+"%@ ago" = "منذ ‭%@";
 
 /* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
+"%@ dB" = "%@ ديسيبل";
 
 /* No comment provided by engineer. */
 "%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now." = "%@ has recovered communication with the pod on your body.\n\nInsulin delivery records have been updated and should match what has actually been delivered.\n\nYou may continue to use %@ normally now.";
@@ -78,13 +78,13 @@
 "Adjusting Pump Time..." = "Adjusting Pump Time...";
 
 /* The title of the cell showing alarm status */
-"Alarms" = "Alarms";
+"Alarms" = "التنبيهات";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Are you sure you want to cancel Pod setup?";
 
 /* Confirmation message for shutting down a pod */
-"Are you sure you want to shutdown this pod?" = "Are you sure you want to shutdown this pod?";
+"Are you sure you want to shutdown this pod?" = "هل أنت متأكد من أنك تريد إيقاف هذه المضخة؟";
 
 /* No comment provided by engineer. */
 "Are you sure you want to skip Omnipod Onboarding?" = "Are you sure you want to skip Omnipod Onboarding?";
@@ -102,7 +102,7 @@
 "Attemping to re-establish communication" = "Attemping to re-establish communication";
 
 /* Back button text on DeliveryUncertaintyRecoveryView */
-"Back" = "Back";
+"Back" = "رجوع";
 
 /* The title of the cell showing pod basal status */
 "Basal Delivery" = "Basal Delivery";
@@ -129,10 +129,10 @@
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* The title of the command to change pump time zone */
-"Change Time Zone" = "Change Time Zone";
+"Change Time Zone" = "تغيير المنطقة الزمنية";
 
 /* Progress message for changing pod time. */
-"Changing time…" = "Changing time…";
+"Changing time…" = "تغيير الوقت…";
 
 /* Title for check cannula screen */
 "Check Cannula" = "Check Cannula";
@@ -147,7 +147,7 @@
 "Checking..." = "Checking...";
 
 /* Title for uncertainty recovered screen */
-"Comms Recovered" = "Comms Recovered";
+"Comms Recovered" = "تم استرداد الاتصال";
 
 /* Text for confidence reminders navigation link */
 "Confidence Reminders" = "Confidence Reminders";
@@ -218,7 +218,7 @@
 "Device Information" = "Device Information";
 
 /* Header for devices section of RileyLinkSetupView */
-"Devices" = "Devices";
+"Devices" = "الأجهزة";
 
 /* Title text for button to disable bolus beeps */
 "Disable Bolus Beeps" = "Disable Bolus Beeps";
@@ -228,7 +228,7 @@
 "Discard Pod" = "Discard Pod";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Title text for button to enable bolus beeps */
 "Enable Bolus Beeps" = "Enable Bolus Beeps";
@@ -255,10 +255,10 @@
 "Expiration Reminder Default" = "Expiration Reminder Default";
 
 /* The title of the cell showing the pod expiration after expiry */
-"Expired" = "Expired";
+"Expired" = "منتهي";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Expires";
+"Expires" = "الانتهاء";
 
 /* Alert title for failing to cancel manual basal error */
 "Failed to Cancel Manual Basal" = "Failed to Cancel Manual Basal";
@@ -276,7 +276,7 @@
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Failed to Update Expiration Reminder";
+"Failed to Update Expiration Reminder" = "فشل في تحديث تذكير انتهاء صلاحية";
 
 /* Alert title for error when updating low reservoir reminder */
 "Failed to Update Low Reservoir Reminder" = "Failed to Update Low Reservoir Reminder";
@@ -385,7 +385,7 @@
 "minute" = "minute";
 
 /* Unit for plural minutes in pod life remaining */
-"minutes" = "minutes";
+"minutes" = "دقائق";
 
 /* Alert title for missing temp basal configuration */
 "Missing Config" = "Missing Config";
@@ -399,7 +399,7 @@
 "Next" = "Next";
 
 /* Button label for user to answer cannula was not properly inserted */
-"No" = "No";
+"No" = "لا";
 
 /* Text shown in insulin remaining space when no pod is paired */
 "No\nDelivery" = "No\nDelivery";
@@ -425,7 +425,7 @@
 
 /* navigation title for notification settings
    Text for pod details disclosure row */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "إعدادات الإشعارات";
 
 /* No comment provided by engineer. */
 "Numbers" = "Numbers";
@@ -547,7 +547,7 @@
 "Pump Time" = "Pump Time";
 
 /* Label text for basal rate summary */
-"Rate" = "Rate";
+"Rate" = "معدّل";
 
 /* Label describing time remaining view */
 "Remaining" = "Remaining";
@@ -593,14 +593,14 @@
 
 /* Title of button to save delivery limit settings
    Title of button to sync basal profile when no pod paired */
-"Save" = "Save";
+"Save" = "إحفظ";
 
 /* button title for saving low reservoir reminder while saving
    button title for saving scheduled reminder while saving */
 "Saving..." = "Saving...";
 
 /* The detail text of the basal row when pod is running scheduled basal */
-"Schedule" = "Schedule";
+"Schedule" = "الجدول";
 
 /* Title of insulin delivery section */
 "Scheduled Basal" = "Scheduled Basal";
@@ -719,7 +719,7 @@
 /* Label for expiration reminder row
    Label for scheduled expiration reminder row
    Label for scheduled reminder value row */
-"Time" = "Time";
+"Time" = "الوقت";
 
 /* Title for pod sync time action sheet.
    title for time change detected notice */
@@ -763,7 +763,7 @@
 "Wait until insertion is completed." = "Wait until insertion is completed.";
 
 /* Button label for user to answer cannula was properly inserted */
-"Yes" = "Yes";
+"Yes" = "نعم";
 
 /* Button title for confirm deactivation option */
 "Yes, Deactivate Pod" = "Yes, Deactivate Pod";
