@@ -75,7 +75,6 @@ extension AddCarbs {
 
                     // Time
                     HStack {
-                        let now = Date.now
                         Text("Time")
                         Spacer()
                         if !pushed {
@@ -111,6 +110,11 @@ extension AddCarbs {
                     .popover(isPresented: $isPromptPresented) {
                         presetPopover
                     }
+
+                    // Optional Hypo Treatment
+                    if state.carbs > 0, !state.disableHypoTreatment {
+                        Toggle("Hypo Treatment", isOn: $state.hypoTreatment)
+                    }
                 }
 
                 Section {
@@ -118,7 +122,11 @@ extension AddCarbs {
                         button.toggle()
                         if button { state.add(override, fetch: editMode) }
                     }
-                    label: { Text(((state.skipBolus && !override && !editMode) || state.carbs <= 0) ? "Save" : "Continue") }
+                    label: {
+                        Text(
+                            ((state.skipBolus && !override && !editMode) || state.carbs <= 0 || state.hypoTreatment) ? "Save" :
+                                "Continue"
+                        ) }
                         .disabled(empty)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
@@ -128,6 +136,7 @@ extension AddCarbs {
                     mealPresets
                 }
             }
+            .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView {

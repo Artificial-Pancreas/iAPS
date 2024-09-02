@@ -8,7 +8,7 @@
 "Continue" = "Continue";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "قراءات السكر غير متوفرة";
@@ -45,14 +45,14 @@
 
 "Last Reading" = "آخر قراءة";
 
-"Time" = "Time";
+"Time" = "الوقت";
 
 "Trend" = "إتجاه";
 
 "Bluetooth" = "البلوتوث";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "الاسم";
 
 /* title for g7 settings connection status when scanning */
 "Scanning" = "يتم المسح";
@@ -67,7 +67,7 @@
 "Last Connect" = "آخر اتصال";
 
 /* Configuration */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* title for g7 config settings to upload readings */
 "Upload Readings" = "رفع القراءات";
@@ -76,7 +76,7 @@
 "Scan for new sensor" = "البحث عن مستشعر جديد";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "حذف المستشعر";
 
 /* No glucose value representation (3 dashes for mg/dL) */
 "– – –" = "– – –";
@@ -126,4 +126,4 @@
 "Sensor\nIssue" = "مشكلة في المستشعر\n";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "إحماء\nالمستشعر";

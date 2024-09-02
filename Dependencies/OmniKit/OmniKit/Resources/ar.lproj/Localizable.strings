@@ -1,51 +1,51 @@
 /* Description for an inactive alert modifier */
-" (inactive)" = " (inactive)";
+" (inactive)" = "(غير نشط)";
 
 /* Format string for low battery alert body for RileyLink. (1: device name) */
-"\"%1$@\" has a low battery" = "\"%1$@\" has a low battery";
+"\"%1$@\" has a low battery" = "%1$@\" بطارية منخفضة";
 
 /* Unit format string for an RSSI value in decibles */
-"%@ dB" = "%@ dB";
+"%@ dB" = "%@ ديسيبل";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin or less remaining in Pod. Change Pod soon.";
 
 /* Format string for activation time exceeded
    Pod state when activation not completed in the time allowed */
-"Activation time exceeded" = "Activation time exceeded";
+"Activation time exceeded" = "تجاوز الوقت المحدد للتفعيل";
 
 /* Description for auto-off */
-"Auto-off" = "Auto-Off";
+"Auto-off" = "إيقاف تلقائي";
 
 /* Description for auto-off alarm */
-"Auto-off alarm" = "Auto-off alarm";
+"Auto-off alarm" = "إيقاف تلقائي للمنبه";
 
 /* Pod state when basal initialized */
-"Basal initialized" = "Basal initialized";
+"Basal initialized" = "تهيئة الانسولين القاعدي";
 
 /* Pod state when running below fifty units */
-"Below 50 units" = "Below 50 units";
+"Below 50 units" = "أقل من 50 وحدة";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "الجرعة";
 
 /* Error message shown when operation could not be completed due to existing bolus in progress */
-"Bolus in progress" = "Bolus in progress";
+"Bolus in progress" = "جرعة قيد التنفيذ";
 
 /* The format string describing a bolus. (1: The amount delivered)(2: Start time of the dose)(3: duration)(4: scheduled certainty) */
-"Bolus: %1$@U %2$@ %3$@ %4$@" = "Bolus: %1$@U %2$@ %3$@ %4$@";
+"Bolus: %1$@U %2$@ %3$@ %4$@" = "جرعة: %1$@U %2$@ %3$@ %4$@";
 
 /* Delivery status when bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "يضخ";
 
 /* Delivery status when bolusing and temp basal is running */
-"Bolusing with temp basal" = "Bolusing with temp basal";
+"Bolusing with temp basal" = "جرعة مع انسولين قاعدي مؤقت";
 
 /* Pod state when inserting cannula */
-"Cannula inserting" = "Cannula inserting";
+"Cannula inserting" = "إدخال القنية قيد التنفيذ";
 
 /* String describing a dose that was certainly scheduled */
-"Certain" = "Certain";
+"Certain" = "معتمد";
 
 /* Alert content body for podExpireImminent pod alert */
 "Change Pod now. Insulin delivery will stop in 1 hour." = "Change Pod now. Insulin delivery will stop in 1 hour.";
@@ -54,13 +54,13 @@
 "Change Pod now. Pod has been active for 72 hours." = "Change Pod now. Pod has been active for 72 hours.";
 
 /* Format string for invalid message error code (1: error code number) */
-"Command error %1$u" = "Command error %1$u";
+"Command error %1$u" = "خطأ في الأمر %1$u";
 
 /* Status highlight that delivery is uncertain. */
 "Comms Issue" = "Comms Issue";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
-"Communication issue: Unacknowledged command pending." = "Communication issue: Unacknowledged command pending.";
+"Communication issue: Unacknowledged command pending." = "مشكلة إتصال: أمر غير معترف به معلق.";
 
 /* Description for BeepPreference.manualCommands */
 "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
@@ -81,28 +81,28 @@
 "Disabled" = "Disabled";
 
 /* Description for Empty reservoir pod fault */
-"Empty reservoir" = "Empty reservoir";
+"Empty reservoir" = "الخزان فارغ";
 
 /* Error message shown when empty response from pod was received */
-"Empty response from pod" = "Empty response from pod";
+"Empty response from pod" = "إجابة فارغة من المضخة";
 
 /* Pod state error event logged shutting down */
-"Error event logged, shutting down" = "Error event logged, shutting down";
+"Error event logged, shutting down" = "تم تسجيل خطأ ، جاري إيقاف التشغيل";
 
 /* Description for expiration alert */
-"Expiration alert" = "Expiration alert";
+"Expiration alert" = "إنذار انتهاء الصلاحية";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Extended";
 
 /* Delivery status when extended bolus is running */
-"Extended bolus running" = "Extended bolus running";
+"Extended bolus running" = "بولوس مطوّل قيد التنفيذ";
 
 /* Delivery status when extended bolus and temp basal is running */
-"Extended bolus running with temp basal" = "Extended bolus running with temp basal";
+"Extended bolus running with temp basal" = "بولوس مطوّل قيد التنفيذ مع انسولين قاعدي مؤقت";
 
 /* Pod state when fault event has occurred */
-"Fault event occurred" = "Fault event occurred";
+"Fault event occurred" = "حدث خطأ";
 
 /* Status highlight that when pod is deactivating. */
 "Finish Deactivation" = "Finish Deactivation";
@@ -111,13 +111,13 @@
 "Finish Pairing" = "Finish Pairing";
 
 /* Description for finish setup */
-"Finish setup " = "Finish setup ";
+"Finish setup " = "الانتهاء من الإعداد ";
 
 /* Description for finish setup reminder */
-"Finish setup reminder" = "Finish setup reminder";
+"Finish setup reminder" = "تذكير إنهاء الإعداد";
 
 /* Pod inititialized */
-"Initialized" = "Initialized";
+"Initialized" = "تهيئة";
 
 /* Pod state when inserting cannula */
 "Inserting cannula" = "Inserting cannula";
@@ -132,10 +132,10 @@
 "Insulin type not configured" = "Insulin type not configured";
 
 /* The format string for Internal pod fault (1: The fault code value) */
-"Internal pod fault %1$03d" = "Internal pod fault %1$03d";
+"Internal pod fault %1$03d" = "خطأ داخلي في المضخة %1$03d";
 
 /* The format string describing a bolus that was interrupted. (1: The amount delivered)(2: The amount scheduled)(3: Start time of the dose)(4: duration)(5: scheduled certainty) */
-"InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@";
+"InterruptedBolus: %1$@ U (%2$@ U scheduled) %3$@ %4$@ %5$@" = "البولوس المتعرقل: تم توصيل %1$@ U (من أصل%2$@ U مقرر) %3$@ %4$@ %5$@";
 
 /* Error message for when unexpected address is received (1: received address) (2: expected address) */
 "Invalid address 0x%x. Expected 0x%x" = "Invalid address 0x%x. Expected 0x%x";
@@ -153,22 +153,22 @@
 "Low Reservoir" = "Low Reservoir";
 
 /* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Low reservoir advisory (%1$gU)";
+"Low reservoir advisory (%1$gU)" = "إشعار بأن الخزان منخفض (%1$gU)";
 
 /* Description for low reservoir alarm */
-"Low reservoir advisory alarm" = "Low reservoir advisory alarm";
+"Low reservoir advisory alarm" = "تنبيه بأن الخزان منخفض";
 
 /* Title for RileyLink low battery alert */
-"Low RileyLink Battery" = "Low RileyLink Battery";
+"Low RileyLink Battery" = "بطارية RileyLink منخفضة";
 
 /* Recovery suggestion when no RileyLink is available */
-"Make sure your RileyLink is nearby and powered on" = "Make sure your RileyLink is nearby and powered on";
+"Make sure your RileyLink is nearby and powered on" = "تأكد من أن RileyLink الخاص بك قريب ويعمل";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
 
 /* Pod memory initialized */
-"Memory initialized" = "Memory initialized";
+"Memory initialized" = "تم تهيئة الذاكرة";
 
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
 "Move to a new area away from any other pods and try again." = "Move to a new area away from any other pods and try again.";
@@ -178,13 +178,13 @@
 "Multiple Command Alert" = "Multiple Command Alert";
 
 /* Pod alert state when no alerts are active */
-"No alerts" = "No alerts";
+"No alerts" = "لا يوجد تنبيهات";
 
 /* Description for BeepPreference.silent */
 "No confidence reminders are used." = "No confidence reminders are used.";
 
 /* Description for Fault Event Code .noFaults */
-"No faults" = "No faults";
+"No faults" = "لا توجد أخطاء";
 
 /* Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
@@ -200,29 +200,29 @@
 "No pods found" = "No pods found";
 
 /* Error message shown when no response from pod was received */
-"No response from pod" = "No response from pod";
+"No response from pod" = "لايوجد رد من الحجيرة";
 
 /* Error message shown when no response from pod was received */
-"No RileyLink available" = "No RileyLink available";
+"No RileyLink available" = "لا يوجد RileyLink متاح";
 
 /* Delivery status when basal is running
    Pod state when running above fifty units */
 "Normal" = "Normal";
 
 /* Description for MessageError notEnoughData */
-"Not enough data" = "Not enough data";
+"Not enough data" = "لا توجد بيانات كافية";
 
 /* Description for Occlusion detected pod fault */
-"Occlusion detected" = "Occlusion detected";
+"Occlusion detected" = "تم اكتشاف خطأ الاستمالة (Occlusion)";
 
 /* Generic title of the omnipod pump manager */
-"Omnipod" = "Omnipod";
+"Omnipod" = "أومنيبود";
 
 /* Pod status after pairing */
 "Paired" = "Paired";
 
 /* Pod status when pairing completed */
-"Pairing completed" = "Pairing completed";
+"Pairing completed" = "إكتمل الإقتران";
 
 /* Description for MessageError parsingError. (1: decription of error), (2: hexadecimal data starting at offset) */
 "Parsing Error: %1$@ in (%2$@)" = "Parsing Error: %1$@ in (%2$@)";
@@ -231,7 +231,7 @@
 "Please bring only original pod in range or deactivate original pod" = "Please bring only original pod in range or deactivate original pod";
 
 /* Recovery suggestion when no response is received from pod */
-"Please bring your pod closer to the RileyLink and try again" = "Please bring your pod closer to the RileyLink and try again";
+"Please bring your pod closer to the RileyLink and try again" = "من فضلك قم بجعل المضخة أقرب إلى RileyLink ثم حاول مرة أخرى";
 
 /* Alert content body for finishSetupReminder pod alert */
 "Please finish pairing your pod." = "Please finish pairing your pod.";
@@ -240,25 +240,25 @@
 "Please pair a new pod" = "Please pair a new pod";
 
 /* Recovery suggestion when pairing signal strength is too high */
-"Please reposition the RileyLink further from the pod" = "Please reposition the RileyLink further from the pod";
+"Please reposition the RileyLink further from the pod" = "يرجى وضع RileyLink أبعد من الحجيرة";
 
 /* Recovery suggestion when pairing signal strength is too low */
-"Please reposition the RileyLink relative to the pod" = "Please reposition the RileyLink relative to the pod";
+"Please reposition the RileyLink relative to the pod" = "يرجى وضع RileyLink اقرب الى المضخة";
 
 /* Error message shown when user cannot pair because pod is already paired */
 "Pod already paired" = "Pod already paired";
 
 /* Error message shown when prime is attempted, but pod is already primed */
-"Pod already primed" = "Pod already primed";
+"Pod already primed" = "تمت تهيأت المضخة مسبقاً";
 
 /* Status highlight message for other alarm. */
 "Pod Error" = "Pod Error";
 
 /* Description for expiration advisory alarm */
-"Pod expiration advisory alarm" = "Pod expiration advisory alarm";
+"Pod expiration advisory alarm" = "انذار اقتراب وقت انتهاء صلاحية المضخة";
 
 /* The title for pod expiration notification */
-"Pod Expiration Notice" = "Pod Expiration Notice";
+"Pod Expiration Notice" = "إشعار انتهاء صلاحية المضخة";
 
 /* Description for Pod expired pod fault */
 "Pod expired" = "Pod expired";
@@ -267,16 +267,16 @@
 "Pod expires in %1$@." = "Pod expires in %1$@.";
 
 /* Format string for pod fault code */
-"Pod Fault: %1$@" = "Pod Fault: %1$@";
+"Pod Fault: %1$@" = "خطأ مضخة:%1$@";
 
 /* Error message when cannula insertion fails because the pod is in an unexpected state */
 "Pod is not in a state ready for cannula insertion." = "Pod is not in a state ready for cannula insertion.";
 
 /* Error message when prime fails because the pod is in an unexpected state */
-"Pod is not in a state ready for priming." = "Pod is not in a state ready for priming.";
+"Pod is not in a state ready for priming." = "المضخة ليست في حالة جاهزة للتهيئة.";
 
 /* Error message action could not be performed because pod is suspended */
-"Pod is suspended" = "Pod is suspended";
+"Pod is suspended" = "تم تعليق المضخة";
 
 /* Status highlight message for occlusion alarm. */
 "Pod Occlusion" = "Pod Occlusion";
@@ -288,23 +288,23 @@
 "Pod sent ack instead of response" = "Pod sent ack instead of response";
 
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
-"Pod setup window expired" = "Pod setup window expired";
+"Pod setup window expired" = "تم تجاوز الوقت المسموح لإعداد المضخة";
 
 /* Description for pod suspended reminder */
-"Pod suspended reminder" = "Pod suspended reminder";
+"Pod suspended reminder" = "تذكير بأن المضخة معلقة";
 
 /* Format string for poor pod signal strength */
-"Poor signal strength" = "Poor signal strength";
+"Poor signal strength" = "قوة الإشارة ضعيفة";
 
 /* Delivery status when pod is priming
    Pod status when priming */
-"Priming" = "Priming";
+"Priming" = "قيد التمهيد";
 
 /* Pod state when priming completed */
-"Priming completed" = "Priming completed";
+"Priming completed" = "اكتمل التمهيد";
 
 /* Pod state when ready for basal programming */
-"Ready for basal programming" = "Ready for basal programming";
+"Ready for basal programming" = "جاهز لبرمجة الانسولين القاعدي";
 
 /* Pod state when ready for cannula insertion */
 "Ready to insert cannula" = "Ready to insert cannula";

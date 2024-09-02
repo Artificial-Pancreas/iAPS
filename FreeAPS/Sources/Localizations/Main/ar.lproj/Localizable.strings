@@ -4,242 +4,246 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Add insulin without actually bolusing";
+"Add insulin without actually bolusing" = "إضافة الأنسولين دون تنفيذ الجرعة";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Add %@ without bolusing";
+"Add %@ without bolusing" = "إضافة %@ دون تنفيذ الجرعة";
 
-"Bolus" = "Bolus";
+"Bolus" = "الجرعة";
 
-"Close" = "Close";
+"Close" = "إغلاق";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Continue without bolus";
+"Continue without bolus" = "متابعة دون ضخ جرعة";
 
 /* Continue after added meal without bolus */
-"Save Meal without bolus" = "Save Meal without bolus";
+"Save Meal without bolus" = "إضافة وجبة دون ضخ جرعة";
 
 /* Predictions and Meal summary part of the Bolus View. */
 "Status" = "الحالة";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nالكمية أكثر من الحد الأقصى المحدد للجرعة! 
+\nهل أنت متيقِّن أنك تريد إضافة ";
 
 /* Header */
-"Enact Bolus" = "Enact Bolus";
+"Enact Bolus" = "ضخ الجرعة";
 
 /* Button */
-"Enact bolus" = "Enact bolus";
+"Enact bolus" = "ضخ الجرعة";
 
 /*  */
-"Insulin recommended" = "Insulin recommended";
+"Insulin recommended" = "الإنسولين الموصى به";
 
 /*  */
-"Insulin required" = "Insulin required";
+"Insulin required" = "الإنسولين المطلوب";
 
 /* Bolus screen */
-"Recommendation" = "Recommendation";
+"Recommendation" = "المقترحات";
 
 /* Button */
-"Clear" = "Clear";
+"Clear" = "مسح";
 
 /* Button */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "آخر دورة قبل %@ دقيقة. أكمل أو ألغِ هذه الوجبة/الجرعة للسماح بتشغيل الدورة التالية";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Display Emojis as Labels";
+"Display Emojis as Labels" = "عرض الرموز التعبيرية كتسميات";
 
 /* Calender Option */
-"Display IOB and COB" = "Display IOB and COB";
+"Display IOB and COB" = "عرض IOB و COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Confirm Bolus Faster";
+"Confirm Bolus Faster" = "تفعيل خاصية تأكيد البولوس بشكل اسرع";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "اعدادات واجهة/تجربة المستخدم";
 
 /*  */
-"Wait please" = "Wait please";
+"Wait please" = "انتظر من فضلك";
 
 /*  */
-"Agree and continue" = "Agree and Continue";
+"Agree and continue" = "الموافقة والمتابعة";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "سجل الأنسولين الخارجي";
 
 /* Bolus progress view */
-"of" = "of";
+"of" = "من";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "جرعة عن بعد ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "تم تسليمها";
 
 /* Remote Bolus Alert, Part 3 */
 " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "تم تسليم الجرعة عن بعد للتو!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Enacted at";
+"Enacted at" = "تم تفيعله";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Suggested at";
+"Suggested at" = "تم اقتراحه";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error at";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
-"Meal Summary" = "Meal Summary";
+"Meal Summary" = "موجز الوجبة";
 
 /* Bolus View Meal Edit Meal Button */
-"Edit Meal" = "Edit Meal";
+"Edit Meal" = "تعديل الوجبة";
 
 /* Bolus View Meal Add Meal Button */
-"Add Meal" = "Add Meal";
+"Add Meal" = "إضافة وجبة";
 
 /* Bolus View Bolus Summary Header */
-"Bolus Summary" = "Bolus Summary";
+"Bolus Summary" = "موجز الجرعات";
 
 /* For the  Bolus View pop-up */
-"Calculations" = "Calculations";
+"Calculations" = "حساب";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal" = "Fatty Meal";
+"Fatty Meal" = "وجبة دهنية";
+
+/* Bolus option */
+"Hypo Treatment" = "علاج إنخفاض";
 
 /* For the  Bolus View pop-up */
-"Full Bolus" = "Full Bolus";
+"Full Bolus" = "جرعة كاملة";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Fraction";
+"Fraction" = "جزء";
 
 /* For the  Bolus View pop-up */
-"Fatty Meal Factor" = "Fatty Meal Factor";
+"Fatty Meal Factor" = "عامل الوجبة الدهنية";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "الكربونات والأنسولين السابقة مدرجة في التنبؤ بالجلوكوز في نهاية المطاف.";
 
 /* For the  Bolus View pop-up */
-"Result" = "Result";
+"Result" = "النتيجة";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Your entered amount was limited by your max Bolus setting of %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "تم تحديد المبلغ الذي أدخلته من خلال إعدادتك القصوى Bols %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Continue";
 
 /* Home title */
-"Home" = "Home";
+"Home" = "الرئيسية";
 
 /* Looping in progress */
 "looping" = "looping";
 
 /* min ago since last loop */
-"min ago" = "min ago";
+"min ago" = "قبل دقيقة";
 
 /* Status Title */
-"No suggestion" = "No suggestion";
+"No suggestion" = "لا اقتراحات";
 
 /* Replace pod text in Header */
-"Replace pod" = "Replace pod";
+"Replace pod" = "استبدال البود";
 
 /* Add carbs screen */
-"Add Carbs" = "Add Carbs";
+"Add Carbs" = "إضافة كربونات";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
-"Add Carbs " = "Add Carbs ";
+"Add Carbs " = "إضافة كربونات ";
 
 /*  */
-"Amount Carbs" = "Amount Carbs";
+"Amount Carbs" = "كمية الكاربوهيدرات";
 
 /* Grams unit */
-"grams" = "grams";
+"grams" = "جرام";
 
 /*  */
-"Carbs required" = "Carbs required";
+"Carbs required" = "الكاربوهيدرات المطلوبة";
 
 /* Saved Food Presets */
-"Saved Food" = "Saved Food";
+"Saved Food" = "الوجبات المحفوظة";
 
 /* */
-"Are you sure?" = "Are you sure?";
+"Are you sure?" = "هل أنت متأكد؟";
 
 /* Bottom target temp */
-"Bottom target" = "Bottom target";
+"Bottom target" = "الهدف السفلي";
 
 /* Cancel preset name */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /*  */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "إلغاء الهدف المؤقت";
 
 /* Custom temp target */
-"Custom" = "Custom";
+"Custom" = "مخصص";
 
 /*  */
-"Date" = "Date";
+"Date" = "التاريخ";
 
 /*  */
-"Delete" = "Delete";
+"Delete" = "حذف";
 
 /* Delete preset temp target */
-"Delete preset \"%@\"" = "Delete preset \"%@\"";
+"Delete preset \"%@\"" = "حذف الإعداد المسبق \"%@\"";
 
 /* Duration of target temp or temp basal */
-"Duration" = "Duration";
+"Duration" = "المدة";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "تفعيل الهدف المؤقت";
 
 /* */
-"Target" = "Target";
+"Target" = "الهدف";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Basal Insulin and Sensitivity ratio";
+"Basal Insulin and Sensitivity ratio" = "نسبة الإنسولين الأساسي والحساسية";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "إعداد 'نصف الهدف الأساسي' سوف يقلل من القاعدي و يرفع من (حساسية الانسولين) في وقت أسبق، عند مستوى جلكوز مستهدف أقل.";
 
 /* */
-" Your setting: " = " Your setting: ";
+" Your setting: " = " الإعدادات الخاصة بك: ";
 
 /* */
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max limits the max endpoint";
 
 /*  */
-"Enter preset name" = "Enter preset name";
+"Enter preset name" = "أدخل اسم التعيين المسبق";
 
 /* Preset name */
-"Name" = "Name";
+"Name" = "الاسم";
 
 /* minutes of target temp */
-"minutes" = "minutes";
+"minutes" = "دقائق";
 
 /*  */
-"Presets" = "Presets";
+"Presets" = "التعيينات المسبقة";
 
 /* Save preset name */
-"Save" = "Save";
+"Save" = "إحفظ";
 
 /*  */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "حفظ كتعيين مسبق";
 
 /* Delete Meal Preset */
-"Delete Preset" = "Delete Preset";
+"Delete Preset" = "حذف التعيين المسبق";
 
 /* Confirm Deletion */
-"Delete preset '%@'?" = "Delete preset '%@'?";
+"Delete preset '%@'?" = "حذف التعيين المسبق '%@'؟";
 
 /* Button */
-"No" = "No";
+"No" = "لا";
 
 /* Button */
-"Yes" = "Yes";
+"Yes" = "نعم";
 
 /* + Button */
 "[ +1 ]" = "[ +1 ]";
@@ -248,119 +252,119 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "الحد الاعلى من الهدف";
 
 /*  Temp target set for ... minutes */
-"for" = "for";
+"for" = "لـ";
 
 /*  Temp target set for ... minutes */
-"min" = "min";
+"min" = "د";
 
 /*  */
-"Autotune" = "Autotune";
+"Autotune" = "ضبط الانسولين التلقائي";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "ملف الانسولين القاعدي";
 
 /*  */
-"Carb ratio" = "Carb ratio";
+"Carb ratio" = "معامل الكارب";
 
 /*  */
-"Delete autotune data" = "Delete autotune data";
+"Delete autotune data" = "حذف بيانات ضبط الانسولين التلقائي";
 
 /*  */
-"Run now" = "Run now";
+"Run now" = "نفذ الأن";
 
 /*  */
-"Last run" = "Last run";
+"Last run" = "آخر تنفيذ";
 
 /*  */
-"Sensitivity" = "Sensitivity";
+"Sensitivity" = "حساسية";
 
 /*  */
 "Use Autotune" = "use Autotune";
 
 /* Add profile basal */
-"Add" = "Add";
+"Add" = "أضف";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "ملف الانسولين القاعدي";
 
 /* Rate basal profile */
-"Rate" = "Rate";
+"Rate" = "معدّل";
 
 /*  */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "الحفظ في المضخة";
 
 /*  */
-"Schedule" = "Schedule";
+"Schedule" = "الجدول";
 
 /*  */
-"starts at" = "starts at";
+"starts at" = "يبدأ عند";
 
 /* Time basal profile */
-"Time" = "Time";
+"Time" = "الوقت";
 
 /* */
-"Calculated Ratio" = "Calculated Ratio";
+"Calculated Ratio" = "النسبة المحسوبة";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "معاملات الكارب";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "النسبة";
 
 /*  */
-"Autosens" = "Autosens";
+"Autosens" = "حساسية الانسولين التلقائية";
 
 /*  */
-"Calculated Sensitivity" = "Calculated Sensitivity";
+"Calculated Sensitivity" = "الحساسية المحسوبة";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "حساسية الأنسولين";
 
 /* */
-"Sensitivity Ratio" = "Sensitivity Ratio";
+"Sensitivity Ratio" = "معدل الحساسية";
 
 /*  */
-"Dismiss" = "Dismiss";
+"Dismiss" = "تجاهل";
 
 /*  */
-"Important message" = "Important message";
+"Important message" = "رسالة مهمة";
 
 /*  */
-"Amount" = "Amount";
+"Amount" = "الكمية";
 
 /* */
-"Cancel Temp Basal" = "Cancel Temp Basal";
+"Cancel Temp Basal" = "إلغاء الضخ المؤقت للإنسولين القاعدي";
 
 /* Enact
 Enact a temp Basal or a temp target */
-"Enact" = "Enact";
+"Enact" = "فعل";
 
 /* Start a temp target or a profile override */
-"Start" = "Start";
+"Start" = "إبدأ";
 
 /* */
-"Manual Temp Basal" = "Manual Temp Basal";
+"Manual Temp Basal" = "إنسولين قاعدي يدوي مؤقت";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Allow uploads";
+"Allow uploads" = "السماح بالتحميل";
 
 /* API secret in NS */
-"API secret" = "API secret";
+"API secret" = "سر API";
 
 /* Connect to NS */
-"Connect" = "Connect";
+"Connect" = "توصيل";
 
 /* Connected to NS */
-"Connected!" = "Connected!";
+"Connected!" = "متصل!";
 
 /* Connecting to NS */
-"Connecting..." = "Connecting...";
+"Connecting..." = "الاتصال جارِ...";
 
 /*  */
-"Invalid URL" = "Invalid URL";
+"Invalid URL" = "عنوان URL غير صحيح";
 
 /*  */
 "Local glucose source" = "Local glucose source";
@@ -372,7 +376,7 @@ Enact a temp Basal or a temp target */
 "Port" = "Port";
 
 /*  */
-"URL" = "URL";
+"URL" = "عنوان الرابط";
 
 /**/
 "Use local glucose server" = "Use local glucose server";
@@ -381,7 +385,7 @@ Enact a temp Basal or a temp target */
 "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "تحرير إعدادات json";
 
 /* */
 "Glucose units" = "Glucose units";
@@ -476,6 +480,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Carbs" = "Max Carbs";
 
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+
 /* */
 "Pump Settings" = "Pump Settings";
 
@@ -507,163 +514,163 @@ Enact a temp Basal or a temp target */
 " g" = " g";
 
 /* The short unit display string for grams */
-"g" = "g";
+"g" = "ج";
 
 /* when 0 U/hr */
-"0 U/hr" = "0 U/hr";
+"0 U/hr" = "0 وحدة/ساعة";
 
 /* abbreviation for days */
-"d" = "d";
+"d" = "يوم";
 
 /* abbreviation for hours */
-"h" = "h";
+"h" = "س";
 
 /* abbreviation for minutes */
-"m" = "m";
+"m" = "د";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "حلقة مغلقة";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "الأجهزة";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "المضخة";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "ساعه";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "اعدادات الساعة";
 
 /* */
-"Apple Watch" = "Apple Watch";
+"Apple Watch" = "ساعة أبل";
 
 /* */
-"Display on Watch" = "Display on Watch";
+"Display on Watch" = "عرض على الساعة";
 
 /* */
-"Garmin Watch" = "Garmin Watch";
+"Garmin Watch" = "ساعة جارمين";
 
 /* */
-"Add devices" = "Add devices";
+"Add devices" = "إضافة أجهزة";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "هدف الجلوكوز";
 
 /* */
-"Heart Rate" = "Heart Rate";
+"Heart Rate" = "معدل ضربات القلب";
 
 /* */
-"Steps" = "Steps";
+"Steps" = "الخطوات";
 
 /* */
-"ISF" = "ISF";
+"ISF" = "عامل حساسية الأنسولين";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it";
 
 /* */
-"Garmin is not available" = "Garmin is not available";
+"Garmin is not available" = "جارمين غير متاح";
 
 /*  */
-"Services" = "Services";
+"Services" = "الخدمات";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "الإعدادات";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "النسبة المئوية للبولوس الموصى بها";
 
 /* 2 log files to share */
-"Share logs" = "Share logs";
+"Share logs" = "شارك السجلات";
 
 /* Upper target */
-"High target" = "High target";
+"High target" = "هدف مرتفع";
 
 /* Lower target */
-"Low target" = "Low target";
+"Low target" = "هدف منخفض";
 
 /* When bolusing */
-"Bolusing" = "Bolusing";
+"Bolusing" = "يضخ";
 
 /* */
-"Pump suspended" = "Pump suspended";
+"Pump suspended" = "المضخة معلقة";
 
 /* */
-"Middleware" = "Middleware";
+"Middleware" = "الوسطاء";
 
 /* Header */
-"History" = "History";
+"History" = "السّجل";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "رفع";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "السماح بالرفع";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "النّوع";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "مستشعر الجلوكوز";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "معرف المرسل";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "أخرى";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "تعيين أهداف المؤقتة مسبقاً على الايفون أولاً";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "جارٍ التحديث...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "الأهداف المؤقتة";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "حذف النشويات؟";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "حذف الإنسولين؟";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "العلاجات";
 
 /* " min" in Treatments list */
-" min" = " min";
+" min" = " د";
 
 /* */
-"Unable to change anything" = "Unable to change anything";
+"Unable to change anything" = "غير قادر على تغيير أي شيء";
 
 
 /* Calendar and Libre transmitter settings ---------------
  */
 /* */
-"Configure Libre Transmitter" = "Configure Libre Transmitter";
+"Configure Libre Transmitter" = "ضبط مرسل ليبري";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "المعايرة";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "إنشاء أحداث في التقويم";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "التقويم";
 
 /* Automatic delivered treatments */
-"Automatic" = "Automatic";
+"Automatic" = "تلقائي";
 
 /* External insulin treatments */
 "External" = "External";
 
 /* */
-"Other" = "Other";
+"Other" = "أخرى";
 
 /* */
 "Libre Transmitter" = "Libre Transmitter";
@@ -810,154 +817,154 @@ Enact a temp Basal or a temp target */
 "Detected sensor seems not to be a libre 1 sensor!" = "Detected sensor seems not to be a libre 1 sensor!";
 
 /* Detected sensor is invalid: %@ */
-"Detected sensor is invalid: %@" = "Detected sensor is invalid: %@";
+"Detected sensor is invalid: %@" = "المستشعر المكتشف غير صالح: %@";
 
 /* Low Battery */
-"Low battery" = "Low battery";
+"Low battery" = "البطارية منخفضة";
 
 /* */
-"Invalid sensor" = "Invalid sensor";
+"Invalid sensor" = "مستشعر غير صالح";
 
 /* */
-"Sensor change" = "Sensor change";
+"Sensor change" = "تغيير جهاز الاستشعار";
 
 /* */
-"Sensor expires soon" = "Sensor expires soon";
+"Sensor expires soon" = "ستنتهي صلاحية المستشعر قريبا";
 
 /* Battery is running low %@, consider charging your %@ device as soon as possible */
-"Battery is running low %@, consider charging your %@ device as soon as possible" = "Battery is running low %@, consider charging your %@ device as soon as possible";
+"Battery is running low %@, consider charging your %@ device as soon as possible" = "البطارية منخفضه %@، إشحن جهازك %@ في أقرب وقت ممكن";
 
 /* Extracting calibrationdata from sensor */
-"Extracting calibrationdata from sensor" = "Extracting calibrationdata from sensor";
+"Extracting calibrationdata from sensor" = "جاري إستخراج بيانات المعايرة من المستشعر";
 
 /* Sensor Ending Soon */
-"Sensor Ending Soon" = "Sensor Ending Soon";
+"Sensor Ending Soon" = "المستشعر سينتهي قريباً";
 
 /* Current Sensor is Ending soon! Sensor Life left in %@ */
-"Current Sensor is Ending soon! Sensor Life left in %@" = "Current Sensor is Ending soon! Sensor Life left in %@";
+"Current Sensor is Ending soon! Sensor Life left in %@" = "المستشعر الحالي سينتهي قريباً! عمر المستشعر المتبقي %@";
 
 /* */
-"Libre Bluetooth" = "Libre Bluetooth";
+"Libre Bluetooth" = "بلوتوث ليبري";
 
 /* */
-"Snooze Alerts" = "Snooze Alerts";
+"Snooze Alerts" = "إغفاء التنبيهات";
 
 /* */
-"Last measurement" = "Last measurement";
+"Last measurement" = "القياس الأخير";
 
 /* */
 "Sensor Footer checksum" = "Sensor Footer checksum";
 
 /* */
-"Last Blood Sugar prediction" = "Last Blood Sugar prediction";
+"Last Blood Sugar prediction" = "آخر تنبؤ بمستوى الجلوكوز في الدم";
 
 /* */
-"CurrentBG" = "CurrentBG";
+"CurrentBG" = "معدل الجلوكوز الحالي";
 
 /* */
-"Sensor Info" = "Sensor Info";
+"Sensor Info" = "معلومات المستشعر";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Age" = "عمر المستشعر";
 
 /* */
-"Sensor Age Left" = "Sensor Age Left";
+"Sensor Age Left" = "عمر المستشعر المتبقي";
 
 /* */
-"Sensor Endtime" = "Sensor Endtime";
+"Sensor Endtime" = "وقت انتهاء المستشعر";
 
 /* */
-"Sensor State" = "Sensor State";
+"Sensor State" = "حالة المستشعر";
 
 /* */
-"Sensor Serial" = "Sensor Serial";
+"Sensor Serial" = "الرقم التسلسلي للمستشعر";
 
 /* */
-"Transmitter Info" = "Transmitter Info";
+"Transmitter Info" = "معلومات المُرسل";
 
 /* */
-"Hardware" = "Hardware";
+"Hardware" = "العتاد";
 
 /* */
-"Firmware" = "Firmware";
+"Firmware" = "البرنامج الثابت";
 
 /* */
-"Connection State" = "Connection State";
+"Connection State" = "حالة الإتصال";
 
 /* */
-"Transmitter Type" = "Transmitter Type";
+"Transmitter Type" = "نوع جهاز الإرسال";
 
 /* */
-"Sensor Type" = "Sensor Type";
+"Sensor Type" = "نوع المستشعر";
 
 /* */
-"Factory Calibration Parameters" = "Factory Calibration Parameters";
+"Factory Calibration Parameters" = "عوامل معايرة المصنع";
 
 /* */
-"Valid for footer" = "Valid for footer";
+"Valid for footer" = "صالح لتذييل الصفحة";
 
 /* */
-"Edit calibrations" = "Edit calibrations";
+"Edit calibrations" = "تعديل المعايرات";
 
 /* */
 "edit calibration clicked" = "edit calibration clicked";
 
 /* */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "حذف المستشعر";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Are you sure you want to remove this cgm from loop?";
+"Are you sure you want to remove this cgm from loop?" = "هل أنت متأكد من أنك تريد إزالة هذا المستشعر من لووب؟";
 
 /* */
-"There is no undo" = "There is no undo";
+"There is no undo" = "لا يوجد تراجع!";
 
 /* */
-"Advanced" = "Advanced";
+"Advanced" = "متقدم";
 
 /* */
-"Alarms" = "Alarms";
+"Alarms" = "التنبيهات";
 
 /* */
-"Glucose Settings" = "Glucose Settings";
+"Glucose Settings" = "إعدادات الجلوكوز";
 
 /* */
-"Notifications" = "Notifications";
+"Notifications" = "الإشعارات";
 
 /* */
-"Export logs" = "Export logs";
+"Export logs" = "تصدير السجلات";
 
 /* */
-"Export not available" = "Export not available";
+"Export not available" = "التصدير غير متوفر";
 
 /* */
-"Log export requires ios 15" = "Log export requires ios 15";
+"Log export requires ios 15" = "تصدير السجل يتطلب iOS 15";
 
 /* */
-"Got it!" = "Got it!";
+"Got it!" = "فهمت ذلك!";
 
 /* */
-"Saved to %@" = "Saved to %@";
+"Saved to %@" = "تم الحفظ في %@";
 
 /* */
-"No logs available" = "No logs available";
+"No logs available" = "لا توجد سجلات متاحة";
 
 /* */
-"Glucose Notification visibility" = "Glucose Notification visibility";
+"Glucose Notification visibility" = "وضوح إشعار مستوى الجلوكوز";
 
 /* */
-"Always Notify Glucose" = "Always Notify Glucose";
+"Always Notify Glucose" = "الاشعار بمستوى الجلوكوز دائمًا";
 
 /* */
-"Notify per reading" = "Notify per reading";
+"Notify per reading" = "إشعار لكل قراءة";
 
 /* */
-"Value" = "Value";
+"Value" = "القيمة";
 
 /* */
-"Adds Phone Battery" = "Adds Phone Battery";
+"Adds Phone Battery" = "إضافة بطارية الهاتف";
 
 /* */
-"Adds Transmitter Battery" = "Adds Transmitter Battery";
+"Adds Transmitter Battery" = "إضافة بطارية جهاز الإرسال";
 
 /* */
 "Also vibrate" = "Also vibrate";
@@ -1104,16 +1111,16 @@ Enact a temp Basal or a temp target */
 "Sensor not found" = "Sensor not found";
 
 /* */
-"Also play alert sound" = "Also play alert sound";
+"Also play alert sound" = "تشغيل التنبيه الصوتي أيضا";
 
 /* */
-"Notification Settings" = "Notification Settings";
+"Notification Settings" = "إعدادات الإشعارات";
 
 /* */
-"Found devices: %d" = "Found devices: %d";
+"Found devices: %d" = "الأجهزة التي تم العثور عليها: %d";
 
 /* */
-"Backfill options" = "Backfill options";
+"Backfill options" = "خيارات الإملاء العكسية";
 
 /* */
 "Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
@@ -1243,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Error: Pump is Busy.";
+"Pump is Busy." = "Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1269,7 +1276,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Save as your Normal Basal Rates";
 
 /* */
-"Save on Pump" = "Save on Pump";
+"Save on Pump" = "الحفظ في المضخة";
 
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
@@ -1299,7 +1306,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Enacted announcements";
 
 /* Debug option view Autotune */
-"Autotune" = "Autotune";
+"Autotune" = "ضبط الانسولين التلقائي";
 
 /* Debug option view Target presets */
 "Target presets" = "Target presets";
@@ -1467,7 +1474,7 @@ Enact a temp Basal or a temp target */
 "Cancel Profile Override" = "Cancel Profile Override";
 
 /* Alert */
-"Cancel Temp Target" = "Cancel Temp Target";
+"Cancel Temp Target" = "إلغاء الهدف المؤقت";
 
 /* Alert */
 "Return to Normal?" = "Return to Normal?";
@@ -1530,7 +1537,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Save and continue";
 
 /* */
-"Save as Preset" = "Save as Preset";
+"Save as Preset" = "حفظ كتعيين مسبق";
 
 /* */
 "Predictions" = "Predictions";
@@ -1636,7 +1643,7 @@ Enact a temp Basal or a temp target */
 "Saving..." = "Saving...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Save";
+"Save" = "إحفظ";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Failed to update confidence reminder preference.";
@@ -1689,7 +1696,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Rate";
+"Rate" = "معدّل";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ for %2$@";
@@ -1872,7 +1879,7 @@ Enact a temp Basal or a temp target */
 "Interval" = "Interval";
 
 /* Median loop interval */
-"Duration" = "Duration";
+"Duration" = "المدة";
 
 /* "Display SD */
 "Display SD instead of CV" = "Display SD instead of CV";
@@ -1953,7 +1960,7 @@ Enact a temp Basal or a temp target */
 "Man" = "Man";
 
 /* Sex dropdown menu option */
-"Other" = "Other";
+"Other" = "أخرى";
 
 /* Sex dropdown menu option */
 "Secret" = "Secret";
@@ -2514,6 +2521,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
