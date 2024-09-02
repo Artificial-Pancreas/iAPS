@@ -111,11 +111,11 @@ class DanaKitSettingsViewModel : ObservableObject {
         updateBasalRate()
         
         if let cannulaDate = self.pumpManager?.state.cannulaDate {
-            self.cannulaAge = "\(String(format: "%.1f", -cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.cannulaAge = formatDateToDayHour(cannulaDate)
         }
         
         if let reservoirDate = self.pumpManager?.state.reservoirDate {
-            self.reservoirAge = "\(String(format: "%.1f", -reservoirDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.reservoirAge = formatDateToDayHour(reservoirDate)
         }
         
         self.basalButtonText = self.updateBasalButtonText()
@@ -129,6 +129,18 @@ class DanaKitSettingsViewModel : ObservableObject {
                 self.didFinish?()
             }
         }
+    }
+    
+    func updateReservoirAge() {
+        self.pumpManager?.state.reservoirDate = Date.now
+        self.reservoirAge = formatDateToDayHour(Date.now)
+        self.pumpManager?.notifyStateDidChange()
+    }
+    
+    func updateCannulaAge() {
+        self.pumpManager?.state.cannulaDate = Date.now
+        self.cannulaAge = formatDateToDayHour(Date.now)
+        self.pumpManager?.notifyStateDidChange()
     }
     
     func scheduleDisconnectNotification(_ duration: TimeInterval) {
@@ -331,6 +343,13 @@ class DanaKitSettingsViewModel : ObservableObject {
             self.basalRate = pumpManager.currentBaseBasalRate
         }
     }
+    
+    private func formatDateToDayHour(_ date: Date) -> String {
+        let day = String(format: "%.0f", -date.timeIntervalSinceNow / .days(1))
+        let hour = String(format: "%.0f", (-date.timeIntervalSinceNow.truncatingRemainder(dividingBy: .days(1))) / .hours(1))
+        
+        return "\(day)d \(hour)h"
+    }
 }
 
 extension DanaKitSettingsViewModel: StateObserver {
@@ -352,11 +371,11 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.basalButtonText = self.updateBasalButtonText()
         
         if let cannulaDate = state.cannulaDate {
-            self.cannulaAge = "\(String(format: "%.1f", -cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.cannulaAge = formatDateToDayHour(cannulaDate)
         }
         
         if let reservoirDate = state.reservoirDate {
-            self.reservoirAge = "\(String(format: "%.1f", -reservoirDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.reservoirAge = formatDateToDayHour(reservoirDate)
         }
     }
     

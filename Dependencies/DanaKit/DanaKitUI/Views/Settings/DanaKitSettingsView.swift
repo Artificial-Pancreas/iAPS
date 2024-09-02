@@ -210,6 +210,9 @@ struct DanaKitSettingsView: View {
                         Text(String(viewModel.reservoirAge!))
                             .foregroundColor(.secondary)
                     }
+                    .onLongPressGesture(perform: {
+                        viewModel.updateReservoirAge()
+                    })
                 }
                 
                 if (viewModel.cannulaAge != nil) {
@@ -219,6 +222,9 @@ struct DanaKitSettingsView: View {
                         Text(String(viewModel.cannulaAge!))
                             .foregroundColor(.secondary)
                     }
+                    .onLongPressGesture(perform: {
+                        viewModel.updateCannulaAge()
+                    })
                 }
             }
             
