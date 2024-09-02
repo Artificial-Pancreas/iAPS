@@ -124,7 +124,8 @@ final class OpenAPS {
                         reason: suggestion.reason,
                         suggestion: suggestion,
                         preferences: preferencesData,
-                        profile: alteredProfile
+                        profile: alteredProfile,
+                        tdd: tdd
                     )
                     // Update time
                     suggestion.timestamp = suggestion.deliverAt ?? clock
@@ -291,7 +292,6 @@ final class OpenAPS {
     ) -> String {
         var reasonString = reason
         let startIndex = reasonString.startIndex
-        let tdd = tdd(preferencesData: preferences)
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {

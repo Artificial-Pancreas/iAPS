@@ -357,14 +357,6 @@ extension View {
         modifier(CompactSectionSpacing())
     }
 
-    func scrollTargetLayoutiOS17() -> some View {
-        modifier(ScrollTargetLayoutModifier())
-    }
-
-    func scrollPositioniOS17(id: Binding<Int?>) -> some View {
-        modifier(ScrollPositionModifier(id: id))
-    }
-
     func asAny() -> AnyView { .init(self) }
 }
 
