@@ -321,9 +321,9 @@ final class OpenAPS {
                     insertedResons += ", AF: \(value)"
                 }
                 if let dynamicCR = readJSON(json: profile, variable: "enableDynamicCR"), Bool(dynamicCR) ?? false {
-                    insertedResons += ", Dynamic ISF/CR: On/On"
+                    insertedResons += ", Dynamic ISF/CR is: On/On"
                 } else {
-                    insertedResons += ", Dynamic ISF/CR: On/Off"
+                    insertedResons += ", Dynamic ISF/CR is: On/Off"
                 }
                 if let tddFactor = readMiddleware(json: profile, variable: "tdd_factor"), tddFactor.count > 1 {
                     insertedResons += ", Basal Adjustment: \(tddFactor.suffix(max(tddFactor.count - 6, 0)))"
@@ -334,6 +334,20 @@ final class OpenAPS {
                 // Autosens
             } else {
                 reasonString.insert(contentsOf: "Autosens Ratio: \(isf)" + tddString, at: startIndex)
+            }
+
+            // Include ISF before eventual adjustment
+            if let old = readMiddleware(json: profile, variable: "old_isf"),
+               let new = readReason(reason: reason, variable: "ISF"), let oldISF = trimmedIsEqual(string: old, decimal: new)
+            {
+                reasonString = reasonString.replacingOccurrences(of: "ISF:", with: "ISF: \(oldISF) →")
+            }
+
+            // Include CR before eventual adjustment
+            if let old = readMiddleware(json: profile, variable: "old_cr"),
+               let new = readReason(reason: reason, variable: "CR"), let oldCR = trimmedIsEqual(string: old, decimal: new)
+            {
+                reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
         }
 
@@ -404,6 +418,16 @@ final class OpenAPS {
         }
 
         return reasonString
+    }
+
+    private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
+        let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
+        let new = "\(decimal)"
+
+        guard old != new else {
+            return nil
+        }
+        return old
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {
