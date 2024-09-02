@@ -92,7 +92,7 @@
 "Suggested at" = "Запропоновано на";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Помилка в";
+"Status at" = "Помилка в";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Резюме харчування";
@@ -1249,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Неможливо виконати рекомендацію щодо нового циклу петлі, оскільки триває болюс. Зачекайте наступного циклу петлі";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Помилка: Помпа зайнята.";
+"Pump is Busy." = "Помилка: Помпа зайнята.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */

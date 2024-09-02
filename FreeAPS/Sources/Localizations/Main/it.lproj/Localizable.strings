@@ -92,7 +92,7 @@
 "Suggested at" = "Suggerito alle";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Errore a";
+"Status at" = "Errore a";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Riepilogo Pasto";
@@ -1249,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Non è possibile attuare un nuovo ciclo loop, perché un bolo è in corso. Attendere il ciclo loop successivo";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Errore: la pompa sta già lavorando.";
+"Pump is Busy." = "Errore: la pompa sta già lavorando.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */

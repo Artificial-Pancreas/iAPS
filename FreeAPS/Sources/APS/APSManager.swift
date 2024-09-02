@@ -51,7 +51,7 @@ enum APSError: LocalizedError {
         case let .invalidPumpState(message):
             return "Error: Invalid Pump State: \(message)"
         case let .bolusInProgress(message):
-            return "\(NSLocalizedString("Error: Pump is Busy.", comment: "Pump Error")) \(NSLocalizedString(message, comment: "Pump Error Message"))"
+            return "\(NSLocalizedString("Pump is Busy.", comment: "Pump Error")) \(NSLocalizedString(message, comment: "Pump Error Message"))"
         case let .glucoseError(message):
             return "Error: Invalid glucose: \(message)"
         case let .apsError(message):

@@ -204,7 +204,6 @@ jobs:
       - name: Fastlane Build & Archive
         run: bundle exec fastlane build_iAPS        
         env:
-          APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
           FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
@@ -216,7 +215,6 @@ jobs:
       - name: Fastlane upload to TestFlight
         run: bundle exec fastlane release
         env:
-          APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
           FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}

@@ -22,15 +22,13 @@ FASTLANE_KEY = ENV["FASTLANE_KEY"]
 DEVICE_NAME = ENV["DEVICE_NAME"]
 DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
-APP_IDENTIFIER = ENV["APP_IDENTIFIER"] || "ru.artpancreas.#{TEAMID}.FreeAPS"
+APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
 
 platform :ios do
   desc "Build iAPS"
   lane :build_iAPS do
     setup_ci if ENV['CI']
-
-    sh "scripts/CreateConfigOverride.sh", "#{APP_IDENTIFIER}"
- 
+    
     update_project_team(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
       teamid: "#{TEAMID}"
