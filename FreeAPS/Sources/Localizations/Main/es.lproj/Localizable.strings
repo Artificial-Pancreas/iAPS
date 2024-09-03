@@ -92,7 +92,7 @@
 "Suggested at" = "Sugerido a las";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Error en";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Resumen de la comida";
@@ -111,6 +111,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Comida Grasienta";
+
+/* Bolus option */
+"Hypo Treatment" = "Hypo Treatment";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Bolo Completo";
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Carbohidratos máximos";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
 
 /* */
 "Pump Settings" = "Límites de la bomba";
@@ -1244,7 +1250,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "No se ha ejecutado el cálculo recomendado para el nuevo ciclo porque hay un bolo en progreso. Espere al siguiente ciclo del lazo";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Error: bomba ocupada.";
+"Pump is Busy." = "Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -2631,6 +2637,12 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";

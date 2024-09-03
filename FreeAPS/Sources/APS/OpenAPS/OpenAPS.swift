@@ -21,6 +21,10 @@ final class OpenAPS {
     func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
+                let start = Date.now
+
+                var now = Date.now
+
                 debug(.openAPS, "Start determineBasal")
                 // clock
                 self.storage.save(clock, as: Monitor.clock)
@@ -36,7 +40,14 @@ final class OpenAPS {
                 // To do: remove this struct.
                 let dynamicVariables = self.loadFileFromStorage(name: Monitor.dynamicVariables)
 
-                var now = Date.now
+                let tdd = CoreDataStorage().fetchInsulinDistribution().first
+
+                print(
+                    "Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds"
+                )
+
+                now = Date.now
+
                 let meal = self.meal(
                     pumphistory: pumpHistory,
                     profile: profile,
@@ -45,7 +56,9 @@ final class OpenAPS {
                     carbs: carbs,
                     glucose: glucose
                 )
-                print("Time for Determine Basal: step after meal module \(-1 * now.timeIntervalSinceNow) seconds")
+                print(
+                    "Time for Meal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                )
 
                 self.storage.save(meal, as: Monitor.meal)
 
@@ -59,7 +72,9 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens
                 )
                 self.storage.save(iob, as: Monitor.iob)
-                print("Time for Determine Basal: step after IOB module \(-1 * now.timeIntervalSinceNow) seconds")
+                print(
+                    "Time for IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                )
 
                 // determine-basal
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
@@ -77,6 +92,7 @@ final class OpenAPS {
                     dynamicVariables: dynamicVariables
                 )
 
+                now = Date.now
                 // The OpenAPS JS algorithm layer
                 let suggested = self.determineBasal(
                     glucose: glucose,
@@ -90,10 +106,15 @@ final class OpenAPS {
                     dynamicVariables: dynamicVariables
                 )
 
+                print(
+                    "Time for Determine Basal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                )
+
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
                 // Update Suggestion
                 if var suggestion = Suggestion(from: suggested) {
+                    now = Date.now
                     // Process any eventual middleware basal rate
                     if let newSuggestion = self.overrideBasal(alteredProfile: alteredProfile, oref0Suggestion: suggestion) {
                         suggestion = newSuggestion
@@ -103,12 +124,17 @@ final class OpenAPS {
                         reason: suggestion.reason,
                         suggestion: suggestion,
                         preferences: preferencesData,
-                        profile: alteredProfile
+                        profile: alteredProfile,
+                        tdd: tdd
                     )
                     // Update time
                     suggestion.timestamp = suggestion.deliverAt ?? clock
                     // Save
                     self.storage.save(suggestion, as: Enact.suggested)
+
+                    print(
+                        "Time for updating and saving reasons: \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
 
                     promise(.success(suggestion))
                 } else {
@@ -209,7 +235,7 @@ final class OpenAPS {
                 let freeaps = self.loadFileFromStorage(name: FreeAPS.settings)
                 let preferencesData = Preferences(from: preferences)
                 let tdd = self.tdd(preferencesData: preferencesData)
-                if let insulin = tdd, (insulin.basal + insulin.bolus) > 0 {
+                if let insulin = tdd, insulin.hours > 0 {
                     CoreDataStorage().saveTDD(insulin)
                 }
                 let dynamicVariables = self.dynamicVariables(preferencesData)
@@ -260,21 +286,24 @@ final class OpenAPS {
     private func reasons(
         reason: String,
         suggestion: Suggestion,
-        preferences: Preferences?,
-        profile: RawJSON
+        preferences _: Preferences?,
+        profile: RawJSON,
+        tdd: InsulinDistribution?
     ) -> String {
         var reasonString = reason
         let startIndex = reasonString.startIndex
-        let tdd = tdd(preferencesData: preferences)
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {
             // TDD
             var tddString = ""
-            if let total = tdd {
-                let round = round(Double((total.bolus + total.basal) * 10)) / 10
-                let bolus = Int(total.bolus * 100 / ((total.bolus + total.basal) != 0 ? total.bolus + total.basal : 1))
-                tddString = ", TDD: \(round) U, \(bolus) % Bolus, "
+            if let tdd = tdd {
+                let total = ((tdd.bolus ?? 0) as Decimal) + ((tdd.tempBasal ?? 0) as Decimal)
+                let round = round(Double(total * 10)) / 10
+
+                let bolus = Int(((tdd.bolus ?? 0) as Decimal) * 100 / (total != 0 ? total : 1))
+
+                tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus, "
             } else {
                 tddString = ", "
             }
@@ -292,9 +321,9 @@ final class OpenAPS {
                     insertedResons += ", AF: \(value)"
                 }
                 if let dynamicCR = readJSON(json: profile, variable: "enableDynamicCR"), Bool(dynamicCR) ?? false {
-                    insertedResons += ", Dynamic ISF/CR: On/On"
+                    insertedResons += ", Dynamic ISF/CR is: On/On"
                 } else {
-                    insertedResons += ", Dynamic ISF/CR: On/Off"
+                    insertedResons += ", Dynamic ISF/CR is: On/Off"
                 }
                 if let tddFactor = readMiddleware(json: profile, variable: "tdd_factor"), tddFactor.count > 1 {
                     insertedResons += ", Basal Adjustment: \(tddFactor.suffix(max(tddFactor.count - 6, 0)))"
@@ -305,6 +334,20 @@ final class OpenAPS {
                 // Autosens
             } else {
                 reasonString.insert(contentsOf: "Autosens Ratio: \(isf)" + tddString, at: startIndex)
+            }
+
+            // Include ISF before eventual adjustment
+            if let old = readMiddleware(json: profile, variable: "old_isf"),
+               let new = readReason(reason: reason, variable: "ISF"), let oldISF = trimmedIsEqual(string: old, decimal: new)
+            {
+                reasonString = reasonString.replacingOccurrences(of: "ISF:", with: "ISF: \(oldISF) →")
+            }
+
+            // Include CR before eventual adjustment
+            if let old = readMiddleware(json: profile, variable: "old_cr"),
+               let new = readReason(reason: reason, variable: "CR"), let oldCR = trimmedIsEqual(string: old, decimal: new)
+            {
+                reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
         }
 
@@ -365,6 +408,7 @@ final class OpenAPS {
                 saveSuggestion.cob = cob as NSDecimalNumber
                 saveSuggestion.target = target as NSDecimalNumber
                 saveSuggestion.minPredBG = minPredBG as NSDecimalNumber
+                saveSuggestion.eventualBG = Decimal(suggestion.eventualBG ?? 100) as NSDecimalNumber
                 saveSuggestion.date = Date.now
 
                 try? coredataContext.save()
@@ -374,6 +418,16 @@ final class OpenAPS {
         }
 
         return reasonString
+    }
+
+    private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
+        let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
+        let new = "\(decimal)"
+
+        guard old != new else {
+            return nil
+        }
+        return old
     }
 
     private func overrideBasal(alteredProfile: RawJSON, oref0Suggestion: Suggestion) -> Suggestion? {

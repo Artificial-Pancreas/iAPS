@@ -92,7 +92,7 @@
 "Suggested at" = "Vorgeschlagen um";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fehler um";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Mahlzeitenübersicht";
@@ -111,6 +111,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Fettige Mahlzeit";
+
+/* Bolus option */
+"Hypo Treatment" = "Hypo Behandlung";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Voller Bolus";
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Max Kohlenhydrate";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Höchstmenge an Kohlenhydraten (g) pro Eintrag";
 
 /* */
 "Pump Settings" = "Pumpeneinstellungen";
@@ -1243,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Die neue Empfehlung kann nicht angewendet werden, da zurzeit ein Bolus verabreicht wird. Warten Sie bitte die nächste Schleife ab.";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Fehler: Die Pumpe ist beschäftigt.";
+"Pump is Busy." = "Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1962,7 +1968,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Geburtsdatum";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nWenn Sie \"Freigeben und Sichern\" aktivieren, werden täglich Sicherungen Ihrer Einstellungen und Statistiken in der Online-Datenbank erstellt.\n\nStellen Sie daher sicher, dass Sie Ihr Wiederherstellungs-Token unten kopieren und speichern. Das Wiederherstellungs-Token wird benötigt, um Ihre Einstellungen auf ein anderes Telefon zu importieren, wenn Sie die Onboarding view verwenden.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Nur das absolute Minimum teilen";
@@ -1971,7 +1977,7 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Nur iAPS Versionsnummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Alle Informationen, die Sie freigeben möchten, werden anonym hochgeladen. Um doppelte Uploads zu vermeiden, werden die Daten mit einer eindeutigen, zufälligen Zeichenfolge identifiziert, die auf Ihrem Telefon gespeichert ist.";
 
 /* Token section title */
 "Your recovery token" = "Ihr Wiederherstellungs-Token";
@@ -2514,6 +2520,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Beim Scrollen nie das kleine Glukosediagramm anzeigen";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Hypo Behandlung deaktivieren";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Glukose-Delta anzeigen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
