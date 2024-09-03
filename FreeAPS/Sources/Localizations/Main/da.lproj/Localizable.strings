@@ -92,7 +92,7 @@
 "Suggested at" = "Anbefalet";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fejl ved";
+"Status at" = "Fejl ved";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Måltidsoversigt";
@@ -111,6 +111,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Fedt Måltid";
+
+/* Bolus option */
+"Hypo Treatment" = "Hypo Treatment";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Fuld Bolus";
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Maks Kulhydrater";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
 
 /* */
 "Pump Settings" = "Pumpe Indstillinger";
@@ -1243,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Error: Pump is Busy.";
+"Pump is Busy." = "Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -2515,6 +2521,15 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
 
+<<<<<<< HEAD
+=======
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
+
+>>>>>>> dev
 /* Setting title */
 "Bolus Calculator" = "Bolus Lommeregner";
 

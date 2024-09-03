@@ -100,6 +100,7 @@ final class OverrideStorage {
             save.smbIsOff = preset.smbIsOff
             save.smbMinutes = preset.smbMinutes
             save.uamMinutes = preset.uamMinutes
+            save.maxIOB = preset.maxIOB
             save.target = preset.target
             try? coredataContext.save()
         }

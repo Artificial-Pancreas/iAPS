@@ -94,14 +94,15 @@ extension Settings {
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                             }
-                            /*
-                             HStack {
-                                 Text("Delete All NS Overrides")
-                                 Button("Delete") { state.deleteOverrides() }
-                                     .frame(maxWidth: .infinity, alignment: .trailing)
-                                     .buttonStyle(.borderedProminent)
-                                     .tint(.red)
-                             }*/
+
+                            // Test code
+                            HStack {
+                                Text("Delete All NS Overrides")
+                                Button("Delete") { state.deleteOverrides() }
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(.red)
+                            }
 
                             HStack {
                                 Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)

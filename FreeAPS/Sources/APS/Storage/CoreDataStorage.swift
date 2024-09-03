@@ -334,4 +334,16 @@ final class CoreDataStorage {
         }
         return presetsArray.first?.name ?? "default"
     }
+
+    func fetchLastLoop() -> LastLoop? {
+        var lastLoop = [LastLoop]()
+        coredataContext.performAndWait {
+            let requestLastLoop = LastLoop.fetchRequest() as NSFetchRequest<LastLoop>
+            let sortLoops = NSSortDescriptor(key: "timestamp", ascending: false)
+            requestLastLoop.sortDescriptors = [sortLoops]
+            requestLastLoop.fetchLimit = 1
+            try? lastLoop = coredataContext.fetch(requestLastLoop)
+        }
+        return lastLoop.first
+    }
 }
