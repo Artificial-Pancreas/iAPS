@@ -219,6 +219,10 @@ enum OverrideIntentError: Error {
                     // Update in Nightscout
                     nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
                 }
+            } else if activeOveride.isPreset {
+                if let duration = overrideStorage.cancelProfile() {
+                    nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                }
             } else {
                 let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
                     .formatted() + " %" : "Custom"

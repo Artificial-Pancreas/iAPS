@@ -92,7 +92,7 @@
 "Suggested at" = "Предложено в";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Ошибка в";
+"Status at" = "Статус в";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Итог питания";
@@ -111,6 +111,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Жирная пища";
+
+/* Bolus option */
+"Hypo Treatment" = "Гипогликемия";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Полный болюс";
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Максимум углеводов";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Максимум углеводов (г), который можно внести в запись";
 
 /* */
 "Pump Settings" = "Настройки помпы";
@@ -1243,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Не удается выполнить рекомендацию по новому циклу петли, так как вводится болюс. Подождите новый цикл петли";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Ошибка: Помпа занята.";
+"Pump is Busy." = "Помпа занята.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1962,7 +1968,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "День рождения";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nЕсли включить \"Общий доступ и резервное копирование\", то ежедневные резервные копии ваших настроек и статистики будут сохраняться в онлайн-базе данных.\n\nОбязательно скопируйте и сохраните свой токен восстановления, указанный ниже. Токен восстановления необходим для импорта настроек на другой телефон при использовании встроенного режима просмотра.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Минимально делиться";
@@ -2514,6 +2520,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Не отображать график уровня глюкозы при прокрутке";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Отключить гипогликемии";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Отображать дельту глюкозы";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";

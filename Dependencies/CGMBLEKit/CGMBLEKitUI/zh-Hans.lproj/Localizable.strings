@@ -39,7 +39,7 @@ Title text for the button to remove a CGM from Loop */
 "Remote Data Synchronization" = "远程数据同步";
 
 /* Title describing sensor expiration */
-"Sensor Expires" = "Sensor Expires";
+"Sensor Expires" = "传感器已过期";
 
 /* Title describing past sensor expiration */
 "Sensor Expired" = "传感器已过期";

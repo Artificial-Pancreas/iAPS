@@ -57,7 +57,7 @@ extension OverrideProfilesConfig {
                     ns.editOverride(preset, duration, last?.date ?? Date.now)
                 } else if let duration = OverrideStorage().cancelProfile() {
                     let nsString = active.percentage.formatted() != "100" ? active.percentage
-                        .formatted() + " %" : "Custom"
+                        .formatted() + " %" : active.isPreset ? "📉" : "Custom"
                     ns.editOverride(nsString, duration, last?.date ?? Date.now)
                 }
             }
@@ -162,7 +162,7 @@ extension OverrideProfilesConfig {
             let lastPreset = OverrideStorage().isPresetName()
             if let alreadyActive = last, alreadyActive.enabled, let duration = OverrideStorage().cancelProfile() {
                 ns.editOverride(
-                    (last?.isPreset ?? false) ? (lastPreset ?? "Override") : "Custom",
+                    (last?.isPreset ?? false) ? (lastPreset ?? "📉") : "Custom",
                     duration,
                     alreadyActive.date ?? Date.now
                 )

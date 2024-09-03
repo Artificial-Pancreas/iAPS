@@ -12,7 +12,7 @@ struct LoopsView: View {
             let readings = loopStatistics.1
             let percentage = loopStatistics.2
 
-            Text(NSLocalizedString("Loops", comment: "") + " / " + NSLocalizedString("Readings", comment: ""))
+            Text(NSLocalizedString("Loops", comment: ""))
                 .padding(.bottom, 10).font(.previewHeadline)
 
             loopChart(percentage: percentage)
@@ -32,19 +32,45 @@ struct LoopsView: View {
                 Text("\(loops)")
             }.font(.loopFont)
         }
-        .padding(.top, 20)
-        .padding(.bottom, 15)
         .dynamicTypeSize(...DynamicTypeSize.xLarge)
     }
 
     func loopChart(percentage: Double) -> some View {
         VStack {
             Chart {
+                // Background chart 100 %
+                if percentage < 100 {
+                    BarMark(
+                        xStart: .value("LoopPercentage", percentage - 4),
+                        xEnd: .value("Full Bar", 100)
+                    )
+                    .foregroundStyle(
+                        Color(.gray).opacity(0.3)
+                    )
+                    .clipShape(
+                        UnevenRoundedRectangle(
+                            topLeadingRadius: 0,
+                            bottomLeadingRadius: 0,
+                            bottomTrailingRadius: 4,
+                            topTrailingRadius: 4
+                        )
+                    )
+                }
+
+                // Loops per readings chart
                 BarMark(
                     x: .value("LoopPercentage", percentage)
                 )
                 .foregroundStyle(
                     percentage >= 90 ? Color(.darkGreen) : percentage >= 75 ? .orange : .red
+                ).opacity(1)
+                .clipShape(
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: 4,
+                        bottomLeadingRadius: 4,
+                        bottomTrailingRadius: 4,
+                        topTrailingRadius: 4
+                    )
                 )
                 .clipShape(
                     UnevenRoundedRectangle(
