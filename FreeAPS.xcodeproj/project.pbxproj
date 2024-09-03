@@ -47,6 +47,8 @@
 		1982F7DB2BA6509D00EAFADE /* PumpStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1982F7DA2BA6509D00EAFADE /* PumpStorage.swift */; };
 		198377D2266BFFF6004DE65E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		198CED9D2B2E62940073032D /* OverrideStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CED9C2B2E62940073032D /* OverrideStorage.swift */; };
+		1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
+		1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
 		19A910302A24BF6300C8951B /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9102F2A24BF6300C8951B /* StatsView.swift */; };
 		19A910362A24D6D700C8951B /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A910352A24D6D700C8951B /* Configs.swift */; };
@@ -2889,6 +2891,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */,
+				1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */,
 				6B1A8D242B14D91700E76752 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

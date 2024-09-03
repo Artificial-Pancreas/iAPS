@@ -92,7 +92,7 @@
 "Suggested at" = "Voorgesteld op";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Foutmelding op";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Maaltijd overzicht";
@@ -111,6 +111,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Vette maaltijd";
+
+/* Bolus option */
+"Hypo Treatment" = "Hypobehandeling";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Volledige bolus";
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Max koolhydraten";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximale hoeveelheid koolhydraten (g) die je elke invoer kunt toevoegen";
 
 /* */
 "Pump Settings" = "Pomp instellingen";
@@ -1243,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loopcyclus advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende cyclus";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Fout: Pomp is bezig.";
+"Pump is Busy." = "Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1935,16 +1941,16 @@ Enact a temp Basal or a temp target */
 "Sharing" = "Delen van statistieken";
 
 /* Share and Backup page header */
-"Share and Backup" = "Share and Backup";
+"Share and Backup" = "Delen en back-up";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload settings and statistics" = "Upload instellingen en statistieken";
 
 /* On-off toggle */
-"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+"Share and Backup all of your Settings and Statistics" = "Deel en back-up al uw instellingen en statistieken";
 
 /* Title of dropdown menu */
-"Sex" = "Sex";
+"Sex" = "Geslacht";
 
 /* Sex dropdown menu option */
 "Woman" = "Vrouw";
@@ -1962,7 +1968,7 @@ Enact a temp Basal or a temp target */
 "Birth Date" = "Geboortedatum";
 
 /* Share and Backup info text */
-"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nAls u \"Delen en back-uppen\" inschakelt, worden er dagelijks back-ups van uw instellingen en statistieken gemaakt in een online database.\n\nZorg ervoor dat u uw hersteltoken hieronder kopieert en opslaat. Het hersteltoken is nodig om uw instellingen te importeren naar een andere telefoon wanneer u de onboarding-weergave gebruikt.";
 
 /* Section title if sharing off */
 "Share Bare Minimum" = "Deel alleen het minimale";
@@ -1971,19 +1977,19 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Alleen iAPS versienummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
 
 /* Token section title */
-"Your recovery token" = "Your recovery token";
+"Your recovery token" = "Je herstelcode";
 
 /* Token display button */
 "Tap to display" = "Tik om weer te geven";
 
 /* Token copy button */
-"Long press to copy" = "Long press to copy";
+"Long press to copy" = "Lang ingedrukt houden om te kopiëren";
 
 /* Link to statistics button */
-"View Personal Statistics" = "View Personal Statistics";
+"View Personal Statistics" = "Persoonlijke statistieken bekijken";
 
 /* */
 "Your identifier" = "Jouw identificatie";
@@ -2518,6 +2524,12 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Laat de kleine glucosegrafiek nooit zien tijdens het scrollen";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Hypobehandelingen uitschakelen";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Glucose delta weergeven";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
