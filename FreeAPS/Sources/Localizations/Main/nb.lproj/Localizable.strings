@@ -92,7 +92,7 @@
 "Suggested at" = "Foreslått kl.";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Feil kl.";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Oppsummering av måltid";

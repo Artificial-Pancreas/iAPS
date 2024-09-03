@@ -92,7 +92,7 @@
 "Suggested at" = "Ehdotettu klo";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Virhe klo";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Aterian yhteenveto";
