@@ -283,52 +283,6 @@ struct PreviewChart: View {
 
         return data
     }
-
-    private func prepareData(data_: [TIRinPercent]) -> [TIRinPercent] {
-        var data = data_
-
-        // Remove separators when needed
-        for index in 0 ..< data.count - 2 {
-            if index < data.count - 1 {
-                if data[index].percentage == 0 {
-                    if index + 1 < data.count {
-                        data.remove(at: index + 1)
-                    } else { data.remove(at: data.count - 1) }
-                }
-            }
-        }
-
-        if data.last?.group == "Separator" || (data.last?.percentage ?? 0) <= 0 {
-            data = data.dropLast()
-            // data.remove(at: data.count - 1)
-        }
-
-        // Remove double separators
-        var c = false
-        for index in 0 ..< data.count - 1 {
-            if data[index].group == "Separator" {
-                if c {
-                    data.remove(at: index)
-                }
-                c = true
-            } else { c = false }
-        }
-
-        data.removeAll(where: { $0.percentage <= 0 })
-
-        // Update properties?
-        if (data.last?.percentage ?? 0) > 0, data.last?.group != "Separator" {
-            data[data.count - 1].last = true
-        } else {
-            data = data.dropLast()
-            data[data.count - 1].last = true
-        }
-
-        data[0].first = true
-        data[data.count - 1].last = true
-
-        return data
-    }
 }
 
 struct TIRinPercent: Identifiable {
