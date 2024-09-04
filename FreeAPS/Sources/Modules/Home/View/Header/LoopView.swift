@@ -59,7 +59,7 @@ struct LoopView: View {
                         }
                     }.dynamicTypeSize(...DynamicTypeSize.xLarge)
                 }
-        }
+        }.offset(y: 5)
     }
 
     private var minutesAgo: Int {

@@ -94,7 +94,7 @@ struct CurrentGlucoseView: View {
                         )
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                        .offset(x: 2, y: fontSize >= .extraLarge ? -3 : 0)
+                        .offset(x: 1, y: fontSize >= .extraLarge ? -3 : 0)
                     }
                 }
             }
@@ -153,13 +153,13 @@ struct CurrentGlucoseView: View {
                     Text(decimal[1]).font(.system(size: 28)).baselineOffset(-10)
                 }
                 .tracking(-1)
-                .offset(x: 0, y: 14)
+                .offset(x: -2, y: 14)
                 .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
             } else {
                 Text(string)
                     .font(.glucoseFontMdDl.width(.condensed)) // .tracking(-2)
                     .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
-                    .offset(x: 0, y: 16)
+                    .offset(x: string.count > 2 ? -2 : -1, y: 16)
             }
         }
     }
