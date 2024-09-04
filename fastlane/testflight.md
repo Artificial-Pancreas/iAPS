@@ -52,7 +52,6 @@ If you have previously built Loop or another app using the "browser build" metho
     * `FASTLANE_KEY`
     * `GH_PAT`
     * `MATCH_PASSWORD` - just make up a password for this
-    * 'APP_IDENTIFIER' - optional, if you want to use a different BUNDLE_IDENTIFIER then `ru.artpancreas.$(DEVELOPMENT_TEAM).FreeAPS`.
 
 ## Validate repository secrets
 
