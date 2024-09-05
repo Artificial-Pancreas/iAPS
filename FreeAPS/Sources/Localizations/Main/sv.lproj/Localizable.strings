@@ -92,7 +92,7 @@
 "Suggested at" = "Föreslaget vid";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fel vid";
+"Status at" = "Status kl";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Måltidssammanfattning";
@@ -111,6 +111,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Fet mat";
+
+/* Bolus option */
+"Hypo Treatment" = "Behandling av lågt blodsocker";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Total mängd";
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximal antal kolhydrater (g) du kan lägga till varje måltid";
 
 /* */
 "Pump Settings" = "Pumpinställningar";
@@ -1243,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan inte utföra ny loop-rekommendation just nu, pga en pågående bolus. Vänta till nästa loop";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Fel: pump är upptagen.";
+"Pump is Busy." = "Pump är upptagen.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1930,45 +1936,66 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Utjämna blodsocker från sensor";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Delning";
+
+/* Share and Backup page header */
+"Share and Backup" = "Dela och säkerhetskopiera";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Ladda upp inställningar och statistik";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Dela och säkerhetskopiera alla dina inställningar och statistik";
+
+/* Title of dropdown menu */
+"Sex" = "Kön";
+
+/* Sex dropdown menu option */
 "Woman" = "Kvinna";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Man";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Annan";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Hemligt";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Födelsedatum";
 
-/* */
-"Share all of your Statistics" = "Dela all statistik";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nOm du aktiverar \"Dela och säkerhetskopiera\" kommer dagliga säkerhetskopior av dina inställningar och statistik att göras till en moln-databas.\n\nSe till att kopiera och spara din återställningstoken nedan. Den kommer att behövas om du någon gång behöver importera dina inställningar till en annan telefon.";
 
-/* */
-"Just iAPS version number" = "Endast appversion";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Dela endast ett minimum";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "All information du väljer att dela laddas upp anonymt. För att förhindra dubbletter av uppladdningar identifieras datan med en unik slumpmässig sträng som sparas på telefonen.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Endast appversion";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "All information du väljer att dela laddas upp anonymt. För att förhindra dubbletter av uppladdningar identifieras datan med en unik slumpmässig sträng som sparas på din telefon.";
+
+/* Token section title */
+"Your recovery token" = "Din återställningsnyckel";
+
+/* Token display button */
 "Tap to display" = "Tryck för att visa";
+
+/* Token copy button */
+"Long press to copy" = "Tryck länge för att kopiera";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Visa personlig statistik";
 
 /* */
 "Your identifier" = "Din identifierare";
 
 /* */
 "Share your data anonymously" = "Dela data anonymt";
-
-/* Setting Title */
-"Sharing" = "Delning";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -2329,7 +2356,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minsta tid i minuter för ny automatisk bolus sedan senaste bolus eller automatisk bolus";
 
 /* Headline "Bolus Increment" */
-"Bolus Increment" = "Minsta bolusmångd";
+"Bolus Increment" = "Minsta bolusmängd";
 
 /* "Bolus Increment" */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Minsta mängd för Omnipod-poddar är 0,05 enheter, medan det för Medtronic-pumpar skiljer sig åt för olika modeller, från 0.25 IE till 0,10 IE. Kontrollera den minsta bolusmängd som kan ges av din pump för denna inställning. Standardvärdet är 0,1 enheter.";
@@ -2486,10 +2513,16 @@ Enact a temp Basal or a temp target */
 "Horizontal Scroll View Visible hours" = "Antal synliga timmar i hemfönstret";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Visa knapp för tidsintervell";
+"Display Time Interval Setting Button" = "Visa knapp för tidsintervall";
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Dölj det lilla glukosdiagrammet när du scrollar";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Visa inte behandling av lågt blodsocker";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Visa exakt glukosförändring";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";

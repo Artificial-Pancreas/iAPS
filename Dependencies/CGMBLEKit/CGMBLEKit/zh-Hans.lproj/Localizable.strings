@@ -2,7 +2,7 @@
 "Dexcom G5" = "Dexcom G 5";
 
 /* CGM display title */
-"Dexcom G6" = "Dexcom G6";
+"Dexcom G6" = "德康 G6";
 
 /* Error description for unreliable state */
 "Glucose data is unavailable" = "葡萄糖数据不可用";
@@ -14,7 +14,7 @@
 "OK" = "Ok";
 
 /* invlid config error description */
-"Peripheral command was invalid" = "Peripheral command was invalid";
+"Peripheral command was invalid" = "外围命令无效";
 
 /* Timeout error description */
 "Peripheral did not respond in time" = "外设没有及时响应";

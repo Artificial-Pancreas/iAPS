@@ -206,4 +206,144 @@ final class CoreDataStorage {
         }
         return presetsArray
     }
+
+    func fetchOnbarding() -> Bool {
+        var firstRun = true
+        coredataContext.performAndWait {
+            let requestBool = Onboarding.fetchRequest() as NSFetchRequest<Onboarding>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestBool.sortDescriptors = [sort]
+            requestBool.fetchLimit = 1
+            try? firstRun = self.coredataContext.fetch(requestBool).first?.firstRun ?? true
+        }
+        return firstRun
+    }
+
+    func saveOnbarding() {
+        coredataContext.performAndWait { [self] in
+            let save = Onboarding(context: self.coredataContext)
+            save.firstRun = false
+            save.date = Date.now
+            try? self.coredataContext.save()
+        }
+    }
+
+    func startOnbarding() {
+        coredataContext.performAndWait { [self] in
+            let save = Onboarding(context: self.coredataContext)
+            save.firstRun = true
+            save.date = Date.now
+            try? self.coredataContext.save()
+        }
+    }
+
+    func fetchSettingProfileName() -> String {
+        fetchActiveProfile()
+    }
+
+    func fetchSettingProfileNames() -> [Profiles]? {
+        var presetsArray: [Profiles]?
+        coredataContext.performAndWait {
+            let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+        }
+        return presetsArray
+    }
+
+    func fetchUniqueSettingProfileName(_ name: String) -> Bool {
+        var presetsArray: Profiles?
+        coredataContext.performAndWait {
+            let requestProfiles = Profiles.fetchRequest() as NSFetchRequest<Profiles>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            requestProfiles.predicate = NSPredicate(
+                format: "uploaded == true && name == %@", name as String
+            )
+            try? presetsArray = self.coredataContext.fetch(requestProfiles).first
+        }
+        return (presetsArray != nil)
+    }
+
+    func saveProfileSettingName(name: String) {
+        coredataContext.perform { [self] in
+            let save = Profiles(context: self.coredataContext)
+            save.name = name
+            save.date = Date.now
+            try? self.coredataContext.save()
+        }
+    }
+
+    func migrateProfileSettingName(name: String) {
+        coredataContext.perform { [self] in
+            let save = Profiles(context: self.coredataContext)
+            save.name = name
+            save.date = Date.now
+            save.uploaded = true
+            try? self.coredataContext.save()
+        }
+    }
+
+    func profileSettingUploaded(name: String) {
+        var profile: String = name
+        if profile.isEmpty {
+            profile = "default"
+        }
+
+        // Avoid duplicates
+        if !fetchUniqueSettingProfileName(name) {
+            coredataContext.perform { [self] in
+                let save = Profiles(context: self.coredataContext)
+                save.name = profile
+                save.date = Date.now
+                save.uploaded = true
+                try? self.coredataContext.save()
+            }
+        }
+    }
+
+    func activeProfile(name: String) {
+        coredataContext.perform { [self] in
+            let save = ActiveProfile(context: self.coredataContext)
+            save.name = name
+            save.date = Date.now
+            save.active = true
+            try? self.coredataContext.save()
+        }
+    }
+
+    func checkIfActiveProfile() -> Bool {
+        var presetsArray = [ActiveProfile]()
+        coredataContext.performAndWait {
+            let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+        }
+        return (presetsArray.first?.active ?? false)
+    }
+
+    func fetchActiveProfile() -> String {
+        var presetsArray = [ActiveProfile]()
+        coredataContext.performAndWait {
+            let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestProfiles.sortDescriptors = [sort]
+            try? presetsArray = self.coredataContext.fetch(requestProfiles)
+        }
+        return presetsArray.first?.name ?? "default"
+    }
+
+    func fetchLastLoop() -> LastLoop? {
+        var lastLoop = [LastLoop]()
+        coredataContext.performAndWait {
+            let requestLastLoop = LastLoop.fetchRequest() as NSFetchRequest<LastLoop>
+            let sortLoops = NSSortDescriptor(key: "timestamp", ascending: false)
+            requestLastLoop.sortDescriptors = [sortLoops]
+            requestLastLoop.fetchLimit = 1
+            try? lastLoop = coredataContext.fetch(requestLastLoop)
+        }
+        return lastLoop.first
+    }
 }

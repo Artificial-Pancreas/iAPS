@@ -92,7 +92,7 @@
 "Suggested at" = "Suggerito alle";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Errore a";
+"Status at" = "Errore a";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Riepilogo Pasto";
@@ -111,6 +111,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Pasto Grasso";
+
+/* Bolus option */
+"Hypo Treatment" = "Trattamento ipoglicemia";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Bolo Completo";
@@ -475,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Carboidrati massimi";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Quantità massima di carboidrati (g) che è possibile aggiungere alla volta";
 
 /* */
 "Pump Settings" = "Microinfusore";
@@ -1243,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Non è possibile attuare un nuovo ciclo loop, perché un bolo è in corso. Attendere il ciclo loop successivo";
 
 /* Pump Error */
-"Error: Pump is Busy." = "Errore: la pompa sta già lavorando.";
+"Pump is Busy." = "Errore: la pompa sta già lavorando.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1930,45 +1936,66 @@ Enact a temp Basal or a temp target */
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Valori Glicemici Levigati";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
-/* */
+/* Setting Title */
 
+"Sharing" = "Condivisione";
+
+/* Share and Backup page header */
+"Share and Backup" = "Condivisione e backup";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Carica le impostazioni e le statistiche";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Condividi e salva tutte le tue impostazioni e statistiche";
+
+/* Title of dropdown menu */
+"Sex" = "Genere";
+
+/* Sex dropdown menu option */
 "Woman" = "Donna";
 
-/* */
+/* Sex dropdown menu option */
 "Man" = "Uomo";
 
-/* */
+/* Sex dropdown menu option */
 "Other" = "Altro";
 
-/* */
+/* Sex dropdown menu option */
 "Secret" = "Segreto";
 
-/* */
+/* Title of birth date field */
 "Birth Date" = "Data di nascita";
 
-/* */
-"Share all of your Statistics" = "Condividi tutte le tue statistiche";
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nSe abiliti \"Condividi e Backup\" i backup giornalieri delle tue impostazioni e delle tue statistiche saranno effettuati sul database online.\n\nAssicurati di copiare e salvare il tuo token di recupero qui sotto. Il token di recupero è necessario per importare le tue impostazioni su un altro telefono quando si utilizza la vista onboarding.";
 
-/* */
-"Just iAPS version number" = "Solo il numero di versione iAPS";
-
-/* */
+/* Section title if sharing off */
 "Share Bare Minimum" = "Condividi Minimo Nullo";
 
-/* */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone." = "Ogni bit di informazioni che si sceglie di condividere viene caricato in modo anonimo. Per evitare duplicati di caricamenti, i dati sono identificati con una stringa casuale univoca salvata sul telefono.";
+/* Minimum share toggle */
+"Just iAPS version number" = "Solo il numero di versione iAPS";
 
-/* */
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Ogni bit di informazione che si sceglie di condividere viene caricato in forma anonima. Per evitare duplicati caricamenti, i dati vengono identificati con una stringa casuale univoca salvata sul telefono, il token di recupero.";
+
+/* Token section title */
+"Your recovery token" = "Il tuo token di recupero";
+
+/* Token display button */
 "Tap to display" = "Tocca per visualizzare";
+
+/* Token copy button */
+"Long press to copy" = "Premi a lungo per copiare";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Mostra Statistiche Personali";
 
 /* */
 "Your identifier" = "Il tuo identificativo";
 
 /* */
 "Share your data anonymously" = "Condividi i tuoi dati in modo anonimo";
-
-/* Setting Title */
-"Sharing" = "Condivisione";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -2491,6 +2518,12 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Non visualizzare mai il grafico piccolo del glucosio durante lo scorrimento";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Disabilita trattamenti Ipoglicemie";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Display Glucose Delta";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
