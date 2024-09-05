@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "build": "webpack --config ./scripts/webpack.config.js"
+    },
+    "devDependencies": {
+        "webpack-cli": "^5.1.4"
+    }
+}
