@@ -396,8 +396,8 @@ extension Home {
         }
 
         var chart: some View {
-            let ratio = state.timeSettings ? 1.73 : 1.56
-            let ratio2 = state.timeSettings ? 1.77 : 1.63
+            let ratio = 1.76
+            let ratio2 = 1.80
 
             return addColouredBackground().shadow(radius: 3, y: 3)
                 .overlay {
@@ -702,9 +702,9 @@ extension Home {
                             // Main Chart
                             chart
                             // Adjust hours visible (X-Axis)
-                            if state.timeSettings, !displayGlucose { timeSetting }
+                            if !displayGlucose { timeSetting }
                             // TIR Chart
-                            preview.padding(.top, (state.timeSettings && !displayGlucose) ? 5 : 15)
+                            preview.padding(.top, !displayGlucose ? 5 : 15)
                             // Loops Chart
                             loopPreview.padding(.vertical, 15)
                             // COB Chart
@@ -719,7 +719,7 @@ extension Home {
                             // Track vertical scroll
                             GeometryReader { proxy in
                                 let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
-                                let yThreshold: CGFloat = state.timeSettings ? -500 : -560
+                                let yThreshold: CGFloat = -500
                                 Color.clear
                                     .onChange(of: scrollPosition) { y in
                                         if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {

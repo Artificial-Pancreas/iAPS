@@ -14,7 +14,6 @@ extension StatConfig {
         @Published var useTargetButton: Bool = false
         @Published var hours: Decimal = 6
         @Published var alwaysUseColors: Bool = true
-        @Published var timeSettings: Bool = true
         @Published var minimumSMB: Decimal = 0.3
         @Published var useInsulinBars: Bool = false
         @Published var skipGlucoseChart: Bool = false
@@ -32,7 +31,6 @@ extension StatConfig {
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
             subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
             subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { skipGlucoseChart = $0 }
-            subscribeSetting(\.timeSettings, on: $timeSettings) { timeSettings = $0 }
             subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { alwaysUseColors = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             subscribeSetting(\.useTargetButton, on: $useTargetButton) { useTargetButton = $0 }

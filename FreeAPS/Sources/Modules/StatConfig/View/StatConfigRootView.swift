@@ -51,7 +51,6 @@ extension StatConfig {
                         DecimalTextField("0.2", value: $state.minimumSMB, formatter: insulinFormatter)
                         Text("U").foregroundColor(.secondary)
                     }
-                    Toggle("Display Time Interval Setting Button", isOn: $state.timeSettings)
 
                 } header: { Text("Home Chart settings ") }
 
