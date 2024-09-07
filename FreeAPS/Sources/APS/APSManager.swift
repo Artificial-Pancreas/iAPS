@@ -351,7 +351,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
-        guard lastGlucoseDate >= Date().addingTimeInterval(-12.minutes.timeInterval) else {
+        guard lastGlucoseDate > Date().addingTimeInterval(-12.minutes.timeInterval) else {
             debug(.apsManager, "Glucose data is stale")
             processError(APSError.glucoseError(message: "Glucose data is stale"))
             return Just(false).eraseToAnyPublisher()
