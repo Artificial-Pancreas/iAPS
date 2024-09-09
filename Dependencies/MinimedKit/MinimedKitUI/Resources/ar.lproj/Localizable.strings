@@ -8,10 +8,10 @@
 "%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
 
 /* The format string describing number of basal schedule entries: (1: number of entries) */
-"%1$@ basal schedule entries\n" = "%1$@ basal schedule entries\n";
+"%1$@ basal schedule entries\n" = "%1$@ إدخالات جدول الجرعة الأساسية\n";
 
 /* The format string describing units of insulin remaining: (1: number of units) */
-"%1$@ Units of insulin remaining\n" = "%1$@ Units of insulin remaining\n";
+"%1$@ Units of insulin remaining\n" = "%1$@ وحدات الانسولين المتبقية\n";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ units remaining at %2$@";
@@ -23,34 +23,34 @@
 "Adjusting Pump Time..." = "Adjusting Pump Time...";
 
 /* Instructions on selecting battery chemistry type */
-"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure.";
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "البطاريات القلوية والبطاريات الليثيومية تتحلل بمعدلات مختلفة. عادةً ما يكون للبطاريات القلوية انخفاض تدريجي ومستمر في الجهد الكهربائي مع مرور الوقت، بينما تحافظ بطاريات الليثيوم على الجهد الكهربائي حتى تصل إلى منتصف عمرها الافتراضي. في مضخات الأنسولين من طراز Minimed (x22/x15) غير المتوافقة مع MySentry والتي تعمل بنظام Loop، تدوم البطاريات القلوية لمدة تتراوح بين 4 إلى 5 أيام تقريبًا تحت الاستخدام العادي. بينما تدوم بطاريات الليثيوم من أسبوع إلى أسبوعين. سيقوم هذا الاختيار باستخدام معدلات تحلل الجهد المختلفة لكل نوع من أنواع البطاريات وينبه المستخدم عندما تكون البطارية على وشك النفاد، أي قبل حوالي 8 إلى 10 ساعات من الفشل.";
 
 /* Text to confirm delete this pump */
-"Are you sure you want to delete this Pump?" = "Are you sure you want to delete this Pump?";
+"Are you sure you want to delete this Pump?" = "هل أنت متأكد أنك تريد حذف هذه المضخة؟";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
-"Battery: %1$@ volts\n" = "Battery: %1$@ volts\n";
+"Battery: %1$@ volts\n" = "البطارية: %1$@ volts\n";
 
 /* The label indicating the best radio frequency */
-"Best Frequency" = "Best Frequency";
+"Best Frequency" = "أفضل تردد";
 
 /* The format string describing pump bolusing state: (1: bolusing) */
-"Bolusing: %1$@\n" = "Bolusing: %1$@\n";
+"Bolusing: %1$@\n" = "يضخ: %1$@\n";
 
 /* Cancel button title */
 "Cancel" = "إلغاء";
 
 /* Title text for suspend resume button when temp basal canceling */
-"Canceling Temp Basal" = "Canceling Temp Basal";
+"Canceling Temp Basal" = "إلغاء الجرعة الأساسية المؤقتة";
 
 /* Text shown in basal rate space when basal is changing */
-"Changing" = "Changing";
+"Changing" = "تغيير";
 
 /* Progress message for changing pump time. */
 "Changing time…" = "تغيير الوقت…";
 
 /* Instructions on selecting battery chemistry type */
-"Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "Choose the type of battery you are using in your pump for better alerting about low battery conditions.";
+"Choose the type of battery you are using in your pump for better alerting about low battery conditions." = "اختر نوع البطارية التي تستخدمها في مضختك لتحسين التنبيهات حول حالات انخفاض البطارية.";
 
 /* The title of the configuration section in MinimedPumpManager settings */
 "Configuration" = "المعطيات";
@@ -63,13 +63,13 @@
 
 /* Button label for removing Pump
    Text to delete pump */
-"Delete Pump" = "Delete Pump";
+"Delete Pump" = "حذف المضخة";
 
 /* Header for devices section of RileyLinkSetupView */
 "Devices" = "الأجهزة";
 
 /* Description for option to not use MySentry */
-"Do not use MySentry" = "Do not use MySentry";
+"Do not use MySentry" = "لا تستخدم MySentry";
 
 /* The alert title for a resume error */
 "Error Resuming" = "خطأ في الاستئناف";
@@ -78,13 +78,13 @@
 "Error Suspending" = "Error Suspending";
 
 /* The alert title for an error while synching time */
-"Error Syncing Time" = "Error Syncing Time";
+"Error Syncing Time" = "خطأ في مزامنة الوقت";
 
 /* Progress message for fetching pump glucose. */
-"Fetching glucose…" = "Fetching glucose…";
+"Fetching glucose…" = "جارٍ جلب الجلوكوز…";
 
 /* Progress message for fetching pump history. */
-"Fetching history…" = "Fetching history…";
+"Fetching history…" = "جارٍ جلب التاريخ…";
 
 /* Progress message for fetching pump model. */
 "Fetching pump model…" = "Fetching pump model…";
