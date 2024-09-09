@@ -230,6 +230,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
     /// The pump should be in history fetch mode, before requesting history data
     public var isInFetchHistoryMode: Bool = false
     
+    /// Allows the user to skip bolus syncing to prevent possible double Bolus entries
+    public var isBolusSyncDisabled: Bool = false
+    
     public var ignorePassword: Bool = false
     public var devicePassword: UInt16 = 0
     

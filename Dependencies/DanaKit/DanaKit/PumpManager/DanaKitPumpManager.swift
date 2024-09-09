@@ -70,6 +70,10 @@ public class DanaKitPumpManager: DeviceManager {
         self.state.isOnBoarded
     }
     
+    public var isBluetoothConnected: Bool {
+        self.bluetooth.isConnected
+    }
+    
     private let basalIntervals: [TimeInterval] = Array(0..<24).map({ TimeInterval(60 * 60 * $0) })
     public var currentBaseBasalRate: Double {
         guard self.state.basalSchedule.count > 0 else {
@@ -423,6 +427,11 @@ extension DanaKitPumpManager: PumpManager {
                     return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Alarm: \(getAlarmMessage(param8: item.alarm))", type: .alarm, alarmType: PumpAlarmType.fromParam8(item.alarm))
                 
                 case HistoryCode.RECORD_TYPE_BOLUS:
+                    // Skip bolus syncing if enabled by user
+                    if self.state.isBolusSyncDisabled {
+                        return nil
+                    }
+                        
                     // If we find a bolus here, we assume that is hasnt been synced to Loop
                     return NewPumpEvent.bolus(
                         dose: DoseEntry.bolus(units: item.value!, deliveredUnits: item.value!, duration: item.durationInMin! * 60, activationType: .manualNoRecommendation, insulinType: self.state.insulinType!, startDate: item.timestamp),

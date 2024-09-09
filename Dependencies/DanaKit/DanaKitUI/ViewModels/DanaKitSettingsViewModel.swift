@@ -15,12 +15,14 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingBleModeSwitch = false
     @Published var showingTimeSyncConfirmation = false
     @Published var showingDisconnectReminder = false
+    @Published var showingBolusSyncingDisabled = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
     @Published var isUsingContinuousMode: Bool = false
     @Published var isUpdatingPumpState: Bool = false
     @Published var isConnected: Bool = false
     @Published var isTogglingConnection: Bool = false
+    @Published var isBolusSyncingDisabled = false
     @Published var isSyncing: Bool = false
     @Published var lastSync: Date? = nil
     @Published var batteryLevel: Double = 0
@@ -103,6 +105,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.reservoirLevel = self.pumpManager?.state.reservoirLevel
         self.isSuspended = self.pumpManager?.state.isPumpSuspended ?? false
         self.pumpTime = self.pumpManager?.state.pumpTime
+        self.isBolusSyncingDisabled = self.pumpManager?.state.isBolusSyncDisabled ?? false
         self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
         self.silentTone = self.pumpManager?.state.useSilentTones ?? false
         self.reservoirLevelWarning = Double(self.pumpManager?.state.lowReservoirRate ?? 20)
@@ -247,6 +250,15 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.silentTone = pumpManager.state.useSilentTones
     }
     
+    func toggleBolusSyncing() {
+        guard let pumpManager = self.pumpManager else {
+            return
+        }
+        
+        pumpManager.state.isBolusSyncDisabled = !self.isBolusSyncingDisabled
+        pumpManager.notifyStateDidChange()
+    }
+    
     func transformBasalProfile(_ index: UInt8) -> String {
         if index == 0 {
             return "A"
@@ -361,6 +373,7 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.lastSync = state.lastStatusDate
         self.reservoirLevel = state.reservoirLevel
         self.isSuspended = state.isPumpSuspended
+        self.isBolusSyncingDisabled = state.isBolusSyncDisabled
         self.pumpTime = state.pumpTime
         self.batteryLevel = state.batteryRemaining
         self.silentTone = state.useSilentTones
