@@ -46,7 +46,6 @@ struct CurrentGlucoseView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         if units == .mmolL {
-            formatter.minimumIntegerDigits = 0
             formatter.decimalSeparator = "."
         }
         formatter.maximumFractionDigits = 1
@@ -77,7 +76,8 @@ struct CurrentGlucoseView: View {
     var glucoseView: some View {
         ZStack {
             if let recent = recentGlucose {
-                if displayDelta, let deltaInt = delta, !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
+                if displayDelta, let deltaInt = delta,
+                   !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
                     if let string = recent.glucose.map({
@@ -103,12 +103,12 @@ struct CurrentGlucoseView: View {
 
     private func deltaView(_ deltaInt: Int) -> some View {
         ZStack {
-            let offset: CGFloat = 4
             let deltaConverted = units == .mmolL ? deltaInt.asMmolL : Decimal(deltaInt)
+            let string = deltaFormatter.string(from: deltaConverted as NSNumber) ?? ""
+            let offset: CGFloat = -7
 
-            Text(deltaFormatter.string(from: deltaConverted as NSNumber) ?? "")
+            Text(string)
                 .font(.caption)
-                .offset(x: -(offset / 2))
                 .background { directionDrop }
                 .offset(x: offset, y: 10)
         }
@@ -143,6 +143,23 @@ struct CurrentGlucoseView: View {
         }
     }
 
+    private func direction(degree: Double) -> (x: CGFloat, y: CGFloat) {
+        switch degree {
+        case 0:
+            return (0, -2)
+        case 45:
+            return (1, -2)
+        case 90:
+            return (2, 0)
+        case 135:
+            return (1, 2)
+        case 180:
+            return (0, 2)
+        default:
+            return (2, 0)
+        }
+    }
+
     private func glucoseText(_ string: String) -> any View {
         ZStack {
             let decimal = string.components(separatedBy: decimalString)
@@ -167,20 +184,23 @@ struct CurrentGlucoseView: View {
     private var glucoseDrop: some View {
         let adjust = adjustments
         let degree = adjustments.degree
+        let shadowDirection = direction(degree: degree)
         return Image("glucoseDrops")
             .resizable()
             .frame(width: 140, height: 140).rotationEffect(.degrees(degree))
             .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
             .offset(x: adjust.x, y: adjust.y)
-            .shadow(radius: 3)
+            .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
     }
 
     private var directionDrop: some View {
         let degree = adjustments.degree
+        let shadowDirection = direction(degree: degree)
         return Image("glucoseDrops")
             .resizable()
-            .frame(width: 40, height: 40).rotationEffect(.degrees(degree))
+            .frame(width: 42, height: 42).rotationEffect(.degrees(degree))
             .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
+            .shadow(radius: 2, x: shadowDirection.x, y: shadowDirection.y)
     }
 
     private var colorOfGlucose: Color {
