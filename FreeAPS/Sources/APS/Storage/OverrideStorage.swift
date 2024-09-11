@@ -106,6 +106,24 @@ final class OverrideStorage {
         }
     }
 
+    func activatePreset(_ id: String) {
+        coredataContext.performAndWait {
+            var presetsArray = [OverridePresets]()
+            coredataContext.performAndWait {
+                let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
+                requestPresets.predicate = NSPredicate(
+                    format: "id == %@", id
+                )
+                try? presetsArray = self.coredataContext.fetch(requestPresets)
+
+                guard let overidePreset = presetsArray.first else {
+                    return
+                }
+                overrideFromPreset(overidePreset)
+            }
+        }
+    }
+
     func fetchProfilePreset(_ name: String) -> OverridePresets? {
         var presetsArray = [OverridePresets]()
         var preset: OverridePresets?
@@ -160,7 +178,6 @@ final class OverrideStorage {
     }
 
     func activateOverride(_ override: Override) {
-        var overrideArray = [Override]()
         coredataContext.performAndWait {
             let save = Override(context: coredataContext)
             save.date = Date.now
