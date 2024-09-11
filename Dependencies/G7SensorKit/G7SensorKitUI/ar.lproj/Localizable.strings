@@ -23,7 +23,7 @@
 "Connecting" = "Connecting";
 
 /* Button title for starting setup */
-"Continue" = "Continue";
+"Continue" = "تابع";
 
 /* Button label for removing CGM */
 "Delete CGM" = "حذف المستشعر";

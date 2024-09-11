@@ -92,7 +92,7 @@
 "Suggested at" = "Suggerito alle";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Errore a";
+"Status at" = "Stato attuale";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Riepilogo Pasto";
@@ -1249,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Non è possibile attuare un nuovo ciclo loop, perché un bolo è in corso. Attendere il ciclo loop successivo";
 
 /* Pump Error */
-"Pump is Busy." = "Errore: la pompa sta già lavorando.";
+"Pump is Busy." = "Il microinfusore sta già erogando.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -2523,7 +2523,7 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Disable Hypo Treatments" = "Disabilita trattamenti Ipoglicemie";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Display Glucose Delta";
+"Display Glucose Delta" = "Mostra Delta Glicemia";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
