@@ -92,16 +92,13 @@ extension Settings {
                 } header: { Text("Extra Features") }
 
                 Section {
-                    Toggle("Disable", isOn: $state.disableHypoTreatment)
-                    if !state.disableHypoTreatment {
-                        HStack {
-                            Picker("Treatment Preset", selection: $state.profileID) {
-                                Text("Default  📉").tag("Hypo Treatment")
-                                ForEach(fetchedProfiles) { item in
-                                    Text(item.name ?? "").tag(item.id)
-                                }
-                                Text("None").tag("None")
+                    HStack {
+                        Picker("Treatment Preset", selection: $state.profileID) {
+                            Text("Default  📉").tag("Hypo Treatment")
+                            ForEach(fetchedProfiles) { item in
+                                Text(item.name ?? "").tag(item.id)
                             }
+                            Text("None").tag("None")
                         }
                     }
                 } header: { Text("Hypo Treatment") }
