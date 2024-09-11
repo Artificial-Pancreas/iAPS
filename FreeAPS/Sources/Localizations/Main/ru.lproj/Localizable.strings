@@ -92,7 +92,7 @@
 "Suggested at" = "Предложено в";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Ошибка в";
+"Status at" = "Статус в";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Итог питания";
@@ -113,7 +113,7 @@
 "Fatty Meal" = "Жирная пища";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Гипогликемия";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Полный болюс";
@@ -480,7 +480,7 @@ Enact a temp Basal or a temp target */
 "Max Carbs" = "Максимум углеводов";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "Максимум углеводов (г), который можно внести в запись";
 
 /* */
 "Pump Settings" = "Настройки помпы";
@@ -1249,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Не удается выполнить рекомендацию по новому циклу петли, так как вводится болюс. Подождите новый цикл петли";
 
 /* Pump Error */
-"Pump is Busy." = "Ошибка: Помпа занята.";
+"Pump is Busy." = "Помпа занята.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -2519,10 +2519,10 @@ Enact a temp Basal or a temp target */
 "Never display the small glucose chart when scrolling" = "Не отображать график уровня глюкозы при прокрутке";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Disable Hypo Treatments";
+"Disable Hypo Treatments" = "Отключить гипогликемии";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Display Glucose Delta";
+"Display Glucose Delta" = "Отображать дельту глюкозы";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";

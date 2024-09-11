@@ -92,7 +92,7 @@
 "Suggested at" = "Vorgeschlagen um";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Fehler um";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Mahlzeitenübersicht";
@@ -1249,7 +1249,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Die neue Empfehlung kann nicht angewendet werden, da zurzeit ein Bolus verabreicht wird. Warten Sie bitte die nächste Schleife ab.";
 
 /* Pump Error */
-"Pump is Busy." = "Fehler: Die Pumpe ist beschäftigt.";
+"Pump is Busy." = "Pump is Busy.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -2522,7 +2522,7 @@ Enact a temp Basal or a temp target */
 "Disable Hypo Treatments" = "Hypo Behandlung deaktivieren";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Display Glucose Delta";
+"Display Glucose Delta" = "Glukose-Delta anzeigen";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
