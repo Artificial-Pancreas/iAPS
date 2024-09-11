@@ -86,7 +86,6 @@ extension StatConfig {
                 Section {
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
                     Toggle("Display and allow Fat and Protein entries", isOn: $state.useFPUconversion)
-                    Toggle("Disable Hypo Treatments", isOn: $state.disableHypoTreatment)
                 } header: { Text("Add Meal View settings ") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
