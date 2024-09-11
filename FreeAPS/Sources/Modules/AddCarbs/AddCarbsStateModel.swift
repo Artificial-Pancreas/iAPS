@@ -23,9 +23,8 @@ extension AddCarbs {
         @Published var id_: String = ""
         @Published var summary: String = ""
         @Published var skipBolus: Bool = false
-        @Published var hypoTreatment: Bool = false
-        @Published var disableHypoTreatment: Bool = false
         @Published var id: String?
+        @Published var hypoTreatment = false
 
         let now = Date.now
 
@@ -38,7 +37,6 @@ extension AddCarbs {
             maxCarbs = settings.settings.maxCarbs
             skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
             useFPUconversion = settingsManager.settings.useFPUconversion
-            disableHypoTreatment = settingsManager.settings.disableHypoTreatment
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
@@ -64,7 +62,7 @@ extension AddCarbs {
 
             if hypoTreatment { hypo() }
 
-            if (skipBolus && !continue_ && !fetch) || hypoTreatment {
+            if let profile = id, profile != "None" || (skipBolus && !continue_ && !fetch) {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {
