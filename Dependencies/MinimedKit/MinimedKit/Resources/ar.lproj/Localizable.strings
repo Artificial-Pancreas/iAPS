@@ -8,7 +8,7 @@
 "AlarmSensor" = "تنبيه الحساس";
 
 /* Describing the battery chemistry as Alkaline */
-"Alkaline" = "Alkaline";
+"Alkaline" = "قلوي";
 
 /* The format string description of a BasalProfileStartPumpEvent. (1: The index of the profile)(2: The basal rate) */
 "Basal Profile %1$@: %2$@ U/hour" = "ملف تعريف القاعدي %1$@: %2$@ U/hour";
@@ -17,7 +17,7 @@
 "Bolus in progress" = "جرعة قيد التنفيذ";
 
 /* Suggestions for diagnosing a command refused pump error */
-"Check that the pump is not suspended or priming, or has a percent temp basal type" = "Check that the pump is not suspended or priming, or has a percent temp basal type";
+"Check that the pump is not suspended or priming, or has a percent temp basal type" = "تحقق من أن المضخة ليست معلقة أو في وضع التحضير، أو لديها نوع جرعة أساسية مؤقتة بنسبة مئوية";
 
 /* Pump error code returned when command refused */
 "Command refused" = "تم رفض الأمر";
@@ -74,25 +74,25 @@
 "Reservoir" = "الخزان";
 
 /* Error description */
-"RileyLink radio tune failed" = "RileyLink radio tune failed";
+"RileyLink radio tune failed" = "فشل ضبط راديو RileyLink";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in minutes) */
-"Temporary Basal: %1$.3f U/hour" = "Temporary Basal: %1$.3f U/hour";
+"Temporary Basal: %1$.3f U/hour" = "الأساس المؤقت: %1$.3f U/ساعة";
 
 /* The format string description of a TempBasalDurationPumpEvent. (1: The duration of the temp basal in minutes) */
-"Temporary Basal: %1$d min" = "Temporary Basal: %1$d min";
+"Temporary Basal: %1$d min" = "الأساس المؤقت: %1$d U/ دقيقة";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in percent) */
-"Temporary Basal: %1$d%%" = "Temporary Basal: %1$d%%";
+"Temporary Basal: %1$d%%" = "الأساسي المؤقت: %1$d U/%%";
 
 /* The format string description of an unknown pump error code. (1: The specific error code raw value) */
-"Unknown pump error code: %1$@" = "Unknown pump error code: %1$@";
+"Unknown pump error code: %1$@" = "رمز خطأ مضخة غير معروف: %1$@";
 
 /* No comment provided by engineer. */
 "Unknown pump model: %@" = "نَموذج مضخة غير معروف: %@";
 
 /* Format string for an unknown response. (1: The operation being performed) (2: The response data) */
-"Unknown response during %1$@: %2$@" = "Unknown response during %1$@: %2$@";
+"Unknown response during %1$@: %2$@" = "استجابة غير صحيحة خلال %1$@: %2$@";
 
 /* Describing the worldwide pump region */
-"World-Wide" = "World-Wide";
+"World-Wide" = "عالمي";
