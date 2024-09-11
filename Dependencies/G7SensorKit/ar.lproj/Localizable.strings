@@ -5,7 +5,7 @@
 "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "يمكن لـ iAPS قراءة بيانات G7، ولكن لا يزال عليك استخدام تطبيق ديكسكوم G7 للإقران والمعايرة وإدارة المستشعرات الأخرى.";
 
 /* Button title for starting setup */
-"Continue" = "Continue";
+"Continue" = "تابع";
 
 /* Button text to cancel G7 setup */
 "Cancel" = "إلغاء";
