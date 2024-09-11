@@ -25,6 +25,7 @@ extension AddCarbs {
         @Published var skipBolus: Bool = false
         @Published var hypoTreatment: Bool = false
         @Published var disableHypoTreatment: Bool = false
+        @Published var id: String?
 
         let now = Date.now
 
@@ -33,6 +34,7 @@ extension AddCarbs {
 
         override func subscribe() {
             carbsRequired = provider.suggestion?.carbsReq
+            id = settings.settings.profileID
             maxCarbs = settings.settings.maxCarbs
             skipBolus = settingsManager.settings.skipBolusScreenAfterCarbs
             useFPUconversion = settingsManager.settings.useFPUconversion
@@ -241,24 +243,30 @@ extension AddCarbs {
                 }
             }
 
+            guard let profileID = id, profileID != "None" else {
+                return
+            }
             // Enable New Override
-            let override = OverridePresets(context: coredataContextBackground)
-            override.percentage = 90
-            override.smbIsOff = true
-            override.duration = 45
-            override.name = "📉"
-            override.advancedSettings = true
-            override.target = 117
-            override.date = Date.now
-            override.indefinite = false
-
-            os.overrideFromPreset(override, UUID().uuidString)
-            // Upload to Nightscout
-            nightscoutManager.uploadOverride(
-                "📉",
-                Double(45),
-                override.date ?? Date.now
-            )
+            if profileID == "Hypo Treatment" {
+                let override = OverridePresets(context: coredataContextBackground)
+                override.percentage = 90
+                override.smbIsOff = true
+                override.duration = 45
+                override.name = "📉"
+                override.advancedSettings = true
+                override.target = 117
+                override.date = Date.now
+                override.indefinite = false
+                os.overrideFromPreset(override, profileID)
+                // Upload to Nightscout
+                nightscoutManager.uploadOverride(
+                    "📉",
+                    Double(45),
+                    override.date ?? Date.now
+                )
+            } else {
+                os.activatePreset(profileID)
+            }
         }
     }
 }

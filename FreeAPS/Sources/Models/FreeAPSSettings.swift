@@ -70,6 +70,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var sexSetting: Int = 3
     var disableHypoTreatment: Bool = false
     var displayDelta: Bool = false
+    var profileID: OverridePresets.ID = "Hypo Treatment"
 }
 
 extension FreeAPSSettings: Decodable {
@@ -353,6 +354,10 @@ extension FreeAPSSettings: Decodable {
 
         if let displayDelta = try? container.decode(Bool.self, forKey: .displayDelta) {
             settings.displayDelta = displayDelta
+        }
+
+        if let profileID = try? container.decode(String.self, forKey: .profileID) {
+            settings.profileID = profileID
         }
 
         self = settings
