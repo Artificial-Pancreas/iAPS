@@ -2,7 +2,7 @@ version: "1"
 rules:
   - base: main
     upstream: Artificial-Pancreas:main    # change `wei` to the owner of upstream repo
-    mergeMethod: hardreset
+    mergeMethod: rebase
   - base: dev
     upstream: Artificial-Pancreas:dev    # change `wei` to the owner of upstream repo
-    mergeMethod: hardreset
+    mergeMethod: rebase
