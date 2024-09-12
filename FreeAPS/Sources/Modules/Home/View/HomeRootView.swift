@@ -704,7 +704,9 @@ extension Home {
                             // Adjust hours visible (X-Axis)
                             if !displayGlucose { timeSetting }
                             // TIR Chart
-                            preview.padding(.top, !displayGlucose ? 5 : 15)
+                            if !state.glucose.isEmpty {
+                                preview.padding(.top, !displayGlucose ? 5 : 15)
+                            }
                             // Loops Chart
                             loopPreview.padding(.vertical, 15)
                             // COB Chart
