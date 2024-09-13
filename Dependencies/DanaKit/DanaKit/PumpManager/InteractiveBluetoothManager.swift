@@ -146,7 +146,7 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
     func disconnect(_ peripheral: CBPeripheral, force: Bool) {
         self.autoConnectUUID = nil
         
-        logDeviceCommunication("Dana - Disconnected", type: .connection)
+        logDeviceCommunication("Dana - Disconnecting", type: .connection)
         self.manager.cancelPeripheralConnection(peripheral)
     }
     

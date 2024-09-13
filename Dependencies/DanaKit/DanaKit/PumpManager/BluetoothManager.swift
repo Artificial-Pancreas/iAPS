@@ -264,6 +264,13 @@ extension BluetoothManager {
     }
     
     func bleCentralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        if let error = error {
+            log.error("Failed to disconnect: \(error.localizedDescription)")
+            logDeviceCommunication("Dana - FAILED TO DISCONNECT: \(error.localizedDescription)", type: .connection)
+            return
+        }
+        
+        logDeviceCommunication("Dana - Disconnected", type: .connection)
         log.info("Device disconnected, name: \(peripheral.name ?? "<NO_NAME>")")
         
         self.pumpManagerDelegate?.state.isConnected = false
