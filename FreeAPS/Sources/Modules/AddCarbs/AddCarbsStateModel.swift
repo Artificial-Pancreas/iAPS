@@ -62,7 +62,7 @@ extension AddCarbs {
 
             if hypoTreatment { hypo() }
 
-            if hypoTreatment, let profile = id, profile != "None" || (skipBolus && !continue_ && !fetch) {
+            if (skipBolus && !continue_ && !fetch) || hypoTreatment {
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {
