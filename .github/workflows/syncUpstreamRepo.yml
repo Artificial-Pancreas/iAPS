@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: GitHub Sync to Upstream Repository
-        uses: Artificial-Pancreas/sync-upstream-repo
+        uses: Artificial-Pancreas/sync-upstream-repo@master
         with:
           upstream_repo: ${{ env.UPSTREAM_URL }}
           upstream_branch: ${{ env.UPSTREAM_BRANCH }}
