@@ -28,6 +28,11 @@ platform :ios do
   desc "Build iAPS"
   lane :build_iAPS do
     setup_ci if ENV['CI']
+
+    if !defined?(ENV["APP_IDENTIFIER"])).nil? # will now return true or false
+      APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
+      File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
+    end
     
     update_project_team(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
