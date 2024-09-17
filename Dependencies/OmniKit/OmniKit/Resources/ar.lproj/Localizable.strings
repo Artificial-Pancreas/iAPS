@@ -57,7 +57,7 @@
 "Command error %1$u" = "خطأ في الأمر %1$u";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Comms Issue";
+"Comms Issue" = "مشكلة في الاتصالات";
 
 /* Error message when command is rejected because an unacknowledged command is pending. */
 "Communication issue: Unacknowledged command pending." = "مشكلة إتصال: أمر غير معترف به معلق.";
@@ -105,10 +105,10 @@
 "Fault event occurred" = "حدث خطأ";
 
 /* Status highlight that when pod is deactivating. */
-"Finish Deactivation" = "Finish Deactivation";
+"Finish Deactivation" = "أكمل إلغاء التفعيل";
 
 /* Status highlight that when pod is activating. */
-"Finish Pairing" = "Finish Pairing";
+"Finish Pairing" = "إنهاء الاقتران";
 
 /* Description for finish setup */
 "Finish setup " = "الانتهاء من الإعداد ";
@@ -147,7 +147,7 @@
 "Invalid CRC" = "Invalid CRC";
 
 /* Error description for OmniBLEPumpManagerError.invalidSetting */
-"Invalid Setting" = "Invalid Setting";
+"Invalid Setting" = "إعدادات غير صالحة";
 
 /* Alert content title for lowReservoir pod alert */
 "Low Reservoir" = "Low Reservoir";
@@ -188,7 +188,7 @@
 
 /* Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "لا يوجد إنسولين";
 
 /* Status highlight that when no pod is paired. */
 "No Pod" = "لا يوجد بود";
@@ -237,7 +237,7 @@
 "Please finish pairing your pod." = "يرجى إكمال إقران البود.";
 
 /* Recover suggestion shown when no pod is paired */
-"Please pair a new pod" = "Please pair a new pod";
+"Please pair a new pod" = "الرجاء إقران بود جديد";
 
 /* Recovery suggestion when pairing signal strength is too high */
 "Please reposition the RileyLink further from the pod" = "يرجى وضع RileyLink أبعد من الحجيرة";
@@ -252,7 +252,7 @@
 "Pod already primed" = "تمت تهيأت المضخة مسبقاً";
 
 /* Status highlight message for other alarm. */
-"Pod Error" = "Pod Error";
+"Pod Error" = "خطأ في البود";
 
 /* Description for expiration advisory alarm */
 "Pod expiration advisory alarm" = "انذار اقتراب وقت انتهاء صلاحية المضخة";
@@ -279,7 +279,7 @@
 "Pod is suspended" = "تم تعليق المضخة";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "انسداد البود";
 
 /* Alert content title for finishSetupReminder pod alert */
 "Pod Pairing Incomplete" = "إقران البود غير مكتمل";
@@ -334,7 +334,7 @@
 "Shutdown imminent alarm" = "Shutdown imminent alarm";
 
 /* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "فقدان الإشارة";
 
 /* Format string for pod signal strength too high */
 "Signal strength too high" = "Signal strength too high";
