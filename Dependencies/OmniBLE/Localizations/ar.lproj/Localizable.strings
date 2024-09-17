@@ -216,46 +216,46 @@
 "Pod is not in a state ready for cannula insertion." = "البود ليس في حالة جاهزة لإدخال الإبرة.";
 
 /* Error description for OmniBLEPumpManagerError.invalidSetting */
-"Invalid Setting" = "Invalid Setting";
+"Invalid Setting" = "إعدادات غير صالحة";
 
 /* Recovery suggestion shown when no pod is paired */
-"Please pair a new pod" = "Please pair a new pod";
+"Please pair a new pod" = "الرجاء إقران بود جديد";
 
 /* Generic title of the OmniBLE pump manager */
-"Omnipod DASH" = "Omnipod DASH";
+"Omnipod DASH" = "أومينبود داش";
 
 /* Status highlight that delivery is uncertain. */
-"Comms Issue" = "Comms Issue";
+"Comms Issue" = "مشكلة في الاتصالات";
 
 /* */
-"Finish Pairing" = "Finish Pairing";
+"Finish Pairing" = "إنهاء الاقتران";
 
 /* Status highlight that when pod is deactivating */
-"Finish Deactivation" = "Finish Deactivation";
+"Finish Deactivation" = "أكمل إلغاء التفعيل";
 
 /* Status highlight that when no pod is paired. */
 "No Pod" = "لا يوجد بود";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "لا يوجد إنسولين";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "انتهت صلاحية البود";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "انسداد البود";
 
 /* Status highlight message for other alarm. */
-"Pod Error" = "Pod Error";
+"Pod Error" = "خطأ في البود";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "لا يوجد إنسولين";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulin Suspended";
 
 /* Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "فقدان الإشارة";
 
 /* Status highlight when manual temp basal is running. */
 "Manual Basal" = "Manual Basal";
@@ -264,37 +264,37 @@
 "Insert Cannula" = "Insert Cannula";
 
 /* Cannula insertion button text while inserting */
-"Inserting..." = "Inserting...";
+"Inserting..." = "جاري إدخال...";
 
 /* Cannula insertion button text while showing error */
-"Retry" = "Retry";
+"Retry" = "أعد المحاولة";
 
 /* Cannula insertion button text while checking insertion */
-"Checking..." = "Checking...";
+"Checking..." = "جارٍ التحقق...";
 
 /* */
-"Check cannula insertion finished" = "Check cannula insertion finished";
+"Check cannula insertion finished" = "تحقق من انتهاء إدخال القنية";
 
 /* */
-"Get pod status" = "Get pod status";
+"Get pod status" = "الحصول على حالة البود";
 
 /* */
-"Save Basal Profile" = "Save Basal Profile";
+"Save Basal Profile" = "حفظ ملف الانسولين القاعدي";
 
 /* */
-"Save basal profile failed: %{public}@" = "Save basal profile failed: %{public}@";
+"Save basal profile failed: %{public}@" = "فشل حفظ الملف الشخصي للأنسولين القاعدي: %{public}@";
 
 /* */
-"Skipping Play Test Beeps due to bolus still in progress." = "Skipping Play Test Beeps due to bolus still in progress.";
+"Skipping Play Test Beeps due to bolus still in progress." = "تخطي نغمة الاختبار بسبب تنفيذ الجرعة.";
 
 /* */
-"Play Test Beeps" = "Play Test Beeps";
+"Play Test Beeps" = "تشغيل نغمة الاختبار";
 
 /* */
-"Skipping Read Pulse Log due to bolus still in progress." = "Skipping Read Pulse Log due to bolus still in progress.";
+"Skipping Read Pulse Log due to bolus still in progress." = "تخطي سجل النبض المقروء بسبب البولوس الذي لا يزال قيد التقدم.";
 
 /* */
-"Read Pulse Log" = "Read Pulse Log";
+"Read Pulse Log" = "قراءة سجل النبض";
 
 /* */
 "Set Confirmation Beeps to %s" = "Set Confirmation Beeps to %s";
@@ -436,7 +436,7 @@
 "Pod deactivated successfully. Continue." = "تم إلغاء تفعيل البود بنجاح. تابع.";
 
 /* Action button description for deactivate after failed attempt */
-"Retry" = "Retry";
+"Retry" = "أعد المحاولة";
 
 /* Action button description when deactivated */
 "Continue" = "تابع";
