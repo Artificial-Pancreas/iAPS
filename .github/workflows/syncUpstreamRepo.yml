@@ -20,6 +20,7 @@ env:
   UPSTREAM_URL: "https://github.com/Artificial-Pancreas/iAPS.git"
   WORKFLOW_TOKEN: ${{ secrets.GH_PAT }}
   UPSTREAM_BRANCH: "dev"
+  DOWNSTREAM_BRANCH: "dev"
   # Optional fetch arguments
   FETCH_ARGS: ""
   # Optional merge arguments
