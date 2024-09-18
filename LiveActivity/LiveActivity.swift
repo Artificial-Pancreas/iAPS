@@ -183,33 +183,31 @@ struct LiveActivity: Widget {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    bgAndTrend(context: context, size: .expanded).0.font(.title2).padding(.leading, 5)
+                    HStack {
+                        loop(context: context, size: 23)
+                    }.padding(10)
                 }
 
                 DynamicIslandExpandedRegion(.center) {
-                    HStack {
-                        iob(context: context, size: .expanded).font(.title2).padding(.leading, 5)
-                        cob(context: context, size: .expanded).font(.title2).padding(.horizontal, 10)
+                    VStack(spacing: 0) {
+                        HStack {
+                            iob(context: context, size: .expanded).font(.title2).padding(.leading, 10)
+                            Spacer()
+                            cob(context: context, size: .expanded).font(.title2).padding(10)
+                        }
+                        HStack {
+                            bgAndTrend(context: context, size: .expanded).0.font(.title2).padding(.leading, 10)
+                            Spacer()
+                            changeLabel(context: context).font(.title2).padding(10)
+                        }
                     }
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    loop(context: context, size: 23)
+                    updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
+                        .padding(.trailing, 10)
                 }
-                DynamicIslandExpandedRegion(.bottom) {
-                    Group {
-                        ZStack {
-                            changeLabel(context: context).font(.title2).padding(.trailing, 5)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                        }
-                    }
-                    .frame(
-                        maxHeight: .infinity,
-                        alignment: .bottom
-                    )
-                }
+                DynamicIslandExpandedRegion(.bottom) {}
             } compactLeading: {
                 HStack {
                     loop(context: context, size: 12)
