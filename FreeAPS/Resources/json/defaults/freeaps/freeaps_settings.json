@@ -61,7 +61,6 @@
   "minumimPrediction": true,
   "minimumSMB": 0.3,
   "useInsulinBars": false,
-  "uploadVersion": true,
   "birthDate": Date.distantPast,
   "displayDelta": false,
   "profileID": "Hypo Treatment"

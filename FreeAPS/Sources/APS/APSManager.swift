@@ -1247,7 +1247,7 @@ final class BaseAPSManager: APSManager, Injectable {
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
-        } else if settingsManager.settings.uploadVersion {
+        } else {
             let json = BareMinimum(
                 id: getIdentifier(),
                 created_at: Date.now,
