@@ -1,19 +1,4 @@
-#
-# before going to main, occurances of dev 
-# should be renamed to ${{ github.ref_name }}
-#
-# there are *two* occurances:
-#  - name:
-#  - UPSTREAM_BRANCH variable
-#
-# this will allow using the same script, like
-# the build_iAPS.yml script, across different
-# branches, so someone could auto-sync the 'dana'
-# branch if they wanted
-#
-# for testing purposes, we need to hardcode the
-# branch.
-#
+
 name: 5. Sync Upstream ( ${{ github.ref_name }} )
 
 env:
