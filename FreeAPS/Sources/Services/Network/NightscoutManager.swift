@@ -62,10 +62,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         settingsManager.settings.uploadStats
     }
 
-    private var isVersionUploadEnabled: Bool {
-        settingsManager.settings.uploadVersion
-    }
-
     private var isUploadGlucoseEnabled: Bool {
         settingsManager.settings.uploadGlucose
     }
@@ -183,7 +179,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchVersion() {
-        guard isStatsUploadEnabled || isVersionUploadEnabled, isNetworkReachable else {
+        guard isStatsUploadEnabled || isNetworkReachable else {
             return
         }
         let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
@@ -899,85 +895,97 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         }
 
         // UPLOAD PREFERNCES WHEN CHANGED
-        if let uploadedPreferences = storage.retrieveFile(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
-           let unWrappedPreferences = preferences
-        {
-            if uploadedPreferences.rawJSON.sorted() != unWrappedPreferences.rawJSON.sorted() ||
-                force
+        if isStatsUploadEnabled || force {
+            if let uploadedPreferences = storage.retrieveFile(OpenAPS.Nightscout.uploadedPreferences, as: Preferences.self),
+               let unWrappedPreferences = preferences
             {
-                let prefs = NightscoutPreferences(preferences: unWrappedPreferences, enteredBy: token, profile: name)
+                if uploadedPreferences.rawJSON.sorted() != unWrappedPreferences.rawJSON.sorted() ||
+                    force
+                {
+                    let prefs = NightscoutPreferences(preferences: unWrappedPreferences, enteredBy: token, profile: name)
+                    uploadPreferences(prefs)
+                } else {
+                    NSLog("NightscoutManager Preferences, preferences unchanged")
+                }
+            } else if loaded.preferences {
+                let prefs = NightscoutPreferences(preferences: preferences, enteredBy: token, profile: name)
                 uploadPreferences(prefs)
-            } else {
-                NSLog("NightscoutManager Preferences, preferences unchanged")
             }
-        } else if loaded.preferences {
-            let prefs = NightscoutPreferences(preferences: preferences, enteredBy: token, profile: name)
-            uploadPreferences(prefs)
         }
 
         // UPLOAD FreeAPS Settings WHEN CHANGED
-        if let uploadedSettings = storage.retrieve(OpenAPS.Nightscout.uploadedSettings, as: FreeAPSSettings.self),
-           let unwrappedSettings = settings, uploadedSettings.rawJSON.sorted() == unwrappedSettings.rawJSON.sorted(), !force
-        {
-            NSLog("NightscoutManager Settings, settings unchanged")
-        } else {
-            let sets = NightscoutSettings(
-                settings: settingsManager.settings, enteredBy: getIdentifier(), profile: name
-            )
-            uploadSettings(sets)
+        if isStatsUploadEnabled || force {
+            if let uploadedSettings = storage.retrieve(OpenAPS.Nightscout.uploadedSettings, as: FreeAPSSettings.self),
+               let unwrappedSettings = settings, uploadedSettings.rawJSON.sorted() == unwrappedSettings.rawJSON.sorted(), !force
+            {
+                NSLog("NightscoutManager Settings, settings unchanged")
+            } else {
+                let sets = NightscoutSettings(
+                    settings: settingsManager.settings, enteredBy: getIdentifier(), profile: name
+                )
+                uploadSettings(sets)
+            }
         }
 
         // UPLOAD PumpSettings WHEN CHANGED
-        if let pumpSettings = storage.retrieveFile(OpenAPS.Settings.settings, as: PumpSettings.self) {
-            if let uploadedSettings = storage.retrieve(OpenAPS.Nightscout.uploadedPumpSettings, as: PumpSettings.self),
-               uploadedSettings.rawJSON.sorted() == pumpSettings.rawJSON.sorted(), !force
-            {
-                NSLog("PumpSettings unchanged")
-            } else { uploadPumpSettingsToDatabase(pumpSettings, token: token, name: name) }
+        if isStatsUploadEnabled || force {
+            if let pumpSettings = storage.retrieveFile(OpenAPS.Settings.settings, as: PumpSettings.self) {
+                if let uploadedSettings = storage.retrieve(OpenAPS.Nightscout.uploadedPumpSettings, as: PumpSettings.self),
+                   uploadedSettings.rawJSON.sorted() == pumpSettings.rawJSON.sorted(), !force
+                {
+                    NSLog("PumpSettings unchanged")
+                } else { uploadPumpSettingsToDatabase(pumpSettings, token: token, name: name) }
 
-        } else {
-            debug(.nightscout, "UploadPumpSettings: error opening pump settings")
+            } else {
+                debug(.nightscout, "UploadPumpSettings: error opening pump settings")
+            }
         }
 
         // UPLOAD Temp Targets WHEN CHANGED
-        if let tempTargets = storage.retrieveFile(OpenAPS.FreeAPS.tempTargetsPresets, as: [TempTarget].self) {
-            if let uploadedTempTargets = storage.retrieve(
-                OpenAPS.Nightscout.uploadedTempTargetsDatabase,
-                as: [TempTarget].self
-            ),
-                uploadedTempTargets.rawJSON.sorted() == tempTargets.rawJSON.sorted(), !force
-            {
-                NSLog("Temp targets unchanged")
-            } else { uploadTempTargetsToDatabase(tempTargets, token: token, name: name) }
+        if isStatsUploadEnabled || force {
+            if let tempTargets = storage.retrieveFile(OpenAPS.FreeAPS.tempTargetsPresets, as: [TempTarget].self) {
+                if let uploadedTempTargets = storage.retrieve(
+                    OpenAPS.Nightscout.uploadedTempTargetsDatabase,
+                    as: [TempTarget].self
+                ),
+                    uploadedTempTargets.rawJSON.sorted() == tempTargets.rawJSON.sorted(), !force
+                {
+                    NSLog("Temp targets unchanged")
+                } else { uploadTempTargetsToDatabase(tempTargets, token: token, name: name) }
 
-        } else {
-            debug(.nightscout, "UploadPumpSettings: error opening pump settings")
+            } else {
+                debug(.nightscout, "UploadPumpSettings: error opening pump settings")
+            }
         }
 
         // Upload Meal Presets when needed
-        let mealPresets = Database(token: token).mealPresetDatabaseUpload(profile: name, token: token)
-        if !mealPresets.presets.isEmpty {
-            if let uploadedMealPresets = storage.retrieveFile(OpenAPS.Nightscout.uploadedMealPresets, as: MealDatabase.self),
-               mealPresets.rawJSON.sorted() == uploadedMealPresets.rawJSON.sorted(), !force
-            {
-                NSLog("Meal Presets unchanged")
-            } else {
-                uploadMealPresetsToDatabase(mealPresets, token: token)
+        if isStatsUploadEnabled || force {
+            let mealPresets = Database(token: token).mealPresetDatabaseUpload(profile: name, token: token)
+            if !mealPresets.presets.isEmpty {
+                if let uploadedMealPresets = storage.retrieveFile(OpenAPS.Nightscout.uploadedMealPresets, as: MealDatabase.self),
+                   mealPresets.rawJSON.sorted() == uploadedMealPresets.rawJSON.sorted(), !force
+                {
+                    NSLog("Meal Presets unchanged")
+                } else {
+                    uploadMealPresetsToDatabase(mealPresets, token: token)
+                }
             }
         }
 
         // Upload Override Presets when needed
-        let overridePresets = Database(token: token).overridePresetDatabaseUpload(profile: name, token: token)
-        if !overridePresets.presets.isEmpty {
-            if let uploadedOverridePresets = storage.retrieveFile(
-                OpenAPS.Nightscout.uploadedOverridePresets,
-                as: OverrideDatabase.self
-            ),
-                overridePresets.rawJSON.sorted() == uploadedOverridePresets.rawJSON.sorted(), !force
-            {
-                NSLog("Override Presets unchanged")
-            } else {
-                uploadOverridePresetsToDatabase(overridePresets, token: token)
+        if isStatsUploadEnabled || force {
+            let overridePresets = Database(token: token).overridePresetDatabaseUpload(profile: name, token: token)
+            if !overridePresets.presets.isEmpty {
+                if let uploadedOverridePresets = storage.retrieveFile(
+                    OpenAPS.Nightscout.uploadedOverridePresets,
+                    as: OverrideDatabase.self
+                ),
+                    overridePresets.rawJSON.sorted() == uploadedOverridePresets.rawJSON.sorted(), !force
+                {
+                    NSLog("Override Presets unchanged")
+                } else {
+                    uploadOverridePresetsToDatabase(overridePresets, token: token)
+                }
             }
         }
     }
