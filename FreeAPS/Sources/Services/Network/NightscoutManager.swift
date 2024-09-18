@@ -62,10 +62,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         settingsManager.settings.uploadStats
     }
 
-    private var isVersionUploadEnabled: Bool {
-        settingsManager.settings.uploadVersion
-    }
-
     private var isUploadGlucoseEnabled: Bool {
         settingsManager.settings.uploadGlucose
     }
@@ -183,7 +179,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func fetchVersion() {
-        guard isStatsUploadEnabled || isVersionUploadEnabled, isNetworkReachable else {
+        guard isStatsUploadEnabled || isNetworkReachable else {
             return
         }
         let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
