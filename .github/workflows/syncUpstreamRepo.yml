@@ -1,6 +1,6 @@
 
 name: 5. Sync Upstream
-run-name: Build iAPS (${{ github.ref_name }})
+run-name: Sync Upstream (${{ github.ref_name }})
 
 env:
   UPSTREAM_URL: "https://github.com/Artificial-Pancreas/iAPS.git"
