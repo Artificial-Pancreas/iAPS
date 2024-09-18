@@ -144,7 +144,7 @@
 "Checking Insertion" = "Checking Insertion";
 
 /* Cannula insertion button text while checking insertion */
-"Checking..." = "Checking...";
+"Checking..." = "جارٍ التحقق...";
 
 /* Title for uncertainty recovered screen */
 "Comms Recovered" = "تم استرداد الاتصال";
@@ -324,7 +324,7 @@
 "Inserting. Please wait." = "Inserting. Please wait.";
 
 /* Cannula insertion button text while inserting */
-"Inserting..." = "Inserting...";
+"Inserting..." = "جاري إدخال...";
 
 /* Text shown in insulin delivery space when insulin suspended */
 "Insulin\nSuspended" = "Insulin\nSuspended";
@@ -405,7 +405,7 @@
 "No\nDelivery" = "No\nDelivery";
 
 /* Error message for reservoir view when reservoir empty */
-"No Insulin" = "No Insulin";
+"No Insulin" = "لا يوجد إنسولين";
 
 /* Label for pod life state when no pod paired
    Text shown in insulin remaining space when no pod is paired */
@@ -464,7 +464,7 @@
 "PI Version" = "PI Version";
 
 /* The title of the command to play test beeps */
-"Play Test Beeps" = "Play Test Beeps";
+"Play Test Beeps" = "تشغيل نغمة الاختبار";
 
 /* Progress message for play test beeps. */
 "Play Test Beeps…" = "Play Test Beeps…";
@@ -492,7 +492,7 @@
 "Pod deactivated successfully. Continue." = "تم إلغاء تفعيل البود بنجاح. تابع.";
 
 /* Error message for reservoir view during general pod fault */
-"Pod Error" = "Pod Error";
+"Pod Error" = "خطأ في البود";
 
 /* Label for pod life state when within pod expiration window */
 "Pod expired" = "انتهت صلاحية البود";
@@ -511,7 +511,7 @@
 "Pod Fault Details" = "Pod Fault Details";
 
 /* Error message for reservoir view when pod occlusion checks failed */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "انسداد البود";
 
 /* Pairing action button accessibility label when pairing succeeded */
 "Pod paired successfully. Continue." = "تم إقران البود بنجاح. تابع.";
@@ -630,7 +630,7 @@
 "Setup Complete" = "Setup Complete";
 
 /* Error message for reservoir view during general pod fault */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "فقدان الإشارة";
 
 /* No comment provided by engineer. */
 "Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";

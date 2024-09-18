@@ -15,6 +15,13 @@ extension Settings {
             )
         ) var fetchedVersionNumber: FetchedResults<VNr>
 
+        @FetchRequest(
+            entity: OverridePresets.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
+                format: "name != %@", "" as String
+            )
+        ) var fetchedProfiles: FetchedResults<OverridePresets>
+
         var body: some View {
             Form {
                 Section {
@@ -83,6 +90,18 @@ extension Settings {
                     Text("Sharing").navigationLink(to: .sharing, from: self)
                     Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                 } header: { Text("Extra Features") }
+
+                Section {
+                    HStack {
+                        Picker("Treatment Preset", selection: $state.profileID) {
+                            Text("Default  📉").tag("Hypo Treatment")
+                            ForEach(fetchedProfiles) { item in
+                                Text(item.name ?? "").tag(item.id)
+                            }
+                            Text("None").tag("None")
+                        }
+                    }
+                } header: { Text("Hypo Treatment") }
 
                 Section {
                     Toggle("Debug options", isOn: $state.debugOptions)
