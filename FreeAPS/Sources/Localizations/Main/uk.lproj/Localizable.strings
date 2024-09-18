@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Події";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Лікування";
 
 /* " min" in Treatments list */
 " min" = " хв";
@@ -2525,7 +2525,7 @@ Enact a temp Basal or a temp target */
 "Disable Hypo Treatments" = "Вимкнути гіпотерапію";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Display Glucose Delta";
+"Display Glucose Delta" = "Відображати дельту Глюкози";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
