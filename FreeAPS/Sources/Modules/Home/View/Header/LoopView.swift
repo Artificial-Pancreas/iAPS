@@ -25,34 +25,41 @@ struct LoopView: View {
     @Environment(\.sizeCategory) private var fontSize
 
     var body: some View {
-        VStack {
-            let multiplyForLargeFonts = fontSize > .extraLarge ? 1.2 : 1
+        VStack(spacing: 2) {
+            let multiplyForLargeFonts = fontSize > .extraLarge ? 1.1 : 1
+
+            HStack(spacing: 0) {
+                Text("i").font(.system(size: 10, design: .rounded)).offset(y: 0.35)
+                Text("APS").font(.system(size: 12, design: .rounded))
+            }.foregroundStyle(.secondary.opacity(0.5))
+
             LoopEllipse(stroke: color)
-                .frame(width: minutesAgo > 9 ? 70 * multiplyForLargeFonts : 60 * multiplyForLargeFonts, height: 27)
+                .frame(width: minutesAgo > 9 ? 60 * multiplyForLargeFonts : 60 * multiplyForLargeFonts, height: 27)
                 .overlay {
-                    let textColor: Color = .secondary
                     HStack {
                         ZStack {
                             if closedLoop {
                                 if !isLooping, actualSuggestion?.timestamp != nil {
-                                    if minutesAgo > 1440 {
-                                        Text("--").font(.loopFont).foregroundColor(textColor).padding(.leading, 5)
+                                    if minutesAgo > 999 {
+                                        Text("--").font(.caption).padding(.leading, 5).foregroundColor(.secondary)
                                     } else {
-                                        let timeString = "\(minutesAgo) " +
-                                            NSLocalizedString("min", comment: "Minutes ago since last loop")
-                                        Text(timeString).font(.loopFont).foregroundColor(textColor)
+                                        let timeString = NSLocalizedString("m", comment: "Minutes ago since last loop")
+                                        HStack(spacing: 0) {
+                                            Text("\(minutesAgo) ")
+                                            Text(timeString).foregroundColor(.secondary)
+                                        }.font(.caption)
                                     }
                                 }
                                 if isLooping {
                                     ProgressView()
                                 }
                             } else if !isLooping {
-                                Text("Open").font(.loopFont)
+                                Text("Open").font(.caption)
                             }
                         }
-                    }
+                    }.dynamicTypeSize(...DynamicTypeSize.xLarge)
                 }
-        }
+        }.offset(y: 5)
     }
 
     private var minutesAgo: Int {

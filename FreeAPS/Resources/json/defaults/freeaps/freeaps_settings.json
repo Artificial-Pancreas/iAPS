@@ -61,5 +61,7 @@
   "minumimPrediction": true,
   "minimumSMB": 0.3,
   "useInsulinBars": false,
-  "birthDate": Date.distantPast
+  "birthDate": Date.distantPast,
+  "displayDelta": false,
+  "profileID": "Hypo Treatment"
 }
