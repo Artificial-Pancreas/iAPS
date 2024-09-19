@@ -135,6 +135,12 @@ jobs:
           (vars.SCHEDULED_SYNC == 'true' && needs.check_latest_from_upstream.outputs.NEW_COMMITS == 'true' )
         )
     steps:
+      - name: Set special variables
+        run: |
+          if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
+            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          fi
+
       - name: Select Xcode version
         run: "sudo xcode-select --switch /Applications/Xcode_15.3.app/Contents/Developer"
       

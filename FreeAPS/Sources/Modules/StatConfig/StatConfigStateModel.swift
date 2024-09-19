@@ -14,11 +14,9 @@ extension StatConfig {
         @Published var useTargetButton: Bool = false
         @Published var hours: Decimal = 6
         @Published var alwaysUseColors: Bool = true
-        @Published var timeSettings: Bool = true
         @Published var minimumSMB: Decimal = 0.3
         @Published var useInsulinBars: Bool = false
         @Published var skipGlucoseChart: Bool = false
-        @Published var disableHypoTreatment: Bool = false
         @Published var displayDelta: Bool = false
 
         var units: GlucoseUnits = .mmolL
@@ -32,14 +30,12 @@ extension StatConfig {
             subscribeSetting(\.yGridLines, on: $yGridLines) { yGridLines = $0 }
             subscribeSetting(\.rulerMarks, on: $rulerMarks) { rulerMarks = $0 }
             subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { skipGlucoseChart = $0 }
-            subscribeSetting(\.timeSettings, on: $timeSettings) { timeSettings = $0 }
             subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { alwaysUseColors = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { useFPUconversion = $0 }
             subscribeSetting(\.useTargetButton, on: $useTargetButton) { useTargetButton = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { skipBolusScreenAfterCarbs = $0 }
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
             subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
-            subscribeSetting(\.disableHypoTreatment, on: $disableHypoTreatment) { disableHypoTreatment = $0 }
             subscribeSetting(\.displayDelta, on: $displayDelta) { displayDelta = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {

@@ -112,7 +112,7 @@ extension AddCarbs {
                     }
 
                     // Optional Hypo Treatment
-                    if state.carbs > 0, !state.disableHypoTreatment {
+                    if state.carbs > 0, let profile = state.id, profile != "None" {
                         Toggle("Hypo Treatment", isOn: $state.hypoTreatment)
                     }
                 }
