@@ -23,20 +23,20 @@ DEVICE_NAME = ENV["DEVICE_NAME"]
 DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
+puts "[#{APP_IDENTIFIER}]"
+if !(defined?(ENV["APP_IDENTIFIER"])).nil? # will now return true or false
+  APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
+else
+  APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
+  File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
+end
+puts "[#{APP_IDENTIFIER}]"
+    
 platform :ios do
   desc "Build iAPS"
   lane :build_iAPS do
     setup_ci if ENV['CI']
 
-    puts "[#{APP_IDENTIFIER}]"
-    if !(defined?(ENV["APP_IDENTIFIER"])).nil? # will now return true or false
-      APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
-    else
-      APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
-      File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
-    end
-    puts "[#{APP_IDENTIFIER}]"
-    
     update_project_team(
       path: "#{GITHUB_WORKSPACE}/FreeAPS.xcodeproj",
       teamid: "#{TEAMID}"
