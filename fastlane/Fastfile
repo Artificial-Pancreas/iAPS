@@ -23,13 +23,15 @@ DEVICE_NAME = ENV["DEVICE_NAME"]
 DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
-if (defined?(ENV["APP_IDENTIFIER"])).nil? # will now return true or false
-  APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
-else
-  printf "\nAPP_IDENTIFIER(env) => [%s] [%d]\n\n", ENV["APP_IDENTIFIER"], ENV["APP_IDENTIFIER"].length
-  APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
-  File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
-end
+APP_IDENTIFIER = ENV.fetch('APP_IDENTIFIER') { "ru.artpancreas.#{TEAMID}.FreeAPS" }
+
+#if ENV["APP_IDENTIFIER"].nil? # will now return true or false
+#  APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
+#else
+#  printf "\nAPP_IDENTIFIER(env) => [%s] [%d]\n\n", ENV["APP_IDENTIFIER"], ENV["APP_IDENTIFIER"].length
+#  APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
+#  File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
+#end
 printf "APP_IDENTIFIER => [%s]\n\n", "#{APP_IDENTIFIER}"
     
 platform :ios do
