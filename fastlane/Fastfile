@@ -30,7 +30,7 @@ platform :ios do
     setup_ci if ENV['CI']
 
     puts "[#{APP_IDENTIFIER}]"
-    if !defined?(ENV["APP_IDENTIFIER"]).nil? # will now return true or false
+    if !(defined?(ENV["APP_IDENTIFIER"])).nil? # will now return true or false
       APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
       File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
     end
