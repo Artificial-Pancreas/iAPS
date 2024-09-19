@@ -641,6 +641,9 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Đã xử lý";
 
+/* Hypo Treatment Preset */
+"Treatment" = "Biện pháp xử lý";
+
 /* " min" in Treatments list */
 " min" = " min";
 
