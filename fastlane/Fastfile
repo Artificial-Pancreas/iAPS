@@ -22,7 +22,6 @@ FASTLANE_KEY = ENV["FASTLANE_KEY"]
 DEVICE_NAME = ENV["DEVICE_NAME"]
 DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
-APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
 
 platform :ios do
   desc "Build iAPS"
@@ -31,6 +30,8 @@ platform :ios do
 
     puts "[#{APP_IDENTIFIER}]"
     if !(defined?(ENV["APP_IDENTIFIER"])).nil? # will now return true or false
+      APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
+    else
       APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
       File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
     end
