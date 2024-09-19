@@ -23,7 +23,7 @@ DEVICE_NAME = ENV["DEVICE_NAME"]
 DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
-if (defined?(ENV["APP_IDENTIFIER"])).nil? || ENV["APP_IDENTIFIER"] == '' # will now return true or false
+if (defined?(ENV["APP_IDENTIFIER"])).nil? || (ENV["APP_IDENTIFIER"]).length == 0 # will now return true or false
   APP_IDENTIFIER = "ru.artpancreas.#{TEAMID}.FreeAPS"
 else
   APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
