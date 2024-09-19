@@ -30,7 +30,7 @@ else
   APP_IDENTIFIER = ENV["APP_IDENTIFIER"]
   File.write('../ConfigOverride.xcconfig', 'BUNDLE_IDENTIFIER = #{APP_IDENTIFIER}', mode: 'a')
 end
-printf "APP_IDENTIFIER => [%s]", #{APP_IDENTIFIER}
+printf "APP_IDENTIFIER => [%s]", "#{APP_IDENTIFIER}"
     
 platform :ios do
   desc "Build iAPS"
