@@ -137,8 +137,9 @@ jobs:
     steps:
       - name: Set special variables
         run: |
-          echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
-        if: vars.APP_IDENTIFIER != NULL
+          if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
+            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          fi
 
       - name: Select Xcode version
         run: "sudo xcode-select --switch /Applications/Xcode_15.3.app/Contents/Developer"
