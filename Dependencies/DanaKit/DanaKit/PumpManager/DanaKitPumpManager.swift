@@ -326,6 +326,10 @@ extension DanaKitPumpManager: PumpManager {
                 await self.syncUserOptions()
                 let events = await self.syncHistory()
                 
+                if self.shouldSyncTime() {
+                    await self.syncTime()
+                }
+                
                 let pumpTime = await self.fetchPumpTime()
                 if let pumpTime = pumpTime {
                     self.state.pumpTimeSyncedAt = Date.now
@@ -349,6 +353,31 @@ extension DanaKitPumpManager: PumpManager {
                 completion?(Date.now)
             }
         }
+    }
+    
+    private func syncTime() async {
+        return await withCheckedContinuation { continuation in
+            self.syncPumpTime { error in
+                if let error = error {
+                    self.log.error("Failed to automaticly sync pump time: \(error.localizedDescription)")
+                }
+                
+                continuation.resume()
+            }
+        }
+    }
+    
+    private func shouldSyncTime() -> Bool {
+        guard self.state.allowAutomaticTimeSync else {
+            return false
+        }
+        guard let pumpTime = self.state.pumpTime else {
+            return false
+        }
+        
+        let pumpTimeComp = Calendar.current.dateComponents([.day], from: pumpTime)
+        let nowComp = Calendar.current.dateComponents([.day], from: Date.now)
+        return pumpTimeComp.day != nowComp.day
     }
     
     private func syncUserOptions() async {
