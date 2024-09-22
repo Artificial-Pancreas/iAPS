@@ -74,6 +74,19 @@ struct DanaKitSettingsView: View {
                     ])
     }
     
+    var disableBolusSync: ActionSheet {
+        ActionSheet(title: Text(LocalizedString(viewModel.isBolusSyncingDisabled ? "Re-enable bolus syncing?" : "Disable bolus syncing?", comment: "Title for bolus syncing disable action sheet")),
+                    buttons: [
+                        .default(Text(viewModel.isBolusSyncingDisabled ?
+                                      LocalizedString("Yes, re-enable bolus syncing", comment: "Button text to re-enable bplus syncing") :
+                                      LocalizedString("Yes, disable bolus syncing", comment: "Button text to disable bplus syncing")
+                                 )) {
+                            self.viewModel.toggleBolusSyncing()
+                        },
+                        .cancel(Text(LocalizedString("No, Keep as is", comment: "Button text to cancel silent tone")))
+                    ])
+    }
+    
     var disconnectReminder: ActionSheet {
         ActionSheet(title: Text(LocalizedString("Set reminder for disconnect", comment: "Title disconnect reminder sheet")),
                                 message: Text(LocalizedString("Do you wish to receive a notification when the pump is longer disconnected for a specific time?", comment: "body disconnect reminder sheet")),
@@ -210,6 +223,9 @@ struct DanaKitSettingsView: View {
                         Text(String(viewModel.reservoirAge!))
                             .foregroundColor(.secondary)
                     }
+                    .onLongPressGesture(perform: {
+                        viewModel.updateReservoirAge()
+                    })
                 }
                 
                 if (viewModel.cannulaAge != nil) {
@@ -219,6 +235,9 @@ struct DanaKitSettingsView: View {
                         Text(String(viewModel.cannulaAge!))
                             .foregroundColor(.secondary)
                     }
+                    .onLongPressGesture(perform: {
+                        viewModel.updateCannulaAge()
+                    })
                 }
             }
             
@@ -289,8 +308,18 @@ struct DanaKitSettingsView: View {
                     Text(String(viewModel.batteryLevel) + "%")
                         .foregroundColor(.secondary)
                 }
+                .onLongPressGesture(perform: {
+                    viewModel.showingBolusSyncingDisabled = true
+                })
+                .actionSheet(isPresented: $viewModel.showingBolusSyncingDisabled) {
+                    disableBolusSync
+                }
+            }
+            
+            Section(header: SectionHeader(label: LocalizedString("Pump time", comment: "The title of the pump time section in DanaKit settings"))) {
                 HStack {
-                    Text(LocalizedString("Pump time", comment: "Text for pump time")).foregroundColor(Color.primary)
+                    Text(LocalizedString("Pump time", comment: "Text for pump time"))
+                        .foregroundColor(Color.primary)
                     Spacer()
                     if viewModel.showPumpTimeSyncWarning {
                         Image(systemName: "clock.fill")
@@ -299,27 +328,39 @@ struct DanaKitSettingsView: View {
                     Text(String(viewModel.formatDate(viewModel.pumpTime)))
                         .foregroundColor(viewModel.showPumpTimeSyncWarning ? guidanceColors.warning : .secondary)
                 }
+                HStack {
+                    Text(LocalizedString("Checked at", comment: "Text for pump time synced at"))
+                        .foregroundColor(Color.primary)
+                    Spacer()
+                    Text(String(viewModel.formatDate(viewModel.pumpTimeSyncedAt)))
+                        .foregroundColor(.secondary)
+                }
+                
+                Toggle(LocalizedString("Nightly pump time sync", comment: "Text for Nightly pump time sync"), isOn: $viewModel.nightlyPumpTimeSync)
+                    .onChange(of: viewModel.nightlyPumpTimeSync) { value in
+                        viewModel.updateNightlyPumpTimeSync(value)
+                    }
                 
                 Button(action: {
                     viewModel.showingTimeSyncConfirmation = true
                 }) {
-                    Text(LocalizedString("Sync Pump time", comment: "Label for syncing the time on the pump"))
+                    Text(LocalizedString("Manually sync Pump time", comment: "Label for syncing the time on the pump"))
                         .foregroundColor(.accentColor)
                 }
                 .disabled(viewModel.isSyncing)
                 .actionSheet(isPresented: $viewModel.showingTimeSyncConfirmation) {
                     syncPumpTime
                 }
-                
+            }
+             
+            Section() {
                 Button(LocalizedString("Share Dana pump logs", comment: "DanaKit share logs")) {
                     self.isSharePresented = true
                 }
                 .sheet(isPresented: $isSharePresented, onDismiss: { }, content: {
                     ActivityViewController(activityItems: viewModel.getLogs())
                 })
-            }
-            
-            Section() {
+                
                 Button(action: {
                     viewModel.showingDeleteConfirmation = true
                 }) {

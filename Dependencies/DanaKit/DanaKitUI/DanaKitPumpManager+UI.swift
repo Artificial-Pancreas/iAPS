@@ -86,7 +86,7 @@ extension DanaKitPumpManager {
                 localizedMessage: LocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
                 imageName: "pause.circle.fill",
                 state: .warning)
-        } else if Date.now.timeIntervalSince(state.lastStatusDate) > .minutes(12) {
+        } else if ((self.bluetooth as? ContinousBluetoothManager) != nil) && !self.bluetooth.isConnected || ((self.bluetooth as? InteractiveBluetoothManager) != nil) && Date.now.timeIntervalSince(state.lastStatusDate) > .minutes(12) {
             return PumpStatusHighlight(
                 localizedMessage: LocalizedString("Signal Loss", comment: "Status highlight when communications with the pod haven't happened recently."),
                 imageName: "exclamationmark.circle.fill",

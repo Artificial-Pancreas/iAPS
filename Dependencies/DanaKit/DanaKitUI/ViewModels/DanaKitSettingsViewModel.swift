@@ -15,12 +15,14 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingBleModeSwitch = false
     @Published var showingTimeSyncConfirmation = false
     @Published var showingDisconnectReminder = false
+    @Published var showingBolusSyncingDisabled = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
     @Published var isUsingContinuousMode: Bool = false
     @Published var isUpdatingPumpState: Bool = false
     @Published var isConnected: Bool = false
     @Published var isTogglingConnection: Bool = false
+    @Published var isBolusSyncingDisabled = false
     @Published var isSyncing: Bool = false
     @Published var lastSync: Date? = nil
     @Published var batteryLevel: Double = 0
@@ -32,6 +34,8 @@ class DanaKitSettingsViewModel : ObservableObject {
     
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
+    @Published var pumpTimeSyncedAt: Date? = nil
+    @Published var nightlyPumpTimeSync: Bool = false
     
     @Published var reservoirLevelWarning: Double
     @Published var reservoirLevel: Double?
@@ -103,6 +107,9 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.reservoirLevel = self.pumpManager?.state.reservoirLevel
         self.isSuspended = self.pumpManager?.state.isPumpSuspended ?? false
         self.pumpTime = self.pumpManager?.state.pumpTime
+        self.pumpTimeSyncedAt = self.pumpManager?.state.pumpTimeSyncedAt
+        self.nightlyPumpTimeSync = self.pumpManager?.state.allowAutomaticTimeSync ?? false
+        self.isBolusSyncingDisabled = self.pumpManager?.state.isBolusSyncDisabled ?? false
         self.batteryLevel = self.pumpManager?.state.batteryRemaining ?? 0
         self.silentTone = self.pumpManager?.state.useSilentTones ?? false
         self.reservoirLevelWarning = Double(self.pumpManager?.state.lowReservoirRate ?? 20)
@@ -111,11 +118,11 @@ class DanaKitSettingsViewModel : ObservableObject {
         updateBasalRate()
         
         if let cannulaDate = self.pumpManager?.state.cannulaDate {
-            self.cannulaAge = "\(String(format: "%.1f", -cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.cannulaAge = formatDateToDayHour(cannulaDate)
         }
         
         if let reservoirDate = self.pumpManager?.state.reservoirDate {
-            self.reservoirAge = "\(String(format: "%.1f", -reservoirDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.reservoirAge = formatDateToDayHour(reservoirDate)
         }
         
         self.basalButtonText = self.updateBasalButtonText()
@@ -129,6 +136,18 @@ class DanaKitSettingsViewModel : ObservableObject {
                 self.didFinish?()
             }
         }
+    }
+    
+    func updateReservoirAge() {
+        self.pumpManager?.state.reservoirDate = Date.now
+        self.reservoirAge = formatDateToDayHour(Date.now)
+        self.pumpManager?.notifyStateDidChange()
+    }
+    
+    func updateCannulaAge() {
+        self.pumpManager?.state.cannulaDate = Date.now
+        self.cannulaAge = formatDateToDayHour(Date.now)
+        self.pumpManager?.notifyStateDidChange()
     }
     
     func scheduleDisconnectNotification(_ duration: TimeInterval) {
@@ -151,6 +170,9 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     func getLogs() -> [URL] {
+        if let pumpManager = self.pumpManager {
+            log.info(pumpManager.state.debugDescription)
+        }
         return log.getDebugLogs()
     }
     
@@ -210,6 +232,15 @@ class DanaKitSettingsViewModel : ObservableObject {
         }
     }
     
+    func updateNightlyPumpTimeSync(_ value: Bool) {
+        guard let pumpManager = self.pumpManager else {
+            return
+        }
+        
+        pumpManager.state.allowAutomaticTimeSync = value
+        pumpManager.notifyStateDidChange()
+    }
+    
     func syncPumpTime() {
         guard let pumpManager = self.pumpManager else {
             return
@@ -233,6 +264,15 @@ class DanaKitSettingsViewModel : ObservableObject {
         
         pumpManager.state.useSilentTones = !self.silentTone
         self.silentTone = pumpManager.state.useSilentTones
+    }
+    
+    func toggleBolusSyncing() {
+        guard let pumpManager = self.pumpManager else {
+            return
+        }
+        
+        pumpManager.state.isBolusSyncDisabled = !self.isBolusSyncingDisabled
+        pumpManager.notifyStateDidChange()
     }
     
     func transformBasalProfile(_ index: UInt8) -> String {
@@ -331,6 +371,13 @@ class DanaKitSettingsViewModel : ObservableObject {
             self.basalRate = pumpManager.currentBaseBasalRate
         }
     }
+    
+    private func formatDateToDayHour(_ date: Date) -> String {
+        let day = String(format: "%.0f", -date.timeIntervalSinceNow / .days(1))
+        let hour = String(format: "%.0f", (-date.timeIntervalSinceNow.truncatingRemainder(dividingBy: .days(1))) / .hours(1))
+        
+        return "\(day)d \(hour)h"
+    }
 }
 
 extension DanaKitSettingsViewModel: StateObserver {
@@ -342,7 +389,10 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.lastSync = state.lastStatusDate
         self.reservoirLevel = state.reservoirLevel
         self.isSuspended = state.isPumpSuspended
+        self.isBolusSyncingDisabled = state.isBolusSyncDisabled
         self.pumpTime = state.pumpTime
+        self.pumpTimeSyncedAt = state.pumpTimeSyncedAt
+        self.nightlyPumpTimeSync = state.allowAutomaticTimeSync
         self.batteryLevel = state.batteryRemaining
         self.silentTone = state.useSilentTones
         self.basalProfileNumber = state.basalProfileNumber
@@ -352,11 +402,11 @@ extension DanaKitSettingsViewModel: StateObserver {
         self.basalButtonText = self.updateBasalButtonText()
         
         if let cannulaDate = state.cannulaDate {
-            self.cannulaAge = "\(String(format: "%.1f", -cannulaDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.cannulaAge = formatDateToDayHour(cannulaDate)
         }
         
         if let reservoirDate = state.reservoirDate {
-            self.reservoirAge = "\(String(format: "%.1f", -reservoirDate.timeIntervalSinceNow / .days(1))) \(LocalizedString("day(s)", comment: "Text for Day unit"))"
+            self.reservoirAge = formatDateToDayHour(reservoirDate)
         }
     }
     

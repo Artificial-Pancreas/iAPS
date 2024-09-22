@@ -70,6 +70,10 @@ public class DanaKitPumpManager: DeviceManager {
         self.state.isOnBoarded
     }
     
+    public var isBluetoothConnected: Bool {
+        self.bluetooth.isConnected
+    }
+    
     private let basalIntervals: [TimeInterval] = Array(0..<24).map({ TimeInterval(60 * 60 * $0) })
     public var currentBaseBasalRate: Double {
         guard self.state.basalSchedule.count > 0 else {
@@ -322,6 +326,10 @@ extension DanaKitPumpManager: PumpManager {
                 await self.syncUserOptions()
                 let events = await self.syncHistory()
                 
+                if self.shouldSyncTime() {
+                    await self.syncTime()
+                }
+                
                 let pumpTime = await self.fetchPumpTime()
                 if let pumpTime = pumpTime {
                     self.state.pumpTimeSyncedAt = Date.now
@@ -345,6 +353,31 @@ extension DanaKitPumpManager: PumpManager {
                 completion?(Date.now)
             }
         }
+    }
+    
+    private func syncTime() async {
+        return await withCheckedContinuation { continuation in
+            self.syncPumpTime { error in
+                if let error = error {
+                    self.log.error("Failed to automaticly sync pump time: \(error.localizedDescription)")
+                }
+                
+                continuation.resume()
+            }
+        }
+    }
+    
+    private func shouldSyncTime() -> Bool {
+        guard self.state.allowAutomaticTimeSync else {
+            return false
+        }
+        guard let pumpTime = self.state.pumpTime else {
+            return false
+        }
+        
+        let pumpTimeComp = Calendar.current.dateComponents([.day], from: pumpTime)
+        let nowComp = Calendar.current.dateComponents([.day], from: Date.now)
+        return pumpTimeComp.day != nowComp.day
     }
     
     private func syncUserOptions() async {
@@ -423,6 +456,11 @@ extension DanaKitPumpManager: PumpManager {
                     return NewPumpEvent(date: item.timestamp, dose: nil, raw: item.raw, title: "Alarm: \(getAlarmMessage(param8: item.alarm))", type: .alarm, alarmType: PumpAlarmType.fromParam8(item.alarm))
                 
                 case HistoryCode.RECORD_TYPE_BOLUS:
+                    // Skip bolus syncing if enabled by user
+                    if self.state.isBolusSyncDisabled {
+                        return nil
+                    }
+                        
                     // If we find a bolus here, we assume that is hasnt been synced to Loop
                     return NewPumpEvent.bolus(
                         dose: DoseEntry.bolus(units: item.value!, deliveredUnits: item.value!, duration: item.durationInMin! * 60, activationType: .manualNoRecommendation, insulinType: self.state.insulinType!, startDate: item.timestamp),
