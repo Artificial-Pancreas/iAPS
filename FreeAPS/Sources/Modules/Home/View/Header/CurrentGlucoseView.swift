@@ -9,6 +9,7 @@ struct CurrentGlucoseView: View {
     @Binding var highGlucose: Decimal
     @Binding var alwaysUseColors: Bool
     @Binding var displayDelta: Bool
+    @Binding var scrolling: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
@@ -76,7 +77,7 @@ struct CurrentGlucoseView: View {
     var glucoseView: some View {
         ZStack {
             if let recent = recentGlucose {
-                if displayDelta, let deltaInt = delta,
+                if displayDelta, !scrolling, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
@@ -86,15 +87,17 @@ struct CurrentGlucoseView: View {
                     {
                         glucoseText(string).asAny()
                             .background { glucoseDrop }
-                        let minutesAgo = -1 * recent.dateString.timeIntervalSinceNow / 60
-                        let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
-                        Text(
-                            minutesAgo <= 1 ? "Now" :
-                                (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
-                        )
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .offset(x: 1, y: fontSize >= .extraLarge ? -3 : 0)
+                        if !scrolling {
+                            let minutesAgo = -1 * recent.dateString.timeIntervalSinceNow / 60
+                            let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
+                            Text(
+                                minutesAgo <= 1 ? "Now" :
+                                    (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
+                            )
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .offset(x: 1, y: fontSize >= .extraLarge ? -3 : 0)
+                        }
                     }
                 }
             }
@@ -165,20 +168,21 @@ struct CurrentGlucoseView: View {
             let decimal = string.components(separatedBy: decimalString)
             if decimal.count > 1 {
                 HStack(spacing: 0) {
-                    Text(decimal[0]).font(.glucoseFont)
-                    Text(decimalString).font(.system(size: 28).weight(.semibold)).baselineOffset(-10)
-                    Text(decimal[1]).font(.system(size: 28)).baselineOffset(-10)
+                    Text(decimal[0]).font(scrolling ? .glucoseSmallFont : .glucoseFont)
+                    Text(decimalString).font(.system(size: !scrolling ? 28 : 14).weight(.semibold)).baselineOffset(-10)
+                    Text(decimal[1]).font(.system(size: !scrolling ? 28 : 18)).baselineOffset(!scrolling ? -10 : -4)
                 }
                 .tracking(-1)
                 .offset(x: -2, y: 14)
                 .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
             } else {
                 Text(string)
-                    .font(.glucoseFontMdDl.width(.condensed)) // .tracking(-2)
+                    .font(scrolling ? .glucoseSmallFont : .glucoseFontMdDl.width(.condensed)) // .tracking(-2)
                     .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
-                    .offset(x: string.count > 2 ? -2 : -1, y: 16)
+                    .offset(x: string.count > 2 ? -1 : -1, y: 16)
             }
         }
+        .offset(y: scrolling ? 3 : 0)
     }
 
     private var glucoseDrop: some View {
@@ -187,7 +191,7 @@ struct CurrentGlucoseView: View {
         let shadowDirection = direction(degree: degree)
         return Image("glucoseDrops")
             .resizable()
-            .frame(width: 140, height: 140).rotationEffect(.degrees(degree))
+            .frame(width: !scrolling ? 140 : 80, height: !scrolling ? 140 : 80).rotationEffect(.degrees(degree))
             .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
             .offset(x: adjust.x, y: adjust.y)
             .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
