@@ -69,8 +69,7 @@ class DanaKitScanViewModel : ObservableObject {
     func connectComplete(_ result: ConnectionResult, _ peripheral: CBPeripheral) {
         switch result {
         case .success:
-            self.pumpManager?.disconnect(peripheral)
-            self.nextStep()
+            self.syncTime(peripheral)
             
         case .failure(let e):
             self.isConnecting = false
@@ -97,6 +96,17 @@ class DanaKitScanViewModel : ObservableObject {
     func cancelPinPrompt() {
         self.isPromptingPincode = false
         self.pumpManager?.disconnect()
+    }
+    
+    func syncTime(_ peripheral: CBPeripheral) {
+        self.pumpManager?.syncPumpTime { error in
+            if let error = error {
+                self.log.error("Failed to sync pump time: \(error)")
+            }
+            
+            self.pumpManager?.disconnect(peripheral)
+            self.nextStep()
+        }
     }
     
     func processPinPrompt() {
