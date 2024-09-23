@@ -92,7 +92,7 @@
 "Suggested at" = "Voorgesteld op";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Status op";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Maaltijd overzicht";
@@ -149,7 +149,7 @@
 "No suggestion" = "Geen suggestie";
 
 /* Replace pod text in Header */
-"Replace pod" = "Vervang Pod";
+"Replace pod" = "Vervang pod";
 
 /* Add carbs screen */
 "Add Carbs" = "Koolhydraten toevoegen";
@@ -640,6 +640,9 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Behandelingen";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Behandeling";
 
 /* " min" in Treatments list */
 " min" = "min";
@@ -1249,7 +1252,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loopcyclus advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende cyclus";
 
 /* Pump Error */
-"Pump is Busy." = "Pump is Busy.";
+"Pump is Busy." = "Je pomp is bezig.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */

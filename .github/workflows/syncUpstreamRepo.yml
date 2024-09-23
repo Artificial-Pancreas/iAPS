@@ -1,0 +1,40 @@
+
+name: 5. Sync Upstream
+run-name: Sync Upstream (${{ github.ref_name }})
+
+env:
+  UPSTREAM_URL: "https://github.com/Artificial-Pancreas/iAPS.git"
+  WORKFLOW_TOKEN: ${{ secrets.GH_PAT }}
+  UPSTREAM_BRANCH: "${{ github.ref_name }}"
+  DOWNSTREAM_BRANCH: "${{ github.ref_name }}"
+  # Optional fetch arguments
+  FETCH_ARGS: ""
+  # Optional merge arguments
+  MERGE_ARGS: ""
+  # Optional push arguments
+  PUSH_ARGS: ""
+  # Optional toggle to spawn time logs (keeps action active)
+  SPAWN_LOGS: "false" # "true" or "false"
+
+on: 
+
+  schedule:
+    - cron: '0 * * * *'             # scheduled to run hourly
+
+  workflow_dispatch:                # trigger manually
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub Sync to Upstream Repository
+        uses: Artificial-Pancreas/sync-upstream-repo@master
+        with:
+          upstream_repo: ${{ env.UPSTREAM_URL }}
+          upstream_branch: ${{ env.UPSTREAM_BRANCH }}
+          downstream_branch: ${{ env.DOWNSTREAM_BRANCH }}
+          token: ${{ env.WORKFLOW_TOKEN }}
+          fetch_args: ${{ env.FETCH_ARGS }}
+          merge_args: ${{ env.MERGE_ARGS }}
+          push_args: ${{ env.PUSH_ARGS }}
+          spawn_logs: ${{ env.SPAWN_LOGS }}

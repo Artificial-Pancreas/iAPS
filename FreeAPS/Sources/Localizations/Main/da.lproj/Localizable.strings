@@ -641,6 +641,9 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Behandlinger";
 
+/* Hypo Treatment Preset */
+"Treatment" = "Treatment";
+
 /* " min" in Treatments list */
 " min" = " min";
 
@@ -2521,15 +2524,12 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
 
-<<<<<<< HEAD
-=======
 /* UI/UX option */
 "Disable Hypo Treatments" = "Disable Hypo Treatments";
 
 /* UI/UX option */
 "Display Glucose Delta" = "Display Glucose Delta";
 
->>>>>>> dev
 /* Setting title */
 "Bolus Calculator" = "Bolus Lommeregner";
 
