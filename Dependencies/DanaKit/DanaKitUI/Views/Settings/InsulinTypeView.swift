@@ -55,7 +55,7 @@ struct InsulinTypeView: View {
             .bold()
             .padding(.horizontal)
         
-        Text(LocalizedString("Select the type of insulin that you will be using in this pump.", comment: "Title text for insulin type confirmation page"))
+        Text(LocalizedString("Select the type of insulin that you will be using in this pump", comment: "Title text for insulin type confirmation page"))
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal)
         

@@ -16,6 +16,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingTimeSyncConfirmation = false
     @Published var showingDisconnectReminder = false
     @Published var showingBolusSyncingDisabled = false
+    @Published var showingBlindReservoirCannulaRefill = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
     @Published var isUsingContinuousMode: Bool = false

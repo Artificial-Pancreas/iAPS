@@ -18,6 +18,8 @@ struct DanaKitSettingsView: View {
     
     @ObservedObject var viewModel: DanaKitSettingsViewModel
     @State private var isSharePresented: Bool = false
+    @State private var showingReservoirCannulaRefillView = false
+    @State private var cannulaOnly = false
     
     var supportedInsulinTypes: [InsulinType]
     var imageName: String
@@ -40,6 +42,20 @@ struct DanaKitSettingsView: View {
                 self.viewModel.syncPumpTime()
             },
             .cancel(Text(LocalizedString("No, Keep Pump As Is", comment: "Button text to cancel pump time sync")))
+        ])
+    }
+    
+    var blindReservoirCannulaRefill: ActionSheet {
+        ActionSheet(title: Text(LocalizedString("Type of refill", comment: "Title for refill action")), buttons: [
+            .default(Text(LocalizedString("Cannula only", comment: "Button text to cannula only"))) {
+                cannulaOnly = true
+                showingReservoirCannulaRefillView = true
+            },
+            .default(Text(LocalizedString("Reservoir and cannula", comment: "Button text to Reservoir and cannula"))) {
+                cannulaOnly = false
+                showingReservoirCannulaRefillView = true
+            },
+            .cancel(Text(LocalizedString("Cancel", comment: "Button text to cancel")))
         ])
     }
     
@@ -263,6 +279,24 @@ struct DanaKitSettingsView: View {
                     Text(LocalizedString("User options", comment: "Title for user options"))
                         .foregroundColor(Color.primary)
                 }
+//                Button(action: {
+//                    viewModel.showingBlindReservoirCannulaRefill = true
+//                }) {
+//                    HStack {
+//                        Text(LocalizedString("Reservoir/cannula refill", comment: "Title for reservoir/cannula refill"))
+//                        Spacer()
+//                        NavigationLink(destination: ReservoirCannulaRefillView, isActive: $showingReservoirCannulaRefillView) { EmptyView() }
+//                            .hidden()
+//                            .frame(width: 0, height: 0)
+//                        Image(systemName: "chevron.right")
+//                            .font(.system(size: UIFont.systemFontSize, weight: .medium))
+//                            .opacity(0.35)
+//                    }
+//                    .foregroundColor(Color.primary)
+//                }
+//                .actionSheet(isPresented: $viewModel.showingBlindReservoirCannulaRefill) {
+//                    blindReservoirCannulaRefill
+//                }
             }
             
             Section(header: SectionHeader(label: LocalizedString("Pump information", comment: "The title of the pump information section in DanaKit settings"))) {
@@ -483,6 +517,15 @@ struct DanaKitSettingsView: View {
         }
         
         return guidanceColors.critical
+    }
+    
+    @ViewBuilder
+    private var ReservoirCannulaRefillView: some View {
+        if self.cannulaOnly {
+            DanaKitRefillCannulaView(viewModel: DanaKitRefillReservoirCannulaViewModel(cannulaOnly: true))
+        } else {
+            DanaKitRefillReservoirView(viewModel: DanaKitRefillReservoirCannulaViewModel(cannulaOnly: false))
+        }
     }
 }
 
