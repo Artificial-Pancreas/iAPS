@@ -74,7 +74,6 @@ extension Home {
         @Published var overrideHistory: [OverrideHistory] = []
         @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = true
-        @Published var timeSettings: Bool = true
         @Published var useCalc: Bool = true
         @Published var minimumSMB: Decimal = 0.3
         @Published var maxBolus: Decimal = 0
@@ -139,7 +138,6 @@ extension Home {
             useTargetButton = settingsManager.settings.useTargetButton
             hours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
-            timeSettings = settingsManager.settings.timeSettings
             useCalc = settingsManager.settings.useCalc
             minimumSMB = settingsManager.settings.minimumSMB
             maxBolus = settingsManager.pumpSettings.maxBolus
@@ -622,7 +620,6 @@ extension Home.StateModel:
         useTargetButton = settingsManager.settings.useTargetButton
         hours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors
-        timeSettings = settingsManager.settings.timeSettings
         useCalc = settingsManager.settings.useCalc
         minimumSMB = settingsManager.settings.minimumSMB
         maxBolus = settingsManager.pumpSettings.maxBolus

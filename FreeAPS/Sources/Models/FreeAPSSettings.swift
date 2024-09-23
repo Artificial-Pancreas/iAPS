@@ -63,12 +63,11 @@ struct FreeAPSSettings: JSON, Equatable {
     var minimumSMB: Decimal = 0.3
     var useInsulinBars: Bool = false
     var disableCGMError: Bool = true
-    var uploadVersion: Bool = true
     var skipGlucoseChart: Bool = false
     var birthDate: Date = .distantPast
     var sexSetting: Int = 3
-    var disableHypoTreatment: Bool = false
     var displayDelta: Bool = false
+    var profileID: OverridePresets.ID = "Hypo Treatment"
 }
 
 extension FreeAPSSettings: Decodable {
@@ -330,10 +329,6 @@ extension FreeAPSSettings: Decodable {
             settings.disableCGMError = disableCGMError
         }
 
-        if let uploadVersion = try? container.decode(Bool.self, forKey: .uploadVersion) {
-            settings.uploadVersion = uploadVersion
-        }
-
         if let skipGlucoseChart = try? container.decode(Bool.self, forKey: .skipGlucoseChart) {
             settings.skipGlucoseChart = skipGlucoseChart
         }
@@ -346,12 +341,12 @@ extension FreeAPSSettings: Decodable {
             settings.sexSetting = sexSetting
         }
 
-        if let disableHypoTreatment = try? container.decode(Bool.self, forKey: .disableHypoTreatment) {
-            settings.disableHypoTreatment = disableHypoTreatment
-        }
-
         if let displayDelta = try? container.decode(Bool.self, forKey: .displayDelta) {
             settings.displayDelta = displayDelta
+        }
+
+        if let profileID = try? container.decode(String.self, forKey: .profileID) {
+            settings.profileID = profileID
         }
 
         self = settings

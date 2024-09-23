@@ -351,7 +351,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
-        guard lastGlucoseDate >= Date().addingTimeInterval(-12.minutes.timeInterval) else {
+        guard lastGlucoseDate > Date().addingTimeInterval(-12.minutes.timeInterval) else {
             debug(.apsManager, "Glucose data is stale")
             processError(APSError.glucoseError(message: "Glucose data is stale"))
             return Just(false).eraseToAnyPublisher()
@@ -1247,7 +1247,7 @@ final class BaseAPSManager: APSManager, Injectable {
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
-        } else if settingsManager.settings.uploadVersion {
+        } else {
             let json = BareMinimum(
                 id: getIdentifier(),
                 created_at: Date.now,

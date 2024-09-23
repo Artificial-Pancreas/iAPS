@@ -135,7 +135,7 @@
 "Your entered amount was limited by your max Bolus setting of %d%@" = "تم تحديد المبلغ الذي أدخلته من خلال إعدادتك القصوى Bols %d%@";
 
 /* Bolus View Continue Button */
-"Continue" = "Continue";
+"Continue" = "تابع";
 
 /* Home title */
 "Home" = "الرئيسية";
@@ -641,6 +641,9 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "العلاجات";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Treatment";
 
 /* " min" in Treatments list */
 " min" = " د";

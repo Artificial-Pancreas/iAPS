@@ -92,7 +92,7 @@
 "Suggested at" = "Ajánlva";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Hiba";
+"Status at" = "Status at";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Étel összegzése";
@@ -640,6 +640,9 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Kezelések";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Treatment";
 
 /* " min" in Treatments list */
 " min" = " perc";

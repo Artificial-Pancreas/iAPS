@@ -643,6 +643,9 @@ Połączono z Nightscout!";
 /* Treatments list */
 "Treatments" = "Treatments";
 
+/* Hypo Treatment Preset */
+"Treatment" = "Treatment";
+
 /* " min" in Treatments list */
 " min" = " min";
 

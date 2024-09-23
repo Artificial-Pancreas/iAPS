@@ -12,6 +12,7 @@ extension Settings {
         @Published var debugOptions = false
         @Published var animatedBackground = false
         @Published var disableCGMError = true
+        @Published var profileID: OverridePresets.ID = "Hypo Treatment"
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -23,9 +24,9 @@ extension Settings {
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
             subscribeSetting(\.disableCGMError, on: $disableCGMError) { disableCGMError = $0 }
+            subscribeSetting(\.profileID, on: $profileID) { profileID = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
-
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
             versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
 
