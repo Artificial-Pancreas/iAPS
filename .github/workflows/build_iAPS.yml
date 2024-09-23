@@ -3,14 +3,15 @@ run-name: Build iAPS (${{ github.ref_name }})
 on:
   workflow_dispatch:
   
-  ## Remove the "#" sign from the beginning of the line below to get automated builds on push (code changes in your repository)
-  #push:
+  # this will trigger this workflow for any push to any branch that this workflow is
+  # active on, *but*, the auto_build_check job will check to see if this branch is
+  # enabled *for* being auto built, and short circuit the process if so.
+  #
+  # if AUTO_BUILD_BRANCHES is not set, or the current branch is not listed, this
+  # workflow is triggered, but doesn't actually do anything.
+  #
+  push:
   
-  schedule:
-    #- cron: '30 04 1 * *' # Runs at 04:30 UTC on the 1st every month
-    - cron: '0 8 * * 3' # Checks for updates at 08:00 UTC every Wednesday
-    - cron: '0 6 1 * *' # Builds the app on the 1st of every month at 06:00 UTC
-
 env:  
   UPSTREAM_REPO: Artificial-Pancreas/iAPS
   UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
@@ -18,8 +19,31 @@ env:
   ALIVE_BRANCH: alive
 
 jobs:
+  auto_build_check:
+    name: Check Auto Build Status
+    runs-on: ubuntu-latest
+    outputs:
+      AUTO_BUILD_ENABLED: ${{ steps.auto-build-enabled.outputs.auto_build }}
+
+    steps:
+      - name: Is Auto Build Branch
+        id: auto-build-enabled
+        run: |
+          echo "auto_build=false" >> $GITHUB_OUTPUT
+          if [ ! -z "${{ vars.AUTO_BUILD_BRANCHES }}" ]; then
+            if echo ",${{ vars.AUTO_BUILD_BRANCHES }}," | grep -q ",${{ github.ref_name }},"; then
+              echo "auto_build=true" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Show Auto Build Status
+        run: |
+          echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
+
   validate:
     name: Validate
+    needs: auto_build_check
+    if: needs.auto_build_check.outputs.AUTO_BUILD_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
     uses: ./.github/workflows/validate_secrets.yml
     secrets: inherit
 
@@ -44,7 +68,7 @@ jobs:
         
         if [[ $PERMISSIONS =~ "workflow" || $PERMISSIONS == "" ]]; then
           echo "GH_PAT holds workflow permissions or is fine-grained PAT."
-          echo "has_permission=true" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to false.
+          echo "has_permission=true" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to true.
         else 
           echo "GH_PAT lacks workflow permissions."
           echo "Automated build features will be skipped!"
@@ -128,13 +152,13 @@ jobs:
     runs-on: macos-14
     permissions:
       contents: write
-    if: | # runs if started manually, or if sync schedule is set and enabled and scheduled on the first Saturday each month, or if sync schedule is set and enabled and new commits were found
-        github.event_name == 'workflow_dispatch' ||
-        (needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-          (vars.SCHEDULED_BUILD != 'false' && github.event.schedule == '0 6 1 * *') ||
-          (vars.SCHEDULED_SYNC == 'true' && needs.check_latest_from_upstream.outputs.NEW_COMMITS == 'true' )
-        )
     steps:
+      - name: Set special variables
+        run: |
+          if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
+            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          fi
+
       - name: Select Xcode version
         run: "sudo xcode-select --switch /Applications/Xcode_15.3.app/Contents/Developer"
       

@@ -182,7 +182,10 @@ struct HeaderBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         Rectangle()
-            .fill(colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1))
+            .fill(
+                colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1)
+//                    Color(.systemGray5)
+            )
     }
 }
 
