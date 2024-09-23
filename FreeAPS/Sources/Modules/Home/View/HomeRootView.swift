@@ -744,64 +744,65 @@ extension Home {
                         onboardingView()
                     }
                 } else {
-                VStack(spacing: 0) {
-                    // Header View
-                    headerView(geo)
+                    VStack(spacing: 0) {
+                        // Header View
+                        headerView(geo)
 
-                    ScrollView {
-                        VStack {
-                            // Main Chart
-                            chart
-                            // Adjust hours visible (X-Axis)
-                            timeSetting
-                            // TIR Chart
-                            if !state.glucose.isEmpty {
-                                preview.padding(.top, 15)
-                            }
-                            // Loops Chart
-                            loopPreview.padding(.vertical, 15)
+                        ScrollView {
+                            VStack {
+                                // Main Chart
+                                chart
+                                // Adjust hours visible (X-Axis)
+                                timeSetting
+                                // TIR Chart
+                                if !state.glucose.isEmpty {
+                                    preview.padding(.top, 15)
+                                }
+                                // Loops Chart
+                                loopPreview.padding(.vertical, 15)
 
-                            if state.carbData > 0 {
-                                activeCOBView
-                            }
+                                if state.carbData > 0 {
+                                    activeCOBView
+                                }
 
-                            // IOB Chart
-                            if state.iobs > 0 {
-                                activeIOBView
-                            }
+                                // IOB Chart
+                                if state.iobs > 0 {
+                                    activeIOBView
+                                }
 
-                        }.background {
-                            // Track vertical scroll
-                            GeometryReader { proxy in
-                                let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
-                                let yThreshold: CGFloat = -550
-                                Color.clear
-                                    .onChange(of: scrollPosition) { y in
-                                        if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
-                                            withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
-                                        } else {
-                                            withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
+                            }.background {
+                                // Track vertical scroll
+                                GeometryReader { proxy in
+                                    let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
+                                    let yThreshold: CGFloat = -550
+                                    Color.clear
+                                        .onChange(of: scrollPosition) { y in
+                                            if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
+                                                withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
+                                            } else {
+                                                withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
+                                            }
                                         }
                                 }
                             }
 
-                    }.coordinateSpace(name: "HomeScrollView")
-                    // Buttons
-                    buttonPanel(geo)
-                }
-
-                .background(
-                    colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
-                        .opacity(IAPSconfig.backgroundOpacity * 2)
-                )
-                .ignoresSafeArea(edges: .vertical)
-                .overlay {
-                    if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(.gray.opacity(0.8))
-                                .frame(width: 320, height: 60)
-                            bolusProgressView(progress: progress, amount: amount)
+                        }.coordinateSpace(name: "HomeScrollView")
+                        // Buttons
+                        buttonPanel(geo)
+                    }
+                    .background(
+                        colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
+                            .opacity(IAPSconfig.backgroundOpacity * 2)
+                    )
+                    .ignoresSafeArea(edges: .vertical)
+                    .overlay {
+                        if let progress = state.bolusProgress, let amount = state.bolusAmount {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(.gray.opacity(0.8))
+                                    .frame(width: 320, height: 60)
+                                bolusProgressView(progress: progress, amount: amount)
+                            }
                         }
                     }
                 }
