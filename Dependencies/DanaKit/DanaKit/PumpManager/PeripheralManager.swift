@@ -87,7 +87,7 @@ class PeripheralManager: NSObject {
         
         
         var data = DanaRSEncryption.encodePacket(operationCode: packet.opCode, buffer: packet.data, deviceName: self.deviceName)
-        self.log.info("Sending opCode: \(packet.opCode), encrypted data: \(data.base64EncodedString()), randomSyncKey: \(DanaRSEncryption.randomSyncKey)")
+//        self.log.info("Sending opCode: \(packet.opCode), encrypted data: \(data.base64EncodedString()), randomSyncKey: \(DanaRSEncryption.randomSyncKey)")
         
         if (DanaRSEncryption.enhancedEncryption != EncryptionType.DEFAULT.rawValue) {
             data = DanaRSEncryption.encodeSecondLevel(data: data)

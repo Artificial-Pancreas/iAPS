@@ -16,6 +16,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var showingTimeSyncConfirmation = false
     @Published var showingDisconnectReminder = false
     @Published var showingBolusSyncingDisabled = false
+    @Published var showingBlindReservoirCannulaRefill = false
     @Published var basalButtonText: String = ""
     @Published var bolusSpeed: BolusSpeed
     @Published var isUsingContinuousMode: Bool = false
@@ -373,7 +374,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     private func formatDateToDayHour(_ date: Date) -> String {
-        let day = String(format: "%.0f", -date.timeIntervalSinceNow / .days(1))
+        let day = String(format: "%.0f", floor(-date.timeIntervalSinceNow / .days(1)))
         let hour = String(format: "%.0f", (-date.timeIntervalSinceNow.truncatingRemainder(dividingBy: .days(1))) / .hours(1))
         
         return "\(day)d \(hour)h"
