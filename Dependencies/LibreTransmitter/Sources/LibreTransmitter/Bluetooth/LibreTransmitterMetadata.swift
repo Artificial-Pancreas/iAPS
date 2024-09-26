@@ -77,13 +77,14 @@ extension String {
 }
 
 public enum SensorType: String, CustomStringConvertible {
-    case libre1    = "DF"
-    case libre1A2 =  "A2"
-    case libre2    = "9D"
+    case libre1 = "DF"
+    case libre1A2 = "A2"
+    case libre2 = "9D"
     case libre2C5 = "C5"
-    case libreUS14day   = "E5"
+    case libreUS14day = "E5"
     case libreUS14dayE6 = "E6"
     case libreProH = "70"
+    case libre2Plus = "C6"
 
     public var description: String {
         switch self {
@@ -91,7 +92,7 @@ public enum SensorType: String, CustomStringConvertible {
             return "Libre 1"
         case .libre1A2:
             return "Libre 1 A2"
-        case .libre2, .libre2C5:
+            case .libre2, .libre2C5, .libre2Plus:
             return "Libre 2"
         case .libreUS14day, .libreUS14dayE6:
             return "Libre US"
