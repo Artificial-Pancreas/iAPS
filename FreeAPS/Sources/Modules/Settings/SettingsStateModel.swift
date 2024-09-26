@@ -10,7 +10,7 @@ extension Settings {
         @Published var debugOptions = false
         @Published var animatedBackground = false
         @Published var disableCGMError = true
-        @Published var profileID: OverridePresets.ID = "Hypo Treatment"
+        @Published var profileID: String = "Hypo Treatment"
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
