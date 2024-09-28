@@ -498,3 +498,48 @@
 
 /* Button text to Reservoir and cannula */
 "Reservoir and cannula" = "Reservoir and cannula";
+
+/* Title for bluetooth mode action sheet */
+"Toggle Bluetooth mode" = "Toggle Bluetooth mode";
+
+/* Button text to get help about Continuous mode */
+"What is this?" = "What is this?";
+
+/* Button text to disable continuous mode */
+"Yes, Switch to interactive mode" = "Yes, Switch to interactive mode";
+
+/* Button text to enable continuous mode */
+"Yes, Switch to continuous mode" = "Yes, Switch to continuous mode";
+
+/* Title for bolus syncing disable action sheet */
+"Disable bolus syncing?" = "Disable bolus syncing?";
+
+/* Title for bolus syncing disable action sheet */
+"Re-enable bolus syncing?" = "Re-enable bolus syncing?";
+
+/* Button text to re-enable bplus syncing */
+"Yes, re-enable bolus syncing" = "Yes, re-enable bolus syncing";
+
+/* Button text to disable bolus syncing */
+"Yes, disable bolus syncing" = "Yes, disable bolus syncing";
+
+/* ana delivery speed body */
+"The Dana pumps support different delivery speeds. You can set it up here" = "The Dana pumps support different delivery speeds. You can set it up here";
+
+/* Text for Basal profile */
+"Basal profile" = "Basal profile";
+
+/* Text for Battery level */
+"Battery level" = "Battery level";
+
+/* The title of the configuration section in DanaKit settings */
+"Configuration" = "Configuration";
+
+/* Text for low reservoir reminder */
+"Low reservoir reminder" = "Low reservoir reminder";
+
+/* refillAmount */
+"Refill amount" = "Refill amount";
+
+/* Insulin unit */
+"U" = "U";

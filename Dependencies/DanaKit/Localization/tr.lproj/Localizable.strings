@@ -1,8 +1,8 @@
 /* Generic loading text */
-"loading" = "yükleniyor";
+"loading" = "yükleme";
 
 /* Generic Continue text */
-"Continue" = "Devam etmek";
+"Continue" = "Devam et";
 
 /* Title for DanaKitSetupView */
 "Dana-i/RS Setup" = "Dana-i/RS Kurulumu";
@@ -20,13 +20,13 @@
 "Dana-i" = "Dana-i";
 
 /* Title for danars v1 explaination */
-"Setting up DanaRS v1" = "DanaRS v1&#39;i kurma";
+"Setting up DanaRS v1" = "DanaRS v1'in Kurulumu";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Eşleştirme işlemi sırasında, DanaRS v3&#39;ünüz bir eşleştirme istemi gösterirken iPhone&#39;unuz bir eşleştirme kodu istemi gösterecektir. Pompanızda OK&#39;i seçin ve iPhone&#39;unuzda kodu yazın. Bundan sonra, Loop DanaRS v1&#39;inizle iletişim kurmaya hazırdır";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Eşleştirme işlemi sırasında DanaRS v3 cihazınız bir eşleştirme istemi gösterirken iPhone cihazınız bir eşleştirme kodu istemi gösterecektir. Pompanızda Tamam'ı seçin ve kodu iPhone'unuza yazın. Bundan sonra Loop, DanaRS v1 cihazınızla iletişim kurmaya hazırdır.";
 
 /* check password text for danars v1 */
-"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Eşleştirme işlemine başlamadan önce pompa şifresini kontrol etmeniz ve gerekirse güncellemeniz önerilir. Bunu pompa ayarları -&gt; kullanıcı ayarları -&gt; şifre bölümüne giderek yapabilirsiniz. Varsayılan şifre 1234&#39;tür, eğer bu sizin şifrenizse lütfen değiştirmeyi düşünün";
+"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Eşleştirme işlemine başlamadan önce, pompa şifresini kontrol etmeniz ve gerekirse güncellemeniz önerilir. Bunu pompa ayarları -> kullanıcı ayarları -> şifre bölümüne giderek yapabilirsiniz. Varsayılan şifre 1234'tür, şifreniz buysa lütfen değiştirmeyi düşünün";
 
 /* Title for danars v1 password */
 "Password DanaRS v1" = "Şifre DanaRS v1";
@@ -35,28 +35,28 @@
 "Fill in password" = "Şifreyi girin";
 
 /* Title for danars v3 explaination */
-"Setting up DanaRS v3" = "DanaRS v3&#39;ü kurma";
+"Setting up DanaRS v3" = "DanaRS v3'ün Kurulumu";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Eşleştirme işlemi sırasında, DanaRS v3&#39;ünüz bir eşleştirme istemi gösterirken iPhone&#39;unuz iki eşleştirme kodu için bir istem gösterecektir. Pompanızda OK&#39;i seçin ve iPhone&#39;unuzda iki kodu yazın. Bundan sonra, Loop DanaRS v3&#39;ünüzle iletişim kurmaya hazırdır";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Eşleştirme işlemi sırasında DanaRS v3 cihazınız bir eşleştirme istemi gösterirken iPhone'unuz iki eşleştirme kodu istemi gösterecektir. Pompanızda Tamam'ı seçin ve iPhone'unuza iki kodu yazın. Bundan sonra Loop, DanaRS v3 cihazınızla iletişim kurmaya hazırdır";
 
 /* Title for dana-i explaination */
-"Setting up Dana-i" = "Dana-i&#39;yi kurmak";
+"Setting up Dana-i" = "Dana-i'nin Kurulumu";
 
 /* General subtext for dana */
-"After setting up the insulin type and bolus speed, you will see all the found Dana pumps. Select the pump you want to link with %1$@." = "İnsülin tipini ve bolus hızını ayarladıktan sonra, bulunan tüm Dana pompalarını göreceksiniz. %1$@ ile bağlamak istediğiniz pompayı seçin.";
+"After setting up the insulin type and bolus speed, you will see all the found Dana pumps. Select the pump you want to link with %1$@." = "İnsülin tipini ve bolus hızını ayarladıktan sonra, bulunan tüm Dana pompalarını içeren bir ekran göreceksiniz. %1$@ile bağlamak istediğiniz pompayı seçin.";
 
 /* Subtext for dana-i */
-"During the pairing process, your Dana-i will show a pairing prompt while your iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Eşleştirme işlemi sırasında, Dana-i&#39;niz bir eşleştirme istemi gösterirken iPhone&#39;unuz bir eşleştirme kodu istemi gösterecektir. Pompanızda OK&#39;i seçin ve iPhone&#39;unuzdaki ekrana 6 haneli kodu yazın. Bundan sonra, %1$@ Dana-i&#39;nizle iletişim kurmaya hazırdır";
+"During the pairing process, your Dana-i will show a pairing prompt while your iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Eşleştirme işlemi sırasında Dana-i cihazınız bir eşleştirme istemi gösterirken iPhone'unuz bir eşleştirme kodu istemi gösterecektir. Pompanızda Tamam'ı seçin ve 6 haneli kodu iPhone'unuzdaki ekrana yazın. Bundan sonra, %1$@ Dana-i'niz ile iletişim kurmaya hazırdır";
 
 /* Dana-i/RS invalid ble5 keys */
 "ERROR: Failed to pair device" = "HATA: Cihaz eşleştirilemedi";
 
 /* Dana-i oke invalid ble5 keys */
-"OK" = "TAMAM";
+"OK" = "TAMAM.";
 
 /* Cancel button title */
-"Cancel" = "İptal etmek";
+"Cancel" = "İptal";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Dana-i/RS pompaları bulundu";
@@ -65,16 +65,16 @@
 "Scanning" = "Tarama";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Bağlanma";
+"Connecting" = "Bağlantı";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Bu pompada kullanacağınız insülin türünü seçin";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Pompayı Kaldır";
+"Remove Pump" = "Pompayı Çıkarın";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
-"Are you sure you want to stop using Dana-i/RS?" = "Dana-i/RS&#39;yi kullanmayı bırakmak istediğinizden emin misiniz?";
+"Are you sure you want to stop using Dana-i/RS?" = "Dana-i/RS kullanmayı bırakmak istediğinizden emin misiniz?";
 
 /* Button text to confirm Dana-i/RS PumpManager deletion */
 "Delete pump" = "Pompayı sil";
@@ -89,7 +89,7 @@
 "Dana-RS v3 found!" = "Dana-RS v3 bulundu!";
 
 /* Dana-RS v3 pincode prompt body */
-"Pincode required" = "Posta kodu gerekli";
+"Pincode required" = "Pin kodu gerekli";
 
 /* Dana-RS v3 pincode prompt pin 1 */
 "Pin 1" = "Pin 1";
@@ -104,34 +104,34 @@
 "Received invalid hex strings. Try again" = "Geçersiz hex dizeleri alındı. Tekrar deneyin";
 
 /* Dana-RS v3 pincode prompt error checksum failed */
-"Checksum failed. Try again" = "Toplam denetimi başarısız oldu. Tekrar deneyin.";
+"Checksum failed. Try again" = "Checksum başarısız oldu. Tekrar deneyin";
 
 /* Title for delivery speed */
 "Delivery speed" = "Teslimat hızı";
 
 /* Dana bolus speed 12u per min */
-"12 sec/U" = "12 sn/U";
+"12 sec/U" = "12 saniye/U";
 
 /* Dana bolus speed 30u per min */
-"30 sec/U" = "30 sn/U";
+"30 sec/U" = "30 saniye/U";
 
 /* Dana bolus speed 60u per min */
-"60 sec/U" = "60 sn/U";
+"60 sec/U" = "60 saniye/U";
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Dana pompaları farklı teslimat hızlarını destekler. Bunu burada ayarlayabilirsiniz, ayrıca ayarlar menüsünden de ayarlayabilirsiniz";
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Dana pompaları farklı dağıtım hızlarını destekler. Bunu buradan ve aynı zamanda ayarlar menüsünden ayarlayabilirsiniz";
 
 /* Text for finish button */
-"Finish" = "Sona ermek";
+"Finish" = "Bitiş";
 
 /* Dana setup complete p1 */
 "Your " = "Senin ";
 
 /* Dana setup complete p2 */
-" is ready to be used!" = " kullanıma hazır!";
+" is ready to be used!" = " kullanılmaya hazır!";
 
 /* Dana setup SMB setting */
-"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Not: Dana pompanız, Dana pompanızın bip seslerini susturmanıza olanak tanıyan özel bir ayara sahiptir. Bunu etkinleştirmek için lütfen Dana distribütörünüzle iletişime geçin.";
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Not: Dana pompanız, Dana pompa bip seslerini susturmanızı sağlayan özel bir ayara sahiptir. Bunu etkinleştirmek için lütfen Dana distribütörünüzle iletişime geçin";
 
 /* Error description when no dana connected */
 "Failed to make a connection" = "Bağlantı kurulamadı";
@@ -140,28 +140,28 @@
 "Failed to adjust temp basal" = "Bazal sıcaklık ayarlanamadı";
 
 /* Error description when failed suspension adjustment */
-"Failed to adjust suspension" = "Süspansiyonu ayarlayamadım";
+"Failed to adjust suspension" = "Süspansiyon ayarlanamadı";
 
 /* Error description when failed generating basal program */
 "Failed to generate Dana basal program" = "Dana bazal programı oluşturulamadı";
 
 /* Error description when failed basal adjustment */
-"Failed to adjust basal" = "Bazal ayarlama başarısız oldu";
+"Failed to adjust basal" = "Bazal ayarlama yapılamadı";
 
 /* Error description when pump time failed to sync */
-"Failed to adjust pump time" = "Pompa zamanı ayarlanamadı";
+"Failed to adjust pump time" = "Pompa süresi ayarlanamadı";
 
 /* Error description when trying to set temp basal */
-"Setting temp basal is not supported at this time" = "Sıcaklık bazal ayarı şu anda desteklenmiyor";
+"Setting temp basal is not supported at this time" = "Geçici bazal ayarı şu anda desteklenmemektedir";
 
 /* Error description when pump is suspended */
-"The insulin delivery has been suspend. Action failed" = "İnsülin dağıtımı askıya alındı. İşlem başarısız oldu";
+"The insulin delivery has been suspend. Action failed" = "İnsülin teslimatı askıya alındı. Eylem başarısız";
 
 /* Error description when pump is busy (with bolussing probably) */
-"Action has been canceled, because the pump is busy" = "Pompa meşgul olduğundan işlem iptal edildi";
+"Action has been canceled, because the pump is busy" = "Pompa meşgul olduğu için işlem iptal edildi";
 
 /* Error description when pump has an active blockage */
-"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Bir bolus zaman aşımı etkindir. Döngü döngüsü, zaman aşımı etkin olmayana kadar tamamlanamaz";
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Bir bolus zaman aşımı etkindir. Zaman aşımı devre dışı kalana kadar döngü döngüsü tamamlanamaz";
 
 /* Error description when pump has reached the bolus max */
 "The max bolus limit is reached. Please try a lower amount or increase the limit" = "Maksimum bolus limitine ulaşıldı. Lütfen daha düşük bir miktar deneyin veya limiti artırın";
@@ -176,10 +176,10 @@
 "Please consider changing your dosing strategy in the setting menu" = "Lütfen ayar menüsünden dozaj stratejinizi değiştirmeyi düşünün";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Teslimatı sürdür";
+"Resume delivery" = "Özgeçmiş teslimatı";
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "Teslimatı askıya al";
+"Suspend delivery" = "Teslimatı askıya alın";
 
 /* Dana settings stop temp basal */
 "Stop temp basal" = "Bazal sıcaklığı durdur";
@@ -194,16 +194,16 @@
 "Scheduled Basal" = "Planlanmış Bazal";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "İnsülin İletimi";
+"Insulin Delivery" = "İnsülin Dağıtımı";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "İnsülin\nAskıya alındı";
+"Insulin\nSuspended" = "İnsülin\nAskıya Alındı";
 
 /* Text shown in basal rate space when delivery status is unknown */
-"Unknown" = "Bilinmeyen";
+"Unknown" = "Bilinmiyor";
 
 /* Units for showing temp basal rate */
-"U/hr" = "Kişi/saat";
+"U/hr" = "U/saat";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Kalan İnsülin";
@@ -215,7 +215,7 @@
 "Hardware model" = "Donanım modeli";
 
 /* Text for firmware version */
-"Firmware version" = "Yazılım sürümü";
+"Firmware version" = "Ürün yazılımı sürümü";
 
 /* DanaKit sync pump */
 "Sync pump data" = "Pompa verilerini senkronize et";
@@ -224,13 +224,13 @@
 "Last sync" = "Son senkronizasyon";
 
 /* Text for pump time */
-"Pump time" = "Pompa zamanı";
+"Pump time" = "Pompa süresi";
 
 /* Text for pump time synced at */
 "Checked at" = "Kontrol edildi";
 
 /* Text for Nightly pump time sync */
-"Nightly pump time sync" = "Gecelik pompa zaman senkronizasyonu";
+"Nightly pump time sync" = "Gece pompa zamanı senkronizasyonu";
 
 /* Label for syncing the time on the pump */
 "Manually sync Pump time" = "Pompa zamanını manuel olarak senkronize edin";
@@ -238,19 +238,19 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Zaman Değişikliği Algılandı";
+"Time Change Detected" = "Zaman Değişikliği Tespit Edildi";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pompanızdaki saat, geçerli saatten farklı. Pompanızdaki saati geçerli saate güncellemek ister misiniz?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pompanızdaki saat geçerli saatten farklı. Pompanızdaki saati geçerli saate güncellemek istiyor musunuz?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Pompanızdaki saat, geçerli saatten farklıdır. Pompanızın saati, planlanmış terapi ayarlarınızı kontrol eder. Saat farkını incelemek ve pompanızı yapılandırmak için Pompa Saati satırına gidin.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Pompanızdaki saat, geçerli saatten farklıdır. Pompanızın saati programlanmış terapi ayarlarınızı kontrol eder. Saat farkını incelemek ve pompanızı yapılandırmak için Pompa Saati satırına ilerleyin.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Evet, Güncel Saate Senkronize Et";
+"Yes, Sync to Current Time" = "Evet, Geçerli Saatle Senkronize Et";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Hayır, Pompayı Olduğu Gibi Tutun";
+"No, Keep Pump As Is" = "Hayır, Pompayı Olduğu Gibi Saklayın";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Bolus";
@@ -262,28 +262,28 @@
 "Basal" = "Bazal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Sürdürmek";
+"Resume" = "Özgeçmiş";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Askıya almak";
+"Suspend" = "Askıya al";
 
 /* Title for user options */
 "User options" = "Kullanıcı seçenekleri";
 
 /* DanaKit share logs */
-"Share Dana pump logs" = "Dana pompa kayıtlarını paylaş";
+"Share Dana pump logs" = "Dana pompa kayıtlarını paylaşın";
 
 /* Loading */
 "Loading" = "Yükleniyor";
 
 /* Text for save button */
-"Save" = "Kaydetmek";
+"Save" = "Kaydet";
 
 /* Text for 24h display */
-"24h display" = "24 saat görüntüleme";
+"24h display" = "24 saat gösterge";
 
 /* Description for 24h display */
-"Should time be display in 12h or 24h" = "Zaman 12 saat veya 24 saat olarak mı görüntülenmeli?";
+"Should time be display in 12h or 24h" = "Zaman 12 saat mi yoksa 24 saat olarak mı gösterilmeli";
 
 /* text on */
 "On" = "Açık";
@@ -295,22 +295,22 @@
 "12h notation" = "12h notasyonu";
 
 /* 24h */
-"24h notation" = "24 saatlik notasyon";
+"24h notation" = "24 saat gösterimi";
 
 /* Text for Scroll function */
 "Scroll function" = "Kaydırma işlevi";
 
 /* text for second */
-"sec" = "saniye";
+"sec" = "sn";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Zamanında arka ışık";
+"Backlight on time" = "Verlichting aan tijd";
 
 /* lcdOnTimeInSec */
-"Lcd on time" = "LCD zamanında";
+"Lcd on time" = "Lcd açık kalma süresi";
 
 /* beepAndAlarm */
-"Alarm beeps" = "Alarm bip sesleri";
+"Alarm beeps" = "Alarm bip sesi";
 
 /* beepAndAlarm.sound */
 "Sound" = "Ses";
@@ -319,13 +319,13 @@
 "Vibration" = "Titreşim";
 
 /* beepAndAlarm.both */
-"Both" = "İkisi birden";
+"Both" = "Her ikisi de";
 
 /* Alert title for batteryZeroPercent */
-"Pump battery 0%" = "Pompa pili 0%";
+"Pump battery 0%" = "Pompa aküsü %0";
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Pompanın pili boş. Hemen değiştirin!";
+"Pump battery is empty. Replace it now!" = "Pompa pili boşalmış. Hemen değiştirin!";
 
 /* Alert title for pumpError */
 "Pump error" = "Pompa hatası";
@@ -334,25 +334,25 @@
 "Check the pump and try again" = "Pompayı kontrol edin ve tekrar deneyin";
 
 /* Alert title for occlusion */
-"Occlusion" = "Tıkanıklık";
+"Occlusion" = "Oklüzyon";
 
 /* Alert body for occlusion */
-"Check the reservoir and infus and try again" = "Rezervuarı ve infüzyonu kontrol edin ve tekrar deneyin";
+"Check the reservoir and infus and try again" = "Hazneyi ve infüzyonu kontrol edin ve tekrar deneyin";
 
 /* Alert title for lowBattery */
 "Low pump battery" = "Düşük pompa pili";
 
 /* Alert body for lowBattery */
-"Pump battery needs to be replaced soon" = "Pompanın pilinin yakında değiştirilmesi gerekiyor";
+"Pump battery needs to be replaced soon" = "Pompa aküsünün yakında değiştirilmesi gerekiyor";
 
 /* Alert title for shutdown */
-"Pump shutdown" = "Pompanın kapanması";
+"Pump shutdown" = "Pompa kapatma";
 
 /* Alert body for shutdown */
-"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Pompayla çok uzun süredir herhangi bir etkileşim olmadı. Ya pompadaki bu işlevi devre dışı bırakın ya da pompayla etkileşim kurun";
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Çok uzun süredir pompa ile herhangi bir etkileşim olmamıştır. Ya pompadaki bu işlevi devre dışı bırakın ya da pompa ile etkileşime geçin";
 
 /* Alert title for basalCompare */
-"Basal Compare" = "Bazal Karşılaştır";
+"Basal Compare" = "Bazal Karşılaştırma";
 
 /* Alert title for bloodSugarMeasure */
 "Blood glucose Measure" = "Kan şekeri ölçümü";
@@ -364,43 +364,43 @@
 "Empty reservoir" = "Boş rezervuar";
 
 /* Alert body for emptyReservoir */
-"Reservoir is empty. Replace it now!" = "Rezervuar boş. Hemen değiştirin!";
+"Reservoir is empty. Replace it now!" = "Rezervuar boşalmış. Hemen değiştirin!";
 
 /* Alert title for emptyReservoir */
-"Check chaft" = "Chaft&#39;ı kontrol et";
+"Check chaft" = "Şaftı kontrol edin";
 
 /* Alert body for checkShaft */
-"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "Pompa, chaft&#39;ında bir sorun tespit etti. Lütfen hazneyi çıkarın, her şeyi kontrol edin ve tekrar deneyin";
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "Pompa, şaftında bir sorun tespit etti. Lütfen rezervuarı çıkarın, her şeyi kontrol edin ve tekrar deneyin";
 
 /* Alert title for basalMax */
 "Basal limit reached" = "Bazal sınıra ulaşıldı";
 
 /* Alert body for basalMax */
-"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Günlük bazal limitinize ulaşıldı. Limiti artırmak için lütfen Dana dağıtımcınızla iletişime geçin";
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Günlük bazal limitinize ulaşıldı. Limiti artırmak için lütfen Dana distribütörünüzle iletişime geçin";
 
 /* Alert title for dailyMax */
 "Daily limit reached" = "Günlük limite ulaşıldı";
 
 /* Alert body for basalMax */
-"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Günlük insülin limitiniz dolmuştur. Limiti artırmak için lütfen Dana distribütörünüzle iletişime geçin";
+"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Günlük insülin limitinize ulaşıldı. Limiti artırmak için lütfen Dana distribütörünüzle iletişime geçin";
 
 /* Alert title for bloodSugarCheckMiss */
 "Missed Blood glucose check" = "Kaçırılan Kan şekeri kontrolü";
 
 /* Alert body for bloodSugarCheckMiss */
-"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Pompanızda bir kan şekeri kontrol hatırlatıcısı ayarlandı ve tetiklendi. Lütfen kaldırın veya glikoz seviyenizi pompaya verin";
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Pompanızda bir kan şekeri kontrolü hatırlatıcısı ayarlanmıştır ve tetiklenmiştir. Lütfen bunu kaldırın veya glikoz seviyenizi pompaya verin";
 
 /* Alert title for unknown */
 "Unknown error" = "Bilinmeyen hata";
 
 /* Alert body for unknown */
-"An unknown error has occurred during processing the alert from the pump. Please report this" = "Pompadan gelen uyarının işlenmesi sırasında bilinmeyen bir hata oluştu. Lütfen bunu bildirin";
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "Pompadan gelen uyarının işlenmesi sırasında bilinmeyen bir hata oluştu. Lütfen bunu rapor edin";
 
 /* The title of the pump information section in DanaKit settings */
-"Pump information" = "Pompa bilgisi";
+"Pump information" = "Pompa bilgileri";
 
 /* Title for silent tone action sheet */
-"Toggle silent tone?" = "Sessiz tonu açıp kapat?";
+"Toggle silent tone?" = "Sessiz tonu değiştirelim mi?";
 
 /* Button text to cancel silent tone */
 "No, Keep as is" = "Hayır, olduğu gibi kalsın";
@@ -412,13 +412,13 @@
 "Yes, Enable silent tones" = "Evet, Sessiz tonları etkinleştir";
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Pompanın kullanması gereken temel profili ayarlayın. Pompadaki profilin üzerine %1$@&#39;deki profilin yazılacağını unutmayın.";
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Pompanın kullanması gereken bazal profili ayarlayın. Pompada bulunan profilin üzerine %1$@adresinde bulunan profilin yazılacağını unutmayın.";
 
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "İnsülin yok";
+"No Insulin" = "İnsülin Yok";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "İnsülin Askıya Alındı";
@@ -440,34 +440,34 @@
 "Status" = "Durum";
 
 /* DanaKit disconnecting */
-"Disconnecting..." = "Bağlantı kesiliyor...";
+"Disconnecting..." = "Bağlantı kesiliyor.";
 
 /* DanaKit connecting */
-"Reconnecting..." = "Yeniden bağlanılıyor...";
+"Reconnecting..." = "Yeniden bağlanıyor...";
 
 /* DanaKit disconnect */
-"Disconnect from pump" = "Pompadan ayırın";
+"Disconnect from pump" = "Pompa bağlantısını kesin";
 
 /* DanaKit connect */
 "Reconnect tp pump" = "Tp pompasını yeniden bağlayın";
 
 /* DanaKit disconnected */
-"Disconnected" = "Bağlantısı Kesildi";
+"Disconnected" = "Bağlantı kesildi";
 
 /* DanaKit connected */
 "Connected" = "Bağlı";
 
 /* Title disconnect reminder notification */
-"Pump is still disconnected" = "Pompa hala bağlı değil";
+"Pump is still disconnected" = "Pompanın bağlantısı hala kesik";
 
 /* Body disconnect reminder notification" */
-"Your pump is still disconnected after the set period!" = "Ayarlanan süre geçmesine rağmen pompanız hala devre dışı!";
+"Your pump is still disconnected after the set period!" = "Ayarlanan süreden sonra pompanızın bağlantısı hala kesik!";
 
 /* Title disconnect reminder sheet */
-"Set reminder for disconnect" = "Bağlantının kesilmesi için hatırlatıcı ayarla";
+"Set reminder for disconnect" = "Bağlantıyı kesmek için hatırlatıcı ayarlayın";
 
 /* body disconnect reminder sheet */
-"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Pompa belirli bir süre daha devre dışı kaldığında bildirim almak ister misiniz?";
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Pompanın bağlantısı belirli bir süre için kesildiğinde bir bildirim almak istiyor musunuz?";
 
 /* Button text to 5 min */
 "Yes, 5 minutes" = "Evet, 5 dakika";
@@ -498,3 +498,48 @@
 
 /* Button text to Reservoir and cannula */
 "Reservoir and cannula" = "Rezervuar ve kanül";
+
+/* Title for bluetooth mode action sheet */
+"Toggle Bluetooth mode" = "Bluetooth modunu aç / kapat";
+
+/* Button text to get help about Continuous mode */
+"What is this?" = "Bu da ne?";
+
+/* Button text to disable continuous mode */
+"Yes, Switch to interactive mode" = "Evet, Etkileşimli moda geç";
+
+/* Button text to enable continuous mode */
+"Yes, Switch to continuous mode" = "Evet, Sürekli moda geç";
+
+/* Title for bolus syncing disable action sheet */
+"Disable bolus syncing?" = "Bolus senkronizasyonunu devre dışı mı bırakayım?";
+
+/* Title for bolus syncing disable action sheet */
+"Re-enable bolus syncing?" = "Bolus senkronizasyonunu yeniden etkinleştirin mi?";
+
+/* Button text to re-enable bplus syncing */
+"Yes, re-enable bolus syncing" = "Evet, bolus senkronizasyonunu yeniden etkinleştirin";
+
+/* Button text to disable bolus syncing */
+"Yes, disable bolus syncing" = "Evet, bolus senkronizasyonunu devre dışı bırakın";
+
+/* ana delivery speed body */
+"The Dana pumps support different delivery speeds. You can set it up here" = "Dana pompaları farklı dağıtım hızlarını destekler. Buradan ayarlayabilirsiniz";
+
+/* Text for Basal profile */
+"Basal profile" = "Bazal profil";
+
+/* Text for Battery level */
+"Battery level" = "Pil seviyesi";
+
+/* The title of the configuration section in DanaKit settings */
+"Configuration" = "Konfigürasyon";
+
+/* Text for low reservoir reminder */
+"Low reservoir reminder" = "Düşük rezervuar hatırlatıcısı";
+
+/* refillAmount */
+"Refill amount" = "Dolum miktarı";
+
+/* Insulin unit */
+"U" = "U";

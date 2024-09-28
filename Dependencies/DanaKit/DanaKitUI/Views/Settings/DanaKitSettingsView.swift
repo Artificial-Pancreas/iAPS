@@ -95,7 +95,7 @@ struct DanaKitSettingsView: View {
                     buttons: [
                         .default(Text(viewModel.isBolusSyncingDisabled ?
                                       LocalizedString("Yes, re-enable bolus syncing", comment: "Button text to re-enable bplus syncing") :
-                                      LocalizedString("Yes, disable bolus syncing", comment: "Button text to disable bplus syncing")
+                                      LocalizedString("Yes, disable bolus syncing", comment: "Button text to disable bolus syncing")
                                  )) {
                             self.viewModel.toggleBolusSyncing()
                         },
