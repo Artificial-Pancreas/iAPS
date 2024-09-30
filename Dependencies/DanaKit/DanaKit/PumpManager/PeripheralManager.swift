@@ -205,7 +205,7 @@ extension PeripheralManager : CBPeripheralDelegate {
             return
         }
         
-        log.info("Receiving data: \(data.base64EncodedString())")
+//        log.info("Receiving data: \(data.base64EncodedString())")
         self.parseReceivedValue(data)
     }
     

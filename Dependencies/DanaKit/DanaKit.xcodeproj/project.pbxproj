@@ -159,9 +159,8 @@
 		B82FA9382B3CAF00004F2AFE /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = ../Localization/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B82FA9392B3CAF00004F2AFE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = ../Localization/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B82FA93A2B3CAF01004F2AFE /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = ../Localization/he.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B82FA93B2B3CAF06004F2AFE /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = ../Localization/hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B82FA93C2B3CAF06004F2AFE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ../Localization/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B82FA93D2B3CAF07004F2AFE /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "../Localization/pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		B82FA93D2B3CAF07004F2AFE /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = ../Localization/pt_BR.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B82FA93E2B3CAF08004F2AFE /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ../Localization/ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B82FA93F2B3CAF0A004F2AFE /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = ../Localization/sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B82FA9402B3CAF0A004F2AFE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = ../Localization/es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -617,6 +616,7 @@
 				cs,
 				hi,
 				sk,
+				pt_BR,
 			);
 			mainGroup = 84752E7826ED0FFE009FD801;
 			packageReferences = (
@@ -792,7 +792,6 @@
 				B82FA9382B3CAF00004F2AFE /* fi */,
 				B82FA9392B3CAF00004F2AFE /* fr */,
 				B82FA93A2B3CAF01004F2AFE /* he */,
-				B82FA93B2B3CAF06004F2AFE /* hi */,
 				B82FA93C2B3CAF06004F2AFE /* ja */,
 				B82FA93D2B3CAF07004F2AFE /* pt-BR */,
 				B82FA93E2B3CAF08004F2AFE /* ro */,

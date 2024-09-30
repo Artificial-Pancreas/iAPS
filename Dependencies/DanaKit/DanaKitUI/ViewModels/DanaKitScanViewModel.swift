@@ -105,7 +105,9 @@ class DanaKitScanViewModel : ObservableObject {
             }
             
             self.pumpManager?.disconnect(peripheral)
-            self.nextStep()
+            DispatchQueue.main.async {
+                self.nextStep()
+            }
         }
     }
     
