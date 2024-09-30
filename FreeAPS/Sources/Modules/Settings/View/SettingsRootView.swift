@@ -96,7 +96,7 @@ extension Settings {
                         Picker("Treatment", selection: $state.profileID) {
                             Text("Default  📉").tag("Hypo Treatment")
                             ForEach(fetchedProfiles) { item in
-                                Text(item.name ?? "").tag(item.id)
+                                Text(item.name ?? "").tag(item.id?.string ?? "")
                             }
                             Text("None").tag("None")
                         }
