@@ -374,10 +374,12 @@ class DanaKitSettingsViewModel : ObservableObject {
     }
     
     private func formatDateToDayHour(_ date: Date) -> String {
-        let day = String(format: "%.0f", floor(-date.timeIntervalSinceNow / .days(1)))
-        let hour = String(format: "%.0f", (-date.timeIntervalSinceNow.truncatingRemainder(dividingBy: .days(1))) / .hours(1))
+        let components = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: date, to: Date.now)
+        if let days = components.day, let hours = components.hour {
+            return "\(days)d \(hours)h"
+        }
         
-        return "\(day)d \(hour)h"
+        return "?d ?h"
     }
 }
 
