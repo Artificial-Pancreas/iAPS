@@ -30,8 +30,18 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
                 profile.sense /= factor;
                 profile.carb_ratio =  round(profile.carb_ratio / factor, 1);
             } else {
-                if (dynamicVariables.cr) { profile.carb_ratio =  round(profile.carb_ratio / factor, 1); }
-                if (dynamicVariables.isf) { profile.sens /= factor; }
+                if (dynamicVariables.cr) {
+                    profile.carb_ratio =  round(profile.carb_ratio / factor, 1);
+                    console.log("Override Active, CR: " + profile.old_cr + " → " + profile.carb_ratio);
+                }
+                if (dynamicVariables.isf) {
+                    profile.sens /= factor;
+                    if (profile.out_units == 'mmol/L') {
+                        console.log("Override Active, ISF: " + profile.old_isf + " → " + Math.round(profile.sens * 0.0555 * 10) / 10);
+                    } else {
+                        console.log("Override Active, ISF: " + profile.old_isf + " → " + profile.sens);
+                    }
+                }
             }
             console.log("Override Active, " + dynamicVariables.overridePercentage + "%");
         }
