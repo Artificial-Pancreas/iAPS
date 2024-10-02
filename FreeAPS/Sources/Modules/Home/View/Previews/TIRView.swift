@@ -17,64 +17,66 @@ struct PreviewChart: View {
     }
 
     var body: some View {
-        VStack {
-            let padding: CGFloat = 40
-            // Prepare the chart data
-            let data = prepareData()
-            HStack {
-                Text("Today")
-            }.padding(.bottom, 15).font(.previewHeadline)
+        if !readings.isEmpty {
+            VStack {
+                let padding: CGFloat = 40
+                // Prepare the chart data
+                let data = prepareData()
+                HStack {
+                    Text("Today")
+                }.padding(.bottom, 15).font(.previewHeadline)
 
-            HStack {
-                Chart(data) { item in
-                    BarMark(
-                        x: .value("TIR", item.type),
-                        y: .value("Percentage", item.percentage),
-                        width: .fixed(65)
-                    )
-                    .foregroundStyle(by: .value("Group", item.group))
-                    .clipShape(
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
-                            bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
-                            bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
-                            topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
+                HStack {
+                    Chart(data) { item in
+                        BarMark(
+                            x: .value("TIR", item.type),
+                            y: .value("Percentage", item.percentage),
+                            width: .fixed(65)
                         )
-                    )
+                        .foregroundStyle(by: .value("Group", item.group))
+                        .clipShape(
+                            UnevenRoundedRectangle(
+                                topLeadingRadius: (item.last || item.percentage == 100) ? 4 : 0,
+                                bottomLeadingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                                bottomTrailingRadius: (item.first || item.percentage == 100) ? 4 : 0,
+                                topTrailingRadius: (item.last || item.percentage == 100) ? 4 : 0
+                            )
+                        )
+                    }
+                    .chartForegroundStyleScale([
+                        NSLocalizedString(
+                            "Low",
+                            comment: ""
+                        ): .red,
+                        NSLocalizedString("In Range", comment: ""): .darkGreen,
+                        NSLocalizedString(
+                            "High",
+                            comment: ""
+                        ): .yellow,
+                        NSLocalizedString(
+                            "Very High",
+                            comment: ""
+                        ): .red,
+                        NSLocalizedString(
+                            "Very Low",
+                            comment: ""
+                        ): .darkRed,
+                        "Separator": colorScheme == .dark ? .black : .white
+                    ])
+                    .chartXAxis(.hidden)
+                    .chartYAxis(.hidden)
+                    .chartLegend(.hidden)
+                    .padding(.bottom, 15)
+                    .padding(.leading, padding)
+                    .frame(maxWidth: (UIScreen.main.bounds.width / 5) + padding)
+
+                    sumView(data).offset(x: 0, y: -7)
                 }
-                .chartForegroundStyleScale([
-                    NSLocalizedString(
-                        "Low",
-                        comment: ""
-                    ): .red,
-                    NSLocalizedString("In Range", comment: ""): .darkGreen,
-                    NSLocalizedString(
-                        "High",
-                        comment: ""
-                    ): .yellow,
-                    NSLocalizedString(
-                        "Very High",
-                        comment: ""
-                    ): .red,
-                    NSLocalizedString(
-                        "Very Low",
-                        comment: ""
-                    ): .darkRed,
-                    "Separator": colorScheme == .dark ? .black : .white
-                ])
-                .chartXAxis(.hidden)
-                .chartYAxis(.hidden)
-                .chartLegend(.hidden)
-                .padding(.bottom, 15)
-                .padding(.leading, padding)
-                .frame(maxWidth: (UIScreen.main.bounds.width / 5) + padding)
 
-                sumView(data).offset(x: 0, y: -7)
-            }
-
-        }.frame(maxHeight: 180)
-            .padding(.top, 20)
-            .dynamicTypeSize(...DynamicTypeSize.xLarge)
+            }.frame(maxHeight: 180)
+                .padding(.top, 20)
+                .dynamicTypeSize(...DynamicTypeSize.xLarge)
+        }
     }
 
     @ViewBuilder private func sumView(_ data: [TIRinPercent]) -> some View {
