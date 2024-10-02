@@ -27,8 +27,9 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
             profile.current_basal *= factor;
             // ISF and CR
             if (dynamicVariables.isfAndCr) {
-                profile.sense /= factor;
+                profile.sens /= factor;
                 profile.carb_ratio =  round(profile.carb_ratio / factor, 1);
+                console.log("Override Active, " + dynamicVariables.overridePercentage + "%");
             } else {
                 if (dynamicVariables.cr) {
                     profile.carb_ratio =  round(profile.carb_ratio / factor, 1);
@@ -43,7 +44,6 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
                     }
                 }
             }
-            console.log("Override Active, " + dynamicVariables.overridePercentage + "%");
         }
             // SMB Minutes
         if (dynamicVariables.advancedSettings && dynamicVariables.smbMinutes !== profile.maxSMBBasalMinutes) {
