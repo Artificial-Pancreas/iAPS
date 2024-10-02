@@ -83,11 +83,11 @@ extension OverrideProfilesConfig {
                 } else { saveOverride.target = 6 }
                 if advancedSettings {
                     saveOverride.advancedSettings = true
+                    saveOverride.isfAndCr = isfAndCr
                     if !isfAndCr {
-                        saveOverride.isfAndCr = false
                         saveOverride.isf = isf
                         saveOverride.cr = cr
-                    } else { saveOverride.isfAndCr = true }
+                    }
                     if smbIsAlwaysOff {
                         saveOverride.smbIsAlwaysOff = true
                         saveOverride.start = start as NSDecimalNumber
@@ -128,23 +128,23 @@ extension OverrideProfilesConfig {
                     ) as NSDecimalNumber
                 } else { saveOverride.target = 6 }
 
-                if advancedSettings {
+                if self.advancedSettings {
                     saveOverride.advancedSettings = true
+                    saveOverride.isfAndCr = self.isfAndCr
                     if !isfAndCr {
-                        saveOverride.isfAndCr = false
-                        saveOverride.isf = isf
-                        saveOverride.cr = cr
-                    } else { saveOverride.isfAndCr = true }
+                        saveOverride.isf = self.isf
+                        saveOverride.cr = self.cr
+                    }
                     if smbIsAlwaysOff {
                         saveOverride.smbIsAlwaysOff = true
                         saveOverride.start = start as NSDecimalNumber
                         saveOverride.end = end as NSDecimalNumber
                     } else { smbIsAlwaysOff = false }
 
-                    saveOverride.smbMinutes = smbMinutes as NSDecimalNumber
-                    saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
+                    saveOverride.smbMinutes = self.smbMinutes as NSDecimalNumber
+                    saveOverride.uamMinutes = self.uamMinutes as NSDecimalNumber
                     saveOverride.maxIOB = maxIOB as NSDecimalNumber
-                    saveOverride.overrideMaxIOB = overrideMaxIOB
+                    saveOverride.overrideMaxIOB = self.overrideMaxIOB
                 }
                 try? self.coredataContext.save()
             }
@@ -177,6 +177,8 @@ extension OverrideProfilesConfig {
             saveOverride.isPreset = true
             saveOverride.date = Date()
             saveOverride.id = id_
+            saveOverride.advancedSettings = profile.advancedSettings
+            saveOverride.isfAndCr = profile.isfAndCr
 
             if let tar = profile.target, tar == 0 {
                 saveOverride.target = 6
@@ -185,12 +187,10 @@ extension OverrideProfilesConfig {
             }
 
             if profile.advancedSettings {
-                saveOverride.advancedSettings = true
-                if !isfAndCr {
-                    saveOverride.isfAndCr = false
+                if !profile.isfAndCr {
                     saveOverride.isf = profile.isf
                     saveOverride.cr = profile.cr
-                } else { saveOverride.isfAndCr = true }
+                }
                 if profile.smbIsAlwaysOff {
                     saveOverride.smbIsAlwaysOff = true
                     saveOverride.start = profile.start
