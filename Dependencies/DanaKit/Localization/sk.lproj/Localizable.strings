@@ -557,7 +557,7 @@
 "Tube refill amount" = "Množstvo náplne do tuby";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "tento spôsob dopĺňania je určený len na prípady, keď čerpadlo nemôže poskytnúť spôsob, ako doplniť zásobník alebo naplniť kanylu.";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Tento spôsob dopĺňania je určený len vtedy, keď čerpadlo nemôže poskytnúť spôsob, ako doplniť zásobník alebo naplniť kanylu.";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "UPOZORNENIE: POUŽÍVAJTE OPATRNE!";

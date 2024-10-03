@@ -557,7 +557,7 @@
 "Tube refill amount" = "软管填充量";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "这种加注方法仅适用于泵无法提供加注储液器或插管填料的情况。";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "这种加注方法仅适用于泵无法提供给储液器加注或给插管填料的情况。";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "警告：慎用！";

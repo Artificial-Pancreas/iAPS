@@ -277,7 +277,7 @@
 "Loading" = "Laden";
 
 /* Text for save button */
-"Save" = "Speichern Sie";
+"Save" = "Speichern in Pumpe";
 
 /* Text for 24h display */
 "24h display" = "24h-Anzeige";
@@ -286,7 +286,7 @@
 "Should time be display in 12h or 24h" = "Soll die Zeit in 12h oder 24h angezeigt werden?";
 
 /* text on */
-"On" = "Auf";
+"On" = "An";
 
 /* text off */
 "Off" = "Aus";
@@ -304,10 +304,10 @@
 "sec" = "sec";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Verlichting aan tijd";
+"Backlight on time" = "LCD Hintergrund Beleuchtung";
 
 /* lcdOnTimeInSec */
-"Lcd on time" = "Lcd auf Zeit";
+"Lcd on time" = "LCD Timeout";
 
 /* beepAndAlarm */
 "Alarm beeps" = "Alarmtöne";
@@ -557,7 +557,7 @@
 "Tube refill amount" = "Nachfüllmenge der Tube";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Diese Methode des Nachfüllens ist nur für den Fall vorgesehen, dass die Pumpe keine Möglichkeit bietet, das Reservoir nachzufüllen oder die Kanüle zu entlüften.";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Diese Methode des Nachfüllens ist nur für den Fall vorgesehen, dass die Pumpe keine Möglichkeit bietet, das Reservoir nachzufüllen oder die Kanüle zu entlüften";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "WARNUNG: MIT VORSICHT VERWENDEN!";

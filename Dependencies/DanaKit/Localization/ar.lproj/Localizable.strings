@@ -557,7 +557,7 @@
 "Tube refill amount" = "كمية إعادة تعبئة الأنبوب";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "إن طريقة إعادة التعبئة هذه مخصصة فقط عندما لا يمكن للمضخة توفير طريقة لإعادة ملء الخزان أو تعبئة القنية";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "إن طريقة إعادة التعبئة هذه مخصصة فقط عندما لا تستطيع المضخة توفير طريقة لإعادة ملء الخزان أو تعبئة القنية";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "تحذير: استخدمه بحذر!";

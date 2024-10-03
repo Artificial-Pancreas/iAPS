@@ -557,7 +557,7 @@
 "Tube refill amount" = "Tüp dolum miktarı";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "bu yeniden doldurma yöntemi yalnızca pompanın rezervuarı yeniden doldurmak veya kanülü prime etmek için bir yol sağlayamadığı durumlar için tasarlanmıştır";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Bu yeniden doldurma yöntemi yalnızca pompanın rezervuarı yeniden doldurmak veya kanülü prime etmek için bir yol sağlayamadığı durumlar için tasarlanmıştır";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "UYARI: DİKKATLİ KULLANIN!";

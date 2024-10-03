@@ -557,7 +557,7 @@
 "Tube refill amount" = "Mängd påfyllning av tub";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "denna påfyllningsmetod är endast avsedd för när pumpen inte kan tillhandahålla ett sätt att fylla på behållaren eller spetsa kanylen";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Denna metod för påfyllning är endast avsedd för när pumpen inte kan tillhandahålla ett sätt att fylla på behållaren eller spetsa kanylen";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "VARNING: ANVÄND MED FÖRSIKTIGHET!";

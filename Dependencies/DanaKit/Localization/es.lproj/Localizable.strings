@@ -557,7 +557,7 @@
 "Tube refill amount" = "Cantidad de recarga del tubo";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "ste método de rellenado sólo está pensado para cuando la bomba no puede proporcionar una forma de rellenar el depósito o cebar la cánula.";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Este método de rellenado sólo está previsto cuando la bomba no puede proporcionar una forma de rellenar el depósito o cebar la cánula.";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "ADVERTENCIA: ¡UTILIZAR CON PRECAUCIÓN!";

@@ -557,7 +557,7 @@
 "Tube refill amount" = "Putken täyttömäärä";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "täyttömenetelmä on tarkoitettu vain silloin, kun pumppu ei pysty täyttämään säiliötä tai täyttämään kanyylia.";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Tämä täyttömenetelmä on tarkoitettu vain silloin, kun pumppu ei pysty täyttämään säiliötä tai täyttämään kanyylia.";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "VAROITUS: KÄYTÄ VAROEN!";

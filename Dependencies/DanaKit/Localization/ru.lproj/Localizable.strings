@@ -557,7 +557,7 @@
 "Tube refill amount" = "Количество пополнений в тюбике";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Этот способ заправки предназначен только для тех случаев, когда насос не может обеспечить наполнение резервуара или заправки канюли";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Этот способ заправки предназначен только для тех случаев, когда насос не может обеспечить пополнение резервуара или заправки канюли";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "ПРЕДУПРЕЖДЕНИЕ: ИСПОЛЬЗОВАТЬ С ОСТОРОЖНОСТЬЮ!";
