@@ -27,7 +27,7 @@ struct DanaKitSetupView: View {
        )
     }
     
-    private let allowedOptions: [Int] = [1, 2]
+    private let allowedOptions: [Int] = [0, 1, 2]
     
     var body: some View {
         VStack(alignment: .leading) {
