@@ -534,6 +534,12 @@ extension DanaKitPumpManager: PumpManager {
             return
         }
         
+        guard let insulinType = self.state.insulinType else {
+            self.log.error("Insulin type is nil...")
+            completion(.configuration(DanaKitPumpManagerError.unknown("Missing insulin type")))
+            return
+        }
+        
         delegateQueue.async {
             let duration = self.estimatedDuration(toBolus: units)
             self.log.info("Enact bolus, units: \(units)U, duration: \(duration)sec")
@@ -584,7 +590,7 @@ extension DanaKitPumpManager: PumpManager {
                         self.state.lastStatusPumpDateTime = (await self.fetchPumpTime()) ?? Date.now
                         self.state.lastStatusDate = Date.now
                         
-                        self.doseEntry = UnfinalizedDose(units: units, duration: duration, activationType: activationType, insulinType: self.state.insulinType!)
+                        self.doseEntry = UnfinalizedDose(units: units, duration: duration, activationType: activationType, insulinType: insulinType)
                         self.doseReporter = DanaKitDoseProgressReporter(total: units)
                         self.state.bolusState = .inProgress
                         self.notifyStateDidChange()
