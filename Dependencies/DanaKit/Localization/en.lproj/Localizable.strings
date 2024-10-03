@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "Step 1: Set reservoir level";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "Reservoir amount";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "Step 2: Set tube refill amount";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "Tube refill amount";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "Step 1: Prime cannula";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Failed to set reservoir amount. Re-sync pump data and try again please";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "Failed to prime the cannula. Please try again later";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";

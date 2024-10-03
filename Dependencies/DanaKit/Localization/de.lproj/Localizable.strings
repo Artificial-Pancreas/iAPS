@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "Schritt 1: Füllstand des Reservoirs einstellen";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "Menge des Reservoirs";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "Schritt 2: Nachfüllmenge für die Tube einstellen";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "Nachfüllmenge der Tube";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Diese Methode des Nachfüllens ist nur für den Fall vorgesehen, dass die Pumpe keine Möglichkeit bietet, das Reservoir nachzufüllen oder die Kanüle zu entlüften.";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "WARNUNG: MIT VORSICHT VERWENDEN!";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Diese Methode des Nachfüllens ist nur für den Fall vorgesehen, dass die Pumpe keine Möglichkeit bietet, das Reservoir nachzufüllen oder die Kanüle zu entlüften";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "WARNUNG: MIT VORSICHT VERWENDEN!";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "Schritt 1: Kanüle vorbereiten";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Reservoirmenge konnte nicht eingestellt werden. Bitte synchronisieren Sie die Pumpendaten erneut und versuchen Sie es erneut.";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "Die Kanüle konnte nicht entlüftet werden. Bitte versuchen Sie es später erneut";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "Die Entlüftung der Röhre ist fehlgeschlagen. Bitte versuchen Sie es später erneut";

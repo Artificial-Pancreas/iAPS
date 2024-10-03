@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "步骤 1：设置蓄水池水位";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "水库容量";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "步骤 2：设置软管填充量";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "软管填充量";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "这种加注方法仅适用于泵无法提供加注储液器或插管填料的情况。";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "警告：慎用！";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "这种加注方法仅适用于泵无法提供给储液器加注或给插管填料的情况。";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "警告：慎用！";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "步骤 1：插管填料";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "设置储液器容量失败。请重新同步泵数据并重试";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "插管填料失败。请稍后再试";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "管道填料失败。请稍后再试";

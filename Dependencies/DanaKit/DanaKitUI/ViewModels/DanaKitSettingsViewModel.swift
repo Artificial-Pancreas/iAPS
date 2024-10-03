@@ -42,12 +42,14 @@ class DanaKitSettingsViewModel : ObservableObject {
     @Published var reservoirLevel: Double?
     @Published var isSuspended: Bool = false
     @Published var basalRate: Double?
+    @Published var showingReservoirCannulaRefillView: Bool = false
     
     private let log = DanaLogger(category: "SettingsView")
     private(set) var insulinType: InsulinType
     private(set) var pumpManager: DanaKitPumpManager?
     private var didFinish: (() -> Void)?
     private(set) var userOptionsView: DanaKitUserSettingsView
+    private(set) var refillView: DanaKitRefillReservoirAndCannulaView
 
     public var pumpModel: String {
         self.pumpManager?.state.getFriendlyDeviceName() ?? ""
@@ -99,6 +101,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.didFinish = didFinish
         
         self.userOptionsView = DanaKitUserSettingsView(viewModel: DanaKitUserSettingsViewModel(self.pumpManager))
+        self.refillView = DanaKitRefillReservoirAndCannulaView(viewModel: DanaKitRefillReservoirCannulaViewModel(pumpManager: pumpManager, cannulaOnly: false))
         
         self.isUsingContinuousMode = self.pumpManager?.state.isUsingContinuousMode ?? false
         self.isConnected = self.pumpManager?.state.isConnected ?? false
@@ -154,6 +157,11 @@ class DanaKitSettingsViewModel : ObservableObject {
     func scheduleDisconnectNotification(_ duration: TimeInterval) {
         NotificationHelper.setDisconnectReminder(duration)
         self.pumpManager?.disconnect(true)
+    }
+    
+    func navigateToRefillView(_ cannulaOnly: Bool) {
+        self.refillView = DanaKitRefillReservoirAndCannulaView(viewModel: DanaKitRefillReservoirCannulaViewModel(pumpManager: pumpManager, cannulaOnly: cannulaOnly))
+        self.showingReservoirCannulaRefillView = true
     }
     
     func forceDisconnect() {

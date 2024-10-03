@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "Trinn 1: Angi reservoarnivå";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "Reservoar^beløp";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "Trinn 2: Påfyllingsmengde til tube";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "Rør påfylling beløp";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "hans påfyllingsmetode er bare beregnet for når pumpen ikke kan gjøre det mulig å fylle reservoaret eller fylle på kanylen";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "ADVARSEL: BRUK MED ADVARSEL!";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Denne påfyllingsmetoden er kun beregnet for når pumpen ikke kan sikre en måte å fylle reservoaret på eller klargjøre kanyletoppen";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "ADVARSEL: BRUK MED ADVARSEL!";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "Trinn 1: Føringskanyle";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Kunne ikke angi reservoarmengde. Resynkroniser pumpens data og prøv igjen";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "Mislyktes å kontrollere kanylen. Vennligst prøv igjen senere";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "Kan ikke kontrollere turen. Prøv igjen senere";

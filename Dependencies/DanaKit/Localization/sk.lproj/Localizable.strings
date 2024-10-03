@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "Krok 1: Nastavenie hladiny v nádrži";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "Množstvo zásobníka";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "Krok 2: Nastavenie množstva náplne do tuby";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "Množstvo náplne do tuby";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "tento spôsob dopĺňania je určený len na prípady, keď čerpadlo nemôže poskytnúť spôsob, ako doplniť zásobník alebo naplniť kanylu.";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "UPOZORNENIE: POUŽÍVAJTE OPATRNE!";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Tento spôsob dopĺňania je určený len vtedy, keď čerpadlo nemôže poskytnúť spôsob, ako doplniť zásobník alebo naplniť kanylu.";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "UPOZORNENIE: POUŽÍVAJTE OPATRNE!";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "Krok 1: Predplnenie kanyly";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Nepodarilo sa nastaviť množstvo zásobníka. Znovu synchronizujte údaje čerpadla a skúste to prosím znova";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "Nepodarilo sa naplniť kanylu. Skúste to prosím neskôr";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "Nepodarilo sa naplniť trubicu. Skúste to prosím neskôr";

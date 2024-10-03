@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "Vaihe 1: Aseta säiliön taso";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "Säiliön määrä";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "Vaihe 2: Aseta putken täyttömäärä";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "Putken täyttömäärä";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "täyttömenetelmä on tarkoitettu vain silloin, kun pumppu ei pysty täyttämään säiliötä tai täyttämään kanyylia.";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "VAROITUS: KÄYTÄ VAROEN!";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Tämä täyttömenetelmä on tarkoitettu vain silloin, kun pumppu ei pysty täyttämään säiliötä tai täyttämään kanyylia.";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "VAROITUS: KÄYTÄ VAROEN!";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "Vaihe 1: Kanyylin esivalmistelu";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Säiliön määrää ei onnistuttu asettamaan. Synkronoi pumpun tiedot uudelleen ja yritä uudelleen.";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "Kanyylin esivalmistelu epäonnistui. Yritä myöhemmin uudelleen";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "Putki ei ole alustettu. Yritä myöhemmin uudelleen";

@@ -148,8 +148,8 @@ struct DanaKitUserSettingsView: View {
             Spacer()
             
             ContinueButton(
-                loading: $viewModel.storingUseroption,
                 text: LocalizedString("Save", comment: "Text for save button"),
+                loading: $viewModel.storingUseroption,
                 action: { viewModel.storeUserOption() }
             )
         }

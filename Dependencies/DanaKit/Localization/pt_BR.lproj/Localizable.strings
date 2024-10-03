@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "Etapa 1: Definir o nível do reservatório";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "Quantidade do reservatório";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "Etapa 2: Defina a quantidade de recarga do tubo";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "Quantidade de refil do tubo";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Esse método de reabastecimento é indicado apenas para quando a bomba não puder fornecer uma maneira de reabastecer o reservatório ou preparar a cânula";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "AVISO: USE COM CUIDADO!";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Esse método de reabastecimento destina-se apenas a quando a bomba não puder fornecer uma maneira de reabastecer o reservatório ou preparar a cânula";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "AVISO: USE COM CUIDADO!";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "Etapa 1: Preparar a cânula";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Falha ao definir a quantidade do reservatório. Re-sincronize os dados da bomba e tente novamente";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "Falha ao preparar a cânula. Tente novamente mais tarde";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "Falha ao preparar o tubo. Tente novamente mais tarde";

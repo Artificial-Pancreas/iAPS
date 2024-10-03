@@ -543,3 +543,39 @@
 
 /* Insulin unit */
 "U" = "U";
+
+/* Label for first step refill */
+"Step 1: Set reservoir level" = "الخطوة 1: ضبط مستوى الخزان";
+
+/* Label for reservoir refilled amount */
+"Reservoir amount" = "كمية الخزان";
+
+/* Label for second step refill */
+"Step 2: Set tube refill amount" = "الخطوة 2: تعيين كمية إعادة تعبئة الأنبوب";
+
+/* Label for tube refilled amount */
+"Tube refill amount" = "كمية إعادة تعبئة الأنبوب";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "إن طريقة إعادة التعبئة هذه مخصصة فقط عندما لا يمكن للمضخة توفير طريقة لإعادة ملء الخزان أو تعبئة القنية";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "تحذير: استخدمه بحذر!";
+
+/* Label for warning refill */
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "إن طريقة إعادة التعبئة هذه مخصصة فقط عندما لا تستطيع المضخة توفير طريقة لإعادة ملء الخزان أو تعبئة القنية";
+
+/* Title for warning refill */
+"WARNING: USE WITH CAUTION!" = "تحذير: استخدمه بحذر!";
+
+/* Label for third step refill */
+"Step 1: Prime cannula" = "الخطوة 1: القنية الأولية";
+
+/* Label for error first step refill */
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "فشل ضبط كمية الخزان. أعد مزامنة بيانات المضخة وحاول مرة أخرى من فضلك";
+
+/* Label for error third step refill */
+"Failed to prime the cannula. Please try again later" = "فشل تحضير القنية. يرجى المحاولة مرة أخرى لاحقاً";
+
+/* Label for error second step refill */
+"Failed to prime the tube. Please try again later" = "فشل تحضير الأنبوب. يرجى المحاولة مرة أخرى لاحقاً";
