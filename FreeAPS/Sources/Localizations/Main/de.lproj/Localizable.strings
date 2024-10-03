@@ -92,7 +92,7 @@
 "Suggested at" = "Vorgeschlagen um";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Status vom";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Mahlzeitenübersicht";
@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Behandlungen";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Behandlung";
 
 /* " min" in Treatments list */
 " min" = " Min";
