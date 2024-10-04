@@ -90,7 +90,8 @@ extension Home {
         @Published var tdd3DaysAgo: Decimal = 0
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
-        @Published var displayDelta: Bool = false
+        @Published var openAPSSettings: Preferences?
+        @Published var displayDelta: Bool = true
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -304,6 +305,27 @@ extension Home {
                 setHBT.date = Date()
                 try? self.coredataContext.save()
             }
+        }
+
+        func token() -> String {
+            Token().getIdentifier()
+        }
+
+        func fetchPreferences() {
+            let token = token()
+            let database = Database(token: token)
+            database.fetchPreferences("default")
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        debug(.service, "Preferences fetched from database. Profile: default")
+                    case let .failure(error):
+                        debug(.service, error.localizedDescription)
+                    }
+                }
+            receiveValue: { self.openAPSSettings = $0 }
+                .store(in: &lifetime)
         }
 
         private func setupGlucose() {
@@ -545,6 +567,10 @@ extension Home {
             let c = Decimal(hbt_ - 100)
             let ratio = min(c / (target + c - 100), maxValue)
             return (ratio * 100)
+        }
+
+        func getIdentifier() -> String {
+            Token().getIdentifier()
         }
     }
 }

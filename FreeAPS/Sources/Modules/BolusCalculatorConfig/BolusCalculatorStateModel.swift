@@ -2,6 +2,8 @@ import SwiftUI
 
 extension BolusCalculatorConfig {
     final class StateModel: BaseStateModel<Provider> {
+        @Injected() private var storage: FileStorage!
+
         @Published var overrideFactor: Decimal = 0
         @Published var useCalc: Bool = true
         @Published var fattyMeals: Bool = false
@@ -17,9 +19,7 @@ extension BolusCalculatorConfig {
             subscribeSetting(\.overrideFactor, on: $overrideFactor, initial: {
                 let value = max(min($0, 2), 0.1)
                 overrideFactor = value
-            }, map: {
-                $0
-            })
+            }, map: { $0 })
             subscribeSetting(\.allowBolusShortcut, on: $allowBolusShortcut) { allowBolusShortcut = $0 }
             subscribeSetting(\.useCalc, on: $useCalc) { useCalc = $0 }
             subscribeSetting(\.fattyMeals, on: $fattyMeals) { fattyMeals = $0 }
@@ -45,6 +45,26 @@ extension BolusCalculatorConfig {
             }, map: {
                 $0
             })
+
+            // broadcaster.register(SettingsObserver.self, observer: self)
+        }
+
+        // Temporary while testing. Replace/remove later
+        func checkProfileChange() {
+            guard let settings_ = storage.retrieveRaw(OpenAPS.FreeAPS.settings) else { return }
+            if let settings = FreeAPSSettings(from: settings_) {
+                overrideFactor = settings.overrideFactor
+                print("Override Factor: \(overrideFactor)")
+                useCalc = settings.useCalc
+                fattyMeals = settings.fattyMeals
+                fattyMealFactor = settings.fattyMealFactor
+                insulinReqPercentage = settings.insulinReqPercentage
+                displayPredictions = settings.displayPredictions
+                allowBolusShortcut = settings.allowBolusShortcut
+                allowedRemoteBolusAmount = settings.allowedRemoteBolusAmount
+                eventualBG = settings.eventualBG
+                minumimPrediction = settings.minumimPrediction
+            }
         }
     }
 }

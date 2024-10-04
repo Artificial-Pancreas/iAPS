@@ -72,6 +72,8 @@ struct TagCloudView: View {
                 return .purple
             case textTag where textTag.contains("Middleware:"):
                 return .red
+            case textTag where textTag.contains("Configuration:"):
+                return Color(.darkGreen)
             default:
                 return .insulin
             }

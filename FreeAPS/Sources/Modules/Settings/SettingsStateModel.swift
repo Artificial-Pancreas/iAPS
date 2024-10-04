@@ -1,3 +1,5 @@
+import Combine
+import LoopKit
 import SwiftUI
 
 extension Settings {
@@ -79,6 +81,14 @@ extension Settings {
 
         func deleteOverrides() {
             nightscoutManager.deleteAllNSoverrrides() // For testing
+        }
+
+        func startOnboarding() {
+            CoreDataStorage().startOnbarding()
+        }
+
+        func getIdentifier() -> String {
+            Token().getIdentifier()
         }
     }
 }
