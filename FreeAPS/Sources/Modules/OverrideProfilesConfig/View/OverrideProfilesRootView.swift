@@ -301,8 +301,10 @@ extension OverrideProfilesConfig {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
-            .onAppear { state.savedSettings() }
+            .onAppear {
+                configureView()
+                state.savedSettings()
+            }
             .navigationBarTitle("Profiles")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
