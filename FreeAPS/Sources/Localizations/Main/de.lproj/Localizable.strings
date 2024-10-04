@@ -92,7 +92,7 @@
 "Suggested at" = "Vorgeschlagen um";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Status vom";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Mahlzeitenübersicht";
@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Behandlungen";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Behandlung";
 
 /* " min" in Treatments list */
 " min" = " Min";
@@ -1252,7 +1252,7 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Die neue Empfehlung kann nicht angewendet werden, da zurzeit ein Bolus verabreicht wird. Warten Sie bitte die nächste Schleife ab.";
 
 /* Pump Error */
-"Pump is Busy." = "Pump is Busy.";
+"Pump is Busy." = "Die Insulinpumpe ist beschäftigt.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */

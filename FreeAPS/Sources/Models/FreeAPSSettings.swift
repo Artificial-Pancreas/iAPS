@@ -67,7 +67,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var birthDate: Date = .distantPast
     var sexSetting: Int = 3
     var displayDelta: Bool = false
-    var profileID: OverridePresets.ID = "Hypo Treatment"
+    var profileID: String = "Hypo Treatment"
 }
 
 extension FreeAPSSettings: Decodable {
