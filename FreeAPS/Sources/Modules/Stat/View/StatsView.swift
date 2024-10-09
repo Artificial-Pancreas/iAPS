@@ -7,6 +7,7 @@ struct StatsView: View {
     @FetchRequest var fetchRequestReadings: FetchedResults<Readings>
 
     @State var headline: Color = .secondary
+    @State var errorReasons: Bool = false
 
     @Binding var highLimit: Decimal
     @Binding var lowLimit: Decimal
@@ -83,11 +84,26 @@ struct StatsView: View {
                     )
                 }
                 VStack(spacing: 5) {
-                    Text("Success").font(.subheadline).foregroundColor(headline)
+                    let succesPercentage = successRate ?? 100
+                    HStack {
+                        Text("Success").foregroundColor(headline)
+                        if succesPercentage != 100 {
+                            Image(systemName: "info.circle").foregroundStyle(.blue)
+                        }
+                    }.font(.subheadline)
                     Text(
-                        ((successRate ?? 100) / 100)
+                        (succesPercentage / 100)
                             .formatted(.percent.grouping(.never).rounded().precision(.fractionLength(1)))
                     )
+                }.onTapGesture {
+                    errorReasons.toggle()
+                }
+            }
+            .overlay {
+                VStack {
+                    if errorReasons {
+                        errors(loopCount - successsNR)
+                    }
                 }
             }
         }
@@ -117,6 +133,43 @@ struct StatsView: View {
             return (sorted[length / 2 - 1] + sorted[length / 2]) / 2
         }
         return sorted[length / 2]
+    }
+
+    private func errors(_ nonCompleted: Int) -> some View {
+        ZStack {
+            if nonCompleted > 0 {
+                let errors = fetchRequest.compactMap(\.error)
+                if errors.isNotEmpty {
+                    let mostFrequent = errors.mostFrequent()?.description ?? ""
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(Color(.systemGray2))
+                        .frame(width: 380, height: 250)
+                        .shadow(radius: 5)
+                        .overlay {
+                            VStack(alignment: .leading) {
+                                Text("Success = Started / Completed (Loops)")
+                                    .padding(.horizontal, 5)
+                                    .padding(.top, 5)
+                                    .padding(.bottom, 3)
+                                HStack {
+                                    Text("\(nonCompleted)").bold()
+                                    Text("Non-completed Loops")
+                                }
+                                .padding(.horizontal, 8).padding(.bottom, 10)
+                                Text("Most Frequent Error:")
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 3)
+                                    .bold()
+                                Text(mostFrequent)
+                                    .padding(.horizontal, 5)
+                                    .padding(.bottom, 5)
+                            }
+                        }
+                }
+            }
+        }
+        .offset(y: -160)
+        .onTapGesture { errorReasons.toggle() }
     }
 
     var hba1c: some View {
@@ -274,5 +327,14 @@ struct StatsView: View {
         array.append((decimal: Decimal(hyperPercentage), string: "High"))
 
         return array
+    }
+}
+
+extension Collection {
+    /**
+     Returns the most frequent element in the collection.
+     */
+    func mostFrequent() -> Element? where Element: Hashable {
+        reduce(into: [:]) { $0[$1, default: 0] += 1 }.max(by: { $0.1 < $1.1 })?.key
     }
 }
