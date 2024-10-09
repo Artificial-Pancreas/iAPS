@@ -155,7 +155,7 @@ struct StatsView: View {
                                     Text("\(nonCompleted)").bold()
                                     Text("Non-completed Loops")
                                 }
-                                .padding(.horizontal, 8).padding(.bottom, 10)
+                                .padding(.horizontal, 5).padding(.bottom, 10)
                                 Text("Most Frequent Error:")
                                     .padding(.horizontal, 5)
                                     .padding(.vertical, 3)
