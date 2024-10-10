@@ -1880,6 +1880,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Errors";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Most Frequent Error";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Non-completed Loops";
+
 /* Average loop interval */
 "Interval" = "Interval";
 
