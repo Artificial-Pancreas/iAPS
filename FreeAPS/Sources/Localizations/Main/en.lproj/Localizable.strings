@@ -1881,10 +1881,10 @@ Enact a temp Basal or a temp target */
 "Errors" = "Errors";
 
 /* Loop Statistics pop-up description */
-"Success = Started / Completed (Loops)" = "Success = Started / Completed (Loops)";
+"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error:" = "Most Frequent Error:";
+"Most Frequent Error" = "Most Frequent Error";
 
 /* Loop Statistics pop-up */
 "Non-completed Loops" = "Non-completed Loops";

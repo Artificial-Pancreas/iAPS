@@ -144,27 +144,31 @@ struct StatsView: View {
                     let mostFrequentCount = errors.filter({ $0 == mostFrequent }).count
                     RoundedRectangle(cornerRadius: 6)
                         .fill(Color(.systemGray2))
-                        .frame(width: 380, height: 250)
+                        .frame(width: 380, height: 200)
                         .shadow(radius: 5)
                         .overlay {
-                            VStack(alignment: .leading) {
-                                Text("Success = Started / Completed (Loops)")
+                            ZStack {
+                                Text("Success = Started / Completed (loops)")
                                     .padding(.horizontal, 5)
-                                    .padding(.top, 5)
-                                    .padding(.bottom, 3)
+                                    .padding(.top, 20)
                                     .foregroundStyle(.secondary)
-                                HStack {
-                                    Text("\(nonCompleted)").bold()
-                                    Text("Non-completed Loops")
-                                }
-                                .padding(.horizontal, 5).padding(.bottom, 10)
-                                Text("Most Frequent Error (\(mostFrequentCount)):")
-                                    .padding(.horizontal, 5)
+                                    .frame(maxHeight: .infinity, alignment: .top)
+                                VStack {
+                                    Text(
+                                        NSLocalizedString("Most Frequent Error", comment: "Loop Statistics pop-up") +
+                                            " (\(mostFrequentCount) " +
+                                            NSLocalizedString("of", comment: "") +
+                                            " \(nonCompleted)):"
+                                    )
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                     .padding(.vertical, 3)
                                     .bold()
-                                Text(mostFrequent)
-                                    .padding(.horizontal, 5)
-                                    .padding(.bottom, 5)
+                                    Text(mostFrequent)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                .frame(maxHeight: .infinity, alignment: .bottom)
+                                .padding(.horizontal, 20)
+                                .padding(.bottom, 20)
                             }
                         }
                 }
