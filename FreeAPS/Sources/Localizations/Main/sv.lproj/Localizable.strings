@@ -1877,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Fel";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Lyckades = Påbörjade / Avslutade (loopar)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Vanligaste fel";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "ej avslutade loopar";
+
 /* Average loop interval */
 "Interval" = "Intervall";
 

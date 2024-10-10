@@ -7,6 +7,7 @@ struct StatsView: View {
     @FetchRequest var fetchRequestReadings: FetchedResults<Readings>
 
     @State var headline: Color = .secondary
+    @State var errorReasons: Bool = false
 
     @Binding var highLimit: Decimal
     @Binding var lowLimit: Decimal
@@ -83,11 +84,26 @@ struct StatsView: View {
                     )
                 }
                 VStack(spacing: 5) {
-                    Text("Success").font(.subheadline).foregroundColor(headline)
+                    let succesPercentage = successRate ?? 100
+                    HStack {
+                        Text("Success").foregroundColor(headline)
+                        if succesPercentage != 100 {
+                            Image(systemName: "info.circle").foregroundStyle(.blue)
+                        }
+                    }.font(.subheadline)
                     Text(
-                        ((successRate ?? 100) / 100)
+                        (succesPercentage / 100)
                             .formatted(.percent.grouping(.never).rounded().precision(.fractionLength(1)))
                     )
+                }.onTapGesture {
+                    errorReasons.toggle()
+                }
+            }
+            .overlay {
+                VStack {
+                    if errorReasons {
+                        errors(loopCount - successsNR)
+                    }
                 }
             }
         }
@@ -117,6 +133,49 @@ struct StatsView: View {
             return (sorted[length / 2 - 1] + sorted[length / 2]) / 2
         }
         return sorted[length / 2]
+    }
+
+    private func errors(_ nonCompleted: Int) -> some View {
+        ZStack {
+            if nonCompleted > 0 {
+                let errors = fetchRequest.compactMap(\.error)
+                if errors.isNotEmpty {
+                    let mostFrequent = errors.mostFrequent()?.description ?? ""
+                    let mostFrequentCount = errors.filter({ $0 == mostFrequent }).count
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(Color(.systemGray2))
+                        .frame(width: 380, height: 200)
+                        .shadow(radius: 5)
+                        .overlay {
+                            ZStack {
+                                Text("Success = Started / Completed (loops)")
+                                    .padding(.horizontal, 5)
+                                    .padding(.top, 20)
+                                    .foregroundStyle(.secondary)
+                                    .frame(maxHeight: .infinity, alignment: .top)
+                                VStack {
+                                    Text(
+                                        NSLocalizedString("Most Frequent Error", comment: "Loop Statistics pop-up") +
+                                            " (\(mostFrequentCount) " +
+                                            NSLocalizedString("of", comment: "") +
+                                            " \(nonCompleted)):"
+                                    )
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.vertical, 3)
+                                    .bold()
+                                    Text(mostFrequent)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                .frame(maxHeight: .infinity, alignment: .bottom)
+                                .padding(.horizontal, 20)
+                                .padding(.bottom, 20)
+                            }
+                        }
+                }
+            }
+        }
+        .offset(y: -160)
+        .onTapGesture { errorReasons.toggle() }
     }
 
     var hba1c: some View {
@@ -274,5 +333,14 @@ struct StatsView: View {
         array.append((decimal: Decimal(hyperPercentage), string: "High"))
 
         return array
+    }
+}
+
+extension Collection {
+    /**
+     Returns the most frequent element in the collection.
+     */
+    func mostFrequent() -> Element? where Element: Hashable {
+        reduce(into: [:]) { $0[$1, default: 0] += 1 }.max(by: { $0.1 < $1.1 })?.key
     }
 }
