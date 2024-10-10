@@ -141,6 +141,7 @@ struct StatsView: View {
                 let errors = fetchRequest.compactMap(\.error)
                 if errors.isNotEmpty {
                     let mostFrequent = errors.mostFrequent()?.description ?? ""
+                    let mostFrequentCount = errors.filter({ $0 == mostFrequent }).count
                     RoundedRectangle(cornerRadius: 6)
                         .fill(Color(.systemGray2))
                         .frame(width: 380, height: 250)
@@ -151,12 +152,13 @@ struct StatsView: View {
                                     .padding(.horizontal, 5)
                                     .padding(.top, 5)
                                     .padding(.bottom, 3)
+                                    .foregroundStyle(.secondary)
                                 HStack {
                                     Text("\(nonCompleted)").bold()
                                     Text("Non-completed Loops")
                                 }
                                 .padding(.horizontal, 5).padding(.bottom, 10)
-                                Text("Most Frequent Error:")
+                                Text("Most Frequent Error (\(mostFrequentCount)):")
                                     .padding(.horizontal, 5)
                                     .padding(.vertical, 3)
                                     .bold()
