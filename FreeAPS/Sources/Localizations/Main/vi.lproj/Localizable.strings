@@ -1881,10 +1881,10 @@ Enact a temp Basal or a temp target */
 "Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
+"Most Frequent Error" = "Lỗi thường gặp";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Non-completed Loops";
+"Non-completed Loops" = "Vòng lặp chưa hoàn thành";
 
 /* Average loop interval */
 "Interval" = "Interval";
