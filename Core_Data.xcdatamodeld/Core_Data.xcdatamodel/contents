@@ -165,6 +165,7 @@
         <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="mmol" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="StatsData" representedClassName="StatsData" syncable="YES" codeGenerationType="class">
