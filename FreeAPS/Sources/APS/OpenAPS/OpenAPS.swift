@@ -413,6 +413,8 @@ final class OpenAPS {
 
                 if let units = readJSON(json: profile, variable: "out_units"), units.contains("mmol/L") {
                     saveSuggestion.mmol = true
+                } else {
+                    saveSuggestion.mmol = false
                 }
 
                 try? coredataContext.save()
