@@ -1877,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Помилки";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Успіх = Розпочато/Завершено (Петлі)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Найпоширеніша Помилка";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Незавершені Петлі";
+
 /* Average loop interval */
 "Interval" = "Інтервал";
 
