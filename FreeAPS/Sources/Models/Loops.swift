@@ -3,6 +3,7 @@ import Foundation
 struct Loops: JSON, Equatable {
     var loops: Int
     var errors: Int
+    var mostFrequentErrorType: String
     var success_rate: Decimal
     var avg_interval: Decimal
     var median_interval: Decimal
