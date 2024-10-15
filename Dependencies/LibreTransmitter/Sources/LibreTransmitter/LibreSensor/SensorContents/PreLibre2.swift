@@ -9,7 +9,7 @@ public enum Libre2 {
     ///   - data: Encrypted FRAM data
     /// - Returns: Decrypted FRAM data
     static public func decryptFRAM(type: SensorType, id: [UInt8], info: [UInt8], data: [UInt8]) throws -> [UInt8] {
-        guard type == .libre2 || type == .libre2C5 || type == .libreUS14day || type == .libreUS14dayE6 else {
+        guard type == .libre2 || type == .libre2C5 || type == .libreUS14day || type == .libreUS14dayE6 || type == .libre2Plus else {
             struct DecryptFRAMError: Error {
                 let errorDescription = "Unsupported sensor type"
             }
@@ -24,8 +24,9 @@ public enum Libre2 {
                     return 0xcadc
                 }
                 return UInt16(info[5], info[4])
-            case .libre2, .libre2C5:
+            case .libre2, .libre2C5, .libre2Plus:
                 return UInt16(info[5], info[4]) ^ 0x44
+                    
             default: fatalError("Unsupported sensor type")
             }
         }
