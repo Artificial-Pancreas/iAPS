@@ -77,8 +77,8 @@ extension Dynamic {
         }
 
         private func thirtyDaysAverages() -> (isf: Double, cr: Double, days: Double)? {
-            let history = reasons.filter({ $0.mmol == sameUnit })
-            let days = (history.first?.date ?? .distantPast).timeIntervalSince(history.last?.date ?? .distantFuture) / 8.64E4
+            let history = reasons.filter({ $0.mmol == sameUnit }).sorted(by: { $0.date ?? Date() > $1.date ?? Date() })
+            let days = -1 * (history.last?.date ?? .now).timeIntervalSince(history.first?.date ?? .now) / 8.64E4
             // Avoid displaying "0 days"
             guard !history.isEmpty, days >= 0.06 else { return nil }
 
