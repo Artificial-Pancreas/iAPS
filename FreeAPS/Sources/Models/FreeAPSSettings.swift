@@ -64,8 +64,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useInsulinBars: Bool = false
     var disableCGMError: Bool = true
     var skipGlucoseChart: Bool = false
-    var birthDate = Date.distantPast
-    // var sex: Sex = .secret
+    var birthDate: Date = .distantPast
     var sexSetting: Int = 3
     var displayDelta: Bool = false
     var profileID: String = "Hypo Treatment"
