@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Trattamenti";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Trattamento";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1878,13 +1878,13 @@ Enact a temp Basal or a temp target */
 "Errors" = "Errori";
 
 /* Loop Statistics pop-up description */
-"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+"Success = Started / Completed (loops)" = "Successo = Iniziato / Completato (ciclo)";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
+"Most Frequent Error" = "Errore Più Frequente";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Non-completed Loops";
+"Non-completed Loops" = "Cicli non completati";
 
 /* Average loop interval */
 "Interval" = "Intervallo";
