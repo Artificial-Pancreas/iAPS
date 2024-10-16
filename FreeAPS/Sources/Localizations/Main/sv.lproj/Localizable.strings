@@ -2465,6 +2465,21 @@ Enact a temp Basal or a temp target */
 /* Threshold Table Columns Title */
 "Threshold" = "Tröskelvärde";
 
+/* Dynamic settings View */
+"Averages" = "Medelvärden";
+
+/* Dynamic settings View */
+"Average ISF" = "Medelvärde ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Medelvärde CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Medelvärde CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulinkänslighet, CR: Insulinkvot,\nCSF: Kolhydratkänslighet = ISF/CR";
+
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";
 
