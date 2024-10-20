@@ -66,6 +66,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.basalProfileNumber = rawValue["basalProfileNumber"] as? UInt8 ?? 0
         self.cannulaDate = rawValue["cannulaDate2"] as? Date
         self.reservoirDate = rawValue["reservoirDate"] as? Date
+        self.allowAutomaticTimeSync = rawValue["allowAutomaticTimeSync"] as? Bool ?? true
+        self.isBolusSyncDisabled = rawValue["isBolusSyncDisabled"] as? Bool ?? false
         
         if let bolusSpeedRaw = rawValue["bolusSpeed"] as? BolusSpeed.RawValue {
             bolusSpeed = BolusSpeed(rawValue: bolusSpeedRaw) ?? .speed12
@@ -134,6 +136,8 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         self.batteryRemaining = 0
         self.cannulaDate = nil
         self.isUsingContinuousMode = false
+        self.allowAutomaticTimeSync = true
+        self.isBolusSyncDisabled = false
     }
     
     public var rawValue: RawValue {
@@ -182,7 +186,9 @@ public struct DanaKitPumpManagerState: RawRepresentable, Equatable {
         value["cannulaDate2"] = self.cannulaDate // Migration to new value
         value["reservoirDate"] = self.reservoirDate
         value["isUsingContinuousMode"] = self.isUsingContinuousMode
-        
+        value["allowAutomaticTimeSync"] = self.allowAutomaticTimeSync
+        value["isBolusSyncDisabled"] = self.isBolusSyncDisabled
+
         return value
     }
     

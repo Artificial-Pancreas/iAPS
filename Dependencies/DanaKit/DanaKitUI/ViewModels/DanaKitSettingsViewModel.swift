@@ -92,7 +92,7 @@ class DanaKitSettingsViewModel : ObservableObject {
     
     private let dateFormatter = {
         let formatter = DateFormatter()
-        formatter.timeStyle = .short
+        formatter.timeStyle = .medium
         return formatter
     }()
     
