@@ -411,6 +411,12 @@ final class OpenAPS {
                 saveSuggestion.eventualBG = Decimal(suggestion.eventualBG ?? 100) as NSDecimalNumber
                 saveSuggestion.date = Date.now
 
+                if let units = readJSON(json: profile, variable: "out_units"), units.contains("mmol/L") {
+                    saveSuggestion.mmol = true
+                } else {
+                    saveSuggestion.mmol = false
+                }
+
                 try? coredataContext.save()
             } else {
                 debug(.dynamic, "Couldn't save suggestion to CoreData")
