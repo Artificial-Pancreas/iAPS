@@ -66,6 +66,7 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
         
         // Device still has an active connection with pump and is probably busy with something
         if self.isConnected {
+            self.log.error("Failed to connect: Already connected")
             self.logDeviceCommunication("Dana - Failed to connect: Already connected", type: .connection)
             self.connectionCallback[identifier]!(.failure)
             
@@ -85,12 +86,15 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
                     self.logDeviceCommunication("Dana - Connected", type: .connection)
                     connectionCallback(.success)
                 case .failure(let err):
+                    self.log.error("Failed to connect: " + err.localizedDescription)
                     self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
                     connectionCallback(.failure)
                 case .requestedPincode:
+                    self.log.error("Failed to connect: Requested pincode")
                     self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
                     connectionCallback(.failure)
                 case .invalidBle5Keys:
+                    self.log.error("Failed to connect: Invalid ble 5 keys")
                     self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
                     connectionCallback(.failure)
                 }
@@ -112,17 +116,21 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
                         self.logDeviceCommunication("Dana - Connected", type: .connection)
                         connectionCallback(.success)
                     case .failure(let err):
+                        self.log.error("Failed to connect: " + err.localizedDescription)
                         self.logDeviceCommunication("Dana - Failed to connect: " + err.localizedDescription, type: .connection)
                         connectionCallback(.failure)
                     case .requestedPincode:
+                        self.log.error("Failed to connect: Requested pincode")
                         self.logDeviceCommunication("Dana - Requested pincode", type: .connection)
                         connectionCallback(.failure)
                     case .invalidBle5Keys:
+                        self.log.error("Failed to connect: Invalid ble 5 keys")
                         self.logDeviceCommunication("Dana - Invalid ble 5 keys", type: .connection)
                         connectionCallback(.failure)
                     }
                 }
             } catch {
+                self.log.error("Failed to connect: " + error.localizedDescription)
                 self.logDeviceCommunication("Dana - Failed to connect: " + error.localizedDescription, type: .connection)
                 self.connectionCallback[identifier]?(.failure)
             }
