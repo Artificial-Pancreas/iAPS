@@ -146,7 +146,7 @@ extension Stat {
                 .pickerStyle(.segmented).background(.cyan.opacity(0.2))
                 stats()
             }
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .dynamicTypeSize(...DynamicTypeSize.xLarge)
             .onAppear(perform: configureView)
             .navigationBarTitle("Statistics")
             .navigationBarTitleDisplayMode(.inline)

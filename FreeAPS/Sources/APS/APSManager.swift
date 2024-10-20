@@ -279,20 +279,20 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
         isLooping.send(false)
 
-        if let error = error {
-            warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+        if let apsError = error {
+            warning(.apsManager, "Loop failed with error: \(apsError.localizedDescription)")
             if let backgroundTask = backGroundTaskID {
                 UIApplication.shared.endBackgroundTask(backgroundTask)
                 backGroundTaskID = .invalid
             }
-            processError(error)
+            processError(apsError)
+            loopStats(loopStatRecord: loopStatRecord, error: apsError)
         } else {
             debug(.apsManager, "Loop succeeded")
             lastLoopDate = Date()
             lastError.send(nil)
+            loopStats(loopStatRecord: loopStatRecord, error: nil)
         }
-
-        loopStats(loopStatRecord: loopStatRecord)
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -986,6 +986,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let output = Loops(
             loops: Int(loopNr),
             errors: errorNR,
+            mostFrequentErrorType: loops.compactMap(\.error).mostFrequent()?.description ?? "",
             success_rate: roundDecimal(Decimal(successRate ?? 0), 1),
             avg_interval: roundDecimal(Decimal(intervalAverage), 1),
             median_interval: roundDecimal(Decimal(median_interval), 1),
@@ -1006,8 +1007,8 @@ final class BaseAPSManager: APSManager, Injectable {
         let newVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
         // Only save and upload twice per day
         guard ((-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 10) || newVersion else {
-            return
-        }
+             return
+         }
 
         if settingsManager.settings.uploadStats {
             let units = settingsManager.settings.units
@@ -1183,6 +1184,7 @@ final class BaseAPSManager: APSManager, Injectable {
             let loopstat = LoopCycles(
                 loops: oneDayLoops.loops,
                 errors: oneDayLoops.errors,
+                mostFrequentErrorType: oneDayLoops.mostFrequentErrorType,
                 readings: Int(oneDayGlucose.readings),
                 success_rate: oneDayLoops.success_rate,
                 avg_interval: oneDayLoops.avg_interval,
@@ -1191,7 +1193,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 max_interval: oneDayLoops.max_interval,
                 avg_duration: oneDayLoops.avg_duration,
                 median_duration: oneDayLoops.median_duration,
-                min_duration: oneDayLoops.max_duration,
+                min_duration: oneDayLoops.min_duration,
                 max_duration: oneDayLoops.max_duration
             )
 
@@ -1304,7 +1306,7 @@ final class BaseAPSManager: APSManager, Injectable {
         return branch
     }
 
-    private func loopStats(loopStatRecord: LoopStats) {
+    private func loopStats(loopStatRecord: LoopStats, error: Error?) {
         coredataContext.perform {
             let nLS = LoopStatRecord(context: self.coredataContext)
 
@@ -1313,6 +1315,10 @@ final class BaseAPSManager: APSManager, Injectable {
             nLS.loopStatus = loopStatRecord.loopStatus
             nLS.duration = loopStatRecord.duration ?? 0.0
             nLS.interval = loopStatRecord.interval ?? 0.0
+
+            if let error = error {
+                nLS.error = error.localizedDescription.string
+            }
 
             try? self.coredataContext.save()
         }
