@@ -876,5 +876,29 @@ extension Home {
                 }
             }
         }
+
+        func onboardingView() -> some View {
+            Restore.RootView(
+                resolver: resolver,
+                int: 0,
+                profile: "default",
+                inSitu: false,
+                id_: "",
+                uniqueID: "",
+                openAPS: nil
+            )
+        }
+
+        func importResetSettingsView(token: String, settings: Preferences) -> some View {
+            Restore.RootView(
+                resolver: resolver,
+                int: -1,
+                profile: "default",
+                inSitu: false,
+                id_: token,
+                uniqueID: token,
+                openAPS: settings
+            )
+        }
     }
 }
