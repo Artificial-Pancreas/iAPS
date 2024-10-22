@@ -1879,6 +1879,15 @@ Połączono z Nightscout!";
 /* Loop Errors in statPanel */
 "Errors" = "Errors";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Most Frequent Error";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Non-completed Loops";
+
 /* Average loop interval */
 "Interval" = "Interval";
 
@@ -2460,6 +2469,21 @@ Połączono z Nightscout!";
 
 /* Threshold Table Columns Title */
 "Threshold" = "Threshold";
+
+/* Dynamic settings View */
+"Averages" = "Averages";
+
+/* Dynamic settings View */
+"Average ISF" = "Average ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Average CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Average CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Calculator settings";
