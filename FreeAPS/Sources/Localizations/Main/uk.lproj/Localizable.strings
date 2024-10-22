@@ -1877,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Помилки";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Успіх = Розпочато/Завершено (Петлі)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Найпоширеніша Помилка";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Незавершені Петлі";
+
 /* Average loop interval */
 "Interval" = "Інтервал";
 
@@ -2458,6 +2467,21 @@ Enact a temp Basal or a temp target */
 
 /* Threshold Table Columns Title */
 "Threshold" = "Поріг";
+
+/* Dynamic settings View */
+"Averages" = "Середній";
+
+/* Dynamic settings View */
+"Average ISF" = "Середній ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Середній CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Середній ISF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: чутливість до інсуліну, CR: співвідношення вуглеводів,\nCSF: чутливість до вуглеводів = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Налаштування калькулятора";
