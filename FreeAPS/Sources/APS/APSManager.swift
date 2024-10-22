@@ -1312,7 +1312,7 @@ final class BaseAPSManager: APSManager, Injectable {
         return branch
     }
 
-    private func loopStats(loopStatRecord: LoopStats) {
+    private func loopStats(loopStatRecord: LoopStats, error: Error?) {
         coredataContext.perform {
             let nLS = LoopStatRecord(context: self.coredataContext)
 
@@ -1321,6 +1321,10 @@ final class BaseAPSManager: APSManager, Injectable {
             nLS.loopStatus = loopStatRecord.loopStatus
             nLS.duration = loopStatRecord.duration ?? 0.0
             nLS.interval = loopStatRecord.interval ?? 0.0
+
+            if let error = error {
+                nLS.error = error.localizedDescription.string
+            }
 
             try? self.coredataContext.save()
         }

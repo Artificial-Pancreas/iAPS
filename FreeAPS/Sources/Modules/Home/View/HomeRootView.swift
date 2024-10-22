@@ -16,6 +16,9 @@ extension Home {
         @State var triggerUpdate = false
         @State var display = false
         @State var displayGlucose = false
+        @State var animateLoop = Date.distantPast
+        @State var animateTIR = Date.distantPast
+
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
 
@@ -478,8 +481,15 @@ extension Home {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
+                .blur(radius: animateTIRView ? 2 : 0)
                 .onTapGesture {
+                    timeIsNowTIR()
                     state.showModal(for: .statistics)
+                }
+                .overlay {
+                    if animateTIRView {
+                        animation.asAny()
+                    }
                 }
         }
 
@@ -536,8 +546,15 @@ extension Home {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
+                .blur(radius: animateLoopView ? 2.5 : 0)
                 .onTapGesture {
+                    timeIsNowLoop()
                     state.showModal(for: .statistics)
+                }
+                .overlay {
+                    if animateLoopView {
+                        animation.asAny()
+                    }
                 }
         }
 
@@ -701,6 +718,26 @@ extension Home {
             .font(.timeSettingFont)
             .padding(.vertical, 15)
             .background(TimeEllipse(characters: string.count))
+        }
+
+        private var animateLoopView: Bool {
+            -1 * animateLoop.timeIntervalSinceNow < 1.5
+        }
+
+        private var animateTIRView: Bool {
+            -1 * animateTIR.timeIntervalSinceNow < 1.5
+        }
+
+        private func timeIsNowLoop() {
+            animateLoop = Date.now
+        }
+
+        private func timeIsNowTIR() {
+            animateTIR = Date.now
+        }
+
+        private var animation: any View {
+            ActivityIndicator(isAnimating: .constant(true), style: .large)
         }
 
         var body: some View {
