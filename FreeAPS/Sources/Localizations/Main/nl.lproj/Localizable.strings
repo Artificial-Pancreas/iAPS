@@ -1878,13 +1878,13 @@ Enact a temp Basal or a temp target */
 "Errors" = "Foutmeldingen";
 
 /* Loop Statistics pop-up description */
-"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+"Success = Started / Completed (loops)" = "Succes = gestarte / voltooide (loops)";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
+"Most Frequent Error" = "Meest voorkomende fout";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Non-completed Loops";
+"Non-completed Loops" = "Niet voltooide Loops";
 
 /* Average loop interval */
 "Interval" = "Interval";
@@ -2470,19 +2470,19 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Threshold" = "Grenswaarde";
 
 /* Dynamic settings View */
-"Averages" = "Averages";
+"Averages" = "Gemiddelden";
 
 /* Dynamic settings View */
-"Average ISF" = "Average ISF";
+"Average ISF" = "Gemiddelde ISF";
 
 /* Dynamic settings View */
-"Average CR" = "Average CR";
+"Average CR" = "Gemiddelde CR";
 
 /* Dynamic settings View */
-"Average CSF" = "Average CSF";
+"Average CSF" = "Gemiddelde CSF";
 
 /* Dynamic settings View */
-"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insuline gevoeligheidsfactor, CR: Koolhydraat ratio, CSF: Koolhydraat gevoeligheidsfactor = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Calculator instellingen";
