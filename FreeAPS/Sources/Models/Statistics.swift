@@ -104,6 +104,7 @@ struct LoopCycles: JSON, Equatable {
     var loops: Int
     var errors: Int
     var mostFrequentErrorType: String
+    var mostFrequentErrorAmount: Int
     var readings: Int
     var success_rate: Decimal
     var avg_interval: Decimal
@@ -174,6 +175,7 @@ extension LoopCycles {
         case loops
         case errors
         case mostFrequentErrorType
+        case mostFrequentErrorAmount
         case readings
         case success_rate
         case avg_interval
