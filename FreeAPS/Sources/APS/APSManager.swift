@@ -982,11 +982,16 @@ final class BaseAPSManager: APSManager, Injectable {
         let intervalAverage = intervalArray.reduce(0, +) / Double(count)
         let maximumInterval = intervalArray.max()
         let minimumInterval = intervalArray.min()
-        //
+
+        // Loop errors
+        let errorArray = loops.compactMap(\.error)
+        let mostFrequentString = errorArray.mostFrequent()?.description ?? ""
+
         let output = Loops(
             loops: Int(loopNr),
             errors: errorNR,
-            mostFrequentErrorType: loops.compactMap(\.error).mostFrequent()?.description ?? "",
+            mostFrequentErrorType: errorArray.mostFrequent()?.description ?? "",
+            mostFrequentErrorAmount: errorArray.filter({ $0 == mostFrequentString }).count,
             success_rate: roundDecimal(Decimal(successRate ?? 0), 1),
             avg_interval: roundDecimal(Decimal(intervalAverage), 1),
             median_interval: roundDecimal(Decimal(median_interval), 1),
@@ -1007,8 +1012,8 @@ final class BaseAPSManager: APSManager, Injectable {
         let newVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
         // Only save and upload twice per day
         guard ((-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 10) || newVersion else {
-             return
-         }
+            return
+        }
 
         if settingsManager.settings.uploadStats {
             let units = settingsManager.settings.units
@@ -1185,6 +1190,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 loops: oneDayLoops.loops,
                 errors: oneDayLoops.errors,
                 mostFrequentErrorType: oneDayLoops.mostFrequentErrorType,
+                mostFrequentErrorAmount: oneDayLoops.mostFrequentErrorAmount,
                 readings: Int(oneDayGlucose.readings),
                 success_rate: oneDayLoops.success_rate,
                 avg_interval: oneDayLoops.avg_interval,
