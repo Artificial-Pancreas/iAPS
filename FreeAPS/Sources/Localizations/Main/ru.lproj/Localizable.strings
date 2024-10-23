@@ -1877,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Ошибки";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Успех = Начато / Завершено (циклы)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Частая ошибка";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Незавершённые циклы";
+
 /* Average loop interval */
 "Interval" = "Интервал";
 
@@ -2458,6 +2467,21 @@ Enact a temp Basal or a temp target */
 
 /* Threshold Table Columns Title */
 "Threshold" = "Порог";
+
+/* Dynamic settings View */
+"Averages" = "Средние значения";
+
+/* Dynamic settings View */
+"Average ISF" = "Средний ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Средний CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Средний CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Чувствительность к инсулину, CR: Углеводный коэффициент,\nCSF: Чувствительность к углеводам = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Настройки калькулятора";
