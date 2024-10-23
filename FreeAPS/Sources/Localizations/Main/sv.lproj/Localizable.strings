@@ -1889,6 +1889,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Fel";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Lyckades = Påbörjade / Avslutade (loopar)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Vanligaste fel";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "ej avslutade loopar";
+
 /* Average loop interval */
 "Interval" = "Intervall";
 
@@ -2470,6 +2479,21 @@ Enact a temp Basal or a temp target */
 
 /* Threshold Table Columns Title */
 "Threshold" = "Tröskelvärde";
+
+/* Dynamic settings View */
+"Averages" = "Medelvärden";
+
+/* Dynamic settings View */
+"Average ISF" = "Medelvärde ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Medelvärde CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Medelvärde CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulinkänslighet, CR: Insulinkvot,\nCSF: Kolhydratkänslighet = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";

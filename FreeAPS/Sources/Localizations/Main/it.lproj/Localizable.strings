@@ -642,7 +642,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Trattamenti";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Trattamento";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1877,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Errori";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Successo = Iniziato / Completato (ciclo)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Errore Più Frequente";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Cicli non completati";
+
 /* Average loop interval */
 "Interval" = "Intervallo";
 
@@ -2459,6 +2468,21 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* Threshold Table Columns Title */
 "Threshold" = "Soglia";
+
+/* Dynamic settings View */
+"Averages" = "Averages";
+
+/* Dynamic settings View */
+"Average ISF" = "Average ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Average CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Average CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Impostazioni calcolatore";

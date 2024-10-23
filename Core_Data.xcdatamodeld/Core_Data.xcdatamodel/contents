@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES" codeGenerationType="class">
         <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-    </entity>
-    <entity name="BGaverages" representedClassName="BGaverages" syncable="YES" codeGenerationType="class">
-        <attribute name="average" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="average_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="average_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="average_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-    </entity>
-    <entity name="BGmedian" representedClassName="BGmedian" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="median" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="median_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="median_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="median_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="Carbohydrates" representedClassName="Carbohydrates" syncable="YES" codeGenerationType="class">
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0"/>
@@ -28,13 +14,6 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enteredBy" optional="YES" attributeType="String"/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-    </entity>
-    <entity name="HbA1c" representedClassName="HbA1c" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="hba1c" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="hba1c_1" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="hba1c_7" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="hba1c_30" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="Identifier" representedClassName="Identifier" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -57,6 +36,7 @@
     <entity name="LoopStatRecord" representedClassName="LoopStatRecord" syncable="YES" codeGenerationType="class">
         <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="error" optional="YES" attributeType="String"/>
         <attribute name="interval" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="loopStatus" optional="YES" attributeType="String"/>
         <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -164,6 +144,7 @@
         <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="mmol" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="StatsData" representedClassName="StatsData" syncable="YES" codeGenerationType="class">
