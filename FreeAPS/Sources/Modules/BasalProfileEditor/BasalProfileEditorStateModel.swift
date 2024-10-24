@@ -6,6 +6,7 @@ extension BasalProfileEditor {
         @Published var items: [Item] = []
         @Published var total: Decimal = 0.0
         @Published var saved = false
+        @Published var allowDilution = false
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -25,6 +26,7 @@ extension BasalProfileEditor {
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
             calcTotal()
+            allowDilution = settingsManager.settings.allowDilution
         }
 
         func calcTotal() {

@@ -126,6 +126,10 @@ extension Settings {
                             HStack {
                                 Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
                             }
+
+                            HStack {
+                                Toggle("Allow diluted insulin concentration settings", isOn: $state.allowDilution)
+                            }
                         }
                         Group {
                             Text("Preferences")
