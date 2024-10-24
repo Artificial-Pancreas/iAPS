@@ -176,8 +176,10 @@ extension BasalProfileEditor {
                     Picker("Insulin", selection: $set) {
                         Text("U100").tag(Decimal(1))
                         Text("U200").tag(Decimal(2))
-                        Text("U50").tag(Decimal(0.5))
-                        Text("U10").tag(Decimal(0.1))
+                        if state.allowDilution {
+                            Text("U50").tag(Decimal(0.5))
+                            Text("U10").tag(Decimal(0.1))
+                        }
                     }._onBindingChange($set) { _ in
                         clean = true
                     }
