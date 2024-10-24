@@ -18,6 +18,7 @@ extension StatConfig {
         @Published var useInsulinBars: Bool = false
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
+        @Published var insulinBadge: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -37,6 +38,7 @@ extension StatConfig {
             subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { oneDimensionalGraph = $0 }
             subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
             subscribeSetting(\.displayDelta, on: $displayDelta) { displayDelta = $0 }
+            subscribeSetting(\.insulinBadge, on: $insulinBadge) { insulinBadge = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
