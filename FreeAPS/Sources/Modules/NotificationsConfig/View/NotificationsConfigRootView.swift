@@ -100,7 +100,9 @@ extension NotificationsConfig {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+            }
             .navigationBarTitle("Notifications")
             .navigationBarTitleDisplayMode(.automatic)
         }

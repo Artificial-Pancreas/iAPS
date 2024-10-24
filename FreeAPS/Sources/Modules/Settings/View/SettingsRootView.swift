@@ -16,6 +16,18 @@ extension Settings {
         ) var fetchedVersionNumber: FetchedResults<VNr>
 
         @FetchRequest(
+            entity: ActiveProfile.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var currentProfile: FetchedResults<ActiveProfile>
+
+        private var GlucoseFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
+        @FetchRequest(
             entity: OverridePresets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
                 format: "name != %@", "" as String
@@ -69,6 +81,11 @@ extension Settings {
                 } header: { Text("Services") }
 
                 Section {
+                    Text("\(currentProfile.first?.name ?? "default")").foregroundStyle(.green).bold()
+                        .navigationLink(to: .profiles, from: self)
+                } header: { Text("Configuration Profiles") }
+
+                Section {
                     Text("Pump Settings").navigationLink(to: .pumpSettingsEditor, from: self)
                     Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
                     Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)
@@ -108,7 +125,7 @@ extension Settings {
                     if state.debugOptions {
                         Group {
                             HStack {
-                                Text("NS Upload Profile and Settings")
+                                Text("Upload Profile and Settings")
                                 Button("Upload") { state.uploadProfileAndSettings(true) }
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
@@ -126,6 +143,17 @@ extension Settings {
                             HStack {
                                 Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
                             }
+
+                            // HStack {
+                            Text("Test Onboarding")
+                                .navigationLink(to: .restore(
+                                    int: 0,
+                                    profile: "default",
+                                    inSitu: true,
+                                    id_: "",
+                                    uniqueID: state.getIdentifier()
+                                ), from: self)
+                                .foregroundStyle(.blue)
                         }
                         Group {
                             Text("Preferences")
@@ -168,6 +196,13 @@ extension Settings {
                         }
 
                         Group {
+                            Text("Override Presets uploaded")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedOverridePresets), from: self)
+                            Text("Meal Presets uploaded")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedMealPresets), from: self)
+                        }
+
+                        Group {
                             Text("Target presets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
                             Text("Calibrations")
@@ -197,7 +232,10 @@ extension Settings {
                 ShareSheet(activityItems: state.logItems())
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+                state.closedLoop = state.settingsManager.settings.closedLoop // Remove later. Test
+            }
             .navigationTitle("Settings")
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.inline)

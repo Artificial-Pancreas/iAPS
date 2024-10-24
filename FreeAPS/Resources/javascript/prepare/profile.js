@@ -75,10 +75,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
                 Math.max(35, Math.min(preferences.insulinPeakTime, 100));
             } else { preferences.insulinPeakTime = 55; }
         }
-        // Migrate missing conversion from original freeaps
-        if (preferences.resistanceLowersTarget) {
-            preferences.resistance_lowers_target = true;
-        }
     }
     
     var tdd_factor = { };

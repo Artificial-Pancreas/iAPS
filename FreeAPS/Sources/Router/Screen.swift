@@ -37,6 +37,8 @@ enum Screen: Identifiable, Hashable {
     case dynamicISF
     case contactTrick
     case sharing
+    case profiles
+    case restore(int: Int, profile: String, inSitu: Bool, id_: String, uniqueID: String)
     var id: Int { String(reflecting: self).hashValue }
 }
 
@@ -111,6 +113,10 @@ extension Screen {
             ContactTrick.RootView(resolver: resolver)
         case .sharing:
             Sharing.RootView(resolver: resolver)
+        case .profiles:
+            ProfilePicker.RootView(resolver: resolver)
+        case let .restore(int: int, profile: profile, inSitu: inSitu, id_: id_, uniqueID: uniqueID):
+            Restore.RootView(resolver: resolver, int: int, profile: profile, inSitu: inSitu, id_: id_, uniqueID: uniqueID)
         }
     }
 
