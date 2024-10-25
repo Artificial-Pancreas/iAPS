@@ -33,6 +33,11 @@ extension PumpSettingsEditor {
                 }
 
                 Section {
+                    Text("Insulin Concentration")
+                        .navigationLink(to: .basalProfileEditor(saveNewConcentration: true), from: self)
+                } header: { Text("Concentration") }
+
+                Section {
                     HStack {
                         if state.syncInProgress {
                             ProgressView().padding(.trailing, 10)
