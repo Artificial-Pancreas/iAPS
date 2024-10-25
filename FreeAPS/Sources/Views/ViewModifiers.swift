@@ -238,7 +238,7 @@ struct NonStandardInsulin: View {
                         .foregroundStyle(.primary)
                 }
         }
-        .offset(x: pod ? -20 : -22, y: pod ? -20 : -20)
+        .offset(x: pod ? -20 : 0, y: pod ? -20 : -20)
     }
 }
 
@@ -416,7 +416,7 @@ extension UnevenRoundedRectangle {
 }
 
 extension UIImage {
-    /// Code suggested by Mamad Farrahi, but slightly modified. Need to find some newer version later.
+    /// Code suggested by Mamad Farrahi, but slightly modified.
     func fillImageUpToPortion(color: Color, portion: Double) -> Image {
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
