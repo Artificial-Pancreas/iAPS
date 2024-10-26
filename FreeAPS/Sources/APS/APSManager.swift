@@ -902,8 +902,8 @@ final class BaseAPSManager: APSManager, Injectable {
         let glucose = array
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let totalReadings = justGlucoseArray.count
-        let highLimit = settingsManager.settings.high
-        let lowLimit = settingsManager.settings.low
+        let highLimit = settings.high
+        let lowLimit = settings.low
         let hyperArray = glucose.filter({ $0.glucose >= Int(highLimit) })
         let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
         let hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
@@ -959,7 +959,7 @@ final class BaseAPSManager: APSManager, Injectable {
             cv = sd / Double(glucoseAverage) * 100
         }
         let conversionFactor = 0.0555
-        let units = settingsManager.settings.units
+        let units = settings.units
 
         var output: (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
         output = (
@@ -999,11 +999,16 @@ final class BaseAPSManager: APSManager, Injectable {
         let intervalAverage = intervalArray.reduce(0, +) / Double(count)
         let maximumInterval = intervalArray.max()
         let minimumInterval = intervalArray.min()
-        //
+
+        // Loop errors
+        let errorArray = loops.compactMap(\.error)
+        let mostFrequentString = errorArray.mostFrequent()?.description ?? ""
+
         let output = Loops(
             loops: Int(loopNr),
             errors: errorNR,
-            mostFrequentErrorType: loops.compactMap(\.error).mostFrequent()?.description ?? "",
+            mostFrequentErrorType: errorArray.mostFrequent()?.description ?? "",
+            mostFrequentErrorAmount: errorArray.filter({ $0 == mostFrequentString }).count,
             success_rate: roundDecimal(Decimal(successRate ?? 0), 1),
             avg_interval: roundDecimal(Decimal(intervalAverage), 1),
             median_interval: roundDecimal(Decimal(median_interval), 1),
@@ -1024,11 +1029,11 @@ final class BaseAPSManager: APSManager, Injectable {
         let newVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
         // Only save and upload twice per day
         guard ((-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 10) || newVersion else {
-             return
-         }
+            return
+        }
 
-        if settingsManager.settings.uploadStats {
-            let units = settingsManager.settings.units
+        if settings.uploadStats {
+            let units = settings.units
             let preferences = settingsManager.preferences
 
             // Carbs
@@ -1067,7 +1072,7 @@ final class BaseAPSManager: APSManager, Injectable {
             let branch = branch()
             let copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
             let pump_ = pumpManager?.localizedTitle ?? ""
-            let cgm = settingsManager.settings.cgm
+            let cgm = settings.cgm
             let file = OpenAPS.Monitor.statistics
             var iPa: Decimal = 75
             if preferences.useCustomPeakTime {
@@ -1103,7 +1108,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: roundDecimal(Decimal(totalDaysGlucose.median), 1)
             )
 
-            let overrideHbA1cUnit = settingsManager.settings.overrideHbA1cUnit
+            let overrideHbA1cUnit = settings.overrideHbA1cUnit
 
             let hbs = Durations(
                 day: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
@@ -1151,10 +1156,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: Decimal(totalDays_.normal_)
             )
             let range = Threshold(
-                low: units == .mmolL ? roundDecimal(settingsManager.settings.low.asMmolL, 1) :
-                    roundDecimal(settingsManager.settings.low, 0),
-                high: units == .mmolL ? roundDecimal(settingsManager.settings.high.asMmolL, 1) :
-                    roundDecimal(settingsManager.settings.high, 0)
+                low: units == .mmolL ? roundDecimal(settings.low.asMmolL, 1) :
+                    roundDecimal(settings.low, 0),
+                high: units == .mmolL ? roundDecimal(settings.high.asMmolL, 1) :
+                    roundDecimal(settings.high, 0)
             )
             let TimeInRange = TIRs(
                 TIR: tir,
@@ -1202,6 +1207,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 loops: oneDayLoops.loops,
                 errors: oneDayLoops.errors,
                 mostFrequentErrorType: oneDayLoops.mostFrequentErrorType,
+                mostFrequentErrorAmount: oneDayLoops.mostFrequentErrorAmount,
                 readings: Int(oneDayGlucose.readings),
                 success_rate: oneDayLoops.success_rate,
                 avg_interval: oneDayLoops.avg_interval,
@@ -1261,8 +1267,8 @@ final class BaseAPSManager: APSManager, Injectable {
                     Variance: variance
                 ),
                 id: getIdentifier(),
-                dob: settingsManager.settings.birthDate,
-                sex: settingsManager.settings.sexSetting
+                dob: settings.birthDate,
+                sex: settings.sexSetting
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
