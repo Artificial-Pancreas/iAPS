@@ -137,7 +137,13 @@ extension BasalProfileEditor {
                 Section {
                     list
                     addButton
-                } header: { Text("Schedule") }
+                } header: {
+                    HStack {
+                        Text("Schedule")
+                        Text("(standard units / hour)")
+                    }
+                }
+
 
                 Section {
                     HStack {
