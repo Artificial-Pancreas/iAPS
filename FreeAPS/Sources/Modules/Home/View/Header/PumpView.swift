@@ -40,7 +40,45 @@ struct PumpView: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            if let reservoir = reservoir {
+            // OmniPods
+            if let date = expiresAtDate {
+                // Insulin amount (U)
+                if let insulin = reservoir {
+                    let amountFraction = 1.0 - Double(insulin) / 200
+                    if insulin == 0xDEAD_BEEF {
+                        podInsulinAmount(portion: amountFraction)
+                            .overlay {
+                                if let timeZone = timeZone,
+                                   timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                                {
+                                    ClockOffset(mdtPump: false)
+                                }
+                            }
+                    } else {
+                        HStack(spacing: 0) {
+                            Text(reservoirFormatter.string(from: insulin as NSNumber) ?? "")
+                            spacer
+                            Text("E").foregroundStyle(.secondary)
+                        }
+                        podInsulinAmount(portion: amountFraction)
+                            .overlay {
+                                if let timeZone = timeZone,
+                                   timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
+                                {
+                                    ClockOffset(mdtPump: false)
+                                }
+                            }
+                    }
+                }
+                remainingTime(time: date.timeIntervalSince(timerDate))
+                    .font(.pumpFont)
+                    .offset(x: -7, y: 0)
+            } else if state.pumpName.contains("Omni") {
+                Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
+                    .offset(x: 0, y: -4)
+            }
+            // Other pumps
+            else if let reservoir = reservoir {
                 if reservoir == 0xDEAD_BEEF {
                     HStack(spacing: 0) {
                         Text("50+ ").font(.statusFont).bold()
@@ -62,6 +100,7 @@ struct PumpView: View {
                     .offset(x: 0, y: -4)
             }
 
+            // MDT and Dana
             if let battery = battery, !state.pumpName.contains("Omni") {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
                     (battery.percent ?? 100) >
@@ -78,26 +117,6 @@ struct PumpView: View {
                             ClockOffset(mdtPump: true)
                         }
                     }
-            }
-
-            if let date = expiresAtDate {
-                Image("pod_reservoir")
-                    .resizable(resizingMode: .stretch)
-                    .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
-                    .foregroundColor(colorScheme == .dark ? .secondary : .white)
-                    .offset(x: 0, y: -5)
-                    .shadow(radius: 2)
-                    .overlay {
-                        if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
-                            ClockOffset(mdtPump: false)
-                        }
-                    }
-                remainingTime(time: date.timeIntervalSince(timerDate))
-                    .font(.pumpFont)
-                    .offset(x: -7, y: 0)
-            } else if state.pumpName.contains("Omni") {
-                Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
-                    .offset(x: 0, y: -4)
             }
         }
         .offset(x: 0, y: 5)
@@ -192,5 +211,25 @@ struct PumpView: View {
 
     private var spacer: Text {
         Text(" ").tracking(-3)
+    }
+
+    private func podInsulinAmount(portion: Double) -> some View {
+        ZStack {
+            UIImage(imageLiteralResourceName: "pod_reservoir")
+                .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: portion)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                .symbolRenderingMode(.palette)
+                .offset(x: 0, y: -5)
+                .shadow(radius: 1, x: 2, y: 2)
+                .foregroundStyle(.white)
+                .overlay {
+                    portion <= 0.3 ?
+                        Text("50+").foregroundStyle(.white).font(.system(size: 6))
+                        .offset(y: -4)
+                        : nil
+                }
+        }
     }
 }
