@@ -443,7 +443,7 @@ extension Home {
                     }
 
                     // Instead of Spacer
-                    .padding(.trailing, 3)
+                    Text(" ")
 
                     // Insulin on Board
                     HStack {
