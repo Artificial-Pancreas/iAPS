@@ -48,7 +48,8 @@ struct PumpView: View {
             if let date = expiresAtDate {
                 // Insulin amount (U)
                 if let insulin = reservoir {
-                    let amountFraction = 1.0 - Double(insulin) / 200
+                    // 110 % due to being a non rectangle.
+                    let amountFraction = 1.0 - Double(insulin * Decimal(concentration.last?.concentration ?? 1) * 1.1) / 200
                     if insulin == 0xDEAD_BEEF {
                         podInsulinFull(portion: amountFraction)
                             .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
@@ -66,7 +67,10 @@ struct PumpView: View {
                             }
                     } else {
                         HStack(spacing: 0) {
-                            Text(reservoirFormatter.string(from: insulin as NSNumber) ?? "")
+                            Text(
+                                reservoirFormatter
+                                    .string(from: (insulin * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
+                            )
                             spacer
                             Text("E").foregroundStyle(.secondary)
                         }
@@ -86,7 +90,6 @@ struct PumpView: View {
                             }
                     }
                 }
-                // }
                 remainingTime(time: date.timeIntervalSince(timerDate))
                     .font(.pumpFont)
                     .offset(x: -7, y: 0)
@@ -106,7 +109,7 @@ struct PumpView: View {
                     HStack(spacing: 0) {
                         Text(
                             reservoirFormatter
-                                .string(from: reservoir as NSNumber)!
+                                .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber)!
                         ).font(.statusFont).bold()
                         Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                     }
