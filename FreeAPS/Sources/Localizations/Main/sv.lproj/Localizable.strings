@@ -476,6 +476,39 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Insulin alert message */
+"Changing the insulin concentration setting will affect the insulin volume delivered by your pump - every bolus, SMB and basal!\n\nPlease make sure you've selected the correct insulin concentration setting before saving.\n\nYour insulin should be labeled with the concentration in units per ml, both on the insulin vial/reservoir/pen and on the packaging. \"U100\" means 100 units per ml and is the standard concentration." = "Changing the insulin concentration setting will affect the insulin volume delivered by your pump - every bolus, SMB and basal!\n\nPlease make sure you've selected the correct insulin concentration setting before saving.\n\nYour insulin should be labeled with the concentration in units per ml, both on the insulin vial/reservoir/pen and on the packaging. \"U100\" means 100 units per ml and is the standard concentration.";
+
+/* Insulin Concentration View */
+"Concentration" = "Koncentration";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Insulinkoncentration";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Byt insulin";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insulin utspädd till";
+
+/* Insulin Concentration View */
+"standard concentration:" = "standardkoncentration:";
+
+/* Insulin Concentration View */
+"units per ml" = "enheter per ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Standardkoncentration (U 100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Insulinkoncentration ökad till";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Kunde inte spara till pump. Försök igen när pumpen inte är upptagen med att ge bolus.";
+
+/* Insulin Concentration View */
+"Saved" = "Sparad";
+
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
 
