@@ -477,37 +477,37 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Max bolus";
 
 /* Insulin alert message */
-"Please make sure you've selected the correct insulin concentration setting before saving.\n\nYour insulin should be labeled with the concentration, in units per ml. U100 means 100 units per ml and is the standard concentration." = "Please make sure you've selected the correct insulin concentration setting before saving.\n\nYour insulin should be labeled with the concentration, in units per ml. U100 means 100 units per ml and is the standard concentration.";
+"Please verify that you have selected the correct insulin concentration before saving your settings. The insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration). Accurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings. The insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration). Accurate selection is critical for proper dosing.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Koncentration";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Insulinkoncentration";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Ändra koncentration";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Insulin utspädd till";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "standardkoncentration:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "enheter per ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Standardkoncentration (U100)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Insulinkoncentration ökad till";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Det gick inte att spara till pump. Försök igen när pumpen inte är upptagen med att ge bolus.";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "Sparad";
 
 /* Label inusulin concentration, units per ml */
 "U100" = "U100";
@@ -521,7 +521,7 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Tillåt utspätt insulin i pumpinställningar";
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
 
