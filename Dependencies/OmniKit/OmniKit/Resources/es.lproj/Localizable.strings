@@ -63,10 +63,10 @@
 "Communication issue: Unacknowledged command pending." = "Problema de comunicación: Pendiente de confirmar comando.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Los recordatorios de confianza sonarán para los comandos que inicie, como bolo, cancelar bolo, suspender, reanudar, guardar recordatorios de notificación, etc. Cuando el lazo cerrado ajusta automáticamente la administración de insulina, no se utilizan recordatorios de confianza.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Los recordatorios de confianza sonarán cuando el lazo cerrado ajuste la administración de insulina, así como para los comandos manuales.";
 
 /* The title for AlarmCode.other notification */
 "Critical Pod Error" = "Error crítico del Pod";
@@ -389,7 +389,7 @@
 "Time Change Detected" = "Cambio de hora detectado";
 
 /* The format string for pod expiration notification body (1: time until expiration) */
-"Time to replace your pod! Your pod will expire in %1$@" = "Es hora de reemplazar el pod! El pod expira en %1$@";
+"Time to replace your pod! Your pod will expire in %1$@" = "¡Es hora de reemplazar el Pod! Expira en %1$@";
 
 /* Error message for PodCommsError.tooManyPodsFound */
 "Too many pods found" = "Se encontraron demasiados Pods";

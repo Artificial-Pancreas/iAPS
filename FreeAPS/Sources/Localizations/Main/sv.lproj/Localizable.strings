@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Klar";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Senast loop var för %@ minuter sedan. Slutför eller stäng denna vy så att nästa loop-cykel kan köras";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Visa Emojis";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Godkänn och fortsätt";
+
+/* */
+"Log external insulin" = "Lägg till externt insulin";
 
 /* Bolus progress view */
 "of" = "av";
@@ -86,7 +92,7 @@
 "Suggested at" = "Föreslaget vid";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Fel vid";
+"Status at" = "Status kl";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Måltidssammanfattning";
@@ -106,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Fet mat";
 
+/* Bolus option */
+"Hypo Treatment" = "Behandling av lågt blodsocker";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Total mängd";
 
@@ -114,6 +123,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Fettrik måltidsfaktor";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Kolhydrater och tidigare insulin ingår i blodsockerprognos.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Resultat";
@@ -282,9 +294,6 @@
 
 /*  */
 "Save on Pump" = "Spara till pump";
-
-/*  */
-"Saving..." = "Sparar...";
 
 /*  */
 "Schedule" = "Schema";
@@ -470,6 +479,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
 
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximal antal kolhydrater (g) du kan lägga till varje måltid";
+
 /* */
 "Pump Settings" = "Pumpinställningar";
 
@@ -628,6 +640,9 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Behandlingar";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Behandling";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1004,6 +1019,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Tillåt användning av iOS genvägar för att ge bolus";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS genvägar";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Denna inställning tillåter att använda iOS genvägar och automatiseringar för att utlösa en bolus med iAP.\n\nObservera att genvägar fungerar även med Siri!\n\nOm du behöver att använda genvägar för bolus säkerställ att du först har stängt av inställningen för att lyssna efter 'Hej Siri' i dina Siri-inställningarna, för att undvika eventuell oavsiktlig aktivering med Siri av genvägen för bolus.\nOm du har denna 'Hej Siri'-inställning på kommer genvägen för bolus att utlösas av att du säger 'Hej Siri, iAPS Bolus'.\n\nNär du startat genvägen med Siri kommer du först bli tillfrågad om mängd insulin och därefter kommer du beöva att bekräfta innan boluskommandot kan skickas till din iAPS-app.";
 
@@ -1039,6 +1057,18 @@ Enact a temp Basal or a temp target */
 
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Aktiverar en %@ - profil";
+
+/* Meal Prestes Shortcut */
+"Which meal preset would you like to use?" = "Vilken måltid vill du lägga till?";
+
+/* Meal Prestes Shortcut */
+"Are you sure you want to use the meal preset %@?" = "Är du säker att du vill lägga till måltiden %@?";
+
+/* Meal Prestes Shortcut */
+"The Meal" = "Måltiden";
+
+/* Meal Prestes Shortcut */
+"has been added to iAPS" = "har lagt till i iAPS";
 
 /* */
 "Schedule " = "Schema ";
@@ -1229,6 +1259,12 @@ Enact a temp Basal or a temp target */
 
 /* Online or internal server */
 "Online or internal server" = "Online eller intern server";
+
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan inte utföra ny loop-rekommendation just nu, pga en pågående bolus. Vänta till nästa loop";
+
+/* Pump Error */
+"Pump is Busy." = "Pump är upptagen.";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1445,6 +1481,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Spara som profil";
 
+/* */
+"Save as preset" = "Spara som förval";
+
 /* Alert */
 "Cancel Profile Override" = "Avbryt Profil";
 
@@ -1520,10 +1559,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Visa fett och protein";
 
-
 /* Time of new meal entry */
 "Now" = "Nu";
-
 
 /* Display future data table entries */
 "Show Future" = "Visa";
@@ -1852,6 +1889,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Fel";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Lyckades = Påbörjade / Avslutade (loopar)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Vanligaste fel";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "ej avslutade loopar";
+
 /* Average loop interval */
 "Interval" = "Intervall";
 
@@ -1913,9 +1959,224 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimentell";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Utjämna blodsocker från sensor";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* Setting Title */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Sharing" = "Delning";
 
+/* Share and Backup page header */
+"Share and Backup" = "Dela och säkerhetskopiera";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Ladda upp inställningar och statistik";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Dela och säkerhetskopiera alla dina inställningar och statistik";
+
+/* Title of dropdown menu */
+"Sex" = "Kön";
+
+/* Sex dropdown menu option */
+"Woman" = "Kvinna";
+
+/* Sex dropdown menu option */
+"Man" = "Man";
+
+/* Sex dropdown menu option */
+"Other" = "Annan";
+
+/* Sex dropdown menu option */
+"Secret" = "Hemligt";
+
+/* Title of birth date field */
+"Birth Date" = "Födelsedatum";
+
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nOm du aktiverar \"Dela och säkerhetskopiera\" kommer dagliga säkerhetskopior av dina inställningar och statistik att göras till en moln-databas.\n\nSe till att kopiera och spara din återställningstoken nedan. Den kommer att behövas om du någon gång behöver importera dina inställningar till en annan telefon.";
+
+/* Section title if sharing off */
+"Share Bare Minimum" = "Dela endast ett minimum";
+
+/* Minimum share toggle */
+"Just iAPS version number" = "Endast appversion";
+
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "All information du väljer att dela laddas upp anonymt. För att förhindra dubbletter av uppladdningar identifieras datan med en unik slumpmässig sträng som sparas på din telefon.";
+
+/* Token section title */
+"Your recovery token" = "Din återställningsnyckel";
+
+/* Token display button */
+"Tap to display" = "Tryck för att visa";
+
+/* Token copy button */
+"Long press to copy" = "Tryck länge för att kopiera";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Visa personlig statistik";
+
+/* */
+"Your identifier" = "Din identifierare";
+
+/* */
+"Share your data anonymously" = "Dela data anonymt";
+
+/* Setting Title */
+"Sharing" = "Delning";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Kontakt";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Kontakter";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Glöm inte att spara dina ändringar.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS behöver åtkomst till dina kontakter för att kunna använda denna funktion";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Ge iAPS åtkomst till dina kontakter";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Åtkomst till kontakter nekad";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Åtkomst till kontakter är begränsad (föräldrakontroll?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Åtkomst till kontakter - okänt tillstånd";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "En kontaktbild kan användas för att få live-uppdateringar från iAPS till din Apple Watch - kontaktkomplikation och / eller till din iPhone kontakt-widget.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Kontaktbild";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Layout";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Enkel";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Delad";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Visa inte";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Loopstatus";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "IOB";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "COB";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Primär";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Överst";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Underst";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Ring";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Yttre";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Bredd";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Gap";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Typsnitt";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Storlek";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Sekundär storlek";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Mellanrum";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Vikt";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Mörkt läge";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Tätare";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Tätt";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "Normalvärde";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Bred";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Lätt";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Reguljär";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Medium";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Halvfet";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Fet";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Svart";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Ingen";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Glukos";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Blodsockerprognos";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Förändring";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Trend";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Senaste loop";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "COB";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "IOB";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Loopstatus";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
@@ -2122,7 +2383,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minsta tid i minuter för ny automatisk bolus sedan senaste bolus eller automatisk bolus";
 
 /* Headline "Bolus Increment" */
-"Bolus Increment" = "Minsta bolusmångd";
+"Bolus Increment" = "Minsta bolusmängd";
 
 /* "Bolus Increment" */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Minsta mängd för Omnipod-poddar är 0,05 enheter, medan det för Medtronic-pumpar skiljer sig åt för olika modeller, från 0.25 IE till 0,10 IE. Kontrollera den minsta bolusmängd som kan ges av din pump för denna inställning. Standardvärdet är 0,1 enheter.";
@@ -2219,6 +2480,21 @@ Enact a temp Basal or a temp target */
 /* Threshold Table Columns Title */
 "Threshold" = "Tröskelvärde";
 
+/* Dynamic settings View */
+"Averages" = "Medelvärden";
+
+/* Dynamic settings View */
+"Average ISF" = "Medelvärde ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Medelvärde CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Medelvärde CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulinkänslighet, CR: Insulinkvot,\nCSF: Kolhydratkänslighet = ISF/CR";
+
 /* Header */
 "Calculator settings" = "Boluskalkylatorinställning";
 
@@ -2233,6 +2509,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Den alternativa boluskalkylatorn använder en annan algoritm för beräkning av bolus. För individuell justering kan du ändra justeringsfaktor (standardvärde 0.8) beroende på om du vill få högre (över 1) eller mindre (under 1) bolusrekommendationer.\n\nFö extra feta måltider, tex pizza, finns möjlighet att minska rekommenderad bolus med en annan faktor (standard 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Extra";
 
 /* UI/UX option */
 "Display Predictions" = "Visa prognoser";
@@ -2276,7 +2555,16 @@ Enact a temp Basal or a temp target */
 "Horizontal Scroll View Visible hours" = "Antal synliga timmar i hemfönstret";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Visa knapp för tidsintervell";
+"Display Time Interval Setting Button" = "Visa knapp för tidsintervall";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Dölj det lilla glukosdiagrammet när du scrollar";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Visa inte behandling av lågt blodsocker";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Visa exakt glukosförändring";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";

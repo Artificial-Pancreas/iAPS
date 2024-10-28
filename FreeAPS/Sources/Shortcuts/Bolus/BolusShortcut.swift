@@ -42,14 +42,14 @@ import Intents
             }
             let bolusAmountString = amount.formatted()
 
-            // if confirmBeforeApplying {
-            let glucoseString = BolusIntentRequest().currentGlucose() // Fetch current glucose
-            try await requestConfirmation(
-                result: .result(
-                    dialog: "Your current glucose is \(glucoseString != nil ? glucoseString! : "not available"). Are you sure you want to bolus \(bolusAmountString) U of insulin?"
+            if confirmBeforeApplying {
+                let glucoseString = BolusIntentRequest().currentGlucose() // Fetch current glucose
+                try await requestConfirmation(
+                    result: .result(
+                        dialog: "Your current glucose is \(glucoseString != nil ? glucoseString! : "not available"). Are you sure you want to bolus \(bolusAmountString) U of insulin?"
+                    )
                 )
-            )
-            // }
+            }
             let finalQuantityBolusDisplay = try BolusIntentRequest().bolus(amount)
             return .result(
                 dialog: IntentDialog(stringLiteral: finalQuantityBolusDisplay)

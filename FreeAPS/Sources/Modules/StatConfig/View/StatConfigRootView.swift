@@ -24,6 +24,13 @@ extension StatConfig {
             return formatter
         }
 
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -37,7 +44,14 @@ extension StatConfig {
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)
                     }
-                    Toggle("Display Time Interval Setting Button", isOn: $state.timeSettings)
+                    Toggle("Use insulin bars", isOn: $state.useInsulinBars)
+                    HStack {
+                        Text("Hide the bolus amount strings when amount is under")
+                        Spacer()
+                        DecimalTextField("0.2", value: $state.minimumSMB, formatter: insulinFormatter)
+                        Text("U").foregroundColor(.secondary)
+                    }
+
                 } header: { Text("Home Chart settings ") }
 
                 Section {
@@ -46,7 +60,9 @@ extension StatConfig {
                 footer: { Text("In case you're using both profiles and temp targets") }
 
                 Section {
+                    Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
+                    Toggle("Display Glucose Delta", isOn: $state.displayDelta)
                 } header: { Text("Header settings") }
                 footer: { Text("Normally glucose is colored red only when over or under your notification limits for high/low") }
 

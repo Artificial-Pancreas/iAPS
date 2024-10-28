@@ -18,23 +18,47 @@ extension LiveActivityAttributes.ContentState {
         formatter.roundingMode = .halfUp
 
         return formatter
-            .string(from: mmol ? value.asMmolL as NSNumber : NSNumber(value: value))!
+            .string(from: mmol ? value.asMmolL as NSNumber : NSNumber(value: value)) ?? ""
     }
 
-    init?(new bg: BloodGlucose, prev: BloodGlucose?, mmol: Bool) {
-        guard let glucose = bg.glucose else {
+    static func formatter(_ string: NSNumber) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 1
+        return formatter.string(from: string) ?? ""
+    }
+
+    static func carbFormatter(_ string: NSNumber) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter.string(from: string) ?? ""
+    }
+
+    init?(new bg: Readings?, prev: Readings?, mmol: Bool, suggestion: Suggestion, loopDate: Date) {
+        guard let glucose = bg?.glucose else {
             return nil
         }
 
-        let formattedBG = Self.formatGlucose(glucose, mmol: mmol, forceSign: false)
+        let formattedBG = Self.formatGlucose(Int(glucose), mmol: mmol, forceSign: false)
+        let trendString = bg?.direction
+        let change = Self.formatGlucose(Int((bg?.glucose ?? 0) - (prev?.glucose ?? 0)), mmol: mmol, forceSign: true)
+        let cobString = Self.carbFormatter((suggestion.cob ?? 0) as NSNumber)
+        let iobString = Self.formatter((suggestion.iob ?? 0) as NSNumber)
+        let eventual = Self.formatGlucose(suggestion.eventualBG ?? 100, mmol: mmol, forceSign: false)
+        let mmol = mmol
 
-        let trendString = bg.direction?.symbol
-
-        let change = prev?.glucose.map({
-            Self.formatGlucose(glucose - $0, mmol: mmol, forceSign: true)
-        }) ?? ""
-
-        self.init(bg: formattedBG, direction: trendString, change: change, date: bg.dateString)
+        self.init(
+            bg: formattedBG,
+            direction: trendString,
+            change: change,
+            date: bg?.date ?? Date.now,
+            iob: iobString,
+            cob: cobString,
+            loopDate: loopDate,
+            eventual: eventual,
+            mmol: mmol
+        )
     }
 }
 
@@ -60,7 +84,7 @@ extension LiveActivityAttributes.ContentState {
 
 @available(iOS 16.2, *) final class LiveActivityBridge: Injectable, ObservableObject {
     @Injected() private var settingsManager: SettingsManager!
-    @Injected() private var glucoseStorage: GlucoseStorage!
+    @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
 
     private let activityAuthorizationInfo = ActivityAuthorizationInfo()
@@ -71,13 +95,16 @@ extension LiveActivityAttributes.ContentState {
     }
 
     private var currentActivity: ActiveActivity?
-    private var latestGlucose: BloodGlucose?
+    private var latestGlucose: Readings?
+    private var loopDate: Date?
+    private var suggestion: Suggestion?
 
     init(resolver: Resolver) {
         systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
 
         injectServices(resolver)
-        broadcaster.register(GlucoseObserver.self, observer: self)
+        broadcaster.register(SuggestionObserver.self, observer: self)
+        broadcaster.register(EnactedSuggestionObserver.self, observer: self)
 
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didEnterBackgroundNotification,
@@ -110,15 +137,16 @@ extension LiveActivityAttributes.ContentState {
         }
     }
 
-    /// creates and tries to present a new activity update from the current GlucoseStorage values if live activities are enabled in settings
+    /// creates and tries to present a new activity update from the current Suggestion values if live activities are enabled in settings
     /// Ends existing live activities if live activities are not enabled in settings
     private func forceActivityUpdate() {
         // just before app resigns active, show a new activity
         // only do this if there is no current activity or the current activity is older than 1h
         if settings.useLiveActivity {
-            if currentActivity?.needsRecreation() ?? true
+            if currentActivity?.needsRecreation() ?? true,
+               let suggestion = storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
             {
-                glucoseDidUpdate(glucoseStorage.recent())
+                suggestionDidUpdate(suggestion)
             }
         } else {
             Task {
@@ -144,7 +172,7 @@ extension LiveActivityAttributes.ContentState {
             } else {
                 let content = ActivityContent(
                     state: state,
-                    staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(6 * 60))
+                    staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(8 * 60))
                 )
 
                 await currentActivity.activity.update(content)
@@ -152,10 +180,18 @@ extension LiveActivityAttributes.ContentState {
         } else {
             do {
                 // always push a non-stale content as the first update
-                // pushing a stale content as the frst content results in the activity not being shown at all
+                // pushing a stale content as the first content results in the activity not being shown at all
                 // we want it shown though even if it is iniially stale, as we expect new BG readings to become available soon, which should then be displayed
                 let nonStale = ActivityContent(
-                    state: LiveActivityAttributes.ContentState(bg: "--", direction: nil, change: "--", date: Date.now),
+                    state: LiveActivityAttributes.ContentState(
+                        bg: "--",
+                        direction: nil,
+                        change: "--",
+                        date: Date.now,
+                        iob: "--",
+                        cob: "--",
+                        loopDate: Date.now, eventual: "--", mmol: false
+                    ),
                     staleDate: Date.now.addingTimeInterval(60)
                 )
 
@@ -190,8 +226,8 @@ extension LiveActivityAttributes.ContentState {
 }
 
 @available(iOS 16.2, *)
-extension LiveActivityBridge: GlucoseObserver {
-    func glucoseDidUpdate(_ glucose: [BloodGlucose]) {
+extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
+    func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         guard settings.useLiveActivity else {
             if currentActivity != nil {
                 Task {
@@ -200,21 +236,50 @@ extension LiveActivityBridge: GlucoseObserver {
             }
             return
         }
+        defer { self.suggestion = suggestion }
 
-        // backfill latest glucose if contained in this update
-        if glucose.count > 1 {
-            latestGlucose = glucose[glucose.count - 2]
-        }
-        defer {
-            self.latestGlucose = glucose.last
-        }
+        let cd = CoreDataStorage()
+        let glucose = cd.fetchGlucose(interval: DateFilter().twoHours)
+        let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
-        guard let bg = glucose.last, let content = LiveActivityAttributes.ContentState(
-            new: bg,
-            prev: latestGlucose,
-            mmol: settings.units == .mmolL
+        guard let content = LiveActivityAttributes.ContentState(
+            new: glucose.first,
+            prev: prev,
+            mmol: settings.units == .mmolL,
+            suggestion: suggestion,
+            loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
+                (cd.fetchLastLoop()?.timestamp ?? .distantPast)
         ) else {
-            // no bg or value, can't update the live activity
+            return
+        }
+
+        Task {
+            await self.pushUpdate(content)
+        }
+    }
+
+    func suggestionDidUpdate(_ suggestion: Suggestion) {
+        guard settings.useLiveActivity else {
+            if currentActivity != nil {
+                Task {
+                    await self.endActivity()
+                }
+            }
+            return
+        }
+        defer { self.suggestion = suggestion }
+
+        let cd = CoreDataStorage()
+        let glucose = cd.fetchGlucose(interval: DateFilter().twoHours)
+        let prev = glucose.count > 1 ? glucose[1] : glucose.first
+
+        guard let content = LiveActivityAttributes.ContentState(
+            new: glucose.first,
+            prev: prev,
+            mmol: settings.units == .mmolL,
+            suggestion: suggestion,
+            loopDate: settings.closedLoop ? (cd.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion.timestamp ?? .distantPast
+        ) else {
             return
         }
 

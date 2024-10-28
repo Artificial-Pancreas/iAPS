@@ -23,7 +23,7 @@
 "Status" = "Status";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWeet je zeker dat je deze hoeveelheid wilt toedienen? \nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWaarschuw bij toedienen van een hoge hoeveelheid zonder te bolussen ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWeet je zeker dat je deze hoeveelheid wilt toedienen? \nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWaarschuw bij toedienen van een hoge hoeveelheid zonder een bolus toe te dienen ";
 
 /* Header */
 "Enact Bolus" = "Bolus geven";
@@ -46,8 +46,11 @@
 /* Button */
 "Done" = "OK";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Laatste update is %@ minuten geleden. Voltooi of annuleer deze maaltijd/bolus opdracht om de volgende loopupdate te laten draaien";
+
 /* Calender Option */
-"Display Emojis as Labels" = "Emojis als labels weergeven";
+"Display Emojis as Labels" = "Emoji’s als labels weergeven";
 
 /* Calender Option */
 "Display IOB and COB" = "Geef IOB en COB weer";
@@ -64,6 +67,9 @@
 /*  */
 "Agree and continue" = "Akkoord en doorgaan";
 
+/* */
+"Log external insulin" = "Externe insuline registreren";
+
 /* Bolus progress view */
 "of" = "van";
 
@@ -74,7 +80,7 @@
 "was delivered" = "zojuist afgeleverd";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuten geleden, op afstand gestart vanuit Nightscout, door een verzorger of een ouder. Wil je nog steeds een bolus?\n\nDe verwachte uiteindelijke glucose, als je niet bolust, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuten geleden, op afstand gestart vanuit Nightscout, door een verzorger of een ouder. Wil je nog steeds een bolus?\n\nDe verwachte uiteindelijke glucose, als je geen bolus toedient, is: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "De bolus op afstand is zojuist geleverd!";
@@ -86,7 +92,7 @@
 "Suggested at" = "Voorgesteld op";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Foutmelding op";
+"Status at" = "Status op";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Maaltijd overzicht";
@@ -106,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Vette maaltijd";
 
+/* Bolus option */
+"Hypo Treatment" = "Hypobehandeling";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Volledige bolus";
 
@@ -114,6 +123,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Vette maaltijd factor";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Koolhydraten en vorige insuline zijn opgenomen in de uiteindelijke glucosevoorspelling.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Resultaat";
@@ -137,7 +149,7 @@
 "No suggestion" = "Geen suggestie";
 
 /* Replace pod text in Header */
-"Replace pod" = "Vervang Pod";
+"Replace pod" = "Vervang pod";
 
 /* Add carbs screen */
 "Add Carbs" = "Koolhydraten toevoegen";
@@ -194,7 +206,7 @@
 "Basal Insulin and Sensitivity ratio" = "Verhouding basale insuline en gevoeligheid";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefglucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefwaarde bloedglucose.";
 
 /* */
 " Your setting: " = "Jouw instelling: ";
@@ -251,13 +263,13 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Basaal profiel";
+"Basal profile" = "Basaalprofiel";
 
 /*  */
-"Carb ratio" = "Koolhydraten ratio";
+"Carb ratio" = "Koolhydraat verhouding";
 
 /*  */
-"Delete autotune data" = "Verwijder autotune-gegevens";
+"Delete autotune data" = "Verwijder autotune gegevens";
 
 /*  */
 "Run now" = "Nu uitvoeren";
@@ -275,7 +287,7 @@
 "Add" = "Toevoegen";
 
 /*  */
-"Basal Profile" = "Basaal profiel";
+"Basal Profile" = "Basaalprofiel";
 
 /* Rate basal profile */
 "Rate" = "Waarde";
@@ -284,25 +296,22 @@
 "Save on Pump" = "Opslaan op pomp";
 
 /*  */
-"Saving..." = "Opslaan...";
-
-/*  */
 "Schedule" = "Schema";
 
 /*  */
-"starts at" = "Start";
+"starts at" = "begint om";
 
 /* Time basal profile */
 "Time" = "Tijd";
 
 /* */
-"Calculated Ratio" = "Gecalculeerde ratio";
+"Calculated Ratio" = "Berekende verhouding";
 
 /* Carb Ratios header */
 "Carb Ratios" = "Koolhydraten ratio's";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Verhouding";
 
 /*  */
 "Autosens" = "Gevoeligheidsdetectie (Autosens)";
@@ -357,7 +366,7 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "Ongeldige URL";
 
 /*  */
-"Local glucose source" = "Lokale glucose bron";
+"Local glucose source" = "Lokale glucosebron";
 
 /* Header */
 "Nightscout Config" = "Nightscout instellingen";
@@ -438,7 +447,7 @@ Enact a temp Basal or a temp target */
 "Add Medtronic" = "Medtronic toevoegen";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Omnipod toevoegen";
+"Add Omnipod" = "Omnipod Eros toevoegen";
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
@@ -469,6 +478,9 @@ Enact a temp Basal or a temp target */
 
 /* Max setting */
 "Max Carbs" = "Max koolhydraten";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximale hoeveelheid koolhydraten (g) die je elke invoer kunt toevoegen";
 
 /* */
 "Pump Settings" = "Pomp instellingen";
@@ -629,6 +641,9 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Behandelingen";
 
+/* Hypo Treatment Preset */
+"Treatment" = "Behandeling";
+
 /* " min" in Treatments list */
 " min" = "min";
 
@@ -774,7 +789,7 @@ Enact a temp Basal or a temp target */
 "(Snoozed)" = "(Gesluimerd)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Bloedsuiker: %@";
+"Glucose: %@" = "Glucosewaarde: %@";
 
 /* Transmitter: %@%% */
 "Transmitter: %@%%" = "Zender: %@%%";
@@ -843,7 +858,7 @@ Enact a temp Basal or a temp target */
 "Sensor Footer checksum" = "Sensor voettekst controlesom";
 
 /* */
-"Last Blood Sugar prediction" = "Laatste bloedsuikervoorspelling";
+"Last Blood Sugar prediction" = "Laatste glucosewaarde-voorspelling";
 
 /* */
 "CurrentBG" = "Huidige BG";
@@ -1004,6 +1019,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "iOS bolus snelkoppelingen toestaan";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS Snelkoppelingen";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Als je deze instelling aanzet kun je iOS sneltoetsen en de bijbehorende automatiseringen gebruiken om een bolus te activeren in iAPS.\n\nLet op: iOS sneltoetsen werken ook met Siri!\n\nAls je bolus snelkoppelingen wilt gebruiken, zorg er dan voor dat je 'Hey Siri' uitzet in de iPhone Siri instellingen, om te voorkomen dat je per ongeluk een bolus activeert met Siri.\n\nAls je 'Hey Siri' niet uitschakelt, kan de iAPS bolussnelkoppeling worden geactiveerd met de uitspraak 'Hey Siri, iAPS Bolus'. Als je de bolus snelkoppeling met Siri activeert, word je gevraagd om een hoeveelheid en een bevestiging voordat het bolus commando naar iAPS kan worden gestuurd.";
 
@@ -1012,12 +1030,6 @@ Enact a temp Basal or a temp target */
 
 /* Bolus shortcut. Error */
 "not available" = "niet beschikbaar";
-
-/* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
-
-/* Bolus shortcut. Error */
-"not available" = "not available";
 
 /* Override Shortcut */
 "Activate an Override Preset" = "Activeer een overschrijvingsvoorinstelling";
@@ -1236,6 +1248,12 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online of interne server";
 
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loopcyclus advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende cyclus";
+
+/* Pump Error */
+"Pump is Busy." = "Je pomp is bezig.";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1451,6 +1469,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Bewaar als profiel";
 
+/* */
+"Save as preset" = "Bewaar als voorinstelling";
+
 /* Alert */
 "Cancel Profile Override" = "Profieloverschrijving annuleren?";
 
@@ -1526,10 +1547,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Toon vet en eiwit";
 
-
 /* Time of new meal entry */
 "Now" = "Nu";
-
 
 /* Display future data table entries */
 "Show Future" = "Toon toekomstig";
@@ -1858,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Foutmeldingen";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Succes = gestarte / voltooide (loops)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Meest voorkomende fout";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Niet voltooide Loops";
+
 /* Average loop interval */
 "Interval" = "Interval";
 
@@ -1895,7 +1923,7 @@ Enact a temp Basal or a temp target */
 "Display Loop Cycle statistics" = "Loop cyclusstatistieken tonen";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Laat Loop statistieken zien in het statPanel in de Home weergave";
+"Displays Loop statistics in the statPanel in Home View" = "Laat statistieken zien in het statPanel in de Home weergave";
 
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Standaard HbA1c-eenheid in statPanel wijzigen. De eenheid in statPanel zal worden bijgewerkt met de volgende statistics.json update";
@@ -1919,9 +1947,224 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimenteel";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Vloeiende glucosewaarde";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* Setting Title */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Sharing" = "Delen van statistieken";
 
+/* Share and Backup page header */
+"Share and Backup" = "Delen en back-up";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Upload instellingen en statistieken";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Deel en back-up al uw instellingen en statistieken";
+
+/* Title of dropdown menu */
+"Sex" = "Geslacht";
+
+/* Sex dropdown menu option */
+"Woman" = "Vrouw";
+
+/* Sex dropdown menu option */
+"Man" = "Man";
+
+/* Sex dropdown menu option */
+"Other" = "Anders";
+
+/* Sex dropdown menu option */
+"Secret" = "Geheim";
+
+/* Title of birth date field */
+"Birth Date" = "Geboortedatum";
+
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nAls u \"Delen en back-uppen\" inschakelt, worden er dagelijks back-ups van uw instellingen en statistieken gemaakt in een online database.\n\nZorg ervoor dat u uw hersteltoken hieronder kopieert en opslaat. Het hersteltoken is nodig om uw instellingen te importeren naar een andere telefoon wanneer u de onboarding-weergave gebruikt.";
+
+/* Section title if sharing off */
+"Share Bare Minimum" = "Deel alleen het minimale";
+
+/* Minimum share toggle */
+"Just iAPS version number" = "Alleen iAPS versienummer";
+
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
+
+/* Token section title */
+"Your recovery token" = "Je herstelcode";
+
+/* Token display button */
+"Tap to display" = "Tik om weer te geven";
+
+/* Token copy button */
+"Long press to copy" = "Lang ingedrukt houden om te kopiëren";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Persoonlijke statistieken bekijken";
+
+/* */
+"Your identifier" = "Jouw identificatie";
+
+/* */
+"Share your data anonymously" = "Deel je gegevens anoniem";
+
+/* Setting Title */
+"Sharing" = "Delen van statistieken";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Contact";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Contacten";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Vergeet niet om je wijzigingen op te slaan.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS heeft toegang tot jouw contacten nodig om deze functie te laten werken";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Geef toegang tot iAPS aan contacten";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Toegang tot contactpersonen geweigerd";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "De toegang tot contacten is beperkt (ouderlijk toezicht?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Toegang tot contacten - onbekende staat";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Contactafbeelding kan gebruikt worden om live updates van iAPS te krijgen tot jouw Apple Watch Contact complicatie en/of jouw iPhone Contact widget.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Contactfoto";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Layout";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Enkel";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Splitsen";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Verbergen";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Loop status";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "IOB";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "COB";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Primair";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Bovenaan";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Onderaan";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Ring";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Buitenste";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Breedte";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Afstand";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Font";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Grootte";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Secundaire grootte";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Tracking";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Dikte";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Nachtmodus";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Strakker";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Strak";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "TIR ";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Breed";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Licht";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Standaard";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Medium";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Semi-vetgedrukt";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Vetgedrukt";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Extra dik";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Geen";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Glucosewaarde";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Uiteindelijke BG";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Delta";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Trend";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Laatste loop tijd";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "COB";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "IOB";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Loop status";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
@@ -1960,7 +2203,7 @@ Enact a temp Basal or a temp target */
 "Advanced Target Adjustments" = "Geavanceerde doelaanpassingen";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "In het verleden stond deze functie altijd aan, maar nu staat deze standaard op \"Uit\". Met oref 0.6.0 is dit niet langer nodig. Deze functie past automatisch het bloedglucose-doel van oref0 aan als de huidige bloedsuiker of de verwachte bloedsuiker hoog is. Hierdoor worden hoge bloedsuikers voorkomen en beperkt, maar schakelt het automatisch naar een lage gevoeligheid om ervoor te zorgen dat de bloedsuiker soepel naar je eigenlijke doel beweegt. Als je dit te snel vindt gaan, kun je deze functie uitschakelen. ";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "In het verleden stond deze functie altijd aan, maar nu staat deze standaard op \"Uit\". Met oref 0.6.0 is dit niet langer nodig. Deze functie past automatisch het glucose-doel van oref0 aan als de huidige glucosewaarde of de verwachte glucosewaarde hoog is. Hierdoor worden hoge glucosewaardes voorkomen en beperkt, maar schakelt het automatisch naar een lage gevoeligheid om ervoor te zorgen dat de glucosewaarde soepel naar je eigenlijke doel beweegt. Als je dit te snel vindt gaan, kun je deze functie uitschakelen.";
 
 /* Headline "Exercise Mode" */
 "Exercise Mode" = "Beweging modus";
@@ -1990,7 +2233,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "UAM inschakelen";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Als deze functie is ingeschakeld, kan het SMB-algoritme onverwachte maaltijden herkennen. Dit is handig als je vergeet om koolhydraten in te voeren, je de koolhydraten verkeerd inschat, de hoeveelheid ingevoerde koolhydraten onjuist is, of als een maaltijd met veel vet en eiwit langer duurt dan verwacht. Zonder koolhydraten in te voeren, kan deze functie snel stijgende bloedsuikersignalen veroorzaakt door koolhydraten, adrenaline, enzovoort herkennen en proberen te corrigeren met SMB's. Het werkt ook andersom: als er een snelle daling van de bloedsuiker is, kan het eerder stoppen met SMB's.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Als deze functie is ingeschakeld, kan het SMB-algoritme onverwachte maaltijden herkennen. Dit is handig als je vergeet om koolhydraten in te voeren, je de koolhydraten verkeerd inschat, de hoeveelheid ingevoerde koolhydraten onjuist is, of als een maaltijd met veel vet en eiwit langer duurt dan verwacht. Zonder koolhydraten in te voeren, kan deze functie snel stijgende glucosewaardesignalen - veroorzaakt door koolhydraten, adrenaline, enzovoort - herkennen en proberen te corrigeren met SMB's. Het werkt ook andersom: als er een snelle daling van de glucosewaarde is, kan het eerder stoppen met SMB's.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Activeer SMB met COB";
@@ -2229,11 +2472,26 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* Threshold Table Columns Title */
 "Threshold" = "Grenswaarde";
 
+/* Dynamic settings View */
+"Averages" = "Gemiddelden";
+
+/* Dynamic settings View */
+"Average ISF" = "Gemiddelde ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Gemiddelde CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Gemiddelde CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insuline gevoeligheidsfactor, CR: Koolhydraat ratio, CSF: Koolhydraat gevoeligheidsfactor = ISF/CR";
+
 /* Header */
 "Calculator settings" = "Calculator instellingen";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Gebruik alternatieve Bolus Calculator";
+"Use alternate Bolus Calculator" = "Gebruik alternatieve boluscalculator";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Vette maaltijd";
@@ -2243,6 +2501,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "De nieuwe alternatieve boluscalculator is een andere benadering van de standaard boluscalculator in iAPS. Als de knop aan staat, gebruik je deze boluscalculator en niet de originele iAPS-calculator. Aan het einde van de berekening wordt een aangepaste factor toegepast, zoals het hoort bij het gebruik van smbs (standaard 0,8).\n\nJe kunt ook de optie toevoegen in je boluscalculator om een andere (!) aanpasbare factor toe te passen aan het einde van de berekening, wat handig kan zijn voor vette maaltijden, zoals pizza (standaard 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Extra functionaliteiten";
 
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";
@@ -2288,6 +2549,15 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Knop voor tijdinterval weergeven";
 
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Laat de kleine glucosegrafiek nooit zien tijdens het scrollen";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Hypobehandelingen uitschakelen";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Glucose delta weergeven";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
 
@@ -2328,7 +2598,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Staat standaard op 0,2 (20%). Maximale positieve procentuele verandering van BG-niveau om SMB te gebruiken, daarboven wordt SMB uitgeschakeld. Hardcoded maximum van 40%. Voor volledig gesloten UAM-loop is 30% raadzaam. Zie in log en popup (maxDelta 27 > 20% van BG 100 - uitschakelen SMB!).";
 
 /* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... Als de bloedsuiker hoger is dan (mg/dl):";
+"... When Blood Glucose Is Over (mg/dl):" = "... Als de glucosewaarde hoger is dan (mg/dl):";
 
 /* ... When Blood Glucose Is Over (mg/dl): */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Stel de waarde in waarmee 'enableSMB_high_bg' wordt vergeleken om SMB in te schakelen. Als BG hoger is dan deze waarde, moet SMB worden ingeschakeld.";

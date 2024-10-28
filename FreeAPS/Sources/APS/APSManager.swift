@@ -3,10 +3,8 @@ import CoreData
 import Foundation
 import LoopKit
 import LoopKitUI
-import OmniBLE
-import OmniKit
-import RileyLinkKit
 import SwiftDate
+import SwiftUI
 import Swinject
 
 protocol APSManager {
@@ -42,6 +40,9 @@ enum APSError: LocalizedError {
     case apsError(message: String)
     case deviceSyncError(message: String)
     case manualBasalTemp(message: String)
+    case activeBolusViewBolus
+    case activeBolusViewBasal
+    case activeBolusViewBasalandBolus
 
     var errorDescription: String? {
         switch self {
@@ -50,7 +51,7 @@ enum APSError: LocalizedError {
         case let .invalidPumpState(message):
             return "Error: Invalid Pump State: \(message)"
         case let .bolusInProgress(message):
-            return "Error: Pump is Busy. \(message)"
+            return "\(NSLocalizedString("Pump is Busy.", comment: "Pump Error")) \(NSLocalizedString(message, comment: "Pump Error Message"))"
         case let .glucoseError(message):
             return "Error: Invalid glucose: \(message)"
         case let .apsError(message):
@@ -59,6 +60,12 @@ enum APSError: LocalizedError {
             return "Sync error: \(message)"
         case let .manualBasalTemp(message):
             return "Manual Basal Temp : \(message)"
+        case .activeBolusViewBolus:
+            return "Suggested SMB not enacted while in Bolus View"
+        case .activeBolusViewBasal:
+            return "Suggested Temp Basal (when > 0) not enacted while in Bolus View"
+        case .activeBolusViewBasalandBolus:
+            return "Suggested Temp Basal (when > 0) and SMB not enacted while in Bolus View"
         }
     }
 }
@@ -76,6 +83,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var keychain: Keychain!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
@@ -126,7 +134,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        openAPS = OpenAPS(storage: storage, nightscout: nightscout)
+        openAPS = OpenAPS(storage: storage, nightscout: nightscout, pumpStorage: pumpHistoryStorage)
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
 
@@ -271,20 +279,20 @@ final class BaseAPSManager: APSManager, Injectable {
     private func loopCompleted(error: Error? = nil, loopStatRecord: LoopStats) {
         isLooping.send(false)
 
-        if let error = error {
-            warning(.apsManager, "Loop failed with error: \(error.localizedDescription)")
+        if let apsError = error {
+            warning(.apsManager, "Loop failed with error: \(apsError.localizedDescription)")
             if let backgroundTask = backGroundTaskID {
                 UIApplication.shared.endBackgroundTask(backgroundTask)
                 backGroundTaskID = .invalid
             }
-            processError(error)
+            processError(apsError)
+            loopStats(loopStatRecord: loopStatRecord, error: apsError)
         } else {
             debug(.apsManager, "Loop succeeded")
             lastLoopDate = Date()
             lastError.send(nil)
+            loopStats(loopStatRecord: loopStatRecord, error: nil)
         }
-
-        loopStats(loopStatRecord: loopStatRecord)
 
         if settings.closedLoop {
             reportEnacted(received: error == nil)
@@ -343,7 +351,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let lastGlucoseDate = glucoseStorage.lastGlucoseDate()
-        guard lastGlucoseDate >= Date().addingTimeInterval(-12.minutes.timeInterval) else {
+        guard lastGlucoseDate > Date().addingTimeInterval(-12.minutes.timeInterval) else {
             debug(.apsManager, "Glucose data is stale")
             processError(APSError.glucoseError(message: "Glucose data is stale"))
             return Just(false).eraseToAnyPublisher()
@@ -550,6 +558,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 processError(error)
                 return
             }
+
+            guard !activeBolusView() else {
+                debug(.apsManager, "Not enacting while in Bolus View")
+                processError(APSError.activeBolusViewBolus)
+                return
+            }
+
             let roundedAmount = pump.roundToSupportedBolusVolume(units: Double(amount))
             pump.enactBolus(units: roundedAmount, activationType: .manualRecommendationAccepted) { error in
                 if let error = error {
@@ -612,6 +627,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 processError(error)
                 return
             }
+
+            guard !activeBolusView() || (activeBolusView() && rate == 0) else {
+                debug(.apsManager, "Not enacting while in Bolus View")
+                processError(APSError.activeBolusViewBasal)
+                return
+            }
+
             // unable to do temp basal during manual temp basal 😁
             if isManualTempBasal {
                 processError(APSError.manualBasalTemp(message: "Loop not possible during the manual basal temp"))
@@ -751,6 +773,14 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
+
+            guard !self.activeBolusView() || (self.activeBolusView() && rate == 0) else {
+                if let units = suggested.units {
+                    return Fail(error: APSError.activeBolusViewBasalandBolus).eraseToAnyPublisher()
+                }
+                return Fail(error: APSError.activeBolusViewBasal).eraseToAnyPublisher()
+            }
+
             return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in
                 let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
                 self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
@@ -763,12 +793,18 @@ final class BaseAPSManager: APSManager, Injectable {
             if let error = self.verifyStatus() {
                 return Fail(error: error).eraseToAnyPublisher()
             }
+
             guard let units = suggested.units else {
                 // It is OK, no bolus required
                 debug(.apsManager, "No bolus required")
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
+
+            guard !self.activeBolusView() else {
+                return Fail(error: APSError.activeBolusViewBolus).eraseToAnyPublisher()
+            }
+
             return pump.enactBolus(units: Double(units), automatic: true).map { _ in
                 self.bolusProgress.send(0)
                 self.bolusAmount.send(units)
@@ -793,7 +829,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 let saveLastLoop = LastLoop(context: self.coredataContext)
                 saveLastLoop.iob = (enacted.iob ?? 0) as NSDecimalNumber
                 saveLastLoop.cob = (enacted.cob ?? 0) as NSDecimalNumber
-                saveLastLoop.timestamp = (enacted.timestamp ?? .distantPast) as Date
+                saveLastLoop.timestamp = received ? enacted.timestamp : CoreDataStorage().fetchLastLoop()?
+                    .timestamp ?? .distantPast
                 try? self.coredataContext.save()
             }
 
@@ -848,8 +885,8 @@ final class BaseAPSManager: APSManager, Injectable {
         let glucose = array
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let totalReadings = justGlucoseArray.count
-        let highLimit = settingsManager.settings.high
-        let lowLimit = settingsManager.settings.low
+        let highLimit = settings.high
+        let lowLimit = settings.low
         let hyperArray = glucose.filter({ $0.glucose >= Int(highLimit) })
         let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
         let hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
@@ -905,7 +942,7 @@ final class BaseAPSManager: APSManager, Injectable {
             cv = sd / Double(glucoseAverage) * 100
         }
         let conversionFactor = 0.0555
-        let units = settingsManager.settings.units
+        let units = settings.units
 
         var output: (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
         output = (
@@ -945,10 +982,16 @@ final class BaseAPSManager: APSManager, Injectable {
         let intervalAverage = intervalArray.reduce(0, +) / Double(count)
         let maximumInterval = intervalArray.max()
         let minimumInterval = intervalArray.min()
-        //
+
+        // Loop errors
+        let errorArray = loops.compactMap(\.error)
+        let mostFrequentString = errorArray.mostFrequent()?.description ?? ""
+
         let output = Loops(
             loops: Int(loopNr),
             errors: errorNR,
+            mostFrequentErrorType: errorArray.mostFrequent()?.description ?? "",
+            mostFrequentErrorAmount: errorArray.filter({ $0 == mostFrequentString }).count,
             success_rate: roundDecimal(Decimal(successRate ?? 0), 1),
             avg_interval: roundDecimal(Decimal(intervalAverage), 1),
             median_interval: roundDecimal(Decimal(median_interval), 1),
@@ -964,18 +1007,16 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON for upload to NS.
     private func statistics() {
-        let now = Date()
-        if settingsManager.settings.uploadStats {
-            let hour = Calendar.current.component(.hour, from: now)
-            guard hour > 20 else {
-                return
-            }
+        let stats = CoreDataStorage().fetchStats()
+        versionCheack()
+        let newVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
+        // Only save and upload twice per day
+        guard ((-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 10) || newVersion else {
+            return
+        }
 
-            let stats = CoreDataStorage().fetchStats()
-            // Only save and upload once per day
-            guard (-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 22 else { return }
-
-            let units = settingsManager.settings.units
+        if settings.uploadStats {
+            let units = settings.units
             let preferences = settingsManager.preferences
 
             // Carbs
@@ -1011,30 +1052,10 @@ final class BaseAPSManager: APSManager, Injectable {
             let build = Bundle.main.buildVersionNumber
 
             // Read branch information from branch.txt instead of infoDictionary
-            var branch = "Unknown"
-            if let branchFileURL = Bundle.main.url(forResource: "branch", withExtension: "txt"),
-               let branchFileContent = try? String(contentsOf: branchFileURL)
-            {
-                let lines = branchFileContent.components(separatedBy: .newlines)
-                for line in lines {
-                    let components = line.components(separatedBy: "=")
-                    if components.count == 2 {
-                        let key = components[0].trimmingCharacters(in: .whitespaces)
-                        let value = components[1].trimmingCharacters(in: .whitespaces)
-
-                        if key == "BRANCH" {
-                            branch = value
-                            break
-                        }
-                    }
-                }
-            } else {
-                branch = "Unknown"
-            }
-
+            let branch = branch()
             let copyrightNotice_ = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
             let pump_ = pumpManager?.localizedTitle ?? ""
-            let cgm = settingsManager.settings.cgm
+            let cgm = settings.cgm
             let file = OpenAPS.Monitor.statistics
             var iPa: Decimal = 75
             if preferences.useCustomPeakTime {
@@ -1070,7 +1091,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: roundDecimal(Decimal(totalDaysGlucose.median), 1)
             )
 
-            let overrideHbA1cUnit = settingsManager.settings.overrideHbA1cUnit
+            let overrideHbA1cUnit = settings.overrideHbA1cUnit
 
             let hbs = Durations(
                 day: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
@@ -1118,10 +1139,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 total: Decimal(totalDays_.normal_)
             )
             let range = Threshold(
-                low: units == .mmolL ? roundDecimal(settingsManager.settings.low.asMmolL, 1) :
-                    roundDecimal(settingsManager.settings.low, 0),
-                high: units == .mmolL ? roundDecimal(settingsManager.settings.high.asMmolL, 1) :
-                    roundDecimal(settingsManager.settings.high, 0)
+                low: units == .mmolL ? roundDecimal(settings.low.asMmolL, 1) :
+                    roundDecimal(settings.low, 0),
+                high: units == .mmolL ? roundDecimal(settings.high.asMmolL, 1) :
+                    roundDecimal(settings.high, 0)
             )
             let TimeInRange = TIRs(
                 TIR: tir,
@@ -1168,6 +1189,8 @@ final class BaseAPSManager: APSManager, Injectable {
             let loopstat = LoopCycles(
                 loops: oneDayLoops.loops,
                 errors: oneDayLoops.errors,
+                mostFrequentErrorType: oneDayLoops.mostFrequentErrorType,
+                mostFrequentErrorAmount: oneDayLoops.mostFrequentErrorAmount,
                 readings: Int(oneDayGlucose.readings),
                 success_rate: oneDayLoops.success_rate,
                 avg_interval: oneDayLoops.avg_interval,
@@ -1176,7 +1199,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 max_interval: oneDayLoops.max_interval,
                 avg_duration: oneDayLoops.avg_duration,
                 median_duration: oneDayLoops.median_duration,
-                min_duration: oneDayLoops.max_duration,
+                min_duration: oneDayLoops.min_duration,
                 max_duration: oneDayLoops.max_duration
             )
 
@@ -1225,20 +1248,71 @@ final class BaseAPSManager: APSManager, Injectable {
                     LoopCycles: loopstat,
                     Insulin: insulin,
                     Variance: variance
-                )
+                ),
+                id: getIdentifier(),
+                dob: settings.birthDate,
+                sex: settings.sexSetting
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
+        } else {
+            let json = BareMinimum(
+                id: getIdentifier(),
+                created_at: Date.now,
+                Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch()
+            )
+            nightscout.uploadVersion(json: json)
+        }
+    }
 
-            coredataContext.performAndWait { [self] in
-                let saveStatsCoreData = StatsData(context: self.coredataContext)
-                saveStatsCoreData.lastrun = Date()
-                try? self.coredataContext.save()
+    private func getIdentifier() -> String {
+        var identfier = keychain.getValue(String.self, forKey: IAPSconfig.id) ?? ""
+        guard identfier.count > 1 else {
+            identfier = UUID().uuidString
+            keychain.setValue(identfier, forKey: IAPSconfig.id)
+            return identfier
+        }
+        return identfier
+    }
+
+    private func versionCheack() {
+        if Date.now.hour % 2 == 0 {
+            if let last = CoreDataStorage().fetchVNr(),
+               (last.date ?? .distantFuture) < Date.now.addingTimeInterval(-10.hours.timeInterval)
+            {
+                nightscout.fetchVersion()
             }
         }
     }
 
-    private func loopStats(loopStatRecord: LoopStats) {
+    private func activeBolusView() -> Bool {
+        let defaults = UserDefaults.standard
+        return defaults.bool(forKey: IAPSconfig.inBolusView)
+    }
+
+    private func branch() -> String {
+        var branch = "Unknown"
+        if let branchFileURL = Bundle.main.url(forResource: "branch", withExtension: "txt"),
+           let branchFileContent = try? String(contentsOf: branchFileURL)
+        {
+            let lines = branchFileContent.components(separatedBy: .newlines)
+            for line in lines {
+                let components = line.components(separatedBy: "=")
+                if components.count == 2 {
+                    let key = components[0].trimmingCharacters(in: .whitespaces)
+                    let value = components[1].trimmingCharacters(in: .whitespaces)
+
+                    if key == "BRANCH" {
+                        branch = value
+                        break
+                    }
+                }
+            }
+        }
+        return branch
+    }
+
+    private func loopStats(loopStatRecord: LoopStats, error: Error?) {
         coredataContext.perform {
             let nLS = LoopStatRecord(context: self.coredataContext)
 
@@ -1247,6 +1321,10 @@ final class BaseAPSManager: APSManager, Injectable {
             nLS.loopStatus = loopStatRecord.loopStatus
             nLS.duration = loopStatRecord.duration ?? 0.0
             nLS.interval = loopStatRecord.interval ?? 0.0
+
+            if let error = error {
+                nLS.error = error.localizedDescription.string
+            }
 
             try? self.coredataContext.save()
         }
@@ -1262,26 +1340,11 @@ final class BaseAPSManager: APSManager, Injectable {
         bolusReporter?.addObserver(self)
     }
 
-    private func updateStatus() {
-        debug(.apsManager, "force update status")
-        guard let pump = pumpManager else {
-            return
-        }
-
-        if let omnipod = pump as? OmnipodPumpManager {
-            omnipod.getPodStatus { _ in }
-        }
-        if let omnipodBLE = pump as? OmniBLEPumpManager {
-            omnipodBLE.getPodStatus { _ in }
-        }
-    }
-
     private func clearBolusReporter() {
         bolusReporter?.removeObserver(self)
         bolusReporter = nil
         processQueue.asyncAfter(deadline: .now() + 0.5) {
             self.bolusProgress.send(nil)
-            self.updateStatus()
         }
     }
 }

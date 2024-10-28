@@ -5,9 +5,13 @@ function generate(pumphistory_data, profile_data, clock_data, glucose_data, basa
         return {"error":"Error: carb_ratio " + profile_data.carb_ratio + " out of bounds"};
     }
 
-    var carb_data = { };
+    var carb_data = {};
     if (carbhistory) {
         carb_data = carbhistory;
+        
+        /* A tempory fix to make all iAPS carb equivalents compatible with the Oref0 meal module.
+         Unfortunately the Oref0 slows down when there are several carb entries and gets super slow when there are many (like when lots of FPUs). Hence this fix will slow down this module even more */
+        carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
     }
 
     if (typeof basalprofile_data[0] === 'undefined') {

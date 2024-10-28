@@ -1,5 +1,5 @@
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@ min";
 
 /* Confirmation message for deleting a CGM */
 "Are you sure you want to delete this CGM?" = "¿Está seguro de que quiere eliminar este MCG?";
@@ -18,7 +18,7 @@ Title text for the button to remove a CGM from Loop */
 "Glucose" = "Glucosa";
 
 /* Describes a glucose value adjusted to reflect a recent calibration */
-"Glucose (Adjusted)" = "Glucose (Adjusted)";
+"Glucose (Adjusted)" = "Glucosa (ajustada)";
 
 /* Section title for latest glucose calibration */
 "Latest Calibration" = "Calibración más reciente";
@@ -51,7 +51,7 @@ Title text for the button to remove a CGM from Loop */
 "Transmitter Age" = "Edad del transmisor";
 
 /* The title text for the Dexcom G5/G6 transmitter ID config value */
-"Transmitter ID" = "Identificación del transmisor";
+"Transmitter ID" = "Identificador del transmisor";
 
 /* Title describing glucose trend */
 "Trend" = "Tendencia";

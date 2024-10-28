@@ -36,7 +36,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
     var low: Decimal = 70
-    var uploadStats: Bool = true
+    var uploadStats: Bool = false
     var hours: Int = 6
     var xGridLines: Bool = true
     var yGridLines: Bool = true
@@ -47,7 +47,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var confirmBolusFaster: Bool = false
     var onlyAutotuneBasals: Bool = false
     var overrideFactor: Decimal = 0.8
-    var useCalc: Bool = false
+    var useCalc: Bool = true
     var fattyMeals: Bool = false
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
@@ -58,6 +58,17 @@ struct FreeAPSSettings: JSON, Equatable {
     var profilesOrTempTargets: Bool = false
     var allowBolusShortcut: Bool = false
     var allowedRemoteBolusAmount: Decimal = 0.0
+    var eventualBG: Bool = true
+    var minumimPrediction: Bool = true
+    var minimumSMB: Decimal = 0.3
+    var useInsulinBars: Bool = false
+    var disableCGMError: Bool = true
+    var skipGlucoseChart: Bool = false
+    var birthDate = Date.distantPast
+    // var sex: Sex = .secret
+    var sexSetting: Int = 3
+    var displayDelta: Bool = false
+    var profileID: String = "Hypo Treatment"
 }
 
 extension FreeAPSSettings: Decodable {
@@ -297,6 +308,50 @@ extension FreeAPSSettings: Decodable {
 
         if let allowedRemoteBolusAmount = try? container.decode(Decimal.self, forKey: .allowedRemoteBolusAmount) {
             settings.allowedRemoteBolusAmount = allowedRemoteBolusAmount
+        }
+
+        if let eventualBG = try? container.decode(Bool.self, forKey: .eventualBG) {
+            settings.eventualBG = eventualBG
+        }
+
+        if let minumimPrediction = try? container.decode(Bool.self, forKey: .minumimPrediction) {
+            settings.minumimPrediction = minumimPrediction
+        }
+
+        if let minimumSMB = try? container.decode(Decimal.self, forKey: .minimumSMB) {
+            settings.minimumSMB = minimumSMB
+        }
+
+        if let useInsulinBars = try? container.decode(Bool.self, forKey: .useInsulinBars) {
+            settings.useInsulinBars = useInsulinBars
+        }
+
+        if let disableCGMError = try? container.decode(Bool.self, forKey: .disableCGMError) {
+            settings.disableCGMError = disableCGMError
+        }
+
+        if let skipGlucoseChart = try? container.decode(Bool.self, forKey: .skipGlucoseChart) {
+            settings.skipGlucoseChart = skipGlucoseChart
+        }
+
+        if let birthDate = try? container.decode(Date.self, forKey: .birthDate) {
+            settings.birthDate = birthDate
+        }
+
+        if let birthDate = try? container.decode(Date.self, forKey: .birthDate) {
+            settings.birthDate = birthDate
+        }
+
+        if let sexSetting = try? container.decode(Int.self, forKey: .sexSetting) {
+            settings.sexSetting = sexSetting
+        }
+
+        if let displayDelta = try? container.decode(Bool.self, forKey: .displayDelta) {
+            settings.displayDelta = displayDelta
+        }
+
+        if let profileID = try? container.decode(String.self, forKey: .profileID) {
+            settings.profileID = profileID
         }
 
         self = settings

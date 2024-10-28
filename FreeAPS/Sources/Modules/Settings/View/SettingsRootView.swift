@@ -8,21 +8,49 @@ extension Settings {
         @StateObject var state = StateModel()
         @State private var showShareSheet = false
 
+        @FetchRequest(
+            entity: VNr.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
+                format: "nr != %@", "" as String
+            )
+        ) var fetchedVersionNumber: FetchedResults<VNr>
+
+        @FetchRequest(
+            entity: OverridePresets.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
+                format: "name != %@", "" as String
+            )
+        ) var fetchedProfiles: FetchedResults<OverridePresets>
+
         var body: some View {
             Form {
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
                 header: {
-                    if let expirationDate = Bundle.main.profileExpiration {
-                        Text(
-                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
-                                "\nBuild Expires: " + expirationDate
-                        ).textCase(nil)
-                    } else {
-                        Text(
-                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
-                        )
+                    VStack(alignment: .leading) {
+                        if let expirationDate = Bundle.main.profileExpiration {
+                            Text(
+                                "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
+                                    "\nBuild Expires: " + expirationDate
+                            ).textCase(nil)
+                        } else {
+                            Text(
+                                "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
+                            )
+                        }
+
+                        if let latest = fetchedVersionNumber.first,
+                           ((latest.nr ?? "") > state.versionNumber) ||
+                           ((latest.nr ?? "") < state.versionNumber && (latest.dev ?? "") > state.versionNumber)
+                        {
+                            Text(
+                                "Latest version on GitHub: " +
+                                    ((latest.nr ?? "") < state.versionNumber ? (latest.dev ?? "") : (latest.nr ?? "")) + "\n"
+                            )
+                            .foregroundStyle(.orange).bold()
+                            .multilineTextAlignment(.leading)
+                        }
                     }
                 }
 
@@ -59,7 +87,21 @@ extension Settings {
                     Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                     Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
+                    Text("Sharing").navigationLink(to: .sharing, from: self)
+                    Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                 } header: { Text("Extra Features") }
+
+                Section {
+                    HStack {
+                        Picker("Treatment", selection: $state.profileID) {
+                            Text("Default  📉").tag("Hypo Treatment")
+                            ForEach(fetchedProfiles) { item in
+                                Text(item.name ?? "").tag(item.id?.string ?? "")
+                            }
+                            Text("None").tag("None")
+                        }
+                    }
+                } header: { Text("Hypo Treatment") }
 
                 Section {
                     Toggle("Debug options", isOn: $state.debugOptions)
@@ -72,21 +114,18 @@ extension Settings {
                                     .buttonStyle(.borderedProminent)
                             }
 
+                            // Test code
                             HStack {
                                 Text("Delete All NS Overrides")
                                 Button("Delete") { state.deleteOverrides() }
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                                     .tint(.red)
-                            } /*
+                            }
 
-                             HStack {
-                                 Text("Delete latest NS Override")
-                                 Button("Delete") { state.deleteOverride() }
-                                     .frame(maxWidth: .infinity, alignment: .trailing)
-                                     .buttonStyle(.borderedProminent)
-                                     .tint(.red)
-                             } */
+                            HStack {
+                                Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
+                            }
                         }
                         Group {
                             Text("Preferences")

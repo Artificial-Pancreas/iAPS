@@ -623,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Régler basal temporaire";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Votre taux d'insuline basale ne sera pas automatiquement ajustée jusqu'à la fin ou l'annulation du taux de basal temporaire.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "L’installation est terminée";
 

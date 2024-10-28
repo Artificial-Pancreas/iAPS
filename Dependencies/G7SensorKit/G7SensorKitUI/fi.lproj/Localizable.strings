@@ -60,7 +60,7 @@
 "LOW" = "LOW";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "Nimi";
 
 /* No comment provided by engineer. */
 "Scan for new sensor" = "Scan for new sensor";
@@ -105,7 +105,7 @@
 "Signal\nLoss" = "Signal\nLoss";
 
 /* Field label */
-"Time" = "Time";
+"Time" = "Aika";
 
 /* Field label */
 "Trend" = "Trend";

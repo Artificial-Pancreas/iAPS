@@ -100,8 +100,27 @@ final class OverrideStorage {
             save.smbIsOff = preset.smbIsOff
             save.smbMinutes = preset.smbMinutes
             save.uamMinutes = preset.uamMinutes
+            save.maxIOB = preset.maxIOB
             save.target = preset.target
             try? coredataContext.save()
+        }
+    }
+
+    func activatePreset(_ id: String) {
+        coredataContext.performAndWait {
+            var presetsArray = [OverridePresets]()
+            coredataContext.performAndWait {
+                let requestPresets = OverridePresets.fetchRequest() as NSFetchRequest<OverridePresets>
+                requestPresets.predicate = NSPredicate(
+                    format: "id == %@", id
+                )
+                try? presetsArray = self.coredataContext.fetch(requestPresets)
+
+                guard let overidePreset = presetsArray.first else {
+                    return
+                }
+                overrideFromPreset(overidePreset)
+            }
         }
     }
 
@@ -159,7 +178,6 @@ final class OverrideStorage {
     }
 
     func activateOverride(_ override: Override) {
-        var overrideArray = [Override]()
         coredataContext.performAndWait {
             let save = Override(context: coredataContext)
             save.date = Date.now

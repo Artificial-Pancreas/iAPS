@@ -527,6 +527,12 @@ public class PodCommsSession {
                     log.default("bolus: pod is still bolusing")
                     return DeliveryCommandResult.certainFailure(error: .unfinalizedBolus)
                 }
+                // If the pod setup is complete, also confirm that the pod is indeed not suspended
+                if podState.setupProgress == .completed && statusResponse.deliveryStatus.suspended {
+                    log.default("bolus: pod is suspended")
+                    return DeliveryCommandResult.certainFailure(error: .podSuspended)
+                }
+                log.default("bolus: get status response verifies pod is not bolusing and not suspended")
             } else {
                 log.default("bolus: failed to read pod status to verify there is no bolus running")
                 return DeliveryCommandResult.certainFailure(error: .noResponse)
@@ -777,7 +783,9 @@ public class PodCommsSession {
                     let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
                 }
             }
+            podState.unacknowledgedCommand = PendingCommand.program(.basalProgram(schedule: schedule), transport.messageNumber, currentDate)
             var status: StatusResponse = try send([basalScheduleCommand, basalExtraCommand])
+            podState.unacknowledgedCommand = nil
             let now = currentDate
             podState.suspendState = .resumed(now)
             podState.unfinalizedResume = UnfinalizedDose(resumeStartTime: now, scheduledCertainty: .certain, insulinType: podState.insulinType)
@@ -788,12 +796,12 @@ public class PodCommsSession {
             }
             podState.updateFromStatusResponse(status, at: currentDate)
             return status
-        } catch PodCommsError.nonceResyncFailed {
-            throw PodCommsError.nonceResyncFailed
-        } catch PodCommsError.rejectedMessage(let errorCode) {
-            throw PodCommsError.rejectedMessage(errorCode: errorCode)
+        } catch PodCommsError.unacknowledgedMessage(let seq, let error) {
+            podState.unacknowledgedCommand = podState.unacknowledgedCommand?.commsFinished
+            log.error("Unacknowledged resume: command seq = %d, error = %{public}@", seq, String(describing: error))
+            throw error
         } catch let error {
-            podState.unfinalizedResume = UnfinalizedDose(resumeStartTime: currentDate, scheduledCertainty: .uncertain, insulinType: podState.insulinType)
+            podState.unacknowledgedCommand = nil
             throw error
         }
     }

@@ -12,6 +12,7 @@ extension AddCarbs {
         @State var isPromptPresented = false
         @State var saved = false
         @State var pushed = false
+        @State var button = false
         @State private var showAlert = false
         @FocusState private var isFocused: Bool
 
@@ -74,7 +75,6 @@ extension AddCarbs {
 
                     // Time
                     HStack {
-                        let now = Date.now
                         Text("Time")
                         Spacer()
                         if !pushed {
@@ -110,11 +110,23 @@ extension AddCarbs {
                     .popover(isPresented: $isPromptPresented) {
                         presetPopover
                     }
+
+                    // Optional Hypo Treatment
+                    if state.carbs > 0, let profile = state.id, profile != "None" {
+                        Toggle("Hypo Treatment", isOn: $state.hypoTreatment)
+                    }
                 }
 
                 Section {
-                    Button { state.add(override, fetch: editMode) }
-                    label: { Text(((state.skipBolus && !override && !editMode) || state.carbs <= 0) ? "Save" : "Continue") }
+                    Button {
+                        button.toggle()
+                        if button { state.add(override, fetch: editMode) }
+                    }
+                    label: {
+                        Text(
+                            ((state.skipBolus && !override && !editMode) || state.carbs <= 0 || state.hypoTreatment) ? "Save" :
+                                "Continue"
+                        ) }
                         .disabled(empty)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }.listRowBackground(!empty ? Color(.systemBlue) : Color(.systemGray4))
@@ -124,6 +136,7 @@ extension AddCarbs {
                     mealPresets
                 }
             }
+            .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView {

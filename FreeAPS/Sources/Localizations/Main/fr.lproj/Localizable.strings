@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Terminé";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "%@ minutes depuis la dernière boucle. Terminez ou annulez cette transaction de repas / bolus pour permettre le prochain cycle de boucle de s'exécuter";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Afficher des émojis en tant qu'étiquettes";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Accepter et continuer";
+
+/* */
+"Log external insulin" = "Journaliser l'insuline externe";
 
 /* Bolus progress view */
 "of" = "de";
@@ -86,7 +92,7 @@
 "Suggested at" = "Suggéré à";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Erreur à";
+"Status at" = "État de";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Résumé du repas";
@@ -106,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Repas gras";
 
+/* Bolus option */
+"Hypo Treatment" = "Traitement d'hypoglycémie";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Bolus entier";
 
@@ -114,6 +123,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Facteur de farine grasse";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Les glucides et l'insuline antérieure sont inclus dans la prédiction du taux de glucose éventuel.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Résultat";
@@ -282,9 +294,6 @@
 
 /*  */
 "Save on Pump" = "Enregistrer sur la pompe";
-
-/*  */
-"Saving..." = "Sauvegarde...";
 
 /*  */
 "Schedule" = "Programme";
@@ -470,6 +479,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Carbs" = "Glucides max";
 
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Quantité maximale de glucides (g) que vous pouvez ajouter à chaque entrée";
+
 /* */
 "Pump Settings" = "Paramètres de la pompe";
 
@@ -628,6 +640,9 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Traitements";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Traitement";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1004,6 +1019,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Autoriser les raccourcis de Bolus dans iOS";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "Raccourcis d'iOS";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Si vous activez ce paramètre, vous pouvez utiliser les raccourcis iOS et ses automatisations pour déclencher un bolus dans iAPS.\n\nNotez que les raccourcis iOS fonctionnent également avec Siri !\n\nSi vous voulez utiliser des raccourcis de bolus, veuillez envisager de désactiver le paramètre 'Utiliser \"Dis Siri\"' dans les paramètres Siri de l'iPhone, afin d'éviter toute activation involontaire d'un bolus avec Siri.\nSi vous ne désactivez pas \"Dis Siri\", le raccourci bolus iAPS peut être déclenché avec la phrase \"Dis Siri, bolus iAPS\".\n\nLorsque déclenché avec Siri, vous devez fournir une quantité et une confirmation avant que la commande de bolus ne puisse être envoyée à iAPS.";
 
@@ -1230,6 +1248,12 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Serveur en ligne ou interne";
 
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Impossible d'appliquer la nouvelle recommandation, car l'administration d'un bolus est en cours. Attendez la prochaine boucle.";
+
+/* Pump Error */
+"Pump is Busy." = "La pompe est occupée.";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1445,6 +1469,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Enregistrer comme profil";
 
+/* */
+"Save as preset" = "Enregistrer en tant que préréglage";
+
 /* Alert */
 "Cancel Profile Override" = "Annuler le réglage de l'annulation du profil ?";
 
@@ -1520,10 +1547,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Afficher les protéines et graisses";
 
-
 /* Time of new meal entry */
 "Now" = "Maintenant";
-
 
 /* Display future data table entries */
 "Show Future" = "Afficher le futur";
@@ -1543,7 +1568,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Glycémie éventuelle";
 
 /* */
-"Please wait" = "Patientez s''il vous plait";
+"Please wait" = "Patientez s'il vous plait";
 
 /* */
 "Glucose, " = "Glycémie, ";
@@ -1617,10 +1642,10 @@ Enact a temp Basal or a temp target */
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Les rappels de confiance sont des bips émis par le Pod qui peuvent être utilisés pour confirmer l'exécution des commandes sélectionnées.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Sauvegarde...";
+"Saving..." = "Enregistrement en cours...";
 
 /* button title for saving low reservoir reminder */
-"Save" = "Sauvegarder";
+"Save" = "Enregistrer";
 
 /* Alert title for error when updating confidence reminder preference */
 "Failed to update confidence reminder preference." = "Impossible de mettre à jour les préférences de rappel de confiance.";
@@ -1673,7 +1698,7 @@ Enact a temp Basal or a temp target */
 "Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Changez de Pod maintenant. La distribution d'insuline s'arrêtera dans %1$@ ou quand il n'y aura plus d'insuline.";
 
 /* Label text for temporary basal rate summary */
-"Rate" = "Taux";
+"Rate" = "Débit";
 
 /* Summary string for temporary basal rate configuration page */
 "%1$@ for %2$@" = "%1$@ pour %2$@";
@@ -1852,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Erreurs";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Most Frequent Error";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Non-completed Loops";
+
 /* Average loop interval */
 "Interval" = "Intervalle";
 
@@ -1913,9 +1947,224 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Expérimental";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Valeur Glycémie lisse";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* Setting Title */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Sharing" = "Partage";
 
+/* Share and Backup page header */
+"Share and Backup" = "Partage et sauvegarde";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Téléverser vos paramètres et statistiques";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Partager et sauvegarder tous vos paramètres et statistiques";
+
+/* Title of dropdown menu */
+"Sex" = "Sexe biologique";
+
+/* Sex dropdown menu option */
+"Woman" = "Femme";
+
+/* Sex dropdown menu option */
+"Man" = "Homme";
+
+/* Sex dropdown menu option */
+"Other" = "Autre";
+
+/* Sex dropdown menu option */
+"Secret" = "Confidentiel";
+
+/* Title of birth date field */
+"Birth Date" = "Date de naissance";
+
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nSi vous activez \"Partage et Sauvegarde\", des sauvegardes quotidiennes de vos paramètres et statistiques seront effectuées dans la base de données en ligne.\n\nAssurez-vous de copier et d'enregistrer votre jeton de récupération ci-dessous. Le jeton de récupération est requis pour importer vos paramètres sur un autre téléphone lorsque vous utilisez le tutoriel de mise en marche.";
+
+/* Section title if sharing off */
+"Share Bare Minimum" = "Partager le minimum";
+
+/* Minimum share toggle */
+"Just iAPS version number" = "Juste le numéro de version iAPS";
+
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Toutes les informations que vous choisissez de partager sont téléchargées de façon anonyme. Pour éviter les doublons, vos données sont identifiées avec une chaîne aléatoire unique enregistrée sur votre téléphone : le jeton de récupération.";
+
+/* Token section title */
+"Your recovery token" = "Votre jeton de récupération";
+
+/* Token display button */
+"Tap to display" = "Appuyer pour afficher";
+
+/* Token copy button */
+"Long press to copy" = "Appuyez longuement pour copier";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Consulter les statistiques personnelles";
+
+/* */
+"Your identifier" = "Votre identifiant";
+
+/* */
+"Share your data anonymously" = "Partager vos données de manière anonyme";
+
+/* Setting Title */
+"Sharing" = "Partage";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Contact";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Contacts";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "N'oubliez pas d'enregistrer vos changements.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS a besoin d'accéder à votre liste de contacts pour cette fonctionnalité";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Donnez l'accès à vos contacts à iAPS";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Accès aux contacts refusé";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Accès aux contacts est restreint (contrôle parental?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Accès aux contacts - état inconnu";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Une image de contact peut être utilisée pour obtenir des mises à jour en direct d'iAPS vers votre complication de contact Apple Watch et/ou votre widget de contact pour iPhone.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Image de contact";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Affichage";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Simple";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Double";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Ne pas afficher";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "État de la boucle";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "Insuline active (IOB)";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "Glucides actifs (COB)";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "Insuline active + Glucides actifs";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Principal";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "En haut";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "En bas";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Anneau";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Anneau extérieur";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Largeur";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Espacement";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Police de caractères";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Taille";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Taille secondaire";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Espacement";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Poids";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Mode sombre";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Très serré";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Serré";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "Normal";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Large";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Léger";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Régulier";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Moyen";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Semi-gras";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Gras";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Noir";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Aucun";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Glycémie";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Taux de glucose éventuel";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Écart";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Tendance";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Heure de la dernière boucle";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "Glucides actifs (COB)";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "Insuline active (IOB)";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "État de la boucle";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
@@ -1975,10 +2224,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "La valeur par défaut est faux, de sorte que iAPS définisse une valeur basal dès qu'il le peut, donc il sera plus facile de voir si le système fonctionne, même lorsque vous êtes hors ligne. Cela signifie qu'OpenAPS définira une valeur basale « neutre » (identique à votre basal par défaut) si aucun ajustement n'est nécessaire. Ceci est un ancien paramètre d'OpenAPS afin de minimiser les sons et les notifications de la 'rig', qui pouvaient vous réveiller pendant la nuit. ";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Annuler la suspension si aucune température";
+"Unsuspend If No Temp" = "Annuler la suspension à la fin du temporaire zéro";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "De nombreuses personnes oublient parfois de reprendre / désuspendre leur pompe après la reconnexion. Si vous êtes l'un d'eux, et que vous êtes définissez un basal temporaire à zéro chaque fois que vous suspendez ou débranchez votre pompe, cette fonction peut être pertinente. Si cette option est activée, elle reprendra automatiquement le basal en cours si vous oubliez de reprendre votre pompe. Tant que la valeur temporaire de basal est de zéro, elle laissera la pompe suspendue.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "De nombreuses personnes oublient parfois de reprendre / désuspendre leur pompe après la reconnexion. Si vous êtes l'un d'eux, et que vous êtes prêt à définir de manière fiable un basal temporaire zéro à chaque fois que vous suspendez et débranchez votre pompe, cette fonctionnalité peut être pertinente. Si cette option est activée, elle reprendra automatiquement le fonctionnement de votre pompe si vous oubliez de le faire avant l'expiration du basal temporaire à zéro que vous avez programmé. Tant que le basal temporaire à zéro est toujours en cours d'exécution, la pompe restera suspendue.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Activer UAM";
@@ -2219,6 +2468,21 @@ Enact a temp Basal or a temp target */
 /* Threshold Table Columns Title */
 "Threshold" = "Seuil";
 
+/* Dynamic settings View */
+"Averages" = "Averages";
+
+/* Dynamic settings View */
+"Average ISF" = "Average ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Average CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Average CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
+
 /* Header */
 "Calculator settings" = "Réglages de la calculatrice";
 
@@ -2233,6 +2497,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Le nouveau calculateur alternatif de bolus est une option au calculateur par défaut dans iAPS. Quand activé, vous utilisez ce calculateur de bolus et non pas le calculateur iAPS original. À la fin du calcul, un facteur personnalisé est appliqué, comme il est censé l'être lors de l'utilisation de SMBs (par défaut 0,8).\n\nVous pouvez également ajouter l'option d'appliquer un autre facteur personnalisable (!) à la fin du calcul, ce qui pourrait être utile pour les repas riches en matières grasses, par exemple, une pizza (par défaut 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Fonctionnalités supplémentaires";
 
 /* UI/UX option */
 "Display Predictions" = "Afficher les prédictions";
@@ -2259,7 +2526,7 @@ Enact a temp Basal or a temp target */
 "Statistics settings " = "Paramètres des statistiques ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Outrepasser l'unité HbA1c";
+"Override HbA1c Unit" = "Convertir l'unité HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Si vous utilisez à la fois des profils et des cibles temporaires";
@@ -2277,6 +2544,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Afficher le bouton de réglage des heures visibles";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Ne jamais afficher le petit graphique de glucose lors du défilement";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Désactiver les traitements d'hypoglycémie";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Afficher l'écart de glycémie";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";

@@ -45,5 +45,12 @@ import Foundation
                 "\(.applicationName) Enacts a bolus"
             ]
         )
+        AppShortcut(
+            intent: ApplyMealPresetIntent(),
+            phrases: [
+                "\(.applicationName) Meal Presets",
+                "Uses an \(.applicationName) Meal Preset"
+            ]
+        )
     }
 }

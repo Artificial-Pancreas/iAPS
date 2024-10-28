@@ -340,52 +340,8 @@ class OmnipodSettingsViewModel: ObservableObject {
         }
     }
 
-    func readPodStatus(_ completion: @escaping (_ result: PumpManagerResult<DetailedStatus>) -> Void) {
-        pumpManager.getDetailedStatus() { (result) in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-    }
-
-    func playTestBeeps(_ completion: @escaping (Error?) -> Void) {
-        pumpManager.playTestBeeps(completion: completion)
-    }
-
-    func readPulseLog(_ completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        pumpManager.readPulseLog() { (result) in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-    }
-
-    func readPulseLogPlus(_ completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        pumpManager.readPulseLogPlus() { (result) in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-    }
-
-    func readActivationTime(_ completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        pumpManager.readActivationTime() { (result) in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-    }
-
-    func readTriggeredAlerts(_ completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        pumpManager.readTriggeredAlerts() { (result) in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-    }
-
-    func pumpManagerDetails(_ completion: @escaping (_ result: String) -> Void) {
-        completion(pumpManager.debugDescription)
+    func playTestBeeps() async throws {
+        try await pumpManager.playTestBeeps()
     }
 
     func setConfirmationBeeps(_ preference: BeepPreference, _ completion: @escaping (_ error: LocalizedError?) -> Void) {
@@ -427,6 +383,10 @@ class OmnipodSettingsViewModel: ObservableObject {
 
     var noPod: Bool {
         return podCommState == .noPod
+    }
+
+    var diagnosticCommands: DiagnosticCommands {
+        return pumpManager
     }
 
     var podError: String? {
@@ -656,3 +616,8 @@ extension OmnipodPumpManager {
 
 }
 
+extension OmnipodPumpManager: DiagnosticCommands {
+    func pumpManagerDetails() -> String {
+        return debugDescription
+    }
+}

@@ -46,6 +46,9 @@
 /* Button */
 "Done" = "Готово";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Останній цикл %@ хвилин тому. Завершіть або скасуйте цю транзакцію прийому їжі/болюсу, щоб запустити наступний цикл циклу";
+
 /* Calender Option */
 "Display Emojis as Labels" = "Відображати Emojis як Мітки";
 
@@ -63,6 +66,9 @@
 
 /*  */
 "Agree and continue" = "Прийняти та Продовжити";
+
+/* */
+"Log external insulin" = "Записувати зовнішній інсулін";
 
 /* Bolus progress view */
 "of" = "із";
@@ -86,7 +92,7 @@
 "Suggested at" = "Запропоновано на";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Помилка в";
+"Status at" = "Статус в";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Резюме харчування";
@@ -106,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Жирна їжа";
 
+/* Bolus option */
+"Hypo Treatment" = "Гіпотерапія";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Повний болюс";
 
@@ -114,6 +123,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Фактор жирної їжі";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Вуглеводи та раніше введений інсулін враховуються при прогнозуванні рівня глюкози у крові.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Результат";
@@ -282,9 +294,6 @@
 
 /*  */
 "Save on Pump" = "Зберегти на Помпі";
-
-/*  */
-"Saving..." = "Збереження...";
 
 /*  */
 "Schedule" = "Розклад";
@@ -470,6 +479,9 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Carbs" = "Максимум вуглеводів";
 
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Максимальна кількість вуглеводів (г), яку можна додати для кожного запису";
+
 /* */
 "Pump Settings" = "Налаштування Помпи";
 
@@ -628,6 +640,9 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Події";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Лікування";
 
 /* " min" in Treatments list */
 " min" = " хв";
@@ -1004,6 +1019,9 @@ Enact a temp Basal or a temp target */
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Дозволити ярлик Болюсу iOS";
 
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "Ярлики iOS";
+
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Якщо ви ввімкнете це налаштування, ви зможете використовувати ярлики iOS та їх автоматичні засоби для запуску болюсу в iAPS.\n\nЗверніть увагу, що ярлики iOS також працюють із Siri!\n\nЯкщо вам потрібно використовувати ярлики болюсу, переконайтеся, що щоб вимкнути прослуховування параметра «Привіт, Сірі» в налаштуваннях iPhone Siri, щоб уникнути будь-якої випадкової активації болюсу за допомогою Siri.\nЯкщо ви не вимкнете «Привіт, Сірі», ярлик болюсу iAPS можна запустити за допомогою виголошення «Привіт». Siri, iAPS Bolus'.\n\nПісля запуску за допомогою Siri вам буде запропоновано ввести суму та підтвердження, перш ніж команду болюсу можна буде надіслати в iAPS.";
 
@@ -1230,6 +1248,12 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Онлайн або внутрішній сервер";
 
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Неможливо виконати рекомендацію щодо нового циклу петлі, оскільки триває болюс. Зачекайте наступного циклу петлі";
+
+/* Pump Error */
+"Pump is Busy." = "Помпа зайнята";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1445,6 +1469,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Save as Profile" = "Зберегти як Профіль";
 
+/* */
+"Save as preset" = "Зберегти як шаблон";
+
 /* Alert */
 "Cancel Profile Override" = "Скасувати заміну профілю?";
 
@@ -1520,10 +1547,8 @@ Enact a temp Basal or a temp target */
 /* Watch Config Option */
 "Display Protein & Fat" = "Показати білок і жир";
 
-
 /* Time of new meal entry */
 "Now" = "Щойно";
-
 
 /* Display future data table entries */
 "Show Future" = "Показати Майбутнє";
@@ -1852,6 +1877,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Помилки";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Успіх = Розпочато/Завершено (Петлі)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Найпоширеніша Помилка";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Незавершені Петлі";
+
 /* Average loop interval */
 "Interval" = "Інтервал";
 
@@ -1913,9 +1947,224 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Експериментальний";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Гладке Значення Глюкози";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* Setting Title */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Sharing" = "Поширити";
 
+/* Share and Backup page header */
+"Share and Backup" = "Поділитися та створити Резервну копію";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Звантажити налаштування та статистику";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Поділитись та зробити Резервну копію всіх ваших Налаштувань та Статистики";
+
+/* Title of dropdown menu */
+"Sex" = "Стать";
+
+/* Sex dropdown menu option */
+"Woman" = "Жінка";
+
+/* Sex dropdown menu option */
+"Man" = "Чоловік";
+
+/* Sex dropdown menu option */
+"Other" = "Інше";
+
+/* Sex dropdown menu option */
+"Secret" = "Секретний ключ";
+
+/* Title of birth date field */
+"Birth Date" = "Дата народження";
+
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nЯкщо ви ввімкнете «Поділитися та створити резервну копію», щоденні резервні копії ваших налаштувань і статистики будуть створені в онлайн-базі даних.\n\nОбов’язково скопіюйте та збережіть токен відновлення нижче. Токен відновлення потрібен для імпорту ваших налаштувань на інший телефон під час перегляду адаптації.";
+
+/* Section title if sharing off */
+"Share Bare Minimum" = "Мінімум розподілу";
+
+/* Minimum share toggle */
+"Just iAPS version number" = "Номер версії iAPS";
+
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Кожна інформація, якою ви вирішите поділитися, завантажується анонімно. Щоб запобігти повторним завантаженням, дані ідентифікуються за допомогою унікального випадкового рядка, збереженого на вашому телефоні, токена відновлення.";
+
+/* Token section title */
+"Your recovery token" = "Ваш токен для відновлення";
+
+/* Token display button */
+"Tap to display" = "Натисніть для відображення";
+
+/* Token copy button */
+"Long press to copy" = "Утримуйте для копіювання";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Переглянути Персональну Статистику";
+
+/* */
+"Your identifier" = "Ваш ідентифікатор";
+
+/* */
+"Share your data anonymously" = "Надсилайте свої дані анонімно";
+
+/* Setting Title */
+"Sharing" = "Поширити";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Контакт";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Контакти";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Не забудьте зберегти зміни!";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "Для роботи цієї функції iAPS потрібен доступ до ваших контактів";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Надати iAPS доступ до контактів";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Доступ до контактів заборонено";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "Доступ до контактів обмежений (батьківський контроль?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Доступ до контактів - невідомий стан";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Зображення контакту можна використовувати для отримання поточних оновлень від iAPS для вашої складності контактів Apple Watch та/або віджета контактів iPhone.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Зображення контакту";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Макет";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Одиночний";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Розділити";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Не показувати";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Статус петлі";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "IOB";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "COB";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Основний";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Вгору";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Внизу";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Дзвінок";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Зовнішній";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Ширина";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Проміжок";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Шрифт";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Розмір";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Додатковий розмір";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Відстеження";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Вага";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Темний режим";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Вантаж";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Щільний";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "Нормальний";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Широкий";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Світлий";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Звичайний";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Середня";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Напівжирний";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Жирний";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Чорна";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Жоден";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Глюкоза";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Подіївний BG";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Дельта";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Тренди";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Час останньої петлі";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "COB";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "IOB";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Статус петлі";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
@@ -2219,6 +2468,21 @@ Enact a temp Basal or a temp target */
 /* Threshold Table Columns Title */
 "Threshold" = "Поріг";
 
+/* Dynamic settings View */
+"Averages" = "Середній";
+
+/* Dynamic settings View */
+"Average ISF" = "Середній ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Середній CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Середній ISF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: чутливість до інсуліну, CR: співвідношення вуглеводів,\nCSF: чутливість до вуглеводів = ISF/CR";
+
 /* Header */
 "Calculator settings" = "Налаштування калькулятора";
 
@@ -2233,6 +2497,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Новий альтернативний болюсний калькулятор є іншим підходом до стандартного болюсного калькулятора в iAPS. Якщо перемикач увімкнено, ви використовуєте цей болюсний калькулятор, а не оригінальний калькулятор iAPS. Наприкінці обчислення застосовано спеціальний коефіцієнт, як це має бути під час використання smbs (за замовчуванням 0,8).\n\nВи також можете додати опцію у своєму болюсному калькуляторі, щоб застосувати інший (!) настроюваний коефіцієнт наприкінці обчислення, яке може бути корисним для жирних страв, наприклад, піци (за замовчуванням 0,7).";
+
+/* Settings Section */
+"Extra Features" = "Додаткові функції";
 
 /* UI/UX option */
 "Display Predictions" = "Показати передбачення";
@@ -2277,6 +2544,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Відображення Кнопки Налаштування Інтервалу Часу";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Ніколи не відображайте маленьку діаграму рівня глюкози під час прокручування";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Вимкнути гіпотерапію";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Відображати дельту Глюкози";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
