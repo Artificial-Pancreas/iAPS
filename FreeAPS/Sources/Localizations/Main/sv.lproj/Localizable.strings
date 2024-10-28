@@ -522,6 +522,7 @@ Enact a temp Basal or a temp target */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
 "Allow diluted insulin concentration settings" = "Tillåt utspätt insulin i pumpinställningar";
+
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
 
