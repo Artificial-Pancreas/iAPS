@@ -108,7 +108,7 @@ public extension SensorType {
 
         let start = patchInfo[0..<2].uppercased()
 
-        let choices: [String: SensorType] = ["DF": .libre1, "A2": .libre1A2, "9D": .libre2, "C5": .libre2, "E5": .libreUS14day, "E6": .libreUS14dayE6, "70": .libreProH]
+        let choices: [String: SensorType] = ["DF": .libre1, "A2": .libre1A2, "9D": .libre2, "C5": .libre2, "C6": .libre2, "E5": .libreUS14day, "E6": .libreUS14dayE6, "70": .libreProH]
 
         if let res = choices[start] {
             self = res
