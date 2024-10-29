@@ -39,12 +39,13 @@ struct PumpView: View {
     }
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 5) {
             // OmniPods
             if let date = expiresAtDate {
                 // Insulin amount (U)
                 if let insulin = reservoir {
-                    let amountFraction = 1.0 - Double(insulin) / 200
+                    // 110 % due to being non rectangular.
+                    let amountFraction = 1.0 - Double(insulin * 1.1) / 200
                     if insulin == 0xDEAD_BEEF {
                         podInsulinAmount(portion: amountFraction)
                             .overlay {
@@ -57,7 +58,6 @@ struct PumpView: View {
                     } else {
                         HStack(spacing: 0) {
                             Text(reservoirFormatter.string(from: insulin as NSNumber) ?? "")
-                            spacer
                             Text("E").foregroundStyle(.secondary)
                         }
                         podInsulinAmount(portion: amountFraction)
@@ -133,26 +133,22 @@ struct PumpView: View {
                 if days >= 1 {
                     HStack(spacing: 0) {
                         Text(" \(days)")
-                        spacer
                         Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(.secondary)
                         if adjustedHours >= 0 {
                             Text(" ")
                             Text("\(adjustedHours)")
-                            spacer
                             Text(NSLocalizedString("h", comment: "abbreviation for days")).foregroundStyle(.secondary)
                         }
                     }
                 } else if hours >= 1 {
                     HStack(spacing: 0) {
                         Text(" \(hours)")
-                        spacer
                         Text(NSLocalizedString("h", comment: "abbreviation for hours"))
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
                     }
                 } else {
                     HStack(spacing: 0) {
                         Text(" \(minutes)")
-                        spacer
                         Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
                     }
@@ -209,17 +205,13 @@ struct PumpView: View {
         }
     }
 
-    private var spacer: Text {
-        Text(" ").tracking(-3)
-    }
-
     private func podInsulinAmount(portion: Double) -> some View {
         ZStack {
             UIImage(imageLiteralResourceName: "pod_reservoir")
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: portion)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                .aspectRatio(0.72, contentMode: .fit)
+                .frame(width: IAPSconfig.iconSize, height: IAPSconfig.iconSize)
                 .symbolRenderingMode(.palette)
                 .offset(x: 0, y: -5)
                 .shadow(radius: 1, x: 2, y: 2)
