@@ -229,16 +229,18 @@ struct NonStandardInsulin: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color(.insulin).opacity(0.2))
-                .frame(width: 33, height: 15)
+            Circle()
+                .fill(concentration > 1 ? Color(.insulin).opacity(0.8) : .clear)
+                .frame(width: concentration > 1 ? 20 : 24)
                 .overlay {
-                    Text("U" + (formatter.string(from: concentration * 100 as NSNumber) ?? ""))
-                        .font(.system(size: 8).weight(.thin))
-                        .foregroundStyle(.primary)
+                    Text(concentration > 1 ? "+" : "👶🏻")
+                        .font(.system(size: 18))
+                        .foregroundStyle(.white)
+                        .frame(width: concentration > 1 ? 20 : 24)
+                        .offset(y: pod ? 0 : -0.6) // But why?
                 }
         }
-        .offset(x: pod ? -20 : 0, y: pod ? -20 : -22)
+        .offset(x: pod ? -14 : -30, y: pod ? -22 : -24)
     }
 }
 
