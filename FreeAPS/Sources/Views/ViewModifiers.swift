@@ -233,7 +233,7 @@ struct NonStandardInsulin: View {
                 .fill(concentration > 1 ? Color(.insulin).opacity(0.8) : .clear)
                 .frame(width: concentration > 1 ? 20 : 24)
                 .overlay {
-                    Text(concentration > 1 ? "+" : "👶🏻")
+                    Text(concentration > 1 ? "⚡️" : "👶🏻")
                         .font(.system(size: 18))
                         .foregroundStyle(.white)
                         .frame(width: concentration > 1 ? 20 : 24)

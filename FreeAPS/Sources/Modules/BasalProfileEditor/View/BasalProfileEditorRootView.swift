@@ -144,7 +144,6 @@ extension BasalProfileEditor {
                     }
                 }
 
-
                 Section {
                     HStack {
                         Text("Total")
