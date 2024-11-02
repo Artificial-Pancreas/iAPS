@@ -39,7 +39,7 @@ struct PumpView: View {
     }
 
     @FetchRequest(
-        entity: InsulinConcentration.entity(), sortDescriptors: []
+        entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
     ) var concentration: FetchedResults<InsulinConcentration>
 
     var body: some View {
@@ -48,9 +48,8 @@ struct PumpView: View {
             if let date = expiresAtDate {
                 // Insulin amount (U)
                 if let insulin = reservoir {
-                    // 120 % due to being non rectangular.
-
-                    let amountFraction = 1.0 - Double(insulin * Decimal(concentration.last?.concentration ?? 1) * 1.2) / 200
+                    // 120 % due to being non rectangular. +10 because of bottom inserter
+                    let amountFraction = 1.0 - (Double(insulin + 10) * 1.2 / 200)
                     if insulin == 0xDEAD_BEEF {
                         podInsulinAmount(portion: amountFraction)
                             .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
@@ -61,7 +60,8 @@ struct PumpView: View {
                                     ClockOffset(mdtPump: false)
                                 }
                                 if (concentration.last?.concentration ?? 1) != 1,
-                                   state.settingsManager.settings.insulinBadge
+                                   !state.settingsManager.settings
+                                   .hideInsulinBadge
                                 {
                                     NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: true)
                                 }
@@ -73,7 +73,7 @@ struct PumpView: View {
                                     .string(from: (insulin * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
                             )
                             Text("E").foregroundStyle(.secondary)
-                        }.offset(x: state.settingsManager.settings.insulinBadge ? 8 : 4)
+                        }.offset(x: 6)
                         podInsulinAmount(portion: amountFraction)
                             .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
                             .overlay {
@@ -83,7 +83,7 @@ struct PumpView: View {
                                     ClockOffset(mdtPump: false)
                                 }
                                 if (concentration.last?.concentration ?? 1) != 1,
-                                   state.settingsManager.settings.insulinBadge
+                                   !state.settingsManager.settings.hideInsulinBadge
                                 {
                                     NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: true)
                                 }
@@ -99,6 +99,10 @@ struct PumpView: View {
             }
             // Other pumps
             else if let reservoir = reservoir {
+                if (concentration.last?.concentration ?? 1) != 1, !state.settingsManager.settings.hideInsulinBadge {
+                    NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: false)
+                }
+
                 if reservoir == 0xDEAD_BEEF {
                     HStack(spacing: 0) {
                         Text("50+ ").font(.statusFont).bold()
@@ -109,7 +113,7 @@ struct PumpView: View {
                     HStack(spacing: 0) {
                         Text(
                             reservoirFormatter
-                                .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber)!
+                                .string(from: reservoir as NSNumber)!
                         ).font(.statusFont).bold()
                         Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                     }
@@ -136,9 +140,6 @@ struct PumpView: View {
                     .overlay {
                         if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                             ClockOffset(mdtPump: true)
-                        }
-                        if (concentration.last?.concentration ?? 1) != 1, state.settingsManager.settings.insulinBadge {
-                            NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: false)
                         }
                     }
             }
