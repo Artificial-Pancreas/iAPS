@@ -262,6 +262,7 @@ extension BasalProfileEditor {
                 let newConfiguration = InsulinConcentration(context: self.coredataContext)
                 newConfiguration.concentration = Double(set)
                 newConfiguration.incrementSetting = Double(state.settingsManager.preferences.bolusIncrement)
+                newConfiguration.date = Date.now
                 do { try self.coredataContext.save()
                 } catch {
                     debug(.apsManager, "Insulin Concentration setting couldn't be saved to CoreData. Error: " + "\(error)")

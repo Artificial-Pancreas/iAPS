@@ -69,8 +69,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var sexSetting: Int = 3
     var displayDelta: Bool = false
     var profileID: String = "Hypo Treatment"
-    var insulinBadge: Bool = false
     var allowDilution: Bool = false
+    var hideInsulinBadge: Bool = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -352,8 +352,8 @@ extension FreeAPSSettings: Decodable {
             settings.profileID = profileID
         }
 
-        if let insulinBadge = try? container.decode(Bool.self, forKey: .insulinBadge) {
-            settings.insulinBadge = insulinBadge
+        if let hideInsulinBadge = try? container.decode(Bool.self, forKey: .hideInsulinBadge) {
+            settings.hideInsulinBadge = hideInsulinBadge
         }
 
         if let allowDilution = try? container.decode(Bool.self, forKey: .allowDilution) {

@@ -230,15 +230,15 @@ struct NonStandardInsulin: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color(.insulin).opacity(0.2))
+                .fill(.red)
                 .frame(width: 33, height: 15)
                 .overlay {
                     Text("U" + (formatter.string(from: concentration * 100 as NSNumber) ?? ""))
-                        .font(.system(size: 8).weight(.thin))
-                        .foregroundStyle(.primary)
+                        .font(.system(size: 9))
+                        .foregroundStyle(.white)
                 }
         }
-        .offset(x: pod ? -20 : 0, y: pod ? -20 : -22)
+        .offset(x: pod ? -15 : -3, y: pod ? -24 : -4.5)
     }
 }
 
