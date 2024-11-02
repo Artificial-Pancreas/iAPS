@@ -72,8 +72,7 @@ struct PumpView: View {
                                 reservoirFormatter
                                     .string(from: (insulin * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
                             )
-                            spacer
-                            Text("E").foregroundStyle(.secondary)
+                            Text("U").foregroundStyle(.secondary)
                         }.offset(x: 6)
                         podInsulinAmount(portion: amountFraction)
                             .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
