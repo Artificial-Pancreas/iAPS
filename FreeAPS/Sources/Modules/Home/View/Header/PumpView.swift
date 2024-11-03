@@ -38,47 +38,71 @@ struct PumpView: View {
         return dateFormatter
     }
 
+    @FetchRequest(
+        entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
+    ) var concentration: FetchedResults<InsulinConcentration>
+
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 5) {
             // OmniPods
             if let date = expiresAtDate {
                 // Insulin amount (U)
                 if let insulin = reservoir {
-                    let amountFraction = 1.0 - Double(insulin) / 200
+                    // 120 % due to being non rectangular. +10 because of bottom inserter
+                    let amountFraction = 1.0 - (Double(insulin + 10) * 1.2 / 200)
                     if insulin == 0xDEAD_BEEF {
                         podInsulinAmount(portion: amountFraction)
+                            .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
                             .overlay {
                                 if let timeZone = timeZone,
                                    timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
                                 {
                                     ClockOffset(mdtPump: false)
                                 }
+                                if (concentration.last?.concentration ?? 1) != 1,
+                                   !state.settingsManager.settings
+                                   .hideInsulinBadge
+                                {
+                                    NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: true)
+                                }
                             }
                     } else {
                         HStack(spacing: 0) {
-                            Text(reservoirFormatter.string(from: insulin as NSNumber) ?? "")
-                            spacer
-                            Text("E").foregroundStyle(.secondary)
-                        }
+                            Text(
+                                reservoirFormatter
+                                    .string(from: (insulin * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
+                            )
+                            Text("U").foregroundStyle(.secondary)
+                        }.offset(x: 6)
                         podInsulinAmount(portion: amountFraction)
+                            .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
                             .overlay {
                                 if let timeZone = timeZone,
                                    timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT()
                                 {
                                     ClockOffset(mdtPump: false)
+                                }
+                                if (concentration.last?.concentration ?? 1) != 1,
+                                   !state.settingsManager.settings.hideInsulinBadge
+                                {
+                                    NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: true)
                                 }
                             }
                     }
                 }
                 remainingTime(time: date.timeIntervalSince(timerDate))
                     .font(.pumpFont)
-                    .offset(x: -7, y: 0)
+                    .offset(x: -5, y: 0)
             } else if state.pumpName.contains("Omni") {
                 Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
                     .offset(x: 0, y: -4)
             }
             // Other pumps
             else if let reservoir = reservoir {
+                if (concentration.last?.concentration ?? 1) != 1, !state.settingsManager.settings.hideInsulinBadge {
+                    NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: false)
+                }
+
                 if reservoir == 0xDEAD_BEEF {
                     HStack(spacing: 0) {
                         Text("50+ ").font(.statusFont).bold()
@@ -112,6 +136,7 @@ struct PumpView: View {
                     .foregroundColor(batteryColor)
                     .offset(x: 0, y: -4)
                     .shadow(radius: 2)
+                    .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 4 : 0)
                     .overlay {
                         if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                             ClockOffset(mdtPump: true)
@@ -133,26 +158,23 @@ struct PumpView: View {
                 if days >= 1 {
                     HStack(spacing: 0) {
                         Text(" \(days)")
-                        spacer
                         Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(.secondary)
                         if adjustedHours >= 0 {
                             Text(" ")
                             Text("\(adjustedHours)")
-                            spacer
+                            // spacer
                             Text(NSLocalizedString("h", comment: "abbreviation for days")).foregroundStyle(.secondary)
                         }
                     }
                 } else if hours >= 1 {
                     HStack(spacing: 0) {
                         Text(" \(hours)")
-                        spacer
                         Text(NSLocalizedString("h", comment: "abbreviation for hours"))
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
                     }
                 } else {
                     HStack(spacing: 0) {
                         Text(" \(minutes)")
-                        spacer
                         Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
                             .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
                     }
@@ -209,17 +231,13 @@ struct PumpView: View {
         }
     }
 
-    private var spacer: Text {
-        Text(" ").tracking(-3)
-    }
-
     private func podInsulinAmount(portion: Double) -> some View {
         ZStack {
             UIImage(imageLiteralResourceName: "pod_reservoir")
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: portion)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
+                .aspectRatio(0.72, contentMode: .fit)
+                .frame(width: IAPSconfig.iconSize, height: IAPSconfig.iconSize)
                 .symbolRenderingMode(.palette)
                 .offset(x: 0, y: -5)
                 .shadow(radius: 1, x: 2, y: 2)

@@ -49,6 +49,19 @@ struct CompactSectionSpacing: ViewModifier {
     }
 }
 
+struct CarveOrDrop: ViewModifier {
+    let carve: Bool
+    func body(content: Content) -> some View {
+        if carve {
+            return content
+                .foregroundStyle(.shadow(.inner(color: .black, radius: 0.01, y: 1)))
+        } else {
+            return content
+                .foregroundStyle(.shadow(.drop(color: .black, radius: 0.02, y: 1)))
+        }
+    }
+}
+
 struct InfoPanelBackground: View {
     let colorScheme: ColorScheme
     var body: some View {
@@ -133,7 +146,6 @@ struct FrostedGlass: View {
 
 struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
-
     var body: some View {
         Rectangle()
             // RoundedRectangle(cornerRadius: 15)
@@ -204,10 +216,36 @@ struct ClockOffset: View {
     }
 }
 
+struct NonStandardInsulin: View {
+    let concentration: Double
+    let pod: Bool
+
+    private var formatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(.red)
+                .frame(width: 33, height: 15)
+                .overlay {
+                    Text("U" + (formatter.string(from: concentration * 100 as NSNumber) ?? ""))
+                        .font(.system(size: 9))
+                        .foregroundStyle(.white)
+                }
+        }
+        .offset(x: pod ? -15 : -3, y: pod ? -24 : -4.5)
+    }
+}
+
 struct TooOldValue: View {
     var body: some View {
         ZStack {
-            Image(systemName: "cicle.fill")
+            Image(systemName: "circle.fill")
                 .resizable()
                 .frame(maxHeight: 20)
                 .symbolRenderingMode(.palette)
@@ -313,19 +351,6 @@ struct ClearButton: ViewModifier {
     }
 }
 
-struct CarveOrDrop: ViewModifier {
-    let carve: Bool
-    func body(content: Content) -> some View {
-        if carve {
-            return content
-                .foregroundStyle(.shadow(.inner(color: .black, radius: 0.01, y: 1)))
-        } else {
-            return content
-                .foregroundStyle(.shadow(.drop(color: .black, radius: 0.02, y: 1)))
-        }
-    }
-}
-
 extension View {
     func roundedBackground() -> some View {
         modifier(RoundedBackground())
@@ -391,7 +416,7 @@ extension UnevenRoundedRectangle {
 }
 
 extension UIImage {
-    /// Code suggested by Mamad Farrahi, but slightly modified. Need to find some newer version later.
+    /// Code suggested by Mamad Farrahi, but slightly modified.
     func fillImageUpToPortion(color: Color, portion: Double) -> Image {
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         UIGraphicsBeginImageContextWithOptions(size, false, scale)

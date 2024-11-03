@@ -442,6 +442,9 @@ extension Home {
                         }.offset(x: 0, y: 5)
                     }
 
+                    // Instead of Spacer
+                    Text(" ")
+
                     // Insulin on Board
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
@@ -459,7 +462,7 @@ extension Home {
                         HStack(spacing: 0) {
                             if let loop = state.suggestion, let iob = loop.iob {
                                 Text(
-                                    numberFormatter.string(from: iob as NSNumber) ?? "0"
+                                    targetFormatter.string(from: iob as NSNumber) ?? "0"
                                 ).font(.statusFont).bold()
                             } else {
                                 Text("?").font(.statusFont).bold()
