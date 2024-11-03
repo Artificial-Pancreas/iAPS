@@ -477,25 +477,25 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Bolus max";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Veuillez vérifier que vous avez sélectionné la bonne concentration d'insuline avant d'enregistrer vos paramètres.\n\nLe flacon ou le stylo d'insuline doit indiquer la concentration en unités par millilitre (p. ex. U100 indique 100 unités par millilitre, ce qui est la concentration standard).\n\nLa sélection de la bonne valeur est essentielle pour un dosage adéquat.";
 
 /* Insulin Concentration View */
 "Concentration" = "Concentration";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Concentration de l'insuline";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Changer l'insuline";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Insuline diluée à";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "concentration standard :";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "unités par ml";
 
 /* Insulin Concentration View */
 "Standard concentration (U 100)" = "Standard concentration (U 100)";
