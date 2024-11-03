@@ -476,6 +476,53 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings. The insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration). Accurate selection is critical for proper dosing." = "Noga kontrollera att du valt rätt inställning för koncentration innan du sparar. Din flaska eller penna med insulin är märkt med insulinkoncentrationen i enheter per milliliter ( t.ex U100: 100 enheter per milliliter, vilket är standardkoncentrationen för insulin). Ditt val av koncentration kommer påverka tillförsel av insulin.";
+
+/* Insulin Concentration View */
+"Concentration" = "Koncentration";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Insulinkoncentration";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Ändra koncentration";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insulin utspädd till";
+
+/* Insulin Concentration View */
+"standard concentration:" = "standardkoncentration:";
+
+/* Insulin Concentration View */
+"units per ml" = "enheter per ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Standardkoncentration (U100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Insulinkoncentration ökad till";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Det gick inte att spara till pump. Försök igen när pumpen inte är upptagen med att ge bolus.";
+
+/* Insulin Concentration View */
+"Saved" = "Sparad";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Tillåt utspätt insulin i pumpinställningar";
+
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
 
