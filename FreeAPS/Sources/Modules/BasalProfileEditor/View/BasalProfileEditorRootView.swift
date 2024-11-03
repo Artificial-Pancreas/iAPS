@@ -7,8 +7,9 @@ extension BasalProfileEditor {
         @StateObject var state = StateModel()
         @State private var editMode = EditMode.inactive
         @Environment(\.dismiss) var dismiss
+
         @FetchRequest(
-            entity: InsulinConcentration.entity(), sortDescriptors: []
+            entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
         ) var concentration: FetchedResults<InsulinConcentration>
 
         let saveNewConcentration: Bool
@@ -144,7 +145,6 @@ extension BasalProfileEditor {
                     }
                 }
 
-
                 Section {
                     HStack {
                         Text("Total")
@@ -241,7 +241,7 @@ extension BasalProfileEditor {
                 }
             } message: {
                 Text("\n" + NSLocalizedString(
-                    "Please verify that you have selected the correct insulin concentration before saving your settings. The insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration). Accurate selection is critical for proper dosing.",
+                    "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.",
                     comment: "Insulin alert message"
                 ))
             }
