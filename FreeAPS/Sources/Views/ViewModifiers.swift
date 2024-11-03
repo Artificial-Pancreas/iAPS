@@ -351,19 +351,6 @@ struct ClearButton: ViewModifier {
     }
 }
 
-struct CarveOrDrop: ViewModifier {
-    let carve: Bool
-    func body(content: Content) -> some View {
-        if carve {
-            return content
-                .foregroundStyle(.shadow(.inner(color: .black, radius: 0.01, y: 1)))
-        } else {
-            return content
-                .foregroundStyle(.shadow(.drop(color: .black, radius: 0.02, y: 1)))
-        }
-    }
-}
-
 extension View {
     func roundedBackground() -> some View {
         modifier(RoundedBackground())

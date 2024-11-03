@@ -250,24 +250,4 @@ struct PumpView: View {
                 }
         }
     }
-
-    private func podInsulinAmount(portion: Double) -> some View {
-        ZStack {
-            UIImage(imageLiteralResourceName: "pod_reservoir")
-                .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: portion)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: IAPSconfig.iconSize * 1.15, height: IAPSconfig.iconSize * 1.6)
-                .symbolRenderingMode(.palette)
-                .offset(x: 0, y: -5)
-                .shadow(radius: 1, x: 2, y: 2)
-                .foregroundStyle(.white)
-                .overlay {
-                    portion <= 0.3 ?
-                        Text("50+").foregroundStyle(.white).font(.system(size: 6))
-                        .offset(y: -4)
-                        : nil
-                }
-        }
-    }
 }
