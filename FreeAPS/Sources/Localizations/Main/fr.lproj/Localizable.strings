@@ -1924,13 +1924,13 @@ Enact a temp Basal or a temp target */
 "Errors" = "Erreurs";
 
 /* Loop Statistics pop-up description */
-"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+"Success = Started / Completed (loops)" = "Succès = Boucles démarrées / Boucles terminées";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
+"Most Frequent Error" = "Erreur la plus fréquente";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Non-completed Loops";
+"Non-completed Loops" = "Boucles non terminées";
 
 /* Average loop interval */
 "Interval" = "Intervalle";
@@ -2515,16 +2515,16 @@ Enact a temp Basal or a temp target */
 "Averages" = "Moyennes";
 
 /* Dynamic settings View */
-"Average ISF" = "Average ISF";
+"Average ISF" = "FSI moyen";
 
 /* Dynamic settings View */
-"Average CR" = "Average CR";
+"Average CR" = "RIG moyen";
 
 /* Dynamic settings View */
-"Average CSF" = "Average CSF";
+"Average CSF" = "FSG moyen";
 
 /* Dynamic settings View */
-"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "FSI : Facteur de sensibilité à l'insuline, RIG : Ratio insuline/glucides,\nFSG : Facteur de sensibilité aux glucides = FSI/RIG";
 
 /* Header */
 "Calculator settings" = "Réglages de la calculatrice";
