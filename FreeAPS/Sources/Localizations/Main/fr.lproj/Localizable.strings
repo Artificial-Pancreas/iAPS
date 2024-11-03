@@ -1641,7 +1641,7 @@ Enact a temp Basal or a temp target */
 "Hide" = "Masquer";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glycémie Eventuelle > Glycémie Cible, mais le glucose est prévu pour la première fois dans la liste déroulante à ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glycémie éventuelle > Glycémie cible, mais le glucose est prévu pour la première fois dans la liste déroulante à ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "qui est inférieur à votre seuil (";
