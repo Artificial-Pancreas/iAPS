@@ -7,8 +7,9 @@ extension BasalProfileEditor {
         @StateObject var state = StateModel()
         @State private var editMode = EditMode.inactive
         @Environment(\.dismiss) var dismiss
+
         @FetchRequest(
-            entity: InsulinConcentration.entity(), sortDescriptors: []
+            entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
         ) var concentration: FetchedResults<InsulinConcentration>
 
         let saveNewConcentration: Bool

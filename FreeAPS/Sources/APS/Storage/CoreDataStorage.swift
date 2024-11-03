@@ -351,6 +351,8 @@ final class CoreDataStorage {
         var conc = [InsulinConcentration]()
         coredataContext.performAndWait {
             let requestConc = InsulinConcentration.fetchRequest() as NSFetchRequest<InsulinConcentration>
+            let sort = NSSortDescriptor(key: "date", ascending: true)
+            requestConc.sortDescriptors = [sort]
             try? conc = coredataContext.fetch(requestConc)
         }
         let recent = conc.last
