@@ -23,7 +23,7 @@
 	<key>NSPrincipalClass</key>
 	<string>CGMBLEKitG6Plugin</string>
 	<key>com.loopkit.Loop.CGMManagerDisplayName</key>
-	<string>Dexcom G6</string>
+	<string>Dexcom G6 & ONE</string>
 	<key>com.loopkit.Loop.CGMManagerIdentifier</key>
 	<string>DexG6Transmitter</string>
 </dict>
