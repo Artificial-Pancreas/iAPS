@@ -23,7 +23,7 @@
 	<key>NSPrincipalClass</key>
 	<string>G7SensorPlugin</string>
 	<key>com.loopkit.Loop.CGMManagerDisplayName</key>
-	<string>Dexcom G7 + ONE+</string>
+	<string>Dexcom G7 & ONE+</string>
 	<key>com.loopkit.Loop.CGMManagerIdentifier</key>
 	<string>G7CGMManager</string>
 </dict>
