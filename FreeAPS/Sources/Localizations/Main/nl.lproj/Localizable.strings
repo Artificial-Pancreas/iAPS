@@ -477,37 +477,37 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Max bolus";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Verifieer dat je de juiste insuline concentratie hebt geselecteerd voordat je opslaat. \n\nHet insuline patroon geeft de concentratie in units per millimeter (U100 bevat 100 eenheden per millimeter, dit is de standaard concentratie).\n\nDe juiste selectie is noodzakelijk voor de juiste dosering.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Concentratie";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Insuline concentratie";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Wijzig insuline";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Insuline verdund naar";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "standaard concentratie:";
 
 /* Insulin Concentration View */
 "units per ml" = "units per ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Standaard concentratie (U 100)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Insuline concentratie verhoogd naar";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Kan niet opslaan naar pomp. Probeer opnieuw wanneer de pomp geen bolus toedient.";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "Opgeslagen";
 
 /* Label inusulin concentration, units per ml */
 "U100" = "U100";
@@ -521,7 +521,7 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Sta verdunde insuline concentratie instellingen toe";
 /* Max setting */
 "Max Carbs" = "Max koolhydraten";
 
