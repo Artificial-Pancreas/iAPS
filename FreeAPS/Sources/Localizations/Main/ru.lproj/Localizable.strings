@@ -498,30 +498,30 @@ Enact a temp Basal or a temp target */
 "units per ml" = "units per ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Стандартная концентрация (100 ЕД/мл)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Концентрация инсулина увеличилась до";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Не удаётся сохранить данные на помпу. Повторите попытку, когда помпа не будет занята введением болюса.";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "Сохранено";
 
 /* Label inusulin concentration, units per ml */
-"U100" = "U100";
+"U100" = "100 ЕД/мл";
 
 /* Label inusulin concentration, units per ml */
-"U200" = "U200";
+"U200" = "200 ЕД/мл";
 
 /* Label inusulin concentration, units per ml */
-"U50" = "U50";
+"U50" = "50 ЕД/мл";
 
 /* Label inusulin concentration, units per ml */
-"U10" = "U10";
+"U10" = "10 ЕД/мл";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Разрешить настройку концентрации разбавленного инсулина";
 /* Max setting */
 "Max Carbs" = "Максимум углеводов";
 
