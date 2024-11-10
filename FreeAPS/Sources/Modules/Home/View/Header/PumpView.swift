@@ -105,7 +105,8 @@ struct PumpView: View {
 
                 if reservoir == 0xDEAD_BEEF {
                     HStack(spacing: 0) {
-                        Text("50+ ").font(.statusFont).bold()
+                        let units = 50 * (concentration.last?.concentration ?? 1)
+                        Text("\(units)+ ").font(.statusFont).bold()
                         Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                     }
                     .offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
@@ -113,7 +114,7 @@ struct PumpView: View {
                     HStack(spacing: 0) {
                         Text(
                             reservoirFormatter
-                                .string(from: reservoir as NSNumber)!
+                                .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber)!
                         ).font(.statusFont).bold()
                         Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
                     }
@@ -243,8 +244,10 @@ struct PumpView: View {
                 .shadow(radius: 1, x: 2, y: 2)
                 .foregroundStyle(.white)
                 .overlay {
+                    let units = 50 * (concentration.last?.concentration ?? 1)
                     portion <= 0.3 ?
-                        Text("50+").foregroundStyle(.white).font(.system(size: 6))
+                        Text((reservoirFormatter.string(from: units as NSNumber) ?? "") + "+").foregroundStyle(.white)
+                        .font(.system(size: 6))
                         .offset(y: -4)
                         : nil
                 }
