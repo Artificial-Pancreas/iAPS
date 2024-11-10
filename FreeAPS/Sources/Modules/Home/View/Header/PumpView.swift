@@ -246,7 +246,8 @@ struct PumpView: View {
                 .overlay {
                     let units = 50 * (concentration.last?.concentration ?? 1)
                     portion <= 0.3 ?
-                        Text("\(units)+ ").foregroundStyle(.white).font(.system(size: 6))
+                        Text((reservoirFormatter.string(from: units as NSNumber) ?? "") + "+").foregroundStyle(.white)
+                        .font(.system(size: 6))
                         .offset(y: -4)
                         : nil
                 }
