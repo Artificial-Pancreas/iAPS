@@ -58,7 +58,7 @@ extension Restore {
                         .padding(.bottom, 40)
 
                     Text(
-                        "In this new version your OpenAPS settings have been reset to default settings, due to a resolved Type error issue.\n\nFortunately you have a backup of all your old OpenAPS settings in the cloud.\n\nDo you want to try to restore these settings now?\n"
+                        "In this new version the OpenAPS settings have been reset to default settings, due to a resolved Type error.\n\nFortunately you have a retrieved backup of your old OpenAPS settings in the cloud (open-iaps.app).\n\nIf you want to use these fetched settings tap \"Yes\""
                     )
                     .font(.previewNormal)
                     .frame(maxWidth: .infinity, alignment: .center)
