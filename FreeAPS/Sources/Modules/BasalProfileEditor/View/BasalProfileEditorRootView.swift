@@ -12,6 +12,9 @@ extension BasalProfileEditor {
             entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
         ) var concentration: FetchedResults<InsulinConcentration>
 
+        let saveNewConcentration: Bool
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+
         private var dateFormatter: DateFormatter {
             let formatter = DateFormatter()
             formatter.timeZone = TimeZone(secondsFromGMT: 0)
@@ -25,43 +28,28 @@ extension BasalProfileEditor {
             return formatter
         }
 
+        @State var set: Decimal = 1
+        @State var saving = false
+        @State var showAlert = false
+        @State var clean = false
+
         var body: some View {
             Form {
-                Section(header: Text("Schedule")) {
-                    list
-                    addButton
-                }
-                Section {
-                    HStack {
-                        Text("Total")
-                            .bold()
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Text(rateFormatter.string(from: state.total as NSNumber) ?? "0")
-                            .foregroundColor(.primary) +
-                            Text(" U/day")
-                            .foregroundColor(.secondary)
-                    }
-                }
-                Section {
-                    HStack {
-                        if state.syncInProgress {
-                            ProgressView().padding(.trailing, 10)
-                        }
-                        Button { state.save() }
-                        label: {
-                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
-                        }
-                        .disabled(state.syncInProgress || state.items.isEmpty)
-                    }
+                if !saveNewConcentration {
+                    basalProfileView
+                } else {
+                    concentrationView
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
-            .navigationTitle("Basal Profile")
+            .onAppear {
+                configureView()
+                set = Decimal(concentration.last?.concentration ?? 1)
+            }
+            .navigationTitle(saveNewConcentration ? "Insulin Concentration" : "Basal Profile")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
-                trailing: EditButton()
+                trailing: !saveNewConcentration ? EditButton() : nil
             )
             .environment(\.editMode, $editMode)
             .onAppear {

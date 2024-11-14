@@ -47,6 +47,11 @@
 		1982F7DB2BA6509D00EAFADE /* PumpStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1982F7DA2BA6509D00EAFADE /* PumpStorage.swift */; };
 		198377D2266BFFF6004DE65E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		198CED9D2B2E62940073032D /* OverrideStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CED9C2B2E62940073032D /* OverrideStorage.swift */; };
+		199003CB2CE625E000FB30A8 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199003CA2CE625DD00FB30A8 /* Token.swift */; };
+		199003CE2CE626B200FB30A8 /* RestoreDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199003CD2CE626AD00FB30A8 /* RestoreDataFlow.swift */; };
+		199003D02CE626BF00FB30A8 /* RestoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199003CF2CE626B900FB30A8 /* RestoreProvider.swift */; };
+		199003D22CE626C900FB30A8 /* RestoreStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199003D12CE626C400FB30A8 /* RestoreStateModel.swift */; };
+		199003D52CE626DA00FB30A8 /* RestoreRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199003D42CE626D300FB30A8 /* RestoreRootView.swift */; };
 		1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
@@ -660,6 +665,11 @@
 		198377E3266C0ADC004DE65E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377E4266C13D2004DE65E /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198CED9C2B2E62940073032D /* OverrideStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideStorage.swift; sourceTree = "<group>"; };
+		199003CA2CE625DD00FB30A8 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		199003CD2CE626AD00FB30A8 /* RestoreDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreDataFlow.swift; sourceTree = "<group>"; };
+		199003CF2CE626B900FB30A8 /* RestoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreProvider.swift; sourceTree = "<group>"; };
+		199003D12CE626C400FB30A8 /* RestoreStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreStateModel.swift; sourceTree = "<group>"; };
+		199003D42CE626D300FB30A8 /* RestoreRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreRootView.swift; sourceTree = "<group>"; };
 		199561C0275E61A50077B976 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		199732B4271B72DD00129A3F /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		199732B5271B9EE900129A3F /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1278,6 +1288,25 @@
 			path = Localizations;
 			sourceTree = "<group>";
 		};
+		199003CC2CE6269000FB30A8 /* Restore */ = {
+			isa = PBXGroup;
+			children = (
+				199003D32CE626CD00FB30A8 /* View */,
+				199003CD2CE626AD00FB30A8 /* RestoreDataFlow.swift */,
+				199003CF2CE626B900FB30A8 /* RestoreProvider.swift */,
+				199003D12CE626C400FB30A8 /* RestoreStateModel.swift */,
+			);
+			path = Restore;
+			sourceTree = "<group>";
+		};
+		199003D32CE626CD00FB30A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				199003D42CE626D300FB30A8 /* RestoreRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		19D440A926B6FEBD008DA6C8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -1407,28 +1436,24 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				F2159A472BA60A0300A0B716 /* ContactTrick */,
-				19F191D92BE4F93400F6297E /* Sharing */,
-				195D80B22AF696EE00D25097 /* Dynamic */,
-				190EBCC229FF134900BA767D /* StatConfig */,
-				BD7DA9A32AE06DBA00601B20 /* BolusCalculatorConfig */,
-				19F95FF129F10F9C00314DDC /* Stat */,
-				CE94597C29E9E1CD0047C9C6 /* WatchConfig */,
-				19E1F7E629D0828B005C8D20 /* IconConfig */,
-				19D466A129AA2B0A004D5F33 /* FPUConfig */,
-				F90692CD274B99850037068D /* HealthKit */,
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
 				A9A4C88374496B3C89058A89 /* AddTempTarget */,
 				672F63EEAE27400625E14BAD /* AutotuneConfig */,
 				A42F1FEDFFD0DDE00AAD54D3 /* BasalProfileEditor */,
 				3811DE0425C9D32E00A708ED /* Base */,
 				C2C98283C436DB934D7E7994 /* Bolus */,
+				BD7DA9A32AE06DBA00601B20 /* BolusCalculatorConfig */,
 				E8176B120B55CE89F1591542 /* Calibrations */,
 				F75CB57ED6971B46F8756083 /* CGM */,
 				0610F7D6D2EC00E3BA1569F0 /* ConfigEditor */,
+				F2159A472BA60A0300A0B716 /* ContactTrick */,
 				E42231DBF0DBE2B4B92D1B15 /* CREditor */,
 				9E56E3626FAD933385101B76 /* DataTable */,
+				195D80B22AF696EE00D25097 /* Dynamic */,
+				19D466A129AA2B0A004D5F33 /* FPUConfig */,
+				F90692CD274B99850037068D /* HealthKit */,
 				3811DE2725C9D49500A708ED /* Home */,
+				19E1F7E629D0828B005C8D20 /* IconConfig */,
 				D8F047E14D567F2B5DBEFD96 /* ISFEditor */,
 				C11D545CED3ECEB525EDEE23 /* LibreConfig */,
 				3811DE1A25C9D48300A708ED /* Main */,
@@ -1439,9 +1464,14 @@
 				3E1C41D9301B7058AA7BF5EA /* PreferencesEditor */,
 				99C01B871ACAB3F32CE755C7 /* PumpConfig */,
 				E493126EA71765130F64CCE5 /* PumpSettingsEditor */,
+				199003CC2CE6269000FB30A8 /* Restore */,
 				3811DE3825C9D4A100A708ED /* Settings */,
+				19F191D92BE4F93400F6297E /* Sharing */,
 				29B478DF61BF8D270F7D8954 /* Snooze */,
+				19F95FF129F10F9C00314DDC /* Stat */,
+				190EBCC229FF134900BA767D /* StatConfig */,
 				6517011F19F244F64E1FF14B /* TargetsEditor */,
+				CE94597C29E9E1CD0047C9C6 /* WatchConfig */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1894,10 +1924,12 @@
 		388E5A5A25B6F05F0019842D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				FEFA5C10299F814A00765C17 /* CoreDataStack.swift */,
+				E06B9119275B5EEA003C04B6 /* Array+Extension.swift */,
+				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 				38F37827261260DC009DB701 /* Color+Extensions.swift */,
 				389ECE042601144100D86C4F /* ConcurrentMap.swift */,
 				38192E0C261BAF980094D973 /* ConvenienceExtensions.swift */,
+				FEFA5C10299F814A00765C17 /* CoreDataStack.swift */,
 				3871F39E25ED895A0013ECB5 /* Decimal+Extensions.swift */,
 				38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */,
 				389487392614928B004DF424 /* DispatchTimer.swift */,
@@ -1911,14 +1943,13 @@
 				38E98A2C25F52DC400C0CED0 /* NSLocking+Extensions.swift */,
 				38C4D33925E9A1ED00D30B77 /* NSObject+AssociatedValues.swift */,
 				3811DE5725C9D4D500A708ED /* ProgressBar.swift */,
-				3811DE5525C9D4D500A708ED /* Publisher.swift */,
-				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
 				3811DEE325CA063400A708ED /* PropertyWrappers */,
-				E06B9119275B5EEA003C04B6 /* Array+Extension.swift */,
-				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
-				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
-				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
+				3811DE5525C9D4D500A708ED /* Publisher.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
+				38E98A3625F5509500C0CED0 /* String+Extensions.swift */,
+				199003CA2CE625DD00FB30A8 /* Token.swift */,
+				CEB434E428B8FF5D00B70274 /* UIColor.swift */,
+				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2916,10 +2947,12 @@
 				3811DE8F25C9D80400A708ED /* User.swift in Sources */,
 				19D466A329AA2B80004D5F33 /* FPUConfigDataFlow.swift in Sources */,
 				3811DEB225C9D88300A708ED /* KeychainItemAccessibility.swift in Sources */,
+				199003CB2CE625E000FB30A8 /* Token.swift in Sources */,
 				385CEAC425F2F154002D6D5B /* AnnouncementsStorage.swift in Sources */,
 				38AEE73D25F0200C0013F05B /* FreeAPSSettings.swift in Sources */,
 				38FCF3FD25E997A80078B0D1 /* PumpHistoryStorage.swift in Sources */,
 				19F191E22BE4F9BA00F6297E /* SharingRootView.swift in Sources */,
+				199003CE2CE626B200FB30A8 /* RestoreDataFlow.swift in Sources */,
 				38D0B3B625EBE24900CB6E88 /* Battery.swift in Sources */,
 				38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */,
 				F90692CF274B999A0037068D /* HealthKitDataFlow.swift in Sources */,
@@ -3014,6 +3047,7 @@
 				38569347270B5DFB0002C50D /* CGMType.swift in Sources */,
 				3821ED4C25DD18BA00BC42AD /* Constants.swift in Sources */,
 				384E803425C385E60086DB71 /* JavaScriptWorker.swift in Sources */,
+				199003D22CE626C900FB30A8 /* RestoreStateModel.swift in Sources */,
 				3811DE5D25C9D4D500A708ED /* Publisher.swift in Sources */,
 				E00EEC0727368630002FF094 /* APSAssembly.swift in Sources */,
 				38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */,
@@ -3030,6 +3064,7 @@
 				3811DE5C25C9D4D500A708ED /* Formatters.swift in Sources */,
 				3871F39F25ED895A0013ECB5 /* Decimal+Extensions.swift in Sources */,
 				3811DE3525C9D49500A708ED /* HomeRootView.swift in Sources */,
+				199003D02CE626BF00FB30A8 /* RestoreProvider.swift in Sources */,
 				38E98A2925F52C9300C0CED0 /* Error+Extensions.swift in Sources */,
 				38EA05DA261F6E7C0064E39B /* SimpleLogReporter.swift in Sources */,
 				3811DE6125C9D4D500A708ED /* ViewModifiers.swift in Sources */,
@@ -3248,6 +3283,7 @@
 				B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */,
 				320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */,
 				19E1F7E829D082D0005C8D20 /* IconConfigDataFlow.swift in Sources */,
+				199003D52CE626DA00FB30A8 /* RestoreRootView.swift in Sources */,
 				E25073BC86C11C3D6A42F5AC /* CalibrationsStateModel.swift in Sources */,
 				BA90041DC8991147E5C8C3AA /* CalibrationsRootView.swift in Sources */,
 				E3A08AAE59538BC8A8ABE477 /* NotificationsConfigDataFlow.swift in Sources */,
