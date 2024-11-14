@@ -49,19 +49,6 @@ struct CompactSectionSpacing: ViewModifier {
     }
 }
 
-struct CarveOrDrop: ViewModifier {
-    let carve: Bool
-    func body(content: Content) -> some View {
-        if carve {
-            return content
-                .foregroundStyle(.shadow(.inner(color: .black, radius: 0.01, y: 1)))
-        } else {
-            return content
-                .foregroundStyle(.shadow(.drop(color: .black, radius: 0.02, y: 1)))
-        }
-    }
-}
-
 struct InfoPanelBackground: View {
     let colorScheme: ColorScheme
     var body: some View {
@@ -146,6 +133,7 @@ struct FrostedGlass: View {
 
 struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         Rectangle()
             // RoundedRectangle(cornerRadius: 15)
@@ -245,7 +233,7 @@ struct NonStandardInsulin: View {
 struct TooOldValue: View {
     var body: some View {
         ZStack {
-            Image(systemName: "circle.fill")
+            Image(systemName: "cicle.fill")
                 .resizable()
                 .frame(maxHeight: 20)
                 .symbolRenderingMode(.palette)

@@ -366,10 +366,3 @@ extension Bolus.StateModel: SuggestionObserver {
         }
     }
 }
-
-extension Decimal {
-    /// Account for increments
-    func roundBolus(increment: Double) -> Decimal {
-        Decimal(round(Double(self) / increment)) * Decimal(increment)
-    }
-}

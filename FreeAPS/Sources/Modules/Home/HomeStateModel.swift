@@ -10,7 +10,6 @@ extension Home {
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
         @Injected() var storage: TempTargetsStorage!
-        @Injected() var keychain: Keychain!
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
         @Published var glucose: [BloodGlucose] = []
@@ -92,7 +91,6 @@ extension Home {
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
-        @Published var openAPSSettings: Preferences?
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -306,23 +304,6 @@ extension Home {
                 setHBT.date = Date()
                 try? self.coredataContext.save()
             }
-        }
-
-        func fetchPreferences() {
-            let token = Token().getIdentifier()
-            let database = Database(token: token)
-            database.fetchPreferences("default")
-                .receive(on: DispatchQueue.main)
-                .sink { completion in
-                    switch completion {
-                    case .finished:
-                        debug(.service, "Preferences fetched from database. Profile: default")
-                    case let .failure(error):
-                        debug(.service, "Preferences fetched from database failed. Error: " + error.localizedDescription)
-                    }
-                }
-            receiveValue: { self.openAPSSettings = $0 }
-                .store(in: &lifetime)
         }
 
         private func setupGlucose() {
