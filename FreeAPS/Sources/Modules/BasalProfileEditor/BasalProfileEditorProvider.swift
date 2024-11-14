@@ -16,10 +16,6 @@ extension BasalProfileEditor {
             deviceManager.pumpManager?.supportedBasalRates.map { Decimal($0) }
         }
 
-        var concentration: Double {
-            CoreDataStorage().insulinConcentration().concentration
-        }
-
         func saveProfile(_ profile: [BasalProfileEntry]) -> AnyPublisher<Void, Error> {
             guard let pump = deviceManager?.pumpManager else {
                 storage.save(profile, as: OpenAPS.Settings.basalProfile)
@@ -27,10 +23,7 @@ extension BasalProfileEditor {
             }
 
             let syncValues = profile.map {
-                RepeatingScheduleValue(
-                    startTime: TimeInterval($0.minutes * 60),
-                    value: Double($0.rate) / concentration
-                )
+                RepeatingScheduleValue(startTime: TimeInterval($0.minutes * 60), value: Double($0.rate))
             }
 
             return Future { promise in

@@ -137,7 +137,6 @@ struct PumpView: View {
                     .foregroundColor(batteryColor)
                     .offset(x: 0, y: -4)
                     .shadow(radius: 2)
-                    .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 4 : 0)
                     .overlay {
                         if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                             ClockOffset(mdtPump: true)

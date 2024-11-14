@@ -10,7 +10,7 @@ enum Screen: Identifiable, Hashable {
     case nighscoutConfig
     case pumpConfig
     case pumpSettingsEditor
-    case basalProfileEditor(saveNewConcentration: Bool)
+    case basalProfileEditor
     case isfEditor
     case crEditor
     case targetsEditor
@@ -57,8 +57,8 @@ extension Screen {
             PumpConfig.RootView(resolver: resolver)
         case .pumpSettingsEditor:
             PumpSettingsEditor.RootView(resolver: resolver)
-        case let .basalProfileEditor(saveNewConcentration):
-            BasalProfileEditor.RootView(resolver: resolver, saveNewConcentration: saveNewConcentration)
+        case .basalProfileEditor:
+            BasalProfileEditor.RootView(resolver: resolver)
         case .isfEditor:
             ISFEditor.RootView(resolver: resolver)
         case .crEditor:
