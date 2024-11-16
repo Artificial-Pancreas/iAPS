@@ -477,51 +477,51 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Макс. Болюс";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings. The insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration). Accurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings. The insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration). Accurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Пожалуйста, убедитесь, что вы выбрали правильную концентрацию инсулина, прежде чем сохранять настройки.\n\nНа флаконе или ручке с инсулином должна быть указана концентрация в единицах на миллилитр (например, 100 ЕД/мл или U100 означает 100 единиц на миллилитр, что является стандартной концентрацией).\n\nТочный выбор имеет решающее значение для правильного дозирования.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Концентрация";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Концентрация инсулина";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Изменить инсулин";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Инсулин разбавлен до";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "стандартная концентрация:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "единиц на мл";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Стандартная концентрация (100 ЕД/мл)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Концентрация инсулина увеличилась до";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Не удаётся сохранить данные на помпу. Повторите попытку, когда помпа не будет занята введением болюса.";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "Сохранено";
 
 /* Label inusulin concentration, units per ml */
-"U100" = "U100";
+"U100" = "100 ЕД/мл";
 
 /* Label inusulin concentration, units per ml */
-"U200" = "U200";
+"U200" = "200 ЕД/мл";
 
 /* Label inusulin concentration, units per ml */
-"U50" = "U50";
+"U50" = "50 ЕД/мл";
 
 /* Label inusulin concentration, units per ml */
-"U10" = "U10";
+"U10" = "10 ЕД/мл";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Разрешить настройку концентрации разбавленного инсулина";
 /* Max setting */
 "Max Carbs" = "Максимум углеводов";
 
