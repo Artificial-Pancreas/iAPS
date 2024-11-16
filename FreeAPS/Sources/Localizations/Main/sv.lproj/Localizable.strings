@@ -477,7 +477,7 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Max bolus";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings. The insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration). Accurate selection is critical for proper dosing." = "Noga kontrollera att du valt rätt inställning för koncentration innan du sparar. Din flaska eller penna med insulin är märkt med insulinkoncentrationen i enheter per milliliter ( t.ex U100: 100 enheter per milliliter, vilket är standardkoncentrationen för insulin). Ditt val av koncentration kommer påverka tillförsel av insulin.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Noga kontrollera att du valt rätt inställning för koncentration innan du sparar.\n\nDin flaska eller penna med insulin är märkt med insulinkoncentrationen i enheter per milliliter (t.ex U100, som betyder 100 enheter per milliliter, vilket är standardkoncentrationen för insulin).\n\nDitt val av koncentration kommer påverka tillförd mängd insulin.";
 
 /* Insulin Concentration View */
 "Concentration" = "Koncentration";
@@ -522,7 +522,6 @@ Enact a temp Basal or a temp target */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
 "Allow diluted insulin concentration settings" = "Tillåt utspätt insulin i pumpinställningar";
-
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
 
@@ -1182,6 +1181,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Debug options" = "Felsökningsalternativ";
+
+/* Loop even when consecutive deltas from CGM readings are zero */
+"Ignore flat CGM readings" = "Ignore flat CGM readings";
 
 /* */
 "Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten ";
