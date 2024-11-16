@@ -47,7 +47,8 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
 - Dexcom ONE +   
 - Dexcom G7   
 - Libre 1   
-- Libre 2 (European)   
+- Libre 2 (European)
+- Libre 2 Plus (European)  
 - Medtronic Enlite
 - Nightscout as CGM
 
