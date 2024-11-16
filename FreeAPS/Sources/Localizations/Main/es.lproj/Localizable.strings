@@ -1301,6 +1301,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Pump Error */
 "Pump is Busy." = "Pump is Busy.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Bolus already in Progress!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1987,6 +1990,33 @@ Ajustes predeterminados:\n
 
 /* HbA1c for all glucose storage days */
 "all" = "todos";
+
+/* Active Insulin View */
+"Active Insulin" = "Active Insulin";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Time with negative insulin";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insulin compared to yesterday";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insulin compared to average";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Average Insulin 10 days";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD yesterday";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD 2 days ago";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD 3 days ago";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Active Carbohydrates";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2713,6 +2743,15 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* UI/UX option */
 "Display Glucose Delta" = "Display Glucose Delta";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Hide Concentration Badge";
+
+/* UI/UX option */
+"Use insulin bars" = "Use insulin bars";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
 
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
