@@ -1182,6 +1182,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Debug options" = "Felsökningsalternativ";
 
+/* Loop even when consecutive deltas from CGM readings are zero */
+"Ignore flat CGM readings" = "Ignore flat CGM readings";
+
 /* */
 "Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten ";
 
