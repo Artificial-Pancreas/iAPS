@@ -1996,16 +1996,16 @@ Enact a temp Basal or a temp target */
 "Average Insulin 10 days" = "Moyenne d'insuline sur 10 jours";
 
 /* Active Insulin View */
-"TDD yesterday" = "TDD yesterday";
+"TDD yesterday" = "Dose quotidienne totale (DQT) hier";
 
 /* Active Insulin View */
-"TDD 2 days ago" = "TDD 2 days ago";
+"TDD 2 days ago" = "DQT il y a 2 jours";
 
 /* Active Insulin View */
-"TDD 3 days ago" = "TDD 3 days ago";
+"TDD 3 days ago" = "DQT il y a 3 jours";
 
 /* Active Carbohydrates View */
-"Active Carbohydrates" = "Active Carbohydrates";
+"Active Carbohydrates" = "Glucides actifs";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2631,10 +2631,10 @@ Enact a temp Basal or a temp target */
 "Hide Concentration Badge" = "Hide Concentration Badge";
 
 /* UI/UX option */
-"Use insulin bars" = "Use insulin bars";
+"Use insulin bars" = "Afficher l'insuline sous forme de barres";
 
 /* UI/UX option */
-"Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
+"Hide the bolus amount strings when amount is under" = "Masquer les quantités de bolus si inférieures à";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";
