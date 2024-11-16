@@ -18,6 +18,7 @@ extension Home {
         @State var displayGlucose = false
         @State var animateLoop = Date.distantPast
         @State var animateTIR = Date.distantPast
+        @State var showBolusActiveAlert = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
@@ -313,10 +314,11 @@ extension Home {
                         }.buttonStyle(.borderless)
                         Spacer()
                         Button {
-                            state.showModal(for: .bolus(
-                                waitForSuggestion: state.useCalc ? true : false,
-                                fetch: false
-                            ))
+                            (state.bolusProgress != nil) ? showBolusActiveAlert = true :
+                                state.showModal(for: .bolus(
+                                    waitForSuggestion: state.useCalc ? true : false,
+                                    fetch: false
+                                ))
                         }
                         label: {
                             Image(systemName: "syringe")
@@ -400,6 +402,11 @@ extension Home {
             .confirmationDialog("Cancel Temporary Target", isPresented: $showCancelTTAlert) {
                 Button("Cancel Temporary Target", role: .destructive) {
                     state.cancelTempTarget()
+                }
+            }
+            .confirmationDialog("Bolus already in Progress", isPresented: $showBolusActiveAlert) {
+                Button("Bolus already in Progress!", role: .cancel) {
+                    showBolusActiveAlert = false
                 }
             }
         }
