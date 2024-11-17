@@ -70,7 +70,7 @@ extension Bolus {
         @Published var loopDate: Date = .distantFuture
         @Published var now = Date.now
 
-        let loopReminder: CGFloat = 20
+        let loopReminder: CGFloat = 4
 
         private var loopFormatter: NumberFormatter {
             let formatter = NumberFormatter()
