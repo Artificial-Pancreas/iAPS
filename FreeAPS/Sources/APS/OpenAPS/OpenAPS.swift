@@ -398,12 +398,12 @@ final class OpenAPS {
         coredataContext.perform { [self] in
             if let isf = readReason(reason: reason, variable: "ISF"),
                let minPredBG = readReason(reason: reason, variable: "minPredBG"),
-               let cr = readJSON(json: profile, variable: "carb_ratio"),
+               let cr = readReason(reason: reason, variable: "CR"),
                let iob = suggestion.iob, let cob = suggestion.cob, let target = targetGlucose
             {
                 let saveSuggestion = Reasons(context: coredataContext)
                 saveSuggestion.isf = isf as NSDecimalNumber
-                saveSuggestion.cr = (Decimal(string: cr) ?? 0) as NSDecimalNumber
+                saveSuggestion.cr = cr as NSDecimalNumber
                 saveSuggestion.iob = iob as NSDecimalNumber
                 saveSuggestion.cob = cob as NSDecimalNumber
                 saveSuggestion.target = target as NSDecimalNumber
