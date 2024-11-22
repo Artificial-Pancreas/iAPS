@@ -63,8 +63,8 @@ extension StatConfig {
                     Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
                     Toggle("Display Glucose Delta", isOn: $state.displayDelta)
+                    Toggle("Hide Concentration Badge", isOn: $state.hideInsulinBadge)
                 } header: { Text("Header settings") }
-                footer: { Text("Normally glucose is colored red only when over or under your notification limits for high/low") }
 
                 Section {
                     HStack {

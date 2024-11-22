@@ -75,10 +75,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
                 Math.max(35, Math.min(preferences.insulinPeakTime, 100));
             } else { preferences.insulinPeakTime = 55; }
         }
-        // Migrate missing conversion from original freeaps
-        if (preferences.resistanceLowersTarget) {
-            preferences.resistance_lowers_target = true;
-        }
     }
     
     var tdd_factor = { };
@@ -140,7 +136,6 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             enableDynamicCR: false,
             sigmoid: false,
             weightPercentage: 0.65,
-            tddAdjBasal: false,
             // threshold_setting: temporary fix to test thomasvargiu/iAPS#original-oref0 branch before build.
             // We can remove it after merged and after build the new original bundles
             // because it's included in the current oref0 PR (https://github.com/openaps/oref0/pull/1465/files)

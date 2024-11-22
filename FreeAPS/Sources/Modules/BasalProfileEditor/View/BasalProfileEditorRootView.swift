@@ -6,6 +6,14 @@ extension BasalProfileEditor {
         let resolver: Resolver
         @StateObject var state = StateModel()
         @State private var editMode = EditMode.inactive
+        @Environment(\.dismiss) var dismiss
+
+        @FetchRequest(
+            entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
+        ) var concentration: FetchedResults<InsulinConcentration>
+
+        let saveNewConcentration: Bool
+        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         private var dateFormatter: DateFormatter {
             let formatter = DateFormatter()
@@ -20,43 +28,28 @@ extension BasalProfileEditor {
             return formatter
         }
 
+        @State var set: Decimal = 1
+        @State var saving = false
+        @State var showAlert = false
+        @State var clean = false
+
         var body: some View {
             Form {
-                Section(header: Text("Schedule")) {
-                    list
-                    addButton
-                }
-                Section {
-                    HStack {
-                        Text("Total")
-                            .bold()
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Text(rateFormatter.string(from: state.total as NSNumber) ?? "0")
-                            .foregroundColor(.primary) +
-                            Text(" U/day")
-                            .foregroundColor(.secondary)
-                    }
-                }
-                Section {
-                    HStack {
-                        if state.syncInProgress {
-                            ProgressView().padding(.trailing, 10)
-                        }
-                        Button { state.save() }
-                        label: {
-                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
-                        }
-                        .disabled(state.syncInProgress || state.items.isEmpty)
-                    }
+                if !saveNewConcentration {
+                    basalProfileView
+                } else {
+                    concentrationView
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
-            .navigationTitle("Basal Profile")
+            .onAppear {
+                configureView()
+                set = Decimal(concentration.last?.concentration ?? 1)
+            }
+            .navigationTitle(saveNewConcentration ? "Insulin Concentration" : "Basal Profile")
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
-                trailing: EditButton()
+                trailing: !saveNewConcentration ? EditButton() : nil
             )
             .environment(\.editMode, $editMode)
             .onAppear {
@@ -140,6 +133,120 @@ extension BasalProfileEditor {
             }
         }
 
+        private var basalProfileView: some View {
+            Group {
+                Section {
+                    list
+                    addButton
+                } header: {
+                    HStack {
+                        Text("Schedule")
+                        Text("(standard units / hour)")
+                    }
+                }
+
+                Section {
+                    HStack {
+                        Text("Total")
+                            .bold()
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Text(rateFormatter.string(from: state.total as NSNumber) ?? "0")
+                            .foregroundColor(.primary) +
+                            Text(" U/day")
+                            .foregroundColor(.secondary)
+                    }
+                }
+                Section {
+                    HStack {
+                        if state.syncInProgress {
+                            ProgressView().padding(.trailing, 10)
+                        }
+                        Button { state.save() }
+                        label: {
+                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
+                        }
+                        .disabled(state.syncInProgress || state.items.isEmpty)
+                    }
+                }
+            }
+        }
+
+        private var concentrationView: some View {
+            Group {
+                Section {
+                    Text("U " + (rateFormatter.string(from: set * 100 as NSNumber) ?? ""))
+                } header: { Text("Insulin Concentration") }
+
+                Section {
+                    Picker("Insulin", selection: $set) {
+                        Text("U100").tag(Decimal(1))
+                        Text("U200").tag(Decimal(2))
+                        if state.allowDilution {
+                            Text("U50").tag(Decimal(0.5))
+                            Text("U10").tag(Decimal(0.1))
+                        }
+                    }._onBindingChange($set) { _ in
+                        clean = true
+                    }
+                } header: { Text("Change Insulin") }
+
+                footer: {
+                    let diluted = NSLocalizedString("Insulin diluted to", comment: "") + " \(set) * " +
+                        NSLocalizedString("standard concentration:", comment: "") + " \(set * 100) " +
+                        NSLocalizedString("units per ml", comment: "")
+                    let standard = NSLocalizedString("Standard concentration (U 100)", comment: "")
+                    let concentrated = NSLocalizedString("Insulin concentration increased to", comment: "") + " \(set) * " +
+                        NSLocalizedString("standard concentration:", comment: "") + " \(set * 100) " +
+                        NSLocalizedString("units per ml", comment: "")
+                    Text(set < 1 ? diluted : set == 1 ? standard : concentrated)
+                }
+
+                Section {
+                    HStack {
+                        if state.syncInProgress {
+                            ProgressView().padding(.trailing, 10)
+                        }
+                        Button {
+                            showAlert.toggle()
+                        }
+                        label: {
+                            Text(state.syncInProgress ? "Saving..." : "Save")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                        }
+                        .disabled(
+                            state.syncInProgress || state.items
+                                .isEmpty || set <= 0
+                        )
+                    }
+                } footer: {
+                    Text(
+                        state.syncInProgress ? "" :
+                            (saving && !state.saved) ? "Couldn't save to pump. Try again when pump isn't busy bolusing." :
+                            (saving && state.saved && !clean) ? "Saved" : ""
+                    )
+                    .textCase(nil)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .foregroundStyle((saving && !state.saved) ? .red : .secondary) }
+            }
+            .alert(
+                Text("Are you sure?"),
+                isPresented: $showAlert
+            ) {
+                Button("No", role: .cancel) {}
+                Button("Yes", role: .destructive) {
+                    clean = false
+                    saving = true
+                    save()
+                }
+            } message: {
+                Text("\n" + NSLocalizedString(
+                    "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.",
+                    comment: "Insulin alert message"
+                ))
+            }
+        }
+
         func onAdd() {
             state.add()
         }
@@ -148,6 +255,20 @@ extension BasalProfileEditor {
             state.items.remove(atOffsets: offsets)
             state.validate()
             state.calcTotal()
+        }
+
+        private func save() {
+            coredataContext.perform { [self] in
+                let newConfiguration = InsulinConcentration(context: self.coredataContext)
+                newConfiguration.concentration = Double(set)
+                newConfiguration.incrementSetting = Double(state.settingsManager.preferences.bolusIncrement)
+                newConfiguration.date = Date.now
+                do { try self.coredataContext.save()
+                } catch {
+                    debug(.apsManager, "Insulin Concentration setting couldn't be saved to CoreData. Error: " + "\(error)")
+                }
+                self.state.save()
+            }
         }
     }
 }

@@ -5,6 +5,8 @@ extension BasalProfileEditor {
         @Published var syncInProgress = false
         @Published var items: [Item] = []
         @Published var total: Decimal = 0.0
+        @Published var saved = false
+        @Published var allowDilution = false
 
         let timeValues = stride(from: 0.0, to: 1.days.timeInterval, by: 30.minutes.timeInterval).map { $0 }
 
@@ -24,6 +26,7 @@ extension BasalProfileEditor {
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
             calcTotal()
+            allowDilution = settingsManager.settings.allowDilution
         }
 
         func calcTotal() {
@@ -58,6 +61,7 @@ extension BasalProfileEditor {
         }
 
         func save() {
+            saved = false
             syncInProgress = true
             let profile = items.map { item -> BasalProfileEntry in
                 let fotmatter = DateFormatter()
@@ -72,7 +76,9 @@ extension BasalProfileEditor {
                 .receive(on: DispatchQueue.main)
                 .sink { _ in
                     self.syncInProgress = false
-                } receiveValue: {}
+                } receiveValue: {
+                    self.saved = true
+                }
                 .store(in: &lifetime)
         }
 
