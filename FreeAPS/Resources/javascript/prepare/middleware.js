@@ -9,15 +9,6 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         console.log("Invalid middleware: " + error);
         string = String(error);
     };
-        
-    if (profile.tddAdjBasal && dynamicVariables.average_total_data != 0) {
-        profile.tdd_factor = Math.round( (dynamicVariables.weightedAverage / dynamicVariables.average_total_data) * 100) / 100;
-        const adjusted = Math.min(Math.max(profile.autosens_min, profile.tdd_factor), profile.autosens_max);
-        if (profile.tdd_factor != adjusted) {
-            console.log("Dynamic basal adjustment limited by your autosens_min/max settings to: " + adjusted);
-            profile.tdd_factor = adjusted;
-        }
-    }
                                           
     profile.old_cr = profile.carb_ratio;
     profile.old_isf = profile.sens;

@@ -236,12 +236,6 @@ function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     if (enable_sigmoid) {
         console.log("Dynamic ISF enabled. Dynamic Ratio (Sigmoid function): " + newRatio + ". New ISF = " + isf + " mg/dl / " + round(0.0555 * isf, 1) + " mmol/l.");
     }
-
-    // Basal Adjustment
-    if (profile.tddAdjBasal && dynISFenabled) {
-        profile.current_basal *= tdd_factor;
-        console.log("Dynamic ISF. Basal adjusted with TDD factor: " + round(tdd_factor, 2));
-    }
 }
 
 function round(value, digits) {

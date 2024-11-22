@@ -48,7 +48,6 @@ struct Preferences: JSON {
     var useNewFormula: Bool = false
     var useWeightedAverage: Bool = false
     var weightPercentage: Decimal = 0.65
-    var tddAdjBasal: Bool = false
     var enableSMB_high_bg: Bool = false
     var enableSMB_high_bg_target: Decimal = 110
     var threshold_setting: Decimal = 65
@@ -103,7 +102,6 @@ extension Preferences {
         case useNewFormula
         case useWeightedAverage
         case weightPercentage
-        case tddAdjBasal
         case enableSMB_high_bg
         case enableSMB_high_bg_target
         case threshold_setting
