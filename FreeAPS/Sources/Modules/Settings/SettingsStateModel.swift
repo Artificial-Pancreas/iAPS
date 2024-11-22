@@ -11,6 +11,7 @@ extension Settings {
         @Published var animatedBackground = false
         @Published var disableCGMError = true
         @Published var profileID: String = "Hypo Treatment"
+        @Published var allowDilution = false
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -23,6 +24,7 @@ extension Settings {
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
             subscribeSetting(\.disableCGMError, on: $disableCGMError) { disableCGMError = $0 }
             subscribeSetting(\.profileID, on: $profileID) { profileID = $0 }
+            subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
@@ -88,5 +90,6 @@ extension Settings.StateModel: SettingsObserver {
         closedLoop = settings.closedLoop
         debugOptions = settings.debugOptions
         disableCGMError = settings.disableCGMError
+        allowDilution = settings.allowDilution
     }
 }

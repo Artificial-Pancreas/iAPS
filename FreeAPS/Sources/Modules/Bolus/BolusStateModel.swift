@@ -70,7 +70,7 @@ extension Bolus {
         @Published var loopDate: Date = .distantFuture
         @Published var now = Date.now
 
-        let loopReminder: CGFloat = 20
+        let loopReminder: CGFloat = 4
 
         private var loopFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -359,10 +359,17 @@ extension Bolus.StateModel: SuggestionObserver {
         setupInsulinRequired()
         loopDate = apsManager.lastLoopDate
 
-        if abs(loopDate.timeIntervalSinceNow / 60) > loopReminder * 1.5, abs(now.timeIntervalSinceNow / 60) > loopReminder {
+        if abs(now.timeIntervalSinceNow / 60) > loopReminder * 1.5 {
             hideModal()
             notActive()
             debug(.apsManager, "Force Closing Bolus View", printToConsole: true)
         }
+    }
+}
+
+extension Decimal {
+    /// Account for increments
+    func roundBolus(increment: Double) -> Decimal {
+        Decimal(round(Double(self) / increment)) * Decimal(increment)
     }
 }

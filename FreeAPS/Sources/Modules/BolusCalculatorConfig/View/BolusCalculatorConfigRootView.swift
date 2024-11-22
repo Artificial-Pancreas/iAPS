@@ -15,7 +15,7 @@ extension BolusCalculatorConfig {
         private var conversionFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 1
+            formatter.maximumFractionDigits = 2
             return formatter
         }
 
