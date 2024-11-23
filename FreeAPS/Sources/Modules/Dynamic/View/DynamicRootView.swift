@@ -125,19 +125,6 @@ extension Dynamic {
                                 .disabled(isPresented)
                         }
 
-                        HStack {
-                            Toggle(isOn: $state.tddAdjBasal) {
-                                Text("Adjust basal")
-                                    .onTapGesture {
-                                        info(
-                                            header: "Adjust basal",
-                                            body: "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD",
-                                            useGraphics: nil
-                                        )
-                                    }
-                            }.disabled(isPresented)
-                        }
-
                     } header: { Text("Settings") }
                 }
 

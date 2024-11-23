@@ -1300,6 +1300,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "La pompe est occupée.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Un bolus est déjà en cours !";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1977,6 +1980,33 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "toutes";
 
+/* Active Insulin View */
+"Active Insulin" = "Insuline active";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Durée avec insuline négative";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insuline, comparée à hier";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insuline, comparée à la moyenne";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Moyenne d'insuline sur 10 jours";
+
+/* Active Insulin View */
+"TDD yesterday" = "Dose quotidienne totale (DQT) hier";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "DQT il y a 2 jours";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "DQT il y a 3 jours";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Glucides actifs";
+
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "Configuration du CGM";
@@ -2596,6 +2626,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Afficher l'écart de glycémie";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Masquer la pastille indiquant la concentration de l'insuline";
+
+/* UI/UX option */
+"Use insulin bars" = "Afficher l'insuline sous forme de barres";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Masquer les quantités de bolus si inférieures à";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";
