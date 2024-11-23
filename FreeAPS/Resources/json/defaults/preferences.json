@@ -46,7 +46,6 @@
   "useNewFormula" : false,
   "useWeightedAverage" : true,
   "weightPercentage" : 0.65,
-  "tddAdjBasal" : false,
   "enableSMB_high_bg" : false,
   "enableSMB_high_bg_target" : 110,
   "threshold_setting" : 65,

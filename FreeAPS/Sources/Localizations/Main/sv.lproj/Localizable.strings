@@ -1182,9 +1182,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Debug options" = "Felsökningsalternativ";
 
-/* Loop even when consecutive deltas from CGM readings are zero */
-"Ignore flat CGM readings" = "Ignore flat CGM readings";
-
 /* */
 "Adds a lot of data to the Issue Report " = "Lägger till en hel del data till rapporten ";
 
@@ -1302,6 +1299,9 @@ Enact a temp Basal or a temp target */
 
 /* Pump Error */
 "Pump is Busy." = "Pump är upptagen.";
+
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "En bolusdos pågår redan!";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1980,6 +1980,33 @@ Enact a temp Basal or a temp target */
 /* HbA1c for all glucose storage days */
 "all" = "alla";
 
+/* Active Insulin View */
+"Active Insulin" = "Aktivt insulin";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Tid med negativt insulin";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insulin jämfört med igår";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insulin jämfört med genomsnitt";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Medelinsulin 10 dagar";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD igår";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD för 2 dagar sedan";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD för 3 dagar sedan";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Aktiva kolhydrater";
+
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
 "CGM Configuration" = "CGM-inställning";
@@ -2599,6 +2626,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Visa exakt glukosförändring";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Dölj koncentrationsmärke";
+
+/* UI/UX option */
+"Use insulin bars" = "Använd insulinstänger";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Dölj bolusmängdtext när beloppet är under";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
