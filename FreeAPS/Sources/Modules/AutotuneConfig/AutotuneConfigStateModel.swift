@@ -68,7 +68,7 @@ extension AutotuneConfig {
             if let autotunedBasals = autotune {
                 let basals = autotunedBasals.basalProfile
                     .map { basal -> BasalProfileEntry in
-                        return BasalProfileEntry(
+                        BasalProfileEntry(
                             start: String(basal.start.prefix(5)),
                             minutes: basal.minutes,
                             rate: basal.rate.roundBolus(increment: increment)
