@@ -45,7 +45,8 @@ extension AddCarbs {
                 }
 
                 Section {
-                    !carbPresets.isEmpty ? mealPresets : nil
+                    // Saved Food presets
+                    mealPresets
 
                     HStack {
                         Text("Carbs").fontWeight(.semibold)
