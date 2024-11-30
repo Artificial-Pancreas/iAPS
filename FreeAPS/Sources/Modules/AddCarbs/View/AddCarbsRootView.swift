@@ -242,7 +242,8 @@ extension AddCarbs {
                             Text("Save as Preset")
                         }.frame(maxWidth: .infinity, alignment: .center)
                     }
-                    header: {
+                    header: { Text("Save") }
+                    footer: {
                         Text("[\(state.carbs), \(state.fat), \(state.protein)]").frame(maxWidth: .infinity, alignment: .center) }
                         .listRowBackground(Color(.systemBlue)).tint(.white)
                 }
