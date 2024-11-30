@@ -341,9 +341,17 @@ extension AddCarbs {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(dish)
-                        HStack { Spacer() }
+                        HStack {
+                            Text("Carbs")
+                            Text("\(preset.carbs ?? 0)")
+                            Spacer()
+                            Text("Fat")
+                            Text("\(preset.fat ?? 0)")
+                            Spacer()
+                            Text("Protein")
+                            Text("\(preset.protein ?? 0)")
+                        }.foregroundStyle(.secondary).font(.caption).padding(.top, 2)
                     }
-                    .padding(.top, 5)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         state.selection = preset
