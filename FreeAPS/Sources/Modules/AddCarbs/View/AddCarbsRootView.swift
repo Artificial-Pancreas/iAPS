@@ -65,13 +65,6 @@ extension AddCarbs {
                         proteinAndFat()
                     }
 
-                    /*
-                     if !empty {
-                         Button { isPromptPresented = true }
-                         label: { Text("Save as Preset") }
-                             .buttonStyle(.borderless)
-                     }*/
-
                     // Summary when combining presets
                     if state.selection != nil {
                         let summary = state.waitersNotepad()
