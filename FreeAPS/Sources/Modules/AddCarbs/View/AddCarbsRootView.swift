@@ -66,7 +66,7 @@ extension AddCarbs {
                     }
 
                     // Summary when combining presets
-                    if state.selection != nil {
+                    if state.combinedPresets.isNotEmpty {
                         let summary = state.waitersNotepad()
                         if summary.isNotEmpty {
                             HStack {
