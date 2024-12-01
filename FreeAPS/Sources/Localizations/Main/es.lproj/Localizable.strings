@@ -1583,6 +1583,12 @@ Ajustes predeterminados:\n
 /* */
 "Meal Presets" = "Atajo de comida";
 
+/* Back button */
+"Back" = "Atrás";
+
+/* Search Saved Food presets */
+"Search" = "Search";
+
 /* */
 "Empty" = "Vacío";
 
