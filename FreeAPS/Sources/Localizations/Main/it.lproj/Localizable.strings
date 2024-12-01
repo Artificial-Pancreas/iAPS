@@ -477,31 +477,31 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Bolo massimo";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Si prega di verificare di aver selezionato la concentrazione corretta di insulina prima di salvare le impostazioni.\n\nIl flaconcino o la penna di insulina devono indicare la concentrazione in unità per millilitro (e.., U100 indica 100 unità per millilitro, che è la concentrazione standard). Una selezione giusta\n\nè fondamentale per un dosaggio adeguato.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Concentrazione";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Concentrazione di insulina";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Modifica insulina";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Insulina diluita fino a";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "concentrazione standard:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "unità per ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Concentrazione standard (U 100)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Concentrazione di insulina aumentata a";
 
 /* Insulin Concentration View */
 "Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
