@@ -579,3 +579,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
+
+/* Battery age */
+"Battery age" = "Battery age"

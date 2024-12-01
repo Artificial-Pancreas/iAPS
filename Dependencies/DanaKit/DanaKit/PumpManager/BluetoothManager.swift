@@ -187,6 +187,10 @@ extension BluetoothManager {
                 return
             }
             
+            if data.batteryRemaining == 100 && pumpManagerDelegate.state.batteryRemaining != 100 {
+                pumpManagerDelegate.state.batteryAge = Date.now
+            }
+            
             pumpManagerDelegate.state.reservoirLevel = data.reservoirRemainingUnits
             pumpManagerDelegate.state.batteryRemaining = data.batteryRemaining
             pumpManagerDelegate.state.isPumpSuspended = data.isPumpSuspended
