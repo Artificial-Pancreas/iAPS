@@ -24,6 +24,8 @@ extension AddCarbs {
         @Published var skipBolus: Bool = false
         @Published var id: String?
         @Published var hypoTreatment = false
+        @Published var presetToEdit: Presets?
+        @Published var edit = false
 
         @Published var combinedPresets: [(preset: Presets?, portions: Int)] = []
 
