@@ -47,7 +47,7 @@ extension AddCarbs {
 
                 Section {
                     // Saved Food presets
-                    mealPresets
+                    mealPresets.padding(.vertical, 9)
 
                     HStack {
                         Text("Carbs").fontWeight(.semibold)
@@ -361,16 +361,15 @@ extension AddCarbs {
         private var minusButton: some View {
             Button {
                 state.subtract()
-
                 if empty {
                     state.selection = nil
                     state.combinedPresets = []
                 }
             }
             label: { Image(systemName: "minus.circle.fill")
-            }.frame(maxWidth: .infinity, alignment: .leading)
-                .buttonStyle(.borderless)
-                .disabled(state.selection == nil)
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
         }
 
         private var plusButton: some View {
@@ -378,9 +377,9 @@ extension AddCarbs {
                 state.plus()
             }
             label: { Image(systemName: "plus.circle.fill")
-            }.frame(maxWidth: .infinity, alignment: .trailing)
-                .buttonStyle(.borderless)
-                .disabled(state.selection == nil)
+            }
+            .buttonStyle(.borderless)
+            .disabled(state.selection == nil)
         }
 
         private func delete(at offsets: IndexSet) {
