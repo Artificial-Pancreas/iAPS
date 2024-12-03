@@ -17,10 +17,12 @@ extension AddCarbs {
         @State private var presentPresets = false
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
-
+       
         @FetchRequest(
             entity: Presets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)]
+            sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate: NSPredicate(
+                format: "dish != %@", " " as String
+            )
         ) var carbPresets: FetchedResults<Presets>
 
         @Environment(\.managedObjectContext) var moc
@@ -105,9 +107,6 @@ extension AddCarbs {
                             label: { Image(systemName: "plus.circle") }.tint(.blue).buttonStyle(.borderless)
                         }
                     }
-                    .popover(isPresented: $isPromptPresented) {
-                        presetPopover
-                    }
                 }
                 // Optional Hypo Treatment
                 if state.carbs > 0, let profile = state.id, profile != "None", state.carbsRequired != nil {
@@ -150,39 +149,6 @@ extension AddCarbs {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Cancel", action: state.hideModal))
             .sheet(isPresented: $presentPresets, content: { presetView })
-        }
-
-        private var presetPopover: some View {
-            Form {
-                Section {
-                    TextField("Name Of Dish", text: $dish)
-                    Button {
-                        saved = true
-                        if dish != "", saved {
-                            let preset = Presets(context: moc)
-                            preset.dish = dish
-                            preset.fat = state.fat as NSDecimalNumber
-                            preset.protein = state.protein as NSDecimalNumber
-                            preset.carbs = state.carbs as NSDecimalNumber
-                            try? moc.save()
-
-                            state.selection = preset
-                            if state.combinedPresets.isEmpty {
-                                state.addPresetToNewMeal()
-                            }
-
-                            saved = false
-                            isPromptPresented = false
-                        }
-                    }
-                    label: { Text("Save") }
-                    Button {
-                        dish = ""
-                        saved = false
-                        isPromptPresented = false }
-                    label: { Text("Cancel") }
-                } header: { Text("Enter Meal Preset Name") }
-            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         private var empty: Bool {
@@ -228,7 +194,7 @@ extension AddCarbs {
                 if !empty {
                     Section {
                         Button {
-                            isPromptPresented = true
+                            addfromCarbsView()
                         }
                         label: {
                             HStack {
@@ -242,20 +208,30 @@ extension AddCarbs {
                     header: { Text("Save") }
                 }
 
-                if carbPresets.count > 4 {
+                let filtered = carbPresets.filter { ($0.dish ?? "").count > 1 }.removeDublicates()
+                if filtered.count > 4 {
                     Section {
                         TextField("Search", text: $string)
                     } header: { Text("Search") }
                 }
-                let data = string.isEmpty ? carbPresets
-                    .filter { _ in true } : carbPresets
+                let data = string.isEmpty ? filtered : carbPresets
                     .filter { ($0.dish ?? "").localizedCaseInsensitiveContains(string) }
 
                 Section {
                     ForEach(data, id: \.self) { preset in
                         presetsList(for: preset)
                     }.onDelete(perform: delete)
-                } header: { Text("Saved Food") }
+                } header: {
+                    HStack {
+                        Text("Saved Food")
+                        Button {
+                            state.presetToEdit = Presets(context: moc)
+                            newPreset = (NSLocalizedString("New", comment: ""), 0, 0, 0)
+                            state.edit = true
+                        } label: { Image(systemName: "plus").font(.system(size: 22)) }
+                            .buttonStyle(.borderless).frame(maxWidth: .infinity, alignment: .trailing)
+                    }
+                }
             }
             .sheet(isPresented: $state.edit, content: { editView })
         }
@@ -264,31 +240,32 @@ extension AddCarbs {
             Form {
                 Section {
                     HStack {
-                        TextField("\(state.presetToEdit?.dish ?? "")", text: $newPreset.dish)
+                        TextField("", text: $newPreset.dish)
                     }
                     HStack {
                         Text("Carbs").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("\(state.presetToEdit?.carbs ?? 0)", value: $newPreset.carbs, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter)
                     }
                     HStack {
                         Text("Fat").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("\(state.presetToEdit?.fat ?? 0)", value: $newPreset.fat, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter)
                     }
                     HStack {
                         Text("Protein").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("\(state.presetToEdit?.protein ?? 0)", value: $newPreset.protein, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter)
                     }
-                } header: { Text("Edit") }
+                } header: { Text(!addingNew ? NSLocalizedString("Edit", comment: "") : NSLocalizedString("Add", comment: "")) }
 
                 Section {
                     Button { save() }
                     label: { Text("Save") }
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .listRowBackground(Color(.systemBlue))
+                        .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
                         .tint(.white)
+                        .disabled(disabled)
                 }
             }
         }
@@ -324,7 +301,8 @@ extension AddCarbs {
         @ViewBuilder private func presetsList(for preset: Presets) -> some View {
             let dish = preset.dish ?? ""
 
-            if dish != "" {
+            // Only list saved entries
+            if !preset.hasChanges {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(dish)
@@ -400,13 +378,20 @@ extension AddCarbs {
                 preset.carbs = newPreset.carbs as NSDecimalNumber
                 preset.fat = newPreset.fat as NSDecimalNumber
                 preset.protein = newPreset.protein as NSDecimalNumber
-
-                if moc.hasChanges {
-                    do {
-                        try moc.save()
-                    } catch { /* To do: add error */ }
-                }
+            } else if !disabled {
+                let preset = Presets(context: moc)
+                preset.carbs = newPreset.carbs as NSDecimalNumber
+                preset.fat = newPreset.fat as NSDecimalNumber
+                preset.protein = newPreset.protein as NSDecimalNumber
+                preset.dish = newPreset.dish
             }
+
+            if moc.hasChanges {
+                do {
+                    try moc.save()
+                } catch { /* To do: add error */ }
+            }
+
             state.edit = false
         }
 
@@ -417,11 +402,25 @@ extension AddCarbs {
             newPreset.protein = (state.presetToEdit?.protein ?? 0) as Decimal
         }
 
+        private func addfromCarbsView() {
+            newPreset = (NSLocalizedString("New", comment: ""), state.carbs, state.fat, state.protein)
+            state.edit = true
+        }
+
         private func reset() {
             presentPresets = false
             string = ""
             state.presetToEdit = nil // Probably not needed
             state.edit = false // Probably not needed
+        }
+
+        private var disabled: Bool {
+            (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
+                (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
+        }
+
+        private var addingNew: Bool {
+            ((state.presetToEdit?.dish) == nil)
         }
     }
 }
