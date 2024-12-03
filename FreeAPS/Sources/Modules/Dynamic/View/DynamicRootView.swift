@@ -172,7 +172,7 @@ extension Dynamic {
                             Text("Average CR")
                             Spacer()
                             Text(
-                                glucoseFormatter
+                                daysFormatter
                                     .string(from: averages.cr as NSNumber) ?? ""
                             )
                             Text("g/U").foregroundColor(.secondary)
