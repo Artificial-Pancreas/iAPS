@@ -1589,6 +1589,9 @@ Ajustes predeterminados:\n
 /* Search Saved Food presets */
 "Search" = "Search";
 
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
+
 /* */
 "Empty" = "Vacío";
 
