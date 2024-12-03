@@ -1572,6 +1572,15 @@ Enact a temp Basal or a temp target */
 /* */
 "Meal Presets" = "Шаблоны";
 
+/* Back button */
+"Back" = "Назад";
+
+/* Search Saved Food presets */
+"Search" = "Поиск";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
+
 /* */
 "Empty" = "Пустой";
 

@@ -91,7 +91,7 @@ struct CurrentGlucoseView: View {
                             let minutesAgo = -1 * recent.dateString.timeIntervalSinceNow / 60
                             let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
                             Text(
-                                minutesAgo <= 1 ? "Now" :
+                                minutesAgo <= 1 ? NSLocalizedString("Now", comment: "") :
                                     (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
                             )
                             .font(.caption)
