@@ -1574,6 +1574,15 @@ Połączono z Nightscout!";
 /* */
 "Meal Presets" = "Meal Presets";
 
+/* Back button */
+"Back" = "Powrót";
+
+/* Search Saved Food presets */
+"Search" = "Search";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
+
 /* */
 "Empty" = "Empty";
 
