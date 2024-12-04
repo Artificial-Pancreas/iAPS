@@ -17,7 +17,7 @@ extension AddCarbs {
         @State private var presentPresets = false
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
-       
+        
         @FetchRequest(
             entity: Presets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate: NSPredicate(
@@ -257,7 +257,7 @@ extension AddCarbs {
                         Spacer()
                         DecimalTextField("0", value: $newPreset.protein, formatter: formatter)
                     }
-                } header: { Text(!addingNew ? NSLocalizedString("Edit", comment: "") : NSLocalizedString("Add", comment: "")) }
+                } header: { Text("Saved Food") }
 
                 Section {
                     Button { save() }
@@ -391,7 +391,6 @@ extension AddCarbs {
                     try moc.save()
                 } catch { /* To do: add error */ }
             }
-
             state.edit = false
         }
 
@@ -417,10 +416,6 @@ extension AddCarbs {
         private var disabled: Bool {
             (newPreset == (NSLocalizedString("New", comment: ""), 0, 0, 0)) || (newPreset.dish == "") ||
                 (newPreset.carbs + newPreset.fat + newPreset.protein <= 0)
-        }
-
-        private var addingNew: Bool {
-            ((state.presetToEdit?.dish) == nil)
         }
     }
 }
