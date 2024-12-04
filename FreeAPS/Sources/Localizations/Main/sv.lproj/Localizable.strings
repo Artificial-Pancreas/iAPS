@@ -1584,6 +1584,15 @@ Enact a temp Basal or a temp target */
 /* */
 "Meal Presets" = "Förval";
 
+/* Back button */
+"Back" = "Tillbaka";
+
+/* Search Saved Food presets */
+"Search" = "Sök";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "Ny";
+
 /* */
 "Empty" = "Inget";
 

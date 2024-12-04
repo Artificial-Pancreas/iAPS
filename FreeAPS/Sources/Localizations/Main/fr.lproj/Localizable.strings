@@ -1572,6 +1572,15 @@ Enact a temp Basal or a temp target */
 /* */
 "Meal Presets" = "Préréglages des repas";
 
+/* Back button */
+"Back" = "Retour";
+
+/* Search Saved Food presets */
+"Search" = "Recherche";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "Nouveau repas";
+
 /* */
 "Empty" = "Vide";
 
