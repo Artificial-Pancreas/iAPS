@@ -17,7 +17,6 @@ extension AddCarbs {
         @Published var useFPUconversion: Bool = false
         @Published var dish: String = ""
         @Published var selection: Presets?
-        @Published var summation: [String] = []
         @Published var maxCarbs: Decimal = 0
         @Published var note: String = ""
         @Published var id_: String = ""
@@ -25,6 +24,10 @@ extension AddCarbs {
         @Published var skipBolus: Bool = false
         @Published var id: String?
         @Published var hypoTreatment = false
+        @Published var presetToEdit: Presets?
+        @Published var edit = false
+
+        @Published var combinedPresets: [(preset: Presets?, portions: Int)] = []
 
         let now = Date.now
 
@@ -75,108 +78,73 @@ extension AddCarbs {
 
         func deletePreset() {
             if selection != nil {
+                carbs -= ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+                fat -= ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+                protein -= ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
                 try? coredataContext.delete(selection!)
                 try? coredataContext.save()
-                carbs = 0
-                fat = 0
-                protein = 0
             }
-            selection = nil
         }
 
         func removePresetFromNewMeal() {
-            let a = summation.firstIndex(where: { $0 == selection?.dish! })
-            if a != nil, summation[a ?? 0] != "" {
-                summation.remove(at: a!)
+            if let index = combinedPresets.firstIndex(where: { $0.preset == selection }) {
+                if combinedPresets[index].portions > 1 {
+                    combinedPresets[index].portions -= 1
+                } else if combinedPresets[index].portions == 1 {
+                    combinedPresets.remove(at: index)
+                    selection = nil
+                }
             }
         }
 
         func addPresetToNewMeal() {
-            let test: String = selection?.dish ?? "dontAdd"
-            if test != "dontAdd" {
-                summation.append(test)
+            if let index = combinedPresets.firstIndex(where: { $0.preset == selection }) {
+                combinedPresets[index].portions += 1
+            } else {
+                combinedPresets.append((selection, 1))
             }
         }
 
-        func addNewPresetToWaitersNotepad(_ dish: String) {
-            summation.append(dish)
-        }
-
-        func addToSummation() {
-            summation.append(selection?.dish ?? "")
-        }
-
-        func waitersNotepad() -> String {
-            var filteredArray = summation.filter { !$0.isEmpty }
+        func waitersNotepad() -> [String] {
+            guard combinedPresets.isNotEmpty else { return [] }
 
             if carbs == 0, protein == 0, fat == 0 {
-                filteredArray = []
+                return []
             }
 
-            guard filteredArray != [] else {
-                return ""
+            var presetsString: [String] = combinedPresets.map { item in
+                "\(item.portions) \(item.preset?.dish ?? "")"
             }
-            var carbs_: Decimal = 0.0
-            var fat_: Decimal = 0.0
-            var protein_: Decimal = 0.0
-            var presetArray = [Presets]()
 
-            coredataContext.performAndWait {
-                let requestPresets = Presets.fetchRequest() as NSFetchRequest<Presets>
-                try? presetArray = coredataContext.fetch(requestPresets)
-            }
-            var waitersNotepad = [String]()
-            var stringValue = ""
+            if presetsString.isNotEmpty {
+                let totCarbs = combinedPresets
+                    .compactMap({ each in (each.preset?.carbs ?? 0) as Decimal * Decimal(each.portions) })
+                    .reduce(0, +)
+                let totFat = combinedPresets.compactMap({ each in (each.preset?.fat ?? 0) as Decimal * Decimal(each.portions) })
+                    .reduce(0, +)
+                let totProtein = combinedPresets
+                    .compactMap({ each in (each.preset?.protein ?? 0) as Decimal * Decimal(each.portions) }).reduce(0, +)
 
-            for each in filteredArray {
-                let countedSet = NSCountedSet(array: filteredArray)
-                let count = countedSet.count(for: each)
-                if each != stringValue {
-                    waitersNotepad.append("\(count) \(each)")
+                if carbs > totCarbs {
+                    presetsString.append("+ \(carbs - totCarbs) carbs")
+                } else if carbs < totCarbs {
+                    presetsString.append("- \(totCarbs - carbs) carbs")
                 }
-                stringValue = each
 
-                for sel in presetArray {
-                    if sel.dish == each {
-                        carbs_ += (sel.carbs)! as Decimal
-                        fat_ += (sel.fat)! as Decimal
-                        protein_ += (sel.protein)! as Decimal
-                        break
-                    }
+                if fat > totFat {
+                    presetsString.append("+ \(fat - totFat) fat")
+                } else if fat < totFat {
+                    presetsString.append("- \(totFat - fat) fat")
                 }
-            }
-            let extracarbs = carbs - carbs_
-            let extraFat = fat - fat_
-            let extraProtein = protein - protein_
-            var addedString = ""
 
-            if extracarbs > 0, filteredArray.isNotEmpty {
-                addedString += "Additional carbs: \(extracarbs) ,"
-            } else if extracarbs < 0 { addedString += "Removed carbs: \(extracarbs) " }
-
-            if extraFat > 0, filteredArray.isNotEmpty {
-                addedString += "Additional fat: \(extraFat) ,"
-            } else if extraFat < 0 { addedString += "Removed fat: \(extraFat) ," }
-
-            if extraProtein > 0, filteredArray.isNotEmpty {
-                addedString += "Additional protein: \(extraProtein) ,"
-            } else if extraProtein < 0 { addedString += "Removed protein: \(extraProtein) ," }
-
-            if addedString != "" {
-                waitersNotepad.append(addedString)
-            }
-            var waitersNotepadString = ""
-
-            if waitersNotepad.count == 1 {
-                waitersNotepadString = waitersNotepad[0]
-            } else if waitersNotepad.count > 1 {
-                for each in waitersNotepad {
-                    if each != waitersNotepad.last {
-                        waitersNotepadString += " " + each + ","
-                    } else { waitersNotepadString += " " + each }
+                if protein > totProtein {
+                    presetsString.append("+ \(protein - totProtein) protein")
+                } else if protein < totProtein {
+                    presetsString.append("- \(totProtein - protein) protein")
                 }
             }
-            return waitersNotepadString
+
+            return presetsString.removeDublicates()
         }
 
         func loadEntries(_ editMode: Bool) {
@@ -196,6 +164,39 @@ extension AddCarbs {
                     self.id_ = mealToEdit.first?.id ?? ""
                 }
             }
+        }
+
+        func subtract() {
+            let presetCarbs = ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+            if carbs != 0, carbs - presetCarbs >= 0 {
+                carbs -= presetCarbs
+            } else { carbs = 0 }
+
+            let presetFat = ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+            if fat != 0, presetFat >= 0 {
+                fat -= presetFat
+            } else { fat = 0 }
+
+            let presetProtein = ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+            if protein != 0, presetProtein >= 0 {
+                protein -= presetProtein
+            } else { protein = 0 }
+
+            removePresetFromNewMeal()
+        }
+
+        func plus() {
+            carbs += ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+            fat += ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+            protein += ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+            addPresetToNewMeal()
+        }
+
+        func addU(_ selection: Presets?) {
+            carbs += ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
+            fat += ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
+            protein += ((selection?.protein ?? 0) as NSDecimalNumber) as Decimal
+            addPresetToNewMeal()
         }
 
         func saveToCoreData(_ stored: [CarbsEntry]) {

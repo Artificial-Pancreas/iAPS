@@ -11,6 +11,7 @@ extension AutotuneConfig {
         @Published var autotune: Autotune?
         private(set) var units: GlucoseUnits = .mmolL
         @Published var publishedDate = Date()
+        @Published var increment: Double = 0.1
         @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date() {
             didSet {
                 DispatchQueue.main.async {
@@ -24,6 +25,7 @@ extension AutotuneConfig {
             units = settingsManager.settings.units
             useAutotune = settingsManager.settings.useAutotune
             publishedDate = lastAutotuneDate
+            increment = Double(settingsManager.preferences.bolusIncrement)
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
 
             $useAutotune
@@ -69,7 +71,7 @@ extension AutotuneConfig {
                         BasalProfileEntry(
                             start: String(basal.start.prefix(5)),
                             minutes: basal.minutes,
-                            rate: basal.rate
+                            rate: basal.rate.roundBolus(increment: increment)
                         )
                     }
                 guard let pump = apsManager.pumpManager else {
@@ -86,7 +88,7 @@ extension AutotuneConfig {
                         self.storage.save(basals, as: OpenAPS.Settings.basalProfile)
                         debug(.service, "Basals saved to pump!")
                     case .failure:
-                        debug(.service, "Basals couldn't be save to pump")
+                        debug(.service, "Basals couldn't be saved to pump")
                     }
                 }
             }
