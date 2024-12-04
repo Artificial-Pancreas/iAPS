@@ -1576,10 +1576,10 @@ Enact a temp Basal or a temp target */
 "Back" = "Zurück";
 
 /* Search Saved Food presets */
-"Search" = "Search";
+"Search" = "Suchen";
 
 /* Placeholder for name of dish when adding a new food preset */
-"New" = "New";
+"New" = "Neu";
 
 /* */
 "Empty" = "Leer";
