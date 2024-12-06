@@ -577,28 +577,28 @@
 "Empty Value" = "قيمة فارغة";
 
 /* Error message description for PeripheralManagerError.unknownCharacteristic */
-"Unknown Characteristic" = "Unknown Characteristic";
+"Unknown Characteristic" = "خاصية غير معروفة";
 
 /* Error message description for PeripheralManagerError.nack */
 "Nack" = "Nack";
 
 /* Title for omnipod reminders section */
-"Omnipod Reminders" = "Omnipod Reminders";
+"Omnipod Reminders" = "تذكيرات البود";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "يقوم التطبيق بتكوين تذكير على البود لتنبيهك مسبقًا قبل انتهاء صلاحية البود. قم بتحديد عدد الساعات التي تود تلقي إشعار مسبق بها بشكل افتراضي عند إقران بود جديد.";
 
 /* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
+"This is a reminder that you scheduled when you paired your current Pod." = "هذا تذكير قمت بجدولته عند إقرانك للبود الحالي.";
 
 /* */
 "Scheduled Reminder" = "Scheduled Reminder";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "يقوم التطبيق بإشعارك عندما يصل مقدار الأنسولين في البود إلى هذا المستوى.";
 
 /* Description text for critical alerts */
-"Critical Alerts" = "Critical Alerts";
+"Critical Alerts" = "تنبيهات هامة";
 
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if you device is set to Silent or Do Not Disturb mode.";
@@ -849,19 +849,19 @@
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
-"Read Pod Status" = "Read Pod Status";
+"Read Pod Status" = "قراءة حالة البود";
 
 /* Title of done button on OmnipodSettingsView */
 "Done" = "تمّ";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "تشخيص البود";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "قراءة سجل النبض";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "قراءة وقت التفعيل";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "قراءة التنبيهات المُفعلة";
