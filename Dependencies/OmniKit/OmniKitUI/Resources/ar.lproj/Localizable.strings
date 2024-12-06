@@ -168,7 +168,7 @@
 "Continue" = "تابع";
 
 /* Title for critical alerts description */
-"Critical Alerts" = "Critical Alerts";
+"Critical Alerts" = "تنبيهات هامة";
 
 /* Unit for singular day in pod life remaining */
 "day" = "يوم";
@@ -431,7 +431,7 @@
 "Numbers" = "Numbers";
 
 /* Title for omnipod reminders section */
-"Omnipod Reminders" = "Omnipod Reminders";
+"Omnipod Reminders" = "تذكيرات البود";
 
 /* Button title to pair with pod during setup */
 "Pair" = "Pair";
@@ -684,7 +684,7 @@
 "Testing Commands…" = "Testing Commands…";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "يقوم التطبيق بتكوين تذكير على البود لتنبيهك مسبقًا قبل انتهاء صلاحية البود. قم بتحديد عدد الساعات التي تود تلقي إشعار مسبق بها بشكل افتراضي عند إقران بود جديد.";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
@@ -693,7 +693,7 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "يقوم التطبيق بإشعارك عندما يصل مقدار الأنسولين في البود إلى هذا المستوى.";
 
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
@@ -711,7 +711,7 @@
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "كانت هناك مشكلة في التواصل مع البود. إذا استمرت هذه المشكلة، انقر على \"تجاهل البود\". يمكنك بعد ذلك تفعيل بود جديد.";
 
 /* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
+"This is a reminder that you scheduled when you paired your current Pod." = "هذا تذكير قمت بجدولته عند إقرانك للبود الحالي.";
 
 /* Alert format string for missing temp basal configuration. */
 "This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate.";
@@ -816,16 +816,16 @@ Silence Pod" = "Silence Pod";
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
-"Read Pod Status" = "Read Pod Status";
+"Read Pod Status" = "قراءة حالة البود";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "تشخيص البود";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "قراءة سجل النبض";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "قراءة وقت التفعيل";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "قراءة التنبيهات المُفعلة";
