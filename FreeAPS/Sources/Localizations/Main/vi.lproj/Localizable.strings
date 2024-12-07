@@ -2656,7 +2656,7 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Hoạt động trực tiếp";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa và năng động (nếu có)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và động (nếu có)";
 
 /* Notification option */
 "Show Live activity" = "Hiển thị hoạt động trực tiếp";
