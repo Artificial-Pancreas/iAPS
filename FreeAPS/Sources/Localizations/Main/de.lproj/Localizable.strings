@@ -1060,7 +1060,7 @@ Enact a temp Basal or a temp target */
 "Bolus Shortcuts are disabled in iAPS settings" = "Bolus Kurzbefehle sind in den iAPS Einstellungen deaktiviert";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Menge in U";
+"Bolus Amount in U" = "Bolus Menge in IE";
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Erlaube iOS Bolus Kurzbefehle";
