@@ -77,7 +77,7 @@
 "A Remote Bolus " = "Ein entfernter Bolus ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "wurde inijiziert";
+"was delivered" = "wurde injiziert";
 
 /* Remote Bolus Alert, Part 3 */
 " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " Minuten seit des Auslösens auf Entfernung via Nightscout, von einem Betreuer oder einem Elternteil. Möchtest du immer noch einen Bolus?\n\nDer vorhergesagte Blutzucker ohne weiteren Bolus ist: ";
@@ -1060,7 +1060,7 @@ Enact a temp Basal or a temp target */
 "Bolus Shortcuts are disabled in iAPS settings" = "Bolus Kurzbefehle sind in den iAPS Einstellungen deaktiviert";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Menge in U";
+"Bolus Amount in U" = "Bolus Menge in IE";
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Erlaube iOS Bolus Kurzbefehle";
