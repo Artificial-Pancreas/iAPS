@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Bitte beachten Sie, dass Sie Ihre Dosierungsstrategie im Einstellungsmenü ändern müssen";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Lebenslauf";
+"Resume delivery" = "Lieferung starten";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Lieferung stoppen";
@@ -579,3 +579,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Die Entlüftung der Röhre ist fehlgeschlagen. Bitte versuchen Sie es später erneut";
+
+/* Battery age */
+"Battery age" = "Batterie Alter";
