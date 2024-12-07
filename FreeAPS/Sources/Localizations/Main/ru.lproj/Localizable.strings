@@ -1579,7 +1579,7 @@ Enact a temp Basal or a temp target */
 "Search" = "Поиск";
 
 /* Placeholder for name of dish when adding a new food preset */
-"New" = "New";
+"New" = "Новый";
 
 /* */
 "Empty" = "Пустой";

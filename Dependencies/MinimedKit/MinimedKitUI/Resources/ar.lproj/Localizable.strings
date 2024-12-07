@@ -20,7 +20,7 @@
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Adjusting Pump Time...";
+"Adjusting Pump Time..." = "جاري ضبط وقت المضخة...";
 
 /* Instructions on selecting battery chemistry type */
 "Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "البطاريات القلوية والبطاريات الليثيومية تتحلل بمعدلات مختلفة. عادةً ما يكون للبطاريات القلوية انخفاض تدريجي ومستمر في الجهد الكهربائي مع مرور الوقت، بينما تحافظ بطاريات الليثيوم على الجهد الكهربائي حتى تصل إلى منتصف عمرها الافتراضي. في مضخات الأنسولين من طراز Minimed (x22/x15) غير المتوافقة مع MySentry والتي تعمل بنظام Loop، تدوم البطاريات القلوية لمدة تتراوح بين 4 إلى 5 أيام تقريبًا تحت الاستخدام العادي. بينما تدوم بطاريات الليثيوم من أسبوع إلى أسبوعين. سيقوم هذا الاختيار باستخدام معدلات تحلل الجهد المختلفة لكل نوع من أنواع البطاريات وينبه المستخدم عندما تكون البطارية على وشك النفاد، أي قبل حوالي 8 إلى 10 ساعات من الفشل.";
@@ -120,7 +120,7 @@
 "No response" = "لا يوجد استجابة";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "لا، إبقاء المضخة كما هي";
 
 /* Pump find device instruction */
 "On your pump, go to the Find Device screen and select \"Find Device\".\n\nMain Menu >\nUtilities >\nConnect Devices >\nOther Devices >\nOn >\nFind Device" = "في المضخة الخاصة بك، انتقل إلى شاشة العثور على الجهاز وحدد \"العثور على الجهاز\".\n\nالقائمة الرئيسية >\nالأدوات >\nتوصيل الأجهزة >\nأجهزة أخرى >\nعلى >\nالعثور على الأجهزة";
@@ -140,7 +140,7 @@
 "Pump ID" = "ID المضخة";
 
 /* The title of the command to change pump time zone */
-"Pump Time" = "Pump Time";
+"Pump Time" = "وقت المضخة";
 
 /* Progress message for reading basal schedule */
 "Reading basal schedule…" = "قراءة جدول الجرعة الأساسية…";
@@ -176,7 +176,7 @@
 "Succeeded" = "Succeeded";
 
 /* Title text for button to suspend insulin delivery */
-"Suspend Delivery" = "Suspend Delivery";
+"Suspend Delivery" = "إيقاف التوصيل مؤقتًا";
 
 /* The format string describing pump suspended state: (1: suspended) */
 "Suspended: %1$@\n" = "معلقة: %1$@\n";
@@ -185,10 +185,10 @@
 "Suspending" = "تعليق";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "المزامنة مع الوقت الحالي";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "الوقت في مضختك مختلف عن الوقت الحالي. هل ترغب في تحديث الوقت في مضختك ليتوافق مع الوقت الحالي؟";
 
 /* Title for pod sync time action sheet. */
 "Time Change Detected" = "تم اكتشاف تغيير في الوقت";
@@ -217,4 +217,4 @@
 "Yes" = "نعم";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "نعم، المزامنة مع الوقت الحالي";
