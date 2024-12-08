@@ -1301,7 +1301,7 @@ Enact a temp Basal or a temp target */
 "Pump is Busy." = "Je pomp is bezig.";
 
 /* Alert when bolus is already in progress (tapping the bolus button) */
-"Bolus already in Progress!" = "Bolus already in Progress!";
+"Bolus already in Progress!" = "Er is al een bolus actief!";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1576,10 +1576,10 @@ Enact a temp Basal or a temp target */
 "Back" = "Terug";
 
 /* Search Saved Food presets */
-"Search" = "Search";
+"Search" = "Zoeken";
 
 /* Placeholder for name of dish when adding a new food preset */
-"New" = "New";
+"New" = "Nieuw";
 
 /* */
 "Empty" = "Leeg";
@@ -1990,16 +1990,16 @@ Enact a temp Basal or a temp target */
 "all" = "alle ";
 
 /* Active Insulin View */
-"Active Insulin" = "Active Insulin";
+"Active Insulin" = "Actieve insuline";
 
 /* Active Insulin View */
-"Time with negative insulin" = "Time with negative insulin";
+"Time with negative insulin" = "Tijd met negatieve insuline";
 
 /* Active Insulin View */
-"Insulin compared to yesterday" = "Insulin compared to yesterday";
+"Insulin compared to yesterday" = "Insuline vergeleken met gisteren";
 
 /* Active Insulin View */
-"Insulin compared to average" = "Insulin compared to average";
+"Insulin compared to average" = "Insuline vergeleken met gemiddelde";
 
 /* Active Insulin View */
 "Average Insulin 10 days" = "Gemiddelde insuline 10 dagen";
