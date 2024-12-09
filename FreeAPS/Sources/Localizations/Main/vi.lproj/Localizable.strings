@@ -2187,7 +2187,7 @@ Enact a temp Basal or a temp target */
 "Weight" = "Weight";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Chế độ tối";
+"Dark mode" = "Dark mode";
 
 /* Contact Image, settings, tighter font tracking */
 "TighterFontTracking" = "Tighter";
