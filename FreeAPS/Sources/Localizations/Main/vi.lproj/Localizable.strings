@@ -170,7 +170,7 @@
 "Saved Food" = "Lưu thực phẩm";
 
 /* */
-"Are you sure?" = "Bạn có chắc không?";
+"Are you sure?" = "Bạn có chắc chắn không?";
 
 /* Bottom target temp */
 "Bottom target" = "Mục tiêu thấp nhất";
@@ -230,7 +230,7 @@
 "Save" = "Lưu";
 
 /*  */
-"Save as Preset" = "Lưu cài đặt sẵn";
+"Save as Preset" = "Lưu mẫu cài đặt sẵn";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Xoá mẫu cài đặt";
@@ -260,7 +260,7 @@
 "min" = "min";
 
 /*  */
-"Autotune" = "Autotune";
+"Autotune" = "Tự động điều chỉnh";
 
 /*  */
 "Basal profile" = "Hồ sơ liều nền";
@@ -529,7 +529,7 @@ Enact a temp Basal or a temp target */
 "Maximum amount of carbs (g) you can add each entry" = "Lượng carbs tối đa (g) bạn có thể thêm vào mỗi mục nhập";
 
 /* */
-"Pump Settings" = "Cấu hình của bơm";
+"Pump Settings" = "Cài đặt của bơm";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -1078,10 +1078,10 @@ Enact a temp Basal or a temp target */
 "not available" = "không có sẵn";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Kích hoạt cài đặt trước ghi đè";
+"Activate an Override Preset" = "Kích hoạt cài đặt sẵn ghi đè";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Cho phép kích hoạt cài đặt trước ghi đè.";
+"Allow to activate an overrride preset." = "Cho phép kích hoạt cài đặt sẵn ghi đè.";
 
 /* Override Shortcut */
 "Which override preset would you like to activate?" = "Bạn muốn kích hoạt cài đặt trước ghi đè nào?";
@@ -1252,7 +1252,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = " day(s)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Hiển thị trên đồng hồ";
+"Display HR on Watch" = "Hiển thị HR trên đồng hồ";
 
 
 /* Headers for settings ----------------------- */
@@ -1342,7 +1342,7 @@ Enact a temp Basal or a temp target */
 "Meal" = "Bữa ăn";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Hồ sơ Bơm";
+"Pump profile" = "Hồ sơ Bơm Insulin";
 
 /* Debug option view Profile */
 "Profile" = "Hồ sơ";
@@ -1357,10 +1357,10 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Thông báo đã kích hoạt";
 
 /* Debug option view Autotune */
-"Autotune" = "Autotune";
+"Autotune" = "Tự động điều chỉnh";
 
 /* Debug option view Target presets */
-"Target presets" = "Mục tiêu đặt trước";
+"Target presets" = "Mục tiêu cài đặt trước";
 
 /* Debug option view */
 "Loop Cycles" = "Chu kỳ vòng lặp";
@@ -1597,7 +1597,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Lưu và tiếp tục";
 
 /* */
-"Save as Preset" = "Lưu cài đặt sẵn";
+"Save as Preset" = "Lưu mẫu cài đặt sẵn";
 
 /* */
 "Predictions" = "Dự đoán";
