@@ -285,7 +285,7 @@
 "Fault" = "Fout";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Vul een nieuwe pod met U-100 insuline (laat de Podnaalddop zitten). Luister naar 2 piepjes.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Vul een nieuwe Pod met insuline. Verwijder de naalddop NIET!! Luister naar 2 piepjes.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Voltooi deactivering";

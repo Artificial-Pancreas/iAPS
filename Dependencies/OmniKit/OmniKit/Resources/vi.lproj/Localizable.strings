@@ -120,7 +120,7 @@
 "Initialized" = "Đã được khởi tạo";
 
 /* Pod state when inserting cannula */
-"Inserting cannula" = "Thay cannula";
+"Inserting cannula" = "Gắn Cannula";
 
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulin ngừng. Thay Pod ngay.";
