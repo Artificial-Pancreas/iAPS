@@ -476,6 +476,52 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Bolo massimo";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Si prega di verificare di aver selezionato la concentrazione corretta di insulina prima di salvare le impostazioni.\n\nIl flaconcino o la penna di insulina devono indicare la concentrazione in unità per millilitro (e.., U100 indica 100 unità per millilitro, che è la concentrazione standard). Una selezione giusta\n\nè fondamentale per un dosaggio adeguato.";
+
+/* Insulin Concentration View */
+"Concentration" = "Concentrazione";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Concentrazione di insulina";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Modifica insulina";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insulina diluita fino a";
+
+/* Insulin Concentration View */
+"standard concentration:" = "concentrazione standard:";
+
+/* Insulin Concentration View */
+"units per ml" = "unità per ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Concentrazione standard (U 100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Concentrazione di insulina aumentata a";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Impossibile salvare sulla pompa. Riprova quando il microinfusore non è occupato in erogazione di bolo.";
+
+/* Insulin Concentration View */
+"Saved" = "Salvato";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Consenti impostazioni di concentrazione di insulina diluita";
 /* Max setting */
 "Max Carbs" = "Carboidrati massimi";
 
@@ -1254,6 +1300,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "Il microinfusore sta già erogando.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Bolo già in corso!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1522,6 +1571,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Meal Presets" = "Pasto Predefinito";
+
+/* Back button */
+"Back" = "Indietro";
+
+/* Search Saved Food presets */
+"Search" = "Cerca";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
 
 /* */
 "Empty" = "Vuoto";
@@ -1930,6 +1988,33 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "tutti";
+
+/* Active Insulin View */
+"Active Insulin" = "Insulina attiva";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Tempo con insulina negativa";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insulina rispetto a ieri";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insulina rispetto alla media";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Insulina media a 10 giorni";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD ieri";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD 2 giorni fa";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD 3 giorni fa";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Carboidrati Attivi";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2470,19 +2555,19 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Threshold" = "Soglia";
 
 /* Dynamic settings View */
-"Averages" = "Averages";
+"Averages" = "Medie";
 
 /* Dynamic settings View */
-"Average ISF" = "Average ISF";
+"Average ISF" = "Media ISF";
 
 /* Dynamic settings View */
-"Average CR" = "Average CR";
+"Average CR" = "Media CR";
 
 /* Dynamic settings View */
-"Average CSF" = "Average CSF";
+"Average CSF" = "Media CSF";
 
 /* Dynamic settings View */
-"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Sensibilità Per L'Insulina, CR: Rapporto Carb,\nCSF: Sensibilità Carb = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Impostazioni calcolatore";
@@ -2554,6 +2639,15 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* UI/UX option */
 "Display Glucose Delta" = "Mostra Delta Glicemia";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Nascondi Badge Concentrazione";
+
+/* UI/UX option */
+"Use insulin bars" = "Usa barre dell'insulina";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Nascondi le stringhe di quantità del bolo quando la quantità è inferiore";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";

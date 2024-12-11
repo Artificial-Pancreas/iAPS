@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES" codeGenerationType="class">
         <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -21,6 +21,11 @@
     <entity name="ImportError" representedClassName="ImportError" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="error" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="InsulinConcentration" representedClassName="InsulinConcentration" syncable="YES" codeGenerationType="class">
+        <attribute name="concentration" optional="YES" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="752259840" usesScalarValueType="NO"/>
+        <attribute name="incrementSetting" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="InsulinDistribution" representedClassName="InsulinDistribution" syncable="YES" codeGenerationType="class">
         <attribute name="bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
@@ -111,7 +116,7 @@
     </entity>
     <entity name="Presets" representedClassName="Presets" syncable="YES" codeGenerationType="class">
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="dish" optional="YES" attributeType="String"/>
+        <attribute name="dish" optional="YES" attributeType="String" defaultValueString=" "/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>

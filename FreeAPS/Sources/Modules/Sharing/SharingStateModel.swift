@@ -20,13 +20,7 @@ extension Sharing {
         }
 
         private func getIdentifier() -> String {
-            var identfier = keychain.getValue(String.self, forKey: IAPSconfig.id) ?? ""
-            guard identfier.count > 1 else {
-                identfier = UUID().uuidString
-                keychain.setValue(identfier, forKey: IAPSconfig.id)
-                return identfier
-            }
-            return identfier
+            keychain.getIdentifier()
         }
 
         func savedSettings() {
@@ -54,5 +48,17 @@ extension Sharing {
                 sexSetting = 3
             }
         }
+    }
+}
+
+extension Keychain {
+    func getIdentifier() -> String {
+        var identfier = getValue(String.self, forKey: IAPSconfig.id) ?? ""
+        guard identfier.count > 1 else {
+            identfier = UUID().uuidString
+            setValue(identfier, forKey: IAPSconfig.id)
+            return identfier
+        }
+        return identfier
     }
 }

@@ -476,6 +476,52 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Verifieer dat je de juiste insuline concentratie hebt geselecteerd voordat je opslaat. \n\nHet insuline patroon geeft de concentratie in units per millimeter (U100 bevat 100 eenheden per millimeter, dit is de standaard concentratie).\n\nDe juiste selectie is noodzakelijk voor de juiste dosering.";
+
+/* Insulin Concentration View */
+"Concentration" = "Concentratie";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Insuline concentratie";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Wijzig insuline";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insuline verdund naar";
+
+/* Insulin Concentration View */
+"standard concentration:" = "standaard concentratie:";
+
+/* Insulin Concentration View */
+"units per ml" = "units per ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Standaard concentratie (U 100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Insuline concentratie verhoogd naar";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Kan niet opslaan naar pomp. Probeer opnieuw wanneer de pomp geen bolus toedient.";
+
+/* Insulin Concentration View */
+"Saved" = "Opgeslagen";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Sta verdunde insuline concentratie instellingen toe";
 /* Max setting */
 "Max Carbs" = "Max koolhydraten";
 
@@ -1254,6 +1300,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "Je pomp is bezig.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Bolus already in Progress!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1522,6 +1571,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Meal Presets" = "Maaltijd voorinstellingen";
+
+/* Back button */
+"Back" = "Terug";
+
+/* Search Saved Food presets */
+"Search" = "Search";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
 
 /* */
 "Empty" = "Leeg";
@@ -1930,6 +1988,33 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "alle ";
+
+/* Active Insulin View */
+"Active Insulin" = "Active Insulin";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Time with negative insulin";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insulin compared to yesterday";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insulin compared to average";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Average Insulin 10 days";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD yesterday";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD 2 days ago";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD 3 days ago";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Active Carbohydrates";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2557,6 +2642,15 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Display Glucose Delta" = "Glucose delta weergeven";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Hide Concentration Badge";
+
+/* UI/UX option */
+"Use insulin bars" = "Use insulin bars";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";

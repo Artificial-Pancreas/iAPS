@@ -48,7 +48,6 @@ struct Preferences: JSON {
     var useNewFormula: Bool = false
     var useWeightedAverage: Bool = false
     var weightPercentage: Decimal = 0.65
-    var tddAdjBasal: Bool = false
     var enableSMB_high_bg: Bool = false
     var enableSMB_high_bg_target: Decimal = 110
     var threshold_setting: Decimal = 65
@@ -67,7 +66,7 @@ extension Preferences {
         case highTemptargetRaisesSensitivity = "high_temptarget_raises_sensitivity"
         case lowTemptargetLowersSensitivity = "low_temptarget_lowers_sensitivity"
         case sensitivityRaisesTarget = "sensitivity_raises_target"
-        case resistanceLowersTarget
+        case resistanceLowersTarget = "resistance_lowers_target"
         case advTargetAdjustments = "adv_target_adjustments"
         case exerciseMode = "exercise_mode"
         case halfBasalExerciseTarget = "half_basal_exercise_target"
@@ -103,7 +102,6 @@ extension Preferences {
         case useNewFormula
         case useWeightedAverage
         case weightPercentage
-        case tddAdjBasal
         case enableSMB_high_bg
         case enableSMB_high_bg_target
         case threshold_setting

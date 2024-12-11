@@ -476,6 +476,52 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Макс. Болюс";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Пожалуйста, убедитесь, что вы выбрали правильную концентрацию инсулина, прежде чем сохранять настройки.\n\nНа флаконе или ручке с инсулином должна быть указана концентрация в единицах на миллилитр (например, 100 ЕД/мл или U100 означает 100 единиц на миллилитр, что является стандартной концентрацией).\n\nТочный выбор имеет решающее значение для правильного дозирования.";
+
+/* Insulin Concentration View */
+"Concentration" = "Концентрация";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Концентрация инсулина";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Изменить инсулин";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Инсулин разбавлен до";
+
+/* Insulin Concentration View */
+"standard concentration:" = "стандартная концентрация:";
+
+/* Insulin Concentration View */
+"units per ml" = "единиц на мл";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Стандартная концентрация (100 ЕД/мл)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Концентрация инсулина увеличилась до";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Не удаётся сохранить данные на помпу. Повторите попытку, когда помпа не будет занята введением болюса.";
+
+/* Insulin Concentration View */
+"Saved" = "Сохранено";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "100 ЕД/мл";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "200 ЕД/мл";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "50 ЕД/мл";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "10 ЕД/мл";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Разрешить настройку концентрации разбавленного инсулина";
 /* Max setting */
 "Max Carbs" = "Максимум углеводов";
 
@@ -1254,6 +1300,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "Помпа занята.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Болюс уже вводится!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1522,6 +1571,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Meal Presets" = "Шаблоны";
+
+/* Back button */
+"Back" = "Назад";
+
+/* Search Saved Food presets */
+"Search" = "Поиск";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
 
 /* */
 "Empty" = "Пустой";
@@ -1930,6 +1988,33 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "все";
+
+/* Active Insulin View */
+"Active Insulin" = "Активный инсулин";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Отрицательный инсулин";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Инсулин по сравнению со вчера";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Инсулин по сравнению со средним";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Средний инсулин за 10 дней";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD за вчера";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD 2 дня назад";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD 3 дня назад";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Действующие углеводы";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2553,6 +2638,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Отображать дельту глюкозы";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Скрыть значок концентрации";
+
+/* UI/UX option */
+"Use insulin bars" = "Отображать инсулин вертикально";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Скрыть строки объёма болюса, когда объём меньше";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";

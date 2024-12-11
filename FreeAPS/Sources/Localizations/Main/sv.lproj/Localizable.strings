@@ -476,6 +476,52 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Noga kontrollera att du valt rätt inställning för koncentration innan du sparar.\n\nDin flaska eller penna med insulin är märkt med insulinkoncentrationen i enheter per milliliter (t.ex U100, som betyder 100 enheter per milliliter, vilket är standardkoncentrationen för insulin).\n\nDitt val av koncentration kommer påverka tillförd mängd insulin.";
+
+/* Insulin Concentration View */
+"Concentration" = "Koncentration";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Insulinkoncentration";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Ändra koncentration";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insulin utspädd till";
+
+/* Insulin Concentration View */
+"standard concentration:" = "standardkoncentration:";
+
+/* Insulin Concentration View */
+"units per ml" = "enheter per ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Standardkoncentration (U100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Insulinkoncentration ökad till";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Det gick inte att spara till pump. Försök igen när pumpen inte är upptagen med att ge bolus.";
+
+/* Insulin Concentration View */
+"Saved" = "Sparad";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Tillåt utspätt insulin i pumpinställningar";
 /* Max setting */
 "Max Carbs" = "Max antal kolhydrater";
 
@@ -1266,6 +1312,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "Pump är upptagen.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "En bolusdos pågår redan!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1534,6 +1583,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Meal Presets" = "Förval";
+
+/* Back button */
+"Back" = "Tillbaka";
+
+/* Search Saved Food presets */
+"Search" = "Sök";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "Ny";
 
 /* */
 "Empty" = "Inget";
@@ -1896,7 +1954,7 @@ Enact a temp Basal or a temp target */
 "Most Frequent Error" = "Vanligaste fel";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "ej avslutade loopar";
+"Non-completed Loops" = "Ej avslutade loopar";
 
 /* Average loop interval */
 "Interval" = "Intervall";
@@ -1942,6 +2000,33 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "alla";
+
+/* Active Insulin View */
+"Active Insulin" = "Aktivt insulin";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Tid med negativt insulin";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insulin jämfört med igår";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insulin jämfört med genomsnitt";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Medelinsulin 10 dagar";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD igår";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD för 2 dagar sedan";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD för 3 dagar sedan";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Aktiva kolhydrater";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2565,6 +2650,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Visa exakt glukosförändring";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Dölj koncentrationsmärke";
+
+/* UI/UX option */
+"Use insulin bars" = "Använd insulinstänger";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Dölj bolusmängdtext när beloppet är under";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";

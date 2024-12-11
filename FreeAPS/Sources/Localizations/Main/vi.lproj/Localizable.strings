@@ -476,6 +476,52 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Liều bolus tối đa";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Vui lòng xác minh rằng bạn đã chọn đúng nồng độ insulin trước khi lưu cài đặt.\n\nLọ hoặc bút tiêm insulin phải ghi rõ nồng độ theo đơn vị trên mililiter (ví dụ: U100 chỉ 100 đơn vị trên mililiter, đây là nồng độ chuẩn).\n\nViệc lựa chọn chính xác rất quan trọng để định lượng đúng liều lượng.";
+
+/* Insulin Concentration View */
+"Concentration" = "Nồng độ";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Nồng độ Insulin";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Thay đổi Insulin";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insulin pha loãng thành";
+
+/* Insulin Concentration View */
+"standard concentration:" = "nồng độ tiêu chuẩn:";
+
+/* Insulin Concentration View */
+"units per ml" = "đơn vị trên ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Nồng độ tiêu chuẩn (U 100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Nồng độ insulin tăng lên";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Không thể lưu vào bơm. Hãy thử lại khi bơm không bận truyền thuốc.";
+
+/* Insulin Concentration View */
+"Saved" = "Đã lưu";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Cho phép cài đặt nồng độ insulin pha loãng";
 /* Max setting */
 "Max Carbs" = "Khối lượng carbs tối đa";
 
@@ -1254,6 +1300,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "Bơm đang bận.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Liều bolus đang được thực hiện!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1522,6 +1571,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Meal Presets" = "Trước bữa ăn";
+
+/* Back button */
+"Back" = "Quay Lại";
+
+/* Search Saved Food presets */
+"Search" = "Tìm kiếm";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
 
 /* */
 "Empty" = "Trống rỗng";
@@ -1930,6 +1988,33 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "Tất cả";
+
+/* Active Insulin View */
+"Active Insulin" = "Lượng Insulin còn hoạt động";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Thời gian có Insulin âm tính";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insulin so với ngày hôm qua";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insulin so với mức trung bình";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Insulin trung bình 10 ngày";
+
+/* Active Insulin View */
+"TDD yesterday" = "Tổng liều ngày hôm qua";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "Tổng liều 2 ngày trước";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "Tổng liều 3 ngày trước";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Lượng Carbohydrates còn hoạt động";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2470,16 +2555,16 @@ Enact a temp Basal or a temp target */
 "Threshold" = "Ngưỡng";
 
 /* Dynamic settings View */
-"Averages" = "Averages";
+"Averages" = "Trung Bình";
 
 /* Dynamic settings View */
-"Average ISF" = "Average ISF";
+"Average ISF" = "ISF trung bình";
 
 /* Dynamic settings View */
-"Average CR" = "Average CR";
+"Average CR" = "CR trung bình";
 
 /* Dynamic settings View */
-"Average CSF" = "Average CSF";
+"Average CSF" = "CSF trung bình";
 
 /* Dynamic settings View */
 "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
@@ -2554,6 +2639,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Hiển thị Glucose Delta";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Ẩn nhãn nồng độ Insulin";
+
+/* UI/UX option */
+"Use insulin bars" = "Sử dụng thanh Insulin";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi số lượng dưới";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán Bolus";

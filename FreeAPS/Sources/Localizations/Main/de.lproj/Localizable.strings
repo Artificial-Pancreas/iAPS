@@ -476,6 +476,52 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Maximaler Bolus";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Bitte vergewissern Sie sich, dass Sie die richtige Insulinkonzentration ausgewählt haben, bevor Sie Ihre Einstellungen speichern.\n\n Auf der Insulinampulle oder dem Pen sollte die Konzentration in Einheiten pro Milliliter angegeben sein (z. B. U100 steht für 100 Einheiten pro Milliliter, was der Standardkonzentration entspricht).\n\nEine genaue Auswahl ist für die richtige Dosierung entscheidend.";
+
+/* Insulin Concentration View */
+"Concentration" = "Konzentration";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Insulinkonzentration";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Insulin ändern";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Verdünntes Insulin auf";
+
+/* Insulin Concentration View */
+"standard concentration:" = "Standardkonzentration:";
+
+/* Insulin Concentration View */
+"units per ml" = "Einheiten pro ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Standardkonzentration (U 100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Insulinkonzentration erhöht auf";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Konnte nicht auf der Pumpe speichern. Versuchen Sie es erneut, wenn die Pumpe nicht mit einem Bolus beschäftigt ist.";
+
+/* Insulin Concentration View */
+"Saved" = "Gespeichert";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Verdünnte Insulinkonzentration erlauben";
 /* Max setting */
 "Max Carbs" = "Max Kohlenhydrate";
 
@@ -1254,6 +1300,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "Die Insulinpumpe ist beschäftigt.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Ein Bolus wird bereits abgegeben!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1522,6 +1571,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Meal Presets" = "Mahlzeit Voreinstellungen";
+
+/* Back button */
+"Back" = "Zurück";
+
+/* Search Saved Food presets */
+"Search" = "Suchen";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "Neu";
 
 /* */
 "Empty" = "Leer";
@@ -1878,13 +1936,13 @@ Enact a temp Basal or a temp target */
 "Errors" = "Fehler";
 
 /* Loop Statistics pop-up description */
-"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+"Success = Started / Completed (loops)" = "Erfolgreich berechnete Loops";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
+"Most Frequent Error" = "Häufigste Fehler";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Non-completed Loops";
+"Non-completed Loops" = "Nicht abgeschlossene Loops";
 
 /* Average loop interval */
 "Interval" = "Intervall";
@@ -1930,6 +1988,34 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "alle";
+
+/* Active Insulin View */
+"Active Insulin" = "Aktives Insulin";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Zeit mit negativem Insulin";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insulin im Vergleich zu gestern";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insulin im Vergleich zum Durchschnitt";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Durchs. Insulinverbrauch (10 Tage)
+";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD gestern";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD vor 2 Tagen";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD vor 3 Tagen";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Aktive Kohlenhydrate";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -1989,7 +2075,7 @@ Enact a temp Basal or a temp target */
 "Just iAPS version number" = "Nur iAPS Versionsnummer";
 
 /* Share info text */
-"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Alle Informationen, die Sie freigeben möchten, werden anonym hochgeladen. Um doppelte Uploads zu vermeiden, werden die Daten mit einer eindeutigen, zufälligen Zeichenfolge identifiziert, die auf Ihrem Telefon gespeichert ist.";
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Alle Informationen, die Sie teilen möchten, werden anonym hochgeladen. Um das Hochladen von Duplikaten zu verhindern, werden die Daten mit einer einzigartigen zufälligen Zeichenkette identifiziert, die auf Ihrem Telefon gespeichert wird, dem Wiederherstellungs-Token.Um doppelte Uploads zu verhindern, werden die Daten durch eine eindeutige, zufällige Zeichenfolge identifiziert, die auf deinem Telefon als Wiederherstellungs-Token gespeichert wird.";
 
 /* Token section title */
 "Your recovery token" = "Ihr Wiederherstellungs-Token";
@@ -2469,19 +2555,19 @@ Enact a temp Basal or a temp target */
 "Threshold" = "Grenzwert";
 
 /* Dynamic settings View */
-"Averages" = "Averages";
+"Averages" = "Durchschnitsswerte";
 
 /* Dynamic settings View */
-"Average ISF" = "Average ISF";
+"Average ISF" = "Durchschnittlicher ISF";
 
 /* Dynamic settings View */
-"Average CR" = "Average CR";
+"Average CR" = "Durchschnittlicher CR";
 
 /* Dynamic settings View */
-"Average CSF" = "Average CSF";
+"Average CSF" = "Durchschnittlicher CSF";
 
 /* Dynamic settings View */
-"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulinempfindlichkeit, CR: Kohlenhydratverhältnis,\nCSF: Kohlenhydrate Empfindlichkeit = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Berechnungseinstellungen";
@@ -2553,6 +2639,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Glukose-Delta anzeigen";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Insulinkonzentrations ausblenden";
+
+/* UI/UX option */
+"Use insulin bars" = "Insulinbalken verwenden";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Bolusmengen in der Grafik ausblenden wenn sie kleiner als";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";

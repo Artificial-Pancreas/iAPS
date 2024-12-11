@@ -476,6 +476,52 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Bolus max";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Veuillez vérifier que vous avez sélectionné la bonne concentration d'insuline avant d'enregistrer vos paramètres.\n\nLe flacon ou le stylo d'insuline doit indiquer la concentration en unités par millilitre (p. ex. U-100 ou 100 U/ml indique une concentration de 100 unités internationales par millilitre, ce qui est le standard).\n\nLa sélection de la bonne valeur est essentielle pour un dosage adéquat.";
+
+/* Insulin Concentration View */
+"Concentration" = "Concentration";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Concentration de l'insuline";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Changer l'insuline";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insuline diluée à";
+
+/* Insulin Concentration View */
+"standard concentration:" = "concentration standard :";
+
+/* Insulin Concentration View */
+"units per ml" = "unités par ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Concentration standard (U-100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Concentration de l'insuline augmentée à";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Impossible d'enregistrer sur la pompe. Réessayez lorsque la pompe n'est pas occupée à donner un bolus.";
+
+/* Insulin Concentration View */
+"Saved" = "Enregistré";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U-100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U-200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U-50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U-10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Permettre les paramètres de concentration d'insuline diluée";
 /* Max setting */
 "Max Carbs" = "Glucides max";
 
@@ -1254,6 +1300,9 @@ Enact a temp Basal or a temp target */
 /* Pump Error */
 "Pump is Busy." = "La pompe est occupée.";
 
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Un bolus est déjà en cours !";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
@@ -1523,6 +1572,15 @@ Enact a temp Basal or a temp target */
 /* */
 "Meal Presets" = "Préréglages des repas";
 
+/* Back button */
+"Back" = "Retour";
+
+/* Search Saved Food presets */
+"Search" = "Recherche";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "Nouveau repas";
+
 /* */
 "Empty" = "Vide";
 
@@ -1595,7 +1653,7 @@ Enact a temp Basal or a temp target */
 "Hide" = "Masquer";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glycémie Eventuelle > Glycémie Cible, mais le glucose est prévu pour la première fois dans la liste déroulante à ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glycémie éventuelle > Glycémie cible, mais le glucose est prévu pour la première fois dans la liste déroulante à ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "qui est inférieur à votre seuil (";
@@ -1878,13 +1936,13 @@ Enact a temp Basal or a temp target */
 "Errors" = "Erreurs";
 
 /* Loop Statistics pop-up description */
-"Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
+"Success = Started / Completed (loops)" = "Succès = Boucles démarrées / Boucles terminées";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
+"Most Frequent Error" = "Erreur la plus fréquente";
 
 /* Loop Statistics pop-up */
-"Non-completed Loops" = "Non-completed Loops";
+"Non-completed Loops" = "Boucles non terminées";
 
 /* Average loop interval */
 "Interval" = "Intervalle";
@@ -1930,6 +1988,33 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "toutes";
+
+/* Active Insulin View */
+"Active Insulin" = "Insuline active";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Durée avec insuline négative";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insuline, comparée à hier";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insuline, comparée à la moyenne";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Moyenne d'insuline sur 10 jours";
+
+/* Active Insulin View */
+"TDD yesterday" = "Dose quotidienne totale (DQT) hier";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "DQT il y a 2 jours";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "DQT il y a 3 jours";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Glucides actifs";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2469,19 +2554,19 @@ Enact a temp Basal or a temp target */
 "Threshold" = "Seuil";
 
 /* Dynamic settings View */
-"Averages" = "Averages";
+"Averages" = "Moyennes";
 
 /* Dynamic settings View */
-"Average ISF" = "Average ISF";
+"Average ISF" = "FSI moyen";
 
 /* Dynamic settings View */
-"Average CR" = "Average CR";
+"Average CR" = "RIG moyen";
 
 /* Dynamic settings View */
-"Average CSF" = "Average CSF";
+"Average CSF" = "FSG moyen";
 
 /* Dynamic settings View */
-"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "FSI : Facteur de sensibilité à l'insuline, RIG : Ratio insuline/glucides,\nFSG : Facteur de sensibilité aux glucides = FSI/RIG";
 
 /* Header */
 "Calculator settings" = "Réglages de la calculatrice";
@@ -2553,6 +2638,15 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Afficher l'écart de glycémie";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Masquer la pastille indiquant la concentration de l'insuline";
+
+/* UI/UX option */
+"Use insulin bars" = "Afficher l'insuline sous forme de barres";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Masquer les quantités de bolus si inférieures à";
 
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";

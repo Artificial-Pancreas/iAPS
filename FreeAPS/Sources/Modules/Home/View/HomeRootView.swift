@@ -18,6 +18,7 @@ extension Home {
         @State var displayGlucose = false
         @State var animateLoop = Date.distantPast
         @State var animateTIR = Date.distantPast
+        @State var showBolusActiveAlert = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
@@ -47,6 +48,11 @@ extension Home {
             entity: TempTargetsSlider.entity(),
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var enactedSliderTT: FetchedResults<TempTargetsSlider>
+
+        @FetchRequest(
+            entity: Onboarding.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var onboarded: FetchedResults<Onboarding>
 
         private var numberFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -308,10 +314,11 @@ extension Home {
                         }.buttonStyle(.borderless)
                         Spacer()
                         Button {
-                            state.showModal(for: .bolus(
-                                waitForSuggestion: state.useCalc ? true : false,
-                                fetch: false
-                            ))
+                            (state.bolusProgress != nil) ? showBolusActiveAlert = true :
+                                state.showModal(for: .bolus(
+                                    waitForSuggestion: state.useCalc ? true : false,
+                                    fetch: false
+                                ))
                         }
                         label: {
                             Image(systemName: "syringe")
@@ -397,6 +404,11 @@ extension Home {
                     state.cancelTempTarget()
                 }
             }
+            .confirmationDialog("Bolus already in Progress", isPresented: $showBolusActiveAlert) {
+                Button("Bolus already in Progress!", role: .cancel) {
+                    showBolusActiveAlert = false
+                }
+            }
         }
 
         var chart: some View {
@@ -442,6 +454,9 @@ extension Home {
                         }.offset(x: 0, y: 5)
                     }
 
+                    // Instead of Spacer
+                    Text(" ")
+
                     // Insulin on Board
                     HStack {
                         let substance = Double(state.suggestion?.iob ?? 0)
@@ -459,7 +474,7 @@ extension Home {
                         HStack(spacing: 0) {
                             if let loop = state.suggestion, let iob = loop.iob {
                                 Text(
-                                    numberFormatter.string(from: iob as NSNumber) ?? "0"
+                                    targetFormatter.string(from: iob as NSNumber) ?? "0"
                                 ).font(.statusFont).bold()
                             } else {
                                 Text("?").font(.statusFont).bold()
@@ -742,72 +757,83 @@ extension Home {
 
         var body: some View {
             GeometryReader { geo in
-                VStack(spacing: 0) {
-                    // Header View
-                    headerView(geo)
+                if onboarded.first?.firstRun ?? true, let openAPSSettings = state.openAPSSettings {
+                    /// If old iAPS user pre v5.7.1 OpenAPS settings will be reset, but can be restored in View below
+                    importResetSettingsView(settings: openAPSSettings)
+                } else {
+                    VStack(spacing: 0) {
+                        // Header View
+                        headerView(geo)
 
-                    ScrollView {
-                        VStack {
-                            // Main Chart
-                            chart
-                            // Adjust hours visible (X-Axis)
-                            timeSetting
-                            // TIR Chart
-                            if !state.glucose.isEmpty {
-                                preview.padding(.top, 15)
-                            }
-                            // Loops Chart
-                            loopPreview.padding(.vertical, 15)
+                        ScrollView {
+                            VStack {
+                                // Main Chart
+                                chart
+                                // Adjust hours visible (X-Axis)
+                                timeSetting
+                                // TIR Chart
+                                if !state.glucose.isEmpty {
+                                    preview.padding(.top, 15)
+                                }
+                                // Loops Chart
+                                loopPreview.padding(.vertical, 15)
 
-                            if state.carbData > 0 {
-                                activeCOBView
-                            }
+                                if state.carbData > 0 {
+                                    activeCOBView
+                                }
 
-                            // IOB Chart
-                            if state.iobs > 0 {
-                                activeIOBView
-                            }
+                                // IOB Chart
+                                if state.iobs > 0 {
+                                    activeIOBView
+                                }
 
-                        }.background {
-                            // Track vertical scroll
-                            GeometryReader { proxy in
-                                let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
-                                let yThreshold: CGFloat = -550
-                                Color.clear
-                                    .onChange(of: scrollPosition) { y in
-                                        if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
-                                            withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
-                                        } else {
-                                            withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
+                            }.background {
+                                // Track vertical scroll
+                                GeometryReader { proxy in
+                                    let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
+                                    let yThreshold: CGFloat = -550
+                                    Color.clear
+                                        .onChange(of: scrollPosition) { y in
+                                            if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
+                                                withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
+                                            } else {
+                                                withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }
+                                            }
                                         }
-                                    }
+                                }
                             }
-                        }
 
-                    }.coordinateSpace(name: "HomeScrollView")
-                    // Buttons
-                    buttonPanel(geo)
-                }
+                        }.coordinateSpace(name: "HomeScrollView")
+                        // Buttons
+                        buttonPanel(geo)
+                    }
 
-                .background(
-                    colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
-                        .opacity(IAPSconfig.backgroundOpacity * 2)
-                )
-                .ignoresSafeArea(edges: .vertical)
-                .overlay {
-                    if let progress = state.bolusProgress, let amount = state.bolusAmount {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(.gray.opacity(0.8))
-                                .frame(width: 320, height: 60)
-                            bolusProgressView(progress: progress, amount: amount)
+                    .background(
+                        colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
+                            .opacity(IAPSconfig.backgroundOpacity * 2)
+                    )
+                    .ignoresSafeArea(edges: .vertical)
+                    .overlay {
+                        if let progress = state.bolusProgress, let amount = state.bolusAmount {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(.gray.opacity(0.8))
+                                    .frame(width: 320, height: 60)
+                                bolusProgressView(progress: progress, amount: amount)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .offset(x: 0, y: -100)
                         }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .offset(x: 0, y: -100)
                     }
                 }
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                if onboarded.first?.firstRun ?? true {
+                    state.fetchPreferences()
+                }
+
+                configureView()
+            }
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
@@ -830,7 +856,6 @@ extension Home {
                             }
                     )
             }
-            .onAppear(perform: configureView)
         }
 
         private var popup: some View {
@@ -857,6 +882,13 @@ extension Home {
                     Text("SMBs and High Temps Disabled.").font(.suggestionParts).foregroundColor(.white).padding(.bottom, 4)
                 }
             }
+        }
+
+        private func importResetSettingsView(settings: Preferences) -> some View {
+            Restore.RootView(
+                resolver: resolver,
+                openAPS: settings
+            )
         }
     }
 }
