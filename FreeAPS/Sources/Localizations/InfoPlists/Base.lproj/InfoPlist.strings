@@ -21,3 +21,12 @@
 
 /* Privacy - Contacts Usage Description */
 "NSContactsUsageDescription" = "To enable the Contact Image feature: get live updates from iAPS to your Apple Watch Contact complication";
+
+/* NSHealthClinicalHealthRecordsShareUsageDescription */
+"NSHealthClinicalHealthRecordsShareUsageDescription" = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
+
+/* NSHealthShareUsageDescription */
+"NSHealthShareUsageDescription" = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
+
+/* SHealthUpdateUsageDescription */
+     "NSHealthUpdateUsageDescription" = "For the iAPS app to work on the Apple Watch, please ensure that you have enabled HealthKit permissions.";
