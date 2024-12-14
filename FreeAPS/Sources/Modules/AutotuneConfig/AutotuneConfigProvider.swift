@@ -15,5 +15,11 @@ extension AutotuneConfig {
         func deleteAutotune() {
             storage.remove(OpenAPS.Settings.autotune)
         }
+
+        var profile: [BasalProfileEntry] {
+            storage.retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
+                ?? [BasalProfileEntry](from: OpenAPS.defaults(for: OpenAPS.Settings.basalProfile))
+                ?? []
+        }
     }
 }

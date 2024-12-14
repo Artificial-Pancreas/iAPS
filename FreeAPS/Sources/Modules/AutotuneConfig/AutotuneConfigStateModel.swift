@@ -20,6 +20,8 @@ extension AutotuneConfig {
             }
         }
 
+        @Published var currentProfile: [BasalProfileEntry] = []
+
         override func subscribe() {
             autotune = provider.autotune
             units = settingsManager.settings.units
@@ -27,6 +29,8 @@ extension AutotuneConfig {
             publishedDate = lastAutotuneDate
             increment = Double(settingsManager.preferences.bolusIncrement)
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
+
+            currentProfile = provider.profile
 
             $useAutotune
                 .removeDuplicates()

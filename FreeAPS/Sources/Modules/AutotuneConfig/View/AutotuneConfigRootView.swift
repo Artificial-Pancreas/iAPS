@@ -74,6 +74,16 @@ extension AutotuneConfig {
                             HStack {
                                 Text(autotune.basalProfile[index].start).foregroundColor(.secondary)
                                 Spacer()
+                                if let current = state.currentProfile.first(where: {
+                                    $0.start == autotune.basalProfile[index].start &&
+                                        $0.minutes == autotune.basalProfile[index].minutes })
+                                {
+                                    HStack(alignment: .center) {
+                                        Text(rateFormatter.string(from: current.rate as NSNumber) ?? "0")
+                                            .foregroundColor(.secondary)
+                                        Text("⇢").foregroundColor(.secondary)
+                                    }
+                                }
                                 Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
                                 Text("U/hr").foregroundColor(.secondary)
                             }
