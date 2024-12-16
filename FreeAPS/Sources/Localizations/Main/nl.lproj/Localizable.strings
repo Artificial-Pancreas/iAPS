@@ -1301,7 +1301,7 @@ Enact a temp Basal or a temp target */
 "Pump is Busy." = "Je pomp is bezig.";
 
 /* Alert when bolus is already in progress (tapping the bolus button) */
-"Bolus already in Progress!" = "Er is al een bolus actief!";
+"Bolus already in Progress!" = "Bolus already in Progress!";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1576,10 +1576,10 @@ Enact a temp Basal or a temp target */
 "Back" = "Terug";
 
 /* Search Saved Food presets */
-"Search" = "Zoeken";
+"Search" = "Search";
 
 /* Placeholder for name of dish when adding a new food preset */
-"New" = "Nieuw";
+"New" = "New";
 
 /* */
 "Empty" = "Leeg";
@@ -1990,31 +1990,31 @@ Enact a temp Basal or a temp target */
 "all" = "alle ";
 
 /* Active Insulin View */
-"Active Insulin" = "Actieve insuline";
+"Active Insulin" = "Active Insulin";
 
 /* Active Insulin View */
-"Time with negative insulin" = "Tijd met negatieve insuline";
+"Time with negative insulin" = "Time with negative insulin";
 
 /* Active Insulin View */
-"Insulin compared to yesterday" = "Insuline vergeleken met gisteren";
+"Insulin compared to yesterday" = "Insulin compared to yesterday";
 
 /* Active Insulin View */
-"Insulin compared to average" = "Insuline vergeleken met gemiddelde";
+"Insulin compared to average" = "Insulin compared to average";
 
 /* Active Insulin View */
-"Average Insulin 10 days" = "Gemiddelde insuline 10 dagen";
+"Average Insulin 10 days" = "Average Insulin 10 days";
 
 /* Active Insulin View */
-"TDD yesterday" = "TDD gisteren";
+"TDD yesterday" = "TDD yesterday";
 
 /* Active Insulin View */
-"TDD 2 days ago" = "TDD 2 dagen terug";
+"TDD 2 days ago" = "TDD 2 days ago";
 
 /* Active Insulin View */
-"TDD 3 days ago" = "TDD 3 dagen terug";
+"TDD 3 days ago" = "TDD 3 days ago";
 
 /* Active Carbohydrates View */
-"Active Carbohydrates" = "Actieve koolhydraten";
+"Active Carbohydrates" = "Active Carbohydrates";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2093,6 +2093,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Share your data anonymously" = "Deel je gegevens anoniem";
+
+/* Setting Title */
+"Sharing" = "Delen van statistieken";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -2641,13 +2644,13 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Glucose Delta" = "Glucose delta weergeven";
 
 /* UI/UX option */
-"Hide Concentration Badge" = "Verberg concentratie badge";
+"Hide Concentration Badge" = "Hide Concentration Badge";
 
 /* UI/UX option */
-"Use insulin bars" = "Gebruik insulinebalken";
+"Use insulin bars" = "Use insulin bars";
 
 /* UI/UX option */
-"Hide the bolus amount strings when amount is under" = "Verberg de bolus hoeveelheid als de hoeveelheid lager is dan";
+"Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
