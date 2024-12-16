@@ -159,7 +159,7 @@ class DanaKitSettingsViewModel : ObservableObject {
         self.pumpManager?.notifyStateDidChange()
     }
     
-    func updateBettryAge() {
+    func updateBatteryAge() {
         self.pumpManager?.state.batteryAge = Date.now
         self.batteryAge = formatDateToDayHour(Date.now)
         self.pumpManager?.notifyStateDidChange()

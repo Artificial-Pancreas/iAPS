@@ -260,7 +260,7 @@ struct DanaKitSettingsView: View {
                             .foregroundColor(.secondary)
                     }
                     .onLongPressGesture(perform: {
-                        viewModel.updateBettryAge()
+                        viewModel.updateBatteryAge()
                     })
                 }
             }
