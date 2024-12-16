@@ -170,10 +170,10 @@
 "Saved Food" = "Lưu thực phẩm";
 
 /* */
-"Are you sure?" = "Bạn có chắc không?";
+"Are you sure?" = "Bạn có chắc chắn không?";
 
 /* Bottom target temp */
-"Bottom target" = "Mục tiêu dưới cùng";
+"Bottom target" = "Mục tiêu thấp nhất";
 
 /* Cancel preset name */
 "Cancel" = "Hủy";
@@ -206,7 +206,7 @@
 "Basal Insulin and Sensitivity ratio" = "Tỷ lệ Insulin cơ bản và độ nhạy";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Cài đặt '1/2 mục tiêu cơ bản' thấp hơn sẽ giảm mức cơ bản và tăng ISF sớm hơn, ở mức glucose mục tiêu thấp hơn.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Cài đặt 'một nửa mục tiêu cơ bản' thấp hơn sẽ giảm mức cơ bản và tăng ISF sớm hơn, ở mức glucose mục tiêu thấp hơn.";
 
 /* */
 " Your setting: " = " Cài đặt của bạn: ";
@@ -224,13 +224,13 @@
 "minutes" = "phút";
 
 /*  */
-"Presets" = "Mẫu cài đặt sẵn";
+"Presets" = "Mẫu thiết lập";
 
 /* Save preset name */
 "Save" = "Lưu";
 
 /*  */
-"Save as Preset" = "Lưu cài đặt sẵn";
+"Save as Preset" = "Lưu mẫu cài đặt sẵn";
 
 /* Delete Meal Preset */
 "Delete Preset" = "Xoá mẫu cài đặt";
@@ -260,7 +260,7 @@
 "min" = "min";
 
 /*  */
-"Autotune" = "Autotune";
+"Autotune" = "Tự động điều chỉnh";
 
 /*  */
 "Basal profile" = "Hồ sơ liều nền";
@@ -275,7 +275,7 @@
 "Run now" = "Chạy ngay";
 
 /*  */
-"Last run" = "Lần chạy gần nhất";
+"Last run" = "Lần chạy cuối";
 
 /*  */
 "Sensitivity" = "Độ nhạy";
@@ -529,7 +529,7 @@ Enact a temp Basal or a temp target */
 "Maximum amount of carbs (g) you can add each entry" = "Lượng carbs tối đa (g) bạn có thể thêm vào mỗi mục nhập";
 
 /* */
-"Pump Settings" = "Cấu hình bơm";
+"Pump Settings" = "Cài đặt của bơm";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -778,7 +778,7 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Về quá trình xử lý";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Xin chắc chắn rằng Libre 2 của bạn đã được kích hoạt and hoàn thành khởi động. Nếu bạn đang có app nào kết nối với cảm biến qua bluetooth thì nên đóng các app này lại hoặc gỡ các app khỏi máy.\n\n Bạn chỉ được dùng 01 app để kết nối với cảm biến qua bluetooth. Sau đó nhấn \"pairing and connection\" để tiếp tục. Bluetooth có thể mất vài phút để kết nối trước khi bắt đầu hoạt động.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Xin chắc chắn rằng Libre 2 của bạn đã được kích hoạt và hoàn thành khởi động. Nếu bạn đang có app nào kết nối với cảm biến qua bluetooth thì nên đóng các app này lại hoặc gỡ các app khỏi máy.\n\n Bạn chỉ được dùng 01 app để kết nối với cảm biến qua bluetooth. Sau đó nhấn \"pairing and connection\" để tiếp tục. Bluetooth có thể mất vài phút để kết nối trước khi bắt đầu hoạt động.";
 
 /* */
 "Pairinginfo" = "Thông tin ghép nối";
@@ -1078,10 +1078,10 @@ Enact a temp Basal or a temp target */
 "not available" = "không có sẵn";
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Kích hoạt cài đặt trước ghi đè";
+"Activate an Override Preset" = "Kích hoạt cài đặt sẵn ghi đè";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Cho phép kích hoạt cài đặt trước ghi đè.";
+"Allow to activate an overrride preset." = "Cho phép kích hoạt cài đặt sẵn ghi đè.";
 
 /* Override Shortcut */
 "Which override preset would you like to activate?" = "Bạn muốn kích hoạt cài đặt trước ghi đè nào?";
@@ -1252,7 +1252,7 @@ Enact a temp Basal or a temp target */
 " day(s)" = " day(s)";
 
 /* Option to show HR in Watch app*/
-"Display HR on Watch" = "Hiển thị trên đồng hồ";
+"Display HR on Watch" = "Hiển thị HR trên đồng hồ";
 
 
 /* Headers for settings ----------------------- */
@@ -1342,7 +1342,7 @@ Enact a temp Basal or a temp target */
 "Meal" = "Bữa ăn";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Hồ sơ Bơm";
+"Pump profile" = "Hồ sơ Bơm Insulin";
 
 /* Debug option view Profile */
 "Profile" = "Hồ sơ";
@@ -1357,10 +1357,10 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Thông báo đã kích hoạt";
 
 /* Debug option view Autotune */
-"Autotune" = "Autotune";
+"Autotune" = "Tự động điều chỉnh";
 
 /* Debug option view Target presets */
-"Target presets" = "Mục tiêu đặt trước";
+"Target presets" = "Mục tiêu cài đặt trước";
 
 /* Debug option view */
 "Loop Cycles" = "Chu kỳ vòng lặp";
@@ -1597,7 +1597,7 @@ Enact a temp Basal or a temp target */
 "Save and continue" = "Lưu và tiếp tục";
 
 /* */
-"Save as Preset" = "Lưu cài đặt sẵn";
+"Save as Preset" = "Lưu mẫu cài đặt sẵn";
 
 /* */
 "Predictions" = "Dự đoán";
@@ -1653,25 +1653,25 @@ Enact a temp Basal or a temp target */
 "Hide" = "Ẩn";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Eventual Glucose > Target Glucose, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "nằm dưới Ngưỡng của bạn (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Eventual Glucose > Target Glucose, nhưng Glucose tăng chậm hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Đang tăng lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Eventual Glucose > Target Glucose, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Đang giảm xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Eventual Glucose > Target Glucose, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Đang thay đổi: ";
@@ -2187,7 +2187,7 @@ Enact a temp Basal or a temp target */
 "Weight" = "Weight";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Chế độ tối";
+"Dark mode" = "Dark mode";
 
 /* Contact Image, settings, tighter font tracking */
 "TighterFontTracking" = "Tighter";
@@ -2626,7 +2626,7 @@ Enact a temp Basal or a temp target */
 "Horizontal Scroll View Visible hours" = "Chế độ xem cuộn ngang Giờ hiển thị";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Nút cài đặt khoảng thời gian hiển thị";
+"Display Time Interval Setting Button" = "Hiển thị khoảng thời gian nút cài đặt";
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Không bao giờ hiển thị biểu đồ glucose nhỏ khi cuộn";
@@ -2656,7 +2656,7 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Hoạt động trực tiếp";
 
 /* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hiển thị hoạt động trực tiếp đường huyết trên màn hình khóa và năng động (nếu có)";
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và động (nếu có)";
 
 /* Notification option */
 "Show Live activity" = "Hiển thị hoạt động trực tiếp";
