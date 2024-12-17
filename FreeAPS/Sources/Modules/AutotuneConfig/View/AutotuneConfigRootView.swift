@@ -119,8 +119,9 @@ extension AutotuneConfig {
                                     .foregroundColor(.primary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                                Text("") // empty columns
-                                Text("")
+                                Text(rateFormatter.string(from: state.currentTotal as NSNumber) ?? "0")
+                                    .foregroundColor(.secondary)
+                                Text("⇢").foregroundColor(.secondary)
 
                                 Text(
                                     rateFormatter

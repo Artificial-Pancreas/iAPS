@@ -21,6 +21,7 @@ extension AutotuneConfig {
         }
 
         @Published var currentProfile: [BasalProfileEntry] = []
+        @Published var currentTotal: Decimal = 0.0
 
         override func subscribe() {
             autotune = provider.autotune
@@ -31,6 +32,7 @@ extension AutotuneConfig {
             subscribeSetting(\.onlyAutotuneBasals, on: $onlyAutotuneBasals) { onlyAutotuneBasals = $0 }
 
             currentProfile = provider.profile
+            calcTotal()
 
             $useAutotune
                 .removeDuplicates()
@@ -43,6 +45,13 @@ extension AutotuneConfig {
                 }
                 .cancellable()
                 .store(in: &lifetime)
+        }
+
+        func calcTotal() {
+            var profileWith24hours = currentProfile.map(\.minutes)
+            profileWith24hours.append(24 * 60)
+            let pr2 = zip(currentProfile, profileWith24hours.dropFirst())
+            currentTotal = pr2.reduce(0) { $0 + (Decimal($1.1 - $1.0.minutes) / 60) * $1.0.rate }
         }
 
         func run() {
