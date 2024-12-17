@@ -251,6 +251,18 @@ struct DanaKitSettingsView: View {
                         viewModel.updateCannulaAge()
                     })
                 }
+                
+                if let batteryAge = viewModel.batteryAge {
+                    HStack {
+                        Text(LocalizedString("Battery age", comment: "Text for battery age")).foregroundColor(Color.primary)
+                        Spacer()
+                        Text(String(batteryAge))
+                            .foregroundColor(.secondary)
+                    }
+                    .onLongPressGesture(perform: {
+                        viewModel.updateBatteryAge()
+                    })
+                }
             }
             
             Section(header: SectionHeader(label: LocalizedString("Configuration", comment: "The title of the configuration section in DanaKit settings")))

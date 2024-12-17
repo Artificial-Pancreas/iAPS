@@ -117,7 +117,7 @@ struct DanaKitRefillReservoirAndCannulaView: View {
                     }
                     .onTapGesture {
                         withAnimation {
-                            self.isEditingTubeRefillAmount.toggle()
+                            self.isEditingPrimeRefillAmount.toggle()
                         }
                     }
                     
