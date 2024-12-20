@@ -16,16 +16,16 @@ struct LiveActivity: Widget {
         formatter.timeStyle = .short
         return formatter
     }()
-
+    
     private let minuteFormatter: NumberFormatter = {
         var formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
         return formatter
     }()
-
+    
     @Environment(\.dynamicTypeSize) private var fontSize
-
+    
     @ViewBuilder private func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         if !context.state.change.isEmpty {
             if !context.isStale {
@@ -37,18 +37,18 @@ struct LiveActivity: Widget {
             Text("--")
         }
     }
-
+    
     private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
         let text = Text("\(dateFormatter.string(from: context.state.loopDate))")
         return text
     }
-
+    
     private func bgAndTrend(context: ActivityViewContext<LiveActivityAttributes>, size: Size) -> (some View, Int) {
         var characters = 0
-
+        
         let bgText = context.state.bg
         characters += bgText.count
-
+        
         // narrow mode is for the minimal dynamic island view
         // there is not enough space to show all three arrow there
         // and everything has to be squeezed together to some degree
@@ -58,27 +58,27 @@ struct LiveActivity: Widget {
         if let direction = context.state.direction {
             if size == .compact {
                 directionText = String(direction[direction.startIndex ... direction.startIndex])
-
+                
                 if direction.count > 1 {
                     warnColor = Color.red
                 }
             } else {
                 directionText = direction
             }
-
+            
             characters += directionText!.count
         }
-
+        
         let spacing: CGFloat
         switch size {
         case .minimal: spacing = -1
         case .compact: spacing = 0
         case .expanded: spacing = 3
         }
-
+        
         let stack = HStack(spacing: spacing) {
             Text(bgText)
-
+            
             if let direction = directionText {
                 let text = Text(direction)
                 switch size {
@@ -91,126 +91,125 @@ struct LiveActivity: Widget {
                     }
                 case .compact:
                     text.scaleEffect(x: 0.8, y: 0.8, anchor: .leading).padding(.trailing, -3)
-
+                    
                 case .expanded:
                     text.scaleEffect(x: 0.7, y: 0.7, anchor: .center).padding(.trailing, -5)
                 }
             }
         }
-        .foregroundStyle(context.isStale ? .secondary : Color.primary)
-
+            .foregroundStyle(context.isStale ? .secondary : Color.primary)
+        
         return (stack, characters)
     }
-
+    
     private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
         HStack(spacing: 0) {
             Text(context.state.iob)
-            Text(" U")
+            Text(" U").opacity(0.7).scaleEffect(0.8)
         }
         .foregroundStyle(.insulin)
     }
-
+    
     private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
         HStack(spacing: 0) {
             Text(context.state.cob)
-            Text(" g")
+            Text(" g").opacity(0.7).scaleEffect(0.8)
         }
         .foregroundStyle(.loopYellow)
     }
-
+    
     private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
         let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
         let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
         return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
     }
-
+    
     private var emptyText: some View {
         Text(" ").font(.caption).offset(x: 0, y: -5)
-    }
-    
-    private func displayValues(_ readings: [LiveActivityAttributes.ContentStateReading], mmol: Bool) -> [(date: Date, mgdl: Int16, value: Double)] {
-        readings.map { reading in
-            (
-                date: reading.date,
-                mgdl: reading.glucose,
-                value: mmol ?
-                    Double(reading.glucose) * 0.0555 :
-                    Double(reading.glucose)
-            )
-        }
-    }
-    
-    private func createYScale(
-        _ state: LiveActivityAttributes.ContentState,
-        _ maxValue: Double
-    ) -> ClosedRange<Double> {
-        let minValue = state.mmol ? 36 * 0.0555 : 36
-        
-        if let settingsMaxValue = state.chartMaxValue {
-            let settingsMaxDouble = Double(settingsMaxValue)
-            let settingsMaxDoubleConverted = state.mmol ? settingsMaxDouble * 0.0555 : settingsMaxDouble
-           
-            if settingsMaxDoubleConverted > maxValue {
-                return Double(minValue)...Double(settingsMaxDoubleConverted)
-            } else {
-                return Double(minValue)...Double(maxValue)
-            }
-        } else {
-            return Double(minValue)...Double(maxValue)
-        }
-        
     }
     
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 2) {
-                ZStack {
-                    updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                if !context.state.showChart {
+                    ZStack {
+                        updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                    }
                 }
                 HStack {
                     VStack {
                         loop(context: context, size: 22)
-                        emptyText
-                    }.offset(x: 0, y: 2)
+                        //                        emptyText
+                    } // .offset(x: 0, y: 2)
                     Spacer()
                     VStack {
                         bgAndTrend(context: context, size: .expanded).0.font(.title)
-                        changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7)).offset(x: -12, y: -5)
+                        //                        changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7)).offset(x: -12, y: -5)
                     }
                     Spacer()
                     VStack {
                         iob(context: context, size: .expanded).font(.title)
-                        emptyText
+                        //                        emptyText
                     }
                     Spacer()
                     VStack {
                         cob(context: context, size: .expanded).font(.title)
-                        emptyText
+                        //                        emptyText
                     }
                 }
-
+                
                 if context.state.showChart {
-                    chartView(for: context.state)
-                }
-                HStack {
-                    Spacer()
-                    if context.state.eventualText {
-                        Text(NSLocalizedString("Eventual Glucose", comment: ""))
+                    HStack(alignment: .top) {
+                        chartView(for: context.state)
                         Spacer()
-                    } else {
-                        Text("⇢").foregroundStyle(.secondary).font(.system(size: UIFont.systemFontSize * 1.8))
-                    }
-                    Text(context.state.eventual)
-                    Text(context.state.mmol ? NSLocalizedString(
-                        "mmol/L",
-                        comment: "The short unit display string for millimoles of glucose per liter"
-                    ) : NSLocalizedString(
-                        "mg/dL",
-                        comment: "The short unit display string for milligrams of glucose per decilter"
-                    )).foregroundStyle(.secondary)
-                }.padding(.top, context.state.showChart ? 0 : 10)
+                        //                        HStack {
+                        //                            Text("⇢").foregroundStyle(.secondary).font(.system(size: UIFont.systemFontSize * 1.2))
+                        //                            Text(context.state.eventual)
+                        //                        }
+                        //                        HStack(spacing: 0) {
+                        
+                        VStack(spacing: -2) {
+                            Text(
+                                //                                    "◎"
+                                "⌖"
+                                //                                    "⊙"
+                            )
+                            .foregroundStyle(.secondary)
+                            //                                .padding(.top, -6)
+                            .font(.system(size: UIFont.systemFontSize * 2.0))
+                            //.background(Color.purple)
+                            Text(context.state.eventual)
+                            Spacer()
+                            updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                            //                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            
+                            //                                Text("").frame(maxHeight: .infinity)
+                        } // .background(Color.red)
+                        //                        }
+                        
+                    } // .background(Color.yellow)
+                }
+                if !context.state.showChart {
+                    HStack {
+                        Spacer()
+                        if context.state.eventualText {
+                            Text(NSLocalizedString("Eventual Glucose", comment: ""))
+                            Spacer()
+                        } else {
+                            Text("⇢").foregroundStyle(.secondary).font(.system(size: UIFont.systemFontSize * 1.8))
+                        }
+                        Text(context.state.eventual)
+                        Text(context.state.mmol ? NSLocalizedString(
+                            "mmol/L",
+                            comment: "The short unit display string for millimoles of glucose per liter"
+                        ) : NSLocalizedString(
+                            "mg/dL",
+                            comment: "The short unit display string for milligrams of glucose per decilter"
+                        )).foregroundStyle(.secondary)
+                    }.padding(.top, context.state.showChart ? 0 : 10)
+                }
             }
             .privacySensitive()
             .padding(.vertical, 10).padding(.horizontal, 15)
@@ -229,7 +228,7 @@ struct LiveActivity: Widget {
                         loop(context: context, size: 23)
                     }.padding(10)
                 }
-
+                
                 DynamicIslandExpandedRegion(.center) {
                     VStack(spacing: 0) {
                         HStack {
@@ -244,7 +243,7 @@ struct LiveActivity: Widget {
                         }
                     }
                 }
-
+                
                 DynamicIslandExpandedRegion(.trailing) {
                     updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
                         .padding(.trailing, 10)
@@ -259,9 +258,9 @@ struct LiveActivity: Widget {
                 changeLabel(context: context).padding(.trailing, 4)
             } minimal: {
                 let (_label, characterCount) = bgAndTrend(context: context, size: .minimal)
-
+                
                 let label = _label.padding(.leading, 7).padding(.trailing, 3)
-
+                
                 if characterCount < 4 {
                     label
                 } else if characterCount < 5 {
@@ -277,14 +276,88 @@ struct LiveActivity: Widget {
             .contentMargins(.leading, 0, for: .compactTrailing)
         }
     }
-    private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
-        let displayedValues = displayValues(state.readings, mmol: state.mmol)
+    
+    private func displayValues(_ values: [Int16], mmol: Bool) -> [Double] {
+        let result =
+        values.map {
+            mmol ?
+            Double($0) * 0.0555 :
+            Double($0)
+        }
+        
+        
+//        print("----- CONV ----")
+//        result.indices.forEach {
+//            print("\(values[$0]) --> \(result[$0])")
+//        }
+//        print("-----")
+        
+        
+        return result
+    }
+    
+    private func createYScale(
+        _ state: LiveActivityAttributes.ContentState,
+        _ maxValue: Double,
+        _ maxThreshold: Int16?
+    ) -> ClosedRange<Double> {
+        let minValue = state.mmol ? 36 * 0.0555 : 36
+        let maxThresholdDouble = maxThreshold.map { Double($0) } ?? 200
+        let maxThresholdDoubleConverted =
+                state.mmol ? maxThresholdDouble * 0.0555 : maxThresholdDouble
+        
+        let maxDataOrThreshold =
+                maxValue > maxThresholdDoubleConverted ? maxValue : maxThresholdDoubleConverted
 
-        let minValue = displayedValues.min { $0.value < $1.value }?.value ?? Double(0)
-        let maxValue = displayedValues.max { $0.value < $1.value }?.value ?? Double(0)
+        
+//        print("maxValue: \(maxValue)")
+//        print("maxThreshold: \(maxThreshold)")
+//        print("maxThresholdDoubleConverted: \(maxThresholdDoubleConverted)")
+//        print("maxDataOrThreshold: \(maxDataOrThreshold)")
+        
+        if let settingsMaxValue = state.chartMaxValue {
+            let settingsMaxDouble = Double(settingsMaxValue)
+            let settingsMaxDoubleConverted = state.mmol ? settingsMaxDouble * 0.0555 : settingsMaxDouble
+        
+//            print("settingsMaxDouble: \(settingsMaxDouble)")
+//            print("settingsMaxDoubleConverted: \(settingsMaxDoubleConverted)")
+            
+            if settingsMaxDoubleConverted > maxDataOrThreshold {
+//                print("using settings: \(settingsMaxDoubleConverted)")
+                return Double(minValue)...Double(settingsMaxDoubleConverted)
+            } else {
+//                print("using data/threshold: \(maxDataOrThreshold)")
+                return Double(minValue)...Double(maxDataOrThreshold)
+            }
+        } else {
+//            print("using data/threshold: \(maxDataOrThreshold) - no settings")
+            return Double(minValue)...Double(maxDataOrThreshold)
+        }
+        
+    }
+
+    
+    private func makePoints(_ dates: [Date], _ values: [Int16], mmol: Bool) -> [(date: Date, value: Double)] {
+        zip(dates, displayValues(values, mmol: mmol)).map { ($0, $1) }
+    }
+    
+    private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
+        let dates = state.readings.dates
+        let displayedValues = makePoints(dates, state.readings.values, mmol: state.mmol)
+        
+        var minValue = displayedValues.min { $0.value < $1.value }?.value ?? Double(0)
+        var maxValue = displayedValues.max { $0.value < $1.value }?.value ?? Double(0)
+
+        func updateMinMax(_ values: [(date: Date, value: Double)]) -> [(date: Date, value: Double)] {
+            let minHere = values.min { $0.value < $1.value }?.value ?? Double(0)
+            let maxHere = values.max { $0.value < $1.value }?.value ?? Double(0)
+            if minHere < minValue { minValue = minHere }
+            if maxHere > maxValue { maxValue = maxHere }
+            return values
+        }
         
         return Chart {
-            ForEach(displayedValues, id: \.date) {
+            ForEach(displayedValues, id: \.date ) {
                 PointMark(
                     x: .value("Time", $0.date),
                     y: .value("Glucose", $0.value)
@@ -296,31 +369,33 @@ struct LiveActivity: Widget {
                     y: .value("Glucose", $0.value)
                 )
                 .foregroundStyle(.darkGreen)
+                .opacity(0.7)
+                .lineStyle(StrokeStyle(lineWidth: 1.0))
             }
             
             if state.showPredictions {
                 
-                let iobValues =
+                let iobPoints =
                     state.predictions?.iob.map({
-                        displayValues($0, mmol: state.mmol)
+                        updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
                     })
                 
-                let ztValues =
+                let ztPoints =
                     state.predictions?.zt.map({
-                        displayValues($0, mmol: state.mmol)
+                        updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
                     })
                 
-                let cobValues =
+                let cobPoints =
                     state.predictions?.cob.map({
-                        displayValues($0, mmol: state.mmol)
+                        updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
                     })
                 
-                let uamValues =
+                let uamPoints =
                     state.predictions?.uam.map({
-                        displayValues($0, mmol: state.mmol)
+                        updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
                     })
                 
-                if let iob = iobValues {
+                if let iob = iobPoints {
                     ForEach(iob, id: \.date) { point in
                         PointMark(
                             x: .value("Time", point.date),
@@ -330,7 +405,7 @@ struct LiveActivity: Widget {
                         .foregroundStyle(Color.insulin.opacity(0.7))
                     }
                 }
-                if let zt = ztValues {
+                if let zt = ztPoints {
                     ForEach(zt, id: \.date) { point in
                         PointMark(
                             x: .value("Time", point.date),
@@ -340,7 +415,7 @@ struct LiveActivity: Widget {
                         .foregroundStyle(Color.zt.opacity(0.7))
                     }
                 }
-                if let cob = cobValues {
+                if let cob = cobPoints {
                     ForEach(cob, id: \.date) { point in
                         PointMark(
                             x: .value("Time", point.date),
@@ -350,7 +425,7 @@ struct LiveActivity: Widget {
                         .foregroundStyle(Color.loopYellow.opacity(0.7))
                     }
                 }
-                if let uam = uamValues {
+                if let uam = uamPoints {
                     ForEach(uam, id: \.date) { point in
                         PointMark(
                             x: .value("Time", point.date),
@@ -367,18 +442,18 @@ struct LiveActivity: Widget {
             
             if let chartHighThreshold = state.chartHighThreshold {
                 RuleMark(y: .value("High Threshold", state.mmol ? Double(chartHighThreshold) * 0.0555 : Double(chartHighThreshold)))
-                    .foregroundStyle(.red.opacity(0.6))
-                    .lineStyle(StrokeStyle(dash: [5, 5]))
+                    .foregroundStyle(.orange.opacity(0.4))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [1, 1]))
             }
             if let chartLowThreshold = state.chartLowThreshold {
                 RuleMark(y: .value("Low Threshold", state.mmol ? Double(chartLowThreshold) * 0.0555 : Double(chartLowThreshold)))
-                    .foregroundStyle(.orange.opacity(0.6))
-                    .lineStyle(StrokeStyle(dash: [5, 5]))
+                    .foregroundStyle(.red.opacity(0.4))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [1, 1]))
             }
             
             
         }
-        .chartYScale(domain: createYScale(state, maxValue))
+        .chartYScale(domain: createYScale(state, maxValue, state.chartMaxValue))
         .chartXAxis {
             AxisMarks(position: .bottom) { _ in
                 AxisGridLine()
@@ -420,13 +495,13 @@ private extension LiveActivityAttributes.ContentState {
     static var testWide: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
-            bg: "00.0",
+            bg: "6.7",
             direction: "→",
-            change: "+0.0",
+            change: "+0.1",
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now, eventual: "100", mmol: true,
+            loopDate: Date.now, eventual: "5.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
             showChart: true,
@@ -526,67 +601,76 @@ private extension LiveActivityAttributes.ContentState {
 
 struct SampleData {
     
-    let sampleReadings: [LiveActivityAttributes.ContentStateReading] = {
+    let sampleReadings: LiveActivityAttributes.ValueSeries = {
         let calendar = Calendar.current
         let now = Date()
 
-        return (0 ..< 2 * 12).map { minutesAgoX5 in
-            let date = calendar.date(byAdding: .minute, value: -minutesAgoX5*5, to: now)!
-            let glucose = Int16(70 + arc4random_uniform(200))
+        let dates = Array((0 ..< 2 * 12).map { minutesAgoX5 in
+            calendar.date(byAdding: .minute, value: -minutesAgoX5*5, to: now)!
+        }.reversed())
 
-            return LiveActivityAttributes.ContentStateReading(
-                date: date,
-                glucose: glucose
-            )
-        }.reversed()
+        
+        let values = Array((0 ..< 2 * 12).map { minutesAgoX5 in
+//            Int16(70 + arc4random_uniform(200))
+            Int16(80)
+        }.reversed())
+        
+        return LiveActivityAttributes.ValueSeries(dates: dates, values: values)
     }()
     
     var samplePredictions: LiveActivityAttributes.ActivityPredictions {
-        let lastReading = sampleReadings.last!
-        
-        let lastGlucose = Double(lastReading.glucose)
-        let lastDate = lastReading.date
+        let lastGlucose = Double(sampleReadings.values.last!)
+        let lastDate = sampleReadings.dates.last!
         
         let numberOfPoints = 2 * 60 / 5 // 2 hours with 5-minute steps
 //        let numberOfPoints = 30 / 5 // 2 hours with 5-minute steps
         
         // Helper function to generate a curve with some randomness
-        func generateCurve(startValue: Double, pattern: String) -> [LiveActivityAttributes.ContentStateReading] {
+        func generateCurve(startValue: Double, pattern: String) -> LiveActivityAttributes.ValueSeries {
             var values: [Double] = []
             var currentValue = startValue
             
             let midpoint = Double(numberOfPoints) / 2
             
             for i in 0..<numberOfPoints {
-                let noise = Double.random(in: -1...1)
+                let noise = Double.random(in: -5...5)
                 switch pattern {
                     case "up":
-                        currentValue += Double.random(in: 3...10) + noise
+                        currentValue += Double.random(in: 5...15) + noise
                     case "down":
-                        currentValue -= Double.random(in: 3...10) + noise
+                        currentValue -= Double.random(in: 5...15) + noise
                     case "peak":
                         let distance = abs(Double(i) - midpoint)
-                        let trend = distance < midpoint/2 ? -1 : 1
-                        currentValue += Double.random(in: 15...25)*Double(trend) + noise
+                        let trend = distance < midpoint/2 || currentValue > 300 ? -1.0 : 1.0
+                        let delta = Double.random(in: 5...20)
+//                        print("delta: \(delta), trend: \(trend), current: \(currentValue), realDelta: \(delta*trend + noise), next: \(currentValue + delta*trend + noise)")
+                        currentValue += delta*trend + noise
                     default:
-                        currentValue += Double.random(in: -3...3)
+                        currentValue += noise
                 }
                 values.append(currentValue)
             }
             
-            return values.enumerated().map { index, value in
-                let pointDate = lastDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))
-                return LiveActivityAttributes.ContentStateReading(
-                    date: pointDate,
-                    glucose: Int16(clamping: Int(value))
-                )
+            let dates = values.enumerated().map { index, _ in
+                lastDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))
             }
+            
+            return LiveActivityAttributes.ValueSeries(dates: dates, values: values.map {
+                Int16(clamping: Int(round($0)))
+            })
         }
+//        
+//        let iob = generateCurve(startValue: lastGlucose, pattern: "down")
+//        let zt = generateCurve(startValue: lastGlucose, pattern: "stable")
+//        let cob = generateCurve(startValue: lastGlucose, pattern: "peak")
+//        let uam = generateCurve(startValue: lastGlucose, pattern: "up")
+
         
-        let iob = generateCurve(startValue: lastGlucose, pattern: "down")
+        let iob = generateCurve(startValue: lastGlucose, pattern: "stable")
         let zt = generateCurve(startValue: lastGlucose, pattern: "stable")
-        let cob = generateCurve(startValue: lastGlucose, pattern: "peak")
-        let uam = generateCurve(startValue: lastGlucose, pattern: "up")
+        let cob = generateCurve(startValue: lastGlucose, pattern: "stable")
+        let uam = generateCurve(startValue: lastGlucose, pattern: "stable")
+        
         
         return LiveActivityAttributes.ActivityPredictions(
             iob: iob,

@@ -51,14 +51,24 @@ extension LiveActivityAttributes.ContentState {
 
         let activityPredictions: LiveActivityAttributes.ActivityPredictions?
         if let predictions = predictions, let bgDate = bg?.date {
-            func createPoints(from values: [Int]?) -> [LiveActivityAttributes.ContentStateReading]? {
-                values?.enumerated().prefix(16).map { index, value in // need to limit the number of predictions due to the payload size limit; or, alternatively, implement a smarter encoding
-                    let pointDate = bgDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))  // 5 minutes * 60 seconds
-                    return LiveActivityAttributes.ContentStateReading(
-                        date: pointDate,
-                        glucose: Int16(clamping: value)
-                    )
+            func createPoints(from values: [Int]?) -> LiveActivityAttributes.ValueSeries? {
+                let prefixToTake = 24
+                if let values = values {
+                    let dates = values.indices.prefix(prefixToTake).map {
+                        bgDate.addingTimeInterval(TimeInterval(($0 + 1) * 5 * 60))
+                    }
+                    let clampedValues = values.prefix(prefixToTake).map { Int16(clamping: $0) }
+                    return LiveActivityAttributes.ValueSeries(dates: dates, values: clampedValues)
+                } else {
+                    return nil
                 }
+//                values?.enumerated().prefix(16).map { index, value in // need to limit the number of predictions due to the payload size limit; or, alternatively, implement a smarter encoding
+//                    let pointDate = bgDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))  // 5 minutes * 60 seconds
+//                    return LiveActivityAttributes.ContentStateReading(
+//                        date: pointDate,
+//                        glucose: Int16(clamping: value)
+//                    )
+//                }
             }
             
             let converted = LiveActivityAttributes.ActivityPredictions(
@@ -72,6 +82,18 @@ extension LiveActivityAttributes.ContentState {
             activityPredictions = nil
         }
         
+        func splitReadings(_ readings: [Readings]) -> LiveActivityAttributes.ValueSeries {
+            let validReadings = readings.compactMap { reading -> (Date, Int16)? in
+                guard let date = reading.date else { return nil }
+                return (date, reading.glucose)
+            }
+            
+            let dates = validReadings.map { $0.0 }
+            let values = validReadings.map { $0.1 }
+            
+            return LiveActivityAttributes.ValueSeries(dates: dates, values: values)
+        }
+        
         self.init(
             bg: formattedBG,
             direction: trendString,
@@ -82,10 +104,7 @@ extension LiveActivityAttributes.ContentState {
             loopDate: loopDate,
             eventual: eventual,
             mmol: mmol,
-            readings: readings.compactMap { reading -> LiveActivityAttributes.ContentStateReading? in
-                guard let date = reading.date else { return nil }
-                return LiveActivityAttributes.ContentStateReading(date: date, glucose: reading.glucose)
-            },
+            readings: splitReadings(readings),
             predictions: activityPredictions,
             showChart: showChart,
             showPredictions: showPredictions,
@@ -273,7 +292,7 @@ extension LiveActivityAttributes.ContentState {
                         iob: "--",
                         cob: "--",
                         loopDate: Date.now, eventual: "--", mmol: false,
-                        readings: [],
+                        readings: LiveActivityAttributes.ValueSeries(dates: [], values: []),
                         predictions: nil,
                         showChart: true,
                         showPredictions: true,

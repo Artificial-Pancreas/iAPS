@@ -12,7 +12,7 @@ struct LiveActivityAttributes: ActivityAttributes {
         let loopDate: Date
         let eventual: String
         let mmol: Bool
-        let readings: [ContentStateReading]
+        let readings: ValueSeries
         let predictions: ActivityPredictions?
         let showChart: Bool
         let showPredictions: Bool
@@ -44,6 +44,11 @@ struct LiveActivityAttributes: ActivityAttributes {
         }
 
     }
+    
+    struct ValueSeries: Codable, Hashable {
+        let dates: [Date]
+        let values: [Int16]
+    }
 
     struct ContentStateReading: Codable, Hashable {
         let date: Date
@@ -51,10 +56,10 @@ struct LiveActivityAttributes: ActivityAttributes {
     }
 
     struct ActivityPredictions: Codable, Hashable {
-        let iob: [ContentStateReading]?
-        let zt: [ContentStateReading]?
-        let cob: [ContentStateReading]?
-        let uam: [ContentStateReading]?
+        let iob: ValueSeries?
+        let zt: ValueSeries?
+        let cob: ValueSeries?
+        let uam: ValueSeries?
     }
 
     let startDate: Date
