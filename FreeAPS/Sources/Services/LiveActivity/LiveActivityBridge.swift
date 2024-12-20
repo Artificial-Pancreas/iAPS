@@ -35,8 +35,20 @@ extension LiveActivityAttributes.ContentState {
         return formatter.string(from: string) ?? ""
     }
 
-    init?(new bg: Readings?, prev: Readings?, mmol: Bool, suggestion: Suggestion, loopDate: Date, readings: [Readings], predictions: Predictions?, showChart: Bool, showPredictions: Bool, chartLowThreshold: Int?,
-          chartHighThreshold: Int?, chartMaxValue: Int?, eventualText: Bool) {
+    init?(
+        new bg: Readings?,
+        prev: Readings?,
+        mmol: Bool,
+        suggestion: Suggestion,
+        loopDate: Date,
+        readings: [Readings]?,
+        predictions: Predictions?,
+        showChart: Bool,
+        chartLowThreshold: Int?,
+        chartHighThreshold: Int?,
+        chartMaxValue: Int?,
+        eventualText: Bool
+    ) {
         guard let glucose = bg?.glucose else {
             return nil
         }
@@ -62,15 +74,8 @@ extension LiveActivityAttributes.ContentState {
                 } else {
                     return nil
                 }
-//                values?.enumerated().prefix(16).map { index, value in // need to limit the number of predictions due to the payload size limit; or, alternatively, implement a smarter encoding
-//                    let pointDate = bgDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))  // 5 minutes * 60 seconds
-//                    return LiveActivityAttributes.ContentStateReading(
-//                        date: pointDate,
-//                        glucose: Int16(clamping: value)
-//                    )
-//                }
             }
-            
+
             let converted = LiveActivityAttributes.ActivityPredictions(
                 iob: createPoints(from: predictions.iob),
                 zt: createPoints(from: predictions.zt),
@@ -81,19 +86,20 @@ extension LiveActivityAttributes.ContentState {
         } else {
             activityPredictions = nil
         }
-        
-        func splitReadings(_ readings: [Readings]) -> LiveActivityAttributes.ValueSeries {
+
+        let preparedReadings: LiveActivityAttributes.ValueSeries? = {
+            guard let readings else { return nil }
             let validReadings = readings.compactMap { reading -> (Date, Int16)? in
                 guard let date = reading.date else { return nil }
                 return (date, reading.glucose)
             }
-            
-            let dates = validReadings.map { $0.0 }
-            let values = validReadings.map { $0.1 }
-            
+
+            let dates = validReadings.map(\.0)
+            let values = validReadings.map(\.1)
+
             return LiveActivityAttributes.ValueSeries(dates: dates, values: values)
-        }
-        
+        }()
+
         self.init(
             bg: formattedBG,
             direction: trendString,
@@ -104,13 +110,12 @@ extension LiveActivityAttributes.ContentState {
             loopDate: loopDate,
             eventual: eventual,
             mmol: mmol,
-            readings: splitReadings(readings),
+            readings: preparedReadings,
             predictions: activityPredictions,
             showChart: showChart,
-            showPredictions: showPredictions,
-            chartLowThreshold: chartLowThreshold.map({Int16(clamping: $0)}),
-            chartHighThreshold: chartHighThreshold.map({Int16(clamping: $0)}),
-            chartMaxValue: chartMaxValue.map({Int16(clamping: $0)}),
+            chartLowThreshold: chartLowThreshold.map({ Int16(clamping: $0) }),
+            chartHighThreshold: chartHighThreshold.map({ Int16(clamping: $0) }),
+            chartMaxValue: chartMaxValue.map({ Int16(clamping: $0) }),
             eventualText: eventualText
         )
     }
@@ -136,7 +141,7 @@ extension LiveActivityAttributes.ContentState {
     }
 }
 
-@available(iOS 16.2, *) final class LiveActivityBridge: Injectable, ObservableObject {
+@available(iOS 16.2, *) final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
@@ -149,6 +154,8 @@ extension LiveActivityAttributes.ContentState {
     private var settings: FreeAPSSettings {
         settingsManager.settings
     }
+
+    private var knownSettings: FreeAPSSettings?
 
     private var currentActivity: ActiveActivity?
     private var latestGlucose: Readings?
@@ -178,7 +185,28 @@ extension LiveActivityAttributes.ContentState {
             self.forceActivityUpdate()
         }
 
+        knownSettings = settings
+        broadcaster.register(SettingsObserver.self, observer: self)
+
         monitorForLiveActivityAuthorizationChanges()
+    }
+
+    func settingsDidChange(_ newSettings: FreeAPSSettings) {
+        if let knownSettings = self.knownSettings {
+            if newSettings.useLiveActivity != knownSettings.useLiveActivity ||
+                newSettings.liveActivityChart != knownSettings.liveActivityChart ||
+                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions ||
+                newSettings.liveActivityChartThresholdLines != knownSettings.liveActivityChartThresholdLines ||
+                newSettings.liveActivityChartDynamicRange != knownSettings.liveActivityChartDynamicRange ||
+                newSettings.liveActivityEventualArrow != knownSettings.liveActivityEventualArrow
+            {
+                print("live activity settings changed")
+                forceActivityUpdate(force: true)
+            } else {
+                print("live activity settings unchanged")
+            }
+        }
+        knownSettings = newSettings
     }
 
     private func monitorForLiveActivityAuthorizationChanges() {
@@ -195,11 +223,11 @@ extension LiveActivityAttributes.ContentState {
 
     /// creates and tries to present a new activity update from the current Suggestion values if live activities are enabled in settings
     /// Ends existing live activities if live activities are not enabled in settings
-    private func forceActivityUpdate() {
+    private func forceActivityUpdate(force: Bool = false) {
         // just before app resigns active, show a new activity
         // only do this if there is no current activity or the current activity is older than 1h
         if settings.useLiveActivity {
-            if currentActivity?.needsRecreation() ?? true,
+            if force || currentActivity?.needsRecreation() ?? true,
                let suggestion = storage.retrieveFile(OpenAPS.Enact.suggested, as: Suggestion.self)
             {
                 suggestionDidUpdate(suggestion)
@@ -229,13 +257,16 @@ extension LiveActivityAttributes.ContentState {
                 let encoder = JSONEncoder()
                 let encodedLength: Int = {
                     if let data = try? encoder.encode(state) {
-                        
+//                         if let jsonString = String(data: data, encoding: .utf8) {
+//                             print("activity payload: \(jsonString)")
+//                         }
+
                         return data.count
-                    }else {
+                    } else {
                         return 0
                     }
                 }()
-                
+
 //                TODO: remove these, debugging only
 //                print("!!!! Payload size: \(encodedLength) bytes")
 //                if let data = try? encoder.encode(state.readings) {
@@ -262,8 +293,10 @@ extension LiveActivityAttributes.ContentState {
 //                }
 
                 let content = {
-                    if encodedLength > 4*1024 { // size limit
-                        print("live activity payload maximum size exceeded: \(encodedLength) bytes, updating live activity without predictions")
+                    if encodedLength > 4 * 1024 { // size limit
+                        print(
+                            "live activity payload maximum size exceeded: \(encodedLength) bytes, updating live activity without predictions"
+                        )
                         return ActivityContent(
                             state: state.withoutPredictions(),
                             staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(8 * 60))
@@ -283,6 +316,7 @@ extension LiveActivityAttributes.ContentState {
                 // always push a non-stale content as the first update
                 // pushing a stale content as the first content results in the activity not being shown at all
                 // we want it shown though even if it is iniially stale, as we expect new BG readings to become available soon, which should then be displayed
+                let settings = self.settings
                 let nonStale = ActivityContent(
                     state: LiveActivityAttributes.ContentState(
                         bg: "--",
@@ -292,14 +326,15 @@ extension LiveActivityAttributes.ContentState {
                         iob: "--",
                         cob: "--",
                         loopDate: Date.now, eventual: "--", mmol: false,
-                        readings: LiveActivityAttributes.ValueSeries(dates: [], values: []),
+                        readings: nil,
                         predictions: nil,
-                        showChart: true,
-                        showPredictions: true,
-                        chartLowThreshold: 75,
-                        chartHighThreshold: 200,
-                        chartMaxValue: nil, // 400
-                        eventualText: false
+                        showChart: settings.liveActivityChart,
+                        chartLowThreshold: settings
+                            .liveActivityChartThresholdLines ? Int16(clamping: (settings.low as NSDecimalNumber).intValue) : nil,
+                        chartHighThreshold: settings
+                            .liveActivityChartThresholdLines ? Int16(clamping: (settings.high as NSDecimalNumber).intValue) : nil,
+                        chartMaxValue: settings.liveActivityChartDynamicRange ? nil : 300, // mg/dl
+                        eventualText: !settings.liveActivityEventualArrow
                     ),
                     staleDate: Date.now.addingTimeInterval(60)
                 )
@@ -337,6 +372,8 @@ extension LiveActivityAttributes.ContentState {
 @available(iOS 16.2, *)
 extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
     func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
+        let settings = self.settings
+
         guard settings.useLiveActivity else {
             if currentActivity != nil {
                 Task {
@@ -358,14 +395,15 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             suggestion: suggestion,
             loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
                 (cd.fetchLastLoop()?.timestamp ?? .distantPast),
-            readings: coreDataStorage.fetchGlucose(interval: DateFilter().twoHours),
-            predictions: suggestion.predictions,
-            showChart: true,
-            showPredictions: true,
-            chartLowThreshold: 75,
-            chartHighThreshold: 200,
-            chartMaxValue: nil, // 400
-            eventualText: false
+            readings: settings.liveActivityChartShowPredictions ? coreDataStorage
+                .fetchGlucose(interval: DateFilter().twoHours) : nil,
+            predictions: settings.liveActivityChartShowPredictions && settings.liveActivityChartShowPredictions ? suggestion
+                .predictions : nil,
+            showChart: settings.liveActivityChart,
+            chartLowThreshold: settings.liveActivityChartThresholdLines ? Int(settings.low) : nil,
+            chartHighThreshold: settings.liveActivityChartThresholdLines ? Int(settings.high) : nil,
+            chartMaxValue: settings.liveActivityChartDynamicRange ? nil : 300, // mg/dl
+            eventualText: !settings.liveActivityEventualArrow
         ) else {
             return
         }
@@ -376,6 +414,8 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
     }
 
     func suggestionDidUpdate(_ suggestion: Suggestion) {
+        let settings = self.settings
+
         guard settings.useLiveActivity else {
             if currentActivity != nil {
                 Task {
@@ -397,14 +437,13 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             suggestion: suggestion,
             loopDate: settings.closedLoop ? (cd.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion
                 .timestamp ?? .distantPast,
-            readings: coreDataStorage.fetchGlucose(interval: DateFilter().twoHours),
-            predictions: suggestion.predictions,
-            showChart: true,
-            showPredictions: true,
-            chartLowThreshold: 75,
-            chartHighThreshold: 200,
-            chartMaxValue: nil, // 400
-            eventualText: false
+            readings: settings.liveActivityChart ? coreDataStorage.fetchGlucose(interval: DateFilter().twoHours) : nil,
+            predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
+            showChart: settings.liveActivityChart,
+            chartLowThreshold: settings.liveActivityChartThresholdLines ? Int(settings.low) : nil,
+            chartHighThreshold: settings.liveActivityChartThresholdLines ? Int(settings.high) : nil,
+            chartMaxValue: settings.liveActivityChartDynamicRange ? nil : 300, // mg/dl
+            eventualText: !settings.liveActivityEventualArrow
         ) else {
             return
         }

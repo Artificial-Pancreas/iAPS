@@ -12,39 +12,36 @@ struct LiveActivityAttributes: ActivityAttributes {
         let loopDate: Date
         let eventual: String
         let mmol: Bool
-        let readings: ValueSeries
+        let readings: ValueSeries?
         let predictions: ActivityPredictions?
         let showChart: Bool
-        let showPredictions: Bool
         let chartLowThreshold: Int16?
         let chartHighThreshold: Int16?
         let chartMaxValue: Int16?
         let eventualText: Bool
-        
+
         func withoutPredictions() -> ContentState {
             ContentState(
-                bg: self.bg,
-                direction: self.direction,
-                change: self.change,
-                date: self.date,
-                iob: self.iob,
-                cob: self.cob,
-                loopDate: self.loopDate,
-                eventual: self.eventual,
-                mmol: self.mmol,
-                readings: self.readings,
+                bg: bg,
+                direction: direction,
+                change: change,
+                date: date,
+                iob: iob,
+                cob: cob,
+                loopDate: loopDate,
+                eventual: eventual,
+                mmol: mmol,
+                readings: readings,
                 predictions: nil,
-                showChart: self.showChart,
-                showPredictions: self.showPredictions,
-                chartLowThreshold: self.chartLowThreshold,
-                chartHighThreshold: self.chartHighThreshold,
-                chartMaxValue: self.chartMaxValue,
-                eventualText: self.eventualText
+                showChart: showChart,
+                chartLowThreshold: chartLowThreshold,
+                chartHighThreshold: chartHighThreshold,
+                chartMaxValue: chartMaxValue,
+                eventualText: eventualText
             )
         }
-
     }
-    
+
     struct ValueSeries: Codable, Hashable {
         let dates: [Date]
         let values: [Int16]
@@ -64,4 +61,3 @@ struct LiveActivityAttributes: ActivityAttributes {
 
     let startDate: Date
 }
-

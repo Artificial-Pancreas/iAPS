@@ -52,6 +52,11 @@ struct FreeAPSSettings: JSON, Equatable {
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = false
+    var liveActivityEventualArrow: Bool = false
+    var liveActivityChart = true
+    var liveActivityChartShowPredictions = true
+    var liveActivityChartThresholdLines = true
+    var liveActivityChartDynamicRange = true
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = true
     var timeSettings: Bool = true
@@ -287,6 +292,30 @@ extension FreeAPSSettings: Decodable {
         if let useLiveActivity = try? container.decode(Bool.self, forKey: .useLiveActivity) {
             settings.useLiveActivity = useLiveActivity
         }
+
+        if let liveActivityEventualArrow = try? container.decode(Bool.self, forKey: .liveActivityEventualArrow) {
+            settings.liveActivityEventualArrow = liveActivityEventualArrow
+        }
+
+        // --- live activity chart
+
+        if let liveActivityChart = try? container.decode(Bool.self, forKey: .liveActivityChart) {
+            settings.liveActivityChart = liveActivityChart
+        }
+
+        if let liveActivityChartShowPredictions = try? container.decode(Bool.self, forKey: .liveActivityChartShowPredictions) {
+            settings.liveActivityChartShowPredictions = liveActivityChartShowPredictions
+        }
+
+        if let liveActivityChartThresholdLines = try? container.decode(Bool.self, forKey: .liveActivityChartThresholdLines) {
+            settings.liveActivityChartThresholdLines = liveActivityChartThresholdLines
+        }
+
+        if let liveActivityChartDynamicRange = try? container.decode(Bool.self, forKey: .liveActivityChartDynamicRange) {
+            settings.liveActivityChartDynamicRange = liveActivityChartDynamicRange
+        }
+
+        // ----
 
         if let useTargetButton = try? container.decode(Bool.self, forKey: .useTargetButton) {
             settings.useTargetButton = useTargetButton
