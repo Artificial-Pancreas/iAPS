@@ -1,4 +1,5 @@
 import ActivityKit
+import Charts
 import SwiftUI
 import WidgetKit
 
@@ -126,7 +127,40 @@ struct LiveActivity: Widget {
     private var emptyText: some View {
         Text(" ").font(.caption).offset(x: 0, y: -5)
     }
-
+    
+    private func displayValues(_ readings: [LiveActivityAttributes.ContentStateReading], mmol: Bool) -> [(date: Date, mgdl: Int16, value: Double)] {
+        readings.map { reading in
+            (
+                date: reading.date,
+                mgdl: reading.glucose,
+                value: mmol ?
+                    Double(reading.glucose) * 0.0555 :
+                    Double(reading.glucose)
+            )
+        }
+    }
+    
+    private func createYScale(
+        _ state: LiveActivityAttributes.ContentState,
+        _ maxValue: Double
+    ) -> ClosedRange<Double> {
+        let minValue = state.mmol ? 36 * 0.0555 : 36
+        
+        if let settingsMaxValue = state.chartMaxValue {
+            let settingsMaxDouble = Double(settingsMaxValue)
+            let settingsMaxDoubleConverted = state.mmol ? settingsMaxDouble * 0.0555 : settingsMaxDouble
+           
+            if settingsMaxDoubleConverted > maxValue {
+                return Double(minValue)...Double(settingsMaxDoubleConverted)
+            } else {
+                return Double(minValue)...Double(maxValue)
+            }
+        } else {
+            return Double(minValue)...Double(maxValue)
+        }
+        
+    }
+    
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
@@ -156,10 +190,18 @@ struct LiveActivity: Widget {
                         emptyText
                     }
                 }
+
+                if context.state.showChart {
+                    chartView(for: context.state)
+                }
                 HStack {
                     Spacer()
-                    Text(NSLocalizedString("Eventual Glucose", comment: ""))
-                    Spacer()
+                    if context.state.eventualText {
+                        Text(NSLocalizedString("Eventual Glucose", comment: ""))
+                        Spacer()
+                    } else {
+                        Text("⇢").foregroundStyle(.secondary).font(.system(size: UIFont.systemFontSize * 1.8))
+                    }
                     Text(context.state.eventual)
                     Text(context.state.mmol ? NSLocalizedString(
                         "mmol/L",
@@ -168,7 +210,7 @@ struct LiveActivity: Widget {
                         "mg/dL",
                         comment: "The short unit display string for milligrams of glucose per decilter"
                     )).foregroundStyle(.secondary)
-                }.padding(.top, 10)
+                }.padding(.top, context.state.showChart ? 0 : 10)
             }
             .privacySensitive()
             .padding(.vertical, 10).padding(.horizontal, 15)
@@ -235,6 +277,130 @@ struct LiveActivity: Widget {
             .contentMargins(.leading, 0, for: .compactTrailing)
         }
     }
+    private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
+        let displayedValues = displayValues(state.readings, mmol: state.mmol)
+
+        let minValue = displayedValues.min { $0.value < $1.value }?.value ?? Double(0)
+        let maxValue = displayedValues.max { $0.value < $1.value }?.value ?? Double(0)
+        
+        return Chart {
+            ForEach(displayedValues, id: \.date) {
+                PointMark(
+                    x: .value("Time", $0.date),
+                    y: .value("Glucose", $0.value)
+                )
+                .symbolSize(20)
+                .foregroundStyle(.darkGreen)
+                LineMark(
+                    x: .value("Time", $0.date),
+                    y: .value("Glucose", $0.value)
+                )
+                .foregroundStyle(.darkGreen)
+            }
+            
+            if state.showPredictions {
+                
+                let iobValues =
+                    state.predictions?.iob.map({
+                        displayValues($0, mmol: state.mmol)
+                    })
+                
+                let ztValues =
+                    state.predictions?.zt.map({
+                        displayValues($0, mmol: state.mmol)
+                    })
+                
+                let cobValues =
+                    state.predictions?.cob.map({
+                        displayValues($0, mmol: state.mmol)
+                    })
+                
+                let uamValues =
+                    state.predictions?.uam.map({
+                        displayValues($0, mmol: state.mmol)
+                    })
+                
+                if let iob = iobValues {
+                    ForEach(iob, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("Glucose", point.value)
+                        )
+                        .symbolSize(5)
+                        .foregroundStyle(Color.insulin.opacity(0.7))
+                    }
+                }
+                if let zt = ztValues {
+                    ForEach(zt, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("Glucose", point.value)
+                        )
+                        .symbolSize(5)
+                        .foregroundStyle(Color.zt.opacity(0.7))
+                    }
+                }
+                if let cob = cobValues {
+                    ForEach(cob, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("Glucose", point.value)
+                        )
+                        .symbolSize(5)
+                        .foregroundStyle(Color.loopYellow.opacity(0.7))
+                    }
+                }
+                if let uam = uamValues {
+                    ForEach(uam, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("Glucose", point.value)
+                        )
+                        .symbolSize(5)
+                        .foregroundStyle(Color.uam.opacity(0.7))
+                    }
+                }
+                
+                
+            }
+            
+            
+            if let chartHighThreshold = state.chartHighThreshold {
+                RuleMark(y: .value("High Threshold", state.mmol ? Double(chartHighThreshold) * 0.0555 : Double(chartHighThreshold)))
+                    .foregroundStyle(.red.opacity(0.6))
+                    .lineStyle(StrokeStyle(dash: [5, 5]))
+            }
+            if let chartLowThreshold = state.chartLowThreshold {
+                RuleMark(y: .value("Low Threshold", state.mmol ? Double(chartLowThreshold) * 0.0555 : Double(chartLowThreshold)))
+                    .foregroundStyle(.orange.opacity(0.6))
+                    .lineStyle(StrokeStyle(dash: [5, 5]))
+            }
+            
+            
+        }
+        .chartYScale(domain: createYScale(state, maxValue))
+        .chartXAxis {
+            AxisMarks(position: .bottom) { _ in
+                AxisGridLine()
+                AxisValueLabel(format: .dateTime.hour())
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .chartYAxis {
+            AxisMarks(position: .trailing, values: [
+                minValue,
+                maxValue
+            ]) { _ in
+                AxisGridLine()
+                AxisValueLabel(
+                    format: state.mmol ?
+                        .number.precision(.fractionLength(1)) :  // 1 decimal place for mmol
+                        .number.precision(.fractionLength(0))
+                )
+                .foregroundStyle(.secondary)
+            }
+        }
+    }
 }
 
 private extension LiveActivityAttributes {
@@ -243,71 +409,201 @@ private extension LiveActivityAttributes {
     }
 }
 
+
+
 private extension LiveActivityAttributes.ContentState {
     // 0 is the widest digit. Use this to get an upper bound on text width.
 
+
+
     // Use mmol/l notation with decimal point as well for the same reason, it uses up to 4 characters, while mg/dl uses up to 3
     static var testWide: LiveActivityAttributes.ContentState {
-        LiveActivityAttributes.ContentState(
+        let sampleData = SampleData()
+        return LiveActivityAttributes.ContentState(
             bg: "00.0",
             direction: "→",
             change: "+0.0",
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now, eventual: "100", mmol: false
+            loopDate: Date.now, eventual: "100", mmol: true,
+            readings: sampleData.sampleReadings,
+            predictions: sampleData.samplePredictions,
+            showChart: true,
+            showPredictions: true,
+            chartLowThreshold: 75,
+            chartHighThreshold: 200,
+            chartMaxValue: 400,
+            eventualText: false
         )
     }
 
     static var testVeryWide: LiveActivityAttributes.ContentState {
-        LiveActivityAttributes.ContentState(
+        let sampleData = SampleData()
+        return LiveActivityAttributes.ContentState(
             bg: "00.0",
             direction: "↑↑",
             change: "+0.0",
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now, eventual: "100", mmol: false
+            loopDate: Date.now, eventual: "100", mmol: true,
+            readings: sampleData.sampleReadings,
+            predictions: sampleData.samplePredictions,
+            showChart: true,
+            showPredictions: false,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: 400,
+            eventualText: true
         )
     }
 
     static var testSuperWide: LiveActivityAttributes.ContentState {
-        LiveActivityAttributes.ContentState(
+        let sampleData = SampleData()
+        return LiveActivityAttributes.ContentState(
             bg: "00.0",
             direction: "↑↑↑",
             change: "+0.0",
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now, eventual: "100", mmol: false
+            loopDate: Date.now, eventual: "100", mmol: true,
+            readings: sampleData.sampleReadings,
+            predictions: sampleData.samplePredictions,
+            showChart: true,
+            showPredictions: true,
+            chartLowThreshold: 75,
+            chartHighThreshold: 200,
+            chartMaxValue: nil,
+            eventualText: false
         )
     }
 
     // 2 characters for BG, 1 character for change is the minimum that will be shown
     static var testNarrow: LiveActivityAttributes.ContentState {
-        LiveActivityAttributes.ContentState(
+        let sampleData = SampleData()
+        return LiveActivityAttributes.ContentState(
             bg: "00",
             direction: "↑",
             change: "+0",
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now, eventual: "100", mmol: false
+            loopDate: Date.now, eventual: "100", mmol: true,
+            readings: sampleData.sampleReadings,
+            predictions: sampleData.samplePredictions,
+            showChart: false,
+            showPredictions: false,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true
         )
     }
 
     static var testMedium: LiveActivityAttributes.ContentState {
-        LiveActivityAttributes.ContentState(
+        let sampleData = SampleData()
+        return LiveActivityAttributes.ContentState(
             bg: "000",
             direction: "↗︎",
             change: "+00",
             date: Date(),
             iob: "1.2",
             cob: "20",
-            loopDate: Date.now, eventual: "100", mmol: false
+            loopDate: Date.now, eventual: "100", mmol: true,
+            readings: sampleData.sampleReadings,
+            predictions: sampleData.samplePredictions,
+            showChart: true,
+            showPredictions: false,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true
         )
     }
 }
+
+struct SampleData {
+    
+    let sampleReadings: [LiveActivityAttributes.ContentStateReading] = {
+        let calendar = Calendar.current
+        let now = Date()
+
+        return (0 ..< 2 * 12).map { minutesAgoX5 in
+            let date = calendar.date(byAdding: .minute, value: -minutesAgoX5*5, to: now)!
+            let glucose = Int16(70 + arc4random_uniform(200))
+
+            return LiveActivityAttributes.ContentStateReading(
+                date: date,
+                glucose: glucose
+            )
+        }.reversed()
+    }()
+    
+    var samplePredictions: LiveActivityAttributes.ActivityPredictions {
+        let lastReading = sampleReadings.last!
+        
+        let lastGlucose = Double(lastReading.glucose)
+        let lastDate = lastReading.date
+        
+        let numberOfPoints = 2 * 60 / 5 // 2 hours with 5-minute steps
+//        let numberOfPoints = 30 / 5 // 2 hours with 5-minute steps
+        
+        // Helper function to generate a curve with some randomness
+        func generateCurve(startValue: Double, pattern: String) -> [LiveActivityAttributes.ContentStateReading] {
+            var values: [Double] = []
+            var currentValue = startValue
+            
+            let midpoint = Double(numberOfPoints) / 2
+            
+            for i in 0..<numberOfPoints {
+                let noise = Double.random(in: -1...1)
+                switch pattern {
+                    case "up":
+                        currentValue += Double.random(in: 3...10) + noise
+                    case "down":
+                        currentValue -= Double.random(in: 3...10) + noise
+                    case "peak":
+                        let distance = abs(Double(i) - midpoint)
+                        let trend = distance < midpoint/2 ? -1 : 1
+                        currentValue += Double.random(in: 15...25)*Double(trend) + noise
+                    default:
+                        currentValue += Double.random(in: -3...3)
+                }
+                values.append(currentValue)
+            }
+            
+            return values.enumerated().map { index, value in
+                let pointDate = lastDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))
+                return LiveActivityAttributes.ContentStateReading(
+                    date: pointDate,
+                    glucose: Int16(clamping: Int(value))
+                )
+            }
+        }
+        
+        let iob = generateCurve(startValue: lastGlucose, pattern: "down")
+        let zt = generateCurve(startValue: lastGlucose, pattern: "stable")
+        let cob = generateCurve(startValue: lastGlucose, pattern: "peak")
+        let uam = generateCurve(startValue: lastGlucose, pattern: "up")
+        
+        return LiveActivityAttributes.ActivityPredictions(
+            iob: iob,
+            zt: zt,
+            cob: cob,
+            uam: uam
+        )
+    }
+    
+    
+}
+
+extension Color {
+    static let uam = Color("UAM")
+    static let zt = Color("ZT")
+}
+
 
 @available(iOS 17.0, iOSApplicationExtension 17.0, *)
 #Preview("Notification", as: .content, using: LiveActivityAttributes.preview) {

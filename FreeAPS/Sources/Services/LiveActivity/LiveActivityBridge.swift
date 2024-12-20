@@ -35,7 +35,8 @@ extension LiveActivityAttributes.ContentState {
         return formatter.string(from: string) ?? ""
     }
 
-    init?(new bg: Readings?, prev: Readings?, mmol: Bool, suggestion: Suggestion, loopDate: Date) {
+    init?(new bg: Readings?, prev: Readings?, mmol: Bool, suggestion: Suggestion, loopDate: Date, readings: [Readings], predictions: Predictions?, showChart: Bool, showPredictions: Bool, chartLowThreshold: Int?,
+          chartHighThreshold: Int?, chartMaxValue: Int?, eventualText: Bool) {
         guard let glucose = bg?.glucose else {
             return nil
         }
@@ -48,6 +49,29 @@ extension LiveActivityAttributes.ContentState {
         let eventual = Self.formatGlucose(suggestion.eventualBG ?? 100, mmol: mmol, forceSign: false)
         let mmol = mmol
 
+        let activityPredictions: LiveActivityAttributes.ActivityPredictions?
+        if let predictions = predictions, let bgDate = bg?.date {
+            func createPoints(from values: [Int]?) -> [LiveActivityAttributes.ContentStateReading]? {
+                values?.enumerated().prefix(16).map { index, value in // need to limit the number of predictions due to the payload size limit; or, alternatively, implement a smarter encoding
+                    let pointDate = bgDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))  // 5 minutes * 60 seconds
+                    return LiveActivityAttributes.ContentStateReading(
+                        date: pointDate,
+                        glucose: Int16(clamping: value)
+                    )
+                }
+            }
+            
+            let converted = LiveActivityAttributes.ActivityPredictions(
+                iob: createPoints(from: predictions.iob),
+                zt: createPoints(from: predictions.zt),
+                cob: createPoints(from: predictions.cob),
+                uam: createPoints(from: predictions.uam)
+            )
+            activityPredictions = converted
+        } else {
+            activityPredictions = nil
+        }
+        
         self.init(
             bg: formattedBG,
             direction: trendString,
@@ -57,7 +81,18 @@ extension LiveActivityAttributes.ContentState {
             cob: cobString,
             loopDate: loopDate,
             eventual: eventual,
-            mmol: mmol
+            mmol: mmol,
+            readings: readings.compactMap { reading -> LiveActivityAttributes.ContentStateReading? in
+                guard let date = reading.date else { return nil }
+                return LiveActivityAttributes.ContentStateReading(date: date, glucose: reading.glucose)
+            },
+            predictions: activityPredictions,
+            showChart: showChart,
+            showPredictions: showPredictions,
+            chartLowThreshold: chartLowThreshold.map({Int16(clamping: $0)}),
+            chartHighThreshold: chartHighThreshold.map({Int16(clamping: $0)}),
+            chartMaxValue: chartMaxValue.map({Int16(clamping: $0)}),
+            eventualText: eventualText
         )
     }
 }
@@ -86,6 +121,8 @@ extension LiveActivityAttributes.ContentState {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
+
+    private let coreDataStorage = CoreDataStorage()
 
     private let activityAuthorizationInfo = ActivityAuthorizationInfo()
     @Published private(set) var systemEnabled: Bool
@@ -170,10 +207,55 @@ extension LiveActivityAttributes.ContentState {
                 await endActivity()
                 await pushUpdate(state)
             } else {
-                let content = ActivityContent(
-                    state: state,
-                    staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(8 * 60))
-                )
+                let encoder = JSONEncoder()
+                let encodedLength: Int = {
+                    if let data = try? encoder.encode(state) {
+                        
+                        return data.count
+                    }else {
+                        return 0
+                    }
+                }()
+                
+//                TODO: remove these, debugging only
+//                print("!!!! Payload size: \(encodedLength) bytes")
+//                if let data = try? encoder.encode(state.readings) {
+//                    print("!!!! Payload size - readings: \(data.count) bytes")
+//                }
+//                if let data = try? encoder.encode(state.predictions) {
+//                    print("!!!! Payload size - predictions: \(data.count) bytes")
+//                }
+//                if let data = try? encoder.encode(state.predictions?.iob) {
+//                    print("!!!! Payload size - predictions.iob: \(data.count) bytes")
+//                    print("!!!! Payload size - predictions.iob: \(state.predictions?.iob?.count ?? 0) items")
+//                }
+//                if let data = try? encoder.encode(state.predictions?.cob) {
+//                    print("!!!! Payload size - predictions.cob: \(data.count) bytes")
+//                    print("!!!! Payload size - predictions.cob: \(state.predictions?.cob?.count ?? 0) items")
+//                }
+//                if let data = try? encoder.encode(state.predictions?.zt) {
+//                    print("!!!! Payload size - predictions.zt: \(data.count) bytes")
+//                    print("!!!! Payload size - predictions.zt: \(state.predictions?.zt?.count ?? 0) items")
+//                }
+//                if let data = try? encoder.encode(state.predictions?.uam) {
+//                    print("!!!! Payload size - predictions.uam: \(data.count) bytes")
+//                    print("!!!! Payload size - predictions.uam: \(state.predictions?.uam?.count ?? 0) items")
+//                }
+
+                let content = {
+                    if encodedLength > 4*1024 { // size limit
+                        print("live activity payload maximum size exceeded: \(encodedLength) bytes, updating live activity without predictions")
+                        return ActivityContent(
+                            state: state.withoutPredictions(),
+                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(8 * 60))
+                        )
+                    } else {
+                        return ActivityContent(
+                            state: state,
+                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(8 * 60))
+                        )
+                    }
+                }()
 
                 await currentActivity.activity.update(content)
             }
@@ -190,7 +272,15 @@ extension LiveActivityAttributes.ContentState {
                         date: Date.now,
                         iob: "--",
                         cob: "--",
-                        loopDate: Date.now, eventual: "--", mmol: false
+                        loopDate: Date.now, eventual: "--", mmol: false,
+                        readings: [],
+                        predictions: nil,
+                        showChart: true,
+                        showPredictions: true,
+                        chartLowThreshold: 75,
+                        chartHighThreshold: 200,
+                        chartMaxValue: nil, // 400
+                        eventualText: false
                     ),
                     staleDate: Date.now.addingTimeInterval(60)
                 )
@@ -248,7 +338,15 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             mmol: settings.units == .mmolL,
             suggestion: suggestion,
             loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
-                (cd.fetchLastLoop()?.timestamp ?? .distantPast)
+                (cd.fetchLastLoop()?.timestamp ?? .distantPast),
+            readings: coreDataStorage.fetchGlucose(interval: DateFilter().twoHours),
+            predictions: suggestion.predictions,
+            showChart: true,
+            showPredictions: true,
+            chartLowThreshold: 75,
+            chartHighThreshold: 200,
+            chartMaxValue: nil, // 400
+            eventualText: false
         ) else {
             return
         }
@@ -278,7 +376,16 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             prev: prev,
             mmol: settings.units == .mmolL,
             suggestion: suggestion,
-            loopDate: settings.closedLoop ? (cd.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion.timestamp ?? .distantPast
+            loopDate: settings.closedLoop ? (cd.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion
+                .timestamp ?? .distantPast,
+            readings: coreDataStorage.fetchGlucose(interval: DateFilter().twoHours),
+            predictions: suggestion.predictions,
+            showChart: true,
+            showPredictions: true,
+            chartLowThreshold: 75,
+            chartHighThreshold: 200,
+            chartMaxValue: nil, // 400
+            eventualText: false
         ) else {
             return
         }
