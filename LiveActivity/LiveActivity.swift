@@ -166,91 +166,120 @@ struct LiveActivity: Widget {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 2) {
-                ZStack {
-                    updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                if !context.state.showChart {
+                    ZStack {
+                        HStack {
+                            if context.state.smallStatus {
+                                loop(context: context, size: 10)
+                                    .padding(.top, 1)
+                            }
+                            updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                        }.frame(maxWidth: .infinity, alignment: .trailing)
+                        
+                    }
                 }
                 HStack(alignment: .top) {
-                    loop(context: context, size: 22)
-                         .padding(.top, 6)
-                    Spacer()
-                    VStack(spacing: 0) {
-                        bgAndTrend(context: context, size: .expanded).0.font(.title) // .background(.green)
-                        if !context.state.showChart {
-                            changeLabel(context: context)
-                                .font(.caption)
-                                .foregroundStyle(.primary.opacity(0.7))
-                                .offset(x: -12/*, y: -5*/)
+                    HStack(alignment: .top) {
+                        if !context.state.smallStatus {
+                            loop(context: context, size: 22)
+                                .padding(.top, 6)
+                            Spacer()
+                        }
+                        VStack(spacing: 0) {
+                            bgAndTrend(context: context, size: .expanded).0.font(.title) // .background(.green)
+                            if !context.state.showChart {
+                                changeLabel(context: context)
+                                    .font(.caption)
+                                    .foregroundStyle(.primary.opacity(0.7))
+                                    .offset(x: -12/*, y: -5*/)
                                 // .background(.blue)
-                        } else {
-                            HStack {
-                                    changeLabel(context: context)
-                                        .font(.caption)
-                                        .foregroundStyle(.primary.opacity(0.7))
-//                                        .offset(y: -5)
-                                    eventual(context: context) // adds .offset(y: -5) to textx
-                                        .font(.caption)
-                                        .foregroundStyle(.primary.opacity(0.7))
-                            }.padding(0) // .background(.blue)
+                            } else {
+                                if !context.state.eventualAlwaysBottom {
+                                    HStack {
+                                        changeLabel(context: context)
+                                            .font(.caption)
+                                            .foregroundStyle(.primary.opacity(0.7))
+                                        //                                        .offset(y: -5)
+                                        eventual(context: context) // adds .offset(y: -5) to textx
+                                            .font(.caption)
+                                            .foregroundStyle(.primary.opacity(0.7))
+                                    }.padding(0) // .background(.blue)
+                                }
+                            }
+                        }
+                        //                     if !context.state.showChart {
+                        //                         VStack(spacing: 0) {
+                        //                             bgAndTrend(context: context, size: .expanded).0.font(.title)
+                        //                             changeLabel(context: context)
+                        //                             .offset(x: -12, y: -5)
+                        //                         }
+                        //                     } else {
+                        //                         Grid(verticalSpacing: -6) {
+                        //                             GridRow {
+                        //                                 bg(context: context, size: .expanded).font(.title)
+                        //                                 trend(context: context)
+                        //                                     .font(.title)
+                        //                             }
+                        //                             GridRow {
+                        //                                 eventual(context: context)
+                        // //                                    .offset(y: -5)
+                        //                                 changeLabel(context: context)
+                        //                                     .frame(height: UIFont.systemFontSize)
+                        // //                                    .offset(y: -5)
+                        //                             }
+                        //                         }
+                        //                        VStack(spacing: 0) {
+                        //
+                        //
+                        //                        }
+                        //                        Spacer()
+                        //                        VStack(spacing: 0) {
+                        //
+                        //
+                        //                        }
+                        //                    }
+                        Spacer()
+                        //                    if context.state.showChart {
+                        //                        HStack {
+                        //                            Text(LiveActivity.eventualSymbol)
+                        //                                .foregroundStyle(.secondary)
+                        //                                .font(.system(size: UIFont.systemFontSize * 1.5))
+                        //                                .frame(height: UIFont.systemFontSize)
+                        //                            Text(context.state.eventual)
+                        //                        }
+                        //                    }
+                        
+                        Spacer()
+                        VStack {
+                            iob(context: context, size: .expanded).font(.title)
+                            //                        if !context.state.showChart {
+                            emptyText
+                            //                        }
+                        }
+                        Spacer()
+                        VStack {
+                            cob(context: context, size: .expanded).font(.title)
+                            //                        if !context.state.showChart {
+                            emptyText
+                            //                        }
                         }
                     }
-//                     if !context.state.showChart {
-//                         VStack(spacing: 0) {
-//                             bgAndTrend(context: context, size: .expanded).0.font(.title)
-//                             changeLabel(context: context)
-//                             .offset(x: -12, y: -5)
-//                         }
-//                     } else {
-//                         Grid(verticalSpacing: -6) {
-//                             GridRow {
-//                                 bg(context: context, size: .expanded).font(.title)
-//                                 trend(context: context)
-//                                     .font(.title)
-//                             }
-//                             GridRow {
-//                                 eventual(context: context)
-// //                                    .offset(y: -5)
-//                                 changeLabel(context: context)
-//                                     .frame(height: UIFont.systemFontSize)
-// //                                    .offset(y: -5)
-//                             }
-//                         }
-//                        VStack(spacing: 0) {
-//                            
-//                            
-//                        }
-//                        Spacer()
-//                        VStack(spacing: 0) {
-//                            
-//                            
-//                        }
-//                    }
-                    Spacer()
-//                    if context.state.showChart {
-//                        HStack {
-//                            Text(LiveActivity.eventualSymbol)
-//                                .foregroundStyle(.secondary)
-//                                .font(.system(size: UIFont.systemFontSize * 1.5))
-//                                .frame(height: UIFont.systemFontSize)
-//                            Text(context.state.eventual)
-//                        }
-//                    }
+                    if context.state.showChart {
 
-                    Spacer()
-                    VStack {
-                        iob(context: context, size: .expanded).font(.title)
-//                        if !context.state.showChart {
-                            emptyText
-//                        }
-                    }
-                    Spacer()
-                    VStack {
-                        cob(context: context, size: .expanded).font(.title)
-//                        if !context.state.showChart {
-                            emptyText
-//                        }
+                        HStack {
+                            if context.state.smallStatus {
+                                loop(context: context, size: 10)
+                                    .padding(.top, 1)
+                            }
+                            updatedLabel(context: context)
+                                .font(.system(size: 13))
+                                .foregroundColor(.secondary)
+//                                .font(.caption).foregroundStyle(.primary.opacity(0.7))
+//                                    .frame(alignment: .trailing)
+                        }.padding(.leading, 20)
                     }
                 }
+
 
                 if context.state.showChart {
 //                    HStack(alignment: .top) {
@@ -266,7 +295,7 @@ struct LiveActivity: Widget {
 //                        }
 //                    }
                 }
-                if !context.state.showChart {
+                if context.state.eventualAlwaysBottom || !context.state.showChart {
                     HStack {
                         Spacer()
                         if context.state.eventualText {
@@ -284,7 +313,7 @@ struct LiveActivity: Widget {
                             "mg/dL",
                             comment: "The short unit display string for milligrams of glucose per decilter"
                         )).foregroundStyle(.secondary)
-                    }.padding(.top, context.state.showChart ? 0 : 10)
+                    }.padding(.top, 10 /*context.state.showChart ? 0 : 10*/)
                 }
             }
             .privacySensitive()
@@ -523,7 +552,12 @@ struct LiveActivity: Widget {
         }
         .chartYAxis {
             if let minYMark, let maxYMark {
-                AxisMarks(position: .trailing, values: [
+                AxisMarks(position: .trailing,
+                          values:
+                            abs(maxYMark-minYMark) < 0.8 ? [
+                                (maxYMark+minYMark)/2
+                            ] :
+                            [
                     minYMark,
                     maxYMark
                 ]) { _ in
@@ -564,7 +598,9 @@ private extension LiveActivityAttributes.ContentState {
             chartLowThreshold: 75,
             chartHighThreshold: 200,
             chartMaxValue: 400,
-            eventualText: false
+            eventualText: false,
+            eventualAlwaysBottom: true,
+            smallStatus: true
         )
     }
 
@@ -584,7 +620,9 @@ private extension LiveActivityAttributes.ContentState {
             chartLowThreshold: 75,
             chartHighThreshold: 200,
             chartMaxValue: 400,
-            eventualText: true
+            eventualText: true,
+            eventualAlwaysBottom: false,
+            smallStatus: false
         )
     }
 
@@ -604,7 +642,9 @@ private extension LiveActivityAttributes.ContentState {
             chartLowThreshold: 75,
             chartHighThreshold: 200,
             chartMaxValue: nil,
-            eventualText: false
+            eventualText: true,
+            eventualAlwaysBottom: false,
+            smallStatus: true
         )
     }
 
@@ -625,7 +665,10 @@ private extension LiveActivityAttributes.ContentState {
             chartLowThreshold: nil,
             chartHighThreshold: nil,
             chartMaxValue: nil,
-            eventualText: false
+            eventualText: false,
+            eventualAlwaysBottom: true,
+            smallStatus: false
+            
         )
     }
 
@@ -645,7 +688,9 @@ private extension LiveActivityAttributes.ContentState {
             chartLowThreshold: nil,
             chartHighThreshold: nil,
             chartMaxValue: nil,
-            eventualText: true
+            eventualText: true,
+            eventualAlwaysBottom: true,
+            smallStatus: false
         )
     }
 }
@@ -662,6 +707,7 @@ struct SampleData {
         var current: Int = 100 + Int.random(in: 0 ... 100)
         let values: [Int16] = Array((0 ..< 2 * 12).map { _ in
             current = current + Int.random(in: 10 ... 20) * Int.random(in: -50 ... 50).signum()
+//            current = 100 + Int.random(in: 0 ... 5) * Int.random(in: -50 ... 50).signum()
             if current < 100 {
                 current = 100 + Int.random(in: 0 ... 10)
             }
