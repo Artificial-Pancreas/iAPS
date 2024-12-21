@@ -27,24 +27,15 @@ struct LiveActivity: Widget {
     @Environment(\.dynamicTypeSize) private var fontSize
 
     @ViewBuilder private func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        HStack {
-            if !context.state.change.isEmpty {
-                if !context.isStale {
-                    Text(context.state.change).font(.caption).foregroundStyle(.primary.opacity(0.7))
-//                    if context.state.showChart {
-//                        Text(LiveActivity.eventualSymbol)
-//                            .foregroundStyle(.secondary)
-//                            .font(.system(size: UIFont.systemFontSize * 1.5))
-//                            .frame(height: UIFont.systemFontSize)
-//                        Text(context.state.eventual)
-//                    }
-                } else {
-                    Text("old").foregroundStyle(.secondary)
-                }
+        if !context.state.change.isEmpty {
+            if !context.isStale {
+                Text(context.state.change)
             } else {
-                Text("--")
+                Text("old").foregroundStyle(.secondary)
             }
-        }.frame(height: UIFont.systemFontSize)
+        } else {
+            Text("--")
+        }
     }
 
     private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
@@ -110,11 +101,40 @@ struct LiveActivity: Widget {
 
         return (stack, characters)
     }
+    
+    private func bg(context: ActivityViewContext<LiveActivityAttributes>, size: Size) -> some View {
+        let bgText = context.state.bg
+        return Text(bgText)
+            .foregroundStyle(context.isStale ? .secondary : Color.primary)
+    }
+    
+    private func eventual(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        HStack {
+            Text(LiveActivity.eventualSymbol)
+                .foregroundStyle(.secondary)
+                .font(.system(size: UIFont.systemFontSize * 1.5))
+                .frame(height: UIFont.systemFontSize)
+//                .offset(y: -5)
+            Text(context.state.eventual)
+//                .offset(y: -5)
+        }
+
+    }
+    
+    private func trend(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        HStack {
+            if let direction = context.state.direction {
+                let text = Text(direction)
+                text.scaleEffect(x: 0.7, y: 0.7, anchor: .center)//.padding(.trailing, -5)
+            }
+        }
+        .foregroundStyle(context.isStale ? .secondary : Color.primary)
+    }
 
     private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
         HStack(spacing: 0) {
             Text(context.state.iob)
-            Text(" U").opacity(0.7).scaleEffect(0.8)
+            Text(" U")
         }
         .foregroundStyle(.insulin)
     }
@@ -122,7 +142,7 @@ struct LiveActivity: Widget {
     private func cob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
         HStack(spacing: 0) {
             Text(context.state.cob)
-            Text(" g").opacity(0.7).scaleEffect(0.8)
+            Text(" g")
         }
         .foregroundStyle(.loopYellow)
     }
@@ -155,15 +175,56 @@ struct LiveActivity: Widget {
                          .padding(.top, 6)
                     Spacer()
                     VStack(spacing: 0) {
-                        bgAndTrend(context: context, size: .expanded).0.font(.title)
-//                            .background(.green)
-//                        if !context.state.showChart {
-                        changeLabel(context: context)
-//                            .offset(x: -12, y: -5)
-//                                                    .offset(x: -12)
-//                            .background(.green)
+                        bgAndTrend(context: context, size: .expanded).0.font(.title) // .background(.green)
+                        if !context.state.showChart {
+                            changeLabel(context: context)
+                                .font(.caption)
+                                .foregroundStyle(.primary.opacity(0.7))
+                                .offset(x: -12/*, y: -5*/)
+                                // .background(.blue)
+                        } else {
+                            HStack {
+                                    changeLabel(context: context)
+                                        .font(.caption)
+                                        .foregroundStyle(.primary.opacity(0.7))
+//                                        .offset(y: -5)
+                                    eventual(context: context) // adds .offset(y: -5) to textx
+                                        .font(.caption)
+                                        .foregroundStyle(.primary.opacity(0.7))
+                            }.padding(0) // .background(.blue)
+                        }
+                    }
+//                     if !context.state.showChart {
+//                         VStack(spacing: 0) {
+//                             bgAndTrend(context: context, size: .expanded).0.font(.title)
+//                             changeLabel(context: context)
+//                             .offset(x: -12, y: -5)
+//                         }
+//                     } else {
+//                         Grid(verticalSpacing: -6) {
+//                             GridRow {
+//                                 bg(context: context, size: .expanded).font(.title)
+//                                 trend(context: context)
+//                                     .font(.title)
+//                             }
+//                             GridRow {
+//                                 eventual(context: context)
+// //                                    .offset(y: -5)
+//                                 changeLabel(context: context)
+//                                     .frame(height: UIFont.systemFontSize)
+// //                                    .offset(y: -5)
+//                             }
+//                         }
+//                        VStack(spacing: 0) {
+//                            
+//                            
 //                        }
-                    } //.background(.blue)
+//                        Spacer()
+//                        VStack(spacing: 0) {
+//                            
+//                            
+//                        }
+//                    }
                     Spacer()
 //                    if context.state.showChart {
 //                        HStack {
@@ -205,7 +266,7 @@ struct LiveActivity: Widget {
 //                        }
 //                    }
                 }
-//                if !context.state.showChart {
+                if !context.state.showChart {
                     HStack {
                         Spacer()
                         if context.state.eventualText {
@@ -224,7 +285,7 @@ struct LiveActivity: Widget {
                             comment: "The short unit display string for milligrams of glucose per decilter"
                         )).foregroundStyle(.secondary)
                     }.padding(.top, context.state.showChart ? 0 : 10)
-//                }
+                }
             }
             .privacySensitive()
             .padding(.vertical, 10).padding(.horizontal, 15)
