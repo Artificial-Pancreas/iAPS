@@ -114,9 +114,7 @@ struct LiveActivity: Widget {
                 .foregroundStyle(.secondary)
                 .font(.system(size: UIFont.systemFontSize * 1.5))
                 .frame(height: UIFont.systemFontSize)
-//                .offset(y: -5)
             Text(context.state.eventual)
-//                .offset(y: -5)
         }
 
     }
@@ -158,9 +156,6 @@ struct LiveActivity: Widget {
     }
 
     private static let eventualSymbol = "⇢"
-//    private static let eventualSymbol = "⌖"
-//    private static let eventualSymbol = "◎"
-//    private static let eventualSymbol = "⊙"
 
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
@@ -207,65 +202,18 @@ struct LiveActivity: Widget {
                                 }
                             }
                         }
-                        //                     if !context.state.showChart {
-                        //                         VStack(spacing: 0) {
-                        //                             bgAndTrend(context: context, size: .expanded).0.font(.title)
-                        //                             changeLabel(context: context)
-                        //                             .offset(x: -12, y: -5)
-                        //                         }
-                        //                     } else {
-                        //                         Grid(verticalSpacing: -6) {
-                        //                             GridRow {
-                        //                                 bg(context: context, size: .expanded).font(.title)
-                        //                                 trend(context: context)
-                        //                                     .font(.title)
-                        //                             }
-                        //                             GridRow {
-                        //                                 eventual(context: context)
-                        // //                                    .offset(y: -5)
-                        //                                 changeLabel(context: context)
-                        //                                     .frame(height: UIFont.systemFontSize)
-                        // //                                    .offset(y: -5)
-                        //                             }
-                        //                         }
-                        //                        VStack(spacing: 0) {
-                        //
-                        //
-                        //                        }
-                        //                        Spacer()
-                        //                        VStack(spacing: 0) {
-                        //
-                        //
-                        //                        }
-                        //                    }
-                        Spacer()
-                        //                    if context.state.showChart {
-                        //                        HStack {
-                        //                            Text(LiveActivity.eventualSymbol)
-                        //                                .foregroundStyle(.secondary)
-                        //                                .font(.system(size: UIFont.systemFontSize * 1.5))
-                        //                                .frame(height: UIFont.systemFontSize)
-                        //                            Text(context.state.eventual)
-                        //                        }
-                        //                    }
-                        
                         Spacer()
                         VStack {
                             iob(context: context, size: .expanded).font(.title)
-                            //                        if !context.state.showChart {
                             emptyText
-                            //                        }
                         }
                         Spacer()
                         VStack {
                             cob(context: context, size: .expanded).font(.title)
-                            //                        if !context.state.showChart {
                             emptyText
-                            //                        }
                         }
                     }
                     if context.state.showChart {
-
                         HStack {
                             if context.state.smallStatus {
                                 loop(context: context, size: 10)
@@ -275,25 +223,13 @@ struct LiveActivity: Widget {
                                 .font(.system(size: 13))
                                 .foregroundColor(.secondary)
 //                                .font(.caption).foregroundStyle(.primary.opacity(0.7))
-//                                    .frame(alignment: .trailing)
                         }.padding(.leading, 20)
                     }
                 }
 
 
                 if context.state.showChart {
-//                    HStack(alignment: .top) {
                         chartView(for: context.state)
-//                        Spacer()
-//                        VStack(spacing: -2) {
-//                            Text(LiveActivity.eventualSymbol)
-//                                .foregroundStyle(.secondary)
-//                                .font(.system(size: UIFont.systemFontSize * 1.5))
-//                            Text(context.state.eventual)
-//                            Spacer()
-//                            updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-//                        }
-//                    }
                 }
                 if context.state.eventualAlwaysBottom || !context.state.showChart {
                     HStack {
