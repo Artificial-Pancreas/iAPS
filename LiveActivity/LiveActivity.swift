@@ -27,15 +27,24 @@ struct LiveActivity: Widget {
     @Environment(\.dynamicTypeSize) private var fontSize
 
     @ViewBuilder private func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        if !context.state.change.isEmpty {
-            if !context.isStale {
-                Text(context.state.change)
+        HStack {
+            if !context.state.change.isEmpty {
+                if !context.isStale {
+                    Text(context.state.change).font(.caption).foregroundStyle(.primary.opacity(0.7))
+//                    if context.state.showChart {
+//                        Text(LiveActivity.eventualSymbol)
+//                            .foregroundStyle(.secondary)
+//                            .font(.system(size: UIFont.systemFontSize * 1.5))
+//                            .frame(height: UIFont.systemFontSize)
+//                        Text(context.state.eventual)
+//                    }
+                } else {
+                    Text("old").foregroundStyle(.secondary)
+                }
             } else {
-                Text("old").foregroundStyle(.secondary)
+                Text("--")
             }
-        } else {
-            Text("--")
-        }
+        }.frame(height: UIFont.systemFontSize)
     }
 
     private func updatedLabel(context: ActivityViewContext<LiveActivityAttributes>) -> Text {
@@ -121,7 +130,7 @@ struct LiveActivity: Widget {
     private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
         let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
         let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
-        return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
+        return LoopActivity(stroke: color, compact: size == 12).frame(width: size, height: size)
     }
 
     private var emptyText: some View {
@@ -137,65 +146,66 @@ struct LiveActivity: Widget {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack(spacing: 2) {
-                if !context.state.showChart {
-                    ZStack {
-                        updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
+                ZStack {
+                    updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                HStack {
-                    let loopCircle =
-                        VStack {
-                            loop(context: context, size: 22)
-                            if !context.state.showChart {
-                                emptyText
-                            }
-                        }
-                    if !context.state.showChart {
-                        loopCircle.offset(x: 0, y: 2)
-                    } else {
-                        loopCircle
-                    }
+                HStack(alignment: .top) {
+                    loop(context: context, size: 22)
+                         .padding(.top, 6)
                     Spacer()
-                    VStack {
+                    VStack(spacing: 0) {
                         bgAndTrend(context: context, size: .expanded).0.font(.title)
-                        if !context.state.showChart {
-                            changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                                .offset(x: -12, y: -5)
-                        }
-                    }
+//                            .background(.green)
+//                        if !context.state.showChart {
+                        changeLabel(context: context)
+//                            .offset(x: -12, y: -5)
+//                                                    .offset(x: -12)
+//                            .background(.green)
+//                        }
+                    } //.background(.blue)
+                    Spacer()
+//                    if context.state.showChart {
+//                        HStack {
+//                            Text(LiveActivity.eventualSymbol)
+//                                .foregroundStyle(.secondary)
+//                                .font(.system(size: UIFont.systemFontSize * 1.5))
+//                                .frame(height: UIFont.systemFontSize)
+//                            Text(context.state.eventual)
+//                        }
+//                    }
+
                     Spacer()
                     VStack {
                         iob(context: context, size: .expanded).font(.title)
-                        if !context.state.showChart {
+//                        if !context.state.showChart {
                             emptyText
-                        }
+//                        }
                     }
                     Spacer()
                     VStack {
                         cob(context: context, size: .expanded).font(.title)
-                        if !context.state.showChart {
+//                        if !context.state.showChart {
                             emptyText
-                        }
+//                        }
                     }
                 }
 
                 if context.state.showChart {
-                    HStack(alignment: .top) {
+//                    HStack(alignment: .top) {
                         chartView(for: context.state)
-                        Spacer()
-                        VStack(spacing: -2) {
-                            Text(LiveActivity.eventualSymbol)
-                                .foregroundStyle(.secondary)
-//                            .opacity(0.7)
-                                .font(.system(size: UIFont.systemFontSize * 1.5))
-                            Text(context.state.eventual)
-                            Spacer()
-                            updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                        }
-                    }
+//                        Spacer()
+//                        VStack(spacing: -2) {
+//                            Text(LiveActivity.eventualSymbol)
+//                                .foregroundStyle(.secondary)
+//                                .font(.system(size: UIFont.systemFontSize * 1.5))
+//                            Text(context.state.eventual)
+//                            Spacer()
+//                            updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+//                        }
+//                    }
                 }
-                if !context.state.showChart {
+//                if !context.state.showChart {
                     HStack {
                         Spacer()
                         if context.state.eventualText {
@@ -203,6 +213,7 @@ struct LiveActivity: Widget {
                             Spacer()
                         } else {
                             Text("⇢").foregroundStyle(.secondary).font(.system(size: UIFont.systemFontSize * 1.8))
+                                .frame(height: UIFont.systemFontSize)
                         }
                         Text(context.state.eventual)
                         Text(context.state.mmol ? NSLocalizedString(
@@ -213,7 +224,7 @@ struct LiveActivity: Widget {
                             comment: "The short unit display string for milligrams of glucose per decilter"
                         )).foregroundStyle(.secondary)
                     }.padding(.top, context.state.showChart ? 0 : 10)
-                }
+//                }
             }
             .privacySensitive()
             .padding(.vertical, 10).padding(.horizontal, 15)
@@ -367,6 +378,9 @@ struct LiveActivity: Widget {
                 .lineStyle(StrokeStyle(lineWidth: 1.0))
             }
 
+            let predictionsOpacity = 0.3
+            let predictionsSymbolSize = CGFloat(20)
+            
             if haveReadings, let iob = state.predictions?.iob.map({
                 updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
             }) {
@@ -375,8 +389,9 @@ struct LiveActivity: Widget {
                         x: .value("Time", point.date),
                         y: .value("Glucose", point.value)
                     )
-                    .symbolSize(10)
-                    .foregroundStyle(Color.insulin.opacity(0.5))
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.insulin)
                 }
             }
             if haveReadings, let zt = state.predictions?.zt.map({
@@ -387,8 +402,9 @@ struct LiveActivity: Widget {
                         x: .value("Time", point.date),
                         y: .value("Glucose", point.value)
                     )
-                    .symbolSize(10)
-                    .foregroundStyle(Color.zt.opacity(0.5))
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.zt)
                 }
             }
             if haveReadings, let cob = state.predictions?.cob.map({
@@ -399,8 +415,9 @@ struct LiveActivity: Widget {
                         x: .value("Time", point.date),
                         y: .value("Glucose", point.value)
                     )
-                    .symbolSize(10)
-                    .foregroundStyle(Color.loopYellow.opacity(0.5))
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.loopYellow)
                 }
             }
             if haveReadings, let uam = state.predictions?.uam.map({
@@ -411,8 +428,9 @@ struct LiveActivity: Widget {
                         x: .value("Time", point.date),
                         y: .value("Glucose", point.value)
                     )
-                    .symbolSize(10)
-                    .foregroundStyle(Color.uam.opacity(0.5))
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.uam)
                 }
             }
 
@@ -422,17 +440,17 @@ struct LiveActivity: Widget {
                     state.mmol ? Double(chartHighThreshold) * 0.0555 : Double(chartHighThreshold)
                 ))
                     .foregroundStyle(.orange.opacity(0.6))
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [1, 1]))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
             }
             if let chartLowThreshold = state.chartLowThreshold {
                 RuleMark(y: .value("Low Threshold", state.mmol ? Double(chartLowThreshold) * 0.0555 : Double(chartLowThreshold)))
                     .foregroundStyle(.red.opacity(0.6))
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [1, 1]))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
             }
 
-            RuleMark(x: .value("Now", Date.now))
-                .foregroundStyle(.secondary.opacity(0.8))
-                .lineStyle(StrokeStyle(lineWidth: 1, dash: [1, 1]))
+//            RuleMark(x: .value("Now", Date.now))
+//                .foregroundStyle(.secondary.opacity(0.8))
+//                .lineStyle(StrokeStyle(lineWidth: 1, dash: [1, 1]))
         }
         .chartYScale(domain: createYScale(state, maxValue, state.chartMaxValue))
         .chartXAxis {
@@ -448,7 +466,7 @@ struct LiveActivity: Widget {
                     minYMark,
                     maxYMark
                 ]) { _ in
-                    AxisGridLine()
+//                    AxisGridLine()
                     AxisValueLabel(
                         format: glucoseFormatter
                     )
@@ -502,8 +520,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: nil,
             showChart: true,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
+            chartLowThreshold: 75,
+            chartHighThreshold: 200,
             chartMaxValue: 400,
             eventualText: true
         )
@@ -546,7 +564,7 @@ private extension LiveActivityAttributes.ContentState {
             chartLowThreshold: nil,
             chartHighThreshold: nil,
             chartMaxValue: nil,
-            eventualText: true
+            eventualText: false
         )
     }
 
