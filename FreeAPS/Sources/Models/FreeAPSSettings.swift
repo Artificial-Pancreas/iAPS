@@ -53,6 +53,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = false
     var liveActivityEventualArrow: Bool = false
+    var liveActivityEventualAlwaysBottom: Bool = true
+    var liveActivitySmallStatus: Bool = false
     var liveActivityChart = true
     var liveActivityChartShowPredictions = true
     var liveActivityChartThresholdLines = true
@@ -296,7 +298,11 @@ extension FreeAPSSettings: Decodable {
         if let liveActivityEventualArrow = try? container.decode(Bool.self, forKey: .liveActivityEventualArrow) {
             settings.liveActivityEventualArrow = liveActivityEventualArrow
         }
-
+        
+        if let liveActivityEventualAlwaysBottom = try? container.decode(Bool.self, forKey: .liveActivityEventualAlwaysBottom) {
+            settings.liveActivityEventualAlwaysBottom = liveActivityEventualAlwaysBottom
+        }
+        
         // --- live activity chart
 
         if let liveActivityChart = try? container.decode(Bool.self, forKey: .liveActivityChart) {

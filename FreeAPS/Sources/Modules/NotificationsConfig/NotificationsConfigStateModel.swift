@@ -15,7 +15,9 @@ extension NotificationsConfig {
         @Published var liveActivityChartThresholdLines = true
         @Published var liveActivityChartDynamicRange = true
         @Published var liveActivityEventualArrow = false
-
+        @Published var liveActivityEventualAlwaysBottom = true
+        @Published var liveActivitySmallStatus = true
+        
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -36,6 +38,8 @@ extension NotificationsConfig {
             subscribeSetting(\.liveActivityChartDynamicRange, on: $liveActivityChartDynamicRange) {
                 liveActivityChartDynamicRange = $0 }
             subscribeSetting(\.liveActivityEventualArrow, on: $liveActivityEventualArrow) { liveActivityEventualArrow = $0 }
+            subscribeSetting(\.liveActivityEventualAlwaysBottom, on: $liveActivityEventualAlwaysBottom) { liveActivityEventualAlwaysBottom = $0 }
+            subscribeSetting(\.liveActivitySmallStatus, on: $liveActivitySmallStatus) { liveActivitySmallStatus = $0 }
 
             subscribeSetting(\.lowGlucose, on: $lowGlucose, initial: {
                 let value = max(min($0, 400), 40)

@@ -19,6 +19,8 @@ struct LiveActivityAttributes: ActivityAttributes {
         let chartHighThreshold: Int16?
         let chartMaxValue: Int16?
         let eventualText: Bool
+        let eventualAlwaysBottom: Bool
+        let smallStatus: Bool
 
         func withoutPredictions() -> ContentState {
             ContentState(
@@ -37,7 +39,9 @@ struct LiveActivityAttributes: ActivityAttributes {
                 chartLowThreshold: chartLowThreshold,
                 chartHighThreshold: chartHighThreshold,
                 chartMaxValue: chartMaxValue,
-                eventualText: eventualText
+                eventualText: eventualText,
+                eventualAlwaysBottom: eventualAlwaysBottom,
+                smallStatus: smallStatus
             )
         }
     }

@@ -47,7 +47,9 @@ extension LiveActivityAttributes.ContentState {
         chartLowThreshold: Int?,
         chartHighThreshold: Int?,
         chartMaxValue: Int?,
-        eventualText: Bool
+        eventualText: Bool,
+        eventualAlwaysBottom: Bool,
+        smallStatus: Bool
     ) {
         guard let glucose = bg?.glucose else {
             return nil
@@ -116,7 +118,9 @@ extension LiveActivityAttributes.ContentState {
             chartLowThreshold: chartLowThreshold.map({ Int16(clamping: $0) }),
             chartHighThreshold: chartHighThreshold.map({ Int16(clamping: $0) }),
             chartMaxValue: chartMaxValue.map({ Int16(clamping: $0) }),
-            eventualText: eventualText
+            eventualText: eventualText,
+            eventualAlwaysBottom: eventualAlwaysBottom,
+            smallStatus: smallStatus
         )
     }
 }
@@ -198,7 +202,9 @@ extension LiveActivityAttributes.ContentState {
                 newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions ||
                 newSettings.liveActivityChartThresholdLines != knownSettings.liveActivityChartThresholdLines ||
                 newSettings.liveActivityChartDynamicRange != knownSettings.liveActivityChartDynamicRange ||
-                newSettings.liveActivityEventualArrow != knownSettings.liveActivityEventualArrow
+                newSettings.liveActivityEventualArrow != knownSettings.liveActivityEventualArrow ||
+                newSettings.liveActivityEventualAlwaysBottom != knownSettings.liveActivityEventualAlwaysBottom ||
+                newSettings.liveActivitySmallStatus != knownSettings.liveActivitySmallStatus
             {
                 print("live activity settings changed")
                 forceActivityUpdate(force: true)
@@ -334,7 +340,9 @@ extension LiveActivityAttributes.ContentState {
                         chartHighThreshold: settings
                             .liveActivityChartThresholdLines ? Int16(clamping: (settings.high as NSDecimalNumber).intValue) : nil,
                         chartMaxValue: settings.liveActivityChartDynamicRange ? nil : 300, // mg/dl
-                        eventualText: !settings.liveActivityEventualArrow
+                        eventualText: !settings.liveActivityEventualArrow,
+                        eventualAlwaysBottom: settings.liveActivityEventualAlwaysBottom,
+                        smallStatus: settings.liveActivitySmallStatus
                     ),
                     staleDate: Date.now.addingTimeInterval(60)
                 )
@@ -403,7 +411,9 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             chartLowThreshold: settings.liveActivityChartThresholdLines ? Int(settings.low) : nil,
             chartHighThreshold: settings.liveActivityChartThresholdLines ? Int(settings.high) : nil,
             chartMaxValue: settings.liveActivityChartDynamicRange ? nil : 300, // mg/dl
-            eventualText: !settings.liveActivityEventualArrow
+            eventualText: !settings.liveActivityEventualArrow,
+            eventualAlwaysBottom: settings.liveActivityEventualAlwaysBottom,
+            smallStatus: settings.liveActivitySmallStatus
         ) else {
             return
         }
@@ -443,7 +453,9 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             chartLowThreshold: settings.liveActivityChartThresholdLines ? Int(settings.low) : nil,
             chartHighThreshold: settings.liveActivityChartThresholdLines ? Int(settings.high) : nil,
             chartMaxValue: settings.liveActivityChartDynamicRange ? nil : 300, // mg/dl
-            eventualText: !settings.liveActivityEventualArrow
+            eventualText: !settings.liveActivityEventualArrow,
+            eventualAlwaysBottom: settings.liveActivityEventualAlwaysBottom,
+            smallStatus: settings.liveActivitySmallStatus
         ) else {
             return
         }
