@@ -86,6 +86,7 @@ enum ActivityChartLayout: String, JSON, CaseIterable, Identifiable, Codable {
     case EventualAtTheBottom
     case EventualOnTheRight
     case EventualOnTheRightWithTime
+    case NoEventual
 
     var displayName: String {
         switch self {
@@ -97,6 +98,8 @@ enum ActivityChartLayout: String, JSON, CaseIterable, Identifiable, Codable {
             return NSLocalizedString("Eventual on the Right", comment: "")
         case .EventualOnTheRightWithTime:
             return NSLocalizedString("Eventual on the Right (with time)", comment: "")
+        case .NoEventual:
+            return NSLocalizedString("No Eventual", comment: "")
         }
     }
 }

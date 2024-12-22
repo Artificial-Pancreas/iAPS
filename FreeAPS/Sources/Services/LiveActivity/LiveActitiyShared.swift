@@ -69,6 +69,7 @@ struct LiveActivityAttributes: ActivityAttributes {
         case EventualAtTheBottom
         case EventualOnTheRight
         case EventualOnTheRightWithTime
+        case NoEventual
     }
 
     let startDate: Date

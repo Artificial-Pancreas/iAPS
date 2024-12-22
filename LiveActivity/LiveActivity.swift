@@ -220,9 +220,7 @@ struct LiveActivity: Widget {
                                     .padding(.top, 1)
                             }
                             updatedLabel(context: context)
-                                .font(.system(size: 13))
-                                .foregroundColor(.secondary)
-//                                .font(.caption).foregroundStyle(.primary.opacity(0.7))
+                                .font(.caption).foregroundStyle(.primary.opacity(0.7))
                         }.padding(.leading, 20)
                     }
                 }
@@ -703,7 +701,7 @@ private extension LiveActivityAttributes.ContentState {
             chartHighThreshold: 200,
             chartMaxValue: nil,
             eventualText: true,
-            smallStatus: true
+            smallStatus: false
         )
     }
 
@@ -745,6 +743,28 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: true,
             chartLayout: .EventualOnTheRightWithTime,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true,
+            smallStatus: false
+        )
+    }
+    
+    static var chart6: LiveActivityAttributes.ContentState {
+        let sampleData = SampleData()
+        return LiveActivityAttributes.ContentState(
+            bg: "10.7",
+            direction: "↗︎",
+            change: "+0.8",
+            date: Date(),
+            iob: "1.2",
+            cob: "20",
+            loopDate: Date.now, eventual: "12.7", mmol: true,
+            readings: sampleData.sampleReadings,
+            predictions: nil,
+            showChart: true,
+            chartLayout: .NoEventual,
             chartLowThreshold: nil,
             chartHighThreshold: nil,
             chartMaxValue: nil,
@@ -856,6 +876,7 @@ extension Color {
     LiveActivityAttributes.ContentState.chart3
     LiveActivityAttributes.ContentState.chart4
     LiveActivityAttributes.ContentState.chart5
+    LiveActivityAttributes.ContentState.chart6
     
 }
 

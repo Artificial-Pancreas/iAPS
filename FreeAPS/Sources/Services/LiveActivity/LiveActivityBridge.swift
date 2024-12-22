@@ -137,6 +137,8 @@ extension ActivityChartLayout {
             return .EventualOnTheRight
         case .EventualOnTheRightWithTime:
             return .EventualOnTheRightWithTime
+        case .NoEventual:
+            return .NoEventual
         }
     }
 }
