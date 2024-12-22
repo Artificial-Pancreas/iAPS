@@ -123,7 +123,6 @@ extension LiveActivityAttributes.ContentState {
             smallStatus: smallStatus
         )
     }
-    
 }
 
 extension ActivityChartLayout {
@@ -142,7 +141,6 @@ extension ActivityChartLayout {
         }
     }
 }
-
 
 @available(iOS 16.2, *) private struct ActiveActivity {
     let activity: Activity<LiveActivityAttributes>

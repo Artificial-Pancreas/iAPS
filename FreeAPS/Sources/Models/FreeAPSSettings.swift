@@ -322,7 +322,7 @@ extension FreeAPSSettings: Decodable {
         if let liveActivityEventualArrow = try? container.decode(Bool.self, forKey: .liveActivityEventualArrow) {
             settings.liveActivityEventualArrow = liveActivityEventualArrow
         }
-       
+
         // --- live activity chart
 
         if let liveActivityChart = try? container.decode(Bool.self, forKey: .liveActivityChart) {

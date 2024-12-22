@@ -62,7 +62,7 @@ struct LiveActivityAttributes: ActivityAttributes {
         let cob: ValueSeries?
         let uam: ValueSeries?
     }
-    
+
     enum ActivityChartLayout: String, CaseIterable, Identifiable, Codable {
         var id: String { rawValue }
         case EventualAtTheTop

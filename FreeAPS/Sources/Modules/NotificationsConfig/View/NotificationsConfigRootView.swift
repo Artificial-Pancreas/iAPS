@@ -111,7 +111,7 @@ extension NotificationsConfig {
                                 Toggle("Show Predictions", isOn: $state.liveActivityChartShowPredictions)
                                 Toggle("Threshold Lines", isOn: $state.liveActivityChartThresholdLines)
                                 Toggle("Dynamic range", isOn: $state.liveActivityChartDynamicRange)
-                                
+
                                 Picker("Layout", selection: $state.liveActivityChartLayout) {
                                     ForEach(ActivityChartLayout.allCases) { layout in
                                         Text(layout.displayName).tag(layout)

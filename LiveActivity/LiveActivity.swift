@@ -101,13 +101,13 @@ struct LiveActivity: Widget {
 
         return (stack, characters)
     }
-    
-    private func bg(context: ActivityViewContext<LiveActivityAttributes>, size: Size) -> some View {
+
+    private func bg(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
         let bgText = context.state.bg
         return Text(bgText)
             .foregroundStyle(context.isStale ? .secondary : Color.primary)
     }
-    
+
     private func eventual(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         HStack {
             Text(LiveActivity.eventualSymbol)
@@ -116,14 +116,13 @@ struct LiveActivity: Widget {
                 .frame(height: UIFont.systemFontSize)
             Text(context.state.eventual)
         }
-
     }
-    
+
     private func trend(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         HStack {
             if let direction = context.state.direction {
                 let text = Text(direction)
-                text.scaleEffect(x: 0.7, y: 0.7, anchor: .center)//.padding(.trailing, -5)
+                text.scaleEffect(x: 0.7, y: 0.7, anchor: .center) // .padding(.trailing, -5)
             }
         }
         .foregroundStyle(context.isStale ? .secondary : Color.primary)
@@ -170,7 +169,6 @@ struct LiveActivity: Widget {
                             }
                             updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
                         }.frame(maxWidth: .infinity, alignment: .trailing)
-                        
                     }
                 }
                 HStack(alignment: .top) {
@@ -186,7 +184,7 @@ struct LiveActivity: Widget {
                                 changeLabel(context: context)
                                     .font(.caption)
                                     .foregroundStyle(.primary.opacity(0.7))
-                                    .offset(x: -12/*, y: -5*/)
+                                    .offset(x: -12 /* , y: -5 */ )
                                 // .background(.blue)
                             } else {
                                 if context.state.chartLayout == .EventualAtTheTop {
@@ -225,13 +223,13 @@ struct LiveActivity: Widget {
                     }
                 }
 
-
                 if context.state.showChart {
-                                    HStack(alignment: .top) {
+                    HStack(alignment: .top) {
                         chartView(for: context.state)
                         Spacer()
                         if context.state.chartLayout == .EventualOnTheRightWithTime ||
-                            context.state.chartLayout == .EventualOnTheRight {
+                            context.state.chartLayout == .EventualOnTheRight
+                        {
                             VStack(spacing: -2) {
                                 Text(LiveActivity.eventualSymbol)
                                     .foregroundStyle(.secondary)
@@ -245,7 +243,7 @@ struct LiveActivity: Widget {
                         }
                     }
                 }
-                if !context.state.showChart || context.state.chartLayout == .EventualAtTheBottom   {
+                if !context.state.showChart || context.state.chartLayout == .EventualAtTheBottom {
                     HStack {
                         Spacer()
                         if context.state.eventualText {
@@ -263,7 +261,7 @@ struct LiveActivity: Widget {
                             "mg/dL",
                             comment: "The short unit display string for milligrams of glucose per decilter"
                         )).foregroundStyle(.secondary)
-                    }.padding(.top, 10 /*context.state.showChart ? 0 : 10*/)
+                    }.padding(.top, 10 /* context.state.showChart ? 0 : 10 */ )
                 }
             }
             .privacySensitive()
@@ -420,7 +418,7 @@ struct LiveActivity: Widget {
 
             let predictionsOpacity = 0.3
             let predictionsSymbolSize = CGFloat(20)
-            
+
             if haveReadings, let iob = state.predictions?.iob.map({
                 updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
             }) {
@@ -502,15 +500,17 @@ struct LiveActivity: Widget {
         }
         .chartYAxis {
             if let minYMark, let maxYMark {
-                AxisMarks(position: .trailing,
-                          values:
-                            abs(maxYMark-minYMark) < 0.8 ? [
-                                (maxYMark+minYMark)/2
-                            ] :
-                            [
-                    minYMark,
-                    maxYMark
-                ]) { _ in
+                AxisMarks(
+                    position: .trailing,
+                    values:
+                    abs(maxYMark - minYMark) < 0.8 ? [
+                        (maxYMark + minYMark) / 2
+                    ] :
+                        [
+                            minYMark,
+                            maxYMark
+                        ]
+                ) { _ in
 //                    AxisGridLine()
                     AxisValueLabel(
                         format: glucoseFormatter
@@ -533,7 +533,7 @@ private extension LiveActivityAttributes.ContentState {
 
     // Use mmol/l notation with decimal point as well for the same reason, it uses up to 4 characters, while mg/dl uses up to 3
     static var testWide: LiveActivityAttributes.ContentState {
-        return LiveActivityAttributes.ContentState(
+        LiveActivityAttributes.ContentState(
             bg: "10.7",
             direction: "→",
             change: "+0.1",
@@ -554,7 +554,7 @@ private extension LiveActivityAttributes.ContentState {
     }
 
     static var testVeryWide: LiveActivityAttributes.ContentState {
-        return LiveActivityAttributes.ContentState(
+        LiveActivityAttributes.ContentState(
             bg: "10.7",
             direction: "↑↑",
             change: "+1.4",
@@ -575,7 +575,7 @@ private extension LiveActivityAttributes.ContentState {
     }
 
     static var testSuperWide: LiveActivityAttributes.ContentState {
-        return LiveActivityAttributes.ContentState(
+        LiveActivityAttributes.ContentState(
             bg: "10.7",
             direction: "↑↑↑",
             change: "+2.1",
@@ -597,7 +597,7 @@ private extension LiveActivityAttributes.ContentState {
 
     // 2 characters for BG, 1 character for change is the minimum that will be shown
     static var testNarrow: LiveActivityAttributes.ContentState {
-        return LiveActivityAttributes.ContentState(
+        LiveActivityAttributes.ContentState(
             bg: "10.7",
             direction: "↑",
             change: "+0.7",
@@ -618,7 +618,7 @@ private extension LiveActivityAttributes.ContentState {
     }
 
     static var testMedium: LiveActivityAttributes.ContentState {
-        return LiveActivityAttributes.ContentState(
+        LiveActivityAttributes.ContentState(
             bg: "10.7",
             direction: "↗︎",
             change: "+0.8",
@@ -637,8 +637,7 @@ private extension LiveActivityAttributes.ContentState {
             smallStatus: false
         )
     }
-    
-    
+
     static var chart1: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
@@ -725,7 +724,6 @@ private extension LiveActivityAttributes.ContentState {
             chartMaxValue: nil,
             eventualText: false,
             smallStatus: true
-            
         )
     }
 
@@ -750,7 +748,7 @@ private extension LiveActivityAttributes.ContentState {
             smallStatus: false
         )
     }
-    
+
     static var chart6: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
@@ -772,17 +770,16 @@ private extension LiveActivityAttributes.ContentState {
             smallStatus: false
         )
     }
-    
 }
 
 struct SampleData {
     let sampleReadings: LiveActivityAttributes.ValueSeries
     let samplePredictions: LiveActivityAttributes.ActivityPredictions
-    
+
     init() {
-        let currentReading = Int16(clamping: 100 + Int.random(in: 0 ... 100));
+        let currentReading = Int16(clamping: 100 + Int.random(in: 0 ... 100))
         let currentReadingDate = Date()
-        
+
         let calendar = Calendar.current
         let now = Date()
 
@@ -790,7 +787,7 @@ struct SampleData {
             calendar.date(byAdding: .minute, value: -minutesAgoX5 * 5, to: now)!
         }.reversed())
 
-        var current: Int = Int(currentReading)
+        var current = Int(currentReading)
         let readingValues: [Int16] = Array((0 ..< 2 * 12).map { _ in
             current = current + Int.random(in: 10 ... 20) * Int.random(in: -50 ... 50).signum()
 //            current = 100 + Int.random(in: 0 ... 5) * Int.random(in: -50 ... 50).signum()
@@ -799,7 +796,7 @@ struct SampleData {
             }
             return Int16(clamping: current)
         }.reversed())
-        
+
         sampleReadings = LiveActivityAttributes.ValueSeries(
             dates: readingDates.dropLast(),
             values: readingValues.dropLast()
@@ -854,7 +851,7 @@ struct SampleData {
         let zt = generateCurve(startValue: lastGlucose, pattern: "stable")
         let cob = generateCurve(startValue: lastGlucose, pattern: "peak")
         let uam = generateCurve(startValue: lastGlucose, pattern: "up")
-        
+
         samplePredictions = LiveActivityAttributes.ActivityPredictions(
             iob: iob,
             zt: zt,
@@ -862,7 +859,6 @@ struct SampleData {
             uam: uam
         )
     }
-    
 }
 
 extension Color {
@@ -885,7 +881,6 @@ extension Color {
     LiveActivityAttributes.ContentState.chart4
     LiveActivityAttributes.ContentState.chart5
     LiveActivityAttributes.ContentState.chart6
-    
 }
 
 struct LoopActivity: View {

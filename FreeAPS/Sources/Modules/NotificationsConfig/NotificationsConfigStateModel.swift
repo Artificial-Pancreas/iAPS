@@ -17,7 +17,7 @@ extension NotificationsConfig {
         @Published var liveActivityEventualArrow = false
         @Published var liveActivitySmallStatus = true
         @Published var liveActivityChartLayout: ActivityChartLayout = .EventualOnTheRight
-        
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -40,7 +40,7 @@ extension NotificationsConfig {
             subscribeSetting(\.liveActivityEventualArrow, on: $liveActivityEventualArrow) { liveActivityEventualArrow = $0 }
             subscribeSetting(\.liveActivitySmallStatus, on: $liveActivitySmallStatus) { liveActivitySmallStatus = $0 }
             subscribeSetting(\.liveActivityChartLayout, on: $liveActivityChartLayout) { liveActivityChartLayout = $0 }
-            
+
             subscribeSetting(\.lowGlucose, on: $lowGlucose, initial: {
                 let value = max(min($0, 400), 40)
                 lowGlucose = units == .mmolL ? value.asMmolL : value
