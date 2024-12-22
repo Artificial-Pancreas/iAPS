@@ -68,7 +68,7 @@ extension LiveActivityAttributes.ContentState {
             func createPoints(from values: [Int]?) -> LiveActivityAttributes.ValueSeries? {
                 let prefixToTake = 24
                 if let values = values {
-                    let dates = values.indices.prefix(prefixToTake).map {
+                    let dates = values.indices.dropFirst().prefix(prefixToTake).map {
                         bgDate.addingTimeInterval(TimeInterval(($0 + 1) * 5 * 60))
                     }
                     let clampedValues = values.prefix(prefixToTake).map { Int16(clamping: $0) }
