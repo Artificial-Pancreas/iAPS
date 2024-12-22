@@ -427,7 +427,7 @@ struct LiveActivity: Widget {
                 ForEach(iob, id: \.date) { point in
                     PointMark(
                         x: .value("Time", point.date),
-                        y: .value("Glucose", point.value)
+                        y: .value("IOB", point.value)
                     )
                     .symbolSize(predictionsSymbolSize)
                     .opacity(predictionsOpacity)
@@ -440,7 +440,7 @@ struct LiveActivity: Widget {
                 ForEach(zt, id: \.date) { point in
                     PointMark(
                         x: .value("Time", point.date),
-                        y: .value("Glucose", point.value)
+                        y: .value("ZT", point.value)
                     )
                     .symbolSize(predictionsSymbolSize)
                     .opacity(predictionsOpacity)
@@ -453,7 +453,7 @@ struct LiveActivity: Widget {
                 ForEach(cob, id: \.date) { point in
                     PointMark(
                         x: .value("Time", point.date),
-                        y: .value("Glucose", point.value)
+                        y: .value("COB", point.value)
                     )
                     .symbolSize(predictionsSymbolSize)
                     .opacity(predictionsOpacity)
@@ -466,7 +466,7 @@ struct LiveActivity: Widget {
                 ForEach(uam, id: \.date) { point in
                     PointMark(
                         x: .value("Time", point.date),
-                        y: .value("Glucose", point.value)
+                        y: .value("UAM", point.value)
                     )
                     .symbolSize(predictionsSymbolSize)
                     .opacity(predictionsOpacity)
@@ -776,16 +776,22 @@ private extension LiveActivityAttributes.ContentState {
 }
 
 struct SampleData {
-    let sampleReadings: LiveActivityAttributes.ValueSeries = {
+    let sampleReadings: LiveActivityAttributes.ValueSeries
+    let samplePredictions: LiveActivityAttributes.ActivityPredictions
+    
+    init() {
+        let currentReading = Int16(clamping: 100 + Int.random(in: 0 ... 100));
+        let currentReadingDate = Date()
+        
         let calendar = Calendar.current
         let now = Date()
 
-        let dates = Array((0 ..< 2 * 12).map { minutesAgoX5 in
+        let readingDates = Array((0 ..< 2 * 12).map { minutesAgoX5 in
             calendar.date(byAdding: .minute, value: -minutesAgoX5 * 5, to: now)!
         }.reversed())
 
-        var current: Int = 100 + Int.random(in: 0 ... 100)
-        let values: [Int16] = Array((0 ..< 2 * 12).map { _ in
+        var current: Int = Int(currentReading)
+        let readingValues: [Int16] = Array((0 ..< 2 * 12).map { _ in
             current = current + Int.random(in: 10 ... 20) * Int.random(in: -50 ... 50).signum()
 //            current = 100 + Int.random(in: 0 ... 5) * Int.random(in: -50 ... 50).signum()
             if current < 100 {
@@ -793,13 +799,14 @@ struct SampleData {
             }
             return Int16(clamping: current)
         }.reversed())
+        
+        sampleReadings = LiveActivityAttributes.ValueSeries(
+            dates: readingDates.dropLast(),
+            values: readingValues.dropLast()
+        )
 
-        return LiveActivityAttributes.ValueSeries(dates: dates, values: values)
-    }()
-
-    var samplePredictions: LiveActivityAttributes.ActivityPredictions {
-        let lastGlucose = Double(sampleReadings.values.last!)
-        let lastDate = sampleReadings.dates.last!
+        let lastGlucose = Double(readingValues.last!)
+        let lastDate = readingDates.last!
 
         let numberOfPoints = 2 * 60 / 5 // 2 hours with 5-minute steps
 
@@ -847,14 +854,15 @@ struct SampleData {
         let zt = generateCurve(startValue: lastGlucose, pattern: "stable")
         let cob = generateCurve(startValue: lastGlucose, pattern: "peak")
         let uam = generateCurve(startValue: lastGlucose, pattern: "up")
-
-        return LiveActivityAttributes.ActivityPredictions(
+        
+        samplePredictions = LiveActivityAttributes.ActivityPredictions(
             iob: iob,
             zt: zt,
             cob: cob,
             uam: uam
         )
     }
+    
 }
 
 extension Color {

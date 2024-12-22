@@ -69,9 +69,9 @@ extension LiveActivityAttributes.ContentState {
                 let prefixToTake = 24
                 if let values = values {
                     let dates = values.dropFirst().indices.prefix(prefixToTake).map {
-                        bgDate.addingTimeInterval(TimeInterval(($0 + 1) * 5 * 60))
+                        bgDate.addingTimeInterval(TimeInterval($0 * 5 * 60))
                     }
-                    let clampedValues = values.prefix(prefixToTake).map { Int16(clamping: $0) }
+                    let clampedValues = values.dropFirst().prefix(prefixToTake).map { Int16(clamping: $0) }
                     return LiveActivityAttributes.ValueSeries(dates: dates, values: clampedValues)
                 } else {
                     return nil
