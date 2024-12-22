@@ -15,8 +15,8 @@ extension NotificationsConfig {
         @Published var liveActivityChartThresholdLines = true
         @Published var liveActivityChartDynamicRange = true
         @Published var liveActivityEventualArrow = false
-        @Published var liveActivityEventualAlwaysBottom = true
         @Published var liveActivitySmallStatus = true
+        @Published var liveActivityChartLayout: ActivityChartLayout = .EventualOnTheRight
         
         var units: GlucoseUnits = .mmolL
 
@@ -38,9 +38,9 @@ extension NotificationsConfig {
             subscribeSetting(\.liveActivityChartDynamicRange, on: $liveActivityChartDynamicRange) {
                 liveActivityChartDynamicRange = $0 }
             subscribeSetting(\.liveActivityEventualArrow, on: $liveActivityEventualArrow) { liveActivityEventualArrow = $0 }
-            subscribeSetting(\.liveActivityEventualAlwaysBottom, on: $liveActivityEventualAlwaysBottom) { liveActivityEventualAlwaysBottom = $0 }
             subscribeSetting(\.liveActivitySmallStatus, on: $liveActivitySmallStatus) { liveActivitySmallStatus = $0 }
-
+            subscribeSetting(\.liveActivityChartLayout, on: $liveActivityChartLayout) { liveActivityChartLayout = $0 }
+            
             subscribeSetting(\.lowGlucose, on: $lowGlucose, initial: {
                 let value = max(min($0, 400), 40)
                 lowGlucose = units == .mmolL ? value.asMmolL : value

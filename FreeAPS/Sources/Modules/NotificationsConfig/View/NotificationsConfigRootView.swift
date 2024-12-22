@@ -111,8 +111,16 @@ extension NotificationsConfig {
                                 Toggle("Show Predictions", isOn: $state.liveActivityChartShowPredictions)
                                 Toggle("Threshold Lines", isOn: $state.liveActivityChartThresholdLines)
                                 Toggle("Dynamic range", isOn: $state.liveActivityChartDynamicRange)
-                                Toggle("Eventual at the Bottom", isOn: $state.liveActivityEventualAlwaysBottom)
-                                Toggle("Small Status Circle", isOn: $state.liveActivitySmallStatus)
+                                
+                                Picker("Layout", selection: $state.liveActivityChartLayout) {
+                                    ForEach(ActivityChartLayout.allCases) { layout in
+                                        Text(layout.displayName).tag(layout)
+                                    }
+                                }
+
+                                if state.liveActivityChartLayout != .EventualOnTheRightWithTime {
+                                    Toggle("Small Status Circle", isOn: $state.liveActivitySmallStatus)
+                                }
                             }
                         )
                     }
