@@ -175,7 +175,7 @@ struct LiveActivity: Widget {
                 }
                 HStack(alignment: .top) {
                     HStack(alignment: .top) {
-                        if !context.state.smallStatus {
+                        if context.state.chartLayout == .EventualOnTheRightWithTime || !context.state.smallStatus {
                             loop(context: context, size: 22)
                                 .padding(.top, 6)
                             Spacer()
@@ -189,7 +189,7 @@ struct LiveActivity: Widget {
                                     .offset(x: -12/*, y: -5*/)
                                 // .background(.blue)
                             } else {
-                                if !context.state.eventualAlwaysBottom {
+                                if context.state.chartLayout == .EventualAtTheTop {
                                     HStack {
                                         changeLabel(context: context)
                                             .font(.caption)
@@ -213,7 +213,7 @@ struct LiveActivity: Widget {
                             emptyText
                         }
                     }
-                    if context.state.showChart {
+                    if context.state.showChart && context.state.chartLayout != .EventualOnTheRightWithTime {
                         HStack {
                             if context.state.smallStatus {
                                 loop(context: context, size: 10)
@@ -229,9 +229,25 @@ struct LiveActivity: Widget {
 
 
                 if context.state.showChart {
+                                    HStack(alignment: .top) {
                         chartView(for: context.state)
+                        Spacer()
+                        if context.state.chartLayout == .EventualOnTheRightWithTime ||
+                            context.state.chartLayout == .EventualOnTheRight {
+                            VStack(spacing: -2) {
+                                Text(LiveActivity.eventualSymbol)
+                                    .foregroundStyle(.secondary)
+                                    .font(.system(size: UIFont.systemFontSize * 1.5))
+                                Text(context.state.eventual)
+                                if context.state.chartLayout == .EventualOnTheRightWithTime {
+                                    Spacer()
+                                    updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                                }
+                            }
+                        }
+                    }
                 }
-                if context.state.eventualAlwaysBottom || !context.state.showChart {
+                if !context.state.showChart || context.state.chartLayout == .EventualAtTheBottom   {
                     HStack {
                         Spacer()
                         if context.state.eventualText {
@@ -519,6 +535,113 @@ private extension LiveActivityAttributes.ContentState {
 
     // Use mmol/l notation with decimal point as well for the same reason, it uses up to 4 characters, while mg/dl uses up to 3
     static var testWide: LiveActivityAttributes.ContentState {
+        return LiveActivityAttributes.ContentState(
+            bg: "10.7",
+            direction: "→",
+            change: "+0.1",
+            date: Date(),
+            iob: "1.2",
+            cob: "20",
+            loopDate: Date.now, eventual: "12.7", mmol: true,
+            readings: nil,
+            predictions: nil,
+            showChart: false,
+            chartLayout: .EventualAtTheBottom,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true,
+            smallStatus: false
+        )
+    }
+
+    static var testVeryWide: LiveActivityAttributes.ContentState {
+        return LiveActivityAttributes.ContentState(
+            bg: "10.7",
+            direction: "↑↑",
+            change: "+1.4",
+            date: Date(),
+            iob: "1.2",
+            cob: "20",
+            loopDate: Date.now, eventual: "12.7", mmol: true,
+            readings: nil,
+            predictions: nil,
+            showChart: false,
+            chartLayout: .EventualAtTheBottom,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true,
+            smallStatus: false
+        )
+    }
+
+    static var testSuperWide: LiveActivityAttributes.ContentState {
+        return LiveActivityAttributes.ContentState(
+            bg: "10.7",
+            direction: "↑↑↑",
+            change: "+2.1",
+            date: Date(),
+            iob: "1.2",
+            cob: "20",
+            loopDate: Date.now, eventual: "12.7", mmol: true,
+            readings: nil,
+            predictions: nil,
+            showChart: false,
+            chartLayout: .EventualAtTheBottom,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true,
+            smallStatus: false
+        )
+    }
+
+    // 2 characters for BG, 1 character for change is the minimum that will be shown
+    static var testNarrow: LiveActivityAttributes.ContentState {
+        return LiveActivityAttributes.ContentState(
+            bg: "10.7",
+            direction: "↑",
+            change: "+0.7",
+            date: Date(),
+            iob: "1.2",
+            cob: "20",
+            loopDate: Date.now, eventual: "12.7", mmol: true,
+            readings: nil,
+            predictions: nil,
+            showChart: false,
+            chartLayout: .EventualAtTheBottom,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true,
+            smallStatus: false
+        )
+    }
+
+    static var testMedium: LiveActivityAttributes.ContentState {
+        return LiveActivityAttributes.ContentState(
+            bg: "10.7",
+            direction: "↗︎",
+            change: "+0.8",
+            date: Date(),
+            iob: "1.2",
+            cob: "20",
+            loopDate: Date.now, eventual: "12.7", mmol: true,
+            readings: nil,
+            predictions: nil,
+            showChart: false,
+            chartLayout: .EventualAtTheBottom,
+            chartLowThreshold: nil,
+            chartHighThreshold: nil,
+            chartMaxValue: nil,
+            eventualText: true,
+            smallStatus: false
+        )
+    }
+    
+    
+    static var chart1: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
             bg: "10.7",
@@ -531,16 +654,16 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
             showChart: true,
+            chartLayout: .EventualAtTheBottom,
             chartLowThreshold: 75,
             chartHighThreshold: 200,
             chartMaxValue: 400,
             eventualText: false,
-            eventualAlwaysBottom: true,
             smallStatus: true
         )
     }
 
-    static var testVeryWide: LiveActivityAttributes.ContentState {
+    static var chart2: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
             bg: "10.7",
@@ -553,16 +676,16 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: nil,
             showChart: true,
+            chartLayout: .EventualAtTheTop,
             chartLowThreshold: 75,
             chartHighThreshold: 200,
             chartMaxValue: 400,
             eventualText: true,
-            eventualAlwaysBottom: false,
             smallStatus: false
         )
     }
 
-    static var testSuperWide: LiveActivityAttributes.ContentState {
+    static var chart3: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
             bg: "10.7",
@@ -575,17 +698,17 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
             showChart: true,
+            chartLayout: .EventualOnTheRight,
             chartLowThreshold: 75,
             chartHighThreshold: 200,
             chartMaxValue: nil,
             eventualText: true,
-            eventualAlwaysBottom: false,
             smallStatus: true
         )
     }
 
     // 2 characters for BG, 1 character for change is the minimum that will be shown
-    static var testNarrow: LiveActivityAttributes.ContentState {
+    static var chart4: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
             bg: "10.7",
@@ -597,18 +720,18 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: nil,
-            showChart: false,
+            showChart: true,
+            chartLayout: .EventualOnTheRight,
             chartLowThreshold: nil,
             chartHighThreshold: nil,
             chartMaxValue: nil,
             eventualText: false,
-            eventualAlwaysBottom: true,
-            smallStatus: false
+            smallStatus: true
             
         )
     }
 
-    static var testMedium: LiveActivityAttributes.ContentState {
+    static var chart5: LiveActivityAttributes.ContentState {
         let sampleData = SampleData()
         return LiveActivityAttributes.ContentState(
             bg: "10.7",
@@ -621,14 +744,15 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: nil,
             showChart: true,
+            chartLayout: .EventualOnTheRightWithTime,
             chartLowThreshold: nil,
             chartHighThreshold: nil,
             chartMaxValue: nil,
             eventualText: true,
-            eventualAlwaysBottom: true,
             smallStatus: false
         )
     }
+    
 }
 
 struct SampleData {
@@ -727,6 +851,12 @@ extension Color {
     LiveActivityAttributes.ContentState.testWide
     LiveActivityAttributes.ContentState.testMedium
     LiveActivityAttributes.ContentState.testNarrow
+    LiveActivityAttributes.ContentState.chart1
+    LiveActivityAttributes.ContentState.chart2
+    LiveActivityAttributes.ContentState.chart3
+    LiveActivityAttributes.ContentState.chart4
+    LiveActivityAttributes.ContentState.chart5
+    
 }
 
 struct LoopActivity: View {
