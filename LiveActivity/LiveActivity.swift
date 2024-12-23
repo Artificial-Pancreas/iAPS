@@ -102,32 +102,6 @@ struct LiveActivity: Widget {
         return (stack, characters)
     }
 
-    private func bg(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
-        let bgText = context.state.bg
-        return Text(bgText)
-            .foregroundStyle(context.isStale ? .secondary : Color.primary)
-    }
-
-    private func eventual(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        HStack {
-            Text(LiveActivity.eventualSymbol)
-                .foregroundStyle(.secondary)
-                .font(.system(size: UIFont.systemFontSize * 1.5))
-                .frame(height: UIFont.systemFontSize)
-            Text(context.state.eventual)
-        }
-    }
-
-    private func trend(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        HStack {
-            if let direction = context.state.direction {
-                let text = Text(direction)
-                text.scaleEffect(x: 0.7, y: 0.7, anchor: .center) // .padding(.trailing, -5)
-            }
-        }
-        .foregroundStyle(context.isStale ? .secondary : Color.primary)
-    }
-
     private func iob(context: ActivityViewContext<LiveActivityAttributes>, size _: Size) -> some View {
         HStack(spacing: 0) {
             Text(context.state.iob)
@@ -147,7 +121,7 @@ struct LiveActivity: Widget {
     private func loop(context: ActivityViewContext<LiveActivityAttributes>, size: CGFloat) -> some View {
         let timeAgo = abs(context.state.loopDate.timeIntervalSinceNow) / 60
         let color: Color = timeAgo > 8 ? .loopYellow : timeAgo > 12 ? .loopRed : .loopGreen
-        return LoopActivity(stroke: color, compact: size == 12).frame(width: size, height: size)
+        return LoopActivity(stroke: color, compact: size == 12).frame(width: size)
     }
 
     private var emptyText: some View {
@@ -162,64 +136,30 @@ struct LiveActivity: Widget {
             VStack(spacing: 2) {
                 if !context.state.showChart {
                     ZStack {
-                        HStack {
-                            if context.state.smallStatus {
-                                loop(context: context, size: 10)
-                                    .padding(.top, 1)
-                            }
-                            updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                        }.frame(maxWidth: .infinity, alignment: .trailing)
+                        updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                            .frame(maxWidth: .infinity, alignment: .trailing)
                     }
                 }
                 HStack(alignment: .top) {
-                    HStack(alignment: .top) {
-                        if context.state.chartLayout == .EventualOnTheRightWithTime || !context.state.smallStatus {
-                            loop(context: context, size: 22)
-                                .padding(.top, 6)
-                            Spacer()
-                        }
-                        VStack(spacing: 0) {
-                            bgAndTrend(context: context, size: .expanded).0.font(.title) // .background(.green)
-                            if !context.state.showChart {
-                                changeLabel(context: context)
-                                    .font(.caption)
-                                    .foregroundStyle(.primary.opacity(0.7))
-                                    .offset(x: -12 /* , y: -5 */ )
-                                // .background(.blue)
-                            } else {
-                                if context.state.chartLayout == .EventualAtTheTop {
-                                    HStack {
-                                        changeLabel(context: context)
-                                            .font(.caption)
-                                            .foregroundStyle(.primary.opacity(0.7))
-                                        //                                        .offset(y: -5)
-                                        eventual(context: context) // adds .offset(y: -5) to textx
-                                            .font(.caption)
-                                            .foregroundStyle(.primary.opacity(0.7))
-                                    }.padding(0) // .background(.blue)
-                                }
-                            }
-                        }
-                        Spacer()
-                        VStack {
-                            iob(context: context, size: .expanded).font(.title)
-                            emptyText
-                        }
-                        Spacer()
-                        VStack {
-                            cob(context: context, size: .expanded).font(.title)
-                            emptyText
+                    loop(context: context, size: 22)
+                        .padding(.top, 6)
+                    Spacer()
+                    VStack(spacing: 0) {
+                        bgAndTrend(context: context, size: .expanded).0.font(.title)
+                        if !context.state.showChart {
+                            changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                                .offset(x: -12, y: -5)
                         }
                     }
-                    if context.state.showChart && context.state.chartLayout != .EventualOnTheRightWithTime {
-                        HStack {
-                            if context.state.smallStatus {
-                                loop(context: context, size: 10)
-                                    .padding(.top, 1)
-                            }
-                            updatedLabel(context: context)
-                                .font(.caption).foregroundStyle(.primary.opacity(0.7))
-                        }.padding(.leading, 20)
+                    Spacer()
+                    VStack {
+                        iob(context: context, size: .expanded).font(.title)
+                        emptyText
+                    }
+                    Spacer()
+                    VStack {
+                        cob(context: context, size: .expanded).font(.title)
+                        emptyText
                     }
                 }
 
@@ -227,32 +167,20 @@ struct LiveActivity: Widget {
                     HStack(alignment: .top) {
                         chartView(for: context.state)
                         Spacer()
-                        if context.state.chartLayout == .EventualOnTheRightWithTime ||
-                            context.state.chartLayout == .EventualOnTheRight
-                        {
-                            VStack(spacing: -2) {
-                                Text(LiveActivity.eventualSymbol)
-                                    .foregroundStyle(.secondary)
-                                    .font(.system(size: UIFont.systemFontSize * 1.5))
-                                Text(context.state.eventual)
-                                if context.state.chartLayout == .EventualOnTheRightWithTime {
-                                    Spacer()
-                                    updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                                }
-                            }
+                        VStack(spacing: -2) {
+                            Text(LiveActivity.eventualSymbol)
+                                .foregroundStyle(.secondary)
+                                .font(.system(size: UIFont.systemFontSize * 1.5))
+                            Text(context.state.eventual)
+                            Spacer()
+                            updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
                         }
                     }
-                }
-                if !context.state.showChart || context.state.chartLayout == .EventualAtTheBottom {
+                } else {
                     HStack {
                         Spacer()
-                        if context.state.eventualText {
-                            Text(NSLocalizedString("Eventual Glucose", comment: ""))
-                            Spacer()
-                        } else {
-                            Text("⇢").foregroundStyle(.secondary).font(.system(size: UIFont.systemFontSize * 1.8))
-                                .frame(height: UIFont.systemFontSize)
-                        }
+                        Text(NSLocalizedString("Eventual Glucose", comment: ""))
+                        Spacer()
                         Text(context.state.eventual)
                         Text(context.state.mmol ? NSLocalizedString(
                             "mmol/L",
@@ -261,7 +189,7 @@ struct LiveActivity: Widget {
                             "mg/dL",
                             comment: "The short unit display string for milligrams of glucose per decilter"
                         )).foregroundStyle(.secondary)
-                    }.padding(.top, 10 /* context.state.showChart ? 0 : 10 */ )
+                    }.padding(.top, 10)
                 }
             }
             .privacySensitive()
@@ -341,12 +269,12 @@ struct LiveActivity: Widget {
     private func createYScale(
         _ state: LiveActivityAttributes.ContentState,
         _ maxValue: Double?,
-        _ maxThreshold: Int16?
+        _ highThreshold: Int16
     ) -> ClosedRange<Double> {
         let minValue = state.mmol ? 54 * 0.0555 : 54
-        let maxThresholdDouble = maxThreshold.map { Double($0) } ?? 180
+        let highThresholdDouble = Double(highThreshold)
         let maxThresholdDoubleConverted =
-            state.mmol ? maxThresholdDouble * 0.0555 : maxThresholdDouble
+            state.mmol ? highThresholdDouble * 0.0555 : highThresholdDouble
 
         let maxDataOrThreshold: Double
 
@@ -356,18 +284,7 @@ struct LiveActivity: Widget {
             maxDataOrThreshold = maxThresholdDoubleConverted
         }
 
-        if let settingsMaxValue = state.chartMaxValue {
-            let settingsMaxDouble = Double(settingsMaxValue)
-            let settingsMaxDoubleConverted = state.mmol ? settingsMaxDouble * 0.0555 : settingsMaxDouble
-
-            if settingsMaxDoubleConverted > maxDataOrThreshold {
-                return Double(minValue) ... Double(settingsMaxDoubleConverted)
-            } else {
-                return Double(minValue) ... Double(maxDataOrThreshold)
-            }
-        } else {
-            return Double(minValue) ... Double(maxDataOrThreshold)
-        }
+        return Double(minValue) ... Double(maxDataOrThreshold)
     }
 
     private func makePoints(_ dates: [Date], _ values: [Int16], mmol: Bool) -> [(date: Date, value: Double)] {
@@ -472,25 +389,25 @@ struct LiveActivity: Widget {
                 }
             }
 
-            if let chartHighThreshold = state.chartHighThreshold {
-                RuleMark(y: .value(
-                    "High Threshold",
-                    state.mmol ? Double(chartHighThreshold) * 0.0555 : Double(chartHighThreshold)
-                ))
-                    .foregroundStyle(.orange.opacity(0.6))
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-            }
-            if let chartLowThreshold = state.chartLowThreshold {
-                RuleMark(y: .value("Low Threshold", state.mmol ? Double(chartLowThreshold) * 0.0555 : Double(chartLowThreshold)))
-                    .foregroundStyle(.red.opacity(0.6))
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-            }
+            RuleMark(y: .value(
+                "Low Threshold",
+                state.mmol ? Double(state.chartLowThreshold) * 0.0555 : Double(state.chartLowThreshold)
+            ))
+                .foregroundStyle(.red.opacity(0.5))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 3]))
+
+            RuleMark(y: .value(
+                "High Threshold",
+                state.mmol ? Double(state.chartHighThreshold) * 0.0555 : Double(state.chartHighThreshold)
+            ))
+                .foregroundStyle(.orange.opacity(0.5))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 3]))
 
 //            RuleMark(x: .value("Now", Date.now))
 //                .foregroundStyle(.secondary.opacity(0.8))
 //                .lineStyle(StrokeStyle(lineWidth: 1, dash: [1, 1]))
         }
-        .chartYScale(domain: createYScale(state, maxValue, state.chartMaxValue))
+        .chartYScale(domain: createYScale(state, maxValue, state.chartHighThreshold))
         .chartXAxis {
             AxisMarks(position: .bottom) { _ in
                 AxisGridLine()
@@ -544,12 +461,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
-            chartLayout: .EventualAtTheBottom,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
+            chartLowThreshold: 75,
+            chartHighThreshold: 200
         )
     }
 
@@ -565,12 +478,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
-            chartLayout: .EventualAtTheBottom,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
+            chartLowThreshold: 75,
+            chartHighThreshold: 200
         )
     }
 
@@ -586,12 +495,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
-            chartLayout: .EventualAtTheBottom,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
+            chartLowThreshold: 75,
+            chartHighThreshold: 200
         )
     }
 
@@ -608,12 +513,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
-            chartLayout: .EventualAtTheBottom,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
+            chartLowThreshold: 75,
+            chartHighThreshold: 200
         )
     }
 
@@ -629,12 +530,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: nil,
             predictions: nil,
             showChart: false,
-            chartLayout: .EventualAtTheBottom,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
+            chartLowThreshold: 75,
+            chartHighThreshold: 200
         )
     }
 
@@ -651,12 +548,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
             showChart: true,
-            chartLayout: .EventualAtTheBottom,
             chartLowThreshold: 75,
-            chartHighThreshold: 200,
-            chartMaxValue: 400,
-            eventualText: false,
-            smallStatus: true
+            chartHighThreshold: 200
         )
     }
 
@@ -673,101 +566,8 @@ private extension LiveActivityAttributes.ContentState {
             readings: sampleData.sampleReadings,
             predictions: nil,
             showChart: true,
-            chartLayout: .EventualAtTheTop,
             chartLowThreshold: 75,
-            chartHighThreshold: 200,
-            chartMaxValue: 400,
-            eventualText: true,
-            smallStatus: false
-        )
-    }
-
-    static var chart3: LiveActivityAttributes.ContentState {
-        let sampleData = SampleData()
-        return LiveActivityAttributes.ContentState(
-            bg: "10.7",
-            direction: "↑↑↑",
-            change: "+2.1",
-            date: Date(),
-            iob: "1.2",
-            cob: "20",
-            loopDate: Date.now, eventual: "12.7", mmol: true,
-            readings: sampleData.sampleReadings,
-            predictions: sampleData.samplePredictions,
-            showChart: true,
-            chartLayout: .EventualOnTheRight,
-            chartLowThreshold: 75,
-            chartHighThreshold: 200,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
-        )
-    }
-
-    // 2 characters for BG, 1 character for change is the minimum that will be shown
-    static var chart4: LiveActivityAttributes.ContentState {
-        let sampleData = SampleData()
-        return LiveActivityAttributes.ContentState(
-            bg: "10.7",
-            direction: "↑",
-            change: "+0.7",
-            date: Date(),
-            iob: "1.2",
-            cob: "20",
-            loopDate: Date.now, eventual: "12.7", mmol: true,
-            readings: sampleData.sampleReadings,
-            predictions: nil,
-            showChart: true,
-            chartLayout: .EventualOnTheRight,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: false,
-            smallStatus: true
-        )
-    }
-
-    static var chart5: LiveActivityAttributes.ContentState {
-        let sampleData = SampleData()
-        return LiveActivityAttributes.ContentState(
-            bg: "10.7",
-            direction: "↗︎",
-            change: "+0.8",
-            date: Date(),
-            iob: "1.2",
-            cob: "20",
-            loopDate: Date.now, eventual: "12.7", mmol: true,
-            readings: sampleData.sampleReadings,
-            predictions: nil,
-            showChart: true,
-            chartLayout: .EventualOnTheRightWithTime,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
-        )
-    }
-
-    static var chart6: LiveActivityAttributes.ContentState {
-        let sampleData = SampleData()
-        return LiveActivityAttributes.ContentState(
-            bg: "10.7",
-            direction: "↗︎",
-            change: "+0.8",
-            date: Date(),
-            iob: "1.2",
-            cob: "20",
-            loopDate: Date.now, eventual: "12.7", mmol: true,
-            readings: sampleData.sampleReadings,
-            predictions: nil,
-            showChart: true,
-            chartLayout: .NoEventual,
-            chartLowThreshold: nil,
-            chartHighThreshold: nil,
-            chartMaxValue: nil,
-            eventualText: true,
-            smallStatus: false
+            chartHighThreshold: 200
         )
     }
 }
@@ -777,17 +577,14 @@ struct SampleData {
     let samplePredictions: LiveActivityAttributes.ActivityPredictions
 
     init() {
-        let currentReading = Int16(clamping: 100 + Int.random(in: 0 ... 100))
-        let currentReadingDate = Date()
-
         let calendar = Calendar.current
-        let now = Date()
+        let now = Date.now
 
         let readingDates = Array((0 ..< 2 * 12).map { minutesAgoX5 in
             calendar.date(byAdding: .minute, value: -minutesAgoX5 * 5, to: now)!
         }.reversed())
 
-        var current = Int(currentReading)
+        var current = 100 + Int.random(in: 0 ... 100)
         let readingValues: [Int16] = Array((0 ..< 2 * 12).map { _ in
             current = current + Int.random(in: 10 ... 20) * Int.random(in: -50 ... 50).signum()
 //            current = 100 + Int.random(in: 0 ... 5) * Int.random(in: -50 ... 50).signum()
@@ -798,8 +595,8 @@ struct SampleData {
         }.reversed())
 
         sampleReadings = LiveActivityAttributes.ValueSeries(
-            dates: readingDates.dropLast(),
-            values: readingValues.dropLast()
+            dates: readingDates,
+            values: readingValues
         )
 
         let lastGlucose = Double(readingValues.last!)
@@ -877,10 +674,6 @@ extension Color {
     LiveActivityAttributes.ContentState.testNarrow
     LiveActivityAttributes.ContentState.chart1
     LiveActivityAttributes.ContentState.chart2
-    LiveActivityAttributes.ContentState.chart3
-    LiveActivityAttributes.ContentState.chart4
-    LiveActivityAttributes.ContentState.chart5
-    LiveActivityAttributes.ContentState.chart6
 }
 
 struct LoopActivity: View {

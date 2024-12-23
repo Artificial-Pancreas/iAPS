@@ -52,13 +52,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = false
-    var liveActivityEventualArrow: Bool = false
-    var liveActivitySmallStatus: Bool = false
     var liveActivityChart = true
-    var liveActivityChartLayout: ActivityChartLayout = .EventualOnTheRight
     var liveActivityChartShowPredictions = true
-    var liveActivityChartThresholdLines = true
-    var liveActivityChartDynamicRange = true
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = true
     var timeSettings: Bool = true
@@ -78,30 +73,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var profileID: String = "Hypo Treatment"
     var allowDilution: Bool = false
     var hideInsulinBadge: Bool = false
-}
-
-enum ActivityChartLayout: String, JSON, CaseIterable, Identifiable, Codable {
-    var id: String { rawValue }
-    case EventualAtTheTop
-    case EventualAtTheBottom
-    case EventualOnTheRight
-    case EventualOnTheRightWithTime
-    case NoEventual
-
-    var displayName: String {
-        switch self {
-        case .EventualAtTheTop:
-            return NSLocalizedString("Eventual at the Top", comment: "")
-        case .EventualAtTheBottom:
-            return NSLocalizedString("Eventual at the Bottom", comment: "")
-        case .EventualOnTheRight:
-            return NSLocalizedString("Eventual on the Right", comment: "")
-        case .EventualOnTheRightWithTime:
-            return NSLocalizedString("Eventual on the Right (with time)", comment: "")
-        case .NoEventual:
-            return NSLocalizedString("No Eventual", comment: "")
-        }
-    }
 }
 
 extension FreeAPSSettings: Decodable {
@@ -319,30 +290,14 @@ extension FreeAPSSettings: Decodable {
             settings.useLiveActivity = useLiveActivity
         }
 
-        if let liveActivityEventualArrow = try? container.decode(Bool.self, forKey: .liveActivityEventualArrow) {
-            settings.liveActivityEventualArrow = liveActivityEventualArrow
-        }
-
         // --- live activity chart
 
         if let liveActivityChart = try? container.decode(Bool.self, forKey: .liveActivityChart) {
             settings.liveActivityChart = liveActivityChart
         }
 
-        if let liveActivityChartLayout = try? container.decode(ActivityChartLayout.self, forKey: .liveActivityChartLayout) {
-            settings.liveActivityChartLayout = liveActivityChartLayout
-        }
-
         if let liveActivityChartShowPredictions = try? container.decode(Bool.self, forKey: .liveActivityChartShowPredictions) {
             settings.liveActivityChartShowPredictions = liveActivityChartShowPredictions
-        }
-
-        if let liveActivityChartThresholdLines = try? container.decode(Bool.self, forKey: .liveActivityChartThresholdLines) {
-            settings.liveActivityChartThresholdLines = liveActivityChartThresholdLines
-        }
-
-        if let liveActivityChartDynamicRange = try? container.decode(Bool.self, forKey: .liveActivityChartDynamicRange) {
-            settings.liveActivityChartDynamicRange = liveActivityChartDynamicRange
         }
 
         // ----
