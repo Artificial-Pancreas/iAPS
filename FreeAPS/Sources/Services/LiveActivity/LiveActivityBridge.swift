@@ -250,40 +250,11 @@ extension LiveActivityAttributes.ContentState {
                 let encoder = JSONEncoder()
                 let encodedLength: Int = {
                     if let data = try? encoder.encode(state) {
-//                         if let jsonString = String(data: data, encoding: .utf8) {
-//                             print("activity payload: \(jsonString)")
-//                         }
-
                         return data.count
                     } else {
                         return 0
                     }
                 }()
-
-//                TODO: remove these, debugging only
-//                print("!!!! Payload size: \(encodedLength) bytes")
-//                if let data = try? encoder.encode(state.readings) {
-//                    print("!!!! Payload size - readings: \(data.count) bytes")
-//                }
-//                if let data = try? encoder.encode(state.predictions) {
-//                    print("!!!! Payload size - predictions: \(data.count) bytes")
-//                }
-//                if let data = try? encoder.encode(state.predictions?.iob) {
-//                    print("!!!! Payload size - predictions.iob: \(data.count) bytes")
-//                    print("!!!! Payload size - predictions.iob: \(state.predictions?.iob?.count ?? 0) items")
-//                }
-//                if let data = try? encoder.encode(state.predictions?.cob) {
-//                    print("!!!! Payload size - predictions.cob: \(data.count) bytes")
-//                    print("!!!! Payload size - predictions.cob: \(state.predictions?.cob?.count ?? 0) items")
-//                }
-//                if let data = try? encoder.encode(state.predictions?.zt) {
-//                    print("!!!! Payload size - predictions.zt: \(data.count) bytes")
-//                    print("!!!! Payload size - predictions.zt: \(state.predictions?.zt?.count ?? 0) items")
-//                }
-//                if let data = try? encoder.encode(state.predictions?.uam) {
-//                    print("!!!! Payload size - predictions.uam: \(data.count) bytes")
-//                    print("!!!! Payload size - predictions.uam: \(state.predictions?.uam?.count ?? 0) items")
-//                }
 
                 let content = {
                     if encodedLength > 4 * 1024 { // size limit
