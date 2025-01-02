@@ -130,6 +130,10 @@ extension Settings {
                             HStack {
                                 Toggle("Allow diluted insulin concentration settings", isOn: $state.allowDilution)
                             }
+
+                            HStack {
+                                Toggle("Max Override 400%", isOn: $state.extended_overrides)
+                            }
                         }
                         Group {
                             Text("Preferences")
