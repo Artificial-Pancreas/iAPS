@@ -1459,6 +1459,9 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Profile Override" = "Remplacer le profil";
 
+/* Extend max override percentage */
+"Max Override 400%" = "Max Override 400%";
+
 /* */
 "Override Profiles" = "Préréglages de surcharge";
 
