@@ -17,7 +17,7 @@ extension AddCarbs {
         @State private var presentPresets = false
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
-        
+
         @FetchRequest(
             entity: Presets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate: NSPredicate(

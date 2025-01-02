@@ -30,6 +30,7 @@ extension OverrideProfilesConfig {
         @Published var emoji: String = ""
         @Published var maxIOB: Decimal = 0
         @Published var overrideMaxIOB: Bool = false
+        @Published var extended_overrides = false
 
         @Injected() var broadcaster: Broadcaster!
         @Injected() var ns: NightscoutManager!
@@ -41,6 +42,7 @@ extension OverrideProfilesConfig {
             defaultSmbMinutes = settingsManager.preferences.maxSMBBasalMinutes
             defaultUamMinutes = settingsManager.preferences.maxUAMSMBBasalMinutes
             defaultmaxIOB = settingsManager.preferences.maxIOB
+            extended_overrides = settingsManager.settings.extended_overrides
 
             presets = [OverridePresets(context: coredataContext)]
         }
