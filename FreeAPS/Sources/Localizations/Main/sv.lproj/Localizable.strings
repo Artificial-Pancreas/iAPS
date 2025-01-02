@@ -1460,7 +1460,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Undantag från dina sparade profiler";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Max Override 400%";
+"Max Override 400%" = "Öka maxvärde för insulinprocent i profiler till 400%";
 
 /* */
 "Override Profiles" = "Aktivera tillfälligt undantag";
