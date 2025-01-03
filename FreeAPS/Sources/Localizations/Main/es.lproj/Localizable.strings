@@ -1470,6 +1470,9 @@ Ajustes predeterminados:\n
 /* Service Section */
 "Profile Override" = "Sobrescritura del perfil";
 
+/* Extend max override percentage */
+"Max Override 400%" = "Max Override 400%";
+
 /* */
 "Override Profiles" = "Sobrescritura de perfil";
 

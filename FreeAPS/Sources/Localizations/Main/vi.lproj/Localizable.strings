@@ -1459,6 +1459,9 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Profile Override" = "Mô tả ghi đè";
 
+/* Extend max override percentage */
+"Max Override 400%" = "Ghi đè tối đa 400%";
+
 /* */
 "Override Profiles" = "Cài đặt ghi đè";
 
