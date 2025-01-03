@@ -1460,7 +1460,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Regolazione Profilo";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Max Override 400%";
+"Max Override 400%" = "Override massimo 400%";
 
 /* */
 "Override Profiles" = "Regolazioni Profili";
