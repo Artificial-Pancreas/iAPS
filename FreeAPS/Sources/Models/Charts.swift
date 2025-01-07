@@ -32,7 +32,7 @@ struct Thresholds: Identifiable, Equatable {
 
 struct Table: Identifiable, Equatable {
     var id: String { UUID().uuidString }
-    let point: String
+    var point: String { "•" }
     let localizedString: LocalizedStringKey
 }
 

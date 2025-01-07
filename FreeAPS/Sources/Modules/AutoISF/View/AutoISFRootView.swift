@@ -469,19 +469,15 @@ extension AutoISF {
         var list: some View {
             let entries = [
                 Table(
-                    point: "•",
                     localizedString: "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target"
                 ),
                 Table(
-                    point: "•",
                     localizedString: "Once this Target is cancelled, the B30 high TBR will be cancelled"
                 ),
                 Table(
-                    point: "•",
                     localizedString: "In order to activate B30 a minimum manual Bolus needs to be given"
                 ),
                 Table(
-                    point: "•",
                     localizedString: "You can specify how long B30 run and how high it is"
                 )
             ]
