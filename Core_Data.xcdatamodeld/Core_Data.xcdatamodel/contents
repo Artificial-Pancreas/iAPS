@@ -146,10 +146,14 @@
         <attribute name="cr" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="737559660" usesScalarValueType="NO"/>
         <attribute name="eventualBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="insulinReq" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="mmol" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="reasons" optional="YES" attributeType="String" defaultValueString="empty"/>
+        <attribute name="smb" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="StatsData" representedClassName="StatsData" syncable="YES" codeGenerationType="class">
