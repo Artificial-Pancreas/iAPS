@@ -2564,7 +2564,7 @@ Enact a temp Basal or a temp target */
 "Average CSF" = "CSF trung bình";
 
 /* Dynamic settings View */
-"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Độ nhạy insulin, CR: Tỷ lệ carbohydrate,\nCSF: Độ nhạy carbohydrate = ISF";
 
 /* Header */
 "Calculator settings" = "Cài đặt tính toán";
