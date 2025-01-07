@@ -60,6 +60,26 @@ extension PreferencesEditor {
                                         value: self.$state.sections[sectionIndex].fields[fieldIndex].decimalValue,
                                         formatter: formatter
                                     )
+                                case .glucose:
+                                    ZStack {
+                                        Button("", action: {
+                                            infoButtonPressed = InfoText(
+                                                description: field.infoText,
+                                                oref0Variable: field.displayName
+                                            )
+                                        })
+                                        Text(field.displayName)
+                                    }
+                                    BGTextField(
+                                        placeholder: "0",
+                                        mgdlValue: self.$state.sections[sectionIndex].fields[fieldIndex].decimalValue,
+                                        units: Binding(
+                                            get: { self.state.unitsIndex == 0 ? .mgdL : .mmolL },
+                                            set: { _ in }
+                                        ),
+                                        isDisabled: false
+                                    )
+
                                 case .insulinCurve:
                                     Picker(
                                         selection: $state.sections[sectionIndex].fields[fieldIndex].insulinCurveValue,
