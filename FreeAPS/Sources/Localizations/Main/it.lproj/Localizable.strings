@@ -2685,10 +2685,10 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Predefiniti a 0,2 (20%). Massima variazione percentuale positiva del livello di glicemia per utilizzare SMB, sopra che disabiliterà SMB. Limite rigido del 40%. Per UAM è consigliabile un loop completamente chiuso. Osservare in log e popup (maxDelta 27 > 20% di BG 100 - disabilitare SMB!).";
 
-/* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... Quando le glicemie sono Sopra (mg/dl):";
+/* Headline "... When Blood Glucose Is Above:" */
+"... When Blood Glucose Is Above:" = "... Quando le glicemie sono Sopra:";
 
-/* ... When Blood Glucose Is Over (mg/dl): */
+/* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Impostare il valore enableSMB_high_bg comparerà per abilitare SMB. Se BG > di questo valore, le SMB si dovrebbero abilitare.";
 
 /* Headline "Enable SMB With High BG" */

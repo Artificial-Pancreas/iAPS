@@ -148,13 +148,13 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString(
-                        "... When Blood Glucose Is Over (mg/dl):",
-                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                        "... When Blood Glucose Is Above:",
+                        comment: "... When Blood Glucose Is Above:"
                     ),
                     type: .glucose(keypath: \.enableSMB_high_bg_target),
                     infoText: NSLocalizedString(
                         "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
-                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                        comment: "... When Blood Glucose Is Above:"
                     ),
                     settable: self
                 ),
