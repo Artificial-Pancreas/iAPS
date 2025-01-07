@@ -41,6 +41,9 @@ extension AutoISF {
         @Published var ketoProtectBasalPercent: Decimal = 20
         @Published var ketoProtectBasalAbsolut: Decimal = 0
 
+        // General settings
+        @Published var units: GlucoseUnits = .mgdL
+
         override func subscribe() {
             subscribeSetting(\.autoisf, on: $autoisf) { autoisf = $0 }
             subscribeSetting(\.enableautoISFwithCOB, on: $enableautoISFwithCOB) { enableautoISFwithCOB = $0 }
@@ -74,6 +77,8 @@ extension AutoISF {
             subscribeSetting(\.ketoProtectAbsolut, on: $ketoProtectAbsolut) { ketoProtectAbsolut = $0 }
             subscribeSetting(\.ketoProtectBasalPercent, on: $ketoProtectBasalPercent) { ketoProtectBasalPercent = $0 }
             subscribeSetting(\.ketoProtectBasalAbsolut, on: $ketoProtectBasalAbsolut) { ketoProtectBasalAbsolut = $0 }
+
+            subscribeSetting(\.units, on: $units) { units = $0 }
         }
     }
 }
