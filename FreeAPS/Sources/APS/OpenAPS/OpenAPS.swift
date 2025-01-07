@@ -22,7 +22,6 @@ final class OpenAPS {
         Future { promise in
             self.processQueue.async {
                 let start = Date.now
-
                 var now = Date.now
 
                 debug(.openAPS, "Start determineBasal")
@@ -35,10 +34,13 @@ final class OpenAPS {
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
                 let preferences = self.loadFileFromStorage(name: Settings.preferences)
                 let preferencesData = Preferences(from: preferences)
-                let profile = self.loadFileFromStorage(name: Settings.profile)
+                var profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
                 // To do: remove this struct.
                 let dynamicVariables = self.loadFileFromStorage(name: Monitor.dynamicVariables)
+                // For other settings
+                let data = self.loadFileFromStorage(name: FreeAPS.settings)
+                let settings = FreeAPSSettings(from: data)
 
                 let tdd = CoreDataStorage().fetchInsulinDistribution().first
 
@@ -79,6 +81,26 @@ final class OpenAPS {
                 // determine-basal
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
+                now = Date.now
+                // Auto ISF Layer
+                if let freeAPSSettings = settings, freeAPSSettings.autoisf {
+                    profile = self.autosisf(
+                        glucose: glucose,
+                        currentTemp: tempBasal,
+                        iob: iob,
+                        profile: profile,
+                        autosens: autosens.isEmpty ? .null : autosens,
+                        meal: meal,
+                        microBolusAllowed: true,
+                        reservoir: reservoir,
+                        dynamicVariables: dynamicVariables,
+                        pumpHistory: pumpHistory
+                    )
+                }
+                print(
+                    "Time for Auto ISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                )
+
                 // The Middleware layer. Has anything been updated?
                 let alteredProfile = self.middleware(
                     glucose: glucose,
@@ -103,7 +125,8 @@ final class OpenAPS {
                     meal: meal,
                     microBolusAllowed: true,
                     reservoir: reservoir,
-                    dynamicVariables: dynamicVariables
+                    dynamicVariables: dynamicVariables,
+                    pumpHistory: pumpHistory
                 )
 
                 print(
@@ -115,17 +138,28 @@ final class OpenAPS {
                 // Update Suggestion
                 if var suggestion = Suggestion(from: suggested) {
                     now = Date.now
-                    // Process any eventual middleware basal rate
+                    /* Process any eventual keto protection basal rate
+                     If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate */
+                    if let mySettings = settings, mySettings.ketoProtect, let iob = suggestion.iob, iob < 0,
+                       let rate = suggestion.rate, rate <= 0,
+                       let basal = self.readBasal(alteredProfile), iob < -basal, (suggestion.units ?? 0) <= 0,
+                       let basalRate = self.aisfBasal(mySettings, basal, oref0Suggestion: suggestion)
+                    {
+                        suggestion = basalRate
+                    }
+
+                    // Process any eventual middleware/AIMI basal rate
                     if let newSuggestion = self.overrideBasal(alteredProfile: alteredProfile, oref0Suggestion: suggestion) {
                         suggestion = newSuggestion
                     }
-                    // Add some reasons, when needed
+                    // Add reasons, when needed
                     suggestion.reason = self.reasons(
                         reason: suggestion.reason,
                         suggestion: suggestion,
                         preferences: preferencesData,
                         profile: alteredProfile,
-                        tdd: tdd
+                        tdd: tdd,
+                        settings: settings
                     )
                     // Update time
                     suggestion.timestamp = suggestion.deliverAt ?? clock
@@ -216,7 +250,7 @@ final class OpenAPS {
         }
     }
 
-    func makeProfiles(useAutotune: Bool) -> Future<Autotune?, Never> {
+    func makeProfiles(useAutotune: Bool, settings: FreeAPSSettings) -> Future<Autotune?, Never> {
         Future { promise in
             debug(.openAPS, "Start makeProfiles")
             self.processQueue.async {
@@ -251,7 +285,8 @@ final class OpenAPS {
                     model: model,
                     autotune: RawJSON.null,
                     freeaps: freeaps,
-                    dynamicVariables: dynamicVariables
+                    dynamicVariables: dynamicVariables,
+                    settings: settings
                 )
 
                 let profile = self.makeProfile(
@@ -265,7 +300,8 @@ final class OpenAPS {
                     model: model,
                     autotune: autotune.isEmpty ? .null : autotune,
                     freeaps: freeaps,
-                    dynamicVariables: dynamicVariables
+                    dynamicVariables: dynamicVariables,
+                    settings: settings
                 )
 
                 self.storage.save(pumpProfile, as: Settings.pumpProfile)
@@ -286,12 +322,14 @@ final class OpenAPS {
     private func reasons(
         reason: String,
         suggestion: Suggestion,
-        preferences _: Preferences?,
+        preferences: Preferences?,
         profile: RawJSON,
-        tdd: InsulinDistribution?
+        tdd: InsulinDistribution?,
+        settings: FreeAPSSettings?
     ) -> String {
         var reasonString = reason
         let startIndex = reasonString.startIndex
+        var aisf = false
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {
@@ -300,52 +338,61 @@ final class OpenAPS {
             if let tdd = tdd {
                 let total = ((tdd.bolus ?? 0) as Decimal) + ((tdd.tempBasal ?? 0) as Decimal)
                 let round = round(Double(total * 10)) / 10
-
                 let bolus = Int(((tdd.bolus ?? 0) as Decimal) * 100 / (total != 0 ? total : 1))
-
-                tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus, "
-            } else {
-                tddString = ", "
+                tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
-            // Dynamic
-            if let notDisabled = readJSON(json: profile, variable: "useNewFormula"), Bool(notDisabled) ?? false {
-                var insertedResons = "Dynamic Ratio: \(isf)"
-                if let algorithm = readJSON(json: profile, variable: "sigmoid"), Bool(algorithm) ?? false {
-                    insertedResons += ", Sigmoid function"
-                } else {
-                    insertedResons += ", Logarithmic function"
-                }
-                if let adjustmentFactor = readJSON(json: profile, variable: "adjustmentFactor"),
-                   let value = Decimal(string: adjustmentFactor)
-                {
-                    insertedResons += ", AF: \(value)"
-                }
-                if let dynamicCR = readJSON(json: profile, variable: "enableDynamicCR"), Bool(dynamicCR) ?? false {
-                    insertedResons += ", Dynamic ISF/CR is: On/On"
-                } else {
-                    insertedResons += ", Dynamic ISF/CR is: On/Off"
-                }
-                if let tddFactor = readMiddleware(json: profile, variable: "tdd_factor"), tddFactor.count > 1 {
-                    insertedResons += ", Basal Adjustment: \(tddFactor.suffix(max(tddFactor.count - 6, 0)))"
-                }
 
-                insertedResons += tddString
-                reasonString.insert(contentsOf: insertedResons, at: startIndex)
-                // Autosens
-            } else {
-                reasonString.insert(contentsOf: "Autosens Ratio: \(isf)" + tddString, at: startIndex)
+            // Auto ISF
+            if let freeAPSSettings = settings, freeAPSSettings.autoisf {
+                let reasons = profile.autoISFreasons ?? ""
+                // If disabled in middleware or Auto ISF layer
+                if let disabled = readJSON(json: profile, variable: "autoisf"), let value = Bool(disabled), !value {
+                    reasonString.insert(
+                        contentsOf: "Autosens Ratio: \(isf)" + tddString + ", \(reasons), ",
+                        at: startIndex
+                    )
+                } else {
+                    reasonString.insert(
+                        contentsOf: "Auto ISF Ratio: \(isf)" + tddString + ", \(reasons), ",
+                        at: startIndex
+                    )
+                }
+                aisf = true
+            } else if let settings = preferences {
+                // Dynamic
+                if settings.useNewFormula {
+                    var insertedResons = "Dynamic Ratio: \(isf)"
+                    if settings.sigmoid {
+                        insertedResons += ", Sigmoid function"
+                    } else {
+                        insertedResons += ", Logarithmic function"
+                    }
+                    insertedResons += ", AF: \(settings.adjustmentFactor)"
+                    if settings.enableDynamicCR {
+                        insertedResons += ", Dynamic ISF/CR is: On/On"
+                    } else {
+                        insertedResons += ", Dynamic ISF/CR is: On/Off"
+                    }
+                    insertedResons += tddString + ", "
+                    reasonString.insert(contentsOf: insertedResons, at: startIndex)
+                } else {
+                    // Autosens
+                    reasonString.insert(contentsOf: "Autosens ratio: \(isf)" + tddString + ", ", at: startIndex)
+                }
             }
 
             // Include ISF before eventual adjustment
             if let old = readMiddleware(json: profile, variable: "old_isf"),
-               let new = readReason(reason: reason, variable: "ISF"), let oldISF = trimmedIsEqual(string: old, decimal: new)
+               let new = readReason(reason: reason, variable: "ISF"),
+               let oldISF = trimmedIsEqual(string: old, decimal: new)
             {
                 reasonString = reasonString.replacingOccurrences(of: "ISF:", with: "ISF: \(oldISF) →")
             }
 
             // Include CR before eventual adjustment
             if let old = readMiddleware(json: profile, variable: "old_cr"),
-               let new = readReason(reason: reason, variable: "CR"), let oldCR = trimmedIsEqual(string: old, decimal: new)
+               let new = readReason(reason: reason, variable: "CR"),
+               let oldCR = trimmedIsEqual(string: old, decimal: new)
             {
                 reasonString = reasonString.replacingOccurrences(of: "CR:", with: "CR: \(oldCR) →")
             }
@@ -394,6 +441,12 @@ final class OpenAPS {
             reasonString.insert(contentsOf: " SMBs Disabled.", at: index)
         }
 
+        // Auto ISF additional comments
+        if aisf {
+            let index = reasonString.endIndex
+            reasonString.insert(contentsOf: "\n\nAuto ISF { \(profile.autoISFstring ?? "") }", at: index)
+        }
+
         // Save Suggestion to CoreData
         coredataContext.perform { [self] in
             if let isf = readReason(reason: reason, variable: "ISF"),
@@ -433,6 +486,7 @@ final class OpenAPS {
         guard old != new else {
             return nil
         }
+
         return old
     }
 
@@ -441,12 +495,62 @@ final class OpenAPS {
               let basal_rate_is = readJSON(json: alteredProfile, variable: "basal_rate") else { return nil }
 
         var returnSuggestion = oref0Suggestion
-        let basal_rate = Decimal(string: basal_rate_is) ?? 0
+        var basal_rate = Decimal(string: basal_rate_is) ?? 0
+
+        guard let settings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self) else {
+            return nil
+        }
+
+        basal_rate = min(basal_rate, settings.maxBasal)
+
         returnSuggestion.rate = basal_rate
         returnSuggestion.duration = 30
         var reasonString = oref0Suggestion.reason
         let endIndex = reasonString.endIndex
-        let insertedResons: String = reasonString + "\n\nBasal Rate overridden in middleware to: \(basal_rate) U/h"
+        let insertedResons: String = reasonString + ". Basal Rate overridden to: \(basal_rate) U/h"
+        reasonString.insert(contentsOf: insertedResons, at: endIndex)
+        returnSuggestion.reason = reasonString
+
+        return returnSuggestion
+    }
+
+    /// If iob is less than one hour of negative insulin and keto protection active, then enact a small keto protection basal rate
+    private func aisfBasal(
+        _ settings: FreeAPSSettings,
+        _ basal: Decimal,
+        oref0Suggestion: Suggestion
+    ) -> Suggestion? {
+        guard basal > 0 else {
+            return nil
+        }
+
+        guard let pumpSettings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self) else {
+            return nil
+        }
+
+        var rate = basal
+        var factor: Decimal = 1
+
+        if settings.variableKetoProtect {
+            factor = min(
+                Swift.max(settings.ketoProtectBasalPercent, 5),
+                50 // protectBasal as percentage can be between 5 and 50%
+            )
+            rate *= (factor / 100)
+        }
+        if settings.ketoProtectAbsolut {
+            // Protect Basal as absolute rate can be between 0 and 2 U/hr, but never more than max basal setting
+            rate = min(Swift.max(settings.ketoProtectBasalAbsolut, 0), 2)
+        }
+
+        var returnSuggestion = oref0Suggestion
+        returnSuggestion.rate = min(rate, pumpSettings.maxBasal)
+        returnSuggestion.duration = 30
+
+        var reasonString = oref0Suggestion.reason
+        let endIndex = reasonString.endIndex
+        let insertedResons: String = reasonString + "\n\nKeto Protection Basal Rate Set: \(rate) U/h"
+        debug(.openAPS, "Auto ISF Keto Protection: Basal rate \(rate) U/h set for 30 minutes.")
         reasonString.insert(contentsOf: insertedResons, at: endIndex)
         returnSuggestion.reason = reasonString
 
@@ -466,6 +570,20 @@ final class OpenAPS {
 
     private func readReason(reason: String, variable: String) -> Decimal? {
         if let string = reason.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
+            let targetComponents = string.components(separatedBy: ":")
+            if targetComponents.count == 2 {
+                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
+                let decimal = Decimal(string: trimmedString) ?? 0
+                return decimal
+            }
+        }
+        return nil
+    }
+
+    private func readBasal(_ profile: String) -> Decimal? {
+        if let string = profile.components(separatedBy: ",")
+            .filter({ !$0.contains("current_basal_safety_multiplier") && $0.contains("current_basal") }).first
+        {
             let targetComponents = string.components(separatedBy: ":")
             if targetComponents.count == 2 {
                 let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
@@ -733,7 +851,8 @@ final class OpenAPS {
         meal: JSON,
         microBolusAllowed: Bool,
         reservoir: JSON,
-        dynamicVariables: JSON
+        dynamicVariables: JSON,
+        pumpHistory: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -759,7 +878,8 @@ final class OpenAPS {
                     microBolusAllowed,
                     reservoir,
                     Date(),
-                    dynamicVariables
+                    dynamicVariables,
+                    pumpHistory
                 ]
             )
         }
@@ -813,7 +933,8 @@ final class OpenAPS {
         model: JSON,
         autotune: JSON,
         freeaps: JSON,
-        dynamicVariables: JSON
+        dynamicVariables: JSON,
+        settings: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -833,7 +954,8 @@ final class OpenAPS {
                     model,
                     autotune,
                     freeaps,
-                    dynamicVariables
+                    dynamicVariables,
+                    settings
                 ]
             )
         }
@@ -877,6 +999,45 @@ final class OpenAPS {
         }
     }
 
+    private func autosisf(
+        glucose: JSON,
+        currentTemp: JSON,
+        iob: JSON,
+        profile: JSON,
+        autosens: JSON,
+        meal: JSON,
+        microBolusAllowed: Bool,
+        reservoir _: JSON,
+        dynamicVariables: JSON,
+        pumpHistory: JSON
+    ) -> RawJSON {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        return jsWorker.inCommonContext { worker in
+            worker.evaluate(script: Script(name: Prepare.log))
+            worker.evaluate(script: Script(name: AutoISF.getLastGlucose))
+
+            if let aisf = self.aisfScript(name: OpenAPS.AutoISF.autoisf) {
+                worker.evaluate(script: aisf)
+            }
+
+            return worker.call(
+                function: Function.generate,
+                with: [
+                    profile,
+                    autosens,
+                    dynamicVariables,
+                    glucose,
+                    microBolusAllowed,
+                    meal,
+                    Date(),
+                    iob,
+                    pumpHistory,
+                    currentTemp
+                ]
+            )
+        }
+    }
+
     private func loadJSON(name: String) -> String {
         try! String(contentsOf: Foundation.Bundle.main.url(forResource: "json/\(name)", withExtension: "json")!)
     }
@@ -892,6 +1053,18 @@ final class OpenAPS {
 
         if let url = Foundation.Bundle.main.url(forResource: "javascript/\(name)", withExtension: "") {
             return Script(name: "Middleware", body: try! String(contentsOf: url))
+        }
+
+        return nil
+    }
+
+    private func aisfScript(name: String) -> Script? {
+        if let body = storage.retrieveRaw(name) {
+            return Script(name: "AISF", body: body)
+        }
+
+        if let url = Foundation.Bundle.main.url(forResource: "javascript/\(name)", withExtension: "") {
+            return Script(name: "AISF", body: try! String(contentsOf: url))
         }
 
         return nil

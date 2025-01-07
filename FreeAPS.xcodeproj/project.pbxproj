@@ -52,6 +52,10 @@
 		1982F7DB2BA6509D00EAFADE /* PumpStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1982F7DA2BA6509D00EAFADE /* PumpStorage.swift */; };
 		198377D2266BFFF6004DE65E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		198CED9D2B2E62940073032D /* OverrideStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198CED9C2B2E62940073032D /* OverrideStorage.swift */; };
+		198F67B52CFCBD5D00E538CB /* AutoISFRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198F67AF2CFCBD5D00E538CB /* AutoISFRootView.swift */; };
+		198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198F67B12CFCBD5D00E538CB /* AutoISFDataFlow.swift */; };
+		198F67B72CFCBD5D00E538CB /* AutoISFProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */; };
+		198F67B82CFCBD5D00E538CB /* AutoISFStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */; };
 		1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
@@ -670,6 +674,10 @@
 		198377E3266C0ADC004DE65E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198377E4266C13D2004DE65E /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		198CED9C2B2E62940073032D /* OverrideStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideStorage.swift; sourceTree = "<group>"; };
+		198F67AF2CFCBD5D00E538CB /* AutoISFRootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoISFRootView.swift; sourceTree = "<group>"; };
+		198F67B12CFCBD5D00E538CB /* AutoISFDataFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoISFDataFlow.swift; sourceTree = "<group>"; };
+		198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoISFProvider.swift; sourceTree = "<group>"; };
+		198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoISFStateModel.swift; sourceTree = "<group>"; };
 		199561C0275E61A50077B976 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		199732B4271B72DD00129A3F /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		199732B5271B9EE900129A3F /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1307,6 +1315,25 @@
 			path = Localizations;
 			sourceTree = "<group>";
 		};
+		198F67B02CFCBD5D00E538CB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				198F67AF2CFCBD5D00E538CB /* AutoISFRootView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		198F67B42CFCBD5D00E538CB /* AutoISF */ = {
+			isa = PBXGroup;
+			children = (
+				198F67B12CFCBD5D00E538CB /* AutoISFDataFlow.swift */,
+				198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */,
+				198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */,
+				198F67B02CFCBD5D00E538CB /* View */,
+			);
+			path = AutoISF;
+			sourceTree = "<group>";
+		};
 		19D440A926B6FEBD008DA6C8 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -1436,6 +1463,7 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				198F67B42CFCBD5D00E538CB /* AutoISF */,
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
 				A9A4C88374496B3C89058A89 /* AddTempTarget */,
 				672F63EEAE27400625E14BAD /* AutotuneConfig */,
@@ -3085,6 +3113,7 @@
 				CE82E02528E867BA00473A9C /* AlertStorage.swift in Sources */,
 				38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */,
 				38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */,
+				198F67B82CFCBD5D00E538CB /* AutoISFStateModel.swift in Sources */,
 				3862CC05273D152B00BF832C /* CalibrationService.swift in Sources */,
 				3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */,
 				190EBCC829FF13AA00BA767D /* StatConfigStateModel.swift in Sources */,
@@ -3167,6 +3196,7 @@
 				19F191DC2BE4F97000F6297E /* SharingDataFlow.swift in Sources */,
 				CE7CA3512A064973004BE681 /* ApplyTempPresetIntent.swift in Sources */,
 				FA630397F76B582C8D8681A7 /* BasalProfileEditorProvider.swift in Sources */,
+				198F67B72CFCBD5D00E538CB /* AutoISFProvider.swift in Sources */,
 				63E890B4D951EAA91C071D5C /* BasalProfileEditorStateModel.swift in Sources */,
 				CE398D16297C9D1D00DF218F /* dexcomSourceG7.swift in Sources */,
 				38FEF3FA2737E42000574A46 /* BaseStateModel.swift in Sources */,
@@ -3175,6 +3205,7 @@
 				F90692AA274B7AAE0037068D /* HealthKitManager.swift in Sources */,
 				38887CCE25F5725200944304 /* IOBEntry.swift in Sources */,
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
+				198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
 				195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */,
 				E00EEC0327368630002FF094 /* ServiceAssembly.swift in Sources */,
@@ -3196,6 +3227,7 @@
 				38E44538274E411700EC9A94 /* Disk+[Data].swift in Sources */,
 				98641AF4F92123DA668AB931 /* CREditorRootView.swift in Sources */,
 				38E4453D274E411700EC9A94 /* Disk+Errors.swift in Sources */,
+				198F67B52CFCBD5D00E538CB /* AutoISFRootView.swift in Sources */,
 				38E98A2325F52C9300C0CED0 /* Signpost.swift in Sources */,
 				CE7CA3542A064973004BE681 /* TempPresetsIntentRequest.swift in Sources */,
 				F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */,

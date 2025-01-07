@@ -1,6 +1,6 @@
 //для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
 
-function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, dynamicVariables) {
+function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, dynamicVariables, pumpHistory) {
     // Needs to be updated here due to time format).
     clock = new Date()
     
@@ -95,11 +95,18 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
             console.log("Flat CGM by-passed.");
         }
     }
-    var glucose_status = freeaps_glucoseGetLast(glucose);
     
-    // In case Basal Rate been set in midleware
+    var glucose_status = freeaps_glucoseGetLast(glucose)
+    
+    // Auto ISF
+    if (profile.iaps.autoisf) {
+        autosens_data.ratio = profile.aisf;
+        console.log("Auto ISF ratio: " + autosens_data.ratio);
+    }
+
+    // In case Basal Rate been set in midleware or AIMI
     if (profile.set_basal && profile.basal_rate) {
-        console.log("Basal Rate set by middleware to " + profile.basal_rate + " U/h.");
+        console.log("Basal Rate set by middleware or AIMI to " + profile.basal_rate + " U/h.");
     }
     
     return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
@@ -110,21 +117,20 @@ function dynisf(profile, autosens_data, dynamicVariables, glucose) {
     console.log("Starting dynamic ISF layer.");
     var dynISFenabled = true;
     
-    // One of two exercise settings (they share the same purpose).
-    var exerciseSetting = false;
-    if (profile.highTemptargetRaisesSensitivity || profile.exerciseMode || dynamicVariables.isEnabled) {
-        exerciseSetting = true;
+    //Turn off when Auto ISF is used
+    if (profile.iaps.autoisf) {
+        console.log("Dynamic ISF disabled due to Auto ISF.");
+        return;
     }
-        
-    const target = profile.min_bg;
-        
+    
     // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
-    if (target >= 118 && exerciseSetting) {
-        //dynISFenabled = false;
+    if (exercising(profile, dynamicVariables)) {
         console.log("Dynamic ISF disabled due to a high temp target/exercise.");
         return;
     }
-
+    
+    const target = profile.min_bg;
+    
     // In case the autosens.min/max limits are reversed:
     const autosens_min = Math.min(profile.autosens_min, profile.autosens_max);
     const autosens_max = Math.max(profile.autosens_min, profile.autosens_max);
@@ -242,6 +248,17 @@ function round(value, digits) {
     if (! digits) { digits = 0; }
     var scale = Math.pow(10, digits);
     return Math.round(value * scale) / scale;
+}
+ 
+function exercising(profile, dynamicVariables) {
+    // One of two exercise settings (they share the same purpose).
+    if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {
+        // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
+        if (profile.min_bg >= 118) {
+            return true
+        }
+    }
+    return false
 }
 
 function disableSMBs(dynamicVariables) {

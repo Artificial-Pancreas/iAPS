@@ -27,6 +27,11 @@ extension OpenAPS {
         static let determineBasal = "middleware/determine_basal.js"
     }
 
+    enum AutoISF {
+        static let getLastGlucose = "autoisf/glucose-get-last-autoisf.js"
+        static let autoisf = "autoisf/autoisf.js"
+    }
+
     enum Settings {
         static let preferences = "preferences.json"
         static let autotune = "settings/autotune.json"
@@ -41,6 +46,7 @@ extension OpenAPS {
         static let tempTargets = "settings/temptargets.json"
         static let model = "settings/model.json"
         static let contactTrick = "settings/contact_trick.json"
+        static let autoisf = "settings/autoisf.json"
     }
 
     enum Monitor {

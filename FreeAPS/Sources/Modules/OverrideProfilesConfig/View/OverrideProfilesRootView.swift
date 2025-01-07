@@ -216,7 +216,7 @@ extension OverrideProfilesConfig {
                             showAlert.toggle()
                             alertSring = "\(state.percentage.formatted(.number)) %, " +
                                 (
-                                    state.duration > 0 || !state
+                                    state.duration > 0 && !state
                                         ._indefinite ?
                                         (
                                             state

@@ -11,9 +11,9 @@ struct Suggestion: JSON, Equatable {
     let iob: Decimal?
     let cob: Decimal?
     var predictions: Predictions?
-    let deliverAt: Date?
+    var deliverAt: Date?
     let carbsReq: Decimal?
-    let temp: TempType?
+    var temp: TempType?
     let bg: Decimal?
     let reservoir: Decimal?
     var timestamp: Date?

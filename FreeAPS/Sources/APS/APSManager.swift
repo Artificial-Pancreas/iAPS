@@ -410,7 +410,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func makeProfiles() -> AnyPublisher<Bool, Never> {
-        openAPS.makeProfiles(useAutotune: settings.useAutotune)
+        openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
             .map { tunedProfile in
                 if let basalProfile = tunedProfile?.basalProfile {
                     self.processQueue.async {
@@ -788,7 +788,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             guard !self.activeBolusView() || (self.activeBolusView() && rate == 0) else {
-                if let units = suggested.units {
+                if suggested.units != nil {
                     return Fail(error: APSError.activeBolusViewBasalandBolus).eraseToAnyPublisher()
                 }
                 return Fail(error: APSError.activeBolusViewBasal).eraseToAnyPublisher()

@@ -11,10 +11,6 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
     };
                                           
     profile.old_cr = profile.carb_ratio;
-    profile.old_isf = profile.sens;
-    if (profile.out_units == 'mmol/L') {
-        profile.old_isf = Math.round(profile.sens * 0.0555 * 10) / 10;
-    }
     
     if (profile.useNewFormula && profile.temptargetSet && (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) && profile.min_bg >= 118) {
             profile.useNewFormula = false;
