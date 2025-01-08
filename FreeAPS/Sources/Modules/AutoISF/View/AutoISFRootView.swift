@@ -82,10 +82,9 @@ extension AutoISF {
                     } header: { Text("Toggles") }
 
                     Section {
-                        HStack {
-                            Text("Auto ISF Max / Min settings:")
-                                .navigationLink(to: .preferencesEditor, from: self)
-                        }
+                        Text("Auto ISF Max / Min settings:")
+                            .navigationLink(to: .preferencesEditor, from: self)
+
                         HStack {
                             Text("SMB Delivery Ratio Minimum")
                                 .onTapGesture {
