@@ -4,13 +4,20 @@ struct BGTextField: View {
     let placeholder: String
     @Binding var mgdlValue: Decimal
     @Binding var units: GlucoseUnits
-
+    private var formatter: NumberFormatter
     var isDisabled: Bool
 
-    init(_ placeholder: String, mgdlValue: Binding<Decimal>, units: Binding<GlucoseUnits>, isDisabled: Bool) {
+    init(
+        _ placeholder: String,
+        mgdlValue: Binding<Decimal>,
+        units: Binding<GlucoseUnits>,
+        formatter: NumberFormatter,
+        isDisabled: Bool
+    ) {
         self.placeholder = placeholder
         _mgdlValue = mgdlValue
         _units = units
+        self.formatter = formatter
         self.isDisabled = isDisabled
     }
 
@@ -19,13 +26,6 @@ struct BGTextField: View {
             get: { units == .mmolL ? mgdlValue.asMmolL : mgdlValue },
             set: { newValue in mgdlValue = units == .mmolL ? newValue.asMgdL.rounded : newValue.rounded }
         )
-    }
-
-    private var formatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        return formatter
     }
 
     var body: some View {
