@@ -124,7 +124,7 @@ extension AutoISF {
                                 }
                             Spacer()
                             BGTextField(
-                                placeholder: "0",
+                                "0",
                                 mgdlValue: $state.smbDeliveryRatioBGrange,
                                 units: $state.units,
                                 isDisabled: isPresented
@@ -285,7 +285,7 @@ extension AutoISF {
                                 }
                             Spacer()
                             BGTextField(
-                                placeholder: "0",
+                                "0",
                                 mgdlValue: $state.b30targetLevel,
                                 units: $state.units,
                                 isDisabled: isPresented
@@ -303,7 +303,7 @@ extension AutoISF {
                                 }
                             Spacer()
                             BGTextField(
-                                placeholder: "0",
+                                "0",
                                 mgdlValue: $state.b30upperLimit,
                                 units: $state.units,
                                 isDisabled: isPresented
@@ -321,7 +321,7 @@ extension AutoISF {
                                 }
                             Spacer()
                             BGTextField(
-                                placeholder: "0",
+                                "0",
                                 mgdlValue: $state.b30upperdelta,
                                 units: $state.units,
                                 isDisabled: isPresented
