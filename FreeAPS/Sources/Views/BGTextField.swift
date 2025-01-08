@@ -3,36 +3,54 @@ import SwiftUI
 struct BGTextField: View {
     let placeholder: String
     @Binding var mgdlValue: Decimal
-    @Binding var units: Int
-    private var formatter: NumberFormatter
+    @Binding var units: GlucoseUnits
     var isDisabled: Bool
 
     init(
         _ placeholder: String,
         mgdlValue: Binding<Decimal>,
-        units: Binding<Int>,
-        formatter: NumberFormatter,
+        units: Binding<GlucoseUnits>,
         isDisabled: Bool
     ) {
         self.placeholder = placeholder
         _mgdlValue = mgdlValue
         _units = units
-        self.formatter = formatter
         self.isDisabled = isDisabled
+    }
+
+    private var mmolLFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 1
+        formatter.maximumFractionDigits = 1
+        return formatter
+    }
+
+    private var mgdLFormatter: NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 0
+        return formatter
     }
 
     private var displayValue: Binding<Decimal> {
         Binding(
-            get: { units == 1 ? mgdlValue.asMmolL : mgdlValue },
-            set: { newValue in mgdlValue = units == 1 ? newValue.asMgdL : newValue }
+            get: { units == .mmolL ? mgdlValue.asMmolL : mgdlValue },
+            set: { newValue in mgdlValue = units == .mmolL ? newValue.asMgdL : newValue }
         )
     }
 
     var body: some View {
         HStack {
-            DecimalTextField(placeholder, value: displayValue, formatter: formatter)
-                .disabled(isDisabled)
-            Text(units == 1 ? LocalizedStringKey("mmol/L") : LocalizedStringKey("mg/dL"))
+            if units == .mmolL {
+                DecimalTextField(placeholder, value: displayValue, formatter: mmolLFormatter)
+                    .disabled(isDisabled)
+            } else {
+                DecimalTextField(placeholder, value: displayValue, formatter: mgdLFormatter)
+                    .disabled(isDisabled)
+            }
+
+            Text(units == .mmolL ? LocalizedStringKey("mmol/L") : LocalizedStringKey("mg/dL"))
                 .foregroundStyle(.secondary)
         }
     }

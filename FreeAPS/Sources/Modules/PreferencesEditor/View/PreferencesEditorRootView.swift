@@ -18,13 +18,6 @@ extension PreferencesEditor {
             return formatter
         }
 
-        private var glucoseFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = state.unitsIndex
-            return formatter
-        }
-
         @State private var infoButtonPressed: InfoText?
 
         var body: some View {
@@ -80,8 +73,10 @@ extension PreferencesEditor {
                                     BGTextField(
                                         "0",
                                         mgdlValue: self.$state.sections[sectionIndex].fields[fieldIndex].decimalValue,
-                                        units: $state.unitsIndex,
-                                        formatter: glucoseFormatter,
+                                        units: Binding(
+                                            get: { self.state.unitsIndex == 0 ? .mgdL : .mmolL },
+                                            set: { _ in }
+                                        ),
                                         isDisabled: false
                                     )
                                 case .insulinCurve:
