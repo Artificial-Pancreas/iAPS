@@ -8,7 +8,7 @@ function round(value, digits) {
     return Math.round(value * scale) / scale;
 }
 
-var freeaps_glucoseGetLast = function (data) {
+var getLastGlucose = function (data) {
     var now = undefined;
     var now_date = undefined;
     var sizeRecords = data.length;
@@ -406,4 +406,3 @@ var freeaps_glucoseGetLast = function (data) {
         , device: now.device
     };
 ;}
-module.exports = getLastGlucose;
