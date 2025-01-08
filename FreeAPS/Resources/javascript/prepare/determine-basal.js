@@ -2,7 +2,7 @@
 
 function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, dynamicVariables, pumpHistory) {
     // Needs to be updated here due to time format).
-    clock = new Date()
+    clock = new Date();
     
     var autosens_data = null;
     if (autosens) {
