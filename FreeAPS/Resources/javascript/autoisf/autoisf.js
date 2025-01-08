@@ -10,7 +10,7 @@ function generate(profile, autosens, dynamicVariables, glucose, microbolusAllowe
     }
     
     // Auto ISF
-    const glucose_status = freeaps_glucoseGetLast(glucose);
+    const glucose_status = getLastGlucose(glucose);
     aisf(profile, autosens_data, dynamicVariables, glucose_status, microbolusAllowed, meal_data, clock, iob, pumpHistory, currenttemp);
     
     return profile

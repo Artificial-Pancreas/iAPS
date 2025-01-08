@@ -1015,7 +1015,6 @@ final class OpenAPS {
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: AutoISF.getLastGlucose))
-
             if let aisf = self.aisfScript(name: OpenAPS.AutoISF.autoisf) {
                 worker.evaluate(script: aisf)
             }
