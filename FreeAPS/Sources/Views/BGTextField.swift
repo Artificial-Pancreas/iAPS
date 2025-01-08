@@ -7,10 +7,7 @@ struct BGTextField: View {
 
     var isDisabled: Bool
 
-    @State private var currentUnits: GlucoseUnits
-
-    init(placeholder: String, mgdlValue: Binding<Decimal>, units: Binding<GlucoseUnits>, isDisabled: Bool) {
-        _currentUnits = State(initialValue: units.wrappedValue)
+    init(_ placeholder: String, mgdlValue: Binding<Decimal>, units: Binding<GlucoseUnits>, isDisabled: Bool) {
         self.placeholder = placeholder
         _mgdlValue = mgdlValue
         _units = units
@@ -19,19 +16,15 @@ struct BGTextField: View {
 
     private var displayValue: Binding<Decimal> {
         Binding(
-            get: { currentUnits == .mmolL ? mgdlValue.asMmolL : mgdlValue },
-            set: { newValue in mgdlValue = currentUnits == .mmolL ? newValue.asMgdL.rounded : newValue }
+            get: { units == .mmolL ? mgdlValue.asMmolL : mgdlValue },
+            set: { newValue in mgdlValue = units == .mmolL ? newValue.asMgdL.rounded : newValue.rounded }
         )
     }
 
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        if units == .mgdL {
-            formatter.maximumFractionDigits = 0
-        } else {
-            formatter.maximumFractionDigits = 1
-        }
+        formatter.maximumFractionDigits = 1
         return formatter
     }
 
@@ -41,9 +34,6 @@ struct BGTextField: View {
                 .disabled(isDisabled)
             Text(units == .mmolL ? "mmol/L" : "mg/dL")
                 .foregroundStyle(.secondary)
-        }
-        .onChange(of: units) { newUnits in
-            currentUnits = newUnits
         }
     }
 }

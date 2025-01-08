@@ -71,7 +71,7 @@ extension PreferencesEditor {
                                         Text(field.displayName)
                                     }
                                     BGTextField(
-                                        placeholder: "0",
+                                        "0",
                                         mgdlValue: self.$state.sections[sectionIndex].fields[fieldIndex].decimalValue,
                                         units: Binding(
                                             get: { self.state.unitsIndex == 0 ? .mgdL : .mmolL },
