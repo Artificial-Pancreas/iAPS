@@ -3,14 +3,14 @@ import SwiftUI
 struct BGTextField: View {
     let placeholder: String
     @Binding var mgdlValue: Decimal
-    @Binding var units: GlucoseUnits
+    @Binding var units: Int
     private var formatter: NumberFormatter
     var isDisabled: Bool
 
     init(
         _ placeholder: String,
         mgdlValue: Binding<Decimal>,
-        units: Binding<GlucoseUnits>,
+        units: Binding<Int>,
         formatter: NumberFormatter,
         isDisabled: Bool
     ) {
@@ -23,8 +23,8 @@ struct BGTextField: View {
 
     private var displayValue: Binding<Decimal> {
         Binding(
-            get: { units == .mmolL ? mgdlValue.asMmolL : mgdlValue },
-            set: { newValue in mgdlValue = units == .mmolL ? newValue.asMgdL.rounded : newValue.rounded }
+            get: { units == 1 ? mgdlValue.asMmolL : mgdlValue },
+            set: { newValue in mgdlValue = units == 1 ? newValue.asMgdL : newValue }
         )
     }
 
@@ -32,7 +32,7 @@ struct BGTextField: View {
         HStack {
             DecimalTextField(placeholder, value: displayValue, formatter: formatter)
                 .disabled(isDisabled)
-            Text(units == .mmolL ? "mmol/L" : "mg/dL")
+            Text(units == 1 ? LocalizedStringKey("mmol/L") : LocalizedStringKey("mg/dL"))
                 .foregroundStyle(.secondary)
         }
     }

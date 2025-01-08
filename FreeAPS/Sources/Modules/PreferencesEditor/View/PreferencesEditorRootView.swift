@@ -80,10 +80,7 @@ extension PreferencesEditor {
                                     BGTextField(
                                         "0",
                                         mgdlValue: self.$state.sections[sectionIndex].fields[fieldIndex].decimalValue,
-                                        units: Binding(
-                                            get: { self.state.unitsIndex == 0 ? .mgdL : .mmolL },
-                                            set: { _ in }
-                                        ),
+                                        units: $state.unitsIndex,
                                         formatter: glucoseFormatter,
                                         isDisabled: false
                                     )
