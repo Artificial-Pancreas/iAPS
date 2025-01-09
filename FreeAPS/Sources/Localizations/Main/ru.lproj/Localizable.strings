@@ -2426,7 +2426,7 @@ Enact a temp Basal or a temp target */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
 
 /* */
-"Enable Auto ISF" = "Enable Auto ISF";
+"Enable Auto ISF" = "Включить Авто ISF";
 
 /* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting";
@@ -2435,7 +2435,7 @@ Enact a temp Basal or a temp target */
 "Keto Protection" = "Keto Protection";
 
 /* */
-"Auto ISF" = "Auto ISF";
+"Auto ISF" = "Авто ISF";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
