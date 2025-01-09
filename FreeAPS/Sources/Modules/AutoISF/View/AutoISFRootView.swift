@@ -155,14 +155,17 @@ extension AutoISF {
                                 .onTapGesture {
                                     info(
                                         header: "SMB Delivery Ratio BG Range",
-                                        body: "Default value: 0, Sensible is bteween 40 and 120. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the standard smb_delivery_ratio is used.",
+                                        body: "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the standard smb_delivery_ratio is used.",
                                         useGraphics: nil
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.smbDeliveryRatioBGrange, formatter: formatter)
-                                .disabled(isPresented)
-                            Text("mg/dl").foregroundStyle(.secondary)
+                            BGTextField(
+                                "0",
+                                mgdlValue: $state.smbDeliveryRatioBGrange,
+                                units: $state.units,
+                                isDisabled: isPresented
+                            )
                         }
 
                         HStack {
@@ -309,48 +312,57 @@ extension AutoISF {
                         }
 
                         HStack {
-                            Text("Target Level in mg/dl for B30 to be enacted")
+                            Text("Target Level for B30 to be enacted")
                                 .onTapGesture {
                                     info(
-                                        header: "Target Level in mg/dl for B30 to be enacted",
+                                        header: "Target Level for B30 to be enacted",
                                         body: "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 AIMI to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.",
                                         useGraphics: nil
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.b30targetLevel, formatter: formatter)
-                                .disabled(isPresented)
-                            Text("mg/dl").foregroundStyle(.secondary)
+                            BGTextField(
+                                "0",
+                                mgdlValue: $state.b30targetLevel,
+                                units: $state.units,
+                                isDisabled: isPresented
+                            )
                         }
 
                         HStack {
-                            Text("Upper BG limit in mg/dl for B30")
+                            Text("Upper BG limit for B30")
                                 .onTapGesture {
                                     info(
-                                        header: "Upper BG limit in mg/dl for B30",
+                                        header: "Upper BG limit for B30",
                                         body: "B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl.",
                                         useGraphics: nil
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.b30upperLimit, formatter: formatter)
-                                .disabled(isPresented)
-                            Text("mg/dl").foregroundStyle(.secondary)
+                            BGTextField(
+                                "0",
+                                mgdlValue: $state.b30upperLimit,
+                                units: $state.units,
+                                isDisabled: isPresented
+                            )
                         }
 
                         HStack {
-                            Text("Upper Delta limit in mg/dl for B30")
+                            Text("Upper Delta limit for B30")
                                 .onTapGesture {
                                     info(
-                                        header: "Upper Delta limit in mg/dl for B30",
+                                        header: "Upper Delta limit for B30",
                                         body: "B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl.",
                                         useGraphics: nil
                                     )
                                 }
                             Spacer()
-                            DecimalTextField("0", value: $state.b30upperdelta, formatter: formatter)
-                                .disabled(isPresented)
-                            Text("mg/dl").foregroundStyle(.secondary)
+                            BGTextField(
+                                "0",
+                                mgdlValue: $state.b30upperdelta,
+                                units: $state.units,
+                                isDisabled: isPresented
+                            )
                         }
 
                         HStack {
