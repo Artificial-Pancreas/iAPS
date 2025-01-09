@@ -271,7 +271,7 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
         systemTime = new Date(currentTime);
     }
     let deltaType;
-    if (profile.iaps.postMealISFalways || profile.iaps.postMealISFduration >= (systemTime - new Date(meal_data.lastCarbTime)) / 1000 / 3600) {
+    if (profile.iaps.postMealISFduration >= (systemTime - new Date(meal_data.lastCarbTime)) / 1000 / 3600) {
         deltaType = 'pp';
     } else {
         deltaType = 'delta';
@@ -284,9 +284,6 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
         addMessage("pp_ISF adaptation bypassed: no rise or too short lived");
     } else if (deltaType === 'pp') {
         pp_ISF = 1 + Math.max(0, bg_delta * profile.iaps.postMealISFweight);
-        if (!profile.iaps.postMealISFalways) {
-            console.log("Post Prandial ISF: last Meal " + round((systemTime - meal_data.lastCarbTime) / 1000 / 3600, 1) + " hrs ago is within Range of " + profile.iaps.postMealISFduration + " hrs.");
-        }
         console.log("Post Prandial ISF adaptation is " + round(pp_ISF, 2));
         addMessage("Post Prandial ISF adaptation: " + round(pp_ISF, 2));
         if (pp_ISF !== 1) {
@@ -307,10 +304,7 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
         }
     }
     const weightISF = profile.iaps.autoISFhourlyChange;  // Specify factor directly; use factor 0 to shut autoISF OFF
-    if (meal_data.mealCOB>0 && !profile.iaps.enableautoISFwithCOB) {
-        console.error("Dura_ISF bypassed; preferences disabled mealCOB of " + round(meal_data.mealCOB, 1));
-        addMessage("Dura ISF bypassed: preferences disabled (mealCOB)");
-    } else if (dura05 < 10) {
+    if (dura05 < 10) {
         console.error("dura_ISF bypassed; BG is only " + dura05 + " min at level " + convert_bg(avg05, profile));
         addMessage("Dura ISF bypassed: BG is only " + dura05 + " min at level " + convert_bg(avg05, profile));
     } else if (avg05 <= target_bg * 1.05) { // Don't use dura below target and don't treat glucose near target as a plateaued glucose (fix)

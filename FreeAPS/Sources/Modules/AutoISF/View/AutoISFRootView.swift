@@ -90,32 +90,6 @@ extension AutoISF {
                                     }
                             }.disabled(isPresented)
                         }
-
-                        HStack {
-                            Toggle(isOn: $state.enableautoISFwithCOB) {
-                                Text("Enable DuraISF effect even with COB")
-                                    .onTapGesture {
-                                        info(
-                                            header: "Enable DuraISF effect even with COB",
-                                            body: "Enable DuraISF even if COB is present not just for UAM.",
-                                            useGraphics: nil
-                                        )
-                                    }
-                            }.disabled(isPresented)
-                        }
-
-                        HStack {
-                            Toggle(isOn: $state.postMealISFalways) {
-                                Text("Enable postprandial ISF adaption always")
-                                    .onTapGesture {
-                                        info(
-                                            header: "Enable postprandial ISF always",
-                                            body: "Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken.",
-                                            useGraphics: nil
-                                        )
-                                    }
-                            }.disabled(isPresented)
-                        }
                     } header: { Text("Toggles") }
 
                     Section {

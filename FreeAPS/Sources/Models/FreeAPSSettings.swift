@@ -76,12 +76,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var smbDeliveryRatioBGrange: Decimal = 0
     var smbDeliveryRatioMin: Decimal = 0.5
     var smbDeliveryRatioMax: Decimal = 0.5
-    var enableautoISFwithCOB: Bool = true
     var autoISFhourlyChange: Decimal = 1
     var higherISFrangeWeight: Decimal = 0
     var lowerISFrangeWeight: Decimal = 0
     var deltaISFrangeWeight: Decimal = 0
-    var postMealISFalways: Bool = false
     var postMealISFweight: Decimal = 0.01
     var postMealISFduration: Decimal = 3
     var enableBGacceleration: Bool = true
@@ -398,14 +396,6 @@ extension FreeAPSSettings: Decodable {
         // AutoISF
         if let autoisf = try? container.decode(Bool.self, forKey: .autoisf) {
             settings.autoisf = autoisf
-        }
-
-        if let enableautoISFwithCOB = try? container.decode(Bool.self, forKey: .enableautoISFwithCOB) {
-            settings.enableautoISFwithCOB = enableautoISFwithCOB
-        }
-
-        if let postMealISFalways = try? container.decode(Bool.self, forKey: .postMealISFalways) {
-            settings.postMealISFalways = postMealISFalways
         }
 
         if let enableBGacceleration = try? container.decode(Bool.self, forKey: .enableBGacceleration) {

@@ -6,8 +6,6 @@ extension AutoISF {
         @Injected() var storage: FileStorage!
 
         @Published var autoisf: Bool = false
-        @Published var enableautoISFwithCOB: Bool = true
-        @Published var postMealISFalways: Bool = false
         @Published var enableBGacceleration: Bool = true
         @Published var use_B30 = false
 
@@ -43,8 +41,6 @@ extension AutoISF {
 
         override func subscribe() {
             subscribeSetting(\.autoisf, on: $autoisf) { autoisf = $0 }
-            subscribeSetting(\.enableautoISFwithCOB, on: $enableautoISFwithCOB) { enableautoISFwithCOB = $0 }
-            subscribeSetting(\.postMealISFalways, on: $postMealISFalways) { postMealISFalways = $0 }
             subscribeSetting(\.enableBGacceleration, on: $enableBGacceleration) { enableBGacceleration = $0 }
             subscribeSetting(\.smbDeliveryRatioBGrange, on: $smbDeliveryRatioBGrange) { smbDeliveryRatioBGrange = $0 }
 
