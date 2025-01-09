@@ -606,7 +606,12 @@ extension AutoISF {
                         if let glucose = item.glucose, glucose != 0, let aisf_reaons = item.reasons {
                             // Prepare an array of Strings
                             let reasonParsed = aisf_reaons.string.components(separatedBy: ",")
-                                .filter { $0 != "AIMI B30 active" }
+                                .filter({ $0 != "AIMI B30 active" }).map(
+                                    { item in
+                                        let check = item.components(separatedBy: ":").last ?? ""
+                                        return check == " 1" ? " -- " : check
+                                    }
+                                )
                             let converted = state.units == .mmolL ? (glucose as Decimal)
                                 .asMmolL : (glucose as Decimal)
                             Grid(horizontalSpacing: 0) {
@@ -615,7 +620,7 @@ extension AutoISF {
                                     Text(dateFormatter.string(from: item.date ?? Date()))
                                         .foregroundStyle(.primary)
                                         .frame(maxWidth: .infinity, alignment: .leading)
-                                        .offset(x: 6)
+                                        .offset(x: 7)
                                     Spacer(minLength: 5)
                                     // Glucose
                                     Text(glucoseFormatter.string(from: converted as NSNumber) ?? "")
@@ -628,40 +633,37 @@ extension AutoISF {
 
                                     if reasonParsed.count >= 4 {
                                         // acce.
-                                        Text(((reasonParsed.first ?? "").string.components(separatedBy: ":").last ?? "") + "  ")
+                                        Text((reasonParsed.first ?? "") + "  ")
                                             .foregroundStyle(.orange)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .offset(x: 5)
                                         // bg
-                                        Text((reasonParsed[1].string.components(separatedBy: ":").last ?? "") + "  ")
+                                        Text(reasonParsed[1] + "  ")
                                             .foregroundStyle(.orange)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .offset(x: 8)
                                         // pp
-                                        Text((reasonParsed[2].string.components(separatedBy: ":").last ?? "") + "  ")
+                                        Text(reasonParsed[2] + "  ")
                                             .foregroundStyle(.orange)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .offset(x: 5)
                                         // dura
-                                        Text((reasonParsed[3].string.components(separatedBy: ":").last ?? "") + "  ")
+                                        Text(reasonParsed[3] + "  ")
                                             .foregroundStyle(.orange)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .offset(x: 3)
                                     }
                                     Spacer(minLength: 13)
                                     // Insunlin Required
-                                    let insReqString = reqFormatter.string(from: (item.rate ?? 0) as NSNumber) ?? ""
-                                    Text(insReqString != "0.00" ? insReqString + " " : "   ")
+                                    let insReqString = reqFormatter.string(from: (item.insulinReq ?? 0) as NSNumber) ?? ""
+                                    Text(insReqString != "0.00" ? insReqString + " " : "0  ")
                                         .foregroundColor(.secondary)
                                         .frame(maxWidth: .infinity, alignment: .leading)
+                                    Spacer(minLength: 2)
                                     // Basal Rate
-                                    Text(
-                                        (item.rate ?? 0) != 0 ?
-                                            "\(formatter.string(from: (item.rate ?? 0) as NSNumber) ?? "")  "
-                                            : "   "
-                                    )
-                                    .foregroundColor(Color(.insulin))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text((formatter.string(from: (item.rate ?? 0) as NSNumber) ?? "") + " ")
+                                        .foregroundColor(Color(.insulin))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                     // SMBs
                                     Text(
                                         (item.smb ?? 0) != 0 ?
