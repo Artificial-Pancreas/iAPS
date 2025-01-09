@@ -51,6 +51,14 @@ extension AutoISF {
             return formatter
         }
 
+        private var dateFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "sv")
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -604,7 +612,7 @@ extension AutoISF {
                             Grid(horizontalSpacing: 0) {
                                 GridRow {
                                     // Time
-                                    Text((item.date ?? Date()).formatted(date: .omitted, time: .shortened))
+                                    Text(dateFormatter.string(from: item.date ?? Date()))
                                         .foregroundStyle(.primary)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .offset(x: 6)
@@ -644,8 +652,8 @@ extension AutoISF {
                                     // Insunlin Required
                                     let insReqString = reqFormatter.string(from: (item.rate ?? 0) as NSNumber) ?? ""
                                     Text(insReqString != "0.00" ? insReqString + " " : "   ")
-                                    .foregroundColor(.secondary)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(.secondary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                     // Basal Rate
                                     Text(
                                         (item.rate ?? 0) != 0 ?
