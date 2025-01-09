@@ -74,7 +74,7 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString(
-                        settingsManager.settings.autoisf ? "Auto ISF Minimim" : preferences
+                        settingsManager.settings.autoisf ? "Auto ISF Minimum" : preferences
                             .useNewFormula ? "Dynamic ISF Minimum" : "Autosens Minimum",
                         comment: "Autosens Max"
                     ),
