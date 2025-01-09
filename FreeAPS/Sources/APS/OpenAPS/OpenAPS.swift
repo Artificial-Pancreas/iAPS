@@ -454,7 +454,6 @@ final class OpenAPS {
                let cr = readReason(reason: reason, variable: "CR"),
                let iob = suggestion.iob, let cob = suggestion.cob, let target = targetGlucose
             {
-                
                 var aisfReasons: String?
                 if aisf {
                     // Save AISF output
@@ -473,6 +472,8 @@ final class OpenAPS {
                 saveSuggestion.smb = (suggestion.units ?? 0) as NSDecimalNumber
                 saveSuggestion.rate = (suggestion.rate ?? 0) as NSDecimalNumber
                 saveSuggestion.reasons = aisfReasons
+                saveSuggestion.glucose = (suggestion.bg ?? 0) as NSDecimalNumber
+                saveSuggestion.ratio = (suggestion.sensitivityRatio ?? 1) as NSDecimalNumber
                 saveSuggestion.date = Date.now
 
                 if let units = readJSON(json: profile, variable: "out_units"), units.contains("mmol/L") {

@@ -12,13 +12,42 @@ extension AutoISF {
         @State var descriptionHeader = Text("")
         @State var scrollView = false
         @State var graphics: (any View)?
+        @State var presentHistory = false
 
         @Environment(\.colorScheme) var colorScheme
         @Environment(\.sizeCategory) private var fontSize
 
+        @FetchRequest(
+            entity: Reasons.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
+            predicate: NSPredicate(format: "date > %@", DateFilter().day)
+        ) var reasons: FetchedResults<Reasons>
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
+            formatter.decimalSeparator = "." // Homogenize as the ratios are always formatted using "."
+            return formatter
+        }
+
+        private var glucoseFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.decimalSeparator = "."
+            if state.settingsManager.settings.units == .mmolL {
+                formatter.maximumFractionDigits = 1
+                formatter.minimumFractionDigits = 1
+            } else {
+                formatter.maximumFractionDigits = 0
+            }
+            return formatter
+        }
+
+        private var reqFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.decimalSeparator = "."
+            formatter.minimumFractionDigits = 2
             return formatter
         }
 
@@ -418,6 +447,14 @@ extension AutoISF {
                             }
                         }
                     } header: { Text("Keto Protection") }
+
+                    Section {
+                        HStack {
+                            Text("History")
+                            Spacer()
+                            Text(">").foregroundStyle(.secondary)
+                        }.onTapGesture { presentHistory.toggle() }
+                    } header: { Text("History") }
                 }
             }
             .blur(radius: isPresented ? 5 : 0)
@@ -428,23 +465,27 @@ extension AutoISF {
             .onAppear(perform: configureView)
             .navigationBarTitle("Auto ISF")
             .navigationBarTitleDisplayMode(.automatic)
+
+            .sheet(isPresented: $presentHistory) {
+                history
+            }
         }
 
-        func info(header: String, body: String, useGraphics: (any View)?) {
+        private func info(header: String, body: String, useGraphics: (any View)?) {
             isPresented.toggle()
             description = Text(NSLocalizedString(body, comment: "Auto ISF Setting"))
             descriptionHeader = Text(NSLocalizedString(header, comment: "Auto ISF Setting Title"))
             graphics = useGraphics
         }
 
-        var info: some View {
+        private var info: some View {
             VStack(spacing: 20) {
                 descriptionHeader.font(.title2).bold()
                 description.font(.body)
             }
         }
 
-        func infoView() -> some View {
+        private func infoView() -> some View {
             info
                 .formatDescription()
                 .onTapGesture {
@@ -452,7 +493,7 @@ extension AutoISF {
                 }
         }
 
-        func infoScrollView() -> some View {
+        private func infoScrollView() -> some View {
             ScrollView {
                 VStack(spacing: 20) {
                     info
@@ -469,7 +510,7 @@ extension AutoISF {
             }
         }
 
-        var list: some View {
+        private var list: some View {
             let entries = [
                 Table(
                     localizedString: "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target"
@@ -500,6 +541,136 @@ extension AutoISF {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(colorScheme == .dark ? Color(.black).opacity(0.3) : Color(.white))
             )
+        }
+
+        private var history: some View {
+            VStack(spacing: 0) {
+                Button { presentHistory.toggle() }
+                label: { Image(systemName: "chevron.backward") }.tint(.blue).opacity(0.8).buttonStyle(.borderless)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(size: 22))
+                    .padding(10)
+                // Title
+                Text("Auto ISF History")
+                    .padding(.bottom, 20)
+                    .font(.system(size: 26))
+
+                // SubTitle
+                HStack {
+                    Text("Final Ratio").foregroundStyle(.red)
+                    Spacer()
+                    Text("Adjustments").foregroundStyle(.orange).offset(x: -20)
+                    Spacer()
+                    Text("Insulin").foregroundStyle(Color(.insulin))
+                }
+                .font(.system(size: 18))
+                .padding(.bottom, 5)
+                .padding(.horizontal, 20)
+
+                Divider()
+
+                // SubTitle
+                // Non-localized variable acronyms
+                HStack(spacing: 10) {
+                    Text("Time").foregroundStyle(.primary)
+                    Text("BG  ").foregroundStyle(Color(.loopGreen))
+                    Text("Final").foregroundStyle(.red)
+                    Spacer(minLength: 3)
+                    Text("acce").foregroundStyle(.orange).offset(x: -3)
+                    Text("bg  ").foregroundStyle(.orange)
+                    Text("pp  ").foregroundStyle(.orange)
+                    Text("dura").foregroundStyle(.orange)
+                    Spacer(minLength: 3)
+                    Text("Req. ").foregroundColor(.secondary)
+                    Text("TBR ").foregroundColor(.blue)
+                    Text("SMB ").foregroundColor(.blue)
+                }
+                .padding(.horizontal, 5)
+                .font(.system(size: 12))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.vertical, 4)
+
+                Divider()
+
+                List {
+                    // Non-localized data table
+                    ForEach(reasons) { item in
+                        if let glucose = item.glucose, glucose != 0, let aisf_reaons = item.reasons {
+                            // Prepare an array of Strings
+                            let reasonParsed = aisf_reaons.string.components(separatedBy: ",")
+                                .filter { $0 != "AIMI B30 active" }
+                            let converted = state.units == .mmolL ? (glucose as Decimal)
+                                .asMmolL : (glucose as Decimal)
+                            Grid(horizontalSpacing: 0) {
+                                GridRow {
+                                    // Time
+                                    Text((item.date ?? Date()).formatted(date: .omitted, time: .shortened))
+                                        .foregroundStyle(.primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .offset(x: 6)
+                                    Spacer(minLength: 5)
+                                    // Glucose
+                                    Text(glucoseFormatter.string(from: converted as NSNumber) ?? "")
+                                        .foregroundStyle(Color(.loopGreen))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .offset(x: 4)
+                                    // Ratio
+                                    Text((formatter.string(from: item.ratio ?? 1) ?? "") + "  ").foregroundStyle(.red)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                                    if reasonParsed.count >= 4 {
+                                        // acce.
+                                        Text(((reasonParsed.first ?? "").string.components(separatedBy: ":").last ?? "") + "  ")
+                                            .foregroundStyle(.orange)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .offset(x: 5)
+                                        // bg
+                                        Text((reasonParsed[1].string.components(separatedBy: ":").last ?? "") + "  ")
+                                            .foregroundStyle(.orange)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .offset(x: 8)
+                                        // pp
+                                        Text((reasonParsed[2].string.components(separatedBy: ":").last ?? "") + "  ")
+                                            .foregroundStyle(.orange)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .offset(x: 5)
+                                        // dura
+                                        Text((reasonParsed[3].string.components(separatedBy: ":").last ?? "") + "  ")
+                                            .foregroundStyle(.orange)
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                            .offset(x: 3)
+                                    }
+                                    Spacer(minLength: 13)
+                                    // Insunlin Required
+                                    let insReqString = reqFormatter.string(from: (item.rate ?? 0) as NSNumber) ?? ""
+                                    Text(insReqString != "0.00" ? insReqString + " " : "   ")
+                                    .foregroundColor(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    // Basal Rate
+                                    Text(
+                                        (item.rate ?? 0) != 0 ?
+                                            "\(formatter.string(from: (item.rate ?? 0) as NSNumber) ?? "")  "
+                                            : "   "
+                                    )
+                                    .foregroundColor(Color(.insulin))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    // SMBs
+                                    Text(
+                                        (item.smb ?? 0) != 0 ?
+                                            "\(formatter.string(from: (item.smb ?? 0) as NSNumber) ?? "")  "
+                                            : "   "
+                                    )
+                                    .foregroundColor(Color(.insulin))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                        }
+                    }
+                    .listRowBackground(colorScheme == .dark ? Color(.black) : Color(.white))
+                }
+                .font(.system(size: 12))
+                .listStyle(.plain)
+            }
         }
     }
 }

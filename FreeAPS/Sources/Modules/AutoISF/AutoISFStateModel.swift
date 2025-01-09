@@ -12,9 +12,6 @@ extension AutoISF {
         @Published var use_B30 = false
 
         @Published var smbDeliveryRatioBGrange: Decimal = 0
-
-        @Published var smbDeliveryRatioBGrangeMmol: Decimal = 0
-
         @Published var smbDeliveryRatioMin: Decimal = 0.5
         @Published var smbDeliveryRatioMax: Decimal = 0.5
         @Published var autoISFhourlyChange: Decimal = 1
@@ -41,14 +38,15 @@ extension AutoISF {
         @Published var ketoProtectBasalPercent: Decimal = 20
         @Published var ketoProtectBasalAbsolut: Decimal = 0
 
+        // General settings
+        @Published var units: GlucoseUnits = .mgdL
+
         override func subscribe() {
             subscribeSetting(\.autoisf, on: $autoisf) { autoisf = $0 }
             subscribeSetting(\.enableautoISFwithCOB, on: $enableautoISFwithCOB) { enableautoISFwithCOB = $0 }
             subscribeSetting(\.postMealISFalways, on: $postMealISFalways) { postMealISFalways = $0 }
             subscribeSetting(\.enableBGacceleration, on: $enableBGacceleration) { enableBGacceleration = $0 }
             subscribeSetting(\.smbDeliveryRatioBGrange, on: $smbDeliveryRatioBGrange) { smbDeliveryRatioBGrange = $0 }
-
-            subscribeSetting(\.smbDeliveryRatioBGrange, on: $smbDeliveryRatioBGrange) { smbDeliveryRatioBGrangeMmol = $0.asMmolL }
 
             subscribeSetting(\.smbDeliveryRatioMin, on: $smbDeliveryRatioMin) { smbDeliveryRatioMin = $0 }
             subscribeSetting(\.smbDeliveryRatioMax, on: $smbDeliveryRatioMax) { smbDeliveryRatioMax = $0 }
@@ -74,6 +72,8 @@ extension AutoISF {
             subscribeSetting(\.ketoProtectAbsolut, on: $ketoProtectAbsolut) { ketoProtectAbsolut = $0 }
             subscribeSetting(\.ketoProtectBasalPercent, on: $ketoProtectBasalPercent) { ketoProtectBasalPercent = $0 }
             subscribeSetting(\.ketoProtectBasalAbsolut, on: $ketoProtectBasalAbsolut) { ketoProtectBasalAbsolut = $0 }
+
+            subscribeSetting(\.units, on: $units) { units = $0 }
         }
     }
 }
