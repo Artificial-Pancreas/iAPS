@@ -79,9 +79,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var autoISFhourlyChange: Decimal = 1
     var higherISFrangeWeight: Decimal = 0
     var lowerISFrangeWeight: Decimal = 0
-    var deltaISFrangeWeight: Decimal = 0
     var postMealISFweight: Decimal = 0.01
-    var postMealISFduration: Decimal = 3
     var enableBGacceleration: Bool = true
     var bgAccelISFweight: Decimal = 0
     var bgBrakeISFweight: Decimal = 0.10
@@ -434,16 +432,8 @@ extension FreeAPSSettings: Decodable {
             settings.lowerISFrangeWeight = lowerISFrangeWeight
         }
 
-        if let deltaISFrangeWeight = try? container.decode(Decimal.self, forKey: .deltaISFrangeWeight) {
-            settings.deltaISFrangeWeight = deltaISFrangeWeight
-        }
-
         if let postMealISFweight = try? container.decode(Decimal.self, forKey: .postMealISFweight) {
             settings.postMealISFweight = postMealISFweight
-        }
-
-        if let postMealISFduration = try? container.decode(Decimal.self, forKey: .postMealISFduration) {
-            settings.postMealISFduration = postMealISFduration
         }
 
         if let bgAccelISFweight = try? container.decode(Decimal.self, forKey: .bgAccelISFweight) {

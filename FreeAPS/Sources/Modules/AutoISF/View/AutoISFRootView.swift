@@ -185,20 +185,6 @@ extension AutoISF {
                         }
 
                         HStack {
-                            Text("ISF weight for higher BG deltas")
-                                .onTapGesture {
-                                    info(
-                                        header: "ISF weight for higher BG deltas",
-                                        body: "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            DecimalTextField("0", value: $state.deltaISFrangeWeight, formatter: formatter)
-                                .disabled(isPresented)
-                        }
-
-                        HStack {
                             Text("ISF weight for postprandial BG rise")
                                 .onTapGesture {
                                     info(
@@ -209,20 +195,6 @@ extension AutoISF {
                                 }
                             Spacer()
                             DecimalTextField("0", value: $state.postMealISFweight, formatter: formatter)
-                                .disabled(isPresented)
-                        }
-
-                        HStack {
-                            Text("Duration ISF postprandial adaption")
-                                .onTapGesture {
-                                    info(
-                                        header: "Duration ISF postprandial adaption",
-                                        body: "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            DecimalTextField("0", value: $state.postMealISFduration, formatter: formatter)
                                 .disabled(isPresented)
                         }
 
@@ -572,8 +544,8 @@ extension AutoISF {
                     Spacer(minLength: 3)
                     Text("acce").foregroundStyle(.orange).offset(x: -3)
                     Text("bg  ").foregroundStyle(.orange)
+                    Text("dura  ").foregroundStyle(.orange)
                     Text("pp  ").foregroundStyle(.orange)
-                    Text("dura").foregroundStyle(.orange)
                     Spacer(minLength: 3)
                     Text("Req. ").foregroundColor(.secondary)
                     Text("TBR ").foregroundColor(.blue)
@@ -628,12 +600,12 @@ extension AutoISF {
                                             .foregroundStyle(.orange)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .offset(x: 8)
-                                        // pp
+                                        // dura
                                         Text(reasonParsed[2] + "  ")
                                             .foregroundStyle(.orange)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .offset(x: 5)
-                                        // dura
+                                        // pp
                                         Text(reasonParsed[3] + "  ")
                                             .foregroundStyle(.orange)
                                             .frame(maxWidth: .infinity, alignment: .leading)

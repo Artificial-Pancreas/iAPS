@@ -131,9 +131,7 @@ function interpolate(xdata, profile, type) { // interpolate ISF behaviour based 
             lowLabl= step;
         }
     }
-    if (type === "delta") {
-        newVal *= profile.iaps.deltaISFrangeWeight;
-    } else if (xdata > 100) {
+    if (xdata > 100) {
         newVal *= profile.iaps.higherISFrangeWeight;
     } else {
         newVal *= profile.iaps.lowerISFrangeWeight;
@@ -165,7 +163,6 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
     let acce_ISF = 1;
     let acce_weight = 1;
     let bg_ISF = 1;
-    let delta_ISF = 1;
     let pp_ISF = 1;
     let dura_ISF = 1;
     let final_ISF = 1;
@@ -256,7 +253,7 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
         console.log("Final ratio: " + round(final_ISF,2)  + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(autoISFsens, profile));
         
         // iAPS pop-up reasons
-        reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, delta_ISF, liftISF);
+        reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, liftISF);
         
         return round(final_ISF,2);
     } else if (bg_ISF > 1) {
@@ -270,36 +267,19 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
     if (currentTime) {
         systemTime = new Date(currentTime);
     }
-    let deltaType;
-    if (profile.iaps.postMealISFduration >= (systemTime - new Date(meal_data.lastCarbTime)) / 1000 / 3600) {
-        deltaType = 'pp';
-    } else {
-        deltaType = 'delta';
-    }
+    const deltaType = 'pp';
+    
     if (bg_off > 0) {
         console.error(deltaType + "pp_ISF adaptation bypassed as average glucose < " + target_bg + "+10");
         addMessage("pp_ISF adaptation bypassed: average glucose < " + target_bg + "+10. ");
     } else if (glucose_status.short_avgdelta < 0) {
         console.error(deltaType + "pp_ISF adaptation bypassed as no rise or too short lived");
         addMessage("pp_ISF adaptation bypassed: no rise or too short lived");
-    } else if (deltaType === 'pp') {
+    } else {
         pp_ISF = 1 + Math.max(0, bg_delta * profile.iaps.postMealISFweight);
         console.log("Post Prandial ISF adaptation is " + round(pp_ISF, 2));
         addMessage("Post Prandial ISF adaptation: " + round(pp_ISF, 2));
         if (pp_ISF !== 1) {
-            sens_modified = true;
-        }
-    } else {
-        delta_ISF = interpolate(bg_delta, profile, "delta");
-        //  Halve the effect below target_bg+30
-        if (bg_off > -20) {
-            delta_ISF = 0.5 * delta_ISF;
-        }
-        delta_ISF = 1 + delta_ISF;
-        console.log("\u0394-ISF adaptation is " + round(delta_ISF, 2));
-        console.log("\u0394-ISF ratio: " + round(delta_ISF, 2));
-        addMessage("\u0394-ISF adaption ratio: " + round(delta_ISF, 2));
-        if (delta_ISF !== 1) {
             sens_modified = true;
         }
     }
@@ -322,16 +302,15 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
     }
     
     // Reasons for iAPS pop-up
-    reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, delta_ISF, liftISF);
+    reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, liftISF);
     
     if (sens_modified) {
-        liftISF = Math.max(dura_ISF, bg_ISF, delta_ISF, acce_ISF, pp_ISF);
+        liftISF = Math.max(dura_ISF, bg_ISF, acce_ISF, pp_ISF);
         console.log("autoISF adaption ratios:");
         console.log("acce " + round(acce_ISF, 2));
         console.log("bg " + round(bg_ISF, 2));
         console.log("dura " + round(dura_ISF, 2));
         console.log("pp " + round(pp_ISF, 2));
-        console.log("delta " + round(delta_ISF, 2));
     
         if (acce_ISF < 1) {
             console.log("Strongest autoISF factor " + round(liftISF, 2) + " weakened to " + round(liftISF*acce_ISF, 2) + " as bg decelerates already");
@@ -509,11 +488,10 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
 }
 
 // Reasons for iAPS pop-up
-function reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, delta_ISF, liftISF) {
+function reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, liftISF) {
     addReason("acce: " + round(acce_ISF, 2));
     addReason("bg: " + round(bg_ISF, 2));
     addReason("dura: " + round(dura_ISF, 2));
     addReason("pp: " + round(pp_ISF, 2));
-    addReason("delta: " + round(delta_ISF, 2));
     addReason("lift: " + round(liftISF, 2));
 }

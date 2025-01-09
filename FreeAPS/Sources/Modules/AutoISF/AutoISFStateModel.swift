@@ -15,9 +15,7 @@ extension AutoISF {
         @Published var autoISFhourlyChange: Decimal = 1
         @Published var higherISFrangeWeight: Decimal = 0
         @Published var lowerISFrangeWeight: Decimal = 0
-        @Published var deltaISFrangeWeight: Decimal = 0
         @Published var postMealISFweight: Decimal = 0.01
-        @Published var postMealISFduration: Decimal = 3
         @Published var bgAccelISFweight: Decimal = 0
         @Published var bgBrakeISFweight: Decimal = 0.10
 
@@ -49,9 +47,7 @@ extension AutoISF {
             subscribeSetting(\.autoISFhourlyChange, on: $autoISFhourlyChange) { autoISFhourlyChange = $0 }
             subscribeSetting(\.higherISFrangeWeight, on: $higherISFrangeWeight) { higherISFrangeWeight = $0 }
             subscribeSetting(\.lowerISFrangeWeight, on: $lowerISFrangeWeight) { lowerISFrangeWeight = $0 }
-            subscribeSetting(\.deltaISFrangeWeight, on: $deltaISFrangeWeight) { deltaISFrangeWeight = $0 }
             subscribeSetting(\.postMealISFweight, on: $postMealISFweight) { postMealISFweight = $0 }
-            subscribeSetting(\.postMealISFduration, on: $postMealISFduration) { postMealISFduration = $0 }
             subscribeSetting(\.bgAccelISFweight, on: $bgAccelISFweight) { bgAccelISFweight = $0 }
             subscribeSetting(\.bgBrakeISFweight, on: $bgBrakeISFweight) { bgBrakeISFweight = $0 }
             subscribeSetting(\.use_B30, on: $use_B30) { use_B30 = $0 }
