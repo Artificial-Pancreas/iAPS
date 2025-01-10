@@ -519,9 +519,9 @@ final class OpenAPS {
         var returnSuggestion = oref0Suggestion
         var basal_rate = Decimal(string: basal_rate_is) ?? 0
 
-        guard let settings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self) else {
-            return nil
-        }
+        let settings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
+            ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
+            ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
 
         basal_rate = min(basal_rate, settings.maxBasal)
 

@@ -4,7 +4,7 @@ function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHisto
     
     // Auto ISF Overrides
     if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
-        
+
         var overrides = { };
         for (var setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
@@ -14,7 +14,7 @@ function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHisto
           }
         }
         profile.iaps = overrides;
-        
+
         if (!profile.iaps.autoisf) {
             console.log("Auto ISF Disabled by Override");
             profile.autoISFstring = "Auto ISF Disabled by Override"
@@ -70,10 +70,10 @@ function aisf(profile, autosens_data, dynamicVariables, glucose_status, currentT
     
     // Change the SMB ratio, when applicable
     profile.smb_delivery_ratio = round(determine_varSMBratio(profile, glucose_status.glucose, dynamicVariables), 2);
-    
+
     // Change the Max IOB setting, when applicable
     iob_max(profile);
-    
+
     profile.autoISFstring = autoISFMessages.join(". ") + ".";
     profile.autoISFreasons = autoISFReasons.join(", ");
     console.log("End autoISF");
@@ -291,7 +291,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     
     if (bg_off > 0) {
         console.error(deltaType + "pp_ISF adaptation bypassed as average glucose < " + target_bg + "+10");
-        addMessage("pp_ISF adaptation bypassed: average glucose < " + target_bg + "+10. ");
+        addMessage("pp_ISF adaptation bypassed: average glucose < " + target_bg + "+10");
     } else if (glucose_status.short_avgdelta < 0) {
         console.error(deltaType + "pp_ISF adaptation bypassed as no rise or too short lived");
         addMessage("pp_ISF adaptation bypassed: no rise or too short lived");
@@ -351,7 +351,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
 
 function determine_varSMBratio(profile, bg, dynamicVariables) {
     let target_bg = profile.min_bg;
-    
+
     if (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6) {
         target_bg = dynamicVariables.overrideTarget;
     }
@@ -450,6 +450,8 @@ function exercising(profile, dynamicVariables) {
     return false
 }
 
+const MillisecondsPerMinute = 60 * 1000
+
 // AIMI B30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     let minutesRemaining = profile.iaps.b30_duration;
@@ -468,7 +470,7 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     for (let i = 0; i < pumpHistory.length; i++) {
         if (pumpHistory[i]._type == "Bolus" && !(pumpHistory[i].isSMB) && pumpHistory[i].amount > profile.iaps.iTime_Start_Bolus) {
             let bolusTime = new Date(pumpHistory[i].timestamp);
-            lastBolusAge = round( (now - bolusTime) / 36e5 * 60, 1);
+            lastBolusAge = round( (now - bolusTime) / MillisecondsPerMinute, 1);
             lastBolus = pumpHistory[i].amount;
             break;
         }
@@ -483,6 +485,7 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     // Disable SMBs, when applicable
     if ((glucose_status.delta <= profile.iaps.b30upperdelta && glucose_status.glucose < profile.iaps.b30upperLimit)) {
         profile.microbolusAllowed = false;
+        addMessage("SMBs disabled (B30)")
     }
     // Logs
     console.log("B30 is running. Time remaining: " + round((minutesRemaining - lastBolusAge), 1) + "min");
