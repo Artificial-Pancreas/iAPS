@@ -243,100 +243,102 @@ extension AutoISF {
                             }.disabled(isPresented)
                         }
 
-                        HStack {
-                            Text("Minimum Start Bolus size")
-                                .onTapGesture {
-                                    info(
-                                        header: "Minimum Start Bolus size",
-                                        body: "Minimum manual bolus to start a B30 adaption.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            DecimalTextField("0", value: $state.iTime_Start_Bolus, formatter: formatter)
-                                .disabled(isPresented)
-                        }
-
-                        HStack {
-                            Text("Target Level for B30 to be enacted")
-                                .onTapGesture {
-                                    info(
-                                        header: "Target Level for B30 to be enacted",
-                                        body: "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 AIMI to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            BGTextField(
-                                "0",
-                                mgdlValue: $state.b30targetLevel,
-                                units: $state.units,
-                                isDisabled: isPresented
-                            )
-                        }
-
-                        HStack {
-                            Text("Upper BG limit for B30")
-                                .onTapGesture {
-                                    info(
-                                        header: "Upper BG limit for B30",
-                                        body: "B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            BGTextField(
-                                "0",
-                                mgdlValue: $state.b30upperLimit,
-                                units: $state.units,
-                                isDisabled: isPresented
-                            )
-                        }
-
-                        HStack {
-                            Text("Upper Delta limit for B30")
-                                .onTapGesture {
-                                    info(
-                                        header: "Upper Delta limit for B30",
-                                        body: "B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            BGTextField(
-                                "0",
-                                mgdlValue: $state.b30upperdelta,
-                                units: $state.units,
-                                isDisabled: isPresented
-                            )
-                        }
-
-                        HStack {
-                            Text("B30 Basal rate increase factor")
-                                .onTapGesture {
-                                    info(
-                                        header: "B30 Basal rate increase factor",
-                                        body: "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            DecimalTextField("0", value: $state.b30factor, formatter: formatter)
-                                .disabled(isPresented)
-                        }
-
-                        HStack {
-                            Text("Duration of increased B30 basal rate")
-                                .onTapGesture {
-                                    info(
-                                        header: "Duration of increased B30 basal rate",
-                                        body: "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            DecimalTextField("0", value: $state.b30_duration, formatter: formatter)
-                                .disabled(isPresented)
+                        if state.use_B30 {
+                            HStack {
+                                Text("Minimum Start Bolus size")
+                                    .onTapGesture {
+                                        info(
+                                            header: "Minimum Start Bolus size",
+                                            body: "Minimum manual bolus to start a B30 adaption.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                                Spacer()
+                                DecimalTextField("0", value: $state.iTime_Start_Bolus, formatter: formatter)
+                                    .disabled(isPresented)
+                            }
+                            
+                            HStack {
+                                Text("Target Level for B30 to be enacted")
+                                    .onTapGesture {
+                                        info(
+                                            header: "Target Level for B30 to be enacted",
+                                            body: "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 AIMI to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                                Spacer()
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.b30targetLevel,
+                                    units: $state.units,
+                                    isDisabled: isPresented
+                                )
+                            }
+                            
+                            HStack {
+                                Text("Upper BG limit for B30")
+                                    .onTapGesture {
+                                        info(
+                                            header: "Upper BG limit for B30",
+                                            body: "B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                                Spacer()
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.b30upperLimit,
+                                    units: $state.units,
+                                    isDisabled: isPresented
+                                )
+                            }
+                            
+                            HStack {
+                                Text("Upper Delta limit for B30")
+                                    .onTapGesture {
+                                        info(
+                                            header: "Upper Delta limit for B30",
+                                            body: "B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                                Spacer()
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.b30upperdelta,
+                                    units: $state.units,
+                                    isDisabled: isPresented
+                                )
+                            }
+                            
+                            HStack {
+                                Text("B30 Basal rate increase factor")
+                                    .onTapGesture {
+                                        info(
+                                            header: "B30 Basal rate increase factor",
+                                            body: "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                                Spacer()
+                                DecimalTextField("0", value: $state.b30factor, formatter: formatter)
+                                    .disabled(isPresented)
+                            }
+                            
+                            HStack {
+                                Text("Duration of increased B30 basal rate")
+                                    .onTapGesture {
+                                        info(
+                                            header: "Duration of increased B30 basal rate",
+                                            body: "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                                Spacer()
+                                DecimalTextField("0", value: $state.b30_duration, formatter: formatter)
+                                    .disabled(isPresented)
+                            }
                         }
                     } header: { Text("AIMI B30 Settings") }
 
