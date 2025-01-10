@@ -2309,19 +2309,19 @@ Enact a temp Basal or a temp target */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Коефіцієнт, який множить вашу нормальну базальну дозу B30. Запроваджена максимальна базальна норма – це максимальна  базальна норма вашої помпи. За замовчуванням 5.";
 
 /* */
-"Upper Delta limit in mg/dl for B30" = "Верхня межа дельта в mg/dl для B30";
+"Upper Delta limit for B30" = "Верхня межа Delta для B30";
 
 /* */
 "B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl." = "B30 працюватиме лише до тих пір, поки дельта BG залишається нижче цього рівня, якщо вище звичайного autoISF. За замовчуванням 8 mg/dl.";
 
 /* */
-"Upper BG limit in mg/dl for B30" = "Верхня межа BG в mg/dl для B30";
+"Upper BG limit for B30" = "Верхня межа BG для B30";
 
 /* */
 "B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl." = "B30 працюватиме лише до тих пір, поки BG залишається нижче цього рівня, якщо вище звичайного autoISF. За замовчуванням 130 mg/dl.";
 
 /* */
-"Target Level in mg/dl for B30 to be enacted" = "Цільовий рівень у mg/dl для B30 має бути прийнятий";
+"Target Level for B30 to be enacted" = "Цільовий рівень для B30 має бути прийнятий";
 
 /* */
 "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 AIMI to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Щоб розпочати адаптацію B30, потрібно активувати ціль EatingSoon Override (або тимчасову ціль). Для запуску B30 AIMI ціль має бути нижче або дорівнювати цьому налаштуванню. За замовчуванням 90 mg/dl. Якщо ви скасуєте ціль EatingSoon Target, базальна норма B30 припиниться.";
@@ -2390,7 +2390,7 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
 /* */
-"Default value: 0, Sensible is bteween 40 and 120. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Значення за замовчуванням: 0, Sensible — між 40 і 120. Лінійно зростаючий коефіцієнт доставки SMB відображається в діапазоні глюкози [target_bg, target_bg+bg_range]. У target_bg коефіцієнт SMB становить smb_delivery_ratio_min, у target_bg+bg_range – smb_delivery_ratio_max. З 0 лінійно зростаючий коефіцієнт SMB вимкнено та використовується виправлення smb_delivery_ratio.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Значення за замовчуванням: 0, Sensible – від 40 mg/dL до 120 mg/dL. Лінійно зростаючий коефіцієнт доставки SMB відображається в діапазоні глюкози [target_bg, target_bg+bg_range]. У target_bg коефіцієнт SMB становить smb_delivery_ratio_min, у target_bg+bg_range – smb_delivery_ratio_max. З 0 лінійно зростаючий коефіцієнт SMB вимкнено та використовується виправлення smb_delivery_ratio.";
 
 /* */
 "SMB DeliveryRatio Maximum" = "SMB DeliveryRatio Maximum";
