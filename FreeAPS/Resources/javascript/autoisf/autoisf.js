@@ -1,8 +1,6 @@
-function generate(profile, autosens, dynamicVariables, glucose, microbolusAllowed, meal, clock, iob, pumpHistory, currenttemp) {
+function generate(profile, autosens, dynamicVariables, glucose, meal, clock, pumpHistory) {
     clock = new Date();
-
     const autosens_data = autosens ? autosens : null;
-    
     var meal_data = {};
     
     if (meal) {
@@ -11,7 +9,7 @@ function generate(profile, autosens, dynamicVariables, glucose, microbolusAllowe
     
     // Auto ISF
     const glucose_status = getLastGlucose(glucose);
-    aisf(profile, autosens_data, dynamicVariables, glucose_status, microbolusAllowed, meal_data, clock, iob, pumpHistory, currenttemp);
+    aisf(profile, autosens_data, dynamicVariables, glucose_status, meal_data, clock, pumpHistory);
     
     return profile
 }
@@ -27,9 +25,10 @@ function addReason(s) {
     autoISFReasons.push(s)
 }
 
-function aisf(profile, autosens_data, dynamicVariables, glucose_status, microbolusAllowed, meal_data, currentTime, iob, pumpHistory, currenttemp) {
+function aisf(profile, autosens_data, dynamicVariables, glucose_status, meal_data, currentTime, pumpHistory) {
     autoISFMessages = [];
     autoISFReasons = [];
+    profile.microbolusAllowed = true;
 
     // Turn Auto ISF off when exercising and an exercise setting is enabled, like with dynamic ISF.
     if (exercising(profile, dynamicVariables)) {
@@ -55,10 +54,12 @@ function aisf(profile, autosens_data, dynamicVariables, glucose_status, microbol
     
     // Change the SMB ratio, when applicable
     profile.smb_delivery_ratio = round(determine_varSMBratio(profile, glucose_status.glucose), 2);
-
+    
+    // Change the Max IOB setting, when applicable
+    iob_max(profile);
+    
     profile.autoISFstring = autoISFMessages.join(". ") + ".";
     profile.autoISFreasons = autoISFReasons.join(", ");
-
     console.log("End autoISF");
 }
 
@@ -368,16 +369,16 @@ function determine_varSMBratio(profile, bg) {
 
 function withinISFlimits(liftISF, sensitivityRatio, profile, normalTarget) {
     let origin_sens = " " + profile.sens;
-    console.log("check ratio " + round(liftISF, 2) + " against autoISF min: " + profile.autosens_min + " and autoISF max: " + profile.autosens_max);
+    console.log("check ratio " + round(liftISF, 2) + " against autoISF min: " + profile.iaps.autosens_min + " and autoISF max: " + profile.iaps.autosens_max);
     
-    if (liftISF < profile.autosens_min) {
-        console.log("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.autosens_min);
-        addMessage("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.autosens_min);
-        liftISF = profile.autosens_min;
-    } else if (liftISF > profile.autosens_max) {
-        console.log("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.autosens_max);
-        addMessage("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.autosens_max);
-        liftISF = profile.autosens_max;
+    if (liftISF < profile.iaps.autosens_min) {
+        console.log("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autosens_min);
+        addMessage("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autosens_min);
+        liftISF = profile.iaps.autosens_min;
+    } else if (liftISF > profile.iaps.autosens_max) {
+        console.log("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.iaps.autosens_max);
+        addMessage("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.iaps.autosens_max);
+        liftISF = profile.iaps.autosens_max;
     }
     let final_ISF = 1;
     // SensitivityRatio = Autosens ratio
@@ -427,64 +428,55 @@ function exercising(profile, dynamicVariables) {
 
 // AIMI B30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
-    let isActive = false;
+    let minutesRemaining = profile.iaps.b30_duration;
+    let lastBolus = 0;
+    let lastBolusAge = minutesRemaining + 1;
     let rate = profile.current_basal;
-    const duration = profile.iaps.b30_duration;
-    let iTime = duration + 1;
-
-    const iTime_Start_Bolus = profile.iaps.iTime_Start_Bolus;
-    const b30targetLevel = profile.iaps.iTime_target;
-    const b30upperLimit = profile.iaps.b30upperLimit;
-    const b30upperdelta = profile.iaps.b30upperdelta;
-    const b30factor = profile.iaps.b30factor;
-    let B30TTset = false;
-    let PHlastBolus = 0;
-    let PHlastBolusAge = 0;
-        
-    // Bolus age and bolus limit
+    let now = new Date();
+    // Guards
+    if (!(profile.temptargetSet || (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6))) {
+        return
+    }
+    if (!((profile.min_bg <= profile.iaps.b30targetLevel) || !(dynamicVariables.overrideTarget <= profile.iaps.b30targetLevel))) {
+        return
+    }
+    // Bolus age and bolus limit guards
     for (let i = 0; i < pumpHistory.length; i++) {
-        if (pumpHistory[i]._type === "Bolus" && pumpHistory[i].amount > iTime_Start_Bolus) {
-            let PHBolusTime = new Date(pumpHistory[i].timestamp);
-            let currentDate = new Date();
-            PHlastBolusAge = round( (currentDate - PHBolusTime) / 36e5 * 60, 1);
-            PHlastBolus = pumpHistory[i].amount;
+        if (pumpHistory[i]._type == "Bolus" && !(pumpHistory[i].isSMB) && pumpHistory[i].amount > profile.iaps.iTime_Start_Bolus) {
+            let bolusTime = new Date(pumpHistory[i].timestamp);
+            lastBolusAge = round( (now - bolusTime) / 36e5 * 60, 1);
+            lastBolus = pumpHistory[i].amount;
             break;
         }
     }
+    if (!(lastBolus >= profile.iaps.iTime_Start_Bolus && lastBolusAge <= minutesRemaining)) {
+        return
+    }
+    // Suggested B30 basal rate.
+    rate *= profile.iaps.b30factor;
+    profile.set_basal = true;
+    profile.basal_rate =  Math.min(round(rate, 2), profile.max_basal);
+    // Disable SMBs, when applicable
+    if ((glucose_status.delta <= profile.iaps.b30upperdelta && glucose_status.glucose < profile.iaps.b30upperLimit)) {
+        profile.microbolusAllowed = false;
+    }
+    // Logs
+    console.log("B30 is running. Time remaining: " + round((minutesRemaining - lastBolusAge), 1) + "min");
+    console.log("B30 Suggested Basal Rate: " + profile.basal_rate + " U/h.");
+    addMessage("B30 active, min remaining: " + round((minutesRemaining - lastBolusAge), 1));
+    addReason("B30 Active");
+}
 
-    // Ues when target set either by a TT or a profile override
-    if ((profile.temptargetSet || (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6)) && (profile.min_bg <= b30targetLevel || dynamicVariables.overrideTarget <= b30targetLevel)) {
-        B30TTset = true;
+// You can set an Auto ISF - specific max IOB setting.
+function iob_max(profile) {
+    //Your setting
+    const threshold = profile.iaps.iobThresholdPercent;
+    //Guards
+    if (threshold >= 100) {
+        return
     }
-
-    let B30lastbolusAge = PHlastBolusAge;
-    // let LastManualBolus = PHlastBolus; // unused
-    
-    if (B30lastbolusAge === 0) {
-        B30lastbolusAge = 1;
-    }
-    
-    if (B30lastbolusAge <= duration && B30TTset) {
-        iTime = B30lastbolusAge;
-        isActive = true;
-        
-        if (glucose_status.delta <= b30upperdelta && glucose_status.glucose < b30upperLimit) {
-            isActive = false;
-            console.log("B30 deactivated by high glucose");
-        }
-    }
-    
-    if (B30TTset && isActive && iTime <= duration) {
-        rate *= b30factor;
-        profile.set_basal = true;
-        profile.basal_rate = round(rate, 2);
-        
-        console.log("B30 iTime is running. iTime remaining: " + round((duration - iTime), 1) + "min");
-        addMessage("B30 iTime remaining: " + round((duration - iTime), 1) + "min");
-        addReason("AIMI B30 active");
-        console.log("AIMI B30 enabled with Target (TT or Override).");
-        console.log("AIMI B30 Suggested Basal Rate: " + profile.basal_rate + " U/h.");
-    }
+    profile.max_iob = round(profile.max_iob * threshold / 100, 1);
+    addReason("Max IOB: " + profile.max_iob);
 }
 
 // Reasons for iAPS pop-up

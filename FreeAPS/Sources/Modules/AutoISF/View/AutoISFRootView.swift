@@ -93,8 +93,33 @@ extension AutoISF {
                     } header: { Text("Toggles") }
 
                     Section {
-                        Text("Auto ISF Max / Min settings:")
-                            .navigationLink(to: .preferencesEditor, from: self)
+                        HStack {
+                            Text("Auto ISF Max")
+                                .onTapGesture {
+                                    info(
+                                        header: "Auto ISF Max",
+                                        body: "Default value: 1.2 The upper limit of ISF adjustment",
+                                        useGraphics: nil
+                                    )
+                                }
+                            Spacer()
+                            DecimalTextField("0", value: $state.autoisf_max, formatter: formatter)
+                                .disabled(isPresented)
+                        }
+
+                        HStack {
+                            Text("Auto ISF Min")
+                                .onTapGesture {
+                                    info(
+                                        header: "Auto ISF Min",
+                                        body: "Default value: 0.8 The lower limit of ISF adjustment",
+                                        useGraphics: nil
+                                    )
+                                }
+                            Spacer()
+                            DecimalTextField("0", value: $state.autoisf_min, formatter: formatter)
+                                .disabled(isPresented)
+                        }
 
                         HStack {
                             Text("SMB Delivery Ratio Minimum")
@@ -225,6 +250,20 @@ extension AutoISF {
                             DecimalTextField("0", value: $state.bgBrakeISFweight, formatter: formatter)
                                 .disabled(isPresented)
                         }
+
+                        HStack {
+                            Text("Max IOB Threshold Percent")
+                                .onTapGesture {
+                                    info(
+                                        header: "Max IOB Threshold Percent",
+                                        body: "Percent of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.",
+                                        useGraphics: nil
+                                    )
+                                }
+                            Spacer()
+                            DecimalTextField("0", value: $state.iobThresholdPercent, formatter: formatter)
+                                .disabled(isPresented)
+                        }
                     } header: { Text("Settings") }
 
                     Section {
@@ -257,7 +296,7 @@ extension AutoISF {
                                 DecimalTextField("0", value: $state.iTime_Start_Bolus, formatter: formatter)
                                     .disabled(isPresented)
                             }
-                            
+
                             HStack {
                                 Text("Target Level for B30 to be enacted")
                                     .onTapGesture {
@@ -275,13 +314,13 @@ extension AutoISF {
                                     isDisabled: isPresented
                                 )
                             }
-                            
+
                             HStack {
-                                Text("Upper BG limit for B30")
+                                Text("Upper BG limit")
                                     .onTapGesture {
                                         info(
-                                            header: "Upper BG limit for B30",
-                                            body: "B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl.",
+                                            header: "Upper BG limit",
+                                            body: "SMBs will be diabled when at or over this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).",
                                             useGraphics: nil
                                         )
                                     }
@@ -293,13 +332,13 @@ extension AutoISF {
                                     isDisabled: isPresented
                                 )
                             }
-                            
+
                             HStack {
-                                Text("Upper Delta limit for B30")
+                                Text("Upper Delta limit")
                                     .onTapGesture {
                                         info(
-                                            header: "Upper Delta limit for B30",
-                                            body: "B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl.",
+                                            header: "Upper Delta limit",
+                                            body: "SMBs will be diabled when when BG delta is at or over this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).",
                                             useGraphics: nil
                                         )
                                     }
@@ -311,7 +350,7 @@ extension AutoISF {
                                     isDisabled: isPresented
                                 )
                             }
-                            
+
                             HStack {
                                 Text("B30 Basal rate increase factor")
                                     .onTapGesture {
@@ -325,7 +364,7 @@ extension AutoISF {
                                 DecimalTextField("0", value: $state.b30factor, formatter: formatter)
                                     .disabled(isPresented)
                             }
-                            
+
                             HStack {
                                 Text("Duration of increased B30 basal rate")
                                     .onTapGesture {
@@ -441,7 +480,7 @@ extension AutoISF {
 
         private func info(header: String, body: String, useGraphics: (any View)?) {
             isPresented.toggle()
-            description = Text(NSLocalizedString(body, comment: "Auto ISF Setting"))
+            description = Text(LocalizedStringKey(body))
             descriptionHeader = Text(NSLocalizedString(header, comment: "Auto ISF Setting Title"))
             graphics = useGraphics
         }

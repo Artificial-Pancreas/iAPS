@@ -88,6 +88,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     var old_isf = { };
     var aisf = { };
     var old_cr = { };
+    var microbolusAllowed = { };
     
     var inputs = { };
     //add all preferences to the inputs
@@ -120,6 +121,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.old_cr = old_cr;
     inputs.iaps = iaps;
     inputs.aisf = aisf;
+    inputs.microbolusAllowed = microbolusAllowed;
     
     if (autotune_data) {
         if (autotune_data.basalprofile) { inputs.basals = autotune_data.basalprofile; }

@@ -2,7 +2,7 @@ import Foundation
 
 struct Suggestion: JSON, Equatable {
     var reason: String
-    let units: Decimal?
+    var units: Decimal?
     let insulinReq: Decimal?
     let eventualBG: Int?
     let sensitivityRatio: Decimal?

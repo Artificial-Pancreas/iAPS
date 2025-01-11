@@ -60,11 +60,7 @@ extension PreferencesEditor {
                 ),
 
                 Field(
-                    displayName: NSLocalizedString(
-                        settingsManager.settings.autoisf ? "Auto ISF Maximum" : preferences
-                            .useNewFormula ? "Dynamic ISF Maximum" : "Autosens Maximum",
-                        comment: "Autosens Max"
-                    ),
+                    displayName: NSLocalizedString("Autosens Maximum", comment: "Autosens Max"),
                     type: .decimal(keypath: \.autosensMax),
                     infoText: NSLocalizedString(
                         "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.",
@@ -73,11 +69,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString(
-                        settingsManager.settings.autoisf ? "Auto ISF Minimum" : preferences
-                            .useNewFormula ? "Dynamic ISF Minimum" : "Autosens Minimum",
-                        comment: "Autosens Max"
-                    ),
+                    displayName: NSLocalizedString("Autosens Minimum", comment: "Autosens Min"),
                     type: .decimal(keypath: \.autosensMin),
                     infoText: NSLocalizedString(
                         "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.",

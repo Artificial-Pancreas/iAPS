@@ -41,15 +41,10 @@ final class OpenAPS {
                 // For other settings
                 let data = self.loadFileFromStorage(name: FreeAPS.settings)
                 let settings = FreeAPSSettings(from: data)
-
                 let tdd = CoreDataStorage().fetchInsulinDistribution().first
-
-                print(
-                    "Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds"
-                )
+                print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
                 now = Date.now
-
                 let meal = self.meal(
                     pumphistory: pumpHistory,
                     profile: profile,
@@ -58,9 +53,7 @@ final class OpenAPS {
                     carbs: carbs,
                     glucose: glucose
                 )
-                print(
-                    "Time for Meal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                )
+                print("Time for Meal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)")
 
                 self.storage.save(meal, as: Monitor.meal)
 
@@ -74,9 +67,7 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens
                 )
                 self.storage.save(iob, as: Monitor.iob)
-                print(
-                    "Time for IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                )
+                print("Time for IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)")
 
                 // determine-basal
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
@@ -86,13 +77,9 @@ final class OpenAPS {
                 if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                     profile = self.autosisf(
                         glucose: glucose,
-                        currentTemp: tempBasal,
-                        iob: iob,
                         profile: profile,
                         autosens: autosens.isEmpty ? .null : autosens,
                         meal: meal,
-                        microBolusAllowed: true,
-                        reservoir: reservoir,
                         dynamicVariables: dynamicVariables,
                         pumpHistory: pumpHistory
                     )
@@ -101,7 +88,7 @@ final class OpenAPS {
                     "Time for Auto ISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                 )
 
-                // The Middleware layer. Has anything been updated?
+                // The Middleware layer.
                 let alteredProfile = self.middleware(
                     glucose: glucose,
                     currentTemp: tempBasal,
@@ -115,7 +102,7 @@ final class OpenAPS {
                 )
 
                 now = Date.now
-                // The OpenAPS JS algorithm layer
+                // The OpenAPS layer
                 let suggested = self.determineBasal(
                     glucose: glucose,
                     currentTemp: tempBasal,
@@ -128,27 +115,37 @@ final class OpenAPS {
                     dynamicVariables: dynamicVariables,
                     pumpHistory: pumpHistory
                 )
-
                 print(
                     "Time for Determine Basal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                 )
-
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
-                // Update Suggestion
+                // Update Suggestion, when applicable (middleware / dynamic ISF / Auto ISF)
                 if var suggestion = Suggestion(from: suggested) {
                     now = Date.now
-                    /* Process any eventual keto protection basal rate
-                     If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate */
-                    if let mySettings = settings, mySettings.ketoProtect, let iob = suggestion.iob, iob < 0,
-                       let rate = suggestion.rate, rate <= 0,
-                       let basal = self.readBasal(alteredProfile), iob < -basal, (suggestion.units ?? 0) <= 0,
-                       let basalRate = self.aisfBasal(mySettings, basal, oref0Suggestion: suggestion)
-                    {
-                        suggestion = basalRate
+
+                    // Auto ISF
+                    if let mySettings = settings, mySettings.autoisf, let iob = suggestion.iob {
+                        // If IOB < one hour of negative insulin and keto protection is active, then enact a small keto protection basal rate
+                        if mySettings.ketoProtect, iob < 0,
+                           let rate = suggestion.rate, rate <= 0,
+                           let basal = self.readBasal(alteredProfile), iob < -basal, (suggestion.units ?? 0) <= 0,
+                           let basalRate = self.aisfBasal(mySettings, basal, oref0Suggestion: suggestion) {
+                            suggestion = basalRate
+                        }
+                        // Use Auto ISF iobThresholdPercent limit for SMBs, when applicable
+                        if let smbThreshold = self.exceedBy30Percent(
+                            settings: mySettings,
+                            suggestion: suggestion,
+                            profile: alteredProfile,
+                            iob: iob,
+                            preferences: preferencesData
+                        ) {
+                            suggestion = smbThreshold
+                        }
                     }
 
-                    // Process any eventual middleware/AIMI basal rate
+                    // Process any eventual middleware/B30 basal rate
                     if let newSuggestion = self.overrideBasal(alteredProfile: alteredProfile, oref0Suggestion: suggestion) {
                         suggestion = newSuggestion
                     }
@@ -165,10 +162,6 @@ final class OpenAPS {
                     suggestion.timestamp = suggestion.deliverAt ?? clock
                     // Save
                     self.storage.save(suggestion, as: Enact.suggested)
-
-                    print(
-                        "Time for updating and saving reasons: \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
 
                     promise(.success(suggestion))
                 } else {
@@ -341,7 +334,6 @@ final class OpenAPS {
                 let bolus = Int(((tdd.bolus ?? 0) as Decimal) * 100 / (total != 0 ? total : 1))
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
-
             // Auto ISF
             if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                 let reasons = profile.autoISFreasons ?? ""
@@ -352,10 +344,8 @@ final class OpenAPS {
                         at: startIndex
                     )
                 } else {
-                    reasonString.insert(
-                        contentsOf: "Auto ISF Ratio: \(isf)" + tddString + ", \(reasons), ",
-                        at: startIndex
-                    )
+                    let insertedResons = "Auto ISF Ratio: \(isf)"
+                    reasonString.insert(contentsOf: insertedResons + tddString + ", \(reasons), ", at: startIndex)
                 }
                 aisf = true
             } else if let settings = preferences {
@@ -435,12 +425,6 @@ final class OpenAPS {
             }
         }
 
-        // SMBs Disabled?
-        if let required = suggestion.insulinReq, required > 0, (suggestion.units ?? 0) <= 0 {
-            let index = reasonString.endIndex
-            reasonString.insert(contentsOf: " SMBs Disabled.", at: index)
-        }
-
         // Auto ISF additional comments
         if aisf {
             let index = reasonString.endIndex
@@ -487,17 +471,45 @@ final class OpenAPS {
                 debug(.dynamic, "Couldn't save suggestion to CoreData")
             }
         }
-
         return reasonString
+    }
+
+    /// The curious 130% of Auto ISF iobThresholdPercent limit for SMBs
+    private func exceedBy30Percent(
+        settings: FreeAPSSettings,
+        suggestion: Suggestion,
+        profile: RawJSON,
+        iob: Decimal,
+        preferences: Preferences?
+    ) -> Suggestion? {
+        guard settings.iobThresholdPercent < 100 else { return nil }
+        guard let insReq = suggestion.insulinReq else { return nil }
+        guard let bolus = suggestion.units, bolus > 0 else { return nil }
+        guard let maxIOB = readReason(reason: profile, variable: "max_iob"),
+              let deliveryRatio = readReason(reason: profile, variable: "smb_delivery_ratio")
+        else { return nil }
+        guard iob < maxIOB, iob + insReq > maxIOB, iob + insReq * deliveryRatio < maxIOB * 1.3 else { return nil }
+        guard let openAPSsettings = preferences,
+              let basal = readReason(reason: profile, variable: "current_basal") else { return nil }
+        guard basal <= 0, bolus * 1.3 <= basal * openAPSsettings.maxSMBBasalMinutes * deliveryRatio else { return nil }
+
+        // Adjust SMB and the ventual basal rate
+        var output = suggestion
+        output.units = Swift.max(bolus, 1.3 * settings.iobThresholdPercent * maxIOB / 100)
+        output.reason += " 130% of microbolus: \((bolus * 1.3).roundBolus(increment: 0.10)). "
+        output.reason = output.reason.replacingOccurrences(
+            of: "Microbolusing: \(bolus)U",
+            with: "Microbolusing: \(output.units ?? bolus)U"
+        )
+
+        debug(.openAPS, "130% of microbolus: \((bolus * 1.3).roundBolus(increment: 0.10))")
+        return output
     }
 
     private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
         let old = string.replacingOccurrences(of: ": ", with: "").replacingOccurrences(of: "f", with: "")
         let new = "\(decimal)"
-
-        guard old != new else {
-            return nil
-        }
+        guard old != new else { return nil }
 
         return old
     }
@@ -1013,13 +1025,9 @@ final class OpenAPS {
 
     private func autosisf(
         glucose: JSON,
-        currentTemp: JSON,
-        iob: JSON,
         profile: JSON,
         autosens: JSON,
         meal: JSON,
-        microBolusAllowed: Bool,
-        reservoir _: JSON,
         dynamicVariables: JSON,
         pumpHistory: JSON
     ) -> RawJSON {
@@ -1038,12 +1046,9 @@ final class OpenAPS {
                     autosens,
                     dynamicVariables,
                     glucose,
-                    microBolusAllowed,
                     meal,
                     Date(),
-                    iob,
-                    pumpHistory,
-                    currentTemp
+                    pumpHistory
                 ]
             )
         }
