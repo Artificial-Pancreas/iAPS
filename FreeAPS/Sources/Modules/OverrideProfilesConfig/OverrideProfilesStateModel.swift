@@ -78,7 +78,10 @@ extension OverrideProfilesConfig {
                 if self.isPreset {
                     saveOverride.isPreset = true
                     saveOverride.id = id
-                } else { saveOverride.isPreset = false }
+                } else {
+                    saveOverride.isPreset = false
+                    saveOverride.id = UUID().uuidString
+                }
                 saveOverride.date = Date()
                 if override_target {
                     saveOverride.target = (
@@ -107,7 +110,7 @@ extension OverrideProfilesConfig {
                 }
 
                 if self.overrideAutoISF {
-                    self.updateAutoISF(nil)
+                    self.updateAutoISF(saveOverride.id)
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)
