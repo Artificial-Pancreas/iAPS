@@ -658,7 +658,7 @@ extension OverrideProfilesConfig {
         private func unChanged() -> Bool {
             let isChanged = (
                 state.percentage == 100 && !state.override_target && !state.smbIsOff && !state
-                    .advancedSettings && !state.overrideMaxIOB
+                    .advancedSettings && !state.overrideMaxIOB && !state.overrideAutoISF
             ) ||
                 (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0) ||
                 (
