@@ -86,7 +86,6 @@
   "b30upperdelta" : 8,
   "b30factor": 5,
   "b30_duration": 30,
-  "smbEnabled": false,
   "ketoProtect": false,
   "variableKetoProtect": false,
   "ketoProtectBasalPercent": 20,

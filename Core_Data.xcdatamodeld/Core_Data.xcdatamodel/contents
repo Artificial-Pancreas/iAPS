@@ -5,6 +5,38 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Auto_ISF" representedClassName="Auto_ISF" syncable="YES" codeGenerationType="class">
+        <attribute name="autoisf" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="autoisf_max" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="autoisf_min" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="autoISFhourlyChange" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="b30_duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="b30factor" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="b30targetLevel" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="b30upperdelta" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="b30upperLimit" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="bgAccelISFweight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="bgBrakeISFweight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="enableBGacceleration" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="higherISFrangeWeight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="iobThresholdPercent" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="iTime_Start_Bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="iTime_target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="ketoProtect" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="ketoProtectAbsolut" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="ketoProtectBasalAbsolut" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="ketoProtectBasalPercent" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="lowerISFrangeWeight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="postMealISFweight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="smbDeliveryRatioBGrange" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="smbDeliveryRatioMax" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="smbDeliveryRatioMin" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="use_B30" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="variableKetoProtect" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="overrides" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Override" inverseName="autoISF" inverseEntity="Override"/>
+    </entity>
     <entity name="Carbohydrates" representedClassName="Carbohydrates" syncable="YES" codeGenerationType="class">
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -78,6 +110,7 @@
         <attribute name="isfAndCr" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isPreset" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="maxIOB" optional="YES" attributeType="Decimal" defaultValueString="0"/>
+        <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="100" usesScalarValueType="YES"/>
         <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -86,6 +119,7 @@
         <attribute name="start" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="100"/>
         <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
+        <relationship name="autoISF" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auto_ISF" inverseName="overrides" inverseEntity="Auto_ISF"/>
     </entity>
     <entity name="OverrideHistory" representedClassName="OverrideHistory" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -105,6 +139,7 @@
         <attribute name="isfAndCr" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="maxIOB" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>

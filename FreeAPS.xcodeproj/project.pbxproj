@@ -73,6 +73,7 @@
 		19DA48E929CD339C00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		19DA48EA29CD339C00EEA1E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		19DB70A72BF8F01E00C05381 /* ActiveCOBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB70A62BF8F01E00C05381 /* ActiveCOBView.swift */; };
+		19DB781D2D332F73007BBB54 /* AutoISFsettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DB781C2D332F73007BBB54 /* AutoISFsettings.swift */; };
 		19DC677F29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */; };
 		19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */; };
 		19DC678329CA677D00FD9EC4 /* OverrideProfilesStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */; };
@@ -696,6 +697,7 @@
 		19D4E4EA29FC6A9F00351451 /* Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Charts.swift; sourceTree = "<group>"; };
 		19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		19DB70A62BF8F01E00C05381 /* ActiveCOBView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveCOBView.swift; sourceTree = "<group>"; };
+		19DB781C2D332F73007BBB54 /* AutoISFsettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoISFsettings.swift; sourceTree = "<group>"; };
 		19DC677E29CA675700FD9EC4 /* OverrideProfilesDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesDataFlow.swift; sourceTree = "<group>"; };
 		19DC678029CA676A00FD9EC4 /* OverrideProfilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesProvider.swift; sourceTree = "<group>"; };
 		19DC678229CA677D00FD9EC4 /* OverrideProfilesStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideProfilesStateModel.swift; sourceTree = "<group>"; };
@@ -1908,6 +1910,7 @@
 			children = (
 				CE82E02628E869DF00473A9C /* AlertEntry.swift */,
 				385CEAC025F2EA52002D6D5B /* Announcement.swift */,
+				19DB781C2D332F73007BBB54 /* AutoISFsettings.swift */,
 				388E5A5F25B6F2310019842D /* Autosens.swift */,
 				38A00B1E25FC00F7006BC0B0 /* Autotune.swift */,
 				19F191E32BE686AE00F6297E /* BareMinimum.swift */,
@@ -3321,6 +3324,7 @@
 				320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */,
 				19E1F7E829D082D0005C8D20 /* IconConfigDataFlow.swift in Sources */,
 				E25073BC86C11C3D6A42F5AC /* CalibrationsStateModel.swift in Sources */,
+				19DB781D2D332F73007BBB54 /* AutoISFsettings.swift in Sources */,
 				BA90041DC8991147E5C8C3AA /* CalibrationsRootView.swift in Sources */,
 				E3A08AAE59538BC8A8ABE477 /* NotificationsConfigDataFlow.swift in Sources */,
 				1956FB212AFF79E200C7B4FF /* CoreDataStorage.swift in Sources */,

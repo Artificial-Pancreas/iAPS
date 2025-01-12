@@ -32,6 +32,30 @@ final class OverrideStorage {
         return overrideArray
     }
 
+    func fetchLatestAutoISFsettings() -> [Auto_ISF] {
+        var array = [Auto_ISF]()
+        coredataContext.performAndWait {
+            let request = Auto_ISF.fetchRequest() as NSFetchRequest<Auto_ISF>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            request.sortDescriptors = [sort]
+            request.fetchLimit = 1
+            try? array = self.coredataContext.fetch(request)
+        }
+        return array
+    }
+
+    func fetchAutoISFsetting(id: String) -> Auto_ISF? {
+        var array = [Auto_ISF]()
+        coredataContext.performAndWait {
+            let request = Auto_ISF.fetchRequest() as NSFetchRequest<Auto_ISF>
+            request.predicate = NSPredicate(
+                format: "id == %@", id as String
+            )
+            try? array = self.coredataContext.fetch(request)
+        }
+        return array.first
+    }
+
     func fetchNumberOfOverrides(numbers: Int) -> [Override] {
         var overrideArray = [Override]()
         coredataContext.performAndWait {

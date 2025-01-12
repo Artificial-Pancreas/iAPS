@@ -72,22 +72,6 @@ final class OpenAPS {
                 // determine-basal
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
-                now = Date.now
-                // Auto ISF Layer
-                if let freeAPSSettings = settings, freeAPSSettings.autoisf {
-                    profile = self.autosisf(
-                        glucose: glucose,
-                        profile: profile,
-                        autosens: autosens.isEmpty ? .null : autosens,
-                        meal: meal,
-                        dynamicVariables: dynamicVariables,
-                        pumpHistory: pumpHistory
-                    )
-                }
-                print(
-                    "Time for Auto ISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                )
-
                 // The Middleware layer.
                 let alteredProfile = self.middleware(
                     glucose: glucose,
@@ -101,13 +85,24 @@ final class OpenAPS {
                     dynamicVariables: dynamicVariables
                 )
 
+                // Auto ISF Layer
+                if let freeAPSSettings = settings, freeAPSSettings.autoisf {
+                    profile = self.autosisf(
+                        glucose: glucose,
+                        profile: alteredProfile,
+                        autosens: autosens.isEmpty ? .null : autosens,
+                        dynamicVariables: dynamicVariables,
+                        pumpHistory: pumpHistory
+                    )
+                }
+
                 now = Date.now
                 // The OpenAPS layer
                 let suggested = self.determineBasal(
                     glucose: glucose,
                     currentTemp: tempBasal,
                     iob: iob,
-                    profile: alteredProfile,
+                    profile: profile,
                     autosens: autosens.isEmpty ? .null : autosens,
                     meal: meal,
                     microBolusAllowed: true,
@@ -130,7 +125,8 @@ final class OpenAPS {
                         if mySettings.ketoProtect, iob < 0,
                            let rate = suggestion.rate, rate <= 0,
                            let basal = self.readBasal(alteredProfile), iob < -basal, (suggestion.units ?? 0) <= 0,
-                           let basalRate = self.aisfBasal(mySettings, basal, oref0Suggestion: suggestion) {
+                           let basalRate = self.aisfBasal(mySettings, basal, oref0Suggestion: suggestion)
+                        {
                             suggestion = basalRate
                         }
                         // Use Auto ISF iobThresholdPercent limit for SMBs, when applicable
@@ -146,7 +142,7 @@ final class OpenAPS {
                     }
 
                     // Process any eventual middleware/B30 basal rate
-                    if let newSuggestion = self.overrideBasal(alteredProfile: alteredProfile, oref0Suggestion: suggestion) {
+                    if let newSuggestion = self.overrideBasal(alteredProfile: profile, oref0Suggestion: suggestion) {
                         suggestion = newSuggestion
                     }
                     // Add reasons, when needed
@@ -154,7 +150,7 @@ final class OpenAPS {
                         reason: suggestion.reason,
                         suggestion: suggestion,
                         preferences: preferencesData,
-                        profile: alteredProfile,
+                        profile: profile,
                         tdd: tdd,
                         settings: settings
                     )
@@ -338,9 +334,11 @@ final class OpenAPS {
             if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                 let reasons = profile.autoISFreasons ?? ""
                 // If disabled in middleware or Auto ISF layer
-                if let disabled = readJSON(json: profile, variable: "autoisf"), let value = Bool(disabled), !value {
+                if let disabled = readAndExclude(json: profile, variable: "autoisf", exclude: "autoisf_m"),
+                   let value = Bool(disabled), !value
+                {
                     reasonString.insert(
-                        contentsOf: "Autosens Ratio: \(isf)" + tddString + ", \(reasons), ",
+                        contentsOf: "Autosens Ratio: \(isf)" + tddString + ", ",
                         at: startIndex
                     )
                 } else {
@@ -592,6 +590,20 @@ final class OpenAPS {
         return nil
     }
 
+    private func readAndExclude(json: RawJSON, variable: String, exclude: String) -> String? {
+        if let string = json.debugDescription.components(separatedBy: ",")
+            .filter({ $0.contains(variable) && !$0.contains(exclude) })
+            .first
+        {
+            let targetComponents = string.components(separatedBy: ":")
+            if targetComponents.count == 2 {
+                let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
+                return trimmedString
+            }
+        }
+        return nil
+    }
+
     private func readReason(reason: String, variable: String) -> Decimal? {
         if let string = reason.components(separatedBy: ",").filter({ $0.contains(variable) }).first {
             let targetComponents = string.components(separatedBy: ":")
@@ -756,6 +768,42 @@ final class OpenAPS {
                 }
             }
 
+            // Auto ISF
+            var autoISFsettings = AutoISFsettings()
+            if useOverride, overrideArray.first?.overrideAutoISF ?? false,
+               let fetched = OverrideStorage().fetchAutoISFsetting(id: overrideArray.first?.id ?? "Not This One")
+            {
+                autoISFsettings = AutoISFsettings(
+                    autoisf: fetched.autoisf,
+                    smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
+                    smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
+                    smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
+                    autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
+                    higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
+                    lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
+                    postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
+                    enableBGacceleration: fetched.enableBGacceleration,
+                    bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
+                    bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
+                    iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
+                    autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
+                    autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
+                    use_B30: fetched.use_B30,
+                    iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
+                    b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
+                    b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
+                    b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
+                    b30factor: (fetched.b30factor ?? 5) as Decimal,
+                    b30_duration: (fetched.b30_duration ?? 30) as Decimal,
+                    ketoProtect: fetched.ketoProtect,
+                    variableKetoProtect: fetched.variableKetoProtect,
+                    ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
+                    ketoProtectAbsolut: fetched.ketoProtectAbsolut,
+                    ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
+                    id: fetched.id ?? ""
+                )
+            }
+
             let averages = DynamicVariables(
                 average_total_data: average14,
                 weightedAverage: weighted_average,
@@ -783,7 +831,9 @@ final class OpenAPS {
                 maxIOB: maxIOB as Decimal,
                 overrideMaxIOB: overrideMaxIOB,
                 disableCGMError: disableCGMError,
-                preset: name
+                preset: name,
+                autoISFoverrides: autoISFsettings,
+                aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
             )
             storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
             return self.loadFileFromStorage(name: Monitor.dynamicVariables)
@@ -1027,7 +1077,6 @@ final class OpenAPS {
         glucose: JSON,
         profile: JSON,
         autosens: JSON,
-        meal: JSON,
         dynamicVariables: JSON,
         pumpHistory: JSON
     ) -> RawJSON {
@@ -1046,7 +1095,6 @@ final class OpenAPS {
                     autosens,
                     dynamicVariables,
                     glucose,
-                    meal,
                     Date(),
                     pumpHistory
                 ]

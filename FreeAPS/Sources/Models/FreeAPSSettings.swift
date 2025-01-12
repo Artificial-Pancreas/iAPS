@@ -95,7 +95,6 @@ struct FreeAPSSettings: JSON, Equatable {
     var b30upperdelta: Decimal = 8
     var b30factor: Decimal = 5
     var b30_duration: Decimal = 30
-    var smbEnabled: Bool = false
     // Keto protection
     var ketoProtect: Bool = false
     var variableKetoProtect: Bool = false
@@ -405,10 +404,6 @@ extension FreeAPSSettings: Decodable {
 
         if let use_B30 = try? container.decode(Bool.self, forKey: .use_B30) {
             settings.use_B30 = use_B30
-        }
-
-        if let smbEnabled = try? container.decode(Bool.self, forKey: .smbEnabled) {
-            settings.smbEnabled = smbEnabled
         }
 
         if let smbDeliveryRatioBGrange = try? container.decode(Decimal.self, forKey: .smbDeliveryRatioBGrange) {

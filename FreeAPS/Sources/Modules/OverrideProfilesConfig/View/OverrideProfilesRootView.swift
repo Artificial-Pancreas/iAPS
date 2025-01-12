@@ -24,6 +24,11 @@ extension OverrideProfilesConfig {
             )
         ) var fetchedProfiles: FetchedResults<OverridePresets>
 
+        @FetchRequest(
+            entity: Auto_ISF.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var fetchedSettings: FetchedResults<Auto_ISF>
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -209,6 +214,247 @@ extension OverrideProfilesConfig {
                                 Text("U").foregroundColor(.secondary)
                             }
                         }
+
+                        Group {
+                            Toggle(isOn: $state.overrideAutoISF) {
+                                Text("Override Auto ISF")
+                            }
+
+                            if state.overrideAutoISF {
+                                Toggle(isOn: $state.autoISFsettings.autoisf) {
+                                    Text("Enable Auto ISF")
+                                }
+
+                                if state.autoISFsettings.autoisf {
+                                    Toggle(isOn: $state.autoISFsettings.enableBGacceleration) {
+                                        Text("Enable BG Acceleration")
+                                    }
+
+                                    HStack {
+                                        Text("Auto ISF Min")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.autoisf_min,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("Auto ISF Max")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.autoisf_max,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("SMB Delivery Ratio Minimum")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.smbDeliveryRatioMin,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("SMB Delivery Ratio Maximum")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.smbDeliveryRatioMax,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("SMB Delivery Ratio BG Range")
+                                        BGTextField(
+                                            "0",
+                                            mgdlValue: $state.autoISFsettings.smbDeliveryRatioBGrange,
+                                            units: $state.units,
+                                            isDisabled: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("Auto ISF Hourly Max Change")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.autoISFhourlyChange,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("ISF Weight for higher BGs")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.higherISFrangeWeight,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("ISF Weight for lower BGs")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.lowerISFrangeWeight,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("ISF Weight for postprandial BG rise")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.postMealISFweight,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("ISF Weight while BG accelerates")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.bgAccelISFweight,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("ISF Weight while BG deccelerates")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.bgBrakeISFweight,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    HStack {
+                                        Text("Max IOB Threshold Percent")
+                                        DecimalTextField(
+                                            "0",
+                                            value: $state.autoISFsettings.iobThresholdPercent,
+                                            formatter: insulinFormatter,
+                                            cleanInput: false
+                                        )
+                                    }
+
+                                    Toggle(isOn: $state.autoISFsettings.use_B30) {
+                                        Text("Activate AIMI B30")
+                                    }
+
+                                    if state.autoISFsettings.use_B30 {
+                                        HStack {
+                                            Text("Minimum Start Bolus size")
+                                            DecimalTextField(
+                                                "0",
+                                                value: $state.autoISFsettings.iTime_Start_Bolus,
+                                                formatter: insulinFormatter,
+                                                cleanInput: false
+                                            )
+                                        }
+
+                                        HStack {
+                                            Text("Target Level for B30 to be enacted")
+                                            BGTextField(
+                                                "0",
+                                                mgdlValue: $state.autoISFsettings.b30targetLevel,
+                                                units: $state.units,
+                                                isDisabled: false
+                                            )
+                                        }
+
+                                        HStack {
+                                            Text("Upper SMB limit")
+                                            BGTextField(
+                                                "0",
+                                                mgdlValue: $state.autoISFsettings.b30targetLevel,
+                                                units: $state.units,
+                                                isDisabled: false
+                                            )
+                                        }
+
+                                        HStack {
+                                            Text("Upper Delta SMB limit")
+                                            BGTextField(
+                                                "0",
+                                                mgdlValue: $state.autoISFsettings.b30upperLimit,
+                                                units: $state.units,
+                                                isDisabled: false
+                                            )
+                                        }
+
+                                        HStack {
+                                            Text("B30 Basal rate increase factor")
+                                            DecimalTextField(
+                                                "0",
+                                                value: $state.autoISFsettings.b30factor,
+                                                formatter: insulinFormatter,
+                                                cleanInput: false
+                                            )
+                                        }
+
+                                        HStack {
+                                            Text("Duration of increased B30 basal rate")
+                                            DecimalTextField(
+                                                "0",
+                                                value: $state.autoISFsettings.b30_duration,
+                                                formatter: insulinFormatter,
+                                                cleanInput: false
+                                            )
+                                        }
+                                    }
+
+                                    Toggle(isOn: $state.autoISFsettings.ketoProtect) {
+                                        Text("Enable Keto Protection")
+                                    }
+
+                                    if state.autoISFsettings.ketoProtect {
+                                        Toggle(isOn: $state.autoISFsettings.variableKetoProtect) {
+                                            Text("Variable Keto Protection")
+                                        }
+
+                                        if state.autoISFsettings.variableKetoProtect {
+                                            HStack {
+                                                Text("Safety TBR in %")
+                                                DecimalTextField(
+                                                    "0",
+                                                    value: $state.autoISFsettings.ketoProtectBasalPercent,
+                                                    formatter: insulinFormatter,
+                                                    cleanInput: false
+                                                )
+                                            }
+                                        } else {
+                                            Toggle(isOn: $state.autoISFsettings.ketoProtectAbsolut) {
+                                                Text("Enable Keto protection with pre-defined TBR")
+                                            }
+                                            if state.autoISFsettings.ketoProtectAbsolut {
+                                                HStack {
+                                                    Text("Absolute Safety TBR")
+                                                    DecimalTextField(
+                                                        "0",
+                                                        value: $state.autoISFsettings.ketoProtectBasalAbsolut,
+                                                        formatter: insulinFormatter,
+                                                        cleanInput: false
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     HStack {
@@ -329,6 +575,7 @@ extension OverrideProfilesConfig {
             let crString = preset.cr ? "CR" : ""
             let dash = crString != "" ? "/" : ""
             let isfAndCRstring = isfString + dash + crString
+            let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
                 HStack {
@@ -351,11 +598,46 @@ extension OverrideProfilesConfig {
                                 Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
                                 Text(isfAndCRstring)
                             }
+                            if let settings = autoisfSettings {
+                                Text("Auto ISF \(settings.autoisf)")
+                            }
+
                             Spacer()
                         }
                         .padding(.top, 2)
                         .foregroundColor(.secondary)
                         .font(.caption)
+
+                        if let settings = autoisfSettings, settings.autoisf {
+                            HStack(spacing: 5) {
+                                Text("Accel: \(settings.enableBGacceleration)")
+                                Text("Keto: \(settings.ketoProtect)")
+                                Text("B30: \(settings.use_B30)")
+                                Text("Min/Max: \(settings.autoisf_min ?? 1)/\(settings.autoisf_max ?? 1)")
+                            }.foregroundColor(.secondary)
+                                .font(.caption)
+                            HStack(spacing: 5) {
+                                let threshold = (settings.iobThresholdPercent ?? 100) != 100 ?
+                                    ", \(settings.iobThresholdPercent ?? 100)%" : ""
+                                Text(
+                                    "SMB: \(settings.smbDeliveryRatioMin ?? 0.5)/\(settings.smbDeliveryRatioMax ?? 0.5)" +
+                                        threshold
+                                )
+                                let target: Decimal = state.units == .mmolL ? ((settings.smbDeliveryRatioBGrange ?? 8) as Decimal)
+                                    .asMmolL : (settings.smbDeliveryRatioBGrange ?? 8) as Decimal
+                                Text("SMB Range: " + (glucoseFormatter.string(from: target as NSNumber) ?? ""))
+                                Text("PP: \(settings.postMealISFweight ?? 0)")
+                            }.foregroundColor(.secondary).font(.caption)
+                            HStack(spacing: 5) {
+                                Text("lowBG: \(settings.lowerISFrangeWeight ?? 0)")
+                                Text("highBG: \(settings.higherISFrangeWeight ?? 0)")
+                                if settings.enableBGacceleration {
+                                    Text("accel: \(settings.bgAccelISFweight ?? 0)")
+                                    Text("brake: \(settings.bgBrakeISFweight ?? 0)")
+                                }
+                                Text("Dura: \(settings.autoISFhourlyChange ?? 0)")
+                            }.foregroundColor(.secondary).font(.caption)
+                        }
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {

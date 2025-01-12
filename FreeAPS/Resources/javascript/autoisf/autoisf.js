@@ -1,15 +1,31 @@
-function generate(profile, autosens, dynamicVariables, glucose, meal, clock, pumpHistory) {
+function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHistory) {
     clock = new Date();
     const autosens_data = autosens ? autosens : null;
-    var meal_data = {};
     
-    if (meal) {
-        meal_data = meal;
+    // Auto ISF Overrides
+    if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
+        
+        var overrides = { };
+        for (var setting in dynamicVariables.autoISFoverrides) {
+          if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
+              if (setting != "id") {
+                  overrides[setting] = dynamicVariables.autoISFoverrides[setting];
+              }
+          }
+        }
+        profile.iaps = overrides;
+        
+        if (!profile.iaps.autoisf) {
+            console.log("Auto ISF Disabled by Override");
+            profile.autoISFstring = "Auto ISF Disabled by Override"
+            profile.iaps.autoisf = false;
+            return profile
+        }
     }
     
     // Auto ISF
     const glucose_status = getLastGlucose(glucose);
-    aisf(profile, autosens_data, dynamicVariables, glucose_status, meal_data, clock, pumpHistory);
+    aisf(profile, autosens_data, dynamicVariables, glucose_status, clock, pumpHistory);
     
     return profile
 }
@@ -25,7 +41,7 @@ function addReason(s) {
     autoISFReasons.push(s)
 }
 
-function aisf(profile, autosens_data, dynamicVariables, glucose_status, meal_data, currentTime, pumpHistory) {
+function aisf(profile, autosens_data, dynamicVariables, glucose_status, currentTime, pumpHistory) {
     autoISFMessages = [];
     autoISFReasons = [];
     profile.microbolusAllowed = true;
@@ -44,7 +60,7 @@ function aisf(profile, autosens_data, dynamicVariables, glucose_status, meal_dat
     }
     
     // Auto ISF ratio
-    const ratio = aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_data, 100);
+    const ratio = aisf_ratio(profile, glucose_status, currentTime, autosens_data, 100,  dynamicVariables);
     profile.old_isf = convert_bg(profile.sens, profile);
     profile.aisf = round(ratio, 2);
     
@@ -53,7 +69,7 @@ function aisf(profile, autosens_data, dynamicVariables, glucose_status, meal_dat
     }
     
     // Change the SMB ratio, when applicable
-    profile.smb_delivery_ratio = round(determine_varSMBratio(profile, glucose_status.glucose), 2);
+    profile.smb_delivery_ratio = round(determine_varSMBratio(profile, glucose_status.glucose, dynamicVariables), 2);
     
     // Change the Max IOB setting, when applicable
     iob_max(profile);
@@ -140,7 +156,7 @@ function interpolate(xdata, profile, type) { // interpolate ISF behaviour based 
     return newVal
 }
 
-function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_data, normalTarget) {
+function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalTarget, dynamicVariables) {
     // The glucose-get-last-autoisf.js parameters
     const parabola_fit_minutes = glucose_status.dura_p;
     const parabola_fit_last_delta = glucose_status.delta_pl;
@@ -158,7 +174,10 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
     let autoISFsens = profile.sens;
     const sensitivityRatio = autosens_data.ratio;
 
-    const target_bg = profile.min_bg;
+    let target_bg = profile.min_bg;
+    if (dynamicVariables.useOverride && dynamicVariables.overrideTarget) {
+        target_bg = dynamicVariables.overrideTarget;
+    }
     
     // The Auto ISF ratios
     let acce_ISF = 1;
@@ -254,7 +273,7 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
         console.log("Final ratio: " + round(final_ISF,2)  + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(autoISFsens, profile));
         
         // iAPS pop-up reasons
-        reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, liftISF);
+        reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF);
         
         return round(final_ISF,2);
     } else if (bg_ISF > 1) {
@@ -279,6 +298,7 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
     } else {
         pp_ISF = 1 + Math.max(0, bg_delta * profile.iaps.postMealISFweight);
         console.log("Post Prandial ISF adaptation is " + round(pp_ISF, 2));
+        console.log("profile.iaps.postMealISFweight: " + profile.iaps.postMealISFweight + ", bg_delta: " + bg_delta);
         addMessage("Post Prandial ISF adaptation: " + round(pp_ISF, 2));
         if (pp_ISF !== 1) {
             sens_modified = true;
@@ -303,7 +323,7 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
     }
     
     // Reasons for iAPS pop-up
-    reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, liftISF);
+    reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF);
     
     if (sens_modified) {
         liftISF = Math.max(dura_ISF, bg_ISF, acce_ISF, pp_ISF);
@@ -329,8 +349,12 @@ function aisf_ratio(profile, glucose_status, meal_data, currentTime, autosens_da
     return 1
 }
 
-function determine_varSMBratio(profile, bg) {
-    const target_bg = profile.min_bg;
+function determine_varSMBratio(profile, bg, dynamicVariables) {
+    let target_bg = profile.min_bg;
+    
+    if (dynamicVariables.useOverride && dynamicVariables.overrideTarget) {
+        target_bg = dynamicVariables.overrideTarget;
+    }
     
     if (!profile.iaps.autoisf) {
         console.log("autoISF disabled, don't adjust SMB Delivery Ratio");
@@ -369,16 +393,16 @@ function determine_varSMBratio(profile, bg) {
 
 function withinISFlimits(liftISF, sensitivityRatio, profile, normalTarget) {
     let origin_sens = " " + profile.sens;
-    console.log("check ratio " + round(liftISF, 2) + " against autoISF min: " + profile.iaps.autosens_min + " and autoISF max: " + profile.iaps.autosens_max);
+    console.log("check ratio " + round(liftISF, 2) + " against autoISF min: " + profile.iaps.autoisf_min + " and autoISF max: " + profile.iaps.autoisf_max);
     
-    if (liftISF < profile.iaps.autosens_min) {
-        console.log("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autosens_min);
-        addMessage("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autosens_min);
-        liftISF = profile.iaps.autosens_min;
-    } else if (liftISF > profile.iaps.autosens_max) {
-        console.log("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.iaps.autosens_max);
-        addMessage("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.iaps.autosens_max);
-        liftISF = profile.iaps.autosens_max;
+    if (liftISF < profile.iaps.autoisf_min) {
+        console.log("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autoisf_min);
+        addMessage("Weakest autoISF factor " + round(liftISF, 2) + " limited by autoISF_min " + profile.iaps.autoisf_min);
+        liftISF = profile.iaps.autoisf_min;
+    } else if (liftISF > profile.iaps.autoisf_max) {
+        console.log("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.iaps.autoisf_max);
+        addMessage("Strongest autoISF factor " + round(liftISF, 2) + " limited by autoISF_max " + profile.iaps.autoisf_max);
+        liftISF = profile.iaps.autoisf_max;
     }
     let final_ISF = 1;
     // SensitivityRatio = Autosens ratio
@@ -480,7 +504,7 @@ function iob_max(profile) {
 }
 
 // Reasons for iAPS pop-up
-function reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF, liftISF) {
+function reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF) {
     addReason("acce: " + round(acce_ISF, 2));
     addReason("bg: " + round(bg_ISF, 2));
     addReason("dura: " + round(dura_ISF, 2));
