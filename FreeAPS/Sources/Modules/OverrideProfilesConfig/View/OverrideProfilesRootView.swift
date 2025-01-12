@@ -54,6 +54,13 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var higherPrecisionFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
         var presetPopover: some View {
             Form {
                 Section {
@@ -295,7 +302,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.higherISFrangeWeight,
-                                            formatter: insulinFormatter,
+                                            formatter: higherPrecisionFormatter,
                                             cleanInput: false
                                         )
                                     }
@@ -305,7 +312,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.lowerISFrangeWeight,
-                                            formatter: insulinFormatter,
+                                            formatter: higherPrecisionFormatter,
                                             cleanInput: false
                                         )
                                     }
@@ -315,7 +322,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.postMealISFweight,
-                                            formatter: insulinFormatter,
+                                            formatter: higherPrecisionFormatter,
                                             cleanInput: false
                                         )
                                     }
@@ -325,7 +332,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.bgAccelISFweight,
-                                            formatter: insulinFormatter,
+                                            formatter: higherPrecisionFormatter,
                                             cleanInput: false
                                         )
                                     }
@@ -335,7 +342,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.bgBrakeISFweight,
-                                            formatter: insulinFormatter,
+                                            formatter: higherPrecisionFormatter,
                                             cleanInput: false
                                         )
                                     }
@@ -445,7 +452,7 @@ extension OverrideProfilesConfig {
                                                     DecimalTextField(
                                                         "0",
                                                         value: $state.autoISFsettings.ketoProtectBasalAbsolut,
-                                                        formatter: insulinFormatter,
+                                                        formatter: higherPrecisionFormatter,
                                                         cleanInput: false
                                                     )
                                                 }
