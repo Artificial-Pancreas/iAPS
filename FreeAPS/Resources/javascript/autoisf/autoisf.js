@@ -175,7 +175,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     const sensitivityRatio = autosens_data.ratio;
 
     let target_bg = profile.min_bg;
-    if (dynamicVariables.useOverride && dynamicVariables.overrideTarget) {
+    if (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6) {
         target_bg = dynamicVariables.overrideTarget;
     }
     
@@ -352,7 +352,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
 function determine_varSMBratio(profile, bg, dynamicVariables) {
     let target_bg = profile.min_bg;
     
-    if (dynamicVariables.useOverride && dynamicVariables.overrideTarget) {
+    if (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6) {
         target_bg = dynamicVariables.overrideTarget;
     }
     

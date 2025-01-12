@@ -37,7 +37,7 @@ struct DecimalTextField: UIViewRepresentable {
             x: 0,
             y: 0,
             width: textfield.frame.size.width,
-            height: 44
+            height: 45
         ))
         let clearButton = UIBarButtonItem(
             title: NSLocalizedString("Clear", comment: "Clear button"),
