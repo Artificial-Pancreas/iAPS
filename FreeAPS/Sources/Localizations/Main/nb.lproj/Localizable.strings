@@ -2684,10 +2684,10 @@ Enact a temp Basal or a temp target */
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Standardverdi er 0.2 (20%). Maksimal prosentvis stigning i blodsukker hvor SMB fremdeles skal slå inn. Over denne verdien vil SMB ikke slå inn. Hardkodet grense på 40%. For lukket loop med UAM, anbefales 30%. Du kan se at dette slår inn i logg og popup (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
-/* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... når blodsukkeret er over (mg/dl):";
+/* Headline "... When Blood Glucose Is Above:" */
+"... When Blood Glucose Is Above:" = "... når blodsukkeret er over:";
 
-/* ... When Blood Glucose Is Over (mg/dl): */
+/* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Sett verdien som enableSMB_high_bg vil sammenligne med for å aktivere SMB. Hvis BS > denne verdien, vil SMB aktiveres.";
 
 /* Headline "Enable SMB With High BG" */

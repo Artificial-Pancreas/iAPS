@@ -2818,10 +2818,10 @@ Límite de seguridad que analiza la diferencia entre las dos últimas lecturas d
 
 Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o en los logs (p. ej.: maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
-/* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "...cuando la glucosa (mg/dL) sea mayor a:";
+/* Headline "... When Blood Glucose Is Above:" */
+"... When Blood Glucose Is Above:" = "...cuando la glucosa sea mayor a:";
 
-/* ... When Blood Glucose Is Over (mg/dl): */
+/* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Fija el umbral por encima del cual se habilita esta funcionalidad. Si la glucemia supera dicho valor, se habilitarán los SMBs";
 
 /* Headline "Enable SMB With High BG" */
