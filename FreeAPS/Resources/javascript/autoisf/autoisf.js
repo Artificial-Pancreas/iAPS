@@ -282,13 +282,12 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     }
 
     const bg_delta = glucose_status.delta;
-    const deltaType = 'pp';
-    
+
     if (bg_off > 0) {
-        console.error(deltaType + "pp_ISF adaptation bypassed as average glucose < " + target_bg + "+10");
-        addMessage("pp_ISF adaptation bypassed: average glucose < " + target_bg + "+10");
+        console.error("pp_ISF adaptation bypassed as average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
+        addMessage("pp_ISF adaptation bypassed: average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
     } else if (glucose_status.short_avgdelta < 0) {
-        console.error(deltaType + "pp_ISF adaptation bypassed as no rise or too short lived");
+        console.error("pp_ISF adaptation bypassed as no rise or too short lived");
         addMessage("pp_ISF adaptation bypassed: no rise or too short lived");
     } else {
         pp_ISF = 1 + Math.max(0, bg_delta * profile.iaps.postMealISFweight);
@@ -458,7 +457,7 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     if (!(profile.temptargetSet || (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6))) {
         return
     }
-    if (!((profile.min_bg <= profile.iaps.b30targetLevel) || !(dynamicVariables.overrideTarget <= profile.iaps.b30targetLevel))) {
+    if (!((profile.min_bg <= profile.iaps.b30targetLevel) || (dynamicVariables.overrideTarget <= profile.iaps.b30targetLevel))) {
         return
     }
     // Bolus age and bolus limit guards
