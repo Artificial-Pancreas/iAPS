@@ -5,10 +5,10 @@ function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHisto
     // Auto ISF Overrides
     if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
 
-        var overrides = { };
-        for (var setting in dynamicVariables.autoISFoverrides) {
+        let overrides = { };
+        for (let setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
-              if (setting != "id") {
+              if (setting !== "id") {
                   overrides[setting] = dynamicVariables.autoISFoverrides[setting];
               }
           }
@@ -130,7 +130,7 @@ function interpolate(xdata, profile, type) { // interpolate ISF behaviour based 
         newVal = lowVal + (topVal - lowVal) / (topX - lowX) * (myX - lowX);
     } else {
         // interpolate
-        for (var i=0; i <= polymax; i++) {
+        for (let i=0; i <= polymax; i++) {
             step = polyX[i];
             sVal = polyY[i];
             if (step === xdata) {
@@ -281,12 +281,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         console.log("BG-ISF adaption ratio: " + round(bg_ISF, 2));
     }
 
-    let bg_delta = glucose_status.delta;
-    let systemTime = new Date();
-    
-    if (currentTime) {
-        systemTime = new Date(currentTime);
-    }
+    const bg_delta = glucose_status.delta;
     const deltaType = 'pp';
     
     if (bg_off > 0) {
@@ -468,7 +463,7 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     }
     // Bolus age and bolus limit guards
     for (let i = 0; i < pumpHistory.length; i++) {
-        if (pumpHistory[i]._type == "Bolus" && !(pumpHistory[i].isSMB) && pumpHistory[i].amount > profile.iaps.iTime_Start_Bolus) {
+        if (pumpHistory[i]._type === "Bolus" && !(pumpHistory[i].isSMB) && pumpHistory[i].amount > profile.iaps.iTime_Start_Bolus) {
             let bolusTime = new Date(pumpHistory[i].timestamp);
             lastBolusAge = round( (now - bolusTime) / MillisecondsPerMinute, 1);
             lastBolus = pumpHistory[i].amount;
