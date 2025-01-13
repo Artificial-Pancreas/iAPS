@@ -4,9 +4,9 @@ function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHisto
     
     // Auto ISF Overrides
     if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
-        
-        var overrides = { };
-        for (var setting in dynamicVariables.autoISFoverrides) {
+
+        let overrides = { };
+        for (let setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
               if (setting != "id") {
                   overrides[setting] = dynamicVariables.autoISFoverrides[setting];
@@ -14,7 +14,7 @@ function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHisto
           }
         }
         profile.iaps = overrides;
-        
+
         if (!profile.iaps.autoisf) {
             console.log("Auto ISF Disabled by Override");
             profile.autoISFstring = "Auto ISF Disabled by Override"
@@ -70,10 +70,10 @@ function aisf(profile, autosens_data, dynamicVariables, glucose_status, currentT
     
     // Change the SMB ratio, when applicable
     profile.smb_delivery_ratio = round(determine_varSMBratio(profile, glucose_status.glucose, dynamicVariables), 2);
-    
+
     // Change the Max IOB setting, when applicable
     iob_max(profile);
-    
+
     profile.autoISFstring = autoISFMessages.join(". ") + ".";
     profile.autoISFreasons = autoISFReasons.join(", ");
     console.log("End autoISF");
@@ -130,7 +130,7 @@ function interpolate(xdata, profile, type) { // interpolate ISF behaviour based 
         newVal = lowVal + (topVal - lowVal) / (topX - lowX) * (myX - lowX);
     } else {
         // interpolate
-        for (var i=0; i <= polymax; i++) {
+        for (let i=0; i <= polymax; i++) {
             step = polyX[i];
             sVal = polyY[i];
             if (step === xdata) {
@@ -281,20 +281,14 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         console.log("BG-ISF adaption ratio: " + round(bg_ISF, 2));
     }
 
-    let bg_delta = glucose_status.delta;
-    let systemTime = new Date();
-    
-    if (currentTime) {
-        systemTime = new Date(currentTime);
-    }
-    const deltaType = 'pp';
-    
+    const bg_delta = glucose_status.delta;
+
     if (bg_off > 0) {
-        console.error(deltaType + "pp_ISF adaptation bypassed as average glucose < " + target_bg + "+10");
-        addMessage("pp_ISF adaptation bypassed: average glucose < " + target_bg + "+10. ");
+        console.error("Post Prandial ISF adaptation bypassed as average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
+        addMessage("Post Prandial ISF adaptation bypassed: average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
     } else if (glucose_status.short_avgdelta < 0) {
-        console.error(deltaType + "pp_ISF adaptation bypassed as no rise or too short lived");
-        addMessage("pp_ISF adaptation bypassed: no rise or too short lived");
+        console.error("Post Prandial ISF adaptation bypassed as no rise or too short lived");
+        addMessage("Post Prandial ISF adaptation bypassed: no rise or too short lived");
     } else {
         pp_ISF = 1 + Math.max(0, bg_delta * profile.iaps.postMealISFweight);
         console.log("Post Prandial ISF adaptation is " + round(pp_ISF, 2));
@@ -340,7 +334,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         }
         final_ISF = withinISFlimits(liftISF, sensitivityRatio, profile, 100);
         autoISFsens = round(final_ISF, 2);
-        console.log("Auto ISF: new Ratio: " + round(final_ISF, 2) + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(autoISFsens, profile));
+        console.log("Auto ISF: new Ratio: " + round(final_ISF, 2) + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(profile.sens / autoISFsens, profile));
         
         return round(final_ISF, 2)
     }
@@ -351,7 +345,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
 
 function determine_varSMBratio(profile, bg, dynamicVariables) {
     let target_bg = profile.min_bg;
-    
+
     if (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6) {
         target_bg = dynamicVariables.overrideTarget;
     }
@@ -450,6 +444,8 @@ function exercising(profile, dynamicVariables) {
     return false
 }
 
+const MillisecondsPerMinute = 60 * 1000
+
 // AIMI B30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     let minutesRemaining = profile.iaps.b30_duration;
@@ -461,14 +457,14 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     if (!(profile.temptargetSet || (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6))) {
         return
     }
-    if (!((profile.min_bg <= profile.iaps.b30targetLevel) || !(dynamicVariables.overrideTarget <= profile.iaps.b30targetLevel))) {
+    if (!((profile.min_bg <= profile.iaps.b30targetLevel) || (dynamicVariables.overrideTarget <= profile.iaps.b30targetLevel))) {
         return
     }
     // Bolus age and bolus limit guards
     for (let i = 0; i < pumpHistory.length; i++) {
-        if (pumpHistory[i]._type == "Bolus" && !(pumpHistory[i].isSMB) && pumpHistory[i].amount > profile.iaps.iTime_Start_Bolus) {
+        if (pumpHistory[i]._type === "Bolus" && !(pumpHistory[i].isSMB) && pumpHistory[i].amount > profile.iaps.iTime_Start_Bolus) {
             let bolusTime = new Date(pumpHistory[i].timestamp);
-            lastBolusAge = round( (now - bolusTime) / 36e5 * 60, 1);
+            lastBolusAge = round( (now - bolusTime) / MillisecondsPerMinute, 1);
             lastBolus = pumpHistory[i].amount;
             break;
         }
@@ -483,6 +479,7 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     // Disable SMBs, when applicable
     if ((glucose_status.delta <= profile.iaps.b30upperdelta && glucose_status.glucose < profile.iaps.b30upperLimit)) {
         profile.microbolusAllowed = false;
+        addMessage("SMBs disabled (B30)")
     }
     // Logs
     console.log("B30 is running. Time remaining: " + round((minutesRemaining - lastBolusAge), 1) + "min");

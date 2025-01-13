@@ -519,12 +519,6 @@ final class OpenAPS {
         var returnSuggestion = oref0Suggestion
         var basal_rate = Decimal(string: basal_rate_is) ?? 0
 
-        guard let settings = storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self) else {
-            return nil
-        }
-
-        basal_rate = min(basal_rate, settings.maxBasal)
-
         returnSuggestion.rate = basal_rate
         returnSuggestion.duration = 30
         var reasonString = oref0Suggestion.reason
