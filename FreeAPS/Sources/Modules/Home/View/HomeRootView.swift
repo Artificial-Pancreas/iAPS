@@ -19,6 +19,7 @@ extension Home {
         @State var animateLoop = Date.distantPast
         @State var animateTIR = Date.distantPast
         @State var showBolusActiveAlert = false
+        @State var displayAutoHistory = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
@@ -728,10 +729,27 @@ extension Home {
                 Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
             }
             .buttonStyle(.borderless)
-            .foregroundStyle(colorScheme == .dark ? .primary : Color(.darkGray))
+            .foregroundStyle(.primary)
             .font(.timeSettingFont)
             .padding(.vertical, 15)
             .background(TimeEllipse(characters: string.count))
+        }
+
+        private var isfView: some View {
+            ZStack {
+                HStack {
+                    if let suggestion = state.suggestion {
+                        Image(systemName: "divide")
+                            .font(.system(size: 16)).foregroundStyle(.teal)
+                        Text("\(suggestion.sensitivityRatio ?? 0)").foregroundStyle(.primary)
+                    }
+                }
+                .font(.timeSettingFont)
+                .background(TimeEllipse(characters: 10))
+                .onTapGesture {
+                    displayAutoHistory.toggle()
+                }
+            }.offset(x: 130)
         }
 
         private var animateLoopView: Bool {
@@ -770,6 +788,8 @@ extension Home {
                                 chart
                                 // Adjust hours visible (X-Axis)
                                 timeSetting
+                                    // Exteneded View
+                                    .overlay { state.extended ? isfView : nil }
                                 // TIR Chart
                                 if !state.glucose.isEmpty {
                                     preview.padding(.top, 15)
@@ -836,6 +856,9 @@ extension Home {
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
+            .sheet(isPresented: $displayAutoHistory) {
+                AutoISFHistoryView(units: state.units)
+            }
             .popup(isPresented: state.isStatusPopupPresented, alignment: .bottom, direction: .bottom) {
                 popup
                     .padding()

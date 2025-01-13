@@ -93,6 +93,7 @@ extension Home {
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var openAPSSettings: Preferences?
+        @Published var extended = true
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -145,6 +146,7 @@ extension Home {
             useInsulinBars = settingsManager.settings.useInsulinBars
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
+            extended = settingsManager.settings.extendHomeView
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -619,6 +621,7 @@ extension Home.StateModel:
         useInsulinBars = settingsManager.settings.useInsulinBars
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
+        extended = settingsManager.settings.extendHomeView
         setupGlucose()
         setupOverrideHistory()
         setupData()

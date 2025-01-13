@@ -35,6 +35,7 @@
 		1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Dynamic structs.swift */; };
 		193F6CDD2A512C8F001240FD /* Loops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193F6CDC2A512C8F001240FD /* Loops.swift */; };
 		194297512B815938006B8A0B /* OverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194297502B815938006B8A0B /* OverridesView.swift */; };
+		1948C0662D35A8350032B6A2 /* AutoISFHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1948C0652D35A8350032B6A2 /* AutoISFHistoryView.swift */; };
 		19493A3B2C5997AD00EC83A7 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19493A3A2C5997AD00EC83A7 /* Database.swift */; };
 		19493A3D2C59987700EC83A7 /* DatabaseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19493A3C2C59987700EC83A7 /* DatabaseModels.swift */; };
 		194C32772B93A9BF0016FB2A /* OverrideShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C32762B93A9BF0016FB2A /* OverrideShortcuts.swift */; };
@@ -643,6 +644,7 @@
 		193F1E3C2B44C14800525770 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		193F6CDC2A512C8F001240FD /* Loops.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loops.swift; sourceTree = "<group>"; };
 		194297502B815938006B8A0B /* OverridesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverridesView.swift; sourceTree = "<group>"; };
+		1948C0652D35A8350032B6A2 /* AutoISFHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoISFHistoryView.swift; sourceTree = "<group>"; };
 		19493A3A2C5997AD00EC83A7 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		19493A3C2C59987700EC83A7 /* DatabaseModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseModels.swift; sourceTree = "<group>"; };
 		194C32762B93A9BF0016FB2A /* OverrideShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideShortcuts.swift; sourceTree = "<group>"; };
@@ -1334,6 +1336,7 @@
 				198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */,
 				198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */,
 				198F67B02CFCBD5D00E538CB /* View */,
+				1948C0652D35A8350032B6A2 /* AutoISFHistoryView.swift */,
 			);
 			path = AutoISF;
 			sourceTree = "<group>";
@@ -3241,6 +3244,7 @@
 				5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */,
 				E13B7DAB2A435F57066AF02E /* TargetsEditorStateModel.swift in Sources */,
 				19DC678129CA676A00FD9EC4 /* OverrideProfilesProvider.swift in Sources */,
+				1948C0662D35A8350032B6A2 /* AutoISFHistoryView.swift in Sources */,
 				9702FF92A09C53942F20D7EA /* TargetsEditorRootView.swift in Sources */,
 				1967DFBE29D052C200759F30 /* Icons.swift in Sources */,
 				38E8754F275556FA00975559 /* WatchManager.swift in Sources */,
