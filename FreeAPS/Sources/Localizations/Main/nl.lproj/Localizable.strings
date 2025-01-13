@@ -2688,10 +2688,10 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Staat standaard op 0,2 (20%). Maximale positieve procentuele verandering van BG-niveau om SMB te gebruiken, daarboven wordt SMB uitgeschakeld. Hardcoded maximum van 40%. Voor volledig gesloten UAM-loop is 30% raadzaam. Zie in log en popup (maxDelta 27 > 20% van BG 100 - uitschakelen SMB!).";
 
-/* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... Als de glucosewaarde hoger is dan (mg/dl):";
+/* Headline "... When Blood Glucose Is Above:" */
+"... When Blood Glucose Is Above:" = "... Als de glucosewaarde hoger is dan:";
 
-/* ... When Blood Glucose Is Over (mg/dl): */
+/* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Stel de waarde in waarmee 'enableSMB_high_bg' wordt vergeleken om SMB in te schakelen. Als BG hoger is dan deze waarde, moet SMB worden ingeschakeld.";
 
 /* Headline "Enable SMB With High BG" */

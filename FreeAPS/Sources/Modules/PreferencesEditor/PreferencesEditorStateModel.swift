@@ -148,13 +148,13 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString(
-                        "... When Blood Glucose Is Over (mg/dl):",
-                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                        "... When Blood Glucose Is Above:",
+                        comment: "... When Blood Glucose Is Above:"
                     ),
-                    type: .decimal(keypath: \.enableSMB_high_bg_target),
+                    type: .glucose(keypath: \.enableSMB_high_bg_target),
                     infoText: NSLocalizedString(
                         "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
-                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                        comment: "... When Blood Glucose Is Above:"
                     ),
                     settable: self
                 ),
@@ -261,7 +261,7 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
-                    type: .decimal(keypath: \.halfBasalExerciseTarget),
+                    type: .glucose(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
                         "Set to a number, e.g. 160, which means when temp target is 160 mg/dL, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
                         comment: "Half Basal Exercise Target"
