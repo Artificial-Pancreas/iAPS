@@ -284,11 +284,11 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     const bg_delta = glucose_status.delta;
 
     if (bg_off > 0) {
-        console.error("pp_ISF adaptation bypassed as average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
-        addMessage("pp_ISF adaptation bypassed: average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
+        console.error("Post Prandial ISF adaptation bypassed as average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
+        addMessage("Post Prandial ISF adaptation bypassed: average glucose < " + convert_bg(target_bg, profile) + "+" + convert_bg(10, profile));
     } else if (glucose_status.short_avgdelta < 0) {
-        console.error("pp_ISF adaptation bypassed as no rise or too short lived");
-        addMessage("pp_ISF adaptation bypassed: no rise or too short lived");
+        console.error("Post Prandial ISF adaptation bypassed as no rise or too short lived");
+        addMessage("Post Prandial ISF adaptation bypassed: no rise or too short lived");
     } else {
         pp_ISF = 1 + Math.max(0, bg_delta * profile.iaps.postMealISFweight);
         console.log("Post Prandial ISF adaptation is " + round(pp_ISF, 2));
@@ -334,7 +334,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         }
         final_ISF = withinISFlimits(liftISF, sensitivityRatio, profile, 100);
         autoISFsens = round(final_ISF, 2);
-        console.log("Auto ISF: new Ratio: " + round(final_ISF, 2) + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(autoISFsens, profile));
+        console.log("Auto ISF: new Ratio: " + round(final_ISF, 2) + ", final ISF: " + convert_bg(profile.sens, profile) + "\u2192" + convert_bg(profile.sens / autoISFsens, profile));
         
         return round(final_ISF, 2)
     }
