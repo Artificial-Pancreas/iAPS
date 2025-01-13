@@ -168,11 +168,11 @@ extension AutoISF {
                         }
 
                         HStack {
-                            Text("Auto ISF Hourly Max Change")
+                            Text("Dura ISF Hourly Max Change")
                                 .onTapGesture {
                                     info(
-                                        header: "Auto ISF Hourly Max Change",
-                                        body: "Rate at which ISF is reduced per hour assuming BG leveel remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.",
+                                        header: "Dura ISF Hourly Max Change",
+                                        body: "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.",
                                         useGraphics: nil
                                     )
                                 }

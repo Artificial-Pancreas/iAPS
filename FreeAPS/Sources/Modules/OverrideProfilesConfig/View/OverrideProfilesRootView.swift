@@ -288,7 +288,7 @@ extension OverrideProfilesConfig {
                                     }
 
                                     HStack {
-                                        Text("Auto ISF Hourly Max Change")
+                                        Text("Dura ISF Hourly Max Change")
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.autoISFhourlyChange,
