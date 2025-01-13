@@ -8,7 +8,7 @@ function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHisto
         let overrides = { };
         for (let setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
-              if (setting !== "id") {
+              if (setting != "id") {
                   overrides[setting] = dynamicVariables.autoISFoverrides[setting];
               }
           }
