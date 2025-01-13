@@ -12,6 +12,7 @@ enum PreferencesEditor {
     enum FieldType {
         case boolean(keypath: WritableKeyPath<Preferences, Bool>)
         case decimal(keypath: WritableKeyPath<Preferences, Decimal>)
+        case glucose(keypath: WritableKeyPath<Preferences, Decimal>)
         case insulinCurve(keypath: WritableKeyPath<Preferences, InsulinCurve>)
     }
 
@@ -36,6 +37,8 @@ enum PreferencesEditor {
                 switch type {
                 case let .decimal(keypath):
                     return settable?.get(keypath) ?? 0
+                case let .glucose(keypath):
+                    return settable?.get(keypath) ?? 0
                 default: return 0
                 }
             }
@@ -58,6 +61,8 @@ enum PreferencesEditor {
             case let (.boolean(keypath), value as Bool):
                 settable?.set(keypath, value: value)
             case let (.decimal(keypath), value as Decimal):
+                settable?.set(keypath, value: value)
+            case let (.glucose(keypath), value as Decimal):
                 settable?.set(keypath, value: value)
             case let (.insulinCurve(keypath), value as InsulinCurve):
                 settable?.set(keypath, value: value)
