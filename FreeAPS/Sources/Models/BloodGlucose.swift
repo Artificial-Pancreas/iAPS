@@ -136,6 +136,10 @@ extension Decimal {
     var asMgdL: Decimal {
         self / GlucoseUnits.exchangeRate
     }
+
+    var rounded: Decimal {
+        Decimal(round(Double(self)))
+    }
 }
 
 extension Double {

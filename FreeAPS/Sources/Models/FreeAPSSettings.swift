@@ -73,6 +73,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var profileID: String = "Hypo Treatment"
     var allowDilution: Bool = false
     var hideInsulinBadge: Bool = false
+    var extended_overrides = false
 }
 
 extension FreeAPSSettings: Decodable {
@@ -372,6 +373,10 @@ extension FreeAPSSettings: Decodable {
 
         if let allowDilution = try? container.decode(Bool.self, forKey: .allowDilution) {
             settings.allowDilution = allowDilution
+        }
+
+        if let extended_overrides = try? container.decode(Bool.self, forKey: .extended_overrides) {
+            settings.extended_overrides = extended_overrides
         }
 
         self = settings

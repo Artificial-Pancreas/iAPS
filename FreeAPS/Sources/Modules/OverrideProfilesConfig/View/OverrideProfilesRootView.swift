@@ -91,9 +91,10 @@ extension OverrideProfilesConfig {
                                     (isEditing ? .orange : .blue)
                             )
                             .font(.largeTitle)
+                        let max: Double = state.extended_overrides ? 400 : 200
                         Slider(
                             value: $state.percentage,
-                            in: 10 ... 200,
+                            in: 10 ... max,
                             step: 1,
                             onEditingChanged: { editing in
                                 isEditing = editing
@@ -215,7 +216,7 @@ extension OverrideProfilesConfig {
                             showAlert.toggle()
                             alertSring = "\(state.percentage.formatted(.number)) %, " +
                                 (
-                                    state.duration > 0 || !state
+                                    state.duration > 0 && !state
                                         ._indefinite ?
                                         (
                                             state
