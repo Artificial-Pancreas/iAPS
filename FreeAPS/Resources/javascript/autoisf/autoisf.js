@@ -72,7 +72,7 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
     profile.smb_delivery_ratio = round(determine_varSMBratio(profile, glucose_status.glucose, dynamicVariables), 2);
 
     // Change the Max IOB setting, when applicable
-    iob_max(iob, profile);
+    iob_max(iob, dynamicVariables, profile);
 
     profile.autoISFstring = autoISFMessages.join(". ") + ".";
     profile.autoISFreasons = autoISFReasons.join(", ");
@@ -489,9 +489,13 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
 }
 
 // You can set an Auto ISF - specific max IOB setting.
-function iob_max(iob, profile) {
+function iob_max(iob, dynamicVariables, profile) {
     //Your setting
-    const threshold = profile.iaps.iobThresholdPercent;
+    let threshold = profile.iaps.iobThresholdPercent;
+    if (dynamicVariables.advancedSettings) {
+        console.log("iobThresholdPercent override: " + dynamicVariables.autoISFoverrides.iobThresholdPercent)
+        threshold = dynamicVariables.autoISFoverrides.iobThresholdPercent
+    }
     //Guards
     if (threshold >= 100) {
         return
@@ -532,15 +536,39 @@ function iob_max(iob, profile) {
         const smbIOBRemainingBasalMinutes = round(smbIOBRemaining / (currentBasal / 60.0), 0)
         console.log("smbIOBRemainingBasalMinutes: " + smbIOBRemainingBasalMinutes)
 
-        if (smbIOBRemainingBasalMinutes < profile.maxSMBBasalMinutes) {
-            console.log("limiting maxSMBBasalMinutes: " + profile.maxSMBBasalMinutes + " -> " + smbIOBRemainingBasalMinutes)
-            addReason("Max SMB: " + profile.maxSMBBasalMinutes + " \u2192 " + smbIOBRemainingBasalMinutes);
-            profile.maxSMBBasalMinutes = smbIOBRemainingBasalMinutes;
+        let effectiveSmbMinutes;
+        if (dynamicVariables.advancedSettings) {
+            console.log("smbMinutes override: " + dynamicVariables.smbMinutes)
+            effectiveSmbMinutes = dynamicVariables.smbMinutes
+        } else {
+            effectiveSmbMinutes = profile.maxSMBBasalMinutes
         }
-        if (smbIOBRemainingBasalMinutes < profile.maxUAMSMBBasalMinutes) {
-            console.log("limiting maxUAMSMBBasalMinutes: " + profile.maxUAMSMBBasalMinutes + " -> " + smbIOBRemainingBasalMinutes)
-            addReason("Max UAM: " + profile.maxUAMSMBBasalMinutes + " \u2192 " + smbIOBRemainingBasalMinutes);
+
+        let effectiveUamMinutes;
+        if (dynamicVariables.advancedSettings) {
+            console.log("uamMinutes override: " + dynamicVariables.uamMinutes)
+            effectiveUamMinutes = dynamicVariables.uamMinutes
+        } else {
+            effectiveUamMinutes = profile.maxUAMSMBBasalMinutes
+        }
+
+        if (smbIOBRemainingBasalMinutes < effectiveSmbMinutes) {
+            console.log("limiting maxSMBBasalMinutes: " + effectiveSmbMinutes + " -> " + smbIOBRemainingBasalMinutes)
+            addReason("Max SMB: " + effectiveSmbMinutes + " \u2192 " + smbIOBRemainingBasalMinutes);
+            profile.maxSMBBasalMinutes = smbIOBRemainingBasalMinutes;
+            if (dynamicVariables.advancedSettings) {
+                profile.dynamicVariablesOverride = dynamicVariables;
+                profile.dynamicVariablesOverride.smbMinutes = smbIOBRemainingBasalMinutes;
+            }
+        }
+        if (smbIOBRemainingBasalMinutes < effectiveUamMinutes) {
+            console.log("limiting maxUAMSMBBasalMinutes: " + effectiveUamMinutes + " -> " + smbIOBRemainingBasalMinutes)
+            addReason("Max UAM: " + effectiveUamMinutes + " \u2192 " + smbIOBRemainingBasalMinutes);
             profile.maxUAMSMBBasalMinutes = smbIOBRemainingBasalMinutes;
+            if (dynamicVariables.advancedSettings) {
+                profile.dynamicVariablesOverride = dynamicVariables;
+                profile.dynamicVariablesOverride.uamMinutes = smbIOBRemainingBasalMinutes;
+            }
         }
     }
 }
