@@ -15,7 +15,7 @@ struct AutoISFHistoryView: View {
     private var formatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.decimalSeparator = "." // Homogenize as the ratios are always formatted using "."
+        formatter.decimalSeparator = "."
         return formatter
     }
 
@@ -79,11 +79,16 @@ struct AutoISFHistoryView: View {
 
             // SubTitle
             // Non-localized variable acronyms
+            let offset: CGFloat = (
+                UIDevice.current.getDeviceId == "iPhone17,2" || UIDevice.current
+                    .getDeviceId == "iPhone 15 Pro Max"
+            ) ?
+                -14 : -7
             HStack(spacing: 10) {
                 Text("Time").foregroundStyle(.primary)
                 Spacer(minLength: 1)
-                Text("BG  ").foregroundStyle(Color(.loopGreen)).offset(x: -7)
-                Text("Final").foregroundStyle(.red).offset(x: -7)
+                Text("BG  ").foregroundStyle(Color(.loopGreen)).offset(x: offset)
+                Text("Final").foregroundStyle(.red).offset(x: offset)
                 Text("acce").foregroundStyle(.orange).offset(x: 2)
                 Text("bg  ").foregroundStyle(.orange).offset(x: 6)
                 Text("dura  ").foregroundStyle(.orange).offset(x: 6)

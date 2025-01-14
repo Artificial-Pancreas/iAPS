@@ -396,11 +396,13 @@ final class OpenAPS {
             }
             orString += " Target \(targetGlucose ?? 0)"
 
-            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: -1)
-            reasonString.insert(contentsOf: orString, at: index)
+            if let index = reasonString.firstIndex(of: ";") {
+                reasonString.insert(contentsOf: orString, at: index)
+            }
         } else if let target = targetGlucose {
-            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: -1)
-            reasonString.insert(contentsOf: ", Target: \(target)", at: index)
+            if let index = reasonString.firstIndex(of: ";") {
+                reasonString.insert(contentsOf: ", Target: \(target)", at: index)
+            }
         }
 
         // SMB Delivery ratio
@@ -443,6 +445,7 @@ final class OpenAPS {
                 let saveSuggestion = Reasons(context: coredataContext)
                 saveSuggestion.isf = isf as NSDecimalNumber
                 saveSuggestion.cr = cr as NSDecimalNumber
+                saveSuggestion.iob = iob as NSDecimalNumber
                 saveSuggestion.iob = iob as NSDecimalNumber
                 saveSuggestion.cob = cob as NSDecimalNumber
                 saveSuggestion.target = target as NSDecimalNumber
@@ -894,7 +897,10 @@ final class OpenAPS {
             worker.evaluate(script: Script(name: Prepare.determineBasal))
             worker.evaluate(script: Script(name: Bundle.basalSetTemp))
             worker.evaluate(script: Script(name: Bundle.getLastGlucose))
+
             worker.evaluate(script: Script(name: Bundle.determineBasal))
+            // For testing replace with:
+            // worker.evaluate(script: Script(name: Test.test_oref0))
 
             if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {
                 worker.evaluate(script: middleware)

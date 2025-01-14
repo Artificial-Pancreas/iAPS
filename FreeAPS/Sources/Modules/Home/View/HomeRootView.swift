@@ -786,10 +786,13 @@ extension Home {
                             VStack {
                                 // Main Chart
                                 chart
-                                // Adjust hours visible (X-Axis)
-                                timeSetting
-                                    // Exteneded View
-                                    .overlay { state.extended ? isfView : nil }
+                                // Adjust hours visible (X-Axis) and optional ratio display
+                                if state.extended {
+                                    timeSetting
+                                        .overlay { isfView }
+                                } else {
+                                    timeSetting
+                                }
                                 // TIR Chart
                                 if !state.glucose.isEmpty {
                                     preview.padding(.top, 15)
