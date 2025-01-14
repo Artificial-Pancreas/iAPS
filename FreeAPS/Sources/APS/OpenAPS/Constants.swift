@@ -11,6 +11,10 @@ extension OpenAPS {
         static let profile = "bundle/profile.js"
     }
 
+    enum Test {
+        static let test_oref0 = "test/determine-basal.js"
+    }
+
     enum Prepare {
         static let iob = "prepare/iob.js"
         static let meal = "prepare/meal.js"

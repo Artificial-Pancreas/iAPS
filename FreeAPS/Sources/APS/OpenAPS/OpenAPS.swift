@@ -398,11 +398,13 @@ final class OpenAPS {
             }
             orString += " Target \(targetGlucose ?? 0)"
 
-            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: -1)
-            reasonString.insert(contentsOf: orString, at: index)
+            if let index = reasonString.firstIndex(of: ";") {
+                reasonString.insert(contentsOf: orString, at: index)
+            }
         } else if let target = targetGlucose {
-            let index = reasonString.firstIndex(of: ";") ?? reasonString.index(reasonString.startIndex, offsetBy: -1)
-            reasonString.insert(contentsOf: ", Target: \(target)", at: index)
+            if let index = reasonString.firstIndex(of: ";") {
+                reasonString.insert(contentsOf: ", Target: \(target)", at: index)
+            }
         }
 
         // SMB Delivery ratio
@@ -446,6 +448,7 @@ final class OpenAPS {
                 saveSuggestion.isf = isf as NSDecimalNumber
                 saveSuggestion.cr = cr as NSDecimalNumber
                 saveSuggestion.iob = iob as NSDecimalNumber
+                saveSuggestion.iob = iob as NSDecimalNumber
                 saveSuggestion.cob = cob as NSDecimalNumber
                 saveSuggestion.target = target as NSDecimalNumber
                 saveSuggestion.minPredBG = minPredBG as NSDecimalNumber
@@ -486,12 +489,12 @@ final class OpenAPS {
         guard let maxIOB = readReason(reason: profile, variable: "max_iob"),
               let deliveryRatio = readReason(reason: profile, variable: "smb_delivery_ratio")
         else { return nil }
-        guard iob < maxIOB, iob + insReq > maxIOB, iob + insReq * deliveryRatio < maxIOB * 1.3 else { return nil }
+        guard iob < maxIOB, iob + insReq * deliveryRatio > maxIOB, iob + insReq * deliveryRatio < maxIOB * 1.3 else { return nil }
         guard let openAPSsettings = preferences,
               let basal = readReason(reason: profile, variable: "current_basal") else { return nil }
         guard basal <= 0, bolus * 1.3 <= basal * openAPSsettings.maxSMBBasalMinutes * deliveryRatio else { return nil }
 
-        // Adjust SMB and the ventual basal rate
+        // Adjust SMB and the eventual basal rate
         var output = suggestion
         output.units = Swift.max(bolus, 1.3 * settings.iobThresholdPercent * maxIOB / 100)
         output.reason += " 130% of microbolus: \((bolus * 1.3).roundBolus(increment: 0.10)). "
@@ -928,7 +931,10 @@ final class OpenAPS {
             worker.evaluate(script: Script(name: Prepare.determineBasal))
             worker.evaluate(script: Script(name: Bundle.basalSetTemp))
             worker.evaluate(script: Script(name: Bundle.getLastGlucose))
+
             worker.evaluate(script: Script(name: Bundle.determineBasal))
+            // For testing replace with:
+            // worker.evaluate(script: Script(name: Test.test_oref0))
 
             if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {
                 worker.evaluate(script: middleware)
