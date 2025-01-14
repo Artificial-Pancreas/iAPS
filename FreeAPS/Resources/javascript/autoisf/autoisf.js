@@ -513,7 +513,8 @@ function iob_max(iob, dynamicVariables, profile) {
         const latestIOB = iob[0]
         currentIOB = latestIOB.iob
     } else {
-        currentIOB = 0
+        console.log("IOB data missing")
+        return
     }
     console.log("currentIOB: " + currentIOB)
 
