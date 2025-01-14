@@ -455,11 +455,16 @@ final class OpenAPS {
                 saveSuggestion.eventualBG = Decimal(suggestion.eventualBG ?? 100) as NSDecimalNumber
                 saveSuggestion.insulinReq = (suggestion.insulinReq ?? 0) as NSDecimalNumber
                 saveSuggestion.smb = (suggestion.units ?? 0) as NSDecimalNumber
-                saveSuggestion.rate = (suggestion.rate ?? 0) as NSDecimalNumber
                 saveSuggestion.reasons = aisfReasons
                 saveSuggestion.glucose = (suggestion.bg ?? 0) as NSDecimalNumber
                 saveSuggestion.ratio = (suggestion.sensitivityRatio ?? 1) as NSDecimalNumber
                 saveSuggestion.date = Date.now
+
+                if let rate = suggestion.rate {
+                    saveSuggestion.rate = rate as NSDecimalNumber
+                } else if let rate = readRate(comment: suggestion.reason) {
+                    saveSuggestion.rate = rate as NSDecimalNumber
+                }
 
                 if let units = readJSON(json: profile, variable: "out_units"), units.contains("mmol/L") {
                     saveSuggestion.mmol = true
@@ -520,7 +525,7 @@ final class OpenAPS {
               let basal_rate_is = readJSON(json: alteredProfile, variable: "basal_rate") else { return nil }
 
         var returnSuggestion = oref0Suggestion
-        var basal_rate = Decimal(string: basal_rate_is) ?? 0
+        let basal_rate = Decimal(string: basal_rate_is) ?? 0
 
         returnSuggestion.rate = basal_rate
         returnSuggestion.duration = 30
@@ -606,6 +611,17 @@ final class OpenAPS {
             let targetComponents = string.components(separatedBy: ":")
             if targetComponents.count == 2 {
                 let trimmedString = targetComponents[1].trimmingCharacters(in: .whitespaces)
+                let decimal = Decimal(string: trimmedString) ?? 0
+                return decimal
+            }
+        }
+        return nil
+    }
+
+    private func readRate(comment: String) -> Decimal? {
+        if let string = comment.components(separatedBy: ", ").filter({ $0.contains("maxSafeBasal:") }).last {
+            if let targetComponents = string.components(separatedBy: ":").last {
+                let trimmedString = targetComponents.trimmingCharacters(in: .whitespaces)
                 let decimal = Decimal(string: trimmedString) ?? 0
                 return decimal
             }
@@ -932,9 +948,8 @@ final class OpenAPS {
             worker.evaluate(script: Script(name: Bundle.basalSetTemp))
             worker.evaluate(script: Script(name: Bundle.getLastGlucose))
 
+            // For testing replace with: worker.evaluate(script: Script(name: Test.test))
             worker.evaluate(script: Script(name: Bundle.determineBasal))
-            // For testing replace with:
-            // worker.evaluate(script: Script(name: Test.test_oref0))
 
             if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {
                 worker.evaluate(script: middleware)

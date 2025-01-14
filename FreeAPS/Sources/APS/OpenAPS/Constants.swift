@@ -12,7 +12,7 @@ extension OpenAPS {
     }
 
     enum Test {
-        static let test_oref0 = "test/determine-basal.js"
+        static let test = "test/test.js"
     }
 
     enum Prepare {
