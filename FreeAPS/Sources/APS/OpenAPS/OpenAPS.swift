@@ -89,6 +89,7 @@ final class OpenAPS {
                 if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                     profile = self.autosisf(
                         glucose: glucose,
+                        iob: iob,
                         profile: alteredProfile,
                         autosens: autosens.isEmpty ? .null : autosens,
                         dynamicVariables: dynamicVariables,
@@ -128,16 +129,6 @@ final class OpenAPS {
                            let basalRate = self.aisfBasal(mySettings, basal, oref0Suggestion: suggestion)
                         {
                             suggestion = basalRate
-                        }
-                        // Use Auto ISF iobThresholdPercent limit for SMBs, when applicable
-                        if let smbThreshold = self.exceedBy30Percent(
-                            settings: mySettings,
-                            suggestion: suggestion,
-                            profile: alteredProfile,
-                            iob: iob,
-                            preferences: preferencesData
-                        ) {
-                            suggestion = smbThreshold
                         }
                     }
 
@@ -470,38 +461,6 @@ final class OpenAPS {
             }
         }
         return reasonString
-    }
-
-    /// The curious 130% of Auto ISF iobThresholdPercent limit for SMBs
-    private func exceedBy30Percent(
-        settings: FreeAPSSettings,
-        suggestion: Suggestion,
-        profile: RawJSON,
-        iob: Decimal,
-        preferences: Preferences?
-    ) -> Suggestion? {
-        guard settings.iobThresholdPercent < 100 else { return nil }
-        guard let insReq = suggestion.insulinReq else { return nil }
-        guard let bolus = suggestion.units, bolus > 0 else { return nil }
-        guard let maxIOB = readReason(reason: profile, variable: "max_iob"),
-              let deliveryRatio = readReason(reason: profile, variable: "smb_delivery_ratio")
-        else { return nil }
-        guard iob < maxIOB, iob + insReq > maxIOB, iob + insReq * deliveryRatio < maxIOB * 1.3 else { return nil }
-        guard let openAPSsettings = preferences,
-              let basal = readReason(reason: profile, variable: "current_basal") else { return nil }
-        guard basal <= 0, bolus * 1.3 <= basal * openAPSsettings.maxSMBBasalMinutes * deliveryRatio else { return nil }
-
-        // Adjust SMB and the ventual basal rate
-        var output = suggestion
-        output.units = Swift.max(bolus, 1.3 * settings.iobThresholdPercent * maxIOB / 100)
-        output.reason += " 130% of microbolus: \((bolus * 1.3).roundBolus(increment: 0.10)). "
-        output.reason = output.reason.replacingOccurrences(
-            of: "Microbolusing: \(bolus)U",
-            with: "Microbolusing: \(output.units ?? bolus)U"
-        )
-
-        debug(.openAPS, "130% of microbolus: \((bolus * 1.3).roundBolus(increment: 0.10))")
-        return output
     }
 
     private func trimmedIsEqual(string: String, decimal: Decimal) -> String? {
@@ -1069,6 +1028,7 @@ final class OpenAPS {
 
     private func autosisf(
         glucose: JSON,
+        iob: JSON,
         profile: JSON,
         autosens: JSON,
         dynamicVariables: JSON,
@@ -1085,6 +1045,7 @@ final class OpenAPS {
             return worker.call(
                 function: Function.generate,
                 with: [
+                    iob,
                     profile,
                     autosens,
                     dynamicVariables,
