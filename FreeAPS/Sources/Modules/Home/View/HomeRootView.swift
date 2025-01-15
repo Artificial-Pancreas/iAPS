@@ -200,7 +200,7 @@ extension Home {
                                 .font(.statusFont).bold()
                                 .foregroundColor(.insulin)
                         }
-                        if state.closedLoop, state.settingsManager.preferences.maxIOB == 0 {
+                        if state.closedLoop, state.maxIOB == 0 {
                             Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
                         }
                     }
@@ -425,64 +425,61 @@ extension Home {
 
         var carbsAndInsulinView: some View {
             HStack {
-                if let settings = state.settingsManager {
-                    // A temporary ugly(?) workaround for displaying last real IOB and COB computation
-                    let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
-                    let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
-                    // Carbs on Board
-                    HStack {
-                        let substance = Double(state.suggestion?.cob ?? 0)
-                        let max = max(Double(settings.preferences.maxCOB), 1)
-                        let fraction: Double = 1 - (substance / max)
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1))
-                        TestTube(
-                            opacity: opacity,
-                            amount: fill,
-                            colourOfSubstance: .loopYellow,
-                            materialOpacity: materialOpacity
-                        )
-                        .frame(width: 12, height: 38)
-                        .offset(x: 0, y: -5)
-                        HStack(spacing: 0) {
-                            if let loop = state.suggestion, let cob = loop.cob {
-                                Text(numberFormatter.string(from: cob as NSNumber) ?? "0")
-                                    .font(.statusFont).bold()
-                                // Display last loop, unless very old
-                            } else {
-                                Text("?").font(.statusFont).bold()
-                            }
-                            Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
-                        }.offset(x: 0, y: 5)
-                    }
+                // A temporary ugly(?) workaround for displaying last real IOB and COB computation
+                let opacity: CGFloat = colorScheme == .dark ? 0.2 : 0.65
+                let materialOpacity: CGFloat = colorScheme == .dark ? 0.25 : 0.10
+                // Carbs on Board
+                HStack {
+                    let substance = Double(state.suggestion?.cob ?? 0)
+                    let max = max(Double(state.maxCOB), 1)
+                    let fraction: Double = 1 - (substance / max)
+                    let fill = CGFloat(min(Swift.max(fraction, 0.05), substance > 0 ? 0.92 : 1))
+                    TestTube(
+                        opacity: opacity,
+                        amount: fill,
+                        colourOfSubstance: .loopYellow,
+                        materialOpacity: materialOpacity
+                    )
+                    .frame(width: 12, height: 38)
+                    .offset(x: 0, y: -5)
+                    HStack(spacing: 0) {
+                        if let loop = state.suggestion, let cob = loop.cob {
+                            Text(numberFormatter.string(from: cob as NSNumber) ?? "0")
+                                .font(.statusFont).bold()
+                            // Display last loop, unless very old
+                        } else {
+                            Text("?").font(.statusFont).bold()
+                        }
+                        Text(NSLocalizedString(" g", comment: "gram of carbs")).font(.statusFont).foregroundStyle(.secondary)
+                    }.offset(x: 0, y: 5)
+                }
+                // Instead of Spacer
+                Text(" ")
 
-                    // Instead of Spacer
-                    Text(" ")
-
-                    // Insulin on Board
-                    HStack {
-                        let substance = Double(state.suggestion?.iob ?? 0)
-                        let max = max(Double(settings.preferences.maxIOB), 1)
-                        let fraction: Double = 1 - abs(substance) / max
-                        let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
-                        TestTube(
-                            opacity: opacity,
-                            amount: fill,
-                            colourOfSubstance: substance < 0 ? .red : .insulin,
-                            materialOpacity: materialOpacity
-                        )
-                        .frame(width: 12, height: 38)
-                        .offset(x: 0, y: -5)
-                        HStack(spacing: 0) {
-                            if let loop = state.suggestion, let iob = loop.iob {
-                                Text(
-                                    targetFormatter.string(from: iob as NSNumber) ?? "0"
-                                ).font(.statusFont).bold()
-                            } else {
-                                Text("?").font(.statusFont).bold()
-                            }
-                            Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                        }.offset(x: 0, y: 5)
-                    }
+                // Insulin on Board
+                HStack {
+                    let substance = Double(state.suggestion?.iob ?? 0)
+                    let max = max(Double(state.maxIOB), 1)
+                    let fraction: Double = 1 - abs(substance) / max
+                    let fill = CGFloat(min(Swift.max(fraction, 0.05), 1))
+                    TestTube(
+                        opacity: opacity,
+                        amount: fill,
+                        colourOfSubstance: substance < 0 ? .red : .insulin,
+                        materialOpacity: materialOpacity
+                    )
+                    .frame(width: 12, height: 38)
+                    .offset(x: 0, y: -5)
+                    HStack(spacing: 0) {
+                        if let loop = state.suggestion, let iob = loop.iob {
+                            Text(
+                                targetFormatter.string(from: iob as NSNumber) ?? "0"
+                            ).font(.statusFont).bold()
+                        } else {
+                            Text("?").font(.statusFont).bold()
+                        }
+                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                    }.offset(x: 0, y: 5)
                 }
             }
             .offset(y: 5)
@@ -747,7 +744,9 @@ extension Home {
                 .font(.timeSettingFont)
                 .background(TimeEllipse(characters: 10))
                 .onTapGesture {
-                    displayAutoHistory.toggle()
+                    if state.autoisf {
+                        displayAutoHistory.toggle()
+                    }
                 }
             }.offset(x: 130)
         }

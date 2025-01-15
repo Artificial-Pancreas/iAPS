@@ -94,6 +94,9 @@ extension Home {
         @Published var displayDelta: Bool = false
         @Published var openAPSSettings: Preferences?
         @Published var extended = true
+        @Published var maxIOB: Decimal = 0
+        @Published var maxCOB: Decimal = 0
+        @Published var autoisf = false
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -147,6 +150,9 @@ extension Home {
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             extended = settingsManager.settings.extendHomeView
+            maxIOB = settingsManager.preferences.maxIOB
+            maxCOB = settingsManager.preferences.maxCOB
+            autoisf = settingsManager.settings.autoisf
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -622,6 +628,9 @@ extension Home.StateModel:
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
         extended = settingsManager.settings.extendHomeView
+        maxIOB = settingsManager.preferences.maxIOB
+        maxCOB = settingsManager.preferences.maxCOB
+        autoisf = settingsManager.settings.autoisf
         setupGlucose()
         setupOverrideHistory()
         setupData()
