@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AutoISFHistoryView: View {
     let units: GlucoseUnits
+    let device = UIDevice.current.getDeviceId
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
@@ -55,12 +56,17 @@ struct AutoISFHistoryView: View {
     private var history: some View {
         VStack(spacing: 0) {
             Button { dismiss() }
-            label: { Image(systemName: "chevron.backward") }.tint(.blue).opacity(0.8).buttonStyle(.borderless)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.system(size: 22))
-                .padding(10)
+            label: {
+                HStack {
+                    Image(systemName: "chevron.backward").font(.system(size: 22))
+                    Text("Back").font(.system(size: 18))
+                }
+            }
+            .tint(.blue).buttonStyle(.borderless)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(10)
             // Title
-            Text("Auto ISF History")
+            Text("History")
                 .padding(.bottom, 20)
                 .font(.system(size: 26))
             // SubTitle
@@ -77,14 +83,11 @@ struct AutoISFHistoryView: View {
 
             Divider()
 
+            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -20 : -7
+            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -10 : 0
+
             // SubTitle
             // Non-localized variable acronyms
-            let device = UIDevice.current.getDeviceId
-            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -20 :
-                -7
-            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -10 :
-                0
-
             HStack(spacing: 10) {
                 Text("Time").foregroundStyle(.primary)
                 Spacer(minLength: 1)
@@ -189,9 +192,6 @@ struct AutoISFHistoryView: View {
             .font(.system(size: 12))
             .listStyle(.plain)
         }
+        .background(Color(.systemGray6))
     }
-}
-
-#Preview {
-    AutoISFHistoryView(units: .mmolL)
 }
