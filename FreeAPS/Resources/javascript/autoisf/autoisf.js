@@ -493,7 +493,6 @@ function iob_max(iob, dynamicVariables, profile) {
     //Your setting
     let threshold = profile.iaps.iobThresholdPercent;
     if (dynamicVariables.advancedSettings) {
-        console.log("iobThresholdPercent override: " + dynamicVariables.autoISFoverrides.iobThresholdPercent)
         threshold = dynamicVariables.autoISFoverrides.iobThresholdPercent
     }
     //Guards
@@ -505,7 +504,6 @@ function iob_max(iob, dynamicVariables, profile) {
     }
 
     const currentBasal = profile.current_basal
-    console.log("currentBasal: " + currentBasal)
 
     let currentIOB;
 
@@ -516,30 +514,26 @@ function iob_max(iob, dynamicVariables, profile) {
         console.log("IOB data missing")
         return
     }
-    console.log("currentIOB: " + currentIOB)
 
     // SMBs are not allowed when above this threshold
     const smbIOB = round(profile.max_iob * threshold / 100, 1)
-    console.log("SMB allowed below IOB=" + smbIOB)
 
     if (currentIOB >= smbIOB) {
+        console.log("SMBs disabled (threshold)");
         addReason("SMBs disabled (threshold)");
         profile.microbolusAllowed = false;
     } else {
         // when below the threshold, SMBs are allowed
         // additionally, in this case SMBs are allowed to overshoot the threshold by 30%
         const smbIOBRemaining = smbIOB*1.30 - currentIOB
-        console.log("smbIOBRemaining: " + smbIOBRemaining)
 
         // using max SMB/UAM basal minutes to enforce SMB restrictions
 
         // no more than this amount of basal minutes can be microbolused in order to stay below threshold+30%
         const smbIOBRemainingBasalMinutes = round(smbIOBRemaining / (currentBasal / 60.0), 0)
-        console.log("smbIOBRemainingBasalMinutes: " + smbIOBRemainingBasalMinutes)
 
         let effectiveSmbMinutes;
         if (dynamicVariables.advancedSettings) {
-            console.log("smbMinutes override: " + dynamicVariables.smbMinutes)
             effectiveSmbMinutes = dynamicVariables.smbMinutes
         } else {
             effectiveSmbMinutes = profile.maxSMBBasalMinutes
@@ -547,7 +541,6 @@ function iob_max(iob, dynamicVariables, profile) {
 
         let effectiveUamMinutes;
         if (dynamicVariables.advancedSettings) {
-            console.log("uamMinutes override: " + dynamicVariables.uamMinutes)
             effectiveUamMinutes = dynamicVariables.uamMinutes
         } else {
             effectiveUamMinutes = profile.maxUAMSMBBasalMinutes
