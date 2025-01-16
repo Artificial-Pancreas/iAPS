@@ -180,7 +180,7 @@ extension DecimalTextField.Coordinator: UITextFieldDelegate {
         if let text = textField.text {
             let newText = (text as NSString).replacingCharacters(in: range, with: string)
 
-            let decimalSeparatorCount = newText.count(where: { $0 == (parent.formatter.decimalSeparator.first ?? ".") })
+            let decimalSeparatorCount = newText.filter({ $0 == (parent.formatter.decimalSeparator.first ?? ".") }).count
             if decimalSeparatorCount > 1 {
                 return false
             }
