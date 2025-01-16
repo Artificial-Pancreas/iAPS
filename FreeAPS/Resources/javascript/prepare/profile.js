@@ -1,7 +1,7 @@
 //для pumpprofile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json
 //для profile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json settings/autotune.json
 
-function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data, preferences_input = false, carbratio_input = false, temptargets_input = false, model_input = false, autotune_input = false, freeaps_data, dynamicVariables, settings_input) {
+function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data, preferences_input = false, carbratio_input = false, temptargets_input = false, model_input = false, autotune_input = false, freeaps_data, dynamicVariables_input, settings_input) {
     if (bgtargets_data.units !== 'mg/dL') {
         if (bgtargets_data.units === 'mmol/L') {
             for (var i = 0, len = bgtargets_data.targets.length; i < len; i++) {
@@ -82,6 +82,11 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
         iaps = settings_input;
     }
     
+    let dynamicVariables = { };
+    if (dynamicVariables_input) {
+        dynamicVariables = dynamicVariables_input;
+    }
+    
     var tdd_factor = { };
     var set_basal = false;
     var basal_rate = { };
@@ -122,6 +127,7 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.iaps = iaps;
     inputs.aisf = aisf;
     inputs.microbolusAllowed = microbolusAllowed;
+    inputs.dynamicVariables = dynamicVariables;
     
     if (autotune_data) {
         if (autotune_data.basalprofile) { inputs.basals = autotune_data.basalprofile; }
@@ -150,7 +156,8 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             // because it's included in the current oref0 PR (https://github.com/openaps/oref0/pull/1465/files)
             // currently (2024-08-09) this settings probably doesn't work in the current iAPS main/dev branch
             threshold_setting: 60,
-            iaps: false
+            iaps: false,
+            dynamicVariables: false
         }
     )
 
