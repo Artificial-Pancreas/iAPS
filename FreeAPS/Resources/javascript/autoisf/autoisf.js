@@ -1,10 +1,10 @@
-function generate(profile, autosens, dynamicVariables, glucose, clock, pumpHistory) {
+function generate(profile, autosens, glucose, clock, pumpHistory) {
     clock = new Date();
     const autosens_data = autosens ? autosens : null;
+    const dynamicVariables = profile.dynamicVariables || { } ;
     
     // Auto ISF Overrides
     if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
-
         let overrides = { };
         for (let setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
