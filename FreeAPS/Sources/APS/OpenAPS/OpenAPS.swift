@@ -37,7 +37,7 @@ final class OpenAPS {
                 var profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
                 // To do: remove this struct.
-                var dynamicVariables = self.loadFileFromStorage(name: Monitor.dynamicVariables)
+                let dynamicVariables = self.loadFileFromStorage(name: Monitor.dynamicVariables)
                 // For other settings
                 let data = self.loadFileFromStorage(name: FreeAPS.settings)
                 let settings = FreeAPSSettings(from: data)
@@ -85,11 +85,6 @@ final class OpenAPS {
                     dynamicVariables: dynamicVariables
                 )
 
-                dynamicVariables = self.dynamicVariablesOverride(
-                    alteredProfile: alteredProfile,
-                    dynamicVariables: dynamicVariables
-                )
-
                 // Auto ISF Layer
                 if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                     profile = self.autosisf(
@@ -100,8 +95,6 @@ final class OpenAPS {
                         dynamicVariables: dynamicVariables,
                         pumpHistory: pumpHistory
                     )
-
-                    dynamicVariables = self.dynamicVariablesOverride(alteredProfile: profile, dynamicVariables: dynamicVariables)
                 }
 
                 now = Date.now
@@ -1108,22 +1101,5 @@ final class OpenAPS {
             return ""
         }
         return (try? String(contentsOf: url)) ?? ""
-    }
-
-    private func dynamicVariablesOverride(
-        alteredProfile: JSON,
-        dynamicVariables: JSON
-    ) -> RawJSON {
-        if
-            let jsonData = alteredProfile.rawJSON.data(using: .utf8),
-            let json = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
-            let override = json["dynamicVariablesOverride"],
-            let overrideData = try? JSONSerialization.data(withJSONObject: override, options: .prettyPrinted),
-            let overrideString = String(data: overrideData, encoding: .utf8)
-        {
-            return overrideString
-        } else {
-            return dynamicVariables.rawJSON
-        }
     }
 }

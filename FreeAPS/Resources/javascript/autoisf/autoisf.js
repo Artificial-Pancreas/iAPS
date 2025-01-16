@@ -41,10 +41,12 @@ function addReason(s) {
     autoISFReasons.push(s)
 }
 
-function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, currentTime, pumpHistory) {
+function aisf(iob, profile, autosens_data, _dynamicVariablesIgnored, glucose_status, currentTime, pumpHistory) {
     autoISFMessages = [];
     autoISFReasons = [];
     profile.microbolusAllowed = true;
+
+    let dynamicVariables = profile.dynamicVariables || {}
 
     // Turn Auto ISF off when exercising and an exercise setting is enabled, like with dynamic ISF.
     if (exercising(profile, dynamicVariables)) {
@@ -492,6 +494,7 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
 function iob_max(iob, dynamicVariables, profile) {
     //Your setting
     let threshold = profile.iaps.iobThresholdPercent;
+
     if (dynamicVariables.advancedSettings) {
         threshold = dynamicVariables.autoISFoverrides.iobThresholdPercent
     }
@@ -551,8 +554,7 @@ function iob_max(iob, dynamicVariables, profile) {
             addReason("Max SMB: " + effectiveSmbMinutes + " \u2192 " + smbIOBRemainingBasalMinutes);
             profile.maxSMBBasalMinutes = smbIOBRemainingBasalMinutes;
             if (dynamicVariables.advancedSettings) {
-                profile.dynamicVariablesOverride = dynamicVariables;
-                profile.dynamicVariablesOverride.smbMinutes = smbIOBRemainingBasalMinutes;
+                dynamicVariables.smbMinutes = smbIOBRemainingBasalMinutes;
             }
         }
         if (smbIOBRemainingBasalMinutes < effectiveUamMinutes) {
@@ -560,8 +562,7 @@ function iob_max(iob, dynamicVariables, profile) {
             addReason("Max UAM: " + effectiveUamMinutes + " \u2192 " + smbIOBRemainingBasalMinutes);
             profile.maxUAMSMBBasalMinutes = smbIOBRemainingBasalMinutes;
             if (dynamicVariables.advancedSettings) {
-                profile.dynamicVariablesOverride = dynamicVariables;
-                profile.dynamicVariablesOverride.uamMinutes = smbIOBRemainingBasalMinutes;
+                dynamicVariables.uamMinutes = smbIOBRemainingBasalMinutes;
             }
         }
     }
