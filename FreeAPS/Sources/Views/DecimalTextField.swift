@@ -177,18 +177,12 @@ extension DecimalTextField.Coordinator: UITextFieldDelegate {
         let isAllowed = allowedCharacters.isSuperset(of: CharacterSet(charactersIn: string))
         if !isAllowed { return false }
 
-        // enforce the decimal separator to match the formatter
-        let adjustedString = string
-            .replacingOccurrences(of: ".", with: parent.formatter.decimalSeparator)
-            .replacingOccurrences(of: ",", with: parent.formatter.decimalSeparator)
+        if let text = textField.text {
+            let newText = (text as NSString).replacingCharacters(in: range, with: string)
 
-        if let text = textField.text, text != adjustedString {
-            let newText = (text as NSString).replacingCharacters(in: range, with: adjustedString)
-
-            // Check if there's more than one occurrence of the decimal separator
             let decimalSeparatorCount = newText.count(where: { $0 == parent.formatter.decimalSeparator.first })
             if decimalSeparatorCount > 1 {
-                return false // Reject input if more than one decimal separator is found
+                return false
             }
 
             textField.text = newText

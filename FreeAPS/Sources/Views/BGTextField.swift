@@ -21,7 +21,6 @@ struct BGTextField: View {
     private var mmolLFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.decimalSeparator = "."
         formatter.maximumFractionDigits = 1
         return formatter
     }
@@ -30,7 +29,6 @@ struct BGTextField: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        formatter.decimalSeparator = "."
         return formatter
     }
 
