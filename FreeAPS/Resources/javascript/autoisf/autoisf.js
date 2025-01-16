@@ -1,7 +1,9 @@
-function generate(iob, profile, autosens, dynamicVariables, glucose, clock, pumpHistory) {
+function generate(iob, profile, autosens, _dynamicVariablesIgnored, glucose, clock, pumpHistory) {
     clock = new Date();
     const autosens_data = autosens ? autosens : null;
-    
+
+    let dynamicVariables = profile.dynamicVariables || {}
+
     // Auto ISF Overrides
     if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
 
@@ -41,12 +43,10 @@ function addReason(s) {
     autoISFReasons.push(s)
 }
 
-function aisf(iob, profile, autosens_data, _dynamicVariablesIgnored, glucose_status, currentTime, pumpHistory) {
+function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, currentTime, pumpHistory) {
     autoISFMessages = [];
     autoISFReasons = [];
     profile.microbolusAllowed = true;
-
-    let dynamicVariables = profile.dynamicVariables || {}
 
     // Turn Auto ISF off when exercising and an exercise setting is enabled, like with dynamic ISF.
     if (exercising(profile, dynamicVariables)) {
