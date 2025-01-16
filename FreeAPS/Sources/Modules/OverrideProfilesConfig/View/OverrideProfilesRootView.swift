@@ -120,7 +120,7 @@ extension OverrideProfilesConfig {
                     if !state._indefinite {
                         HStack {
                             Text("Duration")
-                            DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: false)
+                            DecimalTextField("0", value: $state.duration, formatter: formatter)
                             Text("minutes").foregroundColor(.secondary)
                         }
                     }
@@ -133,7 +133,7 @@ extension OverrideProfilesConfig {
                     if state.override_target {
                         HStack {
                             Text("Target Glucose")
-                            DecimalTextField("0", value: $state.target, formatter: glucoseFormatter, cleanInput: false)
+                            DecimalTextField("0", value: $state.target, formatter: glucoseFormatter)
                             Text(state.units.rawValue).foregroundColor(.secondary)
                         }
                     }
@@ -156,12 +156,12 @@ extension OverrideProfilesConfig {
                         if state.smbIsAlwaysOff {
                             HStack {
                                 Text("First Hour SMBs are Off (24 hours)")
-                                DecimalTextField("0", value: $state.start, formatter: formatter, cleanInput: false)
+                                DecimalTextField("0", value: $state.start, formatter: formatter)
                                 Text("hour").foregroundColor(.secondary)
                             }
                             HStack {
                                 Text("Last Hour SMBs are Off (24 hours)")
-                                DecimalTextField("0", value: $state.end, formatter: formatter, cleanInput: false)
+                                DecimalTextField("0", value: $state.end, formatter: formatter)
                                 Text("hour").foregroundColor(.secondary)
                             }
                         }
@@ -187,8 +187,7 @@ extension OverrideProfilesConfig {
                             DecimalTextField(
                                 "0",
                                 value: $state.smbMinutes,
-                                formatter: formatter,
-                                cleanInput: false
+                                formatter: formatter
                             )
                             Text("minutes").foregroundColor(.secondary)
                         }
@@ -197,8 +196,7 @@ extension OverrideProfilesConfig {
                             DecimalTextField(
                                 "0",
                                 value: $state.uamMinutes,
-                                formatter: formatter,
-                                cleanInput: false
+                                formatter: formatter
                             )
                             Text("minutes").foregroundColor(.secondary)
                         }
@@ -215,8 +213,7 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.maxIOB,
-                                    formatter: insulinFormatter,
-                                    cleanInput: false
+                                    formatter: insulinFormatter
                                 )
                                 Text("U").foregroundColor(.secondary)
                             }
@@ -242,8 +239,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.autoisf_min,
-                                            formatter: insulinFormatter,
-                                            cleanInput: false
+                                            formatter: insulinFormatter
                                         )
                                     }
 
@@ -252,8 +248,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.autoisf_max,
-                                            formatter: insulinFormatter,
-                                            cleanInput: false
+                                            formatter: insulinFormatter
                                         )
                                     }
 
@@ -262,8 +257,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.smbDeliveryRatioMin,
-                                            formatter: insulinFormatter,
-                                            cleanInput: false
+                                            formatter: insulinFormatter
                                         )
                                     }
 
@@ -272,8 +266,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.smbDeliveryRatioMax,
-                                            formatter: insulinFormatter,
-                                            cleanInput: false
+                                            formatter: insulinFormatter
                                         )
                                     }
 
@@ -292,8 +285,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.autoISFhourlyChange,
-                                            formatter: insulinFormatter,
-                                            cleanInput: false
+                                            formatter: insulinFormatter
                                         )
                                     }
 
@@ -302,8 +294,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.higherISFrangeWeight,
-                                            formatter: higherPrecisionFormatter,
-                                            cleanInput: false
+                                            formatter: higherPrecisionFormatter
                                         )
                                     }
 
@@ -312,8 +303,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.lowerISFrangeWeight,
-                                            formatter: higherPrecisionFormatter,
-                                            cleanInput: false
+                                            formatter: higherPrecisionFormatter
                                         )
                                     }
 
@@ -322,8 +312,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.postMealISFweight,
-                                            formatter: higherPrecisionFormatter,
-                                            cleanInput: false
+                                            formatter: higherPrecisionFormatter
                                         )
                                     }
 
@@ -332,8 +321,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.bgAccelISFweight,
-                                            formatter: higherPrecisionFormatter,
-                                            cleanInput: false
+                                            formatter: higherPrecisionFormatter
                                         )
                                     }
 
@@ -342,8 +330,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.bgBrakeISFweight,
-                                            formatter: higherPrecisionFormatter,
-                                            cleanInput: false
+                                            formatter: higherPrecisionFormatter
                                         )
                                     }
 
@@ -352,8 +339,7 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.iobThresholdPercent,
-                                            formatter: insulinFormatter,
-                                            cleanInput: false
+                                            formatter: insulinFormatter
                                         )
                                     }
 
@@ -367,8 +353,7 @@ extension OverrideProfilesConfig {
                                             DecimalTextField(
                                                 "0",
                                                 value: $state.autoISFsettings.iTime_Start_Bolus,
-                                                formatter: insulinFormatter,
-                                                cleanInput: false
+                                                formatter: insulinFormatter
                                             )
                                         }
 
@@ -386,7 +371,7 @@ extension OverrideProfilesConfig {
                                             Text("Upper SMB limit")
                                             BGTextField(
                                                 "0",
-                                                mgdlValue: $state.autoISFsettings.b30targetLevel,
+                                                mgdlValue: $state.autoISFsettings.b30upperLimit,
                                                 units: $state.units,
                                                 isDisabled: false
                                             )
@@ -396,7 +381,7 @@ extension OverrideProfilesConfig {
                                             Text("Upper Delta SMB limit")
                                             BGTextField(
                                                 "0",
-                                                mgdlValue: $state.autoISFsettings.b30upperLimit,
+                                                mgdlValue: $state.autoISFsettings.b30upperdelta,
                                                 units: $state.units,
                                                 isDisabled: false
                                             )
@@ -407,8 +392,7 @@ extension OverrideProfilesConfig {
                                             DecimalTextField(
                                                 "0",
                                                 value: $state.autoISFsettings.b30factor,
-                                                formatter: insulinFormatter,
-                                                cleanInput: false
+                                                formatter: insulinFormatter
                                             )
                                         }
 
@@ -417,8 +401,7 @@ extension OverrideProfilesConfig {
                                             DecimalTextField(
                                                 "0",
                                                 value: $state.autoISFsettings.b30_duration,
-                                                formatter: insulinFormatter,
-                                                cleanInput: false
+                                                formatter: insulinFormatter
                                             )
                                         }
                                     }
@@ -438,8 +421,7 @@ extension OverrideProfilesConfig {
                                                 DecimalTextField(
                                                     "0",
                                                     value: $state.autoISFsettings.ketoProtectBasalPercent,
-                                                    formatter: insulinFormatter,
-                                                    cleanInput: false
+                                                    formatter: insulinFormatter
                                                 )
                                             }
                                         } else {
@@ -452,8 +434,7 @@ extension OverrideProfilesConfig {
                                                     DecimalTextField(
                                                         "0",
                                                         value: $state.autoISFsettings.ketoProtectBasalAbsolut,
-                                                        formatter: higherPrecisionFormatter,
-                                                        cleanInput: false
+                                                        formatter: higherPrecisionFormatter
                                                     )
                                                 }
                                             }
@@ -656,17 +637,16 @@ extension OverrideProfilesConfig {
         }
 
         private func unChanged() -> Bool {
-            let isChanged = (
-                state.percentage == 100 && !state.override_target && !state.smbIsOff && !state
-                    .advancedSettings && !state.overrideMaxIOB && !state.overrideAutoISF
-            ) ||
-                (!state._indefinite && state.duration == 0) || (state.override_target && state.target == 0) ||
-                (
-                    state.percentage == 100 && !state.override_target && !state.smbIsOff && state.isf && state.cr && state
-                        .smbMinutes == state.defaultSmbMinutes && state.uamMinutes == state.defaultUamMinutes && !state
-                        .overrideMaxIOB
-                )
-            return isChanged
+            let percentUnchanged = state.percentage == 100
+            let targetUnchanged = !state.override_target || state.target == 0
+            let smbUnchanged = !state.smbIsOff
+            let maxIOBUnchanged = !state.advancedSettings || !state.overrideMaxIOB || state.maxIOB == 0
+            let smbMinutesUnchanged = state.smbMinutes == state.defaultSmbMinutes
+            let uamMinutesUnchanged = state.uamMinutes == state.defaultUamMinutes
+            let autoISFUnchanged = !state.overrideAutoISF
+
+            return percentUnchanged && targetUnchanged && smbUnchanged && maxIOBUnchanged && smbMinutesUnchanged &&
+                uamMinutesUnchanged && autoISFUnchanged
         }
 
         private func removeProfile(at offsets: IndexSet) {
