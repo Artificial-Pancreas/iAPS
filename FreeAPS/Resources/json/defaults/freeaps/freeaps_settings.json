@@ -90,5 +90,7 @@
   "variableKetoProtect": false,
   "ketoProtectBasalPercent": 20,
   "ketoProtectAbsolut": false,
-  "ketoProtectBasalAbsolut": 0
+  "ketoProtectBasalAbsolut": 0,
+  "extendHomeView": true,
+  "extended_overrides": false
 }

@@ -1,16 +1,15 @@
 /*
 
- Made for testing the iAPS OpenAPSManager
+ Made for testing the OpenAPSManager
  
  To run search in Xcode for:  "For testing replace with:"
- You only need to uncomment and comment one line in two files.
+ You need to uncomment and comment one line in two files to change to this javaScript instead of normal determine-basal.js
  
 */
-
 var autoISFMessages = [];
 var autoISFReasons = [];
 
-var test_oref0 = function test_oref0(glucose_status, currenttemp, iob_data, profile, autosens_data, meal_data, tempBasalFunctions, microBolusAllowed, reservoir_data, currentTime) {
+var test = function test(glucose_status, currenttemp, iob_data, profile, autosens_data, meal_data, tempBasalFunctions, microBolusAllowed, reservoir_data, currentTime) {
 
     //Prepare IOB data
     const iobArray = iob_data;
@@ -20,7 +19,7 @@ var test_oref0 = function test_oref0(glucose_status, currenttemp, iob_data, prof
     
     addReason("Test");
 
-    // Processed data
+    // Processed data. Change or add when needed
     const deliverAt = new Date();
     const basal = round(profile.current_basal, 2);
     const systemTime = new Date();
@@ -44,10 +43,9 @@ var test_oref0 = function test_oref0(glucose_status, currenttemp, iob_data, prof
     const rate = 0;
     const duration = 30;
     
-    // The microBolus and the maxBolus algorithms for SMBs
+    // The microBolus and the maxBolus algorithms for SMBs. Same as in oref0 but condensed.
     const maxBolus = round(profile.current_basal * profile.maxSMBBasalMinutes * 30 / 60, 1);
     let microbolus = Math.floor(Math.max(Math.min(insulinReq * profile.smb_delivery_ratio, maxBolus, max_iob - iob), 0) * roundSMBTo)/roundSMBTo;
-    addReason("Microbolusing: " + microbolus + "U");
     
     var rT = {}; //short for requestedTemp
     rT = {
@@ -58,8 +56,8 @@ var test_oref0 = function test_oref0(glucose_status, currenttemp, iob_data, prof
         , 'insulinReq': insulinReq
         , 'carbsReq': carbsReq
         , 'reservoir' : reservoir_data
-        , 'deliverAt' : deliverAt // The time at which the microbolus should be delivered
-        , 'sensitivityRatio' : autosens_data.ratio // autosens ratio (fraction of normal basal)
+        , 'deliverAt' : deliverAt
+        , 'sensitivityRatio' : autosens_data.ratio
         , 'rate': rate
         , 'duration': duration
         , 'deliverAt': deliverAt
@@ -71,7 +69,12 @@ var test_oref0 = function test_oref0(glucose_status, currenttemp, iob_data, prof
         , 'error': ''
     };
     
-    if (microbolus > 0) { rT.units = microbolus; }
+    addMessage("; Testing OpenAPS Manager ");
+    
+    if (microbolus > 0) {
+        rT.units = microbolus;
+        addMessage("Microbolusing: " + microbolus + "U ");
+    }
 
     // Predictions are empty. Add Whatever algorithm or values to see in iAPS
     var COBpredBGs = [];
@@ -88,12 +91,11 @@ var test_oref0 = function test_oref0(glucose_status, currenttemp, iob_data, prof
     rT.predBGs.COB = COBpredBGs;
     rT.predBGs.UAM = UAMpredBGs;
     
-    addMessage("; Testing OpenAPS Manager ");
-    
     // Reasons
     rT.reason = autoISFReasons.join(", ") + autoISFMessages.join(". ");
     
-    console.log("Reason: " + rT.reason);
+    // To skip tempBasalFunctions uncomment below
+    // return rT
     
     return tempBasalFunctions.setTempBasal(rT.rate, rT.duration, profile, rT, currenttemp);
 };

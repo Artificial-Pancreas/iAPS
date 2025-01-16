@@ -113,8 +113,8 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         console.log("Basal Rate set by middleware or AIMI to " + profile.basal_rate + " U/h.");
     }
     
-    // For testing replace with: 
-    // return test_oref0(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
+    /* For testing replace with:
+    return test(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock); */
     return freeaps_determineBasal(glucose_status, currenttemp, iob, profile, autosens_data, meal_data, freeaps_basalSetTemp, microbolusAllowed, reservoir_data, clock);
 }
 

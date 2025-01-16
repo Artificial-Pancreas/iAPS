@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AutoISFHistoryView: View {
     let units: GlucoseUnits
+    let device = UIDevice.current.getDeviceId
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
@@ -36,7 +37,7 @@ struct AutoISFHistoryView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.decimalSeparator = "."
-        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
         return formatter
     }
 
@@ -55,12 +56,17 @@ struct AutoISFHistoryView: View {
     private var history: some View {
         VStack(spacing: 0) {
             Button { dismiss() }
-            label: { Image(systemName: "chevron.backward") }.tint(.blue).opacity(0.8).buttonStyle(.borderless)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.system(size: 22))
-                .padding(10)
+            label: {
+                HStack {
+                    Image(systemName: "chevron.backward").font(.system(size: 22))
+                    Text("Back").font(.system(size: 18))
+                }
+            }
+            .tint(.blue).buttonStyle(.borderless)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(10)
             // Title
-            Text("Auto ISF History")
+            Text("History")
                 .padding(.bottom, 20)
                 .font(.system(size: 26))
             // SubTitle
@@ -77,26 +83,24 @@ struct AutoISFHistoryView: View {
 
             Divider()
 
+            let proMaxOffset_1: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -20 : -7
+            let proMaxOffset_2: CGFloat = (device == "iPhone17,2" || device == "iPhone 15 Pro Max") ? -10 : 0
+
             // SubTitle
             // Non-localized variable acronyms
-            let offset: CGFloat = (
-                UIDevice.current.getDeviceId == "iPhone17,2" || UIDevice.current
-                    .getDeviceId == "iPhone 15 Pro Max"
-            ) ?
-                -14 : -7
             HStack(spacing: 10) {
                 Text("Time").foregroundStyle(.primary)
                 Spacer(minLength: 1)
-                Text("BG  ").foregroundStyle(Color(.loopGreen)).offset(x: offset)
-                Text("Final").foregroundStyle(.red).offset(x: offset)
-                Text("acce").foregroundStyle(.orange).offset(x: 2)
-                Text("bg  ").foregroundStyle(.orange).offset(x: 6)
+                Text("BG  ").foregroundStyle(Color(.loopGreen)).offset(x: proMaxOffset_1)
+                Text("Final").foregroundStyle(.red).offset(x: proMaxOffset_1)
+                Text("acce").foregroundStyle(.orange).offset(x: 2 + proMaxOffset_2)
+                Text("bg  ").foregroundStyle(.orange).offset(x: 6 + proMaxOffset_2)
                 Text("dura  ").foregroundStyle(.orange).offset(x: 6)
                 Text("pp  ").foregroundStyle(.orange).offset(x: 4)
                 Spacer(minLength: 3)
-                Text("Req. ").foregroundColor(.secondary)
-                Text("TBR ").foregroundColor(.blue)
-                Text("SMB ").foregroundColor(.blue)
+                Text("Req. ").foregroundColor(.secondary).offset(x: proMaxOffset_2 / 2)
+                Text("TBR ").foregroundColor(.blue).offset(x: proMaxOffset_2 / 2)
+                Text("SMB ").foregroundColor(.blue).offset(x: proMaxOffset_2 / 2)
             }
             .padding(.horizontal, 5)
             .font(.system(size: 12))
@@ -111,7 +115,7 @@ struct AutoISFHistoryView: View {
                     if let glucose = item.glucose, glucose != 0, let aisf_reaons = item.reasons {
                         // Prepare an array of Strings
                         let reasonParsed = aisf_reaons.string.components(separatedBy: ",")
-                            .filter({ $0 != "AIMI B30 active" }).map(
+                            .filter({ $0 != "B30 Active" }).map(
                                 { item in
                                     let check = item.components(separatedBy: ":").last ?? ""
                                     return check == " 1" ? " -- " : check
@@ -160,11 +164,13 @@ struct AutoISFHistoryView: View {
                                     // Insunlin Required
                                     let insReqString = reqFormatter.string(from: (item.insulinReq ?? 0) as NSNumber) ?? ""
                                     Text(insReqString != "0.00" ? insReqString + " " : "0  ")
+                                        .offset(x: -1 * proMaxOffset_2)
                                         .foregroundColor(.secondary)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     Spacer(minLength: 2)
                                     // Basal Rate
                                     Text((formatter.string(from: (item.rate ?? 0) as NSNumber) ?? "") + " ")
+                                        .offset(x: -1 * proMaxOffset_2)
                                         .foregroundColor(Color(.insulin))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     // SMBs
@@ -173,6 +179,7 @@ struct AutoISFHistoryView: View {
                                             "\(formatter.string(from: (item.smb ?? 0) as NSNumber) ?? "")  "
                                             : "   "
                                     )
+                                    .offset(x: -1 * proMaxOffset_2)
                                     .foregroundColor(Color(.insulin))
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
@@ -185,9 +192,6 @@ struct AutoISFHistoryView: View {
             .font(.system(size: 12))
             .listStyle(.plain)
         }
+        .background(Color(.systemGray6))
     }
-}
-
-#Preview {
-    AutoISFHistoryView(units: .mmolL)
 }

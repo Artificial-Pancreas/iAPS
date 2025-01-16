@@ -19,7 +19,7 @@ extension StatConfig {
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var hideInsulinBadge: Bool = false
-        @Published var extendHomeView: Bool = false
+        @Published var extendHomeView: Bool = true
 
         var units: GlucoseUnits = .mmolL
 
