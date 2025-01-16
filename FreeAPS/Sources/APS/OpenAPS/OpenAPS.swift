@@ -81,8 +81,7 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens,
                     meal: meal,
                     microBolusAllowed: true,
-                    reservoir: reservoir,
-                    dynamicVariables: dynamicVariables
+                    reservoir: reservoir
                 )
 
                 // Auto ISF Layer
@@ -92,7 +91,6 @@ final class OpenAPS {
                         iob: iob,
                         profile: alteredProfile,
                         autosens: autosens.isEmpty ? .null : autosens,
-                        dynamicVariables: dynamicVariables,
                         pumpHistory: pumpHistory
                     )
                 }
@@ -108,7 +106,6 @@ final class OpenAPS {
                     meal: meal,
                     microBolusAllowed: true,
                     reservoir: reservoir,
-                    dynamicVariables: dynamicVariables,
                     pumpHistory: pumpHistory
                 )
                 print(
@@ -897,7 +894,6 @@ final class OpenAPS {
         meal: JSON,
         microBolusAllowed: Bool,
         reservoir: JSON,
-        dynamicVariables: JSON,
         pumpHistory: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
@@ -926,7 +922,6 @@ final class OpenAPS {
                     microBolusAllowed,
                     reservoir,
                     Date(),
-                    dynamicVariables,
                     pumpHistory
                 ]
             )
@@ -1017,8 +1012,7 @@ final class OpenAPS {
         autosens: JSON,
         meal: JSON,
         microBolusAllowed: Bool,
-        reservoir: JSON,
-        dynamicVariables: JSON
+        reservoir: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
@@ -1040,8 +1034,7 @@ final class OpenAPS {
                     meal,
                     microBolusAllowed,
                     reservoir,
-                    Date(),
-                    dynamicVariables
+                    Date()
                 ]
             )
         }
@@ -1052,7 +1045,6 @@ final class OpenAPS {
         iob: JSON,
         profile: JSON,
         autosens: JSON,
-        dynamicVariables: JSON,
         pumpHistory: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
@@ -1069,7 +1061,6 @@ final class OpenAPS {
                     iob,
                     profile,
                     autosens,
-                    dynamicVariables,
                     glucose,
                     Date(),
                     pumpHistory
