@@ -1322,10 +1322,39 @@ extension DanaKitPumpManager {
             self.log.error("No bolus entry found...")
             return
         }
-        
+
         doseEntry.deliveredUnits = deliveredUnits
         self.doseReporter?.notify(deliveredUnits: deliveredUnits)
         self.notifyStateDidChange()
+
+        if deliveredUnits.truncatingRemainder(dividingBy: getDoseDivider()) == 0.0 {
+            Task {
+                do {
+                    let command = generatePacketGeneralKeepConnection()
+                    let result = try await bluetooth.writeMessage(command)
+
+                    guard result.success else {
+                        self.log.warning("Pump declined keepalive")
+                        return
+                    }
+
+                    self.log.info("Pump accepted keepalive")
+                } catch {
+                    self.log.error("Failed to send keepalive: \(error)")
+                }
+            }
+        }
+    }
+
+    private func getDoseDivider() -> Double {
+        switch state.bolusSpeed {
+        case .speed12:
+            return 20.0
+        case .speed30:
+            return 8.0
+        case .speed60:
+            return 4.0
+        }
     }
     
     func notifyBolusDone(deliveredUnits: Double) {

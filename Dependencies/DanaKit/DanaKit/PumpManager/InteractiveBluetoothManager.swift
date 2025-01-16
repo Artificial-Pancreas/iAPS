@@ -17,6 +17,7 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
     var connectionCompletion: ((ConnectionResult) -> Void)? = nil
     var connectionCallback: [String: ((ConnectionResultShort) -> Void)] = [:]
     var devices: [DanaPumpScan] = []
+    var isBusy: Bool = false
     
     let log = DanaLogger(category: "InteractiveBluetoothManager")
     var manager: CBCentralManager! = nil
@@ -44,6 +45,7 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
     func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) {
         self.connectionCallback[identifier] = { result in
             Task {
+                self.isBusy = true
                 self.resetConnectionCompletion()
                 self.connectionCallback[identifier] = nil
                 
@@ -61,16 +63,23 @@ class InteractiveBluetoothManager : NSObject, BluetoothManager {
                 }
                 
                 await completion(result)
+                self.isBusy = false
             }
         }
         
         // Device still has an active connection with pump and is probably busy with something
-        if self.isConnected {
-            self.log.error("Failed to connect: Already connected")
-            self.logDeviceCommunication("Dana - Failed to connect: Already connected", type: .connection)
-            self.connectionCallback[identifier]!(.failure)
-            
-        // We stored the peripheral. We can quickly reconnect
+        if isConnected {
+            if isBusy {
+                log.error("Failed to connect: Already connected")
+                logDeviceCommunication("Dana - Failed to connect: Already connected", type: .connection)
+                connectionCallback[identifier]!(.failure)
+                return
+            }
+
+            // We can re-use the current connection. YEAH!!
+            connectionCallback[identifier]!(.success)
+
+            // We stored the peripheral. We can quickly reconnect
         } else if self.peripheral != nil {
             self.startTimeout(seconds: TimeInterval.seconds(15), identifier)
             
