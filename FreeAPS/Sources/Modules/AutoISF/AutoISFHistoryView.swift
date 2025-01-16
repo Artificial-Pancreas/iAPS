@@ -115,7 +115,7 @@ struct AutoISFHistoryView: View {
                     if let glucose = item.glucose, glucose != 0, let aisf_reaons = item.reasons {
                         // Prepare an array of Strings
                         let reasonParsed = aisf_reaons.string.components(separatedBy: ",")
-                            .filter({ $0 != "AIMI B30 active" }).map(
+                            .filter({ $0 != "B30 Active" }).map(
                                 { item in
                                     let check = item.components(separatedBy: ":").last ?? ""
                                     return check == " 1" ? " -- " : check

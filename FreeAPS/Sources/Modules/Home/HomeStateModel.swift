@@ -14,7 +14,7 @@ extension Home {
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
-        
+
         @Published var dynamicVariables: DynamicVariables?
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
