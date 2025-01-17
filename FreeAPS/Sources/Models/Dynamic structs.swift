@@ -28,6 +28,8 @@ struct DynamicVariables: JSON, Codable {
     var overrideMaxIOB: Bool
     var disableCGMError: Bool
     var preset: String
+    var autoISFoverrides: AutoISFsettings
+    var aisfOverridden: Bool
 
     init(
         average_total_data: Decimal,
@@ -56,7 +58,9 @@ struct DynamicVariables: JSON, Codable {
         maxIOB: Decimal,
         overrideMaxIOB: Bool,
         disableCGMError: Bool,
-        preset: String
+        preset: String,
+        autoISFoverrides: AutoISFsettings,
+        aisfOverridden: Bool
     ) {
         self.average_total_data = average_total_data
         self.weightedAverage = weightedAverage
@@ -85,6 +89,8 @@ struct DynamicVariables: JSON, Codable {
         self.overrideMaxIOB = overrideMaxIOB
         self.disableCGMError = disableCGMError
         self.preset = preset
+        self.autoISFoverrides = autoISFoverrides
+        self.aisfOverridden = aisfOverridden
     }
 }
 
@@ -117,6 +123,8 @@ extension DynamicVariables {
         case overrideMaxIOB
         case disableCGMError
         case preset
+        case autoISFoverrides
+        case aisfOverridden
     }
 }
 
