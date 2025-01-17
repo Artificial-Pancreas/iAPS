@@ -185,54 +185,42 @@ struct LiveActivity: Widget {
                         VStack {
                             chartView(for: context.state)
                                 .overlay {
-                                    HStack(spacing: 4) {
-                                        Text(LiveActivity.eventualSymbol)
-                                            .font(.system(size: 16))
-                                            .opacity(0.7)
-                                        Text(context.state.eventual).font(.system(size: 18)).opacity(0.8).fontWidth(.condensed)
-                                    }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 15)
+                                    timeAndEventualView(for: context)
                                 }
                         }
                         .padding(.vertical, 15).padding(.leading, 15).padding(.trailing, 10)
                         .background(.black.opacity(0.30))
 
-                        ZStack(alignment: .topTrailing) { // to make timestamp label overlap the image a little bit
+                        ZStack(alignment: .topTrailing) {
                             VStack(alignment: .trailing, spacing: 0) {
-                                glucoseDrop(context.state)
+                                glucoseDrop(context.state).offset(y: -7)
 
                                 Grid(horizontalSpacing: 0) {
                                     GridRow {
-                                        HStack(spacing: 1) {
+                                        HStack(spacing: 0.5) {
                                             Text(context.state.iob)
-                                                .font(.system(size: 22))
+                                                .font(.system(size: 20))
                                                 .foregroundStyle(.insulin)
-
                                             Text("U")
-                                                .font(.system(size: 22).smallCaps())
+                                                .font(.system(size: 20).smallCaps())
                                                 .foregroundStyle(.insulin)
                                         }
                                         .fontWidth(.condensed)
                                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                                        HStack(spacing: 1) {
+                                        HStack(spacing: 0.5) {
                                             Text(context.state.cob)
                                                 .foregroundStyle(.loopYellow)
-
                                             Text("g")
                                                 .foregroundStyle(.loopYellow)
                                         }
-                                        .font(.system(size: 22))
+                                        .font(.system(size: 20))
                                         .fontWidth(.condensed)
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                     }
                                 }
                                 .frame(width: dropWidth)
                             }
-                            .padding(.top, 10)
-
-//                            updatedLabel(context: context)
-//                                .font(.system(size: 11))
-//                                .foregroundStyle(.primary.opacity(0.7))
                         }
                         .frame(maxHeight: .infinity)
                         .padding(.top, 15)
@@ -319,6 +307,22 @@ struct LiveActivity: Widget {
     private var decimalString: String {
         let formatter = NumberFormatter()
         return formatter.decimalSeparator
+    }
+
+    private func timeAndEventualView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        ZStack {
+            HStack(spacing: 4) {
+                Text(LiveActivity.eventualSymbol)
+                    .font(.system(size: 16))
+                    .opacity(0.7)
+                Text(context.state.eventual).font(.system(size: 16)).opacity(0.8).fontWidth(.condensed)
+            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 15)
+
+            updatedLabel(context: context).font(.system(size: 11))
+                .foregroundStyle(.primary.opacity(0.7))
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .padding(.bottom, 30).padding(.leading, 30)
+        }
     }
 
     private func glucoseDrop(_ state: LiveActivityAttributes.ContentState) -> some View {
