@@ -27,28 +27,18 @@ extension AutoISF {
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.decimalSeparator = "." // Homogenize as the ratios are always formatted using "."
             return formatter
         }
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.decimalSeparator = "."
             if state.settingsManager.settings.units == .mmolL {
                 formatter.maximumFractionDigits = 1
                 formatter.minimumFractionDigits = 1
             } else {
                 formatter.maximumFractionDigits = 0
             }
-            return formatter
-        }
-
-        private var reqFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.decimalSeparator = "."
-            formatter.minimumFractionDigits = 2
             return formatter
         }
 
