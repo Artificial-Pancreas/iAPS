@@ -41,6 +41,31 @@ extension AutotuneConfig {
             return formatter
         }()
 
+        private func matchingProfileEntry(forSuggestedIndex index: Int) -> BasalProfileEntry? {
+            guard let autotune = state.autotune else {
+                return nil
+            }
+
+            let suggested = autotune.basalProfile[index]
+            let suggestedEnds: Int
+            if index + 1 < autotune.basalProfile.count {
+                suggestedEnds = autotune.basalProfile[index + 1].minutes
+            } else {
+                suggestedEnds = 24 * 60 // End of day in minutes
+            }
+
+            return state.currentProfile.enumerated().first(where: { currentIndex, currentEntry in
+                let nextOffset: Int
+                if currentIndex + 1 < state.currentProfile.count {
+                    nextOffset = state.currentProfile[currentIndex + 1].minutes
+                } else {
+                    nextOffset = 24 * 60 // End of day in minutes
+                }
+
+                return currentEntry.minutes <= suggested.minutes && suggestedEnds <= nextOffset
+            })?.element
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -94,10 +119,7 @@ extension AutotuneConfig {
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                     }
 
-                                    if let current = state.currentProfile.first(where: {
-                                        $0.start == autotune.basalProfile[index].start &&
-                                            $0.minutes == autotune.basalProfile[index].minutes
-                                    }) {
+                                    if let current = matchingProfileEntry(forSuggestedIndex: index) {
                                         Text(rateFormatter.string(from: current.rate as NSNumber) ?? "0")
                                             .foregroundColor(.secondary)
                                         Text("⇢").foregroundColor(.secondary)
