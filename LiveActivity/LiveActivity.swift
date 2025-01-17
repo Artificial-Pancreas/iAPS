@@ -438,6 +438,9 @@ struct LiveActivity: Widget {
     }
 
     private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
+        let domainMinGlucose = Double(state.readings.map(\.values)?.min() ?? 0) * (state.mmol ? 0.0555 : 1)
+        let domainMaxGlucose = Double(state.readings.map(\.values)?.max() ?? 0) * (state.mmol ? 0.0555 : 1)
+
         let readings = state.readings ?? LiveActivityAttributes.ValueSeries(dates: [], values: [])
         let dates = readings.dates
         let displayedValues = makePoints(dates, readings.values, mmol: state.mmol)
@@ -576,24 +579,13 @@ struct LiveActivity: Widget {
 //                        .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
         }
         .chartYScale(
-            domain:
-            (state.mmol ? 54 * 0.0555 : 54) ... (state.mmol ? 400 * 0.0555 : 400)
-//                            createYScale(state, maxValue, state.chartHighThreshold)
+            domain: 0.7 * domainMinGlucose ... domainMaxGlucose * 1.2
         )
         .chartXAxis {
             AxisMarks(position: .bottom) { _ in
                 AxisGridLine().foregroundStyle(.white.opacity(0.2))
                 AxisValueLabel(format: .dateTime.hour())
                     .foregroundStyle(.secondary)
-            }
-            AxisMarks(
-                position: .top,
-                values: [state.loopDate]
-            ) { _ in
-                AxisGridLine().foregroundStyle(.white.opacity(0.7))
-                AxisValueLabel(format: .dateTime.hour().minute(), anchor: .top)
-                    .foregroundStyle(.secondary)
-                    .offset(y: -20)
             }
         }
         .chartYAxis {
