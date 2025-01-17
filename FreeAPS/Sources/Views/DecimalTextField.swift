@@ -15,6 +15,7 @@ public struct DecimalTextField: UIViewRepresentable {
     var autofocus: Bool
     var cleanInput: Bool
     var allowDecimalSeparator: Bool
+    var liveEditing: Bool // when true: update the value as the user types; when false: only update the value when the user finishes typing (closes the keyboard)
 
     public init(
         _ placeholder: String,
@@ -29,7 +30,8 @@ public struct DecimalTextField: UIViewRepresentable {
         formatter: NumberFormatter,
         autofocus: Bool = false,
         cleanInput: Bool = true,
-        allowDecimalSeparator: Bool = true
+        allowDecimalSeparator: Bool = true,
+        liveEditing: Bool = false
     ) {
         self.placeholder = placeholder
         _value = value
@@ -45,6 +47,7 @@ public struct DecimalTextField: UIViewRepresentable {
         self.formatter = formatter
         formatter.numberStyle = .decimal
         self.allowDecimalSeparator = allowDecimalSeparator
+        self.liveEditing = liveEditing
     }
 
     private func valueAsText() -> String? {
@@ -85,7 +88,9 @@ public struct DecimalTextField: UIViewRepresentable {
             action: #selector(Coordinator.cancelEdit)
         )
 
-        toolbar.items = [clearButton, flexibleSpace, cancelButton, doneButton]
+        toolbar
+            .items = liveEditing ? [clearButton, flexibleSpace, doneButton] :
+            [clearButton, flexibleSpace, cancelButton, doneButton]
         toolbar.sizeToFit()
         return toolbar
     }
@@ -163,6 +168,21 @@ public struct DecimalTextField: UIViewRepresentable {
             }
             isEditing = false
         }
+
+        private func handleUpdatedInput() {
+            guard parent.liveEditing else { return }
+            guard let textField = self.textField else { return }
+
+            let proposedText = textField.text ?? ""
+
+            if let number = parent.formatter.number(from: proposedText) {
+                let decimalNumber = number.decimalValue
+                parent.value = decimalNumber
+            } else {
+                // invalid input, set value to 0
+                parent.value = 0
+            }
+        }
     }
 }
 
@@ -187,6 +207,7 @@ extension DecimalTextField.Coordinator: UITextFieldDelegate {
             }
 
             textField.text = newText
+            handleUpdatedInput()
             return false
         }
         return true
