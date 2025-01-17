@@ -326,7 +326,7 @@ final class OpenAPS {
                    let value = Bool(disabled), !value
                 {
                     reasonString.insert(
-                        contentsOf: "Autosens Ratio: \(isf)" + tddString + ", ",
+                        contentsOf: "Autosens Ratio: \(isf)" + tddString + ", \(reasons), ",
                         at: startIndex
                     )
                 } else {

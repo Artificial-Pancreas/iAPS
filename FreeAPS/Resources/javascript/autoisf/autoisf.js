@@ -17,7 +17,7 @@ function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
 
         if (!profile.iaps.autoisf) {
             console.log("Auto ISF Disabled by Override");
-            profile.autoISFstring = "Auto ISF Disabled by Override"
+            profile.autoISFreasons = "Auto ISF Disabled by Override"
             profile.iaps.autoisf = false;
             return profile
         }
@@ -48,6 +48,7 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
 
     // Turn Auto ISF off when exercising and an exercise setting is enabled, like with dynamic ISF.
     if (exercising(profile, dynamicVariables)) {
+        profile.autoISFreasons = "Auto ISF Disabled by Exercise";
         profile.iaps.autoisf = false;
         return
     } else {
@@ -435,9 +436,6 @@ function exercising(profile, dynamicVariables) {
     if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {
         // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
         if (profile.min_bg >= 118 || (dynamicVariables.useOverride && dynamicVariables.overrideTarget >= 118)) {
-            profile.autoISFreasons = "Auto ISF disabled";
-            profile.autoISFstring = "Disabled by exercise";
-            console.log(profile.autoISFreasons);
             return true;
         }
     }
