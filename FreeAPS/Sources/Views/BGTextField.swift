@@ -21,7 +21,6 @@ struct BGTextField: View {
     private var mmolLFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = 1
         formatter.maximumFractionDigits = 1
         return formatter
     }
@@ -36,7 +35,7 @@ struct BGTextField: View {
     private var displayValue: Binding<Decimal> {
         Binding(
             get: { units == .mmolL ? mgdlValue.asMmolL : mgdlValue },
-            set: { newValue in mgdlValue = units == .mmolL ? newValue.asMgdL : newValue }
+            set: { newValue in mgdlValue = units == .mmolL ? newValue.rounded(to: 1).asMgdL : newValue.rounded(to: 0) }
         )
     }
 
