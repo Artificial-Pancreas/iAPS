@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 
 enum Icon_: String, CaseIterable, Identifiable {
-    case primary = "pod_colorful"
+    case primary = "artficialPancreasPurple"
     case text = "iAPS"
     case podBlack = "podTemplateBlack"
     case popWhite = "podTemplateWhite"
@@ -23,7 +23,6 @@ enum Icon_: String, CaseIterable, Identifiable {
     case purpleBG = "iAPS_Purple_BG"
     case whiteBG = "iAPS_White_BG"
     case loop = "iAPS_Loop"
-    case artficialPancreasPurple
     case pancreasVial
     var id: String { rawValue }
 }

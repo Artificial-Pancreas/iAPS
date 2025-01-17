@@ -192,6 +192,6 @@ struct AutoISFHistoryView: View {
             .font(.system(size: 12))
             .listStyle(.plain)
         }
-        .background(Color(.systemGray6))
+        .background(Color(.systemGray6).opacity(colorScheme == .dark ? 1 : 0.7))
     }
 }
