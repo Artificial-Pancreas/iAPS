@@ -260,7 +260,7 @@
 "min" = "min";
 
 /*  */
-"Autotune" = "Tự động điều chỉnh";
+"Autotune" = "Autotune";
 
 /*  */
 "Basal profile" = "Hồ sơ liều nền";
@@ -1357,7 +1357,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Thông báo đã kích hoạt";
 
 /* Debug option view Autotune */
-"Autotune" = "Tự động điều chỉnh";
+"Autotune" = "Autotune";
 
 /* Debug option view Target presets */
 "Target presets" = "Mục tiêu cài đặt trước";
