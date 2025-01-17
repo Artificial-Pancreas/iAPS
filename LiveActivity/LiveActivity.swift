@@ -184,6 +184,14 @@ struct LiveActivity: Widget {
                     HStack(alignment: .top) {
                         VStack {
                             chartView(for: context.state)
+                                .overlay {
+                                    HStack(spacing: 4) {
+                                        Text(LiveActivity.eventualSymbol)
+                                            .font(.system(size: 16))
+                                            .opacity(0.7)
+                                        Text(context.state.eventual).font(.system(size: 18)).opacity(0.8).fontWidth(.condensed)
+                                    }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 15)
+                                }
                         }
                         .padding(.vertical, 15).padding(.leading, 15).padding(.trailing, 10)
                         .background(.black.opacity(0.30))
@@ -191,13 +199,6 @@ struct LiveActivity: Widget {
                         ZStack(alignment: .topTrailing) { // to make timestamp label overlap the image a little bit
                             VStack(alignment: .trailing, spacing: 0) {
                                 glucoseDrop(context.state)
-
-                                HStack(spacing: 4) {
-                                    Text(LiveActivity.eventualSymbol)
-                                        .font(.system(size: 16))
-                                        .opacity(0.7)
-                                    Text(context.state.eventual).font(.system(size: 18)).opacity(0.8).fontWidth(.condensed)
-                                }
 
                                 Grid(horizontalSpacing: 0) {
                                     GridRow {
