@@ -586,6 +586,15 @@ struct LiveActivity: Widget {
                 AxisValueLabel(format: .dateTime.hour())
                     .foregroundStyle(.secondary)
             }
+            AxisMarks(
+                position: .top,
+                values: [state.loopDate]
+            ) { _ in
+                AxisGridLine().foregroundStyle(.white.opacity(0.7))
+                AxisValueLabel(format: .dateTime.hour().minute(), anchor: .top)
+                    .foregroundStyle(.secondary)
+                    .offset(y: -20)
+            }
         }
         .chartYAxis {
             if let minYMark, let maxYMark {
@@ -715,7 +724,7 @@ private extension LiveActivityAttributes.ContentState {
             direction: "→",
             change: "+0.1",
             date: Date(),
-            iob: "1.2",
+            iob: "-0.2",
             cob: "20",
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
