@@ -13,6 +13,7 @@ extension Dynamic {
         @Published var threshold_setting: Decimal = 65
         @Published var unit: GlucoseUnits = .mmolL
         @Published var averages: (isf: Double, cr: Double, days: Double)?
+        @Published var aisf = false
 
         var preferences: Preferences {
             settingsManager.preferences
@@ -26,6 +27,7 @@ extension Dynamic {
             adjustmentFactor = settings.preferences.adjustmentFactor
             weightPercentage = settings.preferences.weightPercentage
             averages = thirtyDaysAverages()
+            aisf = settingsManager.settings.autoisf
 
             if unit == .mmolL {
                 threshold_setting = settings.preferences.threshold_setting.asMmolL
