@@ -49,20 +49,26 @@ extension Dynamic {
         var body: some View {
             Form {
                 Section {
-                    HStack {
-                        Toggle(isOn: $state.useNewFormula) {
-                            Text("Activate Dynamic Sensitivity (ISF)")
-                                .onTapGesture {
-                                    info(
-                                        header: "Activate Dynamic Sensitivity (ISF)",
-                                        body: "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits.",
-                                        useGraphics: nil
-                                    )
-                                }
-                        }.disabled(isPresented)
+                    if state.aisf {
+                        Text("Dynamic ISF is disabled while Auto ISF is enabled")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .foregroundStyle(.red)
+                    } else {
+                        HStack {
+                            Toggle(isOn: $state.useNewFormula) {
+                                Text("Activate Dynamic Sensitivity (ISF)")
+                                    .onTapGesture {
+                                        info(
+                                            header: "Activate Dynamic Sensitivity (ISF)",
+                                            body: "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits.",
+                                            useGraphics: nil
+                                        )
+                                    }
+                            }.disabled(isPresented)
+                        }
                     }
 
-                    if state.useNewFormula {
+                    if state.useNewFormula, !state.aisf {
                         HStack {
                             Toggle(isOn: $state.enableDynamicCR) {
                                 Text("Activate Dynamic Carb Ratio (CR)")
@@ -79,7 +85,7 @@ extension Dynamic {
                     }
                 } header: { Text("Enable") }
 
-                if state.useNewFormula {
+                if state.useNewFormula, !state.aisf {
                     Section {
                         HStack {
                             Toggle(isOn: $state.sigmoid) {

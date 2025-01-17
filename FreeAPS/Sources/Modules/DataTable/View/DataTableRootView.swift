@@ -204,7 +204,7 @@ extension DataTable {
                                     value: $state.manualGlucose,
                                     formatter: manualGlucoseFormatter,
                                     autofocus: true,
-                                    cleanInput: true
+                                    liveEditing: true
                                 )
                                 Text(state.units.rawValue).foregroundStyle(.secondary)
                             }
@@ -315,7 +315,7 @@ extension DataTable {
                                     value: $state.externalInsulinAmount,
                                     formatter: insulinFormatter,
                                     autofocus: true,
-                                    cleanInput: true
+                                    liveEditing: true
                                 )
                                 Text("U").foregroundColor(.secondary)
                             }
