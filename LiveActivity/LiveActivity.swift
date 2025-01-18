@@ -410,26 +410,6 @@ struct LiveActivity: Widget {
         }
     }
 
-    private func createYScale(
-        _ state: LiveActivityAttributes.ContentState,
-        _ maxValue: Double?,
-        _ highThreshold: Int16
-    ) -> ClosedRange<Double> {
-        let minValue = state.mmol ? 54 * 0.0555 : 54
-        let maxThresholdDouble =
-            state.mmol ? Double(highThreshold) * 0.0555 : Double(highThreshold)
-
-        let maxDataOrThreshold: Double
-
-        if let maxValue, maxValue > maxThresholdDouble {
-            maxDataOrThreshold = maxValue
-        } else {
-            maxDataOrThreshold = maxThresholdDouble
-        }
-
-        return Double(minValue) * 0.9 ... Double(maxDataOrThreshold * 1.1)
-    }
-
     private func makePoints(_ dates: [Date], _ values: [Int16], mmol: Bool) -> [(date: Date, value: Double)] {
         zip(dates, displayValues(values, mmol: mmol)).map { ($0, $1) }
     }
@@ -441,11 +421,16 @@ struct LiveActivity: Widget {
         let yStart = Double(state.chartLowThreshold) * ConvertionConstant
         let yEnd = Double(state.chartHighThreshold) * ConvertionConstant
 
-        // Man/max glucose for domain. +- 20 % for a prettier glucose chart
-        let domainMinGlucose = min(0.8 * Double(state.readings.map(\.values)?.min() ?? 0) * ConvertionConstant, yStart * 0.8)
-        let domainMaxGlucose = max(1.2 * Double(state.readings.map(\.values)?.max() ?? 0) * ConvertionConstant, yEnd * 1.2)
+        let readings = state.readings ?? LiveActivityAttributes.ValueSeries(dates: [], values: [])
 
-        // Max Predction
+        // Min/max BG values
+        let minValue = readings.values.min().map({ Double($0) * ConvertionConstant })
+        let maxValue = readings.values.max().map({ Double($0) * ConvertionConstant })
+
+        let minYMark = minValue
+        let maxYMark = maxValue
+
+        // Min/max Predction values
         let iob: [Int16] = state.predictions?.iob?.values ?? []
         let cob: [Int16] = state.predictions?.cob?.values ?? []
         let zt: [Int16] = state.predictions?.zt?.values ?? []
@@ -453,34 +438,27 @@ struct LiveActivity: Widget {
         let maxPrediction = Double(max(iob.max() ?? 0, cob.max() ?? 0, zt.max() ?? 0, uam.max() ?? 0)) * ConvertionConstant
         let minPrediction = Double(min(iob.min() ?? 0, cob.min() ?? 0, zt.min() ?? 0, uam.min() ?? 0)) * ConvertionConstant
 
-        let readings = state.readings ?? LiveActivityAttributes.ValueSeries(dates: [], values: [])
-        let dates = readings.dates
-        let displayedValues = makePoints(dates, readings.values, mmol: state.mmol)
-
-        var minValue = displayedValues.min { $0.value < $1.value }?.value
-        var maxValue = displayedValues.max { $0.value < $1.value }?.value
-        let minYMark = minValue
-        let maxYMark = maxValue
-        let haveReadings = minValue != nil && maxValue != nil
-
+        // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
+        let yDomain = (
+            max(min(minValue ?? 0, yStart, minPrediction) * 0.8, 0) ...
+            min(max(maxValue ?? 0, yEnd, maxPrediction) * 1.2, 400 * ConvertionConstant)
+        )
+        
+        // ---- 
+        
         let glucoseFormatter: FloatingPointFormatStyle<Double> =
             state.mmol ?
             .number.precision(.fractionLength(1)).locale(Locale(identifier: "en_US")) :
             .number.precision(.fractionLength(0))
-
-        func updateMinMax(_ values: [(date: Date, value: Double)]) -> [(date: Date, value: Double)] {
-            let minHere = values.min { $0.value < $1.value }?.value ?? Double(0)
-            let maxHere = values.max { $0.value < $1.value }?.value ?? Double(0)
-            if let currMinValue = minValue, minHere < currMinValue { minValue = minHere }
-            if let currMaxValue = maxValue, maxHere > currMaxValue { maxValue = maxHere }
-            return values
-        }
 
         let readingsSymbolSize = CGFloat(15)
 
         let predictionsOpacity = 0.3
         let predictionsSymbolSize = CGFloat(10)
 
+        let haveReadings = minValue != nil && maxValue != nil
+        let displayedValues = makePoints(readings.dates, readings.values, mmol: state.mmol)
+        
         return Chart {
             ForEach(displayedValues, id: \.date) {
                 PointMark(
@@ -497,61 +475,68 @@ struct LiveActivity: Widget {
                 .opacity(0.7)
                 .lineStyle(StrokeStyle(lineWidth: 1.0))
             }
+            
+            if haveReadings {
+                
+                if let iob = state.predictions?.iob.map({
+                    makePoints($0.dates, $0.values, mmol: state.mmol)
+                }) {
+                    ForEach(iob, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("IOB", point.value)
+                        )
+                        .symbolSize(predictionsSymbolSize)
+                        .opacity(predictionsOpacity)
+                        .foregroundStyle(Color.insulin)
+                    }
+                }
+                
+                if let zt = state.predictions?.zt.map({
+                    makePoints($0.dates, $0.values, mmol: state.mmol)
+                }) {
+                    ForEach(zt, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("ZT", point.value)
+                        )
+                        .symbolSize(predictionsSymbolSize)
+                        .opacity(predictionsOpacity)
+                        .foregroundStyle(Color.zt)
+                    }
+                }
+                
+                if let cob = state.predictions?.cob.map({
+                    makePoints($0.dates, $0.values, mmol: state.mmol)
+                }) {
+                    ForEach(cob, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("COB", point.value)
+                        )
+                        .symbolSize(predictionsSymbolSize)
+                        .opacity(predictionsOpacity)
+                        .foregroundStyle(Color.loopYellow)
+                    }
+                }
+                
+                if let uam = state.predictions?.uam.map({
+                    makePoints($0.dates, $0.values, mmol: state.mmol)
+                }) {
+                    ForEach(uam, id: \.date) { point in
+                        PointMark(
+                            x: .value("Time", point.date),
+                            y: .value("UAM", point.value)
+                        )
+                        .symbolSize(predictionsSymbolSize)
+                        .opacity(predictionsOpacity)
+                        .foregroundStyle(Color.uam)
+                    }
+                }
+                
+            }
 
-            if haveReadings, let iob = state.predictions?.iob.map({
-                updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
-            }) {
-                ForEach(iob, id: \.date) { point in
-                    PointMark(
-                        x: .value("Time", point.date),
-                        y: .value("IOB", point.value)
-                    )
-                    .symbolSize(predictionsSymbolSize)
-                    .opacity(predictionsOpacity)
-                    .foregroundStyle(Color.insulin)
-                }
-            }
-            if haveReadings, let zt = state.predictions?.zt.map({
-                updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
-            }) {
-                ForEach(zt, id: \.date) { point in
-                    PointMark(
-                        x: .value("Time", point.date),
-                        y: .value("ZT", point.value)
-                    )
-                    .symbolSize(predictionsSymbolSize)
-                    .opacity(predictionsOpacity)
-                    .foregroundStyle(Color.zt)
-                }
-            }
-            if haveReadings, let cob = state.predictions?.cob.map({
-                updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
-            }) {
-                ForEach(cob, id: \.date) { point in
-                    PointMark(
-                        x: .value("Time", point.date),
-                        y: .value("COB", point.value)
-                    )
-                    .symbolSize(predictionsSymbolSize)
-                    .opacity(predictionsOpacity)
-                    .foregroundStyle(Color.loopYellow)
-                }
-            }
-            if haveReadings, let uam = state.predictions?.uam.map({
-                updateMinMax(makePoints($0.dates, $0.values, mmol: state.mmol))
-            }) {
-                ForEach(uam, id: \.date) { point in
-                    PointMark(
-                        x: .value("Time", point.date),
-                        y: .value("UAM", point.value)
-                    )
-                    .symbolSize(predictionsSymbolSize)
-                    .opacity(predictionsOpacity)
-                    .foregroundStyle(Color.uam)
-                }
-            }
-
-            if let xStart = dates.min(),
+            if let xStart = readings.dates.min(),
                let xEnd = [
                    state.predictions?.iob?.dates.last,
                    state.predictions?.cob?.dates.last,
@@ -569,11 +554,7 @@ struct LiveActivity: Widget {
                 .foregroundStyle(.green.opacity(0.1))
             }
         }
-        .chartYScale(
-            // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
-            domain: min(max(0, minPrediction), domainMinGlucose) ...
-                min(max(domainMaxGlucose, maxPrediction), 400 * ConvertionConstant)
-        )
+        .chartYScale(domain: yDomain)
         .chartXAxis {
             AxisMarks(position: .bottom) { _ in
                 AxisGridLine().foregroundStyle(.white.opacity(0.2))
