@@ -182,14 +182,8 @@ struct LiveActivity: Widget {
 
                 } else {
                     HStack(alignment: .top) {
-                        VStack {
-                            chartView(for: context.state)
-                                .overlay {
-                                    timeAndEventualView(for: context)
-                                }
-                        }
-                        .padding(.vertical, 15).padding(.leading, 15).padding(.trailing, 10)
-                        .background(.black.opacity(0.30))
+                        chartView(for: context.state)
+                            .background(.black.opacity(0.30))
 
                         ZStack(alignment: .topTrailing) {
                             VStack(alignment: .trailing, spacing: 0) {
@@ -227,6 +221,7 @@ struct LiveActivity: Widget {
                         .padding(.bottom, 15)
                         .padding(.trailing, 15)
                     }
+                    .overlay { timeAndEventualView(for: context) }
                 }
             }
             .privacySensitive()
@@ -311,17 +306,19 @@ struct LiveActivity: Widget {
 
     private func timeAndEventualView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         ZStack {
+            // Eventual Glucose
             HStack(spacing: 4) {
                 Text(LiveActivity.eventualSymbol)
                     .font(.system(size: 16))
                     .opacity(0.7)
                 Text(context.state.eventual).font(.system(size: 16)).opacity(0.8).fontWidth(.condensed)
-            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 15)
-
+            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 20)
+                .padding(.trailing, 120)
+            // Timestamp
             updatedLabel(context: context).font(.system(size: 11))
                 .foregroundStyle(.primary.opacity(0.7))
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .padding(.bottom, 30).padding(.leading, 30)
+                .padding(.vertical, 10).padding(.leading, 50)
         }
     }
 
@@ -438,8 +435,23 @@ struct LiveActivity: Widget {
     }
 
     private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
-        let domainMinGlucose = Double(state.readings.map(\.values)?.min() ?? 0) * (state.mmol ? 0.0555 : 1)
-        let domainMaxGlucose = Double(state.readings.map(\.values)?.max() ?? 0) * (state.mmol ? 0.0555 : 1)
+        let ConvertionConstant: Double = (state.mmol ? 0.0555 : 1)
+
+        // Green AreaMark low/high
+        let yStart = Double(state.chartLowThreshold) * ConvertionConstant
+        let yEnd = Double(state.chartHighThreshold) * ConvertionConstant
+
+        // Man/max glucose for domain. +- 20 % for a prettier glucose chart
+        let domainMinGlucose = min(0.8 * Double(state.readings.map(\.values)?.min() ?? 0) * ConvertionConstant, yStart * 0.8)
+        let domainMaxGlucose = max(1.2 * Double(state.readings.map(\.values)?.max() ?? 0) * ConvertionConstant, yEnd * 1.2)
+
+        // Max Predction
+        let iob: [Int16] = state.predictions?.iob?.values ?? []
+        let cob: [Int16] = state.predictions?.cob?.values ?? []
+        let zt: [Int16] = state.predictions?.zt?.values ?? []
+        let uam: [Int16] = state.predictions?.uam?.values ?? []
+        let maxPrediction = Double(max(iob.max() ?? 0, cob.max() ?? 0, zt.max() ?? 0, uam.max() ?? 0)) * ConvertionConstant
+        let minPrediction = Double(min(iob.min() ?? 0, cob.min() ?? 0, zt.min() ?? 0, uam.min() ?? 0)) * ConvertionConstant
 
         let readings = state.readings ?? LiveActivityAttributes.ValueSeries(dates: [], values: [])
         let dates = readings.dates
@@ -548,38 +560,19 @@ struct LiveActivity: Widget {
                    displayedValues.last?.date
                ].compactMap({ $0 }).max()
             {
-                let yStart = state.mmol ? Double(state.chartLowThreshold) * 0.0555 : Double(state.chartLowThreshold)
-                let yEnd = state.mmol ? Double(state.chartHighThreshold) * 0.0555 : Double(state.chartHighThreshold)
-
                 RectangleMark(
                     xStart: .value("Start", xStart),
                     xEnd: .value("End", xEnd),
                     yStart: .value("Bottom", yStart),
                     yEnd: .value("Top", yEnd)
                 )
-                .foregroundStyle(.green.opacity(0.2))
+                .foregroundStyle(.green.opacity(0.1))
             }
-
-//                RuleMark(y: .value(
-//                    "Low Threshold",
-//                    state.mmol ? Double(state.chartLowThreshold) * 0.0555 : Double(state.chartLowThreshold)
-//                ))
-//                .foregroundStyle(.red.opacity(0.4))
-//                .lineStyle(StrokeStyle(lineWidth: 2, dash: [1, 1]))
-//
-//                RuleMark(y: .value(
-//                    "High Threshold",
-//                    state.mmol ? Double(state.chartHighThreshold) * 0.0555 : Double(state.chartHighThreshold)
-//                ))
-//                .foregroundStyle(.orange.opacity(0.4))
-//                .lineStyle(StrokeStyle(lineWidth: 2, dash: [1, 1]))
-
-//                    RuleMark(x: .value("Now", Date.now))
-//                        .foregroundStyle(.white.opacity(0.4))
-//                        .lineStyle(StrokeStyle(lineWidth: 1, dash: [5, 5]))
         }
         .chartYScale(
-            domain: 0.7 * domainMinGlucose ... domainMaxGlucose * 1.2
+            // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
+            domain: min(max(0, minPrediction), domainMinGlucose) ...
+                min(max(domainMaxGlucose, maxPrediction), 400 * ConvertionConstant)
         )
         .chartXAxis {
             AxisMarks(position: .bottom) { _ in
@@ -609,7 +602,7 @@ struct LiveActivity: Widget {
                     .foregroundStyle(.secondary)
                 }
             }
-        }
+        }.padding(.bottom, 10).padding(.top, 30).padding(.leading, 15).padding(.trailing, 10)
     }
 }
 
