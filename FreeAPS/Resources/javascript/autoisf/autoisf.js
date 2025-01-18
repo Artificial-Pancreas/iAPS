@@ -491,7 +491,7 @@ function iob_max(iob, dynamicVariables, profile) {
     //Your setting
     let threshold = profile.iaps.iobThresholdPercent;
 
-    if (dynamicVariables.advancedSettings && dynamicVariables.aisfOverridden) {
+    if (dynamicVariables.aisfOverridden) {
         threshold = dynamicVariables.autoISFoverrides.iobThresholdPercent
     }
     //Guards
