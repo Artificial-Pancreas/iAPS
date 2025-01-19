@@ -33,10 +33,6 @@ extension PumpSettingsEditor {
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
 
-            guard !pump.localizedTitle.contains(NSLocalizedString("Dana", comment: "")) else {
-                return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
-            }
-
             // Don't ask why 🤦‍♂️
             // let sync = DeliveryLimitSettingsTableViewController(style: .grouped)
             let limits = DeliveryLimits(
@@ -45,6 +41,22 @@ extension PumpSettingsEditor {
             )
             // sync.maximumBasalRatePerHour = Double(settings.maxBasal)
             // sync.maximumBolus = Double(settings.maxBolus)
+
+            guard !pump.localizedTitle.contains(NSLocalizedString("Dana", comment: "")) else {
+                save(PumpSettings(
+                    insulinActionCurve: settings.insulinActionCurve,
+                    maxBolus: Decimal(
+                        limits.maximumBolus?
+                            .doubleValue(for: .internationalUnit()) ?? Double(settings.maxBolus)
+                    ),
+                    maxBasal: Decimal(
+                        limits.maximumBasalRate?
+                            .doubleValue(for: .internationalUnitsPerHour) ?? Double(settings.maxBasal)
+                    )
+                ))
+                return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
+            }
+
             return Future { promise in
                 self.processQueue.async {
                     pump.syncDeliveryLimits(limits: limits) { result in
