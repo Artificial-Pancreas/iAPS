@@ -36,8 +36,6 @@ final class OpenAPS {
                 let preferencesData = Preferences(from: preferences)
                 var profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-                // To do: remove this struct.
-                let dynamicVariables = self.loadFileFromStorage(name: Monitor.dynamicVariables)
                 // For other settings
                 let data = self.loadFileFromStorage(name: FreeAPS.settings)
                 let settings = FreeAPSSettings(from: data)
