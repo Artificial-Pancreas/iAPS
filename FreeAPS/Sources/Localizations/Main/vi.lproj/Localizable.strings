@@ -260,7 +260,7 @@
 "min" = "min";
 
 /*  */
-"Autotune" = "Tự động điều chỉnh";
+"Autotune" = "Autotune";
 
 /*  */
 "Basal profile" = "Hồ sơ liều nền";
@@ -1357,7 +1357,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Thông báo đã kích hoạt";
 
 /* Debug option view Autotune */
-"Autotune" = "Tự động điều chỉnh";
+"Autotune" = "Autotune";
 
 /* Debug option view Target presets */
 "Target presets" = "Mục tiêu cài đặt trước";
@@ -2032,7 +2032,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to delete this CGM?" = "Bạn có chắc sẽ xóa CGM này?";
 
 /* New Experimental feature */
-"Experimental" = "Thực hiện";
+"Experimental" = "Experimental";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Làm mịn Glucose";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
@@ -2309,16 +2309,16 @@ Enact a temp Basal or a temp target */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Hệ số nhân tỷ lệ cơ bản thông thường của bạn đối với B30. Tỷ lệ cơ bản tối đa được ban hành là mức tối đa của cài đặt cơ bản tối đa của máy bơm của bạn. Mặc định là 5.";
 
 /* */
-"Upper Delta limit for B30" = "Upper Delta limit for B30";
+"Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl." = "B30 sẽ chỉ chạy khi BG delta vẫn ở dưới mức đó, nếu autoISF thông thường sẽ tiếp quản. Mặc định là 8 mg/dl.";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
 
 /* */
-"Upper BG limit for B30" = "Upper BG limit for B30";
+"Upper BG limit" = "Upper BG limit";
 
 /* */
-"B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl." = "B30 sẽ chỉ chạy khi BG vẫn ở dưới mức đó, nếu autoISF ở mức trên thông thường sẽ tiếp quản. Mặc định là 130 mg/dl.";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
@@ -2381,10 +2381,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh ISF nếu glucose cao hơn mục tiêu. Với 0,0, hiệu ứng sẽ bị vô hiệu hóa.";
 
 /* */
-"Auto ISF Hourly Max Change" = "Auto ISF Hourly Max Change";
+"Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG leveel remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Tốc độ ISF giảm mỗi giờ với giả định mức BG vẫn ở mức mục tiêu gấp đôi trong thời gian đó. Khi giá trị = 1,0, ISF giảm xuống 50% sau 1 giờ ở mức BG ở mức mục tiêu gấp đôi.";
+"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
