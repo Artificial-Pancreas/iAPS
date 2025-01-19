@@ -335,12 +335,12 @@ struct LiveActivity: Widget {
         // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
 
         let yDomainMin = minOptional1(
-            lowThreshold * 0.8,
+            lowThreshold * 0.9,
             minValue.map({ $0 * 0.9 }),
             minPrediction
         )
         let yDomainMax = maxOptional1(
-            highThreshold * 0.8,
+            highThreshold * 1.1,
             maxValue.map({ $0 * 1.1 }),
             maxPrediction
         )
