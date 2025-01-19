@@ -381,14 +381,6 @@ struct LiveActivity: Widget {
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.red)
-                        LineMark(
-                            x: .value("Time", $0.date),
-                            y: .value("GlucoseLow", $0.value)
-                        )
-                        .foregroundStyle(.red)
-                        .opacity(bgOpacity)
-                        .lineStyle(StrokeStyle(lineWidth: 1.0))
-
                     } else if $0.value > highThreshold {
                         PointMark(
                             x: .value("Time", $0.date),
@@ -396,14 +388,6 @@ struct LiveActivity: Widget {
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.orange)
-                        LineMark(
-                            x: .value("Time", $0.date),
-                            y: .value("GlucoseHigh", $0.value)
-                        )
-                        .foregroundStyle(.orange)
-                        .opacity(bgOpacity)
-                        .lineStyle(StrokeStyle(lineWidth: 1.0))
-
                     } else {
                         PointMark(
                             x: .value("Time", $0.date),
@@ -411,14 +395,14 @@ struct LiveActivity: Widget {
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.darkGreen)
-                        LineMark(
-                            x: .value("Time", $0.date),
-                            y: .value("Glucose", $0.value)
-                        )
-                        .foregroundStyle(.darkGreen)
-                        .opacity(bgOpacity)
-                        .lineStyle(StrokeStyle(lineWidth: 1.0))
                     }
+                    LineMark(
+                        x: .value("Time", $0.date),
+                        y: .value("Glucose", $0.value)
+                    )
+                    .foregroundStyle(.darkGray)
+                    .opacity(bgOpacity)
+                    .lineStyle(StrokeStyle(lineWidth: 1.0))
                 }
             }
 
