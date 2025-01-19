@@ -260,11 +260,11 @@ struct LiveActivity: Widget {
     @ViewBuilder private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         HStack(alignment: .top) {
             chartView(for: context.state)
-                .background(.black.opacity(0.30))
                 .padding(.bottom, 10)
                 .padding(.top, 30)
                 .padding(.leading, 15)
                 .padding(.trailing, 10)
+                .background(.black.opacity(0.30))
 
             ZStack(alignment: .topTrailing) {
                 VStack(alignment: .trailing, spacing: 0) {
@@ -371,12 +371,30 @@ struct LiveActivity: Widget {
         return Chart {
             if let bg = bgPoints {
                 ForEach(bg, id: \.date) {
-                    PointMark(
-                        x: .value("Time", $0.date),
-                        y: .value("Glucose", $0.value)
-                    )
-                    .symbolSize(readingsSymbolSize)
-                    .foregroundStyle(.darkGreen)
+                    if $0.value < yStart {
+                        PointMark(
+                            x: .value("Time", $0.date),
+                            y: .value("GlucoseLow", $0.value)
+                        )
+                        .symbolSize(readingsSymbolSize)
+                        .foregroundStyle(.red)
+
+                    } else if $0.value > yEnd {
+                        PointMark(
+                            x: .value("Time", $0.date),
+                            y: .value("GlucoseHigh", $0.value)
+                        )
+                        .symbolSize(readingsSymbolSize)
+                        .foregroundStyle(.orange)
+
+                    } else {
+                        PointMark(
+                            x: .value("Time", $0.date),
+                            y: .value("Glucose", $0.value)
+                        )
+                        .symbolSize(readingsSymbolSize)
+                        .foregroundStyle(.darkGreen)
+                    }
                     LineMark(
                         x: .value("Time", $0.date),
                         y: .value("Glucose", $0.value)
@@ -817,12 +835,11 @@ struct SampleData {
             calendar.date(byAdding: .minute, value: -minutesAgoX5 * 5, to: now)!
         }.reversed())
 
-        var current = 100 + Int.random(in: 0 ... 100)
+        var current = 120 + Int.random(in: 0 ... 100)
         let readingValues: [Int16] = Array((0 ..< 2 * 12).map { _ in
             current = current + Int.random(in: 10 ... 20) * Int.random(in: -50 ... 50).signum()
-//            current = 100 + Int.random(in: 0 ... 5) * Int.random(in: -50 ... 50).signum()
-            if current < 100 {
-                current = 100 + Int.random(in: 0 ... 10)
+            if current < 60 {
+                current = 60 + Int.random(in: 0 ... 10)
             }
             return Int16(clamping: current)
         }.reversed())
