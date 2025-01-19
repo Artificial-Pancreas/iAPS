@@ -50,11 +50,11 @@ extension PumpSettingsEditor {
                         }
                         Button { state.save() }
                         label: {
-                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
+                            Text(state.syncInProgress ? "Saving..." : danaString != "" ? "Save on Pump" : "Save")
                         }
                         .disabled(state.syncInProgress)
                     }
-                } footer: { danaString != "" ? Text(LocalizedStringKey(danaString)) : nil }
+                } footer: { danaString != "" ? Text(LocalizedStringKey(danaString)).textCase(nil).foregroundStyle(.red) : nil }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
