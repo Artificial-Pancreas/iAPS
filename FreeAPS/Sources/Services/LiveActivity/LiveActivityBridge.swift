@@ -383,7 +383,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
         defer { self.suggestion = suggestion }
 
         let cd = CoreDataStorage()
-        let glucose = cd.fetchGlucose(interval: DateFilter().twoHours)
+        let glucose = cd.fetchGlucose(interval: DateFilter().threeHours)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
