@@ -345,7 +345,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
         defer { self.suggestion = suggestion }
 
         let cd = CoreDataStorage()
-        let glucose = cd.fetchGlucose(interval: DateFilter().twoHours)
+        let glucose = cd.fetchGlucose(interval: DateFilter().threeHours)
         let prev = glucose.count > 1 ? glucose[1] : glucose.first
 
         guard let content = LiveActivityAttributes.ContentState(
@@ -355,7 +355,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             suggestion: suggestion,
             loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
                 (cd.fetchLastLoop()?.timestamp ?? .distantPast),
-            readings: settings.liveActivityChart ? coreDataStorage.fetchGlucose(interval: DateFilter().twoHours) : nil,
+            readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
             chartLowThreshold: Int(settings.low),
@@ -393,7 +393,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             suggestion: suggestion,
             loopDate: settings.closedLoop ? (cd.fetchLastLoop()?.timestamp ?? .distantPast) : suggestion
                 .timestamp ?? .distantPast,
-            readings: settings.liveActivityChart ? coreDataStorage.fetchGlucose(interval: DateFilter().twoHours) : nil,
+            readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
             chartLowThreshold: Int(settings.low),
