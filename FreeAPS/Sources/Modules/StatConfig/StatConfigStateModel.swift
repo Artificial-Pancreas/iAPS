@@ -19,6 +19,7 @@ extension StatConfig {
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var hideInsulinBadge: Bool = false
+        @Published var extendHomeView: Bool = true
 
         var units: GlucoseUnits = .mmolL
 
@@ -39,6 +40,7 @@ extension StatConfig {
             subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { useInsulinBars = $0 }
             subscribeSetting(\.displayDelta, on: $displayDelta) { displayDelta = $0 }
             subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { hideInsulinBadge = $0 }
+            subscribeSetting(\.extendHomeView, on: $extendHomeView) { extendHomeView = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)

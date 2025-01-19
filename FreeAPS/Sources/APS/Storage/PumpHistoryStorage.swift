@@ -38,10 +38,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 switch event.type {
                 case .bolus:
                     guard let dose = event.dose else { return [] }
-
                     var amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
 
-                    // Needing a bigger change?
                     if insulinConcentration.concentration != 1, var needingAdjustment = amount {
                         needingAdjustment *= Decimal(insulinConcentration.concentration)
                         amount = needingAdjustment.roundBolus(increment: insulinConcentration.increment)
@@ -63,7 +61,6 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
-
                     var rate = Decimal(dose.unitsPerHour)
 
                     // Eventual adjustment for concentration
