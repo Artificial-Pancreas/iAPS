@@ -2309,16 +2309,16 @@ Enact a temp Basal or a temp target */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Коефіцієнт, який множить вашу нормальну базальну дозу B30. Запроваджена максимальна базальна норма – це максимальна  базальна норма вашої помпи. За замовчуванням 5.";
 
 /* */
-"Upper Delta limit for B30" = "Верхня межа Delta для B30";
+"Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl." = "B30 працюватиме лише до тих пір, поки дельта BG залишається нижче цього рівня, якщо вище звичайного autoISF. За замовчуванням 8 mg/dl.";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
 
 /* */
-"Upper BG limit for B30" = "Верхня межа BG для B30";
+"Upper BG limit" = "Upper BG limit";
 
 /* */
-"B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl." = "B30 працюватиме лише до тих пір, поки BG залишається нижче цього рівня, якщо вище звичайного autoISF. За замовчуванням 130 mg/dl.";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Цільовий рівень для B30 має бути прийнятий";
@@ -2381,10 +2381,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значення за замовчуванням: 0,0 Це вага, застосована до багатокутника, який адаптує ISF, якщо рівень глюкози перевищує цільовий показник. З 0,0 ефект фактично вимикається.";
 
 /* */
-"Auto ISF Hourly Max Change" = "Автоматична максимальна зміна ISF щогодини";
+"Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG leveel remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Швидкість, з якою ISF зменшується на годину, припускаючи, що рівень BG залишається подвійним цільовим протягом цього часу. Коли значення = 1,0, ISF знижується до 50% після 1 години рівня BG у 2 рази більше цільового значення.";
+"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
@@ -2876,16 +2876,16 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "За замовчуванням 0.2 (20%). Максимальна позитивна зміна відсоткового рівня глюкози в крові для спрацьовування SMB, при перевищенні цього порога - відбудеться відключення SMB та перехід в керування лише базою. Запрограмована межа – 40%. Для повністю закритої петлі UAM рекомендується 30%. Результат можна спостерігати в журналі роботи та спливаючому вікні статусу петлі (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... Коли Рівень Глюкози понад:";
+"... When Blood Glucose Is Above:" = "... Коли рівень глюкози в крові вище:";
 
 /* ... When Blood Glucose Is Above: */
-"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Налаштуйте рівень для опції \"Увімкнути SMB при високому BG\". Якщо рівень BG вищий за дане значення, SMB будуть увімкнені.";
+"Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Налаштуйте рівень для опції \"Увімкнути SMB за високого BG\". Якщо рівень BG вищий за дане значення, SMB будуть включені.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Увімкнути SMB при високому BG";
+"Enable SMB With High BG" = "Увімкнути SMB за високого BG";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Увімкнути SMB, коли виявлено високий рівень BG, що визначається порогом високого BG (скоригованим або з профілю)";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Увімкнути SMB коли виявлено високий рівень BG, заснований на підвищеній меті BG (скоригованої або з профілю)";
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Налаштування динамічних опцій";
