@@ -32,7 +32,7 @@ extension Calibrations {
                                 value: $state.newCalibration,
                                 formatter: formatter,
                                 autofocus: false,
-                                cleanInput: true
+                                liveEditing: true
                             )
                             Text(state.units.rawValue).foregroundColor(.secondary)
                         }
