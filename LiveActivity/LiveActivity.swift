@@ -304,13 +304,24 @@ struct LiveActivity: Widget {
         let zt: [Int16] = state.predictions?.zt?.values ?? []
         let uam: [Int16] = state.predictions?.uam?.values ?? []
 
+        let lowThreshold = Double(state.chartLowThreshold) * ConversionConstant
+        let highThreshold = Double(state.chartHighThreshold) * ConversionConstant
+
         // Min/max BG values
         let minValue = state.readings?.values.min().map({ Double($0) * ConversionConstant })
         let maxValue = state.readings?.values.max().map({ Double($0) * ConversionConstant })
 
         // Green AreaMark low/high
-        let lowThreshold = Double(state.chartLowThreshold) * ConversionConstant
-        let highThreshold = Double(state.chartHighThreshold) * ConversionConstant
+        let yStart = lowThreshold
+        let yEnd = highThreshold
+        let xStart = state.readings?.dates.min()
+        let xEnd = maxOptional(
+            state.predictions?.iob?.dates.max(),
+            state.predictions?.cob?.dates.max(),
+            state.predictions?.zt?.dates.max(),
+            state.predictions?.uam?.dates.max(),
+            state.readings?.dates.max()
+        )
 
         // Min/max Predction values
         let maxPrediction = maxOptional(
@@ -325,12 +336,12 @@ struct LiveActivity: Widget {
 
         let yDomainMin = min(
             (minValue ?? 0) * 0.9,
-            lowThreshold,
+            lowThreshold * 0.8,
             minPrediction
         )
         let yDomainMax = max(
             (maxValue ?? 0) * 1.1,
-            highThreshold,
+            highThreshold * 0.8,
             maxPrediction
         )
         let yDomain = (
@@ -350,6 +361,7 @@ struct LiveActivity: Widget {
         let bgOpacity: Double = 0.7
         let predictionsOpacity = 0.3
         let predictionsSymbolSize = CGFloat(10)
+        let inRangeRectOpacity = 0.1
 
         let bgPoints = state.readings.map({
             makePoints($0.dates, $0.values)
@@ -369,6 +381,13 @@ struct LiveActivity: Widget {
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.red)
+                        LineMark(
+                            x: .value("Time", $0.date),
+                            y: .value("GlucoseLow", $0.value)
+                        )
+                        .foregroundStyle(.red)
+                        .opacity(bgOpacity)
+                        .lineStyle(StrokeStyle(lineWidth: 1.0))
 
                     } else if $0.value > highThreshold {
                         PointMark(
@@ -377,6 +396,13 @@ struct LiveActivity: Widget {
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.orange)
+                        LineMark(
+                            x: .value("Time", $0.date),
+                            y: .value("GlucoseHigh", $0.value)
+                        )
+                        .foregroundStyle(.orange)
+                        .opacity(bgOpacity)
+                        .lineStyle(StrokeStyle(lineWidth: 1.0))
 
                     } else {
                         PointMark(
@@ -385,14 +411,14 @@ struct LiveActivity: Widget {
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.darkGreen)
+                        LineMark(
+                            x: .value("Time", $0.date),
+                            y: .value("Glucose", $0.value)
+                        )
+                        .foregroundStyle(.darkGreen)
+                        .opacity(bgOpacity)
+                        .lineStyle(StrokeStyle(lineWidth: 1.0))
                     }
-                    LineMark(
-                        x: .value("Time", $0.date),
-                        y: .value("Glucose", $0.value)
-                    )
-                    .foregroundStyle(.darkGreen)
-                    .opacity(bgOpacity)
-                    .lineStyle(StrokeStyle(lineWidth: 1.0))
                 }
             }
 
@@ -442,6 +468,16 @@ struct LiveActivity: Widget {
                     .opacity(predictionsOpacity)
                     .foregroundStyle(Color.uam)
                 }
+            }
+
+            if let xStart = xStart, let xEnd = xEnd {
+                RectangleMark(
+                    xStart: .value("Start", xStart),
+                    xEnd: .value("End", xEnd),
+                    yStart: .value("Bottom", yStart),
+                    yEnd: .value("Top", yEnd)
+                )
+                .foregroundStyle(.green.opacity(inRangeRectOpacity))
             }
         }
         .chartYScale(domain: yDomain)

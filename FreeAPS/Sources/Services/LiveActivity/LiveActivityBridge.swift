@@ -355,10 +355,8 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             suggestion: suggestion,
             loopDate: (suggestion.recieved ?? false) ? (suggestion.timestamp ?? .distantPast) :
                 (cd.fetchLastLoop()?.timestamp ?? .distantPast),
-            readings: settings.liveActivityChartShowPredictions ? coreDataStorage
-                .fetchGlucose(interval: DateFilter().twoHours) : nil,
-            predictions: settings.liveActivityChartShowPredictions && settings.liveActivityChartShowPredictions ? suggestion
-                .predictions : nil,
+            readings: settings.liveActivityChart ? coreDataStorage.fetchGlucose(interval: DateFilter().twoHours) : nil,
+            predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
