@@ -466,7 +466,7 @@ struct LiveActivity: Widget {
         }
         .chartYScale(domain: yDomain)
         .chartXAxis {
-            AxisMarks(position: .bottom) { _ in
+            AxisMarks(position: .bottom, values: .stride(by: .hour, count: 1)) { _ in
                 AxisGridLine().foregroundStyle(.white.opacity(0.2))
                 AxisValueLabel(format: .dateTime.hour())
                     .foregroundStyle(.secondary)
