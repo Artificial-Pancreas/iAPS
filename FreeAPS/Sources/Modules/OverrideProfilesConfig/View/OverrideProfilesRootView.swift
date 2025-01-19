@@ -134,7 +134,7 @@ extension OverrideProfilesConfig {
                             Text("minutes").foregroundColor(.secondary)
                         }
                     }
-                }
+                } header: { Text("Duration") }
 
                 Section {
                     HStack {
@@ -149,7 +149,7 @@ extension OverrideProfilesConfig {
                             Text(state.units.rawValue).foregroundColor(.secondary)
                         }
                     }
-                }
+                } header: { Text("Target") }
 
                 Section {
                     HStack {
