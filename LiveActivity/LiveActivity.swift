@@ -326,27 +326,26 @@ struct LiveActivity: Widget {
         // Min/max Predction values
         let maxPrediction = maxOptional(
             iob.max(), cob.max(), zt.max(), uam.max()
-        ).map({ Double($0) * ConversionConstant }) ?? 0
+        ).map({ Double($0) * ConversionConstant })
 
         let minPrediction = minOptional(
             iob.max(), cob.max(), zt.max(), uam.max()
-        ).map({ Double($0) * ConversionConstant }) ?? 0
+        ).map({ Double($0) * ConversionConstant })
 
         // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
 
-        let yDomainMin = min(
-            (minValue ?? 0) * 0.9,
+        let yDomainMin = minOptional1(
             lowThreshold * 0.8,
+            minValue.map({ $0 * 0.9 }),
             minPrediction
         )
-        let yDomainMax = max(
-            (maxValue ?? 0) * 1.1,
+        let yDomainMax = maxOptional1(
             highThreshold * 0.8,
+            maxValue.map({ $0 * 1.1 }),
             maxPrediction
         )
         let yDomain = (
-            max(yDomainMin, 0) ...
-                min(yDomainMax, 400 * ConversionConstant)
+            max(yDomainMin, 0) ... min(yDomainMax, 400 * ConversionConstant)
         )
 
         // ----
@@ -501,6 +500,14 @@ struct LiveActivity: Widget {
 
     private func minOptional<T: Comparable>(_ values: T?...) -> T? {
         values.compactMap { $0 }.min()
+    }
+
+    private func maxOptional1<T: Comparable>(_ first: T, _ values: T?...) -> T {
+        values.compactMap { $0 }.max().map { max($0, first) } ?? first
+    }
+
+    private func minOptional1<T: Comparable>(_ first: T, _ values: T?...) -> T {
+        values.compactMap { $0 }.min().map { min($0, first) } ?? first
     }
 
     @ViewBuilder private func chartRightHandView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
