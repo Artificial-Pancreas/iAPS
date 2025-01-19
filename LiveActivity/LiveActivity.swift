@@ -24,8 +24,6 @@ struct LiveActivity: Widget {
         return formatter
     }()
 
-    @Environment(\.dynamicTypeSize) private var fontSize
-
     @ViewBuilder private func changeLabel(context: ActivityViewContext<LiveActivityAttributes>) -> some View {
         if !context.state.change.isEmpty {
             if !context.isStale {
@@ -128,118 +126,13 @@ struct LiveActivity: Widget {
         Text(" ").font(.caption).offset(x: 0, y: -5)
     }
 
-    private static let eventualSymbol = "⇢"
-
-    private let dropWidth = CGFloat(80)
-    private let dropHeight = CGFloat(80)
-
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: LiveActivityAttributes.self) { context in
             // Lock screen/banner UI goes here
-            let widget = VStack(spacing: 2) {
-                if !context.state.showChart {
-                    ZStack {
-                        updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                    }
-
-                    HStack(alignment: .top) {
-                        loop(context: context, size: 22)
-                            .padding(.top, 6)
-                        Spacer()
-                        VStack(spacing: 0) {
-                            bgAndTrend(context: context, size: .expanded).0.font(.title)
-                            if !context.state.showChart {
-                                changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
-                                    .offset(x: -12, y: -5)
-                            }
-                        }
-                        Spacer()
-                        VStack {
-                            iob(context: context, size: .expanded).font(.title)
-                            emptyText
-                        }
-                        Spacer()
-                        VStack {
-                            cob(context: context, size: .expanded).font(.title)
-                            emptyText
-                        }
-                    }
-
-                    HStack {
-                        Spacer()
-                        Text(NSLocalizedString("Eventual Glucose", comment: ""))
-                        Spacer()
-                        Text(context.state.eventual)
-                        Text(context.state.mmol ? NSLocalizedString(
-                            "mmol/L",
-                            comment: "The short unit display string for millimoles of glucose per liter"
-                        ) : NSLocalizedString(
-                            "mg/dL",
-                            comment: "The short unit display string for milligrams of glucose per decilter"
-                        )).foregroundStyle(.secondary)
-                    }.padding(.top, 10)
-
-                } else {
-                    HStack(alignment: .top) {
-                        chartView(for: context.state)
-                            .background(.black.opacity(0.30))
-
-                        ZStack(alignment: .topTrailing) {
-                            VStack(alignment: .trailing, spacing: 0) {
-                                glucoseDrop(context.state).offset(y: -7)
-
-                                Grid(horizontalSpacing: 0) {
-                                    GridRow {
-                                        HStack(spacing: 0.5) {
-                                            Text(context.state.iob)
-                                                .font(.system(size: 20))
-                                                .foregroundStyle(.insulin)
-                                            Text("U")
-                                                .font(.system(size: 20).smallCaps())
-                                                .foregroundStyle(.insulin)
-                                        }
-                                        .fontWidth(.condensed)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                                        HStack(spacing: 0.5) {
-                                            Text(context.state.cob)
-                                                .foregroundStyle(.loopYellow)
-                                            Text("g")
-                                                .foregroundStyle(.loopYellow)
-                                        }
-                                        .font(.system(size: 20))
-                                        .fontWidth(.condensed)
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                    }
-                                }
-                                .frame(width: dropWidth)
-                            }
-                        }
-                        .frame(maxHeight: .infinity)
-                        .padding(.top, 15)
-                        .padding(.bottom, 15)
-                        .padding(.trailing, 15)
-                    }
-                    .overlay { timeAndEventualView(for: context) }
-                }
-            }
-            .privacySensitive()
-            .padding(0)
-            // Semantic BackgroundStyle and Color values work here. They adapt to the given interface style (light mode, dark mode)
-            // Semantic UIColors do NOT (as of iOS 17.1.1). Like UIColor.systemBackgroundColor (it does not adapt to changes of the interface style)
-            // The colorScheme environment varaible that is usually used to detect dark mode does NOT work here (it reports false values)
-            if context.state.showChart {
-                widget
-                    .foregroundStyle(.white)
-                    .background(Color.black.opacity(0.6))
-                    .activityBackgroundTint(Color.clear)
+            if !context.state.showChart {
+                bannerWithoutChart(for: context)
             } else {
-                widget
-                    .foregroundStyle(Color.primary)
-                    .background(BackgroundStyle.background.opacity(0.4))
-                    .activityBackgroundTint(Color.clear)
-                    .padding(.vertical, 10).padding(.horizontal, 16)
+                bannerWithChart(for: context)
             }
         } dynamicIsland: { context in
             DynamicIsland {
@@ -299,27 +192,350 @@ struct LiveActivity: Widget {
         }
     }
 
+    /// Banner without a chart
+
+    @ViewBuilder private func bannerWithoutChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        VStack(spacing: 2) {
+            ZStack {
+                updatedLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7))
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            HStack {
+                VStack {
+                    loop(context: context, size: 22)
+                    emptyText
+                }.offset(x: 0, y: 2)
+                Spacer()
+                VStack {
+                    bgAndTrend(context: context, size: .expanded).0.font(.title)
+                    changeLabel(context: context).font(.caption).foregroundStyle(.primary.opacity(0.7)).offset(x: -12, y: -5)
+                }
+                Spacer()
+                VStack {
+                    iob(context: context, size: .expanded).font(.title)
+                    emptyText
+                }
+                Spacer()
+                VStack {
+                    cob(context: context, size: .expanded).font(.title)
+                    emptyText
+                }
+            }
+            HStack {
+                Spacer()
+                Text(NSLocalizedString("Eventual Glucose", comment: ""))
+                Spacer()
+                Text(context.state.eventual)
+                Text(context.state.mmol ? NSLocalizedString(
+                    "mmol/L",
+                    comment: "The short unit display string for millimoles of glucose per liter"
+                ) : NSLocalizedString(
+                    "mg/dL",
+                    comment: "The short unit display string for milligrams of glucose per decilter"
+                )).foregroundStyle(.secondary)
+            }.padding(.top, 10)
+        }
+        .privacySensitive()
+        .padding(.vertical, 10).padding(.horizontal, 15)
+        // Semantic BackgroundStyle and Color values work here. They adapt to the given interface style (light mode, dark mode)
+        // Semantic UIColors do NOT (as of iOS 17.1.1). Like UIColor.systemBackgroundColor (it does not adapt to changes of the interface style)
+        // The colorScheme environment varaible that is usually used to detect dark mode does NOT work here (it reports false values)
+        .foregroundStyle(Color.primary)
+        .background(BackgroundStyle.background.opacity(0.4))
+        .activityBackgroundTint(Color.clear)
+    }
+
+    /// Banner with a chart
+
+    private let EventualSymbol = "⇢"
+
+    private let dropWidth = CGFloat(80)
+    private let dropHeight = CGFloat(80)
+
     private var decimalString: String {
         let formatter = NumberFormatter()
         return formatter.decimalSeparator
     }
 
-    private func timeAndEventualView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        ZStack {
-            // Eventual Glucose
-            HStack(spacing: 4) {
-                Text(LiveActivity.eventualSymbol)
-                    .font(.system(size: 16))
-                    .opacity(0.7)
-                Text(context.state.eventual).font(.system(size: 16)).opacity(0.8).fontWidth(.condensed)
-            }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 20)
-                .padding(.trailing, 120)
-            // Timestamp
-            updatedLabel(context: context).font(.system(size: 11))
-                .foregroundStyle(.primary.opacity(0.7))
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .padding(.vertical, 10).padding(.leading, 50)
+    @ViewBuilder private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        HStack(alignment: .top) {
+            chartView(for: context.state)
+                .background(.black.opacity(0.30))
+                .padding(.bottom, 10)
+                .padding(.top, 30)
+                .padding(.leading, 15)
+                .padding(.trailing, 10)
+
+            ZStack(alignment: .topTrailing) {
+                VStack(alignment: .trailing, spacing: 0) {
+                    chartRightHandView(for: context)
+                }
+            }
+            .frame(maxHeight: .infinity)
+            .padding(.top, 15)
+            .padding(.bottom, 15)
+            .padding(.trailing, 15)
         }
+        .overlay {
+            ZStack {
+                timeAndEventualOverlay(for: context)
+            }
+        }
+        .privacySensitive()
+        .padding(0)
+        .foregroundStyle(.white)
+        .background(Color.black.opacity(0.6))
+        .activityBackgroundTint(Color.clear)
+    }
+
+    private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
+        let ConversionConstant: Double = (state.mmol ? 0.0555 : 1)
+
+        func displayValues(_ values: [Int16]) -> [Double] {
+            values.map { Double($0) * ConversionConstant }
+        }
+
+        func makePoints(_ dates: [Date], _ values: [Int16]) -> [(date: Date, value: Double)] {
+            zip(dates, displayValues(values)).map { ($0, $1) }
+        }
+
+        let iob: [Int16] = state.predictions?.iob?.values ?? []
+        let cob: [Int16] = state.predictions?.cob?.values ?? []
+        let zt: [Int16] = state.predictions?.zt?.values ?? []
+        let uam: [Int16] = state.predictions?.uam?.values ?? []
+
+        // Min/max BG values
+        let minValue = state.readings?.values.min().map({ Double($0) * ConversionConstant })
+        let maxValue = state.readings?.values.max().map({ Double($0) * ConversionConstant })
+
+        // Green AreaMark low/high
+        let yStart = Double(state.chartLowThreshold) * ConversionConstant
+        let yEnd = Double(state.chartHighThreshold) * ConversionConstant
+        let xStart = state.readings?.dates.min()
+        let xEnd = maxOptional(
+            state.predictions?.iob?.dates.max(),
+            state.predictions?.cob?.dates.max(),
+            state.predictions?.zt?.dates.max(),
+            state.predictions?.uam?.dates.max(),
+            state.readings?.dates.max()
+        )
+
+        // Min/max Predction values
+        let maxPrediction = maxOptional(
+            iob.max(), cob.max(), zt.max(), uam.max()
+        ).map({ Double($0) * ConversionConstant }) ?? 0
+
+        let minPrediction = minOptional(
+            iob.max(), cob.max(), zt.max(), uam.max()
+        ).map({ Double($0) * ConversionConstant }) ?? 0
+
+        // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
+
+        let yDomainMin = min(
+            (minValue ?? 0) * 0.8,
+            yStart * 0.8,
+            minPrediction
+        )
+        let yDomainMax = max(
+            (maxValue ?? 0) * 1.2,
+            yEnd * 1.2,
+            maxPrediction
+        )
+        let yDomain = (
+            max(yDomainMin, 0) ...
+                min(yDomainMax, 400 * ConversionConstant)
+        )
+
+        // ----
+
+        let glucoseFormatter: FloatingPointFormatStyle<Double> =
+            state.mmol ?
+            .number.precision(.fractionLength(1)).locale(Locale(identifier: "en_US")) :
+            .number.precision(.fractionLength(0))
+
+        let readingsSymbolSize = CGFloat(15)
+
+        let bgOpacity: Double = 0.7
+        let predictionsOpacity = 0.3
+        let predictionsSymbolSize = CGFloat(10)
+        let inRangeRectOpacity = 0.1
+
+        let bgPoints = state.readings.map({
+            makePoints($0.dates, $0.values)
+        })
+        let iobPoints = state.predictions?.iob.map({ makePoints($0.dates, $0.values) })
+        let ztPoints = state.predictions?.zt.map({ makePoints($0.dates, $0.values) })
+        let cobPoints = state.predictions?.cob.map({ makePoints($0.dates, $0.values) })
+        let uamPoints = state.predictions?.uam.map({ makePoints($0.dates, $0.values) })
+
+        return Chart {
+            if let bg = bgPoints {
+                ForEach(bg, id: \.date) {
+                    PointMark(
+                        x: .value("Time", $0.date),
+                        y: .value("Glucose", $0.value)
+                    )
+                    .symbolSize(readingsSymbolSize)
+                    .foregroundStyle(.darkGreen)
+                    LineMark(
+                        x: .value("Time", $0.date),
+                        y: .value("Glucose", $0.value)
+                    )
+                    .foregroundStyle(.darkGreen)
+                    .opacity(bgOpacity)
+                    .lineStyle(StrokeStyle(lineWidth: 1.0))
+                }
+            }
+
+            if let iob = iobPoints {
+                ForEach(iob, id: \.date) { point in
+                    PointMark(
+                        x: .value("Time", point.date),
+                        y: .value("IOB", point.value)
+                    )
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.insulin)
+                }
+            }
+
+            if let zt = ztPoints {
+                ForEach(zt, id: \.date) { point in
+                    PointMark(
+                        x: .value("Time", point.date),
+                        y: .value("ZT", point.value)
+                    )
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.zt)
+                }
+            }
+
+            if let cob = cobPoints {
+                ForEach(cob, id: \.date) { point in
+                    PointMark(
+                        x: .value("Time", point.date),
+                        y: .value("COB", point.value)
+                    )
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.loopYellow)
+                }
+            }
+
+            if let uam = uamPoints {
+                ForEach(uam, id: \.date) { point in
+                    PointMark(
+                        x: .value("Time", point.date),
+                        y: .value("UAM", point.value)
+                    )
+                    .symbolSize(predictionsSymbolSize)
+                    .opacity(predictionsOpacity)
+                    .foregroundStyle(Color.uam)
+                }
+            }
+
+            if let xStart = xStart, let xEnd = xEnd {
+                RectangleMark(
+                    xStart: .value("Start", xStart),
+                    xEnd: .value("End", xEnd),
+                    yStart: .value("Bottom", yStart),
+                    yEnd: .value("Top", yEnd)
+                )
+                .foregroundStyle(.green.opacity(inRangeRectOpacity))
+            }
+        }
+        .chartYScale(domain: yDomain)
+        .chartXAxis {
+            AxisMarks(position: .bottom) { _ in
+                AxisGridLine().foregroundStyle(.white.opacity(0.2))
+                AxisValueLabel(format: .dateTime.hour())
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .chartYAxis {
+            if let minValue, let maxValue {
+                AxisMarks(
+                    position: .leading,
+                    values:
+                    abs(maxValue - minValue) < 0.8 ? [
+                        (maxValue + minValue) / 2
+                    ] :
+                        [
+                            minValue,
+                            maxValue
+                        ]
+                ) { _ in
+                    AxisValueLabel(
+                        format: glucoseFormatter,
+                        horizontalSpacing: 10
+                    )
+                    .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
+    private func maxOptional<T: Comparable>(_ values: T?...) -> T? {
+        values.compactMap { $0 }.max()
+    }
+
+    private func minOptional<T: Comparable>(_ values: T?...) -> T? {
+        values.compactMap { $0 }.min()
+    }
+
+    @ViewBuilder private func chartRightHandView(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        glucoseDrop(context.state).offset(y: -7)
+            .frame(width: dropWidth, height: dropHeight)
+
+        Grid(horizontalSpacing: 0) {
+            GridRow {
+                HStack(spacing: 0.5) {
+                    Text(context.state.iob)
+                        .font(.system(size: 20))
+                        .foregroundStyle(.insulin)
+                    Text("U")
+                        .font(.system(size: 20).smallCaps())
+                        .foregroundStyle(.insulin)
+                }
+                .fontWidth(.condensed)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                HStack(spacing: 0.5) {
+                    Text(context.state.cob)
+                        .foregroundStyle(.loopYellow)
+                    Text("g")
+                        .foregroundStyle(.loopYellow)
+                }
+                .font(.system(size: 20))
+                .fontWidth(.condensed)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+        }
+        .frame(width: dropWidth)
+    }
+
+    @ViewBuilder private func timeAndEventualOverlay(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        // Eventual Glucose
+        HStack(spacing: 4) {
+            Text(EventualSymbol)
+                .font(.system(size: 16))
+                .opacity(0.7)
+
+            Text(context.state.eventual)
+                .font(.system(size: 16))
+                .opacity(0.8)
+                .fontWidth(.condensed)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 20)
+        .padding(.trailing, 120)
+
+        // Timestamp
+        updatedLabel(context: context)
+            .font(.system(size: 11))
+            .foregroundStyle(.primary.opacity(0.7))
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.vertical, 10).padding(.leading, 50)
     }
 
     private func glucoseDrop(_ state: LiveActivityAttributes.ContentState) -> some View {
@@ -341,19 +557,18 @@ struct LiveActivity: Widget {
             if decimal.count > 1 {
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
                     Text(decimal[0]).font(Font.custom("SuggestionSmallPartsFont", size: 25))
-                    Text(decimalSeparator).font(.system(size: 18).weight(.semibold)) // .baselineOffset(-10)
-                    Text(decimal[1]).font(.system(size: 18)) // .baselineOffset(-10)
+                    Text(decimalSeparator).font(.system(size: 18).weight(.semibold))
+                    Text(decimal[1]).font(.system(size: 18))
                 }
                 .tracking(-1)
                 .offset(x: -2)
                 .foregroundColor(colorOfGlucose())
             } else {
                 Text(string)
-                    .font(Font.custom("SuggestionSmallPartsFont", size: 25).width(.condensed)) // .tracking(-2)
+                    .font(Font.custom("SuggestionSmallPartsFont", size: 25).width(.condensed))
                     .foregroundColor(colorOfGlucose())
             }
         }
-        .frame(width: dropWidth, height: dropHeight)
     }
 
     private func colorOfGlucose() -> Color {
@@ -400,187 +615,6 @@ struct LiveActivity: Widget {
         default:
             return (2, 0)
         }
-    }
-
-    private func displayValues(_ values: [Int16], mmol: Bool) -> [Double] {
-        values.map {
-            mmol ?
-                Double($0) * 0.0555 :
-                Double($0)
-        }
-    }
-
-    private func makePoints(_ dates: [Date], _ values: [Int16], mmol: Bool) -> [(date: Date, value: Double)] {
-        zip(dates, displayValues(values, mmol: mmol)).map { ($0, $1) }
-    }
-
-    private func chartView(for state: LiveActivityAttributes.ContentState) -> some View {
-        let ConvertionConstant: Double = (state.mmol ? 0.0555 : 1)
-
-        let iob: [Int16] = state.predictions?.iob?.values ?? []
-        let cob: [Int16] = state.predictions?.cob?.values ?? []
-        let zt: [Int16] = state.predictions?.zt?.values ?? []
-        let uam: [Int16] = state.predictions?.uam?.values ?? []
-
-        // Min/max BG values
-        let minValue = state.readings?.values.min().map({ Double($0) * ConvertionConstant })
-        let maxValue = state.readings?.values.max().map({ Double($0) * ConvertionConstant })
-
-        // Green AreaMark low/high
-        let yStart = Double(state.chartLowThreshold) * ConvertionConstant
-        let yEnd = Double(state.chartHighThreshold) * ConvertionConstant
-        let xStart = state.readings?.dates.min()
-        let xEnd = [
-            state.predictions?.iob?.dates.max(),
-            state.predictions?.cob?.dates.max(),
-            state.predictions?.zt?.dates.max(),
-            state.predictions?.uam?.dates.max(),
-            state.readings?.dates.max()
-        ].compactMap({ $0 }).max()
-
-        // Min/max Predction values
-        let maxPrediction = Double(max(iob.max() ?? 0, cob.max() ?? 0, zt.max() ?? 0, uam.max() ?? 0)) * ConvertionConstant
-        let minPrediction = Double(min(iob.min() ?? 0, cob.min() ?? 0, zt.min() ?? 0, uam.min() ?? 0)) * ConvertionConstant
-
-        // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
-        let yDomain = (
-            max(min(minValue ?? 0, yStart, minPrediction) * 0.8, 0) ...
-                min(max(maxValue ?? 0, yEnd, maxPrediction) * 1.2, 400 * ConvertionConstant)
-        )
-
-        // ----
-
-        let glucoseFormatter: FloatingPointFormatStyle<Double> =
-            state.mmol ?
-            .number.precision(.fractionLength(1)).locale(Locale(identifier: "en_US")) :
-            .number.precision(.fractionLength(0))
-
-        let readingsSymbolSize = CGFloat(15)
-
-        let predictionsOpacity = 0.3
-        let predictionsSymbolSize = CGFloat(10)
-        let inRangeRectOpacity = 0.1
-        let haveReadings = minValue != nil && maxValue != nil
-
-        return Chart {
-            if let bg = state.readings.map({
-                makePoints($0.dates, $0.values, mmol: state.mmol)
-            }) {
-                ForEach(bg, id: \.date) {
-                    PointMark(
-                        x: .value("Time", $0.date),
-                        y: .value("Glucose", $0.value)
-                    )
-                    .symbolSize(readingsSymbolSize)
-                    .foregroundStyle(.darkGreen)
-                    LineMark(
-                        x: .value("Time", $0.date),
-                        y: .value("Glucose", $0.value)
-                    )
-                    .foregroundStyle(.darkGreen)
-                    .opacity(0.7)
-                    .lineStyle(StrokeStyle(lineWidth: 1.0))
-                }
-            }
-
-            if haveReadings {
-                if let iob = state.predictions?.iob.map({
-                    makePoints($0.dates, $0.values, mmol: state.mmol)
-                }) {
-                    ForEach(iob, id: \.date) { point in
-                        PointMark(
-                            x: .value("Time", point.date),
-                            y: .value("IOB", point.value)
-                        )
-                        .symbolSize(predictionsSymbolSize)
-                        .opacity(predictionsOpacity)
-                        .foregroundStyle(Color.insulin)
-                    }
-                }
-
-                if let zt = state.predictions?.zt.map({
-                    makePoints($0.dates, $0.values, mmol: state.mmol)
-                }) {
-                    ForEach(zt, id: \.date) { point in
-                        PointMark(
-                            x: .value("Time", point.date),
-                            y: .value("ZT", point.value)
-                        )
-                        .symbolSize(predictionsSymbolSize)
-                        .opacity(predictionsOpacity)
-                        .foregroundStyle(Color.zt)
-                    }
-                }
-
-                if let cob = state.predictions?.cob.map({
-                    makePoints($0.dates, $0.values, mmol: state.mmol)
-                }) {
-                    ForEach(cob, id: \.date) { point in
-                        PointMark(
-                            x: .value("Time", point.date),
-                            y: .value("COB", point.value)
-                        )
-                        .symbolSize(predictionsSymbolSize)
-                        .opacity(predictionsOpacity)
-                        .foregroundStyle(Color.loopYellow)
-                    }
-                }
-
-                if let uam = state.predictions?.uam.map({
-                    makePoints($0.dates, $0.values, mmol: state.mmol)
-                }) {
-                    ForEach(uam, id: \.date) { point in
-                        PointMark(
-                            x: .value("Time", point.date),
-                            y: .value("UAM", point.value)
-                        )
-                        .symbolSize(predictionsSymbolSize)
-                        .opacity(predictionsOpacity)
-                        .foregroundStyle(Color.uam)
-                    }
-                }
-            }
-
-            if let xStart = xStart, let xEnd = xEnd {
-                RectangleMark(
-                    xStart: .value("Start", xStart),
-                    xEnd: .value("End", xEnd),
-                    yStart: .value("Bottom", yStart),
-                    yEnd: .value("Top", yEnd)
-                )
-                .foregroundStyle(.green.opacity(inRangeRectOpacity))
-            }
-        }
-        .chartYScale(domain: yDomain)
-        .chartXAxis {
-            AxisMarks(position: .bottom) { _ in
-                AxisGridLine().foregroundStyle(.white.opacity(0.2))
-                AxisValueLabel(format: .dateTime.hour())
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .chartYAxis {
-            if let minValue, let maxValue {
-                AxisMarks(
-                    position: .leading,
-                    values:
-                    abs(maxValue - minValue) < 0.8 ? [
-                        (maxValue + minValue) / 2
-                    ] :
-                        [
-                            minValue,
-                            maxValue
-                        ]
-                ) { _ in
-//                        AxisGridLine().foregroundStyle(.white.opacity(0.2))
-                    AxisValueLabel(
-                        format: glucoseFormatter,
-                        horizontalSpacing: 10
-                    )
-                    .foregroundStyle(.secondary)
-                }
-            }
-        }.padding(.bottom, 10).padding(.top, 30).padding(.leading, 15).padding(.trailing, 10)
     }
 }
 
