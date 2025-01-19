@@ -2309,16 +2309,16 @@ Enact a temp Basal or a temp target */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Коефіцієнт, який множить вашу нормальну базальну дозу B30. Запроваджена максимальна базальна норма – це максимальна  базальна норма вашої помпи. За замовчуванням 5.";
 
 /* */
-"Upper Delta limit" = "Upper Delta limit";
+"Upper Delta limit" = "Верхня межа Дельти";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює Базальна доза B30. За замовчуванням 8 mg/dl (0.5 mmol/l.";
 
 /* */
-"Upper BG limit" = "Upper BG limit";
+"Upper BG limit" = "Верхня межа BG";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює базальна доза B30. За замовчуванням 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Цільовий рівень для B30 має бути прийнятий";
@@ -2381,10 +2381,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значення за замовчуванням: 0,0 Це вага, застосована до багатокутника, який адаптує ISF, якщо рівень глюкози перевищує цільовий показник. З 0,0 ефект фактично вимикається.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
+"Dura ISF Hourly Max Change" = "Dura ISF погодинна максимальна зміна";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
+"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Швидкість, з якою ISF зменшується на годину, припускаючи, що рівень BG залишається на подвійному цільовому рівні протягом цього часу. Коли значення = 1,0, ISF знижується до 50% після 1 години рівня BG у 2 рази більше цільового значення.";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
