@@ -2032,7 +2032,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to delete this CGM?" = "Bạn có chắc sẽ xóa CGM này?";
 
 /* New Experimental feature */
-"Experimental" = "Thực hiện";
+"Experimental" = "Experimental";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Làm mịn Glucose";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
