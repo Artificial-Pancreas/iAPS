@@ -6,6 +6,8 @@ extension PumpSettingsEditor {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
+        @State var danaString: String = ""
+
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -52,12 +54,31 @@ extension PumpSettingsEditor {
                         }
                         .disabled(state.syncInProgress)
                     }
-                }
+                } footer: { danaString != "" ? Text(LocalizedStringKey(danaString)) : nil }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+                ifDana()
+            }
             .navigationTitle("Pump Settings")
             .navigationBarTitleDisplayMode(.inline)
+        }
+
+        private func ifDana() {
+            if let string = pumpString() {
+                danaString = string
+            }
+        }
+
+        private func pumpString() -> String? {
+            guard let pump = state.provider.deviceManager?.pumpManager else {
+                return nil
+            }
+            guard pump.localizedTitle.contains(NSLocalizedString("Dana", comment: "")) else {
+                return nil
+            }
+            return "You need to also save the max basal and max bolus settings to pump manually!"
         }
     }
 }

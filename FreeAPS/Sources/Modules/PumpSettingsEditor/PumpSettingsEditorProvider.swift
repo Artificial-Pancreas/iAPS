@@ -32,6 +32,11 @@ extension PumpSettingsEditor {
                 save(settings)
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
+
+            guard !pump.localizedTitle.contains(NSLocalizedString("Dana", comment: "")) else {
+                return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
+            }
+
             // Don't ask why 🤦‍♂️
             // let sync = DeliveryLimitSettingsTableViewController(style: .grouped)
             let limits = DeliveryLimits(
