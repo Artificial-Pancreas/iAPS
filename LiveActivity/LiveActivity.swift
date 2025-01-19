@@ -309,16 +309,8 @@ struct LiveActivity: Widget {
         let maxValue = state.readings?.values.max().map({ Double($0) * ConversionConstant })
 
         // Green AreaMark low/high
-        let yStart = Double(state.chartLowThreshold) * ConversionConstant
-        let yEnd = Double(state.chartHighThreshold) * ConversionConstant
-        let xStart = state.readings?.dates.min()
-        let xEnd = maxOptional(
-            state.predictions?.iob?.dates.max(),
-            state.predictions?.cob?.dates.max(),
-            state.predictions?.zt?.dates.max(),
-            state.predictions?.uam?.dates.max(),
-            state.readings?.dates.max()
-        )
+        let lowThreshold = Double(state.chartLowThreshold) * ConversionConstant
+        let highThreshold = Double(state.chartHighThreshold) * ConversionConstant
 
         // Min/max Predction values
         let maxPrediction = maxOptional(
@@ -332,13 +324,13 @@ struct LiveActivity: Widget {
         // Dymamic scaling and avoiding any fatal crashes due to out of bounds errors. Never higher than 400 mg/dl
 
         let yDomainMin = min(
-            (minValue ?? 0) * 0.8,
-            yStart * 0.8,
+            (minValue ?? 0) * 0.9,
+            lowThreshold,
             minPrediction
         )
         let yDomainMax = max(
-            (maxValue ?? 0) * 1.2,
-            yEnd * 1.2,
+            (maxValue ?? 0) * 1.1,
+            highThreshold,
             maxPrediction
         )
         let yDomain = (
@@ -358,7 +350,6 @@ struct LiveActivity: Widget {
         let bgOpacity: Double = 0.7
         let predictionsOpacity = 0.3
         let predictionsSymbolSize = CGFloat(10)
-        let inRangeRectOpacity = 0.1
 
         let bgPoints = state.readings.map({
             makePoints($0.dates, $0.values)
@@ -371,7 +362,7 @@ struct LiveActivity: Widget {
         return Chart {
             if let bg = bgPoints {
                 ForEach(bg, id: \.date) {
-                    if $0.value < yStart {
+                    if $0.value < lowThreshold {
                         PointMark(
                             x: .value("Time", $0.date),
                             y: .value("GlucoseLow", $0.value)
@@ -379,7 +370,7 @@ struct LiveActivity: Widget {
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.red)
 
-                    } else if $0.value > yEnd {
+                    } else if $0.value > highThreshold {
                         PointMark(
                             x: .value("Time", $0.date),
                             y: .value("GlucoseHigh", $0.value)
@@ -451,16 +442,6 @@ struct LiveActivity: Widget {
                     .opacity(predictionsOpacity)
                     .foregroundStyle(Color.uam)
                 }
-            }
-
-            if let xStart = xStart, let xEnd = xEnd {
-                RectangleMark(
-                    xStart: .value("Start", xStart),
-                    xEnd: .value("End", xEnd),
-                    yStart: .value("Bottom", yStart),
-                    yEnd: .value("Top", yEnd)
-                )
-                .foregroundStyle(.green.opacity(inRangeRectOpacity))
             }
         }
         .chartYScale(domain: yDomain)
