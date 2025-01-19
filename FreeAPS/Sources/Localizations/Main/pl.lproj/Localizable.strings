@@ -2311,16 +2311,16 @@ Połączono z Nightscout!";
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5.";
 
 /* */
-"Upper Delta limit for B30" = "Upper Delta limit for B30";
+"Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl." = "B30 will only run as long as BG delta stays below that level, if above regular autoISF takes over. Default is 8 mg/dl.";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
 
 /* */
-"Upper BG limit for B30" = "Upper BG limit for B30";
+"Upper BG limit" = "Upper BG limit";
 
 /* */
-"B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl." = "B30 will only run as long as BG stays underneath that level, if above regular autoISF takes over. Default is 130 mg/dl.";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
@@ -2383,10 +2383,10 @@ Połączono z Nightscout!";
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.";
 
 /* */
-"Auto ISF Hourly Max Change" = "Auto ISF Hourly Max Change";
+"Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG leveel remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG leveel remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
+"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
