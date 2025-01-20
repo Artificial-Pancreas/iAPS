@@ -160,7 +160,7 @@ struct LiveActivity: Widget {
                 }
 
                 DynamicIslandExpandedRegion(.trailing) {
-                    updatedLabel(context: context).font(.caption).foregroundStyle(Color.secondary)
+                    updatedLabel(context: context).font(.caption)
                         .padding(.trailing, 10)
                 }
                 DynamicIslandExpandedRegion(.bottom) {}
@@ -276,6 +276,7 @@ struct LiveActivity: Widget {
             .padding(.bottom, 15)
             .padding(.trailing, 15)
         }
+        .foregroundStyle(.white)
         .overlay {
             ZStack {
                 timeAndEventualOverlay(for: context)
@@ -283,7 +284,6 @@ struct LiveActivity: Widget {
         }
         .privacySensitive()
         .padding(0)
-        .foregroundStyle(.white)
         .background(Color.black.opacity(0.6))
         .activityBackgroundTint(Color.clear)
     }
@@ -553,12 +553,14 @@ struct LiveActivity: Widget {
                 .opacity(0.8)
                 .fontWidth(.condensed)
         }
+        .foregroundStyle(.white)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 20)
         .padding(.trailing, 120)
 
         // Timestamp
         updatedLabel(context: context)
             .font(.system(size: 11))
+            .foregroundColor(context.isStale ? Color(.loopRed) : Color.white)
             .foregroundStyle(.primary.opacity(0.7))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(.vertical, 10).padding(.leading, 50)
