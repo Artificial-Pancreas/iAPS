@@ -58,6 +58,8 @@
 		198F67B72CFCBD5D00E538CB /* AutoISFProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */; };
 		198F67B82CFCBD5D00E538CB /* AutoISFStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */; };
 		198FA7BA2D380790006858FD /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FA7B92D380790006858FD /* ChartModel.swift */; };
+		198FEED52D3F8C5900A67FAE /* LiveActivityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */; };
+		198FEED62D3F8C7900A67FAE /* LiveActivityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */; };
 		1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
@@ -684,6 +686,7 @@
 		198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoISFProvider.swift; sourceTree = "<group>"; };
 		198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoISFStateModel.swift; sourceTree = "<group>"; };
 		198FA7B92D380790006858FD /* ChartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartModel.swift; sourceTree = "<group>"; };
+		198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityChart.swift; sourceTree = "<group>"; };
 		199561C0275E61A50077B976 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS8.0.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		199732B4271B72DD00129A3F /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		199732B5271B9EE900129A3F /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1427,6 +1430,14 @@
 				19F191E12BE4F9BA00F6297E /* SharingRootView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		19F4BA572D3FC6130015E9EA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		19F95FF129F10F9C00314DDC /* Stat */ = {
@@ -2307,6 +2318,7 @@
 			children = (
 				6B1A8D1D2B14D91600E76752 /* LiveActivityBundle.swift */,
 				6B1A8D1F2B14D91600E76752 /* LiveActivity.swift */,
+				19F4BA572D3FC6130015E9EA /* Views */,
 				6B1A8D232B14D91700E76752 /* Assets.xcassets */,
 				6B1A8D252B14D91700E76752 /* Info.plist */,
 			);
@@ -3154,6 +3166,7 @@
 				3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */,
 				CE7CA34E2A064973004BE681 /* AppShortcuts.swift in Sources */,
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
+				19F4BA592D3FC9EF0015E9EA /* LiveActivityBanner.swift in Sources */,
 				F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */,
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
@@ -3272,6 +3285,7 @@
 				D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */,
 				CE82E02728E869DF00473A9C /* AlertEntry.swift in Sources */,
 				38E4451E274DB04600EC9A94 /* AppDelegate.swift in Sources */,
+				198FEED62D3F8C7900A67FAE /* LiveActivityChart.swift in Sources */,
 				5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */,
 				BD2FF1A02AE29D43005D1C5D /* CheckboxToggleStyle.swift in Sources */,
 				E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */,
@@ -3384,6 +3398,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BCF84DE2B16843A003AD46E /* LiveActitiyShared.swift in Sources */,
+				198FEED52D3F8C5900A67FAE /* LiveActivityChart.swift in Sources */,
+				19F4BA5A2D3FC9EF0015E9EA /* LiveActivityBanner.swift in Sources */,
 				6B1A8D1E2B14D91600E76752 /* LiveActivityBundle.swift in Sources */,
 				6B1A8D202B14D91600E76752 /* LiveActivity.swift in Sources */,
 			);
@@ -3653,7 +3669,7 @@
 					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
 				);
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3695,7 +3711,7 @@
 					"$(PROJECT_DIR)/Dependencies/ios-armv7_arm64",
 				);
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3925,7 +3941,7 @@
 				INFOPLIST_FILE = LiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiveActivity;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3959,7 +3975,7 @@
 				INFOPLIST_FILE = LiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = LiveActivity;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
