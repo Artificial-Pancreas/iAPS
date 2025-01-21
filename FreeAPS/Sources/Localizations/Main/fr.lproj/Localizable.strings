@@ -2876,7 +2876,7 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "La valeur par défaut est de 0,2 (20%). Le pourcentage maximal positif de changement de niveau de glycémie à utiliser SMB, au dessus de cela désactivera SMB. La limite de 40 % codée en dur. Pour UAM en boucle fermée 30% est conseillé. Observez dans le journal et popup (maxDelta 27 > 20% de BG 100 - désactivant le SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... When Blood Glucose Is Above:";
+"... When Blood Glucose Is Above:" = "... quand la glycémie est au-dessus de :";
 
 /* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Définir la valeur enableSMB_high_bg comparera avec pour activer SMB. Si la glycémie > que cette valeur, les SMBs devraient être activés.";
