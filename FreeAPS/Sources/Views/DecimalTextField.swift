@@ -96,7 +96,8 @@ public struct DecimalTextField: UIViewRepresentable {
     }
 
     public func updateUIView(_ textField: UITextField, context: Context) {
-        if !context.coordinator.isEditing {
+        if !context.coordinator.isEditing || context.coordinator.previousSeenValue != value {
+            context.coordinator.previousSeenValue = value
             let newText = valueAsText()
             if textField.text != newText {
                 textField.text = newText
@@ -128,6 +129,7 @@ public struct DecimalTextField: UIViewRepresentable {
         var didBecomeFirstResponder = false
         let decimalFormatter: NumberFormatter
         var isEditing: Bool = false
+        var previousSeenValue: Decimal = 0
 
         init(_ parent: DecimalTextField, maxLength: Int?) {
             self.parent = parent

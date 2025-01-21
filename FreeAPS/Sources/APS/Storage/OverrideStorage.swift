@@ -126,6 +126,8 @@ final class OverrideStorage {
             save.uamMinutes = preset.uamMinutes
             save.maxIOB = preset.maxIOB
             save.target = preset.target
+            save.overrideMaxIOB = preset.overrideAutoISF
+            save.overrideAutoISF = preset.overrideAutoISF
             try? coredataContext.save()
         }
     }
