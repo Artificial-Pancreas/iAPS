@@ -231,11 +231,11 @@ extension OverrideProfilesConfig {
         }
 
         func savedSettings() {
-            guard let overrideArray = OverrideStorage().fetchLatestOverride().first else {
+            guard let overrideArray = OverrideStorage().fetchLatestOverride().first, overrideArray.enabled else {
                 defaults()
                 return
             }
-            isEnabled = overrideArray.enabled
+            // isEnabled = overrideArray.enabled
             percentage = overrideArray.percentage
             _indefinite = overrideArray.indefinite
             duration = (overrideArray.duration ?? 0) as Decimal
@@ -245,6 +245,7 @@ extension OverrideProfilesConfig {
             smbIsAlwaysOff = overrideArray.smbIsAlwaysOff
             overrideMaxIOB = overrideArray.overrideMaxIOB
             overrideAutoISF = overrideArray.overrideAutoISF
+            override_target = (overrideArray.target != 0 || overrideArray.target != 6)
 
             if advancedSettings {
                 if !isfAndCr {
@@ -304,6 +305,10 @@ extension OverrideProfilesConfig {
             }
 
             let overrideTarget = (overrideArray.target ?? 0) as Decimal
+            if override_target {
+                target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
+            }
+
             var newDuration = Double(duration)
             if isEnabled {
                 let duration = overrideArray.duration ?? 0
@@ -313,13 +318,8 @@ extension OverrideProfilesConfig {
                     isEnabled = false
                 }
                 newDuration = Date().distance(to: date.addingTimeInterval(addedMinutes.minutes.timeInterval)).minutes
-                if override_target {
-                    target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
-                }
             }
             if newDuration < 0 { newDuration = 0 } else { duration = Decimal(newDuration) }
-
-            if !isEnabled { defaults() }
         }
 
         func cancelProfile() {
