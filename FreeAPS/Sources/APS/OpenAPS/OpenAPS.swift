@@ -498,6 +498,10 @@ final class OpenAPS {
         _ basal: Decimal,
         oref0Suggestion: Suggestion
     ) -> Suggestion? {
+        guard settings.closedLoop else {
+            return nil
+        }
+
         guard basal > 0 else {
             return nil
         }

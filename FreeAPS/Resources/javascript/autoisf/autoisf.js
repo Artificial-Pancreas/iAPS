@@ -446,6 +446,10 @@ const MillisecondsPerMinute = 60 * 1000
 
 // AIMI B30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
+    if (!profile.iaps.closedLoop) {
+        return
+    }
+    
     let minutesRemaining = profile.iaps.b30_duration;
     let lastBolus = 0;
     let lastBolusAge = minutesRemaining + 1;
@@ -503,7 +507,6 @@ function iob_max(iob, dynamicVariables, profile) {
     }
 
     const currentBasal = profile.current_basal
-
     let currentIOB;
 
     if (!!iob && iob.length > 0) {
