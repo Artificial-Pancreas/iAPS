@@ -1,4 +1,5 @@
 import ActivityKit
+import CoreData
 import Foundation
 import Swinject
 import UIKit
@@ -45,7 +46,8 @@ extension LiveActivityAttributes.ContentState {
         predictions: Predictions?,
         showChart: Bool,
         chartLowThreshold: Int,
-        chartHighThreshold: Int
+        chartHighThreshold: Int,
+        override: String?
     ) {
         guard let glucose = bg?.glucose else {
             return nil
@@ -112,7 +114,8 @@ extension LiveActivityAttributes.ContentState {
             predictions: activityPredictions,
             showChart: showChart,
             chartLowThreshold: Int16(clamping: chartLowThreshold),
-            chartHighThreshold: Int16(clamping: chartHighThreshold)
+            chartHighThreshold: Int16(clamping: chartHighThreshold),
+            override: override
         )
     }
 }
@@ -137,7 +140,9 @@ extension LiveActivityAttributes.ContentState {
     }
 }
 
-@available(iOS 16.2, *) final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
+@available(iOS 16.2, *) final class LiveActivityBridge: NSObject, Injectable, ObservableObject, SettingsObserver,
+    NSFetchedResultsControllerDelegate
+{
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
@@ -158,8 +163,15 @@ extension LiveActivityAttributes.ContentState {
     private var loopDate: Date?
     private var suggestion: Suggestion?
 
+    private var overridesResultsController: NSFetchedResultsController<Override>?
+    private var presetsResultsController: NSFetchedResultsController<OverridePresets>?
+
+    private var displayedProfileName: String?
+
     init(resolver: Resolver) {
         systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
+
+        super.init()
 
         injectServices(resolver)
         broadcaster.register(SuggestionObserver.self, observer: self)
@@ -185,6 +197,9 @@ extension LiveActivityAttributes.ContentState {
         broadcaster.register(SettingsObserver.self, observer: self)
 
         monitorForLiveActivityAuthorizationChanges()
+
+        setupDataControllers()
+        updateOverrideIfNeeded(updateActivity: false)
     }
 
     func settingsDidChange(_ newSettings: FreeAPSSettings) {
@@ -294,7 +309,8 @@ extension LiveActivityAttributes.ContentState {
                         predictions: nil,
                         showChart: settings.liveActivityChart,
                         chartLowThreshold: Int16(clamping: (settings.low as NSDecimalNumber).intValue),
-                        chartHighThreshold: Int16(clamping: (settings.high as NSDecimalNumber).intValue)
+                        chartHighThreshold: Int16(clamping: (settings.high as NSDecimalNumber).intValue),
+                        override: nil
                     ),
                     staleDate: Date.now.addingTimeInterval(60)
                 )
@@ -326,6 +342,67 @@ extension LiveActivityAttributes.ContentState {
         for unknownActivity in Activity<LiveActivityAttributes>.activities {
             await unknownActivity.end(nil, dismissalPolicy: .immediate)
         }
+    }
+
+    private func setupDataControllers() {
+        let overrideFetchRequest = Override.fetchRequest()
+        overrideFetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+
+        overridesResultsController = NSFetchedResultsController(
+            fetchRequest: overrideFetchRequest,
+            managedObjectContext: CoreDataStack.shared.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+
+        let presetsFetchRequest = OverridePresets.fetchRequest()
+        presetsFetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        presetsFetchRequest.predicate = NSPredicate(format: "name != %@", "" as String)
+
+        presetsResultsController = NSFetchedResultsController(
+            fetchRequest: presetsFetchRequest,
+            managedObjectContext: CoreDataStack.shared.persistentContainer.viewContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil
+        )
+
+        overridesResultsController?.delegate = self
+        presetsResultsController?.delegate = self
+
+        try? overridesResultsController?.performFetch()
+        try? presetsResultsController?.performFetch()
+    }
+
+    private func updateOverrideIfNeeded(updateActivity: Bool) {
+        let currentProfileName: String? = getActiveProfileName()
+        if currentProfileName != displayedProfileName {
+            displayedProfileName = currentProfileName
+            if updateActivity {
+                forceActivityUpdate(force: true)
+            }
+        }
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if controller === overridesResultsController {
+            updateOverrideIfNeeded(updateActivity: true)
+        } else if controller === presetsResultsController {
+            updateOverrideIfNeeded(updateActivity: true)
+        }
+    }
+
+    private func getActiveProfileName() -> String? {
+        guard let firstOverride = overridesResultsController?.fetchedObjects?.first else {
+            return nil
+        }
+        guard firstOverride.enabled else {
+            return nil
+        }
+
+        let profile = presetsResultsController?.fetchedObjects?.first(where: { $0.id == firstOverride.id })
+
+        let name = (profile?.name ?? "Override").trimmingCharacters(in: .whitespacesAndNewlines)
+        return name.isEmpty ? "Override" : name
     }
 }
 
@@ -359,7 +436,8 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
             chartLowThreshold: Int(settings.low),
-            chartHighThreshold: Int(settings.high)
+            chartHighThreshold: Int(settings.high),
+            override: displayedProfileName
         ) else {
             return
         }
@@ -397,7 +475,8 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
             showChart: settings.liveActivityChart,
             chartLowThreshold: Int(settings.low),
-            chartHighThreshold: Int(settings.high)
+            chartHighThreshold: Int(settings.high),
+            override: displayedProfileName
         ) else {
             return
         }

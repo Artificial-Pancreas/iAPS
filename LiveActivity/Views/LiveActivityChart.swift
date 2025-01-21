@@ -306,12 +306,20 @@ struct LiveActivityChart: View {
         .padding(.top, 10)
         .padding(.trailing, 110)
 
-        // Timestamp
-        updatedLabel(context: context)
-            .font(.system(size: 11))
-            .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding(.vertical, 10).padding(.leading, 50)
+        // Timestamp and override
+        HStack(spacing: 16) {
+            updatedLabel(context: context)
+                .font(.system(size: 11))
+                .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
+
+            if let override = context.state.override {
+                Text(override)
+                    .font(.system(size: 11))
+                    .opacity(0.9)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .padding(.vertical, 10).padding(.leading, 50)
     }
 
     private func glucoseDrop(_ state: LiveActivityAttributes.ContentState) -> some View {

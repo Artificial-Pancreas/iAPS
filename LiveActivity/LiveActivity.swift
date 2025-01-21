@@ -269,7 +269,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: false,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: nil
         )
     }
 
@@ -286,7 +287,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: false,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: nil
         )
     }
 
@@ -303,7 +305,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: false,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: nil
         )
     }
 
@@ -321,7 +324,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: false,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: nil
         )
     }
 
@@ -338,7 +342,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: false,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: nil
         )
     }
 
@@ -356,7 +361,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: sampleData.samplePredictions,
             showChart: true,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: nil
         )
     }
 
@@ -374,7 +380,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: true,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: nil
         )
     }
 
@@ -392,7 +399,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: nil,
             showChart: true,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: "🛏️"
         )
     }
 
@@ -410,7 +418,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: sampleData.samplePredictions,
             showChart: true,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: "🍔"
         )
     }
 
@@ -428,7 +437,8 @@ private extension LiveActivityAttributes.ContentState {
             predictions: sampleData.samplePredictions,
             showChart: true,
             chartLowThreshold: 75,
-            chartHighThreshold: 200
+            chartHighThreshold: 200,
+            override: "Override1"
         )
     }
 }

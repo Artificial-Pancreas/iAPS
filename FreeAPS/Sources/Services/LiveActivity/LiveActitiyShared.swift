@@ -17,6 +17,7 @@ struct LiveActivityAttributes: ActivityAttributes {
         let showChart: Bool
         let chartLowThreshold: Int16
         let chartHighThreshold: Int16
+        let override: String?
 
         func withoutPredictions() -> ContentState {
             ContentState(
@@ -33,7 +34,8 @@ struct LiveActivityAttributes: ActivityAttributes {
                 predictions: nil,
                 showChart: showChart,
                 chartLowThreshold: chartLowThreshold,
-                chartHighThreshold: chartHighThreshold
+                chartHighThreshold: chartHighThreshold,
+                override: override
             )
         }
     }
