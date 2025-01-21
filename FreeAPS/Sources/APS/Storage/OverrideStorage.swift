@@ -224,6 +224,8 @@ final class OverrideStorage {
             save.smbMinutes = override.smbMinutes
             save.uamMinutes = override.uamMinutes
             save.target = override.target
+            save.overrideMaxIOB = override.overrideAutoISF
+            save.overrideAutoISF = override.overrideAutoISF
             try? coredataContext.save()
         }
     }
@@ -314,6 +316,8 @@ final class OverrideStorage {
                 save.smbIsOff = preset.smbIsOff
                 save.smbMinutes = preset.smbMinutes
                 save.uamMinutes = preset.uamMinutes
+                save.overrideMaxIOB = preset.overrideAutoISF
+                save.overrideAutoISF = preset.overrideAutoISF
                 if (preset.target ?? 0) as Decimal > 6 {
                     save.target = preset.target
                 } else { save.target = 6 }
