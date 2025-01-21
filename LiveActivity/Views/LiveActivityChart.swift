@@ -309,7 +309,7 @@ struct LiveActivityChart: View {
         // Timestamp
         updatedLabel(context: context)
             .font(.system(size: 11))
-            .foregroundStyle(context.isStale ? Color(.loopRed) : .primary.opacity(0.7))
+            .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding(.vertical, 10).padding(.leading, 50)
     }

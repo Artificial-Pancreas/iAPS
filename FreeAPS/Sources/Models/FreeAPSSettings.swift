@@ -52,7 +52,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var fattyMealFactor: Decimal = 0.7
     var displayPredictions: Bool = true
     var useLiveActivity: Bool = false
-    var liveActivityChart = true
+    var liveActivityChart = false
     var liveActivityChartShowPredictions = true
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = true

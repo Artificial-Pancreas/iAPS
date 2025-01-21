@@ -10,7 +10,7 @@ extension NotificationsConfig {
         @Published var highGlucose: Decimal = 0
         @Published var carbsRequiredThreshold: Decimal = 0
         @Published var useLiveActivity = false
-        @Published var liveActivityChart = true
+        @Published var liveActivityChart = false
         @Published var liveActivityChartShowPredictions = true
 
         var units: GlucoseUnits = .mmolL
