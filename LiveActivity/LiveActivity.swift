@@ -161,8 +161,6 @@ struct LiveActivity: Widget {
                 }
             }
         }
-        .foregroundStyle(context.isStale ? .secondary : Color.primary)
-
         return (stack, characters)
     }
 
@@ -190,6 +188,10 @@ struct LiveActivity: Widget {
 
     private var emptyText: some View {
         Text(" ").font(.caption).offset(x: 0, y: -5)
+    }
+
+    private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
+        LiveActivityChart(context: context)
     }
 
     @ViewBuilder private func bannerWithoutChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
@@ -241,19 +243,6 @@ struct LiveActivity: Widget {
         .foregroundStyle(Color.primary)
         .background(BackgroundStyle.background.opacity(0.4))
         .activityBackgroundTint(Color.clear)
-    }
-
-    /// Banner with a chart
-    private let EventualSymbol = "⇢"
-    private let dropWidth = CGFloat(80)
-    private let dropHeight = CGFloat(80)
-    private var decimalString: String {
-        let formatter = NumberFormatter()
-        return formatter.decimalSeparator
-    }
-
-    private func bannerWithChart(for context: ActivityViewContext<LiveActivityAttributes>) -> some View {
-        LiveActivityChart(context: context)
     }
 }
 

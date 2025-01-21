@@ -1432,6 +1432,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		19F4BA572D3FC6130015E9EA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		19F95FF129F10F9C00314DDC /* Stat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2310,7 +2318,7 @@
 			children = (
 				6B1A8D1D2B14D91600E76752 /* LiveActivityBundle.swift */,
 				6B1A8D1F2B14D91600E76752 /* LiveActivity.swift */,
-				198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */,
+				19F4BA572D3FC6130015E9EA /* Views */,
 				6B1A8D232B14D91700E76752 /* Assets.xcassets */,
 				6B1A8D252B14D91700E76752 /* Info.plist */,
 			);
@@ -3158,6 +3166,7 @@
 				3871F38725ED661C0013ECB5 /* Suggestion.swift in Sources */,
 				CE7CA34E2A064973004BE681 /* AppShortcuts.swift in Sources */,
 				38C4D33A25E9A1ED00D30B77 /* NSObject+AssociatedValues.swift in Sources */,
+				19F4BA592D3FC9EF0015E9EA /* LiveActivityBanner.swift in Sources */,
 				F2159A572BA6239F00A0B716 /* ContactTrickManager.swift in Sources */,
 				38DF179027733EAD00B3528F /* SnowScene.swift in Sources */,
 				38AAF8712600C1B0004AF583 /* MainChartView.swift in Sources */,
@@ -3390,6 +3399,7 @@
 			files = (
 				6BCF84DE2B16843A003AD46E /* LiveActitiyShared.swift in Sources */,
 				198FEED52D3F8C5900A67FAE /* LiveActivityChart.swift in Sources */,
+				19F4BA5A2D3FC9EF0015E9EA /* LiveActivityBanner.swift in Sources */,
 				6B1A8D1E2B14D91600E76752 /* LiveActivityBundle.swift in Sources */,
 				6B1A8D202B14D91600E76752 /* LiveActivity.swift in Sources */,
 			);
