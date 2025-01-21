@@ -224,7 +224,7 @@ struct LiveActivityChart: View {
                     yStart: .value("Bottom", yStart),
                     yEnd: .value("Top", yEnd)
                 )
-                .foregroundStyle(.green.opacity(inRangeRectOpacity))
+                .foregroundStyle(.secondary.opacity(inRangeRectOpacity))
             }
         }
         .chartYScale(domain: yDomain)
@@ -302,8 +302,9 @@ struct LiveActivityChart: View {
                 .fontWidth(.condensed)
         }
         .foregroundStyle(.white)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(.top, 20)
-        .padding(.trailing, 120)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        .padding(.top, 10)
+        .padding(.trailing, 110)
 
         // Timestamp
         updatedLabel(context: context)
