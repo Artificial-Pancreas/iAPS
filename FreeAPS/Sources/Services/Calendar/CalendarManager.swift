@@ -33,21 +33,12 @@ final class BaseCalendarManager: CalendarManager, Injectable {
             switch status {
             case .notDetermined:
                 #if swift(>=5.9)
-                    if #available(iOS 17.0, *) {
-                        EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
-                            if let error = error {
-                                warning(.service, "Calendar access not granted", error: error)
-                            }
-                            promise(.success(granted))
-                        })
-                    } else {
-                        EKEventStore().requestAccess(to: .event) { granted, error in
-                            if let error = error {
-                                warning(.service, "Calendar access not granted", error: error)
-                            }
-                            promise(.success(granted))
+                    EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
+                        if let error = error {
+                            warning(.service, "Calendar access not granted", error: error)
                         }
-                    }
+                        promise(.success(granted))
+                    })
                 #else
                     EKEventStore().requestAccess(to: .event) { granted, error in
                         if let error = error {
@@ -66,15 +57,13 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                 case .fullAccess:
                     promise(.success(true))
                 case .writeOnly:
-                    if #available(iOS 17.0, *) {
-                        EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
-                            if let error = error {
-                                print("Calendar access not upgraded")
-                                warning(.service, "Calendar access not upgraded", error: error)
-                            }
-                            promise(.success(granted))
-                        })
-                    }
+                    EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
+                        if let error = error {
+                            print("Calendar access not upgraded")
+                            warning(.service, "Calendar access not upgraded", error: error)
+                        }
+                        promise(.success(granted))
+                    })
             #endif
 
             @unknown default:

@@ -2,7 +2,7 @@ import AppIntents
 import Foundation
 import Intents
 
-@available(iOS 16.0,*) struct BolusIntent: AppIntent {
+struct BolusIntent: AppIntent {
     static var title: LocalizedStringResource = "Bolus"
     static var description = IntentDescription("Allow to send a bolus command to iAPS.")
 
@@ -61,7 +61,7 @@ import Intents
     }
 }
 
-@available(iOS 16.0,*) final class BolusIntentRequest: BaseIntentsRequest {
+final class BolusIntentRequest: BaseIntentsRequest {
     func bolus(_ bolusAmount: Double) throws -> String {
         guard settingsManager.settings.allowBolusShortcut else {
             return NSLocalizedString("Bolus Shortcuts are disabled in iAPS settings", comment: "")
