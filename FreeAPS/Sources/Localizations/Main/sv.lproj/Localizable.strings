@@ -2285,16 +2285,16 @@ Enact a temp Basal or a temp target */
 "Variable Keto Protection" = "Ketoacidosskydd med variabel temporär basaldos";
 
 /* */
-"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR.";
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Ketoacidosskyddet kommer att aktiveras om IOB är i negativt och om inget basalinsulin har givits på en timme. Om aktiv kommer temporära basaldoser med 0U/h att ersättas med en temporär basaldos som du anger nedan.";
 
 /* */
-"Enable Keto Protection" = "Enable Keto Protection";
+"Enable Keto Protection" = "Aktivera ketoacidosskydd";
 
 /* */
 "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate.";
 
 /* */
-"AIMI B30 Settings" = "AIMI B30 Settings";
+"AIMI B30 Settings" = "B30-inställningar";
 
 /* */
 "Duration of increased B30 basal rate" = "Duration of increased B30 basal rate";
@@ -2432,7 +2432,7 @@ Enact a temp Basal or a temp target */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting";
 
 /* */
-"Keto Protection" = "Keto Protection";
+"Keto Protection" = "Ketoacidosskydd";
 
 /* */
 "Auto ISF" = "Auto ISF";
