@@ -341,8 +341,9 @@ struct LiveActivityChart: View {
                 .foregroundColor(colorOfGlucose)
             } else {
                 Text(string)
-                    .font(Font.custom("SuggestionSmallPartsFont", size: 25).width(.condensed))
+                    .font(Font.custom("SuggestionSmallPartsFontMgDl", fixedSize: 23).width(.condensed))
                     .foregroundColor(colorOfGlucose)
+                    .offset(x: -2)
             }
         }
     }
