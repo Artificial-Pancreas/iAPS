@@ -529,9 +529,6 @@ extension OverrideProfilesConfig {
                             .controlSize(.mini)
                             .disabled(unChanged())
                     }
-                    .sheet(isPresented: $isSheetPresented) {
-                        presetPopover
-                    }
                 }
 
                 if state.isEnabled {
@@ -555,6 +552,9 @@ extension OverrideProfilesConfig {
             .navigationBarTitle("Profiles")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+            .sheet(isPresented: $isSheetPresented) {
+                presetPopover
+            }
         }
 
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
