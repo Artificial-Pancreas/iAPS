@@ -113,7 +113,7 @@ extension OverrideProfilesConfig {
                     self.updateAutoISF(saveOverride.id)
                 }
 
-                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)
+                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
                 ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
 
                 try? self.coredataContext.save()
@@ -413,9 +413,7 @@ extension OverrideProfilesConfig {
                 saveAutoISF.smbDeliveryRatioBGrange = autoISFsettings.smbDeliveryRatioBGrange as NSDecimalNumber
                 saveAutoISF.postMealISFweight = autoISFsettings.postMealISFweight as NSDecimalNumber
                 saveAutoISF.date = Date.now
-
-                // ID here managed different depending on preset or custom override. To do: refactor this later
-                if let isId = id_ { saveAutoISF.id = isId } else { saveAutoISF.id = id }
+                saveAutoISF.id = id_
 
                 try? self.coredataContext.save()
             }
