@@ -113,7 +113,7 @@ extension OverrideProfilesConfig {
                     self.updateAutoISF(saveOverride.id)
                 }
 
-                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(self.duration as NSDecimalNumber)
+                let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
                 ns.uploadOverride(self.percentage.formatted(), Double(duration), saveOverride.date ?? Date.now)
 
                 try? self.coredataContext.save()
@@ -270,38 +270,36 @@ extension OverrideProfilesConfig {
                 }
             }
 
-            if overrideAutoISF {
-                if let fetched = OverrideStorage().fetchLatestAutoISFsettings().first {
-                    autoISFsettings = AutoISFsettings(
-                        autoisf: fetched.autoisf,
-                        smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
-                        smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
-                        smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
-                        autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
-                        higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
-                        lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
-                        postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
-                        enableBGacceleration: fetched.enableBGacceleration,
-                        bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
-                        bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
-                        iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
-                        autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
-                        autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
-                        use_B30: fetched.use_B30,
-                        iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
-                        b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
-                        b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
-                        b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
-                        b30factor: (fetched.b30factor ?? 5) as Decimal,
-                        b30_duration: (fetched.b30_duration ?? 30) as Decimal,
-                        ketoProtect: fetched.ketoProtect,
-                        variableKetoProtect: fetched.variableKetoProtect,
-                        ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
-                        ketoProtectAbsolut: fetched.ketoProtectAbsolut,
-                        ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
-                        id: fetched.id ?? ""
-                    )
-                }
+            if let fetched = OverrideStorage().fetchLatestAutoISFsettings().first {
+                autoISFsettings = AutoISFsettings(
+                    autoisf: fetched.autoisf,
+                    smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
+                    smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
+                    smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
+                    autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
+                    higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
+                    lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
+                    postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
+                    enableBGacceleration: fetched.enableBGacceleration,
+                    bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
+                    bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
+                    iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
+                    autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
+                    autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
+                    use_B30: fetched.use_B30,
+                    iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
+                    b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
+                    b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
+                    b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
+                    b30factor: (fetched.b30factor ?? 5) as Decimal,
+                    b30_duration: (fetched.b30_duration ?? 30) as Decimal,
+                    ketoProtect: fetched.ketoProtect,
+                    variableKetoProtect: fetched.variableKetoProtect,
+                    ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
+                    ketoProtectAbsolut: fetched.ketoProtectAbsolut,
+                    ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
+                    id: fetched.id ?? ""
+                )
             }
 
             let overrideTarget = (overrideArray.target ?? 0) as Decimal
@@ -413,9 +411,7 @@ extension OverrideProfilesConfig {
                 saveAutoISF.smbDeliveryRatioBGrange = autoISFsettings.smbDeliveryRatioBGrange as NSDecimalNumber
                 saveAutoISF.postMealISFweight = autoISFsettings.postMealISFweight as NSDecimalNumber
                 saveAutoISF.date = Date.now
-
-                // ID here managed different depending on preset or custom override. To do: refactor this later
-                if let isId = id_ { saveAutoISF.id = isId } else { saveAutoISF.id = id }
+                saveAutoISF.id = id_
 
                 try? self.coredataContext.save()
             }
