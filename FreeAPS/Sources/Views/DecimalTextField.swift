@@ -180,6 +180,7 @@ public struct DecimalTextField: UIViewRepresentable {
             if let number = parent.formatter.number(from: proposedText) {
                 let decimalNumber = number.decimalValue
                 parent.value = decimalNumber
+                previousSeenValue = decimalNumber
             } else {
                 // invalid input, set value to 0
                 parent.value = 0
