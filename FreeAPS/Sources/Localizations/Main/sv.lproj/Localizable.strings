@@ -2255,46 +2255,46 @@ Enact a temp Basal or a temp target */
 "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Behöver ett blodsockermålvärde <= 118 mg/dl som ett undantag (profil) eller tillfälligt målvärde";
 
 /* */
-"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Once this Target is cancelled, the B30 high TBR will be cancelled";
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "När din profil avbryts kommer B30-basaldosen att avslutas";
 
 /* */
-"In order to activate B30 a minimum manual Bolus needs to be given" = "In order to activate B30 a minimum manual Bolus needs to be given";
+"In order to activate B30 a minimum manual Bolus needs to be given" = "För att aktivera B30 krävs en manuell bolus";
 
 /* */
-"You can specify how long B30 run and how high it is" = "You can specify how long B30 run and how high it is";
+"You can specify how long B30 run and how high it is" = "Du kan ställa in hur många minuter B30 är aktiv samt hur stor den manuella bolusen måste vara";
 
 /* */
-"Absolute Safety TBR " = "Absolute Safety TBR ";
+"Absolute Safety TBR " = "Absolut temporär basaldos ";
 
 /* */
-"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!";
+"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Mångd i U/h av temporär basaldos, som ges för att undvika ketoacidos. Kommer att begränsas till min:  0U/h, max: 2U/hr!";
 
 /* */
-"Enable Keto protection with pre-defined TBR" = "Enable Keto protection with pre-defined TBR";
+"Enable Keto protection with pre-defined TBR" = "Aktivera Ketoacidosskydd med en fördefinierad temporär basaldos";
 
 /* */
-"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR";
+"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Om en bestämd temporar basaldos mellan 0 och 2 U/hr anges istället för procentandel av din nuvarande temporära basaldos";
 
 /* */
-"Safety TBR in %" = "Safety TBR in %";
+"Safety TBR in %" = "Temporär basaldos i % av din ordinarie schemalagda basaldos";
 
 /* */
-"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!";
+"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Andel av temporär basaldos i % av din ordinarie basaldos, som ges för att undvika ketoacidos. Kommer att begränsas till min: 5%, max: 50%!";
 
 /* */
-"Variable Keto Protection" = "Variable Keto Protection";
+"Variable Keto Protection" = "Ketoacidosskydd med variabel temporär basaldos";
 
 /* */
-"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR.";
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Ketoacidosskyddet kommer att aktiveras om IOB är i negativt och om inget basalinsulin har givits på en timme. Om aktiv kommer temporära basaldoser med 0U/h att ersättas med en temporär basaldos som du anger nedan.";
 
 /* */
-"Enable Keto Protection" = "Enable Keto Protection";
+"Enable Keto Protection" = "Aktivera ketoacidosskydd";
 
 /* */
 "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate.";
 
 /* */
-"AIMI B30 Settings" = "AIMI B30 Settings";
+"AIMI B30 Settings" = "B30-inställningar";
 
 /* */
 "Duration of increased B30 basal rate" = "Duration of increased B30 basal rate";
@@ -2432,7 +2432,7 @@ Enact a temp Basal or a temp target */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting";
 
 /* */
-"Keto Protection" = "Keto Protection";
+"Keto Protection" = "Ketoacidosskydd";
 
 /* */
 "Auto ISF" = "Auto ISF";
