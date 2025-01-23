@@ -5,7 +5,7 @@ function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
 
     // Auto ISF Overrides
     if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
-        let overrides = { };
+        let overrides = profile.iaps;
         for (let setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
               if (setting != "id") {
