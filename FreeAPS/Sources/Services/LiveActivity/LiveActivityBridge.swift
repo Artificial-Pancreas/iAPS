@@ -263,12 +263,12 @@ extension LiveActivityAttributes.ContentState {
                         )
                         return ActivityContent(
                             state: state.withoutPredictions(),
-                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(8 * 60))
+                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(12 * 60))
                         )
                     } else {
                         return ActivityContent(
                             state: state,
-                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(8 * 60))
+                            staleDate: min(state.date, Date.now).addingTimeInterval(TimeInterval(12 * 60))
                         )
                     }
                 }()
