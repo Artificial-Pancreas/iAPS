@@ -2384,7 +2384,7 @@ Enact a temp Basal or a temp target */
 "Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
+"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Tốc độ ISF giảm mỗi giờ với giả định mức BG vẫn ở mức mục tiêu gấp đôi trong thời gian đó. Khi giá trị = 1,0, ISF giảm xuống 50% sau 1 giờ ở mức BG ở mức mục tiêu gấp đôi.";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
