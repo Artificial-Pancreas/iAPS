@@ -14,7 +14,6 @@ extension OverrideProfilesConfig {
         @State var isSheetPresented: Bool = false
         @State var index: Int = 1
 
-        @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc
 
         @FetchRequest(
@@ -61,30 +60,25 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
-        var presetPopover: some View {
-            Form {
-                Section {
-                    TextField("Name", text: $state.profileName)
-                } header: { Text("Profile Name").foregroundStyle(.primary) }
-
-                Section {
-                    Button("Save") {
-                        state.savePreset()
-                        isSheetPresented = false
-                    }
-                    .disabled(
-                        state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
-                            .isNotEmpty
-                    )
-
-                    Button("Cancel") {
-                        isSheetPresented = false
-                    }
+        var body: some View {
+            overridesView
+                .navigationBarTitle("Profiles")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .onAppear {
+                    configureView()
+                    state.savedSettings()
                 }
-            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .alert(
+                    "Start Profile",
+                    isPresented: $showAlert,
+                    actions: { alertViewBuilder() }, message: { Text(alertSring) }
+                )
+                .sheet(isPresented: $isSheetPresented) { newPreset }
         }
 
-        var body: some View {
+        var overridesView: some View {
             Form {
                 if state.presets.isNotEmpty {
                     Section {
@@ -94,6 +88,7 @@ extension OverrideProfilesConfig {
                     }
                 }
 
+                // Insulin Slider
                 Section {
                     VStack {
                         Spacer()
@@ -123,6 +118,7 @@ extension OverrideProfilesConfig {
                     )
                 }
 
+                // Duration
                 Section {
                     Toggle(isOn: $state._indefinite) {
                         Text("Enable indefinitely")
@@ -136,6 +132,7 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Duration") }
 
+                // Target
                 Section {
                     HStack {
                         Toggle(isOn: $state.override_target) {
@@ -151,6 +148,7 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Target") }
 
+                // Advanced Settings
                 Section {
                     HStack {
                         Toggle(isOn: $state.advancedSettings) {
@@ -237,6 +235,7 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Advanced Settings") }
 
+                // Auto ISF
                 Section {
                     Toggle(isOn: $state.overrideAutoISF) {
                         Text("Override Auto ISF")
@@ -462,6 +461,7 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Auto ISF") }
 
+                // Buttons
                 Section {
                     HStack {
                         Button("Start") {
@@ -503,22 +503,7 @@ extension OverrideProfilesConfig {
                         .buttonStyle(BorderlessButtonStyle())
                         .font(.callout)
                         .controlSize(.mini)
-                        .alert(
-                            "Start Profile",
-                            isPresented: $showAlert,
-                            actions: {
-                                Button("Cancel", role: .cancel) { state.isEnabled = false }
-                                Button("Start Profile", role: .destructive) {
-                                    if state._indefinite { state.duration = 0 }
-                                    state.isEnabled.toggle()
-                                    state.saveSettings()
-                                    dismiss()
-                                }
-                            },
-                            message: {
-                                Text(alertSring)
-                            }
-                        )
+
                         Button {
                             isSheetPresented = true
                         }
@@ -528,32 +513,54 @@ extension OverrideProfilesConfig {
                             .buttonStyle(BorderlessButtonStyle())
                             .controlSize(.mini)
                             .disabled(unChanged())
+
+                        if state.isEnabled {
+                            Section {
+                                Button("Cancel Profile Override") {
+                                    state.cancelProfile()
+                                    state.hideModal()
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .buttonStyle(BorderlessButtonStyle())
+                                .disabled(!state.isEnabled)
+                                .tint(.red)
+                            } footer: { Text("").padding(.bottom, 150) }
+                        }
                     }
                 }
+            }
+        }
 
-                if state.isEnabled {
-                    Section {
-                        Button("Cancel Profile Override") {
-                            state.cancelProfile()
-                            dismiss()
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .buttonStyle(BorderlessButtonStyle())
-                        .disabled(!state.isEnabled)
-                        .tint(.red)
-                    } footer: { Text("").padding(.bottom, 150) }
+        var newPreset: some View {
+            Form {
+                Section {
+                    TextField("Name", text: $state.profileName)
+                } header: { Text("Profile Name").foregroundStyle(.primary) }
+
+                Section {
+                    Button("Save") {
+                        state.savePreset()
+                        isSheetPresented = false
+                    }
+                    .disabled(
+                        state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
+                            .isNotEmpty
+                    )
+
+                    Button("Cancel") {
+                        isSheetPresented = false
+                    }
                 }
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear {
-                configureView()
-                state.savedSettings()
-            }
-            .navigationBarTitle("Profiles")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Close", action: state.hideModal))
-            .sheet(isPresented: $isSheetPresented) {
-                presetPopover
+            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
+        }
+
+        @ViewBuilder private func alertViewBuilder() -> some View {
+            Button("Cancel", role: .cancel) { state.isEnabled = false }
+            Button("Start Profile", role: .destructive) {
+                if state._indefinite { state.duration = 0 }
+                state.isEnabled.toggle()
+                state.saveSettings()
+                state.hideModal()
             }
         }
 
