@@ -210,7 +210,7 @@ struct ClockOffset: View {
                 .frame(maxHeight: 20)
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(Color(.warning))
-                .offset(x: 10, y: !mdtPump ? -20 : -13)
+                .offset(x: !mdtPump ? 10 : 12, y: !mdtPump ? -20 : -22)
         }
     }
 }
