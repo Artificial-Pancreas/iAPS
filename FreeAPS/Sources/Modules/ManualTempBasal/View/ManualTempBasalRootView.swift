@@ -19,7 +19,7 @@ extension ManualTempBasal {
                     HStack {
                         Text("Amount")
                         Spacer()
-                        DecimalTextField("0", value: $state.rate, formatter: formatter, autofocus: true, cleanInput: true)
+                        DecimalTextField("0", value: $state.rate, formatter: formatter, autofocus: true, liveEditing: true)
                         Text("U/hr").foregroundColor(.secondary)
                     }
                     Picker(selection: $state.durationIndex, label: Text("Duration")) {

@@ -91,7 +91,14 @@ extension NotificationsConfig {
                                     UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                                 }
                             } else {
-                                Toggle("Show Live Activity", isOn: $state.useLiveActivity) }
+                                Toggle("Show Live Activity", isOn: $state.useLiveActivity)
+                                if state.useLiveActivity {
+                                    Toggle("Display Chart", isOn: $state.liveActivityChart)
+                                    if state.liveActivityChart {
+                                        Toggle("Show Predictions", isOn: $state.liveActivityChartShowPredictions)
+                                    }
+                                }
+                            }
                         }
                     )
                     .onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {

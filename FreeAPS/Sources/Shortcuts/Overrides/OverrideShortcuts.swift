@@ -168,7 +168,7 @@ enum OverrideIntentError: Error {
     }
 
     func fetchIDs(_ id: [OverrideEntity.ID]) -> [OverrideEntity] {
-        let presets = overrideStorage.fetchProfiles().filter { id.contains(UUID(uuidString: $0.id ?? "")!) }
+        let presets = overrideStorage.fetchProfiles().filter { id.contains(UUID(uuidString: $0.id ?? "") ?? UUID()) }
             .map { preset -> OverrideEntity in
                 let percentage = preset.percentage != 100 ? preset.percentage.formatted() : ""
                 let targetRaw = settingsManager.settings

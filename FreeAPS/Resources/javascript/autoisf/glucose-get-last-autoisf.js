@@ -147,7 +147,7 @@ var getLastGlucose = function (data) {
 
 
 
-    // start autoISF by https://github.com/ga-zelle/autoISF , relevant variables and functions
+    // start autoISF by https://github.com/ga-zelle/autoISF, relevant variables and functions
     // mod 7: append 2 variables for 5% range
     var dura_ISF_minutes = 0;
     var dura_ISF_average = now.glucose;

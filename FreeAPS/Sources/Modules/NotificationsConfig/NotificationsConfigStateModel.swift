@@ -10,6 +10,9 @@ extension NotificationsConfig {
         @Published var highGlucose: Decimal = 0
         @Published var carbsRequiredThreshold: Decimal = 0
         @Published var useLiveActivity = false
+        @Published var liveActivityChart = false
+        @Published var liveActivityChartShowPredictions = true
+
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -22,6 +25,9 @@ extension NotificationsConfig {
             subscribeSetting(\.addSourceInfoToGlucoseNotifications, on: $addSourceInfoToGlucoseNotifications) {
                 addSourceInfoToGlucoseNotifications = $0 }
             subscribeSetting(\.useLiveActivity, on: $useLiveActivity) { useLiveActivity = $0 }
+            subscribeSetting(\.liveActivityChart, on: $liveActivityChart) { liveActivityChart = $0 }
+            subscribeSetting(\.liveActivityChartShowPredictions, on: $liveActivityChartShowPredictions) {
+                liveActivityChartShowPredictions = $0 }
 
             subscribeSetting(\.lowGlucose, on: $lowGlucose, initial: {
                 let value = max(min($0, 400), 40)

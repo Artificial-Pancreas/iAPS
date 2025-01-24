@@ -15,6 +15,7 @@ public struct DecimalTextField: UIViewRepresentable {
     var autofocus: Bool
     var cleanInput: Bool
     var allowDecimalSeparator: Bool
+    var liveEditing: Bool // when true: update the value as the user types; when false: only update the value when the user finishes typing (closes the keyboard)
 
     public init(
         _ placeholder: String,
@@ -29,7 +30,8 @@ public struct DecimalTextField: UIViewRepresentable {
         formatter: NumberFormatter,
         autofocus: Bool = false,
         cleanInput: Bool = true,
-        allowDecimalSeparator: Bool = true
+        allowDecimalSeparator: Bool = true,
+        liveEditing: Bool = false
     ) {
         self.placeholder = placeholder
         _value = value
@@ -45,6 +47,12 @@ public struct DecimalTextField: UIViewRepresentable {
         self.formatter = formatter
         formatter.numberStyle = .decimal
         self.allowDecimalSeparator = allowDecimalSeparator
+        self.liveEditing = liveEditing
+    }
+
+    private func valueAsText() -> String? {
+        /// show no value initially, i.e. empty String
+        value == 0 ? "" : formatter.string(for: value)
     }
 
     public func makeUIView(context: Context) -> UITextField {
@@ -53,11 +61,7 @@ public struct DecimalTextField: UIViewRepresentable {
         textField.inputAccessoryView = cleanInput ? makeDoneToolbar(for: textField, context: context) : nil
         textField.addTarget(context.coordinator, action: #selector(Coordinator.editingDidBegin), for: .editingDidBegin)
         textField.delegate = context.coordinator
-        if value == 0 { /// show no value initially, i.e. empty String
-            textField.text = ""
-        } else {
-            textField.text = formatter.string(for: value)
-        }
+        textField.text = valueAsText()
         textField.placeholder = placeholder
         return textField
     }
@@ -84,12 +88,21 @@ public struct DecimalTextField: UIViewRepresentable {
             action: #selector(Coordinator.cancelEdit)
         )
 
-        toolbar.items = [clearButton, flexibleSpace, cancelButton, doneButton]
+        toolbar
+            .items = liveEditing ? [clearButton, flexibleSpace, doneButton] :
+            [clearButton, flexibleSpace, cancelButton, doneButton]
         toolbar.sizeToFit()
         return toolbar
     }
 
     public func updateUIView(_ textField: UITextField, context: Context) {
+        if !context.coordinator.isEditing || context.coordinator.previousSeenValue != value {
+            context.coordinator.previousSeenValue = value
+            let newText = valueAsText()
+            if textField.text != newText {
+                textField.text = newText
+            }
+        }
         textField.textColor = textColor
         textField.textAlignment = textAlignment
         textField.keyboardType = keyboardType
@@ -115,6 +128,8 @@ public struct DecimalTextField: UIViewRepresentable {
         let maxLength: Int?
         var didBecomeFirstResponder = false
         let decimalFormatter: NumberFormatter
+        var isEditing: Bool = false
+        var previousSeenValue: Decimal = 0
 
         init(_ parent: DecimalTextField, maxLength: Int?) {
             self.parent = parent
@@ -129,16 +144,12 @@ public struct DecimalTextField: UIViewRepresentable {
         }
 
         @objc func cancelEdit() {
-            if parent.value != 0 {
-                let newText = parent.formatter.string(for: parent.value) ?? ""
-                textField?.text = newText
-            } else {
-                textField?.text = ""
-            }
+            textField?.text = parent.valueAsText()
             textField?.resignFirstResponder()
         }
 
         @objc fileprivate func editingDidBegin(_ textField: UITextField) {
+            isEditing = true
             DispatchQueue.main.async {
                 textField.moveCursorToEnd()
             }
@@ -154,12 +165,24 @@ public struct DecimalTextField: UIViewRepresentable {
                 parent.value = decimalNumber
                 textField.text = parent.formatter.string(for: decimalNumber) ?? ""
             } else {
-                if parent.value != 0 {
-                    let newText = parent.formatter.string(for: parent.value) ?? ""
-                    textField.text = newText
-                } else {
-                    textField.text = ""
-                }
+                // invalid input - reset to the original value
+                textField.text = parent.valueAsText()
+            }
+            isEditing = false
+        }
+
+        private func handleUpdatedInput() {
+            guard parent.liveEditing else { return }
+            guard let textField = self.textField else { return }
+
+            let proposedText = textField.text ?? ""
+
+            if let number = parent.formatter.number(from: proposedText) {
+                let decimalNumber = number.decimalValue
+                parent.value = decimalNumber
+            } else {
+                // invalid input, set value to 0
+                parent.value = 0
             }
         }
     }
@@ -186,6 +209,7 @@ extension DecimalTextField.Coordinator: UITextFieldDelegate {
             }
 
             textField.text = newText
+            handleUpdatedInput()
             return false
         }
         return true

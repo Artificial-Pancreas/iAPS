@@ -5,7 +5,7 @@ function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
 
     // Auto ISF Overrides
     if (dynamicVariables.useOverride && dynamicVariables.aisfOverridden) {
-        let overrides = { };
+        let overrides = profile.iaps;
         for (let setting in dynamicVariables.autoISFoverrides) {
           if (dynamicVariables.autoISFoverrides.hasOwnProperty(setting)) {
               if (setting != "id") {
@@ -435,7 +435,7 @@ function exercising(profile, dynamicVariables) {
     // One of two exercise settings (they share the same purpose).
     if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {
         // Turn dynISF off when using a temp target >= 118 (6.5 mol/l) and if an exercise setting is enabled.
-        if (profile.min_bg >= 118 || (dynamicVariables.useOverride && dynamicVariables.overrideTarget >= 118)) {
+        if (profile.temptargetSet && profile.min_bg >= 118 || (dynamicVariables.useOverride && dynamicVariables.overrideTarget >= 118)) {
             return true;
         }
     }
@@ -446,6 +446,10 @@ const MillisecondsPerMinute = 60 * 1000
 
 // AIMI B30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
+    if (!profile.iaps.closedLoop) {
+        return
+    }
+    
     let minutesRemaining = profile.iaps.b30_duration;
     let lastBolus = 0;
     let lastBolusAge = minutesRemaining + 1;
@@ -491,7 +495,7 @@ function iob_max(iob, dynamicVariables, profile) {
     //Your setting
     let threshold = profile.iaps.iobThresholdPercent;
 
-    if (dynamicVariables.advancedSettings && dynamicVariables.aisfOverridden) {
+    if (dynamicVariables.aisfOverridden) {
         threshold = dynamicVariables.autoISFoverrides.iobThresholdPercent
     }
     //Guards
@@ -503,7 +507,6 @@ function iob_max(iob, dynamicVariables, profile) {
     }
 
     const currentBasal = profile.current_basal
-
     let currentIOB;
 
     if (!!iob && iob.length > 0) {
