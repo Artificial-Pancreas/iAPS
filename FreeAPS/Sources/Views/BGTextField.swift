@@ -5,17 +5,20 @@ struct BGTextField: View {
     @Binding var mgdlValue: Decimal
     @Binding var units: GlucoseUnits
     var isDisabled: Bool
+    var liveEditing: Bool // when true: update the value as the user types; when false: only update the value when the user finishes typing (closes the keyboard)
 
     init(
         _ placeholder: String,
         mgdlValue: Binding<Decimal>,
         units: Binding<GlucoseUnits>,
-        isDisabled: Bool
+        isDisabled: Bool,
+        liveEditing: Bool = false
     ) {
         self.placeholder = placeholder
         _mgdlValue = mgdlValue
         _units = units
         self.isDisabled = isDisabled
+        self.liveEditing = liveEditing
     }
 
     private var mmolLFormatter: NumberFormatter {
@@ -42,10 +45,10 @@ struct BGTextField: View {
     var body: some View {
         HStack {
             if units == .mmolL {
-                DecimalTextField(placeholder, value: displayValue, formatter: mmolLFormatter)
+                DecimalTextField(placeholder, value: displayValue, formatter: mmolLFormatter, liveEditing: liveEditing)
                     .disabled(isDisabled)
             } else {
-                DecimalTextField(placeholder, value: displayValue, formatter: mgdLFormatter)
+                DecimalTextField(placeholder, value: displayValue, formatter: mgdLFormatter, liveEditing: liveEditing)
                     .disabled(isDisabled)
             }
 
