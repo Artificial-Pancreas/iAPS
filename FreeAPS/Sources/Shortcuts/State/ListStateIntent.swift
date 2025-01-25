@@ -1,7 +1,7 @@
 import AppIntents
 import Foundation
 
-@available(iOS 16.0, *) struct ListStateIntent: AppIntent {
+struct ListStateIntent: AppIntent {
     // Title of the action in the Shortcuts app
     static var title: LocalizedStringResource = "List last state available with iAPS"
 

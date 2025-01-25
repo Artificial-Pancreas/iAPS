@@ -41,11 +41,8 @@ struct CapsulaBackground: ViewModifier {
 
 struct CompactSectionSpacing: ViewModifier {
     func body(content: Content) -> some View {
-        if #available(iOS 17, *) {
-            return content
-                .listSectionSpacing(.compact)
-        } else {
-            return content }
+        content
+            .listSectionSpacing(.compact)
     }
 }
 
@@ -65,17 +62,10 @@ struct CarveOrDrop: ViewModifier {
 struct InfoPanelBackground: View {
     let colorScheme: ColorScheme
     var body: some View {
-        if #available(iOS 17.0, *) {
-            Rectangle()
-                .stroke(.gray, lineWidth: 2)
-                .fill(colorScheme == .light ? .white : .black)
-                .frame(height: 24)
-        } else {
-            Rectangle()
-                .strokeBorder(.gray, lineWidth: 2)
-                .background(Rectangle().fill(colorScheme == .light ? .white : .black))
-                .frame(height: 24)
-        }
+        Rectangle()
+            .stroke(.gray, lineWidth: 2)
+            .fill(colorScheme == .light ? .white : .black)
+            .frame(height: 24)
     }
 }
 
@@ -210,7 +200,7 @@ struct ClockOffset: View {
                 .frame(maxHeight: 20)
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(Color(.warning))
-                .offset(x: 10, y: !mdtPump ? -20 : -13)
+                .offset(x: !mdtPump ? 10 : 12, y: !mdtPump ? -20 : -22)
         }
     }
 }
