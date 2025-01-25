@@ -118,6 +118,7 @@ final class OverrideStorage {
             save.indefinite = preset.indefinite
             save.isPreset = true
             save.isf = preset.isf
+            save.basal = preset.basal
             save.isfAndCr = preset.isfAndCr
             save.percentage = preset.percentage
             save.smbIsAlwaysOff = preset.smbIsAlwaysOff
@@ -217,6 +218,7 @@ final class OverrideStorage {
             save.indefinite = override.indefinite
             save.isPreset = override.isPreset
             save.isf = override.isf
+            save.basal = override.basal
             save.isfAndCr = override.isfAndCr
             save.percentage = override.percentage
             save.smbIsAlwaysOff = override.smbIsAlwaysOff
@@ -310,6 +312,7 @@ final class OverrideStorage {
                 save.indefinite = preset.indefinite
                 save.isPreset = true
                 save.isf = preset.isf
+                save.basal = preset.basal
                 save.isfAndCr = preset.isfAndCr
                 save.percentage = preset.percentage
                 save.smbIsAlwaysOff = preset.smbIsAlwaysOff

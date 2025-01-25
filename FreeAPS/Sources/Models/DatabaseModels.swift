@@ -73,6 +73,7 @@ struct MigratedOverridePresets: Codable {
     var indefininite: Bool
     var isf: Bool
     var isndAndCr: Bool
+    var basal: Bool
     var maxIOB: Decimal
     var name: String
     var overrideMaxIOB: Bool
