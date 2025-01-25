@@ -412,7 +412,6 @@ extension OverrideProfilesConfig {
                 saveAutoISF.postMealISFweight = autoISFsettings.postMealISFweight as NSDecimalNumber
                 saveAutoISF.date = Date.now
                 saveAutoISF.id = id_
-
                 try? self.coredataContext.save()
             }
         }

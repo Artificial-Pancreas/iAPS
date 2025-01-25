@@ -14,7 +14,6 @@ extension OverrideProfilesConfig {
         @State var isSheetPresented: Bool = false
         @State var index: Int = 1
 
-        @Environment(\.dismiss) var dismiss
         @Environment(\.managedObjectContext) var moc
 
         @FetchRequest(
@@ -61,30 +60,25 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
-        var presetPopover: some View {
-            Form {
-                Section {
-                    TextField("Name", text: $state.profileName)
-                } header: { Text("Profile Name").foregroundStyle(.primary) }
-
-                Section {
-                    Button("Save") {
-                        state.savePreset()
-                        isSheetPresented = false
-                    }
-                    .disabled(
-                        state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
-                            .isNotEmpty
-                    )
-
-                    Button("Cancel") {
-                        isSheetPresented = false
-                    }
+        var body: some View {
+            overridesView
+                .navigationBarTitle("Profiles")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .onAppear {
+                    configureView()
+                    state.savedSettings()
                 }
-            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .alert(
+                    "Start Profile",
+                    isPresented: $showAlert,
+                    actions: { alertViewBuilder() }, message: { Text(alertSring) }
+                )
+                .sheet(isPresented: $isSheetPresented) { newPreset }
         }
 
-        var body: some View {
+        var overridesView: some View {
             Form {
                 if state.presets.isNotEmpty {
                     Section {
@@ -94,6 +88,7 @@ extension OverrideProfilesConfig {
                     }
                 }
 
+                // Insulin Slider
                 Section {
                     VStack {
                         Spacer()
@@ -123,6 +118,7 @@ extension OverrideProfilesConfig {
                     )
                 }
 
+                // Duration
                 Section {
                     Toggle(isOn: $state._indefinite) {
                         Text("Enable indefinitely")
@@ -130,12 +126,13 @@ extension OverrideProfilesConfig {
                     if !state._indefinite {
                         HStack {
                             Text("Duration")
-                            DecimalTextField("0", value: $state.duration, formatter: formatter)
+                            DecimalTextField("0", value: $state.duration, formatter: formatter, liveEditing: true)
                             Text("minutes").foregroundColor(.secondary)
                         }
                     }
                 } header: { Text("Duration") }
 
+                // Target
                 Section {
                     HStack {
                         Toggle(isOn: $state.override_target) {
@@ -145,12 +142,13 @@ extension OverrideProfilesConfig {
                     if state.override_target {
                         HStack {
                             Text("Target Glucose")
-                            DecimalTextField("0", value: $state.target, formatter: glucoseFormatter)
+                            DecimalTextField("0", value: $state.target, formatter: glucoseFormatter, liveEditing: true)
                             Text(state.units.rawValue).foregroundColor(.secondary)
                         }
                     }
                 } header: { Text("Target") }
 
+                // Advanced Settings
                 Section {
                     HStack {
                         Toggle(isOn: $state.advancedSettings) {
@@ -172,12 +170,12 @@ extension OverrideProfilesConfig {
                         if state.smbIsAlwaysOff {
                             HStack {
                                 Text("First Hour SMBs are Off (24 hours)")
-                                DecimalTextField("0", value: $state.start, formatter: formatter)
+                                DecimalTextField("0", value: $state.start, formatter: formatter, liveEditing: true)
                                 Text("hour").foregroundColor(.secondary)
                             }
                             HStack {
                                 Text("Last Hour SMBs are Off (24 hours)")
-                                DecimalTextField("0", value: $state.end, formatter: formatter)
+                                DecimalTextField("0", value: $state.end, formatter: formatter, liveEditing: true)
                                 Text("hour").foregroundColor(.secondary)
                             }
                         }
@@ -203,7 +201,8 @@ extension OverrideProfilesConfig {
                             DecimalTextField(
                                 "0",
                                 value: $state.smbMinutes,
-                                formatter: formatter
+                                formatter: formatter,
+                                liveEditing: true
                             )
                             Text("minutes").foregroundColor(.secondary)
                         }
@@ -212,7 +211,8 @@ extension OverrideProfilesConfig {
                             DecimalTextField(
                                 "0",
                                 value: $state.uamMinutes,
-                                formatter: formatter
+                                formatter: formatter,
+                                liveEditing: true
                             )
                             Text("minutes").foregroundColor(.secondary)
                         }
@@ -229,7 +229,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.maxIOB,
-                                    formatter: insulinFormatter
+                                    formatter: insulinFormatter,
+                                    liveEditing: true
                                 )
                                 Text("U").foregroundColor(.secondary)
                             }
@@ -237,6 +238,7 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Advanced Settings") }
 
+                // Auto ISF
                 Section {
                     Toggle(isOn: $state.overrideAutoISF) {
                         Text("Override Auto ISF")
@@ -257,7 +259,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.autoisf_min,
-                                    formatter: insulinFormatter
+                                    formatter: insulinFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -266,7 +269,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.autoisf_max,
-                                    formatter: insulinFormatter
+                                    formatter: insulinFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -275,7 +279,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.smbDeliveryRatioMin,
-                                    formatter: insulinFormatter
+                                    formatter: insulinFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -284,7 +289,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.smbDeliveryRatioMax,
-                                    formatter: insulinFormatter
+                                    formatter: insulinFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -294,7 +300,8 @@ extension OverrideProfilesConfig {
                                     "0",
                                     mgdlValue: $state.autoISFsettings.smbDeliveryRatioBGrange,
                                     units: $state.units,
-                                    isDisabled: false
+                                    isDisabled: false,
+                                    liveEditing: true
                                 )
                             }
 
@@ -303,7 +310,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.autoISFhourlyChange,
-                                    formatter: insulinFormatter
+                                    formatter: insulinFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -312,7 +320,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.higherISFrangeWeight,
-                                    formatter: higherPrecisionFormatter
+                                    formatter: higherPrecisionFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -321,7 +330,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.lowerISFrangeWeight,
-                                    formatter: higherPrecisionFormatter
+                                    formatter: higherPrecisionFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -330,7 +340,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.postMealISFweight,
-                                    formatter: higherPrecisionFormatter
+                                    formatter: higherPrecisionFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -339,7 +350,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.bgAccelISFweight,
-                                    formatter: higherPrecisionFormatter
+                                    formatter: higherPrecisionFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -348,7 +360,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.bgBrakeISFweight,
-                                    formatter: higherPrecisionFormatter
+                                    formatter: higherPrecisionFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -357,7 +370,8 @@ extension OverrideProfilesConfig {
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.iobThresholdPercent,
-                                    formatter: insulinFormatter
+                                    formatter: insulinFormatter,
+                                    liveEditing: true
                                 )
                             }
 
@@ -371,7 +385,8 @@ extension OverrideProfilesConfig {
                                     DecimalTextField(
                                         "0",
                                         value: $state.autoISFsettings.iTime_Start_Bolus,
-                                        formatter: insulinFormatter
+                                        formatter: insulinFormatter,
+                                        liveEditing: true
                                     )
                                 }
 
@@ -381,7 +396,8 @@ extension OverrideProfilesConfig {
                                         "0",
                                         mgdlValue: $state.autoISFsettings.b30targetLevel,
                                         units: $state.units,
-                                        isDisabled: false
+                                        isDisabled: false,
+                                        liveEditing: true
                                     )
                                 }
 
@@ -391,7 +407,8 @@ extension OverrideProfilesConfig {
                                         "0",
                                         mgdlValue: $state.autoISFsettings.b30upperLimit,
                                         units: $state.units,
-                                        isDisabled: false
+                                        isDisabled: false,
+                                        liveEditing: true
                                     )
                                 }
 
@@ -401,7 +418,8 @@ extension OverrideProfilesConfig {
                                         "0",
                                         mgdlValue: $state.autoISFsettings.b30upperdelta,
                                         units: $state.units,
-                                        isDisabled: false
+                                        isDisabled: false,
+                                        liveEditing: true
                                     )
                                 }
 
@@ -410,7 +428,8 @@ extension OverrideProfilesConfig {
                                     DecimalTextField(
                                         "0",
                                         value: $state.autoISFsettings.b30factor,
-                                        formatter: insulinFormatter
+                                        formatter: insulinFormatter,
+                                        liveEditing: true
                                     )
                                 }
 
@@ -419,7 +438,8 @@ extension OverrideProfilesConfig {
                                     DecimalTextField(
                                         "0",
                                         value: $state.autoISFsettings.b30_duration,
-                                        formatter: insulinFormatter
+                                        formatter: insulinFormatter,
+                                        liveEditing: true
                                     )
                                 }
                             }
@@ -439,7 +459,8 @@ extension OverrideProfilesConfig {
                                         DecimalTextField(
                                             "0",
                                             value: $state.autoISFsettings.ketoProtectBasalPercent,
-                                            formatter: insulinFormatter
+                                            formatter: insulinFormatter,
+                                            liveEditing: true
                                         )
                                     }
                                 } else {
@@ -452,7 +473,8 @@ extension OverrideProfilesConfig {
                                             DecimalTextField(
                                                 "0",
                                                 value: $state.autoISFsettings.ketoProtectBasalAbsolut,
-                                                formatter: higherPrecisionFormatter
+                                                formatter: higherPrecisionFormatter,
+                                                liveEditing: true
                                             )
                                         }
                                     }
@@ -462,6 +484,7 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Auto ISF") }
 
+                // Buttons
                 Section {
                     HStack {
                         Button("Start") {
@@ -503,22 +526,7 @@ extension OverrideProfilesConfig {
                         .buttonStyle(BorderlessButtonStyle())
                         .font(.callout)
                         .controlSize(.mini)
-                        .alert(
-                            "Start Profile",
-                            isPresented: $showAlert,
-                            actions: {
-                                Button("Cancel", role: .cancel) { state.isEnabled = false }
-                                Button("Start Profile", role: .destructive) {
-                                    if state._indefinite { state.duration = 0 }
-                                    state.isEnabled.toggle()
-                                    state.saveSettings()
-                                    dismiss()
-                                }
-                            },
-                            message: {
-                                Text(alertSring)
-                            }
-                        )
+
                         Button {
                             isSheetPresented = true
                         }
@@ -528,32 +536,54 @@ extension OverrideProfilesConfig {
                             .buttonStyle(BorderlessButtonStyle())
                             .controlSize(.mini)
                             .disabled(unChanged())
+
+                        if state.isEnabled {
+                            Section {
+                                Button("Cancel Profile Override") {
+                                    state.cancelProfile()
+                                    state.hideModal()
+                                }
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .buttonStyle(BorderlessButtonStyle())
+                                .disabled(!state.isEnabled)
+                                .tint(.red)
+                            } footer: { Text("").padding(.bottom, 150) }
+                        }
                     }
                 }
+            }
+        }
 
-                if state.isEnabled {
-                    Section {
-                        Button("Cancel Profile Override") {
-                            state.cancelProfile()
-                            dismiss()
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .buttonStyle(BorderlessButtonStyle())
-                        .disabled(!state.isEnabled)
-                        .tint(.red)
-                    } footer: { Text("").padding(.bottom, 150) }
+        var newPreset: some View {
+            Form {
+                Section {
+                    TextField("Name", text: $state.profileName)
+                } header: { Text("Profile Name").foregroundStyle(.primary) }
+
+                Section {
+                    Button("Save") {
+                        state.savePreset()
+                        isSheetPresented = false
+                    }
+                    .disabled(
+                        state.profileName.isEmpty || fetchedProfiles.filter({ $0.name == state.profileName })
+                            .isNotEmpty
+                    )
+
+                    Button("Cancel") {
+                        isSheetPresented = false
+                    }
                 }
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear {
-                configureView()
-                state.savedSettings()
-            }
-            .navigationBarTitle("Profiles")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Close", action: state.hideModal))
-            .sheet(isPresented: $isSheetPresented) {
-                presetPopover
+            }.dynamicTypeSize(...DynamicTypeSize.xxLarge)
+        }
+
+        @ViewBuilder private func alertViewBuilder() -> some View {
+            Button("Cancel", role: .cancel) { state.isEnabled = false }
+            Button("Start Profile", role: .destructive) {
+                if state._indefinite { state.duration = 0 }
+                state.isEnabled.toggle()
+                state.saveSettings()
+                state.hideModal()
             }
         }
 
