@@ -104,7 +104,9 @@ extension Home {
             maxBolus: 0,
             maxBolusValue: 1,
             useInsulinBars: true,
-            screenHours: 6
+            screenHours: 6,
+            target: [],
+            targetLines: false
         )
 
         override func subscribe() {
@@ -153,6 +155,7 @@ extension Home {
             data.minimumSMB = settingsManager.settings.minimumSMB
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
+            data.targetLines = settingsManager.settings.targetLines
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             extended = settingsManager.settings.extendHomeView
@@ -533,31 +536,33 @@ extension Home {
         private func setupData() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                if let data = self.provider.reasons() {
+                let reasonData = self.provider.reasons
+                if let data = self.provider.iobData(reasonData) {
                     self.iobData = data
                     self.carbData = data.map(\.cob).reduce(0, +)
                     self.iobs = data.map(\.iob).reduce(0, +)
                     neg = data.filter({ $0.iob < 0 }).count * 5
-                    let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
-                    let yesterday = (tdds.first(where: {
-                        ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
-                    })?.tdd ?? 0) as Decimal
-                    let oneDaysAgo = CoreDataStorage().fetchTDD(interval: DateFilter().today).last
-                    tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
-                    tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
-                    tdd2DaysAgo = (tdds.first(where: {
-                        ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                            .addingTimeInterval(-1.days.timeInterval)
-                    })?.tdd ?? 0) as Decimal
-                    tdd3DaysAgo = (tdds.first(where: {
-                        ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                            .addingTimeInterval(-2.days.timeInterval)
-                    })?.tdd ?? 0) as Decimal
+                }
+                self.data.target = self.provider.targetHistory(reasonData)
+                let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
+                let yesterday = (tdds.first(where: {
+                    ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
+                })?.tdd ?? 0) as Decimal
+                let oneDaysAgo = CoreDataStorage().fetchTDD(interval: DateFilter().today).last
+                tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
+                tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
+                tdd2DaysAgo = (tdds.first(where: {
+                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
+                        .addingTimeInterval(-1.days.timeInterval)
+                })?.tdd ?? 0) as Decimal
+                tdd3DaysAgo = (tdds.first(where: {
+                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
+                        .addingTimeInterval(-2.days.timeInterval)
+                })?.tdd ?? 0) as Decimal
 
-                    if let tdds_ = self.provider.dynamicVariables {
-                        tddAverage = ((tdds.first?.tdd ?? 0) as Decimal) - tdds_.average_total_data
-                        tddActualAverage = tdds_.average_total_data
-                    }
+                if let tdds_ = self.provider.dynamicVariables {
+                    tddAverage = ((tdds.first?.tdd ?? 0) as Decimal) - tdds_.average_total_data
+                    tddActualAverage = tdds_.average_total_data
                 }
             }
         }
@@ -632,6 +637,7 @@ extension Home.StateModel:
         data.thresholdLines = settingsManager.settings.rulerMarks
         useTargetButton = settingsManager.settings.useTargetButton
         data.screenHours = settingsManager.settings.hours
+        data.targetLines = settingsManager.settings.targetLines
         alwaysUseColors = settingsManager.settings.alwaysUseColors
         useCalc = settingsManager.settings.useCalc
         data.minimumSMB = settingsManager.settings.minimumSMB

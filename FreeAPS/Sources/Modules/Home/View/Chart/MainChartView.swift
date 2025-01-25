@@ -84,6 +84,7 @@ struct MainChartView: View {
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
+    @State private var targetsPath = Path()
     @State private var overridesPath = Path()
     @State private var suspensionsPath = Path()
     @State private var carbsDots: [DotInfo] = []
@@ -214,6 +215,7 @@ struct MainChartView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { scroll in
                 ZStack(alignment: .top) {
+                    if data.targetLines { targetsView(fullSize: fullSize).drawingGroup() }
                     tempTargetsView(fullSize: fullSize).drawingGroup()
                     overridesView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
@@ -628,12 +630,26 @@ struct MainChartView: View {
         }
     }
 
+    private func targetsView(fullSize: CGSize) -> some View {
+        ZStack {
+            targetsPath
+                .fill(Color.green.opacity(colorScheme == .light ? 0.2 : 0.6))
+        }
+        .onChange(of: data.glucose) {
+            calculateTargetsRects(fullSize: fullSize)
+        }
+        .onChange(of: data.target) {
+            calculateTargetsRects(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) {
+            calculateTargetsRects(fullSize: fullSize)
+        }
+    }
+
     private func overridesView(fullSize: CGSize) -> some View {
         ZStack {
             overridesPath
-                .fill(Color.violet.opacity(colorScheme == .light ? 0.3 : 0.6))
-            overridesPath
-                .stroke(Color.violet.opacity(0.7), lineWidth: 1)
+                .fill(Color.violet.opacity(colorScheme == .light ? 0.5 : 1))
         }
         .onChange(of: data.glucose) {
             calculateOverridesRects(fullSize: fullSize)
@@ -1083,41 +1099,73 @@ extension MainChartView {
         }
     }
 
+    private func calculateTargetsRects(fullSize: CGSize) {
+        calculationQueue.async {
+            let conversion: Decimal = (data.units == .mmolL ? GlucoseUnits.exchangeRate : 1)
+            let rects = data.target.map { target -> CGRect in
+                let x0 = timeToXCoordinate(target.date.timeIntervalSince1970, fullSize: fullSize)
+                let y0 = glucoseToYCoordinate(Int(target.target / conversion), fullSize: fullSize)
+                let x1 = timeToXCoordinate(
+                    target.date.timeIntervalSince1970 + 5.minutes.timeInterval,
+                    fullSize: fullSize
+                )
+
+                return CGRect(
+                    x: x0,
+                    y: y0 - 2.5,
+                    width: x1 - x0,
+                    height: 3
+                )
+            }
+
+            let path = Path { path in
+                path.addRects(rects)
+            }
+            DispatchQueue.main.async {
+                targetsPath = path
+            }
+        }
+    }
+
+    // Overly complex now. Refactor
     private func calculateOverridesRects(fullSize: CGSize) {
         calculationQueue.async {
             let latest = OverrideStorage().fetchLatestOverride().first
+
             let rects = data.overrideHistory.compactMap { each -> CGRect in
                 let duration = each.duration
-                let xStart = timeToXCoordinate(each.date!.timeIntervalSince1970, fullSize: fullSize)
+                let xStart = timeToXCoordinate((each.date ?? Date()).timeIntervalSince1970, fullSize: fullSize)
                 let xEnd = timeToXCoordinate(
-                    each.date!.addingTimeInterval(Int(duration).minutes.timeInterval).timeIntervalSince1970,
+                    (each.date ?? Date()).addingTimeInterval(Int(duration).minutes.timeInterval).timeIntervalSince1970,
                     fullSize: fullSize
                 )
+                // 35 mg/dl is sort of arbritary to avoid any eventual target errors/crazy settings
                 let y = glucoseToYCoordinate(Int(each.target), fullSize: fullSize)
                 return CGRect(
                     x: xStart,
                     y: y - 3,
                     width: xEnd - xStart,
-                    height: 6
+                    height: 4
                 )
             }
             // Display active Override
             if let last = latest, last.enabled {
                 var old = Array(rects)
-                let duration = Double(last.duration ?? 0)
+                let duration = Double(truncating: last.duration ?? 0)
                 // Looks better when target isn't == 0 in Home View Main Chart
-                let targetRaw = last.target ?? 0
-                let target = Int(targetRaw) < 6 ? 6 : targetRaw
+                let targetRaw = Int(truncating: last.target ?? 0)
+                let target = targetRaw
 
                 if duration > 0 {
                     let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970, fullSize: fullSize)
-                    let plusNow = (last.date ?? Date.now).addingTimeInterval(Int(latest?.duration ?? 0).minutes.timeInterval)
+                    let plusNow = (last.date ?? Date.now)
+                        .addingTimeInterval(Int(truncating: latest?.duration ?? 0).minutes.timeInterval)
                     let x2 = timeToXCoordinate(plusNow.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
-                        y: glucoseToYCoordinate(Int(target), fullSize: fullSize) - 3,
+                        y: glucoseToYCoordinate(target, fullSize: fullSize) - 3,
                         width: x2 - x1,
-                        height: 6
+                        height: 4
                     )
                     old.append(oneMore)
                     let path = Path { path in
@@ -1131,9 +1179,9 @@ extension MainChartView {
                     let x2 = timeToXCoordinate(Date.now.timeIntervalSince1970, fullSize: fullSize)
                     let oneMore = CGRect(
                         x: x1,
-                        y: glucoseToYCoordinate(Int(target), fullSize: fullSize) - 3,
+                        y: glucoseToYCoordinate(target, fullSize: fullSize) - 3,
                         width: x2 - x1 + additionalWidth(viewWidth: fullSize.width),
-                        height: 6
+                        height: 4
                     )
                     old.append(oneMore)
                     let path = Path { path in
