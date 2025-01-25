@@ -1,7 +1,7 @@
 import AppIntents
 import Foundation
 
-@available(iOS 16.0, *) struct ListTempPresetsIntent: AppIntent {
+struct ListTempPresetsIntent: AppIntent {
     // Title of the action in the Shortcuts app
     static var title: LocalizedStringResource = "Choose Temporary Presets"
 
@@ -24,7 +24,7 @@ import Foundation
     }
 }
 
-@available(iOS 16.0, *) struct tempPresetsQuery: EntityQuery {
+struct tempPresetsQuery: EntityQuery {
     internal var intentRequest: TempPresetsIntentRequest
 
     init() {
