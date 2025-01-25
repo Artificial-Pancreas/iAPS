@@ -19,6 +19,7 @@ struct DynamicVariables: JSON, Codable {
     var isfAndCr: Bool
     var isf: Bool
     var cr: Bool
+    var basal: Bool
     var smbIsAlwaysOff: Bool
     var start: Decimal
     var end: Decimal
@@ -50,6 +51,7 @@ struct DynamicVariables: JSON, Codable {
         isfAndCr: Bool,
         isf: Bool,
         cr: Bool,
+        basal: Bool,
         smbIsAlwaysOff: Bool,
         start: Decimal,
         end: Decimal,
@@ -80,6 +82,7 @@ struct DynamicVariables: JSON, Codable {
         self.isfAndCr = isfAndCr
         self.isf = isf
         self.cr = cr
+        self.basal = basal
         self.smbIsAlwaysOff = smbIsAlwaysOff
         self.start = start
         self.end = end
@@ -114,6 +117,7 @@ extension DynamicVariables {
         case isfAndCr
         case isf
         case cr
+        case basal
         case smbIsAlwaysOff
         case start
         case end
