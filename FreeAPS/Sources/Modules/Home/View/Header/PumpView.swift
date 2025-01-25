@@ -154,7 +154,7 @@ struct PumpView: View {
                     .rotationEffect(.degrees(-90))
                     .frame(maxWidth: 32, maxHeight: 12)
                     .foregroundColor(batteryColor)
-                    .offset(x: -9, y: -0.5)
+                    .offset(x: -7, y: -0.5)
             }
         }
         .offset(x: 0, y: 5)
@@ -271,11 +271,11 @@ struct PumpView: View {
             UIImage(imageLiteralResourceName: "NonOmniPump")
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
-                .frame(maxWidth: 22, maxHeight: 38)
+                .frame(maxWidth: 22, maxHeight: 32)
                 .symbolRenderingMode(.palette)
                 .shadow(radius: 1, x: 2, y: 2)
                 .foregroundStyle(.white)
-                .padding(.bottom, 5)
+                .padding(.bottom, 1)
                 .overlay {
                     let units = 50 * (concentration.last?.concentration ?? 1)
                     portion <= 0.3 ?
