@@ -2339,7 +2339,7 @@ Enact a temp Basal or a temp target */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting.";
 
 /* */
-"ISF weight while BG decelerates" = "ISF weight while BG decelerates";
+"ISF weight while BG decelerates" = "Vikt medan blodsocker decelererar";
 
 /* */
 "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point.";
