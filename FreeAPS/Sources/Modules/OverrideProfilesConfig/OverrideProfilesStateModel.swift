@@ -249,7 +249,6 @@ extension OverrideProfilesConfig {
             smbIsAlwaysOff = overrideArray.smbIsAlwaysOff
             overrideMaxIOB = overrideArray.overrideMaxIOB
             overrideAutoISF = overrideArray.overrideAutoISF
-            override_target = (overrideArray.target != 0 || overrideArray.target != 6)
 
             if advancedSettings {
                 if !isfAndCr {
@@ -307,6 +306,7 @@ extension OverrideProfilesConfig {
                 )
             }
 
+            override_target = (Double(truncating: overrideArray.target ?? 0) > 6.0)
             let overrideTarget = (overrideArray.target ?? 0) as Decimal
             if override_target {
                 target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
@@ -340,7 +340,7 @@ extension OverrideProfilesConfig {
             _indefinite = true
             percentage = 100
             duration = 0
-            target = 0
+            target = units == .mmolL ? 5 : 100
             override_target = false
             smbIsOff = false
             advancedSettings = false
