@@ -1,7 +1,7 @@
 import CoreData
 import Foundation
 
-@available(iOS 16.0, *) final class TempPresetsIntentRequest: BaseIntentsRequest {
+final class TempPresetsIntentRequest: BaseIntentsRequest {
     enum TempPresetsError: Error {
         case noTempTargetFound
         case noDurationDefined
