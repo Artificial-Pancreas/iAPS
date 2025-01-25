@@ -154,7 +154,7 @@ struct PumpView: View {
                     .rotationEffect(.degrees(-90))
                     .frame(maxWidth: 32, maxHeight: 12)
                     .foregroundColor(batteryColor)
-                    .offset(x: -9, y: -0.5)
+                    .offset(x: -5, y: -0.5)
             }
         }
         .offset(x: 0, y: 5)
