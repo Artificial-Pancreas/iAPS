@@ -2420,16 +2420,16 @@ Enact a temp Basal or a temp target */
 "Enable DuraISF even if COB is present not just for UAM." = "Enable DuraISF even if COB is present not just for UAM.";
 
 /* */
-"Enable BG acceleration" = "Enable BG acceleration";
+"Enable BG acceleration" = "Aktivera justering for blodsockeracceleration";
 
 /* */
-"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
+"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar, somjusterar ISF vid ett accelererande / decelererande blodsocker.";
 
 /* */
 "Enable Auto ISF" = "Aktivera Auto ISF";
 
 /* */
-"Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting";
+"Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Aktiverar automatisk ISF (insulinkänslighet). Detta kommer att inaktivera eventuella samtidiga dynamiska ISF/CR inställningar";
 
 /* */
 "Keto Protection" = "Ketoacidosskydd";
