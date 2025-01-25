@@ -26,7 +26,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
         const factor = dynamicVariables.overridePercentage / 100;
         if (factor != 1) {
             // Basal has already been adjusted in prepare/profile.js
-            console.log("Override active (" + factor + "), new basal: (" + profile.current_basal + ")")
+            console.log("Override active (" + factor + "), basal: (" + profile.current_basal + ")")
             // ISF and CR
             if (dynamicVariables.isfAndCr) {
                 profile.sens /= factor;
