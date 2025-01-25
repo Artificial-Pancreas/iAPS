@@ -19,6 +19,7 @@ extension OverrideProfilesConfig {
         @Published var isfAndCr: Bool = true
         @Published var isf: Bool = true
         @Published var cr: Bool = true
+        @Published var basal: Bool = true
         @Published var smbIsAlwaysOff: Bool = false
         @Published var start: Decimal = 0
         @Published var end: Decimal = 23
@@ -96,6 +97,7 @@ extension OverrideProfilesConfig {
                     if !isfAndCr {
                         saveOverride.isf = isf
                         saveOverride.cr = cr
+                        saveOverride.basal = basal
                     }
                     if smbIsAlwaysOff {
                         saveOverride.smbIsAlwaysOff = true
@@ -148,6 +150,7 @@ extension OverrideProfilesConfig {
                     if !isfAndCr {
                         saveOverride.isf = self.isf
                         saveOverride.cr = self.cr
+                        saveOverride.basal = self.basal
                     }
                     if smbIsAlwaysOff {
                         saveOverride.smbIsAlwaysOff = true
@@ -210,6 +213,7 @@ extension OverrideProfilesConfig {
                 if !profile.isfAndCr {
                     saveOverride.isf = profile.isf
                     saveOverride.cr = profile.cr
+                    saveOverride.basal = profile.basal
                 }
                 if profile.smbIsAlwaysOff {
                     saveOverride.smbIsAlwaysOff = true
@@ -251,6 +255,7 @@ extension OverrideProfilesConfig {
                 if !isfAndCr {
                     isf = overrideArray.isf
                     cr = overrideArray.cr
+                    basal = overrideArray.basal
                 }
                 if smbIsAlwaysOff {
                     start = (overrideArray.start ?? 0) as Decimal
