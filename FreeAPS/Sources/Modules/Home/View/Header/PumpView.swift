@@ -265,13 +265,6 @@ struct PumpView: View {
                 .shadow(radius: 1, x: 2, y: 2)
                 .foregroundStyle(.white)
                 .padding(.bottom, 5)
-                .overlay {
-                    let units = 50 * (concentration.last?.concentration ?? 1)
-                    (portion <= 0.3 && !state.pumpName.contains(NSLocalizedString("Dana", comment: ""))) ?
-                        Text((reservoirFormatter.string(from: units as NSNumber) ?? "") + "+").foregroundStyle(.white)
-                        .font(.system(size: 6))
-                        : nil
-                }
         }
     }
 }
