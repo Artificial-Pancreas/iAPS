@@ -2339,13 +2339,13 @@ Enact a temp Basal or a temp target */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Ger en hög temporarär basaldos vid måltid. Basaldos aktiveras när du anvanvänder antingen en profil eller temporärt målvärde samt en manuell bolus. Syftet är att minska den postprandiella blodsockerstegringen, i synnerhet om du loopar utan att mata in kolhydrater.";
 
 /* */
-"ISF weight while BG decelerates" = "Vikt medan blodsocker decelererar";
+"ISF weight while BG decelerates" = "Justering när blodsocker decelererar";
 
 /* */
 "Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Standardvärde: 0. Detta är den vikt som tillämpas medan blodsockret avtar och som ökar insulinkänsligheten. Vid 0 är är denna justering inaktiverad. 0,1 kan vara en bra utgångspunkt.";
 
 /* */
-"ISF weight while BG accelerates" = "Vikt för när blodsocker accelererar";
+"ISF weight while BG accelerates" = "Justering när blodsocker accelererar";
 
 /* */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Standardvärde: 0. Detta är den vikt som appliceras medan blodsockret accelererar och som minskar insulinkänsligheten. Vid 0 är denna justering inaktiverad. 0,02 är en säker utgångspunkt, från vilken man kan justera uppåt. Typisk inställningar är runt 0,15!";
@@ -2357,25 +2357,25 @@ Enact a temp Basal or a temp target */
 "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Standardvärde: 3. Detta är varaktigheten i timmar efter hur länge effekten av en måltid kommer att vara aktiv. Maximal duration är 10 timmar, oavsett vad du anger.";
 
 /* */
-"ISF weight for postprandial BG rise" = "Vikt för postprandiell blodsockerökning";
+"ISF weight for postprandial BG rise" = "Justering för blodsockerökning efter måltid";
 
 /* */
 "Default value: 0. This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Standardvärde: 0. Detta är den vikt som tillämpas medan glukos stiger och som justerar din insulinkänslighet. Vid 0 är denna justering inaktiverad. Börja med 0,01 - du behöver knappast mer än 0,05!";
 
 /* */
-"ISF weight for higher BG deltas" = "Vikt för högt blodsockerdelta";
+"ISF weight for higher BG deltas" = "Justering vid högt blodsockerdelta";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Standardvärde: 0,0. Detta är den vikt som tillämpas på polygonen som justerar din insulinkänslighet vid högt blodsockerdelta (delta innebär här positiv differens från mälvärde). Vid 0,0 är denna justering inaktiverad.";
 
 /* */
-"ISF weight for lower BG's" = "Vikt för låga blodsocker";
+"ISF weight for lower BG's" = "Justering för låga blodsocker";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Standardvärde: 0,0. Detta är den vikt som tillämpas på polygonen som justerar din insulinkänslighet vid låga blodsocker. Vid 0,0 är denna justering inaktiverad.";
 
 /* */
-"ISF weight for higher BG's" = "Vikt för höga blodsocker";
+"ISF weight for higher BG's" = "Justering för höga blodsocker";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Standardvärde: 0,0. Detta är den vikt som tillämpas på polygonen som justerar din insulinkänslighet vid höga blodsocker. Vid 0,0 är denna justering inaktiverad.";
@@ -2393,13 +2393,13 @@ Enact a temp Basal or a temp target */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Standardvärde: 0. Rimlig inställning är mellan 2 och 6 mmol/l. Den linjärt ökande SMB-kvoten beror på blodsockerintervallinställningen och min/max-inställning för din SMB-kvot.";
 
 /* */
-"SMB DeliveryRatio Maximum" = "Standardvärde: 0,5. Maximal SMB-kvot";
+"SMB DeliveryRatio Maximum" = "Maximal SMB-kvot";
 
 /* */
 "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value above in SMB DeliveryRatio." = "Standardvärde: 0,5. Maximal SMB-kvot.";
 
 /* */
-"SMB Delivery Ratio Minimum" = "Standardvärde: 0,5. Minimal SMB-kvot";
+"SMB Delivery Ratio Minimum" = "Minimal SMB-kvot";
 
 /* */
 "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value above in SMB DeliveryRatio." = "Standardvärde: 0,5. Detta är den nedre änden av en linjärt ökande SMB-kvot istället för det fasta värdet ovan för SMB-kvot i dina OpenAPS-inställningar.";
@@ -2420,10 +2420,10 @@ Enact a temp Basal or a temp target */
 "Enable DuraISF even if COB is present not just for UAM." = "Aktiverar DuraISF-justering även när du har aktiva kolhydrater.";
 
 /* */
-"Enable BG acceleration" = "Aktivera justering for blodsockeracceleration";
+"Enable BG acceleration" = "Aktivera justering av ISF vid blodsockeracceleration";
 
 /* */
-"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar, somjusterar ISF vid ett accelererande / decelererande blodsocker.";
+"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar. Justerar ISF vid ett accelererande / decelererande blodsocker.";
 
 /* */
 "Enable Auto ISF" = "Aktivera Auto ISF";
