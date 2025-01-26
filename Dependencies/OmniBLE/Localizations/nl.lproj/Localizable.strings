@@ -460,7 +460,7 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Vervang Pod nu. De insulinetoediening stopt 8 uur nadat de Pod is verlopen of wanneer er geen insuline meer over is.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Vul een nieuwe Pod met U-100 insuline. Verwijder de blauwe naalddop niet.";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Vul een nieuwe Pod met insuline. Verwijder de naalddop NIET!! Luister naar 2 piepjes.";
 
 /* Label text for step 1 of pair pod instructions */
 "Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";

@@ -85,13 +85,13 @@ extension AddTempTarget {
                         HStack {
                             Text("Target")
                             Spacer()
-                            DecimalTextField("0", value: $state.low, formatter: formatter, cleanInput: true)
+                            DecimalTextField("0", value: $state.low, formatter: formatter, liveEditing: true)
                             Text(state.units.rawValue).foregroundColor(.secondary)
                         }
                         HStack {
                             Text("Duration")
                             Spacer()
-                            DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: true)
+                            DecimalTextField("0", value: $state.duration, formatter: formatter, liveEditing: true)
                             Text("minutes").foregroundColor(.secondary)
                         }
                         DatePicker("Date", selection: $state.date)
@@ -104,7 +104,7 @@ extension AddTempTarget {
                         HStack {
                             Text("Duration")
                             Spacer()
-                            DecimalTextField("0", value: $state.duration, formatter: formatter, cleanInput: true)
+                            DecimalTextField("0", value: $state.duration, formatter: formatter, liveEditing: true)
                             Text("minutes").foregroundColor(.secondary)
                         }
                         DatePicker("Date", selection: $state.date)

@@ -102,23 +102,31 @@ struct PumpView: View {
                 if (concentration.last?.concentration ?? 1) != 1, !state.settingsManager.settings.hideInsulinBadge {
                     NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: false)
                 }
-
+                let amountFraction = 1.0 - (Double(reservoir + 10) * 1.2 / 200)
                 if reservoir == 0xDEAD_BEEF {
-                    HStack(spacing: 0) {
-                        let units = 50 * (concentration.last?.concentration ?? 1)
-                        Text("\(units)+ ").font(.statusFont).bold()
-                        Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
-                    }
-                    .offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
+                    pumpInsulinAmount(portion: amountFraction)
+                        .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                        .overlay {
+                            if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                                ClockOffset(mdtPump: true)
+                            }
+                        }.offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
                 } else {
                     HStack(spacing: 0) {
                         Text(
                             reservoirFormatter
-                                .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber)!
-                        ).font(.statusFont).bold()
-                        Text(NSLocalizedString(" U", comment: "Insulin unit")).font(.statusFont).foregroundStyle(.secondary)
+                                .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
+                        ).font(.statusFont)
+                        Text("U").font(.statusFont).foregroundStyle(.secondary)
                     }
-                    .offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
+                    .offset(y: 7)
+                    pumpInsulinAmount(portion: amountFraction)
+                        .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
+                        .overlay {
+                            if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
+                                ClockOffset(mdtPump: false)
+                            }
+                        }
                 }
             } else {
                 Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
@@ -132,17 +140,10 @@ struct PumpView: View {
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
                 Image(systemName: "battery.\(percent)")
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxHeight: 15)
+                    .rotationEffect(.degrees(-90))
+                    .frame(maxWidth: 32, maxHeight: 12)
                     .foregroundColor(batteryColor)
-                    .offset(x: 0, y: -4)
-                    .shadow(radius: 2)
-                    .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 4 : 0)
-                    .overlay {
-                        if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
-                            ClockOffset(mdtPump: true)
-                        }
-                    }
+                    .offset(y: -0.5)
             }
         }
         .offset(x: 0, y: 5)
@@ -251,6 +252,19 @@ struct PumpView: View {
                         .offset(y: -4)
                         : nil
                 }
+        }
+    }
+
+    private func pumpInsulinAmount(portion: Double) -> some View {
+        ZStack {
+            UIImage(imageLiteralResourceName: "NonOmniPump")
+                .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
+                .resizable()
+                .frame(maxWidth: 17, maxHeight: 36)
+                .symbolRenderingMode(.palette)
+                .shadow(radius: 1, x: 2, y: 2)
+                .foregroundStyle(.white)
+                .padding(.bottom, 5)
         }
     }
 }
