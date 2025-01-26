@@ -2308,7 +2308,7 @@ Enact a temp Basal or a temp target */
 "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "La protezione dalla chetoacidosi si applicherà sempre un piccolo tasso basale Temp configurabile o se sorgono determinate condizioni invece di zero temp!\nLa caratteristica esiste perché in casi particolari una persona potrebbe essere in chetoacidosi con 0% TBR. L'idea deriva dallo sport. Ci potrebbero essere problemi quando un tasso basale dello 0% ha funzionato per diverse ore. I muscoli in particolare potrebbero spegnersi.\nQuesta funzione consente un piccolo TBR di sicurezza per ridurre il rischio di chetoacidosi. Senza la Protezione Variabile, questa sicurezza TBR viene sempre applicata. L'idea alla base della strategia di protezione variabile è che il TBR di sicurezza viene applicato solo se la somma di basale-IOB e bolo-IOB scende negativamente al di sotto del valore dell'attuale tasso basale.";
 
 /* */
-"AIMI B30 Settings" = "Impostazioni AIMI B30";
+"B30 Settings" = "Impostazioni B30";
 
 /* */
 "Duration of increased B30 basal rate" = "Durata dell’aumento del tasso basale B30";
@@ -2338,7 +2338,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Livello obiettivo per attivare B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 AIMI to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Deve essere attivato un obiettivo override di pasto anticipato (o un target temporaneo) per attuare il B30. L’obiettivo deve essere inferiore o uguale a questa impostazione per l’avvio dell’AIMI B30. Il valore predefinito è 90 mg/dl. Se annulli questo obiettivo di pasto anticipato, la velocità basale B30 si interromperà.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Deve essere attivato un obiettivo override di pasto anticipato (o un target temporaneo) per attuare il B30. L’obiettivo deve essere inferiore o uguale a questa impostazione per l’avvio dell B30. Il valore predefinito è 90 mg/dl. Se annulli questo obiettivo di pasto anticipato, la velocità basale B30 si interromperà.";
 
 /* */
 "Minimum Start Bolus size" = "Valore minimo bolo iniziale";
@@ -2347,7 +2347,7 @@ Enact a temp Basal or a temp target */
 "Minimum manual bolus to start a B30 adaption." = "Bolo manuale minimo per avviare un attuazione B30.";
 
 /* */
-"Activate AIMI B30" = "Attiva AIMI B30";
+"Activate B30" = "Attiva B30";
 
 /* */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Consente un aumento della velocità basale dopo un obiettivo Override di pasto anticipato (o obiettvo Temp.) e un bolo manuale per saturare il sito di infusione con insulina per aumentare l'assorbimento di insulina per SMB a seguito di un pasto senza conteggio dei carboidrati.";
