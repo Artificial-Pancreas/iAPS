@@ -2253,12 +2253,14 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
 
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+/* */
+"Default value: 1.2 The upper limit of ISF adjustment" = "Die obere Grenze der ISF Anpassung. Standardwert: 1,2";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Default value: 0.8 The lower limit of ISF adjustment";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Die untere Grenze der ISF Anpassung. Standardwert: 0,8";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
@@ -2318,7 +2320,7 @@ Enact a temp Basal or a temp target */
 "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out.";
 
 /* */
-"B30 Basal rate increase factor" = "B30 Basal rate increase factor";
+"B30 Basal rate increase factor" = "B30 Erhöhungsfaktor für die Basalrate";
 
 /* */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5.";
@@ -2348,7 +2350,7 @@ Enact a temp Basal or a temp target */
 "Minimum manual bolus to start a B30 adaption." = "Minimum manual bolus to start a B30 adaption.";
 
 /* */
-"Activate B30" = "Aktiviere B30";
+"Activate B30" = "Activate B30";
 
 /* */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting.";
