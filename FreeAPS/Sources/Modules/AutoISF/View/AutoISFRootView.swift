@@ -127,7 +127,7 @@ extension AutoISF {
                         }
 
                         HStack {
-                            Text("SMB DeliveryRatio Maximum")
+                            Text("SMB Delivery Ratio Maximum")
                                 .onTapGesture {
                                     info(
                                         header: "SMB Delivery Ratio Maximum",
