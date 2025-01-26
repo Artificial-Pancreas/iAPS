@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Planifier quand les SMB sont désactivés";
 
 /* */
-"Change ISF and CR" = "Changer ISF et CR";
+"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
 
 /* */
 "Change ISF" = "Changer ISF";
