@@ -1512,7 +1512,7 @@ Ajustes predeterminados:\n
 "Schedule when SMBs are Off" = "Programar cuándo los SMB están apagados";
 
 /* */
-"Change ISF and CR" = "Modificar el Factor de Sensibilidad a la Insulina (ISF) y Factor de Carbohidratos (CR)";
+"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
 
 /* */
 "Change ISF" = "Cambiar Factor de Sensibilidad a la Insulina (ISF)";

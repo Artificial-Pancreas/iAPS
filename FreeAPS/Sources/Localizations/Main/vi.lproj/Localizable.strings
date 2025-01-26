@@ -59,7 +59,7 @@
 "Confirm Bolus Faster" = "Xác nhận Bolus nhanh";
 
 /* Setting Section */
-"UI/UX" = "Giao diện/Trải nghiệm người dùng";
+"UI/UX" = "Giao diện người dùng";
 
 /*  */
 "Wait please" = "Xin đợi chốc lát";
@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Lịch trình khi SMBs tắt";
 
 /* */
-"Change ISF and CR" = "Thay đổi ISF và CR";
+"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
 
 /* */
 "Change ISF" = "Thay đổi ISF";
@@ -2312,13 +2312,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Upper BG limit";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
@@ -2384,7 +2384,7 @@ Enact a temp Basal or a temp target */
 "Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
+"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Tốc độ ISF giảm mỗi giờ với giả định mức BG vẫn ở mức mục tiêu gấp đôi trong thời gian đó. Khi giá trị = 1,0, ISF giảm xuống 50% sau 1 giờ ở mức BG ở mức mục tiêu gấp đôi.";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
