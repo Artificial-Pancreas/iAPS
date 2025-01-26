@@ -583,10 +583,10 @@ Enact a temp Basal or a temp target */
 "Devices" = "Thiết bị";
 
 /*  */
-"Pump" = "Bơm Insulin";
+"Pump" = "Pump";
 
 /* */
-"Watch" = "Đồng hồ";
+"Watch" = "Watch";
 
 /* */
 "Watch Configuration" = "Cấu hình đồng hồ";
@@ -661,7 +661,7 @@ Enact a temp Basal or a temp target */
 "Type" = "Loại cảm biến";
 
 /* CGM */
-"CGM" = "Cảm biến đường huyết";
+"CGM" = "CGM";
 
 /* CGM Transmitter ID */
 "Transmitter ID" = "Số ID của Transmitter";
@@ -2253,11 +2253,11 @@ Enact a temp Basal or a temp target */
 /* */
 
 
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Giá trị mặc định: 1.2 Cao hơn giới hạn của điều chỉnh ISF";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Default value: 0.8 The lower limit of ISF adjustment";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Giá trị mặc định: 0.8 Thấp hơn giới hạn của điều chỉnh ISF";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
@@ -2356,7 +2356,7 @@ Enact a temp Basal or a temp target */
 "ISF weight while BG decelerates" = "ISF weight while BG decelerates";
 
 /* */
-"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point.";
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Đây là trọng lượng được áp dụng trong khi glucose giảm tốc và làm suy yếu ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Với 0,1 có thể là điểm khởi đầu tốt.";
 
 /* */
 "ISF weight while BG accelerates" = "ISF weight while BG accelerates";
@@ -2374,7 +2374,7 @@ Enact a temp Basal or a temp target */
 "ISF weight for postprandial BG rise" = "ISF weight for postprandial BG rise";
 
 /* */
-"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!";
+"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Đây là trọng số được áp dụng cho độ dốc tuyến tính trong khi glucose tăng và điều chỉnh ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Bắt đầu với 0,01 - không vượt quá 0,05!";
 
 /* */
 "ISF weight for higher BG deltas" = "ISF weight for higher BG deltas";
@@ -2404,19 +2404,19 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
 /* */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, Sensible nằm giữa 40 và 120. Tỷ lệ phân phối SMB tăng tuyến tính được ánh xạ tới phạm vi glucose [target_bg, target_bg+bg_range]. Tại target_bg, tỷ lệ SMB là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với 0, tỷ lệ SMB tăng tuyến tính bị vô hiệu hóa và sửa lỗi smb_delivery_ratio được sử dụng.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, Sensible nằm giữa 40 và 120. Tỷ lệ phân phối SMB tăng tuyến tính được ánh xạ tới phạm vi glucose [target_bg, target_bg+bg_range]. Tại target_bg tỷ lệ SMB là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tỷ lệ SMB tăng tuyến tính bị vô hiệu hóa và sửa lỗi smb_delivery_ratio được sử dụng.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là mức cao hơn của Tỷ lệ phân phối SMB tăng tuyến tính thay vì giá trị cố định ở trên trong Tỷ lệ phân phối SMB (OpenAP SMB Delivery Ratio).";
 
 /* */
 "SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là giá trị thấp hơn giới hạn của Tỷ lệ phân phối SMB tăng tuyến tính chứ không phải là giá trị cố định ở trên trong Tỷ lệ phân phối SMB (OpenAP SMB Delivery Ratio).";
 
 /* */
 "Toggles" = "Toggles";
@@ -2879,8 +2879,7 @@ Enact a temp Basal or a temp target */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Trung bình có trọng số của TDD. Trọng lượng trong 24 giờ qua:";
 
 /* Weight of past 24 hours of insulin */
-"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Phải > 0 và <= 1.\nMặc định là 0,65 (65 %) * TDD. Phần còn lại sẽ lấy từ mức trung bình của tổng dữ liệu (tối đa 14 ngày) của tất cả các phép tính TDD (35%). Để chỉ sử dụng 24 giờ qua, hãy đặt giá trị này thành 1.\n\nĐể tránh những biến động đột ngột, chẳng hạn như sau một bữa ăn thịnh soạn, tính toán TDD trung bình trong 2 giờ qua được sử dụng thay vì chỉ TDD hiện tại (24 giờ qua lúc thời điểm này).
-​.";
+"Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Phải > 0 và <= 1.\nMặc định là 0,65 (65 %) * TDD. Phần còn lại sẽ lấy từ mức trung bình của tổng dữ liệu (tối đa 14 ngày) của tất cả các phép tính TDD (35%). Để chỉ sử dụng 24 giờ qua, hãy đặt giá trị này thành 1.\n\nĐể tránh những biến động đột ngột, chẳng hạn như sau một bữa ăn thịnh soạn, tính toán TDD trung bình trong 2 giờ qua được sử dụng thay vì chỉ TDD hiện tại (24 giờ qua lúc thời điểm này).";
 
 /* Headline "Adjust basal" */
 "Adjust basal" = "Điều chỉnh mức cơ bản";
