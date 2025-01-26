@@ -55,7 +55,7 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
         console.log("Starting Auto ISF.");
     }
 
-    // AIMI B30
+    // B30
     if (profile.iaps.use_B30) {
         aimi(profile, pumpHistory, dynamicVariables, glucose_status);
     }
@@ -444,7 +444,7 @@ function exercising(profile, dynamicVariables) {
 
 const MillisecondsPerMinute = 60 * 1000
 
-// AIMI B30
+// AB30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     if (!profile.iaps.closedLoop) {
         return
