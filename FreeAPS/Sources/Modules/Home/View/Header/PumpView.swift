@@ -110,12 +110,6 @@ struct PumpView: View {
                             if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                                 ClockOffset(mdtPump: true)
                             }
-                            HStack(spacing: 0) {
-                                let units = 50 * (concentration.last?.concentration ?? 1)
-                                Text("\(units)+ ").font(.statusFont)
-                                Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont)
-                                    .foregroundStyle(.secondary)
-                            }
                         }.offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
                 } else {
                     HStack(spacing: 0) {
@@ -131,11 +125,6 @@ struct PumpView: View {
                         .overlay {
                             if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                                 ClockOffset(mdtPump: false)
-                            }
-                            if (concentration.last?.concentration ?? 1) != 1,
-                               !state.settingsManager.settings.hideInsulinBadge
-                            {
-                                NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: true)
                             }
                         }
                 }
@@ -278,7 +267,7 @@ struct PumpView: View {
                 .padding(.bottom, 5)
                 .overlay {
                     let units = 50 * (concentration.last?.concentration ?? 1)
-                    portion <= 0.3 ?
+                    (portion <= 0.3 && !state.pumpName.contains(NSLocalizedString("Dana", comment: ""))) ?
                         Text((reservoirFormatter.string(from: units as NSNumber) ?? "") + "+").foregroundStyle(.white)
                         .font(.system(size: 6))
                         : nil

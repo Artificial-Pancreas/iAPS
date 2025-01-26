@@ -227,7 +227,7 @@ struct NonStandardInsulin: View {
                         .foregroundStyle(.white)
                 }
         }
-        .offset(x: pod ? -15 : -3, y: pod ? -24 : -4.5)
+        .offset(x: pod ? -15 : -5, y: pod ? -24 : 7)
     }
 }
 
