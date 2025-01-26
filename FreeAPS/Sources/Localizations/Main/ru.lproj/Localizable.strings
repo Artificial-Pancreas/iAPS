@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Расписание, когда SMB отключены";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Изменить ISF и CR и базал";
 
 /* */
 "Change ISF" = "Изменить ISF";
@@ -2253,7 +2253,7 @@ Enact a temp Basal or a temp target */
 /* */
 
 
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+"Default value: 1.2 The upper limit of ISF adjustment" = "По-умолчанию: 1.2 Верхний предел регулировки ISF";
 
 
 /* */
