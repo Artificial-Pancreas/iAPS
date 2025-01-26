@@ -301,7 +301,7 @@ final class OpenAPS {
     private func reasons(
         reason: String,
         suggestion: Suggestion,
-        preferences _: Preferences?,
+        preferences: Preferences?,
         profile: RawJSON,
         tdd: InsulinDistribution?,
         settings: FreeAPSSettings?
