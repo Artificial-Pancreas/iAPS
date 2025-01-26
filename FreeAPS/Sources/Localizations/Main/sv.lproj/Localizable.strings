@@ -2393,13 +2393,13 @@ Enact a temp Basal or a temp target */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Standardvärde: 0. Rimlig inställning är mellan 2 och 6 mmol/l. Den linjärt ökande SMB-kvoten beror på blodsockerintervallinställningen och min/max-inställning för din SMB-kvot.";
 
 /* */
-"SMB DeliveryRatio Maximum" = "Standardvärde: 0,5. Maximal SMB-kvot";
+"SMB DeliveryRatio Maximum" = "Maximal SMB-kvot";
 
 /* */
 "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value above in SMB DeliveryRatio." = "Standardvärde: 0,5. Maximal SMB-kvot.";
 
 /* */
-"SMB Delivery Ratio Minimum" = "Standardvärde: 0,5. Minimal SMB-kvot";
+"SMB Delivery Ratio Minimum" = "Minimal SMB-kvot";
 
 /* */
 "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value above in SMB DeliveryRatio." = "Standardvärde: 0,5. Detta är den nedre änden av en linjärt ökande SMB-kvot istället för det fasta värdet ovan för SMB-kvot i dina OpenAPS-inställningar.";
@@ -2420,10 +2420,10 @@ Enact a temp Basal or a temp target */
 "Enable DuraISF even if COB is present not just for UAM." = "Aktiverar DuraISF-justering även när du har aktiva kolhydrater.";
 
 /* */
-"Enable BG acceleration" = "Aktivera justering for blodsockeracceleration";
+"Enable BG acceleration" = "Aktivera justering av ISF vid blodsockeracceleration";
 
 /* */
-"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar, somjusterar ISF vid ett accelererande / decelererande blodsocker.";
+"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar. Justerar ISF vid ett accelererande / decelererande blodsocker.";
 
 /* */
 "Enable Auto ISF" = "Aktivera Auto ISF";
