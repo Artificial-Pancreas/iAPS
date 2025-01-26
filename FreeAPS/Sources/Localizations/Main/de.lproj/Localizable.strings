@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Plan bei ausgeschalteten SMBs";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Ändere ISF und CR und Basal";
 
 /* */
 "Change ISF" = "Ändere ISF";
@@ -2265,7 +2265,7 @@ Enact a temp Basal or a temp target */
 "You can specify how long B30 run and how high it is" = "You can specify how long B30 run and how high it is";
 
 /* */
-"Absolute Safety TBR " = "Absolute Safety TBR ";
+"Absolute Safety TBR " = "Absolute Sicherheit TBR ";
 
 /* */
 "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!";
@@ -2277,7 +2277,7 @@ Enact a temp Basal or a temp target */
 "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR";
 
 /* */
-"Safety TBR in %" = "Safety TBR in %";
+"Safety TBR in %" = "Sicherheits-TBR in %";
 
 /* */
 "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!";
