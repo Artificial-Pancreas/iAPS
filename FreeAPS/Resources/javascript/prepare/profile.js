@@ -1,7 +1,7 @@
 //для pumpprofile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json
 //для profile.json параметры: settings/settings.json settings/bg_targets.json settings/insulin_sensitivities.json settings/basal_profile.json preferences.json settings/carb_ratios.json settings/temptargets.json settings/model.json settings/autotune.json
 
-function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data, preferences_input = false, carbratio_input = false, temptargets_input = false, model_input = false, autotune_input = false, freeaps_data, dynamicVariables) {
+function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data, preferences_input = false, carbratio_input = false, temptargets_input = false, model_input = false, autotune_input = false, freeaps_data, dynamicVariables_input, settings_input) {
     if (bgtargets_data.units !== 'mg/dL') {
         if (bgtargets_data.units === 'mmol/L') {
             for (var i = 0, len = bgtargets_data.targets.length; i < len; i++) {
@@ -77,11 +77,23 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
         }
     }
     
+    var iaps = { };
+    if (settings_input) {
+        iaps = settings_input;
+    }
+    
+    let dynamicVariables = { };
+    if (dynamicVariables_input) {
+        dynamicVariables = dynamicVariables_input;
+    }
+    
     var tdd_factor = { };
     var set_basal = false;
     var basal_rate = { };
     var old_isf = { };
+    var aisf = { };
     var old_cr = { };
+    var microbolusAllowed = { };
     
     var inputs = { };
     //add all preferences to the inputs
@@ -96,9 +108,8 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.settings = pumpsettings_data;
     inputs.targets = bgtargets_data;
     
-    if (dynamicVariables.useOverride && dynamicVariables.overridePercentage != 100) {
+    if (dynamicVariables.useOverride && dynamicVariables.overridePercentage != 100 && dynamicVariables.basal) {
         basalprofile_data.forEach( basal => basal.rate *= (dynamicVariables.overridePercentage / 100));
-        console.log("Override basal IOB");
     }
     
     inputs.basals = basalprofile_data;
@@ -112,6 +123,10 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
     inputs.basal_rate = basal_rate;
     inputs.old_isf = old_isf;
     inputs.old_cr = old_cr;
+    inputs.iaps = iaps;
+    inputs.aisf = aisf;
+    inputs.microbolusAllowed = microbolusAllowed;
+    inputs.dynamicVariables = dynamicVariables;
     
     
     if (autotune_data) {
@@ -140,7 +155,9 @@ function generate(pumpsettings_data, bgtargets_data, isf_data, basalprofile_data
             // We can remove it after merged and after build the new original bundles
             // because it's included in the current oref0 PR (https://github.com/openaps/oref0/pull/1465/files)
             // currently (2024-08-09) this settings probably doesn't work in the current iAPS main/dev branch
-            threshold_setting: 60
+            threshold_setting: 60,
+            iaps: false,
+            dynamicVariables: false
         }
     )
 

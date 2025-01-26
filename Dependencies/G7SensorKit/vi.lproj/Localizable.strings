@@ -114,7 +114,7 @@
 "Searching for\nSensor" = "Đang tìm kiếm\ncảm biến";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Sensor\n hết hạn";
+"Sensor\nExpired" = "Cảm biến\nđã hết hạn";
 
 /* G7 Status highlight text for signal loss */
 "Sensor\nFailed" = "Sensor\n thất bại";

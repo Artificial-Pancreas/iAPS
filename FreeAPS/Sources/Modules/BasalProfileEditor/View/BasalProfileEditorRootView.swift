@@ -211,7 +211,7 @@ extension BasalProfileEditor {
                             showAlert.toggle()
                         }
                         label: {
-                            Text(state.syncInProgress ? "Saving..." : "Save")
+                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
                         .disabled(
