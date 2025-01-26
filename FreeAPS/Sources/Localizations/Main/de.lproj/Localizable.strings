@@ -47,7 +47,7 @@
 "Done" = "Fertig";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Letzte Loop-Schleife vor %@ Minuten. Berechnung des (Mahlzeiten-)Bolus abschließen oder abbrechen, um den nächsten Schleifendurchlauf zu ermöglichen.";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Letzte Loop-Schleife vor %@ Minuten. Transaktion des Mahlzeit / Bolus abschließen oder abbrechen, um den nächsten Schleifendurchlauf zu ermöglichen";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Emojis als Etiketten benutzen";
