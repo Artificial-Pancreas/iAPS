@@ -56,7 +56,7 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
 
 # iPhone and iPod
 
-iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required. Minimum iOS 16.
+iAPS app runs on iPhone or iPod. An iPhone 8 or newer is required. Minimum iOS 17.
 
 # Documentation
 

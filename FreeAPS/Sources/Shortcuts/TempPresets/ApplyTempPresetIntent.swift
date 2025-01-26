@@ -1,7 +1,7 @@
 import AppIntents
 import Foundation
 
-@available(iOS 16.0, *) struct ApplyTempPresetIntent: AppIntent {
+struct ApplyTempPresetIntent: AppIntent {
     // Title of the action in the Shortcuts app
     static var title: LocalizedStringResource = "Apply a temporary Preset"
 
