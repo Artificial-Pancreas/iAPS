@@ -2253,11 +2253,11 @@ Enact a temp Basal or a temp target */
 /* */
 
 
-"Default value: 1.2 The upper limit of ISF adjustment" = "Standardvärde: 1,2. Den övre gränsen för automatisk juserting av din insulinkänslighet";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Standardvärde: 1,2. Den övre gränsen för automatisk justering av din insulinkänslighet";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Standardvärde: 1,2. Den lägre gränsen för automatisk juserting av din insulinkänslighet";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Standardvärde: 1,2. Den lägre gränsen för automatisk justering av din insulinkänslighet";
 
 /* */
 "Auto ISF Max" = "Auto ISF maximum";
