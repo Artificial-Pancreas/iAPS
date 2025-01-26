@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Расписание, когда SMB отключены";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Изменить ISF и CR и базал";
 
 /* */
 "Change ISF" = "Изменить ISF";
@@ -2253,17 +2253,17 @@ Enact a temp Basal or a temp target */
 /* */
 
 
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+"Default value: 1.2 The upper limit of ISF adjustment" = "По-умолчанию: 1,2 Верхний предел регулировки ISF";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Default value: 0.8 The lower limit of ISF adjustment";
+"Default value: 0.8 The lower limit of ISF adjustment" = "По-умолчанию: 0,8 Нижний предел регулировки ISF";
 
 /* */
-"Auto ISF Max" = "Auto ISF Max";
+"Auto ISF Max" = "Auto ISF максимум";
 
 /* */
-"Auto ISF Min" = "Auto ISF Min";
+"Auto ISF Min" = "Auto ISF минимум";
 
 /* */
 "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Требуется пониженная цель, установленная с помощью переопределения профиля или временной цели";
@@ -2293,16 +2293,16 @@ Enact a temp Basal or a temp target */
 "Safety TBR in %" = "Безопасность ВБС в %";
 
 /* */
-"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!";
+"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Размер небольшой ВБС в % от рекомендуемой дозы текущей базы в профиле, которая назначается во избежание кетоацидоза. Будет ограничена минимальным значением = 5%, максимальным - 50%!";
 
 /* */
-"Variable Keto Protection" = "Variable Keto Protection";
+"Variable Keto Protection" = "Переменная Keto Protection";
 
 /* */
-"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR.";
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Если активировано - небольшая ВБС запускается, когда IOB находится в отрицательном диапазоне, как если бы базальный инсулин не вводился в течение часа. Если функция отключена и включена функция предопределенной ВБС - каждая нулевая ВБС заменяется на небольшую предопределенную ВБС.";
 
 /* */
-"Enable Keto Protection" = "Enable Keto Protection";
+"Enable Keto Protection" = "Включить Keto Protection";
 
 /* */
 "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate.";
