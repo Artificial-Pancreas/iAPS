@@ -260,12 +260,12 @@ extension AutoISF {
                     Section {
                         HStack {
                             Toggle(isOn: $state.use_B30) {
-                                Text("Activate AIMI B30")
+                                Text("Activate B30")
                                     .onTapGesture {
                                         scrollView = true
                                         graphics = list.asAny()
                                         info(
-                                            header: "Activate AIMI B30",
+                                            header: "Activate B30",
                                             body: "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting.",
                                             useGraphics: list
                                         )
@@ -293,7 +293,7 @@ extension AutoISF {
                                     .onTapGesture {
                                         info(
                                             header: "Target Level for B30 to be enacted",
-                                            body: "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 AIMI to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.",
+                                            body: "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.",
                                             useGraphics: nil
                                         )
                                     }
@@ -370,7 +370,7 @@ extension AutoISF {
                                     .disabled(isPresented)
                             }
                         }
-                    } header: { Text("AIMI B30 Settings") }
+                    } header: { Text("B30 Settings") }
 
                     Section {
                         HStack {
