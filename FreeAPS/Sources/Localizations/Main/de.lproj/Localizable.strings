@@ -2338,7 +2338,7 @@ Enact a temp Basal or a temp target */
 "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Unter dieser Grenze werden SMBs deaktiviert so lange eine B30 Basalrate läuft. Standard ist 130 mg/dl (7,2 mmol/l).";
 
 /* */
-"Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
+"Target Level for B30 to be enacted" = "Zielwert für B30";
 
 /* */
 "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
@@ -2350,7 +2350,7 @@ Enact a temp Basal or a temp target */
 "Minimum manual bolus to start a B30 adaption." = "Minimum manual bolus to start a B30 adaption.";
 
 /* */
-"Activate B30" = "Activate B30";
+"Activate B30" = "Aktiviere B30";
 
 /* */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting.";
