@@ -137,7 +137,7 @@ extension DataTable {
                 HStack {
                     HStack {
                         Text("Today")
-                        Text(insulinFormatter.string(from: (state.insulinToday.0 + state.tdd.1) as NSNumber) ?? "")
+                        Text(insulinFormatter.string(from: (state.insulinToday.0 + state.insulinToday.1) as NSNumber) ?? "")
                         Text("U")
                     }
                     Spacer()
