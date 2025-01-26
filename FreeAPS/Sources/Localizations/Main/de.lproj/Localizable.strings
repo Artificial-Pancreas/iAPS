@@ -1460,7 +1460,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Profil überschreibung";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Max Override 400%";
+"Max Override 400%" = "Maximaler Override 400 %";
 
 /* */
 "Override Profiles" = "Überschreibungsprofile";
@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Plan bei ausgeschalteten SMBs";
 
 /* */
-"Change ISF and CR" = "ISF und CR ändern";
+"Change ISF and CR and Basal" = "Ändere ISF und CR und Basal";
 
 /* */
 "Change ISF" = "Ändere ISF";
@@ -2265,7 +2265,7 @@ Enact a temp Basal or a temp target */
 "You can specify how long B30 run and how high it is" = "You can specify how long B30 run and how high it is";
 
 /* */
-"Absolute Safety TBR " = "Absolute Safety TBR ";
+"Absolute Safety TBR " = "Absolute Sicherheit TBR ";
 
 /* */
 "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!";
@@ -2277,13 +2277,13 @@ Enact a temp Basal or a temp target */
 "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR";
 
 /* */
-"Safety TBR in %" = "Safety TBR in %";
+"Safety TBR in %" = "Sicherheits-TBR in %";
 
 /* */
 "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!";
 
 /* */
-"Variable Keto Protection" = "Variable Keto Protection";
+"Variable Keto Protection" = "Variabler Ketoazidose Schutz";
 
 /* */
 "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR.";
@@ -2295,7 +2295,7 @@ Enact a temp Basal or a temp target */
 "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate.";
 
 /* */
-"AIMI B30 Settings" = "AIMI B30 Settings";
+"AIMI B30 Settings" = "AIMI B30 Einstellungen";
 
 /* */
 "Duration of increased B30 basal rate" = "Duration of increased B30 basal rate";
@@ -2334,7 +2334,7 @@ Enact a temp Basal or a temp target */
 "Minimum manual bolus to start a B30 adaption." = "Minimum manual bolus to start a B30 adaption.";
 
 /* */
-"Activate AIMI B30" = "Activate AIMI B30";
+"Activate AIMI B30" = "Aktiviere AIMI B30";
 
 /* */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting.";

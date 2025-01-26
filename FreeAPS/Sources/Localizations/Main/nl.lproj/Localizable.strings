@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Schema wanneer SMB's uit staan";
 
 /* */
-"Change ISF and CR" = "Wijzig ISF en CR";
+"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
 
 /* */
 "Change ISF" = "Wijzig ISF";
