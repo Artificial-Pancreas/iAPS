@@ -2252,7 +2252,21 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
-"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Behöver ett blodsockermålvärde <= 118 mg/dl som ett undantag (profil) eller tillfälligt målvärde";
+
+"Default value: 1.2 The upper limit of ISF adjustment" = "Standardvärde: 1,2. Den övre gränsen för automatisk justering av din insulinkänslighet";
+
+
+/* */
+"Default value: 0.8 The lower limit of ISF adjustment" = "Standardvärde: 1,2. Den lägre gränsen för automatisk justering av din insulinkänslighet";
+
+/* */
+"Auto ISF Max" = "Auto ISF maximum";
+
+/* */
+"Auto ISF Min" = "Auto ISF minimum";
+
+/* */
+"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Behöver ett blodsockermålvärde <= 6,5 mmol/ll som en profil eller tillfälligt målvärde";
 
 /* */
 "Once this Target is cancelled, the B30 high TBR will be cancelled" = "När din profil avbryts kommer B30-basaldosen att avslutas";
@@ -2342,7 +2356,7 @@ Enact a temp Basal or a temp target */
 "ISF weight while BG decelerates" = "Justering när blodsocker decelererar";
 
 /* */
-"Default value: 0. This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Standardvärde: 0. Detta är den vikt som tillämpas medan blodsockret avtar och som ökar insulinkänsligheten. Vid 0 är är denna justering inaktiverad. 0,1 kan vara en bra utgångspunkt.";
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Detta är den vikt som tillämpas på auto-justering av din insulinkänslighet medan blodsockret avtar. Vid 0 är denna justering inaktiverad. 0,1 kan vara en bra utgångspunkt.";
 
 /* */
 "ISF weight while BG accelerates" = "Justering när blodsocker accelererar";
@@ -2360,7 +2374,7 @@ Enact a temp Basal or a temp target */
 "ISF weight for postprandial BG rise" = "Justering för blodsockerökning efter måltid";
 
 /* */
-"Default value: 0. This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Standardvärde: 0. Detta är den vikt som tillämpas medan glukos stiger och som justerar din insulinkänslighet. Vid 0 är denna justering inaktiverad. Börja med 0,01 - du behöver knappast mer än 0,05!";
+"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Detta är den vikt som tillämpas på auto-justering av din insulinkänslighet medan glukos stiger. Vid 0 är denna justering inaktiverad. Börja med 0,01 - du behöver knappast mer än 0,05!";
 
 /* */
 "ISF weight for higher BG deltas" = "Justering vid högt blodsockerdelta";
@@ -2393,16 +2407,16 @@ Enact a temp Basal or a temp target */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Standardvärde: 0. Rimlig inställning är mellan 2 och 6 mmol/l. Den linjärt ökande SMB-kvoten beror på blodsockerintervallinställningen och min/max-inställning för din SMB-kvot.";
 
 /* */
-"SMB DeliveryRatio Maximum" = "Maximal SMB-kvot";
+"SMB Delivery Ratio Maximum" = "Maximal SMB-kvot";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value above in SMB DeliveryRatio." = "Standardvärde: 0,5. Maximal SMB-kvot.";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Standardvärde: 0,5. Detta är den övre änden av en linjärt ökande SMB-kvot istället för det fasta värdet i dina OpenAPS-inställningar.";
 
 /* */
 "SMB Delivery Ratio Minimum" = "Minimal SMB-kvot";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value above in SMB DeliveryRatio." = "Standardvärde: 0,5. Detta är den nedre änden av en linjärt ökande SMB-kvot istället för det fasta värdet ovan för SMB-kvot i dina OpenAPS-inställningar.";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Standardvärde: 0,5. Detta är den nedre änden av en linjärt ökande SMB-kvot istället för det fasta värdet för SMB-kvot i dina OpenAPS-inställningar.";
 
 /* */
 "Toggles" = "Spakar";
@@ -2433,6 +2447,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Keto Protection" = "Ketoacidosskydd";
+
+/* */
+"Max IOB Threshold Percent" = "Procent av Max IOB som tröskelvärde för SMB";
 
 /* */
 "Auto ISF" = "Auto ISF (insulinkänslighet)";
