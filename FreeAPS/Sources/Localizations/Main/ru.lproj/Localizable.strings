@@ -2252,7 +2252,9 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Динамический ISF отключен, так как включен Авто ISF";
 
+/* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "По-умолчанию: 1,2 Верхний предел регулировки ISF";
 
 

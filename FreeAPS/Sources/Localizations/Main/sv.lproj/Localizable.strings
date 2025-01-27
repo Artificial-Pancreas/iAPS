@@ -1501,7 +1501,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Schemalägg när autobolusar ska vara av ";
 
 /* */
-"Change ISF and CR and Basal" = "Ändra ISF (insulinkänslighet) och CR (insulinkvot) och Basalinsulin";
+"Change ISF and CR and Basal" = "Ändra ISF och CR och Basalinsulin";
 
 /* */
 "Change ISF" = "Ändra ISF";
@@ -2252,7 +2252,9 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamisk insulinkänslighet är inaktiverad medan Auto ISF är aktiverad";
 
+/* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Standardvärde: 1,2. Den övre gränsen för automatisk justering av din insulinkänslighet";
 
 
