@@ -2252,7 +2252,7 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF bị vô hiệu hóa trong khi Auto ISF được bật";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Giá trị mặc định: 1.2 Cao hơn giới hạn của điều chỉnh ISF";
@@ -2406,7 +2406,7 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
 /* */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, Sensible nằm giữa 40 và 120. Tỷ lệ phân phối SMB tăng tuyến tính được ánh xạ tới phạm vi glucose [target_bg, target_bg+bg_range]. Tại target_bg tỷ lệ SMB là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tỷ lệ SMB tăng tuyến tính bị vô hiệu hóa và sửa lỗi smb_delivery_ratio được sử dụng.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, Sensible nằm giữa 40mg/dl và 120mg/dl. Tỷ lệ phân phối SMB tăng tuyến tính được ánh xạ tới phạm vi glucose [target_bg, target_bg+bg_range]. Tại target_bg tỷ lệ SMB là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tỷ lệ SMB tăng tuyến tính bị vô hiệu hóa và sửa lỗi smb_delivery_ratio được sử dụng.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
