@@ -60,7 +60,7 @@ extension PreferencesEditor {
                 ),
 
                 Field(
-                    displayName: NSLocalizedString("Autosens Max", comment: "Autosens Max"),
+                    displayName: NSLocalizedString("Autosens Maximum", comment: "Autosens Max"),
                     type: .decimal(keypath: \.autosensMax),
                     infoText: NSLocalizedString(
                         "This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target.",
@@ -69,7 +69,7 @@ extension PreferencesEditor {
                     settable: self
                 ),
                 Field(
-                    displayName: NSLocalizedString("Autosens Min", comment: "Autosens Min"),
+                    displayName: NSLocalizedString("Autosens Minimum", comment: "Autosens Min"),
                     type: .decimal(keypath: \.autosensMin),
                     infoText: NSLocalizedString(
                         "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets.",
@@ -148,13 +148,13 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString(
-                        "... When Blood Glucose Is Over (mg/dl):",
-                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                        "... When Blood Glucose Is Above:",
+                        comment: "... When Blood Glucose Is Above:"
                     ),
-                    type: .decimal(keypath: \.enableSMB_high_bg_target),
+                    type: .glucose(keypath: \.enableSMB_high_bg_target),
                     infoText: NSLocalizedString(
                         "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
-                        comment: "... When Blood Glucose Is Over (mg/dl):"
+                        comment: "... When Blood Glucose Is Above:"
                     ),
                     settable: self
                 ),
@@ -261,7 +261,7 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
-                    type: .decimal(keypath: \.halfBasalExerciseTarget),
+                    type: .glucose(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
                         "Set to a number, e.g. 160, which means when temp target is 160 mg/dL, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
                         comment: "Half Basal Exercise Target"

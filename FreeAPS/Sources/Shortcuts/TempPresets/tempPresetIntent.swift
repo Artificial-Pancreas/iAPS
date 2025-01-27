@@ -3,7 +3,7 @@ import Foundation
 import Intents
 import Swinject
 
-@available(iOS 16.0, *) struct tempPreset: AppEntity, Identifiable {
+struct tempPreset: AppEntity, Identifiable {
     static var defaultQuery = tempPresetsQuery()
 
     var id: UUID

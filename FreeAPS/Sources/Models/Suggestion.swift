@@ -2,7 +2,7 @@ import Foundation
 
 struct Suggestion: JSON, Equatable {
     var reason: String
-    let units: Decimal?
+    var units: Decimal?
     let insulinReq: Decimal?
     let eventualBG: Int?
     let sensitivityRatio: Decimal?
@@ -11,9 +11,9 @@ struct Suggestion: JSON, Equatable {
     let iob: Decimal?
     let cob: Decimal?
     var predictions: Predictions?
-    let deliverAt: Date?
+    var deliverAt: Date?
     let carbsReq: Decimal?
-    let temp: TempType?
+    var temp: TempType?
     let bg: Decimal?
     let reservoir: Decimal?
     var timestamp: Date?

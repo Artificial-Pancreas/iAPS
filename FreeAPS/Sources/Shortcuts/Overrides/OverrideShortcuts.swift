@@ -2,7 +2,7 @@ import AppIntents
 import Foundation
 import Intents
 
-@available(iOS 16.0, *) struct OverrideEntity: AppEntity, Identifiable {
+struct OverrideEntity: AppEntity, Identifiable {
     static var defaultQuery = OverrideQuery()
 
     var id: UUID
@@ -21,7 +21,7 @@ enum OverrideIntentError: Error {
     case NoPresets
 }
 
-@available(iOS 16.0, *) struct ApplyOverrideIntent: AppIntent {
+struct ApplyOverrideIntent: AppIntent {
     // Title of the action in the Shortcuts app
     static var title: LocalizedStringResource = "Activate an Override Preset"
 
@@ -89,7 +89,7 @@ enum OverrideIntentError: Error {
     }
 }
 
-@available(iOS 16.0, *) struct CancelOverrideIntent: AppIntent {
+struct CancelOverrideIntent: AppIntent {
     static var title: LocalizedStringResource = "Cancel active override"
     static var description = IntentDescription("Cancel active override.")
 
@@ -111,7 +111,7 @@ enum OverrideIntentError: Error {
     }
 }
 
-@available(iOS 16.0, *) struct OverrideQuery: EntityQuery {
+struct OverrideQuery: EntityQuery {
     internal var intentRequest: OverrideIntentRequest
 
     init() {
@@ -129,7 +129,7 @@ enum OverrideIntentError: Error {
     }
 }
 
-@available(iOS 16.0, *) final class OverrideIntentRequest: BaseIntentsRequest {
+final class OverrideIntentRequest: BaseIntentsRequest {
     func fetchPresets() throws -> ([OverrideEntity]) {
         let presets = overrideStorage.fetchProfiles().flatMap { preset -> [OverrideEntity] in
             let percentage = preset.percentage != 100 ? preset.percentage.formatted() : ""
@@ -168,7 +168,7 @@ enum OverrideIntentError: Error {
     }
 
     func fetchIDs(_ id: [OverrideEntity.ID]) -> [OverrideEntity] {
-        let presets = overrideStorage.fetchProfiles().filter { id.contains(UUID(uuidString: $0.id ?? "")!) }
+        let presets = overrideStorage.fetchProfiles().filter { id.contains(UUID(uuidString: $0.id ?? "") ?? UUID()) }
             .map { preset -> OverrideEntity in
                 let percentage = preset.percentage != 100 ? preset.percentage.formatted() : ""
                 let targetRaw = settingsManager.settings
