@@ -83,7 +83,7 @@ extension Dynamic {
                             }.disabled(isPresented)
                         }
                     }
-                } header: { Text("Enable") }
+                } header: { state.aisf ? nil : Text("Experimental").foregroundStyle(.red) }
 
                 if state.useNewFormula, !state.aisf {
                     Section {
