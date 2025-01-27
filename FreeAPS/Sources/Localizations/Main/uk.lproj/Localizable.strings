@@ -2255,7 +2255,7 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Динамічний ISF вимкнено, а Auto ISF увімкнено";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Значення за замовчуванням: 1,2 Верхня межа налаштування ISF";
