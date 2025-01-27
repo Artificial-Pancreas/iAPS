@@ -444,7 +444,7 @@ function exercising(profile, dynamicVariables) {
 
 const MillisecondsPerMinute = 60 * 1000
 
-// AB30
+// B30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
     if (!profile.iaps.closedLoop) {
         return
