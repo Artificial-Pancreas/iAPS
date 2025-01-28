@@ -2340,7 +2340,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Целевое значение для активации B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Для активации ВБС B30 должен быть активен профиль или временная цель.  Чтобы активировать B30, целевой уровень глюкозы в крови должен быть ниже или равен этому значению. Стандартное значение – 5 ммоль/л. (90 мг/дл)  Если вы отмените свой профиль или временные цели, базальный ВБС B30 будет отменен.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
 
 /* */
 "Minimum Start Bolus size" = "Минимальный стартовый болюс";
