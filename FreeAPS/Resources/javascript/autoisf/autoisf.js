@@ -455,12 +455,12 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
         return
     }
     
-    let allowed_duration = profile.iaps.b30_duration;
+    const allowed_duration = profile.iaps.b30_duration;
     let last_bolus_amount = 0;
     let minutes_ago = allowed_duration + 1;
     const minimal_bolus = profile.iaps.iTime_Start_Bolus;
     let rate = profile.current_basal;
-    let now = new Date();
+    const now = new Date();
     
     //Find Last Manual bolus
     let bolus = pumpHistory.find((element) => element._type === "Bolus" && !element.isSMB);
