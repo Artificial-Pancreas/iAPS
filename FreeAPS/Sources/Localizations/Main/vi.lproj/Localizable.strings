@@ -2255,11 +2255,11 @@ Enact a temp Basal or a temp target */
 "Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF bị vô hiệu hóa trong khi Auto ISF được bật";
 
 /* */
-"Default value: 1.2 The upper limit of ISF adjustment" = "Giá trị mặc định: 1.2 Cao hơn giới hạn của điều chỉnh ISF";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Giá trị mặc định: 1,2. Đây là giới hạn giá trị cao nhất của điều chỉnh ISF";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Giá trị mặc định: 0.8 Thấp hơn giới hạn của điều chỉnh ISF";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Giá trị mặc định: 0,8. Đây là giới hạn giá trị thấp nhất của điều chỉnh ISF";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
