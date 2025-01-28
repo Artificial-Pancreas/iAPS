@@ -105,11 +105,11 @@ extension CGM {
                         )
                     }
                 }
-                .onChange(of: setupCGM) { setupCGM in
+                .onChange(of: setupCGM) {
                     state.setupCGM = setupCGM
                 }
-                .onChange(of: state.setupCGM) { setupCGM in
-                    self.setupCGM = setupCGM
+                .onChange(of: state.setupCGM) {
+                    self.setupCGM = state.setupCGM
                 }
             }
         }
