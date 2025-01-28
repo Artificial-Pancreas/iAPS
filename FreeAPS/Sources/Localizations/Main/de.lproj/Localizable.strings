@@ -2275,7 +2275,7 @@ Enact a temp Basal or a temp target */
 "Once this Target is cancelled, the B30 high TBR will be cancelled" = "Once this Target is cancelled, the B30 high TBR will be cancelled";
 
 /* */
-"In order to activate B30 a minimum manual Bolus needs to be given" = "In order to activate B30 a minimum manual Bolus needs to be given";
+"In order to activate B30 a minimum manual Bolus needs to be given" = "Um B30 zu aktivieren, muss ein minimaler manueller Bolus abgegeben werden";
 
 /* */
 "You can specify how long B30 run and how high it is" = "You can specify how long B30 run and how high it is";
@@ -2344,10 +2344,10 @@ Enact a temp Basal or a temp target */
 "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
 
 /* */
-"Minimum Start Bolus size" = "Minimum Start Bolus size";
+"Minimum Start Bolus size" = "Minimale Bolusgröße, um zu starten";
 
 /* */
-"Minimum manual bolus to start a B30 adaption." = "Minimum manual bolus to start a B30 adaption.";
+"Minimum manual bolus to start a B30 adaption." = "Minimaler manueller Bolus, um eine B30 Anpassung zu starten.";
 
 /* */
 "Activate B30" = "Aktiviere B30";
@@ -2434,7 +2434,7 @@ Enact a temp Basal or a temp target */
 "Enable DuraISF effect even with COB" = "Enable DuraISF effect even with COB";
 
 /* */
-"Enable DuraISF even if COB is present not just for UAM." = "Enable DuraISF even if COB is present not just for UAM.";
+"Enable DuraISF even if COB is present not just for UAM." = "Aktiviere DuraISF, auch wenn COB nicht nur für UAM vorhanden ist.";
 
 /* */
 "Enable BG acceleration" = "Aktiviere BG-Beschleunigung";
@@ -2896,7 +2896,7 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Standard ist 0.2 (20%). Maximal positive prozentuale Änderung des BG-Levels, um SMB zu verwenden, darüber wird SMB deaktiviert. Hardcodierte Obergrenze von 40%. Für fully-closed-Loop UAM sind 30% ratsam. Beobachte in Log und Popup (maxDelta 27 > 20% BG 100 - Deaktivieren von SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... When Blood Glucose Is Above:";
+"... When Blood Glucose Is Above:" = "... Wenn der Blutzucker zu hoch ist:";
 
 /* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Legen Sie den Wert fest, mit dem enableSMB_high_bg verglichen wird, um SMB zu aktivieren. Wenn BG > diesen Wert überschreitet, sollten SMBs aktiviert sein.";
