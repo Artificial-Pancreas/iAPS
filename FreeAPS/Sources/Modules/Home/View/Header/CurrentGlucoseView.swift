@@ -50,8 +50,8 @@ struct CurrentGlucoseView: View {
             formatter.decimalSeparator = "."
         }
         formatter.maximumFractionDigits = 1
-        formatter.positivePrefix = "+"
-        formatter.negativePrefix = "-"
+        formatter.positivePrefix = "+ "
+        formatter.negativePrefix = "- "
         return formatter
     }
 
@@ -111,8 +111,7 @@ struct CurrentGlucoseView: View {
             let offset: CGFloat = -7
 
             Text(string)
-                .font(.caption)
-                .background { directionDrop }
+                .font(.callout).foregroundStyle(.secondary)
                 .offset(x: offset, y: 10)
         }
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
@@ -195,16 +194,6 @@ struct CurrentGlucoseView: View {
             .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
             .offset(x: adjust.x, y: adjust.y)
             .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
-    }
-
-    private var directionDrop: some View {
-        let degree = adjustments.degree
-        let shadowDirection = direction(degree: degree)
-        return Image("glucoseDrops")
-            .resizable()
-            .frame(width: 42, height: 42).rotationEffect(.degrees(degree))
-            .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
-            .shadow(radius: 2, x: shadowDirection.x, y: shadowDirection.y)
     }
 
     private var colorOfGlucose: Color {

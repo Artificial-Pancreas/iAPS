@@ -1,7 +1,7 @@
 import CoreData
 import Foundation
 
-@available(iOS 16.0,*) final class CarbPresetIntentRequest: BaseIntentsRequest {
+final class CarbPresetIntentRequest: BaseIntentsRequest {
     func addCarbs(_ quantityCarbs: Double, _ quantityFat: Double, _ quantityProtein: Double, _ dateAdded: Date) throws -> String {
         guard quantityCarbs >= 0.0 || quantityFat >= 0.0 || quantityProtein >= 0.0 else {
             return "no carbs or carb equivalents to add"

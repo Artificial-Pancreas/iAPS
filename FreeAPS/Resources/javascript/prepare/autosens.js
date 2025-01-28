@@ -22,5 +22,6 @@ function generate(glucose_data, pumphistory_data, basalprofile, profile_data, ca
     detection_inputs.deviations = 288;
     var ratio24h = freeaps_autosens(detection_inputs);
     var lowestRatio = ratio8h.ratio < ratio24h.ratio ? ratio8h : ratio24h;
+    
     return lowestRatio;
 }

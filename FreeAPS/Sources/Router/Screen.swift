@@ -37,6 +37,7 @@ enum Screen: Identifiable, Hashable {
     case dynamicISF
     case contactTrick
     case sharing
+    case autoISF
     var id: Int { String(reflecting: self).hashValue }
 }
 
@@ -111,6 +112,8 @@ extension Screen {
             ContactTrick.RootView(resolver: resolver)
         case .sharing:
             Sharing.RootView(resolver: resolver)
+        case .autoISF:
+            AutoISF.RootView(resolver: resolver)
         }
     }
 
