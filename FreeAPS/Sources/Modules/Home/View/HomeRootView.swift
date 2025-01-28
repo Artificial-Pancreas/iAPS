@@ -782,8 +782,10 @@ extension Home {
                                     let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
                                     let yThreshold: CGFloat = -550
                                     Color.clear
-                                        .onChange(of: scrollPosition) { y in
-                                            if y < yThreshold, state.iobs > 0 || state.carbData > 0, !state.skipGlucoseChart {
+                                        .onChange(of: scrollPosition) {
+                                            if scrollPosition < yThreshold, state.iobs > 0 || state.carbData > 0,
+                                               !state.skipGlucoseChart
+                                            {
                                                 withAnimation(.easeOut(duration: 0.3)) { displayGlucose = true }
                                             } else {
                                                 withAnimation(.easeOut(duration: 0.4)) { displayGlucose = false }

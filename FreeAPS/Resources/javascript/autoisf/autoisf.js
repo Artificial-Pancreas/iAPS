@@ -55,7 +55,7 @@ function aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, cur
         console.log("Starting Auto ISF.");
     }
 
-    // AIMI B30
+    // B30
     if (profile.iaps.use_B30) {
         aimi(profile, pumpHistory, dynamicVariables, glucose_status);
     }
@@ -444,34 +444,35 @@ function exercising(profile, dynamicVariables) {
 
 const MillisecondsPerMinute = 60 * 1000
 
-// AIMI B30
+// B30
 function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
+    // Guards
     if (!profile.iaps.closedLoop) {
         return
     }
+    // Needs either a TT or a profile override < the set B30 target level
+    if (!(profile.temptargetSet && profile.min_bg < profile.iaps.b30targetLevel || dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6 && dynamicVariables.overrideTarget < profile.iaps.b30targetLevel)) {
+        return
+    }
     
-    let minutesRemaining = profile.iaps.b30_duration;
-    let lastBolus = 0;
-    let lastBolusAge = minutesRemaining + 1;
+    const allowed_duration = profile.iaps.b30_duration;
+    let last_bolus_amount = 0;
+    let minutes_ago = allowed_duration + 1;
+    const minimal_bolus = profile.iaps.iTime_Start_Bolus;
     let rate = profile.current_basal;
-    let now = new Date();
-    // Guards
-    if (!(profile.temptargetSet || (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6))) {
-        return
+    const now = new Date();
+    
+    //Find Last Manual bolus
+    let bolus = pumpHistory.find((element) => element._type === "Bolus" && !element.isSMB);
+    
+    // Update bolus amount and bolus minutes ago
+    if (bolus) {
+        let bolusTime = new Date(bolus.timestamp);
+        minutes_ago = round( (now - bolusTime) / MillisecondsPerMinute, 1);
+        last_bolus_amount = bolus.amount;
     }
-    if (!((profile.min_bg <= profile.iaps.b30targetLevel) || (dynamicVariables.overrideTarget <= profile.iaps.b30targetLevel))) {
-        return
-    }
-    // Bolus age and bolus limit guards
-    for (let i = 0; i < pumpHistory.length; i++) {
-        if (pumpHistory[i]._type === "Bolus" && !(pumpHistory[i].isSMB) && pumpHistory[i].amount > profile.iaps.iTime_Start_Bolus) {
-            let bolusTime = new Date(pumpHistory[i].timestamp);
-            lastBolusAge = round( (now - bolusTime) / MillisecondsPerMinute, 1);
-            lastBolus = pumpHistory[i].amount;
-            break;
-        }
-    }
-    if (!(lastBolus >= profile.iaps.iTime_Start_Bolus && lastBolusAge <= minutesRemaining)) {
+    
+    if (!(last_bolus_amount >= minimal_bolus && minutes_ago <= allowed_duration)) {
         return
     }
     // Suggested B30 basal rate.
@@ -484,9 +485,9 @@ function aimi(profile, pumpHistory, dynamicVariables, glucose_status) {
         addMessage("SMBs disabled (B30)")
     }
     // Logs
-    console.log("B30 is running. Time remaining: " + round((minutesRemaining - lastBolusAge), 1) + "min");
+    console.log("B30 is running. Time remaining: " + round((allowed_duration - minutes_ago), 1) + "min");
     console.log("B30 Suggested Basal Rate: " + profile.basal_rate + " U/h.");
-    addMessage("B30 active, min remaining: " + round((minutesRemaining - lastBolusAge), 1));
+    addMessage("B30 active, min remaining: " + round((allowed_duration - minutes_ago), 1));
     addReason("B30 Active");
 }
 

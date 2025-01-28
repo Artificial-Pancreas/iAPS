@@ -96,7 +96,7 @@ extension Bolus {
                                 }
                                 .toggleStyle(CheckboxToggleStyle())
                                 .font(.footnote)
-                                .onChange(of: state.useFattyMealCorrectionFactor) { _ in
+                                .onChange(of: state.useFattyMealCorrectionFactor) {
                                     state.insulinCalculated = state.calculateInsulin()
                                 }
                             }
