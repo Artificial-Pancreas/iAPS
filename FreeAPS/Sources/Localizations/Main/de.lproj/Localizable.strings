@@ -2323,7 +2323,7 @@ Enact a temp Basal or a temp target */
 "B30 Basal rate increase factor" = "B30 Erhöhungsfaktor für die Basalrate";
 
 /* */
-"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5.";
+"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Faktor, mit dem Ihre normale Basalrate für B30 multipliziert wird. Die maximal verabreichte Basalrate entspricht der maximalen Basaleinstellung Ihrer Insulinpumpe. Der Standardwert ist 5x.";
 
 /* */
 "Upper Delta limit" = "Oberes Delta Limit";
