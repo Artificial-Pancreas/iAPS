@@ -293,7 +293,7 @@ extension AutoISF {
                                     .onTapGesture {
                                         info(
                                             header: "Target Level for B30 to be enacted",
-                                            body: "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.",
+                                            body: "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.",
                                             useGraphics: nil
                                         )
                                     }
