@@ -2340,7 +2340,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Mục tiêu ghi đè EatingSoon (hoặc Mục tiêu tạm thời) cần được kích hoạt để bắt đầu quá trình thích ứng B30. Mục tiêu cần phải thấp hơn hoặc bằng cài đặt này để B30 Aimi bắt đầu. Mặc định là 90 mg/dl. Nếu bạn hủy Mục tiêu EatingSoon này, tỷ lệ cơ bản B30 sẽ dừng lại.";
 
 /* */
 "Minimum Start Bolus size" = "Minimum Start Bolus size";
