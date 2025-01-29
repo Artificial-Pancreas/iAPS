@@ -2302,7 +2302,7 @@ Enact a temp Basal or a temp target */
 "Variable Keto Protection" = "Variabler Ketoazidose Schutz";
 
 /* */
-"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR.";
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Wenn aktiviert wird die kleine Sicherheit TBR aktiviert, wenn sich das IOB in einem negativen Bereich befindet, als ob kein Basalinsulin eine Stunde geliefert worden wäre. Falls deaktiviert und statisch aktiviert ist, wird jedes Zero Temp durch das kleine TBR ersetzt.";
 
 /* */
 "Enable Keto Protection" = "Schutz vor einer Ketoazidose";
@@ -2317,7 +2317,7 @@ Enact a temp Basal or a temp target */
 "Duration of increased B30 basal rate" = "Dauer der erhöhten B30 Basalrate";
 
 /* */
-"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out.";
+"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Dauer der erhöhten Basalrate, die die Infusionsstelle mit Insulin sättigt. Standardmäßig 30 Minuten, wie bei B30. Der Eating Soon TT muss mindestens für diese Dauer laufen, andernfalls stoppt B30, wenn der TT abgelaufen ist.";
 
 /* */
 "B30 Basal rate increase factor" = "B30 Erhöhungsfaktor für die Basalrate";
