@@ -1105,18 +1105,18 @@ Enact a temp Basal or a temp target */
 "Activates an %@ Override Preset" = "Aktiverar en %@ - profil";
 
 /* Suspend/Resume Shortcut */
-"Choose what to do with your pump" = "Choose what to do with your pump";
+"Choose what to do with your pump" = "Vad vill du göra med din pump?";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
+"Are you sure you want to %@ your pump?" = "Är du säker på att du vill %@ din pump?";
 
 /* Suspend/Resume Shortcut */
-"Pump command" = "Pump command";
+"Pump command" = "Pumpkommando";
 /* Suspend/Resume Shortcut */
-"enacted in iAPS" = "enacted in iAPS";
+"enacted in iAPS" = "skickat till iAPS";
 
 /* Temp Basal Shortcut */
-"Temp basal Amount in U/h" = "Temp basal Amount in U/h";
+"Temp basal Amount in U/h" = "Temporär basaldos i enheter per timme";
 
 
 
