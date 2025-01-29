@@ -41,11 +41,8 @@ struct CapsulaBackground: ViewModifier {
 
 struct CompactSectionSpacing: ViewModifier {
     func body(content: Content) -> some View {
-        if #available(iOS 17, *) {
-            return content
-                .listSectionSpacing(.compact)
-        } else {
-            return content }
+        content
+            .listSectionSpacing(.compact)
     }
 }
 
@@ -65,17 +62,10 @@ struct CarveOrDrop: ViewModifier {
 struct InfoPanelBackground: View {
     let colorScheme: ColorScheme
     var body: some View {
-        if #available(iOS 17.0, *) {
-            Rectangle()
-                .stroke(.gray, lineWidth: 2)
-                .fill(colorScheme == .light ? .white : .black)
-                .frame(height: 24)
-        } else {
-            Rectangle()
-                .strokeBorder(.gray, lineWidth: 2)
-                .background(Rectangle().fill(colorScheme == .light ? .white : .black))
-                .frame(height: 24)
-        }
+        Rectangle()
+            .stroke(.gray, lineWidth: 2)
+            .fill(colorScheme == .light ? .white : .black)
+            .frame(height: 24)
     }
 }
 
@@ -181,11 +171,10 @@ struct LoopEllipse: View {
 }
 
 struct TimeEllipse: View {
-    @Environment(\.colorScheme) var colorScheme
     let characters: Int
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(Color.gray).opacity(colorScheme == .light ? 0.2 : 0.2)
+            .fill(Color.gray).opacity(0.2)
             .frame(width: CGFloat(characters * 7), height: 25)
     }
 }
@@ -211,7 +200,7 @@ struct ClockOffset: View {
                 .frame(maxHeight: 20)
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(Color(.warning))
-                .offset(x: 10, y: !mdtPump ? -20 : -13)
+                .offset(x: !mdtPump ? 10 : 12, y: !mdtPump ? -20 : -22)
         }
     }
 }
@@ -238,7 +227,7 @@ struct NonStandardInsulin: View {
                         .foregroundStyle(.white)
                 }
         }
-        .offset(x: pod ? -15 : -3, y: pod ? -24 : -4.5)
+        .offset(x: pod ? -15 : -5, y: pod ? -24 : 7)
     }
 }
 
@@ -423,7 +412,11 @@ extension UIImage {
         draw(in: rect)
         let context = UIGraphicsGetCurrentContext()!
         context.setBlendMode(CGBlendMode.sourceIn)
-        context.setFillColor(color.cgColor ?? UIColor(.insulin.opacity(portion <= 3 ? 0.8 : 1)).cgColor)
+        context
+            .setFillColor(
+                color.cgColor ?? UIColor(portion > 0.75 ? .red.opacity(0.8) : .insulin.opacity(portion <= 3 ? 0.8 : 1))
+                    .cgColor
+            )
         let height: CGFloat = 1 - portion
         let rectToFill = CGRect(x: 0, y: size.height * portion, width: size.width, height: size.height * height)
         context.fill(rectToFill)

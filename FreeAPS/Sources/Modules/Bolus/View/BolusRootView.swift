@@ -74,8 +74,7 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            cleanInput: true,
-                            useButtons: false
+                            liveEditing: true
                         )
                         Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
                     }

@@ -94,7 +94,7 @@ extension Bolus {
                                 }
                                 .toggleStyle(CheckboxToggleStyle())
                                 .font(.footnote)
-                                .onChange(of: state.useFattyMealCorrectionFactor) { _ in
+                                .onChange(of: state.useFattyMealCorrectionFactor) {
                                     state.insulinCalculated = state.calculateInsulin()
                                 }
                             }
@@ -129,14 +129,13 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            cleanInput: true,
-                            useButtons: true
+                            liveEditing: true
                         )
                         Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
                     }
                     .focused($isFocused)
-                    .onChange(of: state.amount) { newValue in
-                        if newValue > state.maxBolus {
+                    .onChange(of: state.amount) {
+                        if state.amount > state.maxBolus {
                             exceededMaxBolus = true
                         } else {
                             exceededMaxBolus = false

@@ -98,7 +98,7 @@ struct NotificationSettingsView: View {
                 favoriteGlucoseUnit = glucoseSegments.firstIndex(of: glucoseUnit) ?? 0
             }
             .onChange(of: favoriteGlucoseUnit){ newValue in
-                let newUnit = glucoseSegments[newValue]
+                let newUnit = glucoseSegments[favoriteGlucoseUnit]
                 if newUnit == HKUnit.milligramsPerDeciliter {
                     mmGlucoseUnit = "mgdl"
                 } else if newUnit == HKUnit.millimolesPerLiter {

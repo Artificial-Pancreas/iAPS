@@ -75,7 +75,7 @@ extension BasalProfileEditor {
                                 ).tag(i)
                             }
                         }
-                        .onChange(of: state.items[index].rateIndex, perform: { _ in state.calcTotal() })
+                        .onChange(of: state.items[index].rateIndex) { state.calcTotal() }
                         .frame(maxWidth: geometry.size.width / 2)
                         .clipped()
 
@@ -90,7 +90,7 @@ extension BasalProfileEditor {
                                 ).tag(i)
                             }
                         }
-                        .onChange(of: state.items[index].timeIndex, perform: { _ in state.calcTotal() })
+                        .onChange(of: state.items[index].timeIndex) { state.calcTotal() }
                         .frame(maxWidth: geometry.size.width / 2)
                         .clipped()
                     }
@@ -211,7 +211,7 @@ extension BasalProfileEditor {
                             showAlert.toggle()
                         }
                         label: {
-                            Text(state.syncInProgress ? "Saving..." : "Save")
+                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
                         .disabled(

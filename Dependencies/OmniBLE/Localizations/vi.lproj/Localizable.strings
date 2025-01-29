@@ -108,7 +108,7 @@
 "Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Không pod";
+"No Pod" = "Không có pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Kết nối Pod";
@@ -234,7 +234,7 @@
 "Finish Deactivation" = "Hoàn tất việc ngưng kích hoạt";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Không pod";
+"No Pod" = "Không có pod";
 
 /* Status highlight message for emptyReservoir alarm. */
 "No Insulin" = "Hết Insulin";
@@ -406,7 +406,7 @@
 "Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Không thể tiếp tục cung cấp insulin";
+"Failed to Resume Insulin Delivery" = "Không thể tiếp tục tiêm insulin trở lại";
 
 /* Alert title for time sync error */
 "Failed to Set Pump Time" = "Không thể cài đặt thời gian cho bơm";
