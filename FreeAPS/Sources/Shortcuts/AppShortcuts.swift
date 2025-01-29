@@ -52,5 +52,26 @@ struct AppShortcuts: AppShortcutsProvider {
                 "Uses an \(.applicationName) Meal Preset"
             ]
         )
+        AppShortcut(
+            intent: ModeIntent(),
+            phrases: [
+                "\(.applicationName) Loop Mode",
+                "Activates an \(.applicationName) Loop Mode"
+            ]
+        )
+        AppShortcut(
+            intent: BasalIntent(),
+            phrases: [
+                "\(.applicationName) Temp Basal",
+                "Enacts an \(.applicationName) Temp Basal"
+            ]
+        )
+        AppShortcut(
+            intent: SuspendResumeIntent(),
+            phrases: [
+                "\(.applicationName) Suspend/Resume",
+                "Suspends/Resumes your \(.applicationName) pump"
+            ]
+        )
     }
 }
