@@ -123,18 +123,18 @@ extension OverrideProfilesConfig {
         }
 
         func savePreset() {
-            coredataContext.perform { [self] in
-                let saveOverride = OverridePresets(context: self.coredataContext)
-                saveOverride.duration = self.duration as NSDecimalNumber
-                saveOverride.indefinite = self._indefinite
-                saveOverride.percentage = self.percentage
-                saveOverride.smbIsOff = self.smbIsOff
-                saveOverride.name = self.profileName
-                saveOverride.emoji = self.emoji
-                saveOverride.overrideAutoISF = self.overrideAutoISF
-                id = UUID().uuidString
-                self.isPreset = true
-                saveOverride.id = id
+            coredataContext.performAndWait { [self] in
+                let saveOverride = OverridePresets(context: coredataContext)
+                saveOverride.duration = duration as NSDecimalNumber
+                saveOverride.indefinite = _indefinite
+                saveOverride.percentage = percentage
+                saveOverride.smbIsOff = smbIsOff
+                saveOverride.name = profileName
+                saveOverride.emoji = emoji
+                saveOverride.overrideAutoISF = overrideAutoISF
+                let useId = UUID().uuidString
+                saveOverride.id = useId
+                isPreset = true
                 saveOverride.date = Date()
                 if override_target {
                     saveOverride.target = (
@@ -144,7 +144,7 @@ extension OverrideProfilesConfig {
                     ) as NSDecimalNumber
                 } else { saveOverride.target = 6 }
 
-                if self.advancedSettings {
+                if advancedSettings {
                     saveOverride.advancedSettings = true
                     saveOverride.isfAndCr = self.isfAndCr
                     if !isfAndCr {
@@ -162,13 +162,14 @@ extension OverrideProfilesConfig {
                     saveOverride.uamMinutes = self.uamMinutes as NSDecimalNumber
                     saveOverride.maxIOB = maxIOB as NSDecimalNumber
                     saveOverride.overrideMaxIOB = self.overrideMaxIOB
+                    saveOverride.date = Date.now
                 }
 
-                if self.overrideAutoISF {
-                    self.updateAutoISF(id)
+                if overrideAutoISF {
+                    updateAutoISF(useId)
                 }
 
-                try? self.coredataContext.save()
+                try? coredataContext.save()
             }
         }
 
@@ -231,50 +232,69 @@ extension OverrideProfilesConfig {
             coredataContext.perform { try? self.coredataContext.save() }
 
             // Uploads new Override to NS
-            ns.uploadOverride(profile.name ?? "", Double(saveOverride.duration ?? 0), saveOverride.date ?? Date())
+            ns.uploadOverride(profile.name ?? "", Double(truncating: saveOverride.duration ?? 0), saveOverride.date ?? Date())
         }
 
-        func savedSettings() {
-            guard let overrideArray = OverrideStorage().fetchLatestOverride().first, overrideArray.enabled else {
+        func savedSettings(edit: Bool, identifier: String?) {
+            let overrideArray = OverrideStorage()
+                .fetchLatestOverride().first
+
+            if !edit, overrideArray == nil {
                 defaults()
                 return
             }
-            // isEnabled = overrideArray.enabled
-            percentage = overrideArray.percentage
-            _indefinite = overrideArray.indefinite
-            duration = (overrideArray.duration ?? 0) as Decimal
-            smbIsOff = overrideArray.smbIsOff
-            advancedSettings = overrideArray.advancedSettings
-            isfAndCr = overrideArray.isfAndCr
-            smbIsAlwaysOff = overrideArray.smbIsAlwaysOff
-            overrideMaxIOB = overrideArray.overrideMaxIOB
-            overrideAutoISF = overrideArray.overrideAutoISF
+
+            if !edit, !(overrideArray?.enabled ?? false) {
+                defaults()
+                return
+            }
+            var presetArray: OverridePresets?
+            if edit { presetArray = OverrideStorage().fetchPreset(id: identifier ?? "No, I'm sorry.") }
+            if edit { profileName = presetArray?.name ?? "" }
+
+            percentage = !edit ? overrideArray!.percentage : presetArray?.percentage ?? 100
+            _indefinite = !edit ? overrideArray!.indefinite : presetArray?.indefinite ?? true
+            duration = !edit ? (overrideArray!.duration ?? 0) as Decimal : (presetArray?.duration ?? 0) as Decimal
+            smbIsOff = !edit ? overrideArray!.smbIsOff : presetArray?.smbIsOff ?? false
+            advancedSettings = !edit ? overrideArray!.advancedSettings : presetArray?.advancedSettings ?? false
+            isfAndCr = !edit ? overrideArray!.isfAndCr : presetArray?.isfAndCr ?? true
+            smbIsAlwaysOff = !edit ? overrideArray!.smbIsAlwaysOff : presetArray?.smbIsAlwaysOff ?? false
+            overrideMaxIOB = !edit ? overrideArray!.overrideMaxIOB : presetArray?.overrideMaxIOB ?? false
+            overrideAutoISF = !edit ? overrideArray!.overrideAutoISF : presetArray?.overrideAutoISF ?? false
 
             if advancedSettings {
                 if !isfAndCr {
-                    isf = overrideArray.isf
-                    cr = overrideArray.cr
-                    basal = overrideArray.basal
+                    isf = !edit ? overrideArray!.isf : presetArray?.isf ?? true
+                    cr = !edit ? overrideArray!.cr : presetArray?.cr ?? true
+                    basal = !edit ? overrideArray!.basal : presetArray?.basal ?? true
                 }
                 if smbIsAlwaysOff {
-                    start = (overrideArray.start ?? 0) as Decimal
-                    end = (overrideArray.end ?? 0) as Decimal
+                    start = !edit ? (overrideArray!.start ?? 0) as Decimal : (presetArray?.start ?? 0) as Decimal
+                    end = !edit ? (overrideArray!.end ?? 0) as Decimal : (presetArray?.end ?? 0) as Decimal
                 }
 
-                if (overrideArray.smbMinutes as Decimal?) != nil {
-                    smbMinutes = (overrideArray.smbMinutes ?? 30) as Decimal
+                if !edit, (overrideArray!.smbMinutes as Decimal?) != nil {
+                    smbMinutes = (overrideArray!.smbMinutes ?? 30) as Decimal
+                } else if edit, (presetArray?.smbMinutes as Decimal?) != nil {
+                    smbMinutes = (presetArray?.smbMinutes ?? 30) as Decimal
                 }
 
-                if (overrideArray.uamMinutes as Decimal?) != nil {
-                    uamMinutes = (overrideArray.uamMinutes ?? 30) as Decimal
+                if !edit, (overrideArray!.uamMinutes as Decimal?) != nil {
+                    uamMinutes = (overrideArray!.uamMinutes ?? 30) as Decimal
+                } else if edit, (presetArray?.uamMinutes as Decimal?) != nil {
+                    uamMinutes = (overrideArray?.uamMinutes ?? 30) as Decimal
                 }
 
-                if let maxIOB_ = overrideArray.maxIOB as Decimal? {
+                if !edit, let maxIOB_ = overrideArray!.maxIOB as Decimal? {
+                    maxIOB = maxIOB_ as Decimal
+                } else if edit, let maxIOB_ = presetArray?.maxIOB as Decimal? {
                     maxIOB = maxIOB_ as Decimal
                 }
             }
 
-            if let fetched = OverrideStorage().fetchLatestAutoISFsettings().first {
+            if let fetched = !edit ? OverrideStorage().fetchLatestAutoISFsettings().first : OverrideStorage()
+                .fetchAutoISFsetting(id: identifier ?? "No, I'm very sorry.")
+            {
                 autoISFsettings = AutoISFsettings(
                     autoisf: fetched.autoisf,
                     smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
@@ -306,17 +326,21 @@ extension OverrideProfilesConfig {
                 )
             }
 
-            override_target = (Double(truncating: overrideArray.target ?? 0) > 6.0)
-            let overrideTarget = (overrideArray.target ?? 0) as Decimal
+            if !edit {
+                override_target = (Double(truncating: overrideArray!.target ?? 0) > 6.0)
+            } else {
+                override_target = (Double(truncating: presetArray?.target ?? 0) > 6.0)
+            }
+            let overrideTarget = !edit ? (overrideArray!.target ?? 0) as Decimal : (presetArray?.target ?? 0) as Decimal
             if override_target {
                 target = units == .mmolL ? overrideTarget.asMmolL : overrideTarget
             }
 
             var newDuration = Double(duration)
             if isEnabled {
-                let duration = overrideArray.duration ?? 0
+                let duration = !edit ? overrideArray!.duration ?? 0 : presetArray?.duration ?? 0
                 let addedMinutes = Int(duration as Decimal)
-                let date = overrideArray.date ?? Date()
+                let date = !edit ? overrideArray!.date ?? Date() : presetArray?.date ?? Date()
                 if date.addingTimeInterval(addedMinutes.minutes.timeInterval) < Date(), !_indefinite {
                     isEnabled = false
                 }
