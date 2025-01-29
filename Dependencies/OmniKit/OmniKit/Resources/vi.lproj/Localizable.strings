@@ -120,7 +120,7 @@
 "Initialized" = "Đã được khởi tạo";
 
 /* Pod state when inserting cannula */
-"Inserting cannula" = "Thay cannula";
+"Inserting cannula" = "Gắn Cannula";
 
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulin ngừng. Thay Pod ngay.";
@@ -285,7 +285,7 @@
 "Pod Pairing Incomplete" = "Pod ghép nối không thành công";
 
 /* Error message shown when pod sends ack instead of response */
-"Pod sent ack instead of response" = "Pod gửi ack thay vì phản hồi";
+"Pod sent ack instead of response" = "Pod gửi xác nhận thay vì phản hồi";
 
 /* Pod state when prime or cannula insertion has not completed in the time allotted */
 "Pod setup window expired" = "Cửa sổ cấu hình pod hết hạn";

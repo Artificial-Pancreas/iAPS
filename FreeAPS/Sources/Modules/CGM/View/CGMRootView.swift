@@ -64,16 +64,14 @@ extension CGM {
                             Toggle("Display Emojis as Labels", isOn: $state.displayCalendarEmojis)
                             Toggle("Display IOB and COB", isOn: $state.displayCalendarIOBandCOB)
                         } else if state.createCalendarEvents {
-                            if #available(iOS 17.0, *) {
-                                Text(
-                                    "If you are not seeing calendars to choose here, please go to Settings -> iAPS -> Calendars and change permissions to \"Full Access\""
-                                ).font(.footnote)
+                            Text(
+                                "If you are not seeing calendars to choose here, please go to Settings -> iAPS -> Calendars and change permissions to \"Full Access\""
+                            ).font(.footnote)
 
-                                Button("Open Settings") {
-                                    // Get the settings URL and open it
-                                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                                        UIApplication.shared.open(url)
-                                    }
+                            Button("Open Settings") {
+                                // Get the settings URL and open it
+                                if let url = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(url)
                                 }
                             }
                         }
@@ -107,11 +105,11 @@ extension CGM {
                         )
                     }
                 }
-                .onChange(of: setupCGM) { setupCGM in
+                .onChange(of: setupCGM) {
                     state.setupCGM = setupCGM
                 }
-                .onChange(of: state.setupCGM) { setupCGM in
-                    self.setupCGM = setupCGM
+                .onChange(of: state.setupCGM) {
+                    self.setupCGM = state.setupCGM
                 }
             }
         }
