@@ -1105,18 +1105,18 @@ Enact a temp Basal or a temp target */
 "Activates an %@ Override Preset" = "Kích hoạt %@ cài đặt sẵn ghi đè";
 
 /* Suspend/Resume Shortcut */
-"Choose what to do with your pump" = "Choose what to do with your pump";
+"Choose what to do with your pump" = "Hãy chọn những gì để làm việc với bơm insulin của bạn";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
+"Are you sure you want to %@ your pump?" = "Bạn có chắc chắn muốn %@ bơm insulin này không?";
 
 /* Suspend/Resume Shortcut */
-"Pump command" = "Pump command";
+"Pump command" = "Lệnh của bơm";
 /* Suspend/Resume Shortcut */
 "enacted in iAPS" = "enacted in iAPS";
 
 /* Temp Basal Shortcut */
-"Temp basal Amount in U/h" = "Temp basal Amount in U/h";
+"Temp basal Amount in U/h" = "Số lượng Temp Basal tính bằng U/h";
 
 
 
@@ -2356,7 +2356,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Mục tiêu ghi đè EatingSoon (hoặc Mục tiêu tạm thời) cần được kích hoạt để bắt đầu quá trình thích ứng B30. Mục tiêu cần phải thấp hơn hoặc bằng cài đặt này để B30 Aimi bắt đầu. Mặc định là 90 mg/dl. Nếu bạn hủy Mục tiêu EatingSoon này, tỷ lệ cơ bản B30 sẽ dừng lại.";
 
 /* */
 "Minimum Start Bolus size" = "Minimum Start Bolus size";
