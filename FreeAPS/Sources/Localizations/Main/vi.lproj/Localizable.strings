@@ -2422,19 +2422,19 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
 /* */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, Sensible nằm giữa 40mg/dl và 120mg/dl. Tỷ lệ phân phối SMB tăng tuyến tính được ánh xạ tới phạm vi glucose [target_bg, target_bg+bg_range]. Tại target_bg tỷ lệ SMB là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tỷ lệ SMB tăng tuyến tính bị vô hiệu hóa và sửa lỗi smb_delivery_ratio được sử dụng.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0. Hợp lý giữa 40mg/dl và 120mg/dl. SMB delivery ratio tăng được ánh xạ tới glucose range [target_bg, target_bg+bg_range]. Tại target_bg SMB ratio là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tăng SMB ratio bị vô hiệu hóa và smb_delivery_ratio được sử dụng.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là mức cao hơn của Tỷ lệ phân phối SMB tăng tuyến tính thay vì giá trị cố định ở trên trong Tỷ lệ phân phối SMB (OpenAP SMB Delivery Ratio).";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
 
 /* */
 "SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là giá trị thấp hơn giới hạn của Tỷ lệ phân phối SMB tăng tuyến tính chứ không phải là giá trị cố định ở trên trong Tỷ lệ phân phối SMB (OpenAP SMB Delivery Ratio).";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
 
 /* */
 "Toggles" = "Toggles";
