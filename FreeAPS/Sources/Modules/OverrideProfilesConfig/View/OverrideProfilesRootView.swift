@@ -12,14 +12,15 @@ extension OverrideProfilesConfig {
         @State private var showingDetail = false
         @State private var alertSring = ""
         @State var isSheetPresented: Bool = false
-        @State var index: Int = 1
+        @State var isEditingPreset: Bool = false
+        @State var presetToEdit: OverridePresets?
 
         @Environment(\.managedObjectContext) var moc
 
         @FetchRequest(
             entity: OverridePresets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
-                format: "name != %@", "" as String
+                format: "name != %@", "Empty" as String
             )
         ) var fetchedProfiles: FetchedResults<OverridePresets>
 
@@ -68,7 +69,7 @@ extension OverrideProfilesConfig {
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
                 .onAppear {
                     configureView()
-                    state.savedSettings()
+                    state.savedSettings(edit: false, identifier: nil)
                 }
                 .alert(
                     "Start Profile",
@@ -76,15 +77,26 @@ extension OverrideProfilesConfig {
                     actions: { alertViewBuilder() }, message: { Text(alertSring) }
                 )
                 .sheet(isPresented: $isSheetPresented) { newPreset }
+                .sheet(isPresented: $isEditingPreset) { edit }
         }
 
         var overridesView: some View {
             Form {
-                if state.presets.isNotEmpty {
+                if state.presets.isNotEmpty, !isEditingPreset {
                     Section {
                         ForEach(fetchedProfiles) { preset in
                             profilesView(for: preset)
-                        }.onDelete(perform: removeProfile)
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        presetToEdit = preset
+                                        state.savedSettings(edit: true, identifier: presetToEdit?.id)
+                                        isEditingPreset.toggle()
+                                    } label: {
+                                        Label("Edit", systemImage: "pencil.line")
+                                    }
+                                }
+                        }
+                        .onDelete(perform: removeProfile)
                     }
                 }
 
@@ -492,57 +504,67 @@ extension OverrideProfilesConfig {
                 // Buttons
                 Section {
                     HStack {
-                        Button("Start") {
-                            showAlert.toggle()
-                            alertSring = "\(state.percentage.formatted(.number)) %, " +
-                                (
-                                    state.duration > 0 && !state
-                                        ._indefinite ?
-                                        (
-                                            state
-                                                .duration
-                                                .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
-                                                " min."
-                                        ) :
-                                        NSLocalizedString(" infinite duration.", comment: "")
-                                ) +
-                                (
-                                    (state.target == 0 || !state.override_target) ? "" :
-                                        (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
-                                )
-                                +
-                                (
-                                    state
-                                        .smbIsOff ?
-                                        NSLocalizedString(
-                                            " SMBs are disabled either by schedule or during the entire duration.",
-                                            comment: ""
-                                        ) : ""
-                                )
-                                +
-                                "\n\n"
-                                +
-                                NSLocalizedString(
-                                    "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.",
-                                    comment: ""
-                                )
+                        if !isEditingPreset {
+                            Button("Start") {
+                                showAlert.toggle()
+                                alertSring = "\(state.percentage.formatted(.number)) %, " +
+                                    (
+                                        state.duration > 0 && !state
+                                            ._indefinite ?
+                                            (
+                                                state
+                                                    .duration
+                                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
+                                                    " min."
+                                            ) :
+                                            NSLocalizedString(" infinite duration.", comment: "")
+                                    ) +
+                                    (
+                                        (state.target == 0 || !state.override_target) ? "" :
+                                            (" Target: " + state.target.formatted() + " " + state.units.rawValue + ".")
+                                    )
+                                    +
+                                    (
+                                        state
+                                            .smbIsOff ?
+                                            NSLocalizedString(
+                                                " SMBs are disabled either by schedule or during the entire duration.",
+                                                comment: ""
+                                            ) : ""
+                                    )
+                                    +
+                                    "\n\n"
+                                    +
+                                    NSLocalizedString(
+                                        "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile.",
+                                        comment: ""
+                                    )
+                            }
+                            .disabled(unChanged())
+                            .buttonStyle(BorderlessButtonStyle())
+                            .font(.callout)
+                            .controlSize(.mini)
                         }
-                        .disabled(unChanged())
-                        .buttonStyle(BorderlessButtonStyle())
-                        .font(.callout)
-                        .controlSize(.mini)
 
                         Button {
-                            isSheetPresented = true
+                            if !isEditingPreset {
+                                isSheetPresented = true
+                            } else if let editThis = presetToEdit {
+                                if !editThis.hasChanges {
+                                    moc.delete(editThis)
+                                }
+                                state.savePreset()
+                                isEditingPreset.toggle()
+                            }
                         }
-                        label: { Text("Save as Profile") }
+                        label: { Text(isEditingPreset ? LocalizedStringKey("Save") : LocalizedStringKey("Save as Profile")) }
                             .tint(.orange)
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .buttonStyle(BorderlessButtonStyle())
                             .controlSize(.mini)
-                            .disabled(unChanged())
+                            .disabled(isEditingPreset ? false : unChanged())
 
-                        if state.isEnabled {
+                        if state.isEnabled, !isEditingPreset {
                             Section {
                                 Button("Cancel Profile Override") {
                                     state.cancelProfile()
@@ -683,6 +705,10 @@ extension OverrideProfilesConfig {
             }
         }
 
+        private var edit: some View {
+            overridesView
+        }
+
         private func unChanged() -> Bool {
             let percentUnchanged = state.percentage == 100
             let targetUnchanged = !state.override_target || state.target == 0
@@ -698,8 +724,8 @@ extension OverrideProfilesConfig {
 
         private func removeProfile(at offsets: IndexSet) {
             for index in offsets {
-                let language = fetchedProfiles[index]
-                moc.delete(language)
+                let preset = fetchedProfiles[index]
+                moc.delete(preset)
             }
             do {
                 try moc.save()
