@@ -212,7 +212,7 @@
 " Your setting: " = " Cài đặt của bạn: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "autosens.max Giới hạn điểm hiện tại tối đa mg/dl";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max giới hạn tối đa";
 
 /*  */
 "Enter preset name" = "Nhập tên";
@@ -1517,7 +1517,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Lịch trình khi SMBs tắt";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Thay đổi ISF, CR và Basal";
 
 /* */
 "Change ISF" = "Thay đổi ISF";
@@ -2481,7 +2481,7 @@ Enact a temp Basal or a temp target */
 "Rewind Resets Autosens" = "Rewind sẽ thiết lập lại Autosens";
 
 /* ”Rewind Resets Autosens” */
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại tỷ lệ cảm biến tự động về mức trung tính khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi điểm gắn có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình một cách độc lập với những thay đổi ở địa điểm, bạn có thể cân nhắc việc tắt tính năng này.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại autosens ratio về mức trung hoà khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi điểm gắn có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình chỉ để thay đổi điểm gắn, bạn có thể cân nhắc việc tắt tính năng này.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
 "High Temptarget Raises Sensitivity" = "Mục tiêu tạm thời cao sẽ làm tăng độ nhạy";
@@ -2505,7 +2505,7 @@ Enact a temp Basal or a temp target */
 "Resistance Lowers Target" = "Chống mục tiêu thấp";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là False. Khi True, sẽ hạ mục tiêu BG khi cảm biến tự động phát hiện kháng cự";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là False. Khi True, sẽ hạ mục tiêu BG khi cảm biến tự động phát hiện trở kháng";
 
 /* Headline ”Advanced Target Adjustments" */
 "Advanced Target Adjustments" = "Điều chỉnh mục tiêu nâng cao";
@@ -2610,7 +2610,7 @@ Enact a temp Basal or a temp target */
 "Autosens Max" = "Autosens tối đa";
 
 /* "Autosens Max" */
-"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Đây là giới hạn hệ số nhân cho autosens (và autotune) để đặt giới hạn tối đa 20% cho tỷ lệ cảm biến tự động có thể cao đến mức nào, từ đó xác định mức độ tự động điều chỉnh mức cơ bản cao, mức độ điều chỉnh ISF thấp và mức độ thấp của nó có thể đặt mục tiêu BG.";
+"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Đây là giới hạn hệ số nhân cho autosens (và autotune) để đặt giới hạn tối đa 20% cho autosens ratio có thể cao đến mức nào, từ đó xác định mức độ tự động điều chỉnh mức cơ bản cao, mức độ điều chỉnh ISF thấp và mức độ thấp của nó có thể đặt mục tiêu BG.";
 
 /* Headline "Autosens Min" */
 "Autosens Min" = "Autosens tối thiểu";
