@@ -2428,13 +2428,13 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là mức cao hơn của SMB Delivery Ratio tăng tuyến tính chứ không phải giá trị cố định ở trên trong SMB Delivery Ratio.";
 
 /* */
 "SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là giá trị giới hạn thấp của SMB Delivery Ratio tăng tuyến tính chứ không phải là giá trị cố định ở trên trong SMB Delivery Ratio.";
 
 /* */
 "Toggles" = "Toggles";
