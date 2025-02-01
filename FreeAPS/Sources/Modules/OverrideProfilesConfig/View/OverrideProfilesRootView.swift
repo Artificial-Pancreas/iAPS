@@ -501,6 +501,16 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Auto ISF") }
 
+                if isEditingPreset {
+                    Section {
+                        HStack {
+                            Text("Name").foregroundStyle(.secondary)
+                            TextField("Name", text: $state.profileName)
+                                .multilineTextAlignment(.trailing)
+                        }
+                    } header: { Text("Profile Name") }
+                }
+
                 // Buttons
                 Section {
                     HStack {
@@ -655,7 +665,7 @@ extension OverrideProfilesConfig {
                                 Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
                                 Text(isfAndCRstring)
                             }
-                            if let settings = autoisfSettings {
+                            if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
                                 Text("Auto ISF \(settings.autoisf)")
                             }
 
@@ -666,33 +676,71 @@ extension OverrideProfilesConfig {
                         .font(.caption)
 
                         if let settings = autoisfSettings, settings.autoisf {
+                            let standard = state.currentSettings
+
                             HStack(spacing: 5) {
-                                Text("Accel: \(settings.enableBGacceleration)")
-                                Text("Keto: \(settings.ketoProtect)")
-                                Text("B30: \(settings.use_B30)")
-                                Text("Min/Max: \(settings.autoisf_min ?? 1)/\(settings.autoisf_max ?? 1)")
+                                if settings.enableBGacceleration != standard
+                                    .enableBGacceleration { Text("Accel: \(settings.enableBGacceleration)") }
+                                if settings.ketoProtect != standard.ketoProtect { Text("Keto: \(settings.ketoProtect)") }
+                                if settings.use_B30 != standard.use_B30 { Text("B30: \(settings.use_B30)") }
+
+                                HStack(spacing: 2) {
+                                    if ((settings.autoisf_min ?? 1) as Decimal) != standard
+                                        .autoisf_min
+                                    { Text("Min: \(settings.autoisf_min ?? 1)")
+                                    }
+                                    if ((settings.autoisf_max ?? 1) as Decimal) != standard
+                                        .autoisf_max
+                                    { Text("Max: \(settings.autoisf_max ?? 1)")
+                                    }
+                                }.foregroundColor(.secondary)
+                                    .font(.caption)
+                                // Text("Min/Max: \(settings.autoisf_min ?? 1)/\(settings.autoisf_max ?? 1)")
                             }.foregroundColor(.secondary)
                                 .font(.caption)
+
                             HStack(spacing: 5) {
-                                let threshold = (settings.iobThresholdPercent ?? 100) != 100 ?
-                                    ", \(settings.iobThresholdPercent ?? 100)%" : ""
-                                Text(
-                                    "SMB: \(settings.smbDeliveryRatioMin ?? 0.5)/\(settings.smbDeliveryRatioMax ?? 0.5)" +
-                                        threshold
-                                )
-                                let target: Decimal = state.units == .mmolL ? ((settings.smbDeliveryRatioBGrange ?? 8) as Decimal)
-                                    .asMmolL : (settings.smbDeliveryRatioBGrange ?? 8) as Decimal
-                                Text("SMB Range: " + (glucoseFormatter.string(from: target as NSNumber) ?? ""))
-                                Text("PP: \(settings.postMealISFweight ?? 0)")
-                            }.foregroundColor(.secondary).font(.caption)
-                            HStack(spacing: 5) {
-                                Text("lowBG: \(settings.lowerISFrangeWeight ?? 0)")
-                                Text("highBG: \(settings.higherISFrangeWeight ?? 0)")
-                                if settings.enableBGacceleration {
-                                    Text("accel: \(settings.bgAccelISFweight ?? 0)")
-                                    Text("brake: \(settings.bgBrakeISFweight ?? 0)")
+                                if ((settings.iobThresholdPercent ?? 100) as Decimal) != standard
+                                    .iobThresholdPercent
+                                { Text("SMB IOB: \(settings.iobThresholdPercent ?? 100)%")
                                 }
-                                Text("Dura: \(settings.autoISFhourlyChange ?? 0)")
+
+                                if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
+                                    .smbDeliveryRatioMin
+                                { Text("SMB min: \(settings.smbDeliveryRatioMin ?? 0.5)") }
+
+                                if ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
+                                    .smbDeliveryRatioMax
+                                { Text("SMB max: \(settings.smbDeliveryRatioMin ?? 0.5)") }
+
+                                if ((settings.smbDeliveryRatioBGrange ?? 0) as Decimal) != standard
+                                    .smbDeliveryRatioBGrange
+                                {
+                                    let target: Decimal = state
+                                        .units == .mmolL ? ((settings.smbDeliveryRatioBGrange ?? 8) as Decimal)
+                                        .asMmolL : (settings.smbDeliveryRatioBGrange ?? 8) as Decimal
+                                    Text("Range: " + (glucoseFormatter.string(from: target as NSNumber) ?? ""))
+                                }
+                            }.foregroundColor(.secondary)
+                                .font(.caption)
+
+                            HStack(spacing: 5) {
+                                if ((settings.lowerISFrangeWeight ?? 0) as Decimal) != standard
+                                    .lowerISFrangeWeight { Text("lowBG: \(settings.lowerISFrangeWeight ?? 0)") }
+                                if ((settings.higherISFrangeWeight ?? 0) as Decimal) != standard
+                                    .lowerISFrangeWeight { Text("highBG: \(settings.lowerISFrangeWeight ?? 0)") }
+                                if settings.enableBGacceleration {
+                                    if ((settings.bgAccelISFweight ?? 0) as Decimal) != standard
+                                        .bgAccelISFweight { Text("accel: \(settings.bgAccelISFweight ?? 0)") }
+                                    if ((settings.bgBrakeISFweight ?? 0) as Decimal) != standard
+                                        .bgBrakeISFweight { Text("brake: \(settings.bgBrakeISFweight ?? 0)") }
+                                }
+                                if ((settings.autoISFhourlyChange ?? 0) as Decimal) != standard
+                                    .autoISFhourlyChange { Text("Dura: \(settings.autoISFhourlyChange ?? 0)") }
+
+                                if ((settings.postMealISFweight ?? 0) as Decimal) != standard
+                                    .postMealISFweight
+                                { Text("PP: \(settings.postMealISFweight ?? 0)") }
                             }.foregroundColor(.secondary).font(.caption)
                         }
                     }
