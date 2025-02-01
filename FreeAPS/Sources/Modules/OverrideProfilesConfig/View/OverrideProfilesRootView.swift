@@ -626,6 +626,7 @@ extension OverrideProfilesConfig {
 
         // The Profile presets
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
+            // Values as String
             let targetRaw = ((preset.target ?? 0) as NSDecimalNumber) as Decimal
             let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
             let duration = (preset.duration ?? 0) as Decimal
@@ -682,78 +683,80 @@ extension OverrideProfilesConfig {
                             }.foregroundStyle(.secondary).font(.caption)
                         }
 
+                        // All of the Auto ISF Settings (Bool and Decimal optionals)
                         if let settings = autoisfSettings, settings.autoisf {
                             let standard = state.currentSettings
 
                             HStack(spacing: 7) {
-                                if settings.enableBGacceleration != standard
-                                    .enableBGacceleration { Text("Accel: \(settings.enableBGacceleration)") }
-                                if settings.ketoProtect != standard.ketoProtect { Text("Keto: \(settings.ketoProtect)") }
-                                if settings.use_B30 != standard.use_B30 { Text("B30: \(settings.use_B30)") }
+                                bool(
+                                    bool: settings.enableBGacceleration,
+                                    setting: standard.enableBGacceleration,
+                                    label: "Accel: "
+                                )
+                                bool(bool: settings.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
+                                bool(bool: settings.use_B30, setting: standard.use_B30, label: "B30: ")
 
-                                HStack(spacing: 2) {
-                                    if ((settings.autoisf_min ?? 1) as Decimal) != standard
-                                        .autoisf_min
-                                    { Text("Min: \(settings.autoisf_min ?? 1)")
-                                    }
-                                    if ((settings.autoisf_max ?? 1) as Decimal) != standard
-                                        .autoisf_max
-                                    { Text("Max: \(settings.autoisf_max ?? 1)")
-                                    }
+                                HStack(spacing: 5) {
+                                    decimal(decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                                    decimal(decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                                 }.foregroundColor(.secondary)
                                     .font(.caption)
-                                // Text("Min/Max: \(settings.autoisf_min ?? 1)/\(settings.autoisf_max ?? 1)")
-                            }.foregroundColor(.secondary)
-                                .font(.caption)
+                            }.foregroundStyle(.secondary).font(.caption)
 
                             HStack(spacing: 7) {
-                                if ((settings.iobThresholdPercent ?? 100) as Decimal) != standard
-                                    .iobThresholdPercent
-                                { Text("SMB IOB: \(settings.iobThresholdPercent ?? 100)%")
-                                }
+                                percentage(
+                                    decimal: settings.iobThresholdPercent,
+                                    setting: standard
+                                        .iobThresholdPercent,
+                                    label: "SMB IOB: "
+                                )
 
                                 if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
                                     .smbDeliveryRatioMin || ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
                                     .smbDeliveryRatioMax
                                 {
                                     Text(
-                                        "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5) - \(settings.smbDeliveryRatioMax ?? 0.5)"
+                                        "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5)-\(settings.smbDeliveryRatioMax ?? 0.5)"
                                     )
                                 }
-
-                                if ((settings.smbDeliveryRatioBGrange ?? 0) as Decimal) != standard
-                                    .smbDeliveryRatioBGrange
-                                {
-                                    let target: Decimal = state
-                                        .units == .mmolL ? ((settings.smbDeliveryRatioBGrange ?? 8) as Decimal)
-                                        .asMmolL : (settings.smbDeliveryRatioBGrange ?? 8) as Decimal
-                                    Text(
-                                        "SMB Range: " + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state
-                                            .units
-                                            .rawValue
-                                    )
-                                }
-                            }.foregroundColor(.secondary)
-                                .font(.caption)
+                                glucose(
+                                    decimal: settings.smbDeliveryRatioBGrange,
+                                    setting: standard.smbDeliveryRatioBGrange,
+                                    label: "SMB Range: "
+                                )
+                            }.foregroundStyle(.secondary).font(.caption)
 
                             HStack(spacing: 8) {
-                                if ((settings.lowerISFrangeWeight ?? 0) as Decimal) != standard
-                                    .lowerISFrangeWeight { Text("lowBG: \(settings.lowerISFrangeWeight ?? 0)") }
-                                if ((settings.higherISFrangeWeight ?? 0) as Decimal) != standard
-                                    .lowerISFrangeWeight { Text("highBG: \(settings.lowerISFrangeWeight ?? 0)") }
-                                if settings.enableBGacceleration {
-                                    if ((settings.bgAccelISFweight ?? 0) as Decimal) != standard
-                                        .bgAccelISFweight { Text("accel: \(settings.bgAccelISFweight ?? 0)") }
-                                    if ((settings.bgBrakeISFweight ?? 0) as Decimal) != standard
-                                        .bgBrakeISFweight { Text("brake: \(settings.bgBrakeISFweight ?? 0)") }
-                                }
-                                if ((settings.autoISFhourlyChange ?? 0) as Decimal) != standard
-                                    .autoISFhourlyChange { Text("Dura: \(settings.autoISFhourlyChange ?? 0)") }
+                                decimal(
+                                    decimal: settings.lowerISFrangeWeight,
+                                    setting: standard.lowerISFrangeWeight,
+                                    label: "lowBG: "
+                                )
+                                decimal(
+                                    decimal: settings.higherISFrangeWeight,
+                                    setting: standard.lowerISFrangeWeight,
+                                    label: "highBG: "
+                                )
 
-                                if ((settings.postMealISFweight ?? 0) as Decimal) != standard
-                                    .postMealISFweight
-                                { Text("PP: \(settings.postMealISFweight ?? 0)") }
-                            }.foregroundColor(.secondary).font(.caption)
+                                if settings.enableBGacceleration {
+                                    decimal(
+                                        decimal: settings.bgAccelISFweight,
+                                        setting: standard.bgAccelISFweight,
+                                        label: "accel: "
+                                    )
+                                    decimal(
+                                        decimal: settings.bgBrakeISFweight,
+                                        setting: standard.bgBrakeISFweight,
+                                        label: "brake: "
+                                    )
+                                }
+                                decimal(
+                                    decimal: settings.autoISFhourlyChange,
+                                    setting: standard.autoISFhourlyChange,
+                                    label: "Dura: "
+                                )
+                                decimal(decimal: settings.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
+                            }.foregroundStyle(.secondary).font(.caption)
                         }
                     }
                     .contentShape(Rectangle())
@@ -780,6 +783,35 @@ extension OverrideProfilesConfig {
 
             return percentUnchanged && targetUnchanged && smbUnchanged && maxIOBUnchanged && smbMinutesUnchanged &&
                 uamMinutesUnchanged && autoISFUnchanged
+        }
+
+        private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+            if let dec = decimal, dec as Decimal != setting {
+                return Text(label + "\(dec)")
+            }
+            return nil
+        }
+
+        private func bool(bool: Bool, setting: Bool, label: String) -> Text? {
+            if bool != setting {
+                return Text(label + "\(bool)")
+            }
+            return nil
+        }
+
+        private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+            if let dec = decimal, dec as Decimal != setting {
+                return Text(label + "\(dec)%")
+            }
+            return nil
+        }
+
+        private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+            if let dec = decimal, dec as Decimal != setting {
+                let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
+                return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+            }
+            return nil
         }
 
         private func removeProfile(at offsets: IndexSet) {
