@@ -501,6 +501,16 @@ extension OverrideProfilesConfig {
                     }
                 } header: { Text("Auto ISF") }
 
+                if isEditingPreset {
+                    Section {
+                        HStack {
+                            Text("Name").foregroundStyle(.secondary)
+                            TextField("Name", text: $state.profileName)
+                                .multilineTextAlignment(.trailing)
+                        }
+                    } header: { Text("Profile Name") }
+                }
+
                 // Buttons
                 Section {
                     HStack {
@@ -614,7 +624,9 @@ extension OverrideProfilesConfig {
             }
         }
 
+        // The Profile presets
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
+            // Values as String
             let targetRaw = ((preset.target ?? 0) as NSDecimalNumber) as Decimal
             let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
             let duration = (preset.duration ?? 0) as Decimal
@@ -630,16 +642,20 @@ extension OverrideProfilesConfig {
             let maxIOB = preset.overrideMaxIOB ? (preset.maxIOB ?? 999) as Decimal : 999
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
-            let dash = crString != "" ? "/" : ""
-            let isfAndCRstring = isfString + dash + crString
+            let basalString = preset.basal ? "Basal" : ""
+            let dash = (crString != "" && isfString != "") ? ", " : ""
+            let dash2 = (basalString != "" && isfString + dash + crString != "") ? ", " : ""
+            let isfAndCRstring = "[" + isfString + dash + crString + dash2 + basalString + "]"
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(name)
-                        HStack(spacing: 5) {
-                            Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
+                        HStack(spacing: 7) {
+                            if percent != 1 {
+                                Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
+                            }
                             if targetString != "" {
                                 Text(targetString)
                                 Text(targetString != "" ? state.units.rawValue : "")
@@ -647,53 +663,100 @@ extension OverrideProfilesConfig {
                             if durationString != "" { Text(durationString + (perpetual ? "" : "min")) }
                             if smbString != "" { Text(smbString).foregroundColor(.secondary).font(.caption) }
                             if scheduledSMBstring != "" { Text(scheduledSMBstring) }
-                            if preset.advancedSettings {
-                                if !preset.smbIsOff {
-                                    Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
-                                    Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
-                                }
-                                Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
-                                Text(isfAndCRstring)
-                            }
-                            if let settings = autoisfSettings {
+                            if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
                                 Text("Auto ISF \(settings.autoisf)")
                             }
-
                             Spacer()
                         }
                         .padding(.top, 2)
                         .foregroundColor(.secondary)
                         .font(.caption)
 
-                        if let settings = autoisfSettings, settings.autoisf {
-                            HStack(spacing: 5) {
-                                Text("Accel: \(settings.enableBGacceleration)")
-                                Text("Keto: \(settings.ketoProtect)")
-                                Text("B30: \(settings.use_B30)")
-                                Text("Min/Max: \(settings.autoisf_min ?? 1)/\(settings.autoisf_max ?? 1)")
-                            }.foregroundColor(.secondary)
-                                .font(.caption)
-                            HStack(spacing: 5) {
-                                let threshold = (settings.iobThresholdPercent ?? 100) != 100 ?
-                                    ", \(settings.iobThresholdPercent ?? 100)%" : ""
-                                Text(
-                                    "SMB: \(settings.smbDeliveryRatioMin ?? 0.5)/\(settings.smbDeliveryRatioMax ?? 0.5)" +
-                                        threshold
-                                )
-                                let target: Decimal = state.units == .mmolL ? ((settings.smbDeliveryRatioBGrange ?? 8) as Decimal)
-                                    .asMmolL : (settings.smbDeliveryRatioBGrange ?? 8) as Decimal
-                                Text("SMB Range: " + (glucoseFormatter.string(from: target as NSNumber) ?? ""))
-                                Text("PP: \(settings.postMealISFweight ?? 0)")
-                            }.foregroundColor(.secondary).font(.caption)
-                            HStack(spacing: 5) {
-                                Text("lowBG: \(settings.lowerISFrangeWeight ?? 0)")
-                                Text("highBG: \(settings.higherISFrangeWeight ?? 0)")
-                                if settings.enableBGacceleration {
-                                    Text("accel: \(settings.bgAccelISFweight ?? 0)")
-                                    Text("brake: \(settings.bgBrakeISFweight ?? 0)")
+                        if preset.advancedSettings {
+                            HStack {
+                                if percent != 1, !(preset.isf && preset.cr && preset.basal) { Text("Adjust " + isfAndCRstring) }
+                                if !preset.smbIsOff {
+                                    Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
+                                    Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
                                 }
-                                Text("Dura: \(settings.autoISFhourlyChange ?? 0)")
-                            }.foregroundColor(.secondary).font(.caption)
+                                Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
+                            }.foregroundStyle(.secondary).font(.caption)
+                        }
+
+                        // All of the Auto ISF Settings (Bool and Decimal optionals)
+                        if let settings = autoisfSettings, settings.autoisf {
+                            let standard = state.currentSettings
+
+                            HStack(spacing: 7) {
+                                bool(
+                                    bool: settings.enableBGacceleration,
+                                    setting: standard.enableBGacceleration,
+                                    label: "Accel: "
+                                )
+                                bool(bool: settings.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
+                                bool(bool: settings.use_B30, setting: standard.use_B30, label: "B30: ")
+
+                                HStack(spacing: 5) {
+                                    decimal(decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                                    decimal(decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
+                                }.foregroundColor(.secondary)
+                                    .font(.caption)
+                            }.foregroundStyle(.secondary).font(.caption)
+
+                            HStack(spacing: 7) {
+                                percentage(
+                                    decimal: settings.iobThresholdPercent,
+                                    setting: standard
+                                        .iobThresholdPercent,
+                                    label: "SMB IOB: "
+                                )
+
+                                if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
+                                    .smbDeliveryRatioMin || ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
+                                    .smbDeliveryRatioMax
+                                {
+                                    Text(
+                                        "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5)-\(settings.smbDeliveryRatioMax ?? 0.5)"
+                                    )
+                                }
+                                glucose(
+                                    decimal: settings.smbDeliveryRatioBGrange,
+                                    setting: standard.smbDeliveryRatioBGrange,
+                                    label: "SMB Range: "
+                                )
+                            }.foregroundStyle(.secondary).font(.caption)
+
+                            HStack(spacing: 8) {
+                                decimal(
+                                    decimal: settings.lowerISFrangeWeight,
+                                    setting: standard.lowerISFrangeWeight,
+                                    label: "lowBG: "
+                                )
+                                decimal(
+                                    decimal: settings.higherISFrangeWeight,
+                                    setting: standard.lowerISFrangeWeight,
+                                    label: "highBG: "
+                                )
+
+                                if settings.enableBGacceleration {
+                                    decimal(
+                                        decimal: settings.bgAccelISFweight,
+                                        setting: standard.bgAccelISFweight,
+                                        label: "accel: "
+                                    )
+                                    decimal(
+                                        decimal: settings.bgBrakeISFweight,
+                                        setting: standard.bgBrakeISFweight,
+                                        label: "brake: "
+                                    )
+                                }
+                                decimal(
+                                    decimal: settings.autoISFhourlyChange,
+                                    setting: standard.autoISFhourlyChange,
+                                    label: "Dura: "
+                                )
+                                decimal(decimal: settings.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
+                            }.foregroundStyle(.secondary).font(.caption)
                         }
                     }
                     .contentShape(Rectangle())
@@ -720,6 +783,35 @@ extension OverrideProfilesConfig {
 
             return percentUnchanged && targetUnchanged && smbUnchanged && maxIOBUnchanged && smbMinutesUnchanged &&
                 uamMinutesUnchanged && autoISFUnchanged
+        }
+
+        private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+            if let dec = decimal, dec as Decimal != setting {
+                return Text(label + "\(dec)")
+            }
+            return nil
+        }
+
+        private func bool(bool: Bool, setting: Bool, label: String) -> Text? {
+            if bool != setting {
+                return Text(label + "\(bool)")
+            }
+            return nil
+        }
+
+        private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+            if let dec = decimal, dec as Decimal != setting {
+                return Text(label + "\(dec)%")
+            }
+            return nil
+        }
+
+        private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+            if let dec = decimal, dec as Decimal != setting {
+                let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
+                return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+            }
+            return nil
         }
 
         private func removeProfile(at offsets: IndexSet) {
