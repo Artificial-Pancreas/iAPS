@@ -2374,7 +2374,7 @@ Enact a temp Basal or a temp target */
 "ISF weight while BG decelerates" = "Peso ISF mentre BG diminuisce";
 
 /* */
-"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point.";
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Questo è il peso applicato mentre il glucosio scende e che indebolisce ISF. Con 0 questo contributo è effettivamente disabilitato. 0.1 potrebbe essere un buon punto di partenza.";
 
 /* */
 "ISF weight while BG accelerates" = "Peso ISF mentre BG diminuisce";
@@ -2392,7 +2392,7 @@ Enact a temp Basal or a temp target */
 "ISF weight for postprandial BG rise" = "Peso ISF per l'aumento della glicemia postprandiale";
 
 /* */
-"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!";
+"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Questo è il peso applicato alla pendenza lineare mentre il glucosio sale e che adatta ISF. Con 0 questo contributo è effettivamente disabilitato. Inizia con 0.01 - difficilmente vai oltre 0.05!";
 
 /* */
 "ISF weight for higher BG deltas" = "Peso ISF per BG superiori";
@@ -2425,16 +2425,16 @@ Enact a temp Basal or a temp target */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Valore predefinito: 0, Sensibile è compreso tra 40 mg/dL e 120 mg/dL. Il rapporto di erogazione di SMB in aumento lineare viene mappato all'intervallo di glucosio [target_bg, target_bg+bg_range]. In target_bg il rapporto SMB è smb_delivery_ratio_min, in target_bg+bg_range è smb_delivery_ratio_max. Con 0 il rapporto SMB in aumento lineare è disabilitato e viene utilizzato il fix smb_delivery_ratio.";
 
 /* */
-"SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
+"SMB Delivery Ratio Maximum" = "Tasso di somministrazione Smb Massimo";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Valore predefinito: 0.5 Questo è il limite superiore di un aumento lineare del rapporto di somministrazione SMB piuttosto che il valore fisso del rapporto di somministrazione in OpenAP SMB.";
 
 /* */
 "SMB Delivery Ratio Minimum" = "Tasso di somministrazione Smb Minimo";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Valore predefinito: 0.5 Questo è il limite inferiore di un rapporto di somministrazione SMB in aumento lineare piuttosto che il valore fisso nel rapporto di somministrazione OpenAP SMB.";
 
 /* */
 "Toggles" = "Attiva/disattiva";
@@ -2467,7 +2467,7 @@ Enact a temp Basal or a temp target */
 "Keto Protection" = "Protezione Keto";
 
 /* */
-"Max IOB Threshold Percent" = "Max IOB Threshold Percent";
+"Max IOB Threshold Percent" = "Percentuale Massima Di Soglia IOB";
 
 /* */
 "Auto ISF" = "Auto ISF";
