@@ -643,8 +643,8 @@ extension OverrideProfilesConfig {
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
             let basalString = preset.basal ? "Basal" : ""
-            let dash = crString != "" ? ", " : ""
-            let dash2 = basalString != "" && isfString + dash + crString != "" ? ", " : ""
+            let dash = (crString != "" && isfString != "") ? ", " : ""
+            let dash2 = (basalString != "" && isfString + dash + crString != "") ? ", " : ""
             let isfAndCRstring = "[" + isfString + dash + crString + dash2 + basalString + "]"
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
