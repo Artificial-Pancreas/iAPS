@@ -33,6 +33,7 @@ extension OverrideProfilesConfig {
         @Published var overrideMaxIOB: Bool = false
         @Published var extended_overrides = false
         @Published var overrideAutoISF: Bool = false
+        @Published var currentSettings = AutoISFsettings()
 
         @Published var autoISFsettings = AutoISFsettings()
 
@@ -47,7 +48,7 @@ extension OverrideProfilesConfig {
             defaultUamMinutes = settingsManager.preferences.maxUAMSMBBasalMinutes
             defaultmaxIOB = settingsManager.preferences.maxIOB
             extended_overrides = settingsManager.settings.extended_overrides
-
+            currentSettings = settings()
             presets = [OverridePresets(context: coredataContext)]
         }
 
@@ -111,8 +112,8 @@ extension OverrideProfilesConfig {
                     saveOverride.overrideMaxIOB = overrideMaxIOB
                 }
 
-                if self.overrideAutoISF {
-                    self.updateAutoISF(saveOverride.id)
+                if overrideAutoISF {
+                    updateAutoISF(saveOverride.id)
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
@@ -292,38 +293,14 @@ extension OverrideProfilesConfig {
                 }
             }
 
-            if let fetched = !edit ? OverrideStorage().fetchLatestAutoISFsettings().first : OverrideStorage()
-                .fetchAutoISFsetting(id: identifier ?? "No, I'm very sorry.")
-            {
-                autoISFsettings = AutoISFsettings(
-                    autoisf: fetched.autoisf,
-                    smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
-                    smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
-                    smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
-                    autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
-                    higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
-                    lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
-                    postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
-                    enableBGacceleration: fetched.enableBGacceleration,
-                    bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
-                    bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
-                    iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
-                    autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
-                    autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
-                    use_B30: fetched.use_B30,
-                    iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
-                    b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
-                    b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
-                    b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
-                    b30factor: (fetched.b30factor ?? 5) as Decimal,
-                    b30_duration: (fetched.b30_duration ?? 30) as Decimal,
-                    ketoProtect: fetched.ketoProtect,
-                    variableKetoProtect: fetched.variableKetoProtect,
-                    ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
-                    ketoProtectAbsolut: fetched.ketoProtectAbsolut,
-                    ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
-                    id: fetched.id ?? ""
-                )
+            let aisf = !edit && (overrideArray?.enabled ?? false) ? OverrideStorage()
+                .fetchAutoISFsetting(id: overrideArray?.id ?? "No, I'm very sorry.") : edit ? OverrideStorage()
+                .fetchAutoISFsetting(id: identifier ?? "No, I'm very sorry.") : nil
+
+            if let fetched = aisf {
+                autoISFsettings = fetch(fetched: fetched)
+            } else {
+                autoISFsettings = currentSettings
             }
 
             if !edit {
@@ -375,37 +352,7 @@ extension OverrideProfilesConfig {
             overrideMaxIOB = false
             overrideAutoISF = false
 
-            let settings = settingsManager.settings
-
-            autoISFsettings = AutoISFsettings(
-                autoisf: settings.autoisf,
-                smbDeliveryRatioBGrange: settings.smbDeliveryRatioBGrange as Decimal,
-                smbDeliveryRatioMin: settings.smbDeliveryRatioMin as Decimal,
-                smbDeliveryRatioMax: settings.smbDeliveryRatioMax as Decimal,
-                autoISFhourlyChange: settings.autoISFhourlyChange as Decimal,
-                higherISFrangeWeight: settings.higherISFrangeWeight as Decimal,
-                lowerISFrangeWeight: settings.lowerISFrangeWeight as Decimal,
-                postMealISFweight: settings.postMealISFweight as Decimal,
-                enableBGacceleration: settings.enableBGacceleration,
-                bgAccelISFweight: settings.bgAccelISFweight as Decimal,
-                bgBrakeISFweight: settings.bgBrakeISFweight as Decimal,
-                iobThresholdPercent: settings.iobThresholdPercent as Decimal,
-                autoisf_max: settings.autoisf_max as Decimal,
-                autoisf_min: settings.autoisf_min as Decimal,
-                use_B30: settings.use_B30,
-                iTime_Start_Bolus: settings.iTime_Start_Bolus as Decimal,
-                b30targetLevel: settings.b30targetLevel as Decimal,
-                b30upperLimit: settings.b30upperLimit as Decimal,
-                b30upperdelta: settings.b30upperdelta as Decimal,
-                b30factor: settings.b30factor as Decimal,
-                b30_duration: settings.b30_duration as Decimal,
-                ketoProtect: settings.ketoProtect,
-                variableKetoProtect: settings.variableKetoProtect,
-                ketoProtectBasalPercent: settings.ketoProtectBasalPercent as Decimal,
-                ketoProtectAbsolut: settings.ketoProtectAbsolut,
-                ketoProtectBasalAbsolut: settings.ketoProtectBasalAbsolut as Decimal,
-                id: ""
-            )
+            autoISFsettings = currentSettings
         }
 
         // Save Auto ISF Override settings
@@ -443,6 +390,72 @@ extension OverrideProfilesConfig {
                 saveAutoISF.id = id_
                 try? self.coredataContext.save()
             }
+        }
+
+        func settings() -> AutoISFsettings {
+            let settings = settingsManager.settings
+
+            return AutoISFsettings(
+                autoisf: settings.autoisf,
+                smbDeliveryRatioBGrange: settings.smbDeliveryRatioBGrange as Decimal,
+                smbDeliveryRatioMin: settings.smbDeliveryRatioMin as Decimal,
+                smbDeliveryRatioMax: settings.smbDeliveryRatioMax as Decimal,
+                autoISFhourlyChange: settings.autoISFhourlyChange as Decimal,
+                higherISFrangeWeight: settings.higherISFrangeWeight as Decimal,
+                lowerISFrangeWeight: settings.lowerISFrangeWeight as Decimal,
+                postMealISFweight: settings.postMealISFweight as Decimal,
+                enableBGacceleration: settings.enableBGacceleration,
+                bgAccelISFweight: settings.bgAccelISFweight as Decimal,
+                bgBrakeISFweight: settings.bgBrakeISFweight as Decimal,
+                iobThresholdPercent: settings.iobThresholdPercent as Decimal,
+                autoisf_max: settings.autoisf_max as Decimal,
+                autoisf_min: settings.autoisf_min as Decimal,
+                use_B30: settings.use_B30,
+                iTime_Start_Bolus: settings.iTime_Start_Bolus as Decimal,
+                b30targetLevel: settings.b30targetLevel as Decimal,
+                b30upperLimit: settings.b30upperLimit as Decimal,
+                b30upperdelta: settings.b30upperdelta as Decimal,
+                b30factor: settings.b30factor as Decimal,
+                b30_duration: settings.b30_duration as Decimal,
+                ketoProtect: settings.ketoProtect,
+                variableKetoProtect: settings.variableKetoProtect,
+                ketoProtectBasalPercent: settings.ketoProtectBasalPercent as Decimal,
+                ketoProtectAbsolut: settings.ketoProtectAbsolut,
+                ketoProtectBasalAbsolut: settings.ketoProtectBasalAbsolut as Decimal,
+                id: ""
+            )
+        }
+
+        func fetch(fetched: Auto_ISF) -> AutoISFsettings {
+            AutoISFsettings(
+                autoisf: fetched.autoisf,
+                smbDeliveryRatioBGrange: (fetched.smbDeliveryRatioBGrange ?? 0) as Decimal,
+                smbDeliveryRatioMin: (fetched.smbDeliveryRatioMin ?? 0) as Decimal,
+                smbDeliveryRatioMax: (fetched.smbDeliveryRatioMax ?? 0) as Decimal,
+                autoISFhourlyChange: (fetched.autoISFhourlyChange ?? 0) as Decimal,
+                higherISFrangeWeight: (fetched.higherISFrangeWeight ?? 0) as Decimal,
+                lowerISFrangeWeight: (fetched.lowerISFrangeWeight ?? 0) as Decimal,
+                postMealISFweight: (fetched.postMealISFweight ?? 0) as Decimal,
+                enableBGacceleration: fetched.enableBGacceleration,
+                bgAccelISFweight: (fetched.bgAccelISFweight ?? 0) as Decimal,
+                bgBrakeISFweight: (fetched.bgBrakeISFweight ?? 0) as Decimal,
+                iobThresholdPercent: (fetched.iobThresholdPercent ?? 0) as Decimal,
+                autoisf_max: (fetched.autoisf_max ?? 0) as Decimal,
+                autoisf_min: (fetched.autoisf_min ?? 0) as Decimal,
+                use_B30: fetched.use_B30,
+                iTime_Start_Bolus: (fetched.iTime_Start_Bolus ?? 1.5) as Decimal,
+                b30targetLevel: (fetched.b30targetLevel ?? 80) as Decimal,
+                b30upperLimit: (fetched.b30upperLimit ?? 140) as Decimal,
+                b30upperdelta: (fetched.b30upperdelta ?? 8) as Decimal,
+                b30factor: (fetched.b30factor ?? 5) as Decimal,
+                b30_duration: (fetched.b30_duration ?? 30) as Decimal,
+                ketoProtect: fetched.ketoProtect,
+                variableKetoProtect: fetched.variableKetoProtect,
+                ketoProtectBasalPercent: (fetched.ketoProtectBasalPercent ?? 0) as Decimal,
+                ketoProtectAbsolut: fetched.ketoProtectAbsolut,
+                ketoProtectBasalAbsolut: (fetched.ketoProtectBasalAbsolut ?? 0.2) as Decimal,
+                id: fetched.id ?? ""
+            )
         }
     }
 }
