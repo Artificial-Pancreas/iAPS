@@ -649,7 +649,9 @@ extension OverrideProfilesConfig {
                     VStack(alignment: .leading) {
                         Text(name)
                         HStack(spacing: 5) {
-                            Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
+                            if percent != 1 {
+                                Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
+                            }
                             if targetString != "" {
                                 Text(targetString)
                                 Text(targetString != "" ? state.units.rawValue : "")
