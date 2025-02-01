@@ -1105,18 +1105,18 @@ Enact a temp Basal or a temp target */
 "Activates an %@ Override Preset" = "Activeer een %@ overschrijvingsvoorinstelling";
 
 /* Suspend/Resume Shortcut */
-"Choose what to do with your pump" = "Choose what to do with your pump";
+"Choose what to do with your pump" = "Kies wat je moet doen met je pomp";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
+"Are you sure you want to %@ your pump?" = "Weet u zeker dat je pomp wilt %@?";
 
 /* Suspend/Resume Shortcut */
-"Pump command" = "Pump command";
+"Pump command" = "Pomp opdracht";
 /* Suspend/Resume Shortcut */
-"enacted in iAPS" = "enacted in iAPS";
+"enacted in iAPS" = "in iAPS ingesteld";
 
 /* Temp Basal Shortcut */
-"Temp basal Amount in U/h" = "Temp basal Amount in U/h";
+"Temp basal Amount in U/h" = "Tijdelijk basaal hoeveelheid in E/uur";
 
 
 
@@ -1517,7 +1517,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Schema wanneer SMB's uit staan";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Verander ISF en CR en Basaal";
 
 /* */
 "Change ISF" = "Wijzig ISF";
@@ -2268,14 +2268,14 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld terwijl Auto ISF is ingeschakeld";
 
 /* */
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Standaardwaarde: 1.2 De bovengrens van ISF aanpassing";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Default value: 0.8 The lower limit of ISF adjustment";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Standaardwaarde: 0.8 De onderste limiet van ISF aanpassing";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
@@ -2284,40 +2284,40 @@ Enact a temp Basal or a temp target */
 "Auto ISF Min" = "Auto ISF Min";
 
 /* */
-"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target";
+"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Heeft een EatingSoon-specifiek glucosedoel nodig, ingesteld door een profieloverschrijving of een tijdelijke doelwaarde";
 
 /* */
-"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Once this Target is cancelled, the B30 high TBR will be cancelled";
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Zodra dit doel wordt geannuleerd, zal de B30 hoge TBR worden geannuleerd";
 
 /* */
-"In order to activate B30 a minimum manual Bolus needs to be given" = "In order to activate B30 a minimum manual Bolus needs to be given";
+"In order to activate B30 a minimum manual Bolus needs to be given" = "Om B30 te activeren, moet er een minimale handmatige bolus worden toegediend";
 
 /* */
-"You can specify how long B30 run and how high it is" = "You can specify how long B30 run and how high it is";
+"You can specify how long B30 run and how high it is" = "Je kunt aangeven hoe lang B30 actief is en hoe hoog het is";
 
 /* */
-"Absolute Safety TBR " = "Absolute Safety TBR ";
+"Absolute Safety TBR " = "Absolute veiligheid TBR ";
 
 /* */
-"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!";
+"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Hoeveelheid in eenheden per uur (U/uur) van de kleine veiligheids-TBR, die wordt toegediend om ketoacidose te voorkomen. Zal worden beperkt tot een minimum van 0 U/uur en een maximum van 2 U/uur!";
 
 /* */
-"Enable Keto protection with pre-defined TBR" = "Enable Keto protection with pre-defined TBR";
+"Enable Keto protection with pre-defined TBR" = "Schakel keto-bescherming in met een vooraf gedefinieerde TBR";
 
 /* */
-"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR";
+"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Moet een absolute TBR tussen 0 en 2 U/uur worden gespecificeerd in plaats van een percentage van de huidige basaalstand";
 
 /* */
-"Safety TBR in %" = "Safety TBR in %";
+"Safety TBR in %" = "Veiligheids TBR in %";
 
 /* */
-"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!";
+"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Hoeveelheid van de kleine veiligheids-TBR in % van de profiel-basaalstand, die wordt toegediend om ketoacidose te voorkomen. Zal worden beperkt tot een minimum van 5% en een maximum van 50%!";
 
 /* */
-"Variable Keto Protection" = "Variable Keto Protection";
+"Variable Keto Protection" = "Variabele keto bescherming";
 
 /* */
-"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR.";
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Indien geactiveerd, treedt de kleine veiligheids-TBR in werking wanneer de IOB zich in het negatieve bereik bevindt, alsof er gedurende één uur geen basale insuline is toegediend. Indien gedeactiveerd en statisch ingeschakeld is, wordt elke Zero Temp vervangen door de kleine TBR.";
 
 /* */
 "Enable Keto Protection" = "Enable Keto Protection";
