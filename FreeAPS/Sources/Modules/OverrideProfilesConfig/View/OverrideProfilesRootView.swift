@@ -624,6 +624,7 @@ extension OverrideProfilesConfig {
             }
         }
 
+        // The Profile presets
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
             let targetRaw = ((preset.target ?? 0) as NSDecimalNumber) as Decimal
             let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
@@ -640,15 +641,17 @@ extension OverrideProfilesConfig {
             let maxIOB = preset.overrideMaxIOB ? (preset.maxIOB ?? 999) as Decimal : 999
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
-            let dash = crString != "" ? "/" : ""
-            let isfAndCRstring = isfString + dash + crString
+            let basalString = preset.basal ? "Basal" : ""
+            let dash = crString != "" ? ", " : ""
+            let dash2 = basalString != "" && isfString + dash + crString != "" ? ", " : ""
+            let isfAndCRstring = "[" + isfString + dash + crString + dash2 + basalString + "]"
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(name)
-                        HStack(spacing: 5) {
+                        HStack(spacing: 7) {
                             if percent != 1 {
                                 Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             }
@@ -659,28 +662,30 @@ extension OverrideProfilesConfig {
                             if durationString != "" { Text(durationString + (perpetual ? "" : "min")) }
                             if smbString != "" { Text(smbString).foregroundColor(.secondary).font(.caption) }
                             if scheduledSMBstring != "" { Text(scheduledSMBstring) }
-                            if preset.advancedSettings {
-                                if !preset.smbIsOff {
-                                    Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
-                                    Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
-                                }
-                                Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
-                                Text(isfAndCRstring)
-                            }
                             if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
                                 Text("Auto ISF \(settings.autoisf)")
                             }
-
                             Spacer()
                         }
                         .padding(.top, 2)
                         .foregroundColor(.secondary)
                         .font(.caption)
 
+                        if preset.advancedSettings {
+                            HStack {
+                                if percent != 1, !(preset.isf && preset.cr && preset.basal) { Text("Adjust " + isfAndCRstring) }
+                                if !preset.smbIsOff {
+                                    Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
+                                    Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
+                                }
+                                Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
+                            }.foregroundStyle(.secondary).font(.caption)
+                        }
+
                         if let settings = autoisfSettings, settings.autoisf {
                             let standard = state.currentSettings
 
-                            HStack(spacing: 5) {
+                            HStack(spacing: 7) {
                                 if settings.enableBGacceleration != standard
                                     .enableBGacceleration { Text("Accel: \(settings.enableBGacceleration)") }
                                 if settings.ketoProtect != standard.ketoProtect { Text("Keto: \(settings.ketoProtect)") }
@@ -701,19 +706,20 @@ extension OverrideProfilesConfig {
                             }.foregroundColor(.secondary)
                                 .font(.caption)
 
-                            HStack(spacing: 5) {
+                            HStack(spacing: 7) {
                                 if ((settings.iobThresholdPercent ?? 100) as Decimal) != standard
                                     .iobThresholdPercent
                                 { Text("SMB IOB: \(settings.iobThresholdPercent ?? 100)%")
                                 }
 
                                 if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
-                                    .smbDeliveryRatioMin
-                                { Text("SMB min: \(settings.smbDeliveryRatioMin ?? 0.5)") }
-
-                                if ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
+                                    .smbDeliveryRatioMin || ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
                                     .smbDeliveryRatioMax
-                                { Text("SMB max: \(settings.smbDeliveryRatioMin ?? 0.5)") }
+                                {
+                                    Text(
+                                        "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5) - \(settings.smbDeliveryRatioMax ?? 0.5)"
+                                    )
+                                }
 
                                 if ((settings.smbDeliveryRatioBGrange ?? 0) as Decimal) != standard
                                     .smbDeliveryRatioBGrange
@@ -721,12 +727,16 @@ extension OverrideProfilesConfig {
                                     let target: Decimal = state
                                         .units == .mmolL ? ((settings.smbDeliveryRatioBGrange ?? 8) as Decimal)
                                         .asMmolL : (settings.smbDeliveryRatioBGrange ?? 8) as Decimal
-                                    Text("Range: " + (glucoseFormatter.string(from: target as NSNumber) ?? ""))
+                                    Text(
+                                        "SMB Range: " + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state
+                                            .units
+                                            .rawValue
+                                    )
                                 }
                             }.foregroundColor(.secondary)
                                 .font(.caption)
 
-                            HStack(spacing: 5) {
+                            HStack(spacing: 8) {
                                 if ((settings.lowerISFrangeWeight ?? 0) as Decimal) != standard
                                     .lowerISFrangeWeight { Text("lowBG: \(settings.lowerISFrangeWeight ?? 0)") }
                                 if ((settings.higherISFrangeWeight ?? 0) as Decimal) != standard

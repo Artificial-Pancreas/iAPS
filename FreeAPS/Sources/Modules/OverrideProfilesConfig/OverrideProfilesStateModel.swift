@@ -49,7 +49,6 @@ extension OverrideProfilesConfig {
             defaultmaxIOB = settingsManager.preferences.maxIOB
             extended_overrides = settingsManager.settings.extended_overrides
             currentSettings = settings()
-
             presets = [OverridePresets(context: coredataContext)]
         }
 
@@ -113,8 +112,8 @@ extension OverrideProfilesConfig {
                     saveOverride.overrideMaxIOB = overrideMaxIOB
                 }
 
-                if self.overrideAutoISF {
-                    self.updateAutoISF(saveOverride.id)
+                if overrideAutoISF {
+                    updateAutoISF(saveOverride.id)
                 }
 
                 let duration = (self.duration as NSDecimalNumber) == 0 ? 2880 : Int(truncating: self.duration as NSDecimalNumber)
@@ -294,10 +293,14 @@ extension OverrideProfilesConfig {
                 }
             }
 
-            if let fetched = !edit ? OverrideStorage().fetchLatestAutoISFsettings().first : OverrideStorage()
-                .fetchAutoISFsetting(id: identifier ?? "No, I'm very sorry.")
-            {
+            let aisf = !edit && (overrideArray?.enabled ?? false) ? OverrideStorage()
+                .fetchAutoISFsetting(id: overrideArray?.id ?? "No, I'm very sorry.") : edit ? OverrideStorage()
+                .fetchAutoISFsetting(id: identifier ?? "No, I'm very sorry.") : nil
+
+            if let fetched = aisf {
                 autoISFsettings = fetch(fetched: fetched)
+            } else {
+                autoISFsettings = currentSettings
             }
 
             if !edit {
@@ -349,7 +352,7 @@ extension OverrideProfilesConfig {
             overrideMaxIOB = false
             overrideAutoISF = false
 
-            autoISFsettings = settings()
+            autoISFsettings = currentSettings
         }
 
         // Save Auto ISF Override settings
