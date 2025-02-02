@@ -304,7 +304,7 @@
 "sec" = "sec";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Verlichting aan tijd";
+"Backlight on time" = "Backlight on time";
 
 /* lcdOnTimeInSec */
 "Lcd on time" = "Lcd on time";

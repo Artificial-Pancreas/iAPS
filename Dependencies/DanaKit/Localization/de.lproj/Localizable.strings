@@ -579,6 +579,3 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Die Entlüftung der Röhre ist fehlgeschlagen. Bitte versuchen Sie es später erneut";
-
-/* Battery age */
-"Battery age" = "Batterie Alter";

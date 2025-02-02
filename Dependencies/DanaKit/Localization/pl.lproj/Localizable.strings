@@ -304,7 +304,7 @@
 "sec" = "sek";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Verlichting aan tijd";
+"Backlight on time" = "Czas włączenia podświetlenia";
 
 /* lcdOnTimeInSec */
 "Lcd on time" = "Czas włączenia wyświetlacza LCD";
