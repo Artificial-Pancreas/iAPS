@@ -18,14 +18,24 @@ extension PumpSettingsEditor {
 
         var body: some View {
             Form {
-                Section(header: Text("Delivery limits")) {
+                Section(
+                    header: Text("Delivery limits"),
+                    footer: Text(
+                        state
+                            .isDanaPump ?
+                            "Dana pump do not allow editting max basal and max bolus, Configure these in the doctor settings of the pump. Saving the settings will fetch the lastest values from the pump" :
+                            ""
+                    )
+                ) {
                     HStack {
                         Text("Max Basal")
                         DecimalTextField("U/hr", value: $state.maxBasal, formatter: formatter)
+                            .disabled(state.isDanaPump)
                     }
                     HStack {
                         Text("Max Bolus")
                         DecimalTextField("U", value: $state.maxBolus, formatter: formatter)
+                            .disabled(state.isDanaPump)
                     }
                 }
 
