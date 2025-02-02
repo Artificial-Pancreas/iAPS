@@ -719,7 +719,7 @@ extension OverrideProfilesConfig {
             }
             if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
                 mainSection.append((
-                    text: "Auto ISF \(settings.autoisf ? "ON" : "OFF")",
+                    text: "Auto ISF \(settings.autoisf ? "on" : "off")",
                     color: .secondary
                 ))
             }
@@ -752,7 +752,7 @@ extension OverrideProfilesConfig {
 
             if preset.smbIsOff, scheduledSMBstring == "" {
                 smbSection.append((
-                    text: "SMBs are OFF",
+                    text: "SMBs are off",
                     color: .secondary
                 ))
             }
@@ -891,14 +891,18 @@ extension OverrideProfilesConfig {
             setting: Decimal,
             label: String
         ) {
-            if let dec = decimal, dec as Decimal != setting {
-                section.append((text: label + "\(higherPrecisionFormatter.string(from: dec) ?? "?")", color: .secondary))
+            if let dec = decimal {
+                let difference = abs((dec as Decimal) - setting)
+                let threshold = setting * 0.0001 // 0.01% of the value of `setting`
+                if difference > threshold {
+                    section.append((text: label + "\(higherPrecisionFormatter.string(from: dec) ?? "?")", color: .secondary))
+                }
             }
         }
 
         private func bool(_ section: inout [(text: String, color: Color)], bool: Bool, setting: Bool, label: String) {
             if bool != setting {
-                section.append((text: label + (bool ? "ON" : "OFF"), color: .secondary))
+                section.append((text: label + (bool ? "on" : "off"), color: .secondary))
             }
         }
 
