@@ -687,7 +687,7 @@ extension OverrideProfilesConfig {
                         if let settings = autoisfSettings, settings.autoisf {
                             let standard = state.currentSettings
 
-                            HStack(spacing: 7) {
+                            HStack(spacing: 5) {
                                 bool(
                                     bool: settings.enableBGacceleration,
                                     setting: standard.enableBGacceleration,
@@ -703,7 +703,7 @@ extension OverrideProfilesConfig {
                                     .font(.caption)
                             }.foregroundStyle(.secondary).font(.caption)
 
-                            HStack(spacing: 7) {
+                            HStack(spacing: 5) {
                                 percentage(
                                     decimal: settings.iobThresholdPercent,
                                     setting: standard
@@ -726,7 +726,7 @@ extension OverrideProfilesConfig {
                                 )
                             }.foregroundStyle(.secondary).font(.caption)
 
-                            HStack(spacing: 8) {
+                            HStack(spacing: 6) {
                                 decimal(
                                     decimal: settings.lowerISFrangeWeight,
                                     setting: standard.lowerISFrangeWeight,
@@ -764,7 +764,7 @@ extension OverrideProfilesConfig {
                         state.selectProfile(id_: preset.id ?? "")
                         state.hideModal()
                     }
-                }
+                }.dynamicTypeSize(...DynamicTypeSize.large)
             }
         }
 
