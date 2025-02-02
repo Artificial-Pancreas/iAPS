@@ -58,7 +58,7 @@ extension PumpSettingsEditor {
                         }
                         Button { state.save() }
                         label: {
-                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
+                            Text(state.syncInProgress ? "Saving..." : !state.isDanaPump ? "Save on Pump" : "Save")
                         }
                         .disabled(state.syncInProgress)
                     }
