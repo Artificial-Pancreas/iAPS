@@ -110,12 +110,6 @@ struct PumpView: View {
                             if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                                 ClockOffset(mdtPump: true)
                             }
-                            HStack(spacing: 0) {
-                                let units = 50 * (concentration.last?.concentration ?? 1)
-                                Text("\(units)+ ").font(.statusFont)
-                                Text(NSLocalizedString("U", comment: "Insulin unit")).font(.statusFont)
-                                    .foregroundStyle(.secondary)
-                            }
                         }.offset(x: 0, y: expiresAtDate == nil ? -4 : 0)
                 } else {
                     HStack(spacing: 0) {
@@ -131,11 +125,6 @@ struct PumpView: View {
                         .overlay {
                             if let timeZone = timeZone, timeZone.secondsFromGMT() != TimeZone.current.secondsFromGMT() {
                                 ClockOffset(mdtPump: false)
-                            }
-                            if (concentration.last?.concentration ?? 1) != 1,
-                               !state.settingsManager.settings.hideInsulinBadge
-                            {
-                                NonStandardInsulin(concentration: concentration.last?.concentration ?? 1, pod: true)
                             }
                         }
                 }
@@ -154,7 +143,7 @@ struct PumpView: View {
                     .rotationEffect(.degrees(-90))
                     .frame(maxWidth: 32, maxHeight: 12)
                     .foregroundColor(batteryColor)
-                    .offset(x: -5, y: -0.5)
+                    .offset(y: -0.5)
             }
         }
         .offset(x: 0, y: 5)
@@ -271,18 +260,11 @@ struct PumpView: View {
             UIImage(imageLiteralResourceName: "NonOmniPump")
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
-                .frame(maxWidth: 22, maxHeight: 38)
+                .frame(maxWidth: 17, maxHeight: 36)
                 .symbolRenderingMode(.palette)
                 .shadow(radius: 1, x: 2, y: 2)
                 .foregroundStyle(.white)
                 .padding(.bottom, 5)
-                .overlay {
-                    let units = 50 * (concentration.last?.concentration ?? 1)
-                    portion <= 0.3 ?
-                        Text((reservoirFormatter.string(from: units as NSNumber) ?? "") + "+").foregroundStyle(.white)
-                        .font(.system(size: 6))
-                        : nil
-                }
         }
     }
 }

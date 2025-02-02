@@ -381,7 +381,7 @@ extension OverrideProfilesConfig {
                             }
 
                             Toggle(isOn: $state.autoISFsettings.use_B30) {
-                                Text("Activate AIMI B30")
+                                Text("Activate B30")
                             }
 
                             if state.autoISFsettings.use_B30 {

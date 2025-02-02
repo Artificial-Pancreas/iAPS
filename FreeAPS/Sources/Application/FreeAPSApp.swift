@@ -65,8 +65,8 @@ import Swinject
                 .environmentObject(Icons())
                 .onOpenURL(perform: handleURL)
         }
-        .onChange(of: scenePhase) { newScenePhase in
-            debug(.default, "APPLICATION PHASE: \(newScenePhase)")
+        .onChange(of: scenePhase) {
+            debug(.default, "APPLICATION PHASE: \(scenePhase)")
         }
     }
 
