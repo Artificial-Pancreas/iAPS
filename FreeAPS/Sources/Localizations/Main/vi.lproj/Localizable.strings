@@ -976,7 +976,7 @@ Enact a temp Basal or a temp target */
 "Glucose Settings" = "Cài đặt đường huyết";
 
 /* */
-"Notifications" = "Thông báo";
+"Notifications" = "Notifications";
 
 /* */
 "Export logs" = "Kết xuất nhật ký";
@@ -2009,7 +2009,7 @@ Enact a temp Basal or a temp target */
 "all" = "Tất cả";
 
 /* Active Insulin View */
-"Active Insulin" = "Lượng Insulin còn hoạt động";
+"Active Insulin" = "Insulin Hoạt Động";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Thời gian có Insulin âm tính";
@@ -2033,7 +2033,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
 /* Active Carbohydrates View */
-"Active Carbohydrates" = "Lượng Carbohydrates còn hoạt động";
+"Active Carbohydrates" = "Carbohydrates Hoạt Động";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
