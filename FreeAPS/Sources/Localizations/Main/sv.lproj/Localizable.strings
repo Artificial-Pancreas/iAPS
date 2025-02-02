@@ -1104,6 +1104,22 @@ Enact a temp Basal or a temp target */
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Aktiverar en %@ - profil";
 
+/* Suspend/Resume Shortcut */
+"Choose what to do with your pump" = "Vad vill du göra med din pump?";
+
+/* Suspend/Resume Shortcut */
+"Are you sure you want to %@ your pump?" = "Är du säker på att du vill %@ din pump?";
+
+/* Suspend/Resume Shortcut */
+"Pump command" = "Pumpkommando";
+/* Suspend/Resume Shortcut */
+"enacted in iAPS" = "skickat till iAPS";
+
+/* Temp Basal Shortcut */
+"Temp basal Amount in U/h" = "Temporär basaldos i enheter per timme";
+
+
+
 /* */
 "Schedule " = "Schema ";
 
@@ -2340,7 +2356,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Målvärde för blodsocker för att aktivera B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "En profil eller ett tillfälligt målvärde behöver vara aktiv för att aktivera en B30-basaldos.  Blodsockermålvärdet måste vara under eller lika med denna inställning för att B30 ska kunna starta. Standardvärde är 5 mmol/l. Om du avbryter din profil eller tillfälliga målvärde kommer B30-basalen att avbrytas.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "En profil eller ett tillfälligt målvärde behöver vara aktiv för att aktivera en B30-basaldos. Blodsockermålvärdet måste vara under denna inställning för att B30 ska startas. Standardvärde är 5 mmol/l. Om du avbryter din profil eller tillfälliga målvärde kommer också B30-basalen att avbrytas.";
 
 /* */
 "Minimum Start Bolus size" = "Minsta manuella bolus för att starta";
