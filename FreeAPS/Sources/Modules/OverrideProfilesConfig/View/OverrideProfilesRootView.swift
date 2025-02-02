@@ -923,13 +923,17 @@ extension OverrideProfilesConfig {
             setting: Decimal,
             label: String
         ) {
-            if let dec = decimal, dec as Decimal != setting {
-                let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
-                section
-                    .append((
-                        text: label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue,
-                        color: .secondary
-                    ))
+            if let dec = decimal {
+                let difference = abs((dec as Decimal) - setting)
+                let threshold = setting * 0.0001 // 0.01% of the value of `setting`
+                if difference > threshold {
+                    let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
+                    section
+                        .append((
+                            text: label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue,
+                            color: .secondary
+                        ))
+                }
             }
         }
 
