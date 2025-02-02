@@ -635,7 +635,7 @@ extension OverrideProfilesConfig {
                         Text(name)
                         VStack(alignment: .leading) {
                             ForEach(Array(sections.enumerated()), id: \.offset) { _, section in
-                                HStack(spacing: 5) {
+                                HStack(spacing: 8) {
                                     ForEach(Array(section.enumerated()), id: \.offset) { _, item in
                                         Text(item.text).foregroundColor(item.color)
                                     }
@@ -681,7 +681,7 @@ extension OverrideProfilesConfig {
             let perpetual = preset.indefinite
             let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
-            let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
+
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
             let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
             let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
@@ -717,22 +717,16 @@ extension OverrideProfilesConfig {
                     color: .secondary
                 ))
             }
-            if smbString != "" {
-                mainSection.append((
-                    text: smbString,
-                    color: .secondary
-                ))
-            }
-            if scheduledSMBstring != "" {
-                mainSection.append((
-                    text: scheduledSMBstring,
-                    color: .secondary
-                ))
-            }
             if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
                 mainSection.append((
                     text: "Auto ISF \(settings.autoisf ? "ON" : "OFF")",
-                    color: settings.autoisf ? .green : .red
+                    color: .secondary
+                ))
+            }
+            if maxIOB != 999 {
+                mainSection.append((
+                    text: "Max IOB: " + maxIOB.formatted(),
+                    color: .secondary
                 ))
             }
 
@@ -749,28 +743,53 @@ extension OverrideProfilesConfig {
                         color: .secondary
                     ))
                 }
+            }
+            if !advancedSection.isEmpty { sections.append(advancedSection) }
+
+            // --- SMB section
+
+            var smbSection: [(text: String, color: Color)] = []
+
+            if preset.smbIsOff, scheduledSMBstring == "" {
+                smbSection.append((
+                    text: "SMBs are OFF",
+                    color: .secondary
+                ))
+            }
+            if scheduledSMBstring != "" {
+                smbSection.append((
+                    text: scheduledSMBstring,
+                    color: .secondary
+                ))
+            }
+
+            if preset.advancedSettings {
                 if !preset.smbIsOff {
+                    if let settings = autoisfSettings, settings.autoisf {
+                        let standard = state.currentSettings
+                        percentage(
+                            &smbSection,
+                            decimal: settings.iobThresholdPercent,
+                            setting: standard.iobThresholdPercent,
+                            label: "SMB IOB: "
+                        )
+                    }
                     if maxMinutesSMB != 0 {
-                        advancedSection.append((
+                        smbSection.append((
                             text: maxMinutesSMB.formatted() + " SMB",
                             color: .secondary
                         ))
                     }
                     if maxMinutesUAM != 0 {
-                        advancedSection.append((
+                        smbSection.append((
                             text: maxMinutesUAM.formatted() + " UAM",
                             color: .secondary
                         ))
                     }
                 }
-                if maxIOB != 999 {
-                    advancedSection.append((
-                        text: "Max IOB: " + maxIOB.formatted(),
-                        color: .secondary
-                    ))
-                }
             }
-            if !advancedSection.isEmpty { sections.append(advancedSection) }
+
+            if !smbSection.isEmpty { sections.append(smbSection) }
 
             // --- all of the Auto ISF Settings (Bool and Decimal optionals)
 
@@ -783,31 +802,23 @@ extension OverrideProfilesConfig {
                     &autoISFSection1,
                     bool: settings.enableBGacceleration,
                     setting: standard.enableBGacceleration,
-                    label: "Accel: "
+                    label: "accel: "
                 )
-                bool(&autoISFSection1, bool: settings.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
+                bool(&autoISFSection1, bool: settings.ketoProtect, setting: standard.ketoProtect, label: "keto: ")
                 bool(&autoISFSection1, bool: settings.use_B30, setting: standard.use_B30, label: "B30: ")
 
-                decimal(&autoISFSection1, decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                decimal(&autoISFSection1, decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
+                decimal(&autoISFSection1, decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "min: ")
+                decimal(&autoISFSection1, decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "max: ")
 
                 if !autoISFSection1.isEmpty { sections.append(autoISFSection1) }
 
-                var autoISFSection2: [(text: String, color: Color)] = []
-
-                percentage(
-                    &autoISFSection2,
-                    decimal: settings.iobThresholdPercent,
-                    setting: standard
-                        .iobThresholdPercent,
-                    label: "SMB IOB: "
-                )
+                var smbRabgeSection: [(text: String, color: Color)] = []
 
                 if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
                     .smbDeliveryRatioMin || ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
                     .smbDeliveryRatioMax
                 {
-                    autoISFSection2
+                    smbRabgeSection
                         .append(
                             (
                                 text: "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5)-\(settings.smbDeliveryRatioMax ?? 0.5)",
@@ -816,13 +827,13 @@ extension OverrideProfilesConfig {
                         )
                 }
                 glucose(
-                    &autoISFSection2,
+                    &smbRabgeSection,
                     decimal: settings.smbDeliveryRatioBGrange,
                     setting: standard.smbDeliveryRatioBGrange,
-                    label: "SMB Range: "
+                    label: "Range: "
                 )
 
-                if !autoISFSection2.isEmpty { sections.append(autoISFSection2) }
+                if !smbRabgeSection.isEmpty { sections.append(smbRabgeSection) }
 
                 var autoISFSection3: [(text: String, color: Color)] = []
 
@@ -857,7 +868,7 @@ extension OverrideProfilesConfig {
                     &autoISFSection3,
                     decimal: settings.autoISFhourlyChange,
                     setting: standard.autoISFhourlyChange,
-                    label: "Dura: "
+                    label: "dura: "
                 )
                 decimal(
                     &autoISFSection3,
@@ -881,13 +892,13 @@ extension OverrideProfilesConfig {
             label: String
         ) {
             if let dec = decimal, dec as Decimal != setting {
-                section.append((text: label + "\(dec)", color: .secondary))
+                section.append((text: label + "\(higherPrecisionFormatter.string(from: dec) ?? "?")", color: .secondary))
             }
         }
 
         private func bool(_ section: inout [(text: String, color: Color)], bool: Bool, setting: Bool, label: String) {
             if bool != setting {
-                section.append((text: label + "\(bool)", color: bool ? .green : .red))
+                section.append((text: label + (bool ? "ON" : "OFF"), color: .secondary))
             }
         }
 
@@ -898,7 +909,7 @@ extension OverrideProfilesConfig {
             label: String
         ) {
             if let dec = decimal, dec as Decimal != setting {
-                section.append((text: label + "\(dec)%", color: .secondary))
+                section.append((text: label + "\(formatter.string(from: dec) ?? "?")%", color: .secondary))
             }
         }
 
