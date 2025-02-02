@@ -626,145 +626,32 @@ extension OverrideProfilesConfig {
 
         // The Profile presets
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
-            // Values as String
-            let targetRaw = ((preset.target ?? 0) as NSDecimalNumber) as Decimal
-            let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
-            let duration = (preset.duration ?? 0) as Decimal
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
-            let percent = preset.percentage / 100
-            let perpetual = preset.indefinite
-            let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
-            let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
-            let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
-            let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
-            let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
-            let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
-            let maxIOB = preset.overrideMaxIOB ? (preset.maxIOB ?? 999) as Decimal : 999
-            let isfString = preset.isf ? "ISF" : ""
-            let crString = preset.cr ? "CR" : ""
-            let basalString = preset.basal ? "Basal" : ""
-            let dash = (crString != "" && isfString != "") ? ", " : ""
-            let dash2 = (basalString != "" && isfString + dash + crString != "") ? ", " : ""
-            let isfAndCRstring = "[" + isfString + dash + crString + dash2 + basalString + "]"
-            let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
+                let sections = createProfileSummary(for: preset)
                 HStack {
                     VStack(alignment: .leading) {
                         Text(name)
-                        HStack(spacing: 7) {
-                            if percent != 1 {
-                                Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
+                        VStack(alignment: .leading) {
+                            ForEach(Array(sections.enumerated()), id: \.offset) { _, section in
+                                HStack(spacing: 5) {
+                                    ForEach(Array(section.enumerated()), id: \.offset) { _, item in
+                                        Text(item.text).foregroundColor(item.color)
+                                    }
+                                }
                             }
-                            if targetString != "" {
-                                Text(targetString)
-                                Text(targetString != "" ? state.units.rawValue : "")
-                            }
-                            if durationString != "" { Text(durationString + (perpetual ? "" : "min")) }
-                            if smbString != "" { Text(smbString).foregroundColor(.secondary).font(.caption) }
-                            if scheduledSMBstring != "" { Text(scheduledSMBstring) }
-                            if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
-                                Text("Auto ISF \(settings.autoisf)")
-                            }
-                            Spacer()
                         }
                         .padding(.top, 2)
-                        .foregroundColor(.secondary)
                         .font(.caption)
-
-                        if preset.advancedSettings {
-                            HStack {
-                                if percent != 1, !(preset.isf && preset.cr && preset.basal) { Text("Adjust " + isfAndCRstring) }
-                                if !preset.smbIsOff {
-                                    Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
-                                    Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
-                                }
-                                Text(maxIOB == 999 ? "" : " Max IOB: " + maxIOB.formatted())
-                            }.foregroundStyle(.secondary).font(.caption)
-                        }
-
-                        // All of the Auto ISF Settings (Bool and Decimal optionals)
-                        if let settings = autoisfSettings, settings.autoisf {
-                            let standard = state.currentSettings
-
-                            HStack(spacing: 5) {
-                                bool(
-                                    bool: settings.enableBGacceleration,
-                                    setting: standard.enableBGacceleration,
-                                    label: "Accel: "
-                                )
-                                bool(bool: settings.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
-                                bool(bool: settings.use_B30, setting: standard.use_B30, label: "B30: ")
-
-                                HStack(spacing: 5) {
-                                    decimal(decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                                    decimal(decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                                }.foregroundColor(.secondary)
-                                    .font(.caption)
-                            }.foregroundStyle(.secondary).font(.caption)
-
-                            HStack(spacing: 5) {
-                                percentage(
-                                    decimal: settings.iobThresholdPercent,
-                                    setting: standard
-                                        .iobThresholdPercent,
-                                    label: "SMB IOB: "
-                                )
-
-                                if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
-                                    .smbDeliveryRatioMin || ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
-                                    .smbDeliveryRatioMax
-                                {
-                                    Text(
-                                        "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5)-\(settings.smbDeliveryRatioMax ?? 0.5)"
-                                    )
-                                }
-                                glucose(
-                                    decimal: settings.smbDeliveryRatioBGrange,
-                                    setting: standard.smbDeliveryRatioBGrange,
-                                    label: "SMB Range: "
-                                )
-                            }.foregroundStyle(.secondary).font(.caption)
-
-                            HStack(spacing: 6) {
-                                decimal(
-                                    decimal: settings.lowerISFrangeWeight,
-                                    setting: standard.lowerISFrangeWeight,
-                                    label: "lowBG: "
-                                )
-                                decimal(
-                                    decimal: settings.higherISFrangeWeight,
-                                    setting: standard.lowerISFrangeWeight,
-                                    label: "highBG: "
-                                )
-
-                                if settings.enableBGacceleration {
-                                    decimal(
-                                        decimal: settings.bgAccelISFweight,
-                                        setting: standard.bgAccelISFweight,
-                                        label: "accel: "
-                                    )
-                                    decimal(
-                                        decimal: settings.bgBrakeISFweight,
-                                        setting: standard.bgBrakeISFweight,
-                                        label: "brake: "
-                                    )
-                                }
-                                decimal(
-                                    decimal: settings.autoISFhourlyChange,
-                                    setting: standard.autoISFhourlyChange,
-                                    label: "Dura: "
-                                )
-                                decimal(decimal: settings.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
-                            }.foregroundStyle(.secondary).font(.caption)
-                        }
+                        .dynamicTypeSize(...DynamicTypeSize.large)
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
                         state.selectProfile(id_: preset.id ?? "")
                         state.hideModal()
                     }
-                }.dynamicTypeSize(...DynamicTypeSize.large)
+                }
             }
         }
 
@@ -785,33 +672,250 @@ extension OverrideProfilesConfig {
                 uamMinutesUnchanged && autoISFUnchanged
         }
 
-        private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
-                return Text(label + "\(dec)")
+        private func createProfileSummary(for preset: OverridePresets) -> [[(text: String, color: Color)]] {
+            // Values as String
+            let targetRaw = ((preset.target ?? 0) as NSDecimalNumber) as Decimal
+            let target = state.units == .mmolL ? targetRaw.asMmolL : targetRaw
+            let duration = (preset.duration ?? 0) as Decimal
+            let percent = preset.percentage / 100
+            let perpetual = preset.indefinite
+            let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
+            let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
+            let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
+            let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
+            let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
+            let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
+            let maxIOB = preset.overrideMaxIOB ? (preset.maxIOB ?? 999) as Decimal : 999
+            let isfString = preset.isf ? "ISF" : ""
+            let crString = preset.cr ? "CR" : ""
+            let basalString = preset.basal ? "Basal" : ""
+            let dash = (crString != "" && isfString != "") ? ", " : ""
+            let dash2 = (basalString != "" && isfString + dash + crString != "") ? ", " : ""
+            let isfAndCRstring = "[" + isfString + dash + crString + dash2 + basalString + "]"
+            let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
+
+            var sections: [[(text: String, color: Color)]] = []
+
+            // --- main section
+
+            var mainSection: [(text: String, color: Color)] = []
+            if percent != 1 {
+                mainSection.append((
+                    text: percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))),
+                    color: .secondary
+                ))
             }
-            return nil
+            if targetString != "" {
+                mainSection.append((
+                    text: "\(targetString) \(state.units.rawValue)",
+                    color: .secondary
+                ))
+            }
+            if durationString != "" {
+                mainSection.append((
+                    text: durationString + (perpetual ? "" : " min"),
+                    color: .secondary
+                ))
+            }
+            if smbString != "" {
+                mainSection.append((
+                    text: smbString,
+                    color: .secondary
+                ))
+            }
+            if scheduledSMBstring != "" {
+                mainSection.append((
+                    text: scheduledSMBstring,
+                    color: .secondary
+                ))
+            }
+            if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
+                mainSection.append((
+                    text: "Auto ISF \(settings.autoisf ? "ON" : "OFF")",
+                    color: settings.autoisf ? .green : .red
+                ))
+            }
+
+            if !mainSection.isEmpty { sections.append(mainSection) }
+
+            // --- advanced section
+
+            var advancedSection: [(text: String, color: Color)] = []
+
+            if preset.advancedSettings {
+                if percent != 1, !(preset.isf && preset.cr && preset.basal) {
+                    advancedSection.append((
+                        text: "Adjust " + isfAndCRstring,
+                        color: .secondary
+                    ))
+                }
+                if !preset.smbIsOff {
+                    if maxMinutesSMB != 0 {
+                        advancedSection.append((
+                            text: maxMinutesSMB.formatted() + " SMB",
+                            color: .secondary
+                        ))
+                    }
+                    if maxMinutesUAM != 0 {
+                        advancedSection.append((
+                            text: maxMinutesUAM.formatted() + " UAM",
+                            color: .secondary
+                        ))
+                    }
+                }
+                if maxIOB != 999 {
+                    advancedSection.append((
+                        text: "Max IOB: " + maxIOB.formatted(),
+                        color: .secondary
+                    ))
+                }
+            }
+            if !advancedSection.isEmpty { sections.append(advancedSection) }
+
+            // --- all of the Auto ISF Settings (Bool and Decimal optionals)
+
+            if let settings = autoisfSettings, settings.autoisf {
+                let standard = state.currentSettings
+
+                var autoISFSection1: [(text: String, color: Color)] = []
+
+                bool(
+                    &autoISFSection1,
+                    bool: settings.enableBGacceleration,
+                    setting: standard.enableBGacceleration,
+                    label: "Accel: "
+                )
+                bool(&autoISFSection1, bool: settings.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
+                bool(&autoISFSection1, bool: settings.use_B30, setting: standard.use_B30, label: "B30: ")
+
+                decimal(&autoISFSection1, decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                decimal(&autoISFSection1, decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
+
+                if !autoISFSection1.isEmpty { sections.append(autoISFSection1) }
+
+                var autoISFSection2: [(text: String, color: Color)] = []
+
+                percentage(
+                    &autoISFSection2,
+                    decimal: settings.iobThresholdPercent,
+                    setting: standard
+                        .iobThresholdPercent,
+                    label: "SMB IOB: "
+                )
+
+                if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
+                    .smbDeliveryRatioMin || ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
+                    .smbDeliveryRatioMax
+                {
+                    autoISFSection2
+                        .append(
+                            (
+                                text: "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5)-\(settings.smbDeliveryRatioMax ?? 0.5)",
+                                color: .secondary
+                            )
+                        )
+                }
+                glucose(
+                    &autoISFSection2,
+                    decimal: settings.smbDeliveryRatioBGrange,
+                    setting: standard.smbDeliveryRatioBGrange,
+                    label: "SMB Range: "
+                )
+
+                if !autoISFSection2.isEmpty { sections.append(autoISFSection2) }
+
+                var autoISFSection3: [(text: String, color: Color)] = []
+
+                decimal(
+                    &autoISFSection3,
+                    decimal: settings.lowerISFrangeWeight,
+                    setting: standard.lowerISFrangeWeight,
+                    label: "lowBG: "
+                )
+                decimal(
+                    &autoISFSection3,
+                    decimal: settings.higherISFrangeWeight,
+                    setting: standard.higherISFrangeWeight,
+                    label: "highBG: "
+                )
+
+                if settings.enableBGacceleration {
+                    decimal(
+                        &autoISFSection3,
+                        decimal: settings.bgAccelISFweight,
+                        setting: standard.bgAccelISFweight,
+                        label: "accel: "
+                    )
+                    decimal(
+                        &autoISFSection3,
+                        decimal: settings.bgBrakeISFweight,
+                        setting: standard.bgBrakeISFweight,
+                        label: "brake: "
+                    )
+                }
+                decimal(
+                    &autoISFSection3,
+                    decimal: settings.autoISFhourlyChange,
+                    setting: standard.autoISFhourlyChange,
+                    label: "Dura: "
+                )
+                decimal(
+                    &autoISFSection3,
+                    decimal: settings.postMealISFweight,
+                    setting: standard.postMealISFweight,
+                    label: "PP: "
+                )
+
+                if !autoISFSection3.isEmpty { sections.append(autoISFSection3) }
+            }
+
+            // ------------------
+
+            return sections
         }
 
-        private func bool(bool: Bool, setting: Bool, label: String) -> Text? {
+        private func decimal(
+            _ section: inout [(text: String, color: Color)],
+            decimal: NSDecimalNumber?,
+            setting: Decimal,
+            label: String
+        ) {
+            if let dec = decimal, dec as Decimal != setting {
+                section.append((text: label + "\(dec)", color: .secondary))
+            }
+        }
+
+        private func bool(_ section: inout [(text: String, color: Color)], bool: Bool, setting: Bool, label: String) {
             if bool != setting {
-                return Text(label + "\(bool)")
+                section.append((text: label + "\(bool)", color: bool ? .green : .red))
             }
-            return nil
         }
 
-        private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+        private func percentage(
+            _ section: inout [(text: String, color: Color)],
+            decimal: NSDecimalNumber?,
+            setting: Decimal,
+            label: String
+        ) {
             if let dec = decimal, dec as Decimal != setting {
-                return Text(label + "\(dec)%")
+                section.append((text: label + "\(dec)%", color: .secondary))
             }
-            return nil
         }
 
-        private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+        private func glucose(
+            _ section: inout [(text: String, color: Color)],
+            decimal: NSDecimalNumber?,
+            setting: Decimal,
+            label: String
+        ) {
             if let dec = decimal, dec as Decimal != setting {
                 let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
-                return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+                section
+                    .append((
+                        text: label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue,
+                        color: .secondary
+                    ))
             }
-            return nil
         }
 
         private func removeProfile(at offsets: IndexSet) {
