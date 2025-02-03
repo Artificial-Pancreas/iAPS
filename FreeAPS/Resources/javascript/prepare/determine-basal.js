@@ -1,6 +1,6 @@
 //для enact/smb-suggested.json параметры: monitor/iob.json monitor/temp_basal.json monitor/glucose.json settings/profile.json settings/autosens.json --meal monitor/meal.json --microbolus --reservoir monitor/reservoir.json
 
-function generate(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, pumpHistory) {
+function generate_determineBasal(iob, currenttemp, glucose, profile, autosens = null, meal = null, microbolusAllowed = true, reservoir = null, clock, pumpHistory) {
     // Needs to be updated here due to time format).
     clock = new Date();
     
@@ -291,3 +291,6 @@ function disableSMBs(dynamicVariables) {
     }
     return false
 }
+
+this.generate_determineBasal = generate_determineBasal
+
