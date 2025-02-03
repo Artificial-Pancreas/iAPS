@@ -1105,6 +1105,22 @@ Enact a temp Basal or a temp target */
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Activates an %@ Override Preset";
 
+/* Suspend/Resume Shortcut */
+"Choose what to do with your pump" = "Choose what to do with your pump";
+
+/* Suspend/Resume Shortcut */
+"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
+
+/* Suspend/Resume Shortcut */
+"Pump command" = "Pump command";
+/* Suspend/Resume Shortcut */
+"enacted in iAPS" = "enacted in iAPS";
+
+/* Temp Basal Shortcut */
+"Temp basal Amount in U/h" = "Temp basal Amount in U/h";
+
+
+
 /* */
 "Schedule " = "Schedule ";
 
@@ -2341,7 +2357,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
 
 /* */
 "Minimum Start Bolus size" = "Minimum Start Bolus size";

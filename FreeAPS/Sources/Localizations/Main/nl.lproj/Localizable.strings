@@ -1104,6 +1104,22 @@ Enact a temp Basal or a temp target */
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Activeer een %@ overschrijvingsvoorinstelling";
 
+/* Suspend/Resume Shortcut */
+"Choose what to do with your pump" = "Kies wat je moet doen met je pomp";
+
+/* Suspend/Resume Shortcut */
+"Are you sure you want to %@ your pump?" = "Weet u zeker dat je pomp wilt %@?";
+
+/* Suspend/Resume Shortcut */
+"Pump command" = "Pomp opdracht";
+/* Suspend/Resume Shortcut */
+"enacted in iAPS" = "in iAPS ingesteld";
+
+/* Temp Basal Shortcut */
+"Temp basal Amount in U/h" = "Tijdelijk basaal hoeveelheid in E/uur";
+
+
+
 /* */
 "Schedule " = "Schema ";
 
@@ -1501,7 +1517,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Schema wanneer SMB's uit staan";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Verander ISF en CR en Basaal";
 
 /* */
 "Change ISF" = "Wijzig ISF";
@@ -2252,14 +2268,14 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld terwijl Auto ISF is ingeschakeld";
 
 /* */
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Standaardwaarde: 1.2 De bovengrens van ISF aanpassing";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Default value: 0.8 The lower limit of ISF adjustment";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Standaardwaarde: 0.8 De onderste limiet van ISF aanpassing";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
@@ -2268,190 +2284,199 @@ Enact a temp Basal or a temp target */
 "Auto ISF Min" = "Auto ISF Min";
 
 /* */
-"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target";
+"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Heeft een EatingSoon-specifiek glucosedoel nodig, ingesteld door een profieloverschrijving of een tijdelijke doelwaarde";
 
 /* */
-"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Once this Target is cancelled, the B30 high TBR will be cancelled";
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Zodra dit doel wordt geannuleerd, zal de B30 hoge TBR worden geannuleerd";
 
 /* */
-"In order to activate B30 a minimum manual Bolus needs to be given" = "In order to activate B30 a minimum manual Bolus needs to be given";
+"In order to activate B30 a minimum manual Bolus needs to be given" = "Om B30 te activeren, moet er een minimale handmatige bolus worden toegediend";
 
 /* */
-"You can specify how long B30 run and how high it is" = "You can specify how long B30 run and how high it is";
+"You can specify how long B30 run and how high it is" = "Je kunt aangeven hoe lang B30 actief is en hoe hoog het is";
 
 /* */
-"Absolute Safety TBR " = "Absolute Safety TBR ";
+"Absolute Safety TBR " = "Absolute veiligheid TBR ";
 
 /* */
-"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!";
+"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Hoeveelheid in eenheden per uur (U/uur) van de kleine veiligheids-TBR, die wordt toegediend om ketoacidose te voorkomen. Zal worden beperkt tot een minimum van 0 U/uur en een maximum van 2 U/uur!";
 
 /* */
-"Enable Keto protection with pre-defined TBR" = "Enable Keto protection with pre-defined TBR";
+"Enable Keto protection with pre-defined TBR" = "Schakel keto-bescherming in met een vooraf gedefinieerde TBR";
 
 /* */
-"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR";
+"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Moet een absolute TBR tussen 0 en 2 U/uur worden gespecificeerd in plaats van een percentage van de huidige basaalstand";
 
 /* */
-"Safety TBR in %" = "Safety TBR in %";
+"Safety TBR in %" = "Veiligheids TBR in %";
 
 /* */
-"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!";
+"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Hoeveelheid van de kleine veiligheids-TBR in % van de profiel-basaalstand, die wordt toegediend om ketoacidose te voorkomen. Zal worden beperkt tot een minimum van 5% en een maximum van 50%!";
 
 /* */
-"Variable Keto Protection" = "Variable Keto Protection";
+"Variable Keto Protection" = "Variabele keto bescherming";
 
 /* */
-"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR.";
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Indien geactiveerd, treedt de kleine veiligheids-TBR in werking wanneer de IOB zich in het negatieve bereik bevindt, alsof er gedurende één uur geen basale insuline is toegediend. Indien gedeactiveerd en statisch ingeschakeld is, wordt elke Zero Temp vervangen door de kleine TBR.";
 
 /* */
-"Enable Keto Protection" = "Enable Keto Protection";
+"Enable Keto Protection" = "Schakel keto-bescherming in";
 
 /* */
-"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate.";
+"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Bescherming tegen ketoacidose\n\n Deze functie past een kleine, instelbare tijdelijke basaalstand (TBR) toe, altijd of alleen onder bepaalde omstandigheden, in plaats van een Zero Temp (0% basaal).\n\n
+
+Waarom deze functie?\n
+In sommige situaties kan een persoon ketoacidose ontwikkelen bij een TBR van 0%. Dit concept komt voort uit sportonderzoek: als iemand gedurende meerdere uren geen basale insuline krijgt (0% TBR), kunnen er problemen ontstaan, met name in de spieren, die daardoor kunnen uitvallen.\n\n
+
+Hoe werkt het?\n
+De kleine veiligheids-TBR helpt het risico op ketoacidose te verminderen.
+Zonder de variabele bescherming wordt deze veiligheids-TBR altijd toegepast.
+Met de variabele bescherming wordt de veiligheids-TBR alleen ingeschakeld als de som van de actieve basale en bolusinsuline (IOB) negatief uitvalt ten opzichte van de huidige basaalstand.\n\n
+Hierdoor blijft er altijd een minimale hoeveelheid insuline beschikbaar, wat helpt om ketoacidose te voorkomen.";
 
 /* */
-"B30 Settings" = "B30 Settings";
+"B30 Settings" = "B30 Instellingen";
 
 /* */
-"Duration of increased B30 basal rate" = "Duration of increased B30 basal rate";
+"Duration of increased B30 basal rate" = "Duur van de verhoogde B30 basaalstand";
 
 /* */
-"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out.";
+"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Duur van de verhoogde basaalstand die de infusieplaats verzadigt met insuline. Standaard 30 minuten, zoals bij B30. De EatingSoon tijdelijke doelwaarde (TT) moet minimaal gedurende deze tijd actief zijn, anders stopt B30 zodra de TT afloopt.";
 
 /* */
-"B30 Basal rate increase factor" = "B30 Basal rate increase factor";
+"B30 Basal rate increase factor" = "B30-verhogingsfactor voor de basaalstand";
 
 /* */
-"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5.";
+"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor waarmee je normale basaalstand wordt vermenigvuldigd voor B30. De maximale basaalstand die wordt toegepast, is de maximale basaalinstelling van je pomp. Standaardwaarde is 5.";
 
 /* */
-"Upper Delta limit" = "Upper Delta limit";
+"Upper Delta limit" = "Bovenste Delta-limiet";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 8 mg/dl (0,5 mmol/l).";
 
 /* */
-"Upper BG limit" = "Upper BG limit";
+"Upper BG limit" = "Bovenste BG limiet";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 130 mg/dl (7,2 mmol/l).";
 
 /* */
-"Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
+"Target Level for B30 to be enacted" = "Doelwaarde voor activering van B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Om de B30-aanpassing te starten, moet een EatingSoon Override Target (of een tijdelijke doelwaarde) worden geactiveerd. De doelwaarde moet onder deze instelling liggen om B30 te laten starten. Standaard is dit 90 mg/dl. Let op: Als je de EatingSoon-doelwaarde annuleert, stopt de B30-basaalstand automatisch.";
 
 /* */
-"Minimum Start Bolus size" = "Minimum Start Bolus size";
+"Minimum Start Bolus size" = "Minimale bolus omvang";
 
 /* */
-"Minimum manual bolus to start a B30 adaption." = "Minimum manual bolus to start a B30 adaption.";
+"Minimum manual bolus to start a B30 adaption." = "Minimale handmatige bolus om een B30 aanpassing te starten.";
 
 /* */
-"Activate B30" = "Activate B30";
+"Activate B30" = "Activeer B30";
 
 /* */
-"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting.";
+"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Hiermee wordt een verhoogde basaalstand ingeschakeld na een EatingSoon Override Target (of een tijdelijke doelwaarde) en een handmatige bolus. Dit helpt de infusieplaats te verzadigen met insuline, waardoor de insulineabsorptie verbetert en SMB’s (Smart Micro Boluses) na een maaltijd zonder koolhydraten tellen effectiever worden.";
 
 /* */
-"ISF weight while BG decelerates" = "ISF weight while BG decelerates";
+"ISF weight while BG decelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
 
 /* */
-"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point.";
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Dit is de waarde die wordt toegepast terwijl je glucose verlaagt en ISF verzwakt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.1 kan een goed uitgangspunt zijn.";
 
 /* */
-"ISF weight while BG accelerates" = "ISF weight while BG accelerates";
+"ISF weight while BG accelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
 
 /* */
-"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!";
+"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Standaard waarde: 0. Dit is de waarde die wordt toegepast tijdens het versnellen van glucose en dat ISF versterkt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.02 is een veilig beginpunt, van waaruit je kunt bewegen. Gebruikelijke instellingen zijn ongeveer 0.15!";
 
 /* */
-"Duration ISF postprandial adaption" = "Duration ISF postprandial adaption";
+"Duration ISF postprandial adaption" = "Duur van de ISF-aanpassing na de maaltijd (postprandiale aanpassing). Dit bepaalt hoe lang de insulinegevoeligheidsfactor (ISF) wordt aangepast na een maaltijd";
 
 /* */
-"Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter.";
+"Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Standaardwaarde: 3. Dit is de duur in uren hoe lang na een maaltijd het effect actief zal zijn. Oref zal koolhydraten timing verwijderen na de laatste 10 uur, ongeacht wat je invoert.";
 
 /* */
-"ISF weight for postprandial BG rise" = "ISF weight for postprandial BG rise";
+"ISF weight for postprandial BG rise" = "ISF-waarde voor stijging van de bloedsuikerspiegel na een maaltijd";
 
 /* */
-"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!";
+"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Deze waarde bepaalt hoe sterk de insulinegevoeligheidsfactor (ISF) wordt aangepast op basis van de snelheid waarmee de bloedsuikerspiegel stijgt. Bij een waarde van 0 is deze aanpassing uitgeschakeld. Het wordt aanbevolen om te beginnen met 0,01, omdat de waarde zelden hoger komt dan 0,05!";
 
 /* */
-"ISF weight for higher BG deltas" = "ISF weight for higher BG deltas";
+"ISF weight for higher BG deltas" = "ISF-waarde voor hogere BG deltas";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Dit gewicht wordt toegepast op de curve die de insulinegevoeligheidsfactor (ISF) aanpast bij grotere schommelingen in de bloedsuikerspiegel. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"ISF weight for lower BG's" = "ISF weight for lower BG's";
+"ISF weight for lower BG's" = "ISF-waarde voor lagere BG's";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde wordt toegepast op de aanpassing van de insulinegevoeligheidsfactor (ISF) wanneer de bloedsuikerspiegel onder de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"ISF weight for higher BG's" = "ISF weight for higher BG's";
+"ISF weight for higher BG's" = "ISF-waarde voor hogere BG's";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde bepaalt hoe de insulinegevoeligheidsfactor (ISF) wordt aangepast wanneer de bloedsuikerspiegel boven de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
+"Dura ISF Hourly Max Change" = "Duur ISF per uur Max verandering";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
+"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Dit bepaalt hoe snel de insulinegevoeligheidsfactor (ISF) per uur wordt verlaagd als de bloedsuikerspiegel gedurende die tijd het dubbele van de doelwaarde blijft. Bij een waarde van 1,0 wordt de ISF na één uur met een bloedsuikerspiegel van 2 keer de doelwaarde met 50% verlaagd.";
 
 /* */
-"SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
+"SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
 
 /* */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "De standaardwaarde is 0, maar een logisch bereik ligt tussen 2,2 mmol/L en 6,7 mmol/L (40-120 mg/dL). De afgifte van SMB's (Smart Micro Boluses) neemt geleidelijk toe naarmate de bloedsuikerspiegel stijgt. Bij de doelwaarde is de SMB-verhouding minimaal, en bij doelwaarde + bg_range is deze maximaal. Als de waarde 0 is, blijft de SMB-verhouding vast en wordt de geleidelijke stijging uitgeschakeld.";
 
 /* */
-"SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
+"SMB Delivery Ratio Maximum" = "Maximale SMB-afgifteverhouding";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "De standaardwaarde is 0,5. Dit is de hoogste waarde van een geleidelijk oplopende SMB-afgifteverhouding, in plaats van een vaste waarde zoals in de OpenAPS SMB-afgifteverhouding.";
 
 /* */
-"SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
+"SMB Delivery Ratio Minimum" = "Minimale SMB-afgifteverhouding";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "De standaardwaarde is 0,5. Dit is de laagste waarde van een geleidelijk oplopende SMB-afgifteverhouding, in plaats van een vaste waarde zoals in de OpenAPS SMB-afgifteverhouding.";
 
 /* */
-"Toggles" = "Toggles";
+"Toggles" = "Schakelaars";
 
 /* */
-"Enable postprandial ISF adaption always" = "Enable postprandial ISF adaption always";
+"Enable postprandial ISF adaption always" = "Schakel de ISF-aanpassing na een maaltijd altijd in";
 
 /* */
-"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken.";
+"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Schakel de ISF-aanpassing na een maaltijd altijd in, ongeacht wanneer de laatste maaltijd is gegeten.";
 
 /* */
-"Enable DuraISF effect even with COB" = "Enable DuraISF effect even with COB";
+"Enable DuraISF effect even with COB" = "DuraISF inschakelen, zelfs met COB";
 
 /* */
-"Enable DuraISF even if COB is present not just for UAM." = "Enable DuraISF even if COB is present not just for UAM.";
+"Enable DuraISF even if COB is present not just for UAM." = "Inschakelen van DuraISF zelfs als COB niet alleen aanwezig is voor UAM.";
 
 /* */
-"Enable BG acceleration" = "Enable BG acceleration";
+"Enable BG acceleration" = "Activeer BG versnelling";
 
 /* */
-"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
+"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Schakelt aanpassingen in voor de versnelling en vertraging van de bloedsuikerspiegel, waardoor de ISF wordt aangepast op basis van de snelheid waarmee de bloedsuiker stijgt of daalt.";
 
 /* */
-"Enable Auto ISF" = "Enable Auto ISF";
+"Enable Auto ISF" = "Auto ISF inschakelen";
 
 /* */
-"Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting";
+"Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Auto ISF. Dit schakelt eventuele dynamische ISF/CR instellingen uit";
 
 /* */
-"Keto Protection" = "Keto Protection";
+"Keto Protection" = "Keto bescherming";
 
 /* */
-"Max IOB Threshold Percent" = "Max IOB Threshold Percent";
+"Max IOB Threshold Percent" = "Max IOB drempelwaarde percentage";
 
 /* */
 "Auto ISF" = "Auto ISF";
@@ -2899,7 +2924,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Staat standaard op 0,2 (20%). Maximale positieve procentuele verandering van BG-niveau om SMB te gebruiken, daarboven wordt SMB uitgeschakeld. Hardcoded maximum van 40%. Voor volledig gesloten UAM-loop is 30% raadzaam. Zie in log en popup (maxDelta 27 > 20% van BG 100 - uitschakelen SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... When Blood Glucose Is Above:";
+"... When Blood Glucose Is Above:" = "... Wanneer de bloedsuikerspiegel hoger is dan:";
 
 /* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Stel de waarde in waarmee 'enableSMB_high_bg' wordt vergeleken om SMB in te schakelen. Als BG hoger is dan deze waarde, moet SMB worden ingeschakeld.";
