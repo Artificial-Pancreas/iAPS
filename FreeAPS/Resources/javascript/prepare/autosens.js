@@ -1,6 +1,6 @@
 // для settings/autosens.json параметры: monitor/glucose.json monitor/pumphistory-24h-zoned.json settings/basal_profile.json settings/profile.json monitor/carbhistory.json settings/temptargets.json
 
-function generate(glucose_data, pumphistory_data, basalprofile, profile_data, carb_data = {}, temptarget_data = {}) {
+function generate_autosens(glucose_data, pumphistory_data, basalprofile, profile_data, carb_data = {}, temptarget_data = {}) {
     if (glucose_data.length < 72) {
         return { "ratio": 1, "error": "not enough glucose data to calculate autosens" };
     };
