@@ -826,8 +826,8 @@ extension OverrideProfilesConfig {
         }
 
         private func save(_ preset: OverridePresets) {
-            let saveOverride = preset // OverridePresets(context: moc)
-
+            let saveOverride = preset
+            
             saveOverride.duration = state.duration as NSDecimalNumber
             saveOverride.indefinite = state._indefinite
             saveOverride.percentage = state.percentage
@@ -835,9 +835,6 @@ extension OverrideProfilesConfig {
             saveOverride.name = state.profileName
             saveOverride.emoji = state.emoji
             saveOverride.overrideAutoISF = state.overrideAutoISF
-            // let useId = UUID().uuidString
-            // saveOverride.id = useId
-            state.isPreset = true
             saveOverride.date = Date()
             if state.override_target {
                 saveOverride.target = (
