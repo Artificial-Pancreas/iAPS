@@ -650,26 +650,25 @@ extension OverrideProfilesConfig {
 
             if name != "" {
                 VStack(alignment: .leading) {
-                    Text(name)
+                    Text(name).padding(.top, 5)
                     HStack(spacing: 7) {
                         percent != 1 ?
-                            Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0)))) : nil
-                        targetString != "" ? Text(targetString + " " + state.units.rawValue) : nil
-                        durationString != "" ? Text(durationString + (perpetual ? "" : "min")) : nil
-                        smbString != "" ? Text(smbString).foregroundColor(.secondary).font(.caption).boolTag(false) : nil
-                        scheduledSMBstring != "" ? Text(scheduledSMBstring) : nil
+                            Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
+                            .foregroundStyle(.secondary) : nil
+                        targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
+                        durationString != "" ? Text(durationString + (perpetual ? "" : "min")).foregroundStyle(.secondary) : nil
+                        smbString != "" ? Text(smbString).boolTag(false) : nil
+                        scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF \(settings.autoisf)")
+                            Text("Auto ISF \(settings.autoisf)").foregroundStyle(.secondary)
                         }
                     }
                     .padding(.top, 2)
-                    .foregroundColor(.secondary)
                     .font(.caption)
 
                     if preset.advancedSettings {
                         HStack {
-                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) :
-                                nil
+                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
                             if !preset.smbIsOff {
                                 Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
                                 Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
@@ -682,7 +681,7 @@ extension OverrideProfilesConfig {
                     if let settings = autoisfSettings, settings.autoisf {
                         let standard = state.currentSettings
 
-                        HStack(spacing: 5) {
+                        LazyHStack {
                             bool(
                                 bool: settings.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
@@ -691,11 +690,10 @@ extension OverrideProfilesConfig {
                             bool(bool: settings.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
                             bool(bool: settings.use_B30, setting: standard.use_B30, label: "B30: ")
 
-                            HStack(spacing: 5) {
+                            LazyHStack(spacing: 5) {
                                 decimal(decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                                 decimal(decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                            }.foregroundColor(.secondary)
-                                .font(.caption)
+                            }
                         }.foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 5) {
@@ -789,7 +787,7 @@ extension OverrideProfilesConfig {
 
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {
             if bool != setting {
-                return Text(label + "\(bool)").boolTag(bool).asAny()
+                return Text(label + "\(bool)").foregroundStyle(.white).boolTag(bool).asAny()
             }
             return nil
         }
