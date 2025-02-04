@@ -1114,7 +1114,7 @@ extension MainChartView {
                     x: x0,
                     y: y0 - 2.5,
                     width: x1 - x0,
-                    height: 3
+                    height: 2
                 )
             }
 
