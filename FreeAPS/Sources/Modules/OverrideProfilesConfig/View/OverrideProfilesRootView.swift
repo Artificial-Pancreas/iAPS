@@ -801,9 +801,12 @@ extension OverrideProfilesConfig {
         }
 
         private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
-                let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
-                return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+            if let nsDecimal = decimal {
+                let dec = nsDecimal as Decimal
+                if dec.rounded(to: 2) != setting.rounded(to: 2) {
+                    let target: Decimal = state.units == .mmolL ? dec.asMmolL : dec
+                    return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+                }
             }
             return nil
         }
@@ -857,7 +860,7 @@ extension OverrideProfilesConfig {
             saveOverride.overrideMaxIOB = state.overrideMaxIOB
             saveOverride.date = Date.now
 
-            if state.overrideAutoISF {
+            if saveOverride.overrideAutoISF {
                 state.updateAutoISF(preset.id)
             }
 
