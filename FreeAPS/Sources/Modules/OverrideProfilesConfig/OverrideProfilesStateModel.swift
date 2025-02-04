@@ -263,12 +263,10 @@ extension OverrideProfilesConfig {
             overrideMaxIOB = !edit ? overrideArray!.overrideMaxIOB : presetArray?.overrideMaxIOB ?? false
             overrideAutoISF = !edit ? overrideArray!.overrideAutoISF : presetArray?.overrideAutoISF ?? false
 
-            // if advancedSettings {
-            // if !isfAndCr {
             isf = !edit ? overrideArray!.isf : presetArray?.isf ?? true
             cr = !edit ? overrideArray!.cr : presetArray?.cr ?? true
             basal = !edit ? overrideArray!.basal : presetArray?.basal ?? true
-            // }
+
             if smbIsAlwaysOff {
                 start = !edit ? (overrideArray!.start ?? 0) as Decimal : (presetArray?.start ?? 0) as Decimal
                 end = !edit ? (overrideArray!.end ?? 0) as Decimal : (presetArray?.end ?? 0) as Decimal
@@ -285,13 +283,13 @@ extension OverrideProfilesConfig {
             } else if edit {
                 uamMinutes = (presetArray?.uamMinutes ?? defaultUamMinutes as NSDecimalNumber) as Decimal
             }
+            // }
 
             if !edit, let maxIOB_ = overrideArray!.maxIOB as Decimal? {
                 maxIOB = maxIOB_ as Decimal
             } else if edit, let maxIOB_ = presetArray?.maxIOB as Decimal? {
                 maxIOB = maxIOB_ as Decimal
             }
-            // }
 
             let aisf = !edit && (overrideArray?.enabled ?? false) ? OverrideStorage()
                 .fetchAutoISFsetting(id: overrideArray?.id ?? "No, I'm very sorry.") : edit ? OverrideStorage()

@@ -678,42 +678,48 @@ extension OverrideProfilesConfig {
                     }
 
                     // All of the Auto ISF Settings (Bool and Decimal optionals)
-                    if let settings = autoisfSettings, settings.autoisf {
+                    if let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
                         LazyHStack {
                             bool(
-                                bool: settings.enableBGacceleration,
+                                bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
                                 label: "Accel: "
                             )
-                            bool(bool: settings.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
-                            bool(bool: settings.use_B30, setting: standard.use_B30, label: "B30: ")
+                            bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
+                            bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
 
                             LazyHStack(spacing: 5) {
-                                decimal(decimal: settings.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                                decimal(decimal: settings.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
+                                decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                                decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                             }
                         }.foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 5) {
+                            decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                            decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
+                        }.foregroundStyle(.secondary)
+                            .font(.caption)
+
+                        HStack(spacing: 5) {
                             percentage(
-                                decimal: settings.iobThresholdPercent,
+                                decimal: aisf.iobThresholdPercent,
                                 setting: standard
                                     .iobThresholdPercent,
                                 label: "SMB IOB: "
                             )
 
-                            if ((settings.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
-                                .smbDeliveryRatioMin || ((settings.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
+                            if ((aisf.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
+                                .smbDeliveryRatioMin || ((aisf.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
                                 .smbDeliveryRatioMax
                             {
                                 Text(
-                                    "SMB ratio: \(settings.smbDeliveryRatioMin ?? 0.5)-\(settings.smbDeliveryRatioMax ?? 0.5)"
+                                    "SMB ratio: \(aisf.smbDeliveryRatioMin ?? 0.5)-\(aisf.smbDeliveryRatioMax ?? 0.5)"
                                 )
                             }
                             glucose(
-                                decimal: settings.smbDeliveryRatioBGrange,
+                                decimal: aisf.smbDeliveryRatioBGrange,
                                 setting: standard.smbDeliveryRatioBGrange,
                                 label: "SMB Range: "
                             )
@@ -721,34 +727,34 @@ extension OverrideProfilesConfig {
 
                         HStack(spacing: 6) {
                             decimal(
-                                decimal: settings.lowerISFrangeWeight,
+                                decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
                                 label: "lowBG: "
                             )
                             decimal(
-                                decimal: settings.higherISFrangeWeight,
+                                decimal: aisf.higherISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
                                 label: "highBG: "
                             )
 
-                            if settings.enableBGacceleration {
+                            if aisf.enableBGacceleration {
                                 decimal(
-                                    decimal: settings.bgAccelISFweight,
+                                    decimal: aisf.bgAccelISFweight,
                                     setting: standard.bgAccelISFweight,
                                     label: "accel: "
                                 )
                                 decimal(
-                                    decimal: settings.bgBrakeISFweight,
+                                    decimal: aisf.bgBrakeISFweight,
                                     setting: standard.bgBrakeISFweight,
                                     label: "brake: "
                                 )
                             }
                             decimal(
-                                decimal: settings.autoISFhourlyChange,
+                                decimal: aisf.autoISFhourlyChange,
                                 setting: standard.autoISFhourlyChange,
                                 label: "Dura: "
                             )
-                            decimal(decimal: settings.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
+                            decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
                         }.foregroundStyle(.secondary).font(.caption)
                     }
                 }
