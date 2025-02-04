@@ -479,14 +479,9 @@ struct MainChartView: View {
                     command.contains("bolus") ?
                     Command.bolus : ""
 
-                VStack {
-                    Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
-                        .overlay {
-                            Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
-                                .offset(x: 0, y: -15)
-                        }
-                    // Image("owl").resizable().frame(maxWidth: Config.owlSeize, maxHeight: Config.owlSeize).scaledToFill()
-                }.position(position).asAny()
+                Text(type).font(.announcementSymbolFont).foregroundStyle(.orange)
+                    .offset(x: 0, y: -15)
+                    .position(position).asAny()
             }
         }
         .onChange(of: data.announcement) {
