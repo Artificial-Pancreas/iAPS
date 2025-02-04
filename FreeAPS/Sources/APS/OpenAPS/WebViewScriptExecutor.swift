@@ -46,20 +46,15 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
     init(frame: CGRect = .zero) {
         super.init()
 
-        // Configure WKWebView with a message handler for console logs
         let contentController = WKUserContentController()
         contentController.add(self, name: "consoleLog")
 
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
 
-        // Initialize WKWebView
         webView = WKWebView(frame: frame, configuration: config)
 
-        // Inject script to capture console.log and console.error
         injectConsoleLogHandler()
-
-        // Load static JavaScript functions
         loadScripts()
     }
 
@@ -73,7 +68,9 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         });
 
         """
-        webView.evaluateJavaScript(consoleScript, completionHandler: nil)
+        DispatchQueue.main.async {
+            self.webView.evaluateJavaScript(consoleScript, completionHandler: nil)
+        }
     }
 
     func script(for name: String) -> FunctionScript? {
@@ -81,19 +78,23 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
     }
 
     private func loadScripts() {
-        for script in scripts {
-            includeScript(script: script)
-        }
+        DispatchQueue.main.async {
+            for script in self.scripts {
+                self.includeScript(script: script)
+            }
 
-        includeScript(script: Script(name: OpenAPS.Prepare.log))
+            self.includeScript(script: Script(name: OpenAPS.Prepare.log))
+        }
     }
 
     func includeScript(script: FunctionScript) {
-        webView.evaluateJavaScript(script.body)
+        includeScript(script: Script(name: "Script", body: script.body))
     }
 
     func includeScript(script: Script) {
-        webView.evaluateJavaScript(script.body)
+        DispatchQueue.main.async {
+            self.webView.evaluateJavaScript(script.body)
+        }
     }
 
     func call(name: String, with arguments: [JSON], withBody body: String = "") -> RawJSON {
@@ -130,7 +131,7 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         let asyncResult = WebViewScriptExecutorAtomic<Result<Any, Error>?>(nil)
 
         group.enter()
-        DispatchQueue.global().async {
+        DispatchQueue.main.async {
             Task {
                 do {
                     let result = try await self.evaluateFunction(body: body)
@@ -162,7 +163,17 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         })();
         """
 
-        return try await webView.evaluateJavaScript(script)
+        return try await withCheckedThrowingContinuation { continuation in
+            DispatchQueue.main.async {
+                self.webView.evaluateJavaScript(script) { result, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: result!)
+                    }
+                }
+            }
+        }
     }
 
     // Handle messages from JavaScript (e.g., console.log)
