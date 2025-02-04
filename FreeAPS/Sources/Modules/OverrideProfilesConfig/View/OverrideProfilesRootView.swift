@@ -560,10 +560,7 @@ extension OverrideProfilesConfig {
                             if !isEditingPreset {
                                 isSheetPresented = true
                             } else if let editThis = presetToEdit {
-                                if !editThis.hasChanges {
-                                    moc.delete(editThis)
-                                }
-                                state.savePreset()
+                                save(editThis)
                                 isEditingPreset.toggle()
                             }
                         }
@@ -821,6 +818,57 @@ extension OverrideProfilesConfig {
                 let preset = fetchedProfiles[index]
                 moc.delete(preset)
             }
+            do {
+                try moc.save()
+            } catch {
+                // To do: add error
+            }
+        }
+
+        private func save(_ preset: OverridePresets) {
+            let saveOverride = preset // OverridePresets(context: moc)
+
+            saveOverride.duration = state.duration as NSDecimalNumber
+            saveOverride.indefinite = state._indefinite
+            saveOverride.percentage = state.percentage
+            saveOverride.smbIsOff = state.smbIsOff
+            saveOverride.name = state.profileName
+            saveOverride.emoji = state.emoji
+            saveOverride.overrideAutoISF = state.overrideAutoISF
+            // let useId = UUID().uuidString
+            // saveOverride.id = useId
+            state.isPreset = true
+            saveOverride.date = Date()
+            if state.override_target {
+                saveOverride.target = (
+                    state.units == .mmolL
+                        ? state.target.asMgdL
+                        : state.target
+                ) as NSDecimalNumber
+            } else { saveOverride.target = 6 }
+
+            saveOverride.advancedSettings = state.advancedSettings
+            saveOverride.isfAndCr = state.isfAndCr
+            saveOverride.isf = state.isf
+            saveOverride.cr = state.cr
+            saveOverride.basal = state.basal
+    
+            if state.smbIsAlwaysOff {
+                saveOverride.smbIsAlwaysOff = true
+                saveOverride.start = state.start as NSDecimalNumber
+                saveOverride.end = state.end as NSDecimalNumber
+            } else { state.smbIsAlwaysOff = false }
+
+            saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
+            saveOverride.uamMinutes = state.uamMinutes as NSDecimalNumber
+            saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
+            saveOverride.overrideMaxIOB = state.overrideMaxIOB
+            saveOverride.date = Date.now
+
+            if state.overrideAutoISF {
+                state.updateAutoISF(preset.id)
+            }
+
             do {
                 try moc.save()
             } catch {
