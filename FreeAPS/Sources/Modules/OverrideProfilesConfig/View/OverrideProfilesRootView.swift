@@ -656,19 +656,22 @@ extension OverrideProfilesConfig {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             .foregroundStyle(.secondary) : nil
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
-                        durationString != "" ? Text(durationString + (perpetual ? "" : "min")).foregroundStyle(.secondary) : nil
+                        durationString != "" ? Text(durationString + (perpetual ? "" : "min"))
+                            .foregroundStyle(.secondary) : nil
                         smbString != "" ? Text(smbString).boolTag(false) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF \(settings.autoisf)").foregroundStyle(.secondary)
                         }
+                        Spacer()
                     }
                     .padding(.top, 2)
                     .font(.caption)
 
                     if preset.advancedSettings {
                         HStack {
-                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
+                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) :
+                                nil
                             if !preset.smbIsOff {
                                 Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
                                 Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
@@ -758,12 +761,12 @@ extension OverrideProfilesConfig {
                         }.foregroundStyle(.secondary).font(.caption)
                     }
                 }
-                .dynamicTypeSize(...DynamicTypeSize.large)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     state.selectProfile(id_: preset.id ?? "")
                     state.hideModal()
                 }
+                .dynamicTypeSize(...DynamicTypeSize.large)
             }
         }
 
