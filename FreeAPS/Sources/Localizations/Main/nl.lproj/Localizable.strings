@@ -2268,7 +2268,7 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld terwijl Auto ISF is ingeschakeld";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld omdat Auto ISF is ingeschakeld";
 
 /* */
 "Default value: 1.2 The upper limit of ISF adjustment" = "Standaardwaarde: 1.2 De bovengrens van ISF aanpassing";
@@ -2323,16 +2323,7 @@ Enact a temp Basal or a temp target */
 "Enable Keto Protection" = "Schakel keto-bescherming in";
 
 /* */
-"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Bescherming tegen ketoacidose\n\n Deze functie past een kleine, instelbare tijdelijke basaalstand (TBR) toe, altijd of alleen onder bepaalde omstandigheden, in plaats van een Zero Temp (0% basaal).\n\n
-
-Waarom deze functie?\n
-In sommige situaties kan een persoon ketoacidose ontwikkelen bij een TBR van 0%. Dit concept komt voort uit sportonderzoek: als iemand gedurende meerdere uren geen basale insuline krijgt (0% TBR), kunnen er problemen ontstaan, met name in de spieren, die daardoor kunnen uitvallen.\n\n
-
-Hoe werkt het?\n
-De kleine veiligheids-TBR helpt het risico op ketoacidose te verminderen.
-Zonder de variabele bescherming wordt deze veiligheids-TBR altijd toegepast.
-Met de variabele bescherming wordt de veiligheids-TBR alleen ingeschakeld als de som van de actieve basale en bolusinsuline (IOB) negatief uitvalt ten opzichte van de huidige basaalstand.\n\n
-Hierdoor blijft er altijd een minimale hoeveelheid insuline beschikbaar, wat helpt om ketoacidose te voorkomen.";
+"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Deze functie stelt een kleine, instelbare tijdelijke basaalstand (TBR) in ter vervanging van een Zero Temp (0% basaal), altijd of onder bepaalde voorwaarden.\n\nWaarom?\nBij een 0% TBR kan ketoacidose ontstaan, zoals blijkt uit sportonderzoek: langdurig geen basale insuline kan spierproblemen veroorzaken.\n \nHoe werkt het?\nDe veiligheids-TBR verkleint dit risico.\n- Zonder variabele bescherming: altijd actief.\n- Met variabele bescherming: alleen als de actieve basale en bolusinsuline (IOB) negatief afwijkt van de huidige basaalstand.\n\nZo blijft er altijd wat insuline beschikbaar om ketoacidose te voorkomen.";
 
 /* */
 "B30 Settings" = "B30 Instellingen";
