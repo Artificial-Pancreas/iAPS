@@ -19,6 +19,29 @@ final class WebViewScriptExecutorAtomic<T> {
 
 class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
     private var webView: WKWebView!
+    private var scripts = [
+        FunctionScript(name: OpenAPS.Bundle.autosens, function: "freeaps_autosens"),
+        FunctionScript(name: OpenAPS.Bundle.autotuneCore, function: "freeaps_autotuneCore"),
+        FunctionScript(name: OpenAPS.Bundle.autotunePrep, function: "freeaps_autotunePrep"),
+        FunctionScript(name: OpenAPS.Bundle.basalSetTemp, function: "freeaps_basalSetTemp"),
+        FunctionScript(name: OpenAPS.Bundle.determineBasal, function: "freeaps_determineBasal"),
+        FunctionScript(name: OpenAPS.Bundle.getLastGlucose, function: "freeaps_glucoseGetLast"),
+        FunctionScript(name: OpenAPS.Bundle.iob, function: "freeaps_iob"),
+        FunctionScript(name: OpenAPS.Bundle.meal, function: "freeaps_meal"),
+        FunctionScript(name: OpenAPS.Bundle.profile, function: "freeaps_profile"),
+        FunctionScript(name: OpenAPS.Prepare.autosens, function: "generate", variable: "iaps_autosens"),
+        FunctionScript(name: OpenAPS.Prepare.autotuneCore, function: "generate", variable: "iaps_autotuneCore"),
+        FunctionScript(name: OpenAPS.Prepare.autotunePrep, function: "generate", variable: "iaps_autotunePrep"),
+        FunctionScript(name: OpenAPS.Prepare.determineBasal, function: "generate", variable: "iaps_determineBasal"),
+        FunctionScript(name: OpenAPS.Prepare.iob, function: "generate", variable: "iaps_iob"),
+        FunctionScript(name: OpenAPS.Prepare.meal, function: "generate", variable: "iaps_meal"),
+        FunctionScript(name: OpenAPS.Prepare.profile, function: "generate", variable: "iaps_profile"),
+        FunctionScript(name: OpenAPS.Prepare.string, function: "generate", variable: "iaps_middleware"),
+        FunctionScript(name: OpenAPS.AutoISF.autoisf, for: [
+            Script(name: OpenAPS.AutoISF.getLastGlucose),
+            Script(name: OpenAPS.AutoISF.autoisf)
+        ], function: "generate", variable: "iaps_autoisf")
+    ]
 
     init(frame: CGRect = .zero) {
         super.init()
@@ -37,75 +60,82 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         injectConsoleLogHandler()
 
         // Load static JavaScript functions
-        loadStaticScripts()
+        loadScripts()
     }
 
     private func injectConsoleLogHandler() {
         let consoleScript = """
-        delete window.strictMode;
-        window.console.log = function(message) {
-            window.webkit.messageHandlers.consoleLog.postMessage(message);
-        };
-        window.console.error = function(message) {
-            window.webkit.messageHandlers.consoleLog.postMessage("[ERROR] " + message);
-        };
-        window._consoleLog = function(message) {
-            window.webkit.messageHandlers.consoleLog.postMessage("[ERROR] " + message);
-        };
+        var _consoleLog = function (message) {
+            window.webkit.messageHandlers.consoleLog.postMessage(message.join(" "));
+        }
         window.addEventListener('error', function(event) {
-            window.webkit.messageHandlers.consoleLog.postMessage("[GLOBAL ERROR]: " + event.message + " at " + event.filename + ":" + event.lineno);
+            window.webkit.messageHandlers.scriptError.postMessage("[JAVASCRIPT][GLOBAL ERROR]: " + event.message + " at " + event.filename + ":" + event.lineno);
         });
+
         """
         webView.evaluateJavaScript(consoleScript, completionHandler: nil)
     }
 
-    private func loadStaticScripts() {
-        let scriptNames = [
-            OpenAPS.Bundle.autosens,
-            OpenAPS.Bundle.autotuneCore,
-            OpenAPS.Bundle.autotunePrep,
-            OpenAPS.Bundle.basalSetTemp,
-            OpenAPS.Bundle.determineBasal,
-            OpenAPS.Bundle.getLastGlucose,
-            OpenAPS.Bundle.iob,
-            OpenAPS.Bundle.meal,
-            OpenAPS.Bundle.profile,
-            OpenAPS.Prepare.log,
-            OpenAPS.Prepare.autosens,
-            OpenAPS.Prepare.autotuneCore,
-            OpenAPS.Prepare.autotunePrep,
-            OpenAPS.Prepare.determineBasal,
-            OpenAPS.Prepare.iob,
-            OpenAPS.Prepare.meal,
-            OpenAPS.Prepare.profile
-        ]
-        for scriptName in scriptNames {
-            webView.evaluateJavaScript(Script(name: scriptName).body) { _, error in
-                if let error = error {
-                    print("Error loading script \(scriptName): \(error)")
-                } else {
-                    print("Successfully loaded script: \(scriptName)")
-                }
-            }
+    func script(for name: String) -> FunctionScript? {
+        scripts.filter { $0.name == name }.first
+    }
+
+    private func loadScripts() {
+        for script in scripts {
+            includeScript(script: script)
+        }
+
+        includeScript(script: Script(name: OpenAPS.Prepare.log))
+    }
+
+    func includeScript(script: FunctionScript) {
+        webView.evaluateJavaScript(script.body)
+    }
+
+    func includeScript(script: Script) {
+        webView.evaluateJavaScript(script.body)
+    }
+
+    func call(name: String, with arguments: [JSON], withBody body: String = "") -> RawJSON {
+        if let script = script(for: name) {
+            return callFunctionSync(function: script, with: arguments, withBody: body)
+        } else {
+            print("No script found for \"\(name)\"")
+            return ""
         }
     }
 
-    func evaluate(script: Script) {
-        webView.evaluateJavaScript(script.body, completionHandler: nil)
+    func callFunctionSync(function: FunctionScript, with arguments: [JSON], withBody body: String = "") -> RawJSON {
+        callFunctionSync(function: function.variable, with: arguments, withBody: body)
     }
 
-    func call(function: String, with arguments: [JSON]) -> RawJSON {
+    func callFunctionSync(function: String, with arguments: [JSON], withBody body: String = "") -> RawJSON {
+        let joined = arguments.map(\.rawJSON).joined(separator: ",")
+        let script = """
+        \(body)
+
+        return JSON.stringify(\(function)(\(joined)) ?? "", null, 4);
+        """
+
+        do {
+            return try evaluateFunctionSync(body: script) as! RawJSON
+        } catch {
+            print(error)
+            return ""
+        }
+    }
+
+    func evaluateFunctionSync(body: String) throws -> Any? {
         let group = DispatchGroup()
-        let asyncResult = WebViewScriptExecutorAtomic<Result<RawJSON, Error>?>(nil)
+        let asyncResult = WebViewScriptExecutorAtomic<Result<Any, Error>?>(nil)
 
         group.enter()
         DispatchQueue.global().async {
             Task {
                 do {
-                    let result = try await self.callAsync(function: function, with: arguments)
+                    let result = try await self.evaluateFunction(body: body)
                     asyncResult.set(.success(result))
                 } catch {
-                    print("Error in async call to \(function): \(error)")
                     asyncResult.set(.failure(error))
                 }
                 group.leave()
@@ -116,54 +146,34 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
 
         switch asyncResult.get() {
         case let .success(result):
-            print("The script returned successfully:")
-            print(result)
             return result
         case let .failure(error):
-            print("An error occurred while executing the script:")
-            print(error)
-            return ""
+            throw error
         case .none:
             print("No result from the script")
-            return ""
+            throw NSError(domain: "WebViewScriptExecutor", code: 1, userInfo: nil)
         }
     }
 
-    func callAsync(function: String, with arguments: [JSON]) async throws -> RawJSON {
-        let joined = arguments.map(\.rawJSON).joined(separator: ",")
-
-        // JavaScript code to handle async functions and Promises
+    func evaluateFunction(body: String) async throws -> Any {
         let script = """
         (function() {
-            let result = \(function)(\(joined));
-            return JSON.stringify(result ?? "", null, 4);
+            \(body)
         })();
         """
 
-        var result: RawJSON?
-        var scriptError: Error?
-
-        return try await withCheckedThrowingContinuation { continuation in
-            webView.evaluateJavaScript(script) { result, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else if let resultString = result as? String {
-                    continuation.resume(returning: resultString)
-                } else {
-                    continuation.resume(throwing: NSError(
-                        domain: "ScriptExecutorError",
-                        code: 2,
-                        userInfo: [NSLocalizedDescriptionKey: "No result from script"]
-                    ))
-                }
-            }
-        }
+        return try await webView.evaluateJavaScript(script)
     }
 
     // Handle messages from JavaScript (e.g., console.log)
     func userContentController(_: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "consoleLog", let logMessage = message.body as? String {
-            print("[JavaScript Console]: \(logMessage)")
+            if logMessage.count > 3 { // Remove the cryptic test logs created during development of Autosens
+                debug(.openAPS, "JavaScript log: \(logMessage)")
+            }
+        }
+        if message.name == "scriptError", let logMessage = message.body as? String {
+            warning(.openAPS, "JavaScript Error: \(logMessage)")
         }
     }
 }

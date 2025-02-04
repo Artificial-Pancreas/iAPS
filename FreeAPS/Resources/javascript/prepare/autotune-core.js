@@ -1,4 +1,4 @@
-function generate_autotuneCore(prepped_glucose_data,previous_autotune_data,pumpprofile_data) {
+function generate(prepped_glucose_data,previous_autotune_data,pumpprofile_data) {
   if (!pumpprofile_data.useCustomPeakTime) {
       previous_autotune_data.dia = pumpprofile_data.dia;
       previous_autotune_data.insulinPeakTime = pumpprofile_data.insulinPeakTime;

@@ -83,6 +83,7 @@ final class OpenAPS {
                     reservoir: reservoir
                 )
 
+                now = Date.now
                 // Auto ISF Layer
                 if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                     profile = self.autosisf(
@@ -93,6 +94,9 @@ final class OpenAPS {
                         pumpHistory: pumpHistory
                     )
                 }
+                print(
+                    "Time for AutoISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                )
 
                 now = Date.now
                 // The OpenAPS layer
@@ -815,7 +819,7 @@ final class OpenAPS {
 
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        return scriptExecutor.call(function: "generate_iob", with: [
+        return scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
             pumphistory,
             profile,
             clock,
@@ -826,7 +830,7 @@ final class OpenAPS {
     private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
-        return scriptExecutor.call(function: "generate_meal", with: [
+        return scriptExecutor.call(name: OpenAPS.Prepare.meal, with: [
             pumphistory,
             profile,
             clock,
@@ -846,7 +850,7 @@ final class OpenAPS {
         tuneInsulinCurve: Bool
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        return scriptExecutor.call(function: "generate_autotunePrepare", with: [
+        return scriptExecutor.call(name: OpenAPS.Prepare.autotunePrep, with: [
             pumphistory,
             profile,
             glucose,
@@ -863,7 +867,7 @@ final class OpenAPS {
         pumpProfile: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        return scriptExecutor.call(function: "generate_autotuneCore", with: [
+        return scriptExecutor.call(name: OpenAPS.Prepare.autotuneCore, with: [
             autotunePreparedData,
             previousAutotuneResult,
             pumpProfile
@@ -883,12 +887,8 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
-        if let middleware = middlewareScript(name: OpenAPS.Middleware.determineBasal) {
-            scriptExecutor.evaluate(script: middleware)
-        }
-
         return scriptExecutor.call(
-            function: "generate_determineBasal",
+            name: OpenAPS.Prepare.determineBasal,
             with: [
                 iob,
                 currentTemp,
@@ -914,7 +914,7 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return scriptExecutor.call(
-            function: "generate_autosense",
+            name: OpenAPS.Prepare.autosens,
             with: [
                 glucose,
                 pumpHistory,
@@ -928,6 +928,7 @@ final class OpenAPS {
 
     private func exportDefaultPreferences() -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
+
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.profile))
@@ -952,7 +953,7 @@ final class OpenAPS {
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return scriptExecutor.call(
-            function: "generate_profile",
+            name: OpenAPS.Prepare.profile,
             with: [
                 pumpSettings,
                 bgTargets,
@@ -981,29 +982,25 @@ final class OpenAPS {
         reservoir: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Prepare.string))
 
-            if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {
-                worker.evaluate(script: middleware)
-            }
+        let script = middlewareScript(name: OpenAPS.Middleware.determineBasal)
 
-            return worker.call(
-                function: Function.generateMiddleware,
-                with: [
-                    iob,
-                    currentTemp,
-                    glucose,
-                    profile,
-                    autosens,
-                    meal,
-                    microBolusAllowed,
-                    reservoir,
-                    Date()
-                ]
-            )
-        }
+        return scriptExecutor.call(
+            name: OpenAPS.Prepare.string,
+            with: [
+                "middleware",
+                iob,
+                currentTemp,
+                glucose,
+                profile,
+                autosens,
+                meal,
+                microBolusAllowed,
+                reservoir,
+                Date()
+            ],
+            withBody: script?.body ?? ""
+        )
     }
 
     private func autosisf(
@@ -1014,25 +1011,18 @@ final class OpenAPS {
         pumpHistory: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: AutoISF.getLastGlucose))
-            if let aisf = self.aisfScript(name: OpenAPS.AutoISF.autoisf) {
-                worker.evaluate(script: aisf)
-            }
 
-            return worker.call(
-                function: Function.generate,
-                with: [
-                    iob,
-                    profile,
-                    autosens,
-                    glucose,
-                    Date(),
-                    pumpHistory
-                ]
-            )
-        }
+        return scriptExecutor.call(
+            name: OpenAPS.AutoISF.autoisf,
+            with: [
+                iob,
+                profile,
+                autosens,
+                glucose,
+                Date(),
+                pumpHistory
+            ]
+        )
     }
 
     private func loadJSON(name: String) -> String {
@@ -1050,18 +1040,6 @@ final class OpenAPS {
 
         if let url = Foundation.Bundle.main.url(forResource: "javascript/\(name)", withExtension: "") {
             return Script(name: "Middleware", body: try! String(contentsOf: url))
-        }
-
-        return nil
-    }
-
-    private func aisfScript(name: String) -> Script? {
-        if let body = storage.retrieveRaw(name) {
-            return Script(name: "AISF", body: body)
-        }
-
-        if let url = Foundation.Bundle.main.url(forResource: "javascript/\(name)", withExtension: "") {
-            return Script(name: "AISF", body: try! String(contentsOf: url))
         }
 
         return nil
