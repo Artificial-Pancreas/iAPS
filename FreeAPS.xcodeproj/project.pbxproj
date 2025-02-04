@@ -308,6 +308,7 @@
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
 		4CEDB7252D516827008F9A0D /* WebViewScriptExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEDB7242D516827008F9A0D /* WebViewScriptExecutor.swift */; };
+		4CEDB7272D5221A8008F9A0D /* FunctionScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEDB7262D5221A8008F9A0D /* FunctionScript.swift */; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
 		5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */; };
@@ -940,6 +941,7 @@
 		44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorProvider.swift; sourceTree = "<group>"; };
 		47DFCE895C930F784EF11843 /* CalibrationsStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalibrationsStateModel.swift; sourceTree = "<group>"; };
 		4CEDB7242D516827008F9A0D /* WebViewScriptExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptExecutor.swift; sourceTree = "<group>"; };
+		4CEDB7262D5221A8008F9A0D /* FunctionScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionScript.swift; sourceTree = "<group>"; };
 		4DD795BA46B193644D48138C /* TargetsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorRootView.swift; sourceTree = "<group>"; };
 		500371C09F54F89A97D65FDB /* CalibrationsRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalibrationsRootView.swift; sourceTree = "<group>"; };
 		505E09DC17A0C3D0AF4B66FE /* ISFEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorStateModel.swift; sourceTree = "<group>"; };
@@ -1948,6 +1950,7 @@
 				388E596B25AD95110019842D /* OpenAPS.swift */,
 				384E803325C385E60086DB71 /* JavaScriptWorker.swift */,
 				384E803725C388640086DB71 /* Script.swift */,
+				4CEDB7262D5221A8008F9A0D /* FunctionScript.swift */,
 				3821ED4B25DD18BA00BC42AD /* Constants.swift */,
 				1924F72B2BA35AE5006644EE /* TotalDailyDose.swift */,
 			);
@@ -3076,6 +3079,7 @@
 				38A0364225ED069400FCBB52 /* TempBasal.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,
 				383948DA25CD64D500E91849 /* Glucose.swift in Sources */,
+				4CEDB7272D5221A8008F9A0D /* FunctionScript.swift in Sources */,
 				CE94598029E9E3BD0047C9C6 /* WatchConfigDataFlow.swift in Sources */,
 				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
 				198CED9D2B2E62940073032D /* OverrideStorage.swift in Sources */,

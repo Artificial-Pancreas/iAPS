@@ -88,14 +88,6 @@ extension OpenAPS {
         static let generate = "generate"
         static let tempBasalFunctions = "tempBasalFunctions"
         static let exportDefaults = "exportDefaults"
-        static let generateAutosens = "generate_autosens"
-        static let generateAutotuneCore = "generate_autotuneCore"
-        static let generateAutotunePrep = "generate_autotunePrep"
-        static let generateDetermineBasal = "generate_determineBasal"
-        static let generateIob = "generate_iob"
-        static let generateMeal = "generate_meal"
-        static let generateMiddleware = "generate_middleware"
-        static let generateProfile = "generate_profile"
     }
 
     enum Nightscout {
