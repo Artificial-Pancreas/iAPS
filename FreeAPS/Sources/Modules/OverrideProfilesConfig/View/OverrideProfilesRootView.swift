@@ -84,7 +84,7 @@ extension OverrideProfilesConfig {
             Form {
                 if state.presets.isNotEmpty, !isEditingPreset {
                     Section {
-                        ForEach(fetchedProfiles) { preset in
+                        ForEach(fetchedProfiles.uniqued(on: \.id)) { preset in
                             profilesView(for: preset)
                                 .swipeActions(edge: .leading) {
                                     Button {
@@ -826,3 +826,11 @@ extension OverrideProfilesConfig {
         }
     }
 }
+
+/*
+ extension Sequence where Element: Hashable {
+     func uniqued() -> [Element] {
+         var set = Set<Element>()
+         return filter { set.insert($0).inserted }
+     }
+ }*/
