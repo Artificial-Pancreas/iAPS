@@ -150,7 +150,7 @@ extension OverrideProfilesConfig {
                 saveOverride.isf = self.isf
                 saveOverride.cr = self.cr
                 saveOverride.basal = self.basal
-              
+
                 if smbIsAlwaysOff {
                     saveOverride.smbIsAlwaysOff = true
                     saveOverride.start = start as NSDecimalNumber

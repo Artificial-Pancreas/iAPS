@@ -634,9 +634,6 @@ extension OverrideProfilesConfig {
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
             let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
-            let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
-            let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
-            let maxIOB = preset.overrideMaxIOB ? (preset.maxIOB ?? 999) as Decimal : 999
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
             let basalString = preset.basal ? "Basal" : ""
@@ -657,7 +654,7 @@ extension OverrideProfilesConfig {
                         smbString != "" ? Text(smbString).boolTag(false) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF \(settings.autoisf)").foregroundStyle(.secondary)
+                            Text("Auto ISF: \(settings.autoisf)").boolTag(settings.autoisf)
                         }
                         Spacer()
                     }
@@ -668,10 +665,10 @@ extension OverrideProfilesConfig {
                         HStack {
                             percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
                             if !preset.smbIsOff {
-                                Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
-                                Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
+                                decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
+                                decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
                             }
-                            maxIOB != 999 ? Text(" Max IOB: " + maxIOB.formatted()) : nil
+                            decimal(decimal: preset.maxIOB, setting: state.defaultmaxIOB, label: "Max IOB: ")
                         }.foregroundStyle(.secondary).font(.caption)
                     }
 
@@ -825,7 +822,7 @@ extension OverrideProfilesConfig {
 
         private func save(_ preset: OverridePresets) {
             let saveOverride = preset
-            
+
             saveOverride.duration = state.duration as NSDecimalNumber
             saveOverride.indefinite = state._indefinite
             saveOverride.percentage = state.percentage
@@ -847,7 +844,7 @@ extension OverrideProfilesConfig {
             saveOverride.isf = state.isf
             saveOverride.cr = state.cr
             saveOverride.basal = state.basal
-    
+
             if state.smbIsAlwaysOff {
                 saveOverride.smbIsAlwaysOff = true
                 saveOverride.start = state.start as NSDecimalNumber
