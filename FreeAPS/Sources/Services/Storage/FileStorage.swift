@@ -4,6 +4,7 @@ protocol FileStorage {
     func save<Value: JSON>(_ value: Value, as name: String)
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
     func retrieveRaw(_ name: String) -> RawJSON?
+    func retrieveRawAsync(_ name: String) async -> RawJSON?
     func append<Value: JSON>(_ newValue: Value, to name: String)
     func append<Value: JSON>(_ newValues: [Value], to name: String)
     func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>)
@@ -17,7 +18,11 @@ protocol FileStorage {
 }
 
 final class BaseFileStorage: FileStorage, Injectable {
-    private let processQueue = DispatchQueue.markedQueue(label: "BaseFileStorage.processQueue", qos: .utility)
+    private let processQueue = DispatchQueue.markedQueue(
+        label: "BaseFileStorage.processQueue",
+        qos: .utility,
+        attributes: .concurrent
+    )
 
     func save<Value: JSON>(_ value: Value, as name: String) {
         processQueue.safeSync {
@@ -41,6 +46,20 @@ final class BaseFileStorage: FileStorage, Injectable {
                 return nil
             }
             return String(data: data, encoding: .utf8)
+        }
+    }
+
+    func retrieveRawAsync(_ name: String) async -> RawJSON? {
+        await withCheckedContinuation { continuation in
+            processQueue.async {
+                // Mantieni la logica esistente per recuperare il file
+                guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
+                    continuation.resume(returning: nil)
+                    return
+                }
+                let result = String(data: data, encoding: .utf8)
+                continuation.resume(returning: result)
+            }
         }
     }
 
