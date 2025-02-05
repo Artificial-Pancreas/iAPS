@@ -675,7 +675,7 @@ extension OverrideProfilesConfig {
                     }
 
                     // All of the Auto ISF Settings (Bool and Decimal optionals)
-                    if let aisf = autoisfSettings, aisf.autoisf {
+                    if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
                         LazyHStack {
@@ -692,12 +692,6 @@ extension OverrideProfilesConfig {
                                 decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                             }
                         }.foregroundStyle(.secondary).font(.caption)
-
-                        HStack(spacing: 5) {
-                            decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                            decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                        }.foregroundStyle(.secondary)
-                            .font(.caption)
 
                         HStack(spacing: 5) {
                             percentage(
