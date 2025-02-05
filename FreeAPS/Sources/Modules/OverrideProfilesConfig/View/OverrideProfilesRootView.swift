@@ -688,7 +688,7 @@ extension OverrideProfilesConfig {
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
                         }
-                        .offset(y: -1)
+                        .offset(y: 2)
                         .foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 5) {
@@ -700,8 +700,7 @@ extension OverrideProfilesConfig {
                         HStack(spacing: 5) {
                             percentage(
                                 decimal: aisf.iobThresholdPercent,
-                                setting: standard
-                                    .iobThresholdPercent,
+                                setting: standard.iobThresholdPercent,
                                 label: "SMB IOB: "
                             )
 
