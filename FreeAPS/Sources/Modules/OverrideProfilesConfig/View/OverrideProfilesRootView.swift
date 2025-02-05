@@ -726,7 +726,7 @@ extension OverrideProfilesConfig {
                             )
                             decimal(
                                 decimal: aisf.higherISFrangeWeight,
-                                setting: standard.lowerISFrangeWeight,
+                                setting: standard.higherISFrangeWeight,
                                 label: "high: "
                             )
 
