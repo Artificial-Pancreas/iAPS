@@ -841,7 +841,7 @@ extension OverrideProfilesConfig {
 
             saveOverride.advancedSettings = state.advancedSettings
             saveOverride.isfAndCr = state.isfAndCr
-            if !saveOverride.isfAndCr {
+            if !state.isfAndCr {
                 saveOverride.isf = state.isf
                 saveOverride.cr = state.cr
                 saveOverride.basal = state.basal
@@ -853,17 +853,17 @@ extension OverrideProfilesConfig {
                 saveOverride.end = state.end as NSDecimalNumber
             } else { state.smbIsAlwaysOff = false }
 
-            if !saveOverride.smbIsAlwaysOff {
+            if !state.smbIsAlwaysOff {
                 saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
                 saveOverride.uamMinutes = state.uamMinutes as NSDecimalNumber
             }
             saveOverride.overrideMaxIOB = state.overrideMaxIOB
-            if saveOverride.overrideMaxIOB {
+            if state.overrideMaxIOB {
                 saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
             }
             saveOverride.date = Date.now
 
-            if saveOverride.overrideAutoISF {
+            if state.overrideAutoISF {
                 state.updateAutoISF(preset.id)
             }
 
