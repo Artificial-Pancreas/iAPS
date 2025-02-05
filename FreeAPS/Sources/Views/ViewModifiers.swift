@@ -39,6 +39,14 @@ struct CapsulaBackground: ViewModifier {
     }
 }
 
+struct BoolTag: ViewModifier {
+    let bool: Bool
+    func body(content: Content) -> some View {
+        content
+            .padding(4).border(Color.gray).background((bool ? Color.green : Color.red).opacity(0.4)).padding(.trailing, 6)
+    }
+}
+
 struct CompactSectionSpacing: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -351,6 +359,10 @@ extension View {
 
     func carvingOrRelief(carve: Bool) -> some View {
         modifier(CarveOrDrop(carve: carve))
+    }
+
+    func boolTag(_ bool: Bool) -> some View {
+        modifier(BoolTag(bool: bool))
     }
 
     func addBackground() -> some View {
