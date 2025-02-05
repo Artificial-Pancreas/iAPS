@@ -868,7 +868,6 @@ extension OverrideProfilesConfig {
             if state.overrideMaxIOB {
                 saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
             }
-            saveOverride.date = Date.now
 
             if state.overrideAutoISF {
                 state.updateAutoISF(preset.id)
