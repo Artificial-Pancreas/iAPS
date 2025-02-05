@@ -656,9 +656,9 @@ extension OverrideProfilesConfig {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             .foregroundStyle(.secondary) : nil
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
-                        durationString != "" ? Text(durationString + (perpetual ? "" : "min"))
+                        durationString != "" ? Text(durationString + (perpetual ? "" : " min"))
                             .foregroundStyle(.secondary) : nil
-                        smbString != "" ? Text(smbString).boolTag(false) : nil
+                        smbString != "" ? Text(smbString).foregroundStyle(.white.opacity(0.8)).boolTag(false) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF \(settings.autoisf)").foregroundStyle(.secondary)
@@ -676,7 +676,7 @@ extension OverrideProfilesConfig {
                                 Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
                                 Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
                             }
-                            maxIOB != 999 ? Text(" Max IOB: " + maxIOB.formatted()) : nil
+                            maxIOB != 999 ? Text("Max IOB: " + maxIOB.formatted()) : nil
                         }.foregroundStyle(.secondary).font(.caption)
                     }
 
@@ -684,7 +684,7 @@ extension OverrideProfilesConfig {
                     if let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
-                        LazyHStack {
+                        HStack {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
@@ -693,17 +693,9 @@ extension OverrideProfilesConfig {
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
 
-                            LazyHStack(spacing: 5) {
-                                decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                                decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                            }
-                        }.foregroundStyle(.secondary).font(.caption)
-
-                        HStack(spacing: 5) {
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                        }.foregroundStyle(.secondary)
-                            .font(.caption)
+                        }.foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 5) {
                             percentage(
@@ -713,31 +705,37 @@ extension OverrideProfilesConfig {
                                 label: "SMB IOB: "
                             )
 
-                            if ((aisf.smbDeliveryRatioMin ?? 0.5) as Decimal) != standard
-                                .smbDeliveryRatioMin || ((aisf.smbDeliveryRatioMax ?? 0.5) as Decimal) != standard
-                                .smbDeliveryRatioMax
+                            let smbDeliveryRatioMin = aisf.smbDeliveryRatioMin as? Decimal ?? standard.smbDeliveryRatioMin
+                            let smbDeliveryRatioMax = aisf.smbDeliveryRatioMax as? Decimal ?? standard.smbDeliveryRatioMax
+                            let smbDeliveryRatioBGrange = aisf.smbDeliveryRatioBGrange as? Decimal ?? standard
+                                .smbDeliveryRatioBGrange
+                            if different(smbDeliveryRatioMin, standard.smbDeliveryRatioMin) ||
+                                different(smbDeliveryRatioMax, standard.smbDeliveryRatioMax) ||
+                                different(smbDeliveryRatioBGrange, standard.smbDeliveryRatioBGrange)
                             {
-                                Text(
-                                    "SMB ratio: \(aisf.smbDeliveryRatioMin ?? 0.5)-\(aisf.smbDeliveryRatioMax ?? 0.5)"
-                                )
+                                if different(smbDeliveryRatioMin, smbDeliveryRatioMax) {
+                                    Text(
+                                        "SMB ratio: \(higherPrecisionFormatter.string(from: smbDeliveryRatioMin as NSNumber) ?? "")-\(higherPrecisionFormatter.string(from: smbDeliveryRatioMax as NSNumber) ?? "") range \(glucoseFormatter.string(from: target as NSNumber) ?? "") \(state.units.rawValue)"
+                                    )
+                                } else {
+                                    Text(
+                                        "SMB ratio: \(higherPrecisionFormatter.string(from: smbDeliveryRatioMin as NSNumber) ?? "")"
+                                    )
+                                }
                             }
-                            glucose(
-                                decimal: aisf.smbDeliveryRatioBGrange,
-                                setting: standard.smbDeliveryRatioBGrange,
-                                label: "SMB Range: "
-                            )
+
                         }.foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 6) {
                             decimal(
                                 decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
-                                label: "lowBG: "
+                                label: "low: "
                             )
                             decimal(
                                 decimal: aisf.higherISFrangeWeight,
-                                setting: standard.lowerISFrangeWeight,
-                                label: "highBG: "
+                                setting: standard.higherISFrangeWeight,
+                                label: "high: "
                             )
 
                             if aisf.enableBGacceleration {
@@ -755,9 +753,9 @@ extension OverrideProfilesConfig {
                             decimal(
                                 decimal: aisf.autoISFhourlyChange,
                                 setting: standard.autoISFhourlyChange,
-                                label: "Dura: "
+                                label: "dura: "
                             )
-                            decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
+                            decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "pp: ")
                         }.foregroundStyle(.secondary).font(.caption)
                     }
                 }
@@ -787,29 +785,33 @@ extension OverrideProfilesConfig {
                 uamMinutesUnchanged && autoISFUnchanged
         }
 
+        private func different(_ first: Decimal, _ second: Decimal) -> Bool {
+            abs(first - second) > 0.0001
+        }
+
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
-                return Text(label + "\(dec)")
+            if let dec = decimal as? Decimal, different(dec, setting) {
+                return Text(label + (higherPrecisionFormatter.string(from: dec as NSNumber) ?? ""))
             }
             return nil
         }
 
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {
             if bool != setting {
-                return Text(label + "\(bool)").foregroundStyle(.white).boolTag(bool).asAny()
+                return Text(label + "\(bool ? "ON" : "OFF")").foregroundStyle(.white.opacity(0.8)).boolTag(bool).asAny()
             }
             return nil
         }
 
         private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
+            if let dec = decimal as? Decimal, different(dec, setting) {
                 return Text(label + "\(dec)%")
             }
             return nil
         }
 
         private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
+            if let dec = decimal as? Decimal, different(dec, setting) {
                 let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
                 return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
             }
