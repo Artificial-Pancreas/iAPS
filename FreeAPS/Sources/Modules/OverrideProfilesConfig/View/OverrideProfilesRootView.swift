@@ -778,12 +778,13 @@ extension OverrideProfilesConfig {
         }
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
+            if let dec = decimal as? Decimal, round(dec) != round(setting) {
                 return Text(label + "\(dec)")
             }
             return nil
         }
 
+        /// Round to two fraction digits
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {
             if bool != setting {
                 return Text(label + "\(bool)").foregroundStyle(.white).boolTag(bool).asAny()
@@ -792,7 +793,7 @@ extension OverrideProfilesConfig {
         }
 
         private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
+            if let dec = decimal as? Decimal, dec != setting {
                 return Text(label + "\(dec)%")
             }
             return nil
@@ -801,12 +802,16 @@ extension OverrideProfilesConfig {
         private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
             if let nsDecimal = decimal {
                 let dec = nsDecimal as Decimal
-                if dec.rounded(to: 2) != setting.rounded(to: 2) {
+                if round(dec) != round(setting) {
                     let target: Decimal = state.units == .mmolL ? dec.asMmolL : dec
                     return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
                 }
             }
             return nil
+        }
+
+        private func round(_ decimal: Decimal) -> Decimal {
+            decimal.rounded(to: 2)
         }
 
         private func removeProfile(at offsets: IndexSet) {
