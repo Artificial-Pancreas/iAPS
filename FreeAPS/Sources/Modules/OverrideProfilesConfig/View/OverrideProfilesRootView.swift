@@ -653,8 +653,8 @@ extension OverrideProfilesConfig {
                         durationString != "" ? Text(durationString + (perpetual ? "" : "min")).foregroundStyle(.secondary) : nil
                         smbString != "" ? Text(smbString).boolTag(false) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
-                        if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF: \(settings.autoisf)").boolTag(settings.autoisf)
+                        if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
+                            Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
                         }
                         Spacer()
                     }
@@ -668,7 +668,9 @@ extension OverrideProfilesConfig {
                                 decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
                                 decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
                             }
-                            decimal(decimal: preset.maxIOB, setting: state.defaultmaxIOB, label: "Max IOB: ")
+                            if preset.overrideMaxIOB {
+                                decimal(decimal: preset.maxIOB, setting: state.defaultmaxIOB, label: "Max IOB: ")
+                            }
                         }.foregroundStyle(.secondary).font(.caption)
                     }
 
@@ -724,12 +726,12 @@ extension OverrideProfilesConfig {
                             decimal(
                                 decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
-                                label: "lowBG: "
+                                label: "low: "
                             )
                             decimal(
                                 decimal: aisf.higherISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
-                                label: "highBG: "
+                                label: "high: "
                             )
 
                             if aisf.enableBGacceleration {
@@ -747,9 +749,9 @@ extension OverrideProfilesConfig {
                             decimal(
                                 decimal: aisf.autoISFhourlyChange,
                                 setting: standard.autoISFhourlyChange,
-                                label: "Dura: "
+                                label: "dura: "
                             )
-                            decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
+                            decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "pp: ")
                         }.foregroundStyle(.secondary).font(.caption)
                     }
                 }
@@ -844,9 +846,11 @@ extension OverrideProfilesConfig {
 
             saveOverride.advancedSettings = state.advancedSettings
             saveOverride.isfAndCr = state.isfAndCr
-            saveOverride.isf = state.isf
-            saveOverride.cr = state.cr
-            saveOverride.basal = state.basal
+            if !saveOverride.isfAndCr {
+                saveOverride.isf = state.isf
+                saveOverride.cr = state.cr
+                saveOverride.basal = state.basal
+            }
 
             if state.smbIsAlwaysOff {
                 saveOverride.smbIsAlwaysOff = true
@@ -854,10 +858,14 @@ extension OverrideProfilesConfig {
                 saveOverride.end = state.end as NSDecimalNumber
             } else { state.smbIsAlwaysOff = false }
 
-            saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
-            saveOverride.uamMinutes = state.uamMinutes as NSDecimalNumber
-            saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
+            if !saveOverride.smbIsAlwaysOff {
+                saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
+                saveOverride.uamMinutes = state.uamMinutes as NSDecimalNumber
+            }
             saveOverride.overrideMaxIOB = state.overrideMaxIOB
+            if saveOverride.overrideMaxIOB {
+                saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
+            }
             saveOverride.date = Date.now
 
             if saveOverride.overrideAutoISF {
