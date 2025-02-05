@@ -844,7 +844,6 @@ extension OverrideProfilesConfig {
             saveOverride.name = state.profileName
             saveOverride.emoji = state.emoji
             saveOverride.overrideAutoISF = state.overrideAutoISF
-            saveOverride.date = Date()
             if state.override_target {
                 saveOverride.target = (
                     state.units == .mmolL
@@ -865,7 +864,7 @@ extension OverrideProfilesConfig {
                 saveOverride.smbIsAlwaysOff = true
                 saveOverride.start = state.start as NSDecimalNumber
                 saveOverride.end = state.end as NSDecimalNumber
-            } else { state.smbIsAlwaysOff = false }
+            } else { saveOverride.smbIsAlwaysOff = false }
 
             if !state.smbIsAlwaysOff {
                 saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
