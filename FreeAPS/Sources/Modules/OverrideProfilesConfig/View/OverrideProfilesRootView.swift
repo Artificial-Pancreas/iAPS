@@ -705,11 +705,11 @@ extension OverrideProfilesConfig {
                             let smbDeliveryRatioMax = aisf.smbDeliveryRatioMax as? Decimal ?? standard.smbDeliveryRatioMax
                             let smbDeliveryRatioBGrange = aisf.smbDeliveryRatioBGrange as? Decimal ?? standard
                                 .smbDeliveryRatioBGrange
-                            if different(smbDeliveryRatioMin, standard.smbDeliveryRatioMin) ||
-                                different(smbDeliveryRatioMax, standard.smbDeliveryRatioMax) ||
-                                different(smbDeliveryRatioBGrange, standard.smbDeliveryRatioBGrange)
+                            if round(smbDeliveryRatioMin) != round(standard.smbDeliveryRatioMin) ||
+                                round(smbDeliveryRatioMax) != round(standard.smbDeliveryRatioMax) ||
+                                round(smbDeliveryRatioBGrange) != round(standard.smbDeliveryRatioBGrange)
                             {
-                                if different(smbDeliveryRatioMin, smbDeliveryRatioMax) {
+                                if round(smbDeliveryRatioMin) != round(smbDeliveryRatioMax) {
                                     Text(
                                         "SMB ratio: \(higherPrecisionFormatter.string(from: smbDeliveryRatioMin as NSNumber) ?? "")-\(higherPrecisionFormatter.string(from: smbDeliveryRatioMax as NSNumber) ?? "") range \(glucoseFormatter.string(from: target as NSNumber) ?? "") \(state.units.rawValue)"
                                     )
@@ -781,13 +781,9 @@ extension OverrideProfilesConfig {
                 uamMinutesUnchanged && autoISFUnchanged
         }
 
-        private func different(_ first: Decimal, _ second: Decimal) -> Bool {
-            abs(first - second) > 0.0001
-        }
-
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal as? Decimal, different(dec, setting) {
-                return Text(label + (higherPrecisionFormatter.string(from: dec as NSNumber) ?? ""))
+            if let dec = decimal as? Decimal, round(dec) != round(setting) {
+                return Text(label + "\(dec)")
             }
             return nil
         }
@@ -800,18 +796,26 @@ extension OverrideProfilesConfig {
         }
 
         private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal as? Decimal, different(dec, setting) {
+            if let dec = decimal as? Decimal, dec != setting {
                 return Text(label + "\(dec)%")
             }
             return nil
         }
 
         private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal as? Decimal, different(dec, setting) {
-                let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
-                return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+            if let nsDecimal = decimal {
+                let dec = nsDecimal as Decimal
+                if round(dec) != round(setting) {
+                    let target: Decimal = state.units == .mmolL ? dec.asMmolL : dec
+                    return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+                }
             }
             return nil
+        }
+
+        /// Round to two fraction digits
+        private func round(_ decimal: Decimal) -> Decimal {
+            decimal.rounded(to: 2)
         }
 
         private func removeProfile(at offsets: IndexSet) {
