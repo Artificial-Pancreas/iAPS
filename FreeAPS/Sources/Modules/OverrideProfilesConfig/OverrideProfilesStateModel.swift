@@ -351,7 +351,9 @@ extension OverrideProfilesConfig {
 
         // Save Auto ISF Override settings
         func updateAutoISF(_ id_: String?) {
-            guard let identifier = id_, let saveAutoISF = OverrideStorage().fetchAutoISFsetting(id: identifier) else { return }
+            guard let identifier = id_ else { return }
+            let saveAutoISF = OverrideStorage().fetchAutoISFsetting(id: identifier)
+                ?? Auto_ISF(context: coredataContext)
             coredataContext.perform { [self] in
                 saveAutoISF.autoISFhourlyChange = autoISFsettings.autoISFhourlyChange as NSDecimalNumber
                 saveAutoISF.autoisf = autoISFsettings.autoisf
@@ -380,6 +382,7 @@ extension OverrideProfilesConfig {
                 saveAutoISF.smbDeliveryRatioMax = autoISFsettings.smbDeliveryRatioMax as NSDecimalNumber
                 saveAutoISF.smbDeliveryRatioBGrange = autoISFsettings.smbDeliveryRatioBGrange as NSDecimalNumber
                 saveAutoISF.postMealISFweight = autoISFsettings.postMealISFweight as NSDecimalNumber
+                saveAutoISF.id = identifier
                 saveAutoISF.date = Date.now
                 try? self.coredataContext.save()
             }
