@@ -145,14 +145,12 @@ extension OverrideProfilesConfig {
                     ) as NSDecimalNumber
                 } else { saveOverride.target = 6 }
 
-                // if advancedSettings {
                 saveOverride.advancedSettings = advancedSettings
                 saveOverride.isfAndCr = self.isfAndCr
-                // if !isfAndCr {
                 saveOverride.isf = self.isf
                 saveOverride.cr = self.cr
                 saveOverride.basal = self.basal
-                // }
+
                 if smbIsAlwaysOff {
                     saveOverride.smbIsAlwaysOff = true
                     saveOverride.start = start as NSDecimalNumber
@@ -164,7 +162,6 @@ extension OverrideProfilesConfig {
                 saveOverride.maxIOB = maxIOB as NSDecimalNumber
                 saveOverride.overrideMaxIOB = self.overrideMaxIOB
                 saveOverride.date = Date.now
-                // }
 
                 if overrideAutoISF {
                     updateAutoISF(useId)
@@ -353,7 +350,8 @@ extension OverrideProfilesConfig {
         }
 
         // Save Auto ISF Override settings
-        private func updateAutoISF(_ id_: String?) {
+        func updateAutoISF(_ id_: String?) {
+            guard let identifier = id_ else { return }
             coredataContext.perform { [self] in
                 let saveAutoISF = Auto_ISF(context: coredataContext)
                 saveAutoISF.autoISFhourlyChange = autoISFsettings.autoISFhourlyChange as NSDecimalNumber
@@ -384,7 +382,7 @@ extension OverrideProfilesConfig {
                 saveAutoISF.smbDeliveryRatioBGrange = autoISFsettings.smbDeliveryRatioBGrange as NSDecimalNumber
                 saveAutoISF.postMealISFweight = autoISFsettings.postMealISFweight as NSDecimalNumber
                 saveAutoISF.date = Date.now
-                saveAutoISF.id = id_
+                saveAutoISF.id = identifier
                 try? self.coredataContext.save()
             }
         }
