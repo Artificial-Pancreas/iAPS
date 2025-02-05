@@ -679,7 +679,7 @@ extension OverrideProfilesConfig {
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
-                        HStack {
+                        HStack(spacing: 10) {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
@@ -687,11 +687,14 @@ extension OverrideProfilesConfig {
                             )
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
+                        }
+                        .offset(y: -1)
+                        .foregroundStyle(.secondary).font(.caption)
 
+                        HStack(spacing: 5) {
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                         }
-                        .offset(y: 2)
                         .foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 5) {
@@ -720,8 +723,8 @@ extension OverrideProfilesConfig {
                                     )
                                 }
                             }
-
-                        }.foregroundStyle(.secondary).font(.caption)
+                        }
+                        .foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 6) {
                             decimal(
