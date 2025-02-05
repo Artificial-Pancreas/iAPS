@@ -783,7 +783,7 @@ extension OverrideProfilesConfig {
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
             if let dec = decimal as? Decimal, round(dec) != round(setting) {
-                return Text(label + "\(dec)")
+                return Text(label + "\(higherPrecisionFormatter.string(from: dec as NSNumber) ?? "")")
             }
             return nil
         }
