@@ -650,8 +650,9 @@ extension OverrideProfilesConfig {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             .foregroundStyle(.secondary) : nil
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
-                        durationString != "" ? Text(durationString + (perpetual ? "" : "min")).foregroundStyle(.secondary) : nil
-                        smbString != "" ? Text(smbString).boolTag(false) : nil
+                        durationString != "" ? Text(durationString + (perpetual ? "" : "min"))
+                            .foregroundStyle(.secondary) : nil
+                        smbString != "" ? Text(smbString).boolTag(false).padding(.leading, 6) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
