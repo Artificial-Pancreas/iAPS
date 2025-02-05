@@ -652,10 +652,10 @@ extension OverrideProfilesConfig {
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
                         durationString != "" ? Text(durationString + (perpetual ? "" : " min"))
                             .foregroundStyle(.secondary) : nil
-                        smbString != "" ? Text(smbString).boolTag(false) : nil
+                        smbString != "" ? Text(smbString).foregroundStyle(.white).boolTag(false) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
+                            Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf)
                         }
                         Spacer()
                     }
@@ -794,7 +794,7 @@ extension OverrideProfilesConfig {
 
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {
             if bool != setting {
-                return Text(label + "\(bool ? "ON" : "OFF")").foregroundStyle(.white).boolTag(bool).asAny()
+                return Text(label + "\(bool ? "on" : "off")").foregroundStyle(.white).boolTag(bool).asAny()
             }
             return nil
         }

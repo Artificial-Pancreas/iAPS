@@ -43,7 +43,17 @@ struct BoolTag: ViewModifier {
     let bool: Bool
     func body(content: Content) -> some View {
         content
-            .padding(4).border(Color.gray).background((bool ? Color.green : Color.red).opacity(0.4)).padding(.trailing, 6)
+            .padding(.vertical, 2)
+            .padding(.horizontal, 6)
+            .background((bool ? Color.green : Color.red).opacity(0.3))
+            .cornerRadius(6)
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(
+                        (bool ? Color.green : Color.red).opacity(0.4),
+                        lineWidth: 1
+                    )
+            )
     }
 }
 
