@@ -560,10 +560,7 @@ extension OverrideProfilesConfig {
                             if !isEditingPreset {
                                 isSheetPresented = true
                             } else if let editThis = presetToEdit {
-                                if !editThis.hasChanges {
-                                    moc.delete(editThis)
-                                }
-                                state.savePreset()
+                                save(editThis)
                                 isEditingPreset.toggle()
                             }
                         }
@@ -637,9 +634,6 @@ extension OverrideProfilesConfig {
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
             let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
-            let maxMinutesSMB = (preset.smbMinutes as Decimal?) != nil ? (preset.smbMinutes ?? 0) as Decimal : 0
-            let maxMinutesUAM = (preset.uamMinutes as Decimal?) != nil ? (preset.uamMinutes ?? 0) as Decimal : 0
-            let maxIOB = preset.overrideMaxIOB ? (preset.maxIOB ?? 999) as Decimal : 999
             let isfString = preset.isf ? "ISF" : ""
             let crString = preset.cr ? "CR" : ""
             let basalString = preset.basal ? "Basal" : ""
@@ -660,8 +654,8 @@ extension OverrideProfilesConfig {
                             .foregroundStyle(.secondary) : nil
                         smbString != "" ? Text(smbString).boolTag(false) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
-                        if let settings = autoisfSettings, settings.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF \(settings.autoisf)").foregroundStyle(.secondary)
+                        if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
+                            Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
                         }
                         Spacer()
                     }
@@ -673,15 +667,17 @@ extension OverrideProfilesConfig {
                             percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) :
                                 nil
                             if !preset.smbIsOff {
-                                Text(maxMinutesSMB == 0 ? "" : maxMinutesSMB.formatted() + " SMB")
-                                Text(maxMinutesUAM == 0 ? "" : maxMinutesUAM.formatted() + " UAM")
+                                decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
+                                decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
                             }
-                            maxIOB != 999 ? Text(" Max IOB: " + maxIOB.formatted()) : nil
+                            if preset.overrideMaxIOB {
+                                decimal(decimal: preset.maxIOB, setting: state.defaultmaxIOB, label: "Max IOB: ")
+                            }
                         }.foregroundStyle(.secondary).font(.caption)
                     }
 
                     // All of the Auto ISF Settings (Bool and Decimal optionals)
-                    if let aisf = autoisfSettings, aisf.autoisf {
+                    if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
                         LazyHStack {
@@ -698,12 +694,6 @@ extension OverrideProfilesConfig {
                                 decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                             }
                         }.foregroundStyle(.secondary).font(.caption)
-
-                        HStack(spacing: 5) {
-                            decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                            decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                        }.foregroundStyle(.secondary)
-                            .font(.caption)
 
                         HStack(spacing: 5) {
                             percentage(
@@ -732,12 +722,12 @@ extension OverrideProfilesConfig {
                             decimal(
                                 decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
-                                label: "lowBG: "
+                                label: "low: "
                             )
                             decimal(
                                 decimal: aisf.higherISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
-                                label: "highBG: "
+                                label: "high: "
                             )
 
                             if aisf.enableBGacceleration {
@@ -755,9 +745,9 @@ extension OverrideProfilesConfig {
                             decimal(
                                 decimal: aisf.autoISFhourlyChange,
                                 setting: standard.autoISFhourlyChange,
-                                label: "Dura: "
+                                label: "dura: "
                             )
-                            decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "PP: ")
+                            decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "pp: ")
                         }.foregroundStyle(.secondary).font(.caption)
                     }
                 }
@@ -809,9 +799,12 @@ extension OverrideProfilesConfig {
         }
 
         private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
-                let target: Decimal = state.units == .mmolL ? (dec as Decimal).asMmolL : setting
-                return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+            if let nsDecimal = decimal {
+                let dec = nsDecimal as Decimal
+                if dec.rounded(to: 2) != setting.rounded(to: 2) {
+                    let target: Decimal = state.units == .mmolL ? dec.asMmolL : dec
+                    return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+                }
             }
             return nil
         }
@@ -821,6 +814,60 @@ extension OverrideProfilesConfig {
                 let preset = fetchedProfiles[index]
                 moc.delete(preset)
             }
+            do {
+                try moc.save()
+            } catch {
+                // To do: add error
+            }
+        }
+
+        private func save(_ preset: OverridePresets) {
+            let saveOverride = preset
+
+            saveOverride.duration = state.duration as NSDecimalNumber
+            saveOverride.indefinite = state._indefinite
+            saveOverride.percentage = state.percentage
+            saveOverride.smbIsOff = state.smbIsOff
+            saveOverride.name = state.profileName
+            saveOverride.emoji = state.emoji
+            saveOverride.overrideAutoISF = state.overrideAutoISF
+            saveOverride.date = Date()
+            if state.override_target {
+                saveOverride.target = (
+                    state.units == .mmolL
+                        ? state.target.asMgdL
+                        : state.target
+                ) as NSDecimalNumber
+            } else { saveOverride.target = 6 }
+
+            saveOverride.advancedSettings = state.advancedSettings
+            saveOverride.isfAndCr = state.isfAndCr
+            if !saveOverride.isfAndCr {
+                saveOverride.isf = state.isf
+                saveOverride.cr = state.cr
+                saveOverride.basal = state.basal
+            }
+
+            if state.smbIsAlwaysOff {
+                saveOverride.smbIsAlwaysOff = true
+                saveOverride.start = state.start as NSDecimalNumber
+                saveOverride.end = state.end as NSDecimalNumber
+            } else { state.smbIsAlwaysOff = false }
+
+            if !saveOverride.smbIsAlwaysOff {
+                saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
+                saveOverride.uamMinutes = state.uamMinutes as NSDecimalNumber
+            }
+            saveOverride.overrideMaxIOB = state.overrideMaxIOB
+            if saveOverride.overrideMaxIOB {
+                saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
+            }
+            saveOverride.date = Date.now
+
+            if saveOverride.overrideAutoISF {
+                state.updateAutoISF(preset.id)
+            }
+
             do {
                 try moc.save()
             } catch {
