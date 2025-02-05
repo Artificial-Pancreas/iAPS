@@ -34,8 +34,20 @@
 /* iAPS Bolus shortcut description */
 "${applicationName} Enacts a bolus" = "${applicationName} Enacts a bolus";
 
-/* iAPS Override shortcut */
-"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+/* iAPS Loop Mode shortcut */
+"${applicationName} Loop Mode" = "${applicationName} Loop Mode";
 
-/* iAPS Meal presets shortcut description */
-"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";
+/* iAPS Loop Mode shortcut description */
+"Activates an ${.applicationName} Loop Mode" = "Activates an ${.applicationName} Loop Mode";
+
+/* iAPS Basal shortcut */
+"${applicationName} Temp Basal" = "${applicationName} Temp Basal";
+
+/* iAPS Basal shortcut description */
+"Enacts an ${.applicationName} Temp Basal" = "Enacts an ${.applicationName} Temp Basal";
+
+/* iAPS Suspend/Resume shortcut */
+"${applicationName} Suspend/Resume" = "${applicationName Suspend/Resume";
+
+/* iAPS Suspend/Resume  shortcut description */
+"Suspends/Resumes your ${applicationName} pump" = "Suspends/Resumes your ${applicationName} pump";
