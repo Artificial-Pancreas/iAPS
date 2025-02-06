@@ -621,6 +621,8 @@ extension OverrideProfilesConfig {
             }
         }
 
+        private let tagsVerticalGap: CGFloat = 6
+
         // The Profile presets
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
             // Values as String
@@ -657,11 +659,12 @@ extension OverrideProfilesConfig {
                         }
                         if smbString != "" {
                             Text(smbString).foregroundStyle(.primary).boolTag(false).padding(.leading, 6)
-                                .padding(.vertical, 2)
+                                .padding(.vertical, tagsVerticalGap)
                         }
                         if scheduledSMBstring != "" { Text(scheduledSMBstring).foregroundStyle(.secondary) }
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf).padding(.vertical, 2)
+                            Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf).padding(.leading, 6)
+                                .padding(.vertical, tagsVerticalGap)
                         }
                     }
                     .font(.caption)
@@ -684,6 +687,23 @@ extension OverrideProfilesConfig {
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
+                        let haveTagsInAutoIsfLine = aisf.enableBGacceleration != standard.enableBGacceleration ||
+                            aisf.ketoProtect != standard.ketoProtect ||
+                            aisf.use_B30 != standard.use_B30
+                        let advancedLineIsVisible = (percent != 1 && !(preset.isf && preset.cr && preset.basal)) ||
+                            (!preset.smbIsOff && (
+                                (preset.smbMinutes ?? 0) as Decimal != state.defaultSmbMinutes ||
+                                    (preset.uamMinutes ?? 0) as Decimal != state.defaultUamMinutes
+                            )) || (
+                                preset.overrideMaxIOB &&
+                                    (preset.maxIOB as? Decimal) ?? state.defaultmaxIOB != state.defaultmaxIOB
+                            )
+                        let haveTagsInFirstLine = smbString != "" ||
+                            (
+                                autoisfSettings != nil && preset.overrideAutoISF &&
+                                    autoisfSettings!.autoisf != state.currentSettings.autoisf
+                            )
+
                         HStack(spacing: 7) {
                             bool(
                                 bool: aisf.enableBGacceleration,
@@ -693,9 +713,15 @@ extension OverrideProfilesConfig {
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                                .foregroundStyle(.secondary)
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
+                                .foregroundStyle(.secondary)
                         }
-                        .foregroundStyle(.secondary).font(.caption)
+                        .font(.caption)
+                        .padding(
+                            .top,
+                            haveTagsInAutoIsfLine && (advancedLineIsVisible || !haveTagsInFirstLine) ? tagsVerticalGap : 0
+                        )
 
                         HStack(spacing: 7) {
                             percentage(
@@ -792,7 +818,7 @@ extension OverrideProfilesConfig {
 
         @ViewBuilder private func bool(bool: Bool, setting: Bool, label: String) -> some View {
             if bool != setting {
-                Text(label + (bool ? "on" : "off")).foregroundStyle(.primary).boolTag(bool).padding(.vertical, 2).asAny()
+                Text(label + (bool ? "on" : "off")).foregroundStyle(.primary).boolTag(bool).padding(.bottom, tagsVerticalGap)
             }
         }
 
