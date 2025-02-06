@@ -643,7 +643,7 @@ extension OverrideProfilesConfig {
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 1) {
                     Text(name).padding(.top, 5).padding(.bottom, 2)
                     HStack(spacing: 7) {
                         percent != 1 ?
@@ -652,10 +652,10 @@ extension OverrideProfilesConfig {
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
                         durationString != "" ? Text(durationString + (perpetual ? "" : " min"))
                             .foregroundStyle(.secondary) : nil
-                        smbString != "" ? Text(smbString).foregroundStyle(.white).boolTag(false).padding(.leading, 6) : nil
+                        smbString != "" ? Text(smbString).foregroundStyle(.white).boolTag(false).padding(.leading, 6).padding(.vertical, 2) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf)
+                            Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf).padding(.vertical, 2)
                         }
                         Spacer()
                     }
@@ -679,7 +679,7 @@ extension OverrideProfilesConfig {
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
-                        HStack {
+                        HStack(spacing: 5) {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
@@ -690,7 +690,7 @@ extension OverrideProfilesConfig {
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                         }
-                        .offset(y: 2)
+//                        .offset(y: 2)
                         .foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 5) {
@@ -721,7 +721,7 @@ extension OverrideProfilesConfig {
                         }
                         .foregroundStyle(.secondary).font(.caption)
 
-                        HStack(spacing: 6) {
+                        HStack(spacing: 5) {
                             decimal(
                                 decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
@@ -789,7 +789,7 @@ extension OverrideProfilesConfig {
 
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {
             if bool != setting {
-                return Text(label + (bool ? "on" : "off")).foregroundStyle(.white).boolTag(bool).asAny()
+                return Text(label + (bool ? "on" : "off")).foregroundStyle(.white).boolTag(bool).padding(.vertical, 2).asAny()
             }
             return nil
         }
