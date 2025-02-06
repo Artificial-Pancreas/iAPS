@@ -44,7 +44,7 @@ struct BoolTag: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.vertical, 4).padding(.horizontal, 6).background((bool ? Color.green : Color.red).opacity(0.4))
-            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .clipShape(RoundedRectangle(cornerRadius: 6)).padding(.trailing, 6)
     }
 }
 
