@@ -726,7 +726,7 @@ extension OverrideProfilesConfig {
                             )
                             decimal(
                                 decimal: aisf.higherISFrangeWeight,
-                                setting: standard.lowerISFrangeWeight,
+                                setting: standard.higherISFrangeWeight,
                                 label: "high: "
                             )
 
@@ -778,7 +778,7 @@ extension OverrideProfilesConfig {
         }
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
+            if let dec = decimal as? Decimal, round(dec) != round(setting) {
                 return Text(label + "\(dec)")
             }
             return nil
@@ -792,7 +792,7 @@ extension OverrideProfilesConfig {
         }
 
         private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
-            if let dec = decimal, dec as Decimal != setting {
+            if let dec = decimal as? Decimal, dec != setting {
                 return Text(label + "\(dec)%")
             }
             return nil
@@ -801,12 +801,17 @@ extension OverrideProfilesConfig {
         private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
             if let nsDecimal = decimal {
                 let dec = nsDecimal as Decimal
-                if dec.rounded(to: 2) != setting.rounded(to: 2) {
+                if round(dec) != round(setting) {
                     let target: Decimal = state.units == .mmolL ? dec.asMmolL : dec
                     return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
                 }
             }
             return nil
+        }
+
+        /// Round to two fraction digits
+        private func round(_ decimal: Decimal) -> Decimal {
+            decimal.rounded(to: 2)
         }
 
         private func removeProfile(at offsets: IndexSet) {
@@ -831,7 +836,6 @@ extension OverrideProfilesConfig {
             saveOverride.name = state.profileName
             saveOverride.emoji = state.emoji
             saveOverride.overrideAutoISF = state.overrideAutoISF
-            saveOverride.date = Date()
             if state.override_target {
                 saveOverride.target = (
                     state.units == .mmolL
@@ -852,7 +856,7 @@ extension OverrideProfilesConfig {
                 saveOverride.smbIsAlwaysOff = true
                 saveOverride.start = state.start as NSDecimalNumber
                 saveOverride.end = state.end as NSDecimalNumber
-            } else { state.smbIsAlwaysOff = false }
+            } else { saveOverride.smbIsAlwaysOff = false }
 
             if !state.smbIsAlwaysOff {
                 saveOverride.smbMinutes = state.smbMinutes as NSDecimalNumber
