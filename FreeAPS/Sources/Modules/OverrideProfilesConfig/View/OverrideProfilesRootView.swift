@@ -682,20 +682,42 @@ extension OverrideProfilesConfig {
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
+                        let haveTagsInAutoIsfLine = aisf.enableBGacceleration != standard.enableBGacceleration ||
+                            aisf.ketoProtect != standard.ketoProtect ||
+                            aisf.use_B30 != standard.use_B30
+                        let advancedLineIsVisible = (percent != 1 && !(preset.isf && preset.cr && preset.basal)) ||
+                            (!preset.smbIsOff && (
+                                (preset.smbMinutes ?? 0) as Decimal != state.defaultSmbMinutes ||
+                                    (preset.uamMinutes ?? 0) as Decimal != state.defaultUamMinutes
+                            )) || (
+                                preset.overrideMaxIOB &&
+                                    (preset.maxIOB as? Decimal) ?? state.defaultmaxIOB != state.defaultmaxIOB
+                            )
+                        let haveTagsInFirstLine = smbString != "" ||
+                            (
+                                autoisfSettings != nil && preset.overrideAutoISF &&
+                                    autoisfSettings!.autoisf != state.currentSettings.autoisf
+                            )
+                        let autoIsfLineTagsTopPadding = haveTagsInAutoIsfLine && (advancedLineIsVisible || !haveTagsInFirstLine) ?
+                            tagsVerticalGap : 2
                         HStack(spacing: 7) {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
                                 label: "Accel: "
-                            ).padding(.vertical, tagsVerticalGap)
+                            ).padding(.top, autoIsfLineTagsTopPadding)
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
-                                .padding(.vertical, tagsVerticalGap)
+                                .padding(.top, autoIsfLineTagsTopPadding)
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
-                                .padding(.vertical, tagsVerticalGap)
+                                .padding(.top, autoIsfLineTagsTopPadding)
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                                 .foregroundStyle(.secondary)
+                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
+                                .padding(.top, autoIsfLineTagsTopPadding)
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                                 .foregroundStyle(.secondary)
+                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
+                                .padding(.top, autoIsfLineTagsTopPadding)
                         }
                         .font(.caption)
 
