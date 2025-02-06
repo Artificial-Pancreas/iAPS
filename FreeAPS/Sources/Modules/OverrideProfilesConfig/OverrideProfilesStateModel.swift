@@ -247,8 +247,10 @@ extension OverrideProfilesConfig {
                 return
             }
             var presetArray: OverridePresets?
-            if edit { presetArray = OverrideStorage().fetchPreset(id: identifier ?? "No, I'm sorry.") }
-            if edit { profileName = presetArray?.name ?? "" }
+            if edit {
+                presetArray = OverrideStorage().fetchPreset(id: identifier ?? "No, I'm sorry.")
+                profileName = presetArray?.name ?? ""
+            }
 
             percentage = !edit ? overrideArray!.percentage : presetArray?.percentage ?? 100
             _indefinite = !edit ? overrideArray!.indefinite : presetArray?.indefinite ?? true
