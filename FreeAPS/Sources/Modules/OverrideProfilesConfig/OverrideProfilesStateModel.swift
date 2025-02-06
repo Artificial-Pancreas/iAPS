@@ -247,8 +247,10 @@ extension OverrideProfilesConfig {
                 return
             }
             var presetArray: OverridePresets?
-            if edit { presetArray = OverrideStorage().fetchPreset(id: identifier ?? "No, I'm sorry.") }
-            if edit { profileName = presetArray?.name ?? "" }
+            if edit {
+                presetArray = OverrideStorage().fetchPreset(id: identifier ?? "No, I'm sorry.")
+                profileName = presetArray?.name ?? ""
+            }
 
             percentage = !edit ? overrideArray!.percentage : presetArray?.percentage ?? 100
             _indefinite = !edit ? overrideArray!.indefinite : presetArray?.indefinite ?? true
@@ -352,10 +354,10 @@ extension OverrideProfilesConfig {
         // Save Auto ISF Override settings
         func updateAutoISF(_ id_: String?) {
             guard let identifier = id_ else { return }
-            
+
             let oldObject = OverrideStorage().fetchAutoISFsetting(id: identifier)
             let saveAutoISF = oldObject != nil ? oldObject! : Auto_ISF(context: coredataContext)
-            
+
             coredataContext.perform { [self] in
                 saveAutoISF.autoISFhourlyChange = autoISFsettings.autoISFhourlyChange as NSDecimalNumber
                 saveAutoISF.autoisf = autoISFsettings.autoisf
