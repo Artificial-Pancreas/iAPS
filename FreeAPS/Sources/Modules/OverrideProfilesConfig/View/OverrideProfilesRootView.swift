@@ -703,25 +703,24 @@ extension OverrideProfilesConfig {
                                 autoisfSettings != nil && preset.overrideAutoISF &&
                                     autoisfSettings!.autoisf != state.currentSettings.autoisf
                             )
-
+                        let autoIsfLineTagsTopPadding = haveTagsInAutoIsfLine && (advancedLineIsVisible || !haveTagsInFirstLine) ?
+                            tagsVerticalGap : 0
                         HStack(spacing: 7) {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
                                 label: "Accel: "
-                            )
+                            ).padding(.top, autoIsfLineTagsTopPadding)
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
+                                .padding(.top, autoIsfLineTagsTopPadding)
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
+                                .padding(.top, autoIsfLineTagsTopPadding)
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                                 .foregroundStyle(.secondary)
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                                 .foregroundStyle(.secondary)
                         }
                         .font(.caption)
-                        .padding(
-                            .top,
-                            haveTagsInAutoIsfLine && (advancedLineIsVisible || !haveTagsInFirstLine) ? tagsVerticalGap : 0
-                        )
 
                         HStack(spacing: 7) {
                             percentage(
