@@ -645,6 +645,7 @@ extension OverrideProfilesConfig {
             if name != "" {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(name).padding(.top, 5).padding(.bottom, 2)
+
                     HStack(spacing: 7) {
                         percent != 1 ?
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
@@ -652,12 +653,12 @@ extension OverrideProfilesConfig {
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
                         durationString != "" ? Text(durationString + (perpetual ? "" : " min"))
                             .foregroundStyle(.secondary) : nil
-                        smbString != "" ? Text(smbString).foregroundStyle(.white).boolTag(false).padding(.leading, 6).padding(.vertical, 2) : nil
+                        smbString != "" ? Text(smbString).foregroundStyle(.white).boolTag(false).padding(.leading, 6)
+                            .padding(.vertical, 2) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf).padding(.vertical, 2)
                         }
-                        Spacer()
                     }
                     .font(.caption)
 
@@ -672,14 +673,15 @@ extension OverrideProfilesConfig {
                             if preset.overrideMaxIOB {
                                 decimal(decimal: preset.maxIOB, setting: state.defaultmaxIOB, label: "Max IOB: ")
                             }
-                        }.foregroundStyle(.secondary).font(.caption)
+                        }
+                        .foregroundStyle(.secondary).font(.caption)
                     }
 
                     // All of the Auto ISF Settings (Bool and Decimal optionals)
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
-                        HStack(spacing: 5) {
+                        HStack(spacing: 7) {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
@@ -690,10 +692,10 @@ extension OverrideProfilesConfig {
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                         }
-//                        .offset(y: 2)
+                        //                        .offset(y: 2)
                         .foregroundStyle(.secondary).font(.caption)
 
-                        HStack(spacing: 5) {
+                        HStack(spacing: 7) {
                             percentage(
                                 decimal: aisf.iobThresholdPercent,
                                 setting: standard.iobThresholdPercent,
@@ -721,7 +723,7 @@ extension OverrideProfilesConfig {
                         }
                         .foregroundStyle(.secondary).font(.caption)
 
-                        HStack(spacing: 5) {
+                        HStack(spacing: 7) {
                             decimal(
                                 decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
@@ -751,7 +753,8 @@ extension OverrideProfilesConfig {
                                 label: "dura: "
                             )
                             decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "pp: ")
-                        }.foregroundStyle(.secondary).font(.caption)
+                        }
+                        .foregroundStyle(.secondary).font(.caption)
                     }
                 }
                 .contentShape(Rectangle())
@@ -759,7 +762,6 @@ extension OverrideProfilesConfig {
                     state.selectProfile(id_: preset.id ?? "")
                     state.hideModal()
                 }
-                .dynamicTypeSize(...DynamicTypeSize.large)
             }
         }
 
