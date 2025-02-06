@@ -135,7 +135,7 @@
         <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="emoji" optional="YES" attributeType="String"/>
         <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="isfAndCr" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
