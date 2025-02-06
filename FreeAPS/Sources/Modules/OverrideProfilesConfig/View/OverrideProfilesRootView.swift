@@ -644,7 +644,10 @@ extension OverrideProfilesConfig {
 
             if name != "" {
                 VStack(alignment: .leading) {
-                    Text(name).padding(.top, 5).padding(.bottom, 2)
+                    HStack {
+                        Text(name).padding(.top, 5).padding(.bottom, 2)
+                        Spacer()
+                    }
                     HStack(spacing: 7) {
                         percent != 1 ?
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
@@ -657,7 +660,6 @@ extension OverrideProfilesConfig {
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
                         }
-                        Spacer()
                     }
                     .font(.caption)
 
@@ -678,7 +680,7 @@ extension OverrideProfilesConfig {
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
-                        LazyHStack {
+                        HStack {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
@@ -687,7 +689,7 @@ extension OverrideProfilesConfig {
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
 
-                            LazyHStack(spacing: 5) {
+                            HStack(spacing: 5) {
                                 decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                                 decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                             }
