@@ -695,7 +695,6 @@ extension OverrideProfilesConfig {
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                         }
-                        //                        .offset(y: 2)
                         .foregroundStyle(.secondary).font(.caption)
 
                         HStack(spacing: 7) {
