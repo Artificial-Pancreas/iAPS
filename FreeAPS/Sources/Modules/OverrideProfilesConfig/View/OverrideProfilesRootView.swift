@@ -174,21 +174,23 @@ extension OverrideProfilesConfig {
                                 Text("Disable SMBs")
                             }
                         }
-                        HStack {
-                            Toggle(isOn: $state.smbIsAlwaysOff) {
-                                Text("Schedule when SMBs are Off")
-                            }.disabled(!state.smbIsOff)
-                        }
-                        if state.smbIsAlwaysOff {
+                        if state.smbIsOff {
                             HStack {
-                                Text("First Hour SMBs are Off (24 hours)")
-                                DecimalTextField("0", value: $state.start, formatter: formatter, liveEditing: true)
-                                Text("hour").foregroundColor(.secondary)
+                                Toggle(isOn: $state.smbIsAlwaysOff) {
+                                    Text("Schedule when SMBs are Off")
+                                }.disabled(!state.smbIsOff)
                             }
-                            HStack {
-                                Text("Last Hour SMBs are Off (24 hours)")
-                                DecimalTextField("0", value: $state.end, formatter: formatter, liveEditing: true)
-                                Text("hour").foregroundColor(.secondary)
+                            if state.smbIsAlwaysOff {
+                                HStack {
+                                    Text("First Hour SMBs are Off (24 hours)")
+                                    DecimalTextField("0", value: $state.start, formatter: formatter, liveEditing: true)
+                                    Text("hour").foregroundColor(.secondary)
+                                }
+                                HStack {
+                                    Text("Last Hour SMBs are Off (24 hours)")
+                                    DecimalTextField("0", value: $state.end, formatter: formatter, liveEditing: true)
+                                    Text("hour").foregroundColor(.secondary)
+                                }
                             }
                         }
                         HStack {
