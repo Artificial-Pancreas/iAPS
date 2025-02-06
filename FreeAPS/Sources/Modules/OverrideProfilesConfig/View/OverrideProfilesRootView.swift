@@ -521,12 +521,7 @@ extension OverrideProfilesConfig {
                                     (
                                         state.duration > 0 && !state
                                             ._indefinite ?
-                                            (
-                                                state
-                                                    .duration
-                                                    .formatted(.number.grouping(.never).rounded().precision(.fractionLength(0))) +
-                                                    " min."
-                                            ) :
+                                            formatTime(minutes: state.duration) + "." :
                                             NSLocalizedString(" infinite duration.", comment: "")
                                     ) +
                                     (
@@ -632,7 +627,7 @@ extension OverrideProfilesConfig {
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
             let percent = preset.percentage / 100
             let perpetual = preset.indefinite
-            let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber)!)"
+            let durationString = perpetual ? "" : formatTime(minutes: duration)
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
             let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
@@ -655,7 +650,7 @@ extension OverrideProfilesConfig {
                         }
                         if targetString != "" { Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) }
                         if durationString != "" {
-                            Text(durationString + (perpetual ? "" : " min")).foregroundStyle(.secondary)
+                            Text(durationString).foregroundStyle(.secondary)
                         }
                         if smbString != "" {
                             Text(smbString).foregroundStyle(.primary).boolTag(false).padding(.leading, 6)
@@ -687,42 +682,20 @@ extension OverrideProfilesConfig {
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
-                        let haveTagsInAutoIsfLine = aisf.enableBGacceleration != standard.enableBGacceleration ||
-                            aisf.ketoProtect != standard.ketoProtect ||
-                            aisf.use_B30 != standard.use_B30
-                        let advancedLineIsVisible = (percent != 1 && !(preset.isf && preset.cr && preset.basal)) ||
-                            (!preset.smbIsOff && (
-                                (preset.smbMinutes ?? 0) as Decimal != state.defaultSmbMinutes ||
-                                    (preset.uamMinutes ?? 0) as Decimal != state.defaultUamMinutes
-                            )) || (
-                                preset.overrideMaxIOB &&
-                                    (preset.maxIOB as? Decimal) ?? state.defaultmaxIOB != state.defaultmaxIOB
-                            )
-                        let haveTagsInFirstLine = smbString != "" ||
-                            (
-                                autoisfSettings != nil && preset.overrideAutoISF &&
-                                    autoisfSettings!.autoisf != state.currentSettings.autoisf
-                            )
-                        let autoIsfLineTagsTopPadding = haveTagsInAutoIsfLine && (advancedLineIsVisible || !haveTagsInFirstLine) ?
-                            tagsVerticalGap : 0
                         HStack(spacing: 7) {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
                                 label: "Accel: "
-                            ).padding(.top, autoIsfLineTagsTopPadding)
+                            ).padding(.vertical, tagsVerticalGap)
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
-                                .padding(.top, autoIsfLineTagsTopPadding)
+                                .padding(.vertical, tagsVerticalGap)
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
-                                .padding(.top, autoIsfLineTagsTopPadding)
+                                .padding(.vertical, tagsVerticalGap)
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                                 .foregroundStyle(.secondary)
-                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
-                                .padding(.top, autoIsfLineTagsTopPadding)
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                                 .foregroundStyle(.secondary)
-                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
-                                .padding(.top, autoIsfLineTagsTopPadding)
                         }
                         .font(.caption)
 
@@ -844,6 +817,25 @@ extension OverrideProfilesConfig {
         /// Round to two fraction digits
         private func round(_ decimal: Decimal) -> Decimal {
             decimal.rounded(to: 2)
+        }
+
+        /// format minutes as 'xx hr yy min'
+        func formatTime(minutes: Decimal) -> String {
+            let roundedMinutes: Int = NSDecimalNumber(decimal: minutes).intValue
+
+            let hours = roundedMinutes / 60
+            let remainingMinutes = roundedMinutes % 60
+
+            if hours != 0, remainingMinutes != 0 {
+                return "\(hours)h \(remainingMinutes)m"
+            }
+            if hours != 0 {
+                return "\(hours) hr"
+            }
+            if remainingMinutes != 0 {
+                return "\(remainingMinutes) min"
+            }
+            return "0 min"
         }
 
         private func removeProfile(at offsets: IndexSet) {
