@@ -717,8 +717,12 @@ extension OverrideProfilesConfig {
                                 .padding(.top, autoIsfLineTagsTopPadding)
                             decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                                 .foregroundStyle(.secondary)
+                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
+                                .padding(.top, autoIsfLineTagsTopPadding)
                             decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                                 .foregroundStyle(.secondary)
+                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
+                                .padding(.top, autoIsfLineTagsTopPadding)
                         }
                         .font(.caption)
 
