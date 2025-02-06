@@ -647,15 +647,19 @@ extension OverrideProfilesConfig {
                     Text(name).padding(.top, 5).padding(.bottom, 2)
 
                     HStack(spacing: 7) {
-                        percent != 1 ?
+                        if percent != 1 {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
-                            .foregroundStyle(.secondary) : nil
-                        targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
-                        durationString != "" ? Text(durationString + (perpetual ? "" : " min"))
-                            .foregroundStyle(.secondary) : nil
-                        smbString != "" ? Text(smbString).foregroundStyle(.white).boolTag(false).padding(.leading, 6)
-                            .padding(.vertical, 2) : nil
-                        scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
+                                .foregroundStyle(.secondary)
+                        }
+                        if targetString != "" { Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) }
+                        if durationString != "" {
+                            Text(durationString + (perpetual ? "" : " min")).foregroundStyle(.secondary)
+                        }
+                        if smbString != "" {
+                            Text(smbString).foregroundStyle(.primary).boolTag(false).padding(.leading, 6)
+                                .padding(.vertical, 2)
+                        }
+                        if scheduledSMBstring != "" { Text(scheduledSMBstring).foregroundStyle(.secondary) }
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf).padding(.vertical, 2)
                         }
@@ -664,8 +668,7 @@ extension OverrideProfilesConfig {
 
                     if preset.advancedSettings {
                         HStack {
-                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) :
-                                nil
+                            if percent != 1, !(preset.isf && preset.cr && preset.basal) { Text("Adjust " + isfAndCRstring) }
                             if !preset.smbIsOff {
                                 decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
                                 decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
@@ -782,36 +785,32 @@ extension OverrideProfilesConfig {
                 uamMinutesUnchanged && autoISFUnchanged
         }
 
-        private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+        @ViewBuilder private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> some View {
             if let dec = decimal as? Decimal, round(dec) != round(setting) {
-                return Text(label + "\(higherPrecisionFormatter.string(from: dec as NSNumber) ?? "")")
+                Text(label + "\(higherPrecisionFormatter.string(from: dec as NSNumber) ?? "")")
             }
-            return nil
         }
 
-        private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {
+        @ViewBuilder private func bool(bool: Bool, setting: Bool, label: String) -> some View {
             if bool != setting {
-                return Text(label + (bool ? "on" : "off")).foregroundStyle(.white).boolTag(bool).padding(.vertical, 2).asAny()
+                Text(label + (bool ? "on" : "off")).foregroundStyle(.primary).boolTag(bool).padding(.vertical, 2).asAny()
             }
-            return nil
         }
 
-        private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+        @ViewBuilder private func percentage(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> some View {
             if let dec = decimal as? Decimal, dec != setting {
-                return Text(label + "\(dec)%")
+                Text(label + "\(dec)%")
             }
-            return nil
         }
 
-        private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
+        @ViewBuilder private func glucose(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> some View {
             if let nsDecimal = decimal {
                 let dec = nsDecimal as Decimal
                 if round(dec) != round(setting) {
                     let target: Decimal = state.units == .mmolL ? dec.asMmolL : dec
-                    return Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
+                    Text(label + (glucoseFormatter.string(from: target as NSNumber) ?? "") + " " + state.units.rawValue)
                 }
             }
-            return nil
         }
 
         /// Round to two fraction digits
