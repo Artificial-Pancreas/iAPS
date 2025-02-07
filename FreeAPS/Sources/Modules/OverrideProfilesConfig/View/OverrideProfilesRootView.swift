@@ -788,7 +788,7 @@ extension OverrideProfilesConfig {
 
         private func bool(bool: Bool, setting: Bool, label: String) -> AnyView? {
             if bool != setting {
-                return Text(label + (bool ? "on" : "off")).foregroundStyle(.primary).boolTag(bool).asAny()
+                return Text(label + (bool ? "on" : "off")).foregroundStyle(.white).boolTag(bool).asAny()
             }
             return nil
         }
