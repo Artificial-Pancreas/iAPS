@@ -40,10 +40,12 @@ struct CapsulaBackground: ViewModifier {
 }
 
 struct BoolTag: ViewModifier {
+    @Environment(\.colorScheme) var colorScheme
     let bool: Bool
     func body(content: Content) -> some View {
         content
-            .padding(.vertical, 4).padding(.horizontal, 6).background((bool ? Color.green : Color.red).opacity(0.4))
+            .padding(.vertical, 4).padding(.horizontal, 6)
+            .background((bool ? Color.green : Color.red).opacity(colorScheme == .light ? 0.8 : 0.5))
             .clipShape(RoundedRectangle(cornerRadius: 6)).padding(.trailing, 6)
     }
 }
