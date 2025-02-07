@@ -106,6 +106,35 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         }
     }
 
+    func callAsync(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+        if let script = script(for: name) {
+            return await callFunctionAsync(function: script, with: arguments, withBody: body)
+        } else {
+            print("No script found for \"\(name)\"")
+            return ""
+        }
+    }
+
+    func callFunctionAsync(function: FunctionScript, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+        await callFunctionAsync(function: function.variable, with: arguments, withBody: body)
+    }
+
+    func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+        let joined = arguments.map(\.rawJSON).joined(separator: ",")
+        let script = """
+        \(body)
+
+        return JSON.stringify(\(function)(\(joined)) ?? "", null, 4);
+        """
+
+        do {
+            return try await evaluateFunction(body: script) as! RawJSON
+        } catch {
+            print(error)
+            return ""
+        }
+    }
+
     func callFunctionSync(function: FunctionScript, with arguments: [JSON], withBody body: String = "") -> RawJSON {
         callFunctionSync(function: function.variable, with: arguments, withBody: body)
     }
