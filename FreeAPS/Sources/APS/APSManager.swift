@@ -1254,7 +1254,7 @@ final class BaseAPSManager: APSManager, Injectable {
             )
 
             // Insulin
-            let insulinDistribution = CoreDataStorage().fetchInsulinDistribution()
+            let insulinDistribution = CoreDataStorage().fetchInsulinDistribution(limit: 1)
             var insulin = Ins(
                 TDD: 0,
                 bolus: 0,

@@ -42,7 +42,6 @@ struct CapsulaBackground: ViewModifier {
 struct BoolTag: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     let bool: Bool
-    @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
         content
             .padding(.vertical, 4).padding(.horizontal, 6)
