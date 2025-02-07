@@ -20,12 +20,26 @@ protocol FileStorage {
 final class BaseFileStorage: FileStorage, Injectable {
     private let processQueue = DispatchQueue.markedQueue(
         label: "BaseFileStorage.processQueue",
-        qos: .utility,
-        attributes: .concurrent
+        qos: .utility
     )
 
+    private var fileQueues: [String: DispatchQueue] = [:]
+    private let queueAccessLock = DispatchQueue(label: "BaseFileStorage.processQueue")
+
+    private func getQueue(for path: String) -> DispatchQueue {
+        queueAccessLock.sync {
+            if let queue = fileQueues[path] {
+                return queue
+            } else {
+                let newQueue = DispatchQueue(label: "BaseFileStorage.processQueue.\(path.hashValue)", qos: .utility)
+                fileQueues[path] = newQueue
+                return newQueue
+            }
+        }
+    }
+
     func save<Value: JSON>(_ value: Value, as name: String) {
-        processQueue.safeSync {
+        getQueue(for: name).sync {
             if let value = value as? RawJSON, let data = value.data(using: .utf8) {
                 try? Disk.save(data, to: .documents, as: name)
             } else {
@@ -35,13 +49,13 @@ final class BaseFileStorage: FileStorage, Injectable {
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
-        processQueue.safeSync {
+        getQueue(for: name).sync {
             try? Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
         }
     }
 
     func retrieveRaw(_ name: String) -> RawJSON? {
-        processQueue.safeSync {
+        getQueue(for: name).sync {
             guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
                 return nil
             }
@@ -51,8 +65,8 @@ final class BaseFileStorage: FileStorage, Injectable {
 
     func retrieveRawAsync(_ name: String) async -> RawJSON? {
         await withCheckedContinuation { continuation in
-            processQueue.async {
-                // Mantieni la logica esistente per recuperare il file
+            getQueue(for: name).async {
+                let now = Date.now
                 guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
                     continuation.resume(returning: nil)
                     return
@@ -73,13 +87,13 @@ final class BaseFileStorage: FileStorage, Injectable {
     }
 
     func append<Value: JSON>(_ newValue: Value, to name: String) {
-        processQueue.safeSync {
+        getQueue(for: name).sync {
             try? Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
 
     func append<Value: JSON>(_ newValues: [Value], to name: String) {
-        processQueue.safeSync {
+        getQueue(for: name).sync {
             try? Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
@@ -121,13 +135,13 @@ final class BaseFileStorage: FileStorage, Injectable {
     }
 
     func remove(_ name: String) {
-        processQueue.safeSync {
+        getQueue(for: name).sync {
             try? Disk.remove(name, from: .documents)
         }
     }
 
     func rename(_ name: String, to newName: String) {
-        processQueue.safeSync {
+        getQueue(for: name).sync {
             try? Disk.rename(name, in: .documents, to: newName)
         }
     }

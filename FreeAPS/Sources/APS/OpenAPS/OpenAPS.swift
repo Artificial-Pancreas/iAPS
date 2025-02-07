@@ -32,33 +32,29 @@ final class OpenAPS {
                     let tempBasal = currentTemp.rawJSON
                     self.storage.save(tempBasal, as: Monitor.tempBasal)
 
-                    async let pumpHistoryAsync = self.loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory)
-                    async let carbsAsync = self.loadFileFromStorageAsync(name: Monitor.carbHistory)
-                    async let glucoseAsync = self.loadFileFromStorageAsync(name: Monitor.glucose)
-                    async let preferencesAsync = self.loadFileFromStorageAsync(name: Settings.preferences)
-                    async let basalProfileAsync = self.loadFileFromStorageAsync(name: Settings.basalProfile)
-                    async let dataAsync = self.loadFileFromStorageAsync(name: FreeAPS.settings)
-                    async let autosensAsync = self.loadFileFromStorageAsync(name: Settings.autosense)
-                    async let reservoirAsync = self.loadFileFromStorageAsync(name: Monitor.reservoir)
                     async let profileAsync = self.loadFileFromStorageAsync(name: Settings.profile)
 
                     let (pumpHistory, carbs, glucose, preferences, basalProfile, data, autosens, reservoir) = await (
-                        pumpHistoryAsync,
-                        carbsAsync,
-                        glucoseAsync,
-                        preferencesAsync,
-                        basalProfileAsync,
-                        dataAsync,
-                        autosensAsync,
-                        reservoirAsync
+                        Task { await self.loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Monitor.carbHistory) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Monitor.glucose) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.preferences) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.basalProfile) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: FreeAPS.settings) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.autosense) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Monitor.reservoir) }.value
                     )
 
                     let preferencesData = Preferences(from: preferences)
                     var profile = await profileAsync
 
-                    let settings = FreeAPSSettings(from: data)
-                    let tdd = CoreDataStorage().fetchInsulinDistribution().first
                     print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
+
+                    let settings = FreeAPSSettings(from: data)
+
+                    now = Date.now
+                    let tdd = CoreDataStorage().fetchInsulinDistribution().first
+                    print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
                     now = Date.now
                     let meal = self.meal(
@@ -91,6 +87,7 @@ final class OpenAPS {
                     // determine-basal
 
                     // The Middleware layer.
+                    now = Date.now
                     let alteredProfile = self.middleware(
                         glucose: glucose,
                         currentTemp: tempBasal,
@@ -101,10 +98,14 @@ final class OpenAPS {
                         microBolusAllowed: true,
                         reservoir: reservoir
                     )
+                    print(
+                        "Time for Middleware module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
 
                     now = Date.now
                     // Auto ISF Layer
                     if let freeAPSSettings = settings, freeAPSSettings.autoisf {
+                        now = Date.now
                         profile = self.autosisf(
                             glucose: glucose,
                             iob: iob,
@@ -112,10 +113,10 @@ final class OpenAPS {
                             autosens: autosens.isEmpty ? .null : autosens,
                             pumpHistory: pumpHistory
                         )
+                        print(
+                            "Time for AutoISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
                     }
-                    print(
-                        "Time for AutoISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
 
                     now = Date.now
                     // The OpenAPS layer
@@ -254,65 +255,111 @@ final class OpenAPS {
         Future { promise in
             debug(.openAPS, "Start makeProfiles")
             self.processQueue.async {
-                var preferences = self.loadFileFromStorage(name: Settings.preferences)
-                if preferences.isEmpty {
-                    preferences = Preferences().rawJSON
+                Task {
+                    let start = Date.now
+                    var now = Date.now
+                    let (
+                        preferencesResult,
+                        pumpSettings,
+                        bgTargets,
+                        basalProfile,
+                        isf,
+                        cr,
+                        tempTargets,
+                        model,
+                        autotune,
+                        freeaps
+                    ) = await (
+                        Task { await self.loadFileFromStorageAsync(name: Settings.preferences) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.settings) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.bgTargets) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.basalProfile) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.insulinSensitivities) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.carbRatios) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.tempTargets) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.model) }.value,
+                        Task { useAutotune ? await self.loadFileFromStorageAsync(name: Settings.autotune) : .empty }.value,
+                        Task { await self.loadFileFromStorageAsync(name: FreeAPS.settings) }.value
+                    )
+
+                    print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
+
+                    var preferences = preferencesResult
+                    if preferences.isEmpty {
+                        preferences = Preferences().rawJSON
+                    }
+                    let preferencesData = Preferences(from: preferences)
+
+                    now = Date.now
+                    let tdd = self.tdd(preferencesData: preferencesData)
+                    print(
+                        "MakeProfiles: Time for tdd \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+
+                    if let insulin = tdd, insulin.hours > 0 {
+                        CoreDataStorage().saveTDD(insulin)
+                    }
+
+                    now = Date.now
+                    let dynamicVariables = self.dynamicVariables(preferencesData)
+                    print(
+                        "MakeProfiles: Time for dynamicVariables \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+
+                    now = Date.now
+                    let pumpProfile = self.makeProfile(
+                        preferences: preferences,
+                        pumpSettings: pumpSettings,
+                        bgTargets: bgTargets,
+                        basalProfile: basalProfile,
+                        isf: isf,
+                        carbRatio: cr,
+                        tempTargets: tempTargets,
+                        model: model,
+                        autotune: RawJSON.null,
+                        freeaps: freeaps,
+                        dynamicVariables: dynamicVariables,
+                        settings: settings
+                    )
+                    print(
+                        "MakeProfiles: Time for pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+
+                    now = Date.now
+                    let profile = self.makeProfile(
+                        preferences: preferences,
+                        pumpSettings: pumpSettings,
+                        bgTargets: bgTargets,
+                        basalProfile: basalProfile,
+                        isf: isf,
+                        carbRatio: cr,
+                        tempTargets: tempTargets,
+                        model: model,
+                        autotune: autotune.isEmpty ? .null : autotune,
+                        freeaps: freeaps,
+                        dynamicVariables: dynamicVariables,
+                        settings: settings
+                    )
+
+                    print(
+                        "MakeProfiles: Time for profile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+
+                    now = Date.now
+                    self.storage.save(pumpProfile, as: Settings.pumpProfile)
+                    self.storage.save(profile, as: Settings.profile)
+
+                    print(
+                        "MakeProfiles: Time for save files \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+
+                    if let tunedProfile = Autotune(from: profile) {
+                        promise(.success(tunedProfile))
+                        return
+                    }
+
+                    promise(.success(nil))
                 }
-                let pumpSettings = self.loadFileFromStorage(name: Settings.settings)
-                let bgTargets = self.loadFileFromStorage(name: Settings.bgTargets)
-                let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
-                let isf = self.loadFileFromStorage(name: Settings.insulinSensitivities)
-                let cr = self.loadFileFromStorage(name: Settings.carbRatios)
-                let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
-                let model = self.loadFileFromStorage(name: Settings.model)
-                let autotune = useAutotune ? self.loadFileFromStorage(name: Settings.autotune) : .empty
-                let freeaps = self.loadFileFromStorage(name: FreeAPS.settings)
-                let preferencesData = Preferences(from: preferences)
-                let tdd = self.tdd(preferencesData: preferencesData)
-                if let insulin = tdd, insulin.hours > 0 {
-                    CoreDataStorage().saveTDD(insulin)
-                }
-                let dynamicVariables = self.dynamicVariables(preferencesData)
-
-                let pumpProfile = self.makeProfile(
-                    preferences: preferences,
-                    pumpSettings: pumpSettings,
-                    bgTargets: bgTargets,
-                    basalProfile: basalProfile,
-                    isf: isf,
-                    carbRatio: cr,
-                    tempTargets: tempTargets,
-                    model: model,
-                    autotune: RawJSON.null,
-                    freeaps: freeaps,
-                    dynamicVariables: dynamicVariables,
-                    settings: settings
-                )
-
-                let profile = self.makeProfile(
-                    preferences: preferences,
-                    pumpSettings: pumpSettings,
-                    bgTargets: bgTargets,
-                    basalProfile: basalProfile,
-                    isf: isf,
-                    carbRatio: cr,
-                    tempTargets: tempTargets,
-                    model: model,
-                    autotune: autotune.isEmpty ? .null : autotune,
-                    freeaps: freeaps,
-                    dynamicVariables: dynamicVariables,
-                    settings: settings
-                )
-
-                self.storage.save(pumpProfile, as: Settings.pumpProfile)
-                self.storage.save(profile, as: Settings.profile)
-
-                if let tunedProfile = Autotune(from: profile) {
-                    promise(.success(tunedProfile))
-                    return
-                }
-
-                promise(.success(nil))
             }
         }
     }

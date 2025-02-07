@@ -4,7 +4,11 @@ import SwiftDate
 import Swinject
 
 final class CoreDataStorage {
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext: NSManagedObjectContext
+
+    init(context: NSManagedObjectContext = CoreDataStack.shared.persistentContainer.viewContext) {
+        coredataContext = context
+    }
 
     func fetchGlucose(interval: NSDate) -> [Readings] {
         var fetchGlucose = [Readings]()
