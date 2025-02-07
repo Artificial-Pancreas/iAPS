@@ -347,6 +347,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
+        let start = Date.now
         debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.isNotEmpty else {
             debug(.apsManager, "Not enough glucose data")
@@ -373,10 +374,39 @@ final class BaseAPSManager: APSManager, Injectable {
         let now = Date()
         let temp = currentTemp(date: now)
 
-        let mainPublisher = makeProfiles()
-            .flatMap { _ in self.autosens() }
-            .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
+        let mainPublisher = Just("Start")
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.makeProfiles().handleEvents(receiveCompletion: { _ in
+                    print(
+                        "APSManager: Time for makeProfiles \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+                })
+            }
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.autosens().handleEvents(receiveCompletion: { _ in
+                    print(
+                        "APSManager: Time for autosens \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+                })
+            }
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.dailyAutotune().handleEvents(receiveCompletion: { _ in
+                    print(
+                        "APSManager: Time for dailyAutotune \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+                })
+            }
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.openAPS.determineBasal(currentTemp: temp, clock: now).handleEvents(receiveCompletion: { _ in
+                    print(
+                        "APSManager: Time for determineBasal \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+                })
+            }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {
