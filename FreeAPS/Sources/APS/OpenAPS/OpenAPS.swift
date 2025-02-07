@@ -53,8 +53,7 @@ final class OpenAPS {
                     let settings = FreeAPSSettings(from: data)
 
                     now = Date.now
-                    let tdd = CoreDataStorage(context: CoreDataStack.shared.persistentContainer.newBackgroundContext())
-                        .fetchInsulinDistribution().first
+                    let tdd = CoreDataStorage().fetchInsulinDistribution().first
                     print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
                     now = Date.now
@@ -298,7 +297,7 @@ final class OpenAPS {
                     )
 
                     if let insulin = tdd, insulin.hours > 0 {
-                        CoreDataStorage(context: CoreDataStack.shared.persistentContainer.newBackgroundContext()).saveTDD(insulin)
+                        CoreDataStorage().saveTDD(insulin)
                     }
 
                     now = Date.now
@@ -503,7 +502,7 @@ final class OpenAPS {
                     aisfReasons = "\(profile.autoISFreasons ?? "")"
                 }
 
-                let saveSuggestion = Reasons()
+                let saveSuggestion = Reasons(context: coredataContext)
                 saveSuggestion.isf = isf as NSDecimalNumber
                 saveSuggestion.cr = cr as NSDecimalNumber
                 saveSuggestion.iob = iob as NSDecimalNumber
@@ -815,8 +814,7 @@ final class OpenAPS {
             // Auto ISF
             var autoISFsettings = AutoISFsettings()
             if useOverride, overrideArray.first?.overrideAutoISF ?? false,
-               let fetched = OverrideStorage()
-               .fetchAutoISFsetting(id: overrideArray.first?.id ?? "Not This One")
+               let fetched = OverrideStorage().fetchAutoISFsetting(id: overrideArray.first?.id ?? "Not This One")
             {
                 autoISFsettings = AutoISFsettings(
                     autoisf: fetched.autoisf,
