@@ -639,23 +639,23 @@ extension OverrideProfilesConfig {
             let basalString = preset.basal ? "Basal" : ""
             let dash = (crString != "" && isfString != "") ? ", " : ""
             let dash2 = (basalString != "" && isfString + dash + crString != "") ? ", " : ""
-            let isfAndCRstring = "[" + isfString + dash + crString + dash2 + basalString + "]"
+            let isfAndCRstring = isfString + dash + crString + dash2 + basalString
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 1) {
                     HStack {
-                        Text(name).padding(.top, 5).padding(.bottom, 2)
+                        Text(name).padding(.vertical, 4)
                         Spacer()
                     }
-                    HStack(spacing: 7) {
+                    HStack {
                         percent != 1 ?
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             .foregroundStyle(.secondary) : nil
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
                         durationString != "" ? Text(durationString + (perpetual ? "" : "min"))
                             .foregroundStyle(.secondary) : nil
-                        smbString != "" ? Text(smbString).boolTag(false).padding(.leading, 6) : nil
+                        if smbString != "" { Text(smbString).boolTag(false) }
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
@@ -665,7 +665,7 @@ extension OverrideProfilesConfig {
 
                     if preset.advancedSettings {
                         HStack {
-                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
+                            if percent != 1, !(preset.isf && preset.cr && preset.basal) { Text("Adjust: " + isfAndCRstring) }
                             if !preset.smbIsOff {
                                 decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
                                 decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
@@ -689,15 +689,14 @@ extension OverrideProfilesConfig {
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
 
-                            HStack(spacing: 5) {
+                            HStack {
                                 decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
                                 decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                             }
                         }
-                        .offset(y: 2)
                         .foregroundStyle(.secondary).font(.caption)
 
-                        HStack(spacing: 5) {
+                        HStack {
                             percentage(
                                 decimal: aisf.iobThresholdPercent,
                                 setting: standard
@@ -720,7 +719,7 @@ extension OverrideProfilesConfig {
                             )
                         }.foregroundStyle(.secondary).font(.caption)
 
-                        HStack(spacing: 6) {
+                        HStack {
                             decimal(
                                 decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
