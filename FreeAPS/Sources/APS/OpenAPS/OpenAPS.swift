@@ -32,9 +32,17 @@ final class OpenAPS {
                     let tempBasal = currentTemp.rawJSON
                     self.storage.save(tempBasal, as: Monitor.tempBasal)
 
-                    async let profileAsync = self.loadFileFromStorageAsync(name: Settings.profile)
-
-                    let (pumpHistory, carbs, glucose, preferences, basalProfile, data, autosens, reservoir) = await (
+                    let (
+                        pumpHistory,
+                        carbs,
+                        glucose,
+                        preferences,
+                        basalProfile,
+                        data,
+                        autosens,
+                        reservoir,
+                        storedProfile
+                    ) = await (
                         Task { await self.loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory) }.value,
                         Task { await self.loadFileFromStorageAsync(name: Monitor.carbHistory) }.value,
                         Task { await self.loadFileFromStorageAsync(name: Monitor.glucose) }.value,
@@ -42,46 +50,45 @@ final class OpenAPS {
                         Task { await self.loadFileFromStorageAsync(name: Settings.basalProfile) }.value,
                         Task { await self.loadFileFromStorageAsync(name: FreeAPS.settings) }.value,
                         Task { await self.loadFileFromStorageAsync(name: Settings.autosense) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Monitor.reservoir) }.value
+                        Task { await self.loadFileFromStorageAsync(name: Monitor.reservoir) }.value,
+                        Task { await self.loadFileFromStorageAsync(name: Settings.profile) }.value
                     )
 
                     let preferencesData = Preferences(from: preferences)
-                    var profile = await profileAsync
+                    var profile = storedProfile
 
                     print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
                     let settings = FreeAPSSettings(from: data)
 
                     now = Date.now
-                    let tdd = CoreDataStorage().fetchInsulinDistribution().first
+                    let tdd = CoreDataStorage(context: CoreDataStack.shared.persistentContainer.newBackgroundContext())
+                        .fetchInsulinDistribution(limit: 1).first
                     print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
                     now = Date.now
-                    let meal = self.meal(
+                    async let mealAsync = self.meal(
                         pumphistory: pumpHistory,
-                        profile: profile,
+                        profile: storedProfile,
                         basalProfile: basalProfile,
                         clock: clock,
                         carbs: carbs,
                         glucose: glucose
                     )
-                    print(
-                        "Time for Meal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
-
-                    self.storage.save(meal, as: Monitor.meal)
-
-                    now = Date.now
                     // iob
-                    let iob = self.iob(
+                    async let iobAsync = self.iob(
                         pumphistory: pumpHistory,
-                        profile: profile,
+                        profile: storedProfile,
                         clock: clock,
                         autosens: autosens.isEmpty ? .null : autosens
                     )
+
+                    let (meal, iob) = await (mealAsync, iobAsync)
+
+                    self.storage.save(meal, as: Monitor.meal)
                     self.storage.save(iob, as: Monitor.iob)
                     print(
-                        "Time for IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        "Time for Meal and IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                     )
 
                     // determine-basal
@@ -284,10 +291,7 @@ final class OpenAPS {
 
                     print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
-                    var preferences = preferencesResult
-                    if preferences.isEmpty {
-                        preferences = Preferences().rawJSON
-                    }
+                    let preferences = preferencesResult.isEmpty ? Preferences().rawJSON : preferencesResult
                     let preferencesData = Preferences(from: preferences)
 
                     now = Date.now
@@ -307,7 +311,7 @@ final class OpenAPS {
                     )
 
                     now = Date.now
-                    let pumpProfile = self.makeProfile(
+                    async let pumpProfileAsync = self.makeProfileAsync(
                         preferences: preferences,
                         pumpSettings: pumpSettings,
                         bgTargets: bgTargets,
@@ -321,12 +325,8 @@ final class OpenAPS {
                         dynamicVariables: dynamicVariables,
                         settings: settings
                     )
-                    print(
-                        "MakeProfiles: Time for pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
 
-                    now = Date.now
-                    let profile = self.makeProfile(
+                    async let profileAsync = self.makeProfileAsync(
                         preferences: preferences,
                         pumpSettings: pumpSettings,
                         bgTargets: bgTargets,
@@ -341,8 +341,10 @@ final class OpenAPS {
                         settings: settings
                     )
 
+                    let (pumpProfile, profile) = await (pumpProfileAsync, profileAsync)
+
                     print(
-                        "MakeProfiles: Time for profile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        "MakeProfiles: Time for profile and pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                     )
 
                     now = Date.now
@@ -700,6 +702,7 @@ final class OpenAPS {
 
     func dynamicVariables(_ preferences: Preferences?) -> RawJSON {
         coredataContext.performAndWait {
+            let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
             let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
@@ -711,14 +714,34 @@ final class OpenAPS {
 
             let cd = CoreDataStorage()
             let os = OverrideStorage()
+
+            var now = Date.now
             // TDD
             let uniqueEvents = cd.fetchTDD(interval: DateFilter().tenDays)
+            print(
+                "dynamicVariables: Time for TDD \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+            )
+
             // Temp Targets using slider
+            now = Date.now
             let sliderArray = cd.fetchTempTargetsSlider()
+            print(
+                "dynamicVariables: Time for fetchTempTargetsSlider \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+            )
+
             // Overrides
+            now = Date.now
             let overrideArray = os.fetchNumberOfOverrides(numbers: 2)
+            print(
+                "dynamicVariables: Time for fetchNumberOfOverrides \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+            )
+
             // Temp Target
+            now = Date.now
             let tempTargetsArray = cd.fetchTempTargets()
+            print(
+                "dynamicVariables: Time for fetchTempTargets \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+            )
 
             // Time adjusted average
             var time = uniqueEvents.first?.timestamp ?? .distantPast
@@ -884,9 +907,9 @@ final class OpenAPS {
         }
     }
 
-    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) -> RawJSON {
+    private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
-        scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
+        await scriptExecutor.callAsync(name: OpenAPS.Prepare.iob, with: [
             pumphistory,
             profile,
             clock,
@@ -894,10 +917,17 @@ final class OpenAPS {
         ])
     }
 
-    private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
+    private func meal(
+        pumphistory: JSON,
+        profile: JSON,
+        basalProfile: JSON,
+        clock: JSON,
+        carbs: JSON,
+        glucose: JSON
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
 
-        scriptExecutor.call(name: OpenAPS.Prepare.meal, with: [
+        await scriptExecutor.callAsync(name: OpenAPS.Prepare.meal, with: [
             pumphistory,
             profile,
             clock,
@@ -1020,6 +1050,40 @@ final class OpenAPS {
     ) -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
         scriptExecutor.call(
+            name: OpenAPS.Prepare.profile,
+            with: [
+                pumpSettings,
+                bgTargets,
+                isf,
+                basalProfile,
+                preferences,
+                carbRatio,
+                tempTargets,
+                model,
+                autotune,
+                freeaps,
+                dynamicVariables,
+                settings
+            ]
+        )
+    }
+
+    private func makeProfileAsync(
+        preferences: JSON,
+        pumpSettings: JSON,
+        bgTargets: JSON,
+        basalProfile: JSON,
+        isf: JSON,
+        carbRatio: JSON,
+        tempTargets: JSON,
+        model: JSON,
+        autotune: JSON,
+        freeaps: JSON,
+        dynamicVariables: JSON,
+        settings: JSON
+    ) async -> RawJSON {
+        // dispatchPrecondition(condition: .onQueue(processQueue))
+        await scriptExecutor.callAsync(
             name: OpenAPS.Prepare.profile,
             with: [
                 pumpSettings,

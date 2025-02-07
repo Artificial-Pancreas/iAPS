@@ -112,12 +112,15 @@ final class CoreDataStorage {
         return stats
     }
 
-    func fetchInsulinDistribution() -> [InsulinDistribution] {
+    func fetchInsulinDistribution(limit: Int? = nil) -> [InsulinDistribution] {
         var insulinDistribution = [InsulinDistribution]()
         coredataContext.performAndWait {
             let requestInsulinDistribution = InsulinDistribution.fetchRequest() as NSFetchRequest<InsulinDistribution>
             let sortInsulin = NSSortDescriptor(key: "date", ascending: false)
             requestInsulinDistribution.sortDescriptors = [sortInsulin]
+            if limit != nil {
+                requestInsulinDistribution.fetchLimit = limit!
+            }
             try? insulinDistribution = coredataContext.fetch(requestInsulinDistribution)
         }
         return insulinDistribution
