@@ -61,6 +61,13 @@ extension OverrideProfilesConfig {
             return formatter
         }
 
+        private var dateFormatter: DateComponentsFormatter {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.hour, .minute]
+            formatter.unitsStyle = .brief
+            return formatter
+        }
+
         var body: some View {
             overridesView
                 .navigationBarTitle("Profiles")
@@ -632,7 +639,9 @@ extension OverrideProfilesConfig {
             let name = ((preset.name ?? "") == "") || (preset.name?.isEmpty ?? true) ? "" : preset.name!
             let percent = preset.percentage / 100
             let perpetual = preset.indefinite
-            let durationString = perpetual ? "" : "\(formatter.string(from: duration as NSNumber) ?? "")"
+            let timeString = higherPrecisionFormatter.string(for: duration as NSNumber) ?? ""
+            let durationString = perpetual ? "" : dateFormatter
+                .string(from: TimeInterval(truncating: duration * 60 as NSNumber)) ?? ""
             let scheduledSMBstring = (preset.smbIsOff && preset.smbIsAlwaysOff) ? "Scheduled SMBs" : ""
             let smbString = (preset.smbIsOff && scheduledSMBstring == "") ? "SMBs are off" : ""
             let targetString = targetRaw > 10 ? "\(glucoseFormatter.string(from: target as NSNumber)!)" : ""
@@ -655,9 +664,8 @@ extension OverrideProfilesConfig {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
                             .foregroundStyle(.secondary) : nil
                         targetString != "" ? Text(targetString + " " + state.units.rawValue).foregroundStyle(.secondary) : nil
-                        durationString != "" ? Text(durationString + (perpetual ? "" : "min"))
-                            .foregroundStyle(.secondary) : nil
-                        if smbString != "" { Text(smbString).boolTag(false) }
+                        durationString != "" ? Text(durationString).foregroundStyle(.secondary) : nil
+                        smbString != "" ? Text(smbString).boolTag(false).padding(.leading, 6) : nil
                         scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
                             Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
@@ -667,7 +675,7 @@ extension OverrideProfilesConfig {
 
                     if preset.advancedSettings {
                         HStack {
-                            if percent != 1, !(preset.isf && preset.cr && preset.basal) { Text("Adjust: " + isfAndCRstring) }
+                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
                             if !preset.smbIsOff {
                                 decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
                                 decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
