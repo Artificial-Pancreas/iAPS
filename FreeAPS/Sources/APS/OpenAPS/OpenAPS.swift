@@ -309,27 +309,31 @@ final class OpenAPS {
                         autotuneAsync,
                         freeapsAsync
                     )
-
                     print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
                     let preferences = preferencesResult.isEmpty ? Preferences().rawJSON : preferencesResult
                     let preferencesData = Preferences(from: preferences)
+                    let freeapsData = FreeAPSSettings(from: freeaps)
+
+                    async let tddAsync = self.tdd(preferencesData: preferencesData)
+                    async let dynamicVariablesAsync = self.dynamicVariables(preferencesData, freeapsData)
 
                     now = Date.now
-                    let tdd = self.tdd(preferencesData: preferencesData)
+
+                    let (
+                        tdd,
+                        dynamicVariables
+                    ) = await (
+                        tddAsync,
+                        dynamicVariablesAsync
+                    )
                     print(
-                        "MakeProfiles: Time for tdd \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        "Time for tdd and DynamicVariables \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                     )
 
                     if let insulin = tdd, insulin.hours > 0 {
                         CoreDataStorage().saveTDD(insulin)
                     }
-
-                    now = Date.now
-                    let dynamicVariables = self.dynamicVariables(preferencesData)
-                    print(
-                        "MakeProfiles: Time for dynamicVariables \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
 
                     now = Date.now
                     async let pumpProfileAsync = self.makeProfileAsync(
@@ -363,7 +367,6 @@ final class OpenAPS {
                     )
 
                     let (pumpProfile, profile) = await (pumpProfileAsync, profileAsync)
-
                     print(
                         "MakeProfiles: Time for profile and pumpProfile \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                     )
@@ -721,16 +724,14 @@ final class OpenAPS {
         return tdd
     }
 
-    func dynamicVariables(_ preferences: Preferences?) -> RawJSON {
+    func dynamicVariables(_ preferences: Preferences?, _ settingsData: FreeAPSSettings?) async -> RawJSON {
+        var averages: DynamicVariables?
         coredataContext.performAndWait {
             let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
             let smbMinutes = (preferences?.maxSMBBasalMinutes ?? 30) as NSDecimalNumber
             let uamMinutes = (preferences?.maxUAMSMBBasalMinutes ?? 30) as NSDecimalNumber
-
-            let settings = self.loadFileFromStorage(name: FreeAPS.settings)
-            let settingsData = FreeAPSSettings(from: settings)
             let disableCGMError = settingsData?.disableCGMError ?? true
 
             let cd = CoreDataStorage()
@@ -740,7 +741,7 @@ final class OpenAPS {
             // TDD
             let uniqueEvents = cd.fetchTDD(interval: DateFilter().tenDays)
             print(
-                "dynamicVariables: Time for TDD \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                "dynamicVariables: Time to fetch TDD \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
             )
 
             // Temp Targets using slider
@@ -891,7 +892,7 @@ final class OpenAPS {
                 )
             }
 
-            let averages = DynamicVariables(
+            averages = DynamicVariables(
                 average_total_data: average14,
                 weightedAverage: weighted_average,
                 weigthPercentage: wp,
@@ -923,9 +924,13 @@ final class OpenAPS {
                 autoISFoverrides: autoISFsettings,
                 aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
             )
-            storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
-            return self.loadFileFromStorage(name: Monitor.dynamicVariables)
         }
+
+        let computed = averages!
+        await saveAsync(computed, name: OpenAPS.Monitor.dynamicVariables)
+        async let dynamicFile = loadFileFromStorageAsync(name: Monitor.dynamicVariables)
+        let file = await dynamicFile
+        return file
     }
 
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {
@@ -1183,6 +1188,10 @@ final class OpenAPS {
 
     private func loadFileFromStorage(name: String) -> RawJSON {
         storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
+    }
+
+    private func saveAsync(_ file: JSON, name: String) async {
+        storage.save(file, as: name)
     }
 
     private func loadFileFromStorageAsync(name: String) async -> RawJSON {
