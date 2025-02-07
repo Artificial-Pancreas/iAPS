@@ -38,7 +38,7 @@ struct BGTextField: View {
     private var displayValue: Binding<Decimal> {
         Binding(
             get: { units == .mmolL ? mgdlValue.asMmolL : mgdlValue },
-            set: { newValue in mgdlValue = units == .mmolL ? newValue.rounded(to: 1).asMgdL : newValue.rounded(to: 0) }
+            set: { newValue in mgdlValue = units == .mmolL ? newValue.asMgdL : newValue }
         )
     }
 
