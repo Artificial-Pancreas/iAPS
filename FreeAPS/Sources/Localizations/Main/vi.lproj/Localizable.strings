@@ -574,7 +574,7 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Vòng lặp kín";
+"Closed loop" = "Closed loop";
 
 /* */
 "Configuration" = "Cấu hình";
@@ -2296,13 +2296,13 @@ Enact a temp Basal or a temp target */
 "You can specify how long B30 run and how high it is" = "Bạn có thể chỉ định B30 chạy trong bao lâu và cao bao nhiêu";
 
 /* */
-"Absolute Safety TBR " = "TBR an toàn tuyệt đối ";
+"Absolute Safety TBR " = "Absolute Safety TBR ";
 
 /* */
 "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Lượng tính bằng U/giờ của TBR an toàn nhỏ, được dùng để tránh nhiễm toan ceton. Sẽ giới hạn ở mức min = 0U/giờ, max = 2U/giờ!";
 
 /* */
-"Enable Keto protection with pre-defined TBR" = "Bật chế độ bảo vệ Keto với TBR được xác định trước";
+"Enable Keto protection with pre-defined TBR" = "Enable Keto protection with pre-defined TBR";
 
 /* */
 "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Nên chỉ định TBR tuyệt đối trong khoảng từ 0 đến 2 U/giờ thay vì phần trăm BR hiện tại";
