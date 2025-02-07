@@ -71,7 +71,7 @@ final class OpenAPS {
                     let settings = FreeAPSSettings(from: data)
 
                     now = Date.now
-                    let tdd = CoreDataStorage(context: CoreDataStack.shared.persistentContainer.newBackgroundContext())
+                    let tdd = CoreDataStorage()
                         .fetchInsulinDistribution(limit: 1).first
                     print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
