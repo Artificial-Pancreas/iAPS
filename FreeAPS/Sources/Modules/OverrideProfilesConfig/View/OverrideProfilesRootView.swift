@@ -618,8 +618,6 @@ extension OverrideProfilesConfig {
             }
         }
 
-        private let tagsVerticalGap: CGFloat = 6
-
         // The Profile presets
         @ViewBuilder private func profilesView(for preset: OverridePresets) -> some View {
             // Values as String
@@ -642,9 +640,8 @@ extension OverrideProfilesConfig {
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
-                VStack(alignment: .leading, spacing: 1) {
+                VStack(alignment: .leading) {
                     Text(name).padding(.top, 5).padding(.bottom, 2)
-
                     HStack(spacing: 7) {
                         if percent != 1 {
                             Text(percent.formatted(.percent.grouping(.never).rounded().precision(.fractionLength(0))))
@@ -655,13 +652,11 @@ extension OverrideProfilesConfig {
                             Text(durationString).foregroundStyle(.secondary)
                         }
                         if smbString != "" {
-                            Text(smbString).foregroundStyle(.primary).boolTag(false).padding(.leading, 6)
-                                .padding(.vertical, tagsVerticalGap)
+                            Text(smbString).boolTag(false).padding(.leading, 6)
                         }
                         if scheduledSMBstring != "" { Text(scheduledSMBstring).foregroundStyle(.secondary) }
                         if let aisf = autoisfSettings, preset.overrideAutoISF, aisf.autoisf != state.currentSettings.autoisf {
-                            Text("Auto ISF: \(aisf.autoisf ? "on" : "off")").boolTag(aisf.autoisf).padding(.leading, 6)
-                                .padding(.vertical, tagsVerticalGap)
+                            Text("Auto ISF: \(aisf.autoisf)").boolTag(aisf.autoisf)
                         }
                     }
                     .font(.caption)
@@ -676,54 +671,31 @@ extension OverrideProfilesConfig {
                             if preset.overrideMaxIOB {
                                 decimal(decimal: preset.maxIOB, setting: state.defaultmaxIOB, label: "Max IOB: ")
                             }
-                        }
-                        .foregroundStyle(.secondary).font(.caption)
+                        }.foregroundStyle(.secondary).font(.caption)
                     }
 
                     // All of the Auto ISF Settings (Bool and Decimal optionals)
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
 
-                        let haveTagsInAutoIsfLine = aisf.enableBGacceleration != standard.enableBGacceleration ||
-                            aisf.ketoProtect != standard.ketoProtect ||
-                            aisf.use_B30 != standard.use_B30
-                        let advancedLineIsVisible = (percent != 1 && !(preset.isf && preset.cr && preset.basal)) ||
-                            (!preset.smbIsOff && (
-                                (preset.smbMinutes ?? 0) as Decimal != state.defaultSmbMinutes ||
-                                    (preset.uamMinutes ?? 0) as Decimal != state.defaultUamMinutes
-                            )) || (
-                                preset.overrideMaxIOB &&
-                                    (preset.maxIOB as? Decimal) ?? state.defaultmaxIOB != state.defaultmaxIOB
-                            )
-                        let haveTagsInFirstLine = smbString != "" ||
-                            (
-                                autoisfSettings != nil && preset.overrideAutoISF &&
-                                    autoisfSettings!.autoisf != state.currentSettings.autoisf
-                            )
-                        let autoIsfLineTagsTopPadding = haveTagsInAutoIsfLine && (advancedLineIsVisible || !haveTagsInFirstLine) ?
-                            tagsVerticalGap : 2
-                        HStack(spacing: 7) {
+                        LazyHStack {
                             bool(
                                 bool: aisf.enableBGacceleration,
                                 setting: standard.enableBGacceleration,
                                 label: "Accel: "
-                            ).padding(.top, autoIsfLineTagsTopPadding)
+                            )
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto: ")
-                                .padding(.top, autoIsfLineTagsTopPadding)
                             bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30: ")
-                                .padding(.top, autoIsfLineTagsTopPadding)
-                            decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                                .foregroundStyle(.secondary)
-                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
-                                .padding(.top, autoIsfLineTagsTopPadding)
-                            decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                                .foregroundStyle(.secondary)
-                                .padding(.bottom, haveTagsInAutoIsfLine ? tagsVerticalGap : 0)
-                                .padding(.top, autoIsfLineTagsTopPadding)
-                        }
-                        .font(.caption)
 
-                        HStack(spacing: 7) {
+                            LazyHStack(spacing: 5) {
+                                decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                                decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
+                            }
+                        }
+                        .offset(y: 2)
+                        .foregroundStyle(.secondary).font(.caption)
+
+                        HStack(spacing: 5) {
                             percentage(
                                 decimal: aisf.iobThresholdPercent,
                                 setting: standard.iobThresholdPercent,
@@ -751,7 +723,7 @@ extension OverrideProfilesConfig {
                         }
                         .foregroundStyle(.secondary).font(.caption)
 
-                        HStack(spacing: 7) {
+                        HStack(spacing: 6) {
                             decimal(
                                 decimal: aisf.lowerISFrangeWeight,
                                 setting: standard.lowerISFrangeWeight,
@@ -781,8 +753,7 @@ extension OverrideProfilesConfig {
                                 label: "dura: "
                             )
                             decimal(decimal: aisf.postMealISFweight, setting: standard.postMealISFweight, label: "pp: ")
-                        }
-                        .foregroundStyle(.secondary).font(.caption)
+                        }.foregroundStyle(.secondary).font(.caption)
                     }
                 }
                 .contentShape(Rectangle())
@@ -790,6 +761,7 @@ extension OverrideProfilesConfig {
                     state.selectProfile(id_: preset.id ?? "")
                     state.hideModal()
                 }
+                .dynamicTypeSize(...DynamicTypeSize.large)
             }
         }
 
@@ -818,7 +790,7 @@ extension OverrideProfilesConfig {
 
         @ViewBuilder private func bool(bool: Bool, setting: Bool, label: String) -> some View {
             if bool != setting {
-                Text(label + (bool ? "on" : "off")).foregroundStyle(.primary).boolTag(bool).padding(.bottom, tagsVerticalGap)
+                Text(label + (bool ? "on" : "off")).foregroundStyle(.primary).boolTag(bool)
             }
         }
 
