@@ -66,7 +66,6 @@ final class BaseFileStorage: FileStorage, Injectable {
     func retrieveRawAsync(_ name: String) async -> RawJSON? {
         await withCheckedContinuation { continuation in
             getQueue(for: name).async {
-                let now = Date.now
                 guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
                     continuation.resume(returning: nil)
                     return

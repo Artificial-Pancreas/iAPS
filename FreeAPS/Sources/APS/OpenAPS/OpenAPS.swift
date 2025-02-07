@@ -32,6 +32,15 @@ final class OpenAPS {
                     let tempBasal = currentTemp.rawJSON
                     self.storage.save(tempBasal, as: Monitor.tempBasal)
 
+                    async let pumpHistoryAsync = self.loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory)
+                    async let carbsAsync = self.loadFileFromStorageAsync(name: Monitor.carbHistory)
+                    async let glucoseAsync = self.loadFileFromStorageAsync(name: Monitor.glucose)
+                    async let preferencesAsync = self.loadFileFromStorageAsync(name: Settings.preferences)
+                    async let basalProfileAsync = self.loadFileFromStorageAsync(name: Settings.basalProfile)
+                    async let dataAsync = self.loadFileFromStorageAsync(name: FreeAPS.settings)
+                    async let autosensAsync = self.loadFileFromStorageAsync(name: Settings.autosense)
+                    async let reservoirAsync = self.loadFileFromStorageAsync(name: Monitor.reservoir)
+                    async let storedProfileAsync = self.loadFileFromStorageAsync(name: Settings.profile)
                     let (
                         pumpHistory,
                         carbs,
@@ -43,15 +52,15 @@ final class OpenAPS {
                         reservoir,
                         storedProfile
                     ) = await (
-                        Task { await self.loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Monitor.carbHistory) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Monitor.glucose) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.preferences) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.basalProfile) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: FreeAPS.settings) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.autosense) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Monitor.reservoir) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.profile) }.value
+                        pumpHistoryAsync,
+                        carbsAsync,
+                        glucoseAsync,
+                        preferencesAsync,
+                        basalProfileAsync,
+                        dataAsync,
+                        autosensAsync,
+                        reservoirAsync,
+                        storedProfileAsync
                     )
 
                     let preferencesData = Preferences(from: preferences)
@@ -265,6 +274,18 @@ final class OpenAPS {
                 Task {
                     let start = Date.now
                     var now = Date.now
+
+                    async let preferencesResultAsync = self.loadFileFromStorageAsync(name: Settings.preferences)
+                    async let pumpSettingsAsync = self.loadFileFromStorageAsync(name: Settings.settings)
+                    async let bgTargetsAsync = self.loadFileFromStorageAsync(name: Settings.bgTargets)
+                    async let basalProfileAsync = self.loadFileFromStorageAsync(name: Settings.basalProfile)
+                    async let isfAsync = self.loadFileFromStorageAsync(name: Settings.insulinSensitivities)
+                    async let crAsync = self.loadFileFromStorageAsync(name: Settings.carbRatios)
+                    async let tempTargetsAsync = self.loadFileFromStorageAsync(name: Settings.tempTargets)
+                    async let modelAsync = self.loadFileFromStorageAsync(name: Settings.model)
+                    async let autotuneAsync = useAutotune ? self.loadFileFromStorageAsync(name: Settings.autotune) : .empty
+                    async let freeapsAsync = self.loadFileFromStorageAsync(name: FreeAPS.settings)
+
                     let (
                         preferencesResult,
                         pumpSettings,
@@ -277,16 +298,16 @@ final class OpenAPS {
                         autotune,
                         freeaps
                     ) = await (
-                        Task { await self.loadFileFromStorageAsync(name: Settings.preferences) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.settings) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.bgTargets) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.basalProfile) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.insulinSensitivities) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.carbRatios) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.tempTargets) }.value,
-                        Task { await self.loadFileFromStorageAsync(name: Settings.model) }.value,
-                        Task { useAutotune ? await self.loadFileFromStorageAsync(name: Settings.autotune) : .empty }.value,
-                        Task { await self.loadFileFromStorageAsync(name: FreeAPS.settings) }.value
+                        preferencesResultAsync,
+                        pumpSettingsAsync,
+                        bgTargetsAsync,
+                        basalProfileAsync,
+                        isfAsync,
+                        crAsync,
+                        tempTargetsAsync,
+                        modelAsync,
+                        autotuneAsync,
+                        freeapsAsync
                     )
 
                     print("MakeProfiles: Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
