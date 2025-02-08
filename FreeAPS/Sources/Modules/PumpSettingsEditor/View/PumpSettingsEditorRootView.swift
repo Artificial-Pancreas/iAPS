@@ -23,7 +23,7 @@ extension PumpSettingsEditor {
                     footer: Text(
                         state
                             .isDanaPump ?
-                            "Dana pump do not allow editting max basal and max bolus, Configure these in the doctor settings of the pump. Saving the settings will fetch the lastest values from the pump" :
+                            "Dana pump do not allow editing max basal and max bolus, Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" :
                             ""
                     )
                 ) {
