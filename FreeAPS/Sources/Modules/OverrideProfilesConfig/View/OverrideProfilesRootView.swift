@@ -645,7 +645,8 @@ extension OverrideProfilesConfig {
             let basalString = preset.basal ? "Basal" : ""
             let dash = (crString != "" && isfString != "") ? ", " : ""
             let dash2 = (basalString != "" && isfString + dash + crString != "") ? ", " : ""
-            let isfAndCRstring = "[" + isfString + dash + crString + dash2 + basalString + "]"
+            let isfAndCRstring = isfString + dash + crString + dash2 + basalString != "" ? "[" + isfString + dash + crString +
+                dash2 + basalString + "]" : "[None]"
             let autoisfSettings = fetchedSettings.first(where: { $0.id == preset.id })
 
             if name != "" {
@@ -677,7 +678,7 @@ extension OverrideProfilesConfig {
                                 decimal(decimal: preset.maxIOB, setting: state.defaultmaxIOB, label: "Max IOB: ")
                             }
                             smbString != "" ? bool(bool: false, setting: true, label: smbString) : nil
-                            scheduledSMBstring != "" ? Text(scheduledSMBstring).foregroundStyle(.secondary) : nil
+                            scheduledSMBstring != "" ? Text(scheduledSMBstring) : nil
                         }.foregroundStyle(.secondary).font(.caption)
                     }
 
