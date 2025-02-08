@@ -2486,6 +2486,9 @@ Enact a temp Basal or a temp target */
 /* Is false */
 " off" = " off";
 
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Adjust ";
+
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS

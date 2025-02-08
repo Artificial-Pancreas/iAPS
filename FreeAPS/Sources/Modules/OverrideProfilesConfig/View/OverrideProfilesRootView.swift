@@ -669,7 +669,11 @@ extension OverrideProfilesConfig {
 
                     if preset.advancedSettings {
                         HStack {
-                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
+                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ?
+                                Text(
+                                    NSLocalizedString("Adjust ", comment: "Override adjustment of ISF, CR and Basal") +
+                                        isfAndCRstring
+                                ) : nil
                             if !preset.smbIsOff {
                                 decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
                                 decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
