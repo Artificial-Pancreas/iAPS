@@ -23,7 +23,10 @@ extension PumpSettingsEditor {
                     footer: Text(
                         state
                             .isDanaPump ?
-                            NSLocalizedString("Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump", comment: "Dana footer") :
+                            NSLocalizedString(
+                                "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump",
+                                comment: "Dana footer"
+                            ) :
                             ""
                     )
                 ) {
