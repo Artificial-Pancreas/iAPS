@@ -2473,10 +2473,10 @@ Enact a temp Basal or a temp target */
 "Auto ISF" = "Авто ISF";
 
 /* Is true */
-" on" = " on";
+" on" = " вкл.";
 
 /* Is false */
-" off" = " off";
+" off" = " выкл.";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
