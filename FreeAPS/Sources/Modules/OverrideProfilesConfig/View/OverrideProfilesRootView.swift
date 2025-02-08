@@ -669,7 +669,11 @@ extension OverrideProfilesConfig {
 
                     if preset.advancedSettings {
                         HStack {
-                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
+                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ?
+                                Text(
+                                    NSLocalizedString("Adjust ", comment: "Override adjustment of ISF, CR and Basal") +
+                                        isfAndCRstring
+                                ) : nil
                             if !preset.smbIsOff {
                                 decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
                                 decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
@@ -693,7 +697,7 @@ extension OverrideProfilesConfig {
                                 label: "Accel"
                             )
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto")
-                            bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30 ")
+                            bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30")
 
                             HStack {
                                 decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
