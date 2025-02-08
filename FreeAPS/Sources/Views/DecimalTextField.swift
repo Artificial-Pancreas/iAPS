@@ -96,7 +96,7 @@ public struct DecimalTextField: UIViewRepresentable {
     }
 
     public func updateUIView(_ textField: UITextField, context: Context) {
-        if !context.coordinator.isEditing || context.coordinator.previousSeenValue != value {
+        if !context.coordinator.isEditing || abs(context.coordinator.previousSeenValue - value) > 0.0000001 {
             context.coordinator.previousSeenValue = value
             let newText = valueAsText()
             if textField.text != newText {
