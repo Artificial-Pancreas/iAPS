@@ -693,7 +693,7 @@ extension OverrideProfilesConfig {
                                 label: "Accel"
                             )
                             bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto")
-                            bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30 ")
+                            bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30")
 
                             HStack {
                                 decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
