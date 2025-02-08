@@ -29,5 +29,5 @@ func parsePacketBasalGetRate(data: Data, usingUtc: Bool?) -> DanaParsePacket<Pac
         basalProfile.append(basalValue)
     }
 
-    return DanaParsePacket(success: basalStep == 0.01, rawData: data, data: PacketBasalGetRate(maxBasal: maxBasal, basalStep: basalStep, basalProfile: basalProfile))
+    return DanaParsePacket(success: basalStep < 1, rawData: data, data: PacketBasalGetRate(maxBasal: maxBasal, basalStep: basalStep, basalProfile: basalProfile))
 }

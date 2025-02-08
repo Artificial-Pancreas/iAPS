@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Bitte beachten Sie, dass Sie Ihre Dosierungsstrategie im Einstellungsmenü ändern müssen";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Lebenslauf";
+"Resume delivery" = "Lieferung starten";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Lieferung stoppen";
@@ -413,7 +413,6 @@
 
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Legen Sie das Basalprofil fest, das die Pumpe verwenden soll. Beachten Sie, dass das in der Pumpe gespeicherte Profil mit dem Profil auf %1$@überschrieben wird.";
-
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.

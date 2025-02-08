@@ -304,7 +304,7 @@
 "sec" = "sek";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Verlichting aan tijd";
+"Backlight on time" = "Czas włączenia podświetlenia";
 
 /* lcdOnTimeInSec */
 "Lcd on time" = "Czas włączenia wyświetlacza LCD";
@@ -413,7 +413,6 @@
 
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Ustaw profil podstawowy, którego powinna używać pompa. Należy pamiętać, że spowoduje to nadpisanie profilu znajdującego się w pompie profilem znajdującym się na stronie %1$@.";
-
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.

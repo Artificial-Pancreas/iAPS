@@ -20,7 +20,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
     
     var autoConnectUUID: String? = nil
     var connectionCompletion: ((ConnectionResult) -> Void)? = nil
-    var connectionCallback: [String: ((ConnectionResultShort) -> Void)] = [:]
+    var connectionCallback: [String: ((ConnectionResult) -> Void)] = [:]
     var devices: [DanaPumpScan] = []
     
     let log = DanaLogger(category: "ContinousBluetoothManager")
@@ -142,7 +142,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
         }
     }
     
-    func ensureConnected(_ completion: @escaping (ConnectionResultShort) async -> Void, _ identifier: String = #function) {
+    func ensureConnected(_ completion: @escaping (ConnectionResult) async -> Void, _ identifier: String = #function) {
         if self.isConnected {
             self.resetConnectionCompletion()
             self.logDeviceCommunication("Dana - Connection is ok!", type: .connection)
@@ -159,7 +159,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
                     
                     self.resetConnectionCompletion()
                     Task {
-                        await completion(.failure)
+                        await completion(.failure(NSError(domain: "Couldn't reconnect", code: -1)))
                     }
                     return
                 }
@@ -178,7 +178,7 @@ class ContinousBluetoothManager : NSObject, BluetoothManager {
             
             self.resetConnectionCompletion()
             Task {
-                await completion(.failure)
+                await completion(.failure(NSError(domain: "Device is forced disconnected...", code: -1)))
             }
         }
     }

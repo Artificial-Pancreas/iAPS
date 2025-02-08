@@ -18,6 +18,14 @@ extension PumpSettingsEditor {
                 ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
         }
 
+        func isDanaPump() -> Bool {
+            guard let pump = deviceManager?.pumpManager else {
+                return true
+            }
+
+            return pump.localizedTitle.contains("Dana")
+        }
+
         func save(settings: PumpSettings) -> AnyPublisher<Void, Error> {
             func save(_ settings: PumpSettings) {
                 storage.save(settings, as: OpenAPS.Settings.settings)

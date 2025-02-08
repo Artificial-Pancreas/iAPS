@@ -470,7 +470,8 @@ extension PeripheralManager {
 extension PeripheralManager {
     private func parseReceivedValue(_ receievedData: Data) {
         var data = receievedData
-        if (self.pumpManager.state.isConnected && DanaRSEncryption.enhancedEncryption != EncryptionType.DEFAULT.rawValue) {
+        
+        if (data.count > 0 && self.pumpManager.state.isConnected && DanaRSEncryption.enhancedEncryption != EncryptionType.DEFAULT.rawValue) {
 //            self.log.info("Second lvl decryption")
             data = DanaRSEncryption.decodeSecondLevel(data: data)
         }
