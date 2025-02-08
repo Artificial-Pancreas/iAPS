@@ -212,7 +212,7 @@
 " Your setting: " = " Cài đặt của bạn: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "autosens.max Giới hạn điểm hiện tại tối đa mg/dl";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max giới hạn tối đa";
 
 /*  */
 "Enter preset name" = "Nhập tên";
@@ -976,7 +976,7 @@ Enact a temp Basal or a temp target */
 "Glucose Settings" = "Cài đặt đường huyết";
 
 /* */
-"Notifications" = "Thông báo";
+"Notifications" = "Notifications";
 
 /* */
 "Export logs" = "Kết xuất nhật ký";
@@ -1103,6 +1103,22 @@ Enact a temp Basal or a temp target */
 
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Kích hoạt %@ cài đặt sẵn ghi đè";
+
+/* Suspend/Resume Shortcut */
+"Choose what to do with your pump" = "Hãy chọn những gì để làm việc với bơm insulin của bạn";
+
+/* Suspend/Resume Shortcut */
+"Are you sure you want to %@ your pump?" = "Bạn có chắc chắn muốn %@ bơm insulin này không?";
+
+/* Suspend/Resume Shortcut */
+"Pump command" = "Lệnh của bơm";
+/* Suspend/Resume Shortcut */
+"enacted in iAPS" = "enacted in iAPS";
+
+/* Temp Basal Shortcut */
+"Temp basal Amount in U/h" = "Số lượng Temp Basal tính bằng U/h";
+
+
 
 /* */
 "Schedule " = "Lịch trình ";
@@ -1501,7 +1517,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Lịch trình khi SMBs tắt";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Thay đổi ISF, CR và Basal";
 
 /* */
 "Change ISF" = "Thay đổi ISF";
@@ -1993,7 +2009,7 @@ Enact a temp Basal or a temp target */
 "all" = "Tất cả";
 
 /* Active Insulin View */
-"Active Insulin" = "Lượng Insulin còn hoạt động";
+"Active Insulin" = "Insulin Hoạt Động";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Thời gian có Insulin âm tính";
@@ -2017,7 +2033,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
 /* Active Carbohydrates View */
-"Active Carbohydrates" = "Lượng Carbohydrates còn hoạt động";
+"Active Carbohydrates" = "Carbohydrates Hoạt Động";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2252,14 +2268,14 @@ Enact a temp Basal or a temp target */
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF bị vô hiệu hóa trong khi Auto ISF được bật";
 
 /* */
-"Default value: 1.2 The upper limit of ISF adjustment" = "Giá trị mặc định: 1.2 Cao hơn giới hạn của điều chỉnh ISF";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Giá trị mặc định: 1,2. Đây là giới hạn giá trị cao nhất của điều chỉnh ISF";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Giá trị mặc định: 0.8 Thấp hơn giới hạn của điều chỉnh ISF";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Giá trị mặc định: 0,8. Đây là giới hạn giá trị thấp nhất của điều chỉnh ISF";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
@@ -2340,7 +2356,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Mục tiêu ghi đè EatingSoon (hoặc Mục tiêu tạm thời) cần được kích hoạt để bắt đầu quá trình thích ứng B30. Mục tiêu cần phải thấp hơn hoặc bằng cài đặt này để B30 Aimi bắt đầu. Mặc định là 90 mg/dl. Nếu bạn hủy Mục tiêu EatingSoon này, tỷ lệ cơ bản B30 sẽ dừng lại.";
 
 /* */
 "Minimum Start Bolus size" = "Minimum Start Bolus size";
@@ -2406,19 +2422,19 @@ Enact a temp Basal or a temp target */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
 /* */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0, Sensible nằm giữa 40 và 120. Tỷ lệ phân phối SMB tăng tuyến tính được ánh xạ tới phạm vi glucose [target_bg, target_bg+bg_range]. Tại target_bg tỷ lệ SMB là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tỷ lệ SMB tăng tuyến tính bị vô hiệu hóa và sửa lỗi smb_delivery_ratio được sử dụng.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0. Hợp lý giữa 40mg/dl và 120mg/dl. SMB delivery ratio tăng được ánh xạ tới glucose range [target_bg, target_bg+bg_range]. Tại target_bg SMB ratio là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tăng SMB ratio bị vô hiệu hóa và smb_delivery_ratio được sử dụng.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là mức cao hơn của Tỷ lệ phân phối SMB tăng tuyến tính thay vì giá trị cố định ở trên trong Tỷ lệ phân phối SMB (OpenAP SMB Delivery Ratio).";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là mức cao hơn của SMB Delivery Ratio tăng tuyến tính chứ không phải giá trị cố định ở trên trong SMB Delivery Ratio.";
 
 /* */
 "SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là giá trị thấp hơn giới hạn của Tỷ lệ phân phối SMB tăng tuyến tính chứ không phải là giá trị cố định ở trên trong Tỷ lệ phân phối SMB (OpenAP SMB Delivery Ratio).";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là giá trị giới hạn thấp của SMB Delivery Ratio tăng tuyến tính chứ không phải là giá trị cố định ở trên trong SMB Delivery Ratio.";
 
 /* */
 "Toggles" = "Toggles";
@@ -2465,7 +2481,7 @@ Enact a temp Basal or a temp target */
 "Rewind Resets Autosens" = "Rewind sẽ thiết lập lại Autosens";
 
 /* ”Rewind Resets Autosens” */
-"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại tỷ lệ cảm biến tự động về mức trung tính khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi điểm gắn có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình một cách độc lập với những thay đổi ở địa điểm, bạn có thể cân nhắc việc tắt tính năng này.";
+"This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại autosens ratio về mức trung hoà khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi điểm gắn có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình chỉ để thay đổi điểm gắn, bạn có thể cân nhắc việc tắt tính năng này.";
 
 /* Headline "High Temptarget Raises Sensitivity" */
 "High Temptarget Raises Sensitivity" = "Mục tiêu tạm thời cao sẽ làm tăng độ nhạy";
@@ -2489,7 +2505,7 @@ Enact a temp Basal or a temp target */
 "Resistance Lowers Target" = "Chống mục tiêu thấp";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là False. Khi True, sẽ hạ mục tiêu BG khi cảm biến tự động phát hiện kháng cự";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là False. Khi True, sẽ hạ mục tiêu BG khi cảm biến tự động phát hiện trở kháng";
 
 /* Headline ”Advanced Target Adjustments" */
 "Advanced Target Adjustments" = "Điều chỉnh mục tiêu nâng cao";
@@ -2594,7 +2610,7 @@ Enact a temp Basal or a temp target */
 "Autosens Max" = "Autosens tối đa";
 
 /* "Autosens Max" */
-"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Đây là giới hạn hệ số nhân cho autosens (và autotune) để đặt giới hạn tối đa 20% cho tỷ lệ cảm biến tự động có thể cao đến mức nào, từ đó xác định mức độ tự động điều chỉnh mức cơ bản cao, mức độ điều chỉnh ISF thấp và mức độ thấp của nó có thể đặt mục tiêu BG.";
+"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Đây là giới hạn hệ số nhân cho autosens (và autotune) để đặt giới hạn tối đa 20% cho autosens ratio có thể cao đến mức nào, từ đó xác định mức độ tự động điều chỉnh mức cơ bản cao, mức độ điều chỉnh ISF thấp và mức độ thấp của nó có thể đặt mục tiêu BG.";
 
 /* Headline "Autosens Min" */
 "Autosens Min" = "Autosens tối thiểu";

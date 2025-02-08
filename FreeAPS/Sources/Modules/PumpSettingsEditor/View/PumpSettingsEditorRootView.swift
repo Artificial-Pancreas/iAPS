@@ -29,12 +29,12 @@ extension PumpSettingsEditor {
                 ) {
                     HStack {
                         Text("Max Basal")
-                        DecimalTextField("U/hr", value: $state.maxBasal, formatter: formatter)
+                        DecimalTextField("U/hr", value: $state.maxBasal, formatter: formatter, liveEditing: true)
                             .disabled(state.isDanaPump)
                     }
                     HStack {
                         Text("Max Bolus")
-                        DecimalTextField("U", value: $state.maxBolus, formatter: formatter)
+                        DecimalTextField("U", value: $state.maxBolus, formatter: formatter, liveEditing: true)
                             .disabled(state.isDanaPump)
                     }
                 }
@@ -42,7 +42,7 @@ extension PumpSettingsEditor {
                 Section(header: Text("Duration of Insulin Action")) {
                     HStack {
                         Text("DIA")
-                        DecimalTextField("hours", value: $state.dia, formatter: formatter)
+                        DecimalTextField("hours", value: $state.dia, formatter: formatter, liveEditing: true)
                     }
                 }
 

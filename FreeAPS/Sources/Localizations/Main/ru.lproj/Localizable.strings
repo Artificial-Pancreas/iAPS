@@ -1104,6 +1104,22 @@ Enact a temp Basal or a temp target */
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Активирует %@ переопределение";
 
+/* Suspend/Resume Shortcut */
+"Choose what to do with your pump" = "Выберите, что сделать с помпой";
+
+/* Suspend/Resume Shortcut */
+"Are you sure you want to %@ your pump?" = "Вы уверены, что хотите %@ помпу?";
+
+/* Suspend/Resume Shortcut */
+"Pump command" = "Команда помпы";
+/* Suspend/Resume Shortcut */
+"enacted in iAPS" = "принято в iAPS";
+
+/* Temp Basal Shortcut */
+"Temp basal Amount in U/h" = "ВБС в Ед/ч";
+
+
+
 /* */
 "Schedule " = "Расписание ";
 
@@ -2340,7 +2356,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Целевое значение для активации B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below or equal this  setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Для активации ВБС B30 должен быть активен профиль или временная цель.  Чтобы активировать B30, целевой уровень глюкозы в крови должен быть ниже или равен этому значению. Стандартное значение – 5 ммоль/л. (90 мг/дл)  Если вы отмените свой профиль или временные цели, базальный ВБС B30 будет отменен.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Чтобы запустить B30, необходимо активировать пониженную временную цель - через профиль или временные цели. Цель должна быть - 5 ммоль (90 мг/дл) или ниже. (по-умолчанию - 5) Если отменить временную цель - действие В30 прекратится.";
 
 /* */
 "Minimum Start Bolus size" = "Минимальный стартовый болюс";
