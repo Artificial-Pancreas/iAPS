@@ -211,8 +211,8 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         // start background time extension
-        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") {
-            guard let backgroundTask = self.backGroundTaskID else { return }
+        backGroundTaskID = UIApplication.shared.beginBackgroundTask(withName: "Loop starting") { [self] in
+            guard let backgroundTask = backGroundTaskID else { return }
             UIApplication.shared.endBackgroundTask(backgroundTask)
             self.backGroundTaskID = .invalid
         }
@@ -409,8 +409,8 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
-                    DispatchQueue.main.async {
-                        self.broadcaster.notify(SuggestionObserver.self, on: .main) {
+                    DispatchQueue.main.async { [self] in
+                        broadcaster.notify(SuggestionObserver.self, on: .main) {
                             $0.suggestionDidUpdate(suggestion)
                         }
                     }
