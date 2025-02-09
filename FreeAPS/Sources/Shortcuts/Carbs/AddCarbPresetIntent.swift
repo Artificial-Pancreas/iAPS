@@ -75,7 +75,7 @@ struct AddCarbPresentIntent: AppIntent {
                 quantityCarbs = try await $carbQuantity.requestValue("How many carbs ?")
             }
 
-            let quantityCarbsName = quantityCarbs.toString()
+            let quantityCarbsName = quantityCarbs.description
             if confirmBeforeApplying {
                 try await requestConfirmation(
                     result: .result(dialog: "Are you sure to add \(quantityCarbsName) g of carbs ?")
