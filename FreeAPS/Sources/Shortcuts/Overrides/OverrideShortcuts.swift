@@ -78,7 +78,7 @@ struct ApplyOverrideIntent: AppIntent {
             let isDone = finalOverrideApply != nil ? finalOverrideApply?.isPreset ?? false : false
 
             let displayDetail: String = isDone ?
-                NSLocalizedString("The Profile Override", comment: "") + " \(displayName)" +
+                NSLocalizedString("The Profile Override", comment: "") + " \(displayName) " +
                 NSLocalizedString("is now activated", comment: "") : "Override Activation Failed"
             return .result(
                 dialog: IntentDialog(stringLiteral: displayDetail)
@@ -134,7 +134,7 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         let presets = overrideStorage.fetchProfiles().flatMap { preset -> [OverrideEntity] in
             let percentage = preset.percentage != 100 ? preset.percentage.formatted() : ""
             let targetRaw = settingsManager.settings
-                .units == .mgdL ? Decimal(Double(preset.target ?? 0)) : Double(preset.target ?? 0)
+                .units == .mgdL ? Decimal(Double(truncating: preset.target ?? 0)) : Double(truncating: preset.target ?? 0)
                 .asMmolL
             let target = (preset.target != 0 || preset.target != 6) ?
                 (glucoseFormatter.string(from: targetRaw as NSNumber) ?? "") : ""
