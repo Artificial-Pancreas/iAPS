@@ -2472,6 +2472,12 @@ Enact a temp Basal or a temp target */
 /* */
 "Auto ISF" = "Auto ISF";
 
+/* Is true */
+" on" = " увімкнути";
+
+/* Is false */
+" off" = " увімкнути";
+
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
