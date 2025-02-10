@@ -263,7 +263,7 @@
 "Autotune" = "Autotune";
 
 /*  */
-"Basal profile" = "Hồ sơ liều nền";
+"Basal profile" = "Basal profile";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
@@ -287,7 +287,7 @@
 "Add" = "Thêm";
 
 /*  */
-"Basal Profile" = "Hồ sơ liều nền";
+"Basal Profile" = "Basal Profile";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -308,7 +308,7 @@
 "Calculated Ratio" = "Tỷ lệ được tính toán";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Tỷ lệ Carb";
+"Carb Ratios" = "Carb Ratios";
 
 /*  */
 "Ratio" = "Tỷ lệ";
@@ -320,7 +320,7 @@
 "Calculated Sensitivity" = "Độ nhạy được tính toán";
 
 /*  */
-"Insulin Sensitivities" = "Độ nhạy Insulin";
+"Insulin Sensitivities" = "Insulin Sensitivities";
 
 /* */
 "Sensitivity Ratio" = "Tỷ lệ độ nhạy";
@@ -529,7 +529,7 @@ Enact a temp Basal or a temp target */
 "Maximum amount of carbs (g) you can add each entry" = "Lượng carbs tối đa (g) bạn có thể thêm vào mỗi mục nhập";
 
 /* */
-"Pump Settings" = "Cài đặt của bơm";
+"Pump Settings" = "Pump Settings";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -574,7 +574,7 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Vòng lặp kín";
+"Closed loop" = "Closed loop";
 
 /* */
 "Configuration" = "Cấu hình";
@@ -688,7 +688,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Đã xử lý";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Biện pháp xử lý";
+"Treatment" = "Treatment";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1196,7 +1196,7 @@ Enact a temp Basal or a temp target */
 "Backfill from trend" = "Chèn lấp từ xu hướng";
 
 /* */
-"Debug options" = "Tùy chọn gỡ lỗi";
+"Debug options" = "Debug options";
 
 /* */
 "Adds a lot of data to the Issue Report " = "Thêm nhiều dữ liệu vào Báo cáo vấn đề ";
@@ -1470,7 +1470,7 @@ Enact a temp Basal or a temp target */
 "Protein" = "Chất đạm";
 
 /* Service Section */
-"Fat And Protein Conversion" = "Chuyển đổi chất béo và chất đạm";
+"Fat And Protein Conversion" = "Fat And Protein Conversion";
 
 /* Service Section */
 "Profile Override" = "Mô tả ghi đè";
@@ -1571,7 +1571,7 @@ Enact a temp Basal or a temp target */
 " infinite duration." = " thời gian không xác định.";
 
 /* Service Section */
-"App Icons" = "Biểu tượng ứng dụng";
+"App Icons" = "App Icons";
 
 /* */
 "iAPS Icon" = "biểu tượng iAPS";
@@ -1651,7 +1651,7 @@ Enact a temp Basal or a temp target */
 "Glucose, " = "Đường huyết, ";
 
 /* */
-"Target Glucose" = "Đường huyết mục tiêu";
+"Target Glucose" = "Target Glucose";
 
 /* */
 "Percentage setting" = "Cài đặt phần trăm";
@@ -2054,7 +2054,7 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* Setting Title */
 
-"Sharing" = "Chia sẻ";
+"Sharing" = "Sharing";
 
 /* Share and Backup page header */
 "Share and Backup" = "Chia sẻ và sao lưu";
@@ -2087,7 +2087,7 @@ Enact a temp Basal or a temp target */
 "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nNếu bạn bật \"Chia sẻ và Sao lưu\", các bản sao lưu hàng ngày của cài đặt và số liệu thống kê của bạn sẽ được thực hiện vào cơ sở dữ liệu trực tuyến.\n\nHãy đảm bảo sao chép và lưu mã thông báo khôi phục của bạn bên dưới. Mã thông báo khôi phục là bắt buộc để nhập cài đặt của bạn vào điện thoại khác khi sử dụng chế độ xem tích hợp.";
 
 /* Section title if sharing off */
-"Share Bare Minimum" = "Chia sẻ ở mức tối thiểu";
+"Share Bare Minimum" = "Chia sẻ tối thiểu";
 
 /* Minimum share toggle */
 "Just iAPS version number" = "Chỉ phiên bản iAPS";
@@ -2143,7 +2143,7 @@ Enact a temp Basal or a temp target */
 "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Bạn có thể sử dụng Hình ảnh liên hệ để nhận các bản cập nhật trực tiếp từ iAPS cho tổ hợp Danh bạ trên Apple Watch và/hoặc tiện ích Danh bạ trên iPhone của bạn.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Hình ảnh danh bạ";
+"Contact Image" = "Contact Image";
 
 /* Contact Image, settings, label for the layout picker */
 "Layout" = "Bố cục";
@@ -2296,13 +2296,13 @@ Enact a temp Basal or a temp target */
 "You can specify how long B30 run and how high it is" = "Bạn có thể chỉ định B30 chạy trong bao lâu và cao bao nhiêu";
 
 /* */
-"Absolute Safety TBR " = "TBR an toàn tuyệt đối ";
+"Absolute Safety TBR " = "Absolute Safety TBR ";
 
 /* */
 "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Lượng tính bằng U/giờ của TBR an toàn nhỏ, được dùng để tránh nhiễm toan ceton. Sẽ giới hạn ở mức min = 0U/giờ, max = 2U/giờ!";
 
 /* */
-"Enable Keto protection with pre-defined TBR" = "Bật chế độ bảo vệ Keto với TBR được xác định trước";
+"Enable Keto protection with pre-defined TBR" = "Enable Keto protection with pre-defined TBR";
 
 /* */
 "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Nên chỉ định TBR tuyệt đối trong khoảng từ 0 đến 2 U/giờ thay vì phần trăm BR hiện tại";
@@ -2471,6 +2471,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Auto ISF" = "Auto ISF";
+
+/* Is true */
+" on" = " on";
+
+/* Is false */
+" off" = " off";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Adjust ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2873,10 +2882,10 @@ Enact a temp Basal or a temp target */
 "Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi số lượng dưới";
 
 /* Setting title */
-"Bolus Calculator" = "Tính toán Bolus";
+"Bolus Calculator" = "Bolus Calculator";
 
 /* Setting title */
-"Dynamic ISF" = "Độ nhạy Insulin (ISF) động";
+"Dynamic ISF" = "Dynamic ISF";
 
 /* Notification option */
 "Live Activity" = "Hoạt động trực tiếp";
