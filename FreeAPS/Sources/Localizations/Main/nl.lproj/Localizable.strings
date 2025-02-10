@@ -2473,13 +2473,13 @@ Enact a temp Basal or a temp target */
 "Auto ISF" = "Auto ISF";
 
 /* Is true */
-" on" = " on";
+" on" = " aan";
 
 /* Is false */
-" off" = " off";
+" off" = " uit";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Pas aan ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
