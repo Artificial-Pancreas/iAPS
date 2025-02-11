@@ -51,7 +51,6 @@ extension StatConfig {
                         DecimalTextField("0.2", value: $state.minimumSMB, formatter: insulinFormatter)
                         Text("U").foregroundColor(.secondary)
                     }
-                    Toggle("Glucose Target Lines", isOn: $state.targetLines)
 
                 } header: { Text("Home Chart settings ") }
 

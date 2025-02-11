@@ -156,7 +156,6 @@ extension Home {
             data.minimumSMB = settingsManager.settings.minimumSMB
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
-            data.targetLines = settingsManager.settings.targetLines
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             extended = settingsManager.settings.extendHomeView
@@ -639,7 +638,6 @@ extension Home.StateModel:
         data.thresholdLines = settingsManager.settings.rulerMarks
         useTargetButton = settingsManager.settings.useTargetButton
         data.screenHours = settingsManager.settings.hours
-        data.targetLines = settingsManager.settings.targetLines
         alwaysUseColors = settingsManager.settings.alwaysUseColors
         useCalc = settingsManager.settings.useCalc
         data.minimumSMB = settingsManager.settings.minimumSMB
