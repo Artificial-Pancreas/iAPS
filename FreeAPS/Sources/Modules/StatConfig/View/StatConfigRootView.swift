@@ -64,7 +64,6 @@ extension StatConfig {
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
                     Toggle("Display Sensor Age", isOn: $state.displayExpiration)
                     Toggle("Display Glucose Delta", isOn: $state.displayDelta)
-                    Toggle("Display Sensor Age", isOn: $state.displayExpiration)
                     Toggle("Hide Concentration Badge", isOn: $state.hideInsulinBadge)
                 } header: { Text("Header settings") }
 
