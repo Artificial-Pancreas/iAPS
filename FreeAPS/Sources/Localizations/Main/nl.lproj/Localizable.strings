@@ -2876,6 +2876,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Glucose Delta" = "Glucose delta weergeven";
 
 /* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Verberg concentratie badge";
 
 /* UI/UX option */
