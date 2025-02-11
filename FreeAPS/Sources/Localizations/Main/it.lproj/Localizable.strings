@@ -2873,6 +2873,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display Glucose Delta" = "Mostra Delta Glicemia";
 
 /* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Nascondi Badge Concentrazione";
 
 /* UI/UX option */
