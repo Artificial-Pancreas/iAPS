@@ -55,7 +55,7 @@ extension Home {
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
         @Published var overrides: [Override] = []
-        @Published var alwaysUseColors: Bool = true
+        @Published var alwaysUseColors: Bool = false
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []
@@ -75,6 +75,7 @@ extension Home {
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
         @Published var autoisf = false
+        @Published var displayExpiration = false
 
         // Chart data
         var data = ChartModel(
@@ -160,6 +161,7 @@ extension Home {
             maxCOB = settingsManager.preferences.maxCOB
             autoisf = settingsManager.settings.autoisf
             hours = settingsManager.settings.hours
+            displayExpiration = settingsManager.settings.displayExpiration
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -644,6 +646,7 @@ extension Home.StateModel:
         maxCOB = settingsManager.preferences.maxCOB
         autoisf = settingsManager.settings.autoisf
         hours = settingsManager.settings.hours
+        displayExpiration = settingsManager.settings.displayExpiration
         setupGlucose()
         setupOverrideHistory()
         setupData()

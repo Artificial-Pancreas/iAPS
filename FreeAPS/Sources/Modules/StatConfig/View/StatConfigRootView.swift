@@ -62,6 +62,7 @@ extension StatConfig {
                 Section {
                     Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
+                    Toggle("Display Sensor Age", isOn: $state.displayExpiration)
                     Toggle("Display Glucose Delta", isOn: $state.displayDelta)
                     Toggle("Hide Concentration Badge", isOn: $state.hideInsulinBadge)
                 } header: { Text("Header settings") }
