@@ -2872,7 +2872,7 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Visa exakt glukosförändring";
 
 /* UI/UX option */
-"Display Sensor Age" = "Display Sensor Age";
+"Display Sensor Age" = "Visa sensorålder";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Dölj koncentrationsmärke";
