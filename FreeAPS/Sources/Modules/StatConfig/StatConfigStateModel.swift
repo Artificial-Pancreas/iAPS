@@ -13,7 +13,7 @@ extension StatConfig {
         @Published var useFPUconversion: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var hours: Decimal = 6
-        @Published var alwaysUseColors: Bool = true
+        @Published var alwaysUseColors: Bool = false
         @Published var minimumSMB: Decimal = 0.3
         @Published var useInsulinBars: Bool = false
         @Published var skipGlucoseChart: Bool = false

@@ -55,7 +55,7 @@ extension Home {
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
         @Published var overrides: [Override] = []
-        @Published var alwaysUseColors: Bool = true
+        @Published var alwaysUseColors: Bool = false
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []

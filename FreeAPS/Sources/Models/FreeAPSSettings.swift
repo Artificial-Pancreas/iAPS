@@ -55,7 +55,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var liveActivityChart = false
     var liveActivityChartShowPredictions = true
     var useTargetButton: Bool = false
-    var alwaysUseColors: Bool = true
+    var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
     var profilesOrTempTargets: Bool = false
     var allowBolusShortcut: Bool = false
