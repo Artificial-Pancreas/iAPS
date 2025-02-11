@@ -108,7 +108,8 @@ extension Home {
                 highGlucose: $state.data.highGlucose,
                 alwaysUseColors: $state.alwaysUseColors,
                 displayDelta: $state.displayDelta,
-                scrolling: $displayGlucose
+                scrolling: $displayGlucose,
+                displayExpiration: $state.displayExpiration
             )
             .onTapGesture {
                 if state.alarm == nil {
