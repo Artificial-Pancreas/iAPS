@@ -74,7 +74,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var hideInsulinBadge: Bool = false
     var extended_overrides = false
     var extendHomeView = true
-    var targetLines = false
+    var displayExpiration = false
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -414,8 +414,8 @@ extension FreeAPSSettings: Decodable {
             settings.extendHomeView = extendHomeView
         }
 
-        if let targetLines = try? container.decode(Bool.self, forKey: .targetLines) {
-            settings.targetLines = targetLines
+        if let displayExpiration = try? container.decode(Bool.self, forKey: .displayExpiration) {
+            settings.displayExpiration = displayExpiration
         }
         // AutoISF
         if let autoisf = try? container.decode(Bool.self, forKey: .autoisf) {

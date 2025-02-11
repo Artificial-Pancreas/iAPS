@@ -75,6 +75,7 @@ extension Home {
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
         @Published var autoisf = false
+        @Published var displayExpiration = false
 
         // Chart data
         var data = ChartModel(
@@ -163,6 +164,7 @@ extension Home {
             maxCOB = settingsManager.preferences.maxCOB
             autoisf = settingsManager.settings.autoisf
             hours = settingsManager.settings.hours
+            displayExpiration = settingsManager.settings.displayExpiration
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -650,6 +652,7 @@ extension Home.StateModel:
         maxCOB = settingsManager.preferences.maxCOB
         autoisf = settingsManager.settings.autoisf
         hours = settingsManager.settings.hours
+        displayExpiration = settingsManager.settings.displayExpiration
         setupGlucose()
         setupOverrideHistory()
         setupData()
