@@ -2872,6 +2872,9 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Отображать дельту глюкозы";
 
 /* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Скрыть значок концентрации";
 
 /* UI/UX option */
