@@ -10,6 +10,7 @@ struct CurrentGlucoseView: View {
     @Binding var alwaysUseColors: Bool
     @Binding var displayDelta: Bool
     @Binding var scrolling: Bool
+    @Binding var displayExpiration: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
@@ -69,6 +70,13 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
+    private var daysFormatter: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour]
+        formatter.unitsStyle = .abbreviated
+        return formatter
+    }
+
     var body: some View {
         glucoseView
             .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xLarge)
@@ -79,6 +87,9 @@ struct CurrentGlucoseView: View {
             if let recent = recentGlucose {
                 if displayDelta, !scrolling, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
+                if displayExpiration {
+                    sageView
+                }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
                     if let string = recent.glucose.map({
@@ -115,7 +126,27 @@ struct CurrentGlucoseView: View {
                 .offset(x: offset, y: 10)
         }
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 120, y: -7)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 120, y: displayExpiration ? -40 : -7)
+    }
+
+    private var sageView: some View {
+        ZStack {
+            if let date = recentGlucose?.sessionStartDate {
+                let timeAgo: TimeInterval = -1 * date.timeIntervalSinceNow
+                LoopEllipse(stroke: colorScheme == .dark ? Color(.systemGray3) : Color(.systemGray6)).frame(width: 65, height: 25)
+                    .overlay {
+                        HStack {
+                            Text(
+                                (daysFormatter.string(from: timeAgo) ?? "").trimmingCharacters(in: .whitespaces)
+                                    .replacingOccurrences(of: ",", with: " ")
+                            )
+                        }
+                    }
+            }
+        }
+        .font(.footnote)
+        .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 128, y: 3)
     }
 
     private var adjustments: (degree: Double, x: CGFloat, y: CGFloat) {

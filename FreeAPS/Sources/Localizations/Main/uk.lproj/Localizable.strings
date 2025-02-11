@@ -1105,15 +1105,15 @@ Enact a temp Basal or a temp target */
 "Activates an %@ Override Preset" = "Активує попередні налаштування %@";
 
 /* Suspend/Resume Shortcut */
-"Choose what to do with your pump" = "Choose what to do with your pump";
+"Choose what to do with your pump" = "Виберіть, що робити з вашою помпою";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
+"Are you sure you want to %@ your pump?" = "Ви впевнені, що хочете %@ свою помпу?";
 
 /* Suspend/Resume Shortcut */
-"Pump command" = "Pump command";
+"Pump command" = "Команда помпи";
 /* Suspend/Resume Shortcut */
-"enacted in iAPS" = "enacted in iAPS";
+"enacted in iAPS" = "прийняті в iAPS";
 
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
@@ -2472,6 +2472,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Auto ISF" = "Авто ISF";
+
+/* Is true */
+" on" = " увімкнути";
+
+/* Is false */
+" off" = " вимкнути";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Налаштувати";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs

@@ -2491,6 +2491,9 @@ Enact a temp Basal or a temp target */
 /* Is false */
 " off" = " off";
 
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Adjust ";
+
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
@@ -2881,6 +2884,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Display Glucose Delta";
+
+/* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Hide Concentration Badge";

@@ -669,7 +669,11 @@ extension OverrideProfilesConfig {
 
                     if preset.advancedSettings {
                         HStack {
-                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ? Text("Adjust " + isfAndCRstring) : nil
+                            percent != 1 && !(preset.isf && preset.cr && preset.basal) ?
+                                Text(
+                                    NSLocalizedString("Adjust ", comment: "Override adjustment of ISF, CR and Basal") +
+                                        isfAndCRstring
+                                ) : nil
                             if !preset.smbIsOff {
                                 decimal(decimal: preset.smbMinutes ?? 0, setting: state.defaultSmbMinutes, label: "SMB ")
                                 decimal(decimal: preset.uamMinutes ?? 0, setting: state.defaultUamMinutes, label: "UAM ")
@@ -685,20 +689,14 @@ extension OverrideProfilesConfig {
                     // All of the Auto ISF Settings (Bool and Decimal optionals)
                     if preset.overrideAutoISF, let aisf = autoisfSettings, aisf.autoisf {
                         let standard = state.currentSettings
-
                         HStack {
-                            bool(
-                                bool: aisf.enableBGacceleration,
-                                setting: standard.enableBGacceleration,
-                                label: "Accel"
-                            )
-                            bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto")
-                            bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30 ")
+                            bool(bool: aisf.enableBGacceleration, setting: standard.enableBGacceleration, label: "Accel")
+                                .frame(maxHeight: 30)
+                            bool(bool: aisf.ketoProtect, setting: standard.ketoProtect, label: "Keto").frame(maxHeight: 30)
+                            bool(bool: aisf.use_B30, setting: standard.use_B30, label: "B30").frame(maxHeight: 30)
 
-                            HStack {
-                                decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
-                                decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
-                            }
+                            decimal(decimal: aisf.autoisf_min, setting: standard.autoisf_min, label: "Min: ")
+                            decimal(decimal: aisf.autoisf_max, setting: standard.autoisf_max, label: "Max: ")
                         }
                         .foregroundStyle(.secondary).font(.caption)
 
@@ -768,7 +766,7 @@ extension OverrideProfilesConfig {
         }
 
         private var edit: some View {
-            overridesView
+            overridesView.dynamicTypeSize(...DynamicTypeSize.xxLarge)
         }
 
         private func unChanged() -> Bool {

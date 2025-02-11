@@ -2483,6 +2483,15 @@ Ajustes predeterminados:\n
 /* */
 "Auto ISF" = "Auto ISF";
 
+/* Is true */
+" on" = " on";
+
+/* Is false */
+" off" = " off";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Adjust ";
+
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS

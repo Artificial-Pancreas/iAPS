@@ -725,7 +725,11 @@ final class BaseAPSManager: APSManager, Injectable {
             guard let id = preset.id, let preset_ = preset.preset else { return }
             storage.overrideFromPreset(preset_, id)
             let currentActiveOveride = storage.fetchLatestOverride().first
-            nightscout.uploadOverride(name, Double(preset.preset?.duration ?? 0), currentActiveOveride?.date ?? Date.now)
+            nightscout.uploadOverride(
+                name,
+                Double(truncating: preset.preset?.duration ?? 0),
+                currentActiveOveride?.date ?? Date.now
+            )
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")
         }
