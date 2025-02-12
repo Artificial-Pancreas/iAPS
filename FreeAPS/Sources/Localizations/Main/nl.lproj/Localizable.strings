@@ -2473,13 +2473,13 @@ Enact a temp Basal or a temp target */
 "Auto ISF" = "Auto ISF";
 
 /* Is true */
-" on" = " on";
+" on" = " aan";
 
 /* Is false */
-" off" = " off";
+" off" = " uit";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Pas aan ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2874,6 +2874,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Display Glucose Delta" = "Glucose delta weergeven";
+
+/* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Verberg concentratie badge";

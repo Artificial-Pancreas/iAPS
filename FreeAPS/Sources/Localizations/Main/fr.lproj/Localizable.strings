@@ -2872,6 +2872,9 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Afficher l'écart de glycémie";
 
 /* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Masquer la pastille indiquant la concentration de l'insuline";
 
 /* UI/UX option */
