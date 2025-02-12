@@ -1359,6 +1359,7 @@
 		198F67B02CFCBD5D00E538CB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1948C0652D35A8350032B6A2 /* AutoISFHistoryView.swift */,
 				198F67AF2CFCBD5D00E538CB /* AutoISFRootView.swift */,
 			);
 			path = View;
@@ -1371,7 +1372,6 @@
 				198F67B22CFCBD5D00E538CB /* AutoISFProvider.swift */,
 				198F67B32CFCBD5D00E538CB /* AutoISFStateModel.swift */,
 				198F67B02CFCBD5D00E538CB /* View */,
-				1948C0652D35A8350032B6A2 /* AutoISFHistoryView.swift */,
 			);
 			path = AutoISF;
 			sourceTree = "<group>";
