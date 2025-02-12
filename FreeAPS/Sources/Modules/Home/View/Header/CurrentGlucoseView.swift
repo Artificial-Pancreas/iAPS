@@ -133,7 +133,7 @@ struct CurrentGlucoseView: View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
                 let timeAgo: TimeInterval = -1 * date.timeIntervalSinceNow
-                LoopEllipse(stroke: colorScheme == .dark ? Color(.systemGray3) : Color(.systemGray6)).frame(width: 60, height: 25)
+                LoopEllipse(stroke: colorScheme == .dark ? Color(.systemGray3) : Color(.systemGray6)).frame(width: 50, height: 23)
                     .overlay {
                         HStack {
                             Text(
