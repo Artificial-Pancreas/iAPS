@@ -126,14 +126,14 @@ struct CurrentGlucoseView: View {
                 .offset(x: offset, y: 10)
         }
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 120, y: displayExpiration ? -40 : -7)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 134, y: displayExpiration ? -34 : -7)
     }
 
     private var sageView: some View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
                 let timeAgo: TimeInterval = -1 * date.timeIntervalSinceNow
-                LoopEllipse(stroke: colorScheme == .dark ? Color(.systemGray3) : Color(.systemGray6)).frame(width: 65, height: 25)
+                LoopEllipse(stroke: colorScheme == .dark ? Color(.systemGray3) : Color(.systemGray6)).frame(width: 60, height: 25)
                     .overlay {
                         HStack {
                             Text(
@@ -146,7 +146,7 @@ struct CurrentGlucoseView: View {
         }
         .font(.footnote)
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 128, y: 3)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 135, y: 3)
     }
 
     private var adjustments: (degree: Double, x: CGFloat, y: CGFloat) {
