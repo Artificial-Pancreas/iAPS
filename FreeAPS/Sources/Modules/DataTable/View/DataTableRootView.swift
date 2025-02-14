@@ -555,7 +555,7 @@ extension DataTable {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .disabled(
                                 (state.meal.carbs == 0 || state.oldCarbs == state.meal.carbs) && state.meal
-                                    .fat == 0 && state.meal.protein == 0
+                                    .fat == 0 && state.meal.protein == 0 && state.carbEquivalents == 0
                             )
                             .listRowBackground(
                                 (state.meal.carbs != 0 && state.oldCarbs != state.meal.carbs) ? Color(.systemBlue) :
