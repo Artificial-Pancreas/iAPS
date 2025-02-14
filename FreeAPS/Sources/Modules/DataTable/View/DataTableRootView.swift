@@ -9,13 +9,18 @@ extension DataTable {
         @State private var isRemoveHistoryItemAlertPresented: Bool = false
         @State private var alertTitle: String = ""
         @State private var alertMessage: String = ""
+
         @State private var alertTreatmentToDelete: Treatment?
         @State private var alertGlucoseToDelete: Glucose?
 
         @State private var showExternalInsulin: Bool = false
         @State private var showFutureEntries: Bool = false // default to hide future entries
         @State private var showManualGlucose: Bool = false
+        @State private var editIsPresented: Bool = false
+
         @State private var isAmountUnconfirmed: Bool = true
+
+        @State private var complex: [CarbsEntry]?
 
         @Environment(\.colorScheme) var colorScheme
 
@@ -94,6 +99,7 @@ extension DataTable {
                 state.externalInsulinDate = Date() } }) {
                 addExternalInsulinView
             }
+            .sheet(isPresented: $editIsPresented) { edit(fullMeal: state.carbStorage.complexMeal(date: state.treatment.date)) }
         }
 
         private var treatmentsList: some View {
@@ -250,6 +256,14 @@ extension DataTable {
                 Text(dateFormatter.string(from: item.date))
                     .moveDisabled(true)
             }
+            .swipeActions(edge: .leading) {
+                Button {
+                    complex = state.carbStorage.complexMeal(date: item.creationDate)
+                    state.updateVariables(mealItem: item, complex: complex)
+                    editIsPresented.toggle()
+                }
+                label: { Label("Edit", systemImage: "pencil.line") }
+            }.disabled(item.type != .carbs && item.type != .fpus)
             .swipeActions {
                 Button(
                     "Delete",
@@ -278,8 +292,7 @@ extension DataTable {
                         isRemoveHistoryItemAlertPresented = true
                     }
                 ).tint(.red)
-            }
-            .disabled(item.type == .tempBasal || item.type == .tempTarget || item.type == .resume || item.type == .suspend)
+            }.disabled(item.type == .tempBasal || item.type == .tempTarget || item.type == .resume || item.type == .suspend)
             .alert(
                 Text(NSLocalizedString(alertTitle, comment: "")),
                 isPresented: $isRemoveHistoryItemAlertPresented
@@ -287,12 +300,12 @@ extension DataTable {
                 Button("Cancel", role: .cancel) {}
                 Button("Delete", role: .destructive) {
                     guard let treatmentToDelete = alertTreatmentToDelete else {
-                        debug(.default, "Cannot gracefully unwrap alertTreatmentToDelete!")
+                        debug(.default, "Cannot unwrap alertTreatmentToDelete!")
                         return
                     }
 
                     if treatmentToDelete.type == .carbs || treatmentToDelete.type == .fpus {
-                        state.deleteCarbs(treatmentToDelete)
+                        state.deleteCarbs(treatmentToDelete.creationDate)
                     } else {
                         state.deleteInsulin(treatmentToDelete)
                     }
@@ -419,6 +432,138 @@ extension DataTable {
                 }
             } message: {
                 Text("\n" + NSLocalizedString(alertMessage, comment: ""))
+            }
+        }
+
+        private func edit(fullMeal _: [CarbsEntry]?) -> some View {
+            VStack(spacing: 0) {
+                let item = state.treatment
+                // if let item = entry {
+                Button { editIsPresented = false }
+                label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .trailing)
+                    .tint(.blue).buttonStyle(.borderless).padding(.top, 20).padding(.trailing, 20)
+                Form {
+                    // Edit carb equivalents
+                    if item.type == .fpus {
+                        Section {
+                            HStack {
+                                Text("Carb Equivalent")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.carbEquivalents,
+                                    formatter: hourFormatter,
+                                    autofocus: true,
+                                    liveEditing: true
+                                )
+                                Text("grams").foregroundColor(.secondary)
+                            }
+                        }
+                        header: { Text("Edit Carb Equivalent") }
+                        footer: { Text("This will also alter any other grouped carb equivalents") }
+                    }
+
+                    // Edit Carbs and carb equivalents
+                    else if let complex = complex {
+                        Section {
+                            HStack {
+                                Text("Carbs")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.meal.carbs,
+                                    formatter: hourFormatter,
+                                    autofocus: true,
+                                    liveEditing: true
+                                )
+                                Text("grams").foregroundColor(.secondary)
+                            }
+                        } header: { Text("Normal Carbs") }
+
+                        Section {
+                            HStack {
+                                Text("Carb Equivalents")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.carbEquivalents,
+                                    formatter: hourFormatter,
+                                    autofocus: true,
+                                    liveEditing: true
+                                )
+                                Text("grams").foregroundColor(.secondary)
+                            }
+
+                            HStack {
+                                let total = Decimal(complex.count - 1) * state.carbEquivalents
+                                Text("Total")
+                                Spacer()
+                                Text(hourFormatter.string(from: total as NSNumber) ?? "")
+                                Text("grams").foregroundColor(.secondary)
+                            }
+                        } header: { Text("Carb Equivalents") }
+                    } else {
+                        // Edit a carb entry
+                        Section {
+                            HStack {
+                                Text("Carbs")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.meal.carbs,
+                                    formatter: hourFormatter,
+                                    autofocus: true,
+                                    liveEditing: true
+                                )
+                                Text("grams").foregroundColor(.secondary)
+                            }
+
+                            HStack {
+                                Text("Fat").foregroundColor(.orange)
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.meal.fat,
+                                    formatter: hourFormatter,
+                                    autofocus: false,
+                                    liveEditing: true
+                                )
+                                Text("grams").foregroundColor(.secondary)
+                            }
+                            HStack {
+                                Text("Protein").foregroundColor(.red)
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.meal.protein,
+                                    formatter: hourFormatter,
+                                    autofocus: false,
+                                    liveEditing: true
+                                ).foregroundColor(.loopRed)
+
+                                Text("grams").foregroundColor(.secondary)
+                            }
+                        } header: { Text("Edit Meal") }
+                    }
+
+                    Section {
+                        Button {
+                            state.updateCarbs(treatment: item, meal: state.meal)
+                            editIsPresented = false
+                        }
+                        label: { Text("Save") }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .disabled(
+                                (state.meal.carbs == 0 || state.oldCarbs == state.meal.carbs) && state.meal
+                                    .fat == 0 && state.meal.protein == 0
+                            )
+                            .listRowBackground(
+                                (state.meal.carbs != 0 && state.oldCarbs != state.meal.carbs) ? Color(.systemBlue) :
+                                    Color(.systemGray4)
+                            )
+                            .tint(.white)
+                    }
+                }
             }
         }
     }
