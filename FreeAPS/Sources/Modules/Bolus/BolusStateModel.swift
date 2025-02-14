@@ -255,6 +255,7 @@ extension Bolus {
                 units: units,
                 type: .carbs,
                 date: (deleteTwice ? (meals.createdAt ?? Date()) : meals.actualDate) ?? Date(),
+                creationDate: meals.createdAt ?? Date.now,
                 id: meals.id ?? "",
                 isFPU: deleteTwice ? true : false,
                 fpuID: deleteTwice ? (meals.fpuID ?? "") : ""

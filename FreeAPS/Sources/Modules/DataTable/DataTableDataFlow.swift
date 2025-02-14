@@ -60,6 +60,7 @@ enum DataTable {
         let units: GlucoseUnits
         let type: DataType
         let date: Date
+        let creationDate: Date
         let amount: Decimal?
         let secondAmount: Decimal?
         let duration: Decimal?
@@ -87,6 +88,7 @@ enum DataTable {
             units: GlucoseUnits,
             type: DataType,
             date: Date,
+            creationDate: Date,
             amount: Decimal? = nil,
             secondAmount: Decimal? = nil,
             duration: Decimal? = nil,
@@ -101,6 +103,7 @@ enum DataTable {
             self.units = units
             self.type = type
             self.date = date
+            self.creationDate = creationDate
             self.amount = amount
             self.secondAmount = secondAmount
             self.duration = duration
@@ -217,7 +220,7 @@ protocol DataTableProvider: Provider {
     func tempTargets() -> [TempTarget]
     func carbs() -> [CarbsEntry]
     func glucose() -> [BloodGlucose]
-    func deleteCarbs(_ treatement: DataTable.Treatment)
+    func deleteCarbs(_ date: Date)
     func deleteInsulin(_ treatement: DataTable.Treatment)
     func deleteGlucose(id: String)
 }

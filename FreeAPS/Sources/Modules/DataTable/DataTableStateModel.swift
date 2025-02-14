@@ -6,8 +6,9 @@ extension DataTable {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
+        @Injected() var carbStorage: CarbsStorage!
+        @Injected() private var nightscout: NightscoutManager!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
-        @Injected() var healthKitManager: HealthKitManager!
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
@@ -21,6 +22,18 @@ extension DataTable {
         @Published var tdd: (Decimal, Decimal, Double) = (0, 0, 0)
         @Published var insulinToday: (Decimal, Decimal, Double) = (0, 0, 0)
         @Published var basalInsulin: Decimal = 0
+
+        @Published var meal: (carbs: Decimal, fat: Decimal, protein: Decimal) = (0, 0, 0)
+        @Published var oldCarbs: Decimal = 0
+        @Published var carbEquivalents: Decimal = 0
+        @Published var treatment = Treatment(
+            units: .mmolL,
+            type: .bolus,
+            date: .distantPast,
+            creationDate: .distantPast
+        )
+
+        @Published var complex: [CarbsEntry]?
 
         var units: GlucoseUnits = .mmolL
 
@@ -36,16 +49,10 @@ extension DataTable {
             broadcaster.register(GlucoseObserver.self, observer: self)
         }
 
-        private let processQueue =
-            DispatchQueue(label: "setupTreatments.processQueue") // Ensure that only one instance of this function can execute at a time
+        private let processQueue = DispatchQueue(label: "setupTreatments.processQueue")
 
         private func setupTreatments() {
-            // Log that the function is starting for testing purposes
             debug(.service, "setupTreatments() started")
-
-            // DispatchQueue.global().async { // Original code with global concurrent queue
-
-            // Ensure that only one instance of this function can execute at a time by using a serial queue
             processQueue.async {
                 let units = self.settingsManager.settings.units
                 let carbs = self.provider.carbs()
@@ -56,6 +63,7 @@ extension DataTable {
                                 units: units,
                                 type: .carbs,
                                 date: $0.actualDate ?? $0.createdAt,
+                                creationDate: $0.createdAt,
                                 amount: $0.carbs,
                                 id: id,
                                 fpuID: $0.fpuID,
@@ -66,6 +74,7 @@ extension DataTable {
                                 units: units,
                                 type: .carbs,
                                 date: $0.actualDate ?? $0.createdAt,
+                                creationDate: $0.createdAt,
                                 amount: $0.carbs,
                                 note: $0.note
                             )
@@ -79,6 +88,7 @@ extension DataTable {
                             units: units,
                             type: .fpus,
                             date: $0.actualDate ?? $0.createdAt,
+                            creationDate: $0.createdAt,
                             amount: $0.carbs,
                             id: $0.id,
                             isFPU: $0.isFPU,
@@ -94,6 +104,7 @@ extension DataTable {
                             units: units,
                             type: .bolus,
                             date: $0.timestamp,
+                            creationDate: $0.timestamp,
                             amount: $0.amount,
                             idPumpEvent: $0.id,
                             isSMB: $0.isSMB,
@@ -112,6 +123,7 @@ extension DataTable {
                             units: units,
                             type: .tempBasal,
                             date: chunk[0].timestamp,
+                            creationDate: chunk[0].timestamp,
                             amount: chunk[0].rate ?? 0,
                             secondAmount: nil,
                             duration: Decimal(chunk[1].durationMin ?? 0)
@@ -124,6 +136,7 @@ extension DataTable {
                             units: units,
                             type: .tempTarget,
                             date: $0.createdAt,
+                            creationDate: $0.createdAt,
                             amount: $0.targetBottom ?? 0,
                             secondAmount: $0.targetTop,
                             duration: $0.duration
@@ -133,13 +146,13 @@ extension DataTable {
                 let suspend = self.provider.pumpHistory()
                     .filter { $0.type == .pumpSuspend }
                     .map {
-                        Treatment(units: units, type: .suspend, date: $0.timestamp)
+                        Treatment(units: units, type: .suspend, date: $0.timestamp, creationDate: $0.timestamp)
                     }
 
                 let resume = self.provider.pumpHistory()
                     .filter { $0.type == .pumpResume }
                     .map {
-                        Treatment(units: units, type: .resume, date: $0.timestamp)
+                        Treatment(units: units, type: .resume, date: $0.timestamp, creationDate: $0.timestamp)
                     }
 
                 DispatchQueue.main.async {
@@ -162,8 +175,8 @@ extension DataTable {
             }
         }
 
-        func deleteCarbs(_ treatment: Treatment) {
-            provider.deleteCarbs(treatment)
+        func deleteCarbs(_ date: Date) {
+            provider.deleteCarbs(date)
         }
 
         func deleteInsulin(_ treatment: Treatment) {
@@ -179,22 +192,7 @@ extension DataTable {
             let id = glucose.id
             provider.deleteGlucose(id: id)
 
-            let fetchRequest: NSFetchRequest<NSFetchRequestResult>
-            fetchRequest = NSFetchRequest(entityName: "Readings")
-            fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-            let deleteRequest = NSBatchDeleteRequest(
-                fetchRequest: fetchRequest
-            )
-            deleteRequest.resultType = .resultTypeObjectIDs
-            do {
-                let deleteResult = try coredataContext.execute(deleteRequest) as? NSBatchDeleteResult
-                if let objectIDs = deleteResult?.result as? [NSManagedObjectID] {
-                    NSManagedObjectContext.mergeChanges(
-                        fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
-                        into: [coredataContext]
-                    )
-                }
-            } catch { /* To do: handle any thrown errors. */ }
+            OverrideStorage().DeleteBatch(identifier: id, entity: "Readings")
 
             // Deletes Manual Glucose
             if (glucose.glucose.type ?? "") == GlucoseType.manual.rawValue {
@@ -254,6 +252,112 @@ extension DataTable {
                     externalInsulinAmount = 0
                 }
                 .store(in: &lifetime)
+        }
+
+        /// Update Carbs or Carb equivalents in storage, data table and Nightscout and Healthkit (where applicable)
+        func updateCarbs(treatment: Treatment?, meal: (carbs: Decimal, fat: Decimal, protein: Decimal)) {
+            guard let oldCarbs = treatment else { return }
+
+            if let complexMeal = complex {
+                let now = Date.now
+                let newCarbs = CarbsEntry(
+                    id: UUID().uuidString,
+                    createdAt: now,
+                    actualDate: oldCarbs.date,
+                    carbs: meal.carbs,
+                    fat: nil,
+                    protein: nil,
+                    note: oldCarbs.note,
+                    enteredBy: CarbsEntry.manual,
+                    isFPU: false,
+                    fpuID: nil
+                )
+
+                let equivalents = complexMeal.filter({ $0.isFPU ?? false })
+
+                let newEquivalents = equivalents.map { item in
+                    CarbsEntry(
+                        id: UUID().uuidString,
+                        createdAt: now,
+                        actualDate: item.actualDate,
+                        carbs: meal.carbs,
+                        fat: nil,
+                        protein: nil,
+                        note: oldCarbs.note,
+                        enteredBy: CarbsEntry.manual,
+                        isFPU: true,
+                        fpuID: item.fpuID
+                    )
+                }
+
+                carbStorage.deleteCarbsAndFPUs(at: complexMeal.first?.createdAt ?? .distantPast)
+
+                // deleteCarbs(oldCarbs)
+                debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
+
+                carbStorage.storeCarbs([newCarbs])
+                carbStorage.editMultiple(carbs: newEquivalents)
+
+                debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
+
+            } else {
+                let multiple = carbStorage.multiple(id: oldCarbs.fpuID ?? "Not this one")
+
+                if multiple.count > 1 {
+                    let id = UUID().uuidString
+                    let newCarbs = multiple.map { item in
+                        CarbsEntry(
+                            id: UUID().uuidString,
+                            createdAt: Date.now,
+                            actualDate: item.actualDate,
+                            carbs: meal.carbs,
+                            fat: nil,
+                            protein: nil,
+                            note: oldCarbs.note,
+                            enteredBy: CarbsEntry.manual,
+                            isFPU: true,
+                            fpuID: id
+                        )
+                    }
+                    deleteCarbs(oldCarbs.creationDate)
+                    debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
+
+                    carbStorage.editMultiple(carbs: newCarbs)
+                    debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
+                } else {
+                    let newCarbs = CarbsEntry(
+                        id: UUID().uuidString,
+                        createdAt: Date.now,
+                        actualDate: oldCarbs.date,
+                        carbs: meal.carbs,
+                        fat: meal.fat,
+                        protein: meal.protein,
+                        note: oldCarbs.note,
+                        enteredBy: CarbsEntry.manual,
+                        isFPU: false,
+                        fpuID: nil
+                    )
+
+                    deleteCarbs(oldCarbs.creationDate)
+                    debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
+
+                    carbStorage.storeCarbs([newCarbs])
+                    debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
+                }
+            }
+        }
+
+        @MainActor func updateVariables(mealItem: Treatment, complex: [CarbsEntry]?) {
+            DispatchQueue.safeMainAsync { [self] in
+                treatment = mealItem
+                let string = (mealItem.amountText.components(separatedBy: " ").first ?? "0")
+                    .replacingOccurrences(of: ",", with: ".")
+                meal.carbs = Decimal(string: string) ?? 0
+                oldCarbs = meal.carbs
+
+                carbEquivalents = mealItem.type == .fpus ? meal.carbs : complex?
+                    .first(where: { $0.isFPU ?? false })?.carbs ?? 0
+            }
         }
     }
 }

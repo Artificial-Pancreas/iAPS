@@ -4,7 +4,7 @@ struct CarbsEntry: JSON, Equatable, Hashable {
     let id: String?
     var createdAt: Date
     let actualDate: Date?
-    let carbs: Decimal
+    var carbs: Decimal
     let fat: Decimal?
     let protein: Decimal?
     let note: String?
