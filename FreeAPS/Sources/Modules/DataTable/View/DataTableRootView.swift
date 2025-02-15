@@ -548,7 +548,7 @@ extension DataTable {
 
                     Section {
                         Button {
-                            state.updateCarbs(treatment: item, meal: state.meal)
+                            state.updateCarbs(treatment: item)
                             editIsPresented = false
                         }
                         label: { Text("Save") }
