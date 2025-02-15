@@ -255,10 +255,10 @@ extension DataTable {
         }
 
         /// Update Carbs or Carb equivalents in storage, data table and Nightscout and Healthkit (where applicable)
-        func updateCarbs(treatment: Treatment?, meal: (carbs: Decimal, fat: Decimal, protein: Decimal)) {
+        func updateCarbs(treatment: Treatment?) {
             guard let oldCarbs = treatment else { return }
 
-            if let complexMeal = complex {
+            if meal.carbs > 0, carbEquivalents > 0 {
                 let now = Date.now
                 let newCarbs = CarbsEntry(
                     id: UUID().uuidString,
@@ -273,28 +273,25 @@ extension DataTable {
                     fpuID: nil
                 )
 
-                let equivalents = complexMeal.filter({ $0.isFPU ?? false })
+                let equivalents = carbStorage.complexMeal(date: oldCarbs.date)?.filter({ $0.isFPU ?? false }) ?? []
+                let fpuID = UUID().uuidString
 
                 let newEquivalents = equivalents.map { item in
                     CarbsEntry(
                         id: UUID().uuidString,
                         createdAt: now,
                         actualDate: item.actualDate,
-                        carbs: meal.carbs,
+                        carbs: carbEquivalents,
                         fat: nil,
                         protein: nil,
                         note: oldCarbs.note,
                         enteredBy: CarbsEntry.manual,
                         isFPU: true,
-                        fpuID: item.fpuID
+                        fpuID: fpuID
                     )
                 }
 
-                carbStorage.deleteCarbsAndFPUs(at: complexMeal.first?.createdAt ?? .distantPast)
-
-                // deleteCarbs(oldCarbs)
-                debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
-
+                carbStorage.deleteCarbsAndFPUs(at: oldCarbs.date)
                 carbStorage.storeCarbs([newCarbs])
                 carbStorage.editMultiple(carbs: newEquivalents)
 
