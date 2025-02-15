@@ -91,7 +91,7 @@ final class OpenAPS {
                         autosens: autosens.isEmpty ? .null : autosens,
                         pumpHistory: pumpHistory
                     )
-                }
+                } else { profile = alteredProfile }
 
                 now = Date.now
                 // The OpenAPS layer
