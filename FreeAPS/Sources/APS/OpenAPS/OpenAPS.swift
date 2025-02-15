@@ -71,7 +71,7 @@ final class OpenAPS {
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
                 // The Middleware layer.
-                let alteredProfile = self.middleware(
+                var alteredProfile = self.middleware(
                     glucose: glucose,
                     currentTemp: tempBasal,
                     iob: iob,
@@ -84,7 +84,7 @@ final class OpenAPS {
 
                 // Auto ISF Layer
                 if let freeAPSSettings = settings, freeAPSSettings.autoisf {
-                    profile = self.autosisf(
+                    alteredProfile = self.autosisf(
                         glucose: glucose,
                         iob: iob,
                         profile: alteredProfile,
@@ -99,7 +99,7 @@ final class OpenAPS {
                     glucose: glucose,
                     currentTemp: tempBasal,
                     iob: iob,
-                    profile: profile,
+                    profile: alteredProfile,
                     autosens: autosens.isEmpty ? .null : autosens,
                     meal: meal,
                     microBolusAllowed: true,
