@@ -132,7 +132,7 @@ final class OpenAPS {
                         print(
                             "Time for AutoISF module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
                         )
-                    }
+                    } else { profile = alteredProfile }
 
                     now = Date.now
                     // The OpenAPS layer
