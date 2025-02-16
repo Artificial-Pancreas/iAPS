@@ -2413,10 +2413,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde bepaalt hoe de insulinegevoeligheidsfactor (ISF) wordt aangepast wanneer de bloedsuikerspiegel boven de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"Duration Weight" = "Duration Weight";
+"Duration Weight" = "Duur hoeveelheid";
 
 /* */
-"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Hoeeveelheid voor een langdurig hoge glucose. Voor elk uur dat de glucose hoog blijft, zal deze aanpassing je ISF verder verlagen.\n\nDe formule voor de Dura ISF-aanpassing is:\n\nDura ISF = 1 + uren boven doel * hoeveelheid / doel * (gemiddelde glucose - doelglucose)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
@@ -2876,7 +2876,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Glucose Delta" = "Glucose delta weergeven";
 
 /* UI/UX option */
-"Display Sensor Age" = "Display Sensor Age";
+"Display Sensor Age" = "Sensor leeftijd tonen";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Verberg concentratie badge";
