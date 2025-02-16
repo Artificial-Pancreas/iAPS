@@ -201,9 +201,6 @@ extension Home {
                                 .font(.statusFont).bold()
                                 .foregroundColor(.insulin)
                         }
-                        if state.closedLoop, state.maxIOB == 0 {
-                            Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
-                        }
                     }
                 }
                 .padding(.leading, 8)
