@@ -2416,7 +2416,7 @@ Enact a temp Basal or a temp target */
 "Duration Weight" = "Duration Weight";
 
 /* */
-"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Вес, соответствующий длительно высокому уровню сахара в крови. С каждым часом, когда уровень сахара в крови остается слишком высоким, эта настройка будет снижать чувствительность к инсулину.\n\nФормула для Dura ISF корректировки такова:\n\nDura ISF = 1 + количество часов выше цели * вес / цель * (средняя глюкоза - целевая глюкоза)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "Диапазон уровня глюкозы в крови для SMB";
@@ -2479,7 +2479,7 @@ Enact a temp Basal or a temp target */
 " off" = " выкл.";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Изменить ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2872,7 +2872,7 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Отображать дельту глюкозы";
 
 /* UI/UX option */
-"Display Sensor Age" = "Display Sensor Age";
+"Display Sensor Age" = "Отображать возраст датчика";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Скрыть значок концентрации";
