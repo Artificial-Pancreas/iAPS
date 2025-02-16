@@ -2413,10 +2413,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значение по умолчанию: 0,0. Это вес, примененный к многоугольнику, который регулирует чувствительность к инсулину при высоком уровне сахара в крови. При значении 0,0 эта настройка отключена.";
 
 /* */
-"Duration Weight" = "Duration Weight";
+"Duration Weight" = "Корректировка длительно повышенного уровня глюкозы";
 
 /* */
-"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Вес, соответствующий длительно высокому уровню глюкозы в крови. С каждым часом, когда уровень глюкозы в крови остается слишком высоким, эта настройка будет снижать чувствительность к инсулину.\n\nФормула для Dura ISF корректировки такова:\n\nDura ISF = 1 + количество часов выше цели * вес / цель * (средняя глюкоза - целевая глюкоза)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "Диапазон уровня глюкозы в крови для SMB";
@@ -2479,7 +2479,7 @@ Enact a temp Basal or a temp target */
 " off" = " выкл.";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Изменить ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2872,7 +2872,7 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Отображать дельту глюкозы";
 
 /* UI/UX option */
-"Display Sensor Age" = "Display Sensor Age";
+"Display Sensor Age" = "Отображать возраст датчика";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Скрыть значок концентрации";
