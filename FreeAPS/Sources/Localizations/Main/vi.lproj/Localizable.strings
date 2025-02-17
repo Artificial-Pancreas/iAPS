@@ -2344,13 +2344,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Upper BG limit";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";

@@ -2345,13 +2345,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Oberes Delta Limit";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Unter diesem Limit werden SMBs ausgeschaltet während eine B30 Basalrate läuft. Standard ist 8 mg/dl (0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Unter diesem Limit werden SMBs ausgeschaltet während eine B30 Basalrate läuft. Standard ist 8 mg/dl (0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Obere BG Grenze";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Unter dieser Grenze werden SMBs deaktiviert so lange eine B30 Basalrate läuft. Standard ist 130 mg/dl (7,2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Unter dieser Grenze werden SMBs deaktiviert so lange eine B30 Basalrate läuft. Standard ist 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Zielwert für B30";
