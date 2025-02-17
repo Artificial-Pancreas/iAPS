@@ -114,9 +114,7 @@ final class OpenAPS {
                         microBolusAllowed: true,
                         reservoir: reservoir
                     )
-                    print(
-                        "Time for Middleware module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
+                }
 
                     now = Date.now
                     // Auto ISF Layer

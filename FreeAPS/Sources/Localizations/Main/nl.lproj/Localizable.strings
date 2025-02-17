@@ -2344,13 +2344,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Bovenste Delta-limiet";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 8 mg/dl (0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 8 mg/dl (0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Bovenste BG limiet";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 130 mg/dl (7,2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Doelwaarde voor activering van B30";
