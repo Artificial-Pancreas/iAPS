@@ -176,7 +176,7 @@
 "Bottom target" = "Mục tiêu thấp nhất";
 
 /* Cancel preset name */
-"Cancel" = "Hủy";
+"Cancel" = "Hủy bỏ";
 
 /*  */
 "Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
@@ -197,7 +197,7 @@
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Hủy bỏ mục tiêu tạm thời";
+"Enact Temp Target" = "Enact Temp Target";
 
 /* */
 "Target" = "Mục tiêu";
@@ -224,7 +224,7 @@
 "minutes" = "phút";
 
 /*  */
-"Presets" = "Mẫu thiết lập";
+"Presets" = "Các mẫu cài đặt sẵn";
 
 /* Save preset name */
 "Save" = "Lưu";
@@ -372,7 +372,7 @@ Enact a temp Basal or a temp target */
 "Nightscout Config" = "Cấu hình Nightscout";
 
 /*  */
-"Port" = "Cổng";
+"Port" = "Port";
 
 /*  */
 "URL" = "URL";
@@ -384,16 +384,16 @@ Enact a temp Basal or a temp target */
 "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Điều này cho phép tải số liệu thống kê lên Nightscout mà có thể được sử dụng bởi Dự án Community Statictics và Demographics. \n\nTham gia vào Thống kê Cộng đồng là tùy chọn và yêu cầu đăng ký riêng tại:\n";
 
 /*  */
-"Edit settings json" = "Chỉnh sửa cấu hình json";
+"Edit settings json" = "Edit settings json";
 
 /* */
 "Glucose units" = "Đơn vị Glucose";
 
 /*  */
-"Preferences" = "Tùy chỉnh";
+"Preferences" = "Preferences";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Insulin được đề xuất";
+"Recommended Insulin Fraction" = "Phần Insulin được đề xuất";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Bỏ qua màn hình bolus sau carbs";
@@ -405,13 +405,13 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Cho phép điều khiển iAPS từ xa";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n trong iAPS Cài đặt > Cấu hình.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.\n.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n trong iAPS Settings > Configuration.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.\n.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Việc này có thể thay thế một vài hoặc tất cả những cấu hình bơm hiện tại của bạn. Bạn có chắc bạn muốn nhập cấu hình từ Nightscout?";
 
 /* Import Error */
-"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nCác cấu hình liều nền trên Nightscout không hợp lệ.\n\n Việc cập nhật bị bỏ. Đề nghị bạn kiểm tra cấu hình liều nền trên Nightscout!";
+"\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nCác cấu hình liều nền trên Nightscout không hợp lệ.\n\n Việc cập nhật bị hủy bỏ. Đề nghị bạn kiểm tra cấu hình liều nền trên Nightscout!";
 
 /* Import Error */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\n Các cấu hình đã được nhập nhưng liều nền không được lưu vào bơm (không có bơm). Kiểm tra cấu hình liều nền của bạn và nhấn 'Lưu vào bơm' để đồng hóa cấu hình liều nền mới";
@@ -577,7 +577,7 @@ Enact a temp Basal or a temp target */
 "Closed loop" = "Closed loop";
 
 /* */
-"Configuration" = "Cấu hình";
+"Configuration" = "Configuration";
 
 /* */
 "Devices" = "Thiết bị";
@@ -589,7 +589,7 @@ Enact a temp Basal or a temp target */
 "Watch" = "Watch";
 
 /* */
-"Watch Configuration" = "Cấu hình đồng hồ";
+"Watch Configuration" = "Watch Configuration";
 
 /* */
 "Apple Watch" = "Apple Watch";
@@ -625,10 +625,10 @@ Enact a temp Basal or a temp target */
 "Services" = "Dịch vụ";
 
 /*  */
-"Settings" = "Cài đặt";
+"Settings" = "Settings";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Tỷ lệ phần trăm Bolus được đề xuất";
+"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
 
 /* 2 log files to share */
 "Share logs" = "Chia sẻ nhật ký";
@@ -913,7 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Thông tin cảm biến";
 
 /* */
-"Sensor Age" = "Thời gian sử dụng cảm biến";
+"Sensor Life-Span" = "Sensor Life-Span";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
 
 /* */
 "Sensor Age Left" = "Thời gian còn lại của cảm biến";
@@ -2344,13 +2347,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Upper BG limit";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
