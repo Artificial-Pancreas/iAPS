@@ -161,6 +161,35 @@ struct LoopEllipse: View {
     }
 }
 
+struct Sage: View {
+    @Environment(\.colorScheme) var colorScheme
+    let amount: Double
+    let expiration: Double
+    var body: some View {
+        let fill = max(amount / expiration, 0.07)
+        let colour: Color = amount <= 8.64E4 ? .red.opacity(0.9) : colorScheme == .light ? .white.opacity(0.7) : .black
+            .opacity(0.8)
+        RoundedRectangle(cornerRadius: 15)
+            .stroke(colorScheme == .dark ? Color(.systemGray2) : Color(.systemGray6), lineWidth: 2)
+            .background(
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                Gradient.Stop(
+                                    color: colour,
+                                    location: fill
+                                ),
+                                Gradient.Stop(color: Color.clear, location: fill)
+                            ]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+            )
+    }
+}
+
 struct TimeEllipse: View {
     let characters: Int
     var body: some View {
@@ -385,5 +414,21 @@ extension UIImage {
         UIGraphicsEndImageContext()
 
         return Image(uiImage: newImage!)
+    }
+}
+
+extension View {
+    func dynamicFill(content: some ShapeView, amount: Double, colour: Color) -> some View {
+        content
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(stops: [
+                        Gradient.Stop(color: .white.opacity(1), location: amount),
+                        Gradient.Stop(color: colour, location: amount)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
     }
 }
