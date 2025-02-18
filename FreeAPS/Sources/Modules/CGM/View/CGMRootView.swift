@@ -61,6 +61,22 @@ extension CGM {
                             }
                         } header: { Text("Maximum Sensor Days") }
                     }
+
+                    if state.cgm == .xdrip || state.cgm == .glucoseDirect {
+                        Section {
+                            HStack {
+                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
+                                Text("days").foregroundStyle(.secondary)
+                            }
+                        }
+                        header: { Text("Sensor life-span") }
+                        footer: {
+                            Text(
+                                "When using \(state.cgm.rawValue) iAPS dooesn't know type of sensor used. Enter the sensor life-span to help iAPS."
+                            )
+                        }
+                    }
+
                     if state.cgm == .libreTransmitter {
                         Button("Configure Libre Transmitter") {
                             state.showModal(for: .libreConfig)
