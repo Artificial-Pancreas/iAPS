@@ -345,7 +345,7 @@
 "Activity" = "Hoạt động";
 
 /* Section header for configuration section */
-"Configuration" = "Cấu hình";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Pod trước";
@@ -718,7 +718,7 @@
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Bạn bắt đầu quá trình cài đặt các lời nhắc, đổ đầy thuốc vào pod, ghép đôi thiết bị và gắn pod lên người.";
 
 /* Cancel button title */
-"Cancel" = "Hủy";
+"Cancel" = "Hủy bỏ";
 
 /* Text for continue button on PodSetupView */
 "Continue" = "Tiếp tục";

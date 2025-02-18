@@ -914,7 +914,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "معلومات المستشعر";
 
 /* */
-"Sensor Age" = "عمر المستشعر";
+"Sensor Life-Span" = "Sensor Life-Span";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
 
 /* */
 "Sensor Age Left" = "عمر المستشعر المتبقي";
