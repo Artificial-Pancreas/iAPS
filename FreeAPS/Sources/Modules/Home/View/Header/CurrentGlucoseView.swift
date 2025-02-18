@@ -141,7 +141,7 @@ struct CurrentGlucoseView: View {
     private var sageView: some View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
-                let expiration = cgm == .xdrip ? sensordays * 8.64E4 : cgm.expiration
+                let expiration = (cgm == .xdrip || cgm == .glucoseDirect) ? sensordays * 8.64E4 : cgm.expiration
                 let remainingTime: TimeInterval = expiration - (-1 * date.timeIntervalSinceNow)
 
                 Sage(amount: remainingTime, expiration: expiration)

@@ -109,6 +109,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return 10.5 * secondsOfDay
         case .libreTransmitter:
             return 14 * secondsOfDay
+        case .enlite:
+            return 6 * secondsOfDay
         default:
             return 10 * secondsOfDay
         }
