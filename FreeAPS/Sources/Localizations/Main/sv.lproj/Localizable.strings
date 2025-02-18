@@ -913,7 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "SensorInfo";
 
 /* */
-"Sensor Age" = "Sensorålder";
+"Sensor Life-Span" = "Sensorlivslängd i dagar";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Vid användning av %@ känner iAPS inte till vilken typ av sensor som används eller sensorns livslängd.";
 
 /* */
 "Sensor Age Left" = "Sensortid kvar";
