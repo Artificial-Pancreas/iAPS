@@ -143,6 +143,7 @@ struct CurrentGlucoseView: View {
             if let date = recentGlucose?.sessionStartDate {
                 let expiration = cgm == .xdrip ? sensordays * 8.64E4 : cgm.expiration
                 let remainingTime: TimeInterval = expiration - (-1 * date.timeIntervalSinceNow)
+
                 Sage(amount: remainingTime, expiration: expiration)
                     .frame(width: 59, height: 26)
                     .overlay {

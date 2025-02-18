@@ -53,13 +53,6 @@ extension CGM {
                                 }
                             }
                         }
-
-                        Section {
-                            HStack {
-                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
-                                Text("days").foregroundStyle(.secondary)
-                            }
-                        } header: { Text("Maximum Sensor Days") }
                     }
 
                     if state.cgm == .xdrip || state.cgm == .glucoseDirect {
@@ -69,10 +62,10 @@ extension CGM {
                                 Text("days").foregroundStyle(.secondary)
                             }
                         }
-                        header: { Text("Sensor life-span") }
+                        header: { Text("Sensor Life-Span") }
                         footer: {
                             Text(
-                                "When using \(state.cgm.rawValue) iAPS dooesn't know type of sensor used. Enter the sensor life-span to help iAPS."
+                                "When using \(state.cgm.rawValue) iAPS dooesn't know type of sensor used or the sensor life-span."
                             )
                         }
                     }
