@@ -915,7 +915,10 @@ Połączono z Nightscout!";
 "Sensor Info" = "Sensor Info";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Life-Span" = "Sensor Life-Span";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
 
 /* */
 "Sensor Age Left" = "Sensor Age Left";
