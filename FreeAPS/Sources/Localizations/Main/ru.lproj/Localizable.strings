@@ -2344,13 +2344,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Верхний предел дельты";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Автоматические болюсы (SMB) будут отключены, если отрицательная дельта уровня глюкозы в крови опустится ниже этого значения во время действия ВБС B30. Стандартное значение – 0,5 ммоль/л. (8 мг/дл).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Автоматические болюсы (SMB) будут отключены, если отрицательная дельта уровня глюкозы в крови опустится ниже этого значения во время действия ВБС B30. Стандартное значение – 0,5 ммоль/л. (8 мг/дл).";
 
 /* */
 "Upper BG limit" = "Верхний предел глюкозы крови";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Автоматические болюсы (SMB) будут отключены, если уровень сахара в крови опустится ниже этого значения во время действия ВБС B30. Стандартное значение – 7,2 ммоль/л. (130 мг/дл).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Автоматические болюсы (SMB) будут отключены, если уровень сахара в крови опустится ниже этого значения во время действия ВБС B30. Стандартное значение – 7,2 ммоль/л. (130 мг/дл).";
 
 /* */
 "Target Level for B30 to be enacted" = "Целевое значение для активации B30";

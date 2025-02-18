@@ -311,7 +311,7 @@ extension AutoISF {
                                     .onTapGesture {
                                         info(
                                             header: "Upper BG limit",
-                                            body: "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).",
+                                            body: "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).",
                                             useGraphics: nil
                                         )
                                     }
@@ -329,7 +329,7 @@ extension AutoISF {
                                     .onTapGesture {
                                         info(
                                             header: "Upper Delta limit",
-                                            body: "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).",
+                                            body: "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).",
                                             useGraphics: nil
                                         )
                                     }
