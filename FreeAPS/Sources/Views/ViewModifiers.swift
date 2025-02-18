@@ -167,7 +167,7 @@ struct Sage: View {
     let expiration: Double
     var body: some View {
         let fill = max(amount / expiration, 0.07)
-        let colour: Color = amount <= 8.64E4 ? .red.opacity(0.8) : colorScheme == .light ? .white.opacity(0.5) : .black
+        let colour: Color = amount <= 8.64E4 ? .red.opacity(0.9) : colorScheme == .light ? .white.opacity(0.5) : .black
             .opacity(0.7)
         RoundedRectangle(cornerRadius: 15)
             .stroke(colorScheme == .dark ? Color(.systemGray2) : Color(.systemGray6), lineWidth: 2)
