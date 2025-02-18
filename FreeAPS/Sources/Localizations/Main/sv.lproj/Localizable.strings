@@ -2344,13 +2344,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Övre gräns för blodsockerdelta";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Automatiska bolusar (SMBs) kommer att stängas av när ditt negativa blodsockerdelta är under denna inställning, under tiden en B30-basaldos körs. Standardvärde är 0,5 mmol/l.";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Automatiska bolusar (SMBs) kommer att stängas av när ditt negativa blodsockerdelta är under denna inställning, under tiden en B30-basaldos körs. Standardvärde är 0,5 mmol/l.";
 
 /* */
 "Upper BG limit" = "Övre blodsockergräns";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Automatiska bolusar (SMBs) kommer att stängas av när ditt blodsocker är under denna inställning, under tiden en B30-basaldos körs. Standardvärde är 7,2 mmol/l.";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Automatiska bolusar (SMBs) kommer att stängas av när ditt blodsocker är under denna inställning, under tiden en B30-basaldos körs. Standardvärde är 7,2 mmol/l.";
 
 /* */
 "Target Level for B30 to be enacted" = "Målvärde för blodsocker för att aktivera B30";
