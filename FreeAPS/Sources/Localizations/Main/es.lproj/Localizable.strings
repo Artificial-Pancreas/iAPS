@@ -914,7 +914,10 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Sensor Info" = "Info del sensor";
 
 /* */
-"Sensor Age" = "Tiempo del sensor";
+"Sensor Life-Span" = "Sensor Life-Span";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
 
 /* */
 "Sensor Age Left" = "Tiempo restante del sensor";
