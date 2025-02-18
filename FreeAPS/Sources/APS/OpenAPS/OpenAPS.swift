@@ -114,7 +114,6 @@ final class OpenAPS {
                         microBolusAllowed: true,
                         reservoir: reservoir
                     )
-                }
 
                     now = Date.now
                     // Auto ISF Layer

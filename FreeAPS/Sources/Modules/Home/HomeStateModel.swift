@@ -76,6 +76,8 @@ extension Home {
         @Published var maxCOB: Decimal = 0
         @Published var autoisf = false
         @Published var displayExpiration = false
+        @Published var cgm: CGMType = .nightscout
+        @Published var sensorDays: Double = 10
 
         // Chart data
         var data = ChartModel(
@@ -164,6 +166,8 @@ extension Home {
             autoisf = settingsManager.settings.autoisf
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
+            cgm = settingsManager.settings.cgm
+            sensorDays = settingsManager.settings.sensorDays
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -651,6 +655,8 @@ extension Home.StateModel:
         autoisf = settingsManager.settings.autoisf
         hours = settingsManager.settings.hours
         displayExpiration = settingsManager.settings.displayExpiration
+        cgm = settingsManager.settings.cgm
+        sensorDays = settingsManager.settings.sensorDays
         setupGlucose()
         setupOverrideHistory()
         setupData()

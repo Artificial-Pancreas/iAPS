@@ -11,6 +11,8 @@ struct CurrentGlucoseView: View {
     @Binding var displayDelta: Bool
     @Binding var scrolling: Bool
     @Binding var displayExpiration: Bool
+    @Binding var cgm: CGMType
+    @Binding var sensordays: Double
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
@@ -70,10 +72,17 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
-    private var daysFormatter: DateComponentsFormatter {
+    private var remainingTimeFormatter: DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day, .hour]
         formatter.unitsStyle = .abbreviated
+        return formatter
+    }
+
+    private var remainingTimeFormatterDays: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day]
+        formatter.unitsStyle = .short
         return formatter
     }
 
@@ -132,14 +141,17 @@ struct CurrentGlucoseView: View {
     private var sageView: some View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
-                let timeAgo: TimeInterval = -1 * date.timeIntervalSinceNow
-                Sage(stroke: colorScheme == .dark ? Color(.systemGray3) : Color(.systemGray6), colour: .gray, amount: 0.8)
-                    // LoopEllipse(stroke: colorScheme == .dark ? Color(.systemGray3) : Color(.systemGray6))
+                let expiration = cgm == .xdrip ? sensordays * 8.64E4 : cgm.expiration
+                let remainingTime: TimeInterval = expiration - (-1 * date.timeIntervalSinceNow)
+                Sage(amount: remainingTime, expiration: expiration)
                     .frame(width: 59, height: 26)
                     .overlay {
                         HStack {
                             Text(
-                                (daysFormatter.string(from: timeAgo) ?? "").trimmingCharacters(in: .whitespaces)
+                                remainingTime >= 2 * 8.64E4 ?
+                                    (remainingTimeFormatterDays.string(from: remainingTime) ?? "")
+                                    .replacingOccurrences(of: ",", with: " ") :
+                                    (remainingTimeFormatter.string(from: remainingTime) ?? "")
                                     .replacingOccurrences(of: ",", with: " ")
                             )
                         }

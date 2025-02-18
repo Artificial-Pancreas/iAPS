@@ -99,6 +99,20 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return NSLocalizedString("Minilink transmitter", comment: "Minilink transmitter")
         }
     }
+
+    var expiration: TimeInterval {
+        let secondsOfDay = 8.64E4
+        switch self {
+        case .dexcomG6:
+            return 10 * secondsOfDay
+        case .dexcomG7:
+            return 10.5 * secondsOfDay
+        case .libreTransmitter:
+            return 14 * secondsOfDay
+        default:
+            return 10 * secondsOfDay
+        }
+    }
 }
 
 enum GlucoseDataError: Error {

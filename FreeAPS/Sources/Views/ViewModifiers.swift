@@ -163,25 +163,29 @@ struct LoopEllipse: View {
 
 struct Sage: View {
     @Environment(\.colorScheme) var colorScheme
-    let stroke: Color
-    let colour: Color
     let amount: Double
+    let expiration: Double
     var body: some View {
+        let fill = max(amount / expiration, 0.07)
+        let colour: Color = amount <= 8.64E4 ? .red.opacity(0.8) : colorScheme == .light ? .white.opacity(0.5) : .black
+            .opacity(0.7)
         RoundedRectangle(cornerRadius: 15)
-            .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 1)
+            .stroke(colorScheme == .dark ? Color(.systemGray2) : Color(.systemGray6), lineWidth: 2)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                Gradient.Stop(color: .white.opacity(1), location: amount),
-                                Gradient.Stop(color: colour, location: amount)
+                                Gradient.Stop(
+                                    color: colour,
+                                    location: fill
+                                ),
+                                Gradient.Stop(color: Color.clear, location: fill)
                             ]),
-                            startPoint: .top,
-                            endPoint: .bottom
+                            startPoint: .leading,
+                            endPoint: .trailing
                         )
                     )
-                // .fill(colorScheme == .light ? .white : .black)
             )
     }
 }

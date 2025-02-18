@@ -8,6 +8,13 @@ extension CGM {
         @StateObject var state = StateModel()
         @State private var setupCGM = false
 
+        private var daysFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         // @AppStorage(UserDefaults.BTKey.cgmTransmitterDeviceAddress.rawValue) private var cgmTransmitterDeviceAddress: String? = nil
 
         var body: some View {
@@ -46,6 +53,13 @@ extension CGM {
                                 }
                             }
                         }
+
+                        Section {
+                            HStack {
+                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
+                                Text("days").foregroundStyle(.secondary)
+                            }
+                        } header: { Text("Maximum Sensor Days") }
                     }
                     if state.cgm == .libreTransmitter {
                         Button("Configure Libre Transmitter") {
