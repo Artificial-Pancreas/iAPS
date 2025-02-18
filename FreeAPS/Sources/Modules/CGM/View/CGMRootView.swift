@@ -65,7 +65,7 @@ extension CGM {
                         header: { Text("Sensor Life-Span") }
                         footer: {
                             Text(
-                                "When using \(state.cgm.rawValue) iAPS dooesn't know type of sensor used or the sensor life-span."
+                                "When using \(state.cgm.rawValue) iAPS doesn't know the type of sensor used or the sensor life-span."
                             )
                         }
                     }
