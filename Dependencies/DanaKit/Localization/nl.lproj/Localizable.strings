@@ -110,13 +110,13 @@
 "Delivery speed" = "Leversnelheid";
 
 /* Dana bolus speed 12u per min */
-"12 sec/U" = "12 sec/U";
+"12 sec/U" = "12 sec/E";
 
 /* Dana bolus speed 30u per min */
-"30 sec/U" = "30 sec/U";
+"30 sec/U" = "30 sec/E";
 
 /* Dana bolus speed 60u per min */
-"60 sec/U" = "60 sec/U";
+"60 sec/U" = "60 sec/E";
 
 /* Dana delivery speed body */
 "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "De Dana-pompen ondersteunen verschillende afgiftesnelheden. Je kunt het hier instellen, maar ook in het instellingenmenu";
@@ -580,4 +580,4 @@
 "Failed to prime the tube. Please try again later" = "Het is niet gelukt om de slang voor te vullen. Probeer het later opnieuw";
 
 /* Battery age */
-"Battery age" = "Battery age";
+"Battery age" = "Leeftijd batterij";
