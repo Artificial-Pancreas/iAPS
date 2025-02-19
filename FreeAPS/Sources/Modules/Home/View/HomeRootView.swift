@@ -109,7 +109,7 @@ extension Home {
                 alwaysUseColors: $state.alwaysUseColors,
                 displayDelta: $state.displayDelta,
                 scrolling: $displayGlucose,
-                displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays
+                displayExpiration: $state.displayExpiration, cgm: $state.cgm, sensordays: $state.sensorDays, anubis: $state.anubis
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -200,9 +200,6 @@ extension Home {
                             Text(tempBasalString)
                                 .font(.statusFont).bold()
                                 .foregroundColor(.insulin)
-                        }
-                        if state.closedLoop, state.maxIOB == 0 {
-                            Text("Check Max IOB Setting").font(.extraSmall).foregroundColor(.orange)
                         }
                     }
                 }

@@ -21,6 +21,7 @@ extension StatConfig {
         @Published var hideInsulinBadge: Bool = false
         @Published var extendHomeView: Bool = true
         @Published var displayExpiration: Bool = false
+        @Published var anubis: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -43,6 +44,7 @@ extension StatConfig {
             subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { hideInsulinBadge = $0 }
             subscribeSetting(\.extendHomeView, on: $extendHomeView) { extendHomeView = $0 }
             subscribeSetting(\.displayExpiration, on: $displayExpiration) { displayExpiration = $0 }
+            subscribeSetting(\.anubis, on: $anubis) { anubis = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)

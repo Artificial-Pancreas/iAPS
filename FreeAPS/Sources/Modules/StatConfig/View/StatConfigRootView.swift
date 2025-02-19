@@ -68,6 +68,10 @@ extension StatConfig {
                 } header: { Text("Header settings") }
 
                 Section {
+                    Toggle("Display Sensor Age, but not Time Remaining", isOn: $state.anubis)
+                } header: { Text("Anubis") }
+
+                Section {
                     HStack {
                         Text("Low")
                         Spacer()

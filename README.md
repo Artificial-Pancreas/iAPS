@@ -38,6 +38,8 @@ https://loopkit.github.io/loopdocs/gh-actions/gh-overview/
 - Medtronic 523 or 723 (firmware 2.4 or lower)  
 - Medtronic Worldwide Veo 554 or 754 (firmware 2.6A or lower)  
 - Medtronic Canadian/Australian Veo 554 or 754 (firmware 2.7A or lower)   
+- DanaRS (firmware v3.0 or higher)
+- Dana-i
 
 # CGM Sensors
 
