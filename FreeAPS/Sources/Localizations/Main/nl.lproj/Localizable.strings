@@ -299,7 +299,7 @@
 "Schedule" = "Schema";
 
 /*  */
-"starts at" = "begint om";
+"starts at" = "Start";
 
 /* Time basal profile */
 "Time" = "Tijd";
@@ -311,7 +311,7 @@
 "Carb Ratios" = "Koolhydraten ratio's";
 
 /*  */
-"Ratio" = "Verhouding";
+"Ratio" = "Waarde";
 
 /*  */
 "Autosens" = "Gevoeligheidsdetectie (Autosens)";
@@ -778,7 +778,8 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Over de werkwijze";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg ervoor dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Als er andere apps zijn die via bluetooth verbinding maken met de sensor dan moeten deze uitgeschakeld of verwijderd worden. \n\n Je kunt maar één app gebruiken die communiceert met de sensor via bluetooth. Druk vervolgens op de knop \"koppelen en verbinden\" hieronder om het proces te starten. Houd er rekening mee dat de bluetooth-verbinding tot enkele minuten kan duren voordat deze begint te werken.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Andere apps die via bluetooth met de sensor verbinden, moeten uitgeschakeld of verwijderd worden.\n
+Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor communiceert. Druk op \"Koppelen en verbinden\" om te starten. Het kan een paar minuten duren voordat de bluetooth-verbinding werkt.";
 
 /* */
 "Pairinginfo" = "Koppeling informatie";
