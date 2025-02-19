@@ -913,10 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Sensor info";
 
 /* */
-"Sensor Life-Span" = "Sensor Life-Span";
+"Sensor Life-Span" = "Sensor levensduur";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Bij gebruik van %@ weet iAPS niet welk type sensor wordt gebruikt of hoe lang de sensor meegaat.";
 
 /* */
 "Sensor Age Left" = "Sensor nog te gebruiken";
@@ -2271,7 +2271,7 @@ Enact a temp Basal or a temp target */
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
 
-"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "De Dana-pomp staat het niet toe om de maximale basaal- en boluswaarden aan te passen. Stel deze in bij de arts/doktersinstellingen van de pomp. Als je de instellingen opslaat, worden de nieuwste waarden van de pomp opgehaald";
 
 /* --------- Auto ISF --------- */
 /* */
@@ -2352,13 +2352,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Bovenste Delta-limiet";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 8 mg/dl (0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Bovenste BG limiet";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Doelwaarde voor activering van B30";
