@@ -2270,6 +2270,11 @@ Połączono z Nightscout!";
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Loop status";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+
 /* --------- Auto ISF --------- */
 /* */
 
