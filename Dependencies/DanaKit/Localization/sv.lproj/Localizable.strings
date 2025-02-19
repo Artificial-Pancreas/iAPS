@@ -62,16 +62,16 @@
 "Found Dana-i/RS pumps" = "Hittade Dana-i/RS-pumpar";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Skanning";
+"Scanning" = "Skannar";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Anslutning";
+"Connecting" = "Ansluter";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Välj den typ av insulin som du ska använda i den här pumpen";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Ta bort pumpen";
+"Remove Pump" = "Ta bort podd";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Är du säker på att du vill sluta använda Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Ta bort pumpen";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Ta bort pump";
+"Delete Pump" = "Radera pump";
 
 /* Connection error message */
 "Error while connecting to device" = "Fel vid anslutning till enhet";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Överväg att ändra din doseringsstrategi i inställningsmenyn";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Leverans av CV";
+"Resume delivery" = "Återuppta insulintillförsel";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Avbryta leverans";
@@ -185,28 +185,28 @@
 "Stop temp basal" = "Stoppa temp basal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Insulin typ";
+"Insulin Type" = "Typ av insulin";
 
 /* Title for insulin type */
 "Select insulin Type" = "Välj insulintyp";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Schemalagd Basal";
+"Scheduled Basal" = "Schemalagd basal";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulintillförsel";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nAvstängd";
+"Insulin\nSuspended" = "Pump\npausad";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Okänd";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/timme";
+"U/hr" = "IE/h";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Kvarvarande insulin";
+"Insulin Remaining" = "Insulin kvar";
 
 /* Text for Dana pump name */
 "Pump name" = "Pumpens namn";
@@ -238,34 +238,34 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Tidsändring detekterad";
+"Time Change Detected" = "Tidsjustering upptäckt";
 
 /* Message for pod sync time action sheet */
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Tiden på din pump skiljer sig från aktuell tid. Vill du uppdatera tiden på din pump till aktuell tid?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Tiden på din pump skiljer sig från aktuell tid. Pumpens tid styr dina schemalagda behandlingsinställningar. Scrolla ner till raden Pumptid för att granska tidsskillnaden och konfigurera din pump.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Tiden på din pump skiljer sig från verklig tid. Pumpens tid styr dina schemalagda terapiinställningar. Bläddra ner till raden Pump Tid för att ändra.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Ja, synkroniseras med aktuell tid";
+"Yes, Sync to Current Time" = "Ja, synkronisera med aktuell tid";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Nej, behåll pumpen i befintligt skick";
+"No, Keep Pump As Is" = "Nej, behåll pumptid";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Temporär basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Meritförteckning";
+"Resume" = "Återuppta";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Avvakta";
+"Suspend" = "Pausa";
 
 /* Title for user options */
 "User options" = "Användaralternativ";
@@ -292,10 +292,10 @@
 "Off" = "Av";
 
 /* 12h */
-"12h notation" = "12h notation";
+"12h notation" = "12-timmarsvisning";
 
 /* 24h */
-"24h notation" = "24h notation";
+"24h notation" = "24-timmarsvisning";
 
 /* Text for Scroll function */
 "Scroll function" = "Scroll-funktion";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Kvarvarande insulinnivå";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Töm behållaren";
+"Empty reservoir" = "Poddfel; tom reservoar";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Reservoaren är tom. Byt ut den nu!";
@@ -420,7 +420,7 @@
 "No Insulin" = "Inget insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin suspenderat";
+"Insulin Suspended" = "Pump pausad";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
@@ -526,7 +526,7 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Dana-pumparna har stöd för olika leveranshastigheter. Du kan ställa in det här";
 
 /* Text for Basal profile */
-"Basal profile" = "Basal profil";
+"Basal profile" = "Basalinställningar";
 
 /* Text for Battery level */
 "Battery level" = "Batterinivå";
@@ -541,7 +541,7 @@
 "Refill amount" = "Mängd påfyllning";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "E";
 
 /* Label for first step refill */
 "Step 1: Set reservoir level" = "Steg 1: Ställ in reservoarnivå";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Misslyckades med att prima röret. Vänligen försök igen senare";
+
+/* Battery age */
+"Battery age" = "Batteriålder";

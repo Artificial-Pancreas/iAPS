@@ -2,7 +2,7 @@
 "loading" = "loading";
 
 /* Generic Continue text */
-"Continue" = "Fortsett";
+"Continue" = "Продовжити";
 
 /* Title for DanaKitSetupView */
 "Dana-i/RS Setup" = "Dana-i/RS Setup";
@@ -53,25 +53,25 @@
 "ERROR: Failed to pair device" = "ERROR: Failed to pair device";
 
 /* Dana-i oke invalid ble5 keys */
-"OK" = "Ok";
+"OK" = "ОК";
 
 /* Cancel button title */
-"Cancel" = "Avbryt";
+"Cancel" = "Відмінити";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Found Dana-i/RS pumps";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Skanner";
+"Scanning" = "Сканування";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Kobler til";
+"Connecting" = "Під'єднання";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Select the type of insulin that you will be using in this pump";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Fjern pumpe";
+"Remove Pump" = "Зніміть Pod";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Are you sure you want to stop using Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Delete pump";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Slette pumpe";
+"Delete Pump" = "Видалити помпу";
 
 /* Connection error message */
 "Error while connecting to device" = "Error while connecting to device";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Please consider changing your dosing strategy in the setting menu";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Gjenoppta levering";
+"Resume delivery" = "Відновити доставку";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Suspend delivery";
@@ -185,28 +185,28 @@
 "Stop temp basal" = "Stop temp basal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Insulintype";
+"Insulin Type" = "Тип Інсуліну";
 
 /* Title for insulin type */
 "Select insulin Type" = "Select insulin Type";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Planlagt basal";
+"Scheduled Basal" = "Запланований Базал";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulintilførsel";
+"Insulin Delivery" = "Подання Інсуліну";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulintilførsel\npauset";
+"Insulin\nSuspended" = "Інсулін\nПризупинено";
 
 /* Text shown in basal rate space when delivery status is unknown */
-"Unknown" = "Ukjent";
+"Unknown" = "Невідомий";
 
 /* Units for showing temp basal rate */
-"U/hr" = "E/t";
+"U/hr" = "U/год";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin i pod";
+"Insulin Remaining" = "Залишок Інсуліну";
 
 /* Text for Dana pump name */
 "Pump name" = "Pump name";
@@ -238,34 +238,34 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Tidsendring oppdaget";
+"Time Change Detected" = "Виявлено Зміну Часу";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Tiden det tar på pumpen er forskjellig fra nåværende tidspunkt. Ønsker du å oppdatere tidspunktet på pumpen til nåværende tidspunkt?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Час на вашій помпі відрізняється від поточного часу. Хочете оновити час на помпі до поточного?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Klokken på pumpen er forskjellig fra gjeldende tid. Pumpens tid styrer dine planlagte behandlingsinnstillinger. Rull ned til Pumpetid-raden for å se tidsforskjellen og konfigurere pumpen.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Час на вашому Pod'i відрізняється від поточного часу. Час вашого Podʼу контролює налаштування запланованої терапії. Прокрутіть униз до рядка Час Podʼу, щоб переглянути різницю в часі та налаштувати Pod.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Ja, synkroniser til gjeldende tid";
+"Yes, Sync to Current Time" = "Так, синхронізувати з поточним часом";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Nei, behold pumpen som den er";
+"No, Keep Pump As Is" = "Ні, залишити  як є";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Болюс";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Midlertidig basal";
+"Temp Basal" = "Тимчасовий  Базал";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Gjenoppta leveranse";
+"Resume" = "Відновити";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Pause leveranse";
+"Suspend" = "Призупинити";
 
 /* Title for user options */
 "User options" = "User options";
@@ -277,7 +277,7 @@
 "Loading" = "Loading";
 
 /* Text for save button */
-"Save" = "Lagre";
+"Save" = "Зберегти";
 
 /* Text for 24h display */
 "24h display" = "24h display";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Should time be display in 12h or 24h";
 
 /* text on */
-"On" = "På";
+"On" = "Увімкнути";
 
 /* text off */
-"Off" = "Av";
+"Off" = "Вимкнути";
 
 /* 12h */
 "12h notation" = "12h notation";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Remaining insulin level";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Tomt reservoar";
+"Empty reservoir" = "Порожній резервуар";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Reservoir is empty. Replace it now!";
@@ -417,14 +417,14 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "Tom for insulin";
+"No Insulin" = "Нема Інсуліну";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulintilførsel pauset";
+"Insulin Suspended" = "Подання Припинено";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signaltap";
+"Signal Loss" = "Втрата сигналу";
 
 /* Text for Day unit */
 "day(s)" = "day(s)";
@@ -436,7 +436,7 @@
 "Reservoir age" = "Reservoir age";
 
 /* Text for status */
-"Status" = "Status";
+"Status" = "Статус";
 
 /* DanaKit disconnecting */
 "Disconnecting..." = "Disconnecting...";
@@ -451,10 +451,10 @@
 "Reconnect tp pump" = "Reconnect tp pump";
 
 /* DanaKit disconnected */
-"Disconnected" = "Frakoblet";
+"Disconnected" = "Від’єднано";
 
 /* DanaKit connected */
-"Connected" = "Tilkoblet";
+"Connected" = "Під'єднаний";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "Pump is still disconnected";
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "The Dana pumps support different delivery speeds. You can set it up here";
 
 /* Text for Basal profile */
-"Basal profile" = "Basalprofil";
+"Basal profile" = "Базальний профіль";
 
 /* Text for Battery level */
-"Battery level" = "Batterinivå";
+"Battery level" = "Рівень заряду";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Oppsett";
+"Configuration" = "Налаштування";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Low reservoir reminder";
@@ -541,43 +541,43 @@
 "Refill amount" = "Refill amount";
 
 /* Insulin unit */
-"U" = "E";
+"U" = "U";
 
 /* Label for first step refill */
-"Step 1: Set reservoir level" = "Trinn 1: Angi reservoarnivå";
+"Step 1: Set reservoir level" = "Step 1: Set reservoir level";
 
 /* Label for reservoir refilled amount */
-"Reservoir amount" = "Reservoar^beløp";
+"Reservoir amount" = "Reservoir amount";
 
 /* Label for second step refill */
-"Step 2: Set tube refill amount" = "Trinn 2: Påfyllingsmengde til tube";
+"Step 2: Set tube refill amount" = "Step 2: Set tube refill amount";
 
 /* Label for tube refilled amount */
-"Tube refill amount" = "Rør påfylling beløp";
+"Tube refill amount" = "Tube refill amount";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Denne påfyllingsmetoden er kun beregnet for når pumpen ikke kan sikre en måte å fylle reservoaret på eller klargjøre kanyletoppen";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "ADVARSEL: BRUK MED ADVARSEL!";
+"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Denne påfyllingsmetoden er kun beregnet for når pumpen ikke kan sikre en måte å fylle reservoaret på eller klargjøre kanyletoppen";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "ADVARSEL: BRUK MED ADVARSEL!";
+"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
 
 /* Label for third step refill */
-"Step 1: Prime cannula" = "Trinn 1: Føringskanyle";
+"Step 1: Prime cannula" = "Step 1: Prime cannula";
 
 /* Label for error first step refill */
-"Failed to set reservoir amount. Re-sync pump data and try again please" = "Kunne ikke angi reservoarmengde. Resynkroniser pumpens data og prøv igjen";
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Failed to set reservoir amount. Re-sync pump data and try again please";
 
 /* Label for error third step refill */
-"Failed to prime the cannula. Please try again later" = "Mislyktes å kontrollere kanylen. Vennligst prøv igjen senere";
+"Failed to prime the cannula. Please try again later" = "Failed to prime the cannula. Please try again later";
 
 /* Label for error second step refill */
-"Failed to prime the tube. Please try again later" = "Kan ikke kontrollere turen. Prøv igjen senere";
+"Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
 
 /* Battery age */
 "Battery age" = "Battery age";

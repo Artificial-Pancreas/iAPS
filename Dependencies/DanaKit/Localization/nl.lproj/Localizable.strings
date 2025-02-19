@@ -2,7 +2,7 @@
 "loading" = "laden";
 
 /* Generic Continue text */
-"Continue" = "Ga verder";
+"Continue" = "Vervolg";
 
 /* Title for DanaKitSetupView */
 "Dana-i/RS Setup" = "Dana-i/RS-instelling";
@@ -56,22 +56,22 @@
 "OK" = "OK";
 
 /* Cancel button title */
-"Cancel" = "Annuleren";
+"Cancel" = "Annuleer";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Gevonden Dana-i/RS-pompen";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Scannen";
+"Scanning" = "Aan het scannen";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Aansluiten op";
+"Connecting" = "Bezig met verbinden";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Selecteer het type insuline dat je gaat gebruiken in deze pomp";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Pomp verwijderen";
+"Remove Pump" = "Verwijder Pod";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Weet je zeker dat je Dana-i/RS niet meer wilt gebruiken?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Pomp verwijderen";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Pomp verwijderen";
+"Delete Pump" = "Verwijder de pomp";
 
 /* Connection error message */
 "Error while connecting to device" = "Fout bij verbinding met apparaat";
@@ -110,13 +110,13 @@
 "Delivery speed" = "Leversnelheid";
 
 /* Dana bolus speed 12u per min */
-"12 sec/U" = "12 sec/U";
+"12 sec/U" = "12 sec/E";
 
 /* Dana bolus speed 30u per min */
-"30 sec/U" = "30 sec/U";
+"30 sec/U" = "30 sec/E";
 
 /* Dana bolus speed 60u per min */
-"60 sec/U" = "60 sec/U";
+"60 sec/U" = "60 sec/E";
 
 /* Dana delivery speed body */
 "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "De Dana-pompen ondersteunen verschillende afgiftesnelheden. Je kunt het hier instellen, maar ook in het instellingenmenu";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Overweeg om je doseerstrategie te wijzigen in het instellingenmenu";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Hervatten";
+"Resume delivery" = "Hervat toediening";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Levering opschorten";
@@ -185,13 +185,13 @@
 "Stop temp basal" = "Stop temp basaal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Type insuline";
+"Insulin Type" = "Insulinesoort";
 
 /* Title for insulin type */
 "Select insulin Type" = "Selecteer type insuline";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Gepland Basaal";
+"Scheduled Basal" = "Gepland basaal";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulinetoediening";
@@ -203,7 +203,7 @@
 "Unknown" = "Onbekend";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/u";
+"U/hr" = "E/uur";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Resterende insuline";
@@ -238,34 +238,34 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Tijdsverandering gedetecteerd";
+"Time Change Detected" = "Wijziging in tijd gedetecteerd";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "De tijd op je pomp is anders dan de huidige tijd. Wil je de tijd op je pomp bijwerken naar de huidige tijd?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "De pomptijd is anders dan de huidige tijd. Wil je de tijd van je pomp updaten naar de huidige tijd?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "De tijd op je pomp verschilt van de huidige tijd. De tijd op je pomp bepaalt je geplande therapie-instellingen. Scroll naar beneden naar de rij Pomptijd om het tijdsverschil te bekijken en je pomp te configureren.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "De tijd op je pomp is anders dan de huidige tijd. De tijd van je pomp bepaalt je geplande therapieinstellingen. Scroll omlaag naar de Pomptijd om het tijdsverschil te bekijken en de pomp te configureren.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Ja, synchroniseren met huidige tijd";
+"Yes, Sync to Current Time" = "Ja, zet naar huidige tijd";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Nee, houd de pomp zoals hij is";
+"No, Keep Pump As Is" = "Nee, pomp laten zoals hij is";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp basaal";
+"Temp Basal" = "Tijdelijk basaal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basaal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "CV";
+"Resume" = "Hervat";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "opschorten";
+"Suspend" = "Onderbreek";
 
 /* Title for user options */
 "User options" = "Opties voor de gebruiker";
@@ -277,7 +277,7 @@
 "Loading" = "Laden";
 
 /* Text for save button */
-"Save" = "Sla";
+"Save" = "Opslaan";
 
 /* Text for 24h display */
 "24h display" = "24-uurs weergave";
@@ -286,7 +286,7 @@
 "Should time be display in 12h or 24h" = "Moet de tijd worden weergegeven in 12u of 24u?";
 
 /* text on */
-"On" = "Op";
+"On" = "Aan";
 
 /* text off */
 "Off" = "Uit";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Resterend insulineniveau";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Leeg reservoir";
+"Empty reservoir" = "Reservoir leeg";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Reservoir is leeg. Vervang het nu!";
@@ -420,7 +420,7 @@
 "No Insulin" = "Geen insuline";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insuline Opgeschort";
+"Insulin Suspended" = "Insuline tijdelijk uitgeschakeld";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
@@ -454,7 +454,7 @@
 "Disconnected" = "Ontkoppeld";
 
 /* DanaKit connected */
-"Connected" = "Aangesloten";
+"Connected" = "Verbonden";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "Pomp is nog steeds losgekoppeld";
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "De Dana-pompen ondersteunen verschillende toedieningssnelheden. Je kunt het hier instellen";
 
 /* Text for Basal profile */
-"Basal profile" = "Basaal profiel";
+"Basal profile" = "Basaalprofiel";
 
 /* Text for Battery level */
 "Battery level" = "Batterijniveau";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Configuratie";
+"Configuration" = "Instellingen";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Herinnering laag reservoir";
@@ -541,7 +541,7 @@
 "Refill amount" = "Navulhoeveelheid";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "E";
 
 /* Label for first step refill */
 "Step 1: Set reservoir level" = "Stap 1: Stel het reservoirniveau in";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Het is niet gelukt om de slang voor te vullen. Probeer het later opnieuw";
+
+/* Battery age */
+"Battery age" = "Leeftijd batterij";
