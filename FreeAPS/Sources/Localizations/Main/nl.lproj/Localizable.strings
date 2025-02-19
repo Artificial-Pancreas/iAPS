@@ -2116,9 +2116,6 @@ Enact a temp Basal or a temp target */
 /* */
 "Share your data anonymously" = "Deel je gegevens anoniem";
 
-/* Setting Title */
-"Sharing" = "Delen van statistieken";
-
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
@@ -2270,6 +2267,11 @@ Enact a temp Basal or a temp target */
 
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Loop status";
+
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
 
 /* --------- Auto ISF --------- */
 /* */
