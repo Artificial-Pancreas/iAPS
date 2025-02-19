@@ -2,7 +2,7 @@
 "loading" = "loading";
 
 /* Generic Continue text */
-"Continue" = "Continue";
+"Continue" = "Tiếp tục";
 
 /* Title for DanaKitSetupView */
 "Dana-i/RS Setup" = "Dana-i/RS Setup";
@@ -56,22 +56,22 @@
 "OK" = "OK";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Hủy bỏ";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Found Dana-i/RS pumps";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Scanning";
+"Scanning" = "Đang quét";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Connecting";
+"Connecting" = "Đang kết nối";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Select the type of insulin that you will be using in this pump";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Remove Pump";
+"Remove Pump" = "Thay bơm";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Are you sure you want to stop using Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Delete pump";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Delete Pump";
+"Delete Pump" = "Xóa bơm";
 
 /* Connection error message */
 "Error while connecting to device" = "Error while connecting to device";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Please consider changing your dosing strategy in the setting menu";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Resume delivery";
+"Resume delivery" = "Tiếp tục lại việc tiêm insulin";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Suspend delivery";
@@ -185,28 +185,28 @@
 "Stop temp basal" = "Stop temp basal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "Loại Insulin";
 
 /* Title for insulin type */
 "Select insulin Type" = "Select insulin Type";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Scheduled Basal";
+"Scheduled Basal" = "Đã lên chương trình cho liều Basal";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Khối lượng tiêm insulin";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "Insulin\n Đã tạm ngưng";
 
 /* Text shown in basal rate space when delivery status is unknown */
-"Unknown" = "Unknown";
+"Unknown" = "Không xác định";
 
 /* Units for showing temp basal rate */
 "U/hr" = "U/hr";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin Remaining";
+"Insulin Remaining" = "Insulin còn lại";
 
 /* Text for Dana pump name */
 "Pump name" = "Pump name";
@@ -238,22 +238,22 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Time Change Detected";
+"Time Change Detected" = "Đã phát hiện thay đổi thời gian";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Bạn có muốn cập nhật thời gian trên máy bơm của mình đến thời điểm hiện tại không?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Thời gian của máy bơm sẽ kiểm soát cài đặt trị liệu theo lịch trình của bạn. Cuộn xuống đến Pump Time để xem lại chênh lệch thời gian và cấu hình bơm của bạn.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Có, đồng bộ với thời gian hiện tại";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "Không, Giữ nguyên";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Liều bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
 "Temp Basal" = "Temp Basal";
@@ -262,10 +262,10 @@
 "Basal" = "Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Resume";
+"Resume" = "Tiếp tục";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Suspend";
+"Suspend" = "Đã tạm ngưng";
 
 /* Title for user options */
 "User options" = "User options";
@@ -277,7 +277,7 @@
 "Loading" = "Loading";
 
 /* Text for save button */
-"Save" = "Save";
+"Save" = "Lưu";
 
 /* Text for 24h display */
 "24h display" = "24h display";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Should time be display in 12h or 24h";
 
 /* text on */
-"On" = "On";
+"On" = "Bật";
 
 /* text off */
-"Off" = "Off";
+"Off" = "Tắt";
 
 /* 12h */
 "12h notation" = "12h notation";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Remaining insulin level";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Empty reservoir";
+"Empty reservoir" = "Hết insulin";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Reservoir is empty. Replace it now!";
@@ -417,14 +417,14 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Đã tạm dừng cấp liều Insulin";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "Mất tín hiệu";
 
 /* Text for Day unit */
 "day(s)" = "day(s)";
@@ -436,7 +436,7 @@
 "Reservoir age" = "Reservoir age";
 
 /* Text for status */
-"Status" = "Status";
+"Status" = "Tình trạng";
 
 /* DanaKit disconnecting */
 "Disconnecting..." = "Disconnecting...";
@@ -451,10 +451,10 @@
 "Reconnect tp pump" = "Reconnect tp pump";
 
 /* DanaKit disconnected */
-"Disconnected" = "Disconnected";
+"Disconnected" = "Đã ngắt kết nối";
 
 /* DanaKit connected */
-"Connected" = "Connected";
+"Connected" = "Đã kết nối";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "Pump is still disconnected";
@@ -529,7 +529,7 @@
 "Basal profile" = "Basal profile";
 
 /* Text for Battery level */
-"Battery level" = "Battery level";
+"Battery level" = "Mức pin";
 
 /* The title of the configuration section in DanaKit settings */
 "Configuration" = "Configuration";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
+
+/* Battery age */
+"Battery age" = "Battery age";
