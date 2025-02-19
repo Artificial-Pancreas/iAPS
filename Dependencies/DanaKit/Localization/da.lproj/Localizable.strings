@@ -62,16 +62,16 @@
 "Found Dana-i/RS pumps" = "Fandt Dana-i/RS-pumper";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Scanning";
+"Scanning" = "Scanner";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Forbindelse";
+"Connecting" = "Tilslutter";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Vælg den type insulin, du vil bruge i denne pumpe";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Fjern pumpen";
+"Remove Pump" = "Fjern pumpe";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Er du sikker på, at du vil stoppe med at bruge Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Slet pumpen";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Slet pumpe";
+"Delete Pump" = "Fjern pumpe";
 
 /* Connection error message */
 "Error while connecting to device" = "Fejl under tilslutning til enhed";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Overvej at ændre din doseringsstrategi i indstillingsmenuen";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Levering af CV";
+"Resume delivery" = "Fortsæt indgivelse";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Suspender levering";
@@ -185,28 +185,28 @@
 "Stop temp basal" = "Stop temp basal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Insulin-type";
+"Insulin Type" = "Insulintype";
 
 /* Title for insulin type */
 "Select insulin Type" = "Vælg insulintype";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Planlagt basal";
+"Scheduled Basal" = "Planlagt Basal";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Levering af insulin";
+"Insulin Delivery" = "Insulintilførsel";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nsuspenderet";
+"Insulin\nSuspended" = "Insulin \nSuspenderet";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Ukendt";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/time";
+"U/hr" = "E/t";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Resterende insulin";
+"Insulin Remaining" = "Resterende Insulin";
 
 /* Text for Dana pump name */
 "Pump name" = "Pumpens navn";
@@ -238,13 +238,13 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Tidsændring opdaget";
+"Time Change Detected" = "Tidsændring registreret";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Tiden på din pumpe er forskellig fra den aktuelle tid. Vil du opdatere tiden på din pumpe til den aktuelle tid?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Tiden på din pumpe er forskellig fra den aktuelle tid. Vil du opdatere tiden på din pumpe til det aktuelle tidspunkt?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Tiden på din pumpe er forskellig fra den aktuelle tid. Din pumpes tid styrer dine planlagte behandlingsindstillinger. Rul ned til rækken Pumpetid for at se tidsforskellen og konfigurere din pumpe.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Tiden på din pumpe er forskellig fra den aktuelle tid. Din pumpes tid styrer dine planlagte behandlingsindstillinger. Gå til Pumpetid for at gennemgå tidsforskellen og konfigurere din pumpe.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Ja, synkroniser til aktuel tid";
@@ -256,16 +256,16 @@
 "Bolus" = "Bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Midlertidig Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "CV";
+"Resume" = "Genoptag";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Suspendere";
+"Suspend" = "Suspender";
 
 /* Title for user options */
 "User options" = "Brugerindstillinger";
@@ -277,7 +277,7 @@
 "Loading" = "Indlæsning";
 
 /* Text for save button */
-"Save" = "Gemme";
+"Save" = "Gem";
 
 /* Text for 24h display */
 "24h display" = "24 timers visning";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Skal tiden vises i 12 eller 24 timer?";
 
 /* text on */
-"On" = "På";
+"On" = "Tændt";
 
 /* text off */
-"Off" = "Fra";
+"Off" = "Slukket";
 
 /* 12h */
 "12h notation" = "12h-notation";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Resterende insulinniveau";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Tøm reservoiret";
+"Empty reservoir" = "Tomt reservoir";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Reservoiret er tomt. Udskift den nu!";
@@ -541,7 +541,7 @@
 "Refill amount" = "Genopfyldningsmængde";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "E";
 
 /* Label for first step refill */
 "Step 1: Set reservoir level" = "Trin 1: Indstil reservoirets niveau";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Det lykkedes ikke at prime slangen. Prøv venligst igen senere";
+
+/* Battery age */
+"Battery age" = "Battery age";
