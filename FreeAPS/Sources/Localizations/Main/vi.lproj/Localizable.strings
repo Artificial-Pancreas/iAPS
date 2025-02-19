@@ -521,7 +521,7 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Cho phép cài đặt nồng độ insulin pha loãng";
+"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
 /* Max setting */
 "Max Carbs" = "Max Carbs";
 
@@ -676,7 +676,7 @@ Enact a temp Basal or a temp target */
 "Updating..." = "Đang cập nhật...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Mục tiêu tạm thời";
+"Temp Targets" = "Temp Targets";
 
 /* Delete carbs from data table and Nightscout */
 "Delete Carbs?" = "Xóa Carbs?";
@@ -913,10 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Thông tin cảm biến";
 
 /* */
-"Sensor Life-Span" = "Sensor Life-Span";
+"Sensor Life-Span" = "Vòng đời của cảm biến";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Khi sử dụng %@ iAPS không biết loại cảm biến được sử dụng hoặc vòng đời của cảm biến.";
 
 /* */
 "Sensor Age Left" = "Thời gian còn lại của cảm biến";
@@ -1349,7 +1349,7 @@ Enact a temp Basal or a temp target */
 "Save on Pump" = "Lưu vào bơm";
 
 /* Debug option view Pump History */
-"Pump History" = "Lịch sử Bơm";
+"Pump History" = "Pump History";
 
 /* Debug option view Target Ranges */
 "Target ranges" = "Phạm vi Mục tiêu";
@@ -1358,22 +1358,22 @@ Enact a temp Basal or a temp target */
 "Temp targets" = "Mục tiêu tạm thời";
 
 /* Debug option view Meal */
-"Meal" = "Bữa ăn";
+"Meal" = "Meal";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Hồ sơ Bơm Insulin";
+"Pump profile" = "Pump profile";
 
 /* Debug option view Profile */
-"Profile" = "Hồ sơ";
+"Profile" = "Profile";
 
 /* Debug option view Enacted */
-"Enacted" = "Đã kích hoạt";
+"Enacted" = "Enacted";
 
 /* Debug option view Announcements (from NS) */
 "Announcements" = "Các thông báo";
 
 /* Debug option view Enacted announcements announcements (from NS) */
-"Enacted announcements" = "Thông báo đã kích hoạt";
+"Enacted announcements" = "Enacted announcements";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1479,7 +1479,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Mô tả ghi đè";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Ghi đè tối đa 400%";
+"Max Override 400%" = "Max Override 400%";
 
 /* */
 "Override Profiles" = "Cài đặt ghi đè";
@@ -1508,7 +1508,7 @@ Enact a temp Basal or a temp target */
 "Normal Profile" = "Normal Profile";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Tùy chỉnh Profile";
+"Custom Profile" = "Custom Profile";
 
 /* */
 "Profiles" = "Profiles";
@@ -2347,13 +2347,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Upper BG limit";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
