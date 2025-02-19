@@ -62,10 +62,10 @@
 "Found Dana-i/RS pumps" = "وجدت مضخات Dana-i/RS";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "المسح الضوئي";
+"Scanning" = "يتم المسح";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "التوصيل";
+"Connecting" = "Connecting";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "حدد نوع الأنسولين الذي ستستخدمه في هذه المضخة";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "يُرجى التفكير في تغيير استراتيجية الجرعات في قائمة الإعدادات";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "استئناف التسليم";
+"Resume delivery" = "Resume delivery";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "تعليق التسليم";
@@ -185,25 +185,25 @@
 "Stop temp basal" = "وقف درجة الحرارة القاعدية";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "نوع الأنسولين";
+"Insulin Type" = "نوع الإنسولين";
 
 /* Title for insulin type */
 "Select insulin Type" = "اختر نوع الأنسولين";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "القاعدية المجدولة";
+"Scheduled Basal" = "الجرعة الأساسية المجدولة";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "توصيل الأنسولين";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "الأنسولين\nمعلق";
+"Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text shown in basal rate space when delivery status is unknown */
-"Unknown" = "غير معروف";
+"Unknown" = "Unknown";
 
 /* Units for showing temp basal rate */
-"U/hr" = "وحدة/ساعة";
+"U/hr" = "U/hr";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "الأنسولين المتبقي";
@@ -238,34 +238,34 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "تم اكتشاف تغير الوقت";
+"Time Change Detected" = "تم اكتشاف تغيير في الوقت";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "الوقت على مضختك مختلف عن الوقت الحالي. هل تريد تحديث الوقت على مضختك إلى الوقت الحالي؟";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "الوقت في مضختك مختلف عن الوقت الحالي. هل ترغب في تحديث الوقت في مضختك ليتوافق مع الوقت الحالي؟";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "يختلف الوقت في مضختك عن الوقت الحالي. يتحكم وقت مضختك في إعدادات العلاج المجدول الخاص بك. قم بالتمرير لأسفل إلى صف وقت المضخة لمراجعة فرق الوقت وتهيئة المضخة الخاصة بك.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "نعم، المزامنة مع الوقت الحالي";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "لا، احتفظ بالمضخة كما هي";
+"No, Keep Pump As Is" = "لا، إبقاء المضخة كما هي";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "بولوس";
+"Bolus" = "الجرعة";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "درجة الحرارة القاعدية";
+"Temp Basal" = "Temp Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "القاعدية";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "السيرة الذاتية";
+"Resume" = "Resume";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "تعليق";
+"Suspend" = "Suspend";
 
 /* Title for user options */
 "User options" = "خيارات المستخدم";
@@ -277,7 +277,7 @@
 "Loading" = "التحميل";
 
 /* Text for save button */
-"Save" = "الحفظ";
+"Save" = "إحفظ";
 
 /* Text for 24h display */
 "24h display" = "عرض 24 ساعة";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "يجب عرض الوقت في 12 ساعة أو 24 ساعة";
 
 /* text on */
-"On" = "على";
+"On" = "On";
 
 /* text off */
-"Off" = "إيقاف التشغيل";
+"Off" = "Off";
 
 /* 12h */
 "12h notation" = "ترميز 12 ساعة";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "مستوى الأنسولين المتبقي";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "خزان فارغ";
+"Empty reservoir" = "الخزان فارغ";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "الخزان فارغ. استبدله الآن!";
@@ -417,10 +417,10 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "لا أنسولين";
+"No Insulin" = "لا يوجد إنسولين";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "تعليق الأنسولين";
+"Insulin Suspended" = "Insulin Suspended";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
@@ -451,10 +451,10 @@
 "Reconnect tp pump" = "إعادة توصيل المضخة";
 
 /* DanaKit disconnected */
-"Disconnected" = "غير متصل";
+"Disconnected" = "Disconnected";
 
 /* DanaKit connected */
-"Connected" = "متصل";
+"Connected" = "Connected";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "لا تزال المضخة مفصولة";
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "تدعم مضخات دانا سرعات توصيل مختلفة. يمكنك إعدادها هنا";
 
 /* Text for Basal profile */
-"Basal profile" = "المظهر الجانبي القاعدي";
+"Basal profile" = "ملف الانسولين القاعدي";
 
 /* Text for Battery level */
-"Battery level" = "مستوى البطارية";
+"Battery level" = "Battery level";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "التكوين";
+"Configuration" = "ضبط";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "تذكير بانخفاض مستوى الخزان";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "فشل تحضير الأنبوب. يرجى المحاولة مرة أخرى لاحقاً";
+
+/* Battery age */
+"Battery age" = "Battery age";
