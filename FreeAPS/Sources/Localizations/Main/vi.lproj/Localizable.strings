@@ -113,7 +113,7 @@
 "Fatty Meal" = "Bữa ăn nhiều chất béo";
 
 /* Bolus option */
-"Hypo Treatment" = "Chống hạ đường huyết";
+"Hypo Treatment" = "Hypo Treatment";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Liều bolus đầy đủ";
@@ -521,7 +521,7 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Cho phép cài đặt nồng độ insulin pha loãng";
+"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
 /* Max setting */
 "Max Carbs" = "Max Carbs";
 
@@ -580,7 +580,7 @@ Enact a temp Basal or a temp target */
 "Configuration" = "Configuration";
 
 /* */
-"Devices" = "Thiết bị";
+"Devices" = "Devices";
 
 /*  */
 "Pump" = "Pump";
@@ -622,7 +622,7 @@ Enact a temp Basal or a temp target */
 "Garmin is not available" = "Garmin không có sẵn";
 
 /*  */
-"Services" = "Dịch vụ";
+"Services" = "Services";
 
 /*  */
 "Settings" = "Settings";
@@ -631,7 +631,7 @@ Enact a temp Basal or a temp target */
 "Recommended Bolus Percentage" = "Recommended Bolus Percentage";
 
 /* 2 log files to share */
-"Share logs" = "Chia sẻ nhật ký";
+"Share logs" = "Share logs";
 
 /* Upper target */
 "High target" = "Mục tiêu cao";
@@ -646,7 +646,7 @@ Enact a temp Basal or a temp target */
 "Pump suspended" = "Bơm đã tạm ngưng";
 
 /* */
-"Middleware" = "Phần mềm trung gian";
+"Middleware" = "Middleware";
 
 /* Header */
 "History" = "Lịch sử";
@@ -676,7 +676,7 @@ Enact a temp Basal or a temp target */
 "Updating..." = "Đang cập nhật...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Mục tiêu tạm thời";
+"Temp Targets" = "Temp Targets";
 
 /* Delete carbs from data table and Nightscout */
 "Delete Carbs?" = "Xóa Carbs?";
@@ -703,7 +703,7 @@ Enact a temp Basal or a temp target */
 "Configure Libre Transmitter" = "Cấu hình Libre Transmitter";
 
 /* */
-"Calibrations" = "Hiệu chuẩn";
+"Calibrations" = "CalibrationsCalibrations";
 
 /* */
 "Create Events in Calendar" = "Tạo sự kiện trong Calendar";
@@ -823,7 +823,7 @@ Enact a temp Basal or a temp target */
 "Libre sensor was incorrectly read, CRCs were not valid" = "Cảm biến libre không được đọc đúng, CRCs không hợp lệ";
 
 /* Glucose */
-"Glucose" = "Đường huyết";
+"Glucose" = "Glucose";
 
 /* LOWALERT! */
 "LOWALERT!" = "CẢNH BÁO THẤP!";
@@ -913,10 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Thông tin cảm biến";
 
 /* */
-"Sensor Life-Span" = "Sensor Life-Span";
+"Sensor Life-Span" = "Vòng đời của cảm biến";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Khi sử dụng %@ iAPS không biết loại cảm biến được sử dụng hoặc vòng đời của cảm biến.";
 
 /* */
 "Sensor Age Left" = "Thời gian còn lại của cảm biến";
@@ -1265,7 +1265,7 @@ Enact a temp Basal or a temp target */
 "Suspend" = "Đã tạm ngưng";
 
 /* */
-"Animated Background" = "Nền màn hình động";
+"Animated Background" = "Animated Background";
 
 /* Sensor day(s) */
 " day(s)" = " day(s)";
@@ -1325,7 +1325,7 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Dành cho nhà phát triển";
+"Developer" = "Developer";
 
 /* Debug option view NS Upload Profile */
 "NS Upload Profile" = "Tải hồ sơ lên NS";
@@ -1349,7 +1349,7 @@ Enact a temp Basal or a temp target */
 "Save on Pump" = "Lưu vào bơm";
 
 /* Debug option view Pump History */
-"Pump History" = "Lịch sử Bơm";
+"Pump History" = "Pump History";
 
 /* Debug option view Target Ranges */
 "Target ranges" = "Phạm vi Mục tiêu";
@@ -1358,28 +1358,28 @@ Enact a temp Basal or a temp target */
 "Temp targets" = "Mục tiêu tạm thời";
 
 /* Debug option view Meal */
-"Meal" = "Bữa ăn";
+"Meal" = "Meal";
 
 /* Debug option view Pump profile */
-"Pump profile" = "Hồ sơ Bơm Insulin";
+"Pump profile" = "Pump profile";
 
 /* Debug option view Profile */
-"Profile" = "Hồ sơ";
+"Profile" = "Profile";
 
 /* Debug option view Enacted */
-"Enacted" = "Đã kích hoạt";
+"Enacted" = "Enacted";
 
 /* Debug option view Announcements (from NS) */
 "Announcements" = "Các thông báo";
 
 /* Debug option view Enacted announcements announcements (from NS) */
-"Enacted announcements" = "Thông báo đã kích hoạt";
+"Enacted announcements" = "Enacted announcements";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
 
 /* Debug option view Target presets */
-"Target presets" = "Mục tiêu cài đặt trước";
+"Target presets" = "Target presets";
 
 /* Debug option view */
 "Loop Cycles" = "Chu kỳ vòng lặp";
@@ -1479,7 +1479,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Mô tả ghi đè";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Ghi đè tối đa 400%";
+"Max Override 400%" = "Max Override 400%";
 
 /* */
 "Override Profiles" = "Cài đặt ghi đè";
@@ -1508,7 +1508,7 @@ Enact a temp Basal or a temp target */
 "Normal Profile" = "Normal Profile";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Tùy chỉnh Profile";
+"Custom Profile" = "Custom Profile";
 
 /* */
 "Profiles" = "Profiles";
@@ -1859,7 +1859,7 @@ Enact a temp Basal or a temp target */
 "Total" = "Total";
 
 /* Headline Statistics */
-"Statistics" = "Thống kê";
+"Statistics" = "Statistics";
 
 /* Option in preferences */
 "Allow Upload of Statistics to NS" = "Cho phép tải số liệu thống kê lên NS";
@@ -2245,7 +2245,7 @@ Enact a temp Basal or a temp target */
 "NoneContactValue" = "Không";
 
 /* Contact Image, settings, Glucose (data to display) */
-"GlucoseContactValue" = "Đường huyết";
+"GlucoseContactValue" = "Glucose";
 
 /* Contact Image, settings, Eventual BG (data to display) */
 "EventualBGContactValue" = "Kết quả BG";
@@ -2347,13 +2347,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Upper BG limit";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
@@ -2820,7 +2820,7 @@ Enact a temp Basal or a temp target */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Công cụ tính bolus thay thế mới là một cách tiếp cận khác với công cụ tính bolus mặc định trong iAPS. Nếu bật nút này, bạn sẽ sử dụng máy tính bolus này chứ không phải máy tính iAPS gốc. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng như lẽ ra phải như vậy khi sử dụng smbs (mặc định là 0,8).\n\nBạn cũng có thể thêm tùy chọn trong máy tính bolus của mình để áp dụng một hệ số tùy chỉnh (!) khác ở cuối phép tính, phép tính có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ: Pizza (mặc định là 0,7).";
 
 /* Settings Section */
-"Extra Features" = "Tính năng bổ sung";
+"Extra Features" = "Extra Features";
 
 /* UI/UX option */
 "Display Predictions" = "Hiển thị dự đoán";
@@ -2870,7 +2870,7 @@ Enact a temp Basal or a temp target */
 "Never display the small glucose chart when scrolling" = "Không bao giờ hiển thị biểu đồ glucose nhỏ khi cuộn";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Vô hiệu hóa điều trị hạ đường huyết";
+"Disable Hypo Treatments" = "Disable Hypo Treatments";
 
 /* UI/UX option */
 "Display Glucose Delta" = "Hiển thị Glucose Delta";
