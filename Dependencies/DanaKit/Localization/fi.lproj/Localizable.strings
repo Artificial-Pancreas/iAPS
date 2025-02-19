@@ -56,22 +56,22 @@
 "OK" = "OK";
 
 /* Cancel button title */
-"Cancel" = "Peruuta";
+"Cancel" = "Peru";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Löytyi Dana-i/RS-pumput";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Skannaus";
+"Scanning" = "Scanning";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Yhdistäminen";
+"Connecting" = "Yhdistetään";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Valitse insuliinityyppi, jota käytät tässä pumpussa.";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Poista pumppu";
+"Remove Pump" = "Remove Pump";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Oletko varma, että haluat lopettaa Dana-i/RS:n käytön?";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Harkitse annostelustrategian muuttamista asetusvalikossa.";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Jatko-osan toimitus";
+"Resume delivery" = "Resume delivery";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Toimituksen keskeyttäminen";
@@ -185,28 +185,28 @@
 "Stop temp basal" = "Pysäytä temp basal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Insuliinityyppi";
+"Insulin Type" = "Insulin Type";
 
 /* Title for insulin type */
 "Select insulin Type" = "Valitse insuliinityyppi";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Aikataulun mukainen Basal";
+"Scheduled Basal" = "Scheduled Basal";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insuliinin toimitus";
+"Insulin Delivery" = "Insulin Delivery";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insuliini\nKeskeytetään";
+"Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Tuntematon";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/h";
+"U/hr" = "U/hr";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Jäljellä oleva insuliini";
+"Insulin Remaining" = "Insulin Remaining";
 
 /* Text for Dana pump name */
 "Pump name" = "Pumpun nimi";
@@ -238,34 +238,34 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Ajan muutos havaittu";
+"Time Change Detected" = "Time Change Detected";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pumppusi kellonaika poikkeaa nykyisestä kellonajasta. Haluatko päivittää pumppusi ajan nykyiseen aikaan?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Pumppusi kellonaika poikkeaa nykyisestä kellonajasta. Pumpun aika ohjaa ajastettuja hoitoasetuksia. Selaa alaspäin Pumpun aika -riville, jotta voit tarkistaa aikaeron ja määrittää pumpun asetukset.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Kyllä, synkronointi nykyiseen aikaan";
+"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Ei, pidä pumppu sellaisenaan";
+"No, Keep Pump As Is" = "No, Keep Pump As Is";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Lisäannos";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Lämpötila Peruslämpötila";
+"Temp Basal" = "Temp Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basaalinen";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Yhteenveto";
+"Resume" = "Resume";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Keskeytä";
+"Suspend" = "Suspend";
 
 /* Title for user options */
 "User options" = "Käyttäjän vaihtoehdot";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Pitäisikö kellonajan näyttää 12h tai 24h tarkkuudella?";
 
 /* text on */
-"On" = "Osoitteessa";
+"On" = "Päällä";
 
 /* text off */
-"Off" = "Off";
+"Off" = "Pois päältä";
 
 /* 12h */
 "12h notation" = "12h merkintätapa";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Jäljellä oleva insuliinitaso";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Tyhjä säiliö";
+"Empty reservoir" = "Säiliö tyhjä";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Säiliö on tyhjä. Vaihda se nyt!";
@@ -417,14 +417,14 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "Ei insuliinia";
+"No Insulin" = "No Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insuliini keskeytetty";
+"Insulin Suspended" = "Insulin Suspended";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signaalin menetys";
+"Signal Loss" = "Signal Loss";
 
 /* Text for Day unit */
 "day(s)" = "päivä(t)";
@@ -451,7 +451,7 @@
 "Reconnect tp pump" = "Kytke tp-pumppu uudelleen";
 
 /* DanaKit disconnected */
-"Disconnected" = "Irrotettu";
+"Disconnected" = "Ei yhteydessä";
 
 /* DanaKit connected */
 "Connected" = "Yhdistetty";
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Dana-pumput tukevat eri toimitusnopeuksia. Voit määrittää sen täältä";
 
 /* Text for Basal profile */
-"Basal profile" = "Perusprofiili";
+"Basal profile" = "Perusinsuliiniprofiili";
 
 /* Text for Battery level */
-"Battery level" = "Akun varaustaso";
+"Battery level" = "Battery level";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Konfigurointi";
+"Configuration" = "Configuration";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Alhaisen säiliön muistutus";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Putki ei ole alustettu. Yritä myöhemmin uudelleen";
+
+/* Battery age */
+"Battery age" = "Battery age";
