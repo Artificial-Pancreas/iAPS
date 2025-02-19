@@ -62,16 +62,16 @@
 "Found Dana-i/RS pumps" = "Nájdené čerpadlá Dana-i/RS";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Skenovanie";
+"Scanning" = "Skenuje sa";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Pripojenie";
+"Connecting" = "Pripája sa";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Vyberte typ inzulínu, ktorý budete používať v tejto pumpe";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Odstránenie čerpadla";
+"Remove Pump" = "Odstrániť Pod";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Ste si istí, že chcete prestať používať Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Vymazať čerpadlo";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Odstrániť čerpadlo";
+"Delete Pump" = "Vymazať Pumpu";
 
 /* Connection error message */
 "Error while connecting to device" = "Chyba pri pripájaní k zariadeniu";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Zvážte zmenu stratégie dávkovania v ponuke nastavenia";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Doručenie životopisu";
+"Resume delivery" = "Obnoviť podávanie inzulínu";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Pozastavenie dodávky";
@@ -185,25 +185,25 @@
 "Stop temp basal" = "Zastavenie bazálnej teploty";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Typ inzulínu";
+"Insulin Type" = "Typ Inzulínu";
 
 /* Title for insulin type */
 "Select insulin Type" = "Vyberte typ inzulínu";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Plánovaná základná";
+"Scheduled Basal" = "Naplánovaný bazál";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Dodávka inzulínu";
+"Insulin Delivery" = "Podávanie inzulínu";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Inzulín\nPozastavený";
+"Insulin\nSuspended" = "Inzulín\nSuspendovaný";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Neznáme";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hod";
+"U/hr" = "J/hod";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Zostávajúci inzulín";
@@ -238,34 +238,34 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Zistená zmena času";
+"Time Change Detected" = "Zistila sa zmena času";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na čerpadle na aktuálny čas?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na vašej pumpe sa líši od aktuálneho času. Čas vašej pumpy riadi nastavenia plánovanej terapie. Prejdite na riadok Čas na pumpe, aby ste skontrolovali časový rozdiel a nakonfigurovali svoju pumpu.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpe je iný ako aktuálny čas. Čas pumpy riadi vaše naplánované liečebné nastavenia. Prejdite nadol na riadok Čas pumpy, pozrite si časový rozdiel a nakonfigurujte pumpu.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Áno, synchronizácia s aktuálnym časom";
+"Yes, Sync to Current Time" = "Áno, synchronizujte s aktuálnym časom";
 
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "Nie, nechajte čerpadlo tak, ako je";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Dávka";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Dočasný bazál";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Bazálna";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Životopis";
+"Resume" = "Pokračovať";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Pozastaviť";
+"Suspend" = "Pozastavenie";
 
 /* Title for user options */
 "User options" = "Možnosti používateľa";
@@ -286,7 +286,7 @@
 "Should time be display in 12h or 24h" = "Či sa má čas zobrazovať v 12h alebo 24h";
 
 /* text on */
-"On" = "Na stránke";
+"On" = "Zapnuté";
 
 /* text off */
 "Off" = "Vypnuté";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Zostávajúca hladina inzulínu";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Prázdny zásobník";
+"Empty reservoir" = "Prázdna nádrž";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Nádrž je prázdna. Vymeňte ju teraz!";
@@ -420,7 +420,7 @@
 "No Insulin" = "Žiadny inzulín";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Inzulín pozastavený";
+"Insulin Suspended" = "Inzulín Suspendovaný";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Čerpadlá Dana podporujú rôzne rýchlosti dodávky. Nastaviť ju môžete tu";
 
 /* Text for Basal profile */
-"Basal profile" = "Základný profil";
+"Basal profile" = "Bazálny profil";
 
 /* Text for Battery level */
-"Battery level" = "Úroveň nabitia batérie";
+"Battery level" = "Stav batérie";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Konfigurácia";
+"Configuration" = "Nastavenie";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Pripomienka nízkej nádrže";
@@ -541,7 +541,7 @@
 "Refill amount" = "Množstvo náplne";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "J";
 
 /* Label for first step refill */
 "Step 1: Set reservoir level" = "Krok 1: Nastavenie hladiny v nádrži";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Nepodarilo sa naplniť trubicu. Skúste to prosím neskôr";
+
+/* Battery age */
+"Battery age" = "Battery age";
