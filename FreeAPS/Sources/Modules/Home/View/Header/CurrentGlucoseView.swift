@@ -13,6 +13,7 @@ struct CurrentGlucoseView: View {
     @Binding var displayExpiration: Bool
     @Binding var cgm: CGMType
     @Binding var sensordays: Double
+    @Binding var anubis: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
@@ -96,7 +97,7 @@ struct CurrentGlucoseView: View {
             if let recent = recentGlucose {
                 if displayDelta, !scrolling, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
-                if displayExpiration {
+                if displayExpiration || anubis {
                     sageView
                 }
                 VStack(spacing: 15) {
@@ -142,9 +143,10 @@ struct CurrentGlucoseView: View {
         ZStack {
             if let date = recentGlucose?.sessionStartDate {
                 let expiration = (cgm == .xdrip || cgm == .glucoseDirect) ? sensordays * 8.64E4 : cgm.expiration
-                let remainingTime: TimeInterval = expiration - (-1 * date.timeIntervalSinceNow)
+                let remainingTime: TimeInterval = anubis ? (-1 * date.timeIntervalSinceNow) : expiration -
+                    (-1 * date.timeIntervalSinceNow)
 
-                Sage(amount: remainingTime, expiration: expiration)
+                Sage(amount: remainingTime, expiration: anubis ? remainingTime : expiration)
                     .frame(width: 59, height: 26)
                     .overlay {
                         HStack {

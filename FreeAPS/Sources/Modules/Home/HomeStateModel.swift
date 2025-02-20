@@ -78,6 +78,7 @@ extension Home {
         @Published var displayExpiration = false
         @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
+        @Published var anubis: Bool = false
 
         // Chart data
         var data = ChartModel(
@@ -168,6 +169,7 @@ extension Home {
             displayExpiration = settingsManager.settings.displayExpiration
             cgm = settingsManager.settings.cgm
             sensorDays = settingsManager.settings.sensorDays
+            anubis = settingsManager.settings.anubis
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -657,6 +659,7 @@ extension Home.StateModel:
         displayExpiration = settingsManager.settings.displayExpiration
         cgm = settingsManager.settings.cgm
         sensorDays = settingsManager.settings.sensorDays
+        anubis = settingsManager.settings.anubis
         setupGlucose()
         setupOverrideHistory()
         setupData()

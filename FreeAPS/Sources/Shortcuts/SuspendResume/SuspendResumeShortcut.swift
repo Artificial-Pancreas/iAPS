@@ -59,7 +59,7 @@ struct SuspendResumeIntent: AppIntent {
 final class SuspendResumeIntentRequest: BaseIntentsRequest {
     func setMode(_ mode: String) throws -> String {
         let resultDisplay: String =
-            NSLocalizedString("Pump command", comment: "") + " \(mode) " + NSLocalizedString("enacted in iAPS", comment: "")
+            NSLocalizedString("Pump command", comment: "") + " \(mode)" + NSLocalizedString("enacted in iAPS", comment: "")
         if mode == PumpMode.resume.rawValue {
             apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:resume"))
         } else if mode == PumpMode.suspend.rawValue {
