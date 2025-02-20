@@ -17,6 +17,7 @@ protocol CarbsStorage {
     func editMultiple(carbs: [CarbsEntry])
     func complexMeal(date: Date) -> [CarbsEntry]?
     func deleteCarbsAndFPUs(at date: Date)
+    func deleteFPUs(at date: Date)
 }
 
 final class BaseCarbsStorage: CarbsStorage, Injectable {
@@ -25,7 +26,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var settings: SettingsManager!
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -36,8 +37,10 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             let file = OpenAPS.Monitor.carbHistory
             var uniqEvents: [CarbsEntry] = []
 
+            let cbs = entries.last?.carbs ?? 0
             let fat = entries.last?.fat ?? 0
             let protein = entries.last?.protein ?? 0
+            let creationDate = entries.last?.createdAt ?? Date.now
 
             if fat > 0 || protein > 0 {
                 // -------------------------- FPU--------------------------------------
@@ -85,7 +88,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     } else { useDate = useDate.addingTimeInterval(interval.minutes.timeInterval) }
 
                     let eachCarbEntry = CarbsEntry(
-                        id: UUID().uuidString, createdAt: entries.last?.createdAt ?? Date(), actualDate: useDate,
+                        id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
                         carbs: equivalent, fat: 0, protein: 0, note: nil,
                         enteredBy: CarbsEntry.manual, isFPU: true,
                         fpuID: fpuID
@@ -109,7 +112,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 // uniqEvents = []
                 let onlyCarbs = CarbsEntry(
                     id: entry.id ?? "",
-                    createdAt: entry.createdAt,
+                    createdAt: creationDate,
                     actualDate: entry.actualDate ?? entry.createdAt,
                     carbs: entry.carbs,
                     fat: nil,
@@ -140,20 +143,17 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 }
             }
 
-            // MARK: Save to CoreData. TEST
+            // MARK: Save to CoreData. Currently not used
 
-            var cbs: Decimal = 0
-            var carbDate = Date()
-            if entries.isNotEmpty {
-                cbs = entries[0].carbs
-                carbDate = entries[0].actualDate ?? entries[0].createdAt
-            }
-            if cbs != 0 {
+            if fat > 0 || protein > 0 {
                 self.coredataContext.perform {
                     let carbDataForStats = Carbohydrates(context: self.coredataContext)
 
-                    carbDataForStats.date = carbDate
                     carbDataForStats.carbs = cbs as NSDecimalNumber
+                    carbDataForStats.fat = fat as NSDecimalNumber
+                    carbDataForStats.protein = protein as NSDecimalNumber
+                    carbDataForStats.id = UUID().uuidString
+                    carbDataForStats.date = creationDate
 
                     try? self.coredataContext.save()
                 }
@@ -239,6 +239,17 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
             allValues.removeAll(where: { $0.createdAt == date })
+            storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
+            broadcaster.notify(CarbsObserver.self, on: processQueue) {
+                $0.carbsDidUpdate(allValues)
+            }
+        }
+    }
+
+    func deleteFPUs(at date: Date) {
+        processQueue.sync {
+            var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
+            allValues.removeAll(where: { $0.createdAt == date && ($0.isFPU ?? false) })
             storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
             broadcaster.notify(CarbsObserver.self, on: processQueue) {
                 $0.carbsDidUpdate(allValues)

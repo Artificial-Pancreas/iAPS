@@ -600,7 +600,7 @@ struct MainChartView: View {
     private func fpuView(fullSize: CGSize) -> some View {
         ZStack {
             fpuPath
-                .fill(.orange.opacity(0.5))
+                .fill(.secondary.opacity(0.4))
             fpuPath
                 .stroke(Color.primary, lineWidth: 0.2)
         }

@@ -26,14 +26,7 @@ extension DataTable {
         @Published var meal: (carbs: Decimal, fat: Decimal, protein: Decimal) = (0, 0, 0)
         @Published var oldCarbs: Decimal = 0
         @Published var carbEquivalents: Decimal = 0
-        @Published var treatment = Treatment(
-            units: .mmolL,
-            type: .bolus,
-            date: .distantPast,
-            creationDate: .distantPast
-        )
-
-        @Published var complex: [CarbsEntry]?
+        @Published var treatment: Treatment?
 
         var units: GlucoseUnits = .mmolL
 
@@ -255,78 +248,38 @@ extension DataTable {
         }
 
         /// Update Carbs or Carb equivalents in storage, data table and Nightscout and Healthkit (where applicable)
-        func updateCarbs(treatment: Treatment?) {
+        func updateCarbs(treatment: Treatment?, computed: Carbohydrates?) {
             guard let oldCarbs = treatment else { return }
 
-            if meal.carbs > 0, carbEquivalents > 0 {
+            if oldCarbs.type != .fpus {
                 let now = Date.now
                 let newCarbs = CarbsEntry(
                     id: UUID().uuidString,
                     createdAt: now,
                     actualDate: oldCarbs.date,
                     carbs: meal.carbs,
-                    fat: nil,
-                    protein: nil,
+                    fat: meal.fat,
+                    protein: meal.protein,
                     note: oldCarbs.note,
                     enteredBy: CarbsEntry.manual,
                     isFPU: false,
                     fpuID: nil
                 )
 
-                let equivalents = carbStorage.complexMeal(date: oldCarbs.date)?.filter({ $0.isFPU ?? false }) ?? []
-                let fpuID = UUID().uuidString
-
-                let newEquivalents = equivalents.map { item in
-                    CarbsEntry(
-                        id: UUID().uuidString,
-                        createdAt: now,
-                        actualDate: item.actualDate,
-                        carbs: carbEquivalents,
-                        fat: nil,
-                        protein: nil,
-                        note: oldCarbs.note,
-                        enteredBy: CarbsEntry.manual,
-                        isFPU: true,
-                        fpuID: fpuID
-                    )
+                carbStorage.deleteCarbsAndFPUs(at: oldCarbs.creationDate)
+                if let deleteOld = computed {
+                    OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
                 }
-
-                carbStorage.deleteCarbsAndFPUs(at: oldCarbs.date)
                 carbStorage.storeCarbs([newCarbs])
-                carbStorage.editMultiple(carbs: newEquivalents)
-
                 debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
 
             } else {
-                let multiple = carbStorage.multiple(id: oldCarbs.fpuID ?? "Not this one")
-
-                if multiple.count > 1 {
-                    let id = UUID().uuidString
-                    let newCarbs = multiple.map { item in
-                        CarbsEntry(
-                            id: UUID().uuidString,
-                            createdAt: Date.now,
-                            actualDate: item.actualDate,
-                            carbs: meal.carbs,
-                            fat: nil,
-                            protein: nil,
-                            note: oldCarbs.note,
-                            enteredBy: CarbsEntry.manual,
-                            isFPU: true,
-                            fpuID: id
-                        )
-                    }
-                    deleteCarbs(oldCarbs.creationDate)
-                    debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
-
-                    carbStorage.editMultiple(carbs: newCarbs)
-                    debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
-                } else {
-                    let newCarbs = CarbsEntry(
+                let newCarbs =
+                    CarbsEntry(
                         id: UUID().uuidString,
                         createdAt: Date.now,
                         actualDate: oldCarbs.date,
-                        carbs: meal.carbs,
+                        carbs: 0,
                         fat: meal.fat,
                         protein: meal.protein,
                         note: oldCarbs.note,
@@ -335,25 +288,26 @@ extension DataTable {
                         fpuID: nil
                     )
 
-                    deleteCarbs(oldCarbs.creationDate)
-                    debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
-
-                    carbStorage.storeCarbs([newCarbs])
-                    debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
+                carbStorage.deleteFPUs(at: oldCarbs.creationDate)
+                if let deleteOld = computed {
+                    OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
                 }
+                debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
+                carbStorage.storeCarbs([newCarbs])
+                debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
             }
         }
 
-        @MainActor func updateVariables(mealItem: Treatment, complex: [CarbsEntry]?) {
-            DispatchQueue.safeMainAsync { [self] in
-                treatment = mealItem
-                let string = (mealItem.amountText.components(separatedBy: " ").first ?? "0")
-                    .replacingOccurrences(of: ",", with: ".")
-                meal.carbs = Decimal(string: string) ?? 0
-                oldCarbs = meal.carbs
+        func updateVariables(mealItem: Treatment, complex: Carbohydrates?) {
+            treatment = mealItem
+            let string = (mealItem.amountText.components(separatedBy: " ").first ?? "0")
+                .replacingOccurrences(of: ",", with: ".")
+            meal.carbs = Decimal(string: string) ?? 0
+            oldCarbs = meal.carbs
 
-                carbEquivalents = mealItem.type == .fpus ? meal.carbs : complex?
-                    .first(where: { $0.isFPU ?? false })?.carbs ?? 0
+            if let fullMeal = complex {
+                meal.fat = (fullMeal.fat ?? 0) as Decimal
+                meal.protein = (fullMeal.protein ?? 0) as Decimal
             }
         }
     }
