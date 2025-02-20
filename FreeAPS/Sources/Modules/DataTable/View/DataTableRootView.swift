@@ -249,12 +249,12 @@ extension DataTable {
             VStack {
                 if item.type == .carbs, let meal = filtered(date: item.creationDate) {
                     HStack {
-                        Image(systemName: "fork.knife.circle").foregroundStyle(item.color)
+                        Image(systemName: "fork.knife.circle.fill").foregroundStyle(item.color)
                         Text("Meal")
                         Spacer()
                         Text(dateFormatter.string(from: item.date))
                             .moveDisabled(true)
-                    }.padding(.bottom, 3)
+                    }.padding(.bottom, 1)
 
                     // Horisontal adjustment of alignment
                     let padding: CGFloat = 82
@@ -266,8 +266,10 @@ extension DataTable {
                                 .trailing,
                                 padding - CGFloat(NSLocalizedString("Carbs", comment: "").count) * lengthAdjustment
                             )
-                        Text(item.amountText).foregroundStyle(.secondary)
-                    }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                        Text(item.amountText)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                    .foregroundStyle(.secondary)
 
                     if meal.fat != 0 {
                         HStack {
@@ -279,8 +281,10 @@ extension DataTable {
                             Text(
                                 (hourFormatter.string(from: (meal.fat ?? 0) as NSNumber) ?? "") +
                                     NSLocalizedString(" g", comment: "")
-                            ).foregroundStyle(.secondary)
-                        }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                            )
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                        .foregroundStyle(.secondary)
                     }
 
                     if meal.protein != 0 {
@@ -293,8 +297,10 @@ extension DataTable {
                             Text(
                                 (hourFormatter.string(from: (meal.protein ?? 0) as NSNumber) ?? "") +
                                     NSLocalizedString(" g", comment: "")
-                            ).foregroundStyle(.secondary)
-                        }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                            )
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                        .foregroundStyle(.secondary)
                     }
 
                 } else if item.type == .carbs {
