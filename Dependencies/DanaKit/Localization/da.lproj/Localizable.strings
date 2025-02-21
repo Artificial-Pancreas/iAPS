@@ -1,5 +1,5 @@
 /* Generic loading text */
-"loading" = "Indlæsning";
+"loading" = "indlæser";
 
 /* Generic Continue text */
 "Continue" = "Fortsæt";
@@ -8,7 +8,7 @@
 "Dana-i/RS Setup" = "Opsætning af Dana-i/RS";
 
 /* Subtitle for DanaKitSetupView */
-"Select your pump" = "Vælg din pumpe";
+"Select your pump" = "Vælg pumpemodel";
 
 /* danaRS v1 option text for DanaKitSetupView */
 "DanaRS-v1" = "DanaRS-v1";
@@ -23,10 +23,10 @@
 "Setting up DanaRS v1" = "Opsætning af DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Under parringsprocessen vil din DanaRS v3 vise en parringsmeddelelse, mens din iPhone vil vise en meddelelse om en parringskode. Vælg OK på din pumpe, og skriv koden på din iPhone. Derefter er Loop klar til at kommunikere med din DanaRS v1.";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "DanaRS v3 vil under parringsprocessen vise en parringsprompt, mens iPhonen vil vise en prompt om en parringskode. Vælg OK på pumpen, og angiv koden på iPhonen. Loop vil herefter være klar til at kommunikere med DanaRS v1";
 
 /* check password text for danars v1 */
-"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Før du går i gang med parringsprocessen, anbefales det at kontrollere og om nødvendigt opdatere pumpens adgangskode. Det kan du gøre ved at gå til pumpeindstillingerne -> brugerindstillinger -> adgangskode. Standardadgangskoden er 1234, og hvis det er din adgangskode, bør du overveje at ændre den.";
+"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Før man går i gang med parringsprocessen, anbefales det at tjekke, og om nødvendigt opdatere, pumpens adgangskode. Det kan man gøre ved at gå til pumpeindstillinger -> brugerindstillinger -> adgangskode. Standardadgangskoden er 1234, og er det den adgangskode, man selv bruger, bør den skiftes";
 
 /* Title for danars v1 password */
 "Password DanaRS v1" = "Adgangskode DanaRS v1";
