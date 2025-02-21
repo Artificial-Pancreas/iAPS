@@ -170,25 +170,25 @@
 "The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Досягнуто максимального добового ліміту інсуліну. Спробуйте зменшити суму або збільште ліміт";
 
 /* dana AB limitation warning title */
-"Only Automatic Bolus is supported" = "Only Automatic Bolus is supported";
+"Only Automatic Bolus is supported" = "Підтримується лише Автоматичний Болюс";
 
 /* dana AB limitation warning body */
-"Please consider changing your dosing strategy in the setting menu" = "Please consider changing your dosing strategy in the setting menu";
+"Please consider changing your dosing strategy in the setting menu" = "Розгляньте можливість зміни стратегії дозування в меню налаштувань";
 
 /* Dana settings resume delivery */
 "Resume delivery" = "Відновити доставку";
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "Suspend delivery";
+"Suspend delivery" = "Призупинити подачу";
 
 /* Dana settings stop temp basal */
-"Stop temp basal" = "Stop temp basal";
+"Stop temp basal" = "Зупинити тимчасову базу";
 
 /* Text for confidence reminders navigation link */
 "Insulin Type" = "Тип Інсуліну";
 
 /* Title for insulin type */
-"Select insulin Type" = "Select insulin Type";
+"Select insulin Type" = "Виберіть тип інсуліну";
 
 /* Title of insulin delivery section */
 "Scheduled Basal" = "Запланований Базал";
@@ -209,31 +209,31 @@
 "Insulin Remaining" = "Залишок Інсуліну";
 
 /* Text for Dana pump name */
-"Pump name" = "Pump name";
+"Pump name" = "Назва Помпи";
 
 /* Text for hardware model */
-"Hardware model" = "Hardware model";
+"Hardware model" = "Модель обладнання";
 
 /* Text for firmware version */
-"Firmware version" = "Firmware version";
+"Firmware version" = "Версія прошивки";
 
 /* DanaKit sync pump */
-"Sync pump data" = "Sync pump data";
+"Sync pump data" = "Синхронізація даних Помпи";
 
 /* Text for last sync */
-"Last sync" = "Last sync";
+"Last sync" = "Остання синхронізація";
 
 /* Text for pump time */
-"Pump time" = "Pump time";
+"Pump time" = "Час Помпи";
 
 /* Text for pump time synced at */
-"Checked at" = "Checked at";
+"Checked at" = "Перевірено в";
 
 /* Text for Nightly pump time sync */
-"Nightly pump time sync" = "Nightly pump time sync";
+"Nightly pump time sync" = "Нічна синхронізація часу Помпи";
 
 /* Label for syncing the time on the pump */
-"Manually sync Pump time" = "Manually sync Pump time";
+"Manually sync Pump time" = "Ручна синхронізація часу Помпи";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
@@ -259,7 +259,7 @@
 "Temp Basal" = "Тимчасовий  Базал";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
-"Basal" = "Basal";
+"Basal" = "Базал";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
 "Resume" = "Відновити";
@@ -268,22 +268,22 @@
 "Suspend" = "Призупинити";
 
 /* Title for user options */
-"User options" = "User options";
+"User options" = "Опції користувача";
 
 /* DanaKit share logs */
-"Share Dana pump logs" = "Share Dana pump logs";
+"Share Dana pump logs" = "Поділіться журналом помпи Dana";
 
 /* Loading */
-"Loading" = "Loading";
+"Loading" = "Завантаження";
 
 /* Text for save button */
 "Save" = "Зберегти";
 
 /* Text for 24h display */
-"24h display" = "24h display";
+"24h display" = "24-годинний дисплей";
 
 /* Description for 24h display */
-"Should time be display in 12h or 24h" = "Should time be display in 12h or 24h";
+"Should time be display in 12h or 24h" = "Час має відображатися через 12 або 24 години";
 
 /* text on */
 "On" = "Увімкнути";
@@ -292,97 +292,97 @@
 "Off" = "Вимкнути";
 
 /* 12h */
-"12h notation" = "12h notation";
+"12h notation" = "12-годинна нотація";
 
 /* 24h */
-"24h notation" = "24h notation";
+"24h notation" = "12-годинна нотація";
 
 /* Text for Scroll function */
-"Scroll function" = "Scroll function";
+"Scroll function" = "Функція прокрутки";
 
 /* text for second */
-"sec" = "sec";
+"sec" = "секунд";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Backlight on time";
+"Backlight on time" = "Час увімкнення Підсвічування ";
 
 /* lcdOnTimeInSec */
-"Lcd on time" = "Lcd on time";
+"Lcd on time" = "Час увімкнення РК-дисплея";
 
 /* beepAndAlarm */
-"Alarm beeps" = "Alarm beeps";
+"Alarm beeps" = "Звукові сигнали";
 
 /* beepAndAlarm.sound */
-"Sound" = "Sound";
+"Sound" = "Звук";
 
 /* beepAndAlarm.vibration */
-"Vibration" = "Vibration";
+"Vibration" = "Вібрація";
 
 /* beepAndAlarm.both */
-"Both" = "Both";
+"Both" = "Обидва";
 
 /* Alert title for batteryZeroPercent */
-"Pump battery 0%" = "Pump battery 0%";
+"Pump battery 0%" = "Акумулятор Помпи 0%";
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Pump battery is empty. Replace it now!";
+"Pump battery is empty. Replace it now!" = "Батарея Помпи розряджена. Замініть його зараз!";
 
 /* Alert title for pumpError */
-"Pump error" = "Pump error";
+"Pump error" = "Помилка Помпи";
 
 /* Alert body for pumpError */
-"Check the pump and try again" = "Check the pump and try again";
+"Check the pump and try again" = "Перевірте Помпу та повторіть спробу";
 
 /* Alert title for occlusion */
-"Occlusion" = "Occlusion";
+"Occlusion" = "Закупорка";
 
 /* Alert body for occlusion */
-"Check the reservoir and infus and try again" = "Check the reservoir and infus and try again";
+"Check the reservoir and infus and try again" = "Перевірте Резервуар і інфузійний набір та повторіть спробу";
 
 /* Alert title for lowBattery */
-"Low pump battery" = "Low pump battery";
+"Low pump battery" = "Розряджений акумулятор Помпи";
 
 /* Alert body for lowBattery */
-"Pump battery needs to be replaced soon" = "Pump battery needs to be replaced soon";
+"Pump battery needs to be replaced soon" = "Необхідно найближчим часом замінити акумулятор Помпи";
 
 /* Alert title for shutdown */
-"Pump shutdown" = "Pump shutdown";
+"Pump shutdown" = "Відключення Помпи";
 
 /* Alert body for shutdown */
-"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump";
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Занадто довго не було жодної взаємодії з Помпою. Або вимкніть цю функцію в помпі, або взаємодійте з помпою";
 
 /* Alert title for basalCompare */
-"Basal Compare" = "Basal Compare";
+"Basal Compare" = "Базальне порівняння";
 
 /* Alert title for bloodSugarMeasure */
-"Blood glucose Measure" = "Blood glucose Measure";
+"Blood glucose Measure" = "Вимірювання Рівня Глюкози в Крові";
 
 /* Alert title for remainingInsulinLevel */
-"Remaining insulin level" = "Remaining insulin level";
+"Remaining insulin level" = "Залишковий рівень інсуліну";
 
 /* Alert title for emptyReservoir */
 "Empty reservoir" = "Порожній резервуар";
 
 /* Alert body for emptyReservoir */
-"Reservoir is empty. Replace it now!" = "Reservoir is empty. Replace it now!";
+"Reservoir is empty. Replace it now!" = "Резервуар порожній. Замініть його зараз!";
 
 /* Alert title for emptyReservoir */
-"Check chaft" = "Check chaft";
+"Check chaft" = "Перевірте вал";
 
 /* Alert body for checkShaft */
-"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again";
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "Помпа виявивла проблему з валом. Вийміть резервуар, перевірте все та повторіть спробу";
 
 /* Alert title for basalMax */
-"Basal limit reached" = "Basal limit reached";
+"Basal limit reached" = "Базальний ліміт досягнуто";
 
 /* Alert body for basalMax */
-"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit";
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Ваш добовий базальний ліміт досягнуто. Щоб збільшити ліміт, зверніться до свого дистриб’ютора Dana";
 
 /* Alert title for dailyMax */
-"Daily limit reached" = "Daily limit reached";
+"Daily limit reached" = "Денний ліміт досягнуто";
 
 /* Alert body for basalMax */
-"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit";
+"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Ваш добовий ліміт інсуліну досягнуто. Щоб збільшити ліміт, зверніться до свого дистриб’ютора Dana";
 
 /* Alert title for bloodSugarCheckMiss */
 "Missed Blood glucose check" = "Пропущена перевірка рівня глюкози в крові";
@@ -574,10 +574,10 @@
 "Failed to set reservoir amount. Re-sync pump data and try again please" = "Не вдалося встановити обсяг Резервуара. Повторно синхронізуйте дані насоса та повторіть спробу";
 
 /* Label for error third step refill */
-"Failed to prime the cannula. Please try again later" = "Failed to prime the cannula. Please try again later";
+"Failed to prime the cannula. Please try again later" = "Не вдалося заповнити Канюлю. Спробуйте пізніше";
 
 /* Label for error second step refill */
-"Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
+"Failed to prime the tube. Please try again later" = "Не вдалося заправити трубку. Спробуйте пізніше";
 
 /* Battery age */
-"Battery age" = "Battery age";
+"Battery age" = "Час використовування батареї";
