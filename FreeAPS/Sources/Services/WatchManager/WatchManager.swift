@@ -459,16 +459,16 @@ extension BaseWatchManager: WCSessionDelegate {
                     fat: Decimal(fat),
                     protein: Decimal(protein), note: nil,
                     enteredBy: CarbsEntry.manual,
-                    isFPU: false, fpuID: nil
+                    isFPU: false
                 )]
             )
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {
-                apsManager.determineBasalSync()
+                apsManager.determineBasalSync(bolus: nil)
                 replyHandler(["confirmation": true])
                 return
             } else {
-                apsManager.determineBasal()
+                apsManager.determineBasal(bolus: nil)
                     .sink { _ in
                         replyHandler(["confirmation": true])
                     }

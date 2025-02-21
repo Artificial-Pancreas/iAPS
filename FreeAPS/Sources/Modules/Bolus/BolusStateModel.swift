@@ -1,3 +1,4 @@
+import Foundation
 import LoopKit
 import SwiftUI
 import Swinject
@@ -12,6 +13,7 @@ extension Bolus {
         @Injected() var settings: SettingsManager!
         @Injected() var nsManager: NightscoutManager!
         @Injected() var announcementStorage: AnnouncementsStorage!
+        @Injected() var carbsStorage: CarbsStorage!
 
         @Published var suggestion: Suggestion?
         @Published var predictions: Predictions?
@@ -34,6 +36,7 @@ extension Bolus {
         @Published var carbRatio: Decimal = 0
 
         var waitForSuggestionInitial: Bool = false
+        @Published var waitForCarbs: Bool = false
 
         // added for bolus calculator
         @Published var recentGlucose: BloodGlucose?
@@ -69,8 +72,11 @@ extension Bolus {
         @Published var closedLoop: Bool = false
         @Published var loopDate: Date = .distantFuture
         @Published var now = Date.now
+        @Published var bolus: Decimal = 0
+        @Published var carbToStore = [CarbsEntry]()
 
         let loopReminder: CGFloat = 4
+        let coreDataStorage = CoreDataStorage()
 
         private var loopFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -98,17 +104,21 @@ extension Bolus {
             loopDate = apsManager.lastLoopDate
 
             if waitForSuggestionInitial {
-                apsManager.determineBasal()
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] ok in
-                        guard let self = self else { return }
-                        if !ok {
-                            self.waitForSuggestion = false
-                            self.insulinRequired = 0
-                            self.insulinRecommended = 0
-                        }
-                    }.store(in: &lifetime)
-                loopDate = apsManager.lastLoopDate
+                if waitForCarbs {
+                    setupBolusData()
+                } else {
+                    apsManager.determineBasal(bolus: bolus)
+                        .receive(on: DispatchQueue.main)
+                        .sink { [weak self] ok in
+                            guard let self = self else { return }
+                            if !ok {
+                                self.waitForSuggestion = false
+                                self.insulinRequired = 0
+                                self.insulinRecommended = 0
+                            }
+                        }.store(in: &lifetime)
+                    loopDate = apsManager.lastLoopDate
+                }
             }
             if let notNilSugguestion = provider.suggestion {
                 suggestion = notNilSugguestion
@@ -193,6 +203,7 @@ extension Bolus {
         func add() {
             guard amount > 0 else {
                 showModal(for: nil)
+                save()
                 return
             }
 
@@ -201,10 +212,20 @@ extension Bolus {
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: { [weak self] _ in
                     guard let self = self else { return }
+                    self.save()
                     self.apsManager.enactBolus(amount: maxAmount, isSMB: false)
                     self.showModal(for: nil)
                 }
                 .store(in: &lifetime)
+        }
+
+        func save() {
+            guard !empty else {
+                print("No Meal to save")
+                return
+            }
+            carbsStorage.storeCarbs(carbToStore)
+            print("Meal saved; carbs: \(carbToStore.first?.carbs ?? 0)")
         }
 
         func setupInsulinRequired() {
@@ -246,27 +267,11 @@ extension Bolus {
             showModal(for: .addCarbs(editMode: editMode, override: override))
         }
 
-        func delete(deleteTwice: Bool, meal: FetchedResults<Meals>) {
+        func delete(deleteTwice _: Bool, meal: FetchedResults<Meals>) {
             guard let meals = meal.first else {
                 return
             }
-
-            let mealArray = DataTable.Treatment(
-                units: units,
-                type: .carbs,
-                date: (deleteTwice ? (meals.createdAt ?? Date()) : meals.actualDate) ?? Date(),
-                creationDate: meals.createdAt ?? Date.now,
-                id: meals.id ?? "",
-                isFPU: deleteTwice ? true : false,
-                fpuID: deleteTwice ? (meals.fpuID ?? "") : ""
-            )
-
-            if deleteTwice {
-                nsManager.deleteNormalCarbs(mealArray)
-                nsManager.deleteFPUs(mealArray)
-            } else {
-                nsManager.deleteNormalCarbs(mealArray)
-            }
+            carbsStorage.deleteCarbsAndFPUs(at: meals.createdAt ?? .distantPast)
         }
 
         func carbsView(fetch: Bool, hasFatOrProtein: Bool, mealSummary: FetchedResults<Meals>) -> Bool {
@@ -348,6 +353,40 @@ extension Bolus {
         private func roundBolus(_ amount: Decimal) -> Decimal {
             // Account for increments (don't use the APSManager function as that gets too slow)
             Decimal(round(Double(amount / bolusIncrement))) * bolusIncrement
+        }
+
+        func setupBolusData() {
+            if let recent = coreDataStorage.recentMeal() {
+                carbToStore = [CarbsEntry(
+                    id: recent.id,
+                    createdAt: recent.createdAt ?? Date.now,
+                    actualDate: recent.actualDate,
+                    carbs: Decimal(recent.carbs),
+                    fat: Decimal(recent.fat),
+                    protein: Decimal(recent.protein),
+                    note: recent.note,
+                    enteredBy: CarbsEntry.manual,
+                    isFPU: false
+                )]
+                bolus = Decimal(recent.carbs)
+
+                apsManager.determineBasal(bolus: bolus)
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] ok in
+                        guard let self = self else { return }
+                        if !ok {
+                            self.waitForSuggestion = false
+                            self.waitForCarbs = false
+                            self.insulinRequired = 0
+                            self.insulinRecommended = 0
+                        }
+                    }.store(in: &lifetime)
+                loopDate = apsManager.lastLoopDate
+            }
+        }
+
+        private var empty: Bool {
+            (carbToStore.first?.carbs ?? 0) == 0 && (carbToStore.first?.fat ?? 0) == 0 && (carbToStore.first?.protein ?? 0) == 0
         }
     }
 }

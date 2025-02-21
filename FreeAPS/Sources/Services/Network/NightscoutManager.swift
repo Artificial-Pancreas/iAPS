@@ -10,8 +10,6 @@ protocol NightscoutManager: GlucoseSource {
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(_ date: Date)
-    func deleteNormalCarbs(_ treatement: DataTable.Treatment)
-    func deleteFPUs(_ treatement: DataTable.Treatment)
     func deleteInsulin(at date: Date)
     func deleteManualGlucose(at: Date)
     func uploadStatus()
@@ -263,60 +261,6 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     info(
                         .nightscout,
                         "Deletion of Announcements not possible \(error.localizedDescription)",
-                        type: MessageType.warning
-                    )
-                }
-            } receiveValue: { _ in }
-            .store(in: &lifetime)
-    }
-
-    func deleteNormalCarbs(_ treatement: DataTable.Treatment) {
-        guard let nightscout = nightscoutAPI, isUploadEnabled else {
-            carbsStorage.deleteCarbs(at: treatement.id, fpuID: "", complex: false)
-            return
-        }
-
-        carbsStorage.deleteCarbs(at: treatement.id, fpuID: "", complex: false)
-
-        healthkitManager.deleteCarbs(date: treatement.creationDate)
-
-        nightscout.deleteCarbs(treatement.creationDate)
-            .collect()
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    debug(.nightscout, "Carbs with Date \(treatement) deleted from NS.")
-                case let .failure(error):
-                    info(
-                        .nightscout,
-                        "Deletion of carbs in NightScout not done \n \(error.localizedDescription)",
-                        type: MessageType.warning
-                    )
-                }
-            } receiveValue: { _ in }
-            .store(in: &lifetime)
-    }
-
-    func deleteFPUs(_ treatement: DataTable.Treatment) {
-        guard let nightscout = nightscoutAPI, isUploadEnabled else {
-            carbsStorage.deleteCarbs(at: "", fpuID: treatement.fpuID ?? "", complex: false)
-            return
-        }
-
-        healthkitManager.deleteCarbs(date: treatement.creationDate)
-
-        carbsStorage.deleteCarbs(at: "", fpuID: treatement.fpuID ?? "", complex: false)
-
-        nightscout.deleteCarbs(treatement.creationDate)
-            .collect()
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    debug(.nightscout, "Carb equivalents deleted from NS")
-                case let .failure(error):
-                    info(
-                        .nightscout,
-                        "Deletion of carb equivalents in NightScout not done \n \(error.localizedDescription)",
                         type: MessageType.warning
                     )
                 }
@@ -1150,7 +1094,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     private func uploadTreatments(_ treatments: [NigtscoutTreatment], fileToSave: String) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else { return }
 
-        checkForNoneUploadedOverides() // To do : Move somewhere else
+        checkForNoneUploadedOverides()
 
         guard !treatments.isEmpty else { return }
 

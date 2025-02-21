@@ -59,14 +59,14 @@ extension AddCarbs {
                 protein: protein,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false, fpuID: UUID().uuidString
+                isFPU: false
             )]
-            carbsStorage.storeCarbs(carbsToStore)
 
             if hypoTreatment { hypo() }
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
-                apsManager.determineBasalSync()
+                carbsStorage.storeCarbs(carbsToStore)
+                apsManager.determineBasalSync(bolus: nil)
                 showModal(for: nil)
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore)
@@ -200,21 +200,7 @@ extension AddCarbs {
         }
 
         func saveToCoreData(_ stored: [CarbsEntry]) {
-            coredataContext.performAndWait {
-                let save = Meals(context: coredataContext)
-                if let entry = stored.first {
-                    save.createdAt = now
-                    save.actualDate = entry.actualDate ?? Date.now
-                    save.id = entry.id ?? ""
-                    save.fpuID = entry.fpuID ?? ""
-                    save.carbs = Double(entry.carbs)
-                    save.fat = Double(entry.fat ?? 0)
-                    save.protein = Double(entry.protein ?? 0)
-                    save.note = entry.note
-                    try? coredataContext.save()
-                }
-                print("meals 1: ID: " + (save.id ?? "").description + " FPU ID: " + (save.fpuID ?? "").description)
-            }
+            CoreDataStorage().saveMeal(stored, now: now)
         }
 
         private func hypo() {

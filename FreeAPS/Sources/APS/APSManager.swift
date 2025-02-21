@@ -24,8 +24,8 @@ protocol APSManager {
     var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
-    func determineBasal() -> AnyPublisher<Bool, Never>
-    func determineBasalSync()
+    func determineBasal(bolus: Decimal?) -> AnyPublisher<Bool, Never>
+    func determineBasalSync(bolus: Decimal?)
     func roundBolus(amount: Decimal) -> Decimal
     var lastError: CurrentValueSubject<Error?, Never> { get }
     func cancelBolus()
@@ -151,7 +151,7 @@ final class BaseAPSManager: APSManager, Injectable {
         deviceDataManager.recommendsLoop
             .receive(on: processQueue)
             .sink { [weak self] in
-                self?.loop()
+                self?.loop(bolus: nil)
             }
             .store(in: &lifetime)
         pumpManager?.addStatusObserver(self, queue: processQueue)
@@ -184,7 +184,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 } else {
                     if self.isManualTempBasal {
                         self.isManualTempBasal = false
-                        self.loop()
+                        self.loop(bolus: nil)
                     }
                 }
             }
@@ -196,7 +196,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     // Loop entry point
-    private func loop() {
+    private func loop(bolus: Decimal?) {
         // check the last start of looping is more the loopInterval but the previous loop was completed
         if lastLoopDate > lastStartLoopDate {
             guard lastStartLoopDate.addingTimeInterval(Config.loopInterval) < Date() else {
@@ -243,7 +243,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         isLooping.send(true)
-        determineBasal()
+        determineBasal(bolus: bolus)
             .replaceEmpty(with: false)
             .flatMap { [weak self] success -> AnyPublisher<Void, Error> in
                 guard let self = self, success else {
@@ -346,7 +346,7 @@ final class BaseAPSManager: APSManager, Injectable {
         return Just(false).eraseToAnyPublisher()
     }
 
-    func determineBasal() -> AnyPublisher<Bool, Never> {
+    func determineBasal(bolus: Decimal?) -> AnyPublisher<Bool, Never> {
         let start = Date.now
         debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.isNotEmpty else {
@@ -401,11 +401,12 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .flatMap { _ in
                 let startTime = Date.now
-                return self.openAPS.determineBasal(currentTemp: temp, clock: now).handleEvents(receiveCompletion: { _ in
-                    print(
-                        "APSManager: Time for determineBasal \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
-                })
+                return self.openAPS.determineBasal(currentTemp: temp, clock: now, bolus: bolus)
+                    .handleEvents(receiveCompletion: { _ in
+                        print(
+                            "APSManager: Time for determineBasal \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
+                    })
             }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
@@ -435,8 +436,8 @@ final class BaseAPSManager: APSManager, Injectable {
         return mainPublisher
     }
 
-    func determineBasalSync() {
-        determineBasal().cancellable().store(in: &lifetime)
+    func determineBasalSync(bolus: Decimal?) {
+        determineBasal(bolus: bolus).cancellable().store(in: &lifetime)
     }
 
     func makeProfiles() -> AnyPublisher<Bool, Never> {
@@ -495,7 +496,7 @@ final class BaseAPSManager: APSManager, Injectable {
             } else {
                 debug(.apsManager, "Bolus succeeded")
                 if !isSMB {
-                    self.determineBasal().sink { _ in }.store(in: &self.lifetime)
+                    self.determineBasal(bolus: nil).sink { _ in }.store(in: &self.lifetime)
                 }
                 self.bolusProgress.send(0)
                 self.bolusAmount.send(Decimal(amount))
@@ -711,8 +712,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 protein: protein,
                 note: "Remote",
                 enteredBy: "Nightscout operator",
-                isFPU: fat > 0 || protein > 0,
-                fpuID: (fat > 0 || protein > 0) ? UUID().uuidString : nil
+                isFPU: false
             )])
 
             announcementsStorage.storeAnnouncements([announcement], enacted: true)

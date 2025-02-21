@@ -333,7 +333,7 @@ struct MainChartView: View {
                 ZStack {
                     xGridView(fullSize: fullSize)
                     carbsView(fullSize: fullSize)
-                    fpuView(fullSize: fullSize)
+                    if data.fpus { fpuView(fullSize: fullSize) }
                     bolusView(fullSize: fullSize)
                     if data.smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     else { connectingGlucoseLinesView(fullSize: fullSize) }

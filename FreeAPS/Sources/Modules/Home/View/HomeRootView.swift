@@ -579,18 +579,17 @@ extension Home {
 
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
-                HStack {
+                HStack(spacing: 20) {
                     VStack {
                         HStack {
                             Text("Bolusing")
-                                .foregroundColor(.primary).font(.bolusProgressFont)
                             let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
 
                             Text(
                                 bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
                                     .formatted() + NSLocalizedString(" U", comment: "")
-                            ).font(.bolusProgressBarFont)
-                        }
+                            )
+                        }.font(.bolusProgressBarFont).foregroundStyle(.white)
                         ProgressView(value: Double(progress))
                             .progressViewStyle(BolusProgressViewStyle())
                     }
@@ -599,9 +598,8 @@ extension Home {
                         .foregroundStyle(.white, .blue)
                         .font(.bolusProgressStopFont)
                         .onTapGesture { state.cancelBolus() }
-                        .offset(x: 10, y: 0)
                 }
-            }
+            }.dynamicTypeSize(...DynamicTypeSize.large)
         }
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
@@ -804,7 +802,7 @@ extension Home {
                         if let progress = state.bolusProgress, let amount = state.bolusAmount {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(.gray.opacity(0.8))
+                                    .fill(.blue.opacity(0.75))
                                     .frame(width: 320, height: 60)
                                 bolusProgressView(progress: progress, amount: amount)
                             }

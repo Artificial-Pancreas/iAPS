@@ -59,7 +59,6 @@ extension DataTable {
                                 creationDate: $0.createdAt,
                                 amount: $0.carbs,
                                 id: id,
-                                fpuID: $0.fpuID,
                                 note: $0.note
                             )
                         } else {
@@ -72,22 +71,6 @@ extension DataTable {
                                 note: $0.note
                             )
                         }
-                    }
-
-                let fpus = self.provider.fpus()
-                    .filter { $0.isFPU ?? false }
-                    .map {
-                        Treatment(
-                            units: units,
-                            type: .fpus,
-                            date: $0.actualDate ?? $0.createdAt,
-                            creationDate: $0.createdAt,
-                            amount: $0.carbs,
-                            id: $0.id,
-                            isFPU: $0.isFPU,
-                            fpuID: $0.fpuID,
-                            note: $0.note
-                        )
                     }
 
                 let boluses = self.provider.pumpHistory()
@@ -149,7 +132,7 @@ extension DataTable {
                     }
 
                 DispatchQueue.main.async {
-                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume, fpus]
+                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
                         .flatMap { $0 }
                         .sorted { $0.date > $1.date }
                 }
@@ -251,51 +234,25 @@ extension DataTable {
         func updateCarbs(treatment: Treatment?, computed: Carbohydrates?) {
             guard let oldCarbs = treatment else { return }
 
-            if oldCarbs.type != .fpus {
-                let now = Date.now
-                let newCarbs = CarbsEntry(
-                    id: UUID().uuidString,
-                    createdAt: now,
-                    actualDate: oldCarbs.date,
-                    carbs: meal.carbs,
-                    fat: meal.fat,
-                    protein: meal.protein,
-                    note: oldCarbs.note,
-                    enteredBy: CarbsEntry.manual,
-                    isFPU: false,
-                    fpuID: nil
-                )
+            let now = Date.now
+            let newCarbs = CarbsEntry(
+                id: UUID().uuidString,
+                createdAt: now,
+                actualDate: oldCarbs.date,
+                carbs: meal.carbs,
+                fat: meal.fat,
+                protein: meal.protein,
+                note: oldCarbs.note,
+                enteredBy: CarbsEntry.manual,
+                isFPU: false
+            )
 
-                carbStorage.deleteCarbsAndFPUs(at: oldCarbs.creationDate)
-                if let deleteOld = computed {
-                    OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
-                }
-                carbStorage.storeCarbs([newCarbs])
-                debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
-
-            } else {
-                let newCarbs =
-                    CarbsEntry(
-                        id: UUID().uuidString,
-                        createdAt: Date.now,
-                        actualDate: oldCarbs.date,
-                        carbs: 0,
-                        fat: meal.fat,
-                        protein: meal.protein,
-                        note: oldCarbs.note,
-                        enteredBy: CarbsEntry.manual,
-                        isFPU: false,
-                        fpuID: nil
-                    )
-
-                carbStorage.deleteFPUs(at: oldCarbs.creationDate)
-                if let deleteOld = computed {
-                    OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
-                }
-                debug(.apsManager, "Carbs deleted: \(oldCarbs.amountText)")
-                carbStorage.storeCarbs([newCarbs])
-                debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
+            carbStorage.deleteCarbsAndFPUs(at: oldCarbs.creationDate)
+            if let deleteOld = computed {
+                OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
             }
+            carbStorage.storeCarbs([newCarbs])
+            debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
         }
 
         func updateVariables(mealItem: Treatment, complex: Carbohydrates?) {

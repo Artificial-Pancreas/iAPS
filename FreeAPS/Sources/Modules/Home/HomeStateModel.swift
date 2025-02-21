@@ -110,7 +110,8 @@ extension Home {
             useInsulinBars: true,
             screenHours: 6,
             target: [],
-            targetLines: false
+            targetLines: false,
+            fpus: false
         )
 
         override func subscribe() {
@@ -159,6 +160,7 @@ extension Home {
             data.minimumSMB = settingsManager.settings.minimumSMB
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
+            data.fpus = settingsManager.settings.fpus
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             extended = settingsManager.settings.extendHomeView
@@ -649,6 +651,7 @@ extension Home.StateModel:
         data.minimumSMB = settingsManager.settings.minimumSMB
         data.maxBolus = settingsManager.pumpSettings.maxBolus
         data.useInsulinBars = settingsManager.settings.useInsulinBars
+        data.fpus = settingsManager.settings.fpus
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
         extended = settingsManager.settings.extendHomeView

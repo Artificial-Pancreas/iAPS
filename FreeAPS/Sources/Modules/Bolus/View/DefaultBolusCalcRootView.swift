@@ -171,6 +171,7 @@ extension Bolus {
                     Section {
                         Button {
                             keepForNextWiew = true
+                            state.save()
                             state.showModal(for: nil)
                         }
                         label: {
@@ -195,19 +196,11 @@ extension Bolus {
             .onAppear {
                 configureView {
                     state.viewActive()
+                    state.waitForCarbs = fetch
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
                 }
             }
-
-            .onDisappear {
-                if fetch, hasFatOrProtein, !keepForNextWiew, state.eventualBG {
-                    state.delete(deleteTwice: true, meal: meal)
-                } else if fetch, !keepForNextWiew, state.eventualBG {
-                    state.delete(deleteTwice: false, meal: meal)
-                }
-            }
-
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(

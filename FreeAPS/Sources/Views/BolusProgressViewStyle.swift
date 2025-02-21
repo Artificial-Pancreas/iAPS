@@ -7,7 +7,7 @@ public struct BolusProgressViewStyle: ProgressViewStyle {
         @State var progress = CGFloat(configuration.fractionCompleted ?? 0)
         ZStack {
             VStack {
-                ProgressView(value: progress)
+                ProgressView(value: progress).tint(.white)
             }
         }.frame(width: 160)
     }

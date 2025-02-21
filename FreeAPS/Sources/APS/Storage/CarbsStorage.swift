@@ -12,9 +12,6 @@ protocol CarbsStorage {
     func syncDate() -> Date
     func recent() -> [CarbsEntry]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
-    func deleteCarbs(at uniqueID: String, fpuID: String, complex: Bool)
-    func multiple(id: String) -> [CarbsEntry]
-    func editMultiple(carbs: [CarbsEntry])
     func complexMeal(date: Date) -> [CarbsEntry]?
     func deleteCarbsAndFPUs(at date: Date)
     func deleteFPUs(at date: Date)
@@ -78,7 +75,6 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 // New date for each carb equivalent
                 var useDate = entries.last?.actualDate ?? Date()
                 // Group and Identify all FPUs together
-                let fpuID = entries.last?.fpuID ?? ""
                 // Create an array of all future carb equivalents.
                 var futureCarbArray = [CarbsEntry]()
                 while carbEquivalents > 0, numberOfEquivalents > 0 {
@@ -90,8 +86,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     let eachCarbEntry = CarbsEntry(
                         id: UUID().uuidString, createdAt: creationDate, actualDate: useDate,
                         carbs: equivalent, fat: 0, protein: 0, note: nil,
-                        enteredBy: CarbsEntry.manual, isFPU: true,
-                        fpuID: fpuID
+                        enteredBy: CarbsEntry.manual, isFPU: true
                     )
                     futureCarbArray.append(eachCarbEntry)
                     numberOfEquivalents -= 1
@@ -108,19 +103,18 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 }
             } // ------------------------- END OF FPU ----------------------------------------
             // Store the actual (normal) carbs
-            if let entry = entries.last, entry.carbs > 0 {
+            if let entry = entries.last {
                 // uniqEvents = []
                 let onlyCarbs = CarbsEntry(
                     id: entry.id ?? "",
                     createdAt: creationDate,
                     actualDate: entry.actualDate ?? entry.createdAt,
                     carbs: entry.carbs,
-                    fat: nil,
-                    protein: nil,
+                    fat: fat,
+                    protein: protein,
                     note: entry.note ?? "",
                     enteredBy: entry.enteredBy ?? "",
-                    isFPU: false,
-                    fpuID: ""
+                    isFPU: false
                 )
 
                 // If fetched en masse from NS
@@ -172,66 +166,12 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
 
-    func multiple(id: String) -> [CarbsEntry] {
-        storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?
-            .filter({ $0.fpuID == id && ($0.isFPU ?? false) }) ?? []
-    }
-
     func complexMeal(date: Date) -> [CarbsEntry]? {
         processQueue.sync {
             let data = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?
                 .filter({ $0.createdAt == date }) ?? []
             guard data.count > 1 else { return nil }
             return data
-        }
-    }
-
-    func editMultiple(carbs: [CarbsEntry]) {
-        processQueue.sync {
-            let file = OpenAPS.Monitor.carbHistory
-            var uniqEvents: [CarbsEntry] = []
-
-            storage.transaction { storage in
-                storage.append(carbs, to: file, uniqBy: \.id)
-                uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
-                    .filter { $0.createdAt.addingTimeInterval(1.days.timeInterval) > Date() }
-                    .sorted { $0.createdAt > $1.createdAt } ?? []
-                storage.save(Array(uniqEvents), as: file)
-            }
-
-            broadcaster.notify(CarbsObserver.self, on: processQueue) {
-                $0.carbsDidUpdate(uniqEvents)
-            }
-        }
-    }
-
-    func deleteCarbs(at uniqueID: String, fpuID: String, complex: Bool) {
-        processQueue.sync {
-            var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
-
-            if fpuID.count > 3 {
-                if allValues.firstIndex(where: { $0.fpuID == fpuID }) == nil {
-                    debug(.default, "Didn't find any carb equivalents to delete. ID to search for: " + fpuID.description)
-                } else {
-                    allValues.removeAll(where: { $0.fpuID == fpuID })
-                    storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
-                    broadcaster.notify(CarbsObserver.self, on: processQueue) {
-                        $0.carbsDidUpdate(allValues)
-                    }
-                }
-            }
-
-            if fpuID.count < 3 || complex {
-                if allValues.firstIndex(where: { $0.id == uniqueID }) == nil {
-                    debug(.default, "Didn't find any carb entries to delete. ID to search for: " + uniqueID.description)
-                } else {
-                    allValues.removeAll(where: { $0.id == uniqueID })
-                    storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
-                    broadcaster.notify(CarbsObserver.self, on: processQueue) {
-                        $0.carbsDidUpdate(allValues)
-                    }
-                }
-            }
         }
     }
 
@@ -260,7 +200,8 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment] {
         let uploaded = storage.retrieve(OpenAPS.Nightscout.uploadedCarbs, as: [NigtscoutTreatment].self) ?? []
 
-        let eventsManual = recent().filter { $0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote }
+        let eventsManual = recent()
+            .filter { ($0.enteredBy == CarbsEntry.manual || $0.enteredBy == CarbsEntry.remote) && $0.carbs > 0 }
         let treatments = eventsManual.map {
             NigtscoutTreatment(
                 duration: nil,
@@ -280,8 +221,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                 foodType: $0.note,
                 targetTop: nil,
                 targetBottom: nil,
-                id: $0.id,
-                fpuID: $0.fpuID
+                id: $0.id
             )
         }
         return Array(Set(treatments).subtracting(Set(uploaded)))
