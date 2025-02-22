@@ -8,15 +8,14 @@ function generate(pumphistory_data, profile_data, clock_data, glucose_data, basa
     var carb_data = {};
     if (carbhistory) {
         carb_data = carbhistory;
-        // Add eventual Temporary data
+        // Eventual Temporary data used only in bolus View
         if (bolus_data && bolus_data.carbs > 0) {
-            console.log("Carb elements: " + carb_data.unshift(bolus_data));
-            console.log("Carbs Date: " + bolus_data.created_at);
-            console.log("Carbs amount: " + bolus_data.carbs);
+            console.log("Carb entries: " + carb_data.unshift(bolus_data));
         }
         /* A tempory fix to make all iAPS carb equivalents compatible with the Oref0 meal module. */
         carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
-        carb_data = carb_data.filter((carb) => carb.carbs > 1);
+        carb_data.forEach( carb => console.log("Carb entry " + carb.created_at + ", carbs: " + carb.carbs + ", entered by: " + carb.enteredBy ));
+        carb_data = carb_data.filter((carb) => carb.carbs >= 1);
     }
     
     

@@ -7,6 +7,7 @@ extension DataTable {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() private var storage: FileStorage!
         @Injected() var carbStorage: CarbsStorage!
+        @Injected() var aps: APSManager!
         @Injected() private var nightscout: NightscoutManager!
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
 
@@ -153,6 +154,10 @@ extension DataTable {
 
         func deleteCarbs(_ date: Date) {
             provider.deleteCarbs(date)
+
+            if date.timeIntervalSinceNow > -2.hours.timeInterval {
+                aps.determineBasalSync()
+            }
         }
 
         func deleteInsulin(_ treatment: Treatment) {
@@ -232,27 +237,30 @@ extension DataTable {
 
         /// Update Carbs or Carb equivalents in storage, data table and Nightscout and Healthkit (where applicable)
         func updateCarbs(treatment: Treatment?, computed: Carbohydrates?) {
-            guard let oldCarbs = treatment else { return }
+            guard let old = treatment else { return }
 
             let now = Date.now
             let newCarbs = CarbsEntry(
                 id: UUID().uuidString,
                 createdAt: now,
-                actualDate: oldCarbs.date,
+                actualDate: old.date,
                 carbs: meal.carbs,
                 fat: meal.fat,
                 protein: meal.protein,
-                note: oldCarbs.note,
+                note: old.note,
                 enteredBy: CarbsEntry.manual,
                 isFPU: false
             )
 
-            carbStorage.deleteCarbsAndFPUs(at: oldCarbs.creationDate)
+            carbStorage.deleteCarbsAndFPUs(at: old.creationDate)
             if let deleteOld = computed {
                 OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
             }
             carbStorage.storeCarbs([newCarbs])
-            debug(.apsManager, "Carbs updated: \(oldCarbs.amountText) -> \(meal.carbs) g")
+            debug(.apsManager, "Carbs updated: \(old.amountText) -> \(meal.carbs) g")
+            if newCarbs.carbs != oldCarbs, (newCarbs.actualDate ?? .distantPast).timeIntervalSinceNow > -3.hours.timeInterval {
+                aps.determineBasalSync()
+            }
         }
 
         func updateVariables(mealItem: Treatment, complex: Carbohydrates?) {
@@ -261,11 +269,8 @@ extension DataTable {
                 .replacingOccurrences(of: ",", with: ".")
             meal.carbs = Decimal(string: string) ?? 0
             oldCarbs = meal.carbs
-
-            if let fullMeal = complex {
-                meal.fat = (fullMeal.fat ?? 0) as Decimal
-                meal.protein = (fullMeal.protein ?? 0) as Decimal
-            }
+            meal.fat = (complex?.fat ?? 0) as Decimal
+            meal.protein = (complex?.protein ?? 0) as Decimal
         }
     }
 }

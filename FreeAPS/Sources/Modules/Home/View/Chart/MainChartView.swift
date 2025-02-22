@@ -602,7 +602,7 @@ struct MainChartView: View {
             fpuPath
                 .fill(.secondary.opacity(0.4))
             fpuPath
-                .stroke(Color.primary, lineWidth: 0.2)
+                .stroke(Color.loopYellow, lineWidth: 0.4)
         }
         .onChange(of: data.carbs) {
             calculateFPUsDots(fullSize: fullSize)

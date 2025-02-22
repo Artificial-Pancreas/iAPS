@@ -86,13 +86,11 @@ extension Bolus {
         }
 
         override func subscribe() {
-            setupInsulinRequired()
             broadcaster.register(SuggestionObserver.self, observer: self)
             units = settingsManager.settings.units
             minimumPrediction = settingsManager.settings.minumimPrediction
             threshold = settingsManager.preferences.threshold_setting
             maxBolus = provider.pumpSettings().maxBolus
-            // added
             fraction = settings.settings.overrideFactor
             useCalc = settings.settings.useCalc
             fattyMeals = settings.settings.fattyMeals
@@ -107,7 +105,7 @@ extension Bolus {
                 if waitForCarbs {
                     setupBolusData()
                 } else {
-                    apsManager.determineBasal(bolus: bolus)
+                    apsManager.determineBasal()
                         .receive(on: DispatchQueue.main)
                         .sink { [weak self] ok in
                             guard let self = self else { return }
@@ -116,16 +114,20 @@ extension Bolus {
                                 self.insulinRequired = 0
                                 self.insulinRecommended = 0
                             }
+
+                            if let notNilSugguestion = provider.suggestion {
+                                suggestion = notNilSugguestion
+                                if let notNilPredictions = suggestion?.predictions {
+                                    predictions = notNilPredictions
+                                }
+                            }
+
                         }.store(in: &lifetime)
                     loopDate = apsManager.lastLoopDate
                 }
             }
-            if let notNilSugguestion = provider.suggestion {
-                suggestion = notNilSugguestion
-                if let notNilPredictions = suggestion?.predictions {
-                    predictions = notNilPredictions
-                }
-            }
+
+            setupInsulinRequired()
         }
 
         func getDeltaBG() {
@@ -155,7 +157,7 @@ extension Bolus {
             fifteenMinInsulin = isf == 0 ? 0 : (deltaBG * conversion) / isf
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
-            wholeCobInsulin = carbRatio != 0 ? cob / carbRatio : 0
+            wholeCobInsulin = carbRatio != 0 ? max(cob, temporaryCarbs) / carbRatio : 0
 
             // determine how much the calculator reduces/ increases the bolus because of IOB
             iobInsulinReduction = (-1) * iob
@@ -200,6 +202,16 @@ extension Bolus {
             return insulinCalculated
         }
 
+        var temporaryCarbs: Decimal {
+            var temporaryCarbs: Decimal = 0
+            let temporary = carbToStore.first
+            let timeDifference = (temporary?.actualDate ?? .distantPast).timeIntervalSinceNow
+            if timeDifference <= 0, timeDifference > -15.minutes.timeInterval {
+                temporaryCarbs = temporary?.carbs ?? 0
+            }
+            return temporaryCarbs
+        }
+
         func add() {
             guard amount > 0 else {
                 showModal(for: nil)
@@ -231,7 +243,7 @@ extension Bolus {
         func setupInsulinRequired() {
             let conversion: Decimal = units == .mmolL ? 0.0555 : 1
             DispatchQueue.main.async {
-                if let suggestion = self.provider.suggestion {
+                if let suggestion = self.suggestion {
                     self.insulinRequired = suggestion.insulinReq ?? 0
                     self.evBG = Decimal(suggestion.eventualBG ?? 0) * conversion
                     self.iob = suggestion.iob ?? 0
@@ -359,7 +371,7 @@ extension Bolus {
             if let recent = coreDataStorage.recentMeal() {
                 carbToStore = [CarbsEntry(
                     id: recent.id,
-                    createdAt: recent.createdAt ?? Date.now,
+                    createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(10.seconds.timeInterval),
                     actualDate: recent.actualDate,
                     carbs: Decimal(recent.carbs),
                     fat: Decimal(recent.fat),
@@ -368,20 +380,30 @@ extension Bolus {
                     enteredBy: CarbsEntry.manual,
                     isFPU: false
                 )]
-                bolus = Decimal(recent.carbs)
 
-                apsManager.determineBasal(bolus: bolus)
-                    .receive(on: DispatchQueue.main)
-                    .sink { [weak self] ok in
-                        guard let self = self else { return }
-                        if !ok {
-                            self.waitForSuggestion = false
-                            self.waitForCarbs = false
-                            self.insulinRequired = 0
-                            self.insulinRecommended = 0
-                        }
-                    }.store(in: &lifetime)
-                loopDate = apsManager.lastLoopDate
+                if let passForward = carbToStore.first {
+                    apsManager.temporaryData = Temporary(forBolusView: passForward)
+                    apsManager.determineBasal()
+                        .receive(on: DispatchQueue.main)
+                        .sink { [weak self] ok in
+                            guard let self = self else { return }
+                            if !ok {
+                                self.waitForSuggestion = false
+                                self.waitForCarbs = false
+                                self.insulinRequired = 0
+                                self.insulinRecommended = 0
+                            }
+
+                            if let notNilSugguestion = provider.suggestion {
+                                suggestion = notNilSugguestion
+                                if let notNilPredictions = suggestion?.predictions {
+                                    predictions = notNilPredictions
+                                }
+                            }
+
+                        }.store(in: &lifetime)
+                    loopDate = apsManager.lastLoopDate
+                }
             }
         }
 

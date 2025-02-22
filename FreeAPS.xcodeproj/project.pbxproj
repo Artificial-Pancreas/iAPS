@@ -33,6 +33,7 @@
 		1927C8E62744606D00347C69 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1927C8E82744606D00347C69 /* InfoPlist.strings */; };
 		192A9A122C0F5361000BBC29 /* MealsShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192A9A112C0F5361000BBC29 /* MealsShortcuts.swift */; };
 		1935364028496F7D001E0B16 /* Dynamic structs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1935363F28496F7D001E0B16 /* Dynamic structs.swift */; };
+		19389E552D69393900636E49 /* ForBolusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19389E542D69393900636E49 /* ForBolusView.swift */; };
 		193F6CDD2A512C8F001240FD /* Loops.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193F6CDC2A512C8F001240FD /* Loops.swift */; };
 		194297512B815938006B8A0B /* OverridesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194297502B815938006B8A0B /* OverridesView.swift */; };
 		1947541C2D470F0500A89AD1 /* SuspendResumeShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1947541B2D470F0500A89AD1 /* SuspendResumeShortcut.swift */; };
@@ -650,6 +651,7 @@
 		192E775A2B9F4D1C004F4822 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		192E775B2B9F4D1E004F4822 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
 		1935363F28496F7D001E0B16 /* Dynamic structs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dynamic structs.swift"; sourceTree = "<group>"; };
+		19389E542D69393900636E49 /* ForBolusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForBolusView.swift; sourceTree = "<group>"; };
 		193F1E392B44C13B00525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		193F1E3A2B44C13B00525770 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
 		193F1E3B2B44C14800525770 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2013,6 +2015,7 @@
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
+				19389E542D69393900636E49 /* ForBolusView.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3377,6 +3380,7 @@
 				891DECF7BC20968D7F566161 /* AutotuneConfigProvider.swift in Sources */,
 				D76333C9256787610B3B4875 /* AutotuneConfigStateModel.swift in Sources */,
 				A05235B9112E677ED03B6E8E /* AutotuneConfigRootView.swift in Sources */,
+				19389E552D69393900636E49 /* ForBolusView.swift in Sources */,
 				7F7B756BE8543965D9FDF1A2 /* DataTableDataFlow.swift in Sources */,
 				1D845DF2E3324130E1D95E67 /* DataTableProvider.swift in Sources */,
 				198FA7BA2D380790006858FD /* ChartModel.swift in Sources */,

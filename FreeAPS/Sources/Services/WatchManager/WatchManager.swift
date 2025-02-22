@@ -464,11 +464,11 @@ extension BaseWatchManager: WCSessionDelegate {
             )
 
             if settingsManager.settings.skipBolusScreenAfterCarbs {
-                apsManager.determineBasalSync(bolus: nil)
+                apsManager.determineBasalSync()
                 replyHandler(["confirmation": true])
                 return
             } else {
-                apsManager.determineBasal(bolus: nil)
+                apsManager.determineBasal()
                     .sink { _ in
                         replyHandler(["confirmation": true])
                     }

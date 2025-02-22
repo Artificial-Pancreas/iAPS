@@ -12,9 +12,7 @@ protocol CarbsStorage {
     func syncDate() -> Date
     func recent() -> [CarbsEntry]
     func nightscoutTretmentsNotUploaded() -> [NigtscoutTreatment]
-    func complexMeal(date: Date) -> [CarbsEntry]?
     func deleteCarbsAndFPUs(at date: Date)
-    func deleteFPUs(at date: Date)
 }
 
 final class BaseCarbsStorage: CarbsStorage, Injectable {
@@ -166,30 +164,10 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
         storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?.reversed() ?? []
     }
 
-    func complexMeal(date: Date) -> [CarbsEntry]? {
-        processQueue.sync {
-            let data = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self)?
-                .filter({ $0.createdAt == date }) ?? []
-            guard data.count > 1 else { return nil }
-            return data
-        }
-    }
-
     func deleteCarbsAndFPUs(at date: Date) {
         processQueue.sync {
             var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
             allValues.removeAll(where: { $0.createdAt == date })
-            storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
-            broadcaster.notify(CarbsObserver.self, on: processQueue) {
-                $0.carbsDidUpdate(allValues)
-            }
-        }
-    }
-
-    func deleteFPUs(at date: Date) {
-        processQueue.sync {
-            var allValues = storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
-            allValues.removeAll(where: { $0.createdAt == date && ($0.isFPU ?? false) })
             storage.save(allValues, as: OpenAPS.Monitor.carbHistory)
             broadcaster.notify(CarbsObserver.self, on: processQueue) {
                 $0.carbsDidUpdate(allValues)

@@ -222,6 +222,7 @@ extension Bolus {
                 trailing: Button {
                     state.hideModal()
                     state.notActive()
+                    if fetch { state.apsManager.determineBasalSync() }
                 }
                 label: { Text("Cancel") }
             )

@@ -589,7 +589,7 @@ extension Home {
                                 bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
                                     .formatted() + NSLocalizedString(" U", comment: "")
                             )
-                        }.font(.bolusProgressBarFont).foregroundStyle(.white)
+                        }.font(.bolusProgressBarFont)
                         ProgressView(value: Double(progress))
                             .progressViewStyle(BolusProgressViewStyle())
                     }
@@ -802,7 +802,7 @@ extension Home {
                         if let progress = state.bolusProgress, let amount = state.bolusAmount {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(.blue.opacity(0.75))
+                                    .fill(.gray.opacity(0.9))
                                     .frame(width: 320, height: 60)
                                 bolusProgressView(progress: progress, amount: amount)
                             }

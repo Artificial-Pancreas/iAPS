@@ -66,7 +66,7 @@ extension AddCarbs {
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
                 carbsStorage.storeCarbs(carbsToStore)
-                apsManager.determineBasalSync(bolus: nil)
+                apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore)
