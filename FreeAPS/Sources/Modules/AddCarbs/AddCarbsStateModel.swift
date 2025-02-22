@@ -71,6 +71,10 @@ extension AddCarbs {
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore)
                 showModal(for: .bolus(waitForSuggestion: true, fetch: true))
+            } else if !empty {
+                carbsStorage.storeCarbs(carbsToStore)
+                apsManager.determineBasalSync()
+                showModal(for: nil)
             } else {
                 hideModal()
             }
@@ -201,6 +205,10 @@ extension AddCarbs {
 
         func saveToCoreData(_ stored: [CarbsEntry]) {
             CoreDataStorage().saveMeal(stored, now: now)
+        }
+
+        private var empty: Bool {
+            carbs <= 0 && fat <= 0 && protein <= 0
         }
 
         private func hypo() {
