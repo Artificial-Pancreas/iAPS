@@ -484,13 +484,13 @@
 "No, just disconnect" = "Nej, bare frakobl";
 
 /* Title for reservoir/cannula refill */
-"Reservoir/cannula refill" = "Genopfyldning af reservoir/kanyle";
+"Reservoir/cannula refill" = "Reservoir-/kanylegenopfyldning";
 
 /* Title for reservoir/cannula refill */
-"Cannula refill" = "Genopfyldning af kanyle";
+"Cannula refill" = "Kanylegenopfyldning";
 
 /* Title for refill action */
-"Type of refill" = "Type af refill";
+"Type of refill" = "Genopfyldningstype";
 
 /* Button text to cannula only */
 "Cannula only" = "Kun kanyle";
@@ -499,10 +499,10 @@
 "Reservoir and cannula" = "Reservoir og kanyle";
 
 /* Title for bluetooth mode action sheet */
-"Toggle Bluetooth mode" = "Bluetooth modus schakelen";
+"Toggle Bluetooth mode" = "Bluetooth-tilstand til/fra";
 
 /* Button text to get help about Continuous mode */
-"What is this?" = "Hvad er det her for noget?";
+"What is this?" = "Hvad er dette?";
 
 /* Button text to disable continuous mode */
 "Yes, Switch to interactive mode" = "Ja, skift til interaktiv tilstand";
@@ -511,19 +511,19 @@
 "Yes, Switch to continuous mode" = "Ja, skift til kontinuerlig tilstand";
 
 /* Title for bolus syncing disable action sheet */
-"Disable bolus syncing?" = "Deaktivere bolus-synkronisering?";
+"Disable bolus syncing?" = "Deaktivér bolus-synkning?";
 
 /* Title for bolus syncing disable action sheet */
-"Re-enable bolus syncing?" = "Genaktiver bolus-synkronisering?";
+"Re-enable bolus syncing?" = "Genaktivér bolus-synkning?";
 
 /* Button text to re-enable bplus syncing */
-"Yes, re-enable bolus syncing" = "Ja, genaktiver bolus-synkronisering";
+"Yes, re-enable bolus syncing" = "Ja, genaktivér bolus-synkning";
 
 /* Button text to disable bolus syncing */
-"Yes, disable bolus syncing" = "Ja, deaktiver bolus-synkronisering";
+"Yes, disable bolus syncing" = "Ja, deaktivér bolus-synkning";
 
 /* ana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here" = "Dana-pumperne understøtter forskellige leveringshastigheder. Du kan sætte det op her";
+"The Dana pumps support different delivery speeds. You can set it up here" = "Dana-pumperne understøtter forskellige leveringshastigheder. Disse kan opsættes her";
 
 /* Text for Basal profile */
 "Basal profile" = "Basal profil";
@@ -535,7 +535,7 @@
 "Configuration" = "Konfiguration";
 
 /* Text for low reservoir reminder */
-"Low reservoir reminder" = "Påmindelse om lav reservoirbeholdning";
+"Low reservoir reminder" = "Lavt reservoir-påmindelse";
 
 /* refillAmount */
 "Refill amount" = "Genopfyldningsmængde";
@@ -544,16 +544,16 @@
 "U" = "E";
 
 /* Label for first step refill */
-"Step 1: Set reservoir level" = "Trin 1: Indstil reservoirets niveau";
+"Step 1: Set reservoir level" = "Trin 1: Indstil reservoirniveau";
 
 /* Label for reservoir refilled amount */
-"Reservoir amount" = "Mængde i reservoiret";
+"Reservoir amount" = "Reservoirmængde";
 
 /* Label for second step refill */
-"Step 2: Set tube refill amount" = "Trin 2: Indstil mængden af tube-refill";
+"Step 2: Set tube refill amount" = "Trin 2: Indstil tubegenopfyldningsmængde";
 
 /* Label for tube refilled amount */
-"Tube refill amount" = "Mængde til genopfyldning af rør";
+"Tube refill amount" = "Tubegenopfyldningsmængde";
 
 /* Label for warning refill */
 "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Denne metode til genopfyldning er kun beregnet til, når pumpen ikke kan give mulighed for at genopfylde reservoiret eller spæde kanylen.";
