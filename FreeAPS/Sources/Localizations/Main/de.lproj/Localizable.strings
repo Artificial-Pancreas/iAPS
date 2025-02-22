@@ -2404,25 +2404,25 @@ Enact a temp Basal or a temp target */
 "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!";
 
 /* */
-"ISF weight for higher BG deltas" = "ISF weight for higher BG deltas";
+"ISF weight for higher BG deltas" = "ISF Wert für höhere BG-Deltas";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled.";
 
 /* */
-"ISF weight for lower BG's" = "ISF weight for lower BG's";
+"ISF weight for lower BG's" = "ISF Wert für niedrigere BG's";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled.";
 
 /* */
-"ISF weight for higher BG's" = "ISF weight for higher BG's";
+"ISF weight for higher BG's" = "ISF Wert für höhere BG's";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.";
 
 /* */
-"Duration Weight" = "Duration Weight";
+"Duration Weight" = "Dauer";
 
 /* */
 "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
@@ -2434,28 +2434,28 @@ Enact a temp Basal or a temp target */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used.";
 
 /* */
-"SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
+"SMB Delivery Ratio Maximum" = "SMB Lieferverhältnis Maximum";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Standardwert: 0.5 Dies ist das untere Ende eines linear steigenden SMB Delivery Ratio statt der Fixwert in OpenAP SMB Delivery Ratio.";
 
 /* */
-"SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
+"SMB Delivery Ratio Minimum" = "SMB Lieferverhältnis Minimum";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Standardwert: 0.5 Dies ist das untere Ende eines linear steigenden SMB Delivery Ratio statt der Fixwert in OpenAP SMB Delivery Ratio.";
 
 /* */
 "Toggles" = "Schalter";
 
 /* */
-"Enable postprandial ISF adaption always" = "Enable postprandial ISF adaption always";
+"Enable postprandial ISF adaption always" = "ISF-Anpassung immer nachträglich aktivieren";
 
 /* */
-"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken.";
+"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Aktivieren Sie jederzeit die Verschiebung der ISF-Anpassung, unabhängig davon, wann das letzte Essen genommen wurde.";
 
 /* */
-"Enable DuraISF effect even with COB" = "Enable DuraISF effect even with COB";
+"Enable DuraISF effect even with COB" = "DuraISF-Effekt auch mit COB aktivieren";
 
 /* */
 "Enable DuraISF even if COB is present not just for UAM." = "Aktiviere DuraISF, auch wenn COB nicht nur für UAM vorhanden ist.";
@@ -2881,7 +2881,7 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Glukose-Delta anzeigen";
 
 /* UI/UX option */
-"Display Sensor Age" = "Display Sensor Age";
+"Display Sensor Age" = "Sensoralter anzeigen";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Insulinkonzentrations ausblenden";

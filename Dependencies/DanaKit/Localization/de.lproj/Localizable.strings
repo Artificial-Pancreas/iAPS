@@ -110,13 +110,13 @@
 "Delivery speed" = "Liefergeschwindigkeit";
 
 /* Dana bolus speed 12u per min */
-"12 sec/U" = "12 sec/U";
+"12 sec/U" = "12 Sek/U";
 
 /* Dana bolus speed 30u per min */
-"30 sec/U" = "30 sec/U";
+"30 sec/U" = "30 Sek/U";
 
 /* Dana bolus speed 60u per min */
-"60 sec/U" = "60 sec/U";
+"60 sec/U" = "60 Sek/U";
 
 /* Dana delivery speed body */
 "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Die Dana-Pumpen unterstützen unterschiedliche Fördergeschwindigkeiten. Sie können sie hier einstellen, aber auch im Einstellungsmenü";
@@ -301,7 +301,7 @@
 "Scroll function" = "Bildlauf-Funktion";
 
 /* text for second */
-"sec" = "sec";
+"sec" = "sek";
 
 /* backlightOnTimeInSec */
 "Backlight on time" = "LCD Hintergrund Beleuchtung";
@@ -316,7 +316,7 @@
 "Sound" = "Ton";
 
 /* beepAndAlarm.vibration */
-"Vibration" = "Vibration";
+"Vibration" = "Vibrieren";
 
 /* beepAndAlarm.both */
 "Both" = "Beide";
@@ -580,4 +580,4 @@
 "Failed to prime the tube. Please try again later" = "Die Entlüftung der Röhre ist fehlgeschlagen. Bitte versuchen Sie es später erneut";
 
 /* Battery age */
-"Battery age" = "Battery age";
+"Battery age" = "Batteriealter";
