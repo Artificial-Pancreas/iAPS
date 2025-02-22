@@ -229,9 +229,11 @@ extension Home {
                 .receive(on: DispatchQueue.main)
                 .map { [weak self] error in
                     self?.errorDate = error == nil ? nil : Date()
-                    if let error = error {
-                        info(.default, error.localizedDescription)
-                    }
+                    /* if let error = error,
+                        !error.localizedDescription.contains(NSLocalizedString("Pump is Busy.", comment: "Pump Error"))
+                     {
+                         info(.default, error.localizedDescription)
+                     } */
                     return error?.localizedDescription
                 }
                 .weakAssign(to: \.errorMessage, on: self)

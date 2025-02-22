@@ -22,7 +22,7 @@ protocol APSManager {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
     var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
-    var temporaryData: Temporary { get set }
+    var temporaryData: TemporaryData { get set }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -109,7 +109,7 @@ final class BaseAPSManager: APSManager, Injectable {
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
-    @Persisted(key: "bolusViewData") var temporaryData = Temporary()
+    @Persisted(key: "temporary") var temporaryData = TemporaryData()
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()

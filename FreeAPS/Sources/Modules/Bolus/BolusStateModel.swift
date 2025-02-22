@@ -382,7 +382,7 @@ extension Bolus {
                 )]
 
                 if let passForward = carbToStore.first {
-                    apsManager.temporaryData = Temporary(forBolusView: passForward)
+                    apsManager.temporaryData = TemporaryData(forBolusView: passForward)
                     apsManager.determineBasal()
                         .receive(on: DispatchQueue.main)
                         .sink { [weak self] ok in
