@@ -24,6 +24,7 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     var units: String?
     var id: String?
     var fpuID: String?
+    var creation_date: Date?
 
     static let local = "iAPS"
     static let trio = "Trio"
@@ -64,5 +65,6 @@ extension NigtscoutTreatment {
         case units
         case id
         case fpuID
+        case creation_date
     }
 }

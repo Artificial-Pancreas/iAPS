@@ -579,20 +579,19 @@ extension Home {
 
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
-                HStack(spacing: 20) {
-                    VStack {
+                HStack {
+                    VStack(spacing: 5) {
                         HStack {
-                            Text("Bolusing")
                             let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
-
+                            Text("Bolusing")
                             Text(
                                 bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
                                     .formatted() + NSLocalizedString(" U", comment: "")
                             )
-                        }.font(.bolusProgressBarFont)
+                        }.frame(width: 200, height: 25).font(.bolusProgressBarFont)
                         ProgressView(value: Double(progress))
                             .progressViewStyle(BolusProgressViewStyle())
-                    }
+                    }.frame(width: 250, height: 70)
                     Image(systemName: "xmark.square.fill")
                         .symbolRenderingMode(.palette)
                         .foregroundStyle(.white, .blue)
@@ -803,7 +802,7 @@ extension Home {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
                                     .fill(.gray.opacity(0.9))
-                                    .frame(width: 320, height: 60)
+                                    .frame(maxWidth: 320, maxHeight: 80)
                                 bolusProgressView(progress: progress, amount: amount)
                             }
                             .frame(maxWidth: .infinity, alignment: .center)

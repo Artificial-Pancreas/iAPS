@@ -154,7 +154,7 @@ extension NightscoutAPI {
         components.port = url.port
         components.path = Config.treatmentsPath
 
-        let arguments = "find[date][$eq]"
+        let arguments = "find[creation_date][$eq]"
         let value = Formatter.iso8601withFractionalSeconds.string(from: date)
 
         components.queryItems = [
