@@ -19,7 +19,7 @@ final class OpenAPS {
         self.pumpStorage = pumpStorage
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: Temporary) -> Future<Suggestion?, Never> {
+    func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: TemporaryData) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
                 Task {
@@ -948,7 +948,7 @@ final class OpenAPS {
         clock: JSON,
         carbs: JSON,
         glucose: JSON,
-        temporary: Temporary
+        temporary: TemporaryData
     ) async -> RawJSON {
         await scriptExecutor.callAsync(name: OpenAPS.Prepare.meal, with: [
             pumphistory,
