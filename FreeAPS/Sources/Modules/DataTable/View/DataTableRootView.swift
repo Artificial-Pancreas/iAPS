@@ -237,7 +237,7 @@ extension DataTable {
 
                     // Horizontal adjustments
                     let leading: CGFloat = 28
-                    let trailing: CGFloat = -80
+                    let trailing: CGFloat = -100
                     let height: CGFloat = 15
 
                     if meal.carbs != 0 {
