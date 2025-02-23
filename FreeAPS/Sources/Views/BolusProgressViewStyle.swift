@@ -8,8 +8,8 @@ public struct BolusProgressViewStyle: ProgressViewStyle {
         ZStack {
             ProgressView(value: progress)
                 .tint(Color.insulin)
-                .scaleEffect(y: 2.5)
-                .frame(width: 200, height: 15)
+                .scaleEffect(y: 5.5)
+                .frame(width: 200, height: 20)
         }
     }
 }
