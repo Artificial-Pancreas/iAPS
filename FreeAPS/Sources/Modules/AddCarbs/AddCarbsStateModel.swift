@@ -20,7 +20,6 @@ extension AddCarbs {
         @Published var maxCarbs: Decimal = 0
         @Published var note: String = ""
         @Published var id_: String = ""
-        @Published var summary: String = ""
         @Published var skipBolus: Bool = false
         @Published var id: String?
         @Published var hypoTreatment = false

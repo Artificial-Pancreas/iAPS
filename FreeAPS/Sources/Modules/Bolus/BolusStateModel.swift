@@ -268,31 +268,22 @@ extension Bolus {
             }
         }
 
-        func backToCarbsView(
-            complexEntry: Bool,
-            _ meal: FetchedResults<Meals>,
-            override: Bool,
-            deleteNothing: Bool,
-            editMode: Bool
-        ) {
-            if !deleteNothing { delete(deleteTwice: complexEntry, meal: meal) }
+        func backToCarbsView(override: Bool, editMode: Bool) {
             showModal(for: .addCarbs(editMode: editMode, override: override))
         }
 
-        func delete(deleteTwice _: Bool, meal: FetchedResults<Meals>) {
-            guard let meals = meal.first else {
-                return
-            }
+        func delete(meal: FetchedResults<Meals>) {
+            guard let meals = meal.first else { return }
             carbsStorage.deleteCarbsAndFPUs(at: meals.createdAt ?? .distantPast)
         }
 
-        func carbsView(fetch: Bool, hasFatOrProtein: Bool, mealSummary: FetchedResults<Meals>) -> Bool {
+        func carbsView(fetch: Bool, hasFatOrProtein _: Bool, mealSummary _: FetchedResults<Meals>) -> Bool {
             var keepForNextWiew = false
             if fetch {
                 keepForNextWiew = true
-                backToCarbsView(complexEntry: hasFatOrProtein, mealSummary, override: false, deleteNothing: false, editMode: true)
+                backToCarbsView(override: false, editMode: true)
             } else {
-                backToCarbsView(complexEntry: false, mealSummary, override: true, deleteNothing: true, editMode: false)
+                backToCarbsView(override: true, editMode: false)
             }
             return keepForNextWiew
         }
@@ -371,7 +362,7 @@ extension Bolus {
             if let recent = coreDataStorage.recentMeal() {
                 carbToStore = [CarbsEntry(
                     id: recent.id,
-                    createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(10.seconds.timeInterval),
+                    createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(5.seconds.timeInterval),
                     actualDate: recent.actualDate,
                     carbs: Decimal(recent.carbs),
                     fat: Decimal(recent.fat),

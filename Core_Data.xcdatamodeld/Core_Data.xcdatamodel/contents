@@ -43,6 +43,7 @@
         <attribute name="enteredBy" optional="YES" attributeType="String"/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="note" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0"/>
     </entity>
     <entity name="Fat" representedClassName="Fat" syncable="YES" codeGenerationType="class">

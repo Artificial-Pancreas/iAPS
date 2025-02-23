@@ -35,6 +35,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             let cbs = entries.last?.carbs ?? 0
             let fat = entries.last?.fat ?? 0
             let protein = entries.last?.protein ?? 0
+            let note = entries.last?.note
             let creationDate = entries.last?.createdAt ?? Date.now
 
             if fat > 0 || protein > 0 {
@@ -144,6 +145,7 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                     carbDataForStats.carbs = cbs as NSDecimalNumber
                     carbDataForStats.fat = fat as NSDecimalNumber
                     carbDataForStats.protein = protein as NSDecimalNumber
+                    carbDataForStats.note = note
                     carbDataForStats.id = UUID().uuidString
                     carbDataForStats.date = creationDate
 

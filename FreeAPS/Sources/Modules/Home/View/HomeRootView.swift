@@ -580,7 +580,7 @@ extension Home {
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
                 HStack {
-                    VStack(spacing: 5) {
+                    VStack(spacing: 4) {
                         HStack {
                             let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
                             Text("Bolusing")

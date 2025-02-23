@@ -90,7 +90,7 @@ extension DataTable {
                     }
                 }
             }
-            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .dynamicTypeSize(...DynamicTypeSize.large)
             .onAppear(perform: configureView)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
@@ -235,52 +235,44 @@ extension DataTable {
                             .moveDisabled(true)
                     }.padding(.bottom, 1)
 
-                    // Horisontal adjustment
-                    let padding: CGFloat = 82
-                    let lengthAdjustment: CGFloat = 7.38
+                    // Horizontal adjustments
+                    let leading: CGFloat = 28
+                    let trailing: CGFloat = -80
+                    let height: CGFloat = 15
 
                     if meal.carbs != 0 {
-                        HStack {
-                            Text("Carbs")
-                                .padding(
-                                    .trailing,
-                                    padding - CGFloat(NSLocalizedString("Carbs", comment: "").count) * lengthAdjustment
-                                )
-                            Text(item.amountText)
+                        HStack(spacing: 0) {
+                            Text("Carbs").frame(maxWidth: .infinity, alignment: .leading)
+                            Text(item.amountText).frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                        .frame(maxHeight: height)
+                        .padding(.leading, leading)
                         .foregroundStyle(.secondary)
                     }
 
                     if meal.fat != 0 {
-                        HStack {
-                            Text("Fat")
-                                .padding(
-                                    .trailing,
-                                    padding - CGFloat(NSLocalizedString("Fat", comment: "").count) * lengthAdjustment
-                                )
+                        HStack(spacing: 0) {
+                            Text("Fat").frame(maxWidth: .infinity, alignment: .leading)
                             Text(
                                 (hourFormatter.string(from: (meal.fat ?? 0) as NSNumber) ?? "") +
                                     NSLocalizedString(" g", comment: "")
-                            )
+                            ).frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                        .frame(maxHeight: height)
+                        .padding(.leading, leading)
                         .foregroundStyle(.secondary)
                     }
 
                     if meal.protein != 0 {
-                        HStack {
-                            Text("Protein")
-                                .padding(
-                                    .trailing,
-                                    padding - CGFloat(NSLocalizedString("Protein", comment: "").count) * lengthAdjustment
-                                )
+                        HStack(spacing: 0) {
+                            Text("Protein").frame(maxWidth: .infinity, alignment: .leading)
                             Text(
                                 (hourFormatter.string(from: (meal.protein ?? 0) as NSNumber) ?? "") +
                                     NSLocalizedString(" g", comment: "")
-                            )
+                            ).frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 28)
+                        .frame(maxHeight: height)
+                        .padding(.leading, leading)
                         .foregroundStyle(.secondary)
                     }
 
