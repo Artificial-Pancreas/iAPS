@@ -24,7 +24,6 @@ enum DataTable {
 
     enum DataType: String, Equatable {
         case carbs
-        case fpus
         case bolus
         case tempBasal
         case tempTarget
@@ -36,8 +35,6 @@ enum DataTable {
             switch self {
             case .carbs:
                 name = "Carbs"
-            case .fpus:
-                name = "Protein / Fat"
             case .bolus:
                 name = "Bolus"
             case .tempBasal:
@@ -60,6 +57,7 @@ enum DataTable {
         let units: GlucoseUnits
         let type: DataType
         let date: Date
+        let creationDate: Date
         let amount: Decimal?
         let secondAmount: Decimal?
         let duration: Decimal?
@@ -87,6 +85,7 @@ enum DataTable {
             units: GlucoseUnits,
             type: DataType,
             date: Date,
+            creationDate: Date,
             amount: Decimal? = nil,
             secondAmount: Decimal? = nil,
             duration: Decimal? = nil,
@@ -101,6 +100,7 @@ enum DataTable {
             self.units = units
             self.type = type
             self.date = date
+            self.creationDate = creationDate
             self.amount = amount
             self.secondAmount = secondAmount
             self.duration = duration
@@ -134,9 +134,6 @@ enum DataTable {
             case .carbs:
                 return numberFormatter
                     .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carbs")
-            case .fpus:
-                return numberFormatter
-                    .string(from: amount as NSNumber)! + NSLocalizedString(" g", comment: "gram of carb equilvalents")
             case .bolus:
                 var bolusText = " "
                 if isSMB ?? false {}
@@ -176,8 +173,6 @@ enum DataTable {
             switch type {
             case .carbs:
                 return .loopYellow
-            case .fpus:
-                return .orange.opacity(0.5)
             case .bolus:
                 return Color.insulin
             case .tempBasal:
@@ -217,7 +212,7 @@ protocol DataTableProvider: Provider {
     func tempTargets() -> [TempTarget]
     func carbs() -> [CarbsEntry]
     func glucose() -> [BloodGlucose]
-    func deleteCarbs(_ treatement: DataTable.Treatment)
+    func deleteCarbs(_ date: Date)
     func deleteInsulin(_ treatement: DataTable.Treatment)
     func deleteGlucose(id: String)
 }

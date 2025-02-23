@@ -147,7 +147,10 @@ extension AddCarbs {
             }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Cancel", action: state.hideModal))
+            .navigationBarItems(trailing: Button("Cancel", action: {
+                state.hideModal()
+                if editMode { state.apsManager.determineBasalSync() }
+            }))
             .sheet(isPresented: $presentPresets, content: { presetView })
         }
 

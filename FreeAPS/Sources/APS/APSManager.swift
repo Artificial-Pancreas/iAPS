@@ -22,6 +22,7 @@ protocol APSManager {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
     var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
+    var temporaryData: TemporaryData { get set }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -108,6 +109,7 @@ final class BaseAPSManager: APSManager, Injectable {
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
+    @Persisted(key: "temporary") var temporaryData = TemporaryData()
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
@@ -243,6 +245,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         isLooping.send(true)
+
         determineBasal()
             .replaceEmpty(with: false)
             .flatMap { [weak self] success -> AnyPublisher<Void, Error> in
@@ -347,6 +350,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
+        let start = Date.now
         debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.isNotEmpty else {
             debug(.apsManager, "Not enough glucose data")
@@ -372,11 +376,44 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let now = Date()
         let temp = currentTemp(date: now)
+        let temporary = temporaryData
+        temporaryData.forBolusView.carbs = 0
+        print("For Bolus View \(temporary.forBolusView.carbs)")
 
-        let mainPublisher = makeProfiles()
-            .flatMap { _ in self.autosens() }
-            .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
+        let mainPublisher = Just("Start")
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.makeProfiles().handleEvents(receiveCompletion: { _ in
+                    print(
+                        "APSManager: Time for makeProfiles \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+                })
+            }
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.autosens().handleEvents(receiveCompletion: { _ in
+                    print(
+                        "APSManager: Time for autosens \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+                })
+            }
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.dailyAutotune().handleEvents(receiveCompletion: { _ in
+                    print(
+                        "APSManager: Time for dailyAutotune \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+                })
+            }
+            .flatMap { _ in
+                let startTime = Date.now
+                return self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary)
+                    .handleEvents(receiveCompletion: { _ in
+                        print(
+                            "APSManager: Time for determineBasal \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
+                    })
+            }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {
@@ -681,8 +718,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 protein: protein,
                 note: "Remote",
                 enteredBy: "Nightscout operator",
-                isFPU: fat > 0 || protein > 0,
-                fpuID: (fat > 0 || protein > 0) ? UUID().uuidString : nil
+                isFPU: false
             )])
 
             announcementsStorage.storeAnnouncements([announcement], enacted: true)

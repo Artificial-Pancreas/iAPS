@@ -26,7 +26,7 @@ protocol HealthKitManager: GlucoseSource {
     /// Delete glucose with syncID
     func deleteGlucose(syncID: String)
     /// delete carbs with syncID
-    func deleteCarbs(syncID: String, fpuID: String)
+    func deleteCarbs(date: Date)
     /// delete insulin with syncID
     func deleteInsulin(syncID: String)
 }
@@ -206,7 +206,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
                         start: $0.actualDate ?? $0.createdAt,
                         end: $0.actualDate ?? $0.createdAt,
                         metadata: [
-                            HKMetadataKeyExternalUUID: $0.id ?? "_id",
+                            HKMetadataKeyExternalUUID: "\($0.createdAt)",
                             HKMetadataKeySyncIdentifier: $0.id ?? "_id",
                             HKMetadataKeySyncVersion: 1,
                             Config.freeAPSMetaKey: true
@@ -583,41 +583,23 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
 
     // - MARK Carbs function
 
-    func deleteCarbs(syncID: String, fpuID: String) {
+    func deleteCarbs(date: Date) {
         guard settingsManager.settings.useAppleHealth,
               let sampleType = Config.healthCarbObject,
               checkAvailabilitySave(objectTypeToHealthStore: sampleType)
         else { return }
 
-        if syncID.count > 2 {
-            let predicate = HKQuery.predicateForObjects(
-                withMetadataKey: HKMetadataKeySyncIdentifier,
-                operatorType: .equalTo,
-                value: syncID
-            )
-            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
-                if let error = error {
-                    warning(.service, "Cannot delete sample with syncID: \(syncID)", error: error)
-                } else if success {
-                    debug(.service, "\(int) carb entries with ID: " + syncID + " deleted from Health Store", printToConsole: true)
-                }
-            }
-        }
+        let predicate = HKQuery.predicateForObjects(
+            withMetadataKey: HKMetadataKeyExternalUUID,
+            operatorType: .equalTo,
+            value: "\(date)"
+        )
 
-        if fpuID.count > 2 {
-            let recentCarbs: [CarbsEntry] = carbsStorage.recent()
-            let ids = recentCarbs.filter { $0.fpuID == fpuID }.compactMap(\.id)
-            let predicate = HKQuery.predicateForObjects(
-                withMetadataKey: HKMetadataKeySyncIdentifier,
-                allowedValues: ids
-            )
-            print("found IDs: " + ids.description)
-            healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
-                if let error = error {
-                    warning(.service, "Cannot delete sample with fpuID: \(fpuID)", error: error)
-                } else if success {
-                    debug(.service, "\(int) carb entries with ID: " + fpuID + " deleted from Health Store", printToConsole: true)
-                }
+        healthKitStore.deleteObjects(of: sampleType, predicate: predicate) { success, int, error in
+            if let error = error {
+                warning(.service, "Cannot delete sample with date: \(date)", error: error)
+            } else if success {
+                debug(.service, "\(int) carb entries with date: \(date) deleted from Health Store", printToConsole: true)
             }
         }
     }

@@ -18,7 +18,11 @@ final class OpenAPS {
         self.pumpStorage = pumpStorage
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
+    func determineBasal(
+        currentTemp: TempBasal,
+        clock: Date = Date(),
+        temporary: TemporaryData
+    ) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
                 let start = Date.now
@@ -49,7 +53,8 @@ final class OpenAPS {
                     basalProfile: basalProfile,
                     clock: clock,
                     carbs: carbs,
-                    glucose: glucose
+                    glucose: glucose,
+                    temporary: temporary
                 )
                 print("Time for Meal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)")
 
@@ -827,19 +832,28 @@ final class OpenAPS {
         }
     }
 
-    private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
+    private func meal(
+        pumphistory: JSON,
+        profile: JSON,
+        basalProfile: JSON,
+        clock: JSON,
+        carbs: JSON,
+        glucose: JSON,
+        temporary: TemporaryData
+    ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Bundle.meal))
             worker.evaluate(script: Script(name: Prepare.meal))
+            worker.evaluate(script: Script(name: Bundle.meal))
             return worker.call(function: Function.generate, with: [
                 pumphistory,
                 profile,
                 clock,
                 glucose,
                 basalProfile,
-                carbs
+                carbs,
+                temporary.forBolusView
             ])
         }
     }

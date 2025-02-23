@@ -148,8 +148,7 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
                 protein: quantityProtein,
                 note: mealPreset.dish ?? "",
                 enteredBy: CarbsEntry.manual,
-                isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false,
-                fpuID: (quantityFat > 0 || quantityProtein > 0) ? UUID().uuidString : nil
+                isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false
             )]
         )
 
