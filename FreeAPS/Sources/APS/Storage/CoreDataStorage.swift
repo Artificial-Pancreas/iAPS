@@ -126,6 +126,7 @@ final class CoreDataStorage {
             let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestReasons.sortDescriptors = [sort]
+            requestReasons.fetchLimit = 1
             try? suggestion = coredataContext.fetch(requestReasons)
         }
         return suggestion.first
@@ -143,6 +144,18 @@ final class CoreDataStorage {
             try? reasonArray = self.coredataContext.fetch(requestReasons)
         }
         return reasonArray
+    }
+
+    func recentReason() -> Reasons? {
+        var reasonArray = [Reasons]()
+        coredataContext.performAndWait {
+            let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestReasons.sortDescriptors = [sort]
+            requestReasons.fetchLimit = 1
+            try? reasonArray = self.coredataContext.fetch(requestReasons)
+        }
+        return reasonArray.first
     }
 
     func saveStatUploadCount() {

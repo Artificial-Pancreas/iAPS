@@ -595,12 +595,12 @@ extension Home {
                             .symbolRenderingMode(.palette)
                             .foregroundStyle(.white, .blue)
                             .font(.bolusProgressStopFont)
-                            .offset(y: 2)
+                            .offset(y: 2.4)
                             .onTapGesture { state.cancelBolus() }
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.large)
-                .padding(.vertical, 20)
+                .padding(.bottom, 8)
             }
         }
 

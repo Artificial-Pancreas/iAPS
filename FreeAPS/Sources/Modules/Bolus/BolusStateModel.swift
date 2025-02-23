@@ -24,7 +24,7 @@ extension Bolus {
         @Published var percentage: Decimal = 0
         @Published var threshold: Decimal = 0
         @Published var maxBolus: Decimal = 0
-        @Published var errorString: Decimal = 0
+        @Published var errorString: String = ""
         @Published var evBG: Decimal = 0
         @Published var insulin: Decimal = 0
         @Published var isf: Decimal = 0
@@ -40,11 +40,12 @@ extension Bolus {
 
         // added for bolus calculator
         @Published var recentGlucose: BloodGlucose?
-        @Published var target: Decimal = 0
+        @Published var target: Decimal = 100
         @Published var cob: Decimal = 0
         @Published var iob: Decimal = 0
 
         @Published var currentBG: Decimal = 0
+        @Published var manualGlucose: Decimal = 0
         @Published var fifteenMinInsulin: Decimal = 0
         @Published var deltaBG: Decimal = 0
         @Published var targetDifferenceInsulin: Decimal = 0
@@ -113,9 +114,7 @@ extension Bolus {
                                 self.waitForSuggestion = false
                                 self.insulinRequired = 0
                                 self.insulinRecommended = 0
-                            }
-
-                            if let notNilSugguestion = provider.suggestion {
+                            } else if let notNilSugguestion = provider.suggestion {
                                 suggestion = notNilSugguestion
                                 if let notNilPredictions = suggestion?.predictions {
                                     predictions = notNilPredictions
@@ -135,10 +134,13 @@ extension Bolus {
             guard let lastGlucose = glucose.first, glucose.count >= 4 else { return }
             deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
                 (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
+
+            if currentBG == 0, (lastGlucose.date ?? .distantPast).timeIntervalSinceNow > -5.minutes.timeInterval {
+                currentBG = Decimal(lastGlucose.glucose)
+            }
         }
 
         func calculateInsulin() -> Decimal {
-            let conversion: Decimal = units == .mmolL ? 0.0555 : 1
             // The actual glucose threshold
             threshold = max(target - 0.5 * (target - 40 * conversion), threshold * conversion)
 
@@ -148,6 +150,9 @@ extension Bolus {
                     // Use Oref0 predictions{
                     insulin = (evBG - target) / isf
                 } else { insulin = 0 }
+            } else if currentBG == 0, manualGlucose > 0 {
+                let targetDifference = manualGlucose * conversion - target
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
             } else {
                 let targetDifference = currentBG - target
                 targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
@@ -157,23 +162,21 @@ extension Bolus {
             fifteenMinInsulin = isf == 0 ? 0 : (deltaBG * conversion) / isf
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
-            wholeCobInsulin = carbRatio != 0 ? max(cob, temporaryCarbs) / carbRatio : 0
+            // If failed recent suggestion use recent carb entry
+            wholeCobInsulin = carbRatio != 0 ? max(cob, recentCarbs) / carbRatio : 0
 
             // determine how much the calculator reduces/ increases the bolus because of IOB
-            iobInsulinReduction = (-1) * iob
+            // If failed recent suggestion use recent IOB value
+            iobInsulinReduction = (-1) * max(iob, recentIOB)
 
             // adding everything together
             // add a calc for the case that no fifteenMinInsulin is available
             if deltaBG != 0 {
                 wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin + fifteenMinInsulin)
+            } else if currentBG == 0, manualGlucose == 0 {
+                wholeCalc = (iobInsulinReduction + wholeCobInsulin)
             } else {
-                // add (rare) case that no glucose value is available -> maybe display warning?
-                // if no bg is available, ?? sets its value to 0
-                if currentBG == 0 {
-                    wholeCalc = (iobInsulinReduction + wholeCobInsulin)
-                } else {
-                    wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin)
-                }
+                wholeCalc = (targetDifferenceInsulin + iobInsulinReduction + wholeCobInsulin)
             }
 
             // apply custom factor at the end of the calculations
@@ -192,7 +195,7 @@ extension Bolus {
                 return 0
             }
 
-            // Account for increments (Don't use the apsManager function as that gets much too slow)
+            // Account for increments (Don't use the apsManager function as that is much too slow)
             insulinCalculated = roundBolus(insulinCalculated)
             // 0 up to maxBolus
             insulinCalculated = min(max(insulinCalculated, 0), maxBolus)
@@ -202,14 +205,23 @@ extension Bolus {
             return insulinCalculated
         }
 
-        var temporaryCarbs: Decimal {
+        var recentCarbs: Decimal {
             var temporaryCarbs: Decimal = 0
-            let temporary = carbToStore.first
-            let timeDifference = (temporary?.actualDate ?? .distantPast).timeIntervalSinceNow
+            guard let temporary = carbToStore.first else { return 0 }
+            let timeDifference = (temporary.actualDate ?? .distantPast).timeIntervalSinceNow
             if timeDifference <= 0, timeDifference > -15.minutes.timeInterval {
-                temporaryCarbs = temporary?.carbs ?? 0
+                temporaryCarbs = temporary.carbs
             }
             return temporaryCarbs
+        }
+
+        var recentIOB: Decimal {
+            guard iob == 0 else { return 0 }
+            guard let recent = coreDataStorage.recentReason() else { return 0 }
+            let timeDifference = (recent.date ?? .distantPast).timeIntervalSinceNow
+            guard timeDifference <= 0, timeDifference > -90.minutes.timeInterval else { return 0 }
+
+            return ((recent.iob ?? 0) as Decimal)
         }
 
         func add() {
@@ -325,6 +337,10 @@ extension Bolus {
             // print("Active: YES") // For testing
         }
 
+        var conversion: Decimal {
+            units == .mmolL ? 0.0555 : 1
+        }
+
         private func prepareData() {
             if !eventualBG {
                 var prepareData = [
@@ -383,9 +399,7 @@ extension Bolus {
                                 self.waitForCarbs = false
                                 self.insulinRequired = 0
                                 self.insulinRecommended = 0
-                            }
-
-                            if let notNilSugguestion = provider.suggestion {
+                            } else if let notNilSugguestion = provider.suggestion {
                                 suggestion = notNilSugguestion
                                 if let notNilPredictions = suggestion?.predictions {
                                     predictions = notNilPredictions

@@ -61,8 +61,30 @@ extension Bolus {
                 Section {
                     if state.waitForSuggestion {
                         Text("Please wait")
-                    } else {
+                    } else if state.predictions != nil {
                         predictionChart
+                    } else {
+                        Text("No Predictions. Failed loop suggestion.").frame(maxWidth: .infinity, alignment: .center)
+                    }
+                }
+
+                if state.predictions == nil {
+                    if state.currentBG == 0 {
+                        Section {
+                            HStack {
+                                Text("Glucose")
+                                Spacer()
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.manualGlucose,
+                                    units: $state.units,
+                                    isDisabled: false,
+                                    liveEditing: true
+                                )
+                            }.onChange(of: state.manualGlucose) {
+                                state.insulinCalculated = state.calculateInsulin()
+                            }
+                        } header: { Text("Missing Glucose") }
                     }
                 }
 
