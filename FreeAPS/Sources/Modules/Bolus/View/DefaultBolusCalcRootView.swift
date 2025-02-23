@@ -56,8 +56,10 @@ extension Bolus {
                 Section {
                     if state.waitForSuggestion {
                         Text("Please wait")
-                    } else {
+                    } else if state.predictions != nil {
                         predictionChart
+                    } else {
+                        Text("No Predictions. Failed loop suggestion.").frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
 
@@ -74,7 +76,7 @@ extension Bolus {
                             Spacer()
                             ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
                         }
-                    } else {
+                    } else if state.suggestion != nil {
                         HStack {
                             Button(action: {
                                 presentInfo.toggle()
