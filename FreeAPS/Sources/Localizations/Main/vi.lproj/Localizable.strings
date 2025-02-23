@@ -1994,7 +1994,7 @@ Enact a temp Basal or a temp target */
 "Past Month " = "Past Month ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "90 ngày trước ";
+"Past 90 Days " = "Past 90 Days ";
 
 /* Duration displayed in statPanel */
 "All Past Days of Data " = "All Past Days of Data ";
