@@ -53,25 +53,25 @@
 "ERROR: Failed to pair device" = "HATA: Cihaz eşleştirilemedi";
 
 /* Dana-i oke invalid ble5 keys */
-"OK" = "TAMAM.";
+"OK" = "Tamam";
 
 /* Cancel button title */
-"Cancel" = "İptal";
+"Cancel" = "Vazgeç";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Dana-i/RS pompaları bulundu";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Tarama";
+"Scanning" = "Taranıyor";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Bağlantı";
+"Connecting" = "Bağlanıyor";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Bu pompada kullanacağınız insülin türünü seçin";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Pompayı Çıkarın";
+"Remove Pump" = "Pompayı Çıkart";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Dana-i/RS kullanmayı bırakmak istediğinizden emin misiniz?";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Lütfen ayar menüsünden dozaj stratejinizi değiştirmeyi düşünün";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Özgeçmiş teslimatı";
+"Resume delivery" = "İletimi Devam Ettir";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Teslimatı askıya alın";
@@ -191,19 +191,19 @@
 "Select insulin Type" = "İnsülin Tipini Seçin";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Planlanmış Bazal";
+"Scheduled Basal" = "Programlanmış Bazal";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "İnsülin Dağıtımı";
+"Insulin Delivery" = "İnsülin İletimi";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "İnsülin\nAskıya Alındı";
+"Insulin\nSuspended" = "İnsülin\nDurduldu";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Bilinmiyor";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/saat";
+"U/hr" = "Ü/Sa";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Kalan İnsülin";
@@ -241,28 +241,28 @@
 "Time Change Detected" = "Zaman Değişikliği Tespit Edildi";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pompanızdaki saat geçerli saatten farklı. Pompanızdaki saati geçerli saate güncellemek istiyor musunuz?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Pompanızdaki saat, mevcut saatten farklı. Pompanızdaki saati şu anki saate güncellemek ister misiniz?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Pompanızdaki saat, geçerli saatten farklıdır. Pompanızın saati programlanmış terapi ayarlarınızı kontrol eder. Saat farkını incelemek ve pompanızı yapılandırmak için Pompa Saati satırına ilerleyin.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Pompanızdaki saat, geçerli saatten farklı. Pompanızın zamanı, planlanmış tedavi ayarlarınızı kontrol eder. Saat farkını gözden geçirmek ve pompanızı yapılandırmak için Pompa Saati satırına ilerleyin.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Evet, Geçerli Saatle Senkronize Et";
+"Yes, Sync to Current Time" = "Evet güncelle";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Hayır, Pompayı Olduğu Gibi Saklayın";
+"No, Keep Pump As Is" = "Hayır güncelleme";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Sıcaklık Bazal";
+"Temp Basal" = "Geçici Bazal Oranı";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Bazal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Özgeçmiş";
+"Resume" = "Devam et";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "Askıya al";
@@ -420,7 +420,7 @@
 "No Insulin" = "İnsülin Yok";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "İnsülin Askıya Alındı";
+"Insulin Suspended" = "İnsülin Durduldu";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
@@ -454,7 +454,7 @@
 "Disconnected" = "Bağlantı kesildi";
 
 /* DanaKit connected */
-"Connected" = "Bağlı";
+"Connected" = "Bağlandı";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "Pompanın bağlantısı hala kesik";
@@ -532,7 +532,7 @@
 "Battery level" = "Pil seviyesi";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Konfigürasyon";
+"Configuration" = "Yapılandırma";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Düşük rezervuar hatırlatıcısı";
@@ -541,7 +541,7 @@
 "Refill amount" = "Dolum miktarı";
 
 /* Insulin unit */
-"U" = "U";
+"U" = "Ü";
 
 /* Label for first step refill */
 "Step 1: Set reservoir level" = "Adım 1: Rezervuar seviyesini ayarlayın";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Tüp doldurulamadı. Lütfen daha sonra tekrar deneyin";
+
+/* Battery age */
+"Battery age" = "Battery age";

@@ -35,7 +35,7 @@
 "Sensor is warming up" = "Sensor varmer op";
 
 /* The description of sensor calibration state when sensor needs calibration. */
-"Sensor needs calibration" = "Sensoren har brug for kalibrering";
+"Sensor needs calibration" = "Sensor behøver kalibrering";
 
 /* Error description */
 "Unknown characteristic" = "Ukendt karakteristik";

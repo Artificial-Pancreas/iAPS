@@ -62,10 +62,10 @@
 "Found Dana-i/RS pumps" = "Pompes Dana-i/RS trouvées";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Numérisation";
+"Scanning" = "Balayage";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Connexion";
+"Connecting" = "Connexion en cours";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Sélectionnez le type d'insuline que vous utiliserez dans cette pompe.";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Veuillez envisager de modifier votre stratégie de dosage dans le menu de réglage.";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Remise de curriculum vitae";
+"Resume delivery" = "Reprendre l'administration";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Suspendre la livraison";
@@ -185,19 +185,19 @@
 "Stop temp basal" = "Arrêt de la température basale";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Type d'insuline";
+"Insulin Type" = "Type d'Insuline";
 
 /* Title for insulin type */
 "Select insulin Type" = "Sélectionner le type d'insuline";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Basale programmée";
+"Scheduled Basal" = "Basal programmé";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Administration d'insuline";
+"Insulin Delivery" = "Administration de l'insuline";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Suspension de l'insuline\n";
+"Insulin\nSuspended" = "Insuline\nSuspendue";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Inconnu";
@@ -238,31 +238,31 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Changement d'heure détecté";
+"Time Change Detected" = "Changement de temps détecté";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "L'heure de votre pompe est différente de l'heure actuelle. Voulez-vous mettre à jour l'heure de votre pompe pour qu'elle corresponde à l'heure actuelle ?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "L'heure de votre pompe est différente de l'heure actuelle. Voulez vous mettre à jour l'heure de votre pompe avec l'heure actuelle ?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "L'heure de votre pompe est différente de l'heure actuelle. L'heure de votre pompe contrôle les paramètres de votre thérapie programmée. Faites défiler vers le bas jusqu'à la ligne Heure de la pompe pour consulter le décalage horaire et configurer votre pompe.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "L'heure de votre pompe est différente de l'heure actuelle. L'heure de votre pompe contrôle les paramètres de votre traitement. Faites défiler jusqu'à la ligne Heure de Pompe pour vérifier le décalage de l'heure et configurer votre pompe.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Oui, synchronisation avec l'heure actuelle";
+"Yes, Sync to Current Time" = "Oui, synchroniser avec l'heure actuelle";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Non, conserver la pompe en l'état";
+"No, Keep Pump As Is" = "Non, garder la pompe telle quelle";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Basal Temp.";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Curriculum vitae";
+"Resume" = "Reprendre";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "Suspendre";
@@ -277,7 +277,7 @@
 "Loading" = "Chargement";
 
 /* Text for save button */
-"Save" = "Économiser";
+"Save" = "Sauvegarder";
 
 /* Text for 24h display */
 "24h display" = "Affichage sur 24 heures";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "L'heure doit-elle être affichée en 12 heures ou en 24 heures ?";
 
 /* text on */
-"On" = "Sur";
+"On" = "Activé";
 
 /* text off */
-"Off" = "Arrêt";
+"Off" = "Désactivé";
 
 /* 12h */
 "12h notation" = "Notation 12h";
@@ -420,7 +420,7 @@
 "No Insulin" = "Pas d'insuline";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Suspension de l'insuline";
+"Insulin Suspended" = "Insuline suspendue";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
@@ -526,7 +526,7 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Les pompes Dana prennent en charge différentes vitesses de distribution. Vous pouvez les configurer ici";
 
 /* Text for Basal profile */
-"Basal profile" = "Profil de base";
+"Basal profile" = "Profil Basal";
 
 /* Text for Battery level */
 "Battery level" = "Niveau de la batterie";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Le tube n'a pas été amorcé. Veuillez réessayer plus tard";
+
+/* Battery age */
+"Battery age" = "Battery age";

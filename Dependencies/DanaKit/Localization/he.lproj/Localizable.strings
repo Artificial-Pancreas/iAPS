@@ -65,7 +65,7 @@
 "Scanning" = "Scanning";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Connecting";
+"Connecting" = "מתחבר";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Select the type of insulin that you will be using in this pump";
@@ -244,7 +244,7 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "השעה במשאבה שלך שונה מהשעה הנוכחית. הגדרות הטיפול נקבעות לפי השעה במשאבה.  יש לבדוק את הפרשי הזמן ולעדכן את השעה במשאבה.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Yes, Sync to Current Time";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Should time be display in 12h or 24h";
 
 /* text on */
-"On" = "On";
+"On" = "דולק";
 
 /* text off */
-"Off" = "Off";
+"Off" = "כבוי";
 
 /* 12h */
 "12h notation" = "12h notation";
@@ -451,10 +451,10 @@
 "Reconnect tp pump" = "Reconnect tp pump";
 
 /* DanaKit disconnected */
-"Disconnected" = "Disconnected";
+"Disconnected" = "מנותק";
 
 /* DanaKit connected */
-"Connected" = "Connected";
+"Connected" = "מחובר";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "Pump is still disconnected";
@@ -529,7 +529,7 @@
 "Basal profile" = "Basal profile";
 
 /* Text for Battery level */
-"Battery level" = "Battery level";
+"Battery level" = "מצב הסוללה";
 
 /* The title of the configuration section in DanaKit settings */
 "Configuration" = "Configuration";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
+
+/* Battery age */
+"Battery age" = "Battery age";

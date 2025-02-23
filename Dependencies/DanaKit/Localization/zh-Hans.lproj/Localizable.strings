@@ -53,7 +53,7 @@
 "ERROR: Failed to pair device" = "错误：配对设备失败";
 
 /* Dana-i oke invalid ble5 keys */
-"OK" = "好的";
+"OK" = "Ok";
 
 /* Cancel button title */
 "Cancel" = "取消";
@@ -62,16 +62,16 @@
 "Found Dana-i/RS pumps" = "发现 Dana-i/RS 泵";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "扫描";
+"Scanning" = "Scanning";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "连接";
+"Connecting" = "正在连接";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "选择您将在该泵中使用的胰岛素类型";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "卸下泵";
+"Remove Pump" = "Remove Pump";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "您确定要停止使用 Dana-i/RS？";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "请考虑在设置菜单中更改配料策略";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "简历交付";
+"Resume delivery" = "Resume delivery";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "暂停交付";
@@ -191,22 +191,22 @@
 "Select insulin Type" = "选择胰岛素类型";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "预定的基质";
+"Scheduled Basal" = "预设基础率";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "胰岛素输送";
+"Insulin Delivery" = "胰岛素输注";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "胰岛素\n暂停使用";
+"Insulin\nSuspended" = "Insulin\nSuspended";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "未知";
 
 /* Units for showing temp basal rate */
-"U/hr" = "U/hr";
+"U/hr" = "U/小时";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "胰岛素剩余量";
+"Insulin Remaining" = "胰岛素余量";
 
 /* Text for Dana pump name */
 "Pump name" = "泵名称";
@@ -238,31 +238,31 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "检测到的时间变化";
+"Time Change Detected" = "检测到时间变化";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "泵上的时间与当前时间不同。您想将泵上的时间更新为当前时间吗？";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "泵上的时间与当前时间不同。泵上的时间控制着您的计划治疗设置。向下滚动到泵时间行，查看时差并配置您的泵。";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "是，与当前时间同步";
+"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "不，保持泵原样";
+"No, Keep Pump As Is" = "No, Keep Pump As Is";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "玻流体";
+"Bolus" = "大剂量";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "基础温度";
+"Temp Basal" = "临时基础率";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "基础";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "简历";
+"Resume" = "恢复";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "暂停";
@@ -277,7 +277,7 @@
 "Loading" = "加载中";
 
 /* Text for save button */
-"Save" = "节省";
+"Save" = "保存​​";
 
 /* Text for 24h display */
 "24h display" = "24 小时显示";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "时间应该以 12 小时还是 24 小时显示";
 
 /* text on */
-"On" = "关于";
+"On" = "开";
 
 /* text off */
-"Off" = "关闭";
+"Off" = "Off";
 
 /* 12h */
 "12h notation" = "12h 符号";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "胰岛素剩余水平";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "空水库";
+"Empty reservoir" = "胰岛素储量为零";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "蓄水池已空。立即更换！";
@@ -417,14 +417,14 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "无胰岛素";
+"No Insulin" = "No Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "胰岛素停用";
+"Insulin Suspended" = "Insulin Suspended";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "信号丢失";
+"Signal Loss" = "Signal Loss";
 
 /* Text for Day unit */
 "day(s)" = "天数";
@@ -436,7 +436,7 @@
 "Reservoir age" = "水库年龄";
 
 /* Text for status */
-"Status" = "现状";
+"Status" = "状态";
 
 /* DanaKit disconnecting */
 "Disconnecting..." = "断开...";
@@ -451,7 +451,7 @@
 "Reconnect tp pump" = "重新连接 TP 泵";
 
 /* DanaKit disconnected */
-"Disconnected" = "断开";
+"Disconnected" = "已断开连接";
 
 /* DanaKit connected */
 "Connected" = "已连接";
@@ -526,10 +526,10 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Dana 泵支持不同的输送速度。您可以在这里进行设置";
 
 /* Text for Basal profile */
-"Basal profile" = "基本概况";
+"Basal profile" = "基础率配置文件";
 
 /* Text for Battery level */
-"Battery level" = "电池电量";
+"Battery level" = "Battery level";
 
 /* The title of the configuration section in DanaKit settings */
 "Configuration" = "配置";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "管道填料失败。请稍后再试";
+
+/* Battery age */
+"Battery age" = "Battery age";

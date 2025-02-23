@@ -126,7 +126,7 @@
 "Pod paired successfully. Continue." = "Pod emparejado correctamente. Continúe.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
-"Finish deactivation" = "Finalizar desactivación";
+"Finish deactivation" = "Finalizar la desactivación";
 
 /* Settings page link description when next lifecycle action is to replace pod */
 "Replace Pod" = "Cambie el Pod";

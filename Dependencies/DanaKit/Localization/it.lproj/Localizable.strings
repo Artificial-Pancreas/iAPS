@@ -56,22 +56,22 @@
 "OK" = "OK";
 
 /* Cancel button title */
-"Cancel" = "Annullamento";
+"Cancel" = "Cancella";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Trovate le pompe Dana-i/RS";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Scansione";
+"Scanning" = "Lettura";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Collegamento";
+"Connecting" = "In fase di Connessione";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Selezionare il tipo di insulina da utilizzare in questo microinfusore";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Rimuovere la pompa";
+"Remove Pump" = "Rimuovi microinfusore";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Siete sicuri di voler smettere di usare Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Eliminare la pompa";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Eliminare la pompa";
+"Delete Pump" = "Cancella Microinfusore";
 
 /* Connection error message */
 "Error while connecting to device" = "Errore durante la connessione al dispositivo";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Considerare la possibilità di modificare la strategia di dosaggio nel menu delle impostazioni.";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Consegna del curriculum";
+"Resume delivery" = "Riprendi erogazione";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Sospendere la consegna";
@@ -185,16 +185,16 @@
 "Stop temp basal" = "Interruzione della temperatura basale";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Tipo di insulina";
+"Insulin Type" = "Tipo di Insulina";
 
 /* Title for insulin type */
 "Select insulin Type" = "Selezionare il tipo di insulina";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Basale programmato";
+"Scheduled Basal" = "Basale programmata";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Consegna dell'insulina";
+"Insulin Delivery" = "Insulina Somministrata";
 
 /* Text shown in insulin delivery space when insulin suspended */
 "Insulin\nSuspended" = "Insulina\nSospesa";
@@ -206,7 +206,7 @@
 "U/hr" = "U/ora";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulina rimanente";
+"Insulin Remaining" = "Insulina Rimanente";
 
 /* Text for Dana pump name */
 "Pump name" = "Nome della pompa";
@@ -238,34 +238,34 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Variazione di tempo rilevata";
+"Time Change Detected" = "Rilevato Cambio Di Tempo";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "L'ora sul microinfusore è diversa dall'ora corrente. Si desidera aggiornare l'ora del microinfusore all'ora corrente?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "L'ora sul microinfusore è diversa dall'ora corrente. Vuoi aggiornare l'ora del microinfusore all'ora corrente?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "L'ora del microinfusore è diversa dall'ora corrente. L'ora del microinfusore controlla le impostazioni della terapia programmata. Scorrere la riga dell'ora del microinfusore per verificare la differenza di orario e configurare il microinfusore.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "L'orario impostato nel microinfusore è diverso dall'orario corrente. L'orario del microinfusore detta e controlla le impostazioni della terapia programmata e va corretto: Nella lista degli 'orari del microinfusore verificare la differenza di orario e configurare correttamente il microinfusore.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Sì, sincronizzazione con l'ora corrente";
+"Yes, Sync to Current Time" = "Sì, sincronizza con l'ora corrente";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, conservare la pompa così com'è";
+"No, Keep Pump As Is" = "No, Tieni microinfusore Come È";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Bolo";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temperatura basale";
+"Temp Basal" = "Basale temporanea";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basale";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Il curriculum";
+"Resume" = "Riprendi";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Sospendere";
+"Suspend" = "Sospendi";
 
 /* Title for user options */
 "User options" = "Opzioni utente";
@@ -277,7 +277,7 @@
 "Loading" = "Caricamento";
 
 /* Text for save button */
-"Save" = "Risparmiare";
+"Save" = "Salva";
 
 /* Text for 24h display */
 "24h display" = "Display 24 ore su 24";
@@ -286,7 +286,7 @@
 "Should time be display in 12h or 24h" = "L'ora deve essere visualizzata in 12 o 24 ore";
 
 /* text on */
-"On" = "Su";
+"On" = "Acceso";
 
 /* text off */
 "Off" = "Spento";
@@ -417,14 +417,14 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "Nessuna insulina";
+"No Insulin" = "Nessuna Insulina";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulina sospesa";
+"Insulin Suspended" = "Insulina Sospesa";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Perdita di segnale";
+"Signal Loss" = "Perdita Di Segnale";
 
 /* Text for Day unit */
 "day(s)" = "giorno/i";
@@ -454,7 +454,7 @@
 "Disconnected" = "Disconnesso";
 
 /* DanaKit connected */
-"Connected" = "Collegato";
+"Connected" = "Connesso";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "La pompa è ancora scollegata";
@@ -529,10 +529,10 @@
 "Basal profile" = "Profilo basale";
 
 /* Text for Battery level */
-"Battery level" = "Livello della batteria";
+"Battery level" = "Livello Batteria";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Configurazione";
+"Configuration" = "Impostazioni";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Segnalazione del serbatoio basso";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Non è stato possibile adescare il tubo. Riprovare più tardi";
+
+/* Battery age */
+"Battery age" = "Battery age";
