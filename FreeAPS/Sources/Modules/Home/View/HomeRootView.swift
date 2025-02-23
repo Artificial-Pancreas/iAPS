@@ -590,14 +590,14 @@ extension Home {
                     }.frame(width: 250, height: 25).font(.bolusProgressBarFont)
                     HStack(alignment: .bottom, spacing: 5) {
                         ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
-
-                        Image(systemName: "xmark.square.fill")
-                            .symbolRenderingMode(.palette)
-                            .foregroundStyle(.white, .blue)
-                            .font(.bolusProgressStopFont)
-                            .offset(y: 2.4)
-                            .onTapGesture { state.cancelBolus() }
+                            .overlay {
+                                Image(systemName: "pause.fill")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.white, .blue)
+                                    .font(.bolusProgressStopFont)
+                            }
                     }
+                    .onTapGesture { state.cancelBolus() }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.large)
                 .padding(.bottom, 8)

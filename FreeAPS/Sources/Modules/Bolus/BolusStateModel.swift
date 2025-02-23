@@ -8,7 +8,6 @@ extension Bolus {
         @Injected() var unlockmanager: UnlockManager!
         @Injected() var apsManager: APSManager!
         @Injected() var broadcaster: Broadcaster!
-        @Injected() var pumpHistoryStorage: PumpHistoryStorage!
         // added for bolus calculator
         @Injected() var settings: SettingsManager!
         @Injected() var nsManager: NightscoutManager!
@@ -75,6 +74,7 @@ extension Bolus {
         @Published var now = Date.now
         @Published var bolus: Decimal = 0
         @Published var carbToStore = [CarbsEntry]()
+        @Published var history: [PumpHistoryEvent]?
 
         let loopReminder: CGFloat = 4
         let coreDataStorage = CoreDataStorage()
@@ -85,6 +85,8 @@ extension Bolus {
             formatter.maximumFractionDigits = 0
             return formatter
         }
+
+        private let processQueue = DispatchQueue(label: "setupBolusData.processQueue")
 
         override func subscribe() {
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -122,6 +124,7 @@ extension Bolus {
                             }
 
                         }.store(in: &lifetime)
+                    setupPumpData()
                     loopDate = apsManager.lastLoopDate
                 }
             }
@@ -205,6 +208,7 @@ extension Bolus {
             return insulinCalculated
         }
 
+        /// When COB module fail
         var recentCarbs: Decimal {
             var temporaryCarbs: Decimal = 0
             guard let temporary = carbToStore.first else { return 0 }
@@ -215,13 +219,26 @@ extension Bolus {
             return temporaryCarbs
         }
 
+        /// When IOB module fail
         var recentIOB: Decimal {
             guard iob == 0 else { return 0 }
             guard let recent = coreDataStorage.recentReason() else { return 0 }
             let timeDifference = (recent.date ?? .distantPast).timeIntervalSinceNow
-            guard timeDifference <= 0, timeDifference > -90.minutes.timeInterval else { return 0 }
+            if timeDifference <= 0, timeDifference > -30.minutes.timeInterval {
+                return ((recent.iob ?? 0) as Decimal)
+            } else if let history = history {
+                let total = history
+                    .filter({ $0.timestamp.timeIntervalSinceNow > -90.minutes.timeInterval && $0.type == .bolus })
+                    .compactMap(\.amount).reduce(0, +)
+                return max(total, 0)
+            }
+            return 0
+        }
 
-            return ((recent.iob ?? 0) as Decimal)
+        func setupPumpData() {
+            DispatchQueue.main.async {
+                self.history = self.provider.pumpHistory()
+            }
         }
 
         func add() {
@@ -407,6 +424,7 @@ extension Bolus {
                             }
 
                         }.store(in: &lifetime)
+                    setupPumpData()
                     loopDate = apsManager.lastLoopDate
                 }
             }

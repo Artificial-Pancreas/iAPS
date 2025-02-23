@@ -9,7 +9,7 @@ public struct BolusProgressViewStyle: ProgressViewStyle {
             ProgressView(value: progress)
                 .tint(Color.insulin)
                 .scaleEffect(y: 5.5)
-                .frame(width: 200, height: 20)
+                .frame(width: 250, height: 20)
         }
     }
 }
