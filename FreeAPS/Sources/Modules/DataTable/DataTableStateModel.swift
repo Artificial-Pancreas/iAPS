@@ -252,11 +252,11 @@ extension DataTable {
                 isFPU: false
             )
 
-            carbStorage.deleteCarbsAndFPUs(at: old.creationDate)
             if let deleteOld = computed {
                 OverrideStorage().DeleteBatch(identifier: deleteOld.id, entity: "Carbohydrates")
             }
             carbStorage.storeCarbs([newCarbs])
+            nightscout.deleteCarbs(old.creationDate)
             debug(.apsManager, "Carbs updated: \(old.amountText) -> \(meal.carbs) g")
             if newCarbs.carbs != oldCarbs, (newCarbs.actualDate ?? .distantPast).timeIntervalSinceNow > -3.hours.timeInterval {
                 aps.determineBasalSync()
