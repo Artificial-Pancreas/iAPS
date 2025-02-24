@@ -30,13 +30,13 @@ Title text for the button to remove a CGM from Loop */
 "Latest Connection" = "Seneste forbindelse";
 
 /* Button title to open CGM app */
-"Open App" = "Åben app";
+"Open App" = "Åbn app";
 
 /* Title describing sensor session age */
-"Session Age" = "Session-alder";
+"Session Age" = "Sessionsalder";
 
 /* Section title for remote data synchronization */
-"Remote Data Synchronization" = "Synkronisering af fjerndata";
+"Remote Data Synchronization" = "Fjerndatasynkronisering";
 
 /* Title describing sensor expiration */
 "Sensor Expires" = "Sensor udløber";
@@ -48,7 +48,7 @@ Title text for the button to remove a CGM from Loop */
 "Status" = "Status";
 
 /* Title describing transmitter session age */
-"Transmitter Age" = "Sender alder";
+"Transmitter Age" = "Senderalder";
 
 /* The title text for the Dexcom G5/G6 transmitter ID config value */
 "Transmitter ID" = "Sender ID";
