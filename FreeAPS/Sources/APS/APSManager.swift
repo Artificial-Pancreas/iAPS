@@ -22,6 +22,7 @@ protocol APSManager {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
     var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
+    var concentration: (concentration: Double, increment: Double) { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -371,7 +372,10 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let now = Date()
-        let temp = currentTemp(date: now)
+        var temp = currentTemp(date: now)
+
+        // Adjust for concentration
+        temp.rate = adjustForConcentration(temp.rate)
 
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
@@ -733,6 +737,14 @@ final class BaseAPSManager: APSManager, Injectable {
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")
         }
+    }
+
+    private func adjustForConcentration(_ rate: Decimal) -> Decimal {
+        guard rate > 0 else { return rate }
+        let setting = concentration
+        guard setting.concentration != 1 else { return rate }
+
+        return (rate * Decimal(setting.concentration)).roundBolus(increment: setting.increment)
     }
 
     private func currentTemp(date: Date) -> TempBasal {
