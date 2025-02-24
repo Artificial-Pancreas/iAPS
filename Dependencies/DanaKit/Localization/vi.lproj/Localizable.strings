@@ -325,7 +325,7 @@
 "Pump battery 0%" = "Pump battery 0%";
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Pump battery is empty. Replace it now!";
+"Pump battery is empty. Replace it now!" = "Pin của máy bơm đã hết. Hãy thay ngay!";
 
 /* Alert title for pumpError */
 "Pump error" = "Pump error";
@@ -337,19 +337,19 @@
 "Occlusion" = "Occlusion";
 
 /* Alert body for occlusion */
-"Check the reservoir and infus and try again" = "Check the reservoir and infus and try again";
+"Check the reservoir and infus and try again" = "Hãy Kiểm tra bình chứa và dây truyền và thử lại";
 
 /* Alert title for lowBattery */
-"Low pump battery" = "Low pump battery";
+"Low pump battery" = "Pin của bơm yếu";
 
 /* Alert body for lowBattery */
-"Pump battery needs to be replaced soon" = "Pump battery needs to be replaced soon";
+"Pump battery needs to be replaced soon" = "Pin máy bơm cần được thay thế sớm";
 
 /* Alert title for shutdown */
 "Pump shutdown" = "Pump shutdown";
 
 /* Alert body for shutdown */
-"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump";
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Đã không có bất kỳ tương tác nào với máy bơm trong thời gian quá dài. Hãy vô hiệu hóa chức năng này trong máy bơm hoặc tương tác với máy bơm";
 
 /* Alert title for basalCompare */
 "Basal Compare" = "Basal Compare";
@@ -358,13 +358,13 @@
 "Blood glucose Measure" = "Blood glucose Measure";
 
 /* Alert title for remainingInsulinLevel */
-"Remaining insulin level" = "Remaining insulin level";
+"Remaining insulin level" = "Mức insulin còn lại";
 
 /* Alert title for emptyReservoir */
 "Empty reservoir" = "Hết insulin";
 
 /* Alert body for emptyReservoir */
-"Reservoir is empty. Replace it now!" = "Reservoir is empty. Replace it now!";
+"Reservoir is empty. Replace it now!" = "Bình chứa đã cạn. Hãy thay thế ngay!";
 
 /* Alert title for emptyReservoir */
 "Check chaft" = "Check chaft";

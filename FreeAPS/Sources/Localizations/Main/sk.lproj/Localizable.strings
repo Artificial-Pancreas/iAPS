@@ -80,7 +80,7 @@
 "was delivered" = "bol doručený";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " pred niekoľkými minútami, spustené na diaľku z Nightscout, opatrovateľom alebo rodičom. Stále chcete podať bolus?\n\nPredpokladaná konečná glykémia, ak nepodáte bolus, je: ";
 
 /* Remote Bolus Alert, Title */
 "A Remote Bolus Was Just Delivered!" = "Vzdialený bolus bol doručený!";
@@ -477,7 +477,7 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Maximálna dávka bolusu";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Pred uložením nastavení skontrolujte, či ste zvolili správnu koncentráciu inzulínu.\n\nNa inzulínovej fľaštičke alebo pere by mala byť uvedená koncentrácia v jednotkách na mililiter (napr. 100U znamená 100 jednotiek na mililiter, čo je štandardná koncentrácia).\n\nPresný výber je rozhodujúci pre správne dávkovanie.";
 
 /* Insulin Concentration View */
 "Concentration" = "Koncentrácia";
@@ -1116,10 +1116,10 @@ Enact a temp Basal or a temp target */
 /* Suspend/Resume Shortcut */
 "Pump command" = "Pump command";
 /* Suspend/Resume Shortcut */
-"enacted in iAPS" = "enacted in iAPS";
+"enacted in iAPS" = "podané v iAPS";
 
 /* Temp Basal Shortcut */
-"Temp basal Amount in U/h" = "Temp basal Amount in U/h";
+"Temp basal Amount in U/h" = "Dočasné množstvo bazálu v U/h";
 
 
 
@@ -1320,7 +1320,7 @@ Enact a temp Basal or a temp target */
 "Pump is Busy." = "Pumpa je zaneprázdnená.";
 
 /* Alert when bolus is already in progress (tapping the bolus button) */
-"Bolus already in Progress!" = "Bolus already in Progress!";
+"Bolus already in Progress!" = "Podanie bolusu už prebieha!";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1479,7 +1479,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Prepísanie profilu";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Max Override 400%";
+"Max Override 400%" = "Maximálne prekročenie o 400%";
 
 /* */
 "Override Profiles" = "Profily prepísania";
@@ -2271,19 +2271,19 @@ Enact a temp Basal or a temp target */
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
 
-"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Pumpa Dana neumožňuje úpravu maximálneho bazálneho a maximálneho bolusu. Nakonfigurujte ich v lekárskych nastaveniach pumpy. Uložením nastavení sa načítajú posledné hodnoty z pumpy";
 
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamické ISF je vypnuté, ak je Auto ISF zapnuté";
 
 /* */
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Predvolená hodnota: 1,2 Horná hranica nastavenia ISF";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Default value: 0.8 The lower limit of ISF adjustment";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Predvolená hodnota: 0.8 Spodná hranica nastavenia ISF";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
