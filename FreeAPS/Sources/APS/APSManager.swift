@@ -372,10 +372,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let now = Date()
-        var temp = currentTemp(date: now)
-
-        // Adjust for concentration
-        temp.rate = adjustForConcentration(temp.rate)
+        let temp = currentTemp(date: now)
 
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
@@ -513,6 +510,7 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
+        let adjusted = pump.roundToSupportedBasalRate(unitsPerHour: rate * self.concentration.concentration)
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
             if let error = error {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
@@ -521,7 +519,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(
                     duration: Int(duration / 60),
-                    rate: Decimal(rate * self.concentration.concentration),
+                    rate: Decimal(adjusted),
                     temp: .absolute,
                     timestamp: Date()
                 )
@@ -762,7 +760,7 @@ final class BaseAPSManager: APSManager, Injectable {
         case .active:
             return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: date)
         case let .tempBasal(dose):
-            let rate = Decimal(dose.unitsPerHour)
+            let rate = adjustForConcentration(Decimal(dose.unitsPerHour))
             let durationMin = max(0, Int((dose.endDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60))
             return TempBasal(duration: durationMin, rate: rate, temp: .absolute, timestamp: date)
         default:
