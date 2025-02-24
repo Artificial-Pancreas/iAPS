@@ -200,6 +200,13 @@ extension OverrideProfilesConfig {
                                 }
                             }
                         }
+
+                        HStack {
+                            Toggle(isOn: $state.endWIthNewCarbs) {
+                                Text("End the Override with next Meal")
+                            }
+                        }
+
                         HStack {
                             Toggle(isOn: $state.isfAndCr) {
                                 Text("Change ISF and CR and Basal")
@@ -852,6 +859,7 @@ extension OverrideProfilesConfig {
             } else { saveOverride.target = 6 }
 
             saveOverride.advancedSettings = state.advancedSettings
+            saveOverride.endWIthNewCarbs = state.endWIthNewCarbs
             saveOverride.isfAndCr = state.isfAndCr
             if !state.isfAndCr {
                 saveOverride.isf = state.isf
