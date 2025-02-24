@@ -64,6 +64,7 @@
 		198FA7BA2D380790006858FD /* ChartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FA7B92D380790006858FD /* ChartModel.swift */; };
 		198FEED52D3F8C5900A67FAE /* LiveActivityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */; };
 		198FEED62D3F8C7900A67FAE /* LiveActivityChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198FEED32D3E93CC00A67FAE /* LiveActivityChart.swift */; };
+		1990DC532D6C1DDE00C4D967 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		1994DBE02C696A410076FCF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		1994DBE12C696FA10076FCF1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 198377D4266BFFF6004DE65E /* Localizable.strings */; };
 		199561C1275E61A50077B976 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 199561C0275E61A50077B976 /* HealthKit.framework */; };
@@ -2013,6 +2014,7 @@
 				19B0EF2028F6D66200069496 /* Statistics.swift */,
 				3871F38625ED661C0013ECB5 /* Suggestion.swift */,
 				38A0364125ED069400FCBB52 /* TempBasal.swift */,
+				19389E542D69393900636E49 /* TemporaryData.swift */,
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
@@ -2967,7 +2969,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19F855C12D6BFE04003BBDFA /* Assets.xcassets in Resources */,
+				1990DC532D6C1DDE00C4D967 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -111,7 +111,7 @@ extension Home {
             screenHours: 6,
             target: [],
             targetLines: false,
-            fpus: false
+            fpus: true
         )
 
         override func subscribe() {
