@@ -468,7 +468,7 @@ Enact a temp Basal or a temp target */
 "Duration of Insulin Action" = "Thời gian hoạt động của Insulin";
 
 /* hours of duration of insulin activity */
-"hours" = "giờ";
+"hours" = "hours";
 
 /* Max setting */
 "Max Basal" = "Liều nền tối đa";
@@ -703,7 +703,7 @@ Enact a temp Basal or a temp target */
 "Configure Libre Transmitter" = "Cấu hình Libre Transmitter";
 
 /* */
-"Calibrations" = "CalibrationsCalibrations";
+"Calibrations" = "Calibrations";
 
 /* */
 "Create Events in Calendar" = "Tạo sự kiện trong Calendar";
@@ -2891,6 +2891,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi số lượng dưới";
+
+/* UI/UX option */
+"Display carb equivalents" = "Hiển thị lượng carb tương đương";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
