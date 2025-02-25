@@ -913,7 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "SensorInfo";
 
 /* */
-"Sensor Age" = "Sensorålder";
+"Sensor Life-Span" = "Sensorlivslängd i dagar";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Vid användning av %@ känner iAPS inte till vilken typ av sensor som används eller sensorns livslängd.";
 
 /* */
 "Sensor Age Left" = "Sensortid kvar";
@@ -2265,6 +2268,11 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Loopstatus";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana-pumpen tillåter inte ändring av max basal och max bolus i iAPS. Ändra istället dessa inställningar på pumpen. När du klickar på spara kommer de senaste inställningarna att hämtas från pumpen";
+
 /* --------- Auto ISF --------- */
 /* */
 
@@ -2413,10 +2421,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Standardvärde: 0,0. Detta är den vikt som tillämpas på polygonen som justerar din insulinkänslighet vid höga blodsocker. Vid 0,0 är denna justering inaktiverad.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Maxjustering av insulinkänslighet per timme";
+"Duration Weight" = "Justering för långvarigt högt blodsocker";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Hastigheten med vilken din insulinkänslighet reduceras per timme förutsatt att blodsockernivån förblir dubbelt så hög som ditt målvärde vid tidpunkten. När värdet är 1,0 kommer insulinkänsligheten att reduceras till 50% efter 1 timme av blodsocker över dubbla målvärdet.";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Den vikt som tillämpas på ett långvarigt högt blodsocker. För varje timme som ditt blodsocker är för högt kommer din insulinkänslighet att justeras nedåt. \n\nFormeln för justering är:\n\nJustering = 1 + timmar över målvärde * vikt / målvärde * (genomsnittligt blodsocker - målvärde)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "Blodsockerintervall för SMB-kvot";
@@ -2870,6 +2878,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Visa exakt glukosförändring";
+
+/* UI/UX option */
+"Display Sensor Age" = "Visa sensorålder";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Dölj koncentrationsmärke";

@@ -913,7 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Информация о сенсоре";
 
 /* */
-"Sensor Age" = "Возраст сенсора";
+"Sensor Life-Span" = "Сенсор работает";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "При использовании %@ iAPS не может определить тип датчика или срок жизни датчика.";
 
 /* */
 "Sensor Age Left" = "Осталось";
@@ -2265,6 +2268,11 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Статус петли";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Помпа Dana не позволяет изменять значения максимального ВБС и максимального болюса. Настройте их в настройках помпы. При сохранении настроек будут получены последние значения из помпы";
+
 /* --------- Auto ISF --------- */
 /* */
 
@@ -2413,10 +2421,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значение по умолчанию: 0,0. Это вес, примененный к многоугольнику, который регулирует чувствительность к инсулину при высоком уровне сахара в крови. При значении 0,0 эта настройка отключена.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Максимальная регулировка ISF в час";
+"Duration Weight" = "Корректировка длительно повышенного уровня глюкозы";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Скорость, с которой снижается чувствительность к инсулину в час, при условии, что уровень сахара в крови в это время остается вдвое выше целевого значения. Если значение равно 1,0, чувствительность к инсулину снизится до 50% после того, как уровень глюкозы в крови в течение 1 часа превысит вдвое целевое значение.";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Вес, соответствующий длительно высокому уровню глюкозы в крови. С каждым часом, когда уровень глюкозы в крови остается слишком высоким, эта настройка будет снижать чувствительность к инсулину.\n\nФормула для Dura ISF корректировки такова:\n\nDura ISF = 1 + количество часов выше цели * вес / цель * (средняя глюкоза - целевая глюкоза)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "Диапазон уровня глюкозы в крови для SMB";
@@ -2479,7 +2487,7 @@ Enact a temp Basal or a temp target */
 " off" = " выкл.";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Изменить ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2870,6 +2878,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Отображать дельту глюкозы";
+
+/* UI/UX option */
+"Display Sensor Age" = "Отображать возраст датчика";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Скрыть значок концентрации";

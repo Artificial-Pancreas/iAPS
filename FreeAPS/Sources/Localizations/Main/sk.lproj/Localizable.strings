@@ -4,10 +4,10 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Pridávanie inzulínu bez skutočného podávania";
+"Add insulin without actually bolusing" = "Pridanie inzulínu bez podania bolusu";
 
 /* Add insulin from source outside of pump */
-"Add %@ without bolusing" = "Pridať %@ bez použitia bolusu";
+"Add %@ without bolusing" = "Pridať %@ bez podania bolusu";
 
 "Bolus" = "Dávka";
 
@@ -68,22 +68,22 @@
 "Agree and continue" = "Súhlasím a pokračovať";
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Záznam externého inzulínu";
 
 /* Bolus progress view */
 "of" = "z";
 
 /* Remote Bolus Alert, Part 1 */
-"A Remote Bolus " = "A Remote Bolus ";
+"A Remote Bolus " = "Vzdialený bolus ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "was delivered";
+"was delivered" = "bol doručený";
 
 /* Remote Bolus Alert, Part 3 */
-" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: ";
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " pred niekoľkými minútami, spustené na diaľku z Nightscout, opatrovateľom alebo rodičom. Stále chcete podať bolus?\n\nPredpokladaná konečná glykémia, ak nepodáte bolus, je: ";
 
 /* Remote Bolus Alert, Title */
-"A Remote Bolus Was Just Delivered!" = "A Remote Bolus Was Just Delivered!";
+"A Remote Bolus Was Just Delivered!" = "Vzdialený bolus bol doručený!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Uskutočnené o";
@@ -92,7 +92,7 @@
 "Suggested at" = "Navrhnuté o";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Stav o";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Sumár jedla";
@@ -113,7 +113,7 @@
 "Fatty Meal" = "Mastné jedlo";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Liečba hypoglykémie";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Celková dávka";
@@ -125,7 +125,7 @@
 "Fatty Meal Factor" = "Faktor mastného jedla";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Sacharidy a predchádzajúci inzulín sú zahrnuté v predpovedi glukózy.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Výsledok";
@@ -293,7 +293,7 @@
 "Rate" = "Hodnotenie";
 
 /*  */
-"Save on Pump" = "Ušetrite na čerpadle";
+"Save on Pump" = "Uložiť do pumpy";
 
 /*  */
 "Schedule" = "Plán";
@@ -402,19 +402,19 @@ Enact a temp Basal or a temp target */
 "Remote control" = "Vzdialené ovládanie";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Povoliť vzdialené ovládanie iAPS";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\\Teraz dôkladne skontrolujte všetky nové nastavenia:\n\n* Bazálne nastavenia\n * Pomery uhľohydrátov\n * Cieľové hodnoty glukózy\n * Citlivosť na inzulín\n * DIA\n\n v iAPS Nastavenia > Konfigurácia.\n\nZlé alebo neplatné nastavenia profilu by mohli mať škodlivé účinky.";
 
 /* Profile Import Alert */
-"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Tým sa nahradia niektoré alebo všetky aktuálne nastavenia čerpadla. Ste si istí, že chcete importovať nastavenia profilu z programu Nightscout?";
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Týmto sa nahradia niektoré alebo všetky aktuálne nastavenia pumpy. Ste si istí, že chcete importovať nastavenia profilu z programu Nightscout?";
 
 /* Import Error */
 "\nInvalid Nightcsout Basal Settings. \n\nImport aborted. Please check your Nightscout Profile Basal Settings!" = "\nNeplatné základné nastavenia Nightcsout. \n\nImport bol prerušený. Skontrolujte základné nastavenia svojho profilu Nightscout!";
 
 /* Import Error */
-"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nNastavenia boli importované, ale základné údaje nebolo možné uložiť do čerpadla (žiadne čerpadlo). Skontrolujte bazálne nastavenia a klepnutím na ´Uložiť na pumpe´ synchronizujte nové bazálne nastavenia";
+"\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nNastavenia boli importované, ale základné údaje nebolo možné uložiť do pumpy (žiadna pumpa). Skontrolujte bazálne nastavenia a klepnutím na ´Uložiť na pumpe´ synchronizujte nové bazálne nastavenia";
 
 /* Import Error Headline */
 "Import Error" = "Chyba importu";
@@ -477,56 +477,56 @@ Enact a temp Basal or a temp target */
 "Max Bolus" = "Maximálna dávka bolusu";
 
 /* Insulin alert message */
-"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Pred uložením nastavení skontrolujte, či ste zvolili správnu koncentráciu inzulínu.\n\nNa inzulínovej fľaštičke alebo pere by mala byť uvedená koncentrácia v jednotkách na mililiter (napr. 100U znamená 100 jednotiek na mililiter, čo je štandardná koncentrácia).\n\nPresný výber je rozhodujúci pre správne dávkovanie.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Koncentrácia";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Koncentrácia inzulínu";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Zmeniť inzulín";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Inzulín zriedený na";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "štandardná koncentrácia:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "jednotiek na ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Štandardná koncentrácia (100 U)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Koncentrácia inzulínu zvýšená na";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Nepodarilo sa uložiť do pumpy. Skúste to znova, keď pumpa nebude podávať bolus.";
 
 /* Insulin Concentration View */
-"Saved" = "Saved";
+"Saved" = "Uložené";
 
 /* Label inusulin concentration, units per ml */
-"U100" = "U100";
+"U100" = "100 U";
 
 /* Label inusulin concentration, units per ml */
-"U200" = "U200";
+"U200" = "200 U";
 
 /* Label inusulin concentration, units per ml */
-"U50" = "U50";
+"U50" = "50 U";
 
 /* Label inusulin concentration, units per ml */
-"U10" = "U10";
+"U10" = "10 U";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Povoliť nastavenie koncentrácie zriedeného inzulínu";
 /* Max setting */
 "Max Carbs" = "Maximum sacharidov";
 
 /* Max carbs description */
-"Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
+"Maximum amount of carbs (g) you can add each entry" = "Maximálne množstvo sacharidov (g), ktoré môžete pridať do každej položky";
 
 /* */
 "Pump Settings" = "Nastavenia pumpy";
@@ -688,7 +688,7 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Ošetrenia";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Liečba";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -913,7 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Informácie o senzore";
 
 /* */
-"Sensor Age" = "Vek senzora";
+"Sensor Life-Span" = "Životnosť senzora";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
 
 /* */
 "Sensor Age Left" = "Zostávajúci vek senzora";
@@ -1042,25 +1045,25 @@ Enact a temp Basal or a temp target */
 "glucose" = "glukóza";
 
 /* Bolus shortcut */
-"Enter a Bolus Amount" = "Enter a Bolus Amount";
+"Enter a Bolus Amount" = "Zadajte veľkosť bolusu";
 
 /* Bolus shortcut */
 "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
 
 /* Bolus shortcut */
-"A bolus command of " = "A bolus command of ";
+"A bolus command of " = "Príkaz bolus ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U inzulínu bolo odoslaných do iAPS. Overte v aplikácii iAPS alebo v aplikácii Nightscout, či bol bolus doručený.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "prilíš malá veľkosť bolusu";
 
 /* Bolus shortcut. Error */
-"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
+"Bolus Shortcuts are disabled in iAPS settings" = "Skratky pre bolus sú vypnuté v nastaveniach iAPS";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Veľkosť bolusu v U";
 
 /* Bolus shortcut. Setting */
 "Allow iOS Bolus Shortcuts" = "Povoliť iOS Bolus Skratky";
@@ -1072,7 +1075,7 @@ Enact a temp Basal or a temp target */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
 
 /* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+"Max allowed bolus amount using shortcuts " = "Maximálná veľkosť bolusu pomocou Skratiek ";
 
 /* Bolus shortcut. Error */
 "not available" = "nie je k dispozícii";
@@ -1090,7 +1093,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
 
 /* Override Shortcut */
-"The Profile Override" = "The Profile Override";
+"The Profile Override" = "Prepísanie profilu";
 
 /* Override Shortcut */
 "is now activated" = "je teraz aktivovaný";
@@ -1099,13 +1102,13 @@ Enact a temp Basal or a temp target */
 "Cancel active override" = "Zrušiť prepísanie profilu";
 
 /* Override Shortcut */
-"Override canceled" = "Override canceled";
+"Override canceled" = "Prepísanie zrušené";
 
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Activates an %@ Override Preset";
 
 /* Suspend/Resume Shortcut */
-"Choose what to do with your pump" = "Choose what to do with your pump";
+"Choose what to do with your pump" = "Vyberte si, čo chcete s pumpou urobiť";
 
 /* Suspend/Resume Shortcut */
 "Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
@@ -1113,10 +1116,10 @@ Enact a temp Basal or a temp target */
 /* Suspend/Resume Shortcut */
 "Pump command" = "Pump command";
 /* Suspend/Resume Shortcut */
-"enacted in iAPS" = "enacted in iAPS";
+"enacted in iAPS" = "podané v iAPS";
 
 /* Temp Basal Shortcut */
-"Temp basal Amount in U/h" = "Temp basal Amount in U/h";
+"Temp basal Amount in U/h" = "Dočasné množstvo bazálu v U/h";
 
 
 
@@ -1241,7 +1244,7 @@ Enact a temp Basal or a temp target */
 "Max Bolus exceeded!" = "Maximálny bolus prekročený!";
 
 /* */
-"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus zlyhal alebo bol nepresný. Pred opakovaním skontrolujte históriu čerpadla.";
+"Bolus failed or inaccurate. Check pump history before repeating." = "Bolus zlyhal alebo bol nepresný. Pred opakovaním skontrolujte históriu pumpy.";
 
 /* */
 "Carbs" = "Sacharidy";
@@ -1314,10 +1317,10 @@ Enact a temp Basal or a temp target */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle";
 
 /* Pump Error */
-"Pump is Busy." = "Pump is Busy.";
+"Pump is Busy." = "Pumpa je zaneprázdnená.";
 
 /* Alert when bolus is already in progress (tapping the bolus button) */
-"Bolus already in Progress!" = "Bolus already in Progress!";
+"Bolus already in Progress!" = "Podanie bolusu už prebieha!";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1343,7 +1346,7 @@ Enact a temp Basal or a temp target */
 "Save as your Normal Basal Rates" = "Uložiť ako normálne bazálne sadzby";
 
 /* */
-"Save on Pump" = "Ušetrite na čerpadle";
+"Save on Pump" = "Uložiť do pumpy";
 
 /* Debug option view Pump History */
 "Pump History" = "História pumpy";
@@ -1476,7 +1479,7 @@ Enact a temp Basal or a temp target */
 "Profile Override" = "Prepísanie profilu";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Max Override 400%";
+"Max Override 400%" = "Maximálne prekročenie o 400%";
 
 /* */
 "Override Profiles" = "Profily prepísania";
@@ -1517,7 +1520,7 @@ Enact a temp Basal or a temp target */
 "Schedule when SMBs are Off" = "Plán, kedy sú SMB vypnuté";
 
 /* */
-"Change ISF and CR and Basal" = "Change ISF and CR and Basal";
+"Change ISF and CR and Basal" = "Zmeniť ISF, CR a bazál";
 
 /* */
 "Change ISF" = "Zmena ISF";
@@ -1595,10 +1598,10 @@ Enact a temp Basal or a temp target */
 "Back" = "Späť";
 
 /* Search Saved Food presets */
-"Search" = "Search";
+"Search" = "Vyhľadávanie";
 
 /* Placeholder for name of dish when adding a new food preset */
-"New" = "New";
+"New" = "Nový";
 
 /* */
 "Empty" = "Prázdny";
@@ -1628,10 +1631,10 @@ Enact a temp Basal or a temp target */
 "Now" = "Teraz";
 
 /* Display future data table entries */
-"Show Future" = "Show Future";
+"Show Future" = "Zobraziť budúce";
 
 /* Hide future data table entries */
-"Hide Future" = "Hide Future";
+"Hide Future" = "Skryť budúce";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1910,7 +1913,7 @@ Enact a temp Basal or a temp target */
 "Time In Range" = "Čas v rozmedzí";
 
 /* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
+"Average Interval" = "Priemerný interval";
 
 /* Median BG */
 "Median" = "Medián";
@@ -1958,7 +1961,7 @@ Enact a temp Basal or a temp target */
 "Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
+"Most Frequent Error" = "Najčastejšia chyba";
 
 /* Loop Statistics pop-up */
 "Non-completed Loops" = "Non-completed Loops";
@@ -2009,31 +2012,31 @@ Enact a temp Basal or a temp target */
 "all" = "všetko";
 
 /* Active Insulin View */
-"Active Insulin" = "Active Insulin";
+"Active Insulin" = "Aktívny inzulín";
 
 /* Active Insulin View */
-"Time with negative insulin" = "Time with negative insulin";
+"Time with negative insulin" = "Čas s negatívnym inzulínom";
 
 /* Active Insulin View */
-"Insulin compared to yesterday" = "Insulin compared to yesterday";
+"Insulin compared to yesterday" = "Inzulín v porovnaní so včerajškom";
 
 /* Active Insulin View */
-"Insulin compared to average" = "Insulin compared to average";
+"Insulin compared to average" = "Inzulín v porovnaní s priemerom";
 
 /* Active Insulin View */
-"Average Insulin 10 days" = "Average Insulin 10 days";
+"Average Insulin 10 days" = "Priemerný inzulín za 10 dní";
 
 /* Active Insulin View */
-"TDD yesterday" = "TDD yesterday";
+"TDD yesterday" = "TDD včera";
 
 /* Active Insulin View */
-"TDD 2 days ago" = "TDD 2 days ago";
+"TDD 2 days ago" = "TDD pred 2 dňami";
 
 /* Active Insulin View */
-"TDD 3 days ago" = "TDD 3 days ago";
+"TDD 3 days ago" = "TDD pred 3 dňami";
 
 /* Active Carbohydrates View */
-"Active Carbohydrates" = "Active Carbohydrates";
+"Active Carbohydrates" = "Aktívne sacharidy";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2054,19 +2057,19 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* Setting Title */
 
-"Sharing" = "Sharing";
+"Sharing" = "Zdieľanie";
 
 /* Share and Backup page header */
-"Share and Backup" = "Share and Backup";
+"Share and Backup" = "Zdieľanie a zálohovanie";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload settings and statistics" = "Nahrať nastavenia a štatistiky";
 
 /* On-off toggle */
-"Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
+"Share and Backup all of your Settings and Statistics" = "Zdieľanie a zálohovanie Vašich nastavení a štatistík";
 
 /* Title of dropdown menu */
-"Sex" = "Sex";
+"Sex" = "Pohlavie";
 
 /* Sex dropdown menu option */
 "Woman" = "Žena";
@@ -2087,7 +2090,7 @@ Enact a temp Basal or a temp target */
 "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view.";
 
 /* Section title if sharing off */
-"Share Bare Minimum" = "Share Bare Minimum";
+"Share Bare Minimum" = "Zdieľať základné údaje";
 
 /* Minimum share toggle */
 "Just iAPS version number" = "Len číslo verzie iAPS";
@@ -2096,60 +2099,60 @@ Enact a temp Basal or a temp target */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token.";
 
 /* Token section title */
-"Your recovery token" = "Your recovery token";
+"Your recovery token" = "Váš token pre obnovu";
 
 /* Token display button */
-"Tap to display" = "Tap to display";
+"Tap to display" = "Klepnutím zobrazíte";
 
 /* Token copy button */
-"Long press to copy" = "Long press to copy";
+"Long press to copy" = "Dlhým stlačením skopírujete";
 
 /* Link to statistics button */
-"View Personal Statistics" = "View Personal Statistics";
+"View Personal Statistics" = "Zobraziť osobné štatistiky";
 
 /* */
-"Your identifier" = "Your identifier";
+"Your identifier" = "Váš identifkátor";
 
 /* */
-"Share your data anonymously" = "Share your data anonymously";
+"Share your data anonymously" = "Anonymné zdieľanie Vašich dát";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Contact";
+"Contact" = "Kontakt";
 
 /* Contact Image, settings, header of the contacts list */
-"Contacts" = "Contacts";
+"Contacts" = "Kontakty";
 
 /* Contact Image, settings, save your changes reminedr */
-"Don't forget to save your changes." = "Don't forget to save your changes.";
+"Don't forget to save your changes." = "Nezabudni uložiť Vaše zmeny.";
 
 /* Contact Image, settings, message about need to access contacts */
-"iAPS needs access to your contacts for this feature to work" = "iAPS needs access to your contacts for this feature to work";
+"iAPS needs access to your contacts for this feature to work" = "Aby táto funkcia fungovala, iAPS potrebuje prístup k vašim kontaktom.";
 
 /* Contact Image, settings, button to grant access to contacts */
-"Grant iAPS access to contacts" = "Grant iAPS access to contacts";
+"Grant iAPS access to contacts" = "Povoliť iAPS prístup ku kontaktom";
 
 /* Contact Image, settings, message when access to contacts denied */
-"Access to contacts denied" = "Access to contacts denied";
+"Access to contacts denied" = "Prístup ku kontaktom nie je povolený";
 
 /* Contact Image, settings, message when access to contacts restricted */
-"Access to contacts is restricted (parental control?)" = "Access to contacts is restricted (parental control?)";
+"Access to contacts is restricted (parental control?)" = "Prístup ku kontaktom je obmedzený (rodičovská ochrana?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Access to contacts - unknown state";
+"Access to contacts - unknown state" = "Prístup ku kontaktom - neznámy stav";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Obrázok kontaktu môžete použiť na získavanie živých aktualizácií z iAPS do komplikácie Kontakt v hodinkách Apple Watch a/alebo do miniaplikácie Kontakt v iPhone.";
 
 /* Contact Image, settings, main header */
-"Contact Image" = "Contact Image";
+"Contact Image" = "Obrázok kontaktu";
 
 /* Contact Image, settings, label for the layout picker */
-"Layout" = "Layout";
+"Layout" = "Rozloženie";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Single";
+"Single" = "Jednoduchý";
 
 /* Contact Image, settings, split layout name */
 "Split" = "Rozdelenie";
@@ -2179,7 +2182,7 @@ Enact a temp Basal or a temp target */
 "Bottom" = "Dole";
 
 /* Contact Image, settings, header for the outer ring section */
-"Ring" = "Ring";
+"Ring" = "Kruh";
 
 /* Contact Image, settings, label for the outer ring picker */
 "Outer" = "Vonkajšie";
@@ -2194,10 +2197,10 @@ Enact a temp Basal or a temp target */
 "Font" = "Písma";
 
 /* Contact Image, settings, label for the font size picker */
-"Size" = "Size";
+"Size" = "Veľkosť";
 
 /* Contact Image, settings, label for the secondary font size picker */
-"Secondary size" = "Secondary size";
+"Secondary size" = "Sekundárna veľkosť";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
 "Tracking" = "Tracking";
@@ -2206,7 +2209,7 @@ Enact a temp Basal or a temp target */
 "Weight" = "Váha";
 
 /* Contact Image, settings, label for the dark-mode switcher */
-"Dark mode" = "Dark mode";
+"Dark mode" = "Tmavý režim";
 
 /* Contact Image, settings, tighter font tracking */
 "TighterFontTracking" = "Tighter";
@@ -2265,17 +2268,22 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Loop stav";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Pumpa Dana neumožňuje úpravu maximálneho bazálneho a maximálneho bolusu. Nakonfigurujte ich v lekárskych nastaveniach pumpy. Uložením nastavení sa načítajú posledné hodnoty z pumpy";
+
 /* --------- Auto ISF --------- */
 /* */
 
-"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamic ISF is disabled while Auto ISF is enabled";
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamické ISF je vypnuté, ak je Auto ISF zapnuté";
 
 /* */
-"Default value: 1.2 The upper limit of ISF adjustment" = "Default value: 1.2 The upper limit of ISF adjustment";
+"Default value: 1.2 The upper limit of ISF adjustment" = "Predvolená hodnota: 1,2 Horná hranica nastavenia ISF";
 
 
 /* */
-"Default value: 0.8 The lower limit of ISF adjustment" = "Default value: 0.8 The lower limit of ISF adjustment";
+"Default value: 0.8 The lower limit of ISF adjustment" = "Predvolená hodnota: 0.8 Spodná hranica nastavenia ISF";
 
 /* */
 "Auto ISF Max" = "Auto ISF Max";
@@ -2413,10 +2421,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
+"Duration Weight" = "Duration Weight";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
@@ -2473,13 +2481,13 @@ Enact a temp Basal or a temp target */
 "Auto ISF" = "Auto ISF";
 
 /* Is true */
-" on" = " on";
+" on" = " zapnuté";
 
 /* Is false */
-" off" = " off";
+" off" = " vypnuté";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Prispôsobiť ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2789,13 +2797,13 @@ Enact a temp Basal or a temp target */
 "Averages" = "Averages";
 
 /* Dynamic settings View */
-"Average ISF" = "Average ISF";
+"Average ISF" = "Priemerné ISF";
 
 /* Dynamic settings View */
-"Average CR" = "Average CR";
+"Average CR" = "Priemerné CR";
 
 /* Dynamic settings View */
-"Average CSF" = "Average CSF";
+"Average CSF" = "Priemerné CSF";
 
 /* Dynamic settings View */
 "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR";
@@ -2869,16 +2877,19 @@ Enact a temp Basal or a temp target */
 "Disable Hypo Treatments" = "Disable Hypo Treatments";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Display Glucose Delta";
+"Display Glucose Delta" = "Zobraziť zmenu glukózy";
 
 /* UI/UX option */
-"Hide Concentration Badge" = "Hide Concentration Badge";
+"Display Sensor Age" = "Zobraziť vek senzora";
 
 /* UI/UX option */
-"Use insulin bars" = "Use insulin bars";
+"Hide Concentration Badge" = "Skryť informáciu o koncentrácií";
 
 /* UI/UX option */
-"Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
+"Use insulin bars" = "Použiť inzulínové čiary";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Skryť veľkosť bolusu, ak je množstvo nižšie";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
@@ -2920,7 +2931,7 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Predvolená hodnota je 0,2 (20%). Maximálna kladná percentuálna zmena úrovne BG na použitie SMB, pri prekročení tejto hodnoty sa SMB vypne. Pevne nastavený limit 40 %. Pre plne uzavretú slučku UAM sa odporúča 30 %. Pozorujte v protokole a vyskakovacom okne (maxDelta 27 > 20% BG 100 - vypnutie SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... When Blood Glucose Is Above:";
+"... When Blood Glucose Is Above:" = "... Ak je hladina glukózy v krvi vyššia ako:";
 
 /* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Nastavenie hodnoty enableSMB_high_bg, s ktorou sa bude porovnávať povolenie SMB. Ak je BG > ako táto hodnota, SMB by sa mali povoliť.";

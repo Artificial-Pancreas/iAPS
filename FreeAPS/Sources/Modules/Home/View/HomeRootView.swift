@@ -770,7 +770,7 @@ extension Home {
                                 }
 
                                 // IOB Chart
-                                if state.iobs > 0 {
+                                if !state.iobData.isEmpty {
                                     activeIOBView
                                 }
 

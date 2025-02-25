@@ -1,14 +1,14 @@
 /* Generic loading text */
-"loading" = "loading";
+"loading" = "đang tải";
 
 /* Generic Continue text */
-"Continue" = "Continue";
+"Continue" = "Tiếp tục";
 
 /* Title for DanaKitSetupView */
-"Dana-i/RS Setup" = "Dana-i/RS Setup";
+"Dana-i/RS Setup" = "Thiết lập Dana-i/RS";
 
 /* Subtitle for DanaKitSetupView */
-"Select your pump" = "Select your pump";
+"Select your pump" = "Chọn máy bơm của bạn";
 
 /* danaRS v1 option text for DanaKitSetupView */
 "DanaRS-v1" = "DanaRS-v1";
@@ -20,76 +20,76 @@
 "Dana-i" = "Dana-i";
 
 /* Title for danars v1 explaination */
-"Setting up DanaRS v1" = "Setting up DanaRS v1";
+"Setting up DanaRS v1" = "Thiết lập DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Trong quá trình ghép nối, DanaRS v1 của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép nối. Trên máy bơm của bạn, hãy chọn OK và nhập mã trên iPhone của bạn. Sau đó, Loop đã sẵn sàng giao tiếp với DanaRS v1 của bạn";
 
 /* check password text for danars v1 */
-"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it";
+"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Trước khi bắt đầu quá trình ghép nối, bạn nên kiểm tra và nếu cần hãy cập nhật mật khẩu máy bơm. Bạn có thể thực hiện việc này bằng cách vào pump settings -> user settings -> password. Mật khẩu mặc định là 1234, nếu đây là mật khẩu của bạn, vui lòng cân nhắc thay đổi mật khẩu";
 
 /* Title for danars v1 password */
-"Password DanaRS v1" = "Password DanaRS v1";
+"Password DanaRS v1" = "Mật khẩu DanaRS v1";
 
 /* password placeholder danars v1 */
-"Fill in password" = "Fill in password";
+"Fill in password" = "Điền mật khẩu";
 
 /* Title for danars v3 explaination */
-"Setting up DanaRS v3" = "Setting up DanaRS v3";
+"Setting up DanaRS v3" = "Thiết lập DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Trong quá trình ghép nối, DanaRS v3 của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép nối. Trên máy bơm của bạn, hãy chọn OK và nhập mã trên iPhone của bạn. Sau đó, Loop đã sẵn sàng giao tiếp với DanaRS v3 của bạn";
 
 /* Title for dana-i explaination */
-"Setting up Dana-i" = "Setting up Dana-i";
+"Setting up Dana-i" = "Thiết lập Dana-i";
 
 /* General subtext for dana */
-"After setting up the insulin type and bolus speed, you will see all the found Dana pumps. Select the pump you want to link with %1$@." = "After setting up the insulin type and bolus speed, you will see a screen with all found Dana pumps. Select the pump you want to link with %1$@.";
+"After setting up the insulin type and bolus speed, you will see all the found Dana pumps. Select the pump you want to link with %1$@." = "Sau khi thiết lập loại insulin và tốc độ bolus, bạn sẽ thấy màn hình với tất cả các máy bơm Dana được tìm thấy. Chọn máy bơm bạn muốn liên kết với %1$@.";
 
 /* Subtext for dana-i */
-"During the pairing process, your Dana-i will show a pairing prompt while your iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "During the pairing process, your Dana-i will show a pairing prompt while your iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i";
+"During the pairing process, your Dana-i will show a pairing prompt while your iPhone will show a prompt for a pairing code. On you pump, select OK and type the 6-digit code in screen on your iPhone. After that, %1$@ is ready to communicate with your Dana-i" = "Trong quá trình ghép nối, Dana-i của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép nối. Trên máy bơm của bạn, hãy chọn OK và nhập mã gồm 6 chữ số vào màn hình trên iPhone của bạn. Sau đó, %1$@ đã sẵn sàng giao tiếp với Dana-i của bạn";
 
 /* Dana-i/RS invalid ble5 keys */
-"ERROR: Failed to pair device" = "ERROR: Failed to pair device";
+"ERROR: Failed to pair device" = "LỖI: Không ghép nối được thiết bị";
 
 /* Dana-i oke invalid ble5 keys */
 "OK" = "OK";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Hủy bỏ";
 
 /* Title for DanaKitScanView */
-"Found Dana-i/RS pumps" = "Found Dana-i/RS pumps";
+"Found Dana-i/RS pumps" = "Đã tìm thấy Dana-i";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Scanning";
+"Scanning" = "Đang quét";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Connecting";
+"Connecting" = "Đang kết nối";
 
 /* Title text for insulin type confirmation page */
-"Select the type of insulin that you will be using in this pump" = "Select the type of insulin that you will be using in this pump";
+"Select the type of insulin that you will be using in this pump" = "Chọn loại insulin mà bạn sẽ sử dụng trong máy bơm này";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Remove Pump";
+"Remove Pump" = "Thay bơm";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
-"Are you sure you want to stop using Dana-i/RS?" = "Are you sure you want to stop using Dana-i/RS?";
+"Are you sure you want to stop using Dana-i/RS?" = "Bạn có chắc chắn muốn ngừng sử dụng Dana-i không?";
 
 /* Button text to confirm Dana-i/RS PumpManager deletion */
-"Delete pump" = "Delete pump";
+"Delete pump" = "Xóa bơm";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Delete Pump";
+"Delete Pump" = "Xóa bơm";
 
 /* Connection error message */
-"Error while connecting to device" = "Error while connecting to device";
+"Error while connecting to device" = "Lỗi khi kết nối với thiết bị";
 
 /* Dana-RS v3 found */
-"Dana-RS v3 found!" = "Dana-RS v3 found!";
+"Dana-RS v3 found!" = "Đã tìm thấy Dana-RS v3!";
 
 /* Dana-RS v3 pincode prompt body */
-"Pincode required" = "Pincode required";
+"Pincode required" = "Yêu cầu mã Pin";
 
 /* Dana-RS v3 pincode prompt pin 1 */
 "Pin 1" = "Pin 1";
@@ -98,10 +98,10 @@
 "Pin 2" = "Pin 2";
 
 /* Dana-RS v3 pincode prompt error invalid length */
-"Received invalid pincode lengths. Try again" = "Received invalid pincode lengths. Try again";
+"Received invalid pincode lengths. Try again" = "Độ dài mã pin không hợp lệ. Hãy thử lại";
 
 /* Dana-RS v3 pincode prompt error invalid hex */
-"Received invalid hex strings. Try again" = "Received invalid hex strings. Try again";
+"Received invalid hex strings. Try again" = "Chuỗi hex không hợp lệ. Hãy thử lại";
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Checksum failed. Try again";
@@ -122,7 +122,7 @@
 "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu";
 
 /* Text for finish button */
-"Finish" = "Finish";
+"Finish" = "Hoàn thành";
 
 /* Dana setup complete p1 */
 "Your " = "Your ";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Please consider changing your dosing strategy in the setting menu";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Resume delivery";
+"Resume delivery" = "Tiếp tục lại việc tiêm insulin";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Suspend delivery";
@@ -185,28 +185,28 @@
 "Stop temp basal" = "Stop temp basal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "Loại Insulin";
 
 /* Title for insulin type */
 "Select insulin Type" = "Select insulin Type";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Scheduled Basal";
+"Scheduled Basal" = "Đã lên chương trình cho liều Basal";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Insulin Delivery";
+"Insulin Delivery" = "Khối lượng tiêm insulin";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insulin\nSuspended";
+"Insulin\nSuspended" = "Insulin\n Đã tạm ngưng";
 
 /* Text shown in basal rate space when delivery status is unknown */
-"Unknown" = "Unknown";
+"Unknown" = "Không xác định";
 
 /* Units for showing temp basal rate */
 "U/hr" = "U/hr";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Insulin Remaining";
+"Insulin Remaining" = "Insulin còn lại";
 
 /* Text for Dana pump name */
 "Pump name" = "Pump name";
@@ -238,22 +238,22 @@
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
    title for time change detected notice */
-"Time Change Detected" = "Time Change Detected";
+"Time Change Detected" = "Đã phát hiện thay đổi thời gian";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Bạn có muốn cập nhật thời gian trên máy bơm của mình đến thời điểm hiện tại không?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Thời gian trên máy bơm của bạn khác với thời gian hiện tại. Thời gian của máy bơm sẽ kiểm soát cài đặt trị liệu theo lịch trình của bạn. Cuộn xuống đến Pump Time để xem lại chênh lệch thời gian và cấu hình bơm của bạn.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "Có, đồng bộ với thời gian hiện tại";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "Không, Giữ nguyên";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Bolus";
+"Bolus" = "Liều bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
 "Temp Basal" = "Temp Basal";
@@ -262,10 +262,10 @@
 "Basal" = "Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Resume";
+"Resume" = "Tiếp tục";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Suspend";
+"Suspend" = "Đã tạm ngưng";
 
 /* Title for user options */
 "User options" = "User options";
@@ -277,7 +277,7 @@
 "Loading" = "Loading";
 
 /* Text for save button */
-"Save" = "Save";
+"Save" = "Lưu";
 
 /* Text for 24h display */
 "24h display" = "24h display";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Should time be display in 12h or 24h";
 
 /* text on */
-"On" = "On";
+"On" = "Bật";
 
 /* text off */
-"Off" = "Off";
+"Off" = "Tắt";
 
 /* 12h */
 "12h notation" = "12h notation";
@@ -325,7 +325,7 @@
 "Pump battery 0%" = "Pump battery 0%";
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Pump battery is empty. Replace it now!";
+"Pump battery is empty. Replace it now!" = "Pin của máy bơm đã hết. Hãy thay ngay!";
 
 /* Alert title for pumpError */
 "Pump error" = "Pump error";
@@ -337,19 +337,19 @@
 "Occlusion" = "Occlusion";
 
 /* Alert body for occlusion */
-"Check the reservoir and infus and try again" = "Check the reservoir and infus and try again";
+"Check the reservoir and infus and try again" = "Hãy Kiểm tra bình chứa và dây truyền và thử lại";
 
 /* Alert title for lowBattery */
-"Low pump battery" = "Low pump battery";
+"Low pump battery" = "Pin của bơm yếu";
 
 /* Alert body for lowBattery */
-"Pump battery needs to be replaced soon" = "Pump battery needs to be replaced soon";
+"Pump battery needs to be replaced soon" = "Pin máy bơm cần được thay thế sớm";
 
 /* Alert title for shutdown */
 "Pump shutdown" = "Pump shutdown";
 
 /* Alert body for shutdown */
-"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump";
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Đã không có bất kỳ tương tác nào với máy bơm trong thời gian quá dài. Hãy vô hiệu hóa chức năng này trong máy bơm hoặc tương tác với máy bơm";
 
 /* Alert title for basalCompare */
 "Basal Compare" = "Basal Compare";
@@ -358,13 +358,13 @@
 "Blood glucose Measure" = "Blood glucose Measure";
 
 /* Alert title for remainingInsulinLevel */
-"Remaining insulin level" = "Remaining insulin level";
+"Remaining insulin level" = "Mức insulin còn lại";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Empty reservoir";
+"Empty reservoir" = "Hết insulin";
 
 /* Alert body for emptyReservoir */
-"Reservoir is empty. Replace it now!" = "Reservoir is empty. Replace it now!";
+"Reservoir is empty. Replace it now!" = "Bình chứa đã cạn. Hãy thay thế ngay!";
 
 /* Alert title for emptyReservoir */
 "Check chaft" = "Check chaft";
@@ -417,14 +417,14 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "No Insulin";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulin Suspended";
+"Insulin Suspended" = "Đã tạm dừng cấp liều Insulin";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Signal Loss";
+"Signal Loss" = "Mất tín hiệu";
 
 /* Text for Day unit */
 "day(s)" = "day(s)";
@@ -436,7 +436,7 @@
 "Reservoir age" = "Reservoir age";
 
 /* Text for status */
-"Status" = "Status";
+"Status" = "Tình trạng";
 
 /* DanaKit disconnecting */
 "Disconnecting..." = "Disconnecting...";
@@ -451,10 +451,10 @@
 "Reconnect tp pump" = "Reconnect tp pump";
 
 /* DanaKit disconnected */
-"Disconnected" = "Disconnected";
+"Disconnected" = "Đã ngắt kết nối";
 
 /* DanaKit connected */
-"Connected" = "Connected";
+"Connected" = "Đã kết nối";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "Pump is still disconnected";
@@ -529,7 +529,7 @@
 "Basal profile" = "Basal profile";
 
 /* Text for Battery level */
-"Battery level" = "Battery level";
+"Battery level" = "Mức pin";
 
 /* The title of the configuration section in DanaKit settings */
 "Configuration" = "Configuration";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
+
+/* Battery age */
+"Battery age" = "Battery age";

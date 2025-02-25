@@ -2,7 +2,7 @@
 "loading" = "cargando";
 
 /* Generic Continue text */
-"Continue" = "Continúe en";
+"Continue" = "Continuar";
 
 /* Title for DanaKitSetupView */
 "Dana-i/RS Setup" = "Configuración de Dana-i/RS";
@@ -62,16 +62,16 @@
 "Found Dana-i/RS pumps" = "Encontradas bombas Dana-i/RS";
 
 /* Dana-i/RS connecting alert title */
-"Scanning" = "Escaneado";
+"Scanning" = "Buscando";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "Conexión";
+"Connecting" = "Conectando";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Seleccione el tipo de insulina que utilizará en esta bomba";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Quitar la bomba";
+"Remove Pump" = "Retire la bomba";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "¿Estás seguro de que quieres dejar de utilizar Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Borrar bomba";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Borrar bomba";
+"Delete Pump" = "Eliminar Microinfusora";
 
 /* Connection error message */
 "Error while connecting to device" = "Error al conectar con el dispositivo";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Por favor, considere cambiar su estrategia de dosificación en el menú de configuración";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Entrega de currículum";
+"Resume delivery" = "Reanudar la entrega de insulina";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Suspender la entrega";
@@ -185,13 +185,13 @@
 "Stop temp basal" = "Parada temp basal";
 
 /* Text for confidence reminders navigation link */
-"Insulin Type" = "Tipo de insulina";
+"Insulin Type" = "Tipo de Insulina";
 
 /* Title for insulin type */
 "Select insulin Type" = "Seleccione el tipo de insulina";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Basal programado";
+"Scheduled Basal" = "Basal programada";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Administración de insulina";
@@ -241,13 +241,13 @@
 "Time Change Detected" = "Cambio de hora detectado";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "La hora de la bomba es diferente de la hora actual. Desea actualizar la hora de su bomba a la hora actual?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "La hora de la bomba es diferente de la hora actual. ¿Desea actualizar la hora de su bomba a la hora actual?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "La hora de su bomba es diferente de la hora actual. La hora de su bomba controla los ajustes programados de su terapia. Desplácese hacia abajo hasta la fila Hora de la bomba para revisar la diferencia horaria y configurar su bomba.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "La hora de su bomba es diferente de la hora actual. La hora de su bomba controla los ajustes programados de su terapia. Desplácese hacia abajo hasta la fila que muestra la Hora de la Bomba para revisar la diferencia horaria y configurar su bomba.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Sí, sincronización con la hora actual";
+"Yes, Sync to Current Time" = "Sí, sincronizar con la hora actual";
 
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "No, mantenga la bomba como está";
@@ -256,13 +256,13 @@
 "Bolus" = "Bolo";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Temp Basal";
+"Temp Basal" = "Insulina basal temporal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Basal";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Currículum";
+"Resume" = "Reanudar";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
 "Suspend" = "Suspender";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "La hora debe mostrarse en 12h o 24h";
 
 /* text on */
-"On" = "En";
+"On" = "Encendido";
 
 /* text off */
-"Off" = "Fuera de";
+"Off" = "Apagado";
 
 /* 12h */
 "12h notation" = "Notación 12h";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Nivel de insulina restante";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Depósito vacío";
+"Empty reservoir" = "Reservorio vacío";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "El depósito está vacío. Sustitúyalo ahora.";
@@ -417,10 +417,10 @@
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "Sin insulina";
+"No Insulin" = "No hay insulina";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Insulina Suspendida";
+"Insulin Suspended" = "Insulina suspendida";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Las bombas Dana admiten diferentes velocidades de suministro. Puede configurarlo aquí";
 
 /* Text for Basal profile */
-"Basal profile" = "Perfil basal";
+"Basal profile" = "Perfil de basal";
 
 /* Text for Battery level */
-"Battery level" = "Nivel de batería";
+"Battery level" = "Nivel de bateria";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Configuración";
+"Configuration" = "Configuracion";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Recordatorio de depósito bajo";
@@ -578,3 +578,6 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "No se ha cebado el tubo. Vuelva a intentarlo más tarde.";
+
+/* Battery age */
+"Battery age" = "Battery age";
