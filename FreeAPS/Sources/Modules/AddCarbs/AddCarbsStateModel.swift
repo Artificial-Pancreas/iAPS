@@ -20,7 +20,6 @@ extension AddCarbs {
         @Published var maxCarbs: Decimal = 0
         @Published var note: String = ""
         @Published var id_: String = ""
-        @Published var summary: String = ""
         @Published var skipBolus: Bool = false
         @Published var id: String?
         @Published var hypoTreatment = false
@@ -59,18 +58,22 @@ extension AddCarbs {
                 protein: protein,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false, fpuID: UUID().uuidString
+                isFPU: false
             )]
-            carbsStorage.storeCarbs(carbsToStore)
 
             if hypoTreatment { hypo() }
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
+                carbsStorage.storeCarbs(carbsToStore)
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore)
                 showModal(for: .bolus(waitForSuggestion: true, fetch: true))
+            } else if !empty {
+                carbsStorage.storeCarbs(carbsToStore)
+                apsManager.determineBasalSync()
+                showModal(for: nil)
             } else {
                 hideModal()
             }
@@ -200,21 +203,11 @@ extension AddCarbs {
         }
 
         func saveToCoreData(_ stored: [CarbsEntry]) {
-            coredataContext.performAndWait {
-                let save = Meals(context: coredataContext)
-                if let entry = stored.first {
-                    save.createdAt = now
-                    save.actualDate = entry.actualDate ?? Date.now
-                    save.id = entry.id ?? ""
-                    save.fpuID = entry.fpuID ?? ""
-                    save.carbs = Double(entry.carbs)
-                    save.fat = Double(entry.fat ?? 0)
-                    save.protein = Double(entry.protein ?? 0)
-                    save.note = entry.note
-                    try? coredataContext.save()
-                }
-                print("meals 1: ID: " + (save.id ?? "").description + " FPU ID: " + (save.fpuID ?? "").description)
-            }
+            CoreDataStorage().saveMeal(stored, now: now)
+        }
+
+        private var empty: Bool {
+            carbs <= 0 && fat <= 0 && protein <= 0
         }
 
         private func hypo() {

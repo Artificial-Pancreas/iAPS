@@ -579,28 +579,28 @@ extension Home {
 
         func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
             ZStack {
-                HStack {
-                    VStack {
-                        HStack {
-                            Text("Bolusing")
-                                .foregroundColor(.primary).font(.bolusProgressFont)
-                            let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
-
-                            Text(
-                                bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
-                                    .formatted() + NSLocalizedString(" U", comment: "")
-                            ).font(.bolusProgressBarFont)
-                        }
-                        ProgressView(value: Double(progress))
-                            .progressViewStyle(BolusProgressViewStyle())
+                VStack {
+                    HStack {
+                        let bolused = targetFormatter.string(from: (amount * progress) as NSNumber) ?? ""
+                        Text("Bolusing")
+                        Text(
+                            bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
+                                .formatted() + NSLocalizedString(" U", comment: "")
+                        )
+                    }.frame(width: 250, height: 25).font(.bolusProgressBarFont)
+                    HStack(alignment: .bottom, spacing: 5) {
+                        ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
+                            .overlay {
+                                Image(systemName: "pause.fill")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.white, .blue)
+                                    .font(.bolusProgressStopFont)
+                            }
                     }
-                    Image(systemName: "xmark.square.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(.white, .blue)
-                        .font(.bolusProgressStopFont)
-                        .onTapGesture { state.cancelBolus() }
-                        .offset(x: 10, y: 0)
+                    .onTapGesture { state.cancelBolus() }
                 }
+                .dynamicTypeSize(...DynamicTypeSize.large)
+                .padding(.bottom, 8)
             }
         }
 
@@ -770,7 +770,7 @@ extension Home {
                                 }
 
                                 // IOB Chart
-                                if state.iobs > 0 {
+                                if !state.iobData.isEmpty {
                                     activeIOBView
                                 }
 
@@ -804,12 +804,12 @@ extension Home {
                         if let progress = state.bolusProgress, let amount = state.bolusAmount {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(.gray.opacity(0.8))
-                                    .frame(width: 320, height: 60)
+                                    .fill(.gray.opacity(0.9))
+                                    .frame(maxWidth: 320, maxHeight: 90)
                                 bolusProgressView(progress: progress, amount: amount)
                             }
                             .frame(maxWidth: .infinity, alignment: .center)
-                            .offset(x: 0, y: -100)
+                            .offset(y: -100)
                         }
                     }
                 }

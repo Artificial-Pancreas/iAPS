@@ -2,7 +2,7 @@ import Foundation
 
 struct TempBasal: JSON {
     let duration: Int
-    let rate: Decimal
+    var rate: Decimal
     let temp: TempType
     let timestamp: Date
 }
