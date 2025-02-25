@@ -22,6 +22,7 @@ extension StatConfig {
         @Published var extendHomeView: Bool = true
         @Published var displayExpiration: Bool = false
         @Published var anubis: Bool = false
+        @Published var fpus: Bool = true
 
         var units: GlucoseUnits = .mmolL
 
@@ -45,6 +46,7 @@ extension StatConfig {
             subscribeSetting(\.extendHomeView, on: $extendHomeView) { extendHomeView = $0 }
             subscribeSetting(\.displayExpiration, on: $displayExpiration) { displayExpiration = $0 }
             subscribeSetting(\.anubis, on: $anubis) { anubis = $0 }
+            subscribeSetting(\.fpus, on: $fpus) { fpus = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)

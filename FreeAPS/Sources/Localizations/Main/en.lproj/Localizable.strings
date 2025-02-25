@@ -2900,6 +2900,9 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
 
+/* UI/UX option */
+"Display carb equivalents" = "Display carb equivalents";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
 

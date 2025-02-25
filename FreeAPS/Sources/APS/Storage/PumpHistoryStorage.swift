@@ -314,7 +314,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     fat: nil,
                     protein: nil,
                     targetTop: nil,
-                    targetBottom: nil
+                    targetBottom: nil,
+                    creation_date: event.timestamp
                 )
             default: return nil
             }

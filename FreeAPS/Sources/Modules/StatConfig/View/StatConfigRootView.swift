@@ -51,6 +51,7 @@ extension StatConfig {
                         DecimalTextField("0.2", value: $state.minimumSMB, formatter: insulinFormatter)
                         Text("U").foregroundColor(.secondary)
                     }
+                    Toggle("Display carb equivalents", isOn: $state.fpus)
 
                 } header: { Text("Home Chart settings ") }
 

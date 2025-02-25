@@ -22,6 +22,7 @@ protocol APSManager {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
     var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
+    var temporaryData: TemporaryData { get set }
     var concentration: (concentration: Double, increment: Double) { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
@@ -109,6 +110,7 @@ final class BaseAPSManager: APSManager, Injectable {
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
+    @Persisted(key: "temporary") var temporaryData = TemporaryData()
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
@@ -244,6 +246,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         isLooping.send(true)
+
         determineBasal()
             .replaceEmpty(with: false)
             .flatMap { [weak self] success -> AnyPublisher<Void, Error> in
@@ -348,6 +351,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
+        let start = Date.now
         debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.isNotEmpty else {
             debug(.apsManager, "Not enough glucose data")
@@ -377,7 +381,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
+            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: self.temporaryData) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {
@@ -510,7 +514,7 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
-        let adjusted = pump.roundToSupportedBasalRate(unitsPerHour: rate * self.concentration.concentration)
+        let adjusted = pump.roundToSupportedBasalRate(unitsPerHour: rate * concentration.concentration)
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
             if let error = error {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
@@ -683,8 +687,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 protein: protein,
                 note: "Remote",
                 enteredBy: "Nightscout operator",
-                isFPU: fat > 0 || protein > 0,
-                fpuID: (fat > 0 || protein > 0) ? UUID().uuidString : nil
+                isFPU: false
             )])
 
             announcementsStorage.storeAnnouncements([announcement], enacted: true)

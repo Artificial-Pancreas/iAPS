@@ -77,6 +77,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var displayExpiration = false
     var sensorDays: Double = 10
     var anubis: Bool = false
+    var fpus: Bool = true
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -145,6 +146,10 @@ extension FreeAPSSettings: Decodable {
 
         if let debugOptions = try? container.decode(Bool.self, forKey: .debugOptions) {
             settings.debugOptions = debugOptions
+        }
+
+        if let fpus = try? container.decode(Bool.self, forKey: .fpus) {
+            settings.fpus = fpus
         }
 
         if let insulinReqPercentage = try? container.decode(Decimal.self, forKey: .insulinReqPercentage) {
