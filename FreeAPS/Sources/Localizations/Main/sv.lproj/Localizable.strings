@@ -2892,7 +2892,7 @@ Enact a temp Basal or a temp target */
 "Hide the bolus amount strings when amount is under" = "Dölj bolusmängdtext när beloppet är under";
 
 /* UI/UX option */
-"Display carb equivalents" = "Display carb equivalents";
+"Display carb equivalents" = "Visa kolhydratekvivalenter";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
