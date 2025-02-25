@@ -660,6 +660,9 @@ extension OverrideProfilesConfig {
                 VStack(alignment: .leading, spacing: 1) {
                     HStack {
                         Text(name).padding(.vertical, 4)
+                        if preset.advancedSettings, preset.endWIthNewCarbs {
+                            Image("PreMealOverride").foregroundStyle(.green)
+                        }
                         Spacer()
                     }
                     HStack {
