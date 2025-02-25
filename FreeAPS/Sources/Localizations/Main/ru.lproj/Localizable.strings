@@ -2892,7 +2892,7 @@ Enact a temp Basal or a temp target */
 "Hide the bolus amount strings when amount is under" = "Скрыть строки объёма болюса, когда объём меньше";
 
 /* UI/UX option */
-"Display carb equivalents" = "Display carb equivalents";
+"Display carb equivalents" = "Отображать эквиваленты углеводов";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";
