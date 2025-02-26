@@ -20,33 +20,14 @@ struct RoundedBackground: ViewModifier {
     }
 }
 
-struct CapsulaBackground: ViewModifier {
-    private let color: Color
-
-    init(color: Color = Color("CapsuleColor")) {
-        self.color = color
-    }
-
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(
-                Rectangle()
-                    // Capsule()
-                    .fill()
-                    .foregroundColor(color)
-            )
-    }
-}
-
 struct BoolTag: ViewModifier {
-    @Environment(\.colorScheme) var colorScheme
     let bool: Bool
+    @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
         content
             .padding(.vertical, 4).padding(.horizontal, 6)
             .background((bool ? Color.green : Color.red).opacity(colorScheme == .light ? 0.8 : 0.5))
-            .clipShape(RoundedRectangle(cornerRadius: 6)).padding(.trailing, 6)
+            .clipShape(RoundedRectangle(cornerRadius: 6)).padding(.vertical, 3).padding(.trailing, 3)
     }
 }
 
@@ -149,7 +130,6 @@ struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         Rectangle()
-            // RoundedRectangle(cornerRadius: 15)
             .fill(
                 colorScheme == .dark ? .black :
                     Color.white
@@ -177,6 +157,35 @@ struct LoopEllipse: View {
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(colorScheme == .light ? .white : .black)
+            )
+    }
+}
+
+struct Sage: View {
+    @Environment(\.colorScheme) var colorScheme
+    let amount: Double
+    let expiration: Double
+    var body: some View {
+        let fill = max(amount / expiration, 0.07)
+        let colour: Color = amount <= 8.64E4 ? .red.opacity(0.9) : amount <= 2 * 8.64E4 ? .orange
+            .opacity(0.8) : colorScheme == .light ? .white.opacity(0.7) : .black.opacity(0.8)
+        RoundedRectangle(cornerRadius: 15)
+            .stroke(colorScheme == .dark ? Color(.systemGray2) : Color(.systemGray6), lineWidth: 2)
+            .background(
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                Gradient.Stop(
+                                    color: colour,
+                                    location: fill
+                                ),
+                                Gradient.Stop(color: Color.clear, location: fill)
+                            ]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
             )
     }
 }
@@ -305,36 +314,6 @@ struct Link<T>: ViewModifier where T: View {
     }
 }
 
-struct AdaptsToSoftwareKeyboard: ViewModifier {
-    @State var currentHeight: CGFloat = 0
-
-    func body(content: Content) -> some View {
-        content
-            .padding(.bottom, currentHeight).animation(.easeOut(duration: 0.25))
-            .edgesIgnoringSafeArea(currentHeight == 0 ? Edge.Set() : .bottom)
-            .onAppear(perform: subscribeToKeyboardChanges)
-    }
-
-    private let keyboardHeightOnOpening = Foundation.NotificationCenter.default
-        .publisher(for: UIResponder.keyboardWillShowNotification)
-        .map { $0.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect }
-        .map(\.height)
-
-    private let keyboardHeightOnHiding = Foundation.NotificationCenter.default
-        .publisher(for: UIResponder.keyboardWillHideNotification)
-        .map { _ in CGFloat(0) }
-
-    private func subscribeToKeyboardChanges() {
-        _ = Publishers.Merge(keyboardHeightOnOpening, keyboardHeightOnHiding)
-            .subscribe(on: DispatchQueue.main)
-            .sink { height in
-                if self.currentHeight == 0 || height == 0 {
-                    self.currentHeight = height
-                }
-            }
-    }
-}
-
 struct ClearButton: ViewModifier {
     @Binding var text: String
     func body(content: Content) -> some View {
@@ -390,10 +369,6 @@ extension View {
 
     func navigationLink<V: BaseView>(to screen: Screen, from view: V) -> some View {
         modifier(Link(destination: view.state.view(for: screen), screen: screen))
-    }
-
-    func adaptsToSoftwareKeyboard() -> some View {
-        modifier(AdaptsToSoftwareKeyboard())
     }
 
     func modal<V: BaseView>(for screen: Screen?, from view: V) -> some View {

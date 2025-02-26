@@ -147,6 +147,7 @@ final class OverrideStorage {
             save.target = preset.target
             save.overrideMaxIOB = preset.overrideAutoISF
             save.overrideAutoISF = preset.overrideAutoISF
+            save.endWIthNewCarbs = preset.endWIthNewCarbs
             try? coredataContext.save()
         }
     }
@@ -246,6 +247,7 @@ final class OverrideStorage {
             save.target = override.target
             save.overrideMaxIOB = override.overrideAutoISF
             save.overrideAutoISF = override.overrideAutoISF
+            save.endWIthNewCarbs = override.endWIthNewCarbs
             try? coredataContext.save()
         }
     }
@@ -339,6 +341,7 @@ final class OverrideStorage {
                 save.uamMinutes = preset.uamMinutes
                 save.overrideMaxIOB = preset.overrideAutoISF
                 save.overrideAutoISF = preset.overrideAutoISF
+                save.endWIthNewCarbs = preset.endWIthNewCarbs
                 if (preset.target ?? 0) as Decimal > 6 {
                     save.target = preset.target
                 } else { save.target = 6 }

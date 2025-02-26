@@ -8,6 +8,13 @@ extension CGM {
         @StateObject var state = StateModel()
         @State private var setupCGM = false
 
+        private var daysFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         // @AppStorage(UserDefaults.BTKey.cgmTransmitterDeviceAddress.rawValue) private var cgmTransmitterDeviceAddress: String? = nil
 
         var body: some View {
@@ -47,6 +54,22 @@ extension CGM {
                             }
                         }
                     }
+
+                    if state.cgm == .xdrip || state.cgm == .glucoseDirect {
+                        Section {
+                            HStack {
+                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
+                                Text("days").foregroundStyle(.secondary)
+                            }
+                        }
+                        header: { Text("Sensor Life-Span") }
+                        footer: {
+                            Text(
+                                "When using \(state.cgm.rawValue) iAPS doesn't know the type of sensor used or the sensor life-span."
+                            )
+                        }
+                    }
+
                     if state.cgm == .libreTransmitter {
                         Button("Configure Libre Transmitter") {
                             state.showModal(for: .libreConfig)
