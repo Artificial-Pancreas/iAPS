@@ -405,11 +405,12 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .flatMap { _ in
                 let startTime = Date.now
-                return self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporaryData).handleEvents(receiveCompletion: { _ in
-                    print(
-                        "APSManager: Time for determineBasal \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-                    )
-                })
+                return self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: self.temporaryData)
+                    .handleEvents(receiveCompletion: { _ in
+                        print(
+                            "APSManager: Time for determineBasal \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                        )
+                    })
             }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {

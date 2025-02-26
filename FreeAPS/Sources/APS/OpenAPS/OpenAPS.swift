@@ -76,7 +76,7 @@ final class OpenAPS {
 
                     now = Date.now
                     let tdd = CoreDataStorage()
-                        .fetchInsulinDistribution(limit: 1).first
+                        .fetchInsulinDistribution().first
                     print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
                     now = Date.now
