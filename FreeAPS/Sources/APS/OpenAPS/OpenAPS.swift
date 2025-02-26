@@ -1085,7 +1085,7 @@ final class OpenAPS {
         model: JSON,
         autotune: JSON,
         freeaps: JSON,
-        dynamicVariables: JSON,
+        dynamicVariables: DynamicVariables,
         settings: JSON
     ) -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
