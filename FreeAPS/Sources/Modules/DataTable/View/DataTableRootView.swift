@@ -531,8 +531,8 @@ extension DataTable {
 
                         Section {
                             Button {
+                                editIsPresented.toggle()
                                 state.updateCarbs(treatment: item, computed: filtered(date: item.creationDate))
-                                editIsPresented = false
                             }
                             label: { Text("Save") }
                                 .frame(maxWidth: .infinity, alignment: .center)
