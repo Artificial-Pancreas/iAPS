@@ -722,8 +722,7 @@ final class OpenAPS {
         return tdd
     }
 
-    func dynamicVariables(_ preferences: Preferences?, _ settingsData: FreeAPSSettings?) async -> RawJSON {
-        var averages: DynamicVariables?
+    func dynamicVariables(_ preferences: Preferences?, _ settingsData: FreeAPSSettings?) async -> DynamicVariables {
         coredataContext.performAndWait {
             let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
@@ -903,7 +902,7 @@ final class OpenAPS {
                 )
             }
 
-            averages = DynamicVariables(
+            let averages = DynamicVariables(
                 average_total_data: average14,
                 weightedAverage: weighted_average,
                 weigthPercentage: wp,
@@ -935,18 +934,15 @@ final class OpenAPS {
                 autoISFoverrides: autoISFsettings,
                 aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
             )
+            self.storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
+            return averages
         }
-
-        let computed = averages!
-        await saveAsync(computed, name: OpenAPS.Monitor.dynamicVariables)
-        async let dynamicFile = loadFileFromStorageAsync(name: Monitor.dynamicVariables)
-        let file = await dynamicFile
-        return file
     }
 
     private func unchanged(meal: Meals) -> Bool {
         meal.carbs <= 0 && meal.fat <= 0 && meal.protein <= 0
     }
+
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
         await scriptExecutor.callAsync(name: OpenAPS.Prepare.iob, with: [
