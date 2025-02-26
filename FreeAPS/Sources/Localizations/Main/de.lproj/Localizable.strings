@@ -2892,6 +2892,9 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Bolusmengen in der Grafik ausblenden wenn sie kleiner als";
 
+/* UI/UX option */
+"Display carb equivalents" = "Display carb equivalents";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus-Rechner";
 
