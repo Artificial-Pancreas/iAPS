@@ -823,6 +823,19 @@ final class OpenAPS {
                         debug(.nightscout, "Override ended, duration: \(duration) minutes")
                     }
                 }
+                // End with new Meal, when applicable
+                if useOverride, overrideArray.first?.advancedSettings ?? false, overrideArray.first?.endWIthNewCarbs ?? false,
+                   let recent = cd.recentMeal(), !unchanged(meal: recent),
+                   (recent.actualDate ?? .distantPast) > (overrideArray.first?.date ?? .distantFuture)
+                {
+                    useOverride = false
+                    if OverrideStorage().cancelProfile() != nil {
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new carbs: \(recent.carbs) g, duration: \(duration) minutes"
+                        )
+                    }
+                }
             }
 
             if !useOverride {
@@ -931,6 +944,9 @@ final class OpenAPS {
         return file
     }
 
+    private func unchanged(meal: Meals) -> Bool {
+        meal.carbs <= 0 && meal.fat <= 0 && meal.protein <= 0
+    }
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
         await scriptExecutor.callAsync(name: OpenAPS.Prepare.iob, with: [
