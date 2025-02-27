@@ -244,7 +244,6 @@ extension Bolus {
         func add() {
             guard amount > 0 else {
                 showModal(for: nil)
-                save()
                 return
             }
 
