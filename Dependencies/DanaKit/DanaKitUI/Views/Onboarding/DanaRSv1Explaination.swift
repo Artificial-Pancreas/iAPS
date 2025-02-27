@@ -36,7 +36,7 @@ struct DanaRSv1Explaination: View {
                     }
                     .padding(.vertical, 10)
                     
-                    Text(String(format: LocalizedString("During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1", comment: "Subtext for danars v1 (1: appName)"), appName))
+                    Text(String(format: LocalizedString("During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1", comment: "Subtext for danars v1 (1: appName)"), appName))
                     
                     Spacer()
                 }

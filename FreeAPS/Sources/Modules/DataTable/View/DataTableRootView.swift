@@ -531,25 +531,17 @@ extension DataTable {
 
                         Section {
                             Button {
+                                editIsPresented.toggle()
                                 state.updateCarbs(treatment: item, computed: filtered(date: item.creationDate))
-                                editIsPresented = false
                             }
                             label: { Text("Save") }
                                 .frame(maxWidth: .infinity, alignment: .center)
-                                .disabled(unChanged)
-                                .listRowBackground(
-                                    !unChanged ? Color(.systemBlue) : Color(.systemGray4)
-                                )
+                                .listRowBackground(Color(.systemBlue))
                                 .tint(.white)
                         }
                     }
                 }
             }
-        }
-
-        private var unChanged: Bool {
-            (state.meal.carbs == 0 || state.oldCarbs == state.meal.carbs) && state.meal
-                .fat == 0 && state.meal.protein == 0 && state.carbEquivalents == 0
         }
 
         private func filtered(date: Date) -> Carbohydrates? {
