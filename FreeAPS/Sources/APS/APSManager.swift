@@ -377,11 +377,13 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let now = Date()
         let temp = currentTemp(date: now)
+        let temporary = temporaryData
+        temporaryData.forBolusView.carbs = 0
 
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: self.temporaryData) }
+            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {

@@ -224,6 +224,7 @@ extension Bolus {
                     }
                 }
             }
+            .interactiveDismissDisabled()
             .compactSectionSpacing()
             .alert(isPresented: $isRemoteBolusAlertPresented) {
                 remoteBolusAlert!

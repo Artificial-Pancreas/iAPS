@@ -193,6 +193,7 @@ extension Bolus {
                     }
                 }
             }
+            .interactiveDismissDisabled()
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
