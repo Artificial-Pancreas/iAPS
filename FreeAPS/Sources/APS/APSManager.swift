@@ -376,7 +376,7 @@ final class BaseAPSManager: APSManager, Injectable {
         }
 
         let now = Date()
-        let temp = currentTemp(date: now)
+        var temp = currentTemp(date: now)
         let temporary = temporaryData
         temporaryData.forBolusView.carbs = 0
 
