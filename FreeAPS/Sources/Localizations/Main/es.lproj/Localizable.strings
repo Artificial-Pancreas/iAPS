@@ -3008,6 +3008,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
 
+/* UI/UX option */
+"Display carb equivalents" = "Display carb equivalents";
+
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
 

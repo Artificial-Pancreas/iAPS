@@ -377,6 +377,8 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let now = Date()
         let temp = currentTemp(date: now)
+        let temporary = temporaryData
+        temporaryData.forBolusView.carbs = 0
 
         let mainPublisher = Just("Start")
             .flatMap { _ in
@@ -405,7 +407,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
             .flatMap { _ in
                 let startTime = Date.now
-                return self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: self.temporaryData)
+                return self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary)
                     .handleEvents(receiveCompletion: { _ in
                         print(
                             "APSManager: Time for determineBasal \(-1 * startTime.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"

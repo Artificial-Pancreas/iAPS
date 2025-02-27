@@ -16,6 +16,7 @@ function generate(pumphistory_data, profile_data, clock_data, glucose_data, basa
         carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
         carb_data.forEach( carb => console.log("Carb entry " + carb.created_at + ", carbs: " + carb.carbs + ", entered by: " + carb.enteredBy ));
         carb_data = carb_data.filter((carb) => carb.carbs >= 1);
+        carb_data.sort((a, b) => b.created_at - a.created_at);
     }
 
     if (typeof basalprofile_data[0] === 'undefined') {

@@ -10,7 +10,6 @@ extension Bolus {
         @Injected() var broadcaster: Broadcaster!
         // added for bolus calculator
         @Injected() var settings: SettingsManager!
-        @Injected() var nsManager: NightscoutManager!
         @Injected() var announcementStorage: AnnouncementsStorage!
         @Injected() var carbsStorage: CarbsStorage!
 
@@ -128,7 +127,6 @@ extension Bolus {
                     loopDate = apsManager.lastLoopDate
                 }
             }
-
             setupInsulinRequired()
         }
 
@@ -204,7 +202,6 @@ extension Bolus {
             insulinCalculated = min(max(insulinCalculated, 0), maxBolus)
 
             prepareData()
-
             return insulinCalculated
         }
 
@@ -244,7 +241,6 @@ extension Bolus {
         func add() {
             guard amount > 0 else {
                 showModal(for: nil)
-                save()
                 return
             }
 
@@ -261,12 +257,8 @@ extension Bolus {
         }
 
         func save() {
-            guard !empty else {
-                print("No Meal to save")
-                return
-            }
+            guard !empty else { return }
             carbsStorage.storeCarbs(carbToStore)
-            print("Meal saved; carbs: \(carbToStore.first?.carbs ?? 0)")
         }
 
         func setupInsulinRequired() {
@@ -299,11 +291,6 @@ extension Bolus {
 
         func backToCarbsView(override: Bool, editMode: Bool) {
             showModal(for: .addCarbs(editMode: editMode, override: override))
-        }
-
-        func delete(meal: FetchedResults<Meals>) {
-            guard let meals = meal.first else { return }
-            carbsStorage.deleteCarbsAndFPUs(at: meals.createdAt ?? .distantPast)
         }
 
         func carbsView(fetch: Bool, hasFatOrProtein _: Bool, mealSummary _: FetchedResults<Meals>) -> Bool {

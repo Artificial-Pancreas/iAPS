@@ -724,7 +724,7 @@ final class OpenAPS {
         return tdd
     }
 
-    func dynamicVariables(_ preferences: Preferences?) -> RawJSON {
+    func dynamicVariables(_ preferences: Preferences?) -> DynamicVariables {
         coredataContext.performAndWait {
             let start = Date.now
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
@@ -940,7 +940,7 @@ final class OpenAPS {
                 aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
             )
             storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
-            return self.loadFileFromStorage(name: Monitor.dynamicVariables)
+            return averages
         }
     }
 
@@ -1087,7 +1087,7 @@ final class OpenAPS {
         model: JSON,
         autotune: JSON,
         freeaps: JSON,
-        dynamicVariables: JSON,
+        dynamicVariables: DynamicVariables,
         settings: JSON
     ) -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
