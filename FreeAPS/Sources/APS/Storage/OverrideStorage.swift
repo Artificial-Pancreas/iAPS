@@ -4,7 +4,11 @@ import Foundation
 import SwiftDate
 
 final class OverrideStorage {
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    let coredataContext: NSManagedObjectContext
+
+    init(context: NSManagedObjectContext = CoreDataStack.shared.persistentContainer.viewContext) {
+        coredataContext = context
+    }
 
     func fetchOverrides(interval: NSDate) -> [Override] {
         var overrideArray = [Override]()
