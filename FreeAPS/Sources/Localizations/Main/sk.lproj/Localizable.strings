@@ -1085,13 +1085,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Activate an Override Preset" = "Aktivácia predvoľby Override";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Povoliť aktiváciu prednastaveného režimu.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Which override preset would you like to activate?";
+"Which override preset would you like to activate?" = "Ktorý prednastavený režim chcete aktivovať?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Are you sure you want to activate the Override Preset %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Ste si istí, že chcete aktivovať prednastavený režim %@?";
 
 /* Override Shortcut */
 "The Profile Override" = "Prepísanie profilu";
@@ -1106,7 +1106,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override canceled" = "Prepísanie zrušené";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Activates an %@ Override Preset";
+"Activates an %@ Override Preset" = "Aktivuје prednastavený režim %@";
 
 /* Suspend/Resume Shortcut */
 "Choose what to do with your pump" = "Vyberte si, čo chcete s pumpou urobiť";
@@ -1115,7 +1115,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Are you sure you want to %@ your pump?" = "Ste si istí, že chcete %@ svoju pumpu?";
 
 /* Suspend/Resume Shortcut */
-"Pump command" = "Pump command";
+"Pump command" = "Príkaz pre pumpu";
 /* Suspend/Resume Shortcut */
 "enacted in iAPS" = "podané v iAPS";
 
@@ -2213,31 +2213,31 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Dark mode" = "Tmavý režim";
 
 /* Contact Image, settings, tighter font tracking */
-"TighterFontTracking" = "Tighter";
+"TighterFontTracking" = "Užšie";
 
 /* Contact Image, settings, tight font tracking */
-"TightFontTracking" = "Tight";
+"TightFontTracking" = "Úzke";
 
 /* Contact Image, settings, normal font tracking */
 "NormalFontTracking" = "Normálny";
 
 /* Contact Image, settings, wide font tracking */
-"WideFontTracking" = "Wide";
+"WideFontTracking" = "Široké";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Tenké";
 
 /* Contact Image, settings, regular font weight */
-"RegularFontWeight" = "Regular";
+"RegularFontWeight" = "Štandardné";
 
 /* Contact Image, settings, medium font weight */
-"MediumFontWeight" = "Medium";
+"MediumFontWeight" = "Stredné";
 
 /* Contact Image, settings, semibold font weight */
-"SemiboldFontWeight" = "Semibold";
+"SemiboldFontWeight" = "Polotučné";
 
 /* Contact Image, settings, bold font weight */
-"BoldFontWeight" = "Bold";
+"BoldFontWeight" = "Tučné";
 
 /* Contact Image, settings, black font weight (black is "very bold") */
 "BlackFontWeight" = "Čierna";
@@ -2249,7 +2249,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "GlucoseContactValue" = "Glykémia";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Eventual BG";
+"EventualBGContactValue" = "Predpokladaná glukóza";
 
 /* Contact Image, settings, Delta (data to display) */
 "DeltaContactValue" = "Delta";
@@ -2366,7 +2366,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Target Level for B30 to be enacted" = "Cieľová hladina glukózy pre aktiváciu B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať prednstavený režim EatingSoon (alebo dočasný cieľ). Aby sa B30 mohlo spustiť, cieľová hodnota musí byť nižšia ako toto nastavenie. Predvolená hodnota: 90 mg/dl. Ak zrušíte tento EatingSoon cieľ, bazálna dávka B30 sa zastaví.";
 
 /* */
 "Minimum Start Bolus size" = "Minimálna veľkosť bolusu pre spustenie";
@@ -2378,7 +2378,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Activate B30" = "Aktivovať B30";
 
 /* */
-"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting.";
+"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Povolí zvýšenú bazálnu dávku po aktivácii prednastaveného režimu EatingSoon (alebo dočasného cieľa) a manuálnom boluse, aby sa nasýtilo infúzne miesto inzulínom a zvýšila sa absorpcia inzulínu pre SMB po jedle bez počítania sacharidov.";
 
 /* */
 "ISF weight while BG decelerates" = "Váha ISF pri poklese glykémie";
@@ -2432,37 +2432,37 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "SMB Delivery Ratio BG Range" = "Pomer dodávky SMB v rozsahu glykémie";
 
 /* */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Predvolená hodnota: 0, rozumné hodnoty sú medzi 40 mg/dL a 120 mg/dL. Lineárne rastúci pomer dodávky SMB je mapovaný na rozsah glykémie [target_bg, target_bg+bg_range]. Pri target_bg je pomer SMB rovný smb_delivery_ratio_min, pri target_bg+bg_range je rovný smb_delivery_ratio_max. Pri hodnote 0 je lineárne rastúci pomer SMB deaktivovaný a používa sa fixný smb_delivery_ratio.";
 
 /* */
-"SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
+"SMB Delivery Ratio Maximum" = "Maximálny pomer dávky SMB";
 
 /* */
-"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Predvolená hodnota: 0.5. Toto je horná hranica lineárne rastúceho pomeru dávky SMB namiesto fixnej hodnoty v OpenAP SMB Delivery Ratio.";
 
 /* */
-"SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
+"SMB Delivery Ratio Minimum" = "Minimálny pomer dávky SMB";
 
 /* */
-"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio.";
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Predvolená hodnota: 0.5. Toto je dolná hranica lineárne rastúceho pomeru dávky SMB namiesto fixnej hodnoty v OpenAP SMB Delivery Ratio.";
 
 /* */
-"Toggles" = "Toggles";
+"Toggles" = "Prepínače";
 
 /* */
-"Enable postprandial ISF adaption always" = "Enable postprandial ISF adaption always";
+"Enable postprandial ISF adaption always" = "Vždy povoliť postprandiálnu adaptáciu ISF";
 
 /* */
-"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken.";
+"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Nepretržite povoliť postprandiálnu adaptáciu ISF, bez ohľadu na čas posledného jedla.";
 
 /* */
-"Enable DuraISF effect even with COB" = "Enable DuraISF effect even with COB";
+"Enable DuraISF effect even with COB" = "Povoliť efekt DuraISF aj pri prítomnosti COB";
 
 /* */
-"Enable DuraISF even if COB is present not just for UAM." = "Enable DuraISF even if COB is present not just for UAM.";
+"Enable DuraISF even if COB is present not just for UAM." = "Povoliť DuraISF aj pri prítomnosti COB, nielen pre UAM.";
 
 /* */
-"Enable BG acceleration" = "Enable BG acceleration";
+"Enable BG acceleration" = "Povoliť akceleráciu glykémie";
 
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
