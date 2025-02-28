@@ -47,7 +47,7 @@
 "Done" = "Hotovo";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Posledný cyklus pred %@ minútami. Dokončite alebo zrušte túto akciu jedla/bolusu, aby mohol prebehnúť ďalší cyklus slučky";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Zobrazenie emotikonov ako štítkov";
@@ -916,7 +916,7 @@ Enact a temp Basal or a temp target */
 "Sensor Life-Span" = "Životnosť senzora";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Ak používate %@ iAPS nepozná typ senzora ani jeho životnosť.";
 
 /* */
 "Sensor Age Left" = "Zostávajúci vek senzora";
@@ -1048,7 +1048,7 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Zadajte veľkosť bolusu";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Vaša aktuálna hladina glukózy je %@. Ste si istí, že chcete podať bolus %@ U inzulínu?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Príkaz bolus ";
