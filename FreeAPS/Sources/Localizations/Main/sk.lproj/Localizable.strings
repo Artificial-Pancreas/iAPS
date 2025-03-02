@@ -164,7 +164,7 @@
 "grams" = "gramov";
 
 /*  */
-"Carbs required" = "Potrebné sacharidy";
+"Carbs required" = "Požadované sacharidy";
 
 /* Saved Food Presets */
 "Saved Food" = "Uložené jedlá";
@@ -215,7 +215,7 @@
 "mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosenzor max obmedzuje maximálny koncový bod";
 
 /*  */
-"Enter preset name" = "Zadajte názov prednastavenia";
+"Enter preset name" = "Zadajte názov predvoľby";
 
 /* Preset name */
 "Name" = "Názov";
@@ -441,7 +441,7 @@ Enact a temp Basal or a temp target */
 "Can't find the default Nightscout Profile." = "Nemôžem nájsť predvolený Nightscout profil.";
 
 /* Add Blood Glucose Test, header */
-"Blood Glucose Test" = "Test krvi na glukózu";
+"Blood Glucose Test" = "Testovanie glykémie z krvi";
 
 /* Add Medtronic pump */
 "Add Medtronic" = "Pridať Medtronic";
@@ -471,7 +471,7 @@ Enact a temp Basal or a temp target */
 "hours" = "hodiny";
 
 /* Max setting */
-"Max Basal" = "Maximálna bazálna";
+"Max Basal" = "Maximálny bazál";
 
 /* Max setting */
 "Max Bolus" = "Maximálna dávka bolusu";
@@ -613,7 +613,7 @@ Enact a temp Basal or a temp target */
 "Steps" = "Kroky";
 
 /* */
-"ISF" = "Citlivosť";
+"ISF" = "ISF";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Aplikácia Garmin Connect musí byť nainštalovaná pre použitie s iAPS.\n Pre stiahnutie choďte do App Store";
@@ -628,10 +628,10 @@ Enact a temp Basal or a temp target */
 "Settings" = "Nastavenia";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Odporúčaný podiel dávky";
+"Recommended Bolus Percentage" = "Odporúčané percento bolusu";
 
 /* 2 log files to share */
-"Share logs" = "Zdieľať záznamy";
+"Share logs" = "Zdieľať logy";
 
 /* Upper target */
 "High target" = "Vysoký cieľ";
@@ -739,7 +739,7 @@ Enact a temp Basal or a temp target */
 "Select the third party transmitter you want to connect to" = "Vyberte vysielač tretej strany, ku ktorému sa chcete pripojiť";
 
 /* State was restored */
-"State was restored" = "Štát bol obnovený";
+"State was restored" = "Stav bol obnovený";
 
 /* The short unit display string for millimoles of glucose per liter */
 "mmol/L" = "mmol/L";
@@ -799,7 +799,7 @@ Enact a temp Basal or a temp target */
 "Pair Sensor & connect" = "Párovanie snímača a pripojenie";
 
 /* */
-"Phone NFC required!" = "Vyžaduje sa telefón NFC!";
+"Phone NFC required!" = "Vyžaduje sa telefón s NFC!";
 
 /* */
 "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Váš telefón alebo aplikácia nemá povolenú komunikáciu NFC, ktorá je potrebná na spárovanie so snímačmi libre2";
@@ -919,10 +919,10 @@ Enact a temp Basal or a temp target */
 "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Ak používate %@ iAPS nepozná typ senzora ani jeho životnosť.";
 
 /* */
-"Sensor Age Left" = "Zostávajúci vek senzora";
+"Sensor Age Left" = "Zostávajúci platnosť senzora";
 
 /* */
-"Sensor Endtime" = "Konce senzora";
+"Sensor Endtime" = "Koniec senzora";
 
 /* */
 "Sensor State" = "Stav senzora";
@@ -967,7 +967,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to remove this cgm from loop?" = "Ste si istí, že chcete tento CGM odstrániť zo slučky?";
 
 /* */
-"There is no undo" = "Nič sa nedá vrátiť späť";
+"There is no undo" = "Nie je možné vrátiť späť";
 
 /* */
 "Advanced" = "Pokročilé";
@@ -1069,7 +1069,7 @@ Enact a temp Basal or a temp target */
 "Allow iOS Bolus Shortcuts" = "Povoliť iOS Bolus Skratky";
 
 /* Bolus shortcut setting. Header */
-"iOS Shortcuts" = "skratky pre iOS";
+"iOS Shortcuts" = "iOS Skratky";
 
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Ak povolíte toto nastavenie, budete môcť používať skratky iOS a ich automatizácie na spustenie bolusu v iAPS.\n\nMajte na pamäti, že skratky iOS fungujú aj so Siri!\n\n
