@@ -2385,7 +2385,7 @@ Enact a temp Basal or a temp target */
 "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Questo è il peso applicato mentre il glucosio scende e che indebolisce ISF. Con 0 questo contributo è effettivamente disabilitato. 0.1 potrebbe essere un buon punto di partenza.";
 
 /* */
-"ISF weight while BG accelerates" = "Peso ISF mentre BG diminuisce";
+"ISF weight while BG accelerates" = "ISF weight while BG accelerates";
 
 /* */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Valore predefinito: 0. Questo è il peso applicato mentre il glucosio sale e che rafforza ISF. Con 0 questo contributo è effettivamente disabilitato. 0.02 è un punto di partenza sicuro, da cui spostarsi. Le impostazioni tipiche sono circa 0.15!";
