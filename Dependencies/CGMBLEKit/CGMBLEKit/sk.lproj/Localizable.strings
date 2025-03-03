@@ -23,7 +23,7 @@
 "Peripheral isnʼt connected" = "Periférne zariadenie nie je pripojené";
 
 /* The description of sensor calibration state when sensor calibration is ok. */
-"Sensor calibration is OK" = "Kalibrácia senzora je vporiadku";
+"Sensor calibration is OK" = "Kalibrácia senzora je v poriadku";
 
 /* The description of sensor calibration state when raw value is unknown. (1: missing data details) */
 "Sensor is in unknown state %1$d" = "Senzor je v neznámom stave %1$d";

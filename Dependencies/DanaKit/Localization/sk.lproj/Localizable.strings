@@ -1,5 +1,5 @@
 /* Generic loading text */
-"loading" = "nakladanie";
+"loading" = "načítanie";
 
 /* Generic Continue text */
 "Continue" = "Pokračovať";
@@ -8,7 +8,7 @@
 "Dana-i/RS Setup" = "Nastavenie Dana-i/RS";
 
 /* Subtitle for DanaKitSetupView */
-"Select your pump" = "Vyberte si svoje čerpadlo";
+"Select your pump" = "Vyberte si svoju pumpu";
 
 /* danaRS v1 option text for DanaKitSetupView */
 "DanaRS-v1" = "DanaRS-v1";
@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Nastavenie systému DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Počas procesu párovania sa na displeji DanaRS v3 zobrazí výzva na spárovanie, zatiaľ čo na displeji iPhonu sa zobrazí výzva na zadanie párovacieho kódu. Na čerpadle vyberte OK a zadajte kód na iPhone. Potom je zariadenie Loop pripravené na komunikáciu s vaším zariadením DanaRS v1";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Počas párovania Vaša DanaRS v1 zobrazí výzvu na párovanie, zatiaľ čo Váš iPhone zobrazí výzvu na zadanie párovacieho kódu. Na pumpe vyberte OK a zadajte kód na svojom iPhone. Potom je %1$@ pripravený na komunikáciu s Vaším DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Pred začatím procesu párovania sa odporúča skontrolovať a v prípade potreby aktualizovať heslo čerpadla. Môžete to urobiť v nastaveniach čerpadla -> nastavenia používateľa -> heslo. Predvolené heslo je 1234, ak je to vaše heslo, zvážte jeho zmenu";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Nastavenie systému DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Počas procesu párovania sa na displeji DanaRS v3 zobrazí výzva na spárovanie, zatiaľ čo na displeji iPhonu sa zobrazí výzva na zadanie dvoch párovacích kódov. Na čerpadle vyberte OK a zadajte dva kódy na iPhone. Potom je zariadenie Loop pripravené na komunikáciu s vaším zariadením DanaRS v3";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Počas procesu párovania Vaša DanaRS v3 zobrazí výzvu na párovanie, zatiaľ čo Váš iPhone zobrazí výzvu na zadanie párovacieho kódu. Na pumpe vyberte OK a zadajte kód na svojom iPhone. Potom je %1$@ pripravený na komunikáciu s Vaším DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Nastavenie aplikácie Dana-i";
@@ -59,7 +59,7 @@
 "Cancel" = "Zrušiť";
 
 /* Title for DanaKitScanView */
-"Found Dana-i/RS pumps" = "Nájdené čerpadlá Dana-i/RS";
+"Found Dana-i/RS pumps" = "Nájdené pumpy Dana-i/RS";
 
 /* Dana-i/RS connecting alert title */
 "Scanning" = "Skenuje sa";
@@ -77,7 +77,7 @@
 "Are you sure you want to stop using Dana-i/RS?" = "Ste si istí, že chcete prestať používať Dana-i/RS?";
 
 /* Button text to confirm Dana-i/RS PumpManager deletion */
-"Delete pump" = "Vymazať čerpadlo";
+"Delete pump" = "Vymazať pumpu";
 
 /* Label for PumpManager deletion button */
 "Delete Pump" = "Vymazať Pumpu";
@@ -86,10 +86,10 @@
 "Error while connecting to device" = "Chyba pri pripájaní k zariadeniu";
 
 /* Dana-RS v3 found */
-"Dana-RS v3 found!" = "Dana-RS v3 nájdený!";
+"Dana-RS v3 found!" = "Dana-RS v3 nájdená!";
 
 /* Dana-RS v3 pincode prompt body */
-"Pincode required" = "Požadované PSČ";
+"Pincode required" = "Požadovaný PIN kód";
 
 /* Dana-RS v3 pincode prompt pin 1 */
 "Pin 1" = "Pin 1";
@@ -98,67 +98,67 @@
 "Pin 2" = "Pin 2";
 
 /* Dana-RS v3 pincode prompt error invalid length */
-"Received invalid pincode lengths. Try again" = "Prijaté neplatné dĺžky pincode. Skúste to znova";
+"Received invalid pincode lengths. Try again" = "Neplatná dĺžka PIN kódu. Skúste to znova";
 
 /* Dana-RS v3 pincode prompt error invalid hex */
-"Received invalid hex strings. Try again" = "Prijaté neplatné hexadecimálne reťazce. Skúste to znova";
+"Received invalid hex strings. Try again" = "Prijaté neplatné hexadecimálné reťazce. Skúste to znova";
 
 /* Dana-RS v3 pincode prompt error checksum failed */
 "Checksum failed. Try again" = "Kontrolný súčet zlyhal. Skúste to znova";
 
 /* Title for delivery speed */
-"Delivery speed" = "Rýchlosť dodania";
+"Delivery speed" = "Rýchlosť dávok";
 
 /* Dana bolus speed 12u per min */
-"12 sec/U" = "12 sekúnd/U";
+"12 sec/U" = "12 sek/U";
 
 /* Dana bolus speed 30u per min */
-"30 sec/U" = "30 sekúnd/U";
+"30 sec/U" = "30 sek/U";
 
 /* Dana bolus speed 60u per min */
-"60 sec/U" = "60 sekúnd/U";
+"60 sec/U" = "60 sek/U";
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Čerpadlá Dana podporujú rôzne rýchlosti dodávky. Môžete ju nastaviť tu, ale aj v ponuke nastavení";
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávok. Môžete ju nastaviť tu, ale aj v ponuke nastavení";
 
 /* Text for finish button */
 "Finish" = "Dokončenie";
 
 /* Dana setup complete p1 */
-"Your " = "Vaša stránka ";
+"Your " = "Vaša ";
 
 /* Dana setup complete p2 */
-" is ready to be used!" = " je pripravený na použitie!";
+" is ready to be used!" = " je pripravená na používanie!";
 
 /* Dana setup SMB setting */
-"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Poznámka: Čerpadlo Dana má špeciálne nastavenie, ktoré umožňuje stlmiť zvukový signál čerpadla Dana. Ak chcete túto funkciu zapnúť, obráťte sa na svojho distribútora Dana";
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Poznámka: Pumpa Dana má špeciálne nastavenie, ktoré umožňuje stlmiť zvukový signál pumpy Dana. Ak chcete túto funkciu zapnúť, obráťte sa na svojho distribútora Dana";
 
 /* Error description when no dana connected */
 "Failed to make a connection" = "Nepodarilo sa nadviazať spojenie";
 
 /* Error description when failed temp adjustment */
-"Failed to adjust temp basal" = "Nepodarilo sa nastaviť bazálnu teplotu";
+"Failed to adjust temp basal" = "Nepodarilo sa nastaviť dočasný bazál";
 
 /* Error description when failed suspension adjustment */
 "Failed to adjust suspension" = "Nepodarilo sa nastaviť odpruženie";
 
 /* Error description when failed generating basal program */
-"Failed to generate Dana basal program" = "Nepodarilo sa vygenerovať základný program Dana";
+"Failed to generate Dana basal program" = "Nepodarilo sa vygenerovať nastavenia bazálu pre Dana";
 
 /* Error description when failed basal adjustment */
-"Failed to adjust basal" = "Nepodarilo sa upraviť bazálnu";
+"Failed to adjust basal" = "Nepodarilo sa upraviť bazál";
 
 /* Error description when pump time failed to sync */
-"Failed to adjust pump time" = "Nepodarilo sa nastaviť čas čerpadla";
+"Failed to adjust pump time" = "Nepodarilo sa nastaviť čas pumpy";
 
 /* Error description when trying to set temp basal */
-"Setting temp basal is not supported at this time" = "Nastavenie bazálnej teploty nie je v súčasnosti podporované";
+"Setting temp basal is not supported at this time" = "Nastavenie dočasného bazálu nie je v súčasnosti podporované";
 
 /* Error description when pump is suspended */
 "The insulin delivery has been suspend. Action failed" = "Podávanie inzulínu bolo pozastavené. Akcia zlyhala";
 
 /* Error description when pump is busy (with bolussing probably) */
-"Action has been canceled, because the pump is busy" = "Akcia bola zrušená, pretože čerpadlo je obsadené";
+"Action has been canceled, because the pump is busy" = "Akcia bola zrušená, pretože pumpa je zaneprázdnená";
 
 /* Error description when pump has an active blockage */
 "A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Časový limit pre podanie bolusu je aktívny. Cyklus slučky sa nemôže dokončiť, kým nie je časový limit neaktívny";
@@ -197,7 +197,7 @@
 "Insulin Delivery" = "Podávanie inzulínu";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Inzulín\nSuspendovaný";
+"Insulin\nSuspended" = "Inzulín\nPozastavený";
 
 /* Text shown in basal rate space when delivery status is unknown */
 "Unknown" = "Neznáme";
@@ -241,7 +241,7 @@
 "Time Change Detected" = "Zistila sa zmena času";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na Vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
 
 /* description for time change detected notice */
 "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na pumpe je iný ako aktuálny čas. Čas pumpy riadi vaše naplánované liečebné nastavenia. Prejdite nadol na riadok Čas pumpy, pozrite si časový rozdiel a nakonfigurujte pumpu.";
@@ -250,7 +250,7 @@
 "Yes, Sync to Current Time" = "Áno, synchronizujte s aktuálnym časom";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Nie, nechajte čerpadlo tak, ako je";
+"No, Keep Pump As Is" = "Nie, nechajte pumpu tak, ako je";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Dávka";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Zostávajúca hladina inzulínu";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Prázdna nádrž";
+"Empty reservoir" = "Prázdny zásobník";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Nádrž je prázdna. Vymeňte ju teraz!";
@@ -580,4 +580,4 @@
 "Failed to prime the tube. Please try again later" = "Nepodarilo sa naplniť trubicu. Skúste to prosím neskôr";
 
 /* Battery age */
-"Battery age" = "Battery age";
+"Battery age" = "Vek batérie";

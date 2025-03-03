@@ -8,10 +8,10 @@
 "%1$@  %2$@/%3$@  %4$@" = "%1$@  %2$@/%3$@  %4$@";
 
 /* The format string describing number of basal schedule entries: (1: number of entries) */
-"%1$@ basal schedule entries\n" = "%1$@ vstupy do základného plánu\n";
+"%1$@ basal schedule entries\n" = "%1$@ záznamy plánu bazálu\n";
 
 /* The format string describing units of insulin remaining: (1: number of units) */
-"%1$@ Units of insulin remaining\n" = "%1$@ Jednotiek zostávajúci inzulín\n";
+"%1$@ Units of insulin remaining\n" = "Zostáva %1$@ jednotiek inzulínu\n";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ jednotiek zostávajúcich na %2$@";
@@ -23,10 +23,10 @@
 "Adjusting Pump Time..." = "Nastavenie času čerpadla...";
 
 /* Instructions on selecting battery chemistry type */
-"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkalické a lítiové batérie sa rozkladajú rôznou rýchlosťou. Alkalické majú tendenciu lineárne klesať v priebehu času, zatiaľ čo lítiové batérie majú tendenciu udržiavať napätie až do polovice svojej životnosti. Pri bežnom používaní v inzulínovej pumpe Minimed (x22/x15), ktorá nie je kompatibilná so systémom MySentry a beží v slučke, vydržia alkalické batérie približne 4 až 5 dní. Lítiové batérie vydržia 1 až 2 týždne. Pri tomto výbere sa pre každý typ chemického zloženia batérie použije iná rýchlosť úbytku napätia a používateľ bude upozornený, keď batériu delí približne 8 až 10 hodín od zlyhania.";
+"Alkaline and Lithium batteries decay at differing rates. Alkaline tend to have a linear voltage drop over time whereas lithium cell batteries tend to maintain voltage until halfway through their lifespan. Under normal usage in a Non-MySentry compatible Minimed (x22/x15) insulin pump running Loop, Alkaline batteries last approximately 4 to 5 days. Lithium batteries last between 1-2 weeks. This selection will use different battery voltage decay rates for each of the battery chemistry types and alert the user when a battery is approximately 8 to 10 hours from failure." = "Alkalické a lítiové batérie sa vybíjajú rozdielnou rýchlosťou. Alkalické majú tendenciu lineárne klesať v priebehu času, zatiaľ čo lítiové batérie majú tendenciu udržiavať napätie až do polovice svojej životnosti. Pri bežnom používaní v inzulínovej pumpe Minimed (x22/x15), ktorá nie je kompatibilná so systémom MySentry a beží v slučke, vydržia alkalické batérie približne 4 až 5 dní. Lítiové batérie vydržia 1 až 2 týždne. Pri tomto výbere sa pre každý typ chemického zloženia batérie použije iná rýchlosť úbytku napätia a používateľ bude upozornený, keď batériu delí približne 8 až 10 hodín od zlyhania.";
 
 /* Text to confirm delete this pump */
-"Are you sure you want to delete this Pump?" = "Ste si istí, že chcete toto čerpadlo vymazať?";
+"Are you sure you want to delete this Pump?" = "Ste si istí, že chcete túto pumpu odstrániť?";
 
 /* The format string describing pump battery voltage: (1: battery voltage) */
 "Battery: %1$@ volts\n" = "Batéria: %1$@ volt\n";
@@ -41,7 +41,7 @@
 "Cancel" = "Zrušiť";
 
 /* Title text for suspend resume button when temp basal canceling */
-"Canceling Temp Basal" = "Ruší sa Dočasný Bazál";
+"Canceling Temp Basal" = "Ruší sa dočasný bazál";
 
 /* Text shown in basal rate space when basal is changing */
 "Changing" = "Zmena";
@@ -69,7 +69,7 @@
 "Devices" = "Zariadenia";
 
 /* Description for option to not use MySentry */
-"Do not use MySentry" = "Nepoužívajte službu MySentry";
+"Do not use MySentry" = "Nepoužívať službu MySentry";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Chyba pri obnovení";
@@ -78,16 +78,16 @@
 "Error Suspending" = "Chyba pri pozastavení";
 
 /* The alert title for an error while synching time */
-"Error Syncing Time" = "Čas synchronizácie chyby";
+"Error Syncing Time" = "Chyba synchronizácie času";
 
 /* Progress message for fetching pump glucose. */
-"Fetching glucose…" = "Získavanie glukózy…";
+"Fetching glucose…" = "Získavanie glykémie…";
 
 /* Progress message for fetching pump history. */
 "Fetching history…" = "Získavanie histórie…";
 
 /* Progress message for fetching pump model. */
-"Fetching pump model…" = "Získavanie modelu čerpadla…";
+"Fetching pump model…" = "Získavanie modelu pumpy…";
 
 /* The title of the cell showing the pump firmware version */
 "Firmware Version" = "Verzia firmvéru";
@@ -111,7 +111,7 @@
 "Medtronic %1$@" = "Medtronic %1$@";
 
 /* Instructions on selecting setting for MySentry */
-"Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Modely pumpy Medtronic 523, 723, 554 a 754 majú funkciu s názvom „MySentry“, ktorá pravidelne vysiela úroveň nabitia batérie zásobníka a pumpy. Počúvanie týchto vysielaní umožňuje Loopu komunikovať s pumpou menej často, čo môže predĺžiť výdrž batérie pumpy. Pri používaní tejto funkcie však RileyLink zostáva viac času v bdelom stave a využíva viac vlastnej batérie. Povolenie môže predĺžiť životnosť batérie pumpy, zatiaľ čo jej vypnutie môže predĺžiť životnosť batérie RileyLink. Toto nastavenie sa pri iných modeloch čerpadiel ignoruje.";
+"Medtronic pump models 523, 723, 554, and 754 have a feature called 'MySentry' that periodically broadcasts the reservoir and pump battery levels.  Listening for these broadcasts allows Loop to communicate with the pump less frequently, which can increase pump battery life.  However, when using this feature the RileyLink stays awake more of the time and uses more of its own battery.  Enabling this may lengthen pump battery life, while disabling it may lengthen RileyLink battery life. This setting is ignored for other pump models." = "Modely inzulínových púmp Medtronic 523, 723, 554 a 754 majú funkciu „MySentry“, ktorá pravidelne vysiela informácie o stave zásobníka a batérie pumpy. Počúvaním týchto vysielaní môže Loop komunikovať s pumpou menej často, čo môže predĺžiť životnosť batérie pumpy. Avšak pri použití tejto funkcie zostáva RileyLink aktívny dlhší čas, čo znamená vyššiu spotrebu jeho vlastnej batérie. Zapnutie tejto funkcie môže predĺžiť životnosť batérie pumpy. Vypnutie môže predĺžiť výdrž batérie RileyLink. Toto nastavenie sa ignoruje pri iných modeloch púmp.";
 
 /* Value string for MySentry config when MySentry is not being used */
 "No" = "Nie";
@@ -127,14 +127,14 @@
 
 /* navigation title for pump battery type selection
    Text for medtronic pump preferred data source */
-"Preferred Data Source" = "Uprednostňovaný zdroj údajov";
+"Preferred Data Source" = "Preferovaný zdroj údajov";
 
 /* Text for medtronic pump battery percent remaining */
-"Pump Battery Remaining" = "Zostávajúca batéria čerpadla";
+"Pump Battery Remaining" = "Zostávajúca batéria pumpy";
 
 /* navigation title for pump battery type selection
    Text for medtronic pump battery type */
-"Pump Battery Type" = "Top batérie pumpy";
+"Pump Battery Type" = "Typ batérie pumpy";
 
 /* The title text for the pump ID config value */
 "Pump ID" = "ID pumpy";
@@ -167,10 +167,10 @@
 "Select the type of insulin that you will be using in this pump." = "Vyberte typ inzulínu, ktorý budete v tejto pumpe používať.";
 
 /* Progress message for sending button press to pump. */
-"Sending button press…" = "Posiela stlačenie tlačidla…";
+"Sending button press…" = "Odosielanie stlačenie tlačidla…";
 
 /* Title text for suspend resume button when temp basal starting */
-"Starting Temp Basal" = "Spustiť Dočasný Bazál";
+"Starting Temp Basal" = "Spustiť dočasný bazál";
 
 /* A message indicating a command succeeded */
 "Succeeded" = "Úspešné";
@@ -182,7 +182,7 @@
 "Suspended: %1$@\n" = "Pozastavené: %1$@\n";
 
 /* Title text for button when insulin delivery is in the process of being stopped */
-"Suspending" = "Pozastavenie";
+"Suspending" = "Pozastavovanie";
 
 /* The title of the command to change pump time zone */
 "Sync to Current Time" = "Synchronizácia s aktuálnym časom";
@@ -211,7 +211,7 @@
 /* Description for option to use MySentry
    navigation title for pump battery type selection
    Text for medtronic pump to use MySentry */
-"Use MySentry" = "Používajte službu MySentry";
+"Use MySentry" = "Použiť MySentry";
 
 /* Value string for MySentry config when MySentry is being used */
 "Yes" = "Áno";

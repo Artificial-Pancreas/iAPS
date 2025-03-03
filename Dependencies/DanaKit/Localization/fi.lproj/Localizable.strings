@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "DanaRS v1:n määrittäminen";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Pariliitoksen aikana DanaRS v3 näyttää pariliitoskehotteen, kun taas iPhone näyttää pariliitoskoodia koskevan kehotteen. Valitse pumpussa OK ja kirjoita koodi iPhonessa. Tämän jälkeen Loop on valmis kommunikoimaan DanaRS v1 -laitteesi kanssa.";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Ennen pariliitoksen muodostamisen aloittamista on suositeltavaa tarkistaa ja tarvittaessa päivittää pumpun salasana. Voit tehdä tämän menemällä pumpun asetuksiin -> käyttäjäasetukset -> salasana. Oletussalasana on 1234, jos tämä on salasanasi, harkitse sen vaihtamista.";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "DanaRS v3:n määrittäminen";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Pariliitoksen aikana DanaRS v3 näyttää pariliitoskehotteen, kun taas iPhone näyttää kehotteen kahdesta pariliitoskoodista. Valitse pumpussa OK ja kirjoita kaksi koodia iPhonessa. Tämän jälkeen Loop on valmis kommunikoimaan DanaRS v3:n kanssa.";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Dana-i:n käyttöönotto";

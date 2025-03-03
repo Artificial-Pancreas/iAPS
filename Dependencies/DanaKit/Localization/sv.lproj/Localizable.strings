@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Installera DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Under parkopplingsprocessen kommer DanaRS v3 att visa en parkopplingsfråga medan din iPhone kommer att visa en fråga om en parkopplingskod. Välj OK på din pump och skriv in koden på din iPhone. Efter det är Loop redo att kommunicera med din DanaRS v1";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Under parkopplingsprocessen kommer DanaRS v1 att visa en parkopplingsfråga medan din iPhone kommer att visa en fråga om en parkopplingskod. Välj OK på din pump och skriv in koden på din iPhone. Efter det är %1$@ redo att kommunicera med din DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Innan du börjar med parkopplingsprocessen rekommenderar vi att du kontrollerar och vid behov uppdaterar pumpens lösenord. Detta gör du genom att gå till pumpinställningar -> användarinställningar -> lösenord. Standardlösenordet är 1234, om detta är ditt lösenord bör du överväga att ändra det";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Uppsättning av DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Under parkopplingsprocessen kommer DanaRS v3 att visa en parkopplingsfråga medan din iPhone kommer att visa en fråga om två parkopplingskoder. Välj OK på din pump och skriv in de två koderna på din iPhone. Efter det är Loop redo att kommunicera med din DanaRS v3.";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Under parkopplingsprocessen kommer DanaRS v3 att visa en parkopplingsfråga medan din iPhone kommer att visa en fråga om två parkopplingskoder. Välj OK på din pump och skriv in de två koderna på din iPhone. Efter det är %1$@ redo att kommunicera med din DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Konfigurera Dana-i";

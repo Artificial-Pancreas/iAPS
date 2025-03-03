@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "إعداد DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "أثناء عملية الاقتران، ستظهر لك مضخة DanaRS v3 مطالبة بالاقتران بينما سيظهر لك جهاز iPhone مطالبة برمز الاقتران. على المضخة الخاصة بك، حدد موافق واكتب الرمز على جهاز iPhone الخاص بك. بعد ذلك، تصبح Loop جاهزة للاتصال بجهاز DanaRS v1 الخاص بك";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "قبل البدء بعملية الاقتران، يوصى بالتحقق من كلمة مرور المضخة وتحديثها إذا لزم الأمر. يمكنك القيام بذلك من خلال الانتقال إلى إعدادات المضخة -> إعدادات المستخدم -> كلمة المرور. كلمة المرور الافتراضية هي 1234، إذا كانت هذه هي كلمة المرور الخاصة بك، يُرجى التفكير في تغييرها";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "إعداد DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "أثناء عملية الاقتران، ستظهر لك مضخة DanaRS v3 مطالبة بالاقتران بينما سيظهر لك جهاز iPhone مطالبة برمزي اقتران. على المضخة الخاصة بك، حدد موافق واكتب الرمزين على جهاز iPhone الخاص بك. بعد ذلك، تصبح Loop جاهزة للتواصل مع جهاز DanaRS v3 الخاص بك";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "إعداد دانا-i";
