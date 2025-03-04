@@ -370,7 +370,7 @@
 "Check chaft" = "Check chaft";
 
 /* Alert body for checkShaft */
-"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again";
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "Máy bơm đã phát hiện ra sự cố với chaft của nó. Vui lòng tháo bình chứa, kiểm tra mọi thứ và thử lại";
 
 /* Alert title for basalMax */
 "Basal limit reached" = "Basal limit reached";
