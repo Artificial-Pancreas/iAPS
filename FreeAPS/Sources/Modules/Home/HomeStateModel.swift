@@ -552,7 +552,6 @@ extension Home {
                     self.iobs = data.map(\.iob).reduce(0, +)
                     neg = data.filter({ $0.iob < 0 }).count * 5
                 }
-                self.data.target = self.provider.targetHistory(reasonData)
                 let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
                 let yesterday = (tdds.first(where: {
                     ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)

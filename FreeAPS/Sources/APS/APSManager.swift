@@ -380,9 +380,6 @@ final class BaseAPSManager: APSManager, Injectable {
         let temporary = temporaryData
         temporaryData.forBolusView.carbs = 0
 
-        // Adjust for concentration
-        temp.rate = adjustForConcentration(temp.rate)
-
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }

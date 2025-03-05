@@ -84,7 +84,6 @@ struct MainChartView: View {
     @State private var tempBasalPath = Path()
     @State private var regularBasalPath = Path()
     @State private var tempTargetsPath = Path()
-    @State private var targetsPath = Path()
     @State private var overridesPath = Path()
     @State private var suspensionsPath = Path()
     @State private var carbsDots: [DotInfo] = []
@@ -215,7 +214,6 @@ struct MainChartView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             ScrollViewReader { scroll in
                 ZStack(alignment: .top) {
-                    if data.targetLines { targetsView(fullSize: fullSize).drawingGroup() }
                     tempTargetsView(fullSize: fullSize).drawingGroup()
                     overridesView(fullSize: fullSize).drawingGroup()
                     basalView(fullSize: fullSize).drawingGroup()
@@ -627,22 +625,6 @@ struct MainChartView: View {
         }
         .onChange(of: didAppearTrigger) {
             calculateTempTargetsRects(fullSize: fullSize)
-        }
-    }
-
-    private func targetsView(fullSize: CGSize) -> some View {
-        ZStack {
-            targetsPath
-                .fill(Color.green.opacity(colorScheme == .light ? 0.2 : 0.6))
-        }
-        .onChange(of: data.glucose) {
-            calculateTargetsRects(fullSize: fullSize)
-        }
-        .onChange(of: data.target) {
-            calculateTargetsRects(fullSize: fullSize)
-        }
-        .onChange(of: didAppearTrigger) {
-            calculateTargetsRects(fullSize: fullSize)
         }
     }
 
@@ -1094,34 +1076,6 @@ extension MainChartView {
             }
             DispatchQueue.main.async {
                 tempTargetsPath = path
-            }
-        }
-    }
-
-    private func calculateTargetsRects(fullSize: CGSize) {
-        calculationQueue.async {
-            let conversion: Decimal = (data.units == .mmolL ? GlucoseUnits.exchangeRate : 1)
-            let rects = data.target.map { target -> CGRect in
-                let x0 = timeToXCoordinate(target.date.timeIntervalSince1970, fullSize: fullSize)
-                let y0 = glucoseToYCoordinate(Int(target.target / conversion), fullSize: fullSize)
-                let x1 = timeToXCoordinate(
-                    target.date.timeIntervalSince1970 + 5.minutes.timeInterval,
-                    fullSize: fullSize
-                )
-
-                return CGRect(
-                    x: x0,
-                    y: y0 - 2.5,
-                    width: x1 - x0,
-                    height: 2
-                )
-            }
-
-            let path = Path { path in
-                path.addRects(rects)
-            }
-            DispatchQueue.main.async {
-                targetsPath = path
             }
         }
     }

@@ -37,10 +37,6 @@ extension Home {
             CoreDataStorage().fetchReasons(interval: DateFilter().day)
         }
 
-        func targetHistory(_ data: [Reasons]) -> [SuggestedTargets] {
-            data.map { SuggestedTargets(target: ($0.target ?? 100) as Decimal, date: $0.date ?? Date()) }
-        }
-
         func iobData(_ data: [Reasons]) -> [IOBData]? {
             guard data.count > 3 else {
                 return nil
