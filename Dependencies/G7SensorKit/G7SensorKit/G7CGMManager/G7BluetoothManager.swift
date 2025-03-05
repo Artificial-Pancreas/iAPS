@@ -101,6 +101,9 @@ class G7BluetoothManager: NSObject {
             return activePeripheralManager?.peripheral
         }
     }
+    
+    /// Isolated to `managerQueue`
+    private var eventRegistrationActive : Bool = false
 
     /// Isolated to `managerQueue`
     private var managedPeripherals: [UUID:G7PeripheralManager] = [:]
@@ -131,7 +134,7 @@ class G7BluetoothManager: NSObject {
             self.centralManager = CBCentralManager(delegate: self, queue: managerQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "com.loudnate.CGMBLEKit"])
         }
     }
-
+    
     // MARK: - Actions
 
     func scanForPeripheral() {
@@ -177,8 +180,24 @@ class G7BluetoothManager: NSObject {
             }
         }
     }
-
-    private func managerQueue_scanForPeripheral() {
+    
+    func centralManager(_ central: CBCentralManager, connectionEventDidOccur event: CBConnectionEvent, for peripheral: CBPeripheral) {
+    
+        managerQueue.async {
+            guard self.eventRegistrationActive else {
+                self.centralManager.registerForConnectionEvents(options: nil)
+                return
+            }
+            
+            self.managerQueue_establishActivePeripheral()
+            
+            if !self.eventRegistrationActive {
+                self.centralManager.registerForConnectionEvents(options: nil)
+            }
+        }
+    }
+                
+    private func managerQueue_establishActivePeripheral() {
         dispatchPrecondition(condition: .onQueue(managerQueue))
 
         guard centralManager.state == .poweredOn else {
@@ -187,6 +206,7 @@ class G7BluetoothManager: NSObject {
 
         let currentState = activePeripheral?.state ?? .disconnected
         guard currentState != .connected else {
+            eventRegistrationActive = false
             return
         }
 
@@ -201,6 +221,16 @@ class G7BluetoothManager: NSObject {
                 handleDiscoveredPeripheral(peripheral)
             }
         }
+        
+        if activePeripheral != nil {
+            eventRegistrationActive = false
+        }
+    }
+
+    private func managerQueue_scanForPeripheral() {
+        dispatchPrecondition(condition: .onQueue(managerQueue))
+        
+        managerQueue_establishActivePeripheral()
 
         if activePeripheral == nil {
             log.debug("Scanning for peripherals")
@@ -210,6 +240,14 @@ class G7BluetoothManager: NSObject {
                 options: nil
             )
             delegate?.bluetoothManagerScanningStatusDidChange(self)
+            
+            if !eventRegistrationActive {
+                eventRegistrationActive = true
+                centralManager.registerForConnectionEvents(options: [CBConnectionEventMatchingOption.serviceUUIDs: [
+                    SensorServiceUUID.advertisement.cbUUID,
+                    SensorServiceUUID.cgmService.cbUUID
+                ]])
+            }
         }
     }
 
@@ -221,9 +259,9 @@ class G7BluetoothManager: NSObject {
      The sleep gives the transmitter time to shut down, but keeps the app running.
 
      */
-    fileprivate func scanAfterDelay() {
+    func scanAfterDelay() {
         DispatchQueue.global(qos: .utility).async {
-            Thread.sleep(forTimeInterval: 2)
+            Thread.sleep(forTimeInterval: 5)
 
             self.scanForPeripheral()
         }

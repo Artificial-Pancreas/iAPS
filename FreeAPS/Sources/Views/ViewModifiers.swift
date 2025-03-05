@@ -416,3 +416,19 @@ extension UIImage {
         return Image(uiImage: newImage!)
     }
 }
+
+extension View {
+    func dynamicFill(content: some ShapeView, amount: Double, colour: Color) -> some View {
+        content
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(stops: [
+                        Gradient.Stop(color: .white.opacity(1), location: amount),
+                        Gradient.Stop(color: colour, location: amount)
+                    ]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+    }
+}
