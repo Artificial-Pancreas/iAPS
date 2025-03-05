@@ -18,6 +18,8 @@ function generate(pumphistory_data, profile_data, clock_data, glucose_data, basa
         carb_data = carb_data.filter((carb) => carb.carbs >= 1);
         carb_data.sort((a, b) => b.created_at - a.created_at);
     }
+    
+    
 
     if (typeof basalprofile_data[0] === 'undefined') {
         return { "error":"Error: bad basalprofile_data: " + JSON.stringify(basalprofile_data) };
