@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct IconImage: View {

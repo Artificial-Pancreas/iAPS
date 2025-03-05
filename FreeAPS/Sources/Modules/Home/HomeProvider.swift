@@ -33,14 +33,20 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
         }
 
-        func reasons() -> [IOBData]? {
-            let reasons = CoreDataStorage().fetchReasons(interval: DateFilter().day)
+        var reasons: [Reasons] {
+            CoreDataStorage().fetchReasons(interval: DateFilter().day)
+        }
 
-            guard reasons.count > 3 else {
+        func targetHistory(_ data: [Reasons]) -> [SuggestedTargets] {
+            data.map { SuggestedTargets(target: ($0.target ?? 100) as Decimal, date: $0.date ?? Date()) }
+        }
+
+        func iobData(_ data: [Reasons]) -> [IOBData]? {
+            guard data.count > 3 else {
                 return nil
             }
 
-            return reasons.compactMap {
+            return data.compactMap {
                 entry -> IOBData in
                 IOBData(
                     date: entry.date ?? Date(),
