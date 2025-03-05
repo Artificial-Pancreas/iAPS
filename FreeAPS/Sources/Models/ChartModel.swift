@@ -90,9 +90,3 @@ class ChartModel: ObservableObject {
         self.fpus = fpus
     }
 }
-
-struct SuggestedTargets: Equatable {
-    let id = UUID()
-    let target: Decimal
-    let date: Date
-}
