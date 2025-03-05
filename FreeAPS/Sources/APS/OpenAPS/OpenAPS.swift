@@ -32,15 +32,6 @@ final class OpenAPS {
                     let tempBasal = currentTemp.rawJSON
                     self.storage.save(tempBasal, as: Monitor.tempBasal)
 
-                    async let pumpHistoryAsync = self.loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory)
-                    async let carbsAsync = self.loadFileFromStorageAsync(name: Monitor.carbHistory)
-                    async let glucoseAsync = self.loadFileFromStorageAsync(name: Monitor.glucose)
-                    async let preferencesAsync = self.loadFileFromStorageAsync(name: Settings.preferences)
-                    async let basalProfileAsync = self.loadFileFromStorageAsync(name: Settings.basalProfile)
-                    async let dataAsync = self.loadFileFromStorageAsync(name: FreeAPS.settings)
-                    async let autosensAsync = self.loadFileFromStorageAsync(name: Settings.autosense)
-                    async let reservoirAsync = self.loadFileFromStorageAsync(name: Monitor.reservoir)
-                    async let storedProfileAsync = self.loadFileFromStorageAsync(name: Settings.profile)
                     let (
                         pumpHistory,
                         carbs,
@@ -52,15 +43,15 @@ final class OpenAPS {
                         reservoir,
                         storedProfile
                     ) = await (
-                        pumpHistoryAsync,
-                        carbsAsync,
-                        glucoseAsync,
-                        preferencesAsync,
-                        basalProfileAsync,
-                        dataAsync,
-                        autosensAsync,
-                        reservoirAsync,
-                        storedProfileAsync
+                        self.pumpHistory(),
+                        self.carbHistory(),
+                        self.glucoseHistory(),
+                        self.preferencesHistory(),
+                        self.basalHistory(),
+                        self.dataHistory(),
+                        self.autosensHistory(),
+                        self.reservoirHistory(),
+                        self.profilerHistory()
                     )
 
                     let preferencesData = Preferences(from: preferences)
@@ -389,6 +380,42 @@ final class OpenAPS {
     }
 
     // MARK: - Private
+
+    private func pumpHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: OpenAPS.Monitor.pumpHistory)
+    }
+
+    private func carbHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: Monitor.carbHistory)
+    }
+
+    private func glucoseHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: Monitor.glucose)
+    }
+
+    private func preferencesHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: Settings.preferences)
+    }
+
+    private func basalHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: Settings.basalProfile)
+    }
+
+    private func dataHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: FreeAPS.settings)
+    }
+
+    private func autosensHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: Settings.autosense)
+    }
+
+    private func reservoirHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: Monitor.reservoir)
+    }
+
+    private func profilerHistory() async -> RawJSON {
+        await loadFileFromStorageAsync(name: Settings.profile)
+    }
 
     private func reasons(
         reason: String,
