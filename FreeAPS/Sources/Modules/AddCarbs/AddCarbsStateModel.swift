@@ -260,56 +260,5 @@ extension AddCarbs {
                 os.activatePreset(profileID)
             }
         }
-
-        private func hypo() {
-            let os = OverrideStorage()
-
-            // Cancel any eventual Other Override already active
-            if let activeOveride = os.fetchLatestOverride().first {
-                let presetName = os.isPresetName()
-                // Is the Override a Preset?
-                if let preset = presetName {
-                    if let duration = os.cancelProfile() {
-                        // Update in Nightscout
-                        nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
-                    }
-                } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
-                    if let duration = os.cancelProfile() {
-                        nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
-                    }
-                } else {
-                    let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
-                        .formatted() + " %" : "Custom"
-                    if let duration = os.cancelProfile() {
-                        nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
-                    }
-                }
-            }
-
-            guard let profileID = id, profileID != "None" else {
-                return
-            }
-            // Enable New Override
-            if profileID == "Hypo Treatment" {
-                let override = OverridePresets(context: coredataContextBackground)
-                override.percentage = 90
-                override.smbIsOff = true
-                override.duration = 45
-                override.name = "📉"
-                override.advancedSettings = true
-                override.target = 117
-                override.date = Date.now
-                override.indefinite = false
-                os.overrideFromPreset(override, profileID)
-                // Upload to Nightscout
-                nightscoutManager.uploadOverride(
-                    "📉",
-                    Double(45),
-                    override.date ?? Date.now
-                )
-            } else {
-                os.activatePreset(profileID)
-            }
-        }
     }
 }
