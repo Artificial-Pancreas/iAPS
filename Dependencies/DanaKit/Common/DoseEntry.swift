@@ -1,0 +1,62 @@
+//
+//  DoseEntry.swift
+//  DanaKit
+//
+//  Created by Bastiaan Verhaar on 21/01/2024.
+//  Copyright © 2024 Randall Knutson. All rights reserved.
+//
+
+import Foundation
+import LoopKit
+
+extension DoseEntry {
+    public static func bolus(units: Double, deliveredUnits: Double, duration: TimeInterval, activationType: BolusActivationType, insulinType: InsulinType, startDate: Date = Date.now) -> DoseEntry {
+        var endTime = Date.now
+        endTime.addTimeInterval(duration)
+        
+        return DoseEntry(
+            type: .bolus,
+            startDate: startDate,
+            endDate: endTime,
+            value: units,
+            unit: .units,
+            deliveredUnits: deliveredUnits,
+            insulinType: insulinType,
+            automatic: activationType.isAutomatic,
+            manuallyEntered: activationType == .manualNoRecommendation,
+            isMutable: false
+        )
+    }
+    
+    public static func tempBasal(absoluteUnit: Double, duration: TimeInterval, insulinType: InsulinType, startDate: Date = Date.now) -> DoseEntry {
+        return DoseEntry(
+            type: .tempBasal,
+            startDate: startDate,
+            endDate: startDate + duration,
+            value: absoluteUnit,
+            unit: .unitsPerHour,
+            insulinType: insulinType
+        )
+    }
+    
+    public static func basal(rate: Double, insulinType: InsulinType, startDate: Date = Date.now) -> DoseEntry {
+        return DoseEntry(
+            type: .basal,
+            startDate: startDate,
+            value: rate,
+            unit: .unitsPerHour,
+            insulinType: insulinType
+        )
+    }
+    
+    public static func resume(insulinType: InsulinType, resumeDate: Date = Date.now) -> DoseEntry {
+        return DoseEntry(
+            resumeDate: resumeDate,
+            insulinType: insulinType
+        )
+    }
+    
+    public static func suspend(suspendDate: Date = Date.now) -> DoseEntry {
+        return DoseEntry(suspendDate: suspendDate)
+    }
+}
