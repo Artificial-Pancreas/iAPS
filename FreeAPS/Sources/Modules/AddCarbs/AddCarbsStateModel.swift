@@ -20,7 +20,6 @@ extension AddCarbs {
         @Published var maxCarbs: Decimal = 0
         @Published var note: String = ""
         @Published var id_: String = ""
-        @Published var summary: String = ""
         @Published var skipBolus: Bool = false
         @Published var id: String?
         @Published var hypoTreatment = false
@@ -59,18 +58,22 @@ extension AddCarbs {
                 protein: protein,
                 note: note,
                 enteredBy: CarbsEntry.manual,
-                isFPU: false, fpuID: UUID().uuidString
+                isFPU: false
             )]
-            carbsStorage.storeCarbs(carbsToStore)
 
             if hypoTreatment { hypo() }
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
+                carbsStorage.storeCarbs(carbsToStore)
                 apsManager.determineBasalSync()
                 showModal(for: nil)
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore)
                 showModal(for: .bolus(waitForSuggestion: true, fetch: true))
+            } else if !empty {
+                carbsStorage.storeCarbs(carbsToStore)
+                apsManager.determineBasalSync()
+                showModal(for: nil)
             } else {
                 hideModal()
             }
@@ -200,20 +203,61 @@ extension AddCarbs {
         }
 
         func saveToCoreData(_ stored: [CarbsEntry]) {
-            coredataContext.performAndWait {
-                let save = Meals(context: coredataContext)
-                if let entry = stored.first {
-                    save.createdAt = now
-                    save.actualDate = entry.actualDate ?? Date.now
-                    save.id = entry.id ?? ""
-                    save.fpuID = entry.fpuID ?? ""
-                    save.carbs = Double(entry.carbs)
-                    save.fat = Double(entry.fat ?? 0)
-                    save.protein = Double(entry.protein ?? 0)
-                    save.note = entry.note
-                    try? coredataContext.save()
+            CoreDataStorage().saveMeal(stored, now: now)
+        }
+
+        private var empty: Bool {
+            carbs <= 0 && fat <= 0 && protein <= 0
+        }
+
+        private func hypo() {
+            let os = OverrideStorage()
+
+            // Cancel any eventual Other Override already active
+            if let activeOveride = os.fetchLatestOverride().first {
+                let presetName = os.isPresetName()
+                // Is the Override a Preset?
+                if let preset = presetName {
+                    if let duration = os.cancelProfile() {
+                        // Update in Nightscout
+                        nightscoutManager.editOverride(preset, duration, activeOveride.date ?? Date.now)
+                    }
+                } else if activeOveride.isPreset { // Because hard coded Hypo treatment isn't actually a preset
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride("📉", duration, activeOveride.date ?? Date.now)
+                    }
+                } else {
+                    let nsString = activeOveride.percentage.formatted() != "100" ? activeOveride.percentage
+                        .formatted() + " %" : "Custom"
+                    if let duration = os.cancelProfile() {
+                        nightscoutManager.editOverride(nsString, duration, activeOveride.date ?? Date.now)
+                    }
                 }
-                print("meals 1: ID: " + (save.id ?? "").description + " FPU ID: " + (save.fpuID ?? "").description)
+            }
+
+            guard let profileID = id, profileID != "None" else {
+                return
+            }
+            // Enable New Override
+            if profileID == "Hypo Treatment" {
+                let override = OverridePresets(context: coredataContextBackground)
+                override.percentage = 90
+                override.smbIsOff = true
+                override.duration = 45
+                override.name = "📉"
+                override.advancedSettings = true
+                override.target = 117
+                override.date = Date.now
+                override.indefinite = false
+                os.overrideFromPreset(override, profileID)
+                // Upload to Nightscout
+                nightscoutManager.uploadOverride(
+                    "📉",
+                    Double(45),
+                    override.date ?? Date.now
+                )
+            } else {
+                os.activatePreset(profileID)
             }
         }
 

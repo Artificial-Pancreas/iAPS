@@ -8,16 +8,16 @@
 "GOT-KQ-cEh.text" = "Detalje";
 
 /* Class = "UITableViewSection"; footerTitle = "The transmitter ID can be found printed on the back of the device, on the side of the box it came in, and from within the settings menus of the receiver and mobile app."; ObjectID = "Qub-6B-0aB"; */
-"Qub-6B-0aB.footerTitle" = "Sender-ID'et kan findes trykt på bagsiden af ​​enheden, på den side af boksen, den kom i, og fra indstillingsmenuerne på modtageren og mobilappen.";
+"Qub-6B-0aB.footerTitle" = "Sender-ID'et kan findes trykt på bagsiden af ​​enheden, på siden af æsken, den kom i, og via indstillingsmenuerne på modtageren og mobil-appen.";
 
 /* Class = "UITableViewSection"; headerTitle = "Transmitter ID"; ObjectID = "Qub-6B-0aB"; */
 "Qub-6B-0aB.headerTitle" = "Sender ID";
 
 /* Class = "UITableViewSection"; footerTitle = "Data can be downloaded over the Internet from Share when the transmitter connection fails."; ObjectID = "k1N-Rg-XDy"; */
-"k1N-Rg-XDy.footerTitle" = "Data kan downloades over internettet fra Share, når transmitterforbindelsen mislykkes.";
+"k1N-Rg-XDy.footerTitle" = "Data kan downloades via internet fra Share, hvis senderforbindelsen mislykkes.";
 
 /* Class = "UITableViewSection"; headerTitle = "Dexcom Share"; ObjectID = "k1N-Rg-XDy"; */
 "k1N-Rg-XDy.headerTitle" = "Dexcom Share";
 
 /* Class = "UITextField"; placeholder = "Enter the 6-digit transmitter ID"; ObjectID = "nKX-TW-GhD"; */
-"nKX-TW-GhD.placeholder" = "Indtast det 6-cifrede sender-ID";
+"nKX-TW-GhD.placeholder" = "Angiv det 6-cifrede sender-ID";

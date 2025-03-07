@@ -89,7 +89,7 @@ extension Home {
 
         func carbs(hours: Int) -> [CarbsEntry] {
             carbsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date() && $0.carbs > 0
             }
         }
 
