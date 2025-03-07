@@ -5,7 +5,7 @@ import JavaScriptCore
 
 final class OpenAPS {
     private let jsWorker = JavaScriptWorker()
-    private let scriptExecutor = WebViewScriptExecutor()
+    private let scriptExecutor: WebViewScriptExecutor
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
     private let storage: FileStorage
     private let nightscout: NightscoutManager
@@ -17,6 +17,7 @@ final class OpenAPS {
         self.storage = storage
         self.nightscout = nightscout
         self.pumpStorage = pumpStorage
+        scriptExecutor = processQueue.sync { WebViewScriptExecutor() }
     }
 
     func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: TemporaryData) -> Future<Suggestion?, Never> {
