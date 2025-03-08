@@ -4,7 +4,7 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Pridanie inzulínu bez podania bolusu";
+"Add insulin without actually bolusing" = "Zaznamenať inzulínu bez podania bolusu";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Pridať %@ bez podania bolusu";
@@ -1497,7 +1497,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override your Basal, ISF, CR and Target profiles" = "Prepíšte svoje profily Basal, ISF, CR a Target";
 
 /* */
-"Enable indefinitely" = "Povolenie na dobu neurčitú";
+"Enable indefinitely" = "Povoliť na dobu neurčitú";
 
 /* */
 "Override Profile target" = "Prepísať cieľ profilu";
@@ -1756,10 +1756,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Upozornenia zaznejú, keď aplikácia automaticky upraví doručenie a na príkazy, ktoré sami zadáte.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Predvolené pripomenutie o expirácii";
+"Expiration Reminder Default" = "Predvolené pripomenutie o exspirácii";
 
 /* */
-"Expiration Reminder" = "Pripomienka Expirácie";
+"Expiration Reminder" = "Pripomienka exspirácie";
 
 /* */
 "Low Reservoir" = "Nízka hladina v rezervoári";
@@ -1776,7 +1776,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Uistite sa, že iPhone a Pod sú blízko seba. Ak problémy s komunikáciou pretrvávajú, presuňte sa do inej oblasti.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Ihneď vymeniť pod. Podávanie inzulínu sa zastaví o %1$@ alebo keď sa minie inzulín.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Ihneď vymeniť Pod. Podávanie inzulínu sa zastaví o %1$@ alebo ak sa minie inzulín.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Dávka";
@@ -1863,7 +1863,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Statistics" = "Štatistiky";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Povolenie nahrávania štatistík do NS";
+"Allow Upload of Statistics to NS" = "Povoliť nahrávania štatistík do NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Nízka";
@@ -2587,10 +2587,10 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Predvolené nastavenie je false. Keď je true, zapne supermikrobolus (SMB) na 6 hodín po sacharidoch, dokonca aj pri 0 sacharidoch na palube (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Povolenie SMB s vysokým dočasným cieľom";
+"Allow SMB With High Temptarget" = "Povoliť SMB s vysokým dočasným cieľom";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Povolenie SMB s vysokým dočasným cieľom";
+"Allow SMB With High Temptarget" = "Povoliť SMB s vysokým dočasným cieľom";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Predvolené nastavenie je false. Ak je true, umožní supermikrobolus (ak je inak povolený) aj pri vysokých cieľových teplotách (> 100 mg/dl).";
@@ -2736,16 +2736,16 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Povolenie funkcie Dynamic ISF";
+"Enable Dynamic ISF" = "Povoliť Dynamic ISF";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Povolenie funkcie Dynamic ISF";
+"Enable Dynamic ISF" = "Povoliť Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Vypočítajte nové nastavenie citlivosti na inzulín (ISF) pri každom cykle slučky. Nové nastavenie ISF bude založené na vašej aktuálnej glykémii, celkovej dennej dávke inzulínu (TDD, posledných 24 hodín všetkého podaného inzulínu) a vašom individuálnom korekčnom faktore (odporúčanie na začiatok je 0,5, ak používate sigmoidnú funkciu, a 0,8, ak nie).\n\\Všetky dynamické úpravy ISF a CR budú obmedzené vašimi limitmi min/max automatického snímania.";
 
 /* Headline Enable Dynamic CR */
-"Enable Dynamic CR" = "Povolenie funkcie Dynamic CR";
+"Enable Dynamic CR" = "Povoliť Dynamic CR";
 
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Používajte dynamický CR. Dynamický pomer sa použije pre CR takto:\n\n Keď pomer > 1: dynCR = (newRatio - 1) / 2 + 1.\nKeď pomer < 1: dynCR = CR/dynCR.\n\nNepoužívajte spolu s vysokou inzulínovou frakciou (> 2)";
@@ -2835,7 +2835,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Smaller iPhone Screens" = "Menšie obrazovky iPhonu";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Zobrazenie a povolenie vstupov pre tuky a bielkoviny";
+"Display and allow Fat and Protein entries" = "Povoliť zadávanie tukov a proteínov";
 
 /* UI/UX option */
 "Add Meal View settings " = "Pridanie nastavení zobrazenia jedla ";
@@ -2942,7 +2942,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Nastavenie hodnoty enableSMB_high_bg, s ktorou sa bude porovnávať povolenie SMB. Ak je BG > ako táto hodnota, SMB by sa mali povoliť.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Povolenie SMB s vysokým krvným cukrom";
+"Enable SMB With High BG" = "Povoliť SMB pri vysokej glykémii";
 
 /* "Enable SMB With High BG" */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Povolenie SMB pri zistení vysokej hladiny cukru v krvi na základe cieľa vysokej hladiny cukru v krvi (upraveného alebo profilu)";
