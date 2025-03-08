@@ -2153,16 +2153,16 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Layout" = "Rozloženie";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Jednoduchý";
+"Single" = "Jednoduché";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Rozdelenie";
+"Split" = "Rozdelený";
 
 /* Contact Image, settings, outer ring - don't show */
 "DontShowRing" = "Nezobrazovať";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop stav";
+"LoopStatusRing" = "Stav slučky";
 
 /* Contact Image, settings, outer ring - IOB */
 "IOBRing" = "IOB";
@@ -2186,7 +2186,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Ring" = "Kruh";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Vonkajšie";
+"Outer" = "Vonkajší";
 
 /* Contact Image, settings, label for the ring width picker */
 "Width" = "Šírka";
@@ -2267,7 +2267,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "IOBContactValue" = "IOB";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop stav";
+"LoopStatusContactValue" = "Stav slučky";
 
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
