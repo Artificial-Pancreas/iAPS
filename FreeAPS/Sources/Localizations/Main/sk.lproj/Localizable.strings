@@ -9,7 +9,7 @@
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Pridať %@ bez podania bolusu";
 
-"Bolus" = "Dávka";
+"Bolus" = "Bolus";
 
 "Close" = "Zatvoriť";
 
@@ -50,7 +50,7 @@
 "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Posledný cyklus pred %@ minútami. Dokončite alebo zrušte túto akciu jedla/bolusu, aby mohol prebehnúť ďalší cyklus slučky";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Zobraziť emotikonov ako štítkov";
+"Display Emojis as Labels" = "Zobraziť emotikony ako štítky";
 
 /* Calender Option */
 "Display IOB and COB" = "Zobraziť IOB a COB";
@@ -574,7 +574,7 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Uzavretý okruh";
+"Closed loop" = "Uzavretá slučka";
 
 /* */
 "Configuration" = "Nastavenie";
@@ -1215,7 +1215,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Also add source info" = "Pridajte aj informácie o zdroji";
 
 /* */
-"Carbs Required Threshold" = "Požadovaná prahová hodnota pre uhľohydráty";
+"Carbs Required Threshold" = "Prahová hodnota pre pripomenutie sacharidov";
 
 /* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
@@ -1230,7 +1230,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Last loop was more than %d min ago" = "Posledná slučka bola pred viac ako %d min";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Zobraziť glykémie na odznaku aplikácie";
+"Show glucose on the app badge" = "Zobraziť glykémiu na odznaku aplikácie";
 
 /* */
 "Backfill glucose" = "Spätne zapísať glykémie";
@@ -1872,7 +1872,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "High" = "Vysoká";
 
 /* In Range */
-"In Range" = "V dosahu";
+"In Range" = "V rozsahu";
 
 /* Display % */
 "Change HbA1c Unit" = "Zmena jednotky HbA1c";
@@ -1908,7 +1908,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "24 hours" = "24 hodiny";
 
 /* Average BG = */
-"Average" = "Priemerný";
+"Average" = "Priemer";
 
 /* TIR Preview Headline */
 "Time In Range" = "Čas v rozmedzí";
@@ -2204,10 +2204,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Secondary size" = "Sekundárna veľkosť";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Sledovanie";
+"Tracking" = "Rozloženie";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Váha";
+"Weight" = "Hrúbka písma";
 
 /* Contact Image, settings, label for the dark-mode switcher */
 "Dark mode" = "Tmavý režim";
