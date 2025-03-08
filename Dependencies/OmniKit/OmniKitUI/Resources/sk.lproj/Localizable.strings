@@ -255,10 +255,10 @@
 "Expiration Reminder Default" = "Predvolené pripomenutie o expirácii";
 
 /* The title of the cell showing the pod expiration after expiry */
-"Expired" = "Expiroval";
+"Expired" = "Exspiroval";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Expiruje";
+"Expires" = "Exspiruje";
 
 /* Alert title for failing to cancel manual basal error */
 "Failed to Cancel Manual Basal" = "Zrušenie manuálneho bazálu zlyhalo";
@@ -276,7 +276,7 @@
 "Failed to update confidence reminder preference." = "Nepodarilo sa aktualizovať predvoľbu pripomenutia dôveryhodnosti.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Nepodarilo sa aktualizovať pripomenutie o expirácii";
+"Failed to Update Expiration Reminder" = "Nepodarilo sa aktualizovať pripomenutie o exspirácii";
 
 /* Alert title for error when updating low reservoir reminder */
 "Failed to Update Low Reservoir Reminder" = "Nepodarilo sa aktualizovať pripomienku nízkej hladiny v rezervoári";
@@ -624,7 +624,7 @@
 "Set Temporary Basal Rate" = "Nastavenie dočasnej bazálnej sadzby";
 
 /* Description text on manual temp basal action sheet */
-"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nezruší.";
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nebude zrušená.";
 
 /* Title for setup complete screen */
 "Setup Complete" = "Nastavenie je dokončené";
@@ -819,7 +819,7 @@ Silence Pod" = "Umlčané";
 "Read Pod Status" = "Zistiť stav Podu";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod diagnostiky";
+"Pod Diagnostics" = "Diagnostika Podu";
 
 /* Text for read pulse log plus title */
 "Read Pulse Log Plus" = "Čítať protokol pulzov";
