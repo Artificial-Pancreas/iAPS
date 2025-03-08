@@ -33,7 +33,7 @@
 "Multiple Command Alert" = "Upozornenie na viacero príkazov";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod vyprší za %1$@.";
+"Pod expires in %1$@." = "Platnosť Podu skončí o %1$@.";
 
 /* Alert content body for podExpiring pod alert */
 "Change Pod now. Pod has been active for 72 hours." = "Teraz vymeňte Pod. Pod bol aktívny 72 hodín.";
@@ -66,10 +66,10 @@
 "Unfinished Activation" = "Nedokončená aktivácia";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expiruje o";
+"Pod expires in" = "Pod exspiruje o";
 
 /* */
-"Pod Expires" = "Expirácia Podu";
+"Pod Expires" = "Exspirácia Podu";
 
 /* */
 "Pod Activated" = "Pod aktivovaný";
@@ -180,7 +180,7 @@
 "Unfinished Activation" = "Nedokončená aktivácia";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expiruje o";
+"Pod expires in" = "Pod exspiruje o";
 
 /* Label for pod life state when within pod expiration window */
 "Pod expired" = "Pod vypršal";
