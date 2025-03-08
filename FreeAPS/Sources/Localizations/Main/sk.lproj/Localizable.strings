@@ -1194,7 +1194,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Backfilling from trend is currently not well supported by Loop" = "Spätné zasypávanie z trendu nie je v súčasnosti dostatočne podporované službou Loop";
 
 /* */
-"Backfill from history" = "Výplň z histórie";
+"Backfill from history" = "Vyplň z histórie";
 
 /* */
 "Backfill from trend" = "Zásyp z trendu";
@@ -1438,7 +1438,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Enable" = "Povoliť";
 
 /* Header */
-"Conversion settings" = "Nastavenia konverzie";
+"Conversion settings" = "Nastavenia prepočtu";
 
 /* Delay */
 "Delay In Minutes" = "Oneskorenie v minútach";
@@ -1557,7 +1557,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "This will change settings back to your normal profile." = "Tým sa nastavenia vrátia do normálneho profilu.";
 
 /* Start Profile Alert */
-"Start Profile" = "Štartovací profil";
+"Start Profile" = "Spustiť profil";
 
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Váš profilový bazálny inzulín sa upraví pomocou percentuálnej hodnoty override a váš profilový ISF a CR sa opačne upraví pomocou percentuálnej hodnoty.";
@@ -2554,7 +2554,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Unsuspend If No Temp" = "Zrušenie pozastavenia Ak nie je dočasné";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Mnohí ľudia po opätovnom pripojení čerpadla občas zabudnú obnoviť/odstaviť jeho prevádzku. Ak patríte medzi nich a ste ochotní spoľahlivo nastaviť nulovú bazálnu teplotu vždy pri pozastavení a odpojení pumpy, táto funkcia vám kryje chrbát. Ak je zapnutá, automaticky obnoví / zruší pozastavenie pumpy, ak to zabudnete urobiť pred vypršaním nulovej teploty. Pokiaľ nulová teplota stále beží, ponechá čerpadlo pozastavené.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Mnohí ľudia po opätovnom pripojení pumpy občas zabudnú obnoviť/odstaviť jeho prevádzku. Ak patríte medzi nich a ste ochotní spoľahlivo nastaviť nulovú bazálnu teplotu vždy pri pozastavení a odpojení pumpy, táto funkcia vám kryje chrbát. Ak je zapnutá, automaticky obnoví / zruší pozastavenie pumpy, ak to zabudnete urobiť pred vypršaním nulovej teploty. Pokiaľ nulová teplota stále beží, ponechá čerpadlo pozastavené.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Povoliť UAM";
@@ -2680,7 +2680,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Toto je množstvo maximálneho počtu sacharidov, o ktorom predpokladáme, že sa vstrebe v priebehu 4 hodín, ak ešte nevidíme vstrebávanie sacharidov.";
 
 /* Headline ”Max SMB Basal Minutes" */
-"Max SMB Basal Minutes" = "Maximálny počet bazálnych minút SMB";
+"Max SMB Basal Minutes" = "Maximálny počet bazálnych minút pre SMB";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolené nastavenie začína na 30. Toto je maximálny počet minút bazálnej dávky, ktorú možno dodať ako jeden SMB s nekrytým COB. To dáva možnosť urobiť SMB agresívnejším, ak sa tak rozhodnete. Odporúča sa nastaviť túto hodnotu na začiatok na 30, v súlade s predvoleným nastavením, a ak sa rozhodnete túto hodnotu zvýšiť, urobte tak v maximálne 15-minútových krokoch, pričom pozorne sledujte účinky zmien. Neodporúča sa nastaviť túto hodnotu na viac ako 90 minút, pretože to môže ovplyvniť schopnosť algoritmu bezpečne vynulovať teplotu. Odporúča sa tiež, aby sa pri nastavení hodnoty vyššej ako predvolená hodnota použil pushover, aby sa generovali upozornenia na všetky predpokladané najnižšie alebo najvyššie hodnoty.";
