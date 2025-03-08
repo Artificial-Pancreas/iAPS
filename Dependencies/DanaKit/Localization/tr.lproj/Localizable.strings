@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "DanaRS v1'in Kurulumu";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Eşleştirme işlemi sırasında DanaRS v3 cihazınız bir eşleştirme istemi gösterirken iPhone cihazınız bir eşleştirme kodu istemi gösterecektir. Pompanızda Tamam'ı seçin ve kodu iPhone'unuza yazın. Bundan sonra Loop, DanaRS v1 cihazınızla iletişim kurmaya hazırdır.";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Eşleştirme işlemine başlamadan önce, pompa şifresini kontrol etmeniz ve gerekirse güncellemeniz önerilir. Bunu pompa ayarları -> kullanıcı ayarları -> şifre bölümüne giderek yapabilirsiniz. Varsayılan şifre 1234'tür, şifreniz buysa lütfen değiştirmeyi düşünün";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "DanaRS v3'ün Kurulumu";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Eşleştirme işlemi sırasında DanaRS v3 cihazınız bir eşleştirme istemi gösterirken iPhone'unuz iki eşleştirme kodu istemi gösterecektir. Pompanızda Tamam'ı seçin ve iPhone'unuza iki kodu yazın. Bundan sonra Loop, DanaRS v3 cihazınızla iletişim kurmaya hazırdır";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Dana-i'nin Kurulumu";
