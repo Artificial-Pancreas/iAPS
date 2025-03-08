@@ -913,7 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Info Sensore";
 
 /* */
-"Sensor Age" = "Durata Sensore";
+"Sensor Life-Span" = "Sensor Life-Span";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
 
 /* */
 "Sensor Age Left" = "Tempo Rimanente Sensore";
@@ -2268,6 +2271,11 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Stato loop";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+
 /* --------- Auto ISF --------- */
 /* */
 
@@ -2347,13 +2355,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Limite delta massimo";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Le SMB saranno disattivate quando sotto questo limite, mentre è in esecuzione una velocità basale B30. Il valore predefinito è 8 mg/dl (0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Limite BG massimo";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Le SMB saranno disattivate quando sotto questo limite, mentre è in esecuzione una velocità basale B30. Il valore predefinito è 130 mg/dl (7.2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Livello obiettivo per attivare B30";
@@ -2380,7 +2388,7 @@ Enact a temp Basal or a temp target */
 "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Questo è il peso applicato mentre il glucosio scende e che indebolisce ISF. Con 0 questo contributo è effettivamente disabilitato. 0.1 potrebbe essere un buon punto di partenza.";
 
 /* */
-"ISF weight while BG accelerates" = "Peso ISF mentre BG diminuisce";
+"ISF weight while BG accelerates" = "ISF weight while BG accelerates";
 
 /* */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Valore predefinito: 0. Questo è il peso applicato mentre il glucosio sale e che rafforza ISF. Con 0 questo contributo è effettivamente disabilitato. 0.02 è un punto di partenza sicuro, da cui spostarsi. Le impostazioni tipiche sono circa 0.15!";
@@ -2416,10 +2424,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Valore predefinito: 0.0\nQuesto è il peso applicato al poligono che adatta ISF se la glicemia è al di sotto del target. \n\nCon 0.0 l'effetto è disattivato.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Cambio Orario Max durante ISF";
+"Duration Weight" = "Duration Weight";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Tasso al quale l'ISF viene ridotto per ore considerando che il livello glicemico rimanga al doppio dell'obiettivo per quel momento. Quando il valore = 1,0, ISF è ridotto del 50% dopo 1 ora di livello di glicemia a obiettivo 2x.";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "Range somministrazione SMB somministrazione BG";
@@ -2474,6 +2482,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Auto ISF" = "Auto ISF";
+
+/* Is true */
+" on" = " acceso";
+
+/* Is false */
+" off" = " spento";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Adjust ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2867,6 +2884,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display Glucose Delta" = "Mostra Delta Glicemia";
 
 /* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Nascondi Badge Concentrazione";
 
 /* UI/UX option */
@@ -2874,6 +2894,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Nascondi le stringhe di quantità del bolo quando la quantità è inferiore";
+
+/* UI/UX option */
+"Display carb equivalents" = "Display carb equivalents";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";

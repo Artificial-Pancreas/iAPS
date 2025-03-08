@@ -6,9 +6,10 @@ public struct BolusProgressViewStyle: ProgressViewStyle {
     public func makeBody(configuration: LinearProgressViewStyle.Configuration) -> some View {
         @State var progress = CGFloat(configuration.fractionCompleted ?? 0)
         ZStack {
-            VStack {
-                ProgressView(value: progress)
-            }
-        }.frame(width: 160)
+            ProgressView(value: progress)
+                .tint(Color.insulin)
+                .scaleEffect(y: 5.5)
+                .frame(width: 250, height: 20)
+        }
     }
 }

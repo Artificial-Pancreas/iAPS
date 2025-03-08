@@ -159,20 +159,6 @@ extension AutoISF {
                         }
 
                         HStack {
-                            Text("Dura ISF Hourly Max Change")
-                                .onTapGesture {
-                                    info(
-                                        header: "Dura ISF Hourly Max Change",
-                                        body: "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.",
-                                        useGraphics: nil
-                                    )
-                                }
-                            Spacer()
-                            DecimalTextField("0", value: $state.autoISFhourlyChange, formatter: formatter)
-                                .disabled(isPresented)
-                        }
-
-                        HStack {
                             Text("ISF weight for higher BG's")
                                 .onTapGesture {
                                     info(
@@ -183,6 +169,20 @@ extension AutoISF {
                                 }
                             Spacer()
                             DecimalTextField("0", value: $state.higherISFrangeWeight, formatter: formatter)
+                                .disabled(isPresented)
+                        }
+
+                        HStack {
+                            Text("Duration Weight")
+                                .onTapGesture {
+                                    info(
+                                        header: "Duration Weight",
+                                        body: "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)",
+                                        useGraphics: nil
+                                    )
+                                }
+                            Spacer()
+                            DecimalTextField("0", value: $state.autoISFhourlyChange, formatter: formatter)
                                 .disabled(isPresented)
                         }
 
@@ -311,7 +311,7 @@ extension AutoISF {
                                     .onTapGesture {
                                         info(
                                             header: "Upper BG limit",
-                                            body: "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).",
+                                            body: "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).",
                                             useGraphics: nil
                                         )
                                     }
@@ -329,7 +329,7 @@ extension AutoISF {
                                     .onTapGesture {
                                         info(
                                             header: "Upper Delta limit",
-                                            body: "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).",
+                                            body: "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).",
                                             useGraphics: nil
                                         )
                                     }

@@ -55,7 +55,7 @@ extension Home {
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistory] = []
         @Published var overrides: [Override] = []
-        @Published var alwaysUseColors: Bool = true
+        @Published var alwaysUseColors: Bool = false
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []
@@ -75,6 +75,10 @@ extension Home {
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
         @Published var autoisf = false
+        @Published var displayExpiration = false
+        @Published var cgm: CGMType = .nightscout
+        @Published var sensorDays: Double = 10
+        @Published var anubis: Bool = false
 
         // Chart data
         var data = ChartModel(
@@ -104,7 +108,8 @@ extension Home {
             maxBolus: 0,
             maxBolusValue: 1,
             useInsulinBars: true,
-            screenHours: 6
+            screenHours: 6,
+            fpus: true
         )
 
         override func subscribe() {
@@ -153,6 +158,7 @@ extension Home {
             data.minimumSMB = settingsManager.settings.minimumSMB
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
+            data.fpus = settingsManager.settings.fpus
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             extended = settingsManager.settings.extendHomeView
@@ -160,6 +166,10 @@ extension Home {
             maxCOB = settingsManager.preferences.maxCOB
             autoisf = settingsManager.settings.autoisf
             hours = settingsManager.settings.hours
+            displayExpiration = settingsManager.settings.displayExpiration
+            cgm = settingsManager.settings.cgm
+            sensorDays = settingsManager.settings.sensorDays
+            anubis = settingsManager.settings.anubis
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -217,9 +227,11 @@ extension Home {
                 .receive(on: DispatchQueue.main)
                 .map { [weak self] error in
                     self?.errorDate = error == nil ? nil : Date()
-                    if let error = error {
-                        info(.default, error.localizedDescription)
-                    }
+                    /* if let error = error,
+                        !error.localizedDescription.contains(NSLocalizedString("Pump is Busy.", comment: "Pump Error"))
+                     {
+                         info(.default, error.localizedDescription)
+                     } */
                     return error?.localizedDescription
                 }
                 .weakAssign(to: \.errorMessage, on: self)
@@ -637,6 +649,7 @@ extension Home.StateModel:
         data.minimumSMB = settingsManager.settings.minimumSMB
         data.maxBolus = settingsManager.pumpSettings.maxBolus
         data.useInsulinBars = settingsManager.settings.useInsulinBars
+        data.fpus = settingsManager.settings.fpus
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
         extended = settingsManager.settings.extendHomeView
@@ -644,6 +657,10 @@ extension Home.StateModel:
         maxCOB = settingsManager.preferences.maxCOB
         autoisf = settingsManager.settings.autoisf
         hours = settingsManager.settings.hours
+        displayExpiration = settingsManager.settings.displayExpiration
+        cgm = settingsManager.settings.cgm
+        sensorDays = settingsManager.settings.sensorDays
+        anubis = settingsManager.settings.anubis
         setupGlucose()
         setupOverrideHistory()
         setupData()

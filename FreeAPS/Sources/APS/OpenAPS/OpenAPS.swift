@@ -18,7 +18,11 @@ final class OpenAPS {
         self.pumpStorage = pumpStorage
     }
 
-    func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
+    func determineBasal(
+        currentTemp: TempBasal,
+        clock: Date = Date(),
+        temporary: TemporaryData
+    ) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
                 let start = Date.now
@@ -49,7 +53,8 @@ final class OpenAPS {
                     basalProfile: basalProfile,
                     clock: clock,
                     carbs: carbs,
-                    glucose: glucose
+                    glucose: glucose,
+                    temporary: temporary
                 )
                 print("Time for Meal module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)")
 
@@ -630,7 +635,7 @@ final class OpenAPS {
         return tdd
     }
 
-    func dynamicVariables(_ preferences: Preferences?) -> RawJSON {
+    func dynamicVariables(_ preferences: Preferences?) -> DynamicVariables {
         coredataContext.performAndWait {
             var hbt_ = preferences?.halfBasalExerciseTarget ?? 160
             let wp = preferences?.weightPercentage ?? 1
@@ -710,6 +715,19 @@ final class OpenAPS {
                     useOverride = false
                     if OverrideStorage().cancelProfile() != nil {
                         debug(.nightscout, "Override ended, duration: \(duration) minutes")
+                    }
+                }
+                // End with new Meal, when applicable
+                if useOverride, overrideArray.first?.advancedSettings ?? false, overrideArray.first?.endWIthNewCarbs ?? false,
+                   let recent = cd.recentMeal(), !unchanged(meal: recent),
+                   (recent.actualDate ?? .distantPast) > (overrideArray.first?.date ?? .distantFuture)
+                {
+                    useOverride = false
+                    if OverrideStorage().cancelProfile() != nil {
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new carbs: \(recent.carbs) g, duration: \(duration) minutes"
+                        )
                     }
                 }
             }
@@ -812,8 +830,12 @@ final class OpenAPS {
                 aisfOverridden: useOverride && (overrideArray.first?.overrideAutoISF ?? false)
             )
             storage.save(averages, as: OpenAPS.Monitor.dynamicVariables)
-            return self.loadFileFromStorage(name: Monitor.dynamicVariables)
+            return averages
         }
+    }
+
+    private func unchanged(meal: Meals) -> Bool {
+        meal.carbs <= 0 && meal.fat <= 0 && meal.protein <= 0
     }
 
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) -> RawJSON {
@@ -831,19 +853,28 @@ final class OpenAPS {
         }
     }
 
-    private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
+    private func meal(
+        pumphistory: JSON,
+        profile: JSON,
+        basalProfile: JSON,
+        clock: JSON,
+        carbs: JSON,
+        glucose: JSON,
+        temporary: TemporaryData
+    ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
         return jsWorker.inCommonContext { worker in
             worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Bundle.meal))
             worker.evaluate(script: Script(name: Prepare.meal))
+            worker.evaluate(script: Script(name: Bundle.meal))
             return worker.call(function: Function.generate, with: [
                 pumphistory,
                 profile,
                 clock,
                 glucose,
                 basalProfile,
-                carbs
+                carbs,
+                temporary.forBolusView
             ])
         }
     }
@@ -983,7 +1014,7 @@ final class OpenAPS {
         model: JSON,
         autotune: JSON,
         freeaps: JSON,
-        dynamicVariables: JSON,
+        dynamicVariables: DynamicVariables,
         settings: JSON
     ) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))

@@ -31,6 +31,7 @@ extension OverrideProfilesConfig {
         @Published var emoji: String = ""
         @Published var maxIOB: Decimal = 0
         @Published var overrideMaxIOB: Bool = false
+        @Published var endWIthNewCarbs: Bool = false
         @Published var extended_overrides = false
         @Published var overrideAutoISF: Bool = false
         @Published var currentSettings = AutoISFsettings()
@@ -110,6 +111,7 @@ extension OverrideProfilesConfig {
                     saveOverride.uamMinutes = uamMinutes as NSDecimalNumber
                     saveOverride.maxIOB = maxIOB as NSDecimalNumber
                     saveOverride.overrideMaxIOB = overrideMaxIOB
+                    saveOverride.endWIthNewCarbs = endWIthNewCarbs
                 }
 
                 if overrideAutoISF {
@@ -150,6 +152,7 @@ extension OverrideProfilesConfig {
                 saveOverride.isf = self.isf
                 saveOverride.cr = self.cr
                 saveOverride.basal = self.basal
+                saveOverride.endWIthNewCarbs = self.endWIthNewCarbs
 
                 if smbIsAlwaysOff {
                     saveOverride.smbIsAlwaysOff = true
@@ -224,6 +227,7 @@ extension OverrideProfilesConfig {
                 saveOverride.uamMinutes = (profile.uamMinutes ?? 0) as NSDecimalNumber
                 saveOverride.maxIOB = (profile.maxIOB ?? defaultmaxIOB as NSDecimalNumber) as NSDecimalNumber
                 saveOverride.overrideMaxIOB = profile.overrideMaxIOB
+                saveOverride.endWIthNewCarbs = profile.endWIthNewCarbs
             }
 
             // Saves
@@ -261,6 +265,7 @@ extension OverrideProfilesConfig {
             smbIsAlwaysOff = !edit ? overrideArray!.smbIsAlwaysOff : presetArray?.smbIsAlwaysOff ?? false
             overrideMaxIOB = !edit ? overrideArray!.overrideMaxIOB : presetArray?.overrideMaxIOB ?? false
             overrideAutoISF = !edit ? overrideArray!.overrideAutoISF : presetArray?.overrideAutoISF ?? false
+            endWIthNewCarbs = !edit ? overrideArray!.endWIthNewCarbs : presetArray?.endWIthNewCarbs ?? false
 
             isf = !edit ? overrideArray!.isf : presetArray?.isf ?? true
             cr = !edit ? overrideArray!.cr : presetArray?.cr ?? true
@@ -347,6 +352,7 @@ extension OverrideProfilesConfig {
             maxIOB = defaultmaxIOB
             overrideMaxIOB = false
             overrideAutoISF = false
+            endWIthNewCarbs = false
 
             autoISFsettings = currentSettings
         }
