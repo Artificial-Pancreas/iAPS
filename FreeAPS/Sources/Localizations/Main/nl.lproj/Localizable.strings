@@ -53,7 +53,7 @@
 "Display Emojis as Labels" = "Emoji’s als labels weergeven";
 
 /* Calender Option */
-"Display IOB and COB" = "Geef IOB en COB weer";
+"Display IOB and COB" = "Toon IOB en COB";
 
 /* Apple Watch App setting */
 "Confirm Bolus Faster" = "Bevestig bolus sneller";
@@ -299,7 +299,7 @@
 "Schedule" = "Schema";
 
 /*  */
-"starts at" = "begint om";
+"starts at" = "Start";
 
 /* Time basal profile */
 "Time" = "Tijd";
@@ -311,7 +311,7 @@
 "Carb Ratios" = "Koolhydraten ratio's";
 
 /*  */
-"Ratio" = "Verhouding";
+"Ratio" = "Waarde";
 
 /*  */
 "Autosens" = "Gevoeligheidsdetectie (Autosens)";
@@ -778,7 +778,8 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Over de werkwijze";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg ervoor dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Als er andere apps zijn die via bluetooth verbinding maken met de sensor dan moeten deze uitgeschakeld of verwijderd worden. \n\n Je kunt maar één app gebruiken die communiceert met de sensor via bluetooth. Druk vervolgens op de knop \"koppelen en verbinden\" hieronder om het proces te starten. Houd er rekening mee dat de bluetooth-verbinding tot enkele minuten kan duren voordat deze begint te werken.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Andere apps die via bluetooth met de sensor verbinden, moeten uitgeschakeld of verwijderd worden.\n
+Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor communiceert. Druk op \"Koppelen en verbinden\" om te starten. Het kan een paar minuten duren voordat de bluetooth-verbinding werkt.";
 
 /* */
 "Pairinginfo" = "Koppeling informatie";
@@ -913,7 +914,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Sensor info";
 
 /* */
-"Sensor Age" = "Sensor leeftijd";
+"Sensor Life-Span" = "Sensor levensduur";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Bij gebruik van %@ weet iAPS niet welk type sensor wordt gebruikt of hoe lang de sensor meegaat.";
 
 /* */
 "Sensor Age Left" = "Sensor nog te gebruiken";
@@ -2268,6 +2272,11 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Loop status";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "De Dana-pomp staat het niet toe om de maximale basaal- en boluswaarden aan te passen. Stel deze in bij de arts/doktersinstellingen van de pomp. Als je de instellingen opslaat, worden de nieuwste waarden van de pomp opgehaald";
+
 /* --------- Auto ISF --------- */
 /* */
 
@@ -2347,13 +2356,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Bovenste Delta-limiet";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 8 mg/dl (0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 8 mg/dl (0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Bovenste BG limiet";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld wanneer deze limiet wordt onderschreden, terwijl een B30-basaalstand actief is. Standaardwaarde is 130 mg/dl (7,2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 130 mg/dl (7,2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Doelwaarde voor activering van B30";
@@ -2416,10 +2425,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde bepaalt hoe de insulinegevoeligheidsfactor (ISF) wordt aangepast wanneer de bloedsuikerspiegel boven de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Duur ISF per uur Max verandering";
+"Duration Weight" = "Duur hoeveelheid";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Dit bepaalt hoe snel de insulinegevoeligheidsfactor (ISF) per uur wordt verlaagd als de bloedsuikerspiegel gedurende die tijd het dubbele van de doelwaarde blijft. Bij een waarde van 1,0 wordt de ISF na één uur met een bloedsuikerspiegel van 2 keer de doelwaarde met 50% verlaagd.";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Hoeeveelheid voor een langdurig hoge glucose. Voor elk uur dat de glucose hoog blijft, zal deze aanpassing je ISF verder verlagen.\n\nDe formule voor de Dura ISF-aanpassing is:\n\nDura ISF = 1 + uren boven doel * hoeveelheid / doel * (gemiddelde glucose - doelglucose)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
@@ -2474,6 +2483,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Auto ISF" = "Auto ISF";
+
+/* Is true */
+" on" = " aan";
+
+/* Is false */
+" off" = " uit";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Pas aan ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2870,6 +2888,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Glucose Delta" = "Glucose delta weergeven";
 
 /* UI/UX option */
+"Display Sensor Age" = "Sensor leeftijd tonen";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Verberg concentratie badge";
 
 /* UI/UX option */
@@ -2877,6 +2898,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Verberg de bolus hoeveelheid als de hoeveelheid lager is dan";
+
+/* UI/UX option */
+"Display carb equivalents" = "Toon koolhydraathoeveelheden";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";

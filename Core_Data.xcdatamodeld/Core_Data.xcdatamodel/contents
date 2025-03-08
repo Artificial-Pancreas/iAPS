@@ -41,6 +41,10 @@
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enteredBy" optional="YES" attributeType="String"/>
+        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="note" optional="YES" attributeType="String" defaultValueString="Empty"/>
+        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0"/>
     </entity>
     <entity name="Fat" representedClassName="Fat" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -105,6 +109,7 @@
         <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -135,6 +140,7 @@
         <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="emoji" optional="YES" attributeType="String"/>
         <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>

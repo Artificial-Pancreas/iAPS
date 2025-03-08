@@ -913,7 +913,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Інформація про Сенсор";
 
 /* */
-"Sensor Age" = "Вік Сенсору";
+"Sensor Life-Span" = "Термін служби Сенсору";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Під час використання %@ iAPS не знає тип використовуваного Сенсору або його термін служби.";
 
 /* */
 "Sensor Age Left" = "Залишилось";
@@ -1105,15 +1108,15 @@ Enact a temp Basal or a temp target */
 "Activates an %@ Override Preset" = "Активує попередні налаштування %@";
 
 /* Suspend/Resume Shortcut */
-"Choose what to do with your pump" = "Choose what to do with your pump";
+"Choose what to do with your pump" = "Виберіть, що робити з вашою помпою";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
+"Are you sure you want to %@ your pump?" = "Ви впевнені, що хочете %@ свою помпу?";
 
 /* Suspend/Resume Shortcut */
-"Pump command" = "Pump command";
+"Pump command" = "Команда помпи";
 /* Suspend/Resume Shortcut */
-"enacted in iAPS" = "enacted in iAPS";
+"enacted in iAPS" = "прийняті в iAPS";
 
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
@@ -2268,6 +2271,11 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Статус петлі";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Помпа Dana  не дозволяє редагувати максимальний Базал і максимальний Болюс. Налаштуйте їх у налаштуваннях \"лікаря\" помпи. Збереження налаштувань дозволить отримати останні значення з помпи";
+
 /* --------- Auto ISF --------- */
 /* */
 
@@ -2348,13 +2356,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Верхня межа Дельти";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює Базальна доза B30. За замовчуванням 8 mg/dl (0.5 mmol/l.";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює базальна доза B30. За замовчуванням 8 mg/dl (0.5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Верхня межа BG";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює базальна доза B30. За замовчуванням 130 mg/dl (7.2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює базальна доза B30. За замовчуванням 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Цільовий рівень для B30 має бути прийнятий";
@@ -2417,10 +2425,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значення за замовчуванням: 0,0 Це вага, застосована до багатокутника, який адаптує ISF, якщо рівень глюкози перевищує цільовий показник. З 0,0 ефект фактично вимикається.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Dura ISF погодинна максимальна зміна";
+"Duration Weight" = "Коригування тривало підвищеного рівня глюкози";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Швидкість, з якою ISF зменшується на годину, припускаючи, що рівень BG залишається на подвійному цільовому рівні протягом цього часу. Коли значення = 1,0, ISF знижується до 50% після 1 години рівня BG у 2 рази більше цільового значення.";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Вага, що відповідає тривало високому рівню глюкози в крові. З кожною годиною, коли рівень глюкози в крові залишається занадто високим, це налаштування буде знижувати чутливість до інсуліну. \n\nФормула для Dura ISF коригування така:\n\nDura ISF = 1 + кількість годин вище мети * вага / ціль * (середня глюкоза - цільова глюкоза)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
@@ -2475,6 +2483,15 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Auto ISF" = "Авто ISF";
+
+/* Is true */
+" on" = " увімкнути";
+
+/* Is false */
+" off" = " вимкнути";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Налаштувати";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2867,6 +2884,9 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Відображати дельту Глюкози";
 
 /* UI/UX option */
+"Display Sensor Age" = "Показувати вік Сенсору";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Сховати значок Концентрації";
 
 /* UI/UX option */
@@ -2874,6 +2894,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Приховати рядки об'єм болюса, коли об'єм менший";
+
+/* UI/UX option */
+"Display carb equivalents" = "Показати еквіваленти вуглеводів";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";

@@ -56,8 +56,10 @@ extension Bolus {
                 Section {
                     if state.waitForSuggestion {
                         Text("Please wait")
-                    } else {
+                    } else if state.predictions != nil {
                         predictionChart
+                    } else {
+                        Text("No Predictions. Failed loop suggestion.").frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
 
@@ -74,7 +76,7 @@ extension Bolus {
                             Spacer()
                             ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
                         }
-                    } else {
+                    } else if state.suggestion != nil {
                         HStack {
                             Button(action: {
                                 presentInfo.toggle()
@@ -171,6 +173,7 @@ extension Bolus {
                     Section {
                         Button {
                             keepForNextWiew = true
+                            state.save()
                             state.showModal(for: nil)
                         }
                         label: {
@@ -190,24 +193,17 @@ extension Bolus {
                     }
                 }
             }
+            .interactiveDismissDisabled()
             .compactSectionSpacing()
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear {
                 configureView {
                     state.viewActive()
+                    state.waitForCarbs = fetch
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
                 }
             }
-
-            .onDisappear {
-                if fetch, hasFatOrProtein, !keepForNextWiew, state.eventualBG {
-                    state.delete(deleteTwice: true, meal: meal)
-                } else if fetch, !keepForNextWiew, state.eventualBG {
-                    state.delete(deleteTwice: false, meal: meal)
-                }
-            }
-
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(
@@ -223,6 +219,7 @@ extension Bolus {
                 trailing: Button {
                     state.hideModal()
                     state.notActive()
+                    if fetch { state.apsManager.determineBasalSync() }
                 }
                 label: { Text("Cancel") }
             )
@@ -256,9 +253,9 @@ extension Bolus {
         func carbsView() {
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: hasFatOrProtein, meal, override: false, deleteNothing: false, editMode: true)
+                state.backToCarbsView(override: false, editMode: true)
             } else {
-                state.backToCarbsView(complexEntry: false, meal, override: true, deleteNothing: true, editMode: false)
+                state.backToCarbsView(override: true, editMode: false)
             }
         }
 
