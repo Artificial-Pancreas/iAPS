@@ -36,34 +36,34 @@
 "Pod expires in %1$@." = "Pod vyprší za %1$@.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Vymeniť pod teraz. Pod bol aktívny 72 hodín.";
+"Change Pod now. Pod has been active for 72 hours." = "Teraz vymeňte Pod. Pod bol aktívny 72 hodín.";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Treba vymeniť pod. Podávanie inzulínu sa zastaví o 1 hodinu.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Teraz vymeňte Pod. Podávanie inzulínu sa zastaví o 1 hodinu.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
-"%1$@ insulin or less remaining in Pod. Change Pod soon." = "V podu zostáva %1$@ inzulínu alebo menej. Čoskoro vymeňte pod.";
+"%1$@ insulin or less remaining in Pod. Change Pod soon." = "V Pode zostáva %1$@ inzulínu alebo menej. Čoskoro vymeňte Pod.";
 
 /* Alert content body for suspendInProgress pod alert */
 "Suspend In Progress Reminder" = "Pripomienka prebiehajúceho pozastavenia";
 
 /* Alert content body for suspendEnded pod alert */
-"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Obdobie pozastavenia podávania inzulínu sa skončilo.\n\nPodávanie môžete obnoviť z bannera na domovskej obrazovke alebo z obrazovky nastavení pumpy. Znovu sa vám to pripomenie za 15 minút.";
+"The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Obdobie pozastavenia inzulínu skončilo.\n\nMôžete obnoviť podávanie z banneru na domovskej obrazovke alebo z nastavení vašej pumpy. Pripomenutie dostanete znova o 15 minút.";
 
 /* Alert content body for finishSetupReminder pod alert */
-"Please finish pairing your pod." = "Dokončite párovanie podu.";
+"Please finish pairing your pod." = "Dokončite párovanie Vášho Podu.";
 
 /* Alert content body for timeOffsetChangeDetected pod alert */
-"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Čas na vašej pumpe sa líši od aktuálneho času. Čas na čerpadle si môžete skontrolovať a synchronizovať s aktuálnym časom v nastaveniach.";
+"The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Čas na Vašej pumpe sa líši od aktuálneho času. Môžete skontrolovať čas pumpy a synchronizovať ho s aktuálnym časom v nastaveniach.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Čas pozastavenia vypršal. Otvorte aplikáciu a pokračujte.";
+"Suspension time is up. Open the app and resume." = "Čas pozastavenia uplynul. Otvorte aplikáciu a obnovte podávanie.";
 
 /* Action button default text for PodAlerts */
 "Ok" = "OK";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Aktivácia neukončená";
+"Unfinished Activation" = "Nedokončená aktivácia";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Pod expiruje o";
@@ -84,22 +84,22 @@
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
 
 /* Title for pod reminders section */
-"Pod Reminders" = "Pod Reminders";
+"Pod Reminders" = "Upozornenia Podu";
 
 /* Footer text for pod reminders section */
-"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod.";
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Aplikácia nastaví pripomienku na Pode, aby Vás vopred upozornila na jeho vypršanie. Vopred nastavte počet hodín, kedy chcete byť upozornení. Táto hodnota sa použije ako predvolená pri párovaní nového Podu.";
 
 /* Footer text for scheduled reminder area */
-"The expiration reminder time for the current Pod." = "The expiration reminder time for the current Pod.";
+"The expiration reminder time for the current Pod." = "Pripomenutie vypršania času platnosti pre aktuálny Pod.";
 
 /* Footer text for low reservoir value row */
-"The app notifies you when the amount of insulin in the Pod reaches this level." = "The app notifies you when the amount of insulin in the Pod reaches this level.";
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "Aplikácia Vás bude notifikovať, ak zostatok inzulínu v Pode dosiahne túto úroveň.";
 
 /* Description text for critical alerts */
-"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced.";
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Uvedené pripomenutia v aplikácii nezaznejú, ak je zariadenie v tichom režime alebo v režime Nerušiť. Existujú aj iné kritické upozornenia Podu, ktoré zaznejú v aplikácii, aj keď je vaše zariadenie nastavené na režim Tichý alebo Nerušiť.\n\nPod bude tiež používať zvukové signály pre všetky pripomenutia a upozornenia Podu okrem prípadov, keď je Pod stíšený.";
 
 /* Text for suspend resume button when insulin delivery active */
-"Suspend Insulin Delivery" = "Zastavte podávanie inzulínu";
+"Suspend Insulin Delivery" = "Pozastaviť podávanie inzulínu";
 
 /* Label for pod life state when within pod expiration window */
 "Pod expired" = "Pod vypršal";
@@ -120,10 +120,10 @@
 "Pairing." = "Párovanie.";
 
 /* Pairing action button accessibility label while priming */
-"Priming. Please wait." = "Pripravuje sa. Prosím čakajte.";
+"Priming. Please wait." = "Plnenie. Prosím, čakajte.";
 
 /* Pairing action button accessibility label when pairing succeeded */
-"Pod paired successfully. Continue." = "Pod sprárovaný úspešne. Pokračovať.";
+"Pod paired successfully. Continue." = "Pod bol úspešne spárovaný. Pokračujte.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Dokončiť deaktiváciu";
@@ -177,7 +177,7 @@
 "Replace Pod" = "Vymeňte pod";
 
 /* Label for pod life state when pod not fully activated */
-"Unfinished Activation" = "Aktivácia neukončená";
+"Unfinished Activation" = "Nedokončená aktivácia";
 
 /* Label for pod life state when time remaining */
 "Pod expires in" = "Pod expiruje o";
@@ -204,13 +204,13 @@
 "Replace Pod" = "Vymeňte pod";
 
 /* Error message shown when no pod is paired */
-"No pod paired" = "Nie je spárovaný žiadny pod";
+"No pod paired" = "Žiaden spárovaný Pod";
 
 /* Error message shown when user cannot pair because pod is already paired */
 "Pod already paired" = "Pod je už spárovaný";
 
 /* Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured */
-"Insulin type not configured" = "Typ inzulínu nie je nakonfigurovaný";
+"Insulin type not configured" = "Typ inzulínu nie je nastavený";
 
 /* Error message when cannula insertion fails because the pod is in an unexpected state */
 "Pod is not in a state ready for cannula insertion." = "Pod nie je v stave pripravenom na zavedenie kanyly.";
@@ -219,7 +219,7 @@
 "Invalid Setting" = "Neplatné nastavenie";
 
 /* Recovery suggestion shown when no pod is paired */
-"Please pair a new pod" = "Spárujte nový pod";
+"Please pair a new pod" = "Prosím, spárujte nový Pod";
 
 /* Generic title of the OmniBLE pump manager */
 "Omnipod DASH" = "Omnipod DASH";
@@ -279,13 +279,13 @@
 "Get pod status" = "Zistiť stav Podu";
 
 /* */
-"Save Basal Profile" = "Nastavovanie bazálneho profilu";
+"Save Basal Profile" = "Uložiť profil bazálu";
 
 /* */
-"Save basal profile failed: %{public}@" = "Uloženie základného profilu sa nepodarilo: %{public}@";
+"Save basal profile failed: %{public}@" = "Uloženie profilu bazálu zlyhalo: %{public}@";
 
 /* */
-"Skipping Play Test Beeps due to bolus still in progress." = "Vynechanie pípnutia testu prehrávania z dôvodu stále prebiehajúceho podávania bolusu.";
+"Skipping Play Test Beeps due to bolus still in progress." = "Vynechanie testovacích pípnutí z dôvodu prebiehajúceho bolusu.";
 
 /* */
 "Play Test Beeps" = "Prehrať skúšobné pípnutia";
@@ -330,16 +330,16 @@
 "Critical Pod Error" = "Kritická chyba zariadenia Pod";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Podávanie inzulínu sa zastavilo. Vymeňte modul teraz.";
+"Insulin delivery stopped. Change Pod now." = "Podávanie inzulínu sa zastavilo. Vymeňte Pod.";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "Zostávajúci inzulín";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Nastavenie dočasnej bazálnej sadzby";
+"Set Temporary Basal Rate" = "Nastavenie dávky dočasného bazálu";
 
 /* Description text on manual temp basal action sheet */
-"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nezruší.";
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nebude zrušená.";
 
 /* Section header for activity section */
 "Activity" = "Aktivita";
@@ -351,10 +351,10 @@
 "Previous Pod" = "Predchádzajúci Pod";
 
 /* The title of the command to change pump time zone */
-"Pump Time" = "Čas čerpadla";
+"Pump Time" = "Čas pumpy";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Nastavenie času čerpadla...";
+"Adjusting Pump Time..." = "Nastavenie času pumpy...";
 
 /* The title of the command to change pump time zone */
 "Sync to Current Time" = "Synchronizácia s aktuálnym časom";
@@ -363,13 +363,13 @@
 "Switch to other insulin delivery device" = "Prechod na iné zariadenie na podávanie inzulínu";
 
 /* Title for pod sync time action sheet. */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na Vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Áno, synchronizujte s aktuálnym časom";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Nie, nechajte čerpadlo tak, ako je";
+"No, Keep Pump As Is" = "Nie, nechajte pumpu tak, ako je";
 
 /* Title for Omnipod DASH PumpManager deletion action sheet. */
 "Remove Pump" = "Odstrániť Pod";
@@ -378,7 +378,7 @@
 "Are you sure you want to stop using Omnipod DASH?" = "Naozaj chcete prestať používať Ominpod Dash?";
 
 /* Button text to confirm Omnipod DASH PumpManager deletion */
-"Delete Omnipod DASH" = "Vymazať Omnipod Dash";
+"Delete Omnipod DASH" = "Odstrániť Omnipod Dash";
 
 /* Text for confidence reminders navigation link" */
 "Insulin Type" = "Typ Inzulínu";
@@ -390,7 +390,7 @@
 "Suspend Delivery" = "Pozastavenie dodávky";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Podávanie inzulínu bude zastavené, kým ho neobnovíte manuálne. Kedy chcete, aby vám slučka pripomenula obnovenie podávania?";
+"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Podávanie inzulínu bude zastavené, kým ho manuálne neobnovíte. Kedy chcete, aby vám slučka pripomenula obnovenie podávania?";
 
 /* Button text for 30 minute suspend duration */
 "30 minutes" = "30 minút";
@@ -398,7 +398,7 @@
 /* Button text for 1 hour suspend duration" */
 "1 hour" = "1 hodina";
 /* Button text for 1 hour 30 minute suspend duration */
-"1 hour 30 minutes" = "1 hodina 30 minút";
+"1 hour 30 minutes" = "1 hodina a 30 minút";
 /* Button text for 2 hour suspend duration */
 "2 hours" = "2 hodiny";
 
@@ -406,25 +406,25 @@
 "Failed to Suspend Insulin Delivery" = "Pozastavenie podávania inzulínu zlyhalo";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Obnovenie podávania inzulínu zlyhalo";
+"Failed to Resume Insulin Delivery" = "Zlyhalo obnovenie podávania inzulínu";
 
 /* Alert title for time sync error */
-"Failed to Set Pump Time" = "Nastavenie času pumpy zlyhalo";
+"Failed to Set Pump Time" = "Zlyhalo nastavenie času pumpy";
 
 /* Alert title for failing to cancel manual basal error */
-"Failed to Cancel Manual Basal" = "Zrušenie manuálneho bazálu zlyhalo";
+"Failed to Cancel Manual Basal" = "Zlyhalo zrušenie manuálneho bazálu";
 
 /* */
-"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Prosím, deaktivujte pod. Po dokončení deaktivácie, ho môžete odstrániť a spárovať nový pod.";
+"Please deactivate the pod. When deactivation is complete, you may remove it and pair a new pod." = "Prosím, deaktivujte Pod. Po dokončení deaktivácie, ho môžete odstrániť a spárovať nový Pod.";
 
 /* Instructions for deactivate pod when pod not on body */
-"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Prosím, deaktivujte pod. Po dokončení deaktivácie, môžete spárovať nový pod.";
+"Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "Prosím, deaktivujte Pod. Po dokončení deaktivácie, môžete spárovať nový Pod.";
 
 /* Deactivate pod action button */
 "Deactivate Pod" = "Deaktivovať Pod";
 
 /* */
-"Slide to Insert Cannula" = "Pripravené na zavedenie kanyly";
+"Slide to Insert Cannula" = "Posunutím zaveďte kanylu";
 
 /* */
 "Slide to Deactivate Pod" = "Posunutím deaktivujte pod";
@@ -442,31 +442,31 @@
 "Continue" = "Pokračovať";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Nastal problém s komunikáciou s modulom. Ak tento problém pretrváva, ťuknite na položku Discard Pod. Potom môžete aktivovať nový pod.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Vyskytol sa problém pri komunikácii s Podom. Ak problém pretrváva, klepnite na Zahodiť Pod. Potom môžete aktivovať nový Pod.";
 
 /* Text for discard pod button */
-"Discard Pod" = "Zlikvidujte pod";
+"Discard Pod" = "Zahodiť Pod";
 
 /* Title for remove pod modal */
-"Remove Pod from Body" = "Odstránenie struku z tela";
+"Remove Pod from Body" = "Odstráňte Pod z tela";
 
 /* Alert message body for confirm pod attachment */
-"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Váš Pod môže stále podávať inzulín.\nOdstráňte ho z tela a potom klepnite na \"Pokračova.\"";
+"Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "Váš Pod môže stále podávať inzulín.\nOdstráňte ho z tela a potom klepnite na \"Pokračovať.\"";
 
 /* Insulin Unit */
 "U" = "J";
 
 /* The action string on pod status page when pod expired */
-"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Zmeniť Pod teraz. Podávanie inzulínu sa zastaví 8 hodín po uplynutí doby platnosti Podu alebo keď už nezostane žiadny inzulín.";
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Teraz vymeňte Pod. Podávanie inzulínu sa zastaví 8 hodín po uplynutí platnosti Podu alebo keď nezostane žiadny inzulín.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Naplňte nový pod s inzulínom U-100 (modrý uzáver ihly pod nechajte nasadený).";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Naplňte nový Pod s inzulínom U-100 (na Pode nechajte nasadený modrý uzáver ihly).";
 
 /* Label text for step 1 of pair pod instructions */
-"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Remove the blue needle Pod cover and inspect the cannula. Then remove the paper pad.";
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Odstráňte modrý kryt ihly z Podu a skontrolujte kanylu. Potom odstráňte papierový podklad.";
 
 /* Label text for step 2 of pair pod instructions */
-"Listen for 2 beeps." = "Počúvajte 2 pípnutia.";
+"Listen for 2 beeps." = "Počkajte na 2 pípnutia.";
 
 /* Label text indicating pairing finished.*/
 "Paired" = "Spárované";
@@ -475,22 +475,22 @@
 "Cancel" = "Zrušiť";
 
 /* Alert title for cancel pairing modal */
-"Are you sure you want to cancel Pod setup?" = "Naozaj chcete zrušiť svoj hlas?";
+"Are you sure you want to cancel Pod setup?" = "Naozaj chcete zrušiť nastavenie Podu?";
 
 /* Alert message body for confirm pod attachment */
-"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Ak zrušíte nastavenie podov, aktuálny pod bude deaktivovaný a nebude možné ho používať.";
+"If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Ak zrušíte nastavenie Podu, aktuálny Pod bude deaktivovaný a nebude možné ho používať.";
 
 /* Button title for confirm deactivation option */
 "Yes, Deactivate Pod" = "Áno, deaktivujte pod";
 
 /* Continue pairing button title of in pairing cancel modal */
-"No, Continue With Pod" = "Nie, pokračujte so zariadením Pod";
+"No, Continue With Pod" = "Nie, pokračujte s Podom";
 
 /* Label text for step one of attach pod instructions */
-"Prepare site." = "Príprava miesta na telo.";
+"Prepare site." = "Pripravte miesto.";
 
 /* Label text for step three of attach pod instructions */
-"Check Pod, apply to site, then confirm pod attachment." = "Skontrolujte pod, aplikujte ho na telo, potom potvrďte prilepenie podu.";
+"Check Pod, apply to site, then confirm pod attachment." = "Skontrolujte Pod, aplikujte ho na telo, potom potvrďte prilepenie Podu.";
 
 /* Action button title for attach pod view */
 "Continue" = "Pokračovať";
@@ -499,10 +499,10 @@
 "Attach Pod" = "Aplikujte pod";
 
 /* Alert title for confirm pod attachment */
-"Confirm Pod Attachment" = "Potvrdiť pripojenie zariadenia Pod";
+"Confirm Pod Attachment" = "Potvrdiť pripojenie Podu";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Uistite sa, že je pod bezpečne pripevnený k vášmu telu.\n\nKanylu možno do každého podu zaviesť len raz. Keď je Pod pripojený, klepnite na \"Potvrdiť\".";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Prosím, potvrďte, že Pod je bezpečne pripevnený na vašom tele.\n\nKanylu je možné použiť iba raz na každom Pode. Keď je Pod pripevnený, klepnite na „Potvrdiť“.";
 
 /* Button title for confirm attachment option */
 "Confirm" = "Potvrdiť";
@@ -517,13 +517,13 @@
 "Slide the switch below to start cannula insertion." = "Posunutím spínača nižšie spustite zavádzanie kanyly.";
 
 /* Label text indicating insertion finished. */
-"Inserted" = "Vložené do tela";
+"Inserted" = "Zavedené";
 
 /* Check Cannula */
 "Check Cannula" = "Skontrolujte kanylu";
 
 /* */
-"Is the cannula inserted properly?" = "Je kanyla správne zavedená?";
+"Is the cannula inserted properly?" = "Je kanyla zavedená správne?";
 
 /* Description of proper cannula insertion */
 "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "Keď je kanyla správne zavedená do kože, okienko v hornej časti Podu by malo byť sfarbené do ružova.";
@@ -538,7 +538,7 @@
 "Pairing..." = "Páruje sa...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Príprava...";
+"Priming..." = "Plnenie...";
 
 /* */
 "Deactivating..." = "Deaktivuje sa...";
@@ -547,7 +547,7 @@
 "Deactivated" = "Deaktivované";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Váš pod je pripravený na použitie.\n\n%1$@ vám pripomenie, aby ste si vymenili pod pred uplynutím jeho platnosti. Môžete to zmeniť na čas, ktorý vám vyhovuje.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Váš pod je pripravený na použitie.\n\n%1$@ Vám pripomenie, aby ste si vymenili pod pred uplynutím jeho platnosti. Môžete to zmeniť na čas, ktorý vám vyhovuje.";
 
 /* */
 "Scheduled Reminder" = "Naplánovaná pripomienka";
@@ -586,7 +586,7 @@
 "Omnipod Reminders" = "Pripomienky omnipodu";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Aplikácia nakonfiguruje pripomienku na pod, ktorá vás vopred upozorní na vypršanie platnosti pod. Nastavte počet hodín vopred, ktoré chcete nakonfigurovať pri párovaní nového zariadenia Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "Aplikácia nastaví pripomienku na Pode, aby vás vopred upozornila na jeho vypršanie. Nastavte počet hodín pred upozornením, ktoré chcete nakonfigurovať pri párovaní nového Podu.";
 
 /* Footer text for scheduled reminder area */
 "This is a reminder that you scheduled when you paired your current Pod." = "Toto je pripomienka, ktorú ste naplánovali pri spárovaní aktuálneho Podu.";
@@ -595,7 +595,7 @@
 "Scheduled Reminder" = "Naplánovaná pripomienka";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "Aplikácia vás upozorní, keď množstvo inzulínu v pode dosiahne túto úroveň.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "Aplikácia Vás upozorní, keď množstvo inzulínu v Pode dosiahne túto úroveň.";
 
 /* Description text for critical alerts */
 "Critical Alerts" = "Kritické výstrahy";
@@ -632,10 +632,10 @@
 "No confidence reminders are used." = "Nepoužívajú sa žiadne oznámenia.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Upozornenia budú znieť pri príkazoch, ktoré iniciujete, ako napríklad bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie pripomienok upozornení atď. Keď aplikácia automaticky upravuje podávanie, nepoužívajú sa žiadne pripomenutia dôvery.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Potvrdzujúce upozornenie budú znieť pri príkazoch, ktoré iniciujete, ako sú bolus, zrušenie bolusu, pozastavenie, obnovenie, uloženie upozornení atď. Keď aplikácia automaticky upravuje podávanie inzulínu, potvrdzujúce notifikácie sa nepoužívajú.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Upozornenia zaznejú, keď aplikácia automaticky upraví doručenie a na príkazy, ktoré sami zadáte.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Potvrdzujúce pripomienky budú znieť, keď aplikácia automaticky upraví podávanie inzulínu, ako aj pri príkazoch, ktoré iniciujete.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Dávka";
@@ -715,7 +715,7 @@
 "Pod Setup" = "Nastavenie podu";
 
 /* bodyText for PodSetupView */
-"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Teraz začnete s procesom konfigurácie pripomienok, naplnením podu inzulínom, jeho spárovaním s vašim zariadením a umiestnením podu na telo.";
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Teraz začnete proces konfigurácie upozornení, naplnenie Podu inzulínom, párovanie s Vaším zariadením a umiestnením na Vaše telo.";
 
 /* Cancel button title */
 "Cancel" = "Zrušiť";
@@ -748,22 +748,22 @@
 "hr" = "h";
 
 /* Button title to cancel manual basal */
-"Cancel Manual Basal" = "Zrušenie manuálneho bazálneho";
+"Cancel Manual Basal" = "Zrušenie manuálneho bazálu";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Inzulín\nSuspendovaný";
+"Insulin\nSuspended" = "Inzulín\nPozastavený";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Obnoviť podávanie inzulínu";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Uistite sa, že je váš iPhone v dosahu a skúste znova.";
+"Make sure your pod is nearby and try again." = "Uistite sa, že je Váš Pod je v dosahu a skúste znova.";
 
 /* Error message shown when the pod is not connected */
-"Pod not connected" = "Žiadny Pod nie je pripojený";
+"Pod not connected" = "Pod nie je pripojený";
 
 /* Label for suspended at time */
-"Suspended At" = "Pozastavené na";
+"Suspended At" = "Pozastavené o";
 
 /* Text for suspend resume button when insulin delivery is resuming */
 "Resuming insulin delivery..." = "Obnovuje sa podávanie inzulínu...";
@@ -784,16 +784,16 @@
 "Try again" = "Skúste znova";
 
 /* Recovery suggestion for PodCommsError.tooManyPodsFound */
-"Move to a new area away from any other pods and try again." = "Presuňte sa ďalej od ostatných modulov a skúste znova.";
+"Move to a new area away from any other pods and try again." = "Presuňte sa ďalej od ostatných Podov a skúste znova.";
 
 /* Recovery suggestion for PodCommsError.noPodsFound */
-"Make sure your pod is filled and nearby." = "Uistite sa, že je váš pod naplnený a v blízkosti.";
+"Make sure your pod is filled and nearby." = "Uistite sa, že Váš Pod je naplnený a v blízkosti.";
 
 /* Recovery suggestion when pairing signal strength is too high */
-"Please reposition iPhone further from the pod" = "Premiestnite RileyLink ďalej od podu";
+"Please reposition iPhone further from the pod" = "Prosím, presuňte iPhone ďalej od Podu";
 
 /* Recovery suggestion when pairing signal strength is too low */
-"Please reposition iPhone relative to the pod" = "Zmeňte polohu RileyLink vzhľadom k podu";
+"Please reposition iPhone relative to the pod" = "Prosím, zmeňte polohu iPhone k Podu";
 
 /* Recovery suggestion on unexpected pod change */
 "Please bring only original pod in range or deactivate original pod" = "Prosím, majte iba pôvodný pod v dosahu alebo deaktivujte pôvodný pod";
@@ -802,7 +802,7 @@
 "Crosstalk possible. Please move to a new location" = "Možné presluchy. Presuňte sa na iné miesto";
 
 /* Recovery suggestion when no pod is available */
-"Make sure your pod is nearby and try again." = "Uistite sa, že je váš iPhone v dosahu a skúste znova.";
+"Make sure your pod is nearby and try again." = "Uistite sa, že je Váš Pod je v dosahu a skúste znova.";
 
 /* Recovery suggestion when operation could not be completed due to existing bolus in progress */
 "Wait for existing bolus to finish, or cancel bolus" = "Počkajte na dokončenie bolusu alebo bolus zrušte";
@@ -817,7 +817,7 @@
 "%@ ago" = "pred %@";
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Umlčané";
+"Silenced" = "Stíšené";
 
 /* Description for SilencePodPreference.disabled */
 "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normálny prevádzkový režim, v ktorom sa zvukové signály Pod používajú pre všetky upozornenia Pod a keď sú povolené pripomenutia dôvery.";
@@ -829,13 +829,13 @@
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Režim Silence Pod potlačí všetky upozornenia Pod a upozornenia na potvrdenie.";
 
 /* navigation title for Silnce Pod */
-"Silence Pod" = "Umlčané";
+"Silence Pod" = "Stíšiť Pod";
 
 /* title for pod details page */
 "Pod Details" = "Detaily Podu";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Predchádzajúci Pod Podrobnosti";
+"Previous Pod Details" = "Podrobnosti predchádzajúceho Podu";
 
 /* Text for pump manager details navigation link */
 "Pump Manager Details" = "Podrobnosti o manažérovi čerpadla";
@@ -855,7 +855,7 @@
 "Done" = "Hotovo";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod diagnostiky";
+"Pod Diagnostics" = "Diagnostika Podu";
 
 /* Text for read pulse log plus title */
 "Read Pulse Log Plus" = "Čítať protokol pulzov";
