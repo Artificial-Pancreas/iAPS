@@ -23,7 +23,7 @@
 "Status" = "Stav";
 
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDávka prekračuje vaše nastavenie Max Bolus!\nSte si istí, že chcete dávku pridať ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDávka prekračuje Vaše nastavenie Max Bolus!\nSte si istí, že chcete dávku pridať ";
 
 /* Header */
 "Enact Bolus" = "Pridať bolus";
@@ -38,7 +38,7 @@
 "Insulin required" = "Požadovaný inzulín";
 
 /* Bolus screen */
-"Recommendation" = "Odporúčania";
+"Recommendation" = "Odporúčanie";
 
 /* Button */
 "Clear" = "Vymazať";
@@ -131,7 +131,7 @@
 "Result" = "Výsledok";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Vaša zadaná hodnota bola obmedzená Vaším maximálnym nastavením dávky na %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Vaša zadaná hodnota bola obmedzená Vaším maximálnym nastavením bolusu na %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Pokračovať";
@@ -146,10 +146,10 @@
 "min ago" = "minútami";
 
 /* Status Title */
-"No suggestion" = "Žiadne návrhy";
+"No suggestion" = "Žiadny návrh";
 
 /* Replace pod text in Header */
-"Replace pod" = "Vymeňte pod";
+"Replace pod" = "Vymeňte Pod";
 
 /* Add carbs screen */
 "Add Carbs" = "Pridať sacharidy";
@@ -1887,7 +1887,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Display Chart Threshold lines for Low and High" = "Zobraziť prahové čiary grafu pre nízke a vysoké hodnoty";
 
 /* */
-"Standing / Laying TIR Chart" = "Tabuľka TIR v stoji / v ľahu";
+"Standing / Laying TIR Chart" = "Graf TIR na výšku / šírku";
 
 /* */
 "Hours X-Axis (6 default)" = "Hodiny na osi X (6 predvolených)";
@@ -2545,7 +2545,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "Predvolene nastavené na false, čo znamená, že sa ako cieľ OpenAPS používa iba dolná hranica cieľového rozsahu glykémie. Ide o bezpečnostnú funkciu, ktorá zabraňuje príliš širokým cieľom a menej optimálnym výsledkom. Horná hranica cieľového rozsahu sa preto používa iba na zabránenie nadmerným korekciám bolusovým kalkulátorom. Použite wide_bg_target_range: true, aby ste vynútili neutrálne dočasné dávky v širšom rozsahu očakávaných hodnôt glykémie.";
 
 /* Headline "Skip Neutral Temps" */
-"Skip Neutral Temps" = "Preskočiť neutrálny dočasný bazál";
+"Skip Neutral Temps" = "Preskočiť dočasný neutrálny bazál";
 
 /* "Skip Neutral Temps" */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Predvolene nastavené na false, aby iAPS nastavoval dočasné bazálne dávky vždy, keď to je možné, čo uľahčuje kontrolu fungovania systému, aj keď ste offline. To znamená, že iAPS nastaví „neutrálny“ dočasnú dávku (rovnakú ako váš predvolený bazál), ak nie sú potrebné žiadne úpravy. Toto je staré nastavenie pre OpenAPS, ktoré umožňuje minimalizovať zvuky a upozornenia zo zariadenia („rig“), ktoré by Vás mohli v noci prebudiť. ";
@@ -2572,7 +2572,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Enable SMB With Temptarget" = "Povoliť SMB s dočasnými cieľmi";
 
 /* "Enable SMB With Temptarget” */
-"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "To umožňuje supermikrobolus (SMB), ktorý čoskoro zje / má nízku teplotu. Ak je táto funkcia zapnutá, akýkoľvek dočasný cieľ pod 100 mg/dl, napríklad cieľová teplota 99 (alebo 80, typický cieľový ukazovateľ pre skoré jedenie), aktivuje SMB.";
+"This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Toto povoľuje supermikrobolus (SMB) pri nastavení „čoskoro jedlo“ / nízkych dočasných cieľových hodnôt. Ak je táto funkcia povolená, akýkoľvek dočasný cieľ nižší ako 100 mg/dL, napríklad dočasný cieľ 99 (alebo 80, čo je typická hodnota pre „čoskoro jedlo“), aktivuje SMB.";
 
 /* Headline "Enable SMB Always" */
 "Enable SMB Always" = "Vždy povoliť SMB";
@@ -2593,7 +2593,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Allow SMB With High Temptarget" = "Povoliť SMB s vysokým dočasným cieľom";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Predvolené nastavenie je false. Ak je true, umožní supermikrobolus (ak je inak povolený) aj pri vysokých cieľových teplotách (> 100 mg/dl).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Predvolené nastavenie je false. Ak je true, umožní supermikrobolus (ak je inak povolený) aj pri vysokých cieľových hodnotách (> 100 mg/dl).";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Vlastný maximálny účinok";
@@ -2641,7 +2641,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Half Basal Exercise Target" = "Polovičný bazál počas cvičenia";
 
 /* "Half Basal Exercise Target" */
-"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Nastavte číslo, napr. 160, čo znamená, že ak je cieľová teplota 160 mg/dl a exercise_mode=true, spustite 50 % bazálnej dávky pri tejto úrovni (120 = 75 %; 140 = 60 %). Túto hodnotu môžete upraviť, aby ste mali väčšiu kontrolu nad režimami cvičenia.";
+"Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Nastavte číslo, napr. 160, čo znamená, že ak je dočasný cieľ 160 mg/dl a exercise_mode=true, spustite 50 % bazálnej dávky pri tejto úrovni (120 = 75 %; 140 = 60 %). Túto hodnotu môžete upraviť, aby ste mali väčšiu kontrolu nad režimami cvičenia.";
 
 /* Headline "Max COB" */
 "Max COB" = "Max COB";
@@ -2683,19 +2683,19 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Max SMB Basal Minutes" = "Maximálny počet bazálnych minút pre SMB";
 
 /* ”Max SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolené nastavenie začína na 30. Toto je maximálny počet minút bazálnej dávky, ktorú možno dodať ako jeden SMB s nekrytým COB. To dáva možnosť urobiť SMB agresívnejším, ak sa tak rozhodnete. Odporúča sa nastaviť túto hodnotu na začiatok na 30, v súlade s predvoleným nastavením, a ak sa rozhodnete túto hodnotu zvýšiť, urobte tak v maximálne 15-minútových krokoch, pričom pozorne sledujte účinky zmien. Neodporúča sa nastaviť túto hodnotu na viac ako 90 minút, pretože to môže ovplyvniť schopnosť algoritmu bezpečne vynulovať teplotu. Odporúča sa tiež, aby sa pri nastavení hodnoty vyššej ako predvolená hodnota použil pushover, aby sa generovali upozornenia na všetky predpokladané najnižšie alebo najvyššie hodnoty.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolene nastavené na začiatok je 30. Toto je maximálny počet minút bazálnej dávky, ktorá môže byť podaná ako jediný SMB pri nekompenzovanom COB. To umožňuje nastaviť SMB agresívnejšie, ak si to želáte. Odporúča sa ponechať túto hodnotu na 30 ako predvolenú a ak sa rozhodnete ju zvýšiť, robte to v maximálnych krokoch po 15 minútach, pričom dôkladne sledujte účinky zmien. Neodporúča sa nastaviť túto hodnotu vyššiu ako 90 minút, pretože by to mohlo ovplyvniť schopnosť algoritmu bezpečne nastaviť nulovú dočasnú dávku. Odporúča sa tiež používať pushover pri nastavení hodnoty vyššej ako predvolená, aby sa generovali upozornenia na predpokladané nízke alebo vysoké hodnoty glykémie.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
 "Max UAM SMB Basal Minutes" = "Maximálny počet bazálnych minút UAM SMB";
 
 /* "Max UAM SMB Basal Minutes" */
-"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolené nastavenie začína na 30. Toto je maximálny počet minút bazálnej dávky, ktorú môže UAM dodať ako jeden SMB, keď IOB prekročí COB. To dáva možnosť, aby bol UAM viac alebo menej agresívny, ak sa tak rozhodnete. Odporúča sa nastaviť túto hodnotu na začiatok na 30, v súlade s predvoleným nastavením, a ak sa rozhodnete túto hodnotu zvýšiť, urobte tak v maximálne 15-minútových intervaloch, pričom pozorne sledujte účinky zmien. Zníženie hodnoty spôsobí, že UAM bude dávkovať menej inzulínu pre každý SMB. Neodporúča sa nastaviť túto hodnotu na viac ako 60 minút, pretože to môže ovplyvniť schopnosť algoritmu bezpečne vynulovať teplotu. Odporúča sa tiež, aby sa pri nastavení hodnoty vyššej ako predvolená hodnota použil pushover, aby sa generovali upozornenia na všetky predpokladané najnižšie alebo najvyššie hodnoty.";
+"Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolene nastavené na začiatok pri 30. Toto je maximálny počet minút bazálnej dávky, ktorú môže UAM podať ako jediný SMB, keď IOB presahuje COB. To umožňuje nastaviť UAM viac alebo menej agresívny podľa Vašej voľby. Odporúča sa ponechať túto hodnotu na 30 ako predvolenú a ak sa rozhodnete ju zvýšiť, robte to v maximálnych krokoch po 15 minútach, pričom dôkladne sledujte účinky zmien. Zníženie hodnoty spôsobí, že UAM bude dávkovať menej inzulínu pre každý SMB. Neodporúča sa nastaviť túto hodnotu vyššie ako 60 minút, pretože by to mohlo ovplyvniť schopnosť algoritmu bezpečne nastaviť nulovú dočasnú dávku. Odporúča sa tiež používať pushover pri nastavení hodnoty vyššej ako predvolená, aby sa generovali upozornenia na predpokladané nízke alebo vysoké hodnoty glykémie.";
 
 /* Headline "SMB Interval" */
 "SMB Interval" = "Časový interval SMB";
 
 /* "SMB Interval" */
-"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimálne trvanie v minútach pre nový SMB od posledného SMB alebo manuálneho bolusu";
+"Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimálna doba v minútach pre nový SMB od posledného SMB alebo manuálneho bolusu";
 
 /* Headline "Bolus Increment" */
 "Bolus Increment" = "Bolusový prírastok";
