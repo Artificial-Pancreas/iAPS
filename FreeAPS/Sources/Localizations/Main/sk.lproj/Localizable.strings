@@ -47,7 +47,7 @@
 "Done" = "Hotovo";
 
 /* Bolus View footer */
-"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Posledný cyklus pred %@ minútami. Dokončite alebo zrušte túto akciu jedla/bolusu, aby mohol prebehnúť ďalší cyklus slučky";
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Posledná slučka pred %@ minútami. Dokončite alebo zrušte túto transakciu jedla/bolusu, aby mohol prebehnúť ďalší cyklus slučky";
 
 /* Calender Option */
 "Display Emojis as Labels" = "Zobraziť emotikony ako štítky";
@@ -62,7 +62,7 @@
 "UI/UX" = "UI/UX";
 
 /*  */
-"Wait please" = "Čakajte prosím";
+"Wait please" = "Počkajte, prosím";
 
 /*  */
 "Agree and continue" = "Súhlasím a pokračovať";
@@ -212,7 +212,7 @@
 " Your setting: " = " Vaše nastavenie: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosenzor max obmedzuje maximálny koncový bod";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dL. Autosens max obmedzuje maximálnu koncovú hodnotu";
 
 /*  */
 "Enter preset name" = "Zadajte názov predvoľby";
@@ -1480,7 +1480,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Profile Override" = "Prepísanie profilu";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Maximálne prekročenie o 400%";
+"Max Override 400%" = "Maximálne prepísanie o 400%";
 
 /* */
 "Override Profiles" = "Profily prepísania";
@@ -1494,7 +1494,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Total Insulin Adjustment" = "Celková úprava inzulínu";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Prepíšte svoje profily Basal, ISF, CR a Target";
+"Override your Basal, ISF, CR and Target profiles" = "Dočasne upravte profily pre bazál, ISF, CR a cieľ";
 
 /* */
 "Enable indefinitely" = "Povoliť na neurčito";
@@ -1545,7 +1545,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Save as preset" = "Uložiť ako predvoľbu";
 
 /* Alert */
-"Cancel Profile Override" = "Zrušiť prepísanie profilu?";
+"Cancel Profile Override" = "Zrušiť dočasný profil?";
 
 /* Alert */
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
@@ -1560,7 +1560,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Start Profile" = "Spustiť profil";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Váš profilový bazálny inzulín sa upraví pomocou percentuálnej hodnoty override a váš profilový ISF a CR sa opačne upraví pomocou percentuálnej hodnoty.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Váš profilový bazálny inzulín bude upravený podľa zadaných percent a Vaše ISF a CR budú upravené inverzne podľa tohto percenta.";
 
 /* */
 "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Spustením tohto prepísania sa zmenia vaše profily a/alebo cieľová glykémia, ktoré sa používajú na zacyklenie počas celého zvoleného trvania. Klepnutím na \"Spustiť profil\" spustíte svoj nový profil alebo upravíte svoj aktuálny aktívny profil.";
@@ -1920,10 +1920,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Median" = "Medián";
 
 /* CGM readings in statView */
-"Readings" = "Čítania";
+"Readings" = "Merania";
 
 /* CGM readings in statView */
-"Readings / 24h" = "Odčítania / 24h";
+"Readings / 24h" = "Merania / 24h";
 
 /* Days of saved readings*/
 "Days" = "Dni";
@@ -2506,13 +2506,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "High Temptarget Raises Sensitivity" = "Vysoký dočasný cieľ zvýši citlivosť";
 
 /* ”High Temptarget Raises Sensitivity" */
-"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Predvolené nastavenie je vypnuté. Ak je nastavená na hodnotu true, zvýši sa citlivosť (nižší pomer citlivosti) pre dočasné ciele nastavené na >= 111. Synonymum pre exercise_mode. Čím vyšší je Váš dočasný cieľ nad 110, tým citlivejší (nižší) je pomer citlivosti, napr. dočasný cieľ 120 má za následok pomer citlivosti 0,75, zatiaľ čo 140 má za následok 0,6 (pri predvolenom halfBasalTarget 160).";
+"Defaults to false. When set to true, raises sensitivity (lower sensitivity ratio) for temp targets set to >= 111. Synonym for exercise_mode. The higher your temp target above 110 will result in more sensitive (lower) ratios, e.g., temp target of 120 results in sensitivity ratio of 0.75, while 140 results in 0.6 (with default halfBasalTarget of 160)." = "Predvolené nastavenie je vypnuté. Ak je povolené, zvýši sa citlivosť (nižší pomer citlivosti) pre dočasné ciele nastavené na >= 111. Synonymum pre exercise_mode. Čím vyšší je Váš dočasný cieľ nad 110, tým citlivejší (nižší) je pomer citlivosti, napr. dočasný cieľ 120 má za následok pomer citlivosti 0,75, zatiaľ čo 140 má za následok 0,6 (pri predvolenom halfBasalTarget 160).";
 
 /* Headline ”Low Temptarget Lowers Sensitivity" */
 "Low Temptarget Lowers Sensitivity" = "Nízky dočasný cieľ zníži citlivosť";
 
 /* ”Low Temptarget Lowers Sensitivity" */
-"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Predvolené nastavenie je vypnuté. Ak je nastavená na hodnotu true, môže znížiť citlivosť (vyšší pomer citlivosti) pre dočasné ciele <= 99. Nižšia Vaša cieľová hodnota pod 100 bude mať za následok menej citlivé (vyššie) pomery, napr. cieľová hodnota 95 má za následok pomer citlivosti 1,09, zatiaľ čo 85 má za následok 1,33 (s predvolenou hodnotou halfBasalTarget 160).";
+"Defaults to false. When set to true, can lower sensitivity (higher sensitivity ratio) for temptargets <= 99. The lower your temp target below 100 will result in less sensitive (higher) ratios, e.g., temp target of 95 results in sensitivity ratio of 1.09, while 85 results in 1.33 (with default halfBasalTarget of 160)." = "Predvolené nastavenie je vypnuté. Ak je povolené, môže znížiť citlivosť (vyšší pomer citlivosti) pre dočasné ciele <= 99. Nižšia Vaša cieľová hodnota pod 100 bude mať za následok menej citlivé (vyššie) pomery, napr. cieľová hodnota 95 má za následok pomer citlivosti 1,09, zatiaľ čo 85 má za následok 1,33 (s predvolenou hodnotou halfBasalTarget 160).";
 
 /* Headline ”Sensitivity Raises Target" */
 "Sensitivity Raises Target" = "Citlivosť zvyšuje cieľ";
@@ -2536,7 +2536,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Exercise Mode" = "Režim cvičenia";
 
 /* "Exercise Mode" */
-"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Predvolené nastavenie je vypnuté. Ak je true, > 105 mg/dl vyššia dočasná cieľová hodnota upraví pomer citlivosti pre režim exercise_mode. Synonymum pre high_temptarget_raises_sensitivity";
+"Defaults to false. When true, > 105 mg/dL high temp target adjusts sensitivityRatio for exercise_mode. Synonym for high_temptarget_raises_sensitivity" = "Predvolené nastavenie je vypnuté. Ak je povolené, > 105 mg/dl vyššia dočasná cieľová hodnota upraví pomer citlivosti pre režim exercise_mode. Synonymum pre high_temptarget_raises_sensitivity";
 
 /* Headline "Wide BG Target Range" */
 "Wide BG Target Range" = "Široký cieľový rozsah cukru v krvi";
@@ -2563,7 +2563,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Ak je táto možnosť povolená, algoritmus SMB dokáže rozpoznať neohlásené jedlá. To je užitočné, ak zabudnete iAPS informovať o sacharidoch alebo ich nesprávne odhadnete a množstvo zadaných sacharidov je nesprávne, alebo ak jedlo s veľkým množstvom tukov a bielkovín má dlhšie trvanie, ako sa očakávalo. Bez akéhokoľvek zadávania sacharidov dokáže UAM rozpoznať rýchle zvýšenie glykémie spôsobené sacharidmi, adrenalínom atď. a snaží sa ho upraviť pomocou SMB. Funguje to aj opačne: ak dôjde k rýchlemu poklesu glykémie, môže zastaviť SMB skôr.";
 
 /* Headline "Enable SMB With COB" */
-"Enable SMB With COB" = "Povoliť SMB zo sacharidmi";
+"Enable SMB With COB" = "Povoliť SMB pri COB";
 
 /* Enable SMB With COB" */
 "This enables supermicrobolus (SMB) while carbs on board (COB) are positive." = "To umožňuje supermikrobolus (SMB), zatiaľ čo carbs on board (COB) sú pozitívne.";
@@ -2578,7 +2578,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Enable SMB Always" = "Vždy povoliť SMB";
 
 /* "Enable SMB Always" */
-"Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Predvolené nastavenie je vypnuté. Ak je true, vždy sa zapne supermikrobolus (pokiaľ nie je zakázaný vysokým dočasným cieľom).";
+"Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Predvolené nastavenie je vypnuté. Ak je povolené, vždy sa zapne supermikrobolus (pokiaľ nie je zakázaný vysokým dočasným cieľom).";
 
 /* Headline "Enable SMB After Carbs" */
 "Enable SMB After Carbs" = "Povoliť SMB po jedle";
@@ -2593,13 +2593,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Allow SMB With High Temptarget" = "Povoliť SMB s vysokým dočasným cieľom";
 
 /* "Allow SMB With High Temptarget" */
-"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Predvolené nastavenie je vypnuté. Ak je true, umožní supermikrobolus (ak je inak povolený) aj pri vysokých cieľových hodnotách (> 100 mg/dl).";
+"Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Predvolené nastavenie je vypnuté. Ak je povolené, umožní supermikrobolus (ak je inak povolený) aj pri vysokých cieľových hodnotách (> 100 mg/dl).";
 
 /* Headline "Use Custom Peak Time” */
 "Use Custom Peak Time" = "Vlastný maximálny účinok";
 
 /* "Use Custom Peak Time” */
-"Defaults to false. Setting to true allows changing insulinPeakTime" = "Predvolené nastavenie je vypnuté. Nastavenie na true umožňuje zmenu inzulínu Peak Time";
+"Defaults to false. Setting to true allows changing insulinPeakTime" = "Predvolené nastavenie je vypnuté. Ak ho povolíte, budete môcť individuálne upraviť čas maximálneho účinku inzulínu (Peak Time)";
 
 /* Headline "Suspend Zeros IOB” */
 "Suspend Zeros IOB" = "Pozastaviť nulovanie IOB";
@@ -2629,13 +2629,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Autosens Max" = "Autosens Max";
 
 /* "Autosens Max" */
-"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Ide o násobiaci limit pre autosenzory (a autotune), ktorý stanovuje maximálny limit 20 % na to, aký vysoký môže byť pomer autosenzorov, čo následne určuje, ako vysoko môže autosenzor nastaviť základné hodnoty, ako nízko môže nastaviť ISF a ako nízko môže nastaviť cieľové hodnoty BG.";
+"This is a multiplier cap for autosens (and autotune) to set a 20% max limit on how high the autosens ratio can be, which in turn determines how high autosens can adjust basals, how low it can adjust ISF, and how low it can set the BG target." = "Toto je horný limit násobiteľa pre autosens (a autotune), ktorý nastavuje maximálny limit 20 % na to, ako vysoko môže byť pomer autosens upravený. To následne určuje, do akej miery môže autosens zvýšiť bazálne dávky, znížiť ISF a znížiť cieľovú hodnotu glykémie.";
 
 /* Headline "Autosens Min" */
 "Autosens Min" = "Autosens Min";
 
 /* "Autosens Min" */
-"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Druhá strana bezpečnostných limitov autosenzora stanovuje limit na to, ako nízko môže autosenzor nastaviť základné hodnoty a ako vysoko môže nastaviť ciele ISF a BG.";
+"The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Druhá strana bezpečnostných limitov autosens, ktorá nastavuje spodný limit na to, ako nízko môže autosens upraviť bazálne dávky, zvýšiť ISF a zvýšiť cieľovú hodnotu glykémie.";
 
 /* Headline "Half Basal Exercise Target" */
 "Half Basal Exercise Target" = "Polovičný bazál počas cvičenia";
@@ -2945,7 +2945,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Enable SMB With High BG" = "Povoliť SMB pri vysokej glykémii";
 
 /* "Enable SMB With High BG" */
-"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Povolenie SMB pri zistení vysokej hladiny cukru v krvi na základe cieľa vysokej hladiny cukru v krvi (upraveného alebo profilu)";
+"Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Povoliť SMB, keď je zistená vysoká glykémia, na základe cieľovej hodnoty pre vysokú BG (upravená alebo profilová)";
 
 /* Headline "Dynamic settings" */
 "Dynamic settings" = "Dynamické nastavenia";
