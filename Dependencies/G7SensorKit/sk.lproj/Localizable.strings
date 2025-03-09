@@ -35,7 +35,7 @@
 "Sensor Start" = "Čas zavedenia";
 
 /* title for g7 settings row showing sensor expiration time */
-"Sensor Expiration" = "Exspirácia senzoru";
+"Sensor Expiration" = "Exspirácia senzora";
 
 /* title for g7 settings row showing sensor grace period end time */
 "Grace Period End" = "Dodatočná doba platnosti";
@@ -105,7 +105,7 @@
 "Sensor failed" = "Senzor zlyhal";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
-"Sensor expires" = "Senzor exspiruje";
+"Sensor expires" = "Exspirácia senzora";
 
 /* G7 Progress bar label when sensor grace period progress showing */
 "Grace period remaining" = "Zostávajúce predĺžené obdobie";
