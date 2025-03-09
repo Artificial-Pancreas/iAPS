@@ -31,4 +31,7 @@
    <FileRef
       location = "group:Dependencies/MinimedKit/MinimedKit.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Dependencies/DanaKit/DanaKit.xcodeproj">
+   </FileRef>
 </Workspace>

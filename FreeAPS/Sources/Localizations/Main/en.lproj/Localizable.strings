@@ -915,7 +915,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Sensor Info";
 
 /* */
-"Sensor Age" = "Sensor Age";
+"Sensor Life-Span" = "Sensor Life-Span";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
 
 /* */
 "Sensor Age Left" = "Sensor Age Left";
@@ -2276,6 +2279,11 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Loop status";
 
+/* --------------------------  Dana Pump  ---------------------- */
+
+/* Dana footer */
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+
 /* --------- Auto ISF --------- */
 
 /* */
@@ -2355,13 +2363,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Upper Delta limit";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Upper BG limit";
 
 /* */
-"SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be diabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
@@ -2424,10 +2432,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.";
 
 /* */
-"Dura ISF Hourly Max Change" = "Dura ISF Hourly Max Change";
+"Duration Weight" = "Duration Weight";
 
 /* */
-"Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target." = "Rate at which ISF is reduced per hour assuming BG level remains at double target for that time. When value = 1.0, ISF is reduced to 50% after 1 hour of BG level at 2x target.";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
@@ -2488,6 +2496,9 @@ Enact a temp Basal or a temp target */
 
 /* Is false */
 " off" = " off";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Adjust ";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2881,6 +2892,9 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Display Glucose Delta";
 
 /* UI/UX option */
+"Display Sensor Age" = "Display Sensor Age";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Hide Concentration Badge";
 
 /* UI/UX option */
@@ -2888,6 +2902,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Hide the bolus amount strings when amount is under";
+
+/* UI/UX option */
+"Display carb equivalents" = "Display carb equivalents";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";

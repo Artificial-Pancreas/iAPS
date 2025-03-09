@@ -13,13 +13,16 @@ extension StatConfig {
         @Published var useFPUconversion: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var hours: Decimal = 6
-        @Published var alwaysUseColors: Bool = true
+        @Published var alwaysUseColors: Bool = false
         @Published var minimumSMB: Decimal = 0.3
         @Published var useInsulinBars: Bool = false
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var hideInsulinBadge: Bool = false
         @Published var extendHomeView: Bool = true
+        @Published var displayExpiration: Bool = false
+        @Published var anubis: Bool = false
+        @Published var fpus: Bool = true
 
         var units: GlucoseUnits = .mmolL
 
@@ -41,6 +44,9 @@ extension StatConfig {
             subscribeSetting(\.displayDelta, on: $displayDelta) { displayDelta = $0 }
             subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { hideInsulinBadge = $0 }
             subscribeSetting(\.extendHomeView, on: $extendHomeView) { extendHomeView = $0 }
+            subscribeSetting(\.displayExpiration, on: $displayExpiration) { displayExpiration = $0 }
+            subscribeSetting(\.anubis, on: $anubis) { anubis = $0 }
+            subscribeSetting(\.fpus, on: $fpus) { fpus = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)

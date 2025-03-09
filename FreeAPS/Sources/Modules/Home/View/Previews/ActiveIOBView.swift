@@ -105,7 +105,7 @@ struct ActiveIOBView: View {
             AxisMarks(values: .automatic(desiredCount: 3))
         }
         .chartYScale(
-            domain: minimumRange ... maximum
+            domain: minimumRange ... max(minimumRange, maximum, minimumRange + 1)
         )
         .chartXScale(
             domain: Date.now.addingTimeInterval(-1.days.timeInterval) ... Date.now

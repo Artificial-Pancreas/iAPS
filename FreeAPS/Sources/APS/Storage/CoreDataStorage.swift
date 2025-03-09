@@ -126,6 +126,7 @@ final class CoreDataStorage {
             let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestReasons.sortDescriptors = [sort]
+            requestReasons.fetchLimit = 1
             try? suggestion = coredataContext.fetch(requestReasons)
         }
         return suggestion.first
@@ -143,6 +144,18 @@ final class CoreDataStorage {
             try? reasonArray = self.coredataContext.fetch(requestReasons)
         }
         return reasonArray
+    }
+
+    func recentReason() -> Reasons? {
+        var reasonArray = [Reasons]()
+        coredataContext.performAndWait {
+            let requestReasons = Reasons.fetchRequest() as NSFetchRequest<Reasons>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestReasons.sortDescriptors = [sort]
+            requestReasons.fetchLimit = 1
+            try? reasonArray = self.coredataContext.fetch(requestReasons)
+        }
+        return reasonArray.first
     }
 
     func saveStatUploadCount() {
@@ -176,6 +189,34 @@ final class CoreDataStorage {
             try? nr = coredataContext.fetch(requestNr)
         }
         return nr.first
+    }
+
+    func recentMeal() -> Meals? {
+        var meals = [Meals]()
+        coredataContext.performAndWait {
+            let requestmeals = Meals.fetchRequest() as NSFetchRequest<Meals>
+            let sort = NSSortDescriptor(key: "createdAt", ascending: false)
+            requestmeals.sortDescriptors = [sort]
+            requestmeals.fetchLimit = 1
+            try? meals = coredataContext.fetch(requestmeals)
+        }
+        return meals.first
+    }
+
+    func saveMeal(_ stored: [CarbsEntry], now: Date) {
+        coredataContext.perform { [self] in
+            let save = Meals(context: coredataContext)
+            if let entry = stored.first {
+                save.createdAt = now
+                save.actualDate = entry.actualDate ?? Date.now
+                save.id = entry.id ?? ""
+                save.carbs = Double(entry.carbs)
+                save.fat = Double(entry.fat ?? 0)
+                save.protein = Double(entry.protein ?? 0)
+                save.note = entry.note
+                try? coredataContext.save()
+            }
+        }
     }
 
     func fetchMealPreset(_ name: String) -> Presets? {

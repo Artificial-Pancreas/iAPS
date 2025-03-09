@@ -104,10 +104,8 @@ extension Bolus {
                 }
             }
             .onDisappear {
-                if fetch, hasFatOrProtein, !keepForNextWiew, !state.useCalc {
-                    state.delete(deleteTwice: true, meal: meal)
-                } else if fetch, !keepForNextWiew, !state.useCalc {
-                    state.delete(deleteTwice: false, meal: meal)
+                if !state.useCalc {
+                    state.notActive()
                 }
                 if !state.useCalc {
                     state.notActive()
