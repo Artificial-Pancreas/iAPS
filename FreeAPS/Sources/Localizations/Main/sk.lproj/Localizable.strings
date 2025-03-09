@@ -56,7 +56,7 @@
 "Display IOB and COB" = "Zobraziť IOB a COB";
 
 /* Apple Watch App setting */
-"Confirm Bolus Faster" = "Rýchlejšie potvrdenie podania dávky";
+"Confirm Bolus Faster" = "Rýchlejšie potvrdenie bolusu";
 
 /* Setting Section */
 "UI/UX" = "UI/UX";
@@ -1179,7 +1179,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Sensor not found" = "Senzor nenájdený";
 
 /* */
-"Also play alert sound" = "Prehrajte aj zvuk upozornenia";
+"Also play alert sound" = "Prehrať zvuk upozornenia";
 
 /* */
 "Notification Settings" = "Nastavenia oznámení";
@@ -1212,7 +1212,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Battery" = "Batéria";
 
 /* */
-"Also add source info" = "Pridajte aj informácie o zdroji";
+"Also add source info" = "Pridať informáciu o zdroji";
 
 /* */
 "Carbs Required Threshold" = "Prahová hodnota pre pripomenutie sacharidov";
@@ -1626,7 +1626,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Predictions" = "Predikcia";
 
 /* Watch Config Option */
-"Display Protein & Fat" = "Zobraziť bielkovín a tukov";
+"Display Protein & Fat" = "Zobraziť bielkoviny a tuky";
 
 /* Time of new meal entry */
 "Now" = "Teraz";
@@ -1811,7 +1811,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Active Time" = "Aktívny Čas";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Celkovo dodaných";
+"Total Delivery" = "Spolu dodaných";
 
 /* */
 "Add Omnipod Dash" = "Pridať Omnipod Dash";
@@ -1878,10 +1878,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Change HbA1c Unit" = "Zmena jednotky HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Zobraziť mriežky na osi x grafu";
+"Display Chart X - Grid lines" = "Zobraziť mriežku na osi x grafu";
 
 /* */
-"Display Chart Y - Grid lines" = "Zobraziť mriežky na osi y grafu";
+"Display Chart Y - Grid lines" = "Zobraziť mriežku na osi y grafu";
 
 /* */
 "Display Chart Threshold lines for Low and High" = "Zobraziť prahové čiary grafu pre nízke a vysoké hodnoty";
