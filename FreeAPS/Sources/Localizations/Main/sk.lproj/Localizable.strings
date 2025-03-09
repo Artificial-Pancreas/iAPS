@@ -2602,10 +2602,10 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Defaults to false. Setting to true allows changing insulinPeakTime" = "Predvolené nastavenie je false. Nastavenie na true umožňuje zmenu inzulínu Peak Time";
 
 /* Headline "Suspend Zeros IOB” */
-"Suspend Zeros IOB" = "Pozastavenie núl IOB";
+"Suspend Zeros IOB" = "Pozastaviť nulovanie IOB";
 
 /* "Suspend Zeros IOB” */
-"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Predvolená hodnota je false. Všetky existujúce temp bazály počas doby, keď bolo čerpadlo pozastavené, sa odstránia a pridá sa 0 temp bazálov, ktoré negujú profilové bazálne sadzby počas doby, keď je čerpadlo pozastavené.";
+"Default is false. Any existing temp basals during times the pump was suspended will be deleted and 0 temp basals to negate the profile basal rates during times pump is suspended will be added." = "Predvolene nastavené na false. Všetky existujúce dočasné bazálne dávky počas obdobia, keď bola pumpa pozastavená, budú odstránené a namiesto nich budú pridané nulové dočasné bazálne dávky, aby sa negovali profilové bazálne dávky počas obdobia pozastavenia pumpy.";
 
 /* Headline "Max IOB" */
 "Max IOB" = "Max IOB";
@@ -2662,10 +2662,10 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "This is a setting for default carb absorption impact per 5 minutes. The default is an expected 8 mg/dL/5min. This affects how fast COB is decayed in situations when carb absorption is not visible in BG deviations. The default of 8 mg/dL/5min corresponds to a minimum carb absorption rate of 24g/hr at a CSF of 4 mg/dL/g." = "Toto je nastavenie pre predvolený vplyv absorpcie sacharidov za 5 minút. Predvolené nastavenie je očakávaných 8 mg/dl/5 min. Toto ovplyvňuje, ako rýchlo sa COB rozkladá v situáciách, keď absorpcia sacharidov nie je viditeľná v odchýlkach BG. Predvolená hodnota 8 mg/dl/5min zodpovedá minimálnej rýchlosti absorpcie sacharidov 24 g/hod pri CSF 4 mg/dl/g.";
 
 /* Headline "Autotune ISF Adjustment Fraction" */
-"Autotune ISF Adjustment Fraction" = "Frakcia automatického ladenia ISF";
+"Autotune ISF Adjustment Fraction" = "Úpravový faktor Autotune ISF";
 
 /* "Autotune ISF Adjustment Fraction" */
-"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "Predvolená hodnota 0,5 pre túto hodnotu udržuje automatické ladenie ISF bližšie k hodnote ISF čerpadla prostredníctvom váženého priemeru fullNewISF a pumpISF. Hodnota 1,0 umožňuje úplné prispôsobenie, hodnota 0 neznamená žiadne prispôsobenie od ISF čerpadla.";
+"The default of 0.5 for this value keeps autotune ISF closer to pump ISF via a weighted average of fullNewISF and pumpISF. 1.0 allows full adjustment, 0 is no adjustment from pump ISF." = "Predvolená hodnota 0,5 pre tento parameter udržiava Autotune ISF bližšie k ISF pumpy pomocou váženého priemeru fullNewISF a pumpISF. Hodnota 1,0 umožňuje úplnú úpravu, zatiaľ čo hodnota 0 znamená, že sa ISF pumpy nemení.";
 
 /* Headline "Remaining Carbs Fraction" */
 "Remaining Carbs Fraction" = "Podiel zvyšných sacharidov";
