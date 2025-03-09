@@ -1811,7 +1811,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Active Time" = "Aktívny Čas";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Celkovo dodaných";
+"Total Delivery" = "Spolu dodaných";
 
 /* */
 "Add Omnipod Dash" = "Pridať Omnipod Dash";
