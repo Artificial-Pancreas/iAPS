@@ -1968,7 +1968,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Non-completed Loops" = "Nedokončené slučky";
 
 /* Average loop interval */
-"Interval" = "Intervalové";
+"Interval" = "Interval";
 
 /* Median loop interval */
 "Duration" = "Trvanie";
@@ -2067,7 +2067,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Upload settings and statistics" = "Odoslať nastavenia a štatistiky";
 
 /* On-off toggle */
-"Share and Backup all of your Settings and Statistics" = "Zdieľanie a zálohovanie Vašich nastavení a štatistík";
+"Share and Backup all of your Settings and Statistics" = "Zdieľať a zálohať nastavenia a štatistiky";
 
 /* Title of dropdown menu */
 "Sex" = "Pohlavie";
