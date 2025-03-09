@@ -11,13 +11,18 @@ final class OpenAPS {
     private let nightscout: NightscoutManager
     private let pumpStorage: PumpHistoryStorage
 
-    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext // newBackgroundContext()
+    let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
-    init(storage: FileStorage, nightscout: NightscoutManager, pumpStorage: PumpHistoryStorage) {
+    init(
+        storage: FileStorage,
+        nightscout: NightscoutManager,
+        pumpStorage: PumpHistoryStorage,
+        scriptExecutor: WebViewScriptExecutor
+    ) {
         self.storage = storage
         self.nightscout = nightscout
         self.pumpStorage = pumpStorage
-        scriptExecutor = processQueue.sync { WebViewScriptExecutor() }
+        self.scriptExecutor = scriptExecutor
     }
 
     func determineBasal(currentTemp: TempBasal, clock: Date = Date(), temporary: TemporaryData) -> Future<Suggestion?, Never> {

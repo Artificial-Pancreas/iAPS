@@ -86,6 +86,8 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var keychain: Keychain!
+    private var scriptExecutor = WebViewScriptExecutor()
+
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastStartLoopDate") private var lastStartLoopDate: Date = .distantPast
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
@@ -141,7 +143,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        openAPS = OpenAPS(storage: storage, nightscout: nightscout, pumpStorage: pumpHistoryStorage)
+        openAPS = OpenAPS(
+            storage: storage,
+            nightscout: nightscout,
+            pumpStorage: pumpHistoryStorage,
+            scriptExecutor: scriptExecutor
+        )
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
 
