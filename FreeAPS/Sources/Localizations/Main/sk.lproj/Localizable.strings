@@ -1503,7 +1503,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override Profile target" = "Prepísať cieľ profilu";
 
 /* */
-"Disable SMBs" = "Zakázanie SMB";
+"Disable SMBs" = "Zakázať SMB";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
@@ -1530,10 +1530,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Change CR" = "Zmena CR";
 
 /* */
-"SMB Minutes" = "Zápisnice SMB";
+"SMB Minutes" = "SMB minúty";
 
 /* */
-"UAM SMB Minutes" = "Zápisnica UAM SMB";
+"UAM SMB Minutes" = "UAM SMB minúty";
 
 /* */
 "Start new Profile" = "Spustenie nového profilu";
@@ -2638,7 +2638,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Druhá strana bezpečnostných limitov autosenzora stanovuje limit na to, ako nízko môže autosenzor nastaviť základné hodnoty a ako vysoko môže nastaviť ciele ISF a BG.";
 
 /* Headline "Half Basal Exercise Target" */
-"Half Basal Exercise Target" = "Polovičný cieľ bazálneho cvičenia";
+"Half Basal Exercise Target" = "Polovičný bazál počas cvičenia";
 
 /* "Half Basal Exercise Target" */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Nastavte číslo, napr. 160, čo znamená, že ak je cieľová teplota 160 mg/dl a exercise_mode=true, spustite 50 % bazálnej dávky pri tejto úrovni (120 = 75 %; 140 = 60 %). Túto hodnotu môžete upraviť, aby ste mali väčšiu kontrolu nad režimami cvičenia.";
