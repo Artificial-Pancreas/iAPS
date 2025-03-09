@@ -8,6 +8,13 @@ extension CGM {
         @StateObject var state = StateModel()
         @State private var setupCGM = false
 
+        private var daysFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 1
+            return formatter
+        }
+
         // @AppStorage(UserDefaults.BTKey.cgmTransmitterDeviceAddress.rawValue) private var cgmTransmitterDeviceAddress: String? = nil
 
         var body: some View {
@@ -47,6 +54,22 @@ extension CGM {
                             }
                         }
                     }
+
+                    if state.cgm == .xdrip || state.cgm == .glucoseDirect {
+                        Section {
+                            HStack {
+                                TextField("0", value: $state.sensorDays, formatter: daysFormatter)
+                                Text("days").foregroundStyle(.secondary)
+                            }
+                        }
+                        header: { Text("Sensor Life-Span") }
+                        footer: {
+                            Text(
+                                "When using \(state.cgm.rawValue) iAPS doesn't know the type of sensor used or the sensor life-span."
+                            )
+                        }
+                    }
+
                     if state.cgm == .libreTransmitter {
                         Button("Configure Libre Transmitter") {
                             state.showModal(for: .libreConfig)
@@ -64,16 +87,14 @@ extension CGM {
                             Toggle("Display Emojis as Labels", isOn: $state.displayCalendarEmojis)
                             Toggle("Display IOB and COB", isOn: $state.displayCalendarIOBandCOB)
                         } else if state.createCalendarEvents {
-                            if #available(iOS 17.0, *) {
-                                Text(
-                                    "If you are not seeing calendars to choose here, please go to Settings -> iAPS -> Calendars and change permissions to \"Full Access\""
-                                ).font(.footnote)
+                            Text(
+                                "If you are not seeing calendars to choose here, please go to Settings -> iAPS -> Calendars and change permissions to \"Full Access\""
+                            ).font(.footnote)
 
-                                Button("Open Settings") {
-                                    // Get the settings URL and open it
-                                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                                        UIApplication.shared.open(url)
-                                    }
+                            Button("Open Settings") {
+                                // Get the settings URL and open it
+                                if let url = URL(string: UIApplication.openSettingsURLString) {
+                                    UIApplication.shared.open(url)
                                 }
                             }
                         }
@@ -107,11 +128,11 @@ extension CGM {
                         )
                     }
                 }
-                .onChange(of: setupCGM) { setupCGM in
+                .onChange(of: setupCGM) {
                     state.setupCGM = setupCGM
                 }
-                .onChange(of: state.setupCGM) { setupCGM in
-                    self.setupCGM = setupCGM
+                .onChange(of: state.setupCGM) {
+                    self.setupCGM = state.setupCGM
                 }
             }
         }

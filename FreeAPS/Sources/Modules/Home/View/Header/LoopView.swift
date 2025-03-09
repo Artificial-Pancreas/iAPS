@@ -31,7 +31,9 @@ struct LoopView: View {
             HStack(spacing: 0) {
                 Text("i").font(.system(size: 10, design: .rounded)).offset(y: 0.35)
                 Text("APS").font(.system(size: 12, design: .rounded))
-            }.foregroundStyle(.secondary.opacity(0.5))
+            }
+            .foregroundStyle(.secondary.opacity(0.7))
+            .carvingOrRelief(carve: colorScheme == .light)
 
             LoopEllipse(stroke: color)
                 .frame(width: minutesAgo > 9 ? 60 * multiplyForLargeFonts : 60 * multiplyForLargeFonts, height: 27)

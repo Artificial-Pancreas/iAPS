@@ -46,9 +46,7 @@ import Swinject
         _ = resolver.resolve(WatchManager.self)!
         _ = resolver.resolve(HealthKitManager.self)!
         _ = resolver.resolve(BluetoothStateManager.self)!
-        if #available(iOS 16.2, *) {
-            _ = resolver.resolve(LiveActivityBridge.self)!
-        }
+        _ = resolver.resolve(LiveActivityBridge.self)!
     }
 
     init() {
@@ -67,8 +65,8 @@ import Swinject
                 .environmentObject(Icons())
                 .onOpenURL(perform: handleURL)
         }
-        .onChange(of: scenePhase) { newScenePhase in
-            debug(.default, "APPLICATION PHASE: \(newScenePhase)")
+        .onChange(of: scenePhase) {
+            debug(.default, "APPLICATION PHASE: \(scenePhase)")
         }
     }
 

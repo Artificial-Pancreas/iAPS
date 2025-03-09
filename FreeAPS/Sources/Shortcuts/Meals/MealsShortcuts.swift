@@ -2,7 +2,7 @@ import AppIntents
 import Foundation
 import Intents
 
-@available(iOS 16.0, *) struct MealPresetEntity: AppEntity, Identifiable {
+struct MealPresetEntity: AppEntity, Identifiable {
     static var defaultQuery = MealPresetQuery()
     var id: String
     var displayRepresentation: DisplayRepresentation {
@@ -17,7 +17,7 @@ enum MealPresetIntentError: Error {
     case NoPresets
 }
 
-@available(iOS 16.0, *) struct ApplyMealPresetIntent: AppIntent {
+struct ApplyMealPresetIntent: AppIntent {
     static var title: LocalizedStringResource = "iAPS Meal Presets"
     static var description = IntentDescription("Allow to use iAPS Meal Presets")
     internal var intentRequest: MealPresetIntentRequest
@@ -81,7 +81,7 @@ enum MealPresetIntentError: Error {
     }
 }
 
-@available(iOS 16.0, *) struct MealPresetQuery: EntityQuery {
+struct MealPresetQuery: EntityQuery {
     internal var intentRequest: MealPresetIntentRequest
 
     init() {
@@ -99,7 +99,7 @@ enum MealPresetIntentError: Error {
     }
 }
 
-@available(iOS 16.0, *) final class MealPresetIntentRequest: BaseIntentsRequest {
+final class MealPresetIntentRequest: BaseIntentsRequest {
     func fetchPresets() throws -> ([MealPresetEntity]) {
         let presets = coreDataStorage.fetchMealPresets().flatMap { preset -> [MealPresetEntity] in
             [MealPresetEntity(id: preset.dish ?? "")]
@@ -148,8 +148,7 @@ enum MealPresetIntentError: Error {
                 protein: quantityProtein,
                 note: mealPreset.dish ?? "",
                 enteredBy: CarbsEntry.manual,
-                isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false,
-                fpuID: (quantityFat > 0 || quantityProtein > 0) ? UUID().uuidString : nil
+                isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false
             )]
         )
 

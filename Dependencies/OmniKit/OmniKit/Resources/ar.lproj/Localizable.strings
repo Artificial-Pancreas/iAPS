@@ -69,13 +69,13 @@
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
 
 /* The title for AlarmCode.other notification */
-"Critical Pod Error" = "Critical Pod Error";
+"Critical Pod Error" = "خطأ حرج في البود";
 
 /* Recovery suggestion when unexpected address received */
 "Crosstalk possible. Please move to a new location" = "Crosstalk possible. Please move to a new location";
 
 /* Pod state when pod has been deactivated */
-"Deactivated" = "Deactivated";
+"Deactivated" = "تم إلغاء التنشيط";
 
 /* Title string for BeepPreference.silent */
 "Disabled" = "Disabled";
@@ -123,7 +123,7 @@
 "Inserting cannula" = "Inserting cannula";
 
 /* The default notification body for AlarmCodes */
-"Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
+"Insulin delivery stopped. Change Pod now." = "تم إيقاف توصيل الأنسولين. يجب تغيير الكبسولة الآن.";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulin Suspended";

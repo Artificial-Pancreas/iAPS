@@ -61,8 +61,30 @@ extension Bolus {
                 Section {
                     if state.waitForSuggestion {
                         Text("Please wait")
-                    } else {
+                    } else if state.predictions != nil {
                         predictionChart
+                    } else {
+                        Text("No Predictions. Failed loop suggestion.").frame(maxWidth: .infinity, alignment: .center)
+                    }
+                }
+
+                if state.predictions == nil {
+                    if state.currentBG == 0 {
+                        Section {
+                            HStack {
+                                Text("Glucose")
+                                Spacer()
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.manualGlucose,
+                                    units: $state.units,
+                                    isDisabled: false,
+                                    liveEditing: true
+                                )
+                            }.onChange(of: state.manualGlucose) {
+                                state.insulinCalculated = state.calculateInsulin()
+                            }
+                        } header: { Text("Missing Glucose") }
                     }
                 }
 
@@ -94,7 +116,7 @@ extension Bolus {
                                 }
                                 .toggleStyle(CheckboxToggleStyle())
                                 .font(.footnote)
-                                .onChange(of: state.useFattyMealCorrectionFactor) { _ in
+                                .onChange(of: state.useFattyMealCorrectionFactor) {
                                     state.insulinCalculated = state.calculateInsulin()
                                 }
                             }
@@ -129,14 +151,13 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
-                            cleanInput: true,
-                            useButtons: true
+                            liveEditing: true
                         )
                         Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
                     }
                     .focused($isFocused)
-                    .onChange(of: state.amount) { newValue in
-                        if newValue > state.maxBolus {
+                    .onChange(of: state.amount) {
+                        if state.amount > state.maxBolus {
                             exceededMaxBolus = true
                         } else {
                             exceededMaxBolus = false
@@ -182,6 +203,7 @@ extension Bolus {
                     Section {
                         Button {
                             keepForNextWiew = true
+                            state.save()
                             state.showModal(for: nil)
                         }
                         label: {
@@ -202,6 +224,7 @@ extension Bolus {
                     }
                 }
             }
+            .interactiveDismissDisabled()
             .compactSectionSpacing()
             .alert(isPresented: $isRemoteBolusAlertPresented) {
                 remoteBolusAlert!
@@ -222,22 +245,17 @@ extension Bolus {
                 trailing: Button {
                     state.hideModal()
                     state.notActive()
+                    if fetch { state.apsManager.determineBasalSync() }
                 }
                 label: { Text("Cancel") }
             )
             .onAppear {
                 configureView {
                     state.viewActive()
+                    state.waitForCarbs = fetch
                     state.waitForSuggestionInitial = waitForSuggestion
                     state.waitForSuggestion = waitForSuggestion
                     state.insulinCalculated = state.calculateInsulin()
-                }
-            }
-            .onDisappear {
-                if fetch, hasFatOrProtein, !keepForNextWiew, state.useCalc, !state.eventualBG {
-                    state.delete(deleteTwice: true, meal: meal)
-                } else if fetch, !keepForNextWiew, state.useCalc, !state.eventualBG {
-                    state.delete(deleteTwice: false, meal: meal)
                 }
             }
             .popup(isPresented: showInfo, alignment: .bottom, direction: .center, type: .default) {
@@ -270,9 +288,9 @@ extension Bolus {
         func carbsView() {
             if fetch {
                 keepForNextWiew = true
-                state.backToCarbsView(complexEntry: hasFatOrProtein, meal, override: false, deleteNothing: false, editMode: true)
+                state.backToCarbsView(override: false, editMode: true)
             } else {
-                state.backToCarbsView(complexEntry: false, meal, override: true, deleteNothing: true, editMode: false)
+                state.backToCarbsView(override: true, editMode: false)
             }
         }
 

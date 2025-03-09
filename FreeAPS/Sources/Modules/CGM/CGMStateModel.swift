@@ -22,6 +22,7 @@ extension CGM {
         @Published var currentCalendarID: String = ""
         @Persisted(key: "CalendarManager.currentCalendarID") var storedCalendarID: String? = nil
         @Published var cgmTransmitterDeviceAddress: String? = nil
+        @Published var sensorDays: Double = 10
 
         override func subscribe() {
             cgm = settingsManager.settings.cgm
@@ -33,6 +34,7 @@ extension CGM {
             subscribeSetting(\.displayCalendarIOBandCOB, on: $displayCalendarIOBandCOB) { displayCalendarIOBandCOB = $0 }
             subscribeSetting(\.displayCalendarEmojis, on: $displayCalendarEmojis) { displayCalendarEmojis = $0 }
             subscribeSetting(\.smoothGlucose, on: $smoothGlucose, initial: { smoothGlucose = $0 })
+            subscribeSetting(\.sensorDays, on: $sensorDays) { sensorDays = $0 }
 
             $cgm
                 .removeDuplicates()

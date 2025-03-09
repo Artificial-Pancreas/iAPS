@@ -56,7 +56,7 @@ struct PreviewChart: View {
                         NSLocalizedString(
                             "Very High",
                             comment: ""
-                        ): .red,
+                        ): .darkRed,
                         NSLocalizedString(
                             "Very Low",
                             comment: ""

@@ -23,13 +23,16 @@ struct NigtscoutTreatment: JSON, Hashable, Equatable {
     var units: String?
     var id: String?
     var fpuID: String?
+    var creation_date: Date?
 
     static let local = "iAPS"
+    static let trio = "Trio"
 
     static let empty = NigtscoutTreatment(from: "{}")!
 
     static func == (lhs: NigtscoutTreatment, rhs: NigtscoutTreatment) -> Bool {
-        (lhs.createdAt ?? Date()) == (rhs.createdAt ?? Date())
+        (lhs.createdAt ?? Date()) == (rhs.createdAt ?? Date()) &&
+            (lhs.carbs ?? 0) == (rhs.carbs ?? 0)
     }
 
     func hash(into hasher: inout Hasher) {
@@ -61,5 +64,6 @@ extension NigtscoutTreatment {
         case units
         case id
         case fpuID
+        case creation_date
     }
 }

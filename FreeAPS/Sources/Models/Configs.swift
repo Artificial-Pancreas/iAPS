@@ -3,6 +3,7 @@ import SwiftUI
 
 struct DateFilter {
     var twoHours = Date().addingTimeInterval(-2.hours.timeInterval) as NSDate
+    var threeHours = Date().addingTimeInterval(-3.hours.timeInterval) as NSDate
     var today = Calendar.current.startOfDay(for: Date()) as NSDate
     var day = Date().addingTimeInterval(-24.hours.timeInterval) as NSDate
     var twoDays = Date().addingTimeInterval(-2.days.timeInterval) as NSDate
@@ -15,7 +16,7 @@ struct DateFilter {
 
 public enum IAPSconfig {
     static let padding: CGFloat = 60
-    static let iconSize: CGFloat = 20
+    static let iconSize: CGFloat = 34
     static let backgroundOpacity: Double = 0.1
     static let buttonSize: CGFloat = 26
     static let shadowOpacity: CGFloat = 0.75

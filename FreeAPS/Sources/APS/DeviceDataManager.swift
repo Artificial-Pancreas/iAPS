@@ -1,5 +1,6 @@
 import Algorithms
 import Combine
+import DanaKit
 import Foundation
 import LoopKit
 import LoopKitUI
@@ -7,6 +8,7 @@ import MinimedKit
 import MockKit
 import OmniBLE
 import OmniKit
+import os.log
 import ShareClient
 import SwiftDate
 import Swinject
@@ -33,6 +35,7 @@ private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
     OmnipodPumpManager.self,
     OmniBLEPumpManager.self,
+    DanaKitPumpManager.self,
     MockPumpManager.self
 ]
 
@@ -40,6 +43,7 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
     MinimedPumpManager.managerIdentifier: MinimedPumpManager.self,
     OmnipodPumpManager.managerIdentifier: OmnipodPumpManager.self,
     OmniBLEPumpManager.managerIdentifier: OmniBLEPumpManager.self,
+    DanaKitPumpManager.managerIdentifier: DanaKitPumpManager.self,
     MockPumpManager.managerIdentifier: MockPumpManager.self
 ]
 
