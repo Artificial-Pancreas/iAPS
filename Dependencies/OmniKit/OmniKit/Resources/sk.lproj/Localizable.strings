@@ -90,7 +90,7 @@
 "Error event logged, shutting down" = "Zaprotokolovaná udalosť chyby, vypína sa";
 
 /* Description for expiration alert */
-"Expiration alert" = "Varovanie o expirácii";
+"Expiration alert" = "Varovanie o exspirácii";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Rozšírený";
@@ -255,10 +255,10 @@
 "Pod Error" = "Chyba podu";
 
 /* Description for expiration advisory alarm */
-"Pod expiration advisory alarm" = "Oznámenie o expirácii podu";
+"Pod expiration advisory alarm" = "Oznámenie o exspirácii Podu";
 
 /* The title for pod expiration notification */
-"Pod Expiration Notice" = "Oznámenie o expirácii podu";
+"Pod Expiration Notice" = "Oznámenie o exspirácii Podu";
 
 /* Description for Pod expired pod fault */
 "Pod expired" = "Pod vypršal";
