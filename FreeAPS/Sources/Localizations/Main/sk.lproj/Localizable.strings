@@ -4,17 +4,17 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Pridanie inzulínu bez podania bolusu";
+"Add insulin without actually bolusing" = "Zaznamenať inzulínu bez podania bolusu";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Pridať %@ bez podania bolusu";
 
-"Bolus" = "Dávka";
+"Bolus" = "Bolus";
 
 "Close" = "Zatvoriť";
 
 /* Continue after added carbs without bolus */
-"Continue without bolus" = "Pokračovať bez dávky";
+"Continue without bolus" = "Pokračovať bez bolusu";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Uložiť jedlo bez bolusu";
@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDávka prekračuje vaše nastavenie Max Bolus!\nSte si istí, že chcete dávku pridať ";
 
 /* Header */
-"Enact Bolus" = "Pridať dávku";
+"Enact Bolus" = "Pridať bolus";
 
 /* Button */
-"Enact bolus" = "Pridať dávku";
+"Enact bolus" = "Pridať bolus";
 
 /*  */
 "Insulin recommended" = "Odporúčaný inzulín";
@@ -50,10 +50,10 @@
 "Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Posledný cyklus pred %@ minútami. Dokončite alebo zrušte túto akciu jedla/bolusu, aby mohol prebehnúť ďalší cyklus slučky";
 
 /* Calender Option */
-"Display Emojis as Labels" = "Zobrazenie emotikonov ako štítkov";
+"Display Emojis as Labels" = "Zobraziť emotikony ako štítky";
 
 /* Calender Option */
-"Display IOB and COB" = "Zobrazenie IOB a COB";
+"Display IOB and COB" = "Zobraziť IOB a COB";
 
 /* Apple Watch App setting */
 "Confirm Bolus Faster" = "Rýchlejšie potvrdenie podania dávky";
@@ -86,7 +86,7 @@
 "A Remote Bolus Was Just Delivered!" = "Vzdialený bolus bol doručený!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Uskutočnené o";
+"Enacted at" = "Vykonané o";
 
 /* Headline in suggested pop up (at: at what time) */
 "Suggested at" = "Navrhnuté o";
@@ -348,7 +348,7 @@ Enact a temp Basal or a temp target */
 "Manual Temp Basal" = "Manuálny dočasný bazál";
 
 /* Allow uploads to different services */
-"Allow uploads" = "Povoliť nahrávanie";
+"Allow uploads" = "Povoliť odosielanie";
 
 /* API secret in NS */
 "API secret" = "API kľúč";
@@ -381,7 +381,7 @@ Enact a temp Basal or a temp target */
 "Use local glucose server" = "Použiť lokálny server glykémie";
 
 /* Enable Statistics */
-"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Toto umožňuje nahrávanie súboru statistics.json do Nightscoutu, ktorý môže byť použitý pre komunitné štatistiky a projekt demografie.\n\nÚčasť na štatistikách Spoločenstva je dobrovoľná a vyžaduje si samostatnú registráciu na adrese:\n";
+"This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Toto umožňuje odosielanie súboru statistics.json do Nightscoutu, ktorý môže byť použitý pre komunitné štatistiky a projekt demografie.\n\nÚčasť na štatistikách Spoločenstva je dobrovoľná a vyžaduje si samostatnú registráciu na adrese:\n";
 
 /*  */
 "Edit settings json" = "Upraviť settings json";
@@ -574,7 +574,7 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Uzavretý okruh";
+"Closed loop" = "Uzavretá slučka";
 
 /* */
 "Configuration" = "Nastavenie";
@@ -652,10 +652,10 @@ Enact a temp Basal or a temp target */
 "History" = "História";
 
 /* Nightscout option */
-"Upload" = "Nahrať";
+"Upload" = "Odosielať";
 
 /* Nightscout option */
-"Allow Uploads" = "Povoliť nahrávanie";
+"Allow Uploads" = "Povoliť odosielanie";
 
 /* Type of CGM or glucose source */
 "Type" = "Typ";
@@ -1194,7 +1194,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Backfilling from trend is currently not well supported by Loop" = "Spätné zasypávanie z trendu nie je v súčasnosti dostatočne podporované službou Loop";
 
 /* */
-"Backfill from history" = "Výplň z histórie";
+"Backfill from history" = "Vyplň z histórie";
 
 /* */
 "Backfill from trend" = "Zásyp z trendu";
@@ -1215,7 +1215,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Also add source info" = "Pridajte aj informácie o zdroji";
 
 /* */
-"Carbs Required Threshold" = "Požadovaná prahová hodnota pre uhľohydráty";
+"Carbs Required Threshold" = "Prahová hodnota pre pripomenutie sacharidov";
 
 /* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
@@ -1230,7 +1230,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Last loop was more than %d min ago" = "Posledná slučka bola pred viac ako %d min";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Zobrazenie glykémie na odznaku aplikácie";
+"Show glucose on the app badge" = "Zobraziť glykémiu na odznaku aplikácie";
 
 /* */
 "Backfill glucose" = "Spätne zapísať glykémie";
@@ -1329,7 +1329,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Developer" = "Vývojár";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "Nahrať profil NS";
+"NS Upload Profile" = "Odoslať profil do NS";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Nahraný profil";
@@ -1438,7 +1438,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Enable" = "Povoliť";
 
 /* Header */
-"Conversion settings" = "Nastavenia konverzie";
+"Conversion settings" = "Nastavenia prepočtu";
 
 /* Delay */
 "Delay In Minutes" = "Oneskorenie v minútach";
@@ -1474,7 +1474,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Protein" = "Bielkoviny";
 
 /* Service Section */
-"Fat And Protein Conversion" = "Konverzia tukov a bielkovín";
+"Fat And Protein Conversion" = "Tukoproteínové jednotky";
 
 /* Service Section */
 "Profile Override" = "Prepísanie profilu";
@@ -1497,7 +1497,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override your Basal, ISF, CR and Target profiles" = "Prepíšte svoje profily Basal, ISF, CR a Target";
 
 /* */
-"Enable indefinitely" = "Povolenie na dobu neurčitú";
+"Enable indefinitely" = "Povoliť na neurčito";
 
 /* */
 "Override Profile target" = "Prepísať cieľ profilu";
@@ -1557,7 +1557,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "This will change settings back to your normal profile." = "Tým sa nastavenia vrátia do normálneho profilu.";
 
 /* Start Profile Alert */
-"Start Profile" = "Štartovací profil";
+"Start Profile" = "Spustiť profil";
 
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Váš profilový bazálny inzulín sa upraví pomocou percentuálnej hodnoty override a váš profilový ISF a CR sa opačne upraví pomocou percentuálnej hodnoty.";
@@ -1626,7 +1626,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Predictions" = "Predikcia";
 
 /* Watch Config Option */
-"Display Protein & Fat" = "Zobrazenie bielkovín a tukov";
+"Display Protein & Fat" = "Zobraziť bielkovín a tukov";
 
 /* Time of new meal entry */
 "Now" = "Teraz";
@@ -1756,10 +1756,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Upozornenia zaznejú, keď aplikácia automaticky upraví doručenie a na príkazy, ktoré sami zadáte.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Predvolené pripomenutie o expirácii";
+"Expiration Reminder Default" = "Predvolené pripomenutie o exspirácii";
 
 /* */
-"Expiration Reminder" = "Pripomienka Expirácie";
+"Expiration Reminder" = "Pripomienka exspirácie";
 
 /* */
 "Low Reservoir" = "Nízka hladina v rezervoári";
@@ -1776,7 +1776,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Uistite sa, že iPhone a Pod sú blízko seba. Ak problémy s komunikáciou pretrvávajú, presuňte sa do inej oblasti.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Ihneď vymeniť pod. Podávanie inzulínu sa zastaví o %1$@ alebo keď sa minie inzulín.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Ihneď vymeniť Pod. Podávanie inzulínu sa zastaví o %1$@ alebo ak sa minie inzulín.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Dávka";
@@ -1811,7 +1811,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Active Time" = "Aktívny Čas";
 
 /* description label for total delivery pod details row */
-"Total Delivery" = "Celková dávka";
+"Total Delivery" = "Celkovo dodaných";
 
 /* */
 "Add Omnipod Dash" = "Pridať Omnipod Dash";
@@ -1863,7 +1863,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Statistics" = "Štatistiky";
 
 /* Option in preferences */
-"Allow Upload of Statistics to NS" = "Povolenie nahrávania štatistík do NS";
+"Allow Upload of Statistics to NS" = "Povoliť odosielanie štatistík do NS";
 
 /* Low Glucose Threshold in Statistics settings */
 "Low" = "Nízka";
@@ -1872,19 +1872,19 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "High" = "Vysoká";
 
 /* In Range */
-"In Range" = "V dosahu";
+"In Range" = "V rozsahu";
 
 /* Display % */
 "Change HbA1c Unit" = "Zmena jednotky HbA1c";
 
 /* */
-"Display Chart X - Grid lines" = "Zobrazenie grafu X - Línie mriežky";
+"Display Chart X - Grid lines" = "Zobraziť mriežky na osi x grafu";
 
 /* */
-"Display Chart Y - Grid lines" = "Zobrazenie grafu Y - Línie mriežky";
+"Display Chart Y - Grid lines" = "Zobraziť mriežky na osi y grafu";
 
 /* */
-"Display Chart Threshold lines for Low and High" = "Zobrazenie prahových čiar grafu pre nízke a vysoké hodnoty";
+"Display Chart Threshold lines for Low and High" = "Zobraziť prahové čiary grafu pre nízke a vysoké hodnoty";
 
 /* */
 "Standing / Laying TIR Chart" = "Tabuľka TIR v stoji / v ľahu";
@@ -1908,7 +1908,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "24 hours" = "24 hodiny";
 
 /* Average BG = */
-"Average" = "Priemerný";
+"Average" = "Priemer";
 
 /* TIR Preview Headline */
 "Time In Range" = "Čas v rozmedzí";
@@ -1920,7 +1920,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Median" = "Medián";
 
 /* CGM readings in statView */
-"Readings" = "Čítanie";
+"Readings" = "Čítania";
 
 /* CGM readings in statView */
 "Readings / 24h" = "Odčítania / 24h";
@@ -1953,7 +1953,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "days" = "dni";
 
 /* Nr of Loops in statPanel */
-"Loops" = "Opakovanie";
+"Loops" = "Slučky";
 
 /* Loop Errors in statPanel */
 "Errors" = "Chyba";
@@ -1974,7 +1974,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Duration" = "Trvanie";
 
 /* "Display SD */
-"Display SD instead of CV" = "Zobrazenie SD namiesto CV";
+"Display SD instead of CV" = "Zobraziť SD namiesto CV";
 
 /* Description for display SD */
 "Display Standard Deviation (SD) instead of Coefficient of Variation (CV) in statPanel" = "Zobrazenie štandardnej odchýlky (SD) namiesto variačného koeficientu (CV) v paneli statPanel";
@@ -1983,7 +1983,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Update every number of minutes:" = "Aktualizujte každý počet minút:";
 
 /* Description for update interval for statistics */
-"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Predvolená hodnota je 20 minút. Ako často sa má aktualizovať a ukladať súbor statistics.json a odosielať posledné pole, ak je povolené, do služby Nightscout.";
+"Default is 20 minutes. How often to update and save the statistics.json and to upload last array, when enabled, to Nightscout." = "Predvolená hodnota je 20 minút. Ako často aktualizovať a uložiť súbor statistics.json a nahrať posledné hodnoty, ak je povolené odosielanie do Nightscoutu.";
 
 /* Duration displayed in statPanel */
 "Past 24 Hours " = "Posledných 24 Hodín ";
@@ -2001,7 +2001,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "All Past Days of Data " = "Všetky údaje za uplynulé dni ";
 
 /* "Display Loop statistics in statPanel */
-"Display Loop Cycle statistics" = "Zobrazenie štatistík cyklu slučky";
+"Display Loop Cycle statistics" = "Zobraziť štatistiky cyklov slučky";
 
 /* Description for Display Loop statistics */
 "Displays Loop statistics in the statPanel in Home View" = "Zobrazí štatistiky slučky v paneli statPanel v zobrazení Domov";
@@ -2064,7 +2064,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Share and Backup" = "Zdieľanie a zálohovanie";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Nahrať nastavenia a štatistiky";
+"Upload settings and statistics" = "Odoslať nastavenia a štatistiky";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Zdieľanie a zálohovanie Vašich nastavení a štatistík";
@@ -2153,16 +2153,16 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Layout" = "Rozloženie";
 
 /* Contact Image, settings, single layout name */
-"Single" = "Jednoduchý";
+"Single" = "Jednoduché";
 
 /* Contact Image, settings, split layout name */
-"Split" = "Rozdelenie";
+"Split" = "Rozdelený";
 
 /* Contact Image, settings, outer ring - don't show */
 "DontShowRing" = "Nezobrazovať";
 
 /* Contact Image, settings, outer ring - Loop status */
-"LoopStatusRing" = "Loop stav";
+"LoopStatusRing" = "Stav slučky";
 
 /* Contact Image, settings, outer ring - IOB */
 "IOBRing" = "IOB";
@@ -2186,7 +2186,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Ring" = "Kruh";
 
 /* Contact Image, settings, label for the outer ring picker */
-"Outer" = "Vonkajšie";
+"Outer" = "Vonkajší";
 
 /* Contact Image, settings, label for the ring width picker */
 "Width" = "Šírka";
@@ -2204,10 +2204,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Secondary size" = "Sekundárna veľkosť";
 
 /* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
-"Tracking" = "Sledovanie";
+"Tracking" = "Rozloženie";
 
 /* Contact Image, settings, label for the font weight picker */
-"Weight" = "Váha";
+"Weight" = "Hrúbka písma";
 
 /* Contact Image, settings, label for the dark-mode switcher */
 "Dark mode" = "Tmavý režim";
@@ -2267,7 +2267,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "IOBContactValue" = "IOB";
 
 /* Contact Image, settings, loop status (data to display) */
-"LoopStatusContactValue" = "Loop stav";
+"LoopStatusContactValue" = "Stav slučky";
 
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
@@ -2554,7 +2554,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Unsuspend If No Temp" = "Zrušenie pozastavenia Ak nie je dočasné";
 
 /* "Unsuspend If No Temp” */
-"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Mnohí ľudia po opätovnom pripojení čerpadla občas zabudnú obnoviť/odstaviť jeho prevádzku. Ak patríte medzi nich a ste ochotní spoľahlivo nastaviť nulovú bazálnu teplotu vždy pri pozastavení a odpojení pumpy, táto funkcia vám kryje chrbát. Ak je zapnutá, automaticky obnoví / zruší pozastavenie pumpy, ak to zabudnete urobiť pred vypršaním nulovej teploty. Pokiaľ nulová teplota stále beží, ponechá čerpadlo pozastavené.";
+"Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Mnohí ľudia po opätovnom pripojení pumpy občas zabudnú obnoviť/odstaviť jeho prevádzku. Ak patríte medzi nich a ste ochotní spoľahlivo nastaviť nulovú bazálnu teplotu vždy pri pozastavení a odpojení pumpy, táto funkcia vám kryje chrbát. Ak je zapnutá, automaticky obnoví / zruší pozastavenie pumpy, ak to zabudnete urobiť pred vypršaním nulovej teploty. Pokiaľ nulová teplota stále beží, ponechá čerpadlo pozastavené.";
 
 /* Headline "Enable UAM" */
 "Enable UAM" = "Povoliť UAM";
@@ -2587,10 +2587,10 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Predvolené nastavenie je false. Keď je true, zapne supermikrobolus (SMB) na 6 hodín po sacharidoch, dokonca aj pri 0 sacharidoch na palube (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Povolenie SMB s vysokým dočasným cieľom";
+"Allow SMB With High Temptarget" = "Povoliť SMB s vysokým dočasným cieľom";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Povolenie SMB s vysokým dočasným cieľom";
+"Allow SMB With High Temptarget" = "Povoliť SMB s vysokým dočasným cieľom";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Predvolené nastavenie je false. Ak je true, umožní supermikrobolus (ak je inak povolený) aj pri vysokých cieľových teplotách (> 100 mg/dl).";
@@ -2680,13 +2680,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Toto je množstvo maximálneho počtu sacharidov, o ktorom predpokladáme, že sa vstrebe v priebehu 4 hodín, ak ešte nevidíme vstrebávanie sacharidov.";
 
 /* Headline ”Max SMB Basal Minutes" */
-"Max SMB Basal Minutes" = "Maximálny počet bazálnych minút SMB";
+"Max SMB Basal Minutes" = "Maximálny počet bazálnych minút pre SMB";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolené nastavenie začína na 30. Toto je maximálny počet minút bazálnej dávky, ktorú možno dodať ako jeden SMB s nekrytým COB. To dáva možnosť urobiť SMB agresívnejším, ak sa tak rozhodnete. Odporúča sa nastaviť túto hodnotu na začiatok na 30, v súlade s predvoleným nastavením, a ak sa rozhodnete túto hodnotu zvýšiť, urobte tak v maximálne 15-minútových krokoch, pričom pozorne sledujte účinky zmien. Neodporúča sa nastaviť túto hodnotu na viac ako 90 minút, pretože to môže ovplyvniť schopnosť algoritmu bezpečne vynulovať teplotu. Odporúča sa tiež, aby sa pri nastavení hodnoty vyššej ako predvolená hodnota použil pushover, aby sa generovali upozornenia na všetky predpokladané najnižšie alebo najvyššie hodnoty.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Maximálny počet bazálnych minút SMB";
+"Max UAM SMB Basal Minutes" = "Maximálny počet bazálnych minút UAM SMB";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolené nastavenie začína na 30. Toto je maximálny počet minút bazálnej dávky, ktorú môže UAM dodať ako jeden SMB, keď IOB prekročí COB. To dáva možnosť, aby bol UAM viac alebo menej agresívny, ak sa tak rozhodnete. Odporúča sa nastaviť túto hodnotu na začiatok na 30, v súlade s predvoleným nastavením, a ak sa rozhodnete túto hodnotu zvýšiť, urobte tak v maximálne 15-minútových intervaloch, pričom pozorne sledujte účinky zmien. Zníženie hodnoty spôsobí, že UAM bude dávkovať menej inzulínu pre každý SMB. Neodporúča sa nastaviť túto hodnotu na viac ako 60 minút, pretože to môže ovplyvniť schopnosť algoritmu bezpečne vynulovať teplotu. Odporúča sa tiež, aby sa pri nastavení hodnoty vyššej ako predvolená hodnota použil pushover, aby sa generovali upozornenia na všetky predpokladané najnižšie alebo najvyššie hodnoty.";
@@ -2701,7 +2701,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Bolus Increment" = "Bolusový prírastok";
 
 /* "Bolus Increment" */
-"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Najmenšia uzákonená suma pre malé a stredné podniky. Minimálne množstvo pre pumpy Omnipod je 0,05 U, zatiaľ čo pre pumpy Medtronic sa pre rôzne modely líši, od 0,025 U do 0,10 U. Skontrolujte si, aké minimálne množstvo bolusu môže vaša pumpa dodať. Predvolená hodnota je 0,1.";
+"Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Najmenšia veľkosť SMB. Minimálne množstvo pre pumpy Omnipod je 0,05 U, zatiaľ čo pre pumpy Medtronic sa pre rôzne modely líši, od 0,025 U do 0,10 U. Skontrolujte si, aké minimálne množstvo bolusu môže vaša pumpa dodať. Predvolená hodnota je 0,1.";
 
 /* Headline "Insulin Peak Time" */
 "Insulin Peak Time" = "Čas inzulínového vrcholu";
@@ -2722,7 +2722,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Predvolená hodnota je 1.3. Zvýšte cieľovú hodnotu o túto hodnotu, keď sa v slučke vypínajú nespracované/hlučné údaje CGM";
 
 /* Headline "SMB DeliveryRatio" */
-"SMB DeliveryRatio" = "Pomer dodávok pre malé a stredné podniky";
+"SMB DeliveryRatio" = "Percentuálny podiel SMB";
 
 /* SMB DeliveryRatio */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Predvolená hodnota: 0,5 Toto je ďalší kľúčový bezpečnostný limit OpenAPS a určuje, aký podiel z celkového požadovaného inzulínu sa môže dodať ako SMB. Túto experimentálnu hodnotu zvyšujte pomaly a opatrne.";
@@ -2736,16 +2736,16 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Adjust Dynamic ISF constant" = "Nastavenie konštanty Dynamic ISF";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Povolenie funkcie Dynamic ISF";
+"Enable Dynamic ISF" = "Povoliť Dynamic ISF";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Povolenie funkcie Dynamic ISF";
+"Enable Dynamic ISF" = "Povoliť Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Vypočítajte nové nastavenie citlivosti na inzulín (ISF) pri každom cykle slučky. Nové nastavenie ISF bude založené na vašej aktuálnej glykémii, celkovej dennej dávke inzulínu (TDD, posledných 24 hodín všetkého podaného inzulínu) a vašom individuálnom korekčnom faktore (odporúčanie na začiatok je 0,5, ak používate sigmoidnú funkciu, a 0,8, ak nie).\n\\Všetky dynamické úpravy ISF a CR budú obmedzené vašimi limitmi min/max automatického snímania.";
 
 /* Headline Enable Dynamic CR */
-"Enable Dynamic CR" = "Povolenie funkcie Dynamic CR";
+"Enable Dynamic CR" = "Povoliť Dynamic CR";
 
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Používajte dynamický CR. Dynamický pomer sa použije pre CR takto:\n\n Keď pomer > 1: dynCR = (newRatio - 1) / 2 + 1.\nKeď pomer < 1: dynCR = CR/dynCR.\n\nNepoužívajte spolu s vysokou inzulínovou frakciou (> 2)";
@@ -2835,7 +2835,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Smaller iPhone Screens" = "Menšie obrazovky iPhonu";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Zobrazenie a povolenie vstupov pre tuky a bielkoviny";
+"Display and allow Fat and Protein entries" = "Povoliť zadávanie tukov a proteínov";
 
 /* UI/UX option */
 "Add Meal View settings " = "Pridanie nastavení zobrazenia jedla ";
@@ -2867,7 +2867,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Normally glucose is colored red only when over or under your notification limits for high/low" = "Normálne sa glykémia sfarbí na červeno len vtedy, keď je nad alebo pod Vašimi limitmi pre vysoké/nízke hodnoty";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Horizontálne rolovacie zobrazenie Viditeľné hodiny";
+"Horizontal Scroll View Visible hours" = "Vodorovné posúvanie - viditeľné hodiny";
 
 /* UI/UX option */
 "Display Time Interval Setting Button" = "Tlačidlo nastavenia časového intervalu zobrazenia";
@@ -2942,7 +2942,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Nastavenie hodnoty enableSMB_high_bg, s ktorou sa bude porovnávať povolenie SMB. Ak je BG > ako táto hodnota, SMB by sa mali povoliť.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Povolenie SMB s vysokým krvným cukrom";
+"Enable SMB With High BG" = "Povoliť SMB pri vysokej glykémii";
 
 /* "Enable SMB With High BG" */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Povolenie SMB pri zistení vysokej hladiny cukru v krvi na základe cieľa vysokej hladiny cukru v krvi (upraveného alebo profilu)";
