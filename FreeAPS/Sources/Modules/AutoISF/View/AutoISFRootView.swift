@@ -71,11 +71,11 @@ extension AutoISF {
                     Section {
                         HStack {
                             Toggle(isOn: $state.enableBGacceleration) {
-                                Text("Enable BG acceleration")
+                                Text("Enable BG Acceleration")
                                     .onTapGesture {
                                         info(
-                                            header: "Enable BG acceleration",
-                                            body: "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.",
+                                            header: "Enable BG Acceleration",
+                                            body: "Enables the BG Acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.",
                                             useGraphics: nil
                                         )
                                     }
