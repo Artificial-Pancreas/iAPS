@@ -2817,13 +2817,28 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Use alternate Bolus Calculator" = "Použite alternatívnu kalkulačku Bolus";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Použiť bolusovú kalkulačku";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "V závislosti od Vašich nastavení používa Swift bolusová kalkulačka údaje z predpovedí glykémie OpenAPS a/alebo z IOB, COB, trendu glykémie, aktuálnej glykémie a cieľovej glykémie. Na konci výpočtu sa použije vlastný faktor (predvolene 0,8).\n\nV kalkulačke bolusu môžete mať tiež možnosť použiť na konci výpočtu ďalší (!) prispôsobiteľný faktor, ktorý by mohol byť užitočný pre tukoproteínové jednotky, napr. pizzu (predvolene 0,7).\n\nBolusová kalkulačka NEPOUŽÍVA premennú OpenAPS \"insulinRequired\", určenú pre SMB.";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Úprava";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Použiť OpenAPS na predpoveď glykémie";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Tukoproteínové jedlá";
 
 /* Bolus Calculator Setting */
 "Apply factor for fatty meals" = "Použiť tukoproteínový faktor";
 
-/* Bolus Calculator Footer */
+/* Bolus Calculator Setting */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Nová alternatívna bolusová kalkulačka je ďalším prístupom k predvolenej bolusovej kalkulačke v systéme iAPS. Ak je prepínač zapnutý, používate túto kalkulačku bolusu a nie pôvodnú kalkulačku iAPS. Na konci výpočtu sa použije vlastný faktor, ako to má byť pri používaní smbs (predvolene 0,8).\n\nV kalkulačke bolusu môžete tiež pridať možnosť použiť na konci výpočtu ďalší (!) prispôsobiteľný faktor, ktorý by mohol byť užitočný pre tučné jedlá, napr. pizzu (predvolene 0,7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Použiť OpenAPS predpoveď glykémie pre výpočet odporúčaného inzulínu. Toto nastavenie povolí \"starú\" kalkulačku. Predvolene zapnuté.\n\n2. Použite OpenAPS minPredBG predpoveď ako doplnkovú bezpečnostnú zábranu, ktorá neumožní glykémii klesnúť pod vašu prahovú hodnotu. Toto nastavenie môže byť použité spolu s alebo bez predpovede glykémie. Predvolene zapnuté";
 
 /* Settings Section */
 "Extra Features" = "Ďalšie funkcie";
@@ -2904,6 +2919,9 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Zobraziť ISF a tlačidlo pre zobrazenie histórie";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Zobraziť Auto ISF na domovskej obrazovke";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
