@@ -53,7 +53,7 @@
 "Display Emojis as Labels" = "Emoji’s als labels weergeven";
 
 /* Calender Option */
-"Display IOB and COB" = "Geef IOB en COB weer";
+"Display IOB and COB" = "Toon IOB en COB";
 
 /* Apple Watch App setting */
 "Confirm Bolus Faster" = "Bevestig bolus sneller";
@@ -261,6 +261,9 @@
 
 /*  */
 "Autotune" = "Autotune";
+
+/* Debug option view Dynamic Variables */
+"Dynamic Variables" = "Dynamic Variables";
 
 /*  */
 "Basal profile" = "Basaalprofiel";
@@ -604,6 +607,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Apparaten toevoegen";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+
+/* */
 "Glucose Target" = "Glucose streefwaarde";
 
 /* */
@@ -614,6 +620,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "ISF";
+
+/* */
+"% Override" = "% Override";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "De app Garmin Connect moet geïnstalleerd zijn om iAPS te kunnen gebruiken. \nGa naar de App Store om deze te downloaden.";
@@ -1329,7 +1338,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Developer" = "Ontwikkelaar";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload profiel";
+"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Delete All NS Overrides";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS geüpload profiel";
@@ -1352,8 +1364,11 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Debug option view Pump History */
 "Pump History" = "Pomp geschiedenis";
 
+/* Debug option view Temp Basals */
+"Temp Basals" = "Temp Basals";
+
 /* Debug option view Target Ranges */
-"Target ranges" = "Doelbereiken";
+"Targets ranges" = "Targets ranges";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Tijdelijke doelen";
@@ -1375,6 +1390,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Ingevoerde meldingen";
+
+"* Debug option view Not Uploaded Overrides */
+Overrides Not Upload" = "Overrides Not Upload";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1476,6 +1494,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Service Section */
 "Fat And Protein Conversion" = "Omrekening vet en eiwit";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Ignore flat CGM readings";
+
 /* Service Section */
 "Profile Override" = "Overschrijf profiel";
 
@@ -1505,6 +1526,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "Disable SMBs" = "SMBs uitschakelen";
 
+/* */
+"End the Override with next Meal" = "End the Override with next Meal";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normaal profiel";
 
@@ -1513,6 +1537,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Profiles" = "Profielen";
+
+/* */
+"Advanced Settings" = "Advanced Settings";
 
 /* */
 "More options" = "Meer opties";
@@ -1534,6 +1561,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "UAM SMB Minutes" = "UAM SMB Minuten";
+
+/* */
+"Override Max IOB" = "Override Max IOB";
 
 /* */
 "Start new Profile" = "Start nieuw profiel";
@@ -2410,13 +2440,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Dit gewicht wordt toegepast op de curve die de insulinegevoeligheidsfactor (ISF) aanpast bij grotere schommelingen in de bloedsuikerspiegel. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"ISF weight for lower BG's" = "ISF-waarde voor lagere BG's";
+"ISF weight for lower BG" = "ISF weight for lower BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde wordt toegepast op de aanpassing van de insulinegevoeligheidsfactor (ISF) wanneer de bloedsuikerspiegel onder de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"ISF weight for higher BG's" = "ISF-waarde voor hogere BG's";
+"ISF weight for higher BG" = "ISF weight for higher BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde bepaalt hoe de insulinegevoeligheidsfactor (ISF) wordt aangepast wanneer de bloedsuikerspiegel boven de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
@@ -2466,6 +2496,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Schakelt aanpassingen in voor de versnelling en vertraging van de bloedsuikerspiegel, waardoor de ISF wordt aangepast op basis van de snelheid waarmee de bloedsuiker stijgt of daalt.";
 
+"* */
+Override Auto ISF" = "Override Auto ISF";
+
 /* */
 "Enable Auto ISF" = "Auto ISF inschakelen";
 
@@ -2489,6 +2522,15 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* Override adjustment of ISF, CR and Basal */
 "Adjust " = "Pas aan ";
+
+/* History of the adjustments */
+"Final Ratio" = "Final Ratio";
+
+/* History of the adjustments */
+"Adjustments" = "Adjustments";
+
+/* History of the adjustments */
+"Insulin" = "Insulin";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2820,6 +2862,18 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Use alternate Bolus Calculator" = "Gebruik alternatieve boluscalculator";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Use Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Adjustment";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Vette maaltijd";
 
 /* Bolus Calculator Setting */
@@ -2827,6 +2881,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "De nieuwe alternatieve boluscalculator is een andere benadering van de standaard boluscalculator in iAPS. Als de knop aan staat, gebruik je deze boluscalculator en niet de originele iAPS-calculator. Aan het einde van de berekening wordt een aangepaste factor toegepast, zoals het hoort bij het gebruik van smbs (standaard 0,8).\n\nJe kunt ook de optie toevoegen in je boluscalculator om een andere (!) aanpasbare factor toe te passen aan het einde van de berekening, wat handig kan zijn voor vette maaltijden, zoals pizza (standaard 0,7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
 
 /* Settings Section */
 "Extra Features" = "Extra functionaliteiten";
@@ -2899,6 +2956,18 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* UI/UX option */
 "Display carb equivalents" = "Toon koolhydraathoeveelheden";
 
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Display Ratio and a History View button";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Auto ISF Home View";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
 
@@ -2907,6 +2976,15 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Notification option */
 "Live Activity" = "Live activiteit";
+
+/* Show Live Activity */
+"Show Live Activity" = "Show Live Activity";
+
+/* Display Chart */
+"Display Chart" = "Display Chart";
+
+/* Show Predictions */
+"Show Predictions" = "Show Predictions";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
