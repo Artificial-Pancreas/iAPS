@@ -1517,6 +1517,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "Disable SMBs" = "Zakázať SMB";
 
+/* */
+"End the Override with next Meal" = "Ukončiť prepísanie s nasledujúcim jedlom";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
 
@@ -1546,6 +1549,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* */
 "UAM SMB Minutes" = "UAM SMB minúty";
+
+/* */
+"Override Max IOB" = "Upraviť maximálne IOB";
 
 /* */
 "Start new Profile" = "Spustenie nového profilu";
@@ -2474,10 +2480,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Enable DuraISF even if COB is present not just for UAM." = "Povoliť DuraISF aj pri prítomnosti COB, nielen pre UAM.";
 
 /* */
-"Enable BG acceleration" = "Povoliť akceleráciu glykémie";
+"Enable BG Acceleration" = "Povoliť akceleráciu glykémie";
 
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Povolí adaptáciu podľa zmeny glykémie, upraví ISF pri stúpaní/klesaní glykémie.";
+
+/* */
+"Override Auto ISF" = "Upraviť Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Zapnúť Auto ISF";
@@ -2953,13 +2962,16 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 /* Notification option */
 "Live Activity" = "Živé aktivity";
 
-/* Notification option */
-"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";
+/* Show Live Activity */
+"Show Live Activity" = "Zobraziť Živú aktivitu";
 
-/* Notification option */
-"Show Live activity" = "Zobraziť živú aktivitu";
+/* Display Chart */
+"Display Chart" = "Zobraziť graf";
 
-/* Live Activity Footer */
+/* Show Predictions */
+"Show Predictions" = "Zobraziť predpovede";
+
+/* Live activity displays blood glucose live on the lock screen and on the dynamic island (if available) */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";
 
 /* Live Activity Footer when off */
