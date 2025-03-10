@@ -262,6 +262,9 @@
 /*  */
 "Autotune" = "Autotune";
 
+/* Debug option view Dynamic Variables */
+"Dynamic Variables" = "Dynamic Variables";
+
 /*  */
 "Basal profile" = "Basal profil";
 
@@ -604,6 +607,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Tilføj enheder";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+
+/* */
 "Glucose Target" = "Glukose mål";
 
 /* */
@@ -614,6 +620,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "Insulin følsomhedsfaktor";
+
+/* */
+"% Override" = "% Override";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Garmin Connect skal være installeret for at bruge iAPS.\n Gå til App Store for at downloade den";
@@ -1328,7 +1337,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "Udvikler";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload Profil";
+"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Delete All NS Overrides";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Uploadet Profil";
@@ -1351,8 +1363,11 @@ Enact a temp Basal or a temp target */
 /* Debug option view Pump History */
 "Pump History" = "Pumpe Historie";
 
+/* Debug option view Temp Basals */
+"Temp Basals" = "Temp Basals";
+
 /* Debug option view Target Ranges */
-"Target ranges" = "Målområder";
+"Targets ranges" = "Targets ranges";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Midlertidige mål";
@@ -1374,6 +1389,9 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Indførte meddelelser";
+
+"* Debug option view Not Uploaded Overrides */
+Overrides Not Upload" = "Overrides Not Upload";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1475,6 +1493,9 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Fat And Protein Conversion" = "Fedt Og Protein Konvertering";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Ignore flat CGM readings";
+
 /* Service Section */
 "Profile Override" = "Profil Tilsidesætte";
 
@@ -1504,6 +1525,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "Deaktiver SMB'er";
 
+/* */
+"End the Override with next Meal" = "End the Override with next Meal";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profil";
 
@@ -1512,6 +1536,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Profiles" = "Profiler";
+
+/* */
+"Advanced Settings" = "Advanced Settings";
 
 /* */
 "More options" = "Flere muligheder";
@@ -1533,6 +1560,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "UAM SMB Minutes" = "UAM SMB Minutter";
+
+/* */
+"Override Max IOB" = "Override Max IOB";
 
 /* */
 "Start new Profile" = "Start ny profil";
@@ -2465,6 +2495,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
 
+"* */
+Override Auto ISF" = "Override Auto ISF";
+
 /* */
 "Enable Auto ISF" = "Enable Auto ISF";
 
@@ -2488,6 +2521,15 @@ Enact a temp Basal or a temp target */
 
 /* Override adjustment of ISF, CR and Basal */
 "Adjust " = "Adjust ";
+
+/* History of the adjustments */
+"Final Ratio" = "Final Ratio";
+
+/* History of the adjustments */
+"Adjustments" = "Adjustments";
+
+/* History of the adjustments */
+"Insulin" = "Insulin";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2815,6 +2857,18 @@ Enact a temp Basal or a temp target */
 "Use alternate Bolus Calculator" = "Brug alternativ Bolus Lommeregner";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Use Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Adjustment";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Fedtholdige Måltider";
 
 /* Bolus Calculator Setting */
@@ -2822,6 +2876,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Den nye alternative bolus lommeregner er en anden tilgang til standard bolus lommeregner i iAPS. Hvis kontakten (toggle) er slået til, bruger du denne bolus lommeregner og ikke den oprindelige iAPS lommeregner. I slutningen af beregningen anvendes en brugerdefineret faktor, som den formodes at være, når du bruger SMBs (standard 0,8).\n\nDu kan også tilføje muligheden i din bolus lommeregner for at anvende en anden (!) bruger tilpasset faktor ved afslutningen af beregningen, som kunne være nyttig for fedtholdige måltider, f.eks. Pizza (standard 0,7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
 
 /* Settings Section */
 "Extra Features" = "Ekstra funktioner";
@@ -2894,6 +2951,18 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Display carb equivalents" = "Display carb equivalents";
 
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Display Ratio and a History View button";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Auto ISF Home View";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus Lommeregner";
 
@@ -2902,6 +2971,15 @@ Enact a temp Basal or a temp target */
 
 /* Notification option */
 "Live Activity" = "Live aktivitet";
+
+/* Show Live Activity */
+"Show Live Activity" = "Show Live Activity";
+
+/* Display Chart */
+"Display Chart" = "Display Chart";
+
+/* Show Predictions */
+"Show Predictions" = "Show Predictions";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live aktivitet viser blodglukose live på låseskærmen og på den dynamiske ø (hvis tilgængelig)";
