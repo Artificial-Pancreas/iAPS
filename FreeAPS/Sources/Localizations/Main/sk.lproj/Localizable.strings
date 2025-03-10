@@ -604,6 +604,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Pridať zariadenie";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Tlačidlo profilových prepínačov / tlačidlo dočasných cieľov";
+
+/* */
 "Glucose Target" = "Cieľová glykémia";
 
 /* */
@@ -614,6 +617,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "ISF";
+
+/* */
+"% Override" = "% prepísania";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Aplikácia Garmin Connect musí byť nainštalovaná pre použitie s iAPS.\n Pre stiahnutie choďte do App Store";
