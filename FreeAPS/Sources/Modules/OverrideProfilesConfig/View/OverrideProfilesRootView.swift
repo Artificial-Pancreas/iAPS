@@ -349,7 +349,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF weight for higher BGs")
+                                Text("ISF weight for higher BG's")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.higherISFrangeWeight,
@@ -359,7 +359,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF weight for lower BGs")
+                                Text("ISF weight for lower BG's")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.lowerISFrangeWeight,
@@ -389,7 +389,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF weight while BG deccelerates")
+                                Text("ISF weight while BG decelerates")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.bgBrakeISFweight,
