@@ -2623,7 +2623,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Current Basal Safety Multiplier" = "Bezpečný násobok aktuálneho bazálu";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Toto je ďalší dôležitý bezpečnostný limit systému OpenAPS. Predvolené nastavenie (ktoré tiež pravdepodobne nebude potrebné upravovať) je 4. To znamená, že systém OpenAPS nikdy nebude môcť nastaviť dočasnú bazálnu dávku, ktorá je vyššia ako 4-násobok aktuálnej hodinovej bazálnej dávky naprogramovanej v pumpe používateľa alebo, ak je zapnutá, určenej automatickým nastavením.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Toto je ďalší dôležitý bezpečnostný limit systému OpenAPS. Predvolené nastavenie (ktoré tiež pravdepodobne nebude potrebné upravovať) je 4. Znamená to, že systém OpenAPS nikdy nebude môcť nastaviť dočasnú bazálnu dávku, ktorá je vyššia ako 4-násobok aktuálnej hodinovej bazálnej dávky naprogramovanej v pumpe používateľa alebo, ak je zapnutá, určenej automatickým nastavením.";
 
 /* Headline "Autosens Max" */
 "Autosens Max" = "Autosens Max";
