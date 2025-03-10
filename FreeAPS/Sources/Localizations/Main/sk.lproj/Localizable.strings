@@ -1329,7 +1329,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Developer" = "Vývojár";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "Odoslať profil do NS";
+"NS Upload Profile and Settings" = "Odoslať profil a nastavenia do NS";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Odstrániť všetky NS prepísania";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Nahraný profil";
