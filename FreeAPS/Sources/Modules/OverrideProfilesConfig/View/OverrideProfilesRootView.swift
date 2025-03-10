@@ -339,7 +339,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("Dura ISF Hourly Max Change")
+                                Text("Duration Weight")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.autoISFhourlyChange,
@@ -349,7 +349,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF Weight for higher BGs")
+                                Text("ISF weight for higher BGs")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.higherISFrangeWeight,
@@ -359,7 +359,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF Weight for lower BGs")
+                                Text("ISF weight for lower BGs")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.lowerISFrangeWeight,
@@ -369,7 +369,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF Weight for postprandial BG rise")
+                                Text("ISF weight for postprandial BG rise")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.postMealISFweight,
@@ -379,7 +379,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF Weight while BG accelerates")
+                                Text("ISF weight while BG accelerates")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.bgAccelISFweight,
@@ -389,7 +389,7 @@ extension OverrideProfilesConfig {
                             }
 
                             HStack {
-                                Text("ISF Weight while BG deccelerates")
+                                Text("ISF weight while BG deccelerates")
                                 DecimalTextField(
                                     "0",
                                     value: $state.autoISFsettings.bgBrakeISFweight,
