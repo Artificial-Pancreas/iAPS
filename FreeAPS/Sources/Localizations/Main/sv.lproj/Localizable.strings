@@ -263,7 +263,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Dynamiska variabler";
 
 /*  */
 "Basal profile" = "Basalinställningar";
@@ -607,7 +607,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Lägg till enhet";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Knapp för profiler / Tillfälliga målvärden";
 
 /* */
 "Glucose Target" = "Målvärde för glukos";
@@ -622,7 +622,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% Undantag";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Appen 'Garmin Connect' måste  vara installerad för att kunna användas med iAPS.\n Gå till App Store för att ladda ner";
@@ -1337,10 +1337,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "Utvecklare";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+"NS Upload Profile and Settings" = "NS Ladda upp profil och inställningar";
 
 /* Debug option delete all NS overrides */
-"Delete All NS Overrides" = "Delete All NS Overrides";
+"Delete All NS Overrides" = "Ta bort alla NS-undantag";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "Uppladdad profil";
@@ -1364,10 +1364,10 @@ Enact a temp Basal or a temp target */
 "Pump History" = "Pumphistorik";
 
 /* Debug option view Temp Basals */
-"Temp Basals" = "Temp Basals";
+"Temp Basals" = "Temporära basaler";
 
 /* Debug option view Target Ranges */
-"Targets ranges" = "Targets ranges";
+"Targets ranges" = "Målvärden";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Tillfälliga målvärden";
@@ -1391,7 +1391,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Överförda meddelanden";
 
 "* Debug option view Not Uploaded Overrides */
-Overrides Not Upload" = "Overrides Not Upload";
+Overrides Not Upload" = "Undantag ej uppladdade";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1494,7 +1494,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Fat And Protein Conversion" = "Fett och protein";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Ignore flat CGM readings";
+"Ignore flat CGM readings" = "Ignorera varningar för oförändrade sensorvärden";
 
 /* Service Section */
 "Profile Override" = "Undantag från dina sparade profiler";
@@ -1526,7 +1526,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Disable SMBs" = "Stäng av autobolusar (SMBs)";
 
 /* */
-"End the Override with next Meal" = "End the Override with next Meal";
+"End the Override with next Meal" = "Avsluta profilen med nästa måltid";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profil";
@@ -1538,7 +1538,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Profiles" = "Profiler";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Avancerade inställningar";
 
 /* */
 "More options" = "Fler alternativ";
@@ -1562,7 +1562,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "UAM SMB Minutes" = "UAM-SMB-minuter";
 
 /* */
-"Override Max IOB" = "Override Max IOB";
+"Override Max IOB" = "Åsidosätt max IOB";
 
 /* */
 "Start new Profile" = "Starta ny profil";
@@ -2439,13 +2439,13 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Standardvärde: 0,0. Detta är den vikt som tillämpas på polygonen som justerar din insulinkänslighet vid högt blodsockerdelta (delta innebär här positiv differens från mälvärde). Vid 0,0 är denna justering inaktiverad.";
 
 /* */
-"ISF weight for lower BG" = "ISF weight for lower BG";
+"ISF weight for lower BG" = "Justering för låga blodsocker";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Standardvärde: 0,0. Detta är den vikt som tillämpas på polygonen som justerar din insulinkänslighet vid låga blodsocker. Vid 0,0 är denna justering inaktiverad.";
 
 /* */
-"ISF weight for higher BG" = "ISF weight for higher BG";
+"ISF weight for higher BG" = "Justering för höga blodsocker";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Standardvärde: 0,0. Detta är den vikt som tillämpas på polygonen som justerar din insulinkänslighet vid höga blodsocker. Vid 0,0 är denna justering inaktiverad.";
@@ -2496,7 +2496,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar. Justerar ISF vid ett accelererande / decelererande blodsocker.";
 
 "* */
-Override Auto ISF" = "Override Auto ISF";
+Override Auto ISF" = "Ändra Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Aktivera Auto ISF";
@@ -2523,10 +2523,10 @@ Override Auto ISF" = "Override Auto ISF";
 "Adjust " = "Justera ";
 
 /* History of the adjustments */
-"Final Ratio" = "Final Ratio";
+"Final Ratio" = "Kvot";
 
 /* History of the adjustments */
-"Adjustments" = "Adjustments";
+"Adjustments" = "Justeringar";
 
 /* History of the adjustments */
 "Insulin" = "Insulin";
@@ -2857,7 +2857,7 @@ Override Auto ISF" = "Override Auto ISF";
 "Use alternate Bolus Calculator" = "Använd alternativ boluskalkylator";
 
 /* Bolus Calculator Setting */
-"Use Bolus Calculator" = "Use Bolus Calculator";
+"Use Bolus Calculator" = "Använd boluskalkylator";
 
 /* Bolus Calculator Setting */
 "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
