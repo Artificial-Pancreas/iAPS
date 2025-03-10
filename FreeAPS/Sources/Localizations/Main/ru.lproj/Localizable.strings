@@ -2409,13 +2409,13 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Значение по-умолчанию: 0,0. Это вес, применяемый к многоугольнику, который корректирует вашу чувствительность к инсулину при высокой дельте уровня глюкозы в крови (здесь дельта означает положительное отклонение от целевого значения). При значении 0,0 эта настройка отключена.";
 
 /* */
-"ISF weight for lower BG's" = "Поправка на низкий уровень глюкозы в крови";
+"ISF weight for lower BG" = "Поправка на низкий уровень глюкозы в крови";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Значение по умолчанию: 0,0. Это вес, примененный к многоугольнику, который регулирует чувствительность к инсулину при низком уровне сахара в крови. При значении 0,0 эта настройка отключена.";
 
 /* */
-"ISF weight for higher BG's" = "Поправка на высокий уровень глюкозы в крови";
+"ISF weight for higher BG" = "Поправка на высокий уровень глюкозы в крови";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значение по умолчанию: 0,0. Это вес, примененный к многоугольнику, который регулирует чувствительность к инсулину при высоком уровне сахара в крови. При значении 0,0 эта настройка отключена.";

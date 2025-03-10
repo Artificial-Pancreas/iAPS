@@ -2409,13 +2409,13 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Valore predefinito: 0.0 Questo è il peso applicato al poligono che adatta delta ISF maggiori. Con 0.0 l'effetto è disabilitato.";
 
 /* */
-"ISF weight for lower BG's" = "Peso ISF per BG minore";
+"ISF weight for lower BG" = "Peso ISF per BG minore";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Valore predefinito: 0.0\nQuesto è il peso applicato al poligono che adatta ISF se la glicemia è al di sotto del target. \n\nCon 0.0 l'effetto è disattivato.";
 
 /* */
-"ISF weight for higher BG's" = "Peso ISF per BG superiori";
+"ISF weight for higher BG" = "Peso ISF per BG superiori";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Valore predefinito: 0.0\nQuesto è il peso applicato al poligono che adatta ISF se la glicemia è al di sotto del target. \n\nCon 0.0 l'effetto è disattivato.";
