@@ -1394,8 +1394,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Prijaté oznámenia";
 
-"* Debug option view Not Uploaded Overrides */
-"Overrides Not Uploaded" = "Overrides Not Uploaded";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Neodoslané prepísania";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
