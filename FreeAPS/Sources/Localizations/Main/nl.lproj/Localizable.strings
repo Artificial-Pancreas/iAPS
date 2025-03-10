@@ -2410,13 +2410,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Dit gewicht wordt toegepast op de curve die de insulinegevoeligheidsfactor (ISF) aanpast bij grotere schommelingen in de bloedsuikerspiegel. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"ISF weight for lower BG's" = "ISF-waarde voor lagere BG's";
+"ISF weight for lower BG" = "ISF-waarde voor lagere BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde wordt toegepast op de aanpassing van de insulinegevoeligheidsfactor (ISF) wanneer de bloedsuikerspiegel onder de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
 
 /* */
-"ISF weight for higher BG's" = "ISF-waarde voor hogere BG's";
+"ISF weight for higher BG" = "ISF-waarde voor hogere BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde bepaalt hoe de insulinegevoeligheidsfactor (ISF) wordt aangepast wanneer de bloedsuikerspiegel boven de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
