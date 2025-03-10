@@ -435,7 +435,7 @@ extension OverrideProfilesConfig {
                                 }
 
                                 HStack {
-                                    Text("Upper SMB limit")
+                                    Text("Upper BG limit")
                                     BGTextField(
                                         "0",
                                         mgdlValue: $state.autoISFsettings.b30upperLimit,
@@ -446,7 +446,7 @@ extension OverrideProfilesConfig {
                                 }
 
                                 HStack {
-                                    Text("Upper Delta SMB limit")
+                                    Text("Upper Delta limit")
                                     BGTextField(
                                         "0",
                                         mgdlValue: $state.autoISFsettings.b30upperdelta,
