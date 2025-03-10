@@ -2518,13 +2518,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Sensitivity Raises Target" = "Citlivosť zvyšuje cieľ";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "Keď je to pravda, zvýši cieľový krvný cukor, keď \"autosens\" zistí citlivosť";
+"When true, raises BG target when autosens detects sensitivity" = "Keď je nastavené povolené, zvýši cieľovú hodnotu glykémie, keď autosens zistí zvýšenú citlivosť";
 
 /* Headline ”Resistance Lowers Target" */
 "Resistance Lowers Target" = "Rezistancia znižuje cieľ";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Predvolené nastavenie je vypnuté. Keď je true, zníži cieľový krvný cukor, keď \"autosens\" zistí rezistenciu";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Predvolené nastavenie je vypnuté. Ak je povolené, po tom ako \"autosens\" zistí rezistenciu zníži cieľovú glykémiu";
 
 /* Headline ”Advanced Target Adjustments" */
 "Advanced Target Adjustments" = "Pokročilé úpravy cieľa";
@@ -2692,7 +2692,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Predvolene nastavené na začiatok pri 30. Toto je maximálny počet minút bazálnej dávky, ktorú môže UAM podať ako jediný SMB, keď IOB presahuje COB. To umožňuje nastaviť UAM viac alebo menej agresívny podľa Vašej voľby. Odporúča sa ponechať túto hodnotu na 30 ako predvolenú a ak sa rozhodnete ju zvýšiť, robte to v maximálnych krokoch po 15 minútach, pričom dôkladne sledujte účinky zmien. Zníženie hodnoty spôsobí, že UAM bude dávkovať menej inzulínu pre každý SMB. Neodporúča sa nastaviť túto hodnotu vyššie ako 60 minút, pretože by to mohlo ovplyvniť schopnosť algoritmu bezpečne nastaviť nulovú dočasnú dávku. Odporúča sa tiež používať pushover pri nastavení hodnoty vyššej ako predvolená, aby sa generovali upozornenia na predpokladané nízke alebo vysoké hodnoty glykémie.";
 
 /* Headline "SMB Interval" */
-"SMB Interval" = "Časový interval SMB";
+"SMB Interval" = "Interval SMB";
 
 /* "SMB Interval" */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Minimálna doba v minútach pre nový SMB od posledného SMB alebo manuálneho bolusu";
@@ -2722,7 +2722,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Predvolená hodnota je 1,3. Zvýši cieľovú hodnotu o túto hodnotu, keď sa v slučke používajú zašumené/odskakujúce údaje CGM";
 
 /* Headline "SMB DeliveryRatio" */
-"SMB DeliveryRatio" = "Percentuálny podiel SMB";
+"SMB DeliveryRatio" = "Podiel SMB";
 
 /* SMB DeliveryRatio */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Predvolená hodnota: 0,5 Toto je ďalší kľúčový bezpečnostný limit OpenAPS a určuje, aký podiel z celkového požadovaného inzulínu sa môže dodať ako SMB. Túto experimentálnu hodnotu zvyšujte pomaly a opatrne.";
@@ -2775,7 +2775,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Použitie sigmoidnej funkcie pre ISF (a pre CR, ak je povolená) namiesto predvoleného logaritmického vzorca. Vyžaduje, aby bolo v nastaveniach povolené nastavenie Dynamická ISF.\n\nNastavenie Adjustment (Úprava) upravuje sklon krivky (Y: dynamický pomer, X: glykémia). Nižšia hodnota ==> menej strmá == menej agresívna.\n\nNastavenie autosens.min/max určuje limity max/min pre dynamický pomer A tiež to, ako veľmi sa dynamický pomer upravuje. Ak AF je sklon krivky, autosens.min/max je výška grafu, interval Y, kde Y: dynamický pomer. Krivka bude mať vždy sigmoidný tvar bez ohľadu na to, aké nastavenia autosens.min/max sa použijú, čo znamená, že tieto nastavenia majú veľké dôsledky na výsledok vypočítaného dynamického ISF. Buďte opatrní pri nastavení príliš vysokej hodnoty autosens.max. Pri správnom nastavení profilu ISF ju pravdepodobne nikdy nebudete potrebovať vyššiu ako 1.5\n\nLimit autosens.max > 1.5 sa pri použití sigmoidnej funkcie neodporúča.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Nastavenie prahové hodnoty";
+"Threshold Setting" = "Nastavenie prahovej hodnoty";
 
 /* Dynamic ISF Setting Title */
 "Minimum Threshold Setting" = "Nastavenie minimálneho prahu";
@@ -2838,7 +2838,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Display and allow Fat and Protein entries" = "Povoliť zadávanie tukov a proteínov";
 
 /* UI/UX option */
-"Add Meal View settings " = "Pridanie nastavení zobrazenia jedla ";
+"Add Meal View settings " = "Pokročilé nastavenia zadávania jedál ";
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Zobraziť dočasné cieľové tlačidlo";
