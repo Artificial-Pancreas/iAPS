@@ -262,6 +262,9 @@
 /*  */
 "Autotune" = "Autotune";
 
+/* Debug option view Dynamic Variables */
+"Dynamic Variables" = "Dynamic Variables";
+
 /*  */
 "Basal profile" = "Profil Basal";
 
@@ -604,6 +607,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Ajouter des appareils";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+
+/* */
 "Glucose Target" = "Cible de glucose";
 
 /* */
@@ -614,6 +620,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "ISF";
+
+/* */
+"% Override" = "% Override";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "L'application Garmin Connect doit être installée pour utiliser iAPS.\n Allez sur l'App Store pour la télécharger";
@@ -1328,7 +1337,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "Développeur";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "Profil NS Upload";
+"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Delete All NS Overrides";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "Profil NS Uploaded";
@@ -1351,8 +1363,11 @@ Enact a temp Basal or a temp target */
 /* Debug option view Pump History */
 "Pump History" = "Historique pompe";
 
+/* Debug option view Temp Basals */
+"Temp Basals" = "Temp Basals";
+
 /* Debug option view Target Ranges */
-"Target ranges" = "Fourchette cible";
+"Targets ranges" = "Targets ranges";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Cibles temporaires";
@@ -1374,6 +1389,9 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Annonces émises";
+
+"* Debug option view Not Uploaded Overrides */
+Overrides Not Upload" = "Overrides Not Upload";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1475,6 +1493,9 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Fat And Protein Conversion" = "Conversion de graisses et de protéines";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Ignore flat CGM readings";
+
 /* Service Section */
 "Profile Override" = "Remplacer le profil";
 
@@ -1504,6 +1525,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "Désactiver les SMBs";
 
+/* */
+"End the Override with next Meal" = "End the Override with next Meal";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Profil normal";
 
@@ -1512,6 +1536,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Profiles" = "Profils";
+
+/* */
+"Advanced Settings" = "Advanced Settings";
 
 /* */
 "More options" = "Plus d'options";
@@ -1533,6 +1560,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "UAM SMB Minutes" = "UAM SMB Minutes";
+
+/* */
+"Override Max IOB" = "Override Max IOB";
 
 /* */
 "Start new Profile" = "Commencer un nouveau profil";
@@ -2409,13 +2439,13 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled.";
 
 /* */
-"ISF weight for lower BG's" = "ISF weight for lower BG's";
+"ISF weight for lower BG" = "ISF weight for lower BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled.";
 
 /* */
-"ISF weight for higher BG's" = "ISF weight for higher BG's";
+"ISF weight for higher BG" = "ISF weight for higher BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.";
@@ -2465,6 +2495,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
 
+"* */
+Override Auto ISF" = "Override Auto ISF";
+
 /* */
 "Enable Auto ISF" = "Enable Auto ISF";
 
@@ -2488,6 +2521,15 @@ Enact a temp Basal or a temp target */
 
 /* Override adjustment of ISF, CR and Basal */
 "Adjust " = "Adjust ";
+
+/* History of the adjustments */
+"Final Ratio" = "Final Ratio";
+
+/* History of the adjustments */
+"Adjustments" = "Adjustments";
+
+/* History of the adjustments */
+"Insulin" = "Insulin";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2815,6 +2857,18 @@ Enact a temp Basal or a temp target */
 "Use alternate Bolus Calculator" = "Utiliser la calculatrice de bolus alternative";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Use Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Adjustment";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Repas riche en matières grasses";
 
 /* Bolus Calculator Setting */
@@ -2822,6 +2876,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Le nouveau calculateur alternatif de bolus est une option au calculateur par défaut dans iAPS. Quand activé, vous utilisez ce calculateur de bolus et non pas le calculateur iAPS original. À la fin du calcul, un facteur personnalisé est appliqué, comme il est censé l'être lors de l'utilisation de SMBs (par défaut 0,8).\n\nVous pouvez également ajouter l'option d'appliquer un autre facteur personnalisable (!) à la fin du calcul, ce qui pourrait être utile pour les repas riches en matières grasses, par exemple, une pizza (par défaut 0,7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
 
 /* Settings Section */
 "Extra Features" = "Fonctionnalités supplémentaires";
@@ -2894,6 +2951,18 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Display carb equivalents" = "Display carb equivalents";
 
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Display Ratio and a History View button";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Auto ISF Home View";
+
 /* Setting title */
 "Bolus Calculator" = "Calculateur de Bolus";
 
@@ -2902,6 +2971,15 @@ Enact a temp Basal or a temp target */
 
 /* Notification option */
 "Live Activity" = "Activité en direct";
+
+/* Show Live Activity */
+"Show Live Activity" = "Show Live Activity";
+
+/* Display Chart */
+"Display Chart" = "Display Chart";
+
+/* Show Predictions */
+"Show Predictions" = "Show Predictions";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'activité en direct affiche la glycémie sur l'écran de verrouillage et sur l'île dynamique (si disponible)";
