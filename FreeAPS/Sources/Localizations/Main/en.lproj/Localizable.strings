@@ -1397,7 +1397,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Enacted announcements";
 
 * Debug option view Not Uploaded Overrides */
-"Overrides Not Upload" = "Overrides Not Upload";
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
