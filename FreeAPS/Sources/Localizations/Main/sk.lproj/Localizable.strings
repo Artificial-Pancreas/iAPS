@@ -1430,7 +1430,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " U/day" = " J/deň";
 
 /* Total AT / Scheduled basal insulin */
-"Total" = "Celkom";
+"Total" = "Spolu";
 
 /* -------------------------------------------- FPU Strings ------------------------------------------------------*/
 /* Enable FPU */
@@ -1857,7 +1857,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Month" = "Mesiac";
 
 /* */
-"Total" = "Celkom";
+"Total" = "Spolu";
 
 /* Headline Statistics */
 "Statistics" = "Štatistiky";
@@ -2548,7 +2548,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Skip Neutral Temps" = "Preskočiť dočasný neutrálny bazál";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Predvolene nastavené na false, aby iAPS nastavoval dočasné bazálne dávky vždy, keď to je možné, čo uľahčuje kontrolu fungovania systému, aj keď ste offline. To znamená, že iAPS nastaví „neutrálny“ dočasnú dávku (rovnakú ako váš predvolený bazál), ak nie sú potrebné žiadne úpravy. Toto je staré nastavenie pre OpenAPS, ktoré umožňuje minimalizovať zvuky a upozornenia zo zariadenia („rig“), ktoré by Vás mohli v noci prebudiť. ";
+"Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Predvolene nastavenie je vypnuté, aby iAPS nastavoval dočasné bazálne dávky vždy, keď to je možné, čo uľahčuje kontrolu fungovania systému, aj keď ste offline. To znamená, že iAPS nastaví „neutrálny“ dočasnú dávku (rovnakú ako váš predvolený bazál), ak nie sú potrebné žiadne úpravy. Toto je staré nastavenie pre OpenAPS, ktoré umožňuje minimalizovať zvuky a upozornenia zo zariadenia („rig“), ktoré by Vás mohli v noci prebudiť. ";
 
 /* Headline "Unsuspend If No Temp” */
 "Unsuspend If No Temp" = "Zrušiť pozastavenie bez dočasného bazálu";
@@ -2617,13 +2617,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Max Daily Safety Multiplier" = "Max bezpečný denný násobok";
 
 /* "Max Daily Safety Multiplier" */
-"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Ide o dôležitý bezpečnostný limit systému OpenAPS. Predvolené nastavenie (ktoré pravdepodobne nebude potrebné upravovať) je 3. To znamená, že systém OpenAPS nikdy nebude môcť nastaviť dočasnú bazálnu dávku, ktorá je vyššia ako 3× najvyššia hodinová bazálna dávka naprogramovaná v používateľskej pumpe alebo, ak je zapnutá, určená automatickým ladením.";
+"This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Ide o dôležitý bezpečnostný limit systému OpenAPS. Predvolené nastavenie (ktoré pravdepodobne nebude potrebné upravovať) je 3. To znamená, že systém OpenAPS nikdy nebude môcť nastaviť dočasnú bazálnu dávku, ktorá je vyššia ako 3× najvyššia hodinová bazálna dávka naprogramovaná v používateľskej pumpe alebo, ak je zapnutá, určená autotune.";
 
 /* Headline "Current Basal Safety Multiplier" */
 "Current Basal Safety Multiplier" = "Bezpečný násobok aktuálneho bazálu";
 
 /* "Current Basal Safety Multiplier" */
-"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Toto je ďalší dôležitý bezpečnostný limit systému OpenAPS. Predvolené nastavenie (ktoré tiež pravdepodobne nebude potrebné upravovať) je 4. Znamená to, že systém OpenAPS nikdy nebude môcť nastaviť dočasnú bazálnu dávku, ktorá je vyššia ako 4-násobok aktuálnej hodinovej bazálnej dávky naprogramovanej v pumpe používateľa alebo, ak je zapnutá, určenej automatickým nastavením.";
+"This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Toto je ďalší dôležitý bezpečnostný limit systému OpenAPS. Predvolené nastavenie (ktoré tiež pravdepodobne nebude potrebné upravovať) je 4. Znamená to, že systém OpenAPS nikdy nebude môcť nastaviť dočasnú bazálnu dávku, ktorá je vyššia ako 4-násobok aktuálnej hodinovej bazálnej dávky naprogramovanej v pumpe používateľa alebo, ak je zapnutá, určenej autotune.";
 
 /* Headline "Autosens Max" */
 "Autosens Max" = "Autosens Max";
