@@ -2896,6 +2896,15 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 /* UI/UX option */
 "Display carb equivalents" = "Zobraziť ekvivalenty sacharidov";
 
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Zobraziť vek senzora, ale nie zostávajúci čas";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Zobraziť ISF a tlačidlo pre zobrazenie histórie";
+
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
 
