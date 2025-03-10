@@ -158,7 +158,7 @@
 "Add Carbs " = "Ввод углеводов";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "Переопределение";
 
 /*  */
 "Amount Carbs" = "Кол-во углеводов";
@@ -266,7 +266,7 @@
 "Autotune" = "Автотюн";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Динамические переменные";
 
 /*  */
 "Basal profile" = "Базальный профиль";
