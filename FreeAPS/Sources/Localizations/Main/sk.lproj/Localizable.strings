@@ -1479,6 +1479,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Service Section */
 "Profile Override" = "Prepísanie profilu";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Ignorovať rovnaké hodnoty glykémie";
+
 /* Extend max override percentage */
 "Max Override 400%" = "Maximálne prepísanie o 400%";
 
@@ -2490,6 +2493,15 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 
 /* Override adjustment of ISF, CR and Basal */
 "Adjust " = "Prispôsobiť ";
+
+/* History of the adjustments */
+"Final Ratio" = "Finálny pomer";
+
+/* History of the adjustments */
+"Adjustments" = "Prispôsobenia";
+
+/* History of the adjustments */
+"Insulin" = "Inzulín";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
