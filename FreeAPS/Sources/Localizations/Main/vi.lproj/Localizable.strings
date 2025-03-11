@@ -1382,7 +1382,7 @@ Enact a temp Basal or a temp target */
 "Targets ranges" = "Targets ranges";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Mục tiêu tạm thời";
+"Temp targets" = "Temp targets";
 
 /* Debug option view Meal */
 "Meal" = "Meal";
@@ -1397,7 +1397,7 @@ Enact a temp Basal or a temp target */
 "Enacted" = "Enacted";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Các thông báo";
+"Announcements" = "Announcements";
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Enacted announcements";
