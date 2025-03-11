@@ -701,6 +701,15 @@ Połączono z Nightscout!";
 /* Treatments list */
 "Treatments" = "Treatments";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Treatment";
 
@@ -1395,8 +1404,8 @@ Połączono z Nightscout!";
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Enacted announcements";
 
-"* Debug option view Not Uploaded Overrides */
-Overrides Not Uploaded" = "Overrides Not Uploaded";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -2500,8 +2509,8 @@ Overrides Not Uploaded" = "Overrides Not Uploaded";
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
 
-"* */
-Override Auto ISF" = "Override Auto ISF";
+/* */
+"Override Auto ISF" = "Override Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Enable Auto ISF";
