@@ -701,6 +701,9 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Treatments";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Treatment";
 
