@@ -699,6 +699,15 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Ošetrenia";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Liečba";
 
@@ -1394,8 +1403,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Prijaté oznámenia";
 
-"* Debug option view Not Uploaded Overrides */
-Overrides Not Uploaded" = "Neodoslané prepísania";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -2500,8 +2509,8 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Povolí adaptáciu podľa zmeny glykémie, upraví ISF pri stúpaní/klesaní glykémie.";
 
-"* */
-Override Auto ISF" = "Upraviť Auto ISF";
+/* */
+"Override Auto ISF" = "Override Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Zapnúť Auto ISF";
