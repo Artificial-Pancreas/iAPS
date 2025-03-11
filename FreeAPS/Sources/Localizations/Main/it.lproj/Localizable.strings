@@ -3044,3 +3044,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Fattore Regolazione";
+
+/* Apple Watch Overrides */
+"Overrides" = "Overrides";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Cancel Override";
