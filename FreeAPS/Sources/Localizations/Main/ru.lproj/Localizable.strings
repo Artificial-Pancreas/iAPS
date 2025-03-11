@@ -700,13 +700,13 @@ Enact a temp Basal or a temp target */
 "Treatments" = "События";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Добавить инсулин";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Добавить глюкозу";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Новая глюкоза";
 
 /* Hypo Treatment Preset */
 "Treatment" = "Терапия";
@@ -1403,7 +1403,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Принятые оповещения";
 
 /* Debug option view Not Uploaded Overrides */
-"Overrides Not Uploaded" = "Overrides Not Uploaded";
+"Overrides Not Uploaded" = "Переопределения не загружены";
 
 /* Debug option view Autotune */
 "Autotune" = "Автотюн";
@@ -2508,7 +2508,7 @@ Enact a temp Basal or a temp target */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Включает настройку ускорения уровня глюкозы в крови. Регулирует ISF в случае ускорения/замедления уровня сахара в крови.";
 
 /* */
-"Override Auto ISF" = "Override Auto ISF";
+"Override Auto ISF" = "Переопределить Авто ISF";
 
 /* */
 "Enable Auto ISF" = "Включить Авто ISF";
@@ -3045,7 +3045,7 @@ Enact a temp Basal or a temp target */
 "Adjustment Factor" = "Коэффициент регулировки";
 
 /* Apple Watch Overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Переопределения";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Cancel Override";
+"Cancel Override" = "Отменить переопределение";
