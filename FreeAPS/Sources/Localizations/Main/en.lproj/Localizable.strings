@@ -704,6 +704,12 @@ Enact a temp Basal or a temp target */
 /* Add Insulin */
 "Add Insulin" = "Add Insulin";
 
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Treatment";
 
