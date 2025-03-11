@@ -610,7 +610,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Pridať zariadenie";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Tlačidlo prepísania profilu / Tlačidlo dočasných cieľov";
+"Profile Overrides Button / Temp Targets Button" = "Tlačidlo upravenia profilu / Tlačidlo dočasných cieľov";
 
 /* */
 "Glucose Target" = "Cieľová glykémia";
@@ -625,7 +625,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% prepísania";
+"% Override" = "% upravenia";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Aplikácia Garmin Connect musí byť nainštalovaná pre použitie s iAPS.\n Pre stiahnutie choďte do App Store";
@@ -1106,28 +1106,28 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Activate an Override Preset" = "Aktivácia predvoľby Override";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Povoliť aktiváciu prednastaveného režimu.";
+"Allow to activate an overrride preset." = "Povoliť aktiváciu upraveného profilu.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Ktorý prednastavený režim chcete aktivovať?";
+"Which override preset would you like to activate?" = "Ktorý upravený profil chcete aktivovať?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Ste si istí, že chcete aktivovať prednastavený režim %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Ste si istí, že chcete aktivovať upravený profil %@?";
 
 /* Override Shortcut */
-"The Profile Override" = "Prepísanie profilu";
+"The Profile Override" = "Upravenie profilu";
 
 /* Override Shortcut */
 "is now activated" = "je teraz aktivovaný";
 
 /* Override Shortcut */
-"Cancel active override" = "Zrušiť prepísanie profilu";
+"Cancel active override" = "Zrušiť upravený profil";
 
 /* Override Shortcut */
-"Override canceled" = "Prepísanie zrušené";
+"Override canceled" = "Upravenie zrušené";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Aktivuје prednastavený režim %@";
+"Activates an %@ Override Preset" = "Aktivuје upravený režim %@";
 
 /* Suspend/Resume Shortcut */
 "Choose what to do with your pump" = "Vyberte si, čo chcete s pumpou urobiť";
@@ -1510,18 +1510,18 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Ignore flat CGM readings" = "Ignorovať stabilné hodnoty CGM";
 
 /* Service Section */
-"Profile Override" = "Prepísanie profilu";
+"Profile Override" = "Upravenie profilu";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Maximálne prepísanie o 400%";
+"Max Override 400%" = "Maximálne upravenie o 400%";
 
 /* */
-"Override Profiles" = "Profily prepísania";
+"Override Profiles" = "Upravenie profilu";
 
 /* */
 "Normal " = "Normálny ";
 
-"Currently no Override active" = "Momentálne nie je aktívne žiadne Override";
+"Currently no Override active" = "Momentálne nie je aktívne žiadne upravenie";
 
 /* */
 "Total Insulin Adjustment" = "Celková úprava inzulínu";
@@ -1539,7 +1539,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Disable SMBs" = "Zakázať SMB";
 
 /* */
-"End the Override with next Meal" = "Ukončiť prepísanie pri nasledujúcom jedle";
+"End the Override with next Meal" = "Ukončiť upravenie pri nasledujúcom jedle";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
@@ -1587,7 +1587,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Save as preset" = "Uložiť ako predvoľbu";
 
 /* Alert */
-"Cancel Profile Override" = "Zrušiť dočasný profil?";
+"Cancel Profile Override" = "Zrušiť upravený profil?";
 
 /* Alert */
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
@@ -2383,8 +2383,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Duration of increased B30 basal rate" = "Trvanie zvýšenej bazálnej dávky B30";
 
 /* */
-"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Trvanie zvýšenej bazálnej dávky, ktorá saturuje infúzne miesto inzulínom. Predvolene 30 minút, ako pri B30.
-Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B30 zastaví po jeho ukončení.";
+"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Trvanie zvýšenej bazálnej dávky, ktorá saturuje infúzne miesto inzulínom. Predvolene 30 minút, ako pri B30. Profil EatingSoon alebo dočasný cieľ musia byť aktívne aspoň počas tohto trvania, inak sa B30 zastaví po ukončení profilu.";
 
 /* */
 "B30 Basal rate increase factor" = "Faktor zvýšenia bazálnej dávky B30";
@@ -2408,7 +2407,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Target Level for B30 to be enacted" = "Cieľová hladina glykémie pre aktiváciu B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať prednstavený režim EatingSoon (alebo dočasný cieľ). Aby sa B30 mohlo spustiť, cieľová hodnota musí byť nižšia ako toto nastavenie. Predvolená hodnota: 90 mg/dl. Ak zrušíte tento EatingSoon cieľ, bazálna dávka B30 sa zastaví.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať profil EatingSoon (alebo dočasný cieľ). Aby sa B30 mohlo spustiť, cieľová hodnota musí byť nižšia ako toto nastavenie. Predvolená hodnota: 90 mg/dl. Ak zrušíte tento EatingSoon cieľ, bazálna dávka B30 sa zastaví.";
 
 /* */
 "Minimum Start Bolus size" = "Minimálna veľkosť bolusu pre spustenie";
@@ -2420,7 +2419,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Activate B30" = "Aktivovať B30";
 
 /* */
-"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Povolí zvýšenú bazálnu dávku po aktivácii prednastaveného režimu EatingSoon (alebo dočasného cieľa) a manuálnom boluse, aby sa nasýtilo infúzne miesto inzulínom a zvýšila sa absorpcia inzulínu pre SMB po jedle bez počítania sacharidov.";
+"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Povolí zvýšenú bazálnu dávku po aktivácii profilu EatingSoon (alebo dočasného cieľa) a manuálnom boluse, aby sa nasýtilo infúzne miesto inzulínom a zvýšila sa absorpcia inzulínu pre SMB po jedle bez počítania sacharidov.";
 
 /* */
 "ISF weight while BG decelerates" = "Váha ISF pri poklese glykémie";
@@ -3045,3 +3044,9 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Faktor úpravy";
+
+/* Apple Watch Overrides */
+"Overrides" = "Overrides";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Cancel Override";

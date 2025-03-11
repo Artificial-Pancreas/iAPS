@@ -3045,3 +3045,9 @@ Połączono z Nightscout!";
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Adjustment Factor";
+
+/* Apple Watch Overrides */
+"Overrides" = "Overrides";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Cancel Override";

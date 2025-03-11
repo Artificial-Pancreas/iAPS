@@ -3177,3 +3177,9 @@ Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o 
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Factor de ajuste";
+
+/* Apple Watch Overrides */
+"Overrides" = "Overrides";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Cancel Override";
