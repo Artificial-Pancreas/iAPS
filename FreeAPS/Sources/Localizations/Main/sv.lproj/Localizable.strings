@@ -158,7 +158,7 @@
 "Add Carbs " = "Lägg till";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "Undantag";
 
 /*  */
 "Amount Carbs" = "Mängd kolhydrater";
@@ -1394,7 +1394,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Överförda meddelanden";
 
 "* Debug option view Not Uploaded Overrides */
-Overrides Not Uploaded" = "Overrides Not Uploaded";
+Overrides Not Uploaded" = "Undantag ej uppladdade";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
