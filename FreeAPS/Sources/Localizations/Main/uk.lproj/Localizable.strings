@@ -2873,13 +2873,13 @@ Enact a temp Basal or a temp target */
 "Use Bolus Calculator" = "Використовуйте Калькулятор Болюсу";
 
 /* Bolus Calculator Setting */
-"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Залежно від ваших налаштувань, Swift-калькулятор болюса використовує дані з прогнозів глюкози OpenAPS та/або IOB (інсулін на борту), COB (вуглеводи на борту), тренда глюкози, поточного рівня глюкози та цільового рівня глюкози. В кінці розрахунку застосовується коефіцієнт користувача (за замовчуванням 0.8).\n\nУ вас також є можливість в налаштуваннях болюс-калькулятора застосувати додатковий коефіцієнт, що настроюється в кінці розрахунку. Це може бути корисним для жирної їжі, наприклад, піци (за замовчуванням 0.7).\n\nБолюс-калькулятор НЕ використовує змінну OpenAPS \"insulinRequired\", яка призначена для SMB (супермікроболюсів).";
 
 /* Bolus Calculator Setting */
-"Adjustment" = "Adjustment";
+"Adjustment" = "Коригування";
 
 /* Bolus Calculator Setting */
-"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+"Use OpenAPS glucose predictions" = "Використовувати передбачення глюкози OpenAPS";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Жирна їжа";
@@ -2891,7 +2891,7 @@ Enact a temp Basal or a temp target */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Новий альтернативний болюсний калькулятор є іншим підходом до стандартного болюсного калькулятора в iAPS. Якщо перемикач увімкнено, ви використовуєте цей болюсний калькулятор, а не оригінальний калькулятор iAPS. Наприкінці обчислення застосовано спеціальний коефіцієнт, як це має бути під час використання smbs (за замовчуванням 0,8).\n\nВи також можете додати опцію у своєму болюсному калькуляторі, щоб застосувати інший (!) настроюваний коефіцієнт наприкінці обчислення, яке може бути корисним для жирних страв, наприклад, піци (за замовчуванням 0,7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Використовувати прогноз кінцевого рівня глюкози (eventual glucose) від OpenAPS для розрахунку інсуліну, що рекомендується. Цей параметр активує старий калькулятор. Увімкнено за замовчуванням.\n\n2. Використовувати прогноз minPredBG від OpenAPS як додатковий захист, щоб не допустити зниження прогнозованого рівня глюкози нижче вашого порогового значення. Цей параметр можна використовувати як разом із прогнозом eventual glucose, так і без нього. Увімкнено за замовчуванням.";
 
 /* Settings Section */
 "Extra Features" = "Додаткові функції";
@@ -2965,16 +2965,16 @@ Enact a temp Basal or a temp target */
 "Display carb equivalents" = "Показати еквіваленти вуглеводів";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+"Display Sensor Time Remaining" = "Відображати час Сенсору що залишився.";
 
 /* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+"Display Sensor Age, but not Time Remaining" = "Відображати вік Сенсору замість часу, що залишився.";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Display Ratio and a History View button";
+"Display Ratio and a History View button" = "Відображати Співвідношення та Кнопку перегляду історії";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Авто ISF на Головному екрані";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
@@ -2986,13 +2986,13 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Дії наживо";
 
 /* Show Live Activity */
-"Show Live Activity" = "Show Live Activity";
+"Show Live Activity" = "Відображати Ефір Активності";
 
 /* Display Chart */
-"Display Chart" = "Display Chart";
+"Display Chart" = "Відобразити Графік";
 
 /* Show Predictions */
-"Show Predictions" = "Show Predictions";
+"Show Predictions" = "Відображати Прогнози";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
