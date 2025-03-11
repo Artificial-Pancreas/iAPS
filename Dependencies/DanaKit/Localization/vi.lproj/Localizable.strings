@@ -355,7 +355,7 @@
 "Basal Compare" = "Basal Compare";
 
 /* Alert title for bloodSugarMeasure */
-"Blood glucose Measure" = "Blood glucose Measure";
+"Blood glucose Measure" = "Kiểm tra đường huyết";
 
 /* Alert title for remainingInsulinLevel */
 "Remaining insulin level" = "Mức insulin còn lại";
@@ -559,25 +559,25 @@
 "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
+"WARNING: USE WITH CAUTION!" = "CẢNH BÁO: SỬ DỤNG THẬN TRỌNG!";
 
 /* Label for warning refill */
 "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
+"WARNING: USE WITH CAUTION!" = "CẢNH BÁO: SỬ DỤNG THẬN TRỌNG!";
 
 /* Label for third step refill */
-"Step 1: Prime cannula" = "Step 1: Prime cannula";
+"Step 1: Prime cannula" = "Bước 1: Prime cannula";
 
 /* Label for error first step refill */
-"Failed to set reservoir amount. Re-sync pump data and try again please" = "Failed to set reservoir amount. Re-sync pump data and try again please";
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Không thể thiết lập reservoir. Đồng bộ lại dữ liệu bơm và vui lòng thử lại";
 
 /* Label for error third step refill */
 "Failed to prime the cannula. Please try again later" = "Failed to prime the cannula. Please try again later";
 
 /* Label for error second step refill */
-"Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
+"Failed to prime the tube. Please try again later" = "Failed to prime the cannula. Please try again later";
 
 /* Battery age */
 "Battery age" = "Battery age";
