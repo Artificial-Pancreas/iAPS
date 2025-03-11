@@ -699,6 +699,15 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Behandelingen";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Behandeling";
 
@@ -1394,8 +1403,8 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Ingevoerde meldingen";
 
-"* Debug option view Not Uploaded Overrides */
-Overrides Not Uploaded" = "Overrides Not Uploaded";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -2499,8 +2508,8 @@ Overrides Not Uploaded" = "Overrides Not Uploaded";
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Schakelt aanpassingen in voor de versnelling en vertraging van de bloedsuikerspiegel, waardoor de ISF wordt aangepast op basis van de snelheid waarmee de bloedsuiker stijgt of daalt.";
 
-"* */
-Override Auto ISF" = "Override Auto ISF";
+/* */
+"Override Auto ISF" = "Override Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Auto ISF inschakelen";
