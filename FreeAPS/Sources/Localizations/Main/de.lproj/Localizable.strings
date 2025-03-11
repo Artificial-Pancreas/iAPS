@@ -699,6 +699,15 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Behandlungen";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Behandlung";
 
@@ -1393,8 +1402,8 @@ Enact a temp Basal or a temp target */
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Erlassene Ankündigungen";
 
-"* Debug option view Not Uploaded Overrides */
-Overrides Not Uploaded" = "Overrides Not Uploaded";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -2499,8 +2508,8 @@ Overrides Not Uploaded" = "Overrides Not Uploaded";
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Ermöglicht die BG-Beschleunigungsanpassungen und passt den ISF für ansteigende/abfallende Blutzuckerwerte an.";
 
-"* */
-Override Auto ISF" = "Override Auto ISF";
+/* */
+"Override Auto ISF" = "Override Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Auto ISF aktivieren";
