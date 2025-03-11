@@ -157,6 +157,9 @@
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Aggiungi Carboidrati ";
 
+/* Home View */
+"Override" = "Override";
+
 /*  */
 "Amount Carbs" = "Quantità di carboidrati";
 
@@ -695,6 +698,15 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Trattamenti";
+
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
 
 /* Hypo Treatment Preset */
 "Treatment" = "Trattamento";
@@ -1390,8 +1402,8 @@ Enact a temp Basal or a temp target */
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Annunci attivati";
 
-"* Debug option view Not Uploaded Overrides */
-Overrides Not Upload" = "Overrides Not Upload";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -2495,8 +2507,8 @@ Overrides Not Upload" = "Overrides Not Upload";
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Abilita gli adattamenti di accelerazione BG, regolando l'ISF per aumentare/diminuire la glicemia.";
 
-"* */
-Override Auto ISF" = "Override Auto ISF";
+/* */
+"Override Auto ISF" = "Override Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Abilita ISF Automatico";

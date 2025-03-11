@@ -157,6 +157,9 @@
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Ввод углеводов";
 
+/* Home View */
+"Override" = "Переопределение";
+
 /*  */
 "Amount Carbs" = "Кол-во углеводов";
 
@@ -263,7 +266,7 @@
 "Autotune" = "Автотюн";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Динамические переменные";
 
 /*  */
 "Basal profile" = "Базальный профиль";
@@ -607,7 +610,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Добавить устройства";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Кнопка временные цели, вместо кнопки переопределить профиль";
 
 /* */
 "Glucose Target" = "Цель глюкозы";
@@ -622,7 +625,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ФЧИ (ISF)";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% Переопределения";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Необходимо установить приложение Garmin Connect, для использования с iAPS.\n Перейдите в App Store для его загрузки";
@@ -695,6 +698,15 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "События";
+
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
 
 /* Hypo Treatment Preset */
 "Treatment" = "Терапия";
@@ -1337,10 +1349,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "Разработчик";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+"NS Upload Profile and Settings" = "NS Загрузить профиль и настройки";
 
 /* Debug option delete all NS overrides */
-"Delete All NS Overrides" = "Delete All NS Overrides";
+"Delete All NS Overrides" = "Удалить все NS переопределения";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "Загруженный в NS профиль";
@@ -1364,10 +1376,10 @@ Enact a temp Basal or a temp target */
 "Pump History" = "История помпы";
 
 /* Debug option view Temp Basals */
-"Temp Basals" = "Temp Basals";
+"Temp Basals" = "Временный базал";
 
 /* Debug option view Target Ranges */
-"Targets ranges" = "Targets ranges";
+"Targets ranges" = "Целевые диапазоны";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Временные цели";
@@ -1390,8 +1402,8 @@ Enact a temp Basal or a temp target */
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Принятые оповещения";
 
-"* Debug option view Not Uploaded Overrides */
-Overrides Not Upload" = "Overrides Not Upload";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Автотюн";
@@ -1494,7 +1506,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Fat And Protein Conversion" = "Преобразование жиров и белков";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Ignore flat CGM readings";
+"Ignore flat CGM readings" = "Игнорировать ровные показания CGM";
 
 /* Service Section */
 "Profile Override" = "Переопределение профиля";
@@ -1526,7 +1538,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Disable SMBs" = "Отключить микроболюсы SMB";
 
 /* */
-"End the Override with next Meal" = "End the Override with next Meal";
+"End the Override with next Meal" = "Завершить переопределение со следующим приемом пищи";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Нормальный профиль";
@@ -1538,7 +1550,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Profiles" = "Профили";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Расширенные настройки";
 
 /* */
 "More options" = "Больше опций";
@@ -1562,7 +1574,7 @@ Overrides Not Upload" = "Overrides Not Upload";
 "UAM SMB Minutes" = "UAM SMB минуты";
 
 /* */
-"Override Max IOB" = "Override Max IOB";
+"Override Max IOB" = "Переопределить Макс IOB";
 
 /* */
 "Start new Profile" = "Запустить новый профиль";
@@ -2439,13 +2451,13 @@ Overrides Not Upload" = "Overrides Not Upload";
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Значение по-умолчанию: 0,0. Это вес, применяемый к многоугольнику, который корректирует вашу чувствительность к инсулину при высокой дельте уровня глюкозы в крови (здесь дельта означает положительное отклонение от целевого значения). При значении 0,0 эта настройка отключена.";
 
 /* */
-"ISF weight for lower BG" = "ISF weight for lower BG";
+"ISF weight for lower BG" = "Поправка на низкий уровень глюкозы в крови";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Значение по умолчанию: 0,0. Это вес, примененный к многоугольнику, который регулирует чувствительность к инсулину при низком уровне сахара в крови. При значении 0,0 эта настройка отключена.";
 
 /* */
-"ISF weight for higher BG" = "ISF weight for higher BG";
+"ISF weight for higher BG" = "Поправка на высокий уровень глюкозы в крови";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значение по умолчанию: 0,0. Это вес, примененный к многоугольнику, который регулирует чувствительность к инсулину при высоком уровне сахара в крови. При значении 0,0 эта настройка отключена.";
@@ -2495,8 +2507,8 @@ Overrides Not Upload" = "Overrides Not Upload";
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Включает настройку ускорения уровня глюкозы в крови. Регулирует ISF в случае ускорения/замедления уровня сахара в крови.";
 
-"* */
-Override Auto ISF" = "Override Auto ISF";
+/* */
+"Override Auto ISF" = "Override Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Включить Авто ISF";
@@ -2523,13 +2535,13 @@ Override Auto ISF" = "Override Auto ISF";
 "Adjust " = "Изменить ";
 
 /* History of the adjustments */
-"Final Ratio" = "Final Ratio";
+"Final Ratio" = "Финальное соотношение";
 
 /* History of the adjustments */
-"Adjustments" = "Adjustments";
+"Adjustments" = "Корректировки";
 
 /* History of the adjustments */
-"Insulin" = "Insulin";
+"Insulin" = "Инсулин";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2857,16 +2869,16 @@ Override Auto ISF" = "Override Auto ISF";
 "Use alternate Bolus Calculator" = "Альтернативный калькулятор болюса";
 
 /* Bolus Calculator Setting */
-"Use Bolus Calculator" = "Use Bolus Calculator";
+"Use Bolus Calculator" = "Использовать калькулятор болюса";
 
 /* Bolus Calculator Setting */
-"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "В зависимости от ваших настроек, Swift-калькулятор болюса использует данные из прогнозов глюкозы OpenAPS и/или из IOB (инсулин на борту), COB (углеводы на борту), тренда глюкозы, текущего уровня глюкозы и целевого уровня глюкозы. В конце расчета применяется пользовательский коэффициент (по умолчанию 0.8).\n\nУ вас также есть возможность в настройках болюс-калькулятора применить дополнительный настраиваемый коэффициент в конце расчета. Это может быть полезно для жирной пищи, например, пиццы (по умолчанию 0.7).\n\nБолюс-калькулятор НЕ использует переменную OpenAPS \"insulinRequired\", которая предназначена для SMB (супермикроболюсов).";
 
 /* Bolus Calculator Setting */
-"Adjustment" = "Adjustment";
+"Adjustment" = "Корректирование";
 
 /* Bolus Calculator Setting */
-"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+"Use OpenAPS glucose predictions" = "Использовать OpenAPS прогнозы глюкозы";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Жирная пища";
@@ -2878,7 +2890,7 @@ Override Auto ISF" = "Override Auto ISF";
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Альтернативный калькулятор болюса использует другой алгоритм расчета болюса. Для индивидуальной настройки вы можете изменить поправочный коэффициент (значение по умолчанию 0.8) в зависимости от того, хотите ли вы более высокие (выше 1) или меньшие (ниже 1) рекомендации по болюсу.\n\nДля особо жирных блюд, таких как пицца, существует возможность уменьшить рекомендуемый болюс еще на один коэффициент (стандартно 0.7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Использовать прогноз конечного уровня глюкозы (eventual glucose) от OpenAPS для расчета рекомендуемого инсулина. Этот параметр активирует \"старый\" калькулятор. Включен по умолчанию.\n\n2. Использовать прогноз minPredBG от OpenAPS в качестве дополнительной защитной меры, чтобы не допустить снижения прогнозируемого уровня глюкозы ниже вашего порогового значения. Этот параметр можно использовать как вместе с прогнозом eventual glucose, так и без него. Включен по умолчанию.";
 
 /* Settings Section */
 "Extra Features" = "Дополнительные функции";
@@ -2952,16 +2964,16 @@ Override Auto ISF" = "Override Auto ISF";
 "Display carb equivalents" = "Отображать эквиваленты углеводов";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+"Display Sensor Time Remaining" = "Отображать оставшееся время датчика";
 
 /* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+"Display Sensor Age, but not Time Remaining" = "Отображать возраст датчика, вместо оставшегося времени";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Display Ratio and a History View button";
+"Display Ratio and a History View button" = "Отображать соотношение и кнопку просмотра истории";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Авто ISF на главном экране";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";
@@ -2973,13 +2985,13 @@ Override Auto ISF" = "Override Auto ISF";
 "Live Activity" = "Эфир активности";
 
 /* Show Live Activity */
-"Show Live Activity" = "Show Live Activity";
+"Show Live Activity" = "Отображать эфир активности";
 
 /* Display Chart */
-"Display Chart" = "Display Chart";
+"Display Chart" = "Отобразить график";
 
 /* Show Predictions */
-"Show Predictions" = "Show Predictions";
+"Show Predictions" = "Отображать прогнозы";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Эфир активности - в реальном времени отображает уровень глюкозы в крови на экране блокировки и на динамическом островке Dynamic Island (если доступно)";
