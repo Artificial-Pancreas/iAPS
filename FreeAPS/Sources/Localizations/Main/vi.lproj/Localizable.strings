@@ -2980,10 +2980,10 @@ Override Auto ISF" = "Override Auto ISF";
 "Show Live Activity" = "Show Live Activity";
 
 /* Display Chart */
-"Display Chart" = "Display Chart";
+"Display Chart" = "Hiễn thị các biểu đồ";
 
 /* Show Predictions */
-"Show Predictions" = "Show Predictions";
+"Show Predictions" = "Hiển thị dự đoán";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và động (nếu có)";
