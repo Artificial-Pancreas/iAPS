@@ -700,13 +700,13 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Behandlingar";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Lägg till insulin";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Lägg till blodsocker";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Nytt blodsocker";
 
 /* Hypo Treatment Preset */
 "Treatment" = "Behandling";
@@ -1403,7 +1403,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Överförda meddelanden";
 
 /* Debug option view Not Uploaded Overrides */
-"Overrides Not Uploaded" = "Overrides Not Uploaded";
+"Overrides Not Uploaded" = "Undantag ej uppladdade";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -2508,7 +2508,7 @@ Enact a temp Basal or a temp target */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar. Justerar ISF vid ett accelererande / decelererande blodsocker.";
 
 /* */
-"Override Auto ISF" = "Override Auto ISF";
+"Override Auto ISF" = "Ändra Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Aktivera Auto ISF";
@@ -2878,7 +2878,7 @@ Enact a temp Basal or a temp target */
 "Adjustment" = "Justering";
 
 /* Bolus Calculator Setting */
-"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+"Use OpenAPS glucose predictions" = "Använd OpenAPS-glukosprognoser";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Fet måltid";
@@ -2973,7 +2973,7 @@ Enact a temp Basal or a temp target */
 "Display Ratio and a History View button" = "Visa kvot och knapp för historikvisning";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Hemskärm Auto ISF";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
