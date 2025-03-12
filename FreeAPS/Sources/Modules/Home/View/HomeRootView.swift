@@ -858,7 +858,7 @@ extension Home {
                     Text(suggestion.reasonConclusion.capitalizingFirstLetter()).font(.suggestionSmallParts)
                         .foregroundColor(.white)
                 } else {
-                    Text("No sugestion found").font(.suggestionHeadline).foregroundColor(.white)
+                    Text("No suggestion found").font(.suggestionHeadline).foregroundColor(.white)
                 }
                 if let errorMessage = state.errorMessage, let date = state.errorDate {
                     Text(NSLocalizedString("Status at", comment: "") + " " + dateFormatter.string(from: date))

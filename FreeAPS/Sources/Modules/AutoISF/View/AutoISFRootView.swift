@@ -159,10 +159,10 @@ extension AutoISF {
                         }
 
                         HStack {
-                            Text("ISF weight for higher BG's")
+                            Text("ISF weight for higher BG")
                                 .onTapGesture {
                                     info(
-                                        header: "ISF weight for higher BG's",
+                                        header: "ISF weight for higher BG",
                                         body: "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.",
                                         useGraphics: nil
                                     )
@@ -187,10 +187,10 @@ extension AutoISF {
                         }
 
                         HStack {
-                            Text("ISF weight for lower BG's")
+                            Text("ISF weight for lower BG")
                                 .onTapGesture {
                                     info(
-                                        header: "ISF weight for lower BG's",
+                                        header: "ISF weight for lower BG",
                                         body: "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled.",
                                         useGraphics: nil
                                     )
