@@ -1,4 +1,5 @@
 /* No comment provided by engineer. */
+/* No comment provided by engineer. */
 "—" = "—";
 
 /* Format string for last status date on pod details screen */
@@ -793,7 +794,7 @@
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
 
 /* navigation title for Silnce Pod */
-"Silence Pod" = "Tysta podden" = "Silence Pod" = "Tysta podden";
+"Silence Pod" = "Tysta podden";
 
 /* title for pod details page */
 "Pod Details" = "Poddetaljer";

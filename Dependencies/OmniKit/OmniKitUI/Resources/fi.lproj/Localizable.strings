@@ -793,7 +793,7 @@
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
 
 /* navigation title for Silnce Pod */
-"Silence Pod" = "Silence Pod" = "Silence Pod" = "Silence Pod";
+"Silence Pod" = "Silence Pod";
 
 /* title for pod details page */
 "Pod Details" = "Pod Details";
