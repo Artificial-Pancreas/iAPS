@@ -160,6 +160,12 @@
 /* Home View */
 "Override" = "Override";
 
+/* Home View Message if no pump is connected */
+"No Pump" = "No Pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Open";
+
 /*  */
 "Amount Carbs" = "Amount Carbs";
 
