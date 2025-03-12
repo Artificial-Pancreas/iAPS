@@ -343,7 +343,7 @@
 "Low pump battery" = "Slabá batéria čerpadla";
 
 /* Alert body for lowBattery */
-"Pump battery needs to be replaced soon" = "Batéria čerpadla sa musí čoskoro vymeniť";
+"Pump battery needs to be replaced soon" = "Batériu pumpy bude potrebné čoskoro vymeniť";
 
 /* Alert title for shutdown */
 "Pump shutdown" = "Vypnutie čerpadla";

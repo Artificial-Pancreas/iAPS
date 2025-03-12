@@ -81,7 +81,7 @@
 "Confidence Reminders" = "Upozornenia s pípnutím zo zariadenia Pod";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Zvukové upozornenia Podu, ktoré môžu slúžiť na potvrdenie vybraných príkazov ak Pod nie je stíšený.";
 
 /* Title for pod reminders section */
 "Pod Reminders" = "Upozornenia Podu";
@@ -336,7 +336,7 @@
 "Insulin Remaining" = "Zostávajúci inzulín";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Nastavenie dávky dočasného bazálu";
+"Set Temporary Basal Rate" = "Nastaviť dávku dočasného bazálu";
 
 /* Description text on manual temp basal action sheet */
 "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nebude zrušená.";

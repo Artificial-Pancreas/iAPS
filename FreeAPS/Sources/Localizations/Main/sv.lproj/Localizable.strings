@@ -3045,7 +3045,7 @@ Enact a temp Basal or a temp target */
 "Adjustment Factor" = "Justeringskonstant";
 
 /* Apple Watch Overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Undantag";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Cancel Override";
+"Cancel Override" = "Avbryt Undantag";
