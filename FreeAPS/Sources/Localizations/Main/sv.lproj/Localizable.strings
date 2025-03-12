@@ -157,6 +157,15 @@
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Lägg till";
 
+/* Home View */
+"Override" = "Undantag";
+
+/* Home View Message if no pump is connected */
+"No Pump" = "Ingen pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Öppen";
+
 /*  */
 "Amount Carbs" = "Mängd kolhydrater";
 
@@ -696,8 +705,23 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Behandlingar";
 
+/* Add Insulin */
+"Add Insulin" = "Lägg till insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Lägg till blodsocker";
+
+/* New Glucose */
+"New Glucose" = "Nytt blodsocker";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Behandling";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Standard 📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Ingen";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1390,8 +1414,8 @@ Enact a temp Basal or a temp target */
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Överförda meddelanden";
 
-"* Debug option view Not Uploaded Overrides */
-Overrides Not Upload" = "Undantag ej uppladdade";
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Undantag ej uppladdade";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -2495,8 +2519,8 @@ Overrides Not Upload" = "Undantag ej uppladdade";
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Aktivera blodsockeraccelerationsjusteringar. Justerar ISF vid ett accelererande / decelererande blodsocker.";
 
-"* */
-Override Auto ISF" = "Ändra Auto ISF";
+/* */
+"Override Auto ISF" = "Ändra Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Aktivera Auto ISF";
@@ -2860,13 +2884,13 @@ Override Auto ISF" = "Ändra Auto ISF";
 "Use Bolus Calculator" = "Använd boluskalkylator";
 
 /* Bolus Calculator Setting */
-"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Beroende på dina inställningar använder Swift-boluskalkylatorn data från OpenAPS glukosprognoser och/eller IOB, COB, glukostrend, nuvarande glukos och målglukos. I slutet av beräkningen tillämpas en anpassad faktor (standard 0,8).\n\nDu kan också ha alternativet i din boluskalkylator för att använda en annan (!) anpassningsbar faktor i slutet av beräkningen som kan vara användbar för fettmåltider, e. Pizza (standard 0,7).\n\nBoluskalkylatorn använder INTE OpenAPS-variabeln \"insulinRequired\".";
 
 /* Bolus Calculator Setting */
 "Adjustment" = "Justering";
 
 /* Bolus Calculator Setting */
-"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+"Use OpenAPS glucose predictions" = "Använd OpenAPS-glukosprognoser";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Fet måltid";
@@ -2878,7 +2902,7 @@ Override Auto ISF" = "Ändra Auto ISF";
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Den alternativa boluskalkylatorn använder en annan algoritm för beräkning av bolus. För individuell justering kan du ändra justeringsfaktor (standardvärde 0.8) beroende på om du vill få högre (över 1) eller mindre (under 1) bolusrekommendationer.\n\nFö extra feta måltider, tex pizza, finns möjlighet att minska rekommenderad bolus med en annan faktor (standard 0,7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Använd OpenAPS-glukosprognos för din bolusrekommendation. Denna inställning kommer att aktivera \"gamla\" kalkylatorn. På som standard.\n\n2. Använd OpenAPS-minPredBG-prognos som en kompletterande säkerhetsinställning. Denna inställning kan användas tillsammans med eller utan OpenAPS-glukosprognosen. På som standard";
 
 /* Settings Section */
 "Extra Features" = "Extra";
@@ -2961,7 +2985,7 @@ Override Auto ISF" = "Ändra Auto ISF";
 "Display Ratio and a History View button" = "Visa kvot och knapp för historikvisning";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Hemskärm Auto ISF";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
@@ -3031,3 +3055,9 @@ Override Auto ISF" = "Ändra Auto ISF";
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Justeringskonstant";
+
+/* Apple Watch Overrides */
+"Overrides" = "Undantag";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Avbryt Undantag";

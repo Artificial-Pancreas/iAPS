@@ -87,7 +87,7 @@
 "Sensor\nWarmup" = "Zahrievanie\nsenzoru";
 
 /* title for g7 settings row showing sensor expiration time */
-"Sensor Expiration" = "Exspirácia senzora";
+"Sensor Expiration" = "Senzor exspiruje";
 
 /* G7 Progress bar label when sensor expired */
 "Sensor expired" = "Senzor exspiroval";
