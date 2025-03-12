@@ -713,6 +713,12 @@ Enact a temp Basal or a temp target */
 /* Hypo Treatment Preset */
 "Treatment" = "Treatment";
 
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default  📉";
+
+/* Hypo Treatment Default Value */
+"None" = "None";
+
 /* " min" in Treatments list */
 " min" = " min";
 
