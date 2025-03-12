@@ -158,7 +158,13 @@
 "Add Carbs " = "Pridať sacharidy ";
 
 /* Home View */
-"Override" = "Prepísaný";
+"Override" = "Upravený";
+
+/* Home View Message if no pump is connected */
+"No Pump" = "Žiadna pumpa";
+
+/* Home View Message if open loop is active */
+"Open" = "Otvorený";
 
 /*  */
 "Amount Carbs" = "Množstvo sacharidov";
@@ -266,7 +272,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Dynamické premenné";
 
 /*  */
 "Basal profile" = "Bazálny profil";
@@ -459,7 +465,7 @@ Enact a temp Basal or a temp target */
 "Add Simulator" = "Pridať simulátor";
 
 /* View/Header when pod expired */
-"Replace" = "Vymeniť";
+"Replace" = "Vymeňte";
 
 /* Insulin model */
 "Model" = "Model";
@@ -610,7 +616,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Pridať zariadenie";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Tlačidlo upravenia profilu / Tlačidlo dočasných cieľov";
 
 /* */
 "Glucose Target" = "Cieľová glykémia";
@@ -625,7 +631,7 @@ Enact a temp Basal or a temp target */
 "ISF" = "ISF";
 
 /* */
-"% Override" = "% Override";
+"% Override" = "% upravenia";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Aplikácia Garmin Connect musí byť nainštalovaná pre použitie s iAPS.\n Pre stiahnutie choďte do App Store";
@@ -699,8 +705,23 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Ošetrenia";
 
+/* Add Insulin */
+"Add Insulin" = "Zaznamenať inzulín";
+
+/* Add Glucose */
+"Add Glucose" = "Pridať glykémiu";
+
+/* New Glucose */
+"New Glucose" = "Nová glykémia";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Liečba";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Predvolená  📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Žiadny";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1097,28 +1118,28 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Activate an Override Preset" = "Aktivácia predvoľby Override";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Povoliť aktiváciu prednastaveného režimu.";
+"Allow to activate an overrride preset." = "Povoliť aktiváciu upraveného profilu.";
 
 /* Override Shortcut */
-"Which override preset would you like to activate?" = "Ktorý prednastavený režim chcete aktivovať?";
+"Which override preset would you like to activate?" = "Ktorý upravený profil chcete aktivovať?";
 
 /* Override Shortcut */
-"Are you sure you want to activate the Override Preset %@?" = "Ste si istí, že chcete aktivovať prednastavený režim %@?";
+"Are you sure you want to activate the Override Preset %@?" = "Ste si istí, že chcete aktivovať upravený profil %@?";
 
 /* Override Shortcut */
-"The Profile Override" = "Prepísanie profilu";
+"The Profile Override" = "Upravenie profilu";
 
 /* Override Shortcut */
 "is now activated" = "je teraz aktivovaný";
 
 /* Override Shortcut */
-"Cancel active override" = "Zrušiť prepísanie profilu";
+"Cancel active override" = "Zrušiť upravený profil";
 
 /* Override Shortcut */
-"Override canceled" = "Prepísanie zrušené";
+"Override canceled" = "Upravenie zrušené";
 
 /* Override Shortcut */
-"Activates an %@ Override Preset" = "Aktivuје prednastavený režim %@";
+"Activates an %@ Override Preset" = "Aktivuје upravený režim %@";
 
 /* Suspend/Resume Shortcut */
 "Choose what to do with your pump" = "Vyberte si, čo chcete s pumpou urobiť";
@@ -1149,7 +1170,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Some ui element was incorrectly specified" = "Niektorý prvok 'ui' bol zadaný nesprávne";
 
 /* */
-"Success" = "Úspech";
+"Success" = "Úspešné";
 
 /* */
 "Schedules were saved successfully!" = "Zmeny boli úspešne uložené!";
@@ -1341,10 +1362,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Developer" = "Vývojár";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+"NS Upload Profile and Settings" = "NS odoslať profil a nastavenia";
 
 /* Debug option delete all NS overrides */
-"Delete All NS Overrides" = "Delete All NS Overrides";
+"Delete All NS Overrides" = "Vymazať všetky prepísania NS";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Nahraný profil";
@@ -1368,10 +1389,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Pump History" = "História pumpy";
 
 /* Debug option view Temp Basals */
-"Temp Basals" = "Temp Basals";
+"Temp Basals" = "Dočasné bazály";
 
 /* Debug option view Target Ranges */
-"Targets ranges" = "Targets ranges";
+"Targets ranges" = "Cieľové rozsahy";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Dočasné ciele";
@@ -1395,7 +1416,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Enacted announcements" = "Prijaté oznámenia";
 
 /* Debug option view Not Uploaded Overrides */
-"Overrides Not Uploaded" = "Neodoslané prepísania";
+"Overrides Not Uploaded" = "Nenahrané prepísania";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1498,39 +1519,39 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Fat And Protein Conversion" = "Tukoproteínové jednotky";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Ignore flat CGM readings";
+"Ignore flat CGM readings" = "Ignorovať stabilné hodnoty CGM";
 
 /* Service Section */
-"Profile Override" = "Prepísanie profilu";
+"Profile Override" = "Upravenie profilu";
 
 /* Extend max override percentage */
-"Max Override 400%" = "Maximálne prepísanie o 400%";
+"Max Override 400%" = "Maximálne upravenie o 400%";
 
 /* */
-"Override Profiles" = "Profily prepísania";
+"Override Profiles" = "Upravenie profilu";
 
 /* */
 "Normal " = "Normálny ";
 
-"Currently no Override active" = "Momentálne nie je aktívne žiadne Override";
+"Currently no Override active" = "Momentálne nie je aktívne žiadne upravenie";
 
 /* */
 "Total Insulin Adjustment" = "Celková úprava inzulínu";
 
 /* */
-"Override your Basal, ISF, CR and Target profiles" = "Dočasne upravte profily pre bazál, ISF, CR a cieľ";
+"Override your Basal, ISF, CR and Target profiles" = "Dočasne upraví profily pre bazál, ISF, CR a cieľ";
 
 /* */
 "Enable indefinitely" = "Povoliť na neurčito";
 
 /* */
-"Override Profile target" = "Prepísať cieľ profilu";
+"Override Profile target" = "Upraviť cieľ profilu";
 
 /* */
 "Disable SMBs" = "Zakázať SMB";
 
 /* */
-"End the Override with next Meal" = "End the Override with next Meal";
+"End the Override with next Meal" = "Ukončiť upravenie pri nasledujúcom jedle";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
@@ -1542,7 +1563,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Profiles" = "Profily";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Pokročilé nastavenia";
 
 /* */
 "More options" = "Viac možností";
@@ -1566,7 +1587,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "UAM SMB Minutes" = "UAM SMB minúty";
 
 /* */
-"Override Max IOB" = "Override Max IOB";
+"Override Max IOB" = "Upraviť Max IOB";
 
 /* */
 "Start new Profile" = "Spustenie nového profilu";
@@ -1578,7 +1599,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Save as preset" = "Uložiť ako predvoľbu";
 
 /* Alert */
-"Cancel Profile Override" = "Zrušiť dočasný profil?";
+"Cancel Profile Override" = "Zrušiť upravený profil?";
 
 /* Alert */
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
@@ -1599,7 +1620,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Spustením tohto prepísania sa zmenia vaše profily a/alebo cieľová glykémia, ktoré sa používajú na zacyklenie počas celého zvoleného trvania. Klepnutím na \"Spustiť profil\" spustíte svoj nový profil alebo upravíte svoj aktuálny aktívny profil.";
 
 /* Change Target glucose in profile settings */
-"Override Profile Target" = "Prepísať cieľ profilu";
+"Override Profile Target" = "Upraviť cieľ profilu";
 
 /* Alert string. Keep spaces. */
 " SMBs are disabled either by schedule or during the entire duration." = " SMB sú vypnuté buď podľa plánu, alebo počas celého trvania.";
@@ -1751,7 +1772,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Previous Pod Information" = "Predchádzajúce informácie o Pod";
 
 /* Text for confidence reminders navigation link */
-"Confidence Reminders" = "Upozornenia s pípnutím zo zariadenia Pod";
+"Confidence Reminders" = "Zvukové upozornenia Podu";
 
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
 
@@ -1809,7 +1830,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* The action string on pod status page when pod data is stale */
 "Make sure your phone and pod are close to each other. If communication issues persist, move to a new area." = "Uistite sa, že iPhone a Pod sú blízko seba. Ak problémy s komunikáciou pretrvávajú, presuňte sa do inej oblasti.";
 /* Format string for the action string on pod status page when pod expired. (1: service time remaining) */
-"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Ihneď vymeniť Pod. Podávanie inzulínu sa zastaví o %1$@ alebo ak sa minie inzulín.";
+"Change Pod now. Insulin delivery will stop in %1$@ or when no more insulin remains." = "Ihneď vymeňte Pod. Podávanie inzulínu sa zastaví o %1$@ alebo ak sa minie inzulín.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Dávka";
@@ -1932,13 +1953,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "4 hours" = "4 hodiny";
 
 /* */
-"6 hours" = "6 hodiny";
+"6 hours" = "6 hodín";
 
 /* */
-"12 hours" = "12 hodiny";
+"12 hours" = "12 hodín";
 
 /* */
-"24 hours" = "24 hodiny";
+"24 hours" = "24 hodín";
 
 /* Average BG = */
 "Average" = "Priemer";
@@ -2374,8 +2395,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Duration of increased B30 basal rate" = "Trvanie zvýšenej bazálnej dávky B30";
 
 /* */
-"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Trvanie zvýšenej bazálnej dávky, ktorá saturuje infúzne miesto inzulínom. Predvolene 30 minút, ako pri B30.
-Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B30 zastaví po jeho ukončení.";
+"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Trvanie zvýšenej bazálnej dávky, ktorá saturuje infúzne miesto inzulínom. Predvolene 30 minút, ako pri B30. Profil EatingSoon alebo dočasný cieľ musia byť aktívne aspoň počas tohto trvania, inak sa B30 zastaví po ukončení profilu.";
 
 /* */
 "B30 Basal rate increase factor" = "Faktor zvýšenia bazálnej dávky B30";
@@ -2399,7 +2419,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Target Level for B30 to be enacted" = "Cieľová hladina glykémie pre aktiváciu B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať prednstavený režim EatingSoon (alebo dočasný cieľ). Aby sa B30 mohlo spustiť, cieľová hodnota musí byť nižšia ako toto nastavenie. Predvolená hodnota: 90 mg/dl. Ak zrušíte tento EatingSoon cieľ, bazálna dávka B30 sa zastaví.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať profil EatingSoon (alebo dočasný cieľ). Aby sa B30 mohlo spustiť, cieľová hodnota musí byť nižšia ako toto nastavenie. Predvolená hodnota: 90 mg/dl. Ak zrušíte tento EatingSoon cieľ, bazálna dávka B30 sa zastaví.";
 
 /* */
 "Minimum Start Bolus size" = "Minimálna veľkosť bolusu pre spustenie";
@@ -2411,7 +2431,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Activate B30" = "Aktivovať B30";
 
 /* */
-"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Povolí zvýšenú bazálnu dávku po aktivácii prednastaveného režimu EatingSoon (alebo dočasného cieľa) a manuálnom boluse, aby sa nasýtilo infúzne miesto inzulínom a zvýšila sa absorpcia inzulínu pre SMB po jedle bez počítania sacharidov.";
+"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Povolí zvýšenú bazálnu dávku po aktivácii profilu EatingSoon (alebo dočasného cieľa) a manuálnom boluse, aby sa nasýtilo infúzne miesto inzulínom a zvýšila sa absorpcia inzulínu pre SMB po jedle bez počítania sacharidov.";
 
 /* */
 "ISF weight while BG decelerates" = "Váha ISF pri poklese glykémie";
@@ -2444,13 +2464,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Predvolená hodnota: 0.0. Toto je váha aplikovaná na polygón, ktorý prispôsobuje ISF pre vyššie delty glykémie. S hodnotou 0.0 je tento efekt deaktivovaný.";
 
 /* */
-"ISF weight for lower BG" = "ISF weight for lower BG";
+"ISF weight for lower BG" = "Váha ISF pre nižšiu glykémiu";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Predvolená hodnota: 0.0. Toto je váha aplikovaná na polygón, ktorý prispôsobuje ISF, ak je glykémia pod cieľovou hodnotou. S hodnotou 0.0 je tento efekt deaktivovaný.";
 
 /* */
-"ISF weight for higher BG" = "ISF weight for higher BG";
+"ISF weight for higher BG" = "Váha ISF pre vyššiu glykémiu";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Predvolená hodnota: 0.0. Toto je váha aplikovaná na polygón, ktorý prispôsobuje ISF, ak je glykémia nad cieľovou hodnotou. S hodnotou 0.0 je tento efekt deaktivovaný.";
@@ -2501,7 +2521,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Povolí adaptáciu podľa zmeny glykémie, upraví ISF pri stúpaní/klesaní glykémie.";
 
 /* */
-"Override Auto ISF" = "Override Auto ISF";
+"Override Auto ISF" = "Upraviť Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Zapnúť Auto ISF";
@@ -2528,13 +2548,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Adjust " = "Prispôsobiť ";
 
 /* History of the adjustments */
-"Final Ratio" = "Final Ratio";
+"Final Ratio" = "Výsledný pomer";
 
 /* History of the adjustments */
-"Adjustments" = "Adjustments";
+"Adjustments" = "Úpravy";
 
 /* History of the adjustments */
-"Insulin" = "Insulin";
+"Insulin" = "Inzulín";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2862,16 +2882,16 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Use alternate Bolus Calculator" = "Použite alternatívnu kalkulačku Bolus";
 
 /* Bolus Calculator Setting */
-"Use Bolus Calculator" = "Use Bolus Calculator";
+"Use Bolus Calculator" = "Použiť bolusovú kalkulačku";
 
 /* Bolus Calculator Setting */
-"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "V závislosti od vašich nastavení používa Swift bolusová kalkulačka údaje z predikcií glukózy OpenAPS a/alebo z IOB, COB, trendu glukózy, aktuálnej hodnoty glukózy a cieľovej glukózy. Na konci výpočtu sa aplikuje vlastný faktor (predvolená hodnota 0,8).\n\nVo Vašej bolusovej kalkulačke môžete mať aj možnosť použiť ďalší (!) prispôsobiteľný faktor na konci výpočtu, čo môže byť užitočné pri tukoproteínových jedlách, napr. pizza (predvolená hodnota 0,7).\n\nBolusová kalkulačka nepoužíva premennú OpenAPS „insulinRequired“, ktorá je určená pre SMB.";
 
 /* Bolus Calculator Setting */
-"Adjustment" = "Adjustment";
+"Adjustment" = "Úprava";
 
 /* Bolus Calculator Setting */
-"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+"Use OpenAPS glucose predictions" = "Použiť OpenAPS predikciu glykémie";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Tukoproteínové jedlá";
@@ -2883,7 +2903,7 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Nová alternatívna bolusová kalkulačka je ďalším prístupom k predvolenej bolusovej kalkulačke v systéme iAPS. Ak je prepínač zapnutý, používate túto kalkulačku bolusu a nie pôvodnú kalkulačku iAPS. Na konci výpočtu sa použije vlastný faktor, ako to má byť pri používaní smbs (predvolene 0,8).\n\nV kalkulačke bolusu môžete tiež pridať možnosť použiť na konci výpočtu ďalší (!) prispôsobiteľný faktor, ktorý by mohol byť užitočný pre tučné jedlá, napr. pizzu (predvolene 0,7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Použiť predikciu konečnej hodnoty glukózy z OpenAPS na výpočet odporúčaného množstva inzulínu. Toto nastavenie umožní použitie \"starej\" kalkulačky. Predvolene zapnuté.\n\n2. Použiť predikciu minPredBG z OpenAPS ako doplnkovú bezpečnostnú ochranu, ktorá neumožní, aby predikovaná hladina glukózy klesla pod Váš nastavený prah. Toto nastavenie je možné použiť spolu s predikciou výslednej hodnoty glukózy alebo samostatne. Predvolene zapnuté";
 
 /* Settings Section */
 "Extra Features" = "Ďalšie funkcie";
@@ -2957,16 +2977,16 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Display carb equivalents" = "Zobraziť ekvivalenty sacharidov";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+"Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";
 
 /* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+"Display Sensor Age, but not Time Remaining" = "Zobraziť vek senzora, ale nie zostávajúci čas";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Display Ratio and a History View button";
+"Display Ratio and a History View button" = "Zobraziť tlačidlo s výsledným pomerom a históriou";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Auto ISF domovská obrazovka";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
@@ -2978,13 +2998,13 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 "Live Activity" = "Živé aktivity";
 
 /* Show Live Activity */
-"Show Live Activity" = "Show Live Activity";
+"Show Live Activity" = "Zobraziť Živú aktivitu";
 
 /* Display Chart */
-"Display Chart" = "Display Chart";
+"Display Chart" = "Zobraziť graf";
 
 /* Show Predictions */
-"Show Predictions" = "Show Predictions";
+"Show Predictions" = "Zobraziť predikcie";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Živé Aktivity zobrazujú glykémiu na uzamknutej obrazovke a na Dynamickom ostrove (ak je k dispozícii)";
@@ -3036,3 +3056,9 @@ Režim EatingSoon TT musí byť aktívny aspoň počas tohto trvania, inak sa B3
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Faktor úpravy";
+
+/* Apple Watch Overrides */
+"Overrides" = "Profily";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Zrušiť profil";
