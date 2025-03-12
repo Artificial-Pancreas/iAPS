@@ -160,6 +160,12 @@
 /* Home View */
 "Override" = "Override";
 
+/* Home View Message if no pump is connected */
+"No Pump" = "No Pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Open";
+
 /*  */
 "Amount Carbs" = "Amount Carbs";
 
@@ -712,6 +718,12 @@ Połączono z Nightscout!";
 
 /* Hypo Treatment Preset */
 "Treatment" = "Treatment";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default  📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Brak";
 
 /* " min" in Treatments list */
 " min" = " min";
