@@ -161,10 +161,10 @@
 "Override" = "Undantag";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Ingen pump";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Öppen";
 
 /*  */
 "Amount Carbs" = "Mängd kolhydrater";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Behandling";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Standard 📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Ingen";
