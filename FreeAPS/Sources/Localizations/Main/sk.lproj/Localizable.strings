@@ -161,10 +161,10 @@
 "Override" = "Upravený";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Žiadna pumpa";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Otvorený";
 
 /*  */
 "Amount Carbs" = "Množstvo sacharidov";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Liečba";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Predvolená  📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Žiadny";
