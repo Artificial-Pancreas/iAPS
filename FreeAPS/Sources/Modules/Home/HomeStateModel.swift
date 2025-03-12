@@ -494,7 +494,7 @@ extension Home {
 
         private func setStatusTitle() {
             guard let suggestion = data.suggestion else {
-                statusTitle = "No suggestion"
+                statusTitle = NSLocalizedString("No suggestion", comment: "Status title when there is no suggestion")
                 return
             }
 
