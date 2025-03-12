@@ -1,43 +1,31 @@
-/* Title text for basal rates */
-"Basal Rates" = "الضخ المستمر";
+/*
+  Localizable.strings
+  LoopKit
 
-/* Title for bolus dose type */
-"Bolus" = "Bolus";
+  Created by Pete Schwamb on 3/19/23.
+  Copyright © 2023 LoopKit Authors. All rights reserved.
+*/
+/* Description for novolog insulin type */
 
-/* Title text for carb ratios */
-"Carb Ratios" = "معاملات الكارب";
+"NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk" = "NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk";
 
-/* Title text for glucose target range */
-"Correction Range" = "نطاق التصحيح";
+/* Description for humalog insulin type */
+"Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly" = "Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly";
 
-/* Title text for delivery limits */
-"Delivery Limits" = "حدود الضخ";
+/* Description for apidra insulin type */
+"Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis " = "Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis";
 
-/* Brand name for fiasp insulin type
-   Title for Fiasp insulin type */
-"Fiasp" = "Fiasp";
+/* Description for fiasp insulin type */
+"Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk" = "Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk";
 
-/* Title text for fast acting insulin model */
-"Insulin Model" = "نوع الأنسولين";
+/* Description for lyumjev insulin type */
+"Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly" = "Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly";
 
-/* Title text for insulin sensitivity */
-"Insulin Sensitivities" = "حساسية الأنسولين";
+/* Description for afrezza insulin type */
+"Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind" = "Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind";
 
-/* The short unit display string for millimoles per liter */
-"mmol/L" = "mmol/L";
+/* Title for Unset insulin type */
+"Unset" = "Unset";
 
-/* Sensor state description for the valid state */
-"OK" = "موافق";
-
-/* Title for pre-meal mode */
-"Pre-Meal" = "Pre-Meal";
-
-/* The short unit display string for international units of insulin */
-"U" = "وحدة";
-
-/* The short unit display string for international units of insulin per hour */
-"U/hr" = "وحدة لكل ساعة";
-
-/* Title for workout mode */
-"Workout" = "التمارين";
-
+/* Description for Unset insulin type */
+"The currently selected fast acting insulin model will be used as a default." = "The currently selected fast acting insulin model will be used as a default.";
