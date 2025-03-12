@@ -53,17 +53,17 @@ public enum InsulinType: Int, Codable, CaseIterable {
     public var description: String {
         switch self {
         case .novolog:
-            return LocalizedString("NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk", comment: "Description for novolog insulin type")
+            return NSLocalizedString("NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk", comment: "Description for novolog insulin type")
         case .humalog:
-            return LocalizedString("Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly", comment: "Description for humalog insulin type")
+            return NSLocalizedString("Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly", comment: "Description for humalog insulin type")
         case .apidra:
-            return LocalizedString("Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis ", comment: "Description for apidra insulin type")
+            return NSLocalizedString("Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis ", comment: "Description for apidra insulin type")
         case .fiasp:
-            return LocalizedString("Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk", comment: "Description for fiasp insulin type")
+            return NSLocalizedString("Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk", comment: "Description for fiasp insulin type")
         case .lyumjev:
-            return LocalizedString("Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly", comment: "Description for lyumjev insulin type")
+            return NSLocalizedString("Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly", comment: "Description for lyumjev insulin type")
         case .afrezza:
-            return LocalizedString("Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind", comment: "Description for afrezza insulin type")
+            return NSLocalizedString("Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind", comment: "Description for afrezza insulin type")
         }
     }
     
