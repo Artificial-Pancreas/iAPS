@@ -151,7 +151,7 @@ struct CurrentGlucoseView: View {
                     .overlay {
                         HStack {
                             Text(
-                                remainingTime >= 2 * 8.64E4 ?
+                                remainingTime >= 1 * 8.64E4 ?
                                     (remainingTimeFormatterDays.string(from: remainingTime) ?? "")
                                     .replacingOccurrences(of: ",", with: " ") :
                                     (remainingTimeFormatter.string(from: remainingTime) ?? "")
