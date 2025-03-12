@@ -160,6 +160,12 @@
 /* Home View */
 "Override" = "Upravený";
 
+/* Home View Message if no pump is connected */
+"No Pump" = "No Pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Open";
+
 /*  */
 "Amount Carbs" = "Množstvo sacharidov";
 
@@ -710,6 +716,12 @@ Enact a temp Basal or a temp target */
 
 /* Hypo Treatment Preset */
 "Treatment" = "Liečba";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default  📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Žiadny";
 
 /* " min" in Treatments list */
 " min" = " min";
