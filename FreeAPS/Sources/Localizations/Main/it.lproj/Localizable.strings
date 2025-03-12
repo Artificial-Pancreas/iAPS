@@ -160,6 +160,12 @@
 /* Home View */
 "Override" = "Override";
 
+/* Home View Message if no pump is connected */
+"No Pump" = "No Pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Open";
+
 /*  */
 "Amount Carbs" = "Quantità di carboidrati";
 
@@ -710,6 +716,12 @@ Enact a temp Basal or a temp target */
 
 /* Hypo Treatment Preset */
 "Treatment" = "Trattamento";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default  📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Nessuno";
 
 /* " min" in Treatments list */
 " min" = " min";
