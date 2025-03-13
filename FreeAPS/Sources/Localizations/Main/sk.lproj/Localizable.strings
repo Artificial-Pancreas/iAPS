@@ -533,7 +533,7 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "10 U";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Povoliť nastavenie koncentrácie zriedeného inzulínu";
+"Allow diluted insulin concentration settings" = "Povoliť nastavenie koncentrácie inzulínu";
 /* Max setting */
 "Max Carbs" = "Maximum sacharidov";
 
