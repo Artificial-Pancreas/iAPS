@@ -483,7 +483,7 @@ Enact a temp Basal or a temp target */
 "hours" = "hours";
 
 /* Max setting */
-"Max Basal" = "Liều nền tối đa";
+"Max Basal" = "Liều Basal tối đa";
 
 /* Max setting */
 "Max Bolus" = "Liều bolus tối đa";
@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Liều Basal thủ công⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/ngày";
+" U/day" = " U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
