@@ -105,8 +105,8 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
-            } else {
-                content.sound = .default
+            } else if sound != "Silent" {
+                // content.sound = .default
                 self.playSoundIfNeeded(sound: sound)
             }
 
@@ -228,7 +228,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
                 if notificationAlarm {
                     self.playSoundIfNeeded(sound: sound)
-                    content.sound = .default
+                    // content.sound = .default
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
                 }
 
