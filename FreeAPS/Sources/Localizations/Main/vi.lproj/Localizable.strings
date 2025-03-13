@@ -86,10 +86,10 @@
 "A Remote Bolus Was Just Delivered!" = "Một liều Bolus từ xa vừa được hoàn thành!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Thực hiện ở";
+"Enacted at" = "Thực hiện lúc";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Đề xuất ở";
+"Suggested at" = "Đề xuất lúc";
 
 /* Headline in enacted pop up (at: at what time) */
 "Status at" = "Trạng thái tại";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Treatment";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Default";
 
 /* Hypo Treatment Default Value */
 "None" = "Không";
