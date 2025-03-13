@@ -40,6 +40,7 @@
   "yGridLines" : true,
   "oneDimensionalGraph" : false,
   "rulerMarks" : false,
+  "alarmSound": "New/Anticipalte.caf",
   "maxCarbs" : 200,
   "displayFatAndProteinOnWatch" : false,
   "confirmBolusFaster" : false,

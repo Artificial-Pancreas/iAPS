@@ -57,6 +57,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
+    var alarmSound: String = "New/Anticipalte.caf"
     var profilesOrTempTargets: Bool = false
     var allowBolusShortcut: Bool = false
     var allowedRemoteBolusAmount: Decimal = 0.0
@@ -359,6 +360,10 @@ extension FreeAPSSettings: Decodable {
 
         if let timeSettings = try? container.decode(Bool.self, forKey: .timeSettings) {
             settings.timeSettings = timeSettings
+        }
+
+        if let alarmSound = try? container.decode(String.self, forKey: .alarmSound) {
+            settings.alarmSound = alarmSound
         }
 
         if let profilesOrTempTargets = try? container.decode(Bool.self, forKey: .profilesOrTempTargets) {

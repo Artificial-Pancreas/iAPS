@@ -355,15 +355,18 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         playSound()
     }
 
-    static let soundID: UInt32 = 1336
+    static var soundID: UInt32 = 1336
     private static var stopPlaying = false
 
     private func playSound(times: Int = 1) {
         guard times > 0, !Self.stopPlaying else {
             return
         }
+        let path = "/System/Library/Audio/UISounds/" + settingsManager.settings.alarmSound
+        let soundURL = URL(string: path)
+        AudioServicesCreateSystemSoundID(soundURL! as CFURL, &Self.soundID)
 
-        AudioServicesPlaySystemSoundWithCompletion(Self.soundID) {
+        AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(Self.soundID)) {
             self.playSound(times: times - 1)
         }
     }
