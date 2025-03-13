@@ -160,7 +160,7 @@
 /* Home View */
 "Override" = "Переопределение";
 
-/* Home View Message if no pump is connected */
+/* Home View Message if no pump is connected *
 "No Pump" = "Нет помпы";
 
 /* Home View Message if open loop is active */

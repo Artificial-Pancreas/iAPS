@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Treatment";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default";
+"Default  📉" = "Default  📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Không";
