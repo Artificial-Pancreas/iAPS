@@ -179,9 +179,21 @@
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Deaktivieren";
 
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Slide zum Deaktivieren von Pod";
+
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Pod deaktivieren";
+
+/* */
+"Slide to Insert Cannula" = "Streichen um die Kanüle einzuführen";
+
+/* */
+"Slide to Deactivate Pod" = "Slide zum Deaktivieren von Pod";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Schieben Sie den Schalter unten, um mit dem Einfügen von Kanülen zu beginnen.";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Deaktiviert";
@@ -273,7 +285,7 @@
 "Fault" = "Störung";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Füllen Sie einen neuen Pod mit U-100-Insulin (Entfernen Sie nicht den Nadelverschluss). Warten Sie auf 2 Pieptöne.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Füllen Sie einen neuen Pod mit U-100-Insulin (Entfernen Sie nicht den Nadelverschluss). Warten Sie auf 2 Pieptöne.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Deaktivierung abschließen";
@@ -611,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Temporärere Basalrate setzen";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Ihre Insulinabgabe wird nicht automatisch angepasst, bis die temporäre Basalrate beendet oder abgebrochen wird.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Einrichtung abgeschlossen";
 
@@ -774,8 +789,8 @@
 /* Description for SilencePodPreference.enabled */
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod Alarme verwenden keine Signale und Bestätigungssignale werden unterdrückt. Der Pod springt nur bei tödlichen Pod-Fehlern und beim Abspielen von Testsignalen.\n\nWarnung: Warnung - Wann immer der Pod zum Schweigen gebracht wird, muss er innerhalb des Bluetooth-Bereichs dieses Geräts gehalten werden, um Benachrichtigungen für Pod-Benachrichtigungen zu erhalten.";
 
-/* Help text for Silence Pod view */
-/* navigation title for Silnce Pod" */
+/* Help text for Silence Pod view  */
+/* navigation title for Silnce Pod */
 
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
 Silence Pod" = "Stille Pod";
@@ -802,3 +817,15 @@ Silence Pod" = "Stille Pod";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Pod-Status ablesen";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Diagnose-Infos";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Erweiterten Impuls-Log lesen";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Aktivierungsinformationen";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Ausgelöste Warnungen";

@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Нагадування про Верифікацію";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Сигнали підтвердження — це звукові сигнали Podʼа, які можна використовувати для підтвердження вибраних команд.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Нагадування Pod";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Програма налаштовує нагадування на телефоні, щоб повідомити вас про закінчення терміну дії Pod. Встановіть кількість годин попереднього повідомлення, яку потрібно зберегти при поєднанні нового Pod.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Нагадування про закінчення дії поточного Pod.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "Програма повідомить вас, коли кількість інсуліну в Pod досягне цього рівня.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Вказані вище нагадування не звучатимуть у програмі, якщо пристрій знаходиться в режимі \"Без звуку\" або \"Не турбувати\". Існують інші важливі оповіщення Pod, які будуть звучати в програмі, навіть якщо на пристрої встановлено режим \"Без звуку\" або \"Не турбувати\", коли Pod заглушено.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Призупинити Введення Інсуліну";
 
@@ -320,6 +338,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Встановіть Тимчасову Базальну Швидкість";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Ваша подача інсуліну не буде автоматично скоригована, доки тимчасова базальна доза не закінчиться або не буде скасована.";
+
 /* Section header for activity section */
 "Activity" = "Активність";
 
@@ -402,6 +423,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Деактивувати Pod";
 
+/* */
+"Slide to Insert Cannula" = "Готовий до введення канюлі";
+
+/* */
+"Slide to Deactivate Pod" = "Проведіть, щоб деактивувати Pod";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Деактивувати.";
 
@@ -435,6 +462,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Наповніть новий Pod інсуліном U-100 (залиште синю кришку капсули на голці).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Видаліть синю кришку голки Podʼа та перевірте канюлю. Потім зніміть паперову підкладку.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Прослухайте 2 звукові сигнали.";
 
@@ -459,10 +489,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Підготуйте місце.";
 
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Видаліть синю кришку голки Podʼа та перевірте канюлю. Потім зніміть паперову підкладку.";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Перевірте Pod, установіть його на тілі, а потім підтвердіть установку Pod.";
 
@@ -486,6 +512,9 @@ Label text for step two of attach pod instructions */
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Дочекайтеся завершення введення канюлі.";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Посуньте перемикач нижче, щоб розпочати введення канюлі.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Введено";
@@ -821,3 +850,18 @@ Label text for step two of attach pod instructions */
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Отримати статус Pod'у";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Готово";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Діагностика Pod'у";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Читати Журнал Подій";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Прочитайте час активації";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Читайте Тригерні Сповіщення";

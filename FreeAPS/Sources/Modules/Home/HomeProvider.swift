@@ -15,16 +15,39 @@ extension Home {
             storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         }
 
+        var dynamicVariables: DynamicVariables? {
+            storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
+        }
+
+        let overrideStorage = OverrideStorage()
+
         func overrides() -> [Override] {
-            OverrideStorage().fetchOverrides(interval: DateFilter().day)
+            overrideStorage.fetchOverrides(interval: DateFilter().day)
         }
 
         func overrideHistory() -> [OverrideHistory] {
-            OverrideStorage().fetchOverrideHistory(interval: DateFilter().day)
+            overrideStorage.fetchOverrideHistory(interval: DateFilter().day)
         }
 
         var enactedSuggestion: Suggestion? {
             storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+        }
+
+        func reasons() -> [IOBData]? {
+            let reasons = CoreDataStorage().fetchReasons(interval: DateFilter().day)
+
+            guard reasons.count > 3 else {
+                return nil
+            }
+
+            return reasons.compactMap {
+                entry -> IOBData in
+                IOBData(
+                    date: entry.date ?? Date(),
+                    iob: (entry.iob ?? 0) as Decimal,
+                    cob: (entry.cob ?? 0) as Decimal
+                )
+            }
         }
 
         func pumpTimeZone() -> TimeZone? {
@@ -66,7 +89,7 @@ extension Home {
 
         func carbs(hours: Int) -> [CarbsEntry] {
             carbsStorage.recent().filter {
-                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date()
+                $0.createdAt.addingTimeInterval(hours.hours.timeInterval) > Date() && $0.carbs > 0
             }
         }
 

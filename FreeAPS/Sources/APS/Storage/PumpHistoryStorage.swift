@@ -26,14 +26,25 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         injectServices(resolver)
     }
 
+    var concentration: (concentration: Double, increment: Double) {
+        CoreDataStorage().insulinConcentration()
+    }
+
     func storePumpEvents(_ events: [NewPumpEvent]) {
+        let insulinConcentration = concentration
         processQueue.async {
             let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
                 let id = event.raw.md5String
                 switch event.type {
                 case .bolus:
                     guard let dose = event.dose else { return [] }
-                    let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
+                    var amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
+
+                    if insulinConcentration.concentration != 1, var needingAdjustment = amount {
+                        needingAdjustment *= Decimal(insulinConcentration.concentration)
+                        amount = needingAdjustment.roundBolus(increment: insulinConcentration.increment)
+                    }
+
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
                     return [PumpHistoryEvent(
                         id: id,
@@ -50,8 +61,14 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
+                    var rate = Decimal(dose.unitsPerHour)
 
-                    let rate = Decimal(dose.unitsPerHour)
+                    // Eventual adjustment for concentration
+                    if insulinConcentration.concentration != 1, rate >= 0.05 {
+                        rate *= Decimal(insulinConcentration.concentration)
+                        rate = rate.roundBolus(increment: insulinConcentration.increment)
+                    }
+
                     let minutes = (dose.endDate - dose.startDate).timeInterval / 60
                     let delivered = dose.deliveredUnits
                     let date = event.date
@@ -297,7 +314,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     fat: nil,
                     protein: nil,
                     targetTop: nil,
-                    targetBottom: nil
+                    targetBottom: nil,
+                    creation_date: event.timestamp
                 )
             default: return nil
             }

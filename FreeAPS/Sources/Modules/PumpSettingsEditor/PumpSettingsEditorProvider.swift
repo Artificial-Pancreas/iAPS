@@ -18,8 +18,16 @@ extension PumpSettingsEditor {
                 ?? PumpSettings(insulinActionCurve: 6, maxBolus: 10, maxBasal: 2)
         }
 
+        func isDanaPump() -> Bool {
+            guard let pump = deviceManager?.pumpManager else {
+                return true
+            }
+
+            return pump.localizedTitle.contains("Dana")
+        }
+
         func save(settings: PumpSettings) -> AnyPublisher<Void, Error> {
-            func save() {
+            func save(_ settings: PumpSettings) {
                 storage.save(settings, as: OpenAPS.Settings.settings)
                 processQueue.async {
                     self.broadcaster.notify(PumpSettingsObserver.self, on: self.processQueue) {
@@ -29,7 +37,7 @@ extension PumpSettingsEditor {
             }
 
             guard let pump = deviceManager?.pumpManager else {
-                save()
+                save(settings)
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
             // Don't ask why 🤦‍♂️
@@ -44,8 +52,21 @@ extension PumpSettingsEditor {
                 self.processQueue.async {
                     pump.syncDeliveryLimits(limits: limits) { result in
                         switch result {
-                        case .success:
-                            save()
+                        case let .success(actual):
+                            // Store the limits from the pumpManager to ensure the correct values
+                            // Example: Dana pumps don't allow to set these limits, only to fetch them
+                            // This will ensure we always have the correct values stored
+                            save(PumpSettings(
+                                insulinActionCurve: settings.insulinActionCurve,
+                                maxBolus: Decimal(
+                                    actual.maximumBolus?
+                                        .doubleValue(for: .internationalUnit()) ?? Double(settings.maxBolus)
+                                ),
+                                maxBasal: Decimal(
+                                    actual.maximumBasalRate?
+                                        .doubleValue(for: .internationalUnitsPerHour) ?? Double(settings.maxBasal)
+                                )
+                            ))
                             promise(.success(()))
                         case let .failure(error):
                             promise(.failure(error))

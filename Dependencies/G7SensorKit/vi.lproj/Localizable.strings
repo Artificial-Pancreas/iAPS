@@ -38,7 +38,7 @@
 "Sensor Expiration" = "Cảm biến hết hạn";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Thời gian ân huệ kết thúc";
+"Grace Period End" = "Thời gian gia hạn kết thúc";
 
 /* Field label */
 "Glucose" = "Đường huyết";
@@ -47,7 +47,7 @@
 
 "Time" = "Thời gian";
 
-"Trend" = "Xu hướng Glucose";
+"Trend" = "Xu hướng";
 
 "Bluetooth" = "Bluetooth";
 
@@ -64,7 +64,7 @@
 "Connecting" = "Đang kết nối";
 
 /* title for g7 settings row showing sensor last connect time */
-"Last Connect" = "Kết nối gần đây nhất";
+"Last Connect" = "Kết nối mới nhất";
 
 /* Configuration */
 "Configuration" = "Cấu hình";
@@ -108,13 +108,13 @@
 "Sensor expires" = "Sensor hết hạn";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Thời gian ân huệ còn lại";
+"Grace period remaining" = "Thời gian gia hạn còn lại";
 
 /* G7 Status highlight text for searching for sensor */
-"Searching for\nSensor" = "Đang tìm kiếm \n sensor";
+"Searching for\nSensor" = "Đang tìm kiếm\ncảm biến";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Sensor\n hết hạn";
+"Sensor\nExpired" = "Cảm biến\nđã hết hạn";
 
 /* G7 Status highlight text for signal loss */
 "Sensor\nFailed" = "Sensor\n thất bại";

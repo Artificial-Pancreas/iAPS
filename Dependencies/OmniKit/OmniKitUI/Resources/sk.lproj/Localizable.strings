@@ -153,7 +153,7 @@
 "Confidence Reminders" = "Upozornenia s pípnutím zo zariadenia Pod";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Zvukové upozornenia Podu, ktoré môžu slúžiť na potvrdenie vybraných príkazov ak Pod nie je stíšený.";
 
 /* The title of the configuration section in settings */
 "Configuration" = "Konfigurácia";
@@ -179,9 +179,21 @@
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Deaktivovať";
 
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Posunutím deaktivujte pod";
+
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Deaktivovať pod";
+
+/* */
+"Slide to Insert Cannula" = "Pripravené na zavedenie kanyly";
+
+/* */
+"Slide to Deactivate Pod" = "Posunutím deaktivujte pod";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Posunutím spínača nižšie spustite zavádzanie kanyly.";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Deaktivované";
@@ -243,10 +255,10 @@
 "Expiration Reminder Default" = "Predvolené pripomenutie o expirácii";
 
 /* The title of the cell showing the pod expiration after expiry */
-"Expired" = "Expiroval";
+"Expired" = "Exspiroval";
 
 /* The title of the cell showing the pod expiration */
-"Expires" = "Expiruje";
+"Expires" = "Exspiruje";
 
 /* Alert title for failing to cancel manual basal error */
 "Failed to Cancel Manual Basal" = "Zrušenie manuálneho bazálu zlyhalo";
@@ -264,7 +276,7 @@
 "Failed to update confidence reminder preference." = "Nepodarilo sa aktualizovať predvoľbu pripomenutia dôveryhodnosti.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Nepodarilo sa aktualizovať pripomenutie o expirácii";
+"Failed to Update Expiration Reminder" = "Nepodarilo sa aktualizovať pripomenutie o exspirácii";
 
 /* Alert title for error when updating low reservoir reminder */
 "Failed to Update Low Reservoir Reminder" = "Nepodarilo sa aktualizovať pripomienku nízkej hladiny v rezervoári";
@@ -273,7 +285,7 @@
 "Fault" = "Chyba";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Naplňte nový pod inzulínom U-100 (kryt ihly ponechajte nasadený). Budete počuť 2 pípnutia.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Naplňte nový pod inzulínom U-100 (kryt ihly ponechajte nasadený). Budete počuť 2 pípnutia.";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Dokončiť deaktiváciu";
@@ -611,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Nastavenie dočasnej bazálnej sadzby";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nebude zrušená.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Nastavenie je dokončené";
 
@@ -774,8 +789,8 @@
 /* Description for SilencePodPreference.enabled */
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Všetky upozornenia Pod nepoužívajú žiadne zvukové signály a zvukové signály pripomínajúce potvrdenie sú potlačené. Pod bude pípať len pri fatálnych poruchách Pod a pri prehrávaní testovacích pípnutí.\n\n⚠️Warning - Vždy, keď je Pod stlmený, musí byť v dosahu Bluetooth tohto zariadenia, aby prijímal upozornenia na upozornenia Pod.";
 
-/* Help text for Silence Pod view */
-/* navigation title for Silnce Pod" */
+/* Help text for Silence Pod view  */
+/* navigation title for Silnce Pod */
 
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
 Silence Pod" = "Umlčané";
@@ -802,3 +817,15 @@ Silence Pod" = "Umlčané";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Zistiť stav Podu";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Diagnostika Podu";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Čítať protokol pulzov";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Čas aktivácie čítania";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Čítanie spustených upozornení";

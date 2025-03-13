@@ -38,6 +38,7 @@ public enum PodCommsError: Error {
     case podIncompatible(str: String)
     case noPodsFound
     case tooManyPodsFound
+    case setupNotComplete
 }
 
 extension PodCommsError: LocalizedError {
@@ -98,7 +99,8 @@ extension PodCommsError: LocalizedError {
             return LocalizedString("No pods found", comment: "Error message for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
             return LocalizedString("Too many pods found", comment: "Error message for PodCommsError.tooManyPodsFound")
-
+        case .setupNotComplete:
+            return LocalizedString("Pod setup is not complete", comment: "Error description when pod setup is not complete")
         }
     }
 
@@ -162,6 +164,8 @@ extension PodCommsError: LocalizedError {
             return LocalizedString("Make sure your pod is filled and nearby.", comment: "Recovery suggestion for PodCommsError.noPodsFound")
         case .tooManyPodsFound:
             return LocalizedString("Move to a new area away from any other pods and try again.", comment: "Recovery suggestion for PodCommsError.tooManyPodsFound")
+        case .setupNotComplete:
+            return nil
         }
     }
 
@@ -279,7 +283,9 @@ public class PodCommsSession {
 
             let message = Message(address: podState.address, messageBlocks: blocksToSend, sequenceNum: messageNumber, expectFollowOnMessage: expectFollowOnMessage)
 
-            self.podState.lastCommsOK = false // mark last comms as not OK until we get the expected response
+            // Clear the lastDeliveryStatusReceived variable which is used to guard against possible 0x31 pod faults
+            podState.lastDeliveryStatusReceived = nil
+
             let response = try transport.sendMessage(message)
 
             // Simulate fault
@@ -288,7 +294,6 @@ public class PodCommsSession {
 
             if let responseMessageBlock = response.messageBlocks[0] as? T {
                 log.info("POD Response: %{public}@", String(describing: responseMessageBlock))
-                self.podState.lastCommsOK = true // message successfully sent and expected response received
                 return responseMessageBlock
             }
 
@@ -436,7 +441,6 @@ public class PodCommsSession {
 
     public func insertCannula(optionalAlerts: [PodAlert] = [], silent: Bool) throws -> TimeInterval {
         let cannulaInsertionUnits = Pod.cannulaInsertionUnits + Pod.cannulaInsertionUnitsExtra
-        let insertionWait: TimeInterval = .seconds(cannulaInsertionUnits / Pod.primeDeliveryRate)
 
         guard podState.activatedAt != nil else {
             throw PodCommsError.noPodPaired
@@ -448,7 +452,8 @@ public class PodCommsSession {
             if status.podProgressStatus == .insertingCannula {
                 podState.setupProgress = .cannulaInserting
                 podState.updateFromStatusResponse(status, at: currentDate)
-                return insertionWait // Not sure when it started, wait full time to be sure
+                // return a non-zero wait time based on the bolus not yet delivered
+                return (status.bolusNotDelivered / Pod.primeDeliveryRate) + 1
             }
             if status.podProgressStatus.readyForDelivery {
                 markSetupProgressCompleted(statusResponse: status)
@@ -477,7 +482,7 @@ public class PodCommsSession {
         podState.updateFromStatusResponse(status2, at: currentDate)
 
         podState.setupProgress = .cannulaInserting
-        return insertionWait
+        return status2.bolusNotDelivered / Pod.primeDeliveryRate // seconds for the cannula insert bolus to finish
     }
 
     public func checkInsertionCompleted() throws {
@@ -513,16 +518,24 @@ public class PodCommsSession {
         let timeBetweenPulses = TimeInterval(seconds: Pod.secondsPerBolusPulse)
         let bolusScheduleCommand = SetInsulinScheduleCommand(nonce: podState.currentNonce, units: units, timeBetweenPulses: timeBetweenPulses, extendedUnits: extendedUnits, extendedDuration: extendedDuration)
 
-        // Do a getstatus to verify that there isn't an on-going bolus in progress if the last bolus command is still
-        // finalized, if the last delivery status wasn't successfully verified or the last comms attempt wasn't OK
-        if podState.unfinalizedBolus != nil || !podState.deliveryStatusVerified || !podState.lastCommsOK {
-            var ongoingBolus = true
+        // Do a get status here to verify that there isn't an on-going bolus in progress if the last bolus command
+        // is still not finalized OR we don't have the last pod delivery status confirming that no bolus is active.
+        if podState.unfinalizedBolus != nil || podState.lastDeliveryStatusReceived == nil || podState.lastDeliveryStatusReceived!.bolusing {
             if let statusResponse: StatusResponse = try? send([GetStatusCommand()]) {
                 podState.updateFromStatusResponse(statusResponse, at: currentDate)
-                ongoingBolus = podState.unfinalizedBolus != nil
-            }
-            guard !ongoingBolus else {
-                return DeliveryCommandResult.certainFailure(error: .unfinalizedBolus)
+                guard podState.unfinalizedBolus == nil else {
+                    log.default("bolus: pod is still bolusing")
+                    return DeliveryCommandResult.certainFailure(error: .unfinalizedBolus)
+                }
+                // If the pod setup is complete, also confirm that the pod is indeed not suspended
+                if podState.setupProgress == .completed && statusResponse.deliveryStatus.suspended {
+                    log.default("bolus: pod is suspended")
+                    return DeliveryCommandResult.certainFailure(error: .podSuspended)
+                }
+                log.default("bolus: get status response verifies pod is not bolusing and not suspended")
+            } else {
+                log.default("bolus: failed to read pod status to verify there is no bolus running")
+                return DeliveryCommandResult.certainFailure(error: .noResponse)
             }
         }
 
@@ -624,6 +637,11 @@ public class PodCommsSession {
             return .certainFailure(error: .unacknowledgedCommandPending)
         }
 
+        guard podState.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            return .certainFailure(error: PodCommsError.setupNotComplete)
+        }
+
         do {
             var alertConfigurations: [AlertConfiguration] = []
             var podSuspendedReminderAlert: PodAlert? = nil
@@ -704,6 +722,11 @@ public class PodCommsSession {
             return .certainFailure(error: .unacknowledgedCommandPending)
         }
 
+        guard podState.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            return .certainFailure(error: PodCommsError.setupNotComplete)
+        }
+
         do {
             podState.unacknowledgedCommand = PendingCommand.stopProgram(deliveryType, transport.messageNumber, currentDate)
             let cancelDeliveryCommand = CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: deliveryType, beepType: beepType)
@@ -752,12 +775,17 @@ public class PodCommsSession {
         let basalExtraCommand = BasalScheduleExtraCommand.init(schedule: schedule, scheduleOffset: scheduleOffset, acknowledgementBeep: acknowledgementBeep, programReminderInterval: programReminderInterval)
 
         do {
-            if podState.setupProgress == .completed && !(podState.lastCommsOK && podState.deliveryStatusVerified) {
-                // The pod setup is complete and the current delivery state can't be trusted so
-                // do a cancel all to be sure that setting the basal program won't fault the pod.
-                let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
+            if !podState.isSuspended || podState.lastDeliveryStatusReceived == nil || !podState.lastDeliveryStatusReceived!.suspended {
+                // The podState or the last pod delivery status return indicates that the pod is not currently suspended.
+                // So execute a cancel all command here before setting the basal to prevent a possible 0x31 pod fault,
+                // but only when the pod startup is complete as a cancel command during pod setup also fault the pod!
+                if podState.setupProgress == .completed  {
+                    let _: StatusResponse = try send([CancelDeliveryCommand(nonce: podState.currentNonce, deliveryType: .all, beepType: .noBeepCancel)])
+                }
             }
+            podState.unacknowledgedCommand = PendingCommand.program(.basalProgram(schedule: schedule), transport.messageNumber, currentDate)
             var status: StatusResponse = try send([basalScheduleCommand, basalExtraCommand])
+            podState.unacknowledgedCommand = nil
             let now = currentDate
             podState.suspendState = .resumed(now)
             podState.unfinalizedResume = UnfinalizedDose(resumeStartTime: now, scheduledCertainty: .certain, insulinType: podState.insulinType)
@@ -768,12 +796,12 @@ public class PodCommsSession {
             }
             podState.updateFromStatusResponse(status, at: currentDate)
             return status
-        } catch PodCommsError.nonceResyncFailed {
-            throw PodCommsError.nonceResyncFailed
-        } catch PodCommsError.rejectedMessage(let errorCode) {
-            throw PodCommsError.rejectedMessage(errorCode: errorCode)
+        } catch PodCommsError.unacknowledgedMessage(let seq, let error) {
+            podState.unacknowledgedCommand = podState.unacknowledgedCommand?.commsFinished
+            log.error("Unacknowledged resume: command seq = %d, error = %{public}@", seq, String(describing: error))
+            throw error
         } catch let error {
-            podState.unfinalizedResume = UnfinalizedDose(resumeStartTime: currentDate, scheduledCertainty: .uncertain, insulinType: podState.insulinType)
+            podState.unacknowledgedCommand = nil
             throw error
         }
     }

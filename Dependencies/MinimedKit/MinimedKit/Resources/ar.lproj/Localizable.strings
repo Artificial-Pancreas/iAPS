@@ -1,98 +1,98 @@
 /* Communications error for a bolus currently running */
-"A bolus is already in progress" = "A bolus is already in progress";
+"A bolus is already in progress" = "هناك جرعة جارية بالفعل";
 
 /* The description of AlarmClockReminderPumpEvent */
-"AlarmClockReminder" = "AlarmClockReminder";
+"AlarmClockReminder" = "تذكير المنبه";
 
 /* The description of AlarmSensorPumpEvent */
-"AlarmSensor" = "AlarmSensor";
+"AlarmSensor" = "تنبيه الحساس";
 
 /* Describing the battery chemistry as Alkaline */
-"Alkaline" = "Alkaline";
+"Alkaline" = "قلوي";
 
 /* The format string description of a BasalProfileStartPumpEvent. (1: The index of the profile)(2: The basal rate) */
-"Basal Profile %1$@: %2$@ U/hour" = "Basal Profile %1$@: %2$@ U/hour";
+"Basal Profile %1$@: %2$@ U/hour" = "ملف تعريف القاعدي %1$@: %2$@ U/hour";
 
 /* Pump error code when bolus is in progress */
-"Bolus in progress" = "Bolus in progress";
+"Bolus in progress" = "جرعة قيد التنفيذ";
 
 /* Suggestions for diagnosing a command refused pump error */
-"Check that the pump is not suspended or priming, or has a percent temp basal type" = "Check that the pump is not suspended or priming, or has a percent temp basal type";
+"Check that the pump is not suspended or priming, or has a percent temp basal type" = "تحقق من أن المضخة ليست معلقة أو في وضع التحضير، أو لديها نوع جرعة أساسية مؤقتة بنسبة مئوية";
 
 /* Pump error code returned when command refused */
-"Command refused" = "Command refused";
+"Command refused" = "تم رفض الأمر";
 
 /* No comment provided by engineer. */
-"Comms with another pump detected" = "Comms with another pump detected.";
+"Comms with another pump detected" = "تم اكتشاف الاتصال مع مضخة أخرى.";
 
 /* Error description */
-"Decoding Error" = "Decoding Error";
+"Decoding Error" = "خطأ في فك التشفير";
 
 /* Error description */
-"Device Error" = "Device Error";
+"Device Error" = "خطأ في الجهاز";
 
 /* Describing the pump history insulin data source */
-"Event History" = "Event History";
+"Event History" = "سجل الأحداث";
 
 /* Format string for failure reason. (1: The operation being performed) (2: The response data) */
-"Invalid response during %1$@: %2$@" = "Invalid response during %1$@: %2$@";
+"Invalid response during %1$@: %2$@" = "استجابة غير صحيحة خلال %1$@: %2$@";
 
 /* Describing the battery chemistry as Lithium */
-"Lithium" = "Lithium";
+"Lithium" = "ليثيوم";
 
 /* Recovery suggestion */
-"Make sure your RileyLink is nearby and powered on" = "Make sure your RileyLink is nearby and powered on";
+"Make sure your RileyLink is nearby and powered on" = "تأكد من أن RileyLink الخاص بك قريب ويعمل";
 
 /* Pump error code describing max setting exceeded */
-"Max setting exceeded" = "Max setting exceeded";
+"Max setting exceeded" = "تم تجاوز الحد الأقصى للإعدادات";
 
 /* Pump title (1: model number) */
-"Minimed %@" = "Minimed %@";
+"Minimed %@" = "تم تصغير %@";
 
 /* Generic title of the minimed pump manager */
-"Minimed 500/700 Series" = "Minimed 500/700 Series";
+"Minimed 500/700 Series" = "الحد الأدنى 500/700 سلسلة";
 
 /* Describing the North America pump region */
-"North America" = "North America";
+"North America" = "أمريكا الشماليّة";
 
 /* No comment provided by engineer. */
-"Pump did not respond" = "Pump did not respond";
+"Pump did not respond" = "المضخة لم تستجب";
 
 /* Error description */
-"Pump Error" = "Pump Error";
+"Pump Error" = "خطأ في المضخة";
 
 /* No comment provided by engineer. */
-"Pump is suspended" = "Pump is suspended";
+"Pump is suspended" = "تم تعليق المضخة";
 
 /* No comment provided by engineer. */
-"Pump responded unexpectedly" = "Pump responded unexpectedly";
+"Pump responded unexpectedly" = "مضخة استجابت بشكل غير متوقع";
 
 /* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
-"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "PumpMessage(%1$@, %2$@, %3$@, %4$@)";
+"PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "رسالة المضخة(%1$@، %2$@، %3$@، %4$@)";
 
 /* Describing the reservoir insulin data source */
 "Reservoir" = "الخزان";
 
 /* Error description */
-"RileyLink radio tune failed" = "RileyLink radio tune failed";
+"RileyLink radio tune failed" = "فشل ضبط راديو RileyLink";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in minutes) */
-"Temporary Basal: %1$.3f U/hour" = "Temporary Basal: %1$.3f U/hour";
+"Temporary Basal: %1$.3f U/hour" = "الأساس المؤقت: %1$.3f U/ساعة";
 
 /* The format string description of a TempBasalDurationPumpEvent. (1: The duration of the temp basal in minutes) */
-"Temporary Basal: %1$d min" = "Temporary Basal: %1$d min";
+"Temporary Basal: %1$d min" = "الأساس المؤقت: %1$d U/ دقيقة";
 
 /* The format string description of a TempBasalPumpEvent. (1: The rate of the temp basal in percent) */
-"Temporary Basal: %1$d%%" = "Temporary Basal: %1$d%%";
+"Temporary Basal: %1$d%%" = "الأساسي المؤقت: %1$d U/%%";
 
 /* The format string description of an unknown pump error code. (1: The specific error code raw value) */
-"Unknown pump error code: %1$@" = "Unknown pump error code: %1$@";
+"Unknown pump error code: %1$@" = "رمز خطأ مضخة غير معروف: %1$@";
 
 /* No comment provided by engineer. */
-"Unknown pump model: %@" = "Unknown pump model: %@";
+"Unknown pump model: %@" = "نَموذج مضخة غير معروف: %@";
 
 /* Format string for an unknown response. (1: The operation being performed) (2: The response data) */
-"Unknown response during %1$@: %2$@" = "Unknown response during %1$@: %2$@";
+"Unknown response during %1$@: %2$@" = "استجابة غير صحيحة خلال %1$@: %2$@";
 
 /* Describing the worldwide pump region */
-"World-Wide" = "World-Wide";
+"World-Wide" = "عالمي";

@@ -32,7 +32,6 @@ public enum OmniBLEPumpManagerError: Error {
     case insulinTypeNotConfigured
     case notReadyForCannulaInsertion
     case invalidSetting
-    case setupNotComplete
     case communication(Error)
     case state(Error)
 }
@@ -45,13 +44,11 @@ extension OmniBLEPumpManagerError: LocalizedError {
         case .podAlreadyPaired:
             return LocalizedString("Pod already paired", comment: "Error message shown when user cannot pair because pod is already paired")
         case .insulinTypeNotConfigured:
-            return LocalizedString("Insulin type not configured", comment: "Error description for OmniBLEPumpManagerError.insulinTypeNotConfigured")
+            return LocalizedString("Insulin type not configured", comment: "Error description for insulin type not configured")
         case .notReadyForCannulaInsertion:
             return LocalizedString("Pod is not in a state ready for cannula insertion.", comment: "Error message when cannula insertion fails because the pod is in an unexpected state")
         case .invalidSetting:
             return LocalizedString("Invalid Setting", comment: "Error description for invalid setting")
-        case .setupNotComplete:
-            return LocalizedString("Pod setup is not complete", comment: "Error description when pod setup is not complete")
         case .communication(let error):
             if let error = error as? LocalizedError {
                 return error.errorDescription
@@ -157,12 +154,12 @@ public class OmniBLEPumpManager: DeviceManager {
             oldValue = state
             let oldStatusEvaluationDate = state.lastStatusChange
             let oldHighlight = buildPumpStatusHighlight(for: oldValue, andDate: oldStatusEvaluationDate)
-            oldStatus = status(for: oldValue)
+            oldStatus = status(for: oldValue, at: oldStatusEvaluationDate)
 
             returnType = changes(&state)
 
             let newStatusEvaluationDate = Date()
-            let newStatus = status(for: state)
+            let newStatus = status(for: state, at: newStatusEvaluationDate)
             let newHighlight = buildPumpStatusHighlight(for: state, andDate: newStatusEvaluationDate)
 
             if oldStatus != newStatus || oldHighlight != newHighlight {
@@ -305,13 +302,13 @@ extension OmniBLEPumpManager {
         podStateObservers.removeElement(observer)
     }
 
-    private func status(for state: OmniBLEPumpManagerState) -> PumpManagerStatus {
+    private func status(for state: OmniBLEPumpManagerState, at date: Date = Date()) -> PumpManagerStatus {
         return PumpManagerStatus(
             timeZone: state.timeZone,
             device: device(for: state),
             pumpBatteryChargeRemaining: nil,
-            basalDeliveryState: basalDeliveryState(for: state),
-            bolusState: bolusState(for: state),
+            basalDeliveryState: basalDeliveryState(for: state, at: date),
+            bolusState: bolusState(for: state, at: date),
             insulinType: state.insulinType,
             deliveryIsUncertain: state.podState?.needsCommsRecovery == true
         )
@@ -343,7 +340,7 @@ extension OmniBLEPumpManager {
         }
     }
 
-    private func basalDeliveryState(for state: OmniBLEPumpManagerState) -> PumpManagerStatus.BasalDeliveryState {
+    private func basalDeliveryState(for state: OmniBLEPumpManagerState, at date: Date = Date()) -> PumpManagerStatus.BasalDeliveryState {
         guard let podState = state.podState else {
             return .active(.distantPast)
         }
@@ -370,7 +367,7 @@ extension OmniBLEPumpManager {
         case .disengaging:
             return .cancelingTempBasal
         case .stable:
-            if let tempBasal = podState.unfinalizedTempBasal {
+            if let tempBasal = podState.unfinalizedTempBasal, !tempBasal.isFinished(at: date) {
                 return .tempBasal(DoseEntry(tempBasal))
             }
             switch podState.suspendState {
@@ -382,7 +379,7 @@ extension OmniBLEPumpManager {
         }
     }
 
-    private func bolusState(for state: OmniBLEPumpManagerState) -> PumpManagerStatus.BolusState {
+    private func bolusState(for state: OmniBLEPumpManagerState, at date: Date = Date()) -> PumpManagerStatus.BolusState {
         guard let podState = state.podState else {
             return .noBolus
         }
@@ -393,7 +390,7 @@ extension OmniBLEPumpManager {
         case .disengaging:
             return .canceling
         case .stable:
-            if let bolus = podState.unfinalizedBolus {
+            if let bolus = podState.unfinalizedBolus, !bolus.isFinished(at: date) {
                 return .inProgress(DoseEntry(bolus))
             }
         }
@@ -458,7 +455,7 @@ extension OmniBLEPumpManager {
         } else if !podState.isSetupComplete {
             return .activating
         }
-        return .deactivating
+        return .deactivating // Can't be reached and thus will never be returned
     }
 
     public var podCommState: PodCommState {
@@ -599,7 +596,7 @@ extension OmniBLEPumpManager {
         switch podCommState(for: state) {
         case .activating:
             return PumpStatusHighlight(
-                localizedMessage: LocalizedString("Finish Pairing", comment: "Status highlight that when pod is activating."),
+                localizedMessage: LocalizedString("Finish Setup", comment: "Status highlight that when pod is activating."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         case .deactivating:
@@ -710,6 +707,25 @@ extension OmniBLEPumpManager {
         }
     }
 
+    // Reset all the per pod state kept in pump manager state which doesn't span pods
+    fileprivate func resetPerPodPumpManagerState() {
+
+        // Reset any residual per pod slot based pump manager alerts
+        // (i.e., all but timeOffsetChangeDetected which isn't actually used)
+        let podAlerts = state.activeAlerts.filter { $0 != .timeOffsetChangeDetected }
+        for alert in podAlerts {
+            self.retractAlert(alert: alert)
+        }
+
+        self.setState { (state) in
+            // Reset alertsWithPendingAcknowledgment which are all pod slot based
+            state.alertsWithPendingAcknowledgment = []
+
+            // Reset other miscellaneous state variables that are actually per pod
+            state.podAttachmentConfirmed = false
+            state.acknowledgedTimeOffsetAlert = false
+        }
+    }
 
     // MARK: - Pod comms
 
@@ -737,13 +753,14 @@ extension OmniBLEPumpManager {
 
         self.podComms.forgetPod()
 
+        self.resetPerPodPumpManagerState()
+
         if let dosesToStore = state.podState?.dosesToStore {
             store(doses: dosesToStore, completion: { error in
                 self.setState({ (state) in
                     if error != nil {
                         state.unstoredDoses.append(contentsOf: dosesToStore)
                     }
-                    state.alertsWithPendingAcknowledgment = []
                 })
                 self.prepForNewPod()
                 completion()
@@ -774,6 +791,11 @@ extension OmniBLEPumpManager {
         podState.fault = fault
 
         self.podComms = PodComms(podState: podState, myId: state.controllerId, podId: state.podId)
+
+        self.podComms.delegate = self
+        self.podComms.messageLogger = self
+
+        self.resetPerPodPumpManagerState()
 
         setState({ (state) in
             state.updatePodStateFromPodComms(podState)
@@ -846,23 +868,18 @@ extension OmniBLEPumpManager {
             }
         }
 
-        let needsPairing = setStateWithResult({ (state) -> Bool in
-            guard let podState = state.podState else {
-                return true // Needs pairing
-            }
-
-            // Return true if not yet paired
-            return podState.setupProgress.isPaired == false
-        })
-
-        if needsPairing {
-
-            self.log.default("Pairing pod before priming")
-
+        // For a restart in the middle of pod setup, the pod can only continue
+        // if interruption happened after pod was completely paired.
+        // Unfortunately podState.setupProgress.isPaired can’t be relied on upon
+        // for some restarts. This code enables user to continue if they have a
+        // fully paired pod.
+        if self.state.podState == nil {
             guard let insulinType = insulinType else {
                 completion(.failure(.configuration(OmniBLEPumpManagerError.insulinTypeNotConfigured)))
                 return
             }
+
+            self.log.default("Pairing pod before priming")
 
             connectToNewPod(completion: { result in
                 switch result {
@@ -871,6 +888,9 @@ extension OmniBLEPumpManager {
                 case .success:
                     self.podComms.pairAndSetupPod(timeZone: .currentFixed, insulinType: insulinType, messageLogger: self)
                     { (result) in
+
+                        // Have new podState, reset all the per pod pump manager state
+                        self.resetPerPodPumpManagerState()
 
                         // Calls completion
                         primeSession(result)
@@ -881,6 +901,9 @@ extension OmniBLEPumpManager {
             })
         } else {
             self.log.default("Pod already paired. Continuing.")
+
+            // Resuming the pod setup, try to ensure pod comms will work right away
+            self.resumingPodSetup()
 
             self.podComms.runSession(withName: "Prime pod") { (result) in
                 // Calls completion
@@ -941,6 +964,10 @@ extension OmniBLEPumpManager {
         self.podComms.runSession(withName: "Insert cannula") { (result) in
             switch result {
             case .success(let session):
+                if self.state.podState?.setupProgress.cannulaInsertionSuccessfullyStarted == true {
+                    // Resuming the pod setup, try to ensure pod comms will work right away
+                    self.resumingPodSetup()
+                }
                 do {
                     if self.state.podState?.setupProgress.needsInitialBasalSchedule == true {
                         let scheduleOffset = timeZone.scheduleOffset(forDate: Date())
@@ -953,11 +980,11 @@ extension OmniBLEPumpManager {
 
                     let expirationReminderTime = Pod.nominalPodLife - self.state.defaultExpirationReminderOffset
                     let alerts: [PodAlert] = [
-                        .expirationReminder(offset: self.podTime, absAlertTime: self.state.defaultExpirationReminderOffset > 0 ? expirationReminderTime : 0),
-                        .lowReservoir(units: self.state.lowReservoirReminderValue)
+                        .expirationReminder(offset: self.podTime, absAlertTime: self.state.defaultExpirationReminderOffset > 0 ? expirationReminderTime : 0, silent: self.state.silencePod),
+                        .lowReservoir(units: self.lowReservoirReminderValue, silent: self.state.silencePod)
                     ]
 
-                    let finishWait = try session.insertCannula(optionalAlerts: alerts, silent: self.silencePod)
+                    let finishWait = try session.insertCannula(optionalAlerts: alerts, silent: self.state.silencePod)
                     completion(.success(finishWait))
                 } catch let error {
                     completion(.failure(.communication(error)))
@@ -991,6 +1018,33 @@ extension OmniBLEPumpManager {
         #endif
     }
 
+    // Called when resuming a pod setup operation which sometimes can fail on the first pod command in various situations.
+    // Attempting a getStatus and sleeping a couple of seconds on errors greatly improves the odds for first pod command success.
+    public func resumingPodSetup() {
+        let sleepTime:UInt32 = 2
+
+        if !isConnected {
+            self.log.debug("### Pod setup resume pod not connected, sleeping %d seconds", sleepTime)
+            sleep(sleepTime)
+        }
+
+        podComms.runSession(withName: "Resuming pod setup") { (result) in
+            switch result {
+            case .success(let session):
+                let status = try? session.getStatus()
+                if status == nil {
+                    self.log.debug("### Pod setup resume getStatus failed, sleeping %d seconds", sleepTime)
+                    sleep(sleepTime)
+                }
+            case .failure(let error):
+                self.log.debug("### Pod setup resume session failure, sleeping %d seconds: %@", sleepTime, error.localizedDescription)
+                sleep(sleepTime)
+            }
+        }
+    }
+
+    // MARK: - Pump Commands
+
     public func getPodStatus(completion: ((_ result: PumpManagerResult<StatusResponse>) -> Void)? = nil) {
         guard state.hasActivePod else {
             completion?(.failure(PumpManagerError.configuration(OmniBLEPumpManagerError.noPodPaired)))
@@ -1018,36 +1072,34 @@ extension OmniBLEPumpManager {
         }
     }
 
-    public func getDetailedStatus(completion: ((_ result: PumpManagerResult<DetailedStatus>) -> Void)? = nil) {
+    public func getDetailedStatus() async throws -> DetailedStatus {
 
         // use hasSetupPod here instead of hasActivePod as DetailedStatus can be read with a faulted Pod
         guard self.hasSetupPod else {
-            completion?(.failure(PumpManagerError.configuration(OmniBLEPumpManagerError.noPodPaired)))
-            return
+            throw PumpManagerError.configuration(OmniBLEPumpManagerError.noPodPaired)
         }
 
-        podComms.runSession(withName: "Get detailed status") { (result) in
-            do {
-                switch result {
-                case .success(let session):
-                    let beepBlock = self.beepMessageBlock(beepType: .bipBip)
-                    let detailedStatus = try session.getDetailedStatus(beepBlock: beepBlock)
-                    session.dosesForStorage({ (doses) -> Bool in
-                        self.store(doses: doses, in: session)
-                    })
-                    completion?(.success(detailedStatus))
-                case .failure(let error):
-                    throw error
+        return try await withCheckedThrowingContinuation { continuation in
+            podComms.runSession(withName: "Get detailed status") { (result) in
+                do {
+                    switch result {
+                    case .success(let session):
+                        let beepBlock = self.beepMessageBlock(beepType: .bipBip)
+                        let detailedStatus = try session.getDetailedStatus(beepBlock: beepBlock)
+                        session.dosesForStorage({ (doses) -> Bool in
+                            self.store(doses: doses, in: session)
+                        })
+                        continuation.resume(returning: detailedStatus)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                } catch let error {
+                    self.log.error("Failed to fetch detailed status: %{public}@", String(describing: error))
+                    continuation.resume(throwing: PumpManagerError.communication(error as? LocalizedError))
                 }
-            } catch let error {
-                completion?(.failure(.communication(error as? LocalizedError)))
-                self.log.error("Failed to fetch detailed status: %{public}@", String(describing: error))
             }
         }
     }
-
-
-    // MARK: - Pump Commands
 
     public func acknowledgePodAlerts(_ alertsToAcknowledge: AlertSet, completion: @escaping (_ alerts: AlertSet?) -> Void) {
         guard self.hasActivePod else {
@@ -1077,23 +1129,29 @@ extension OmniBLEPumpManager {
 
     public func setTime(completion: @escaping (OmniBLEPumpManagerError?) -> Void) {
 
-        guard state.hasActivePod else {
-            completion(OmniBLEPumpManagerError.noPodPaired)
+        let timeZone = TimeZone.currentFixed
+        guard let podState = state.podState, podState.fault == nil else {
+            // With no non-faulted pod just update our pump manager
+            // state with the current timezone and return success
+            // instead of an inappropriate "No pod paired" error.
+            self.setState { (state) in
+                state.timeZone = timeZone
+            }
+            completion(nil)
             return
         }
 
-        guard state.podState?.setupProgress == .completed else {
+        guard podState.isSetupComplete else {
             // A cancel delivery command before pod setup is complete will fault the pod
-            completion(.state(OmniBLEPumpManagerError.setupNotComplete))
+            completion(.state(PodCommsError.setupNotComplete))
             return
         }
 
-        guard state.podState?.unfinalizedBolus?.isFinished() != false else {
+        guard podState.unfinalizedBolus?.isFinished() != false else {
             completion(.state(PodCommsError.unfinalizedBolus))
             return
         }
 
-        let timeZone = TimeZone.currentFixed
         self.podComms.runSession(withName: "Set time zone") { (result) in
             switch result {
             case .success(let session):
@@ -1124,11 +1182,11 @@ extension OmniBLEPumpManager {
 
             guard state.podState?.setupProgress == .completed else {
                 // A cancel delivery command before pod setup is complete will fault the pod
-                return .failure(PumpManagerError.deviceState(OmniBLEPumpManagerError.setupNotComplete))
+                return .failure(PumpManagerError.deviceState(PodCommsError.setupNotComplete))
             }
 
             guard state.podState?.unfinalizedBolus?.isFinished() != false else {
-                return .failure(.deviceState(PodCommsError.unfinalizedBolus))
+                return .failure(PumpManagerError.deviceState(PodCommsError.unfinalizedBolus))
             }
 
             return .success(true)
@@ -1209,162 +1267,165 @@ extension OmniBLEPumpManager {
         #endif
     }
 
-    public func playTestBeeps(completion: @escaping (Error?) -> Void) {
+    public func playTestBeeps() async throws {
         guard self.hasActivePod else {
-            completion(OmniBLEPumpManagerError.noPodPaired)
-            return
+            throw OmniBLEPumpManagerError.noPodPaired
         }
         guard state.podState?.unfinalizedBolus?.scheduledCertainty == .uncertain || state.podState?.unfinalizedBolus?.isFinished() != false else {
             self.log.info("Skipping Play Test Beeps due to bolus still in progress.")
-            completion(PodCommsError.unfinalizedBolus)
-            return
+            throw PodCommsError.unfinalizedBolus
         }
 
-        self.podComms.runSession(withName: "Play Test Beeps") { (result) in
-            switch result {
-            case .success(let session):
-                // preserve the pod's completion beep state which gets reset playing beeps
-                let enabled: Bool = self.silencePod ? false : self.beepPreference.shouldBeepForManualCommand
-                let result = session.beepConfig(
-                    beepType: .bipBeepBipBeepBipBeepBipBeep,
-                    tempBasalCompletionBeep: enabled && self.hasUnfinalizedManualTempBasal,
-                    bolusCompletionBeep: enabled && self.hasUnfinalizedManualBolus
-                )
-
+        try await withCheckedThrowingContinuation { continuation in
+            self.podComms.runSession(withName: "Play Test Beeps") { (result) in
                 switch result {
-                case .success:
-                    completion(nil)
+                case .success(let session):
+                    // preserve the pod's completion beep state which gets reset playing beeps
+                    let enabled: Bool = self.silencePod ? false : self.beepPreference.shouldBeepForManualCommand
+                    let result = session.beepConfig(
+                        beepType: .bipBeepBipBeepBipBeepBipBeep,
+                        tempBasalCompletionBeep: enabled && self.hasUnfinalizedManualTempBasal,
+                        bolusCompletionBeep: enabled && self.hasUnfinalizedManualBolus
+                    )
+
+                    switch result {
+                    case .success:
+                        continuation.resume()
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
                 case .failure(let error):
-                    completion(error)
+                    continuation.resume(throwing: error)
                 }
-            case .failure(let error):
-                completion(error)
             }
         }
     }
 
-    public func readPulseLog(completion: @escaping (Result<String, Error>) -> Void) {
-        // use hasSetupPod here instead of hasActivePod as PodInfo can be read with a faulted Pod
+    public func readPulseLog() async throws -> String {
+        // use hasSetupPod to be able to read pulse log from a faulted Pod
         guard self.hasSetupPod else {
-            completion(.failure(OmniBLEPumpManagerError.noPodPaired))
-            return
+            throw OmniBLEPumpManagerError.noPodPaired
         }
+
         guard state.podState?.isFaulted == true || state.podState?.unfinalizedBolus?.scheduledCertainty == .uncertain || state.podState?.unfinalizedBolus?.isFinished() != false else
         {
             self.log.info("Skipping Read Pulse Log due to bolus still in progress.")
-            completion(.failure(PodCommsError.unfinalizedBolus))
-            return
+            throw PodCommsError.unfinalizedBolus
         }
 
-        self.podComms.runSession(withName: "Read Pulse Log") { (result) in
-            switch result {
-            case .success(let session):
-                do {
-                    // read the most recent 50 entries from the pulse log
-                    let beepBlock = self.beepMessageBlock(beepType: .bipBeeeeep)
-                    let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .pulseLogRecent, beepBlock: beepBlock)
-                    guard let podInfoPulseLogRecent = podInfoResponse.podInfo as? PodInfoPulseLogRecent else {
-                        self.log.error("Unable to decode Pulse Log: %s", String(describing: podInfoResponse))
-                        throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+        return try await withCheckedThrowingContinuation { continuation in
+            self.podComms.runSession(withName: "Read Pulse Log") { (result) in
+                switch result {
+                case .success(let session):
+                    do {
+                        // read the most recent 50 entries from the pulse log
+                        let beepBlock = self.beepMessageBlock(beepType: .bipBeeeeep)
+                        let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .pulseLogRecent, beepBlock: beepBlock)
+                        guard let podInfoPulseLogRecent = podInfoResponse.podInfo as? PodInfoPulseLogRecent else {
+                            self.log.error("Unable to decode PulseLogRecent: %s", String(describing: podInfoResponse))
+                            throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+                        }
+                        let lastPulseNumber = Int(podInfoPulseLogRecent.indexLastEntry)
+                        let str = pulseLogString(pulseLogEntries: podInfoPulseLogRecent.pulseLog, lastPulseNumber: lastPulseNumber)
+                        continuation.resume(returning: str)
+                    } catch {
+                        continuation.resume(throwing: error)
                     }
-                    let lastPulseNumber = Int(podInfoPulseLogRecent.indexLastEntry)
-                    let str = pulseLogString(pulseLogEntries: podInfoPulseLogRecent.pulseLog, lastPulseNumber: lastPulseNumber)
-                    completion(.success(str))
-                } catch let error {
-                    completion(.failure(error))
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
-            case .failure(let error):
-                completion(.failure(error))
             }
         }
     }
 
-    public func readPulseLogPlus(completion: @escaping (Result<String, Error>) -> Void) {
+    public func readPulseLogPlus() async throws -> String {
         // use hasSetupPod here instead of hasActivePod as PodInfo can be read with a faulted Pod
         guard self.hasSetupPod else {
-            completion(.failure(OmniBLEPumpManagerError.noPodPaired))
-            return
+            throw OmniBLEPumpManagerError.noPodPaired
         }
         guard state.podState?.isFaulted == true || state.podState?.unfinalizedBolus?.scheduledCertainty == .uncertain || state.podState?.unfinalizedBolus?.isFinished() != false else
         {
             self.log.info("Skipping Read Pulse Log Plus due to bolus still in progress.")
-            completion(.failure(PodCommsError.unfinalizedBolus))
-            return
+            throw PodCommsError.unfinalizedBolus
         }
 
-        podComms.runSession(withName: "Read Pulse Log Plus") { (result) in
-            do {
-                switch result {
-                case .success(let session):
-                    let beepBlock = self.beepMessageBlock(beepType: .bipBeeeeep)
-                    let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .pulseLogPlus, beepBlock: beepBlock)
-                    guard let podInfoPulseLogPlus = podInfoResponse.podInfo as? PodInfoPulseLogPlus else {
-                        self.log.error("Unable to decode Pulse Log Plus: %s", String(describing: podInfoResponse))
-                        throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+        return try await withCheckedThrowingContinuation { continuation in
+            podComms.runSession(withName: "Read Pulse Log Plus") { (result) in
+                do {
+                    switch result {
+                    case .success(let session):
+                        let beepBlock = self.beepMessageBlock(beepType: .bipBeeeeep)
+                        let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .pulseLogPlus, beepBlock: beepBlock)
+                        guard let podInfoPulseLogPlus = podInfoResponse.podInfo as? PodInfoPulseLogPlus else {
+                            self.log.error("Unable to decode Pulse Log Plus: %s", String(describing: podInfoResponse))
+                            throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+                        }
+                        let str = pulseLogPlusString(podInfoPulseLogPlus: podInfoPulseLogPlus)
+                        continuation.resume(returning: str)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
                     }
-                    let str = pulseLogPlusString(podInfoPulseLogPlus: podInfoPulseLogPlus)
-                    completion(.success(str))
-                case .failure(let error):
-                    throw error
+                } catch {
+                    continuation.resume(throwing: error)
                 }
-            } catch let error {
-                completion(.failure(error))
             }
         }
     }
 
-    public func readActivationTime(completion: @escaping (Result<String, Error>) -> Void) {
+    public func readActivationTime() async throws -> String {
         // use hasSetupPod here instead of hasActivePod as PodInfo can be read with a faulted Pod
         guard self.hasSetupPod else {
-            completion(.failure(OmniBLEPumpManagerError.noPodPaired))
-            return
+            throw OmniBLEPumpManagerError.noPodPaired
         }
 
-        podComms.runSession(withName: "Read Activation Time") { (result) in
-            do {
-                switch result {
-                case .success(let session):
-                    let beepBlock = self.beepMessageBlock(beepType: .beepBeep)
-                    let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .activationTime, beepBlock: beepBlock)
-                    guard let podInfoActivationTime = podInfoResponse.podInfo as? PodInfoActivationTime else {
-                        self.log.error("Unable to decode Activation Time: %s", String(describing: podInfoResponse))
-                        throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+        return try await withCheckedThrowingContinuation { continuation in
+            podComms.runSession(withName: "Read Activation Time") { (result) in
+                do {
+                    switch result {
+                    case .success(let session):
+                        let beepBlock = self.beepMessageBlock(beepType: .beepBeep)
+                        let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .activationTime, beepBlock: beepBlock)
+                        guard let podInfoActivationTime = podInfoResponse.podInfo as? PodInfoActivationTime else {
+                            self.log.error("Unable to decode Activation Time: %s", String(describing: podInfoResponse))
+                            throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+                        }
+                        let str = activationTimeString(podInfoActivationTime: podInfoActivationTime)
+                        continuation.resume(returning: str)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
                     }
-                    let str = activationTimeString(podInfoActivationTime: podInfoActivationTime)
-                    completion(.success(str))
-                case .failure(let error):
-                    throw error
+                } catch {
+                    continuation.resume(throwing: error)
                 }
-            } catch let error {
-                completion(.failure(error))
             }
         }
     }
 
-    public func readTriggeredAlerts(completion: @escaping (Result<String, Error>) -> Void) {
+    public func readTriggeredAlerts() async throws -> String {
         // use hasSetupPod here instead of hasActivePod as PodInfo can be read with a faulted Pod
         guard self.hasSetupPod else {
-            completion(.failure(OmniBLEPumpManagerError.noPodPaired))
-            return
+            throw OmniBLEPumpManagerError.noPodPaired
         }
 
-        podComms.runSession(withName: "Read Triggered Alerts") { (result) in
-            do {
-                switch result {
-                case .success(let session):
-                    let beepBlock = self.beepMessageBlock(beepType: .beepBeep)
-                    let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .triggeredAlerts, beepBlock: beepBlock)
-                    guard let podInfoTriggeredAlerts = podInfoResponse.podInfo as? PodInfoTriggeredAlerts else {
-                        self.log.error("Unable to decode Read Triggered Alerts: %s", String(describing: podInfoResponse))
-                        throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+        return try await withCheckedThrowingContinuation { continuation in
+            podComms.runSession(withName: "Read Triggered Alerts") { (result) in
+                do {
+                    switch result {
+                    case .success(let session):
+                        let beepBlock = self.beepMessageBlock(beepType: .beepBeep)
+                        let podInfoResponse = try session.readPodInfo(podInfoResponseSubType: .triggeredAlerts, beepBlock: beepBlock)
+                        guard let podInfoTriggeredAlerts = podInfoResponse.podInfo as? PodInfoTriggeredAlerts else {
+                            self.log.error("Unable to decode Read Triggered Alerts: %s", String(describing: podInfoResponse))
+                            throw PodCommsError.unexpectedResponse(response: .podInfoResponse)
+                        }
+                        let str = triggeredAlertsString(podInfoTriggeredAlerts: podInfoTriggeredAlerts)
+                        continuation.resume(returning: str)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
                     }
-                    let str = triggeredAlertsString(podInfoTriggeredAlerts: podInfoTriggeredAlerts)
-                    completion(.success(str))
-                case .failure(let error):
-                    throw error
+                } catch let error {
+                    continuation.resume(throwing: error)
                 }
-            } catch let error {
-                completion(.failure(error))
             }
         }
     }
@@ -1780,8 +1841,8 @@ extension OmniBLEPumpManager: PumpManager {
                 state.bolusEngageState = .engaging
             })
 
-            if case .some(.suspended) = self.state.podState?.suspendState {
-                self.log.error("enactBolus: returning pod suspended error for bolus")
+            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended == true {
+                self.log.error("Not enacting bolus because podState or last status received indicates pod is suspended")
                 completion(.deviceState(PodCommsError.podSuspended))
                 return
             }
@@ -1819,7 +1880,7 @@ extension OmniBLEPumpManager: PumpManager {
 
         guard state.podState?.setupProgress == .completed else {
             // A cancel delivery command before pod setup is complete will fault the pod
-            completion(.failure(PumpManagerError.deviceState(OmniBLEPumpManagerError.setupNotComplete)))
+            completion(.failure(PumpManagerError.deviceState(PodCommsError.setupNotComplete)))
             return
         }
 
@@ -1880,8 +1941,15 @@ extension OmniBLEPumpManager: PumpManager {
     }
 
     public func runTemporaryBasalProgram(unitsPerHour: Double, for duration: TimeInterval, automatic: Bool, completion: @escaping (PumpManagerError?) -> Void) {
-        guard self.hasActivePod else {
-            completion(.deviceState(OmniBLEPumpManagerError.noPodPaired))
+
+        guard self.hasActivePod, let podState = self.state.podState else {
+            completion(.configuration(OmniBLEPumpManagerError.noPodPaired))
+            return
+        }
+
+        guard state.podState?.setupProgress == .completed else {
+            // A cancel delivery command before pod setup is complete will fault the pod
+            completion(.deviceState(PodCommsError.setupNotComplete))
             return
         }
 
@@ -1914,95 +1982,97 @@ extension OmniBLEPumpManager: PumpManager {
                 return
             }
 
-            do {
-                if case .some(.suspended) = self.state.podState?.suspendState {
-                    self.log.info("Not enacting temp basal because podState indicates pod is suspended.")
-                    throw PodCommsError.podSuspended
+            if let podState = self.state.podState, podState.isSuspended || podState.lastDeliveryStatusReceived?.suspended == true {
+                self.log.info("Not enacting temp basal because podState or last status received indicates pod is suspended")
+                completion(.deviceState(PodCommsError.podSuspended))
+                return
+            }
+
+            // A resume scheduled basal delivery request is denoted by a 0 duration that cancels any existing temp basal.
+            let resumingScheduledBasal = duration < .ulpOfOne
+
+            // If a bolus is not finished, fail if not resuming the scheduled basal
+            guard podState.unfinalizedBolus?.isFinished() != false || resumingScheduledBasal else {
+                self.log.info("Not enacting temp basal because podState indicates unfinalized bolus in progress.")
+                completion(.deviceState(PodCommsError.unfinalizedBolus))
+                return
+            }
+
+            // Do the safe cancel TB command when resuming scheduled basal delivery OR if unfinalizedTempBasal indicates a
+            // running a temp basal OR if we don't have the last pod delivery status confirming that no temp basal is running.
+            if resumingScheduledBasal || podState.unfinalizedTempBasal != nil ||
+                podState.lastDeliveryStatusReceived == nil || podState.lastDeliveryStatusReceived!.tempBasalRunning
+            {
+                let status: StatusResponse
+
+                // if resuming scheduled basal delivery & an acknowledgement beep is needed, use the cancel TB beep
+                let beepType: BeepType = resumingScheduledBasal && acknowledgementBeep ? .beep : .noBeepCancel
+                let result = session.cancelDelivery(deliveryType: .tempBasal, beepType: beepType)
+                switch result {
+                case .certainFailure(let error):
+                    completion(.communication(error))
+                    return
+                case .unacknowledged(let error):
+                    completion(.communication(error))
+                    return
+                case .success(let cancelTempStatus, _):
+                    status = cancelTempStatus
                 }
 
-                // A resume scheduled basal delivery request is denoted by a 0 duration that cancels any existing temp basal.
-                let resumingScheduledBasal = duration < .ulpOfOne
-
-                // If a bolus is not finished, fail if not resuming the scheduled basal
-                guard self.state.podState?.unfinalizedBolus?.isFinished() != false || resumingScheduledBasal else {
-                    self.log.info("Not enacting temp basal because podState indicates unfinalized bolus in progress.")
-                    throw PodCommsError.unfinalizedBolus
+                // If pod is bolusing, fail if not resuming the scheduled basal
+                guard !status.deliveryStatus.bolusing || resumingScheduledBasal else {
+                    self.log.info("Canceling temp basal because status return indicates bolus in progress.")
+                    completion(.communication(PodCommsError.unfinalizedBolus))
+                    return
                 }
 
-                // Did the last message have comms issues or is the last delivery status not verified correctly?
-                let uncertainDeliveryStatus = self.state.podState?.lastCommsOK == false || self.state.podState?.deliveryStatusVerified == false
-
-                // Do the cancel temp basal command if currently running a temp basal OR
-                // if resuming scheduled basal delivery OR if the delivery status is uncertain.
-                if self.state.podState?.unfinalizedTempBasal != nil || resumingScheduledBasal || uncertainDeliveryStatus {
-                    let status: StatusResponse
-
-                    // if resuming scheduled basal delivery & an acknowledgement beep is needed, use the cancel TB beep
-                    let beepType: BeepType = resumingScheduledBasal && acknowledgementBeep ? .beep : .noBeepCancel
-                    let result = session.cancelDelivery(deliveryType: .tempBasal, beepType: beepType)
-                    switch result {
-                    case .certainFailure(let error):
-                        throw error
-                    case .unacknowledged(let error):
-                        throw error
-                    case .success(let cancelTempStatus, _):
-                        status = cancelTempStatus
-                    }
-
-                    // If pod is bolusing, fail if not resuming the scheduled basal
-                    guard !status.deliveryStatus.bolusing || resumingScheduledBasal else {
-                        throw PodCommsError.unfinalizedBolus
-                    }
-
-                    guard status.deliveryStatus != .suspended else {
-                        self.log.info("Canceling temp basal because status return indicates pod is suspended.")
-                        throw PodCommsError.podSuspended
-                    }
-                } else {
-                    self.log.info("Skipped Cancel TB command before enacting temp basal")
+                guard status.deliveryStatus != .suspended else {
+                    self.log.info("Canceling temp basal because status return indicates pod is suspended!")
+                    completion(.communication(PodCommsError.podSuspended))
+                    return
                 }
+            } else {
+                self.log.info("Skipped Cancel TB command before enacting temp basal")
+            }
 
-                defer {
-                    self.setState({ (state) in
-                        state.tempBasalEngageState = .stable
-                    })
+            defer {
+                self.setState({ (state) in
+                    state.tempBasalEngageState = .stable
+                })
+            }
+
+            if resumingScheduledBasal {
+                self.setState({ (state) in
+                    state.tempBasalEngageState = .disengaging
+                })
+                session.dosesForStorage() { (doses) -> Bool in
+                    return self.store(doses: doses, in: session)
                 }
+                completion(nil)
+            } else {
+                self.setState({ (state) in
+                    state.tempBasalEngageState = .engaging
+                })
 
-                if resumingScheduledBasal {
-                    self.setState({ (state) in
-                        state.tempBasalEngageState = .disengaging
-                    })
+                var calendar = Calendar(identifier: .gregorian)
+                calendar.timeZone = self.state.timeZone
+                let scheduledRate = self.state.basalSchedule.currentRate(using: calendar, at: self.dateGenerator())
+                let isHighTemp = rate > scheduledRate
+
+                let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, automatic: automatic, acknowledgementBeep: acknowledgementBeep, completionBeep: completionBeep)
+                switch result {
+                case .success:
                     session.dosesForStorage() { (doses) -> Bool in
                         return self.store(doses: doses, in: session)
                     }
                     completion(nil)
-                } else {
-                    self.setState({ (state) in
-                        state.tempBasalEngageState = .engaging
-                    })
-
-                    var calendar = Calendar(identifier: .gregorian)
-                    calendar.timeZone = self.state.timeZone
-                    let scheduledRate = self.state.basalSchedule.currentRate(using: calendar, at: self.dateGenerator())
-                    let isHighTemp = rate > scheduledRate
-
-                    let result = session.setTempBasal(rate: rate, duration: duration, isHighTemp: isHighTemp, automatic: automatic, acknowledgementBeep: acknowledgementBeep, completionBeep: completionBeep)
-
-                    switch result {
-                    case .success:
-                        session.dosesForStorage() { (doses) -> Bool in
-                            return self.store(doses: doses, in: session)
-                        }
-                        completion(nil)
-                    case .unacknowledged(let error):
-                        throw error
-                    case .certainFailure(let error):
-                        throw error
-                    }
+                case .unacknowledged(let error):
+                    self.log.error("Temp basal uncertain error: %@", String(describing: error))
+                    completion(nil)
+                case .certainFailure(let error):
+                    self.log.error("setTempBasal failed: %{public}@", String(describing: error))
+                    completion(.communication(error))
                 }
-            } catch let error {
-                self.log.error("Error during temp basal: %{public}@", String(describing: error))
-                completion(.communication(error as? LocalizedError))
             }
         }
     }
@@ -2436,7 +2506,8 @@ extension OmniBLEPumpManager: AlertSoundVendor {
 extension OmniBLEPumpManager {
     public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
         guard self.hasActivePod else {
-            completion(OmniBLEPumpManagerError.noPodPaired)
+            log.default("Skipping alert acknowledgements with no active pod")
+            completion(nil)
             return
         }
 
@@ -2444,7 +2515,9 @@ extension OmniBLEPumpManager {
             if alert.alertIdentifier == alertIdentifier || alert.repeatingAlertIdentifier == alertIdentifier {
                 // If this alert was triggered by the pod find the slot to clear it.
                 if let slot = alert.triggeringSlot {
-                    if case .some(.suspended) = self.state.podState?.suspendState, slot == .slot6SuspendTimeExpired {
+                    if (self.state.podState?.isSuspended == true || self.state.podState?.lastDeliveryStatusReceived?.suspended == true) &&
+                        slot == .slot6SuspendTimeExpired
+                    {
                         // Don't clear this pod alert here with the pod still suspended so that the suspend time expired
                         // pod alert beeping will continue until the pod is resumed which will then deactivate this alert.
                         log.default("Skipping acknowledgement of suspend time expired alert with a suspended pod")

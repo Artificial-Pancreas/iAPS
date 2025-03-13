@@ -1,7 +1,7 @@
 import AppIntents
 import Foundation
 
-@available(iOS 16.0, *) struct ListStateIntent: AppIntent {
+struct ListStateIntent: AppIntent {
     // Title of the action in the Shortcuts app
     static var title: LocalizedStringResource = "List last state available with iAPS"
 
@@ -31,8 +31,8 @@ import Foundation
             cob: iob_cob.cob,
             unit: stateIntent.settingsManager.settings.units
         )
-        let iob_text = String(format: "%.2f", iob_cob.iob)
-        let cob_text = String(format: "%.2f", iob_cob.cob)
+        // let iob_text = String(format: "%.2f", iob_cob.iob)
+        // let cob_text = String(format: "%.2f", iob_cob.cob)
         return .result(
             value: BG,
             view: ListStateView(state: BG)

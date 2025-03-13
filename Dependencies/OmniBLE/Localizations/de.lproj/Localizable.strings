@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Pumpe Bestätigungstöne";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Vertrauenserinnerungen sind Pieptöne vom Pod, die verwendet werden können, um ausgewählte Befehle zu bestätigen.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Pod Erinnerungen";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Die App konfiguriert eine Erinnerung auf dem Pod, um Dich vor Ablauf des Pods zu benachrichtigen. Legen die Anzahl der Stunden fest, die Du vor Ablauf des Pods benachrichtigt werden möchtest.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Die Ablauf-Erinnerung für den aktuellen Pod.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "Die App benachrichtigt dich, wenn die Insulinmenge im Pod diesen Wert unterschreitet.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Die obigen Erinnerungen ertönen nicht, wenn sich Dein Gerät im Lautlos- oder Nicht-Stören-Modus befindet.\n\nEs gibt andere kritische Pod-Warnungen und -Alarme, die auch dann ertönen, wenn Dein Gerät auf „Lautlos“ oder „Nicht stören“ eingestellt ist.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Insulinabgabe unterbrechen";
 
@@ -273,10 +291,10 @@
 "Play Test Beeps" = "Testtöne abspielen";
 
 /* */
-"Skipping Read Pulse Log due to bolus still in progress." = "Überspringe Lese Pulse Protokoll wegen noch laufendem Bolus.";
+"Skipping Read Pulse Log due to bolus still in progress." = "Impuls-Log kann nicht gelesen werden da die Pumpe zurzeit einen Bolus verabreicht.";
 
 /* */
-"Read Pulse Log" = "Pulse-Log lesen";
+"Read Pulse Log" = "Impuls-Log lesen";
 
 /* */
 "Set Confirmation Beeps to %s" = "Bestätigungston auf %s setzen";
@@ -319,6 +337,9 @@
 
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Temporäre Basalrate setzen";
+
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Ihre Insulinabgabe wird nicht automatisch angepasst, bis die temporäre Basalrate beendet oder abgebrochen wird.";
 
 /* Section header for activity section */
 "Activity" = "Aktivität";
@@ -402,6 +423,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Pod deaktivieren";
 
+/* */
+"Slide to Insert Cannula" = "Streichen um die Kanüle einzuführen";
+
+/* */
+"Slide to Deactivate Pod" = "Streichen um den Pod zu deaktivieren";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deaktivierung.";
 
@@ -435,6 +462,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Füllen Sie einen neuen Pod mit U-100 Insulin (lassen Sie blaue Nadelabdeckung auf dem Pod).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Entfernen Sie die blaue Pod-Nadel Kappe und prüfen Sie die Kanüle. Danach die Klebefolien auf der Rückseite entfernen.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Auf 2 Signaltöne warten.";
 
@@ -459,9 +489,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Setzstelle vorbereiten.";
 
-/* Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Entfernen Sie blaue Pod-Nadel Kappe und prüfen Sie die Kanüle. Danach die Klebefolien auf der Rückseite entfernen.";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Prüfen Sie den Pod, auf der Setzstelle anbringen, dann Prodanbringung bestätigen.";
 
@@ -485,6 +512,9 @@
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Warten Sie, bis die Einführung abgeschlossen ist.";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Verschieben Sie den Schalter unten, um mit der Kanüleneinfügen zu beginnen.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Eingeführt";
@@ -820,3 +850,18 @@
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Pod-Status ablesen";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Fertig";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Diagnose-Infos";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Erweiterten Impuls-Log lesen";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Aktivierungsinformationen";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Ausgelöste Warnungen";

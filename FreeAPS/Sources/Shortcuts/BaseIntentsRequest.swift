@@ -1,11 +1,11 @@
 import Foundation
 import Swinject
 
-@available(iOS 16.0, *) protocol IntentsRequestType {
+protocol IntentsRequestType {
     var intentRequest: BaseIntentsRequest { get set }
 }
 
-@available(iOS 16.0, *) class BaseIntentsRequest: NSObject, Injectable {
+class BaseIntentsRequest: NSObject, Injectable {
     @Injected() var tempTargetsStorage: TempTargetsStorage!
     @Injected() var settingsManager: SettingsManager!
     @Injected() var storage: TempTargetsStorage!
@@ -13,6 +13,10 @@ import Swinject
     @Injected() var carbsStorage: CarbsStorage!
     @Injected() var glucoseStorage: GlucoseStorage!
     @Injected() var apsManager: APSManager!
+    @Injected() var nightscoutManager: NightscoutManager!
+
+    let overrideStorage = OverrideStorage()
+    let coreDataStorage = CoreDataStorage()
 
     let resolver: Resolver
 

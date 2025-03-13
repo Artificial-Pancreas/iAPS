@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Bekreftelseslyder";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Påminnelsesvarsler er pipelyder fra Pod'en som kan brukes til å bekrefte valgte kommandoer når Pod'en ikke er i stillemodus.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Pod Reminders";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "The expiration reminder time for the current Pod.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "The app notifies you when the amount of insulin in the Pod reaches this level.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Sett insulintilførsel på pause";
 
@@ -320,6 +338,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Angi manuell basal";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled.";
+
 /* Section header for activity section */
 "Activity" = "Aktivitet";
 
@@ -402,6 +423,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Deaktiver Pod";
 
+/* */
+"Slide to Insert Cannula" = "Sveip for å sette inn kanyle";
+
+/* */
+"Slide to Deactivate Pod" = "Sveip for å deaktivere Pod";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deaktiverer.";
 
@@ -435,6 +462,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Fyll en ny Pod med U-100 insulin (la den blå hetten være på).";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Fjern Pod'ens blå kanylehette og sjekk kanylen. Fjern deretter papirbeskyttelsen.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Lytt etter 2 pip.";
 
@@ -459,10 +489,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Gjør klart stedet hvor pod skal festes.";
 
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Fjern det blå beskyttelsesdekselet og kontroller kanylen. Fjern deretter papiret fra plasteret.";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Kontroller pod, fest på kroppen, og bekreft at den sitter korrekt.";
 
@@ -486,6 +512,9 @@ Label text for step two of attach pod instructions */
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Vent til innsettingen er fullført.";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Sveip under for å starte innsetting av kanylen.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Kanyle er satt inn";
@@ -603,10 +632,10 @@ Label text for step two of attach pod instructions */
 "No confidence reminders are used." = "Det brukes ingen bekreftelseslyder.";
 
 /* Description for BeepPreference.manualCommands */
-"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used.";
+"Confidence reminders will sound for commands you initiate, like bolus, cancel bolus, suspend, resume, save notification reminders, etc. When the app automatically adjusts delivery, no confidence reminders are used." = "Du vil høre påminnelseslyder for kommandoer du starter, slik som bolus, avbryt bolus, pause, gjenoppta, lagre innstillinger, osv. Når appen automatisk justerer insulinlevering hører du ingen påminnelseslyder.";
 
 /* Description for BeepPreference.extended */
-"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate.";
+"Confidence reminders will sound when the app automatically adjusts delivery as well as for commands you initiate." = "Du vil høre påminnelseslyder når appen automatisk justerer insulinlevering, og for kommandoer du starter.";
 
 /* Label text for temporary basal rate summary */
 "Rate" = "Ratio";
@@ -788,36 +817,51 @@ Label text for step two of attach pod instructions */
 "%@ ago" = "%@ siden";
 
 /* Title string for SilencePodPreference.enabled */
-"Silenced" = "Silenced";
+"Silenced" = "Dempet";
 
 /* Description for SilencePodPreference.disabled */
-"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled.";
+"Normal operation mode where audible Pod beeps are used for all Pod alerts and when confidence reminders are enabled." = "Normal driftsmodus der Pod piper for alle Pod-varslinger og når påminnelsesvarsler er aktivert.";
 
 /* Description for SilencePodPreference.enabled */
-"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
+"All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Pipelyder er slått av for alle Pod-varsler og påminnelsesvarsler er slått av. Pod'en vil kun pipe hvis den slutter å virke og når du ber om test-lyd.\n\n⚠️Advarsel - Når pipelyder er slått av må du passe på å ha Pod'en innenfor Bluetooth-rekkevidde til mobiltelefonen slik at du kan motta varsler på telefonen ved feil på Pod'en.";
 
 /* Help text for Silence Pod view */
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Stillemodus slår av alle pipelyder for Pod'en.";
 
 /* navigation title for Silnce Pod */
-"Silence Pod" = "Silence Pod";
+"Silence Pod" = "Stillemodus";
 
 /* title for pod details page */
-"Pod Details" = "Pod Details";
+"Pod Details" = "Pod-detaljer";
 
 /* Text for previous pod details row" */
-"Previous Pod Details" = "Previous Pod Details";
+"Previous Pod Details" = "Detaljer fra forrige Pod";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "Detaljer for pumpehåndtering";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Retrieving Pump Manager Details...";
+"Retrieving Pump Manager Details..." = "Henter detaljer for pumpehåndtering...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Refresh Pump Manager Details";
+"Refresh Pump Manager Details" = "Oppdater detaljer for pumpehåndtering";
 
 /* Section header for diagnostic section */
-"Diagnostics" = "Diagnostics";
+"Diagnostics" = "Diagnose";
 
 /* Text for read pod status navigation link */
-"Read Pod Status" = "Read Pod Status";
+"Read Pod Status" = "Les Pod-status";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Ferdig";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Pod Diagnostics";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Read Activation Time";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Read Triggered Alerts";

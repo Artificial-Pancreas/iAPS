@@ -23,7 +23,7 @@ class AcknowledgeAlertsTests: XCTestCase {
             let cmd = try AcknowledgeAlertCommand(encodedData: Data(hexadecimalString: "11052f9b5b2f10")!)
             XCTAssertEqual(.acknowledgeAlert,cmd.blockType)
             XCTAssertEqual(0x2f9b5b2f, cmd.nonce)
-            XCTAssert(cmd.alerts.contains(.slot4))
+            XCTAssert(cmd.alerts.contains(.slot4LowReservoir))
         } catch (let error) {
             XCTFail("message decoding threw error: \(error)")
         }

@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Bevestigingsmeldingen met piepjes vanuit de Pod";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Dit zijn meldingen die met piepjes uit de Pod komen en kunnen worden gebruikt ter bevestiging van geselecteerde opdrachten.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Pod herinneringen";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "iAPS configureert melding op de Pod om je op de hoogte te stellen wanneer de Pod verloopt. Stel het aantal uren vooraf in dat je standaard wilt instellen als je een nieuwe Pod koppelt.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "De verloopherinneringstijd voor de huidige Pod.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Als je apparaat stil is of in de Niet storen-modus staat, hoor je de bovenstaande herinneringen niet in de app. Er zijn echter andere belangrijke waarschuwingen voor de Pod die nog steeds in de app verschijnen, zelfs als je apparaat stil is of in de Niet storen-modus staat.\n\nDe Pod maakt ook geluid met piepjes voor alle herinneringen en waarschuwingen, behalve als de Pod is uitgeschakeld.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Onderbreken van insulinetoediening";
 
@@ -320,6 +338,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Stel tijdelijke basaal in";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Je insuline levering zal niet automatisch worden aangepast totdat de tijdelijke basaalstand is beëindigd of is geannuleerd.";
+
 /* Section header for activity section */
 "Activity" = "Activiteit";
 
@@ -402,6 +423,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Deactiveer Pod";
 
+/* */
+"Slide to Insert Cannula" = "Schuif om canule in te brengen";
+
+/* */
+"Slide to Deactivate Pod" = "Schuif om de Pod te deactiveren";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Deactiveren.";
 
@@ -433,7 +460,10 @@
 "Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Vervang Pod nu. De insulinetoediening stopt 8 uur nadat de Pod is verlopen of wanneer er geen insuline meer over is.";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Vul een nieuwe Pod met U-100 insuline. Verwijder de blauwe naalddop niet.";
+"Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Vul een nieuwe Pod met insuline. Verwijder de naalddop NIET!!";
+
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
 
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Luister naar 2 piepjes.";
@@ -459,10 +489,6 @@
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Bereid de infusieplaats voor.";
 
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Verwijder de blauwe naalddop van de Pod en controleer de canule. Verwijder vervolgens de beschermlaag van de hechtstrip.";
-
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Controleer de Pod, breng aan op de infusieplaats en bevestig de plaatsing.";
 
@@ -486,6 +512,9 @@ Label text for step two of attach pod instructions */
 
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Wacht tot het inbrengen is voltooid.";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Schuif om de canule te starten.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Ingebracht";
@@ -722,7 +751,7 @@ Label text for step two of attach pod instructions */
 "Cancel Manual Basal" = "Annuleer handmatige basaal";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insuline\nOnderbroken";
+"Insulin\nSuspended" = "Insuline\nopgeschort";
 
 /* Text for suspend resume button when insulin delivery is suspended */
 "Resume Insulin Delivery" = "Insulinetoediening hervatten";
@@ -821,3 +850,18 @@ Label text for step two of attach pod instructions */
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Lees pompstatus";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "OK";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Diagnostische Pod gegevens";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Pulslog uitlezen";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Activatietijd lezen";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Lees geactiveerde waarschuwingen";

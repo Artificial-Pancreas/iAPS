@@ -16,8 +16,14 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Verdergaan zonder bolus";
 
+/* Continue after added meal without bolus */
+"Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
+
+/* Predictions and Meal summary part of the Bolus View. */
+"Status" = "Status";
+
 /* Alert when adding large amount without bolusing */
-"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWeet je zeker dat je deze hoeveelheid wilt toedienen? \nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWaarschuw bij toedienen van een hoge hoeveelheid zonder te bolussen ";
+"\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWeet je zeker dat je deze hoeveelheid wilt toedienen? \nDeze hoeveelheid is meer dan je instelling van je maximale bolus! \nWaarschuw bij toedienen van een hoge hoeveelheid zonder een bolus toe te dienen ";
 
 /* Header */
 "Enact Bolus" = "Bolus geven";
@@ -40,14 +46,44 @@
 /* Button */
 "Done" = "OK";
 
+/* Bolus View footer */
+"Last loop %@ minutes ago. Complete or cancel this meal/bolus transaction to allow for next loop cycle to run" = "Laatste update is %@ minuten geleden. Voltooi of annuleer deze maaltijd/bolus opdracht om de volgende loopupdate te laten draaien";
+
+/* Calender Option */
+"Display Emojis as Labels" = "Emoji’s als labels weergeven";
+
+/* Calender Option */
+"Display IOB and COB" = "Toon IOB en COB";
+
+/* Apple Watch App setting */
+"Confirm Bolus Faster" = "Bevestig bolus sneller";
+
+/* Setting Section */
+"UI/UX" = "UI/UX";
+
 /*  */
 "Wait please" = "Wachten";
 
 /*  */
 "Agree and continue" = "Akkoord en doorgaan";
 
+/* */
+"Log external insulin" = "Externe insuline registreren";
+
 /* Bolus progress view */
 "of" = "van";
+
+/* Remote Bolus Alert, Part 1 */
+"A Remote Bolus " = "Een bolus op afstand ";
+
+/* Remote Bolus Alert, Part 2 */
+"was delivered" = "zojuist afgeleverd";
+
+/* Remote Bolus Alert, Part 3 */
+" minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " minuten geleden, op afstand gestart vanuit Nightscout, door een verzorger of een ouder. Wil je nog steeds een bolus?\n\nDe verwachte uiteindelijke glucose, als je geen bolus toedient, is: ";
+
+/* Remote Bolus Alert, Title */
+"A Remote Bolus Was Just Delivered!" = "De bolus op afstand is zojuist geleverd!";
 
 /* Headline in enacted pop up (at: at what time) */
 "Enacted at" = "Toegediend op";
@@ -56,7 +92,7 @@
 "Suggested at" = "Voorgesteld op";
 
 /* Headline in enacted pop up (at: at what time) */
-"Error at" = "Foutmelding op";
+"Status at" = "Status op";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Maaltijd overzicht";
@@ -76,6 +112,9 @@
 /* For the  Bolus View pop-up */
 "Fatty Meal" = "Vette maaltijd";
 
+/* Bolus option */
+"Hypo Treatment" = "Hypobehandeling";
+
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Volledige bolus";
 
@@ -84,6 +123,9 @@
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Vette maaltijd factor";
+
+/* Footer */
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Koolhydraten en vorige insuline zijn opgenomen in de uiteindelijke glucosevoorspelling.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Resultaat";
@@ -107,13 +149,22 @@
 "No suggestion" = "Geen suggestie";
 
 /* Replace pod text in Header */
-"Replace pod" = "Vervang Pod";
+"Replace pod" = "Vervang pod";
 
 /* Add carbs screen */
 "Add Carbs" = "Koolhydraten toevoegen";
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Koolhydraten toevoegen ";
+
+/* Home View */
+"Override" = "Aangepast programma";
+
+/* Home View Message if no pump is connected */
+"No Pump" = "No Pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Open";
 
 /*  */
 "Amount Carbs" = "Hoeveelheid koolhydraten";
@@ -164,7 +215,7 @@
 "Basal Insulin and Sensitivity ratio" = "Verhouding basale insuline en gevoeligheid";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefglucose.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Bij een lagere instelling \"Half Basaal Doel\" wordt de basaal verlaagd en de ISF eerder verhoogd, bij een lagere streefwaarde bloedglucose.";
 
 /* */
 " Your setting: " = "Jouw instelling: ";
@@ -220,14 +271,17 @@
 /*  */
 "Autotune" = "Autotune";
 
-/*  */
-"Basal profile" = "Basaal profiel";
+/* Debug option view Dynamic Variables */
+"Dynamic Variables" = "Dynamische variabelen";
 
 /*  */
-"Carb ratio" = "Koolhydraten ratio";
+"Basal profile" = "Basaalprofiel";
 
 /*  */
-"Delete autotune data" = "Verwijder autotune-gegevens";
+"Carb ratio" = "Koolhydraat verhouding";
+
+/*  */
+"Delete autotune data" = "Verwijder autotune gegevens";
 
 /*  */
 "Run now" = "Nu uitvoeren";
@@ -245,16 +299,13 @@
 "Add" = "Toevoegen";
 
 /*  */
-"Basal Profile" = "Basaal profiel";
+"Basal Profile" = "Basaalprofiel";
 
 /* Rate basal profile */
 "Rate" = "Waarde";
 
 /*  */
 "Save on Pump" = "Opslaan op pomp";
-
-/*  */
-"Saving..." = "Opslaan...";
 
 /*  */
 "Schedule" = "Schema";
@@ -266,13 +317,13 @@
 "Time" = "Tijd";
 
 /* */
-"Calculated Ratio" = "Gecalculeerde ratio";
+"Calculated Ratio" = "Berekende verhouding";
 
 /* Carb Ratios header */
 "Carb Ratios" = "Koolhydraten ratio's";
 
 /*  */
-"Ratio" = "Ratio";
+"Ratio" = "Waarde";
 
 /*  */
 "Autosens" = "Gevoeligheidsdetectie (Autosens)";
@@ -302,6 +353,9 @@
 Enact a temp Basal or a temp target */
 "Enact" = "Uitvoeren";
 
+/* Start a temp target or a profile override */
+"Start" = "Start";
+
 /* */
 "Manual Temp Basal" = "Handmatige tijdelijke basaal";
 
@@ -324,7 +378,7 @@ Enact a temp Basal or a temp target */
 "Invalid URL" = "Ongeldige URL";
 
 /*  */
-"Local glucose source" = "Lokale glucose bron";
+"Local glucose source" = "Lokale glucosebron";
 
 /* Header */
 "Nightscout Config" = "Nightscout instellingen";
@@ -358,6 +412,9 @@ Enact a temp Basal or a temp target */
 
 /* Allow remote control from NS */
 "Remote control" = "Afstandsbediening";
+
+/* Allow remote control from NS */
+"Allow Remote control of iAPS" = "Toestaan dat iAPS op afstand beheerd wordt";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nCheck nu al je nieuwe instellingen:\n\n* Basaal instellingen\n * Koolhydraat ratio's\n * Doel glucose waarde\n * Insuline sensitiviteit\n * DIA\n\n in iAPS instellingen > Configuratie.\n\nSlechte of ongeldige profielinstellingen kunnen  desastreuze effecten hebben!";
@@ -402,10 +459,13 @@ Enact a temp Basal or a temp target */
 "Add Medtronic" = "Medtronic toevoegen";
 
 /* Add Omnipod pump */
-"Add Omnipod" = "Omnipod toevoegen";
+"Add Omnipod" = "Omnipod Eros toevoegen";
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
+
+/* View/Header when pod expired */
+"Replace" = "Vervang";
 
 /* Insulin model */
 "Model" = "Model";
@@ -428,8 +488,57 @@ Enact a temp Basal or a temp target */
 /* Max setting */
 "Max Bolus" = "Max bolus";
 
+/* Insulin alert message */
+"Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Verifieer dat je de juiste insuline concentratie hebt geselecteerd voordat je opslaat. \n\nHet insuline patroon geeft de concentratie in units per millimeter (U100 bevat 100 eenheden per millimeter, dit is de standaard concentratie).\n\nDe juiste selectie is noodzakelijk voor de juiste dosering.";
+
+/* Insulin Concentration View */
+"Concentration" = "Concentratie";
+
+/* Insulin Concentration View */
+"Insulin Concentration" = "Insuline concentratie";
+
+/* Insulin Concentration View */
+"Change Insulin" = "Wijzig insuline";
+
+/* Insulin Concentration View */
+"Insulin diluted to" = "Insuline verdund naar";
+
+/* Insulin Concentration View */
+"standard concentration:" = "standaard concentratie:";
+
+/* Insulin Concentration View */
+"units per ml" = "units per ml";
+
+/* Insulin Concentration View */
+"Standard concentration (U 100)" = "Standaard concentratie (U 100)";
+
+/* Insulin Concentration View */
+"Insulin concentration increased to" = "Insuline concentratie verhoogd naar";
+
+/* Insulin Concentration View */
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Kan niet opslaan naar pomp. Probeer opnieuw wanneer de pomp geen bolus toedient.";
+
+/* Insulin Concentration View */
+"Saved" = "Opgeslagen";
+
+/* Label inusulin concentration, units per ml */
+"U100" = "U100";
+
+/* Label inusulin concentration, units per ml */
+"U200" = "U200";
+
+/* Label inusulin concentration, units per ml */
+"U50" = "U50";
+
+/* Label inusulin concentration, units per ml */
+"U10" = "U10";
+/* Debug option, allow U50 and U10 (diluted insulin) */
+"Allow diluted insulin concentration settings" = "Sta verdunde insuline concentratie instellingen toe";
 /* Max setting */
 "Max Carbs" = "Max koolhydraten";
+
+/* Max carbs description */
+"Maximum amount of carbs (g) you can add each entry" = "Maximale hoeveelheid koolhydraten (g) die je elke invoer kunt toevoegen";
 
 /* */
 "Pump Settings" = "Pomp instellingen";
@@ -507,6 +616,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Apparaten toevoegen";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Knop profieloverschrijving / knop tijdelijk streefdoel";
+
+/* */
 "Glucose Target" = "Glucose streefwaarde";
 
 /* */
@@ -517,6 +629,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "ISF";
+
+/* */
+"% Override" = "% Aangepast programma";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "De app Garmin Connect moet geïnstalleerd zijn om iAPS te kunnen gebruiken. \nGa naar de App Store om deze te downloaden.";
@@ -589,6 +704,24 @@ Enact a temp Basal or a temp target */
 
 /* Treatments list */
 "Treatments" = "Behandelingen";
+
+/* Add Insulin */
+"Add Insulin" = "Voeg insuline toe";
+
+/* Add Glucose */
+"Add Glucose" = "Voeg glucose toe";
+
+/* New Glucose */
+"New Glucose" = "Nieuwe glucose";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Behandeling";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default  📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Geen";
 
 /* " min" in Treatments list */
 " min" = "min";
@@ -678,7 +811,8 @@ Enact a temp Basal or a temp target */
 "About the Process" = "Over de werkwijze";
 
 /* */
-"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg ervoor dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Als er andere apps zijn die via bluetooth verbinding maken met de sensor dan moeten deze uitgeschakeld of verwijderd worden. \n\n Je kunt maar één app gebruiken die communiceert met de sensor via bluetooth. Druk vervolgens op de knop \"koppelen en verbinden\" hieronder om het proces te starten. Houd er rekening mee dat de bluetooth-verbinding tot enkele minuten kan duren voordat deze begint te werken.";
+"Please make sure that your Libre 2 sensor is already activated and finished warming up. If you have other apps connecting to the sensor via bluetooth, these need to be shut down or uninstalled. \n\n You can only have one app communicating with the sensor via bluetooth. Then press the \"pariring and connection\" button below to start the process. Please note that the bluetooth connection might take up to a couple of minutes before it starts working." = "Zorg dat je Libre 2-sensor al geactiveerd is en klaar is met opwarmen. Andere apps die via bluetooth met de sensor verbinden, moeten uitgeschakeld of verwijderd worden.\n
+Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor communiceert. Druk op \"Koppelen en verbinden\" om te starten. Het kan een paar minuten duren voordat de bluetooth-verbinding werkt.";
 
 /* */
 "Pairinginfo" = "Koppeling informatie";
@@ -735,7 +869,7 @@ Enact a temp Basal or a temp target */
 "(Snoozed)" = "(Gesluimerd)";
 
 /* Glucose: %@ */
-"Glucose: %@" = "Bloedsuiker: %@";
+"Glucose: %@" = "Glucosewaarde: %@";
 
 /* Transmitter: %@%% */
 "Transmitter: %@%%" = "Zender: %@%%";
@@ -804,7 +938,7 @@ Enact a temp Basal or a temp target */
 "Sensor Footer checksum" = "Sensor voettekst controlesom";
 
 /* */
-"Last Blood Sugar prediction" = "Laatste bloedsuikervoorspelling";
+"Last Blood Sugar prediction" = "Laatste glucosewaarde-voorspelling";
 
 /* */
 "CurrentBG" = "Huidige BG";
@@ -813,7 +947,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Sensor info";
 
 /* */
-"Sensor Age" = "Sensor leeftijd";
+"Sensor Life-Span" = "Sensor levensduur";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Bij gebruik van %@ weet iAPS niet welk type sensor wordt gebruikt of hoe lang de sensor meegaat.";
 
 /* */
 "Sensor Age Left" = "Sensor nog te gebruiken";
@@ -932,8 +1069,93 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "Hoog";
 
+/* TIR Chart */
+"Very High" = "Erg hoog";
+
+/* TIR Chart */
+"Very Low" = "Erg laag";
+
 /* */
 "glucose" = "glucose";
+
+/* Bolus shortcut */
+"Enter a Bolus Amount" = "Voer een bolus hoeveelheid in";
+
+/* Bolus shortcut */
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Je huidige glucose is %@. Weet je zeker dat je een %@ E insuline wilt bolussen?";
+
+/* Bolus shortcut */
+"A bolus command of " = "Een bolus commando van ";
+
+/* Bolus shortcut */
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " E van insuline is verzonden naar iAPS. Verifieer in de iAPS app of in Nightscout zodra de bolus is afgeleverd.";
+
+/* Bolus shortcut. Error */
+"too small bolus amount" = "te kleine bolus hoeveelheid";
+
+/* Bolus shortcut. Error */
+"Bolus Shortcuts are disabled in iAPS settings" = "Bolus snelkoppelingen zijn uitgeschakeld in de iAPS instellingen";
+
+/* Bolus shortcut */
+"Bolus Amount in U" = "Bolus hoeveelheid in E";
+
+/* Bolus shortcut. Setting */
+"Allow iOS Bolus Shortcuts" = "iOS bolus snelkoppelingen toestaan";
+
+/* Bolus shortcut setting. Header */
+"iOS Shortcuts" = "iOS Snelkoppelingen";
+
+/* Bolus shortcut. Pop-up */
+"If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "Als je deze instelling aanzet kun je iOS sneltoetsen en de bijbehorende automatiseringen gebruiken om een bolus te activeren in iAPS.\n\nLet op: iOS sneltoetsen werken ook met Siri!\n\nAls je bolus snelkoppelingen wilt gebruiken, zorg er dan voor dat je 'Hey Siri' uitzet in de iPhone Siri instellingen, om te voorkomen dat je per ongeluk een bolus activeert met Siri.\n\nAls je 'Hey Siri' niet uitschakelt, kan de iAPS bolussnelkoppeling worden geactiveerd met de uitspraak 'Hey Siri, iAPS Bolus'. Als je de bolus snelkoppeling met Siri activeert, word je gevraagd om een hoeveelheid en een bevestiging voordat het bolus commando naar iAPS kan worden gestuurd.";
+
+/* Bolus shortcut. Setting */
+"Max allowed bolus amount using shortcuts " = "Max toegestane bolus hoeveelheid met snelkoppelingen ";
+
+/* Bolus shortcut. Error */
+"not available" = "niet beschikbaar";
+
+/* Override Shortcut */
+"Activate an Override Preset" = "Activeer een overschrijvingsvoorinstelling";
+
+/* Override Shortcut */
+"Allow to activate an overrride preset." = "Toestaan om een overschrijvingsvoorinstelling te activeren.";
+
+/* Override Shortcut */
+"Which override preset would you like to activate?" = "Welke vooraf ingestelde overschrijving wil je activeren?";
+
+/* Override Shortcut */
+"Are you sure you want to activate the Override Preset %@?" = "Weet je zeker dat je een overschrijvingsvoorinstelling %@ wilt activeren?";
+
+/* Override Shortcut */
+"The Profile Override" = "De profieloverschrijving";
+
+/* Override Shortcut */
+"is now activated" = "is nu geactiveerd";
+
+/* Override Shortcut */
+"Cancel active override" = "Actieve profieloverschrijving annuleren";
+
+/* Override Shortcut */
+"Override canceled" = "Overschrijven geannuleerd";
+
+/* Override Shortcut */
+"Activates an %@ Override Preset" = "Activeer een %@ overschrijvingsvoorinstelling";
+
+/* Suspend/Resume Shortcut */
+"Choose what to do with your pump" = "Kies wat je moet doen met je pomp";
+
+/* Suspend/Resume Shortcut */
+"Are you sure you want to %@ your pump?" = "Weet u zeker dat je pomp wilt %@?";
+
+/* Suspend/Resume Shortcut */
+"Pump command" = "Pomp opdracht";
+/* Suspend/Resume Shortcut */
+"enacted in iAPS" = "in iAPS ingesteld";
+
+/* Temp Basal Shortcut */
+"Temp basal Amount in U/h" = "Tijdelijk basaal hoeveelheid in E/uur";
+
+
 
 /* */
 "Schedule " = "Schema ";
@@ -1125,13 +1347,25 @@ Enact a temp Basal or a temp target */
 /* Online or internal server */
 "Online or internal server" = "Online of interne server";
 
+/* Pump Error Message */
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Kan het nieuwe loopcyclus advies niet uitvoeren, omdat er een bolus bezig is. Wacht op de volgende cyclus";
+
+/* Pump Error */
+"Pump is Busy." = "Je pomp is bezig.";
+
+/* Alert when bolus is already in progress (tapping the bolus button) */
+"Bolus already in Progress!" = "Er is al een bolus actief!";
+
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
 "Developer" = "Ontwikkelaar";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "NS Upload profiel";
+"NS Upload Profile and Settings" = "NS upload-profiel en instellingen";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Verwijder alle NS overschrijvingen";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS geüpload profiel";
@@ -1154,8 +1388,11 @@ Enact a temp Basal or a temp target */
 /* Debug option view Pump History */
 "Pump History" = "Pomp geschiedenis";
 
+/* Debug option view Temp Basals */
+"Temp Basals" = "Tijdelijk basaal";
+
 /* Debug option view Target Ranges */
-"Target ranges" = "Doelbereiken";
+"Targets ranges" = "Doelbereiken";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Tijdelijke doelen";
@@ -1177,6 +1414,9 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Ingevoerde meldingen";
+
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overschrijvingen niet geüpload";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1257,6 +1497,9 @@ Enact a temp Basal or a temp target */
 /* Description */
 "Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Dit laat je vet en eiwit omzetten in toekomstige koolhydraten met behulp van de Warschau-formule. Deze formule verdeelt de koolhydraten over een zelf in te stellen tijdsduur van 5-12 uur.\n\nDe vertraging is de tijd tussen nu en de eerste toekomstige koolhydrateninvoer. Het interval in minuten is het aantal minuten tussen elke invoer. Als je een korter interval kiest, wordt het resultaat gelijkmatiger. Goede keuzes zijn bijvoorbeeld 10, 15, 20, 30 of 60 minuten.\n\nDe aanpassingsfactor bepaalt het effect van vet en eiwit op de waarden. Een factor van 1,0 betekent volledig effect (de oorspronkelijke Warschau-methode), en 0,5 betekent half effect.\n\nLet op dat je mogelijk moet opmerken dat je normale koolhydratenverhouding moet verhogen tot een hoger getal wanneer je vet en eiwit toevoegt. Daarom is het het beste om te beginnen met een factor van ongeveer 0,5 om het jezelf makkelijk te maken.\n\nStandaardinstellingen zijn een tijdslimiet van 8 uur, een interval van 30 minuten, een factor van 0,5 en een vertraging van 60 minuten";
 
+/* Fat/Protein additional info */
+"\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nKoolhydraateenheden die te klein worden (0,6 g of minder) worden uitgesloten en de equivalenten boven 0,6 maar onder 1 worden naar boven afgerond op 1. Met een hogere tijdsintervalinstelling krijg je minder eenheden met een hogere hoeveelheid koolhydraten.";
+
 /* FPU Settings Title */
 "Fat and Protein" = "Vetten & eiwitten";
 
@@ -1275,8 +1518,14 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Fat And Protein Conversion" = "Omrekening vet en eiwit";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Vlakke CGM-metingen negeren";
+
 /* Service Section */
 "Profile Override" = "Overschrijf profiel";
+
+/* Extend max override percentage */
+"Max Override 400%" = "Max overschrijving 400%";
 
 /* */
 "Override Profiles" = "Overschrijvings profielen";
@@ -1301,6 +1550,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "SMBs uitschakelen";
 
+/* */
+"End the Override with next Meal" = "Beëindig overschrijving bij volgende maaltijd";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normaal profiel";
 
@@ -1311,13 +1563,16 @@ Enact a temp Basal or a temp target */
 "Profiles" = "Profielen";
 
 /* */
+"Advanced Settings" = "Geavanceerde instellingen";
+
+/* */
 "More options" = "Meer opties";
 
 /* */
 "Schedule when SMBs are Off" = "Schema wanneer SMB's uit staan";
 
 /* */
-"Change ISF and CR" = "Wijzig ISF en CR";
+"Change ISF and CR and Basal" = "Verander ISF en CR en Basaal";
 
 /* */
 "Change ISF" = "Wijzig ISF";
@@ -1332,10 +1587,16 @@ Enact a temp Basal or a temp target */
 "UAM SMB Minutes" = "UAM SMB Minuten";
 
 /* */
+"Override Max IOB" = "Max IOB overschrijven";
+
+/* */
 "Start new Profile" = "Start nieuw profiel";
 
 /* */
 "Save as Profile" = "Bewaar als profiel";
+
+/* */
+"Save as preset" = "Bewaar als voorinstelling";
 
 /* Alert */
 "Cancel Profile Override" = "Profieloverschrijving annuleren?";
@@ -1388,6 +1649,15 @@ Enact a temp Basal or a temp target */
 /* */
 "Meal Presets" = "Maaltijd voorinstellingen";
 
+/* Back button */
+"Back" = "Terug";
+
+/* Search Saved Food presets */
+"Search" = "Zoeken";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "Nieuw";
+
 /* */
 "Empty" = "Leeg";
 
@@ -1411,6 +1681,15 @@ Enact a temp Basal or a temp target */
 
 /* Watch Config Option */
 "Display Protein & Fat" = "Toon vet en eiwit";
+
+/* Time of new meal entry */
+"Now" = "Nu";
+
+/* Display future data table entries */
+"Show Future" = "Toon toekomstig";
+
+/* Hide future data table entries */
+"Hide Future" = "Verberg toekomstig";
 
 /* ----------------------- New Bolus Calculator ---------------------------*/
 /* Warning about bolus recommendation. Title */
@@ -1685,6 +1964,12 @@ Enact a temp Basal or a temp target */
 /* Average BG = */
 "Average" = "Gemiddeld";
 
+/* TIR Preview Headline */
+"Time In Range" = "Tijd binnen bereik (TIR)";
+
+/* Average Loop Interval in minutes */
+"Average Interval" = "Gemiddelde interval";
+
 /* Median BG */
 "Median" = "Mediaan";
 
@@ -1727,6 +2012,15 @@ Enact a temp Basal or a temp target */
 /* Loop Errors in statPanel */
 "Errors" = "Foutmeldingen";
 
+/* Loop Statistics pop-up description */
+"Success = Started / Completed (loops)" = "Succes = gestarte / voltooide (loops)";
+
+/* Loop Statistics pop-up */
+"Most Frequent Error" = "Meest voorkomende fout";
+
+/* Loop Statistics pop-up */
+"Non-completed Loops" = "Niet voltooide Loops";
+
 /* Average loop interval */
 "Interval" = "Interval";
 
@@ -1764,13 +2058,40 @@ Enact a temp Basal or a temp target */
 "Display Loop Cycle statistics" = "Loop cyclusstatistieken tonen";
 
 /* Description for Display Loop statistics */
-"Displays Loop statistics in the statPanel in Home View" = "Laat Loop statistieken zien in het statPanel in de Home weergave";
+"Displays Loop statistics in the statPanel in Home View" = "Laat statistieken zien in het statPanel in de Home weergave";
 
 /* Description for Override HbA1c unit */
 "Change default HbA1c unit in statPanlel. The unit in statPanel will be updateded with next statistics.json update" = "Standaard HbA1c-eenheid in statPanel wijzigen. De eenheid in statPanel zal worden bijgewerkt met de volgende statistics.json update";
 
 /* HbA1c for all glucose storage days */
 "all" = "alle ";
+
+/* Active Insulin View */
+"Active Insulin" = "Actieve insuline";
+
+/* Active Insulin View */
+"Time with negative insulin" = "Tijd met negatieve insuline";
+
+/* Active Insulin View */
+"Insulin compared to yesterday" = "Insuline vergeleken met gisteren";
+
+/* Active Insulin View */
+"Insulin compared to average" = "Insuline vergeleken met gemiddelde";
+
+/* Active Insulin View */
+"Average Insulin 10 days" = "Gemiddelde insuline 10 dagen";
+
+/* Active Insulin View */
+"TDD yesterday" = "TDD gisteren";
+
+/* Active Insulin View */
+"TDD 2 days ago" = "TDD 2 dagen terug";
+
+/* Active Insulin View */
+"TDD 3 days ago" = "TDD 3 dagen terug";
+
+/* Active Carbohydrates View */
+"Active Carbohydrates" = "Actieve koolhydraten";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -1788,9 +2109,454 @@ Enact a temp Basal or a temp target */
 "Experimental" = "Experimenteel";
 /* Smoothing of CGM readings */
 "Smooth Glucose Value" = "Vloeiende glucosewaarde";
+/* ------------------------------------------- Sharing -------------------------------------------------------*/
+/* Setting Title */
 
-/* -----------------------------------------------------------------------------------------------------------
+"Sharing" = "Delen van statistieken";
 
+/* Share and Backup page header */
+"Share and Backup" = "Delen en back-up";
+
+/* Section 1 title */
+"Upload settings and statistics" = "Upload instellingen en statistieken";
+
+/* On-off toggle */
+"Share and Backup all of your Settings and Statistics" = "Deel en back-up al uw instellingen en statistieken";
+
+/* Title of dropdown menu */
+"Sex" = "Geslacht";
+
+/* Sex dropdown menu option */
+"Woman" = "Vrouw";
+
+/* Sex dropdown menu option */
+"Man" = "Man";
+
+/* Sex dropdown menu option */
+"Other" = "Anders";
+
+/* Sex dropdown menu option */
+"Secret" = "Geheim";
+
+/* Title of birth date field */
+"Birth Date" = "Geboortedatum";
+
+/* Share and Backup info text */
+"\nIf you enable \"Share and Backup\" daily backups of your settings and statistics will be made to online database.\n\nMake sure to copy and save your recovery token below. The recovery token is required to import your settings to another phone when using the onboarding view." = "\nAls u \"Delen en back-uppen\" inschakelt, worden er dagelijks back-ups van uw instellingen en statistieken gemaakt in een online database.\n\nZorg ervoor dat u uw hersteltoken hieronder kopieert en opslaat. Het hersteltoken is nodig om uw instellingen te importeren naar een andere telefoon wanneer u de onboarding-weergave gebruikt.";
+
+/* Section title if sharing off */
+"Share Bare Minimum" = "Deel alleen het minimale";
+
+/* Minimum share toggle */
+"Just iAPS version number" = "Alleen iAPS versienummer";
+
+/* Share info text */
+"Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Elk stukje informatie dat je wilt delen, wordt anoniem geüpload. Om dubbele uploads te voorkomen, worden de gegevens geïdentificeerd met een unieke willekeurige tekenreeks die op je telefoon is opgeslagen, het hersteltoken.";
+
+/* Token section title */
+"Your recovery token" = "Je herstelcode";
+
+/* Token display button */
+"Tap to display" = "Tik om weer te geven";
+
+/* Token copy button */
+"Long press to copy" = "Lang ingedrukt houden om te kopiëren";
+
+/* Link to statistics button */
+"View Personal Statistics" = "Persoonlijke statistieken bekijken";
+
+/* */
+"Your identifier" = "Jouw identificatie";
+
+/* */
+"Share your data anonymously" = "Deel je gegevens anoniem";
+
+/* ——————————Contact Image ————————*/
+/* Contact Image, contacts list - prefix before the contact given name */
+
+"Contact" = "Contact";
+
+/* Contact Image, settings, header of the contacts list */
+"Contacts" = "Contacten";
+
+/* Contact Image, settings, save your changes reminedr */
+"Don't forget to save your changes." = "Vergeet niet om je wijzigingen op te slaan.";
+
+/* Contact Image, settings, message about need to access contacts */
+"iAPS needs access to your contacts for this feature to work" = "iAPS heeft toegang tot jouw contacten nodig om deze functie te laten werken";
+
+/* Contact Image, settings, button to grant access to contacts */
+"Grant iAPS access to contacts" = "Geef toegang tot iAPS aan contacten";
+
+/* Contact Image, settings, message when access to contacts denied */
+"Access to contacts denied" = "Toegang tot contactpersonen geweigerd";
+
+/* Contact Image, settings, message when access to contacts restricted */
+"Access to contacts is restricted (parental control?)" = "De toegang tot contacten is beperkt (ouderlijk toezicht?)";
+
+/* Contact Image, settings, message when access to contacts is in unknown state */
+"Access to contacts - unknown state" = "Toegang tot contacten - onbekende staat";
+
+/* Contact Image, settings, short description of the feature */
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Contactafbeelding kan gebruikt worden om live updates van iAPS te krijgen tot jouw Apple Watch Contact complicatie en/of jouw iPhone Contact widget.";
+
+/* Contact Image, settings, main header */
+"Contact Image" = "Contactfoto";
+
+/* Contact Image, settings, label for the layout picker */
+"Layout" = "Layout";
+
+/* Contact Image, settings, single layout name */
+"Single" = "Enkel";
+
+/* Contact Image, settings, split layout name */
+"Split" = "Splitsen";
+
+/* Contact Image, settings, outer ring - don't show */
+"DontShowRing" = "Verbergen";
+
+/* Contact Image, settings, outer ring - Loop status */
+"LoopStatusRing" = "Loop status";
+
+/* Contact Image, settings, outer ring - IOB */
+"IOBRing" = "IOB";
+
+/* Contact Image, settings, outer ring - COB */
+"COBRing" = "COB";
+
+/* Contact Image, settings, outer ring - IOB+COB */
+"IOB+COBRing" = "IOB+COB";
+
+/* Contact Image, settings, label for the primary value picker */
+"Primary" = "Primair";
+
+/* Contact Image, settings, label for the top value picker */
+"Top" = "Bovenaan";
+
+/* Contact Image, settings, label for the bottom value picker */
+"Bottom" = "Onderaan";
+
+/* Contact Image, settings, header for the outer ring section */
+"Ring" = "Ring";
+
+/* Contact Image, settings, label for the outer ring picker */
+"Outer" = "Buitenste";
+
+/* Contact Image, settings, label for the ring width picker */
+"Width" = "Breedte";
+
+/* Contact Image, settings, label for the ring gap picker */
+"Gap" = "Afstand";
+
+/* Contact Image, settings, header for the font section */
+"Font" = "Font";
+
+/* Contact Image, settings, label for the font size picker */
+"Size" = "Grootte";
+
+/* Contact Image, settings, label for the secondary font size picker */
+"Secondary size" = "Secundaire grootte";
+
+/* Contact Image, settings, label for the font tracking picker (tracking - horizontal spacing between letters) */
+"Tracking" = "Tracking";
+
+/* Contact Image, settings, label for the font weight picker */
+"Weight" = "Dikte";
+
+/* Contact Image, settings, label for the dark-mode switcher */
+"Dark mode" = "Nachtmodus";
+
+/* Contact Image, settings, tighter font tracking */
+"TighterFontTracking" = "Strakker";
+
+/* Contact Image, settings, tight font tracking */
+"TightFontTracking" = "Strak";
+
+/* Contact Image, settings, normal font tracking */
+"NormalFontTracking" = "TIR ";
+
+/* Contact Image, settings, wide font tracking */
+"WideFontTracking" = "Breed";
+
+/* Contact Image, settings, light font weight */
+"LightFontWeight" = "Licht";
+
+/* Contact Image, settings, regular font weight */
+"RegularFontWeight" = "Standaard";
+
+/* Contact Image, settings, medium font weight */
+"MediumFontWeight" = "Medium";
+
+/* Contact Image, settings, semibold font weight */
+"SemiboldFontWeight" = "Semi-vetgedrukt";
+
+/* Contact Image, settings, bold font weight */
+"BoldFontWeight" = "Vetgedrukt";
+
+/* Contact Image, settings, black font weight (black is "very bold") */
+"BlackFontWeight" = "Extra dik";
+
+/* Contact Image, settings, don't display any value */
+"NoneContactValue" = "Geen";
+
+/* Contact Image, settings, Glucose (data to display) */
+"GlucoseContactValue" = "Glucosewaarde";
+
+/* Contact Image, settings, Eventual BG (data to display) */
+"EventualBGContactValue" = "Uiteindelijke BG";
+
+/* Contact Image, settings, Delta (data to display) */
+"DeltaContactValue" = "Delta";
+
+/* Contact Image, settings, Trend (data to display) */
+"TrendContactValue" = "Trend";
+
+/* Contact Image, settings, Last loop time (data to display) */
+"LastLoopTimeContactValue" = "Laatste loop tijd";
+
+/* Contact Image, settings, COB (data to display) */
+"COBContactValue" = "COB";
+
+/* Contact Image, settings, IOB (data to display) */
+"IOBContactValue" = "IOB";
+
+/* Contact Image, settings, loop status (data to display) */
+"LoopStatusContactValue" = "Loop status";
+
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "De Dana-pomp staat het niet toe om de maximale basaal- en boluswaarden aan te passen. Stel deze in bij de arts/doktersinstellingen van de pomp. Als je de instellingen opslaat, worden de nieuwste waarden van de pomp opgehaald";
+
+/* --------- Auto ISF --------- */
+/* */
+
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Dynamische ISF is uitgeschakeld omdat Auto ISF is ingeschakeld";
+
+/* */
+"Default value: 1.2 The upper limit of ISF adjustment" = "Standaardwaarde: 1.2 De bovengrens van ISF aanpassing";
+
+
+/* */
+"Default value: 0.8 The lower limit of ISF adjustment" = "Standaardwaarde: 0.8 De onderste limiet van ISF aanpassing";
+
+/* */
+"Auto ISF Max" = "Auto ISF Max";
+
+/* */
+"Auto ISF Min" = "Auto ISF Min";
+
+/* */
+"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Heeft een EatingSoon-specifiek glucosedoel nodig, ingesteld door een profieloverschrijving of een tijdelijke doelwaarde";
+
+/* */
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Zodra dit doel wordt geannuleerd, zal de B30 hoge TBR worden geannuleerd";
+
+/* */
+"In order to activate B30 a minimum manual Bolus needs to be given" = "Om B30 te activeren, moet er een minimale handmatige bolus worden toegediend";
+
+/* */
+"You can specify how long B30 run and how high it is" = "Je kunt aangeven hoe lang B30 actief is en hoe hoog het is";
+
+/* */
+"Absolute Safety TBR " = "Absolute veiligheid TBR ";
+
+/* */
+"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Hoeveelheid in eenheden per uur (U/uur) van de kleine veiligheids-TBR, die wordt toegediend om ketoacidose te voorkomen. Zal worden beperkt tot een minimum van 0 U/uur en een maximum van 2 U/uur!";
+
+/* */
+"Enable Keto protection with pre-defined TBR" = "Schakel keto-bescherming in met een vooraf gedefinieerde TBR";
+
+/* */
+"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Moet een absolute TBR tussen 0 en 2 U/uur worden gespecificeerd in plaats van een percentage van de huidige basaalstand";
+
+/* */
+"Safety TBR in %" = "Veiligheids TBR in %";
+
+/* */
+"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Hoeveelheid van de kleine veiligheids-TBR in % van de profiel-basaalstand, die wordt toegediend om ketoacidose te voorkomen. Zal worden beperkt tot een minimum van 5% en een maximum van 50%!";
+
+/* */
+"Variable Keto Protection" = "Variabele keto bescherming";
+
+/* */
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Indien geactiveerd, treedt de kleine veiligheids-TBR in werking wanneer de IOB zich in het negatieve bereik bevindt, alsof er gedurende één uur geen basale insuline is toegediend. Indien gedeactiveerd en statisch ingeschakeld is, wordt elke Zero Temp vervangen door de kleine TBR.";
+
+/* */
+"Enable Keto Protection" = "Schakel keto-bescherming in";
+
+/* */
+"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Deze functie stelt een kleine, instelbare tijdelijke basaalstand (TBR) in ter vervanging van een Zero Temp (0% basaal), altijd of onder bepaalde voorwaarden.\n\nWaarom?\nBij een 0% TBR kan ketoacidose ontstaan, zoals blijkt uit sportonderzoek: langdurig geen basale insuline kan spierproblemen veroorzaken.\n \nHoe werkt het?\nDe veiligheids-TBR verkleint dit risico.\n- Zonder variabele bescherming: altijd actief.\n- Met variabele bescherming: alleen als de actieve basale en bolusinsuline (IOB) negatief afwijkt van de huidige basaalstand.\n\nZo blijft er altijd wat insuline beschikbaar om ketoacidose te voorkomen.";
+
+/* */
+"B30 Settings" = "B30 Instellingen";
+
+/* */
+"Duration of increased B30 basal rate" = "Duur van de verhoogde B30 basaalstand";
+
+/* */
+"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Duur van de verhoogde basaalstand die de infusieplaats verzadigt met insuline. Standaard 30 minuten, zoals bij B30. De EatingSoon tijdelijke doelwaarde (TT) moet minimaal gedurende deze tijd actief zijn, anders stopt B30 zodra de TT afloopt.";
+
+/* */
+"B30 Basal rate increase factor" = "B30-verhogingsfactor voor de basaalstand";
+
+/* */
+"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor waarmee je normale basaalstand wordt vermenigvuldigd voor B30. De maximale basaalstand die wordt toegepast, is de maximale basaalinstelling van je pomp. Standaardwaarde is 5.";
+
+/* */
+"Upper Delta limit" = "Bovenste Delta-limiet";
+
+/* */
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 8 mg/dl (0,5 mmol/l).";
+
+/* */
+"Upper BG limit" = "Bovenste BG limiet";
+
+/* */
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 130 mg/dl (7,2 mmol/l).";
+
+/* */
+"Target Level for B30 to be enacted" = "Doelwaarde voor activering van B30";
+
+/* */
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Om de B30-aanpassing te starten, moet een EatingSoon Override Target (of een tijdelijke doelwaarde) worden geactiveerd. De doelwaarde moet onder deze instelling liggen om B30 te laten starten. Standaard is dit 90 mg/dl. Let op: Als je de EatingSoon-doelwaarde annuleert, stopt de B30-basaalstand automatisch.";
+
+/* */
+"Minimum Start Bolus size" = "Minimale bolus omvang";
+
+/* */
+"Minimum manual bolus to start a B30 adaption." = "Minimale handmatige bolus om een B30 aanpassing te starten.";
+
+/* */
+"Activate B30" = "Activeer B30";
+
+/* */
+"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Hiermee wordt een verhoogde basaalstand ingeschakeld na een EatingSoon Override Target (of een tijdelijke doelwaarde) en een handmatige bolus. Dit helpt de infusieplaats te verzadigen met insuline, waardoor de insulineabsorptie verbetert en SMB’s (Smart Micro Boluses) na een maaltijd zonder koolhydraten tellen effectiever worden.";
+
+/* */
+"ISF weight while BG decelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
+
+/* */
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Dit is de waarde die wordt toegepast terwijl je glucose verlaagt en ISF verzwakt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.1 kan een goed uitgangspunt zijn.";
+
+/* */
+"ISF weight while BG accelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
+
+/* */
+"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Standaard waarde: 0. Dit is de waarde die wordt toegepast tijdens het versnellen van glucose en dat ISF versterkt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.02 is een veilig beginpunt, van waaruit je kunt bewegen. Gebruikelijke instellingen zijn ongeveer 0.15!";
+
+/* */
+"Duration ISF postprandial adaption" = "Duur van de ISF-aanpassing na de maaltijd (postprandiale aanpassing). Dit bepaalt hoe lang de insulinegevoeligheidsfactor (ISF) wordt aangepast na een maaltijd";
+
+/* */
+"Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Standaardwaarde: 3. Dit is de duur in uren hoe lang na een maaltijd het effect actief zal zijn. Oref zal koolhydraten timing verwijderen na de laatste 10 uur, ongeacht wat je invoert.";
+
+/* */
+"ISF weight for postprandial BG rise" = "ISF-waarde voor stijging van de bloedsuikerspiegel na een maaltijd";
+
+/* */
+"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Deze waarde bepaalt hoe sterk de insulinegevoeligheidsfactor (ISF) wordt aangepast op basis van de snelheid waarmee de bloedsuikerspiegel stijgt. Bij een waarde van 0 is deze aanpassing uitgeschakeld. Het wordt aanbevolen om te beginnen met 0,01, omdat de waarde zelden hoger komt dan 0,05!";
+
+/* */
+"ISF weight for higher BG deltas" = "ISF-waarde voor hogere BG deltas";
+
+/* */
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Dit gewicht wordt toegepast op de curve die de insulinegevoeligheidsfactor (ISF) aanpast bij grotere schommelingen in de bloedsuikerspiegel. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
+
+/* */
+"ISF weight for lower BG" = "ISF-waarde voor lagere BG's";
+
+/* */
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde wordt toegepast op de aanpassing van de insulinegevoeligheidsfactor (ISF) wanneer de bloedsuikerspiegel onder de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
+
+/* */
+"ISF weight for higher BG" = "ISF-waarde voor hogere BG's";
+
+/* */
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "De standaardwaarde is 0,0. Deze waarde bepaalt hoe de insulinegevoeligheidsfactor (ISF) wordt aangepast wanneer de bloedsuikerspiegel boven de doelwaarde ligt. Bij een waarde van 0,0 is dit effect uitgeschakeld.";
+
+/* */
+"Duration Weight" = "Duur hoeveelheid";
+
+/* */
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Hoeeveelheid voor een langdurig hoge glucose. Voor elk uur dat de glucose hoog blijft, zal deze aanpassing je ISF verder verlagen.\n\nDe formule voor de Dura ISF-aanpassing is:\n\nDura ISF = 1 + uren boven doel * hoeveelheid / doel * (gemiddelde glucose - doelglucose)";
+
+/* */
+"SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
+
+/* */
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "De standaardwaarde is 0, maar een logisch bereik ligt tussen 2,2 mmol/L en 6,7 mmol/L (40-120 mg/dL). De afgifte van SMB's (Smart Micro Boluses) neemt geleidelijk toe naarmate de bloedsuikerspiegel stijgt. Bij de doelwaarde is de SMB-verhouding minimaal, en bij doelwaarde + bg_range is deze maximaal. Als de waarde 0 is, blijft de SMB-verhouding vast en wordt de geleidelijke stijging uitgeschakeld.";
+
+/* */
+"SMB Delivery Ratio Maximum" = "Maximale SMB-afgifteverhouding";
+
+/* */
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "De standaardwaarde is 0,5. Dit is de hoogste waarde van een geleidelijk oplopende SMB-afgifteverhouding, in plaats van een vaste waarde zoals in de OpenAPS SMB-afgifteverhouding.";
+
+/* */
+"SMB Delivery Ratio Minimum" = "Minimale SMB-afgifteverhouding";
+
+/* */
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "De standaardwaarde is 0,5. Dit is de laagste waarde van een geleidelijk oplopende SMB-afgifteverhouding, in plaats van een vaste waarde zoals in de OpenAPS SMB-afgifteverhouding.";
+
+/* */
+"Toggles" = "Schakelaars";
+
+/* */
+"Enable postprandial ISF adaption always" = "Schakel de ISF-aanpassing na een maaltijd altijd in";
+
+/* */
+"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Schakel de ISF-aanpassing na een maaltijd altijd in, ongeacht wanneer de laatste maaltijd is gegeten.";
+
+/* */
+"Enable DuraISF effect even with COB" = "DuraISF inschakelen, zelfs met COB";
+
+/* */
+"Enable DuraISF even if COB is present not just for UAM." = "Inschakelen van DuraISF zelfs als COB niet alleen aanwezig is voor UAM.";
+
+/* */
+"Enable BG acceleration" = "Activeer BG versnelling";
+
+/* */
+"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Schakelt aanpassingen in voor de versnelling en vertraging van de bloedsuikerspiegel, waardoor de ISF wordt aangepast op basis van de snelheid waarmee de bloedsuiker stijgt of daalt.";
+
+/* */
+"Override Auto ISF" = "Auto ISF overschrijven";
+
+/* */
+"Enable Auto ISF" = "Auto ISF inschakelen";
+
+/* */
+"Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Auto ISF. Dit schakelt eventuele dynamische ISF/CR instellingen uit";
+
+/* */
+"Keto Protection" = "Keto bescherming";
+
+/* */
+"Max IOB Threshold Percent" = "Max IOB drempelwaarde percentage";
+
+/* */
+"Auto ISF" = "Auto ISF";
+
+/* Is true */
+" on" = " aan";
+
+/* Is false */
+" off" = " uit";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Pas aan ";
+
+/* History of the adjustments */
+"Final Ratio" = "Uiteindelijke ratio";
+
+/* History of the adjustments */
+"Adjustments" = "Aanpassingen";
+
+/* History of the adjustments */
+"Insulin" = "Insuline";
+
+/* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
 */
@@ -1829,7 +2595,7 @@ Enact a temp Basal or a temp target */
 "Advanced Target Adjustments" = "Geavanceerde doelaanpassingen";
 
 /* ”Advanced Target Adjustments" */
-"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "In het verleden stond deze functie altijd aan, maar nu staat deze standaard op \"Uit\". Met oref 0.6.0 is dit niet langer nodig. Deze functie past automatisch het bloedglucose-doel van oref0 aan als de huidige bloedsuiker of de verwachte bloedsuiker hoog is. Hierdoor worden hoge bloedsuikers voorkomen en beperkt, maar schakelt het automatisch naar een lage gevoeligheid om ervoor te zorgen dat de bloedsuiker soepel naar je eigenlijke doel beweegt. Als je dit te snel vindt gaan, kun je deze functie uitschakelen. ";
+"This feature was previously enabled by default but will now default to false (will NOT be enabled automatically) in oref0 0.6.0 and beyond. (There is no need for this with 0.6.0). This feature lowers oref0’s target BG automatically when current BG and eventualBG are high. This helps prevent and mitigate high BG, but automatically switches to low-temping to ensure that BG comes down smoothly toward your actual target. If you find this behavior too aggressive, you can disable this feature. If you do so, please let us know so we can better understand what settings work best for everyone." = "In het verleden stond deze functie altijd aan, maar nu staat deze standaard op \"Uit\". Met oref 0.6.0 is dit niet langer nodig. Deze functie past automatisch het glucose-doel van oref0 aan als de huidige glucosewaarde of de verwachte glucosewaarde hoog is. Hierdoor worden hoge glucosewaardes voorkomen en beperkt, maar schakelt het automatisch naar een lage gevoeligheid om ervoor te zorgen dat de glucosewaarde soepel naar je eigenlijke doel beweegt. Als je dit te snel vindt gaan, kun je deze functie uitschakelen.";
 
 /* Headline "Exercise Mode" */
 "Exercise Mode" = "Beweging modus";
@@ -1859,7 +2625,7 @@ Enact a temp Basal or a temp target */
 "Enable UAM" = "UAM inschakelen";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Als deze functie is ingeschakeld, kan het SMB-algoritme onverwachte maaltijden herkennen. Dit is handig als je vergeet om koolhydraten in te voeren, je de koolhydraten verkeerd inschat, de hoeveelheid ingevoerde koolhydraten onjuist is, of als een maaltijd met veel vet en eiwit langer duurt dan verwacht. Zonder koolhydraten in te voeren, kan deze functie snel stijgende bloedsuikersignalen veroorzaakt door koolhydraten, adrenaline, enzovoort herkennen en proberen te corrigeren met SMB's. Het werkt ook andersom: als er een snelle daling van de bloedsuiker is, kan het eerder stoppen met SMB's.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Als deze functie is ingeschakeld, kan het SMB-algoritme onverwachte maaltijden herkennen. Dit is handig als je vergeet om koolhydraten in te voeren, je de koolhydraten verkeerd inschat, de hoeveelheid ingevoerde koolhydraten onjuist is, of als een maaltijd met veel vet en eiwit langer duurt dan verwacht. Zonder koolhydraten in te voeren, kan deze functie snel stijgende glucosewaardesignalen - veroorzaakt door koolhydraten, adrenaline, enzovoort - herkennen en proberen te corrigeren met SMB's. Het werkt ook andersom: als er een snelle daling van de glucosewaarde is, kan het eerder stoppen met SMB's.";
 
 /* Headline "Enable SMB With COB" */
 "Enable SMB With COB" = "Activeer SMB met COB";
@@ -2041,11 +2807,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic ISF" = "Dynamische ISF inschakelen";
 
 /* Enable Dynamic ISF */
-"Calculate a new ISF with every loop cycle. New ISF will be based on current BG, TDD of insulin (past 24 hours or a weighted average) and an Adjustment Factor (default is 1).\n\nDynamic ISF and CR ratios will be limited by your autosens.min/max limits.\n\nDynamic ratio replaces the autosens.ratio: New ISF = Static ISF / Dynamic ratio,\nDynamic ratio = profile.sens * adjustmentFactor * tdd * Math.log(BG/insulinFactor+1) / 1800,\ninsulinFactor = 120 - InsulinPeakTimeInMinutes" = "Bereken bij elke loopcyclus een nieuwe ISF (Insulin Sensitivity Factor). De nieuwe ISF wordt bepaald door de huidige bloedsuikerspiegel (BG), de totale dagelijkse dosis insuline (TDD) van de afgelopen 24 uur of een gemiddelde daarvan, en een aanpassingsfactor (standaard 1). De dynamische ISF en CR (Carb Ratio) worden beperkt door de minimum- en maximumwaarden die zijn ingesteld in uw autosens.min/max grenzen. De dynamische ratio vervangt de autosens.ratio:/n/n
-Nieuwe ISF = Statische ISF / Dynamische ratio,
-Dynamische ratio = profielgevoeligheid * aanpassingsfactor * TDD * Logaritme (BG/insulineFactor+1) / 1800,
-InsulineFactor = 120 - Tijd tot insulinepiek in minuten./n/n
-Eenvoudiger gezegd, het systeem past de insulinegevoeligheid aan op basis van je recente insulinegebruik en huidige bloedsuikerspiegel. De aanpassingen zijn beperkt binnen bepaalde grenzen die je hebt ingesteld";
+"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Bereken een nieuwe instelling voor de insulinegevoeligheid (ISF) bij elke cyclus van de loop. De nieuwe ISF wordt gebaseerd op je huidige glucose, totale dagelijkse dosis insuline (TDD, afgelopen 24 uur van alle toegediende insuline) en een individuele aanpassingsfactor (aanbevolen wordt om te beginnen met 0,5 als u de Sigmoid-functie gebruikt en 0,8 als dat niet het geval is).\n\nAlle dynamische ISF- en CR-aanpassingen worden beperkt door je autosens.min/max-limieten.";
 
 /* Headline Enable Dynamic CR */
 "Enable Dynamic CR" = "Dynamische CR inschakelen";
@@ -2067,7 +2829,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Adjust Dynamic ISF constant" = "Dynamische ISF-constante aanpassen";
 
 /* Adjust Dynamic ISF constant */
-"Adjust Dynamic ratios by a constant. Default is 0.5. The higher the value, the larger the correction of your ISF will be for a high or a low BG. Maximum correction is determined by the Autosens min/max settings. For Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with. For the logaritmic formula there is less consensus, but starting with 0.5 - 0.8 is more appropiate for most users" = "Verander de dynamische verhoudingen met een vaste waarde, die standaard op 0,5 staat. Als je deze waarde verhoogt, zal de aanpassing van je ISF voor hoge of lage bloedsuikerwaarden groter zijn. De grootte van de correctie is beperkt door de instellingen voor Autosens min/max. Voor de Sigmoid-functie wordt een startwaarde van 0,4 tot 0,5 aanbevolen. Voor de logaritmische formule is er geen vastgestelde norm, maar voor de meeste gebruikers is een waarde tussen 0,5 en 0,8 passender.";
+"Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Individuele aanpassing van de berekende dynamische verhoudingen. De standaardwaarde is 0,5. Hoe hoger de waarde, hoe groter de correctie van uw ISF/CR zal zijn voor een hoge of lage bloedglucosewaarde. De maximale/minimale correctie wordt bepaald door de Autosens min/max instellingen.\n\nVoor de Sigmoid functie wordt een aanpassingsfactor van 0.4 - 0.5 aanbevolen om mee te beginnen.\n\nVoor de logaritmische formule is er minder consensus, maar beginnen rond 0.8 is waarschijnlijk goed voor de meeste volwassen gebruikers. Voor jongere gebruikers wordt aanbevolen om nog lager te beginnen met de logaritmische formule, om een te agressieve behandeling te voorkomen.";
 
 /* Headline Use Sigmoid Function */
 "Use Sigmoid Function" = "Gebruik Sigmoid functie";
@@ -2084,11 +2846,71 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* Headline Threshold Setting */
 "Threshold Setting" = "Grenswaarde instellingen";
 
-/* Threshold Setting */
-"The default threshold in FAX depends on your current minimum BG target, as follows:\n\nIf your minimum BG target = 90 mg/dl -> threshold = 65 mg/dl,\n\nif minimum BG target = 100 mg/dl -> threshold = 70 mg/dl,\n\nminimum BG target = 110 mg/dl -> threshold = 75 mg/dl,\n\nand if minimum BG target = 130 mg/dl  -> threshold = 85 mg/dl.\n\nThis setting allows you to change the default to a higher threshold for looping with dynISF. Valid values are 65 mg/dl<= Threshold Setting <= 120 mg/dl." = "De standaard drempelwaarde in iAPS hangt af van je huidige minimum bloedsuikerdoel. Hier is hoe het werkt:\n\n Als je minimum doel 5,0 mmol/l is, dan is de drempel 3,6 mmol/l. Bij een minimum doel van 5,5 mmol/l, wordt de drempel 3,8 mmol/l. Als je minimum doel 6,1 mmol/l is, blijft de drempel 3,8 mmol/l. Bij een minimum doel van 7,2 mmol/l, wordt de drempel 4,7 mmol/l.\n\nJe kunt deze instelling aanpassen en een hogere drempelwaarde kiezen voor het herhalen met dynISF. De geldige waarden hiervoor zijn tussen 3,6 mmol/l en 6,6 mmol/l.";
+/* Dynamic ISF Setting Title */
+"Minimum Threshold Setting" = "Instelling minimale grenswaarde";
+
+/* Minimum Threshold Setting, Part 1 */
+"This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Met deze instelling kun je een grenswaarde kiezen waaronder geen insuline wordt toegediend. De grenswaarde is de grootste waarde van je grenswaarde-instelling en de berekende grenswaarde: \n\nStreefwaarde Glucose - (Streefwaarde Glucose - 2,2) / 2 = 1,1) \n---> hier met mmol/l als glucose-eenheid ";
+
+/* Minimum Threshold Setting, Part 2 */
+"the threshold will be " = "de grenswaarde wordt ";
+
+/* Minimum Threshold Setting, Part 3 */
+"unless your threshold setting is set higher:" = "tenzij uw grenswaarde hoger is ingesteld:";
+
+/* Threshold Table Columns Title */
+"Setting" = "Instelling";
+
+/* Threshold Table Columns Title */
+"Threshold" = "Grenswaarde";
+
+/* Dynamic settings View */
+"Averages" = "Gemiddelden";
+
+/* Dynamic settings View */
+"Average ISF" = "Gemiddelde ISF";
+
+/* Dynamic settings View */
+"Average CR" = "Gemiddelde CR";
+
+/* Dynamic settings View */
+"Average CSF" = "Gemiddelde CSF";
+
+/* Dynamic settings View */
+"ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Insuline gevoeligheidsfactor, CR: Koolhydraat ratio, CSF: Koolhydraat gevoeligheidsfactor = ISF/CR";
 
 /* Header */
 "Calculator settings" = "Calculator instellingen";
+
+/* Bolus Calculator Setting */
+"Use alternate Bolus Calculator" = "Gebruik alternatieve boluscalculator";
+
+/* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Gebruik boluscalculator";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Deze boluscalculator gebruikt, afhankelijk van je instellingen, gegevens van OpenAPS glucosevoorspellingen en/of IOB (insuline aan boord), COB (koolhydraten aan boord), glucose-trend, huidige glucosewaarde en je streefglucose. Aan het einde van de berekening wordt een aanpassingsfactor toegepast (standaard 0,8).\n\nJe kunt ook een extra optie inschakelen in de boluscalculator om een andere, aanpasbare factor toe te passen. Dit kan handig zijn voor vetrijke maaltijden, zoals pizza (standaard 0,7).\n\nLet op: de boluscalculator gebruikt niet de OpenAPS-variabele \\\"insulinRequired\\\", die speciaal bedoeld is voor SMB’s (Super Micro Bolussen).";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Aanpassing";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Gebruik OpenAPS glucosevoorspellingen";
+
+/* Bolus Calculator Setting */
+"Fatty Meals" = "Vette maaltijd";
+
+/* Bolus Calculator Setting */
+"Apply factor for fatty meals" = "Pas factor toe voor vette maaltijden";
+
+/* Bolus Calculator Footer */
+"The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "De nieuwe alternatieve boluscalculator is een andere benadering van de standaard boluscalculator in iAPS. Als de knop aan staat, gebruik je deze boluscalculator en niet de originele iAPS-calculator. Aan het einde van de berekening wordt een aangepaste factor toegepast, zoals het hoort bij het gebruik van smbs (standaard 0,8).\n\nJe kunt ook de optie toevoegen in je boluscalculator om een andere (!) aanpasbare factor toe te passen aan het einde van de berekening, wat handig kan zijn voor vette maaltijden, zoals pizza (standaard 0,7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+
+/* Settings Section */
+"Extra Features" = "Extra functionaliteiten";
 
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";
@@ -2108,6 +2930,15 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* UI/UX option */
 "Home View Button Panel " = "Beginscherm knoppaneel ";
 
+/* UI/UX title */
+"Home Chart settings " = "Home grafiek instellingen ";
+
+/* UI/UX title */
+"Statistics settings " = "Statistiek instellingen ";
+
+/* UI/UX title */
+"Override HbA1c Unit" = "HbA1c eenheid overschrijven";
+
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "In het geval dat je zowel profielen als tijdelijke doelen gebruikt";
 
@@ -2122,14 +2953,74 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* UI/UX option */
 "Horizontal Scroll View Visible hours" = "Horizontale scrolweergave zichtbare uren";
 
+/* UI/UX option */
+"Display Time Interval Setting Button" = "Knop voor tijdinterval weergeven";
+
+/* UI/UX option */
+"Never display the small glucose chart when scrolling" = "Laat de kleine glucosegrafiek nooit zien tijdens het scrollen";
+
+/* UI/UX option */
+"Disable Hypo Treatments" = "Hypobehandelingen uitschakelen";
+
+/* UI/UX option */
+"Display Glucose Delta" = "Glucose delta weergeven";
+
+/* UI/UX option */
+"Display Sensor Age" = "Sensor leeftijd tonen";
+
+/* UI/UX option */
+"Hide Concentration Badge" = "Verberg concentratie badge";
+
+/* UI/UX option */
+"Use insulin bars" = "Gebruik insulinebalken";
+
+/* UI/UX option */
+"Hide the bolus amount strings when amount is under" = "Verberg de bolus hoeveelheid als de hoeveelheid lager is dan";
+
+/* UI/UX option */
+"Display carb equivalents" = "Toon koolhydraathoeveelheden";
+
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Resterende sensortijd weergeven";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Sensor leeftijd weergeven, maar geen resterende tijd";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Weergave ratio en een weergave knop geschiedenis";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Auto ISF Home-weergave";
+
+/* Setting title */
+"Bolus Calculator" = "Bolus calculator";
+
+/* Setting title */
+"Dynamic ISF" = "Dynamische ISF";
+
 /* Notification option */
 "Live Activity" = "Live activiteit";
+
+/* Show Live Activity */
+"Show Live Activity" = "Toon live activiteit";
+
+/* Display Chart */
+"Display Chart" = "Grafieken weergeven";
+
+/* Show Predictions */
+"Show Predictions" = "Voorspellingen tonen";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
 
 /* Notification option */
-"Show live activity" = "Toon live activiteit";
+"Show Live activity" = "Toon live activiteit";
+
+/* Live Activity Footer */
+"Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "De 'Live activiteit' toont bloedglucose op het vergrendelscherm en op het Dynamische Island (indien beschikbaar).\n\nDynamic Island vervangt de traditionele statische 'notch' (inkeping) aan de bovenkant van de iPhone-schermen";
+
+/* Live Activity Footer when off */
+"Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Live activiteiten zijn uitgeschakeld in systeem instellingen. Ga naar Instellingen -> iAPS -> Live activiteiten\n\n om live activiteiten in te schakelen.";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
 "Weighted Average of TDD. Weight of past 24 hours:" = "Gewogen gemiddelde van TDD van afgelopen 24 uur:";
@@ -2149,10 +3040,10 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Staat standaard op 0,2 (20%). Maximale positieve procentuele verandering van BG-niveau om SMB te gebruiken, daarboven wordt SMB uitgeschakeld. Hardcoded maximum van 40%. Voor volledig gesloten UAM-loop is 30% raadzaam. Zie in log en popup (maxDelta 27 > 20% van BG 100 - uitschakelen SMB!).";
 
-/* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... Als de bloedsuiker hoger is dan (mg/dl):";
+/* Headline "... When Blood Glucose Is Above:" */
+"... When Blood Glucose Is Above:" = "... Wanneer de bloedsuikerspiegel hoger is dan:";
 
-/* ... When Blood Glucose Is Over (mg/dl): */
+/* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Stel de waarde in waarmee 'enableSMB_high_bg' wordt vergeleken om SMB in te schakelen. Als BG hoger is dan deze waarde, moet SMB worden ingeschakeld.";
 
 /* Headline "Enable SMB With High BG" */
@@ -2169,3 +3060,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Aanpassingsfactor";
+
+/* Apple Watch Overrides */
+"Overrides" = "Tijdelijke programma’s";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Annuleer tijdelijk programma";

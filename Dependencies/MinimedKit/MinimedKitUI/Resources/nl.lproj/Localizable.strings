@@ -93,7 +93,7 @@
 "Firmware Version" = "Firmwareversie";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insuline\nOnderbroken";
+"Insulin\nSuspended" = "Insuline\nopgeschort";
 
 /* Title of insulin delivery section */
 "Insulin Delivery" = "Insulinetoediening";

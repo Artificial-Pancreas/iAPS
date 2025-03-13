@@ -18,7 +18,7 @@
 "Low Reservoir" = "Sắp hết thuốc";
 
 /* Alert content title for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Đang tiến hành tạm dừng lời nhắc";
 
 /* Alert content title for suspendEnded pod alert */
 "Resume Insulin" = "Tiếp tục lại việc tiêm insulin";
@@ -27,7 +27,7 @@
 "Pod Pairing Incomplete" = "Pod ghép nối không thành công";
 
 /* Alert content title for timeOffsetChangeDetected pod alert */
-"Time Change Detected" = "Thay đổi thời gian được phát hiện";
+"Time Change Detected" = "Đã phát hiện thay đổi thời gian";
 
 /* Alert content body for multiCommand pod alert */
 "Multiple Command Alert" = "Multiple Command Alert";
@@ -45,7 +45,7 @@
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "%1$@ insulin hoặc ít hơn còn lại trong Pod. Thay Pod ngay.";
 
 /* Alert content body for suspendInProgress pod alert */
-"Suspend In Progress Reminder" = "Suspend In Progress Reminder";
+"Suspend In Progress Reminder" = "Đang tiến hành tạm dừng lời nhắc";
 
 /* Alert content body for suspendEnded pod alert */
 "The insulin suspension period has ended.\n\nYou can resume delivery from the banner on the home screen or from your pump settings screen. You will be reminded again in 15 minutes." = "Thời gian tạm ngưng insulin đã kết thúc.\n\n Bạn có thể phục hồi việc tiêm thuốc từ màn hình chính hoặc từ màn hình cài đặt bơm. Sẽ có thông báo nhắc trong vòng 15 phút.";
@@ -57,7 +57,7 @@
 "The time on your pump is different from the current time. You can review the pump time and and sync to current time in settings." = "Thời gian trên bơm khác so với thời gian thực tế. Bạn có thể xem thời gian trên bơm và sync thời gian hiện hành trong cài đặt.";
 
 /* Alert notification body for suspendEnded pod alert user notification */
-"Suspension time is up. Open the app and resume." = "Thời gian tạm dừng hết. Mở ứng dụng và tiếp tục lại.";
+"Suspension time is up. Open the app and resume." = "Đã hết thời gian tạm dừng. Mở ứng dụng và tiếp tục.";
 
 /* Action button default text for PodAlerts */
 "Ok" = "Ok";
@@ -80,6 +80,24 @@
 /* */
 "Confidence Reminders" = "Confidence Reminders";
 
+/* Help text for BeepPreferenceSelectionView */
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Lời nhắc là những tiếng bíp từ Pod có thể được sử dụng để xác nhận các lệnh đã chọn khi Pod không ở chế độ im lặng.";
+
+/* Title for pod reminders section */
+"Pod Reminders" = "Lời nhắc Pod";
+
+/* Footer text for pod reminders section */
+"The app configures a reminder on the Pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure by default when pairing a new Pod." = "Ứng dụng cấu hình lời nhắc trên pod để thông báo trước cho bạn khi pod hết hạn. Đặt số giờ bạn muốn cấu hình khi ghép nối pod mới.";
+
+/* Footer text for scheduled reminder area */
+"The expiration reminder time for the current Pod." = "Thời gian nhắc nhở hết hạn cho Pod hiện tại.";
+
+/* Footer text for low reservoir value row */
+"The app notifies you when the amount of insulin in the Pod reaches this level." = "Ứng dụng nhắc nhở bạn khi lượng insulin trong pod đạt đến mức này.";
+
+/* Description text for critical alerts */
+"The above reminders will not sound in the app if your device is in Silent or Do Not Disturb mode. There are other critical Pod alerts that will sound in the app even if your device is set to Silent or Do Not Disturb mode.\n\nThe Pod will also use audible beeps for all Pod reminders and alerts except when the Pod is Silenced." = "Lời nhắc ở trên sẽ không phát ra âm thanh nếu thiết bị của bạn ở trạng thái Silent hoặc Do Not Disturb.\n\n Có nhiều cách cảnh báo khác nhau phát ra âm thanh ngay cả khi thiết bị của bạn ở trạng thái im lặng hoặc không làm phiền.";
+
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "Tạm dừng insulin";
 
@@ -90,7 +108,7 @@
 "Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Không pod";
+"No Pod" = "Không có pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Kết nối Pod";
@@ -171,7 +189,7 @@
 "Unfinished deactivation" = "Vô hiệu hóa chưa hoàn tất";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Không pod";
+"No Pod" = "Không có pod";
 
 /* Pod life HUD view label */
 "Fault" = "Lỗi";
@@ -216,22 +234,22 @@
 "Finish Deactivation" = "Hoàn tất việc ngưng kích hoạt";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Không pod";
+"No Pod" = "Không có pod";
 
 /* Status highlight message for emptyReservoir alarm. */
-"No Insulin" = "Hết thuốc";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight message for podExpired alarm. */
 "Pod Expired" = "Pod đã hết hạn";
 
 /* Status highlight message for occlusion alarm. */
-"Pod Occlusion" = "Pod Occlusion";
+"Pod Occlusion" = "Pod bị tắc nghẽn";
 
 /* Status highlight message for other alarm. */
 "Pod Error" = "Lỗi Pod";
 
 /* Status highlight that a pump is out of insulin. */
-"No Insulin" = "Hết thuốc";
+"No Insulin" = "Hết Insulin";
 
 /* Status highlight that insulin delivery was suspended. */
 "Insulin Suspended" = "Insulin Đã tạm ngưng";
@@ -255,7 +273,7 @@
 "Checking..." = "Đang kiểm tra...";
 
 /* */
-"Check cannula insertion finished" = "Kiểm tra việc gắn cannula hoàn tất";
+"Check cannula insertion finished" = "Kiểm tra việc gắn cannula đã hoàn tất";
 
 /* */
 "Get pod status" = "Lấy thông tin pod";
@@ -320,11 +338,14 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Cài đặt liều nền tạm thời";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Việc cung cấp insulin của bạn sẽ không được điều chỉnh tự động cho đến khi mức cơ bản tạm thời kết thúc hoặc bị hủy bỏ.";
+
 /* Section header for activity section */
 "Activity" = "Hoạt động";
 
 /* Section header for configuration section */
-"Configuration" = "Cấu hình";
+"Configuration" = "Configuration";
 
 /* Title for previous pod page */
 "Previous Pod" = "Pod trước";
@@ -385,7 +406,7 @@
 "Failed to Suspend Insulin Delivery" = "Thất bại khi tạm dừng liều insulin";
 
 /* Alert title for resume error */
-"Failed to Resume Insulin Delivery" = "Không thể tiêm insulin trở lại";
+"Failed to Resume Insulin Delivery" = "Không thể tiếp tục tiêm insulin trở lại";
 
 /* Alert title for time sync error */
 "Failed to Set Pump Time" = "Không thể cài đặt thời gian cho bơm";
@@ -402,6 +423,12 @@
 /* Deactivate pod action button */
 "Deactivate Pod" = "Hủy kích hoạt Pod";
 
+/* */
+"Slide to Insert Cannula" = "Trượt để chèn Cannula";
+
+/* */
+"Slide to Deactivate Pod" = "Trượt để vô hiệu hóa Pod";
+
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "Đang hủy kích hoạt.";
 
@@ -415,7 +442,7 @@
 "Continue" = "Tiếp tục";
 
 /* Format string for recovery suggestion during deactivate pod. */
-"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Đã xảy ra sự cố khi giao tiếp với Pod. Nếu sự cố này vẫn tiếp diễn, hãy nhấn vào Discard Pod. Sau đó, bạn có thể kích hoạt Pod mới.";
+"There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "Đã xảy ra sự cố khi giao tiếp với Pod. Nếu sự cố này vẫn tiếp diễn, hãy nhấn vào Loại bỏ pod. Sau đó, bạn có thể kích hoạt Pod mới.";
 
 /* Text for discard pod button */
 "Discard Pod" = "Loại bỏ pod";
@@ -435,6 +462,9 @@
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Dùng loại insulin U-100.";
 
+/* Label text for step 1 of pair pod instructions */
+"Remove the Pod's blue needle cap and check cannula. Then remove paper backing." = "Tháo nắp kim màu xanh của Pod và kiểm tra ống thông. Sau đó loại bỏ lớp lót giấy.";
+
 /* Label text for step 2 of pair pod instructions */
 "Listen for 2 beeps." = "Nghe 2 tiếng bíp.";
 
@@ -442,7 +472,7 @@
 "Paired" = "Đã ghép đôi";
 
 /* Cancel button text in navigation bar on pair pod UI */
-"Cancel" = "Bỏ qua";
+"Cancel" = "Hủy";
 
 /* Alert title for cancel pairing modal */
 "Are you sure you want to cancel Pod setup?" = "Bạn có chắc chắn muốn hủy cấu hình pod?";
@@ -458,10 +488,6 @@
 
 /* Label text for step one of attach pod instructions */
 "Prepare site." = "Chuẩn bị vị trí.";
-
-/* Remove the Pod’s blue needle cap and check cannula. Then remove paper backing.
-Label text for step two of attach pod instructions */
-"Remove the Pod’s blue needle cap and check cannula. Then remove paper backing." = "Tháo nắp kim màu xanh và kiểm tra cannula. Sau đó gỡ bỏ lớp giấy phía sau.";
 
 /* Label text for step three of attach pod instructions */
 "Check Pod, apply to site, then confirm pod attachment." = "Kiểm tra pod, gắn vào vị trí sau đó xác nhận pod đã được gắn chặt.";
@@ -487,6 +513,9 @@ Label text for step two of attach pod instructions */
 /* Label text for step two of insert cannula instructions */
 "Wait until insertion is completed." = "Đợi đến khi việc gắn hoàn tất.";
 
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Trượt bên dưới để bắt đầu chèn Cannula.";
+
 /* Label text indicating insertion finished. */
 "Inserted" = "Đã gắn";
 
@@ -509,7 +538,7 @@ Label text for step two of attach pod instructions */
 "Pairing..." = "Đang ghép đôi...";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "Đang chuẩn bị...";
 
 /* */
 "Deactivating..." = "Đang hủy kích hoạt...";
@@ -521,7 +550,7 @@ Label text for step two of attach pod instructions */
 "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Pod đã sẵn sàng hoạt động.\n\n%1$@ sẽ nhắc nhở bạn thay đổi khi pod hết hạn. Bạn có thể thay khi nào tiện.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* Label for expiration reminder row */
 "Time" = "Thời gian";
@@ -533,7 +562,7 @@ Label text for step two of attach pod instructions */
 "Setup Complete" = "Cấu hình hoàn thành";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Không có lời nhắc";
 
 /* Error message description for PeripheralManagerError.notReady */
 "Peripheral Not Ready" = "Thiết bị ngoại vi chưa sẵn sàng";
@@ -563,7 +592,7 @@ Label text for step two of attach pod instructions */
 "This is a reminder that you scheduled when you paired your current Pod." = "Đây là lời nhắc mà bạn đã lên lịch khi ghép nối Pod hiện tại của mình.";
 
 /* */
-"Scheduled Reminder" = "Scheduled Reminder";
+"Scheduled Reminder" = "Lịch biểu lời nhắc";
 
 /* Footer text for low reservoir value row */
 "The App notifies you when the amount of insulin in the Pod reaches this level." = "Ứng dụng nhắc nhở bạn khi lượng insulin trong pod đạt đến mức này.";
@@ -580,7 +609,7 @@ Label text for step two of attach pod instructions */
 "Time" = "Thời gian";
 
 /* Value text for no expiration reminder */
-"No Reminder" = "No Reminder";
+"No Reminder" = "Không có lời nhắc";
 
 /* Label for low reservoir reminder row */
 "Low Reservoir Reminder" = "Báo nhắc gần hết thuốc";
@@ -638,10 +667,10 @@ Label text for step two of attach pod instructions */
 "Missing Config" = "Thiếu cấu hình";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Maximum basal rate chưa được PumpManager cấu hình. Đề nghị vào therapy settings-> delivery limits và cấu hình maximum basal rate mới.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Liều nền tối đa chưa được cấu hình. Đề nghị vào Cài đặt-> Cấu hình bơm và cấu hình Liều nền tối đa mới.";
 
 /* Label text for expiration reminder default row */
-"Expiration Reminder Default" = "Mặc định Nhắc nhở Hết hạn";
+"Expiration Reminder Default" = "Mặc định nhắc nhở hết hạn";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Thông tin Pod trước đó";
@@ -665,10 +694,10 @@ Label text for step two of attach pod instructions */
 "Sequence Number" = "Số thứ tự";
 
 /* description label for firmware version pod details row */
-"Firmware Version" = "Firmware Version";
+"Firmware Version" = "Phiên bản phần mềm";
 
 /* description label for ble firmware version pod details row */
-"BLE Firmware Version" = "BLE Firmware Version";
+"BLE Firmware Version" = "Phiên bản phần mềm Bluetooth";
 
 /* description label for activated at timne pod details row */
 "Pod Activated" = "Pod đã kích hoạt";
@@ -677,7 +706,7 @@ Label text for step two of attach pod instructions */
 "Active Time" = "Thời gian Hoạt động";
 
 /* description label for last status date pod details row */
-"Last Status" = "Trạng thái cuối";
+"Last Status" = "Trạng thái gần nhất";
 
 /* description label for pod fault details */
 "Pod Fault Details" = "Thông tin lỗi Pod";
@@ -695,7 +724,7 @@ Label text for step two of attach pod instructions */
 "Continue" = "Tiếp tục";
 
 /* Are you sure you want to skip Omnipod Onboarding? */
-"Skip Omnipod Onboarding?" = "Skip Omnipod Onboarding?";
+"Skip Omnipod Onboarding?" = "Bỏ qua giới thiệu Omnipod không?";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "Ứng dụng sẽ thông báo trước cho bạn thời gian pod hết hạn.\n\n Kéo xuống để thiết lập số giờ để ứng dụng thông báo.";
@@ -704,13 +733,13 @@ Label text for step two of attach pod instructions */
 "Next" = "Kế tiếp";
 
 /* */
-"Expiration Reminder" = "Nhắc nhở Hết hạn";
+"Expiration Reminder" = "Nhắc nhở hết hạn";
 
 /* Description text on LowReservoirReminderSetupView */
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Ứng dụng sẽ thông báo khi lượng insulin trong Pod đạt đến mức này (50-10 U).\n\n Kéo xuống để chọn số Unit mà bạn muốn để nhận thông báo.";
 
 /* Label text for low reservoir value row */
-"Low Reservoir" = "Sắp hết thuốc";
+"Low Reservoir" = "Sắp hết insulin";
 
 /* */
 "Save" = "Lưu";
@@ -809,15 +838,30 @@ Label text for step two of attach pod instructions */
 "Previous Pod Details" = "Thông tin của Pod trước đó";
 
 /* Text for pump manager details navigation link */
-"Pump Manager Details" = "Pump Manager Details";
+"Pump Manager Details" = "Chi tiết về Trình quản lý Bơm";
 
 /* button title when retrieving pump manager details */
-"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Pump Manager...";
+"Retrieving Pump Manager Details..." = "Đang truy xuất thông tin Trình quản lý Bơm...";
 /* button title to refresh pump manager details */
-"Refresh Pump Manager Details" = "Làm mới Pump Manager Details";
+"Refresh Pump Manager Details" = "Làm mới Chi tiết về Trình quản lý Bơm";
 
 /* Section header for diagnostic section */
 "Diagnostics" = "Chẩn đoán";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Đọc tình trạng pod";
+
+/* Title of done button on OmnipodSettingsView */
+"Done" = "Xong";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Chẩn đoán Pod";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Read Pulse Log Plus";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Đọc thời gian kích hoạt";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Đọc cảnh báo được kích hoạt";

@@ -2,19 +2,19 @@
 "– – –" = "– – –";
 
 /* Format string for glucose trend per minute. (1: glucose value and unit) */
-"%@/min" = "%@/min";
+"%@/min" = "%@ دقيقة";
 
 /* No comment provided by engineer. */
 "Are you sure you want to delete this CGM?" = "Are you sure you want to delete this CGM?";
 
 /* No comment provided by engineer. */
-"Bluetooth" = "Bluetooth";
+"Bluetooth" = "البلوتوث";
 
 /* Button text to cancel G7 setup */
-"Cancel" = "Cancel";
+"Cancel" = "إلغاء";
 
 /* No comment provided by engineer. */
-"Configuration" = "Configuration";
+"Configuration" = "ضبط";
 
 /* title for g7 settings connection status when connected */
 "Connected" = "Connected";
@@ -23,95 +23,95 @@
 "Connecting" = "Connecting";
 
 /* Button title for starting setup */
-"Continue" = "Continue";
+"Continue" = "تابع";
 
 /* Button label for removing CGM */
-"Delete CGM" = "Delete CGM";
+"Delete CGM" = "حذف المستشعر";
 
 /* Navigation bar title for G7SettingsView
    Title on WelcomeView */
-"Dexcom G7" = "Dexcom G7";
+"Dexcom G7" = "ديكسكوم G7";
 
 /* No comment provided by engineer. */
-"Done" = "Done";
+"Done" = "تمّ";
 
 /* Field label */
 "Glucose" = "Glucose";
 
 /* title for g7 settings row showing sensor grace period end time */
-"Grace Period End" = "Grace Period End";
+"Grace Period End" = "نهاية الفترة";
 
 /* G7 Progress bar label when sensor grace period progress showing */
-"Grace period remaining" = "Grace period remaining";
+"Grace period remaining" = "الفترة المتبقية";
 
 /* String displayed instead of a glucose value above the CGM range */
-"HIGH" = "HIGH";
+"HIGH" = "مرتفع";
 
 /* title for g7 settings row showing sensor last connect time */
-"Last Connect" = "Last Connect";
+"Last Connect" = "آخر اتصال";
 
 /* No comment provided by engineer. */
-"Last Reading" = "Last Reading";
+"Last Reading" = "آخر قراءة";
 
 /* Descriptive text on G7StartupView */
-"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management.";
+"iAPS can read G7 CGM data, but you must still use the Dexcom G7 App for pairing, calibration, and other sensor management." = "يمكن لـ iAPS قراءة بيانات G7، ولكن لا يزال عليك استخدام تطبيق ديكسكوم G7 للإقران والمعايرة وإدارة المستشعرات الأخرى.";
 
 /* String displayed instead of a glucose value below the CGM range */
-"LOW" = "LOW";
+"LOW" = "منخفض";
 
 /* title for g7 settings row showing BLE Name */
-"Name" = "Name";
+"Name" = "الاسم";
 
 /* No comment provided by engineer. */
-"Scan for new sensor" = "Scan for new sensor";
+"Scan for new sensor" = "البحث عن مستشعر جديد";
 
 /* title for g7 settings connection status when scanning */
-"Scanning" = "Scanning";
+"Scanning" = "يتم المسح";
 
 /* G7 Status highlight text for searching for sensor */
-"Searching for\nSensor" = "Searching for\nSensor";
+"Searching for\nSensor" = "البحث عن مستشعر\n";
 
 /* G7 Progress bar label when searching for sensor */
-"Searching for sensor" = "Searching for sensor";
+"Searching for sensor" = "البحث عن مستشعر";
 
 /* G7 Status highlight text for sensor expired */
-"Sensor\nExpired" = "Sensor\nExpired";
+"Sensor\nExpired" = "إنتهاء صلاحية المستشعر\n";
 
 /* G7 Status highlight text for sensor failed */
-"Sensor\nFailed" = "Sensor\nFailed";
+"Sensor\nFailed" = "فشل جهاز الاستشعار\n";
 
 /* G7 Status highlight text for sensor error */
-"Sensor\nIssue" = "Sensor\nIssue";
+"Sensor\nIssue" = "مشكلة في المستشعر\n";
 
 /* G7 Status highlight text for sensor warmup */
-"Sensor\nWarmup" = "Sensor\nWarmup";
+"Sensor\nWarmup" = "إحماء\nالمستشعر";
 
 /* title for g7 settings row showing sensor expiration time */
-"Sensor Expiration" = "Sensor Expiration";
+"Sensor Expiration" = "إنتهت صلاحية المستشعر";
 
 /* G7 Progress bar label when sensor expired */
-"Sensor expired" = "Sensor expired";
+"Sensor expired" = "إنتهت صلاحية المستشعر";
 
 /* G7 Progress bar label when sensor lifetime progress showing */
-"Sensor expires" = "Sensor expires";
+"Sensor expires" = "إنتهت صلاحية المستشعر";
 
 /* G7 Progress bar label when sensor failed */
-"Sensor failed" = "Sensor failed";
+"Sensor failed" = "فشل الحساس";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Start sensor";
+"Sensor Start" = "بدء الحساس";
 
 /* G7 Status highlight text for signal loss */
-"Signal\nLoss" = "Signal\nLoss";
+"Signal\nLoss" = "فقدان الإشارة\n";
 
 /* Field label */
-"Time" = "Time";
+"Time" = "الوقت";
 
 /* Field label */
-"Trend" = "Trend";
+"Trend" = "إتجاه";
 
 /* title for g7 config settings to upload readings */
-"Upload Readings" = "Upload Readings";
+"Upload Readings" = "رفع القراءات";
 
 /* G7 Progress bar label when sensor in warmup */
-"Warmup completes" = "Warmup completes";
+"Warmup completes" = "اكتمل الإحماء";

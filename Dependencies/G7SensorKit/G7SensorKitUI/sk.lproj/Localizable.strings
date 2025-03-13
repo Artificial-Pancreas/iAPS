@@ -99,7 +99,7 @@
 "Sensor failed" = "Senzor zlyhal";
 
 /* title for g7 settings row showing sensor start time */
-"Sensor Start" = "Senzor štartu";
+"Sensor Start" = "Spustenie senzora";
 
 /* G7 Status highlight text for signal loss */
 "Signal\nLoss" = "Strata\nsignálu";

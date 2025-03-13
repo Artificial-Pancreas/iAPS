@@ -10,7 +10,7 @@ enum Screen: Identifiable, Hashable {
     case nighscoutConfig
     case pumpConfig
     case pumpSettingsEditor
-    case basalProfileEditor
+    case basalProfileEditor(saveNewConcentration: Bool)
     case isfEditor
     case crEditor
     case targetsEditor
@@ -35,6 +35,9 @@ enum Screen: Identifiable, Hashable {
     case statisticsConfig
     case bolusCalculatorConfig
     case dynamicISF
+    case contactTrick
+    case sharing
+    case autoISF
     var id: Int { String(reflecting: self).hashValue }
 }
 
@@ -55,8 +58,8 @@ extension Screen {
             PumpConfig.RootView(resolver: resolver)
         case .pumpSettingsEditor:
             PumpSettingsEditor.RootView(resolver: resolver)
-        case .basalProfileEditor:
-            BasalProfileEditor.RootView(resolver: resolver)
+        case let .basalProfileEditor(saveNewConcentration):
+            BasalProfileEditor.RootView(resolver: resolver, saveNewConcentration: saveNewConcentration)
         case .isfEditor:
             ISFEditor.RootView(resolver: resolver)
         case .crEditor:
@@ -105,6 +108,12 @@ extension Screen {
             BolusCalculatorConfig.RootView(resolver: resolver)
         case .dynamicISF:
             Dynamic.RootView(resolver: resolver)
+        case .contactTrick:
+            ContactTrick.RootView(resolver: resolver)
+        case .sharing:
+            Sharing.RootView(resolver: resolver)
+        case .autoISF:
+            AutoISF.RootView(resolver: resolver)
         }
     }
 

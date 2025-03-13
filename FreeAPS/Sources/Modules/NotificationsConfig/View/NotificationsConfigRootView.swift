@@ -14,13 +14,7 @@ extension NotificationsConfig {
 
         let soundManager = SystemSoundsManager()
 
-        @State private var systemLiveActivitySetting: Bool = {
-            if #available(iOS 16.1, *) {
-                ActivityAuthorizationInfo().areActivitiesEnabled
-            } else {
-                false
-            }
-        }()
+        @State private var systemLiveActivitySetting: Bool = { ActivityAuthorizationInfo().areActivitiesEnabled }()
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -46,8 +40,10 @@ extension NotificationsConfig {
 
             if !systemLiveActivitySetting {
                 footer =
-                    "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" +
-                    footer
+                    NSLocalizedString(
+                        "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n",
+                        comment: "footer"
+                    ) + NSLocalizedString(footer, comment: "Footer")
             }
 
             return footer
@@ -140,19 +136,24 @@ extension NotificationsConfig {
                     }
                 }
 
-                if #available(iOS 16.2, *) {
-                    Section(
-                        header: Text("Live Activity"),
-                        footer: Text(
-                            liveActivityFooterText()
-                        ),
-                        content: {
-                            if !systemLiveActivitySetting {
-                                Button("Open Settings App") {
-                                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                Section(
+                    header: Text("Live Activity"),
+                    footer: Text(
+                        liveActivityFooterText()
+                    ),
+                    content: {
+                        if !systemLiveActivitySetting {
+                            Button("Open Settings App") {
+                                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                            }
+                        } else {
+                            Toggle("Show Live Activity", isOn: $state.useLiveActivity)
+                            if state.useLiveActivity {
+                                Toggle("Display Chart", isOn: $state.liveActivityChart)
+                                if state.liveActivityChart {
+                                    Toggle("Show Predictions", isOn: $state.liveActivityChartShowPredictions)
                                 }
-                            } else {
-                                Toggle("Show Live Activity", isOn: $state.useLiveActivity) }
+                            }
                         }
                     )
                     .onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {

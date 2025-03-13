@@ -179,9 +179,21 @@
 /* Button title to deactivate pod because of fault during setup */
 "Deactivate" = "Deactiveer";
 
+/* Action button description for deactivate while pod still active */
+"Slide to Deactivate Pod" = "Schuif om de Pod te deactiveren";
+
 /* Button title for pod deactivation
    Button title to deactivate pod */
 "Deactivate Pod" = "Deactiveer Pod";
+
+/* */
+"Slide to Insert Cannula" = "Schuif om de canule in te brengen";
+
+/* */
+"Slide to Deactivate Pod" = "Schuif om de Pod te deactiveren";
+
+/* Label text for step one of insert cannula instructions */
+"Slide the switch below to start cannula insertion." = "Schuif om de canule te starten";
 
 /* Label text showing pod is deactivated */
 "Deactivated" = "Gedeactiveerd";
@@ -273,7 +285,7 @@
 "Fault" = "Fout";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave Pod needle cap on). Listen for 2 beeps." = "Vul een nieuwe pod met U-100 insuline (laat de Podnaalddop zitten). Luister naar 2 piepjes.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Vul een nieuwe Pod met insuline. Verwijder de naalddop NIET!!";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Voltooi deactivering";
@@ -315,7 +327,7 @@
 "Inserting..." = "Canule wordt ingebracht...";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Insuline\nOnderbroken";
+"Insulin\nSuspended" = "Insuline\nopgeschort";
 
 /* The title of the cell showing delivered insulin */
 "Insulin Delivered" = "Geleverde insuline";
@@ -390,7 +402,7 @@
 "No" = "Nee";
 
 /* Text shown in insulin remaining space when no pod is paired */
-"No\nDelivery" = "Geen\nToediening";
+"No\nDelivery" = "Geen\ntoediening";
 
 /* Error message for reservoir view when reservoir empty */
 "No Insulin" = "Geen insuline";
@@ -611,6 +623,9 @@
 /* Button title to set temporary basal rate */
 "Set Temporary Basal Rate" = "Tijdelijke Basaalsnelheid Instellen";
 
+/* Description text on manual temp basal action sheet */
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Je insuline levering zal niet automatisch worden aangepast totdat de tijdelijke basaalstand is beëindigd of is geannuleerd.";
+
 /* Title for setup complete screen */
 "Setup Complete" = "Setup voltooid";
 
@@ -774,8 +789,8 @@
 /* Description for SilencePodPreference.enabled */
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod alarmen gebruiken geen piepjes en herinneringen worden gedempt. De Pod zal alleen piepen bij fatale Pod fouten en bij testpiepen.\n\n⚠️Waarschuwing - Wanneer de Pod is gedempt, moet het binnen het Bluetooth-bereik van dit apparaat worden gehouden om meldingen voor Pod te ontvangen.";
 
-/* Help text for Silence Pod view */
-/* navigation title for Silnce Pod" */
+/* Help text for Silence Pod view  */
+/* navigation title for Silnce Pod */
 
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
 Silence Pod" = "Gedempt";
@@ -802,3 +817,15 @@ Silence Pod" = "Gedempt";
 
 /* Text for read pod status navigation link */
 "Read Pod Status" = "Lees pompstatus";
+
+/* Title for the pod diagnostic view */
+"Pod Diagnostics" = "Diagnostische Pod gegevens";
+
+/* Text for read pulse log plus title */
+"Read Pulse Log Plus" = "Pulslog uitlezen";
+
+/* Text for read activation time title */
+"Read Activation Time" = "Activatietijd lezen";
+
+/* Text for read triggered alerts title */
+"Read Triggered Alerts" = "Lees geactiveerde waarschuwingen";
