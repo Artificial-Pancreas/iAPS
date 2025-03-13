@@ -80,7 +80,7 @@ extension NotificationsConfig {
                 Button(
                     action: {
                         currentName = name
-                        
+
                         if isPlay {
                             self.playSound(name, currentSoundID) {
                                 isPlay = false
@@ -138,9 +138,7 @@ extension NotificationsConfig {
 
                 Section(
                     header: Text("Live Activity"),
-                    footer: Text(
-                        liveActivityFooterText()
-                    ),
+                    footer: Text(liveActivityFooterText()),
                     content: {
                         if !systemLiveActivitySetting {
                             Button("Open Settings App") {
@@ -155,11 +153,11 @@ extension NotificationsConfig {
                                 }
                             }
                         }
-                    )
-                    .onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
-                        self.systemLiveActivitySetting = $0
-                    })
-                }
+                    }
+                ).onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
+                    self.systemLiveActivitySetting = $0
+                })
+
                 Section(header: Text("Sound")) {
                     Picker(selection: $state.alarmSound, label: Text("Selected:")) {
                         ForEach(soundManager.infos, id: \.self.name) { i in

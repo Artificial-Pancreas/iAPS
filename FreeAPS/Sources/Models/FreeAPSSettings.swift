@@ -364,7 +364,8 @@ extension FreeAPSSettings: Decodable {
 
         if let alarmSound = try? container.decode(String.self, forKey: .alarmSound) {
             settings.alarmSound = alarmSound
-          
+        }
+
         if let profilesOrTempTargets = try? container.decode(Bool.self, forKey: .profilesOrTempTargets) {
             settings.profilesOrTempTargets = profilesOrTempTargets
         }
