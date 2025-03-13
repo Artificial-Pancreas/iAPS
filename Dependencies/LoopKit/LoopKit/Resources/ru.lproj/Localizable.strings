@@ -28,4 +28,4 @@
 "Unset" = "Не указан";
 
 /* Description for Unset insulin type */
-"The currently selected fast acting insulin model will be used as a default." = "The currently selected fast acting insulin model will be used as a default.";
+"The currently selected fast acting insulin model will be used as a default." = "Выбранная модель быстродействующего инсулина будет использоваться по умолчанию.";
