@@ -50,6 +50,8 @@ extension NotificationsConfig {
         }
 
         func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
+            guard state.alarmSound != "Silent" else { return }
+
             if sStop != nil {
                 AudioServicesDisposeSystemSoundID(sStop!)
                 return
@@ -158,8 +160,37 @@ extension NotificationsConfig {
                     self.systemLiveActivitySetting = $0
                 })
 
-                Section(header: Text("Sound")) {
-                    Picker(selection: $state.alarmSound, label: Text("Selected:")) {
+                Section(header: Text("Sounds")) {
+                    Picker(selection: $state.hypoSound, label: Text("Hypo Sound:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.hyperSound, label: Text("Hyper Sound:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.ascending, label: Text("Ascending:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.descending, label: Text("Descending:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.carbSound, label: Text("Carbs Required:")) {
+                        Text("Silent").tag("Silent")
                         ForEach(soundManager.infos, id: \.self.name) { i in
                             self.buttonView(name: i.name)
                         }

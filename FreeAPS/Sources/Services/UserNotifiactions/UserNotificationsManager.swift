@@ -96,6 +96,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
     private func notifyCarbsRequired(_ carbs: Int) {
         guard Decimal(carbs) >= settingsManager.settings.carbsRequiredThreshold else { return }
+        let sound = settingsManager.settings.carbSound
 
         ensureCanSendNotification {
             var titles: [String] = []
@@ -106,7 +107,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else {
                 content.sound = .default
-                self.playSoundIfNeeded()
+                self.playSoundIfNeeded(sound: sound)
             }
 
             titles.append(String(format: NSLocalizedString("Carbs required: %d g", comment: "Carbs required"), carbs))
@@ -197,15 +198,18 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         ensureCanSendNotification {
             var titles: [String] = []
             var notificationAlarm = false
+            var sound: String = "New/Anticipalte.caf"
 
             switch self.glucoseStorage.alarm {
             case .none:
                 titles.append(NSLocalizedString("Glucose", comment: "Glucose"))
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
+                sound = self.settingsManager.settings.hypoSound
                 notificationAlarm = true
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
+                sound = self.settingsManager.settings.hyperSound
                 notificationAlarm = true
             }
 
@@ -223,7 +227,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 content.body = body
 
                 if notificationAlarm {
-                    self.playSoundIfNeeded()
+                    self.playSoundIfNeeded(sound: sound)
                     content.sound = .default
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
                 }
@@ -349,25 +353,27 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
-    private func playSoundIfNeeded() {
+    private func playSoundIfNeeded(sound: String) {
         guard settingsManager.settings.useAlarmSound, snoozeUntilDate < Date() else { return }
+        guard sound != "Silent" else { return }
+
         Self.stopPlaying = false
-        playSound()
+        playSound(sound: sound)
     }
 
     static var soundID: UInt32 = 1336
     private static var stopPlaying = false
 
-    private func playSound(times: Int = 1) {
+    private func playSound(times: Int = 1, sound: String) {
         guard times > 0, !Self.stopPlaying else {
             return
         }
-        let path = "/System/Library/Audio/UISounds/" + settingsManager.settings.alarmSound
+        let path = "/System/Library/Audio/UISounds/" + sound
         let soundURL = URL(string: path)
         AudioServicesCreateSystemSoundID(soundURL! as CFURL, &Self.soundID)
 
         AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(Self.soundID)) {
-            self.playSound(times: times - 1)
+            self.playSound(times: times - 1, sound: sound)
         }
     }
 

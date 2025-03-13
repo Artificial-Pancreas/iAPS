@@ -10,7 +10,15 @@ extension NotificationsConfig {
         @Published var highGlucose: Decimal = 0
         @Published var carbsRequiredThreshold: Decimal = 0
         @Published var useLiveActivity = false
+
+        @Published var hypoSound: String = "New/Anticipalte.caf"
+        @Published var hyperSound: String = "New/Anticipalte.caf"
+        @Published var ascending: String = "New/Anticipalte.caf"
+        @Published var descending: String = "New/Anticipalte.caf"
+        @Published var carbSound: String = "New/Anticipalte.caf"
+
         @Published var alarmSound: String = "New/Anticipalte.caf"
+
         @Published var liveActivityChart = false
         @Published var liveActivityChartShowPredictions = true
 
@@ -51,7 +59,11 @@ extension NotificationsConfig {
                 on: $carbsRequiredThreshold
             ) { carbsRequiredThreshold = $0 }
 
-            subscribeSetting(\.alarmSound, on: $alarmSound) { alarmSound = $0 }
+            subscribeSetting(\.hypoSound, on: $hypoSound) { hypoSound = $0 }
+            subscribeSetting(\.hyperSound, on: $hyperSound) { hyperSound = $0 }
+            subscribeSetting(\.ascending, on: $ascending) { ascending = $0 }
+            subscribeSetting(\.descending, on: $descending) { descending = $0 }
+            subscribeSetting(\.carbSound, on: $carbSound) { carbSound = $0 }
         }
     }
 }
