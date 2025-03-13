@@ -25,7 +25,7 @@
 "Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind" = "Afrezza - это инсулин сверхбыстрого действия во время еды, который вдыхается через легкие с помощью перорального ингалятора и производится MannKind";
 
 /* Title for Unset insulin type */
-"Unset" = "Unset";
+"Unset" = "Не указан";
 
 /* Description for Unset insulin type */
-"The currently selected fast acting insulin model will be used as a default." = "The currently selected fast acting insulin model will be used as a default.";
+"The currently selected fast acting insulin model will be used as a default." = "Выбранная модель быстродействующего инсулина будет использоваться по умолчанию.";
