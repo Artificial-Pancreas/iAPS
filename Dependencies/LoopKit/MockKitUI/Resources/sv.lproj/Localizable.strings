@@ -26,10 +26,10 @@
 "OK" = "OK";
 
 /* The title of the temp basal error toggle */
-"Error on Temp Basal" = "Error on Temp Basal";
+"Error on Temp Basal" = "Fel på temp. basal";
 
 /* The title of the battery remaining setting */
-"Battery Remaining" = "Battery Remaining";
+"Battery Remaining" = "Återstående batteri";
 
 /* The title of the custom deliverable increments setting */
 "Custom" = "Anpassad";
@@ -38,25 +38,25 @@
 "Pump Settings" = "Pumpinställningar";
 
 /* The title of the current basal rate setting */
-"Current Basal Rate" = "Current Basal Rate";
+"Current Basal Rate" = "Nuvarande basal";
 
 /* The title of the resolve occlusion action */
-"Resolve Occlusion" = "Resolve Occlusion";
+"Resolve Occlusion" = "Lös ocklusion";
 
 /* The title of the detect occlusion action */
-"Detect Occlusion" = "Detect Occlusion";
+"Detect Occlusion" = "Upptäck Ocklusion";
 
 /* The title of the resolve pump error action */
-"Resolve Pump Error" = "Resolve Pump Error";
+"Resolve Pump Error" = "Lös pumpfel";
 
 /* The title of the cause pump error action */
-"Cause Pump Error" = "Cause Pump Error";
+"Cause Pump Error" = "Orsaka pumpfel";
 
 /* The title of the basal rates setting */
 "Basal Rates" = "Basaldoser";
 
 /* The title of the bolus volumes setting */
-"Bolus Volumes" = "Bolus Volumes";
+"Bolus Volumes" = "Bolusmängder";
 
 /* The title of the insulin type setting */
 "Insulin Type" = "Typ av insulin";
