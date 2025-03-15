@@ -26,10 +26,10 @@
 "OK" = "ОК";
 
 /* The title of the temp basal error toggle */
-"Error on Temp Basal" = "Error on Temp Basal";
+"Error on Temp Basal" = "Помилка у ТБШ";
 
 /* The title of the battery remaining setting */
-"Battery Remaining" = "Battery Remaining";
+"Battery Remaining" = "Залишок заряду Батареї";
 
 /* The title of the custom deliverable increments setting */
 "Custom" = "Своя";
@@ -38,58 +38,58 @@
 "Pump Settings" = "Налаштування Помпи";
 
 /* The title of the current basal rate setting */
-"Current Basal Rate" = "Current Basal Rate";
+"Current Basal Rate" = "Поточна ТБШ";
 
 /* The title of the resolve occlusion action */
-"Resolve Occlusion" = "Resolve Occlusion";
+"Resolve Occlusion" = "Вирішити Оклюзію";
 
 /* The title of the detect occlusion action */
-"Detect Occlusion" = "Detect Occlusion";
+"Detect Occlusion" = "Виявлення Оклюзії";
 
 /* The title of the resolve pump error action */
-"Resolve Pump Error" = "Resolve Pump Error";
+"Resolve Pump Error" = "Усуньте помилку Помпи";
 
 /* The title of the cause pump error action */
-"Cause Pump Error" = "Cause Pump Error";
+"Cause Pump Error" = "Причина помилки Помпи";
 
 /* The title of the basal rates setting */
 "Basal Rates" = "Швидкості Базалу";
 
 /* The title of the bolus volumes setting */
-"Bolus Volumes" = "Bolus Volumes";
+"Bolus Volumes" = "Об’єми Болюсу";
 
 /* The title of the insulin type setting */
 "Insulin Type" = "Тип Інсуліну";
 
 /* The title of the reservoir remaining setting */
-"Reservoir Remaining" = "Reservoir Remaining";
+"Reservoir Remaining" = "Резервуар, що залишився";
 
 /* The title of the bolus error toggle */
-"Error on Bolus" = "Error on Bolus";
+"Error on Bolus" = "Помилка Болюсу";
 
 /* The title of the bolus cancel error toggle */
-"Error on Cancel Bolus" = "Error on Cancel Bolus";
+"Error on Cancel Bolus" = "Помилка під час скасування Болюсу";
 
 /* The title of the suspend error toggle */
-"Error on Suspend" = "Error on Suspend";
+"Error on Suspend" = "Помилка під час Призупинення";
 
 /* The title of the resume error toggle */
-"Error on Resume" = "Error on Resume";
+"Error on Resume" = "Помилка Відновлення";
 
 /* The title of the uncertain delivery error toggle */
-"Next Delivery Command Uncertain" = "Next Delivery Command Uncertain";
+"Next Delivery Command Uncertain" = "Наступна команда доставки Невизначена";
 
 /* The title of the last reconciliation date setting */
-"Last Reconciliation Date" = "Last Reconciliation Date";
+"Last Reconciliation Date" = "Дата останньої Звірки";
 
 /* The title of the percent complete setting */
-"Percent Complete" = "Percent Complete";
+"Percent Complete" = "Відсоток Завершення";
 
 /* The title of the warning threshold setting */
-"Warning Threshold" = "Warning Threshold";
+"Warning Threshold" = "Порогове Значення Попередження";
 
 /* The title of the critical threshold setting */
-"Critical Threshold" = "Critical Threshold";
+"Critical Threshold" = "Критичний Поріг";
 
 /* The title of the delete pump action */
 "Delete Pump" = "Видалити помпу";
