@@ -2198,7 +2198,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Access to contacts - unknown state" = "Toegang tot contacten - onbekende staat";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Contactafbeelding kan gebruikt worden om live updates van iAPS te krijgen tot jouw Apple Watch Contact complicatie en/of jouw iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Contactafbeelding kan gebruikt worden om live updates van iAPS te krijgen voor jouw Apple Watch Contact complicatie en/of jouw iPhone Contact widget.";
 
 /* Contact Image, settings, main header */
 "Contact Image" = "Contactfoto";
