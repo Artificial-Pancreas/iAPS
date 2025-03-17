@@ -101,10 +101,10 @@
 "Supported Bolus Volumes" = "Supported Bolus Volumes";
 
 /* Confirmation message for pump deletion */
-"Are you sure you want to delete this pump?" = "Are you sure you want to delete this pump?";
+"Are you sure you want to delete this pump?" = "Bạn có chắc muốn xóa bơm này không?";
 
 /* Warning message for changing supported pump basal rates values */
-"Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)" = "Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)";
+"Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)" = "Thay đổi các giá trị được hỗ trợ của máy bơm có thể khiến ứng dụng bị sập. Đảm bảo bạn đang thay đổi chúng sao cho các giá trị liệu đã đặt vẫn hợp lệ (ví dụ: tỷ lệ cơ bản, bolus tối đa, v.v.)";
 
 /* The title of the minimum value setting for basal rates */
 "Minimum Value" = "Minimum Value";
