@@ -2977,6 +2977,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Display carb equivalents" = "Zobraziť ekvivalenty sacharidov";
 
 /* UI/UX option */
+"Display carb equivalent amount" = "Display carb equivalent amount";
+
+/* UI/UX option */
 "Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";
 
 /* UI/UX option */
