@@ -2976,6 +2976,9 @@ Enact a temp Basal or a temp target */
 "Display carb equivalents" = "Отображать эквиваленты углеводов";
 
 /* UI/UX option */
+"Display carb equivalent amount" = "Display carb equivalent amount";
+
+/* UI/UX option */
 "Display Sensor Time Remaining" = "Отображать оставшееся время датчика";
 
 /* UI/UX option */
