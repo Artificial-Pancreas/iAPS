@@ -2978,6 +2978,9 @@ Połączono z Nightscout!";
 "Display carb equivalents" = "Display carb equivalents";
 
 /* UI/UX option */
+"Display carb equivalent amount" = "Display carb equivalent amount";
+
+/* UI/UX option */
 "Display Sensor Time Remaining" = "Display Sensor Time Remaining";
 
 /* UI/UX option */
