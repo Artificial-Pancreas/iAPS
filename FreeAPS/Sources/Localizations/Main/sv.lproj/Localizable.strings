@@ -2976,7 +2976,7 @@ Enact a temp Basal or a temp target */
 "Display carb equivalents" = "Visa kolhydratekvivalenter";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Display carb equivalent amount";
+"Display carb equivalent amount" = "Visa kolhydratekvivalentmängd";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Visa återstående tid för sensor";
