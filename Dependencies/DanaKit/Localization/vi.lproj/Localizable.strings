@@ -523,7 +523,7 @@
 "Yes, disable bolus syncing" = "Có, tắt đồng bộ bolus";
 
 /* ana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here" = "The Dana pumps support different delivery speeds. You can set it up here";
+"The Dana pumps support different delivery speeds. You can set it up here" = "Máy bơm Dana hỗ trợ nhiều tốc độ phân phối khác nhau. Bạn có thể thiết lập ở đây";
 
 /* Text for Basal profile */
 "Basal profile" = "Basal profile";
@@ -535,10 +535,10 @@
 "Configuration" = "Configuration";
 
 /* Text for low reservoir reminder */
-"Low reservoir reminder" = "Low reservoir reminder";
+"Low reservoir reminder" = "Báo nhắc gần hết thuốc";
 
 /* refillAmount */
-"Refill amount" = "Refill amount";
+"Refill amount" = "Số lượng nạp lại";
 
 /* Insulin unit */
 "U" = "U";
@@ -556,13 +556,13 @@
 "Tube refill amount" = "Tube refill amount";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Phương pháp nạp lại này chỉ dành cho trường hợp máy bơm không thể nạp lại bình chứa hoặc mồi ống thông";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "CẢNH BÁO: SỬ DỤNG THẬN TRỌNG!";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Phương pháp nạp lại này chỉ dành cho trường hợp máy bơm không thể nạp lại bình chứa hoặc mồi ống thông";
 
 /* Title for warning refill */
 "WARNING: USE WITH CAUTION!" = "CẢNH BÁO: SỬ DỤNG THẬN TRỌNG!";
