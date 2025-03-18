@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDávka prekračuje Vaše nastavenie Max Bolus!\nSte si istí, že chcete dávku pridať ";
 
 /* Header */
-"Enact Bolus" = "Pridať bolus";
+"Enact Bolus" = "Podať bolus";
 
 /* Button */
-"Enact bolus" = "Pridať bolus";
+"Enact bolus" = "Podať bolus";
 
 /*  */
 "Insulin recommended" = "Odporúčaný inzulín";
@@ -2977,7 +2977,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Display carb equivalents" = "Zobraziť ekvivalenty sacharidov";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Display carb equivalent amount";
+"Display carb equivalent amount" = "Zobraziť ekvivalentné množstvo sacharidov";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";
