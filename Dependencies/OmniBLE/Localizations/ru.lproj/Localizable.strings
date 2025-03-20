@@ -828,7 +828,7 @@
 /* Help text for Silence Pod view */
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Беззвучный режим Пода отключает все звуковые сигналы и напоминания о подтверждении Пода.";
 
-/* navigation title for Silnce Pod */
+/* navigation title for Silence Pod */
 "Silence Pod" = "Беззвучный Под";
 
 /* title for pod details page */

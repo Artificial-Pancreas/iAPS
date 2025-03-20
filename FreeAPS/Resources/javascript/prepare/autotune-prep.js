@@ -33,6 +33,15 @@ function generate(pumphistory_data, profile_data, glucose_data, pumpprofile_data
         }
     } );
 
+    /* A temporary fix to make all iAPS carb equivalents compatible with the Oref0 meal module. */
+    carb_data.forEach( carb => carb.created_at = carb.actualDate ? carb.actualDate : carb.created_at);
+    carb_data.forEach( carb => console.log("Carb entry " + carb.created_at + ", carbs: " + carb.carbs + ", entered by: " + carb.enteredBy ));
+    carb_data = carb_data.filter((carb) => carb.carbs >= 1);
+    carb_data.sort((a, b) => b.created_at - a.created_at);
+
+    /* oref0 autotune-prep module expects the timestamp to be in the created_at field */
+    pumphistory_data.forEach( entry => entry.created_at = entry.timestamp );
+
     inputs = {
       history: pumphistory_data
     , profile: profile_data

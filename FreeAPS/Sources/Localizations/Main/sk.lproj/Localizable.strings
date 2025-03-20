@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nDávka prekračuje Vaše nastavenie Max Bolus!\nSte si istí, že chcete dávku pridať ";
 
 /* Header */
-"Enact Bolus" = "Pridať bolus";
+"Enact Bolus" = "Podať bolus";
 
 /* Button */
-"Enact bolus" = "Pridať bolus";
+"Enact bolus" = "Podať bolus";
 
 /*  */
 "Insulin recommended" = "Odporúčaný inzulín";
@@ -533,7 +533,7 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "10 U";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Povoliť nastavenie koncentrácie zriedeného inzulínu";
+"Allow diluted insulin concentration settings" = "Povoliť nastavenie koncentrácie inzulínu";
 /* Max setting */
 "Max Carbs" = "Maximum sacharidov";
 
@@ -2975,6 +2975,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* UI/UX option */
 "Display carb equivalents" = "Zobraziť ekvivalenty sacharidov";
+
+/* UI/UX option */
+"Display carb equivalent amount" = "Zobraziť ekvivalentné množstvo sacharidov";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Zobraziť zostávajúci čas senzora";

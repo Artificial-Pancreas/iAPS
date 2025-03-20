@@ -161,10 +161,10 @@
 "Override" = "Перевизначити";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Немає Помпи";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Відкрита";
 
 /*  */
 "Amount Carbs" = "Кількість Вуглеводів";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Лікування";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "За замовчуванням 📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Жоден";
@@ -2977,6 +2977,9 @@ Enact a temp Basal or a temp target */
 "Display carb equivalents" = "Показати еквіваленти вуглеводів";
 
 /* UI/UX option */
+"Display carb equivalent amount" = "Display carb equivalent amount";
+
+/* UI/UX option */
 "Display Sensor Time Remaining" = "Відображати час Сенсору що залишився.";
 
 /* UI/UX option */
@@ -3058,7 +3061,7 @@ Enact a temp Basal or a temp target */
 "Adjustment Factor" = "Коефіцієнт Регулювання";
 
 /* Apple Watch Overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Перевизначити";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Cancel Override";
+"Cancel Override" = "Скасувати перевизначення";
