@@ -790,10 +790,10 @@
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Všetky upozornenia Pod nepoužívajú žiadne zvukové signály a zvukové signály pripomínajúce potvrdenie sú potlačené. Pod bude pípať len pri fatálnych poruchách Pod a pri prehrávaní testovacích pípnutí.\n\n⚠️Warning - Vždy, keď je Pod stlmený, musí byť v dosahu Bluetooth tohto zariadenia, aby prijímal upozornenia na upozornenia Pod.";
 
 /* Help text for Silence Pod view  */
-/* navigation title for Silnce Pod */
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Režim Silence Pod potlačí všetky upozornenia Pod a upozornenia na potvrdenie.";
 
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
-Silence Pod" = "Umlčané";
+/* Navigation title for Silence Pod */
+"Silence Pod" = "Stíšiť Pod";
 
 /* title for pod details page */
 "Pod Details" = "Detaily Podu";

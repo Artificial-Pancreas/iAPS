@@ -13,17 +13,17 @@
 "%1$@%2$@%3$@" = "%1$@ %2$@ %3$@";
 
 /* The title of the cancel action in an action sheet */
-"Cancel" = "إلغاء";
+"Cancel" = "Cancelar";
 
 /* The alert title for a resume error */
-"Error Resuming" = "خطأ في الاستئناف";
+"Error Resuming" = "Error Resuming";
 
 /* The alert title for a suspend error */
 "Error Suspending" = "Error Suspending";
 
 /* Button title to acknowledge error
    Default acknowledgement */
-"OK" = "حسناً";
+"OK" = "OK";
 
 /* The title of the temp basal error toggle */
 "Error on Temp Basal" = "Error on Temp Basal";
@@ -32,10 +32,10 @@
 "Battery Remaining" = "Battery Remaining";
 
 /* The title of the custom deliverable increments setting */
-"Custom" = "مخصص";
+"Custom" = "Definir";
 
 /* Title for Insulin Pump Simulator settings */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Ajustes Bomba";
 
 /* The title of the current basal rate setting */
 "Current Basal Rate" = "Current Basal Rate";
@@ -53,13 +53,13 @@
 "Cause Pump Error" = "Cause Pump Error";
 
 /* The title of the basal rates setting */
-"Basal Rates" = "الضخ المستمر";
+"Basal Rates" = "Basal Rates";
 
 /* The title of the bolus volumes setting */
 "Bolus Volumes" = "Bolus Volumes";
 
 /* The title of the insulin type setting */
-"Insulin Type" = "نوع الإنسولين";
+"Insulin Type" = "Insulin Type";
 
 /* The title of the reservoir remaining setting */
 "Reservoir Remaining" = "Reservoir Remaining";
@@ -92,7 +92,7 @@
 "Critical Threshold" = "Critical Threshold";
 
 /* The title of the delete pump action */
-"Delete Pump" = "حذف المضخة";
+"Delete Pump" = "Delete Pump";
 
 /* Controller title for supported basal rates selection screen */
 "Supported Basal Rates" = "Supported Basal Rates";

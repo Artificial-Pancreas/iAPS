@@ -86,10 +86,10 @@
 "A Remote Bolus Was Just Delivered!" = "Một liều Bolus từ xa vừa được hoàn thành!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Thực hiện ở";
+"Enacted at" = "Thực hiện lúc";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Đề xuất ở";
+"Suggested at" = "Đề xuất lúc";
 
 /* Headline in enacted pop up (at: at what time) */
 "Status at" = "Trạng thái tại";
@@ -483,7 +483,7 @@ Enact a temp Basal or a temp target */
 "hours" = "hours";
 
 /* Max setting */
-"Max Basal" = "Liều nền tối đa";
+"Max Basal" = "Liều Basal tối đa";
 
 /* Max setting */
 "Max Bolus" = "Liều bolus tối đa";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Treatment";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Default";
 
 /* Hypo Treatment Default Value */
 "None" = "Không";
@@ -1063,7 +1063,7 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Đơn vị ghi đè";
 
 /* */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* */
 "High" = "High";
@@ -1072,7 +1072,7 @@ Enact a temp Basal or a temp target */
 "Very High" = "Very High";
 
 /* TIR Chart */
-"Very Low" = "Quá thấp";
+"Very Low" = "Very Low";
 
 /* */
 "glucose" = "đường huyết";
@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Liều Basal thủ công⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/ngày";
+" U/day" = " U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
@@ -1919,7 +1919,7 @@ Enact a temp Basal or a temp target */
 "Allow Upload of Statistics to NS" = "Cho phép tải số liệu thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* High Glucose Threshold in Statistics settings */
 "High" = "High";
@@ -2975,6 +2975,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display carb equivalents" = "Hiển thị lượng carb tương đương";
+
+/* UI/UX option */
+"Display carb equivalent amount" = "Hiển thị lượng carb tương đương";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Hiển thị thời gian còn lại của cảm biến";

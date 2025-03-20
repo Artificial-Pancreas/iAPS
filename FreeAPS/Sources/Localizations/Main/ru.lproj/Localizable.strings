@@ -161,10 +161,10 @@
 "Override" = "Переопределение";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Нет помпы";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Открытая";
 
 /*  */
 "Amount Carbs" = "Кол-во углеводов";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Терапия";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "По умолчанию  📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Не подан";
@@ -2974,6 +2974,9 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display carb equivalents" = "Отображать эквиваленты углеводов";
+
+/* UI/UX option */
+"Display carb equivalent amount" = "Отображать эквиваленты углеводов";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Отображать оставшееся время датчика";

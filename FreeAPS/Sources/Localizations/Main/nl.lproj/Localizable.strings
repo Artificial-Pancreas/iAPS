@@ -161,7 +161,7 @@
 "Override" = "Aangepast programma";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Geen pomp";
 
 /* Home View Message if open loop is active */
 "Open" = "Open";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Behandeling";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Standaard 📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Geen";
@@ -1614,7 +1614,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Start Profile" = "Start profiel";
 
 /* */
-"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Je basale insuline zal worden aangepast met het overschrijvingspercentage en uw ISF en CR profiel zullen direct worden aangepast aan het percentage.";
+"Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Je basale insuline zal worden aangepast met het overschrijvingspercentage. Je ISF en CR profiel zullen direct worden aangepast aan dit percentage.";
 
 /* */
 "Starting this override will change your Profiles and/or your Target Glucose used for looping during the entire selected duration. Tapping ”Start Profile” will start your new profile or edit your current active profile." = "Als je deze instelling (overschrijving) start, pas je je profielen en/of je streefwaarde voor glucose aan die tijdens het hele gekozen tijdsduur wordt gebruikt. Door op \"Start profiel\" te tikken, begin je met je nieuwe instellingen of verander je je huidige actieve instellingen.";
@@ -1632,7 +1632,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "App Icons" = "App iconen";
 
 /* */
-"iAPS Icon" = "iAPS icoon";
+"iAPS Icon" = "iAPS icon";
 
 /* Service Section */
 "Statistics and Home View" = "Statistieken en Home View";
@@ -2198,7 +2198,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Access to contacts - unknown state" = "Toegang tot contacten - onbekende staat";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Contactafbeelding kan gebruikt worden om live updates van iAPS te krijgen tot jouw Apple Watch Contact complicatie en/of jouw iPhone Contact widget.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Contactafbeelding kan gebruikt worden om live updates van iAPS te krijgen voor jouw Apple Watch Contact complicatie en/of jouw iPhone Contact widget.";
 
 /* Contact Image, settings, main header */
 "Contact Image" = "Contactfoto";
@@ -2676,7 +2676,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Max IOB" = "Max IOB";
 
 /* "Max IOB" */
-"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "De Max IOB is de maximale hoeveelheid insuline aan boord van alle bronnen - zowel basaal (of SMB correcties) en bolus insuline die door iAPS gegeven mag worden om alles hoger dan de streefwaarde te behandelen. Anders dan de andere twee veiligheid instelingen (max_daily_safety_multiplier and current_basal_safety_multiplier) wordt bij deze instelling een vaste aantal eenheden insuline opgegeven. Voorlopig worden handmatige bolussen NIET beperkt door deze instelling. \n\n Om je basaal waarden te testen gedurende de nacht kun je deze instelling op 0 zetten tijdens een actieve Loop. Dit zorgt er voor dat stop voor laag geactiveerd worden wanneer je je instelling aan het testen bent. \n\n(Tip van https://www.loopandlearn.org/freeaps-x/#open-loop).";
+"Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "Max IOB is de maximale hoeveelheid insuline in je lichaam vanuit alle bronnen – dus zowel basale insuline (of automatische correcties) als bolussen – die iAPS mag geven om je glucosewaarde naar beneden te brengen. In tegenstelling tot de andere twee veiligheidsinstellingen (max_daily_safety_multiplier en current_basal_safety_multiplier) geef je hier een vast aantal eenheden insuline op. Let op: deze instelling geldt niet voor handmatig gegeven bolussen.\n\nWil je ’s nachts je basaal waardes testen? Zet deze instelling dan tijdelijk op 0 tijdens een gesloten Loop. Hierdoor wordt ‘stop voor laag’ automatisch geactiveerd, zodat je veilig kunt testen.\n\n(Tip van: https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
 "Max Daily Safety Multiplier" = "Maximale dagelijkse veiligheidsvermenigvuldiger";
@@ -2775,7 +2775,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Tijd van maximale bloedglucose verlagend effect van insuline in hele minuten (insuline piek tijd). Let op: Oref gaat er van uit dat ultra-snelle (Lyumjev) & snelle werking (Fiasp) curves minimaal (35 & 50 min) en maximaal (100 en 120 min) hebben als insulinPeakTimes. Het gebruik van een aangepaste insulinPeakTime buiten deze grenzen leidt tot problemen met iAPS, langere loopberekeningen en mogelijke een rode Loop.";
 
 /* Headline "Carbs Req Threshold" */
-"Carbs Req Threshold" = "Koolhydraten vereist drempel";
+"Carbs Req Threshold" = "Koolhydraten vereist drempelwaarde";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Aantal gram koolhydraten benodigd om een push bericht te versturen. Standaard ingesteld op 1 (voor 1 gram aan koolhydraten). Kan worden verhoogd als u alleen push berichten wilt krijgen boven de ingestelde drempelwaarde.";
@@ -2807,7 +2807,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Enable Dynamic ISF" = "Dynamische ISF inschakelen";
 
 /* Enable Dynamic ISF */
-"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Bereken een nieuwe instelling voor de insulinegevoeligheid (ISF) bij elke cyclus van de loop. De nieuwe ISF wordt gebaseerd op je huidige glucose, totale dagelijkse dosis insuline (TDD, afgelopen 24 uur van alle toegediende insuline) en een individuele aanpassingsfactor (aanbevolen wordt om te beginnen met 0,5 als u de Sigmoid-functie gebruikt en 0,8 als dat niet het geval is).\n\nAlle dynamische ISF- en CR-aanpassingen worden beperkt door je autosens.min/max-limieten.";
+"Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Bereken een nieuwe instelling voor de insulinegevoeligheid (ISF) bij elke cyclus van de loop. De nieuwe ISF wordt gebaseerd op je huidige glucose, totale dagelijkse dosis insuline (TDD, afgelopen 24 uur van alle toegediende insuline) en een individuele aanpassingsfactor (aanbevolen wordt om te beginnen met 0,5 als je de Sigmoid-functie gebruikt en 0,8 als dat niet het geval is).\n\nAlle dynamische ISF- en CR-aanpassingen worden beperkt door je autosens.min/max-limieten.";
 
 /* Headline Enable Dynamic CR */
 "Enable Dynamic CR" = "Dynamische CR inschakelen";
@@ -2856,7 +2856,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "the threshold will be " = "de grenswaarde wordt ";
 
 /* Minimum Threshold Setting, Part 3 */
-"unless your threshold setting is set higher:" = "tenzij uw grenswaarde hoger is ingesteld:";
+"unless your threshold setting is set higher:" = "tenzij je grenswaarde hoger is ingesteld:";
 
 /* Threshold Table Columns Title */
 "Setting" = "Instelling";
@@ -2907,7 +2907,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "De nieuwe alternatieve boluscalculator is een andere benadering van de standaard boluscalculator in iAPS. Als de knop aan staat, gebruik je deze boluscalculator en niet de originele iAPS-calculator. Aan het einde van de berekening wordt een aangepaste factor toegepast, zoals het hoort bij het gebruik van smbs (standaard 0,8).\n\nJe kunt ook de optie toevoegen in je boluscalculator om een andere (!) aanpasbare factor toe te passen aan het einde van de berekening, wat handig kan zijn voor vette maaltijden, zoals pizza (standaard 0,7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Gebruik de OpenAPS voorspelling van de uiteindelijke bloedsuikerwaarde om de aanbevolen insulinedosis te berekenen. Deze instelling activeert de \"oude\" rekenmethode en staat standaard aan.\n\n2. Gebruik de OpenAPS minPredBG-voorspelling als extra veiligheidsmaatregel, zodat de bloedsuikerwaarde niet onder je ingestelde grens zakt. Deze instelling kan samen met of zonder de uiteindelijke bloedsuikerwaarde worden gebruikt en staat standaard aan";
 
 /* Settings Section */
 "Extra Features" = "Extra functionaliteiten";
@@ -2979,6 +2979,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Display carb equivalents" = "Toon koolhydraathoeveelheden";
+
+/* UI/UX option */
+"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Resterende sensortijd weergeven";
