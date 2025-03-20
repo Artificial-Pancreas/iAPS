@@ -1,4 +1,5 @@
 import ActivityKit
+import AVFoundation
 import Combine
 import SwiftUI
 import Swinject
@@ -7,6 +8,11 @@ extension NotificationsConfig {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
+        @State private var currentSoundID: SystemSoundID = 1336
+        @State private var isPlay = false
+        @State private var currentName: String = ""
+
+        let soundManager = SystemSoundsManager()
 
         @State private var systemLiveActivitySetting: Bool = { ActivityAuthorizationInfo().areActivitiesEnabled }()
 
@@ -43,6 +49,63 @@ extension NotificationsConfig {
             return footer
         }
 
+        func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
+            guard state.alarmSound != "Silent" else { return }
+
+            if sStop != nil {
+                AudioServicesDisposeSystemSoundID(sStop!)
+                return
+            }
+            let path = "/System/Library/Audio/UISounds/" + (s ?? state.alarmSound)
+            var theSoundID = SystemSoundID(1336)
+            let soundURL = URL(string: path)
+            AudioServicesCreateSystemSoundID(soundURL! as CFURL, &theSoundID)
+            currentSoundID = theSoundID
+            AudioServicesPlaySystemSoundWithCompletion(theSoundID) {
+                AudioServicesDisposeSystemSoundID(theSoundID)
+                onCompletion()
+            }
+        }
+
+        private func buttonView(name: String) -> some View {
+            HStack {
+                Text(
+                    name
+                        .replacingOccurrences(of: ".caf", with: "")
+                        .replacingOccurrences(of: "New/", with: "")
+                        .replacingOccurrences(of: "Modern/", with: "")
+                        .replacingOccurrences(of: "nano/", with: "")
+                        .replacingOccurrences(of: "_", with: " ")
+                )
+                Spacer()
+
+                Button(
+                    action: {
+                        currentName = name
+
+                        if isPlay {
+                            self.playSound(name, currentSoundID) {
+                                isPlay = false
+                                currentName = ""
+                            }
+                        } else {
+                            self.playSound(name) {
+                                isPlay = false
+                                currentName = ""
+                            }
+                        }
+                        isPlay = true
+
+                    },
+
+                    label: {
+                        isPlay && currentName == name ? Image(systemName: "pause") :
+                            !isPlay ? Image(systemName: "play") : nil
+                    }
+                )
+            }
+        }
+
         var body: some View {
             Form {
                 Section(header: Text("Glucose")) {
@@ -77,9 +140,7 @@ extension NotificationsConfig {
 
                 Section(
                     header: Text("Live Activity"),
-                    footer: Text(
-                        liveActivityFooterText()
-                    ),
+                    footer: Text(liveActivityFooterText()),
                     content: {
                         if !systemLiveActivitySetting {
                             Button("Open Settings App") {
@@ -95,10 +156,46 @@ extension NotificationsConfig {
                             }
                         }
                     }
-                )
-                .onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
+                ).onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
                     self.systemLiveActivitySetting = $0
                 })
+
+                Section(header: Text("Sounds")) {
+                    Picker(selection: $state.hypoSound, label: Text("Hypo Sound:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.hyperSound, label: Text("Hyper Sound:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.ascending, label: Text("Ascending:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.descending, label: Text("Descending:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.carbSound, label: Text("Carbs Required:")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            self.buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)

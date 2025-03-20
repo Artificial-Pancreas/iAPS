@@ -1252,6 +1252,27 @@ Enact a temp Basal or a temp target */
  /* */
  "Carbs Required Threshold" = "Carbs Required Threshold";
 
+/* */
+"Carbs Required:" = "Carbs Required:";
+
+/* */
+"Sounds" = "Sounds";
+
+/* Sound for Hypo alert */
+"Hypo Sound:" = "Hypo Sound:";
+
+/* Sound for Hyper alert */
+"Hyper Sound:" = "Hyper Sound:";
+
+/* Sound for ascending glucose */
+"Ascending:" = "Ascending:";
+
+/* Sound for descending glucose */
+"Descending:" = "Descending:";
+
+/* Option for no sound */
+"Silent" = "Silent";
+
  /* */
  "Carbs required: %d g" = "Carbs required: %d g";
 
