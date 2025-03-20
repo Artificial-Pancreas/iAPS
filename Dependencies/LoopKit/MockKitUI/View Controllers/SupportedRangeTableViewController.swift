@@ -78,7 +78,7 @@ final class SupportedRangeTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return "Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)"
+        return LocalizedString("Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)", comment: "Warning message for changing supported pump values")
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,13 +86,13 @@ final class SupportedRangeTableViewController: UITableViewController {
 
         switch Row(rawValue: indexPath.row)! {
         case .minValue:
-            cell.textLabel?.text = "Minimum Value"
+            cell.textLabel?.text = LocalizedString("Minimum Value", comment: "The title of the minimum value setting")
             cell.detailTextLabel?.text = numberFormatter.string(from: minValue)
         case .maxValue:
-            cell.textLabel?.text = "Maximum Value"
+            cell.textLabel?.text = LocalizedString("Maximum Value", comment: "The title of the maximum value setting")
             cell.detailTextLabel?.text = numberFormatter.string(from: maxValue)
         case .stepSize:
-            cell.textLabel?.text = "Step Size"
+            cell.textLabel?.text = LocalizedString("Step Size", comment: "The title of the step size value setting")
             cell.detailTextLabel?.text = numberFormatter.string(from: stepSize)
         }
 

@@ -114,7 +114,7 @@
 "Finish setup " = "Voltooi installatie";
 
 /* Description for finish setup reminder */
-"Finish setup reminder" = "Voltooi instelling van herinnering";
+"Finish setup reminder" = "Voltooi instelling van melding";
 
 /* Pod inititialized */
 "Initialized" = "Geinitialiseerd";
@@ -310,7 +310,7 @@
 "Ready to insert cannula" = "Gereed voor inbrengen canule";
 
 /* Pod pairing reminder initialized */
-"Reminder initialized" = "Herinnering geïnitialiseerd";
+"Reminder initialized" = "Melding geïnitialiseerd";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
 "Resume" = "Hervatten";
@@ -425,4 +425,4 @@
 "Wait for existing temp basal to finish, or suspend to cancel" = "Wacht tot de huidig tijdelijk basaalsnelheid is voltooid, of onderbreek om te annuleren";
 
 /* Description waiting for pairing reminder */
-"Waiting for pairing reminder" = "Wacht op herinnering om te verbinden";
+"Waiting for pairing reminder" = "Wacht op melding om te verbinden";

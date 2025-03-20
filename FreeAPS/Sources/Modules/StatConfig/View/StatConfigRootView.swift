@@ -52,6 +52,9 @@ extension StatConfig {
                         Text("U").foregroundColor(.secondary)
                     }
                     Toggle("Display carb equivalents", isOn: $state.fpus)
+                    if state.fpus {
+                        Toggle("Display carb equivalent amount", isOn: $state.fpuAmounts)
+                    }
 
                 } header: { Text("Home Chart settings ") }
 

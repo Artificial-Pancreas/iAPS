@@ -828,7 +828,7 @@
 /* Help text for Silence Pod view */
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Chế độ Silence Pod sẽ chặn tất cả tiếng bíp và lời nhắc nhở.";
 
-/* navigation title for Silnce Pod */
+/* navigation title for Silence Pod */
 "Silence Pod" = "Pod im lặng";
 
 /* title for pod details page */

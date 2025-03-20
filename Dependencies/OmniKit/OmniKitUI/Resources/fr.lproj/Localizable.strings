@@ -789,11 +789,11 @@
 /* Description for SilencePodPreference.enabled */
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Toutes les alertes de Pod n'utilisent aucun bip et les bips de rappel de confirmation sont supprimés. Le Pod ne sera disponible que pour les défauts fataux du Pod et lors de la lecture des bips de test.\n\n⚠️Warning - Chaque fois que le Pod est réduit au silence, il doit être maintenu à portée Bluetooth de cet appareil pour recevoir des notifications pour les alertes de Pod.";
 
-/* Help text for Silence Pod view */
-/* navigation title for Silnce Pod" */
+/* Help text for Silence Pod view  */
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Le mode Pod silencieux supprime tous les bips d'alerte et de rappel de confirmation.";
 
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
-Silence Pod" = "Pod silencieux";
+/* Navigation title for Silence Pod */
+"Silence Pod" = "Pod silencieux";
 
 /* title for pod details page */
 "Pod Details" = "Détails du Pod";

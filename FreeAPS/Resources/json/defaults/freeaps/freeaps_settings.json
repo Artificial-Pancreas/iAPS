@@ -97,5 +97,6 @@
   "extended_overrides": false,
   "displayExpiration": false,
   "anubis": false,
-  "fpus": true
+  "fpus": true,
+  "fpuAmounts": false
 }

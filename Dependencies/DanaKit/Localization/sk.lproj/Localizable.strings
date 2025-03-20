@@ -182,7 +182,7 @@
 "Suspend delivery" = "Pozastavenie dodávky";
 
 /* Dana settings stop temp basal */
-"Stop temp basal" = "Zastavenie bazálnej teploty";
+"Stop temp basal" = "Zastaviť dočasnú bazálnu dávku";
 
 /* Text for confidence reminders navigation link */
 "Insulin Type" = "Typ Inzulínu";
@@ -253,7 +253,7 @@
 "No, Keep Pump As Is" = "Nie, nechajte pumpu tak, ako je";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
-"Bolus" = "Dávka";
+"Bolus" = "Bolus";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
 "Temp Basal" = "Dočasný bazál";
@@ -343,7 +343,7 @@
 "Low pump battery" = "Slabá batéria čerpadla";
 
 /* Alert body for lowBattery */
-"Pump battery needs to be replaced soon" = "Batéria čerpadla sa musí čoskoro vymeniť";
+"Pump battery needs to be replaced soon" = "Batériu pumpy bude potrebné čoskoro vymeniť";
 
 /* Alert title for shutdown */
 "Pump shutdown" = "Vypnutie čerpadla";
