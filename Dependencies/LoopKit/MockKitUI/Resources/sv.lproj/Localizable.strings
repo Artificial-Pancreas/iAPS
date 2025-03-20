@@ -101,7 +101,7 @@
 "Supported Bolus Volumes" = "Supported Bolus Volumes";
 
 /* Confirmation message for pump deletion */
-"Are you sure you want to delete this pump?" = "Are you sure you want to delete this pump?";
+"Are you sure you want to delete this pump?" = "Säkert att du vill ta bort denna pump?";
 
 /* Warning message for changing supported pump basal rates values */
 "Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)" = "Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)";
