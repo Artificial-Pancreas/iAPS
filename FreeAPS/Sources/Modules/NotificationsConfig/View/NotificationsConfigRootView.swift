@@ -34,8 +34,10 @@ extension NotificationsConfig {
 
             if !systemLiveActivitySetting {
                 footer =
-                    "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" +
-                    footer
+                    NSLocalizedString(
+                        "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n",
+                        comment: "footer"
+                    ) + NSLocalizedString(footer, comment: "Footer")
             }
 
             return footer

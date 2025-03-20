@@ -157,6 +157,15 @@
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Agregar Carbohidratos ";
 
+/* Home View */
+"Override" = "Override";
+
+/* Home View Message if no pump is connected */
+"No Pump" = "No Pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Open";
+
 /*  */
 "Amount Carbs" = "Cantidad de Carbohidratos";
 
@@ -261,6 +270,9 @@
 
 /*  */
 "Autotune" = "Autotune";
+
+/* Debug option view Dynamic Variables */
+"Dynamic Variables" = "Dynamic Variables";
 
 /*  */
 "Basal profile" = "Perfil de basal";
@@ -604,6 +616,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Añadir dispositivo";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+
+/* */
 "Glucose Target" = "Objetivo de glucosa";
 
 /* */
@@ -614,6 +629,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "FSI";
+
+/* */
+"% Override" = "% Override";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "La aplicación Garmin Connect debe estar instalada para usar con iAPS.\n Vaya a la App Store para descargarla";
@@ -687,8 +705,23 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Tratamientos";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Treatment";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default  📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Ninguno";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1329,7 +1362,10 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Developer" = "Desarrollador";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "Subir perfil a NS";
+"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Delete All NS Overrides";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "Perfil subido a NS";
@@ -1352,8 +1388,11 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Debug option view Pump History */
 "Pump History" = "Historial de la bomba";
 
+/* Debug option view Temp Basals */
+"Temp Basals" = "Temp Basals";
+
 /* Debug option view Target Ranges */
-"Target ranges" = "Rangos objetivo";
+"Targets ranges" = "Targets ranges";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Objetivos temporales";
@@ -1375,6 +1414,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Anuncios ejecutados";
+
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1486,6 +1528,9 @@ Ajustes predeterminados:\n
 /* Service Section */
 "Fat And Protein Conversion" = "Conversión de UGPs";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Ignore flat CGM readings";
+
 /* Service Section */
 "Profile Override" = "Sobrescritura del perfil";
 
@@ -1515,6 +1560,9 @@ Ajustes predeterminados:\n
 /* */
 "Disable SMBs" = "Deshabilitar SMBs";
 
+/* */
+"End the Override with next Meal" = "End the Override with next Meal";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Perfil normal";
 
@@ -1523,6 +1571,9 @@ Ajustes predeterminados:\n
 
 /* */
 "Profiles" = "Perfiles";
+
+/* */
+"Advanced Settings" = "Advanced Settings";
 
 /* */
 "More options" = "Más opciones";
@@ -1544,6 +1595,9 @@ Ajustes predeterminados:\n
 
 /* */
 "UAM SMB Minutes" = "Minutos de SMB en UAM";
+
+/* */
+"Override Max IOB" = "Override Max IOB";
 
 /* */
 "Start new Profile" = "Iniciar nuevo perfil";
@@ -2423,13 +2477,13 @@ Ajustes predeterminados:\n
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled.";
 
 /* */
-"ISF weight for lower BG's" = "ISF weight for lower BG's";
+"ISF weight for lower BG" = "ISF weight for lower BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled.";
 
 /* */
-"ISF weight for higher BG's" = "ISF weight for higher BG's";
+"ISF weight for higher BG" = "ISF weight for higher BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled.";
@@ -2480,6 +2534,9 @@ Ajustes predeterminados:\n
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose.";
 
 /* */
+"Override Auto ISF" = "Override Auto ISF";
+
+/* */
 "Enable Auto ISF" = "Enable Auto ISF";
 
 /* */
@@ -2502,6 +2559,15 @@ Ajustes predeterminados:\n
 
 /* Override adjustment of ISF, CR and Basal */
 "Adjust " = "Adjust ";
+
+/* History of the adjustments */
+"Final Ratio" = "Final Ratio";
+
+/* History of the adjustments */
+"Adjustments" = "Adjustments";
+
+/* History of the adjustments */
+"Insulin" = "Insulin";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2935,6 +3001,18 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Use alternate Bolus Calculator" = "Usar calculadora alternativa";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Use Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Adjustment";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Comidas grasientas";
 
 /* Bolus Calculator Setting */
@@ -2942,6 +3020,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "La calculadora de bolos alternativa es una alternativa a la calculadora de bolos predeterminada en iAPS. Se puede cambiar entre calculadoras habilitando el botón correspondiente en este menú. Tras el cálculo se aplica un factor de corrección de la misma manera que ocurre con los SMBs (por defecto 0.8).\n\nAdicionalmente, es posible habilitar un segundo factor al final del cálculo que puede ser útil para las comidas más grasientas como la pizza (por defecto 0.7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
 
 /* Settings Section */
 "Extra Features" = "Funciones adicionales";
@@ -3014,6 +3095,21 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 /* UI/UX option */
 "Display carb equivalents" = "Display carb equivalents";
 
+/* UI/UX option */
+"Display carb equivalent amount" = "Display carb equivalent amount";
+
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Display Ratio and a History View button";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Auto ISF Home View";
+
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
 
@@ -3022,6 +3118,15 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* Notification option */
 "Live Activity" = "Live Activity";
+
+/* Show Live Activity */
+"Show Live Activity" = "Show Live Activity";
+
+/* Display Chart */
+"Display Chart" = "Display Chart";
+
+/* Show Predictions */
+"Show Predictions" = "Show Predictions";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Live Activity muestra la glucosa en vivo en la pantalla de bloqueo y en la Dynamic Island (si está disponible)";
@@ -3090,3 +3195,9 @@ Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o 
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Factor de ajuste";
+
+/* Apple Watch Overrides */
+"Overrides" = "Overrides";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Cancel Override";

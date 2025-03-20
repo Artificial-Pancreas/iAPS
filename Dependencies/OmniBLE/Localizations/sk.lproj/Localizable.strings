@@ -33,7 +33,7 @@
 "Multiple Command Alert" = "Upozornenie na viacero príkazov";
 
 /* Format string for alert content body for userPodExpiration pod alert. (1: time until expiration) */
-"Pod expires in %1$@." = "Pod vyprší za %1$@.";
+"Pod expires in %1$@." = "Platnosť Podu skončí o %1$@.";
 
 /* Alert content body for podExpiring pod alert */
 "Change Pod now. Pod has been active for 72 hours." = "Teraz vymeňte Pod. Pod bol aktívny 72 hodín.";
@@ -66,10 +66,10 @@
 "Unfinished Activation" = "Nedokončená aktivácia";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expiruje o";
+"Pod expires in" = "Pod exspiruje o";
 
 /* */
-"Pod Expires" = "Expirácia Podu";
+"Pod Expires" = "Exspirácia Podu";
 
 /* */
 "Pod Activated" = "Pod aktivovaný";
@@ -81,7 +81,7 @@
 "Confidence Reminders" = "Upozornenia s pípnutím zo zariadenia Pod";
 
 /* Help text for BeepPreferenceSelectionView */
-"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
+"Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Zvukové upozornenia Podu, ktoré môžu slúžiť na potvrdenie vybraných príkazov ak Pod nie je stíšený.";
 
 /* Title for pod reminders section */
 "Pod Reminders" = "Upozornenia Podu";
@@ -114,7 +114,7 @@
 "Pair Pod" = "Párovať pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Párovať pod.";
+"Pair pod." = "Spárovať Pod.";
 
 /* Pairing action button accessibility label while pairing */
 "Pairing." = "Párovanie.";
@@ -180,7 +180,7 @@
 "Unfinished Activation" = "Nedokončená aktivácia";
 
 /* Label for pod life state when time remaining */
-"Pod expires in" = "Pod expiruje o";
+"Pod expires in" = "Pod exspiruje o";
 
 /* Label for pod life state when within pod expiration window */
 "Pod expired" = "Pod vypršal";
@@ -336,7 +336,7 @@
 "Insulin Remaining" = "Zostávajúci inzulín";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Nastavenie dávky dočasného bazálu";
+"Set Temporary Basal Rate" = "Nastaviť dávku dočasného bazálu";
 
 /* Description text on manual temp basal action sheet */
 "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Dodávka inzulínu sa automaticky neupraví, kým sa dočasná bazálna dávka neskončí alebo nebude zrušená.";
@@ -514,7 +514,7 @@
 "Wait until insertion is completed." = "Počkajte kým nie je zavedenie ukončené.";
 
 /* Label text for step one of insert cannula instructions */
-"Slide the switch below to start cannula insertion." = "Posunutím spínača nižšie spustite zavádzanie kanyly.";
+"Slide the switch below to start cannula insertion." = "Posunutím prepínača nižšie spustíte zavádzanie kanyly.";
 
 /* Label text indicating insertion finished. */
 "Inserted" = "Zavedené";
@@ -736,7 +736,7 @@
 "Expiration Reminder" = "Pripomienka Expirácie";
 
 /* Description text on LowReservoirReminderSetupView */
-"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Aplikácia vás upozorní, keď množstvo inzulínu v pode dosiahne túto úroveň (50 – 10 U). \n\nRolovaním nastavte počet jednotiek, pri ktorých chcete byť upozornení.";
+"The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "Aplikácia vás upozorní, keď množstvo inzulínu v Pode dosiahne túto úroveň (50 – 10 U). \n\nRolovaním nastavte počet jednotiek, pri ktorých chcete byť upozornení.";
 
 /* Label text for low reservoir value row */
 "Low Reservoir" = "Nízka hladina v rezervoári";
@@ -772,7 +772,7 @@
 "Suspending insulin delivery..." = "Pozastavenie podávania inzulínu...";
 
 /* Error message for PodCommsError.noPodsFound */
-"No pods found" = "Nenašiel sa žiadny pod";
+"No pods found" = "Nenašiel sa žiadny Pod";
 
 /* Error message for PodCommsError.tooManyPodsFound */
 "Too many pods found" = "Našlo sa príliš veľa podov";
@@ -828,7 +828,7 @@
 /* Help text for Silence Pod view */
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Režim Silence Pod potlačí všetky upozornenia Pod a upozornenia na potvrdenie.";
 
-/* navigation title for Silnce Pod */
+/* navigation title for Silence Pod */
 "Silence Pod" = "Stíšiť Pod";
 
 /* title for pod details page */

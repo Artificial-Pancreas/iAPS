@@ -104,7 +104,7 @@
 "Received invalid hex strings. Try again" = "Chuỗi hex không hợp lệ. Hãy thử lại";
 
 /* Dana-RS v3 pincode prompt error checksum failed */
-"Checksum failed. Try again" = "Checksum failed. Try again";
+"Checksum failed. Try again" = "Kiểm tra tổng không thành công. Hãy thử lại";
 
 /* Title for delivery speed */
 "Delivery speed" = "Delivery speed";
@@ -128,37 +128,37 @@
 "Your " = "Your ";
 
 /* Dana setup complete p2 */
-" is ready to be used!" = " is ready to be used!";
+" is ready to be used!" = " đã sẵn sàng để sử dụng!";
 
 /* Dana setup SMB setting */
 "Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Lưu ý: Máy bơm Dana của bạn có một cài đặt đặc biệt cho phép bạn tắt tiếng bíp của máy bơm Dana. Để bật chức năng này, vui lòng liên hệ với nhà phân phối Dana của bạn";
 
 /* Error description when no dana connected */
-"Failed to make a connection" = "Failed to make a connection";
+"Failed to make a connection" = "Không thể kết nối";
 
 /* Error description when failed temp adjustment */
-"Failed to adjust temp basal" = "Failed to adjust temp basal";
+"Failed to adjust temp basal" = "Không thể điều chỉnh liều temp basal";
 
 /* Error description when failed suspension adjustment */
-"Failed to adjust suspension" = "Failed to adjust suspension";
+"Failed to adjust suspension" = "Không thể điều chỉnh bởi hệ thống treo";
 
 /* Error description when failed generating basal program */
-"Failed to generate Dana basal program" = "Failed to generate Dana basal program";
+"Failed to generate Dana basal program" = "Không tạo được liều basal Dana";
 
 /* Error description when failed basal adjustment */
-"Failed to adjust basal" = "Failed to adjust basal";
+"Failed to adjust basal" = "Không thể điều chỉnh liều basal";
 
 /* Error description when pump time failed to sync */
-"Failed to adjust pump time" = "Failed to adjust pump time";
+"Failed to adjust pump time" = "Không điều chỉnh được thời gian bơm";
 
 /* Error description when trying to set temp basal */
-"Setting temp basal is not supported at this time" = "Setting temp basal is not supported at this time";
+"Setting temp basal is not supported at this time" = "Cài đặt liều temp basal không được hỗ trợ tại thời điểm này";
 
 /* Error description when pump is suspended */
-"The insulin delivery has been suspend. Action failed" = "The insulin delivery has been suspend. Action failed";
+"The insulin delivery has been suspend. Action failed" = "Việc cung cấp insulin đã bị tạm dừng. Hành động không thành công";
 
 /* Error description when pump is busy (with bolussing probably) */
-"Action has been canceled, because the pump is busy" = "Action has been canceled, because the pump is busy";
+"Action has been canceled, because the pump is busy" = "Hành động đã bị hủy, vì máy bơm đang bận";
 
 /* Error description when pump has an active blockage */
 "A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Thời gian chờ bolus đang hoạt động. Chu kỳ vòng lặp không thể hoàn tất cho đến khi thời gian chờ không hoạt động";
@@ -170,7 +170,7 @@
 "The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Đã đạt đến giới hạn insulin tối đa hàng ngày. Vui lòng thử lượng thấp hơn hoặc tăng giới hạn";
 
 /* dana AB limitation warning title */
-"Only Automatic Bolus is supported" = "Only Automatic Bolus is supported";
+"Only Automatic Bolus is supported" = "Chỉ hỗ trợ liều Bolus tự động";
 
 /* dana AB limitation warning body */
 "Please consider changing your dosing strategy in the setting menu" = "Vui lòng cân nhắc thay đổi liều lượng của bạn trong menu cài đặt";
@@ -179,16 +179,16 @@
 "Resume delivery" = "Tiếp tục lại việc tiêm insulin";
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "Suspend delivery";
+"Suspend delivery" = "Tạm ngưng liều insulin";
 
 /* Dana settings stop temp basal */
-"Stop temp basal" = "Stop temp basal";
+"Stop temp basal" = "Tạm dừng liều temp basal";
 
 /* Text for confidence reminders navigation link */
 "Insulin Type" = "Loại Insulin";
 
 /* Title for insulin type */
-"Select insulin Type" = "Select insulin Type";
+"Select insulin Type" = "Chọn loại insulin";
 
 /* Title of insulin delivery section */
 "Scheduled Basal" = "Đã lên chương trình cho liều Basal";
@@ -209,31 +209,31 @@
 "Insulin Remaining" = "Insulin còn lại";
 
 /* Text for Dana pump name */
-"Pump name" = "Pump name";
+"Pump name" = "Tên máy bơm";
 
 /* Text for hardware model */
-"Hardware model" = "Hardware model";
+"Hardware model" = "Mô hình phần cứng";
 
 /* Text for firmware version */
-"Firmware version" = "Firmware version";
+"Firmware version" = "Phiên bản phần mềm";
 
 /* DanaKit sync pump */
-"Sync pump data" = "Sync pump data";
+"Sync pump data" = "Đồng bộ dữ liệu bơm";
 
 /* Text for last sync */
-"Last sync" = "Last sync";
+"Last sync" = "Lần đồng bộ gần đây nhất";
 
 /* Text for pump time */
-"Pump time" = "Pump time";
+"Pump time" = "Thời gian của Bơm";
 
 /* Text for pump time synced at */
-"Checked at" = "Checked at";
+"Checked at" = "Đã kiểm tra tại";
 
 /* Text for Nightly pump time sync */
 "Nightly pump time sync" = "Nightly pump time sync";
 
 /* Label for syncing the time on the pump */
-"Manually sync Pump time" = "Manually sync Pump time";
+"Manually sync Pump time" = "Đồng bộ thời gian bơm thủ công";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
@@ -271,7 +271,7 @@
 "User options" = "User options";
 
 /* DanaKit share logs */
-"Share Dana pump logs" = "Share Dana pump logs";
+"Share Dana pump logs" = "Chia sẻ nhật ký bơm Dana";
 
 /* Loading */
 "Loading" = "Loading";
@@ -283,7 +283,7 @@
 "24h display" = "24h display";
 
 /* Description for 24h display */
-"Should time be display in 12h or 24h" = "Should time be display in 12h or 24h";
+"Should time be display in 12h or 24h" = "Thời gian được hiển thị 12h hoặc 24h";
 
 /* text on */
 "On" = "Bật";
@@ -292,34 +292,34 @@
 "Off" = "Tắt";
 
 /* 12h */
-"12h notation" = "12h notation";
+"12h notation" = "Ký hiệu 12h";
 
 /* 24h */
-"24h notation" = "24h notation";
+"24h notation" = "Ký hiệu 24h";
 
 /* Text for Scroll function */
-"Scroll function" = "Scroll function";
+"Scroll function" = "Chức năng cuộn";
 
 /* text for second */
 "sec" = "sec";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Backlight on time";
+"Backlight on time" = "Đèn nền theo thời gian";
 
 /* lcdOnTimeInSec */
-"Lcd on time" = "Lcd on time";
+"Lcd on time" = "Màn hình Lcd time";
 
 /* beepAndAlarm */
-"Alarm beeps" = "Alarm beeps";
+"Alarm beeps" = "Báo động tiếp beeps";
 
 /* beepAndAlarm.sound */
-"Sound" = "Sound";
+"Sound" = "Âm thanh";
 
 /* beepAndAlarm.vibration */
-"Vibration" = "Vibration";
+"Vibration" = "Chế độ rung";
 
 /* beepAndAlarm.both */
-"Both" = "Both";
+"Both" = "Cả hai";
 
 /* Alert title for batteryZeroPercent */
 "Pump battery 0%" = "Pump battery 0%";
@@ -331,7 +331,7 @@
 "Pump error" = "Pump error";
 
 /* Alert body for pumpError */
-"Check the pump and try again" = "Check the pump and try again";
+"Check the pump and try again" = "Kiểm tra máy bơm và thử lại";
 
 /* Alert title for occlusion */
 "Occlusion" = "Occlusion";
@@ -355,7 +355,7 @@
 "Basal Compare" = "Basal Compare";
 
 /* Alert title for bloodSugarMeasure */
-"Blood glucose Measure" = "Blood glucose Measure";
+"Blood glucose Measure" = "Kiểm tra đường huyết";
 
 /* Alert title for remainingInsulinLevel */
 "Remaining insulin level" = "Mức insulin còn lại";
@@ -373,13 +373,13 @@
 "The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "Máy bơm đã phát hiện ra sự cố với chaft của nó. Vui lòng tháo bình chứa, kiểm tra mọi thứ và thử lại";
 
 /* Alert title for basalMax */
-"Basal limit reached" = "Basal limit reached";
+"Basal limit reached" = "Đã đạt đến giới hạn liều cơ bản";
 
 /* Alert body for basalMax */
 "Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Đã đạt đến giới hạn bolus tối đa. Vui lòng thử lượng thấp hơn hoặc tăng giới hạn";
 
 /* Alert title for dailyMax */
-"Daily limit reached" = "Daily limit reached";
+"Daily limit reached" = "Đạt giới hạn hàng ngày";
 
 /* Alert body for basalMax */
 "Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Đã đạt giới hạn insulin hàng ngày của bạn. Vui lòng liên hệ với nhà phân phối Dana của bạn để tăng giới hạn";
@@ -388,31 +388,31 @@
 "Missed Blood glucose check" = "Missed Blood glucose check";
 
 /* Alert body for bloodSugarCheckMiss */
-"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump";
+"A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Lời nhắc kiểm tra lượng đường trong máu đã được thiết lập trong máy bơm của bạn và được kích hoạt. Vui lòng tháo nó ra hoặc đưa mức đường huyết của bạn vào máy bơm";
 
 /* Alert title for unknown */
-"Unknown error" = "Unknown error";
+"Unknown error" = "Lỗi không xác định";
 
 /* Alert body for unknown */
-"An unknown error has occurred during processing the alert from the pump. Please report this" = "An unknown error has occurred during processing the alert from the pump. Please report this";
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "Đã xảy ra lỗi không xác định trong quá trình xử lý cảnh báo từ máy bơm. Vui lòng báo cáo lỗi này";
 
 /* The title of the pump information section in DanaKit settings */
-"Pump information" = "Pump information";
+"Pump information" = "Thông tin máy bơm";
 
 /* Title for silent tone action sheet */
-"Toggle silent tone?" = "Toggle silent tone?";
+"Toggle silent tone?" = "Chuyển đổi chế độ im lặng không?";
 
 /* Button text to cancel silent tone */
-"No, Keep as is" = "No, Keep as is";
+"No, Keep as is" = "Không, giữ nguyên như vậy";
 
 /* Button text to disable silent tone */
 "Yes, Disable silent tones" = "Có, Tắt âm báo im lặng";
 
 /* Button text to enable silent tone */
-"Yes, Enable silent tones" = "Yes, Enable silent tones";
+"Yes, Enable silent tones" = "Có, Bật âm báo im lặng";
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@";
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Đặt cấu hình cơ bản mà máy bơm nên sử dụng. Lưu ý rằng nó sẽ ghi đè lên cấu hình có trong máy bơm, với cấu hình trong %1$@";
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
@@ -439,16 +439,16 @@
 "Status" = "Tình trạng";
 
 /* DanaKit disconnecting */
-"Disconnecting..." = "Disconnecting...";
+"Disconnecting..." = "Đang ngắt kết nối...";
 
 /* DanaKit connecting */
-"Reconnecting..." = "Reconnecting...";
+"Reconnecting..." = "Đang kết nối lại...";
 
 /* DanaKit disconnect */
-"Disconnect from pump" = "Disconnect from pump";
+"Disconnect from pump" = "Ngắt kết nối từ máy bơm";
 
 /* DanaKit connect */
-"Reconnect tp pump" = "Reconnect tp pump";
+"Reconnect tp pump" = "Kết nối lại máy bơm";
 
 /* DanaKit disconnected */
 "Disconnected" = "Đã ngắt kết nối";
@@ -457,31 +457,31 @@
 "Connected" = "Đã kết nối";
 
 /* Title disconnect reminder notification */
-"Pump is still disconnected" = "Pump is still disconnected";
+"Pump is still disconnected" = "Máy bơm vẫn chưa được ngắt kết nối";
 
 /* Body disconnect reminder notification" */
-"Your pump is still disconnected after the set period!" = "Your pump is still disconnected after the set period!";
+"Your pump is still disconnected after the set period!" = "Máy bơm của bạn vẫn bị ngắt kết nối sau thời gian đã đặt!";
 
 /* Title disconnect reminder sheet */
-"Set reminder for disconnect" = "Set reminder for disconnect";
+"Set reminder for disconnect" = "Đặt lời nhắc ngắt kết nối";
 
 /* body disconnect reminder sheet */
-"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Do you wish to receive a notification when the pump is longer disconnected for a specific time?";
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Bạn có muốn nhận thông báo khi máy bơm không được ngắt kết nối trong một khoảng thời gian cụ thể không?";
 
 /* Button text to 5 min */
-"Yes, 5 minutes" = "Yes, 5 minutes";
+"Yes, 5 minutes" = "Có, 5 phút";
 
 /* Button text to 15 min */
-"Yes, 15 minutes" = "Yes, 15 minutes";
+"Yes, 15 minutes" = "Có, 15 phút";
 
 /* Button text to 30 min */
-"Yes, 30 minutes" = "Yes, 30 minutes";
+"Yes, 30 minutes" = "Có, 30 phút";
 
 /* Button text to 1h */
-"Yes, 1 hour" = "Yes, 1 hour";
+"Yes, 1 hour" = "Có, 1 giờ";
 
 /* Button text to just disconnect */
-"No, just disconnect" = "No, just disconnect";
+"No, just disconnect" = "Không, chỉ cần ngắt kết nối";
 
 /* Title for reservoir/cannula refill */
 "Reservoir/cannula refill" = "Reservoir/cannula refill";
@@ -499,31 +499,31 @@
 "Reservoir and cannula" = "Reservoir and cannula";
 
 /* Title for bluetooth mode action sheet */
-"Toggle Bluetooth mode" = "Toggle Bluetooth mode";
+"Toggle Bluetooth mode" = "Chuyển đổi chế độ Bluetooth";
 
 /* Button text to get help about Continuous mode */
-"What is this?" = "What is this?";
+"What is this?" = "Đây là gì?";
 
 /* Button text to disable continuous mode */
-"Yes, Switch to interactive mode" = "Yes, Switch to interactive mode";
+"Yes, Switch to interactive mode" = "Có, chuyển sang chế độ tương tác";
 
 /* Button text to enable continuous mode */
-"Yes, Switch to continuous mode" = "Yes, Switch to continuous mode";
+"Yes, Switch to continuous mode" = "Có, chuyển sang chế độ liên tục";
 
 /* Title for bolus syncing disable action sheet */
-"Disable bolus syncing?" = "Disable bolus syncing?";
+"Disable bolus syncing?" = "Tắt đồng bộ bolus?";
 
 /* Title for bolus syncing disable action sheet */
-"Re-enable bolus syncing?" = "Re-enable bolus syncing?";
+"Re-enable bolus syncing?" = "Bật lại tính năng đồng bộ bolus không?";
 
 /* Button text to re-enable bplus syncing */
-"Yes, re-enable bolus syncing" = "Yes, re-enable bolus syncing";
+"Yes, re-enable bolus syncing" = "Có, bật lại đồng bộ bolus";
 
 /* Button text to disable bolus syncing */
-"Yes, disable bolus syncing" = "Yes, disable bolus syncing";
+"Yes, disable bolus syncing" = "Có, tắt đồng bộ bolus";
 
 /* ana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here" = "The Dana pumps support different delivery speeds. You can set it up here";
+"The Dana pumps support different delivery speeds. You can set it up here" = "Máy bơm Dana hỗ trợ nhiều tốc độ phân phối khác nhau. Bạn có thể thiết lập ở đây";
 
 /* Text for Basal profile */
 "Basal profile" = "Basal profile";
@@ -535,10 +535,10 @@
 "Configuration" = "Configuration";
 
 /* Text for low reservoir reminder */
-"Low reservoir reminder" = "Low reservoir reminder";
+"Low reservoir reminder" = "Báo nhắc gần hết thuốc";
 
 /* refillAmount */
-"Refill amount" = "Refill amount";
+"Refill amount" = "Số lượng nạp lại";
 
 /* Insulin unit */
 "U" = "U";
@@ -556,28 +556,28 @@
 "Tube refill amount" = "Tube refill amount";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Phương pháp nạp lại này chỉ dành cho trường hợp máy bơm không thể nạp lại bình chứa hoặc mồi ống thông";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
+"WARNING: USE WITH CAUTION!" = "CẢNH BÁO: SỬ DỤNG THẬN TRỌNG!";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Phương pháp nạp lại này chỉ dành cho trường hợp máy bơm không thể nạp lại bình chứa hoặc mồi ống thông";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "WARNING: USE WITH CAUTION!";
+"WARNING: USE WITH CAUTION!" = "CẢNH BÁO: SỬ DỤNG THẬN TRỌNG!";
 
 /* Label for third step refill */
-"Step 1: Prime cannula" = "Step 1: Prime cannula";
+"Step 1: Prime cannula" = "Bước 1: Prime cannula";
 
 /* Label for error first step refill */
-"Failed to set reservoir amount. Re-sync pump data and try again please" = "Failed to set reservoir amount. Re-sync pump data and try again please";
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Không thể thiết lập reservoir. Đồng bộ lại dữ liệu bơm và vui lòng thử lại";
 
 /* Label for error third step refill */
 "Failed to prime the cannula. Please try again later" = "Failed to prime the cannula. Please try again later";
 
 /* Label for error second step refill */
-"Failed to prime the tube. Please try again later" = "Failed to prime the tube. Please try again later";
+"Failed to prime the tube. Please try again later" = "Failed to prime the cannula. Please try again later";
 
 /* Battery age */
 "Battery age" = "Battery age";

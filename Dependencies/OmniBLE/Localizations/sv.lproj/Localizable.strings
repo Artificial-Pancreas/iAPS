@@ -828,7 +828,7 @@
 /* Help text for Silence Pod view */
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Under tyst poddläge stängs alla poddens ljud av.";
 
-/* navigation title for Silnce Pod */
+/* navigation title for Silence Pod */
 "Silence Pod" = "Tysta podden";
 
 /* title for pod details page */
