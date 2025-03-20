@@ -828,7 +828,7 @@
 /* Help text for Silence Pod view */
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Stille Pod Modus unterdrückt alle Pod Warnungen und Bestätigungs-Erinnerung.";
 
-/* navigation title for Silnce Pod */
+/* navigation title for Silence Pod */
 "Silence Pod" = "Stille Pod";
 
 /* title for pod details page */

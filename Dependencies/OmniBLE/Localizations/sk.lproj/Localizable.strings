@@ -828,7 +828,7 @@
 /* Help text for Silence Pod view */
 "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Režim Silence Pod potlačí všetky upozornenia Pod a upozornenia na potvrdenie.";
 
-/* navigation title for Silnce Pod */
+/* navigation title for Silence Pod */
 "Silence Pod" = "Stíšiť Pod";
 
 /* title for pod details page */

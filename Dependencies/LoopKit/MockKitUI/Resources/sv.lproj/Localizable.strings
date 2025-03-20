@@ -62,19 +62,19 @@
 "Insulin Type" = "Typ av insulin";
 
 /* The title of the reservoir remaining setting */
-"Reservoir Remaining" = "Reservoir Remaining";
+"Reservoir Remaining" = "Insulin kvar";
 
 /* The title of the bolus error toggle */
-"Error on Bolus" = "Error on Bolus";
+"Error on Bolus" = "Fel vid bolus";
 
 /* The title of the bolus cancel error toggle */
-"Error on Cancel Bolus" = "Error on Cancel Bolus";
+"Error on Cancel Bolus" = "Fel vid försök att avbryta bolus";
 
 /* The title of the suspend error toggle */
-"Error on Suspend" = "Error on Suspend";
+"Error on Suspend" = "Fel vid paus";
 
 /* The title of the resume error toggle */
-"Error on Resume" = "Error on Resume";
+"Error on Resume" = "Fel vid återupptagande";
 
 /* The title of the uncertain delivery error toggle */
 "Next Delivery Command Uncertain" = "Next Delivery Command Uncertain";
@@ -107,10 +107,10 @@
 "Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)" = "Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)";
 
 /* The title of the minimum value setting for basal rates */
-"Minimum Value" = "Minimum Value";
+"Minimum Value" = "Lägsta värde";
 
 /* The title of the maximum value setting for basal rates */
-"Maximum Value" = "Maximum Value";
+"Maximum Value" = "Högsta värde";
 
 /* The title of the step size setting for basal rates */
-"Step Size" = "Step Size";
+"Step Size" = "Intervallsteg";
