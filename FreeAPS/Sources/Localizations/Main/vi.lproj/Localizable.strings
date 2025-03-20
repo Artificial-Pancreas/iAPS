@@ -1289,7 +1289,7 @@ Enact a temp Basal or a temp target */
 "Temp Basal" = "Temp Basal";
 
 /* */
-"Temp Target" = "Mục tiêu tạm thời";
+"Temp Target" = "Temp Target";
 
 /* */
 "Resume" = "Tiếp tục";
@@ -2921,7 +2921,7 @@ Enact a temp Basal or a temp target */
 "Add Meal View settings " = "Thêm cài đặt Chế độ xem bữa ăn ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Hiển thị nút tiêu tạm thời";
+"Display Temp Targets Button" = "Hiển thị nút mục tiêu tạm thời";
 
 /* UI/UX option */
 "Home View Button Panel " = "Bảng nút xem trang chủ ";
