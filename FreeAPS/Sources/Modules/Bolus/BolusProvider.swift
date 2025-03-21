@@ -1,5 +1,9 @@
+import Foundation
+
 extension Bolus {
     final class Provider: BaseProvider, BolusProvider {
+        @Injected() var pumpHistoryStorage: PumpHistoryStorage!
+
         let coreDataStorage = CoreDataStorage()
 
         var suggestion: Suggestion? {
@@ -15,6 +19,10 @@ extension Bolus {
         func fetchGlucose() -> [Readings] {
             let fetchGlucose = coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
             return fetchGlucose
+        }
+
+        func pumpHistory() -> [PumpHistoryEvent] {
+            pumpHistoryStorage.recent()
         }
     }
 }

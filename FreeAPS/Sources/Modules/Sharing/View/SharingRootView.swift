@@ -38,7 +38,7 @@ extension Sharing {
                             ForEach(Sex.allCases) { sex in
                                 Text(NSLocalizedString(sex.rawValue, comment: "")).tag(Optional(sex.rawValue))
                             }
-                        }.onChange(of: state.sex) { _ in
+                        }.onChange(of: state.sex) {
                             state.saveSetting()
                         }
                         HStack {

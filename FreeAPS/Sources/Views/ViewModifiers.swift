@@ -20,32 +20,21 @@ struct RoundedBackground: ViewModifier {
     }
 }
 
-struct CapsulaBackground: ViewModifier {
-    private let color: Color
-
-    init(color: Color = Color("CapsuleColor")) {
-        self.color = color
-    }
-
+struct BoolTag: ViewModifier {
+    let bool: Bool
+    @Environment(\.colorScheme) var colorScheme
     func body(content: Content) -> some View {
         content
-            .padding()
-            .background(
-                Rectangle()
-                    // Capsule()
-                    .fill()
-                    .foregroundColor(color)
-            )
+            .padding(.vertical, 4).padding(.horizontal, 6)
+            .background((bool ? Color.green : Color.red).opacity(colorScheme == .light ? 0.8 : 0.5))
+            .clipShape(RoundedRectangle(cornerRadius: 6)).padding(.vertical, 3).padding(.trailing, 3)
     }
 }
 
 struct CompactSectionSpacing: ViewModifier {
     func body(content: Content) -> some View {
-        if #available(iOS 17, *) {
-            return content
-                .listSectionSpacing(.compact)
-        } else {
-            return content }
+        content
+            .listSectionSpacing(.compact)
     }
 }
 
@@ -65,17 +54,10 @@ struct CarveOrDrop: ViewModifier {
 struct InfoPanelBackground: View {
     let colorScheme: ColorScheme
     var body: some View {
-        if #available(iOS 17.0, *) {
-            Rectangle()
-                .stroke(.gray, lineWidth: 2)
-                .fill(colorScheme == .light ? .white : .black)
-                .frame(height: 24)
-        } else {
-            Rectangle()
-                .strokeBorder(.gray, lineWidth: 2)
-                .background(Rectangle().fill(colorScheme == .light ? .white : .black))
-                .frame(height: 24)
-        }
+        Rectangle()
+            .stroke(.gray, lineWidth: 2)
+            .fill(colorScheme == .light ? .white : .black)
+            .frame(height: 24)
     }
 }
 
@@ -148,7 +130,6 @@ struct ColouredRoundedBackground: View {
     @Environment(\.colorScheme) var colorScheme
     var body: some View {
         Rectangle()
-            // RoundedRectangle(cornerRadius: 15)
             .fill(
                 colorScheme == .dark ? .black :
                     Color.white
@@ -180,12 +161,40 @@ struct LoopEllipse: View {
     }
 }
 
-struct TimeEllipse: View {
+struct Sage: View {
     @Environment(\.colorScheme) var colorScheme
+    let amount: Double
+    let expiration: Double
+    var body: some View {
+        let fill = max(amount / expiration, 0.07)
+        let colour: Color = amount <= 8.64E4 ? .red.opacity(0.9) : amount <= 2 * 8.64E4 ? .orange
+            .opacity(0.8) : colorScheme == .light ? .white.opacity(0.7) : .black.opacity(0.8)
+        RoundedRectangle(cornerRadius: 15)
+            .stroke(colorScheme == .dark ? Color(.systemGray2) : Color(.systemGray6), lineWidth: 2)
+            .background(
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                Gradient.Stop(
+                                    color: colour,
+                                    location: fill
+                                ),
+                                Gradient.Stop(color: Color.clear, location: fill)
+                            ]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+            )
+    }
+}
+
+struct TimeEllipse: View {
     let characters: Int
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
-            .fill(Color.gray).opacity(colorScheme == .light ? 0.2 : 0.2)
+            .fill(Color.gray).opacity(0.2)
             .frame(width: CGFloat(characters * 7), height: 25)
     }
 }
@@ -211,7 +220,7 @@ struct ClockOffset: View {
                 .frame(maxHeight: 20)
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(Color(.warning))
-                .offset(x: 10, y: !mdtPump ? -20 : -13)
+                .offset(x: !mdtPump ? 10 : 12, y: !mdtPump ? -20 : -22)
         }
     }
 }
@@ -238,7 +247,7 @@ struct NonStandardInsulin: View {
                         .foregroundStyle(.white)
                 }
         }
-        .offset(x: pod ? -15 : -3, y: pod ? -24 : -4.5)
+        .offset(x: pod ? -15 : -5, y: pod ? -24 : 7)
     }
 }
 
@@ -305,36 +314,6 @@ struct Link<T>: ViewModifier where T: View {
     }
 }
 
-struct AdaptsToSoftwareKeyboard: ViewModifier {
-    @State var currentHeight: CGFloat = 0
-
-    func body(content: Content) -> some View {
-        content
-            .padding(.bottom, currentHeight).animation(.easeOut(duration: 0.25))
-            .edgesIgnoringSafeArea(currentHeight == 0 ? Edge.Set() : .bottom)
-            .onAppear(perform: subscribeToKeyboardChanges)
-    }
-
-    private let keyboardHeightOnOpening = Foundation.NotificationCenter.default
-        .publisher(for: UIResponder.keyboardWillShowNotification)
-        .map { $0.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect }
-        .map(\.height)
-
-    private let keyboardHeightOnHiding = Foundation.NotificationCenter.default
-        .publisher(for: UIResponder.keyboardWillHideNotification)
-        .map { _ in CGFloat(0) }
-
-    private func subscribeToKeyboardChanges() {
-        _ = Publishers.Merge(keyboardHeightOnOpening, keyboardHeightOnHiding)
-            .subscribe(on: DispatchQueue.main)
-            .sink { height in
-                if self.currentHeight == 0 || height == 0 {
-                    self.currentHeight = height
-                }
-            }
-    }
-}
-
 struct ClearButton: ViewModifier {
     @Binding var text: String
     func body(content: Content) -> some View {
@@ -364,6 +343,10 @@ extension View {
         modifier(CarveOrDrop(carve: carve))
     }
 
+    func boolTag(_ bool: Bool) -> some View {
+        modifier(BoolTag(bool: bool))
+    }
+
     func addBackground() -> some View {
         ColouredRoundedBackground()
     }
@@ -386,10 +369,6 @@ extension View {
 
     func navigationLink<V: BaseView>(to screen: Screen, from view: V) -> some View {
         modifier(Link(destination: view.state.view(for: screen), screen: screen))
-    }
-
-    func adaptsToSoftwareKeyboard() -> some View {
-        modifier(AdaptsToSoftwareKeyboard())
     }
 
     func modal<V: BaseView>(for screen: Screen?, from view: V) -> some View {
@@ -423,7 +402,11 @@ extension UIImage {
         draw(in: rect)
         let context = UIGraphicsGetCurrentContext()!
         context.setBlendMode(CGBlendMode.sourceIn)
-        context.setFillColor(color.cgColor ?? UIColor(.insulin.opacity(portion <= 3 ? 0.8 : 1)).cgColor)
+        context
+            .setFillColor(
+                color.cgColor ?? UIColor(portion > 0.75 ? .red.opacity(0.8) : .insulin.opacity(portion <= 3 ? 0.8 : 1))
+                    .cgColor
+            )
         let height: CGFloat = 1 - portion
         let rectToFill = CGRect(x: 0, y: size.height * portion, width: size.width, height: size.height * height)
         context.fill(rectToFill)

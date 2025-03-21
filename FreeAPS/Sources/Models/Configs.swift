@@ -3,6 +3,7 @@ import SwiftUI
 
 struct DateFilter {
     var twoHours = Date().addingTimeInterval(-2.hours.timeInterval) as NSDate
+    var threeHours = Date().addingTimeInterval(-3.hours.timeInterval) as NSDate
     var today = Calendar.current.startOfDay(for: Date()) as NSDate
     var day = Date().addingTimeInterval(-24.hours.timeInterval) as NSDate
     var twoDays = Date().addingTimeInterval(-2.days.timeInterval) as NSDate

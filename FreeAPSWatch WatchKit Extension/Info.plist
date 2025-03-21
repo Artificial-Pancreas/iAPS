@@ -18,5 +18,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>
 	</dict>
+	<key>CFBundleIconName</key>
+	<string>$(APP_ICON)</string>
 </dict>
 </plist>

@@ -17,7 +17,7 @@ extension AddCarbs {
         @State private var presentPresets = false
         @State private var string = ""
         @State private var newPreset: (dish: String, carbs: Decimal, fat: Decimal, protein: Decimal) = ("", 0, 0, 0)
-        
+
         @FetchRequest(
             entity: Presets.entity(),
             sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate: NSPredicate(
@@ -59,7 +59,7 @@ extension AddCarbs {
                             value: $state.carbs,
                             formatter: formatter,
                             autofocus: true,
-                            cleanInput: true
+                            liveEditing: true
                         )
                         Text("grams").foregroundColor(.secondary)
                     }
@@ -147,7 +147,10 @@ extension AddCarbs {
             }
             .navigationTitle("Add Meal")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing: Button("Cancel", action: state.hideModal))
+            .navigationBarItems(trailing: Button("Cancel", action: {
+                state.hideModal()
+                if editMode { state.apsManager.determineBasalSync() }
+            }))
             .sheet(isPresented: $presentPresets, content: { presetView })
         }
 
@@ -279,7 +282,7 @@ extension AddCarbs {
                     value: $state.fat,
                     formatter: formatter,
                     autofocus: false,
-                    cleanInput: true
+                    liveEditing: true
                 )
                 Text("grams").foregroundColor(.secondary)
             }
@@ -291,7 +294,7 @@ extension AddCarbs {
                     value: $state.protein,
                     formatter: formatter,
                     autofocus: false,
-                    cleanInput: true
+                    liveEditing: true
                 ).foregroundColor(.loopRed)
 
                 Text("grams").foregroundColor(.secondary)

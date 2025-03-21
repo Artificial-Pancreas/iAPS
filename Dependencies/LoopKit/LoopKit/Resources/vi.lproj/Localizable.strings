@@ -1,130 +1,31 @@
-/* String format for value with units (1: value, 2: separator, 3: units) */
-"%1$@%2$@%3$@" = "%1$@%2$@%3$@";
+/*
+  Localizable.strings
+  LoopKit
 
-/* The error description describing when Health sharing was denied */
-"Authorization Denied" = "Cấp quyền bị từ chối";
+  Created by Pete Schwamb on 3/19/23.
+  Copyright © 2023 LoopKit Authors. All rights reserved.
+*/
+/* Description for novolog insulin type */
 
-/* Title text for basal rates */
-"Basal Rates" = "Lịch biểu tiêm liều nền";
+"NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk" = "NovoLog (insulin aspart) là một loại insulin tác dụng nhanh do Novo Nordisk sản xuất";
 
-/* Title for bolus dose type */
-"Bolus" = "Bolus";
+/* Description for humalog insulin type */
+"Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly" = "Humalog (insulin lispro) là một loại insulin tác dụng nhanh do Eli Lilly sản xuất";
 
-/* Title text for carb ratios */
-"Carb Ratios" = "Carb Ratios";
+/* Description for apidra insulin type */
+"Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis " = "Apidra (insulin glulisine) là một loại insulin tác dụng nhanh do Sanofi-aventis sản xuất";
 
-/* The description of an error returned when attempting to delete a sample not shared by the current app */
-"com.loudnate.CarbKit.deleteCarbEntryUnownedErrorDescription" = "Cấp quyền bị từ chối";
+/* Description for fiasp insulin type */
+"Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk" = "Fiasp là một công thức insulin aspart dùng trong bữa ăn có bổ sung nicotinamide (vitamin B3) do Novo Nordisk sản xuất";
 
-/* The error recovery suggestion when attempting to delete a sample not shared by the current app */
-"com.loudnate.carbKit.sharingDeniedErrorRecoverySuggestion" = "Mẫu này có thể bị xóa khỏi ứng dụng Health";
+/* Description for lyumjev insulin type */
+"Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly" = "Lyumjev là một công thức insulin lispro dùng cho bữa ăn có bổ sung citrate và treprostinil do Eli Lilly sản xuất";
 
-/* Generic pump error description */
-"Communication Failure" = "Liên lạc thất bại";
+/* Description for afrezza insulin type */
+"Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind" = "Afrezza là loại insulin tác dụng cực nhanh dùng vào bữa ăn, được hít vào phổi bằng ống hít và được sản xuất bởi MannKind";
 
-/* Generic pump error description */
-"Connection Failure" = "Kết nối thất bại";
+/* Title for Unset insulin type */
+"Unset" = "Chưa được đặt";
 
-/* Title text for glucose target range */
-"Correction Range" = "Phạm vi liều Bổ sung";
-
-/* Title text for delivery limits */
-"Delivery Limits" = "Giới hạn liều tiêm";
-
-/* Generic pump error description */
-"Device Refused" = "Thiết bị bị từ chối";
-
-/* Recovery suggestion for a no data error */
-"Ensure carb data exists for the specified date" = "Đảm bảo dữ liệu carb tồn tại cho ngày cụ thể";
-
-/* Glucose trend down */
-"Falling" = "Đang hạ";
-
-/* Glucose trend down-down */
-"Falling fast" = "Đang hạ nhanh";
-
-/* Glucose trend down-down-down */
-"Falling very fast" = "Đang hạ rất nhanh";
-
-/* Brand name for fiasp insulin type
-   Title for Fiasp insulin type */
-"Fiasp" = "Fiasp";
-
-/* Glucose trend flat */
-"Flat" = "Flat";
-
-/* The short unit display string for grams per U */
-"g/U" = "g/U";
-
-/* Title text for fast acting insulin model */
-"Insulin Model" = "Chủng loại Insulin";
-
-/* Title text for insulin sensitivity */
-"Insulin Sensitivities" = "Độ nhạy của Insulin";
-
-/* Generic pump error description */
-"Invalid Configuration" = "Cấu hình không hiệu lực";
-
-/* Title text for maximum basal rate configuration */
-"Maximum Basal Rate" = "Lượng Basal tối đa";
-
-/* Title text for maximum bolus configuration */
-"Maximum Bolus" = "Liều Bolus tối đa";
-
-/* The short unit display string for milligrams per deciliter per U */
-"mg/dL/U" = "mg/dL/U";
-
-/* The short unit display string for millimoles per liter */
-"mmol/L" = "mmol/L";
-
-/* The short unit display string for millimoles per liter per U */
-"mmol/L/U" = "mmol/L/U";
-
-/* Sensor state description for the non-valid state */
-"Needs Attention" = "Cần chú ý";
-
-/* Describes an error for no data found in a CarbStore request */
-"No values found" = "Không tìm thấy giá trị nào";
-
-/* Sensor state description for the valid state */
-"OK" = "OK";
-
-/* The error recovery suggestion when Health sharing was denied */
-"Please re-enable sharing in Health" = "Xin hãy cấp quyền chia sẻ lại trong ứng dụng Health";
-
-/* Title for pre-meal mode */
-"Pre-Meal" = "Trước bữa ăn";
-
-/* Glucose trend up */
-"Rising" = "Đang tăng";
-
-/* Glucose trend up-up */
-"Rising fast" = "Đang tăng nhanh";
-
-/* Glucose trend up-up-up */
-"Rising very fast" = "Đang tăng rất nhanh";
-
-/* Title for suspend dose type */
-"Suspended" = "Đã tạm ngưng";
-
-/* The short unit display string for international units of insulin */
-"U" = "U";
-
-/* The short unit display string for international units of insulin per hour */
-"U/hr" = "U/giờ";
-
-/* The long unit display string for a singular international unit of insulin */
-"Unit" = "Unit";
-
-/* The long unit display string for a singular international unit of insulin per hour */
-"Unit/hour" = "Unit/giờ";
-
-/* The long unit display string for international units of insulin */
-"Units" = "Units";
-
-/* The long unit display string for international units of insulin per hour */
-"Units/hour" = "Units/giờ";
-
-/* Title for workout mode */
-"Workout" = "Workout";
-
+/* Description for Unset insulin type */
+"The currently selected fast acting insulin model will be used as a default." = "Mô hình insulin tác dụng nhanh hiện đang được chọn sẽ được sử dụng làm mặc định.";

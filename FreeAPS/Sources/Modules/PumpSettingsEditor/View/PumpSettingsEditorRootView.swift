@@ -18,21 +18,34 @@ extension PumpSettingsEditor {
 
         var body: some View {
             Form {
-                Section(header: Text("Delivery limits")) {
+                Section(
+                    header: Text("Delivery limits"),
+                    footer: Text(
+                        state
+                            .isDanaPump ?
+                            NSLocalizedString(
+                                "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump",
+                                comment: "Dana footer"
+                            ) :
+                            ""
+                    )
+                ) {
                     HStack {
                         Text("Max Basal")
-                        DecimalTextField("U/hr", value: $state.maxBasal, formatter: formatter)
+                        DecimalTextField("U/hr", value: $state.maxBasal, formatter: formatter, liveEditing: true)
+                            .disabled(state.isDanaPump)
                     }
                     HStack {
                         Text("Max Bolus")
-                        DecimalTextField("U", value: $state.maxBolus, formatter: formatter)
+                        DecimalTextField("U", value: $state.maxBolus, formatter: formatter, liveEditing: true)
+                            .disabled(state.isDanaPump)
                     }
                 }
 
                 Section(header: Text("Duration of Insulin Action")) {
                     HStack {
                         Text("DIA")
-                        DecimalTextField("hours", value: $state.dia, formatter: formatter)
+                        DecimalTextField("hours", value: $state.dia, formatter: formatter, liveEditing: true)
                     }
                 }
 
@@ -48,7 +61,7 @@ extension PumpSettingsEditor {
                         }
                         Button { state.save() }
                         label: {
-                            Text(state.syncInProgress ? "Saving..." : "Save on Pump")
+                            Text(state.syncInProgress ? "Saving..." : !state.isDanaPump ? "Save on Pump" : "Save")
                         }
                         .disabled(state.syncInProgress)
                     }

@@ -115,6 +115,10 @@ extension NightscoutAPI {
             URLQueryItem(
                 name: "find[enteredBy][$ne]",
                 value: NigtscoutTreatment.local.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+            ),
+            URLQueryItem(
+                name: "find[enteredBy][$ne]",
+                value: NigtscoutTreatment.trio.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
             )
         ]
         if let date = sinceDate {
@@ -143,17 +147,15 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    func deleteCarbs(_ treatement: DataTable.Treatment, _isFPU: Bool) -> AnyPublisher<Void, Swift.Error> {
+    func deleteCarbs(_ date: Date) -> AnyPublisher<Void, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.treatmentsPath
 
-        let arguments = _isFPU ? "find[fpuID][$eq]" : "find[created_at][$eq]"
-
-        let value = _isFPU ? (treatement.fpuID ?? "") : Formatter.iso8601withFractionalSeconds
-            .string(from: treatement.date)
+        let arguments = "find[creation_date][$eq]"
+        let value = Formatter.iso8601withFractionalSeconds.string(from: date)
 
         components.queryItems = [
             URLQueryItem(name: "find[carbs][$exists]", value: "true"),

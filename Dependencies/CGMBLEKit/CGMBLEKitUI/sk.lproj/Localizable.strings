@@ -36,10 +36,10 @@ Title text for the button to remove a CGM from Loop */
 "Session Age" = "Dĺžka relácie";
 
 /* Section title for remote data synchronization */
-"Remote Data Synchronization" = "Diaľková sychronizácia dát";
+"Remote Data Synchronization" = "Vzdialená sychronizácia dát";
 
 /* Title describing sensor expiration */
-"Sensor Expires" = "Platnosť senzora vyprší";
+"Sensor Expires" = "Platnosť senzora skončí";
 
 /* Title describing past sensor expiration */
 "Sensor Expired" = "Platnosť senzora vypršala";

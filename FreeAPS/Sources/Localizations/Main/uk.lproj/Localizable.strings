@@ -157,6 +157,15 @@
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Додати Вуглеводи ";
 
+/* Home View */
+"Override" = "Перевизначити";
+
+/* Home View Message if no pump is connected */
+"No Pump" = "Немає Помпи";
+
+/* Home View Message if open loop is active */
+"Open" = "Відкрита";
+
 /*  */
 "Amount Carbs" = "Кількість Вуглеводів";
 
@@ -261,6 +270,9 @@
 
 /*  */
 "Autotune" = "Автотюн";
+
+/* Debug option view Dynamic Variables */
+"Dynamic Variables" = "Динамічні Змінні";
 
 /*  */
 "Basal profile" = "Базальний профіль";
@@ -604,6 +616,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Додати пристрій";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Кнопка Заміни Профілю / Кнопка Тимчасових Цілей";
+
+/* */
 "Glucose Target" = "Мета глюкози";
 
 /* */
@@ -614,6 +629,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "ISF";
+
+/* */
+"% Override" = "% Перевизначити";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Щоб використовувати iAPS, необхідно встановити програму Garmin Connect.\n Перейдіть до App Store, щоб завантажити її";
@@ -687,8 +705,23 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Події";
 
+/* Add Insulin */
+"Add Insulin" = "Додайте Інсулін";
+
+/* Add Glucose */
+"Add Glucose" = "Додайте Глюкозу";
+
+/* New Glucose */
+"New Glucose" = "Нова Глюкоза";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Лікування";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "За замовчуванням 📉";
+
+/* Hypo Treatment Default Value */
+"None" = "Жоден";
 
 /* " min" in Treatments list */
 " min" = " хв";
@@ -913,7 +946,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Інформація про Сенсор";
 
 /* */
-"Sensor Age" = "Вік Сенсору";
+"Sensor Life-Span" = "Термін служби Сенсору";
+
+/* */
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Під час використання %@ iAPS не знає тип використовуваного Сенсору або його термін служби.";
 
 /* */
 "Sensor Age Left" = "Залишилось";
@@ -1103,6 +1139,22 @@ Enact a temp Basal or a temp target */
 
 /* Override Shortcut */
 "Activates an %@ Override Preset" = "Активує попередні налаштування %@";
+
+/* Suspend/Resume Shortcut */
+"Choose what to do with your pump" = "Виберіть, що робити з вашою помпою";
+
+/* Suspend/Resume Shortcut */
+"Are you sure you want to %@ your pump?" = "Ви впевнені, що хочете %@ свою помпу?";
+
+/* Suspend/Resume Shortcut */
+"Pump command" = "Команда помпи";
+/* Suspend/Resume Shortcut */
+"enacted in iAPS" = "прийняті в iAPS";
+
+/* Temp Basal Shortcut */
+"Temp basal Amount in U/h" = "Temp basal Amount in U/h";
+
+
 
 /* */
 "Schedule " = "Розклад ";
@@ -1309,7 +1361,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "РОЗРОБНИК";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "Профіль Завантаження NS";
+"NS Upload Profile and Settings" = "Профіль і Налаштування NS Upload";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Видалити всі Перевизначення NS";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Завантажений Профіль";
@@ -1332,8 +1387,11 @@ Enact a temp Basal or a temp target */
 /* Debug option view Pump History */
 "Pump History" = "Історія Помпи";
 
+/* Debug option view Temp Basals */
+"Temp Basals" = "Тимчасовий  Базал";
+
 /* Debug option view Target Ranges */
-"Target ranges" = "Цільові діапазони";
+"Targets ranges" = "Цільові діапазони";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Тимчасові цілі";
@@ -1355,6 +1413,9 @@ Enact a temp Basal or a temp target */
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Введені в дію оголошення";
+
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Перевизначення Не Завантажено";
 
 /* Debug option view Autotune */
 "Autotune" = "Автотюн";
@@ -1456,8 +1517,14 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Fat And Protein Conversion" = "Перетворення Жиру та Білка";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Ігнорувати рівні показання CGM";
+
 /* Service Section */
 "Profile Override" = "Перевизначення Профілю";
+
+/* Extend max override percentage */
+"Max Override 400%" = "Макс. перевизначення 400%";
 
 /* */
 "Override Profiles" = "Змінити Параметри";
@@ -1482,6 +1549,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "Вимкнути SMBs";
 
+/* */
+"End the Override with next Meal" = "Завершіть перевизначення наступним прийомом Їжі";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Звичайний профіль";
 
@@ -1492,13 +1562,16 @@ Enact a temp Basal or a temp target */
 "Profiles" = "Профілі";
 
 /* */
+"Advanced Settings" = "Розширені Налаштування";
+
+/* */
 "More options" = "Додаткові параметри";
 
 /* */
 "Schedule when SMBs are Off" = "Розклад, коли SMBs вимкнено";
 
 /* */
-"Change ISF and CR" = "Змінити ISF і CR";
+"Change ISF and CR and Basal" = "Змініть ISF, CR і Basal";
 
 /* */
 "Change ISF" = "Змінити ISF";
@@ -1511,6 +1584,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "UAM SMB Minutes" = "Хвилини UAM SMB";
+
+/* */
+"Override Max IOB" = "Перевизначити Макс IOB";
 
 /* */
 "Start new Profile" = "Створіть новий Профіль";
@@ -2249,6 +2325,240 @@ Enact a temp Basal or a temp target */
 /* Contact Image, settings, loop status (data to display) */
 "LoopStatusContactValue" = "Статус петлі";
 
+/* --------------------------  Dana Pump  ---------------------- */
+/* Dana footer */
+
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Помпа Dana  не дозволяє редагувати максимальний Базал і максимальний Болюс. Налаштуйте їх у налаштуваннях \"лікаря\" помпи. Збереження налаштувань дозволить отримати останні значення з помпи";
+
+/* --------- Auto ISF --------- */
+/* */
+
+"Dynamic ISF is disabled while Auto ISF is enabled" = "Динамічний ISF вимкнено, а Auto ISF увімкнено";
+
+/* */
+"Default value: 1.2 The upper limit of ISF adjustment" = "Значення за замовчуванням: 1,2 Верхня межа налаштування ISF";
+
+
+/* */
+"Default value: 0.8 The lower limit of ISF adjustment" = "Значення за замовчуванням: 0,8 Нижня межа налаштування ISF";
+
+/* */
+"Auto ISF Max" = "Auto ISF Max";
+
+/* */
+"Auto ISF Min" = "Auto ISF Min
+";
+
+/* */
+"Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Потрібен спеціальний цільовий рівень Глюкози EatingSoon, встановлений за допомогою перевизначення профілю або тимчасового цільового значення";
+
+/* */
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Після скасування цієї цілі буде скасовано високий TBR B30";
+
+/* */
+"In order to activate B30 a minimum manual Bolus needs to be given" = "Щоб активувати B30, необхідно ввести мінімальний болюс вручну";
+
+/* */
+"You can specify how long B30 run and how high it is" = "Ви можете вказати тривалість роботи B30 і її висоту";
+
+/* */
+"Absolute Safety TBR " = "Абсолютна безпека TBR";
+
+/* */
+"Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Кількість в U/год невеликого безпечного TBR, який дають, щоб уникнути кетоацидозу. Буде обмежено до min = 0U/год, максимум = 2U/год!";
+
+/* */
+"Enable Keto protection with pre-defined TBR" = "Увімкніть захист Keto за допомогою попередньо визначеного TBR";
+
+/* */
+"Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Чи слід вказувати абсолютний TBR від 0 до 2 U/год замість відсотка поточного BR";
+
+/* */
+"Safety TBR in %" = "Безпека TBR в %";
+
+/* */
+"Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Кількість невеликого безпечного TBR у % від профілю BR, який дається для уникнення кетоацидозу. Буде обмежено до min = 5%, max = 50%!";
+
+/* */
+"Variable Keto Protection" = "Змінний Keto захист";
+
+/* */
+"If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Якщо активовано, малий безпековий TBR спрацьовує, коли IOB знаходиться в негативному діапазоні, як ніби базальний інсулін не вводився протягом однієї години. Якщо дезактивовано та статику ввімкнено, кожна нульова температура замінюється малим TBR.";
+
+/* */
+"Enable Keto Protection" = "Увімкніть Keto захист";
+
+/* */
+"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Захист від кетоацидозу застосовуватиме невелику  Базальну Швидкість, яку можна налаштувати, завжди або за певних умов замість нульової !\nЦя функція існує, тому що в окремих випадках людина може отримати кетоацидоз від 0% TBR. Ідея походить від спорту. Можуть виникнути проблеми, якщо базальна норма 0% працювала протягом кількох годин. Зокрема, м’язи можуть вимикатися.\nЦя функція дає змогу зменшити ризик кетоацидозу через невеликий безпечний TBR. Без змінного захисту ця безпека TBR завжди застосовується. Ідея змінної стратегії захисту полягає в тому, що безпека TBR застосовується, лише якщо сума базального IOB і болюсного IOB падає негативно нижче значення поточної базальної швидкості.";
+
+/* */
+"B30 Settings" = "Налаштування B30";
+
+/* */
+"Duration of increased B30 basal rate" = "Тривалість підвищеної базальної дози B30";
+
+/* */
+"Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Тривалість підвищеної базальної швидкості, яка насичує місце інфузії інсуліном. За замовчуванням 30 хвилин, як у B30. EatingSoon TT має працювати принаймні протягом цього часу, інакше B30 зупиниться, коли TT закінчиться.";
+
+/* */
+"B30 Basal rate increase factor" = "B30 Коефіцієнт підвищення базальної дози";
+
+/* */
+"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Коефіцієнт, який множить вашу нормальну базальну дозу B30. Запроваджена максимальна базальна норма – це максимальна  базальна норма вашої помпи. За замовчуванням 5.";
+
+/* */
+"Upper Delta limit" = "Верхня межа Дельти";
+
+/* */
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює базальна доза B30. За замовчуванням 8 mg/dl (0.5 mmol/l).";
+
+/* */
+"Upper BG limit" = "Верхня межа BG";
+
+/* */
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs буде вимкнено, якщо нижче цього ліміту, коли працює базальна доза B30. За замовчуванням 130 mg/dl (7.2 mmol/l).";
+
+/* */
+"Target Level for B30 to be enacted" = "Цільовий рівень для B30 має бути прийнятий";
+
+/* */
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Щоб розпочати адаптацію B30, потрібно активувати ціль EatingSoon Override (або тимчасову ціль). Ціль має бути нижче цього налаштування, щоб B30 почався. За замовчуванням 90 mg/dl. Якщо ви скасуєте ціль EatingSoon Target, базальна норма B30 припиниться.";
+
+/* */
+"Minimum Start Bolus size" = "Мінімальний початковий розмір Болюсу";
+
+/* */
+"Minimum manual bolus to start a B30 adaption." = "Мінімальний ручний Болюс для початку адаптації B30.";
+
+/* */
+"Activate B30" = "Активуйте B30";
+
+/* */
+"Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Забезпечує підвищення Базальної Швидкості після EatingSoon Override Target (або Temp Target) і ручного Болюсу для насичення місця інфузії інсуліном для збільшення всмоктування інсуліну для SMB після прийому їжі без підрахунку вуглеводів.";
+
+/* */
+"ISF weight while BG decelerates" = "Вага ISF, поки BG сповільнюється";
+
+/* */
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Це значення, яке застосовується під час уповільнення рівня глюкози та послаблення ISF. З 0 цей внесок фактично вимкнено. 0,1 може бути хорошою відправною точкою.";
+
+/* */
+"ISF weight while BG accelerates" = "Вага ISF, тоді як BG прискорюється";
+
+/* */
+"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Значення за замовчуванням: 0. Це вага, що застосовується під час прискорення глюкози та посилення ISF. З 0 цей внесок фактично вимкнено. 0,02 є безпечною відправною точкою, від якої можна рухатися вгору. Типові параметри становлять близько 0,15!";
+
+/* */
+"Duration ISF postprandial adaption" = "Тривалість ISF постпрандіальної адаптації";
+
+/* */
+"Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Значення за замовчуванням: 3. Це тривалість у годинах, протягом якого ефект буде активним після прийому їжі. Oref видалить час вуглеводів після 10 годин, незалежно від того, що ви введете.";
+
+/* */
+"ISF weight for postprandial BG rise" = "Вага ISF для підвищення BG після їжі";
+
+/* */
+"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Це значення, що застосовується до лінійного нахилу під час підвищення рівня глюкози та адаптує ISF. З 0 цей внесок фактично вимкнено. Почніть з 0,01 - навряд чи виходить за межі 0,05!";
+
+/* */
+"ISF weight for higher BG deltas" = "Вага ISF для вищих дельт BG ";
+
+/* */
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Значення за замовчуванням: 0,0 Це вага, застосована до багатокутника, який адаптує вищі дельти ISF. З 0,0 ефект фактично вимикається.";
+
+/* */
+"ISF weight for lower BG" = "Поправка на низький рівень BG";
+
+/* */
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Значення за замовчуванням: 0,0 Це вага, застосована до багатокутника, який адаптує ISF, якщо рівень глюкози нижчий за цільовий. З 0,0 ефект фактично вимикається.";
+
+/* */
+"ISF weight for higher BG" = "Виправлення на високий рівень BG";
+
+/* */
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Значення за замовчуванням: 0,0 Це вага, застосована до багатокутника, який адаптує ISF, якщо рівень глюкози перевищує цільовий показник. З 0,0 ефект фактично вимикається.";
+
+/* */
+"Duration Weight" = "Коригування тривало підвищеного рівня глюкози";
+
+/* */
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Вага, що відповідає тривало високому рівню глюкози в крові. З кожною годиною, коли рівень глюкози в крові залишається занадто високим, це налаштування буде знижувати чутливість до інсуліну. \n\nФормула для Dura ISF коригування така:\n\nDura ISF = 1 + кількість годин вище мети * вага / ціль * (середня глюкоза - цільова глюкоза)";
+
+/* */
+"SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
+
+/* */
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Значення за замовчуванням: 0, Sensible – від 40 mg/dL до 120 mg/dL. Лінійно зростаючий коефіцієнт доставки SMB відображається в діапазоні глюкози [target_bg, target_bg+bg_range]. У target_bg коефіцієнт SMB становить smb_delivery_ratio_min, у target_bg+bg_range – smb_delivery_ratio_max. З 0 лінійно зростаючий коефіцієнт SMB вимкнено та використовується виправлення smb_delivery_ratio.";
+
+/* */
+"SMB Delivery Ratio Maximum" = "Максимальний коефіцієнт доставки SMB";
+
+/* */
+"Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Значення за замовчуванням: 0,5. Це найвищий рівень лінійно зростаючого коефіцієнта доставки SMB, а не фіксоване значення в OpenAP SMB Delivery Ratio.";
+
+/* */
+"SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
+
+/* */
+"Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Значення за замовчуванням: 0,5 Це нижня межа лінійно зростаючого коефіцієнта доставки SMB, а не фіксоване значення в OpenAP SMB Delivery Ratio.";
+
+/* */
+"Toggles" = "Перемикає";
+
+/* */
+"Enable postprandial ISF adaption always" = "Завжди вмикайте адаптацію ISF після їжі";
+
+/* */
+"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Увімкніть постпрандіальну адаптацію ISF постійно, незалежно від того, коли був останній прийом їжі.";
+
+/* */
+"Enable DuraISF effect even with COB" = "Увімкніть ефект DuraISF навіть із COB";
+
+/* */
+"Enable DuraISF even if COB is present not just for UAM." = "Увімкніть DuraISF, навіть якщо COB присутній не лише для UAM.";
+
+/* */
+"Enable BG acceleration" = "Увімкнути прискорення BG ";
+
+/* */
+"Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Вмикає адаптацію прискорення BG, регулюючи ISF для прискорення/уповільнення рівня глюкози в крові.";
+
+/* */
+"Override Auto ISF" = "Перевизначити Auto ISF";
+
+/* */
+"Enable Auto ISF" = "Увімкнути автоматичний ISF";
+
+/* */
+"Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Вмикає автоматичний ISF. Це вимкне будь-яке можливе динамічне налаштування ISF/CR";
+
+/* */
+"Keto Protection" = "KETO PROTECTION";
+
+/* */
+"Max IOB Threshold Percent" = "Максимальний пороговий відсоток IOB";
+
+/* */
+"Auto ISF" = "Авто ISF";
+
+/* Is true */
+" on" = " увімкнути";
+
+/* Is false */
+" off" = " вимкнути";
+
+/* Override adjustment of ISF, CR and Basal */
+"Adjust " = "Налаштувати";
+
+/* History of the adjustments */
+"Final Ratio" = "Фінальне Cпіввідношення";
+
+/* History of the adjustments */
+"Adjustments" = "Коригування";
+
+/* History of the adjustments */
+"Insulin" = "Інсулін";
+
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
   iAPS
@@ -2575,6 +2885,18 @@ Enact a temp Basal or a temp target */
 "Use alternate Bolus Calculator" = "Використати альтернативний болюсний калькулятор";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Використовуйте Калькулятор Болюсу";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Залежно від ваших налаштувань, Swift-калькулятор болюса використовує дані з прогнозів глюкози OpenAPS та/або IOB (інсулін на борту), COB (вуглеводи на борту), тренда глюкози, поточного рівня глюкози та цільового рівня глюкози. В кінці розрахунку застосовується коефіцієнт користувача (за замовчуванням 0.8).\n\nУ вас також є можливість в налаштуваннях болюс-калькулятора застосувати додатковий коефіцієнт, що настроюється в кінці розрахунку. Це може бути корисним для жирної їжі, наприклад, піци (за замовчуванням 0.7).\n\nБолюс-калькулятор НЕ використовує змінну OpenAPS \"insulinRequired\", яка призначена для SMB (супермікроболюсів).";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Коригування";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Використовувати передбачення глюкози OpenAPS";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Жирна їжа";
 
 /* Bolus Calculator Setting */
@@ -2582,6 +2904,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Новий альтернативний болюсний калькулятор є іншим підходом до стандартного болюсного калькулятора в iAPS. Якщо перемикач увімкнено, ви використовуєте цей болюсний калькулятор, а не оригінальний калькулятор iAPS. Наприкінці обчислення застосовано спеціальний коефіцієнт, як це має бути під час використання smbs (за замовчуванням 0,8).\n\nВи також можете додати опцію у своєму болюсному калькуляторі, щоб застосувати інший (!) настроюваний коефіцієнт наприкінці обчислення, яке може бути корисним для жирних страв, наприклад, піци (за замовчуванням 0,7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Використовувати прогноз кінцевого рівня глюкози (eventual glucose) від OpenAPS для розрахунку інсуліну, що рекомендується. Цей параметр активує старий калькулятор. Увімкнено за замовчуванням.\n\n2. Використовувати прогноз minPredBG від OpenAPS як додатковий захист, щоб не допустити зниження прогнозованого рівня глюкози нижче вашого порогового значення. Цей параметр можна використовувати як разом із прогнозом eventual glucose, так і без нього. Увімкнено за замовчуванням.";
 
 /* Settings Section */
 "Extra Features" = "Додаткові функції";
@@ -2640,6 +2965,9 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Відображати дельту Глюкози";
 
 /* UI/UX option */
+"Display Sensor Age" = "Показувати вік Сенсору";
+
+/* UI/UX option */
 "Hide Concentration Badge" = "Сховати значок Концентрації";
 
 /* UI/UX option */
@@ -2647,6 +2975,24 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Hide the bolus amount strings when amount is under" = "Приховати рядки об'єм болюса, коли об'єм менший";
+
+/* UI/UX option */
+"Display carb equivalents" = "Показати еквіваленти вуглеводів";
+
+/* UI/UX option */
+"Display carb equivalent amount" = "Display carb equivalent amount";
+
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Відображати час Сенсору що залишився.";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Відображати вік Сенсору замість часу, що залишився.";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Відображати Співвідношення та Кнопку перегляду історії";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Авто ISF на Головному екрані";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
@@ -2656,6 +3002,15 @@ Enact a temp Basal or a temp target */
 
 /* Notification option */
 "Live Activity" = "Дії наживо";
+
+/* Show Live Activity */
+"Show Live Activity" = "Відображати Ефір Активності";
+
+/* Display Chart */
+"Display Chart" = "Відобразити Графік";
+
+/* Show Predictions */
+"Show Predictions" = "Відображати Прогнози";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Дії наживо відображає рівень глюкози в крові в прямому ефірі на екрані блокування та на динамічному острові (якщо доступний)";
@@ -2687,10 +3042,10 @@ Enact a temp Basal or a temp target */
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "За замовчуванням 0.2 (20%). Максимальна позитивна зміна відсоткового рівня глюкози в крові для спрацьовування SMB, при перевищенні цього порога - відбудеться відключення SMB та перехід в керування лише базою. Запрограмована межа – 40%. Для повністю закритої петлі UAM рекомендується 30%. Результат можна спостерігати в журналі роботи та спливаючому вікні статусу петлі (maxDelta 27 > 20% of BG 100 - disabling SMB!).";
 
-/* Headline "... When Blood Glucose Is Over (mg/dl):" */
-"... When Blood Glucose Is Over (mg/dl):" = "... Коли Рівень Глюкози вищий (мг/дл):";
+/* Headline "... When Blood Glucose Is Above:" */
+"... When Blood Glucose Is Above:" = "... Коли рівень глюкози в крові вище:";
 
-/* ... When Blood Glucose Is Over (mg/dl): */
+/* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Налаштуйте рівень для опції \"Увімкнути SMB за високого BG\". Якщо рівень BG вищий за дане значення, SMB будуть включені.";
 
 /* Headline "Enable SMB With High BG" */
@@ -2707,3 +3062,9 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Коефіцієнт Регулювання";
+
+/* Apple Watch Overrides */
+"Overrides" = "Перевизначити";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Скасувати перевизначення";

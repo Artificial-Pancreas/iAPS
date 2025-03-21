@@ -57,16 +57,16 @@
 "%g U" = "%g U";
 
 /* Button text for 1 hour suspend duration */
-"1 hour" = "1 hour";
+"1 hour" = "ساعة واحدة";
 
 /* Button text for 1 hour 30 minute suspend duration */
-"1 hour 30 minutes" = "1 hour 30 minutes";
+"1 hour 30 minutes" = "1 ساعة و 30 دقيقة";
 
 /* Button text for 2 hour suspend duration */
-"2 hours" = "2 hours";
+"2 hours" = "ساعتان";
 
 /* Button text for 30 minute suspend duration */
-"30 minutes" = "30 minutes";
+"30 minutes" = "30 دقيقة";
 
 /* The title of the cell showing the pod activated at time */
 "Active Time" = "Active Time";
@@ -75,7 +75,7 @@
 "Activity" = "النشاط";
 
 /* Text indicating ongoing pump time synchronization */
-"Adjusting Pump Time..." = "Adjusting Pump Time...";
+"Adjusting Pump Time..." = "جاري ضبط وقت المضخة...";
 
 /* The title of the cell showing alarm status */
 "Alarms" = "التنبيهات";
@@ -159,7 +159,7 @@
 "Configuration" = "المعطيات";
 
 /* Button title for confirm attachment option */
-"Confirm" = "Confirm";
+"Confirm" = "تأكيد";
 
 /* Alert title for confirm pod attachment */
 "Confirm Pod Attachment" = "تأكيد وضع البود";
@@ -168,7 +168,7 @@
 "Continue" = "تابع";
 
 /* Title for critical alerts description */
-"Critical Alerts" = "Critical Alerts";
+"Critical Alerts" = "تنبيهات هامة";
 
 /* Unit for singular day in pod life remaining */
 "day" = "يوم";
@@ -193,10 +193,10 @@
 "Slide to Deactivate Pod" = "Slide to Deactivate Pod";
 
 /* Label text for step one of insert cannula instructions */
-"Slide the switch below to start cannula insertion." = "Slide the switch below to start cannula insertion.";
+"Slide the switch below to start cannula insertion." = "مرر المفتاح أدناه لبدء إدخال الإبرة.";
 
 /* Label text showing pod is deactivated */
-"Deactivated" = "Deactivated";
+"Deactivated" = "تم إلغاء التنشيط";
 
 /* Deactivate pod action button accessibility label while deactivating */
 "Deactivating." = "جارٍ إلغاء التفعيل.";
@@ -294,7 +294,7 @@
 "Finish pod setup" = "Finish pod setup";
 
 /* Action button title to continue at Setup Complete */
-"Finish Setup" = "Finish Setup";
+"Finish Setup" = "إتمام الإعداد";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "Greater than %1$@ units remaining at %2$@" = "Greater than %1$@ units remaining at %2$@";
@@ -318,7 +318,7 @@
 "Insert Cannula" = "Insert Cannula";
 
 /* Label text indicating insertion finished. */
-"Inserted" = "Inserted";
+"Inserted" = "تم الإدخال";
 
 /* Insert cannula action button accessibility label while pairing */
 "Inserting. Please wait." = "Inserting. Please wait.";
@@ -336,23 +336,23 @@
 "Insulin Delivery" = "توصيل الأنسولين";
 
 /* The action string on pod status page when pod faulted */
-"Insulin delivery stopped. Change Pod now." = "Insulin delivery stopped. Change Pod now.";
+"Insulin delivery stopped. Change Pod now." = "تم إيقاف توصيل الأنسولين. يجب تغيير الكبسولة الآن.";
 
 /* Message for suspend duration selection action sheet */
-"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?";
+"Insulin delivery will be stopped until you resume manually. When would you like Loop to remind you to resume delivery?" = "سيتم إيقاف توصيل الأنسولين حتى تقوم باستئنافه يدويًا. متى ترغب في أن يذكرك Loop باستئناف التوصيل؟";
 
 /* Header for insulin remaining on pod settings screen */
 "Insulin Remaining" = "الأنسولين المتبقي";
 
 /* Text for confidence reminders navigation link
    Title for insulin type selection screen */
-"Insulin Type" = "Insulin Type";
+"Insulin Type" = "نوع الإنسولين";
 
 /* The error message shown when Loop's basal schedule has an unsupported rate */
 "Invalid entry" = "Invalid entry";
 
 /* Question to confirm the cannula is inserted properly */
-"Is the cannula inserted properly?" = "Is the cannula inserted properly?";
+"Is the cannula inserted properly?" = "هل تم إدخال الإبرة بشكل صحيح؟";
 
 /* Label text for step 2 of pair pod instructions */
 "Keep the RileyLink about 6 inches from the pod during pairing." = "Keep the RileyLink about 6 inches from the pod during pairing.";
@@ -418,7 +418,7 @@
 "No, Continue With Pod" = "لا، استمر مع البود";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "No, Keep Pump As Is";
+"No, Keep Pump As Is" = "لا، إبقاء المضخة كما هي";
 
 /* The detail text for bolus delivery when no bolus is being delivered */
 "None" = "None";
@@ -431,7 +431,7 @@
 "Numbers" = "Numbers";
 
 /* Title for omnipod reminders section */
-"Omnipod Reminders" = "Omnipod Reminders";
+"Omnipod Reminders" = "تذكيرات البود";
 
 /* Button title to pair with pod during setup */
 "Pair" = "Pair";
@@ -455,7 +455,7 @@
 "Pairing." = "إقران.";
 
 /* Pod pairing action button text while pairing */
-"Pairing..." = "Pairing...";
+"Pairing..." = "جاري الاقتران...";
 
 /* No comment provided by engineer. */
 "Percent = %lf" = "Percent = %lf";
@@ -470,7 +470,7 @@
 "Play Test Beeps…" = "Play Test Beeps…";
 
 /* Alert message body for confirm pod attachment */
-"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached.";
+"Please confirm that the Pod is securely attached to your body.\n\nThe cannula can be inserted only once with each Pod. Tap “Confirm” when Pod is attached." = "يرجى تأكيد أن البود مثبت بإحكام على جسمك.\n\nيمكن إدخال الإبرة مرة واحدة فقط مع كل بود. اضغط على \"تأكيد\" عندما يكون البود مثبت.";
 
 /* Instructions for deactivate pod when pod not on body */
 "Please deactivate the pod. When deactivation is complete, you may pair a new pod." = "يرجى إلغاء تفعيل البود. عند اكتمال إلغاء التفعيل، يمكنك إقران بود جديد.";
@@ -526,7 +526,7 @@
 "Prepare site." = "تحضير الموقع.";
 
 /* title for previous pod page */
-"Previous Pod" = "Previous Pod";
+"Previous Pod" = "البود السابق";
 
 /* Text for previous pod information row */
 "Previous Pod Information" = "Previous Pod Information";
@@ -538,13 +538,13 @@
 "Priming. Please wait." = "التحضير. يرجى الانتظار.";
 
 /* Pod pairing action button text while priming */
-"Priming..." = "Priming...";
+"Priming..." = "جاري التحضير...";
 
 /* The text of the loading label when priming */
 "Priming…" = "Priming…";
 
 /* The title of the command to change pump time zone */
-"Pump Time" = "Pump Time";
+"Pump Time" = "وقت المضخة";
 
 /* Label text for basal rate summary */
 "Rate" = "معدّل";
@@ -556,7 +556,7 @@
 "Remove Pod from Body" = "قم بإزالة البود من الجسم";
 
 /* Title for Omnipod PumpManager deletion action sheet. */
-"Remove Pump" = "Remove Pump";
+"Remove Pump" = "إزالة المضخة";
 
 /* Label text for step two of attach pod instructions */
 "Remove the Pod's clear needle cap and check cannula. Then remove paper backing." = "Remove the Pod's clear needle cap and check cannula. Then remove paper backing.";
@@ -621,10 +621,10 @@
 "Set Temporary Basal" = "Set Temporary Basal";
 
 /* Button title to set temporary basal rate */
-"Set Temporary Basal Rate" = "Set Temporary Basal Rate";
+"Set Temporary Basal Rate" = "ضبط معدل القاعدي المؤقت";
 
 /* Description text on manual temp basal action sheet */
-"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled.";
+"Your insulin delivery will not be automatically adjusted until the temporary basal rate finishes or is canceled." = "لن يتم تعديل توصيل الأنسولين تلقائيًا حتى ينتهي معدل القاعدة المؤقت أو يتم إلغاؤه.";
 
 /* Title for setup complete screen */
 "Setup Complete" = "Setup Complete";
@@ -642,7 +642,7 @@
 "Succeeded" = "Succeeded";
 
 /* Title for suspend duration selection action sheet */
-"Suspend Delivery" = "Suspend Delivery";
+"Suspend Delivery" = "إيقاف التوصيل مؤقتًا";
 
 /* Text for suspend resume button when insulin delivery active */
 "Suspend Insulin Delivery" = "تعليق توصيل الإنسولين";
@@ -660,16 +660,16 @@
 "Switch from Omnipod Pumps" = "Switch from Omnipod Pumps";
 
 /* Label for PumpManager deletion button */
-"Switch to other insulin delivery device" = "Switch to other insulin delivery device";
+"Switch to other insulin delivery device" = "التبديل إلى جهاز توصيل الأنسولين الآخر";
 
 /* The title of the command to change pump time zone */
-"Sync to Current Time" = "Sync to Current Time";
+"Sync to Current Time" = "المزامنة مع الوقت الحالي";
 
 /* Title of button to sync basal profile from pod */
 "Sync With Pod" = "Sync With Pod";
 
 /* Label text for step one of insert cannula instructions */
-"Tap below to start cannula insertion." = "Tap below to start cannula insertion.";
+"Tap below to start cannula insertion." = "اضغط أدناه لبدء إدخال الإبرة.";
 
 /* Navigation Title for ManualTempBasalEntryView */
 "Temporary Basal" = "Temporary Basal";
@@ -684,7 +684,7 @@
 "Testing Commands…" = "Testing Commands…";
 
 /* Footer text for omnipod reminders section */
-"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod.";
+"The app configures a reminder on the pod to notify you in advance of Pod expiration. Set the number of hours advance notice you would like to configure when pairing a new Pod." = "يقوم التطبيق بتكوين تذكير على البود لتنبيهك مسبقًا قبل انتهاء صلاحية البود. قم بتحديد عدد الساعات التي تود تلقي إشعار مسبق بها بشكل افتراضي عند إقران بود جديد.";
 
 /* Description text on ExpirationReminderSetupView */
 "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have." = "The App notifies you in advance of Pod expiration.\n\nScroll to set the number of hours advance notice you would like to have.";
@@ -693,25 +693,25 @@
 "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded." = "The App notifies you when the amount of insulin in the Pod reaches this level (50-10 U).\n\nScroll to set the number of units at which you would like to be reminded.";
 
 /* Footer text for low reservoir value row */
-"The App notifies you when the amount of insulin in the Pod reaches this level." = "The App notifies you when the amount of insulin in the Pod reaches this level.";
+"The App notifies you when the amount of insulin in the Pod reaches this level." = "يقوم التطبيق بإشعارك عندما يصل مقدار الأنسولين في البود إلى هذا المستوى.";
 
 /* Description text for critical alerts */
 "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode." = "The reminders above will not sound if your device is in Silent or Do Not Disturb mode.\n\nThere are other critical Pod alerts and alarms that will sound even if your device is set to Silent or Do Not Disturb mode.";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "الوقت في مضختك مختلف عن الوقت الحالي. هل ترغب في تحديث الوقت في مضختك ليتوافق مع الوقت الحالي؟";
 
 /* description for time change detected notice */
 "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
 
 /* Description of proper cannula insertion */
-"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin.";
+"The window on the top of the Pod should be colored pink when the cannula is properly inserted into the skin." = "يجب أن تكون النافذة الموجودة في أعلى الكبسولة ملونة باللون الوردي عندما تكون الإبرة مدخلة بشكل صحيح في الجلد.";
 
 /* Format string for recovery suggestion during deactivate pod. */
 "There was a problem communicating with the pod. If this problem persists, tap Discard Pod. You can then activate a new Pod." = "كانت هناك مشكلة في التواصل مع البود. إذا استمرت هذه المشكلة، انقر على \"تجاهل البود\". يمكنك بعد ذلك تفعيل بود جديد.";
 
 /* Footer text for scheduled reminder area */
-"This is a reminder that you scheduled when you paired your current Pod." = "This is a reminder that you scheduled when you paired your current Pod.";
+"This is a reminder that you scheduled when you paired your current Pod." = "هذا تذكير قمت بجدولته عند إقرانك للبود الحالي.";
 
 /* Alert format string for missing temp basal configuration. */
 "This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate." = "This Pump has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to Therapy Settings -> Delivery Limits and set a new Maximum Basal Rate.";
@@ -760,7 +760,7 @@
 "Unknown" = "Unknown";
 
 /* Label text for step two of insert cannula instructions */
-"Wait until insertion is completed." = "Wait until insertion is completed.";
+"Wait until insertion is completed." = "انتظر حتى يتم الانتهاء من الإدخال.";
 
 /* Button label for user to answer cannula was properly inserted */
 "Yes" = "نعم";
@@ -769,13 +769,13 @@
 "Yes, Deactivate Pod" = "نعم، إلغاء تنشيط البود";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Yes, Sync to Current Time";
+"Yes, Sync to Current Time" = "نعم، المزامنة مع الوقت الحالي";
 
 /* bodyText for PodSetupView */
 "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body.";
 
 /* Format string for instructions for setup complete view. (1: app name) */
-"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you.";
+"Your Pod is ready for use.\n\n%1$@ will remind you to change your pod before it expires. You can change this to a time convenient for you." = "بودك جاهز للاستخدام.\n\n%1$@ سيذكرك بتغيير البود الخاص بك قبل انتهاء صلاحيته. يمكنك تغيير هذا إلى وقت مناسب لك.";
 
 /* Alert message body for confirm pod attachment */
 "Your Pod may still be delivering Insulin.\nRemove it from your body, then tap “Continue.“" = "قد يكون البود لا يزال يقوم بتوصيل الأنسولين. \nقم بإزالته من جسمك، ثم اضغط على \"تابع\"";
@@ -789,11 +789,11 @@
 /* Description for SilencePodPreference.enabled */
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts.";
 
-/* Help text for Silence Pod view */
-/* navigation title for Silnce Pod" */
+/* Help text for Silence Pod view  */
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.";
 
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
-Silence Pod" = "Silence Pod";
+/* Navigation title for Silence Pod */
+"Silence Pod" = "Silence Pod";
 
 /* title for pod details page */
 "Pod Details" = "Pod Details";
@@ -816,16 +816,16 @@ Silence Pod" = "Silence Pod";
 "Diagnostics" = "Diagnostics";
 
 /* Text for read pod status navigation link */
-"Read Pod Status" = "Read Pod Status";
+"Read Pod Status" = "قراءة حالة البود";
 
 /* Title for the pod diagnostic view */
-"Pod Diagnostics" = "Pod Diagnostics";
+"Pod Diagnostics" = "تشخيص البود";
 
 /* Text for read pulse log plus title */
-"Read Pulse Log Plus" = "Read Pulse Log Plus";
+"Read Pulse Log Plus" = "قراءة سجل النبض";
 
 /* Text for read activation time title */
-"Read Activation Time" = "Read Activation Time";
+"Read Activation Time" = "قراءة وقت التفعيل";
 
 /* Text for read triggered alerts title */
-"Read Triggered Alerts" = "Read Triggered Alerts";
+"Read Triggered Alerts" = "قراءة التنبيهات المُفعلة";

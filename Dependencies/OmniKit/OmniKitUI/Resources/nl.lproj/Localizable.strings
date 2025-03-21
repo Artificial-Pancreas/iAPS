@@ -276,16 +276,16 @@
 "Failed to update confidence reminder preference." = "Voorkeuren voor bijwerken van herrineringsmeldingen is mislukt.";
 
 /* Alert title for error when updating expiration reminder */
-"Failed to Update Expiration Reminder" = "Vervaldatumherinnering bijwerken mislukt";
+"Failed to Update Expiration Reminder" = "Bijwerken 'Vervaldatum' melding mislukt";
 
 /* Alert title for error when updating low reservoir reminder */
-"Failed to Update Low Reservoir Reminder" = "Bijwerken reservoir bijna leeg herinnering mislukt";
+"Failed to Update Low Reservoir Reminder" = "Bijwerken 'Reservoir bijna leeg' melding mislukt";
 
 /* Pod life HUD view label */
 "Fault" = "Fout";
 
 /* Label text for step 1 of pair pod instructions */
-"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Vul een nieuwe pod met U-100 insuline (laat de Podnaalddop zitten). Luister naar 2 piepjes.";
+"Fill a new pod with U-100 Insulin (leave clear Pod needle cap on). Listen for 2 beeps." = "Vul een nieuwe Pod met insuline. Verwijder de naalddop NIET!!";
 
 /* Settings page link description when next lifecycle action is to finish deactivation */
 "Finish deactivation" = "Voltooi deactivering";
@@ -309,10 +309,10 @@
 "If you cancel Pod setup, the current Pod will be deactivated and will be unusable." = "Als je de Podinstallatie annuleert, wordt de huidige Pod gedeactiveerd en onbruikbaar.";
 
 /* Instructions when deactivating pod that has been paired, but not attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Een Pod die gedeeltelijk is ingesteld, moet eerst worden uitgeschakeld voordat je probeert een nieuwe pod te koppelen. Deactiveer de Pod uit en gooi hem weg.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and discard pod." = "Een Pod die gedeeltelijk is ingesteld, moet eerst worden uitgeschakeld voordat je probeert een nieuwe pod te koppelen. Deactiveer de Pod en gooi hem weg.";
 
 /* Instructions when deactivating pod that has been paired and possibly attached. */
-"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Een niet compleet ingestelde Pod, moet eerst worden uitgeschakeld voordat je probeert een nieuwe pod te koppelen. Deactiveer de Pod uit en gooi hem weg.";
+"Incompletely set up pod must be deactivated before pairing with a new one. Please deactivate and remove pod." = "Een niet compleet ingestelde Pod, moet eerst worden uitgeschakeld voordat je probeert een nieuwe pod te koppelen. Deactiveer de Pod en gooi hem weg.";
 
 /* Button title to insert cannula during setup */
 "Insert Cannula" = "Canule inbrengen";
@@ -789,11 +789,11 @@
 /* Description for SilencePodPreference.enabled */
 "All Pod alerts use no beeps and confirmation reminder beeps are suppressed. The Pod will only beep for fatal Pod faults and when playing test beeps.\n\n⚠️Warning - Whenever the Pod is silenced it must be kept within Bluetooth range of this device to receive notifications for Pod alerts." = "Alle Pod alarmen gebruiken geen piepjes en herinneringen worden gedempt. De Pod zal alleen piepen bij fatale Pod fouten en bij testpiepen.\n\n⚠️Waarschuwing - Wanneer de Pod is gedempt, moet het binnen het Bluetooth-bereik van dit apparaat worden gehouden om meldingen voor Pod te ontvangen.";
 
-/* Help text for Silence Pod view */
-/* navigation title for Silnce Pod" */
+/* Help text for Silence Pod view  */
+"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping." = "Stille Podmodus dempt alle Podalarmen en bevestigingsmeldingen.";
 
-"Silence Pod mode suppresses all Pod alert and confirmation reminder beeping.
-Silence Pod" = "Gedempt";
+/* Navigation title for Silence Pod */
+"Silence Pod" = "Podgeluiden dempen";
 
 /* title for pod details page */
 "Pod Details" = "Pod details";

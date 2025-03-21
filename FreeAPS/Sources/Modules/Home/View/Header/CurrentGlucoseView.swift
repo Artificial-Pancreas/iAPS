@@ -10,6 +10,10 @@ struct CurrentGlucoseView: View {
     @Binding var alwaysUseColors: Bool
     @Binding var displayDelta: Bool
     @Binding var scrolling: Bool
+    @Binding var displayExpiration: Bool
+    @Binding var cgm: CGMType
+    @Binding var sensordays: Double
+    @Binding var anubis: Bool
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
@@ -50,8 +54,8 @@ struct CurrentGlucoseView: View {
             formatter.decimalSeparator = "."
         }
         formatter.maximumFractionDigits = 1
-        formatter.positivePrefix = "+"
-        formatter.negativePrefix = "-"
+        formatter.positivePrefix = "+ "
+        formatter.negativePrefix = "- "
         return formatter
     }
 
@@ -69,6 +73,20 @@ struct CurrentGlucoseView: View {
         return formatter
     }
 
+    private var remainingTimeFormatter: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour]
+        formatter.unitsStyle = .abbreviated
+        return formatter
+    }
+
+    private var remainingTimeFormatterDays: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day]
+        formatter.unitsStyle = .short
+        return formatter
+    }
+
     var body: some View {
         glucoseView
             .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xLarge)
@@ -79,6 +97,9 @@ struct CurrentGlucoseView: View {
             if let recent = recentGlucose {
                 if displayDelta, !scrolling, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
+                if displayExpiration || anubis {
+                    sageView
+                }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
                     if let string = recent.glucose.map({
@@ -111,12 +132,38 @@ struct CurrentGlucoseView: View {
             let offset: CGFloat = -7
 
             Text(string)
-                .font(.caption)
-                .background { directionDrop }
+                .font(.callout).foregroundStyle(.secondary)
                 .offset(x: offset, y: 10)
         }
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 120, y: -7)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 140.5, y: displayExpiration ? -34 : -7)
+    }
+
+    private var sageView: some View {
+        ZStack {
+            if let date = recentGlucose?.sessionStartDate {
+                let expiration = (cgm == .xdrip || cgm == .glucoseDirect) ? sensordays * 8.64E4 : cgm.expiration
+                let remainingTime: TimeInterval = anubis ? (-1 * date.timeIntervalSinceNow) : expiration -
+                    (-1 * date.timeIntervalSinceNow)
+
+                Sage(amount: remainingTime, expiration: anubis ? remainingTime : expiration)
+                    .frame(width: 59, height: 26)
+                    .overlay {
+                        HStack {
+                            Text(
+                                remainingTime >= 1 * 8.64E4 ?
+                                    (remainingTimeFormatterDays.string(from: remainingTime) ?? "")
+                                    .replacingOccurrences(of: ",", with: " ") :
+                                    (remainingTimeFormatter.string(from: remainingTime) ?? "")
+                                    .replacingOccurrences(of: ",", with: " ")
+                            )
+                        }
+                    }
+            }
+        }
+        .font(.footnote)
+        .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
+        .frame(maxHeight: .infinity, alignment: .center).offset(x: 140.5, y: 3)
     }
 
     private var adjustments: (degree: Double, x: CGFloat, y: CGFloat) {
@@ -195,16 +242,6 @@ struct CurrentGlucoseView: View {
             .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
             .offset(x: adjust.x, y: adjust.y)
             .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
-    }
-
-    private var directionDrop: some View {
-        let degree = adjustments.degree
-        let shadowDirection = direction(degree: degree)
-        return Image("glucoseDrops")
-            .resizable()
-            .frame(width: 42, height: 42).rotationEffect(.degrees(degree))
-            .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
-            .shadow(radius: 2, x: shadowDirection.x, y: shadowDirection.y)
     }
 
     private var colorOfGlucose: Color {

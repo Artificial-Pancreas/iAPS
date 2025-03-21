@@ -22,6 +22,8 @@ protocol APSManager {
     var pumpExpiresAtDate: CurrentValueSubject<Date?, Never> { get }
     var isManualTempBasal: Bool { get }
     var bolusAmount: CurrentValueSubject<Decimal?, Never> { get }
+    var temporaryData: TemporaryData { get set }
+    var concentration: (concentration: Double, increment: Double) { get }
     func enactTempBasal(rate: Double, duration: TimeInterval)
     func makeProfiles() -> AnyPublisher<Bool, Never>
     func determineBasal() -> AnyPublisher<Bool, Never>
@@ -108,6 +110,7 @@ final class BaseAPSManager: APSManager, Injectable {
     var bluetoothManager: BluetoothStateManager? { deviceDataManager.bluetoothManager }
 
     @Persisted(key: "isManualTempBasal") var isManualTempBasal: Bool = false
+    @Persisted(key: "temporary") var temporaryData = TemporaryData()
 
     let isLooping = CurrentValueSubject<Bool, Never>(false)
     let lastLoopDateSubject = PassthroughSubject<Date, Never>()
@@ -243,6 +246,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
 
         isLooping.send(true)
+
         determineBasal()
             .replaceEmpty(with: false)
             .flatMap { [weak self] success -> AnyPublisher<Void, Error> in
@@ -347,6 +351,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
+        let start = Date.now
         debug(.apsManager, "Start determine basal")
         guard let glucose = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self), glucose.isNotEmpty else {
             debug(.apsManager, "Not enough glucose data")
@@ -372,11 +377,13 @@ final class BaseAPSManager: APSManager, Injectable {
 
         let now = Date()
         let temp = currentTemp(date: now)
+        let temporary = temporaryData
+        temporaryData.forBolusView.carbs = 0
 
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
+            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now, temporary: temporary) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {
@@ -410,7 +417,7 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     func makeProfiles() -> AnyPublisher<Bool, Never> {
-        openAPS.makeProfiles(useAutotune: settings.useAutotune)
+        openAPS.makeProfiles(useAutotune: settings.useAutotune, settings: settings)
             .map { tunedProfile in
                 if let basalProfile = tunedProfile?.basalProfile {
                     self.processQueue.async {
@@ -509,6 +516,7 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
+        let adjusted = pump.roundToSupportedBasalRate(unitsPerHour: rate * concentration.concentration)
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
             if let error = error {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
@@ -517,7 +525,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(
                     duration: Int(duration / 60),
-                    rate: Decimal(rate * self.concentration.concentration),
+                    rate: Decimal(adjusted),
                     temp: .absolute,
                     timestamp: Date()
                 )
@@ -681,8 +689,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 protein: protein,
                 note: "Remote",
                 enteredBy: "Nightscout operator",
-                isFPU: fat > 0 || protein > 0,
-                fpuID: (fat > 0 || protein > 0) ? UUID().uuidString : nil
+                isFPU: false
             )])
 
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
@@ -725,10 +732,22 @@ final class BaseAPSManager: APSManager, Injectable {
             guard let id = preset.id, let preset_ = preset.preset else { return }
             storage.overrideFromPreset(preset_, id)
             let currentActiveOveride = storage.fetchLatestOverride().first
-            nightscout.uploadOverride(name, Double(preset.preset?.duration ?? 0), currentActiveOveride?.date ?? Date.now)
+            nightscout.uploadOverride(
+                name,
+                Double(truncating: preset.preset?.duration ?? 0),
+                currentActiveOveride?.date ?? Date.now
+            )
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")
         }
+    }
+
+    private func adjustForConcentration(_ rate: Decimal) -> Decimal {
+        guard rate > 0 else { return rate }
+        let setting = concentration
+        guard setting.concentration != 1 else { return rate }
+
+        return (rate * Decimal(setting.concentration)).roundBolus(increment: setting.increment)
     }
 
     private func currentTemp(date: Date) -> TempBasal {
@@ -746,7 +765,7 @@ final class BaseAPSManager: APSManager, Injectable {
         case .active:
             return TempBasal(duration: 0, rate: 0, temp: .absolute, timestamp: date)
         case let .tempBasal(dose):
-            let rate = Decimal(dose.unitsPerHour)
+            let rate = adjustForConcentration(Decimal(dose.unitsPerHour))
             let durationMin = max(0, Int((dose.endDate.timeIntervalSince1970 - date.timeIntervalSince1970) / 60))
             return TempBasal(duration: durationMin, rate: rate, temp: .absolute, timestamp: date)
         default:
@@ -788,7 +807,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             guard !self.activeBolusView() || (self.activeBolusView() && rate == 0) else {
-                if let units = suggested.units {
+                if suggested.units != nil {
                     return Fail(error: APSError.activeBolusViewBasalandBolus).eraseToAnyPublisher()
                 }
                 return Fail(error: APSError.activeBolusViewBasal).eraseToAnyPublisher()
@@ -1053,7 +1072,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
             var algo_ = "Oref0"
 
-            if preferences.sigmoid, preferences.enableDynamicCR {
+            if settings.autoisf {
+                algo_ = "Auto ISF"
+            } else if preferences.sigmoid, preferences.enableDynamicCR {
                 algo_ = "Dynamic ISF + CR: Sigmoid"
             } else if preferences.sigmoid, !preferences.enableDynamicCR {
                 algo_ = "Dynamic ISF: Sigmoid"
@@ -1062,6 +1083,7 @@ final class BaseAPSManager: APSManager, Injectable {
             } else if preferences.useNewFormula, !preferences.sigmoid,!preferences.enableDynamicCR {
                 algo_ = "Dynamic ISF: Logarithmic"
             }
+
             let af = preferences.adjustmentFactor
             let insulin_type = preferences.curve
             let buildDate = Bundle.main.buildDate
