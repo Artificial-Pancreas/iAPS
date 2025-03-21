@@ -83,19 +83,19 @@
 "Last Reconciliation Date" = "Last Reconciliation Date";
 
 /* The title of the percent complete setting */
-"Percent Complete" = "Percent Complete";
+"Percent Complete" = "Procent slutförd";
 
 /* The title of the warning threshold setting */
-"Warning Threshold" = "Warning Threshold";
+"Warning Threshold" = "Varning tröskelvärde";
 
 /* The title of the critical threshold setting */
-"Critical Threshold" = "Critical Threshold";
+"Critical Threshold" = "Kritiskt tröskelvärde";
 
 /* The title of the delete pump action */
 "Delete Pump" = "Radera pump";
 
 /* Controller title for supported basal rates selection screen */
-"Supported Basal Rates" = "Supported Basal Rates";
+"Supported Basal Rates" = "Basalvärden som stöds";
 
 /* Controller title for supported bolus volumes selection screen */
 "Supported Bolus Volumes" = "Supported Bolus Volumes";
