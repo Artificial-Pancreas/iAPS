@@ -225,7 +225,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         } else {
             const fit_share = 10 * (parabola_fit_correlation - 0.9);  // 0 at correlation 0.9, 1 at 1.00
             let cap_weight = 1;  // full contribution above target
-            if (acce_weight === 1 && glucose_status.glucose < profile.target_bg) {  // below target acce goes towards target
+            if (acce_weight === 1 && glucose_status.glucose < target_bg) {  // below target acce goes towards target
                 if (bg_acce > 0) {
                     if (bg_acce>1) {
                         cap_weight = 0.5;  // halve the effect below target
