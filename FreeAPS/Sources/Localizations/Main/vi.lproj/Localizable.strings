@@ -1289,7 +1289,7 @@ Enact a temp Basal or a temp target */
 "Temp Basal" = "Temp Basal";
 
 /* */
-"Temp Target" = "Mục tiêu tạm thời";
+"Temp Target" = "Temp Target";
 
 /* */
 "Resume" = "Tiếp tục";
@@ -1843,16 +1843,16 @@ Enact a temp Basal or a temp target */
 "Set Temporary Basal" = "Cài đặt liều nền tạm thời";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Liều nền tạm thời";
+"Temporary Basal" = "Liều Basal tạm thời";
 
 /* Alert title for a failure to set temporary basal */
 "Temporary Basal Failed" = "Liều nền tạm thời thất bại";
 
 /* Alert format string for a failure to set temporary basal with recovery suggestion. (1: error description) (2: recovery text) */
-"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Không thể cài đặt liều nền tạm thời: %1$@\n\n%2$@";
+"Unable to set a temporary basal rate: %1$@\n\n%2$@" = "Không thể cài đặt mức tỷ lệ liều cơ bản tạm thời: %1$@\n\n%2$@";
 
 /* Alert format string for a failure to set temporary basal. (1: error description) */
-"Unable to set a temporary basal rate: %1$@" = "Không thể cài đặt liều nền tạm thời: %1$@";
+"Unable to set a temporary basal rate: %1$@" = "Không thể cài đặt mức tỷ lệ liều cơ bản tạm thời: %1$@";
 
 /* Alert title for missing temp basal configuration */
 "Missing Config" = "Thiếu cấu hình";
@@ -2173,7 +2173,7 @@ Enact a temp Basal or a temp target */
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
-"Contact" = "Danh bạ";
+"Contact" = "Contact";
 
 /* Contact Image, settings, header of the contacts list */
 "Contacts" = "Contacts";
@@ -2763,7 +2763,7 @@ Enact a temp Basal or a temp target */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Thời lượng tối thiểu tính bằng phút cho SMB mới kể từ SMB cuối cùng hoặc liều truyền thủ công";
 
 /* Headline "Bolus Increment" */
-"Bolus Increment" = "Tốc độ Bolus nhanh";
+"Bolus Increment" = "Bolus Increment";
 
 /* "Bolus Increment" */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Số SMB được ban hành nhỏ nhất. Lượng tối thiểu đối với máy bơm Omnipod là 0,05 U, trong khi đối với máy bơm Medtronic, lượng này khác nhau đối với nhiều kiểu máy khác nhau, từ 0,025 U đến 0,10 U. Vui lòng kiểm tra lượng truyền nhanh tối thiểu mà máy bơm của bạn có thể cung cấp. Giá trị mặc định là 0,1.";
@@ -2795,7 +2795,7 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
@@ -2822,7 +2822,7 @@ Enact a temp Basal or a temp target */
 "Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
+"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
 
 /* Adjust Dynamic ISF constant */
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Điều chỉnh riêng các tỷ lệ động được tính toán. Mặc định là 0,5. Giá trị càng cao thì mức điều chỉnh ISF/CR của bạn đối với mức đường huyết cao hay thấp càng lớn. Hiệu chỉnh tối đa/tối thiểu được xác định bởi cài đặt tối thiểu/tối đa của Autosens.\n\nĐối với hàm Sigmoid, hệ số điều chỉnh được khuyến nghị là 0,4 - 0,5 để bắt đầu.\n\nĐối với công thức logarit, có ít sự đồng thuận hơn, nhưng bắt đầu từ khoảng 0,8 là có lẽ phù hợp với hầu hết người dùng trưởng thành. Đối với người dùng trẻ tuổi, nên bắt đầu ở mức thấp hơn nữa khi sử dụng công thức logarit để tránh điều trị quá tích cực.";
@@ -2879,7 +2879,7 @@ Enact a temp Basal or a temp target */
 "Calculator settings" = "Cài đặt tính toán";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Sử dụng Máy tính Bolus thay thế";
+"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
 
 /* Bolus Calculator Setting */
 "Use Bolus Calculator" = "Use Bolus Calculator";
@@ -2921,7 +2921,7 @@ Enact a temp Basal or a temp target */
 "Add Meal View settings " = "Thêm cài đặt Chế độ xem bữa ăn ";
 
 /* UI/UX option */
-"Display Temp Targets Button" = "Hiển thị nút tiêu tạm thời";
+"Display Temp Targets Button" = "Hiển thị nút mục tiêu tạm thời";
 
 /* UI/UX option */
 "Home View Button Panel " = "Bảng nút xem trang chủ ";
