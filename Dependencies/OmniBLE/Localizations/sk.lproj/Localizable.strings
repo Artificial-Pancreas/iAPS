@@ -108,7 +108,7 @@
 "Unfinished deactivation" = "Deaktivácia neukončená";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Žiadny pod";
+"No Pod" = "Žiaden Pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Párovať pod";
@@ -189,7 +189,7 @@
 "Unfinished deactivation" = "Deaktivácia neukončená";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Žiadny pod";
+"No Pod" = "Žiaden Pod";
 
 /* Pod life HUD view label */
 "Fault" = "Chyba";
@@ -234,7 +234,7 @@
 "Finish Deactivation" = "Dokončiť deaktiváciu";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Žiadny pod";
+"No Pod" = "Žiaden Pod";
 
 /* Status highlight message for emptyReservoir alarm. */
 "No Insulin" = "Žiadny inzulín";
@@ -772,7 +772,7 @@
 "Suspending insulin delivery..." = "Pozastavenie podávania inzulínu...";
 
 /* Error message for PodCommsError.noPodsFound */
-"No pods found" = "Nenašiel sa žiadny Pod";
+"No pods found" = "Nenašiel sa žiaden Pod";
 
 /* Error message for PodCommsError.tooManyPodsFound */
 "Too many pods found" = "Našlo sa príliš veľa podov";
