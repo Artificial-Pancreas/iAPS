@@ -865,7 +865,7 @@ Enact a temp Basal or a temp target */
 "HIGHALERT!" = "VYSOKÉ UPOZORNENIE!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Zdriemol)";
+"(Snoozed)" = "(Stíšené)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Glykémia: %@";
@@ -1185,10 +1185,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "No Glucose Alarm active" = "Nie je aktívny žiaden alarm o glykémii";
 
 /* */
-"snoozing until %@" = "stíšenie do %@";
+"snoozing until %@" = "stíšené do %@";
 
 /* */
-"not snoozing" = "nedriemať";
+"not snoozing" = "stíšenie neaktívne";
 
 /* */
 "nothing to see here" = "nie je tu nič k zobrazeniu";
