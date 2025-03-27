@@ -1777,7 +1777,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Úspora...";
+"Saving..." = "Ukladanie...";
 
 /* button title for saving low reservoir reminder */
 "Save" = "Uložiť";
