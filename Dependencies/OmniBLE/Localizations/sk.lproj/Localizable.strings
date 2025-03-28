@@ -72,7 +72,7 @@
 "Pod Expires" = "Exspirácia Podu";
 
 /* */
-"Pod Activated" = "Pod aktivovaný";
+"Pod Activated" = "Aktivácia Podu";
 
 /* */
 "Notification Settings" = "Nastavenia oznámení";
@@ -114,7 +114,7 @@
 "Pair Pod" = "Párovať pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Spárovať Pod.";
+"Pair pod." = "Párovať Pod.";
 
 /* Pairing action button accessibility label while pairing */
 "Pairing." = "Párovanie.";
@@ -700,7 +700,7 @@
 "BLE Firmware Version" = "BLE verzia firmvéru";
 
 /* description label for activated at timne pod details row */
-"Pod Activated" = "Pod aktivovaný";
+"Pod Activated" = "Aktivácia Podu";
 
 /* description label for active time pod details row */
 "Active Time" = "Aktívny Čas";
