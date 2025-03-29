@@ -72,7 +72,7 @@
 "Pod Expires" = "Exspirácia Podu";
 
 /* */
-"Pod Activated" = "Pod aktivovaný";
+"Pod Activated" = "Aktivácia Podu";
 
 /* */
 "Notification Settings" = "Nastavenia oznámení";
@@ -108,13 +108,13 @@
 "Unfinished deactivation" = "Deaktivácia neukončená";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Žiadny pod";
+"No Pod" = "Žiaden Pod";
 
 /* Settings page link description when next lifecycle action is to pair new pod */
 "Pair Pod" = "Párovať pod";
 
 /* Pairing action button accessibility label while ready to pair */
-"Pair pod." = "Spárovať Pod.";
+"Pair pod." = "Párovať Pod.";
 
 /* Pairing action button accessibility label while pairing */
 "Pairing." = "Párovanie.";
@@ -189,7 +189,7 @@
 "Unfinished deactivation" = "Deaktivácia neukončená";
 
 /* Label for pod life state when no pod paired */
-"No Pod" = "Žiadny pod";
+"No Pod" = "Žiaden Pod";
 
 /* Pod life HUD view label */
 "Fault" = "Chyba";
@@ -234,7 +234,7 @@
 "Finish Deactivation" = "Dokončiť deaktiváciu";
 
 /* Status highlight that when no pod is paired. */
-"No Pod" = "Žiadny pod";
+"No Pod" = "Žiaden Pod";
 
 /* Status highlight message for emptyReservoir alarm. */
 "No Insulin" = "Žiadny inzulín";
@@ -700,7 +700,7 @@
 "BLE Firmware Version" = "BLE verzia firmvéru";
 
 /* description label for activated at timne pod details row */
-"Pod Activated" = "Pod aktivovaný";
+"Pod Activated" = "Aktivácia Podu";
 
 /* description label for active time pod details row */
 "Active Time" = "Aktívny Čas";
@@ -772,7 +772,7 @@
 "Suspending insulin delivery..." = "Pozastavenie podávania inzulínu...";
 
 /* Error message for PodCommsError.noPodsFound */
-"No pods found" = "Nenašiel sa žiadny Pod";
+"No pods found" = "Nenašiel sa žiaden Pod";
 
 /* Error message for PodCommsError.tooManyPodsFound */
 "Too many pods found" = "Našlo sa príliš veľa podov";
