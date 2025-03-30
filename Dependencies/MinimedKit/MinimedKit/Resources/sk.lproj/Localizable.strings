@@ -44,7 +44,7 @@
 "Make sure your RileyLink is nearby and powered on" = "Uistite sa, že je váš RileyLink v blízkosti a je zapnutý";
 
 /* Pump error code describing max setting exceeded */
-"Max setting exceeded" = "Prekročené max nastavenie";
+"Max setting exceeded" = "Maximálne nastavenie prekročené";
 
 /* Pump title (1: model number) */
 "Minimed %@" = "Minimed %@";

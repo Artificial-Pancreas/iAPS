@@ -109,7 +109,8 @@ extension Home {
             maxBolusValue: 1,
             useInsulinBars: true,
             screenHours: 6,
-            fpus: true
+            fpus: true,
+            fpuAmounts: false
         )
 
         override func subscribe() {
@@ -159,6 +160,7 @@ extension Home {
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus
+            data.fpuAmounts = settingsManager.settings.fpuAmounts
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             extended = settingsManager.settings.extendHomeView
@@ -494,7 +496,7 @@ extension Home {
 
         private func setStatusTitle() {
             guard let suggestion = data.suggestion else {
-                statusTitle = "No suggestion"
+                statusTitle = NSLocalizedString("No suggestion", comment: "Status title when there is no suggestion")
                 return
             }
 
@@ -650,6 +652,7 @@ extension Home.StateModel:
         data.maxBolus = settingsManager.pumpSettings.maxBolus
         data.useInsulinBars = settingsManager.settings.useInsulinBars
         data.fpus = settingsManager.settings.fpus
+        data.fpuAmounts = settingsManager.settings.fpuAmounts
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
         extended = settingsManager.settings.extendHomeView

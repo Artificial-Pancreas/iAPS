@@ -8,7 +8,7 @@
 "Dana-i/RS Setup" = "Dana-i/RS-instelling";
 
 /* Subtitle for DanaKitSetupView */
-"Select your pump" = "Selecteer uw pomp";
+"Select your pump" = "Selecteer je pomp";
 
 /* danaRS v1 option text for DanaKitSetupView */
 "DanaRS-v1" = "DanaRS-v1";
@@ -23,10 +23,10 @@
 "Setting up DanaRS v1" = "DanaRS v1 instellen";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Tijdens het koppelproces zal uw DanaRS v3 een koppelprompt tonen en uw iPhone een vraag om een koppelcode. Selecteer OK op uw pomp en typ de code in op uw iPhone. Daarna is,%1$@, klaar om met uw DanaRS v1 te communiceren";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Tijdens het koppelproces zal je DanaRS v3 een koppelprompt tonen en je iPhone een vraag om een koppelcode. Selecteer OK op je pomp en typ de code in op je iPhone. Daarna is,%1$@, klaar om met je DanaRS v1 te communiceren";
 
 /* check password text for danars v1 */
-"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Voordat je begint met het koppelproces, is het aan te raden om het wachtwoord van de pomp te controleren en zo nodig bij te werken. Je kunt dit doen via de pompinstellingen -> gebruikersinstellingen -> wachtwoord. Het standaard wachtwoord is 1234. Als dit je wachtwoord is, overweeg dan om het te wijzigen.";
+"Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Controleer vóór het koppelen het wachtwoord van de pomp en pas het indien nodig aan. Ga hiervoor naar de pompinstellingen, selecteer 'Gebruikersinstellingen' en vervolgens 'Wachtwoord'. Het standaardwachtwoord is 1234; als je dit nog gebruikt, overweeg dan om het te wijzigen.";
 
 /* Title for danars v1 password */
 "Password DanaRS v1" = "Wachtwoord DanaRS v1";

@@ -86,10 +86,10 @@
 "A Remote Bolus Was Just Delivered!" = "Một liều Bolus từ xa vừa được hoàn thành!";
 
 /* Headline in enacted pop up (at: at what time) */
-"Enacted at" = "Thực hiện ở";
+"Enacted at" = "Thực hiện lúc";
 
 /* Headline in suggested pop up (at: at what time) */
-"Suggested at" = "Đề xuất ở";
+"Suggested at" = "Đề xuất lúc";
 
 /* Headline in enacted pop up (at: at what time) */
 "Status at" = "Trạng thái tại";
@@ -156,6 +156,15 @@
 
 /* Add carbs header and button in Watch app. You can skip the last " " space. It's just for differentiation */
 "Add Carbs " = "Thêm Carbs";
+
+/* Home View */
+"Override" = "Override";
+
+/* Home View Message if no pump is connected */
+"No Pump" = "No Pump";
+
+/* Home View Message if open loop is active */
+"Open" = "Open";
 
 /*  */
 "Amount Carbs" = "Khối lượng Carbs";
@@ -261,6 +270,9 @@
 
 /*  */
 "Autotune" = "Autotune";
+
+/* Debug option view Dynamic Variables */
+"Dynamic Variables" = "Dynamic Variables";
 
 /*  */
 "Basal profile" = "Basal profile";
@@ -471,7 +483,7 @@ Enact a temp Basal or a temp target */
 "hours" = "hours";
 
 /* Max setting */
-"Max Basal" = "Liều nền tối đa";
+"Max Basal" = "Liều Basal tối đa";
 
 /* Max setting */
 "Max Bolus" = "Liều bolus tối đa";
@@ -604,6 +616,9 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Thêm thiết bị";
 
 /* */
+"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+
+/* */
 "Glucose Target" = "Glucose Target";
 
 /* */
@@ -614,6 +629,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "ISF" = "ISF";
+
+/* */
+"% Override" = "% Override";
 
 /* */
 "The app Garmin Connect must be installed to use for iAPS.\n Go to App Store to download it" = "Phải cài đặt ứng dụng Garmin Connect để sử dụng cho iAPS.\n Hãy truy cập App Store để tải xuống ứng dụng này";
@@ -687,8 +705,23 @@ Enact a temp Basal or a temp target */
 /* Treatments list */
 "Treatments" = "Đã xử lý";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
 /* Hypo Treatment Preset */
 "Treatment" = "Treatment";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default";
+
+/* Hypo Treatment Default Value */
+"None" = "Không";
 
 /* " min" in Treatments list */
 " min" = " min";
@@ -1030,7 +1063,7 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Đơn vị ghi đè";
 
 /* */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* */
 "High" = "High";
@@ -1039,7 +1072,7 @@ Enact a temp Basal or a temp target */
 "Very High" = "Very High";
 
 /* TIR Chart */
-"Very Low" = "Quá thấp";
+"Very Low" = "Very Low";
 
 /* */
 "glucose" = "đường huyết";
@@ -1328,7 +1361,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "Developer";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile" = "Tải hồ sơ lên NS";
+"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+
+/* Debug option delete all NS overrides */
+"Delete All NS Overrides" = "Delete All NS Overrides";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "Đã tải hồ sơ lên NS";
@@ -1351,11 +1387,14 @@ Enact a temp Basal or a temp target */
 /* Debug option view Pump History */
 "Pump History" = "Pump History";
 
+/* Debug option view Temp Basals */
+"Temp Basals" = "Temp Basals";
+
 /* Debug option view Target Ranges */
-"Target ranges" = "Phạm vi Mục tiêu";
+"Targets ranges" = "Targets ranges";
 
 /* Debug option view Temp targets */
-"Temp targets" = "Mục tiêu tạm thời";
+"Temp targets" = "Temp targets";
 
 /* Debug option view Meal */
 "Meal" = "Meal";
@@ -1370,10 +1409,13 @@ Enact a temp Basal or a temp target */
 "Enacted" = "Enacted";
 
 /* Debug option view Announcements (from NS) */
-"Announcements" = "Các thông báo";
+"Announcements" = "Announcements";
 
 /* Debug option view Enacted announcements announcements (from NS) */
 "Enacted announcements" = "Enacted announcements";
+
+/* Debug option view Not Uploaded Overrides */
+"Overrides Not Uploaded" = "Overrides Not Uploaded";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1426,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Liều Basal thủ công⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/ngày";
+" U/day" = " U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
@@ -1475,6 +1517,9 @@ Enact a temp Basal or a temp target */
 /* Service Section */
 "Fat And Protein Conversion" = "Fat And Protein Conversion";
 
+/* Ignore flat CGM readings */
+"Ignore flat CGM readings" = "Bỏ qua các số đọc CGM phẳng";
+
 /* Service Section */
 "Profile Override" = "Profile Override";
 
@@ -1504,6 +1549,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Disable SMBs" = "Vô hiệu hóa SMBs";
 
+/* */
+"End the Override with next Meal" = "Kết thúc Override bằng bữa ăn tiếp theo";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profile";
 
@@ -1512,6 +1560,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Profiles" = "Profiles";
+
+/* */
+"Advanced Settings" = "Advanced Settings";
 
 /* */
 "More options" = "Các lựa chọn khác";
@@ -1533,6 +1584,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "UAM SMB Minutes" = "UAM SMB theo phút";
+
+/* */
+"Override Max IOB" = "Override Max IOB";
 
 /* */
 "Start new Profile" = "Bắt đầu profile mới";
@@ -1865,7 +1919,7 @@ Enact a temp Basal or a temp target */
 "Allow Upload of Statistics to NS" = "Cho phép tải số liệu thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* High Glucose Threshold in Statistics settings */
 "High" = "High";
@@ -2274,7 +2328,7 @@ Enact a temp Basal or a temp target */
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
 
-"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Máy bơm Dana không cho phép chỉnh sửa mức cơ bản tối đa và mức bolus tối đa. Cấu hình những điều này trong cài đặt của bác sĩ về máy bơm. Lưu cài đặt sẽ lấy các giá trị mới nhất từ ​​máy bơm";
 
 /* --------- Auto ISF --------- */
 /* */
@@ -2412,13 +2466,13 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh delta cao hơn của ISF. Với 0,0, hiệu ứng sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for lower BG's" = "ISF weight for lower BG's";
+"ISF weight for lower BG" = "ISF weight for lower BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh ISF nếu glucose thấp hơn mục tiêu. Với 0.0, hiệu ứng sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for higher BG's" = "ISF weight for higher BG's";
+"ISF weight for higher BG" = "ISF weight for higher BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh ISF nếu glucose cao hơn mục tiêu. Với 0,0, hiệu ứng sẽ bị vô hiệu hóa.";
@@ -2469,6 +2523,9 @@ Enact a temp Basal or a temp target */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Cho phép điều chỉnh tốc độ tăng tốc BG, điều chỉnh ISF để tăng tốc/giảm tốc độ đường huyết.";
 
 /* */
+"Override Auto ISF" = "Override Auto ISF";
+
+/* */
 "Enable Auto ISF" = "Enable Auto ISF";
 
 /* */
@@ -2491,6 +2548,15 @@ Enact a temp Basal or a temp target */
 
 /* Override adjustment of ISF, CR and Basal */
 "Adjust " = "Adjust ";
+
+/* History of the adjustments */
+"Final Ratio" = "Final Ratio";
+
+/* History of the adjustments */
+"Adjustments" = "Adjustments";
+
+/* History of the adjustments */
+"Insulin" = "Insulin";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2819,6 +2885,18 @@ Enact a temp Basal or a temp target */
 "Use alternate Bolus Calculator" = "Sử dụng Máy tính Bolus thay thế";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Use Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Tùy thuộc vào cài đặt của bạn, tính toán bolus sẽ sử dụng dữ liệu từ dự đoán đường huyết OpenAPS và/hoặc từ IOB, COB, xu hướng đường huyết, đường huyết hiện tại và đường huyết mục tiêu. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng (mặc định là 0,8).\n\nBạn cũng có thể có tùy chọn trong tính toán bolus của mình để áp dụng một hệ số tùy chỉnh khác (!) vào cuối phép tính, hệ số này có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ như Pizza (mặc định là 0,7).\n\nTính toán bolus KHÔNG sử dụng biến OpenAPS \"insulinRequired\", được tạo cho SMBs.";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Adjustment";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Sử dụng dự đoán glucose OpenAPS";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Bữa ăn nhiều chất béo";
 
 /* Bolus Calculator Setting */
@@ -2826,6 +2904,9 @@ Enact a temp Basal or a temp target */
 
 /* Bolus Calculator Footer */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Công cụ tính bolus thay thế mới là một cách tiếp cận khác với công cụ tính bolus mặc định trong iAPS. Nếu bật nút này, bạn sẽ sử dụng máy tính bolus này chứ không phải máy tính iAPS gốc. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng như lẽ ra phải như vậy khi sử dụng smbs (mặc định là 0,8).\n\nBạn cũng có thể thêm tùy chọn trong máy tính bolus của mình để áp dụng một hệ số tùy chỉnh (!) khác ở cuối phép tính, phép tính có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ: Pizza (mặc định là 0,7).";
+
+/* Bolus Calculator Setting */
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Sử dụng dự đoán glucose của OpenAPS để tính toán insulin được khuyến nghị. Thiết lập này sẽ kích hoạt tính toán \"cũ\". Bật theo mặc định.\n\n2. Sử dụng dự đoán minPredBG của OpenAPS như một rào chắn an toàn bổ sung, không cho phép dự đoán đường huyết giảm xuống dưới ngưỡng của bạn. Thiết lập này có thể được sử dụng cùng với hoặc không có đường huyết đự đoán. Bật theo mặc định";
 
 /* Settings Section */
 "Extra Features" = "Extra Features";
@@ -2898,6 +2979,21 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Display carb equivalents" = "Hiển thị lượng carb tương đương";
 
+/* UI/UX option */
+"Display carb equivalent amount" = "Hiển thị lượng carb tương đương";
+
+/* UI/UX option */
+"Display Sensor Time Remaining" = "Hiển thị thời gian còn lại của cảm biến";
+
+/* UI/UX option */
+"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+
+/* UI/UX option */
+"Display Ratio and a History View button" = "Hiển thị tỷ lệ và nút Xem lịch sử";
+
+/* UI/UX option */
+"Auto ISF Home View" = "Auto ISF Home View";
+
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
 
@@ -2906,6 +3002,15 @@ Enact a temp Basal or a temp target */
 
 /* Notification option */
 "Live Activity" = "Hoạt động trực tiếp";
+
+/* Show Live Activity */
+"Show Live Activity" = "Show Live Activity";
+
+/* Display Chart */
+"Display Chart" = "Hiễn thị các biểu đồ";
+
+/* Show Predictions */
+"Show Predictions" = "Hiển thị dự đoán";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "Hoạt động trực tiếp hiển thị đường huyết trực tiếp trên màn hình khóa và động (nếu có)";
@@ -2958,3 +3063,9 @@ Enact a temp Basal or a temp target */
 
 /* Headline "Adjustment Factor" */
 "Adjustment Factor" = "Yếu tố điều chỉnh (AF)";
+
+/* Apple Watch Overrides */
+"Overrides" = "Overrides";
+
+/* Apple Watch Overrides */
+"Cancel Override" = "Cancel Override";
