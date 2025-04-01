@@ -59,7 +59,7 @@
 "Confirm Bolus Faster" = "Xác nhận Bolus nhanh";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "Giao diện người dùng";
 
 /*  */
 "Wait please" = "Xin đợi chốc lát";
@@ -275,7 +275,7 @@
 "Dynamic Variables" = "Dynamic Variables";
 
 /*  */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Hồ sơ liều nền";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
@@ -320,7 +320,7 @@
 "Calculated Ratio" = "Tỷ lệ được tính toán";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Carb Ratios";
+"Carb Ratios" = "Tỷ lệ Carb";
 
 /*  */
 "Ratio" = "Tỷ lệ";
@@ -332,7 +332,7 @@
 "Calculated Sensitivity" = "Độ nhạy được tính toán";
 
 /*  */
-"Insulin Sensitivities" = "Insulin Sensitivities";
+"Insulin Sensitivities" = "Độ nhạy Insulin";
 
 /* */
 "Sensitivity Ratio" = "Tỷ lệ độ nhạy";
@@ -486,7 +486,7 @@ Enact a temp Basal or a temp target */
 "Max Basal" = "Liều Basal tối đa";
 
 /* Max setting */
-"Max Bolus" = "Liều bolus tối đa";
+"Max Bolus" = "Liều Bolus tối đa";
 
 /* Insulin alert message */
 "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Vui lòng xác minh rằng bạn đã chọn đúng nồng độ insulin trước khi lưu cài đặt.\n\nLọ hoặc bút tiêm insulin phải ghi rõ nồng độ theo đơn vị trên mililiter (ví dụ: U100 chỉ 100 đơn vị trên mililiter, đây là nồng độ chuẩn).\n\nViệc lựa chọn chính xác rất quan trọng để định lượng đúng liều lượng.";
@@ -541,7 +541,7 @@ Enact a temp Basal or a temp target */
 "Maximum amount of carbs (g) you can add each entry" = "Lượng carbs tối đa (g) bạn có thể thêm vào mỗi mục nhập";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Cài đặt Bơm";
 
 /* Insulin unit per hour */
 "U/hr" = "U/hr";
@@ -619,7 +619,7 @@ Enact a temp Basal or a temp target */
 "Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
 
 /* */
-"Glucose Target" = "Glucose Target";
+"Glucose Target" = "Đường Huyết mục tiêu";
 
 /* */
 "Heart Rate" = "Heart Rate";
@@ -1232,7 +1232,7 @@ Enact a temp Basal or a temp target */
 "Backfill from trend" = "Chèn lấp từ xu hướng";
 
 /* */
-"Debug options" = "Debug options";
+"Debug options" = "Tùy chọn gỡ lỗi";
 
 /* */
 "Adds a lot of data to the Issue Report " = "Thêm nhiều dữ liệu vào Báo cáo vấn đề ";
@@ -1358,7 +1358,7 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Developer";
+"Developer" = "Dành cho nhà phát triển";
 
 /* Debug option view NS Upload Profile */
 "NS Upload Profile and Settings" = "NS Upload Profile and Settings";
@@ -1515,7 +1515,7 @@ Enact a temp Basal or a temp target */
 "Protein" = "Chất đạm";
 
 /* Service Section */
-"Fat And Protein Conversion" = "Fat And Protein Conversion";
+"Fat And Protein Conversion" = "Chuyển đổi Chất Béo và Chất Đạm";
 
 /* Ignore flat CGM readings */
 "Ignore flat CGM readings" = "Bỏ qua các số đọc CGM phẳng";
@@ -1628,7 +1628,7 @@ Enact a temp Basal or a temp target */
 " infinite duration." = " thời gian không xác định.";
 
 /* Service Section */
-"App Icons" = "App Icons";
+"App Icons" = "Biểu Tượng Ứng Dụng";
 
 /* */
 "iAPS Icon" = "biểu tượng iAPS";
@@ -2111,7 +2111,7 @@ Enact a temp Basal or a temp target */
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* Setting Title */
 
-"Sharing" = "Sharing";
+"Sharing" = "Chia sẻ";
 
 /* Share and Backup page header */
 "Share and Backup" = "Chia sẻ và sao lưu";
@@ -2974,7 +2974,7 @@ Enact a temp Basal or a temp target */
 "Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi số lượng dưới";
 
 /* UI/UX option */
-"Display carb equivalents" = "Hiển thị lượng carb tương đương";
+"Display carb equivalents" = "Hiển thị carb tương đương";
 
 /* UI/UX option */
 "Display carb equivalent amount" = "Hiển thị lượng carb tương đương";
@@ -2983,7 +2983,7 @@ Enact a temp Basal or a temp target */
 "Display Sensor Time Remaining" = "Hiển thị thời gian còn lại của cảm biến";
 
 /* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+"Display Sensor Age, but not Time Remaining" = "Hiển thị Sensor Age, nhưng không hiển thị thời gian còn lại";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Hiển thị tỷ lệ và nút Xem lịch sử";
@@ -2992,7 +2992,7 @@ Enact a temp Basal or a temp target */
 "Auto ISF Home View" = "Auto ISF Home View";
 
 /* Setting title */
-"Bolus Calculator" = "Bolus Calculator";
+"Bolus Calculator" = "Tính toán liều Bolus";
 
 /* Setting title */
 "Dynamic ISF" = "Dynamic ISF";
