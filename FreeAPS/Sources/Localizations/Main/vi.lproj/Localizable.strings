@@ -26,10 +26,10 @@
 "\nAmount is more than your Max Bolus setting! \nAre you sure you want to add " = "\nLiều tiêm nhiều hơn liều Max Bolus! \nBạn có chắc chắn muốn thêm ";
 
 /* Header */
-"Enact Bolus" = "Tiêm liều bolus";
+"Enact Bolus" = "Tiêm liều Bolus";
 
 /* Button */
-"Enact bolus" = "Tiêm liều bolus";
+"Enact bolus" = "Tiêm liều Bolus";
 
 /*  */
 "Insulin recommended" = "Liều insulin được đề nghị";
