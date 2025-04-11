@@ -2443,7 +2443,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "ISF weight while BG accelerates" = "ISF-waarde terwijl de bloedglucose sneller verandert";
 
 /* */
-"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Standaard waarde: 0. Dit is de waarde die wordt toegepast tijdens het versnellen van glucose en dat ISF versterkt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.02 is een veilig beginpunt, van waaruit je kunt bewegen. Gebruikelijke instellingen zijn ongeveer 0.15!";
+"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Deze waarde wordt gebruikt bij het versnellen van glucose en versterkt het effect van de ISF. Bij 0 is dit effect uitgeschakeld. Een veilige startwaarde is 0,02 — van daaruit kun je rustig aanpassen. Veel gebruikte waarden liggen rond de 0,15!";
 
 /* */
 "Duration ISF postprandial adaption" = "Duur van de ISF-aanpassing na de maaltijd (postprandiale aanpassing). Dit bepaalt hoe lang de insulinegevoeligheidsfactor (ISF) wordt aangepast na een maaltijd";
