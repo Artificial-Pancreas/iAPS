@@ -1469,7 +1469,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 " -  Manual Basal ⚠️" = " -  Basal temporal manual ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/día";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
