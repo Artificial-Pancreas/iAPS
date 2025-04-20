@@ -385,7 +385,7 @@
 "Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Đã đạt giới hạn insulin hàng ngày của bạn. Vui lòng liên hệ với nhà phân phối Dana của bạn để tăng giới hạn";
 
 /* Alert title for bloodSugarCheckMiss */
-"Missed Blood glucose check" = "Missed Blood glucose check";
+"Missed Blood glucose check" = "Không thấy kiểm tra đường huyết";
 
 /* Alert body for bloodSugarCheckMiss */
 "A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Lời nhắc kiểm tra lượng đường trong máu đã được thiết lập trong máy bơm của bạn và được kích hoạt. Vui lòng tháo nó ra hoặc đưa mức đường huyết của bạn vào máy bơm";
@@ -484,19 +484,19 @@
 "No, just disconnect" = "Không, chỉ cần ngắt kết nối";
 
 /* Title for reservoir/cannula refill */
-"Reservoir/cannula refill" = "Reservoir/cannula refill";
+"Reservoir/cannula refill" = "Nạp lại Reservoir/cannula";
 
 /* Title for reservoir/cannula refill */
-"Cannula refill" = "Cannula refill";
+"Cannula refill" = "Nạp Cannula";
 
 /* Title for refill action */
-"Type of refill" = "Type of refill";
+"Type of refill" = "Kiểu nạp lại";
 
 /* Button text to cannula only */
-"Cannula only" = "Cannula only";
+"Cannula only" = "Chỉ Cannula";
 
 /* Button text to Reservoir and cannula */
-"Reservoir and cannula" = "Reservoir and cannula";
+"Reservoir and cannula" = "Reservoir và cannula";
 
 /* Title for bluetooth mode action sheet */
 "Toggle Bluetooth mode" = "Chuyển đổi chế độ Bluetooth";
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Máy bơm Dana hỗ trợ nhiều tốc độ phân phối khác nhau. Bạn có thể thiết lập ở đây";
 
 /* Text for Basal profile */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Hồ sơ liều nền";
 
 /* Text for Battery level */
 "Battery level" = "Mức pin";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Configuration";
+"Configuration" = "Cấu hình";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Báo nhắc gần hết thuốc";
@@ -544,16 +544,16 @@
 "U" = "U";
 
 /* Label for first step refill */
-"Step 1: Set reservoir level" = "Step 1: Set reservoir level";
+"Step 1: Set reservoir level" = "Bước 1: Đặt mức Reservoir";
 
 /* Label for reservoir refilled amount */
-"Reservoir amount" = "Reservoir amount";
+"Reservoir amount" = "Lượng bình chứa";
 
 /* Label for second step refill */
-"Step 2: Set tube refill amount" = "Step 2: Set tube refill amount";
+"Step 2: Set tube refill amount" = "Bước 2: Đặt lượng ống nạp lại";
 
 /* Label for tube refilled amount */
-"Tube refill amount" = "Tube refill amount";
+"Tube refill amount" = "Lượng ống nạp lại";
 
 /* Label for warning refill */
 "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Phương pháp nạp lại này chỉ dành cho trường hợp máy bơm không thể nạp lại bình chứa hoặc mồi ống thông";
