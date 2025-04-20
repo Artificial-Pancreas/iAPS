@@ -1470,7 +1470,7 @@ Połączono z Nightscout!";
 " -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
