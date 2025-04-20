@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "iAPS_NoButtons_Gray1024x1024.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
