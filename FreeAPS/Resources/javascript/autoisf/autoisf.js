@@ -169,7 +169,6 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     const parabola_fit_a2 = glucose_status.a_2;
     const dura05 = glucose_status.dura_ISF_minutes;
     const avg05  = glucose_status.dura_ISF_average;
-    const bg_off = profile.min_bg + 10 - glucose_status.glucose;
 
     let sens_modified = false;
     let autoISFsens = profile.sens;
@@ -179,7 +178,8 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     if (dynamicVariables.useOverride && dynamicVariables.overrideTarget > 6) {
         target_bg = dynamicVariables.overrideTarget;
     }
-    
+    const bg_off = target_bg + 10 - glucose_status.glucose;
+
     // The Auto ISF ratios
     let acce_ISF = 1;
     let acce_weight = 1;

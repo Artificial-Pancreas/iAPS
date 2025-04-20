@@ -35,7 +35,7 @@
 "Custom" = "Tùy chọn";
 
 /* Title for Insulin Pump Simulator settings */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Cài đặt Bơm";
 
 /* The title of the current basal rate setting */
 "Current Basal Rate" = "Tỷ lệ liều cơ bản hiện tại";
@@ -80,7 +80,7 @@
 "Next Delivery Command Uncertain" = "Lệnh chạy tiếp theo không chắc chắn";
 
 /* The title of the last reconciliation date setting */
-"Last Reconciliation Date" = "Last Reconciliation Date";
+"Last Reconciliation Date" = "Ngày đối chiếu cuối cùng";
 
 /* The title of the percent complete setting */
 "Percent Complete" = "Tỉ lệ hoàn thành";
