@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct IconSelection: View {
@@ -11,8 +10,9 @@ struct IconSelection: View {
             HStack {
                 Text("iAPS Icon")
                     .font(.title)
-                IconImage(icon: model.appIcon)
-                    .frame(maxHeight: 114)
+                Image(model.appIcon.preview)
+                    .resizable()
+                    .frame(maxWidth: 60, maxHeight: 60)
             }
 
             Divider()
@@ -20,11 +20,11 @@ struct IconSelection: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(Icon_.allCases) { icon in
-                        Button {
-                            model.setAlternateAppIcon(icon: icon)
-                        } label: {
-                            IconImage(icon: icon)
-                        }
+                        Button { model.setAlternateAppIcon(icon: icon) }
+                        label: { Image(icon.preview)
+                            .resizable()
+                            .frame(maxWidth: 80, maxHeight: 80)
+                        }.padding(.vertical, 15)
                     }
                 }
             }
