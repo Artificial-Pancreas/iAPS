@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Liều Basal thủ công⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
