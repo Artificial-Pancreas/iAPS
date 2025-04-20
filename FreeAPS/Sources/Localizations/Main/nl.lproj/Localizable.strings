@@ -1871,7 +1871,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Add Omnipod Dash" = "Omnipod Dash toevoegen";
 
 /* */
-"Insert Cannula" = "Plaats canulle";
+"Insert Cannula" = "Plaats canule";
 
 /* */
 "Check Cannula" = "Check canule";
@@ -2404,13 +2404,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor waarmee je normale basaalstand wordt vermenigvuldigd voor B30. De maximale basaalstand die wordt toegepast, is de maximale basaalinstelling van je pomp. Standaardwaarde is 5.";
 
 /* */
-"Upper Delta limit" = "Bovenste Delta-limiet";
+"Upper Delta limit" = "Maximale toegestane verandering";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 8 mg/dl (0,5 mmol/l).";
 
 /* */
-"Upper BG limit" = "Bovenste BG limiet";
+"Upper BG limit" = "Maximale toegestane glucosewaarde";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 130 mg/dl (7,2 mmol/l).";
@@ -2434,16 +2434,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Hiermee wordt een verhoogde basaalstand ingeschakeld na een EatingSoon Override Target (of een tijdelijke doelwaarde) en een handmatige bolus. Dit helpt de infusieplaats te verzadigen met insuline, waardoor de insulineabsorptie verbetert en SMB’s (Smart Micro Boluses) na een maaltijd zonder koolhydraten tellen effectiever worden.";
 
 /* */
-"ISF weight while BG decelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
+"ISF weight while BG decelerates" = "ISF-waarde terwijl de bloedglucose langzamer verandert";
 
 /* */
-"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Dit is de waarde die wordt toegepast terwijl je glucose verlaagt en ISF verzwakt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.1 kan een goed uitgangspunt zijn.";
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Dit is de waarde die wordt gebruikt wanneer je bloedglucose daalt en de ISF minder effect heeft. De standaardwaarde is 0. Bij 0 is dit effect uitgeschakeld. Een goed startpunt is 0,1 — van daaruit kun je voorzichtig bijstellen wat voor jou werkt.";
 
 /* */
-"ISF weight while BG accelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
+"ISF weight while BG accelerates" = "ISF-waarde terwijl de bloedglucose sneller verandert";
 
 /* */
-"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Standaard waarde: 0. Dit is de waarde die wordt toegepast tijdens het versnellen van glucose en dat ISF versterkt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.02 is een veilig beginpunt, van waaruit je kunt bewegen. Gebruikelijke instellingen zijn ongeveer 0.15!";
+"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Deze waarde wordt gebruikt bij het versnellen van glucose en versterkt het effect van de ISF. Bij 0 is dit effect uitgeschakeld. Een veilige startwaarde is 0,02 — van daaruit kun je rustig aanpassen. Veel gebruikte waarden liggen rond de 0,15!";
 
 /* */
 "Duration ISF postprandial adaption" = "Duur van de ISF-aanpassing na de maaltijd (postprandiale aanpassing). Dit bepaalt hoe lang de insulinegevoeligheidsfactor (ISF) wordt aangepast na een maaltijd";

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "pod_colorful1024x1024.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
