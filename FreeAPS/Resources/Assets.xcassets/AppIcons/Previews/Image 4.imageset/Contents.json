@@ -1,11 +1,7 @@
 {
   "images" : [
     {
-<<<<<<<< HEAD:Dependencies/DanaKit/DanaKitUI/DanaKitUI.xcassets/reservoir_mask.imageset/Contents.json
-      "filename" : "reservoir_mask.pdf",
-========
       "filename" : "pod4.png",
->>>>>>>> dev:FreeAPS/Resources/Assets.xcassets/AppIcons/Previews/Image 4.imageset/Contents.json
       "idiom" : "universal"
     }
   ],
