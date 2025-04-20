@@ -26,6 +26,54 @@ enum Icon_: String, CaseIterable, Identifiable {
     case loop = "iAPS_Loop"
     case pancreasVial
     var id: String { rawValue }
+
+    var preview: String {
+        switch self {
+        case .primary: "Image 1"
+        case .artficialPancreasPurple:
+            "Image 2"
+        case .text:
+            "Image 3"
+        case .podBlack:
+            "Image 4"
+        case .popWhite:
+            "Image 5"
+        case .cyan:
+            "Image 6"
+        case .podPurple:
+            "Image 7"
+        case .catWithPod:
+            "Image 8"
+        case .catWithPodWhite:
+            "Image 9"
+        case .loopWhiteText:
+            "Image 10"
+        case .loopText:
+            "Image 11"
+        case .black:
+            "Image 12"
+        case .clean:
+            "Image 13"
+        case .purple:
+            "Image 14"
+        case .glow:
+            "Image 15"
+        case .gray:
+            "Image 16"
+        case .whiteAndGray:
+            "Image 17"
+        case .grayAndLoopNoButtons:
+            "Image 18"
+        case .purpleBG:
+            "Image 19"
+        case .whiteBG:
+            "Image 20"
+        case .loop:
+            "Image 21"
+        case .pancreasVial:
+            "Image 22"
+        }
+    }
 }
 
 class Icons: ObservableObject, Equatable {
