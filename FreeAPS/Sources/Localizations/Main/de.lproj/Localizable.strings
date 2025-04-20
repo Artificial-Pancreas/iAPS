@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Manuelle Basalrate ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " iE/Tag";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Gesamt";
