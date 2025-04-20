@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Ручная ВБС ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " Ед/день";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Всего";
