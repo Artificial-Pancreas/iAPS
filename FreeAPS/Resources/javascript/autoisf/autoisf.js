@@ -256,16 +256,17 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     }
 
     bg_ISF = 1 + interpolate(100 - bg_off, profile, "bg");
-    console.log("BG_ISF adaptation: " + round(bg_ISF, 2));
+    bg_ISF = round(bg_ISF, 2)
+    console.log("BG_ISF adaptation: " + bg_ISF);
     let liftISF = 1;
 
     if (bg_ISF < 1) {
-        liftISF = Math.min(bg_ISF, acce_ISF);
         if (acce_ISF > 1) {
             liftISF = bg_ISF * acce_ISF;
             console.log("BG-ISF adaptation lifted to " + round(liftISF, 2) + ", as BG accelerates already");
             addMessage("BG-ISF adaptation lifted to " + round(liftISF, 2) + " as BG accelerates already");
         } else {
+            liftISF = Math.min(bg_ISF, acce_ISF);
             console.log("liftISF: " + round(liftISF, 2) + "(minimal)");
             addMessage("liftISF: " + round(liftISF, 2) + "(minimal)");
         }
@@ -279,7 +280,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
         return round(final_ISF,2);
     } else if (bg_ISF > 1) {
         sens_modified = true;
-        console.log("BG-ISF adaption ratio: " + round(bg_ISF, 2));
+        console.log("BG-ISF adaption ratio: " + bg_ISF);
     }
 
     const bg_delta = glucose_status.delta;
