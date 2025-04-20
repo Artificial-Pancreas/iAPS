@@ -1469,7 +1469,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 " -  Manual Basal ⚠️" = " -  Handmatige tijdelijke basaal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " E/dag";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Totaal";
