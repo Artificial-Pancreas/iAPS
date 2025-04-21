@@ -1,13 +1,13 @@
 {
   "images" : [
     {
-      "filename" : "iAPS Icon2.png",
+      "filename" : "artificialPancreas_purple_2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
     },
     {
-      "filename" : "iAPS Icon2 1.png",
+      "filename" : "artificialPancreas_purple_2 1.png",
       "idiom" : "universal",
       "platform" : "watchos",
       "size" : "1024x1024"
