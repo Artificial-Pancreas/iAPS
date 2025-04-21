@@ -3648,6 +3648,7 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
 				APP_GROUP_ID = "$(APP_GROUP_ID)";
+				APP_ICON = "$(APP_ICON)";
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "appIcon2 appIcon3 appIcon4 appIcon5 appIcon6 appIcon7 appIcon8 appIcon9 appIcon10 appIcon11 appIcon12 appIcon13 appIcon14 appIcon15 appIcon16 appIcon17 appIcon18 appIcon19 appIcon20 appIcon21 appIcon22";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3691,6 +3692,7 @@
 			buildSettings = {
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
 				APP_GROUP_ID = "$(APP_GROUP_ID)";
+				APP_ICON = "$(APP_ICON)";
 				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "appIcon2 appIcon3 appIcon4 appIcon5 appIcon6 appIcon7 appIcon8 appIcon9 appIcon10 appIcon11 appIcon12 appIcon13 appIcon14 appIcon15 appIcon16 appIcon17 appIcon18 appIcon19 appIcon20 appIcon21 appIcon22";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
