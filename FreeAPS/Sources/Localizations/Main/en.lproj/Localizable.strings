@@ -1472,7 +1472,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Manual Basal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
@@ -2541,6 +2541,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Max IOB Threshold Percent" = "Max IOB Threshold Percent";
+
+/* Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
 
 /* */
 "Auto ISF" = "Auto ISF";
