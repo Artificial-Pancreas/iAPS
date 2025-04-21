@@ -256,7 +256,7 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     }
 
     bg_ISF = 1 + interpolate(100 - bg_off, profile, "bg");
-    console.log("BG_ISF adaptation: " + round(bg_ISF, 4));
+    console.log("BG_ISF adaptation: " + bg_ISF);
     let liftISF = 1;
 
     if (bg_ISF < 1) {
