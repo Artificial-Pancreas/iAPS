@@ -163,7 +163,7 @@ struct LiveActivityChart: View {
                         x: .value("Time", $0.date),
                         y: .value("Glucose", $0.value)
                     )
-                    .foregroundStyle(Color(.darkGray))
+                    .foregroundStyle(Color(.darkerGray))
                     .opacity(bgOpacity)
                     .lineStyle(StrokeStyle(lineWidth: 1.0))
                 }
@@ -319,7 +319,7 @@ struct LiveActivityChart: View {
             let degree = dropAngle(state)
             let shadowDirection = direction(degree: degree)
 
-            Image("glucoseDrops")
+            Image("SmallGlucoseDrops")
                 .resizable()
                 .frame(width: dropWidth, height: dropHeight).rotationEffect(.degrees(degree))
                 .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
