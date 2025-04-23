@@ -47,72 +47,10 @@ jobs:
     uses: ./.github/workflows/validate_secrets.yml
     secrets: inherit
 
-  # Checks if GH_PAT holds workflow permissions
-  # Checks for existence of alive branch; if non-existent creates it
-  check_alive_and_permissions:
-    needs: validate
-    runs-on: ubuntu-latest
-    name: Check alive branch and permissions
-    permissions:
-      contents: write
-    outputs:
-      WORKFLOW_PERMISSION: ${{ steps.workflow-permission.outputs.has_permission }}
-    
-    steps:
-    - name: Check for workflow permissions
-      id: workflow-permission
-      env: 
-        TOKEN_TO_CHECK: ${{ secrets.GH_PAT }}
-      run: |
-        PERMISSIONS=$(curl -sS -f -I -H "Authorization: token ${{ env.TOKEN_TO_CHECK }}" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2-);
-        
-        if [[ $PERMISSIONS =~ "workflow" || $PERMISSIONS == "" ]]; then
-          echo "GH_PAT holds workflow permissions or is fine-grained PAT."
-          echo "has_permission=true" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to true.
-        else 
-          echo "GH_PAT lacks workflow permissions."
-          echo "Automated build features will be skipped!"
-          echo "has_permission=false" >> $GITHUB_OUTPUT # Set WORKFLOW_PERMISSION to false.
-        fi
-    
-    - name: Check for alive branch
-      if: steps.workflow-permission.outputs.has_permission == 'true'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        if [[ "$(gh api -H "Accept: application/vnd.github+json" /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/branches | jq --raw-output 'any(.name=="alive")')" == "true" ]]; then
-          echo "Branch 'alive' exists."
-          echo "ALIVE_BRANCH_EXISTS=true" >> $GITHUB_ENV # Set ALIVE_BRANCH_EXISTS to true
-        else
-          echo "Branch 'alive' does not exist."
-          echo "ALIVE_BRANCH_EXISTS=false" >> $GITHUB_ENV # Set ALIVE_BRANCH_EXISTS to false
-        fi
-    
-    - name: Create alive branch
-      if: env.ALIVE_BRANCH_EXISTS == 'false'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # Get ref for Artificial-Pancreas/iAPS:main
-        SHA=$(curl -sS https://api.github.com/repos/${{ env.UPSTREAM_REPO }}/git/refs \
-          | jq '.[] | select(.ref == "refs/heads/main" ) | .object.sha' \
-          | tr -d '"'
-        );
-        
-        # Create alive branch based on Artificial-Pancreas/iAPS:dev
-        gh api \
-          --method POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.v3+json" \
-          /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/git/refs \
-          -f ref='refs/heads/alive' \
-          -f sha=$SHA
-  
-  # Performs keepalive to avoid stale fork
   check_latest_from_upstream:
-    needs: [validate, check_alive_and_permissions]
+    needs: [validate]
     runs-on: ubuntu-latest
-    name: Check upstream and keep alive
+    name: Check upstream
     outputs: 
       NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
     
@@ -125,31 +63,12 @@ jobs:
       with:
         token: ${{ secrets.GH_PAT }}
         ref: alive
-        
-    # Keep repository "alive": add empty commits to ALIVE_BRANCH after "time_elapsed" days of inactivity to avoid inactivation of scheduled workflows
-    - name: Keep alive
-      if: |
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-        (vars.SCHEDULED_BUILD != 'false' || vars.SCHEDULED_SYNC != 'false')
-      uses: gautamkrishnar/keepalive-workflow@v1 # using the workflow with default settings
-      with:
-        time_elapsed: 20 # Time elapsed from the previous commit to trigger a new automated commit (in days)
-    
-    - name: Show scheduled build configuration message
-      if: needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION != 'true'
-      run: |
-        echo "### :calendar: Scheduled Sync and Build Disabled :mobile_phone_off:" >> $GITHUB_STEP_SUMMARY
-        echo "You have not yet configured the scheduled sync and build for iAPS's browser build." >> $GITHUB_STEP_SUMMARY
-        echo "Synchronizing your fork of <code>iAPS</code> with the upstream repository <code>Artificial-Pancreas/iAPS</code> will be skipped." >> $GITHUB_STEP_SUMMARY
-        echo "If you want to enable automatic builds and updates for your iAPS, please follow the instructions \
-              under the following path <code>iAPS/fastlane/testflight.md</code>." >> $GITHUB_STEP_SUMMARY
-   
   
   # Builds iAPS
   build:
     name: Build
-    needs: [validate, check_alive_and_permissions, check_latest_from_upstream]
-    runs-on: macos-14
+    needs: [validate,check_latest_from_upstream]
+    runs-on: macos-15
     permissions:
       contents: write
     steps:
@@ -159,12 +78,12 @@ jobs:
             echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
           fi
 
-      - name: Select Xcode version
-        run: "sudo xcode-select --switch /Applications/Xcode_15.3.app/Contents/Developer"
+        # Uncomment to manually select Xcode version
+        #- name: Select Xcode version
+        #run: "sudo xcode-select --switch /Applications/Xcode_15.3.app/Contents/Developer"
       
       - name: Checkout Repo for syncing
         if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
           vars.SCHEDULED_SYNC == 'true'
         uses: actions/checkout@v4
         with:
@@ -173,7 +92,6 @@ jobs:
       
       - name: Sync upstream changes
         if: | # do not run the upstream sync action on the upstream repository
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
           vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
@@ -187,20 +105,17 @@ jobs:
       # Display a sample message based on the sync output var 'has_new_commits'
       - name: New commits found
         if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
           vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
         run: echo "New commits were found to sync."
     
       - name: No new commits
         if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' && 
           vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
         run: echo "There were no new commits."
       
       - name: Show value of 'has_new_commits'
         if: |
-          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true'
-          && vars.SCHEDULED_SYNC == 'true'
+          vars.SCHEDULED_SYNC == 'true'
         run: |
           echo ${{ steps.sync.outputs.has_new_commits }}
           echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }}" >> $GITHUB_OUTPUT

@@ -49,7 +49,7 @@ struct DescriptionLayout: ViewModifier {
             .foregroundStyle(Color.white)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(colorScheme == .dark ? Color(.darkGray) : Color(.gray))
+                    .fill(colorScheme == .dark ? Color(.darkerGray) : Color(.gray))
             )
     }
 }

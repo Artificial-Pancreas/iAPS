@@ -865,7 +865,7 @@ Enact a temp Basal or a temp target */
 "HIGHALERT!" = "VYSOKÉ UPOZORNENIE!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Zdriemol)";
+"(Snoozed)" = "(Stíšené)";
 
 /* Glucose: %@ */
 "Glucose: %@" = "Glykémia: %@";
@@ -1185,10 +1185,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "No Glucose Alarm active" = "Nie je aktívny žiaden alarm o glykémii";
 
 /* */
-"snoozing until %@" = "driemanie do %@";
+"snoozing until %@" = "stíšené do %@";
 
 /* */
-"not snoozing" = "nedriemať";
+"not snoozing" = "stíšenie neaktívne";
 
 /* */
 "nothing to see here" = "nie je tu nič k zobrazeniu";
@@ -1221,13 +1221,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Found devices: %d" = "Nájdené zariadenia: %d";
 
 /* */
-"Backfill options" = "Možnosti zasypania";
+"Backfill options" = "Možnosti doplnenia";
 
 /* */
 "Backfilling from trend is currently not well supported by Loop" = "Spätné zasypávanie z trendu nie je v súčasnosti dostatočne podporované službou Loop";
 
 /* */
-"Backfill from history" = "Vyplň z histórie";
+"Backfill from history" = "Doplniť z histórie";
 
 /* */
 "Backfill from trend" = "Zásyp z trendu";
@@ -1266,7 +1266,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Show glucose on the app badge" = "Zobraziť glykémiu na odznaku aplikácie";
 
 /* */
-"Backfill glucose" = "Spätne zapísať glykémie";
+"Backfill glucose" = "Doplniť glykémie";
 
 /* About this source */
 "About this source" = "Informácie o tomto zdroji";
@@ -1777,7 +1777,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Confidence reminders are beeps from the Pod which can be used to acknowledge selected commands when the Pod is not silenced." = "Upozornenia s pípnutím zo zariadenia Pod, ktoré možno použiť na potvrdenie vybraných príkazov, keď zariadenie Pod nie je vypnuté.";
 
 /* button title for saving low reservoir reminder while saving */
-"Saving..." = "Úspora...";
+"Saving..." = "Ukladanie...";
 
 /* button title for saving low reservoir reminder */
 "Save" = "Uložiť";
