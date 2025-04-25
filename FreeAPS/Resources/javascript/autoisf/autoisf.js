@@ -256,16 +256,17 @@ function aisf_ratio(profile, glucose_status, currentTime, autosens_data, normalT
     }
 
     bg_ISF = 1 + interpolate(100 - bg_off, profile, "bg");
-    console.log("BG_ISF adaptation: " + round(bg_ISF, 2));
+    console.log("BG_ISF adaptation: " + bg_ISF);
     let liftISF = 1;
 
     if (bg_ISF < 1) {
-        liftISF = Math.min(bg_ISF, acce_ISF);
+        addMessage("BG-ISF < 1");
         if (acce_ISF > 1) {
             liftISF = bg_ISF * acce_ISF;
             console.log("BG-ISF adaptation lifted to " + round(liftISF, 2) + ", as BG accelerates already");
             addMessage("BG-ISF adaptation lifted to " + round(liftISF, 2) + " as BG accelerates already");
         } else {
+            liftISF = Math.min(bg_ISF, acce_ISF);
             console.log("liftISF: " + round(liftISF, 2) + "(minimal)");
             addMessage("liftISF: " + round(liftISF, 2) + "(minimal)");
         }
@@ -431,6 +432,12 @@ function round(value, digits) {
     return Math.round(value * scale) / scale;
 }
 
+function floor(value, digits) {
+    if (! digits) { digits = 0; }
+    const scale = Math.pow(10, digits);
+    return Math.floor(value * scale) / scale;
+}
+
 function exercising(profile, dynamicVariables) {
     // One of two exercise settings (they share the same purpose).
     if (profile.high_temptarget_raises_sensitivity || profile.exercise_mode || dynamicVariables.isEnabled) {
@@ -571,7 +578,11 @@ function iob_max(iob, dynamicVariables, profile) {
 // Reasons for iAPS pop-up
 function reasons(profile, acce_ISF, bg_ISF, dura_ISF, pp_ISF) {
     addReason("acce: " + round(acce_ISF, 2));
-    addReason("bg: " + round(bg_ISF, 2));
+    let roundedBg = round(bg_ISF, 2);
+    if (roundedBg === 1 && bg_ISF < 1) {
+        roundedBg = floor(bg_ISF, 3);
+    }
+    addReason("bg: " + roundedBg);
     addReason("dura: " + round(dura_ISF, 2));
     addReason("pp: " + round(pp_ISF, 2));
 }
