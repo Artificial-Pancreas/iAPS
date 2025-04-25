@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Liều Basal thủ công⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/day";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
@@ -2536,6 +2536,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Max IOB Threshold Percent" = "Max IOB Threshold Percent";
+
+/* Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Tỷ lệ phần trăm cài đặt IOB tối đa được sử dụng cho SMB khi bật ISF tự động.\n\nTrong khi IOB hiện tại thấp hơn ngưỡng, lượng SMB có thể vượt ngưỡng 30%, tuy nhiên không bao giờ vượt quá cài đặt IOB tối đa.\n\nỞ mức 100%, cài đặt này sẽ bị vô hiệu hóa.";
 
 /* */
 "Auto ISF" = "Auto ISF";
