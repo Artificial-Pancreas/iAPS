@@ -1469,7 +1469,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 " -  Manual Basal ⚠️" = " -  Handmatige tijdelijke basaal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " E/dag";
+"U/day" = "E/dag";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Totaal";
@@ -2479,7 +2479,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Duration Weight" = "Duur hoeveelheid";
 
 /* */
-"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Hoeeveelheid voor een langdurig hoge glucose. Voor elk uur dat de glucose hoog blijft, zal deze aanpassing je ISF verder verlagen.\n\nDe formule voor de Dura ISF-aanpassing is:\n\nDura ISF = 1 + uren boven doel * hoeveelheid / doel * (gemiddelde glucose - doelglucose)";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Hoeveelheid voor een langdurig hoge glucose. Voor elk uur dat de glucose hoog blijft, zal deze aanpassing je ISF verder verlagen.\n\nDe formule voor de Dura ISF-aanpassing is:\n\nDura ISF = 1 + uren boven doel * hoeveelheid / doel * (gemiddelde glucose - doelglucose)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
@@ -2534,6 +2534,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Max IOB Threshold Percent" = "Max IOB drempelwaarde percentage";
+
+/* Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage van de maximale IOB-instelling voor SMB’s (Super Micro Bolussen) bij ingeschakelde automatische ISF (insulinegevoeligheid).\n\nZolang de huidige IOB (insuline die nog actief is) onder een bepaalde grens blijft, mag een SMB deze grens met 30% overschrijden — maar nooit meer dan het ingestelde maximum voor IOB.\n\nBij een instelling van 100% is deze beperking uitgeschakeld, dus dan wordt de hele IOB-limiet gebruikt.";
 
 /* */
 "Auto ISF" = "Auto ISF";
