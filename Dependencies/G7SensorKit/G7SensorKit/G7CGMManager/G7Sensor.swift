@@ -99,15 +99,11 @@ public final class G7Sensor: G7BluetoothManagerDelegate {
         bluetoothManager.delegate = self
     }
 
-    public func scanForNewSensor(scanAfterDelay: Bool = false) {
+    public func scanForNewSensor() {
         self.sensorID = nil
         bluetoothManager.disconnect()
         bluetoothManager.forgetPeripheral()
-        if scanAfterDelay {
-            bluetoothManager.scanAfterDelay()
-        } else {
-            bluetoothManager.scanForPeripheral()
-        }
+        bluetoothManager.scanForPeripheral()
     }
 
     public func resumeScanning() {
