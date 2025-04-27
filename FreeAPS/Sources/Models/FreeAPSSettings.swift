@@ -79,6 +79,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var anubis: Bool = false
     var fpus: Bool = true
     var fpuAmounts: Bool = false
+    var carbButton: Bool = true
+    var profileButton: Bool = true
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -249,6 +251,14 @@ extension FreeAPSSettings: Decodable {
 
         if let useAlarmSound = try? container.decode(Bool.self, forKey: .useAlarmSound) {
             settings.useAlarmSound = useAlarmSound
+        }
+
+        if let carbButton = try? container.decode(Bool.self, forKey: .carbButton) {
+            settings.carbButton = carbButton
+        }
+
+        if let profileButton = try? container.decode(Bool.self, forKey: .profileButton) {
+            settings.profileButton = profileButton
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(
