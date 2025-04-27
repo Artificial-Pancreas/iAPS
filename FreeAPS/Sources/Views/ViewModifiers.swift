@@ -205,7 +205,6 @@ struct HeaderBackground: View {
         Rectangle()
             .fill(
                 colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1)
-//                    Color(.systemGray5)
             )
     }
 }
