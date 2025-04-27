@@ -60,8 +60,9 @@ extension StatConfig {
 
                 Section {
                     Toggle("Display Temp Targets Button", isOn: $state.useTargetButton)
+                    Toggle("Display Profile Override Button", isOn: $state.profileButton)
+                    Toggle("Display Meal Button", isOn: $state.carbButton)
                 } header: { Text("Home View Button Panel ") }
-                footer: { Text("In case you're using both profiles and temp targets") }
 
                 Section {
                     Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
