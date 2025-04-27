@@ -2906,7 +2906,7 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Il nuovo calcolatore alternativo di bolo è un altro approccio al calcolatore di bolo predefinito in iAPS. Se l'interruttore è acceso, si utilizza questa calcolatrice per il bolo e non la calcolatrice iAPS originale. Alla fine del calcolo viene applicato un fattore personalizzato come si suppone che sia quando si utilizza smbs (predefinita 0.8).\n\nPuoi anche aggiungere l'opzione nella calcolatrice del bolo per applicarne un altro (!) fattore personalizzabile al termine del calcolo che potrebbe essere utile per i pasti grassi. es. Pizza (predefinita 0.7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Usare la previsione finale del glucosio OpenAPS per calcolare l’insulina raccomandata. Questa impostazione attiverà la calcolatrice \"vecchia\". Attivata per impostazione predefinita.\n\n2. Utilizzare la previsione di OpenAPS minPredBG come un sistema di protezione di sicurezza complementare, non permettendo che la previsione di glucosio scenda al di sotto della soglia. Questa impostazione può essere utilizzata insieme o senza l'eventuale glucosio.";
 
 /* Settings Section */
 "Extra Features" = "Funzioni aggiuntive";
@@ -2965,7 +2965,7 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display Glucose Delta" = "Mostra Delta Glicemia";
 
 /* UI/UX option */
-"Display Sensor Age" = "Display Sensor Age";
+"Display Sensor Age" = "Visualizza Età Sensore";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Nascondi Badge Concentrazione";
@@ -2977,22 +2977,22 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Hide the bolus amount strings when amount is under" = "Nascondi le stringhe di quantità del bolo quando la quantità è inferiore";
 
 /* UI/UX option */
-"Display carb equivalents" = "Display carb equivalents";
+"Display carb equivalents" = "Mostra i carboidrati equivalenti";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Display carb equivalent amount";
+"Display carb equivalent amount" = "Mostra i carboidrati equivalenti";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+"Display Sensor Time Remaining" = "Mostra Il Tempo Rimanente Del Sensore";
 
 /* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+"Display Sensor Age, but not Time Remaining" = "Visualizza l'età del sensore, ma non il tempo rimanente";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Display Ratio and a History View button";
+"Display Ratio and a History View button" = "Mostra il rapporto e la visualizza lo storico dati";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Auto isf su vista principale";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
@@ -3004,13 +3004,13 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Live Activity" = "Attività in tempo reale";
 
 /* Show Live Activity */
-"Show Live Activity" = "Show Live Activity";
+"Show Live Activity" = "Mostra attività in tempo reale";
 
 /* Display Chart */
-"Display Chart" = "Display Chart";
+"Display Chart" = "Mostra grafico";
 
 /* Show Predictions */
-"Show Predictions" = "Show Predictions";
+"Show Predictions" = "Visualizza previsioni";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'attività in tempo reale mostra il glucosio attivo nel sangue sulla schermata di blocco e sulla Dynamic Island(se disponibile)";
@@ -3067,4 +3067,4 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Overrides" = "Overrides";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Cancel Override";
+"Cancel Override" = "Annulla override";
