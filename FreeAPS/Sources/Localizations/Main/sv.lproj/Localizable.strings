@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Manuell basal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " IE/dag";
+"U/day" = "IE/dag";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Totalt";
@@ -2533,6 +2533,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Max IOB Threshold Percent" = "Procent av Max IOB som tröskelvärde för SMB";
+
+/* Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Begränsa dina SMB (automatiska bolusar) med en procent av fin inställning för maximalt tillåten mängd aktivt insulin (Max IOB). Kommer endast att användas medan Auto ISF är aktivt.\n\nMedan nuvarande aktivt insulin (IOB) ligger under tröskelvärdet, kan SMB-beloppet överskrida detta tröskelvärde med 30%, men kan aldrig överskrida din inställning för maximalt tillåteb mängd aktivt insulin.\n\nPå 100% kommer denna inställning ar inaktiveras.";
 
 /* */
 "Auto ISF" = "Auto ISF";
