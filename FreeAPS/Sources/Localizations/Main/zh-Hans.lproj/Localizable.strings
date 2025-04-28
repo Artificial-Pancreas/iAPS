@@ -2928,6 +2928,12 @@ Enact a temp Basal or a temp target */
 "Display Temp Targets Button" = "Display Temp Targets Button";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
+
+/* UI/UX option */
 "Home View Button Panel " = "Home View Button Panel ";
 
 /* UI/UX title */
