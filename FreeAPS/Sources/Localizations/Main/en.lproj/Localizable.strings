@@ -1270,6 +1270,9 @@ Enact a temp Basal or a temp target */
 /* Sound for descending glucose */
 "Descending:" = "Descending:";
 
+/* Silent sound option */
+"Silent" = "Silent";
+
 /* Option for no sound */
 "Silent" = "Silent";
 
