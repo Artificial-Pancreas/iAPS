@@ -112,11 +112,7 @@ function generate(iob, currenttemp, glucose, profile, autosens = null, meal = nu
 
     // In case Basal Rate been set in midleware or B30
     if (profile.set_basal && profile.basal_rate) {
-        if (!profile.iaps.closedLoop) {
-            profile.set_basal = false;
-        } else {
-            console.log("Basal Rate set by middleware or B30 to " + profile.basal_rate + " U/h.");
-        }
+        console.log("Basal Rate set by middleware or B30 to " + profile.basal_rate + " U/h.");
     }
     
     /* For testing replace with:
