@@ -1250,6 +1250,30 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Kulhydrater Påkrævet Grænseværdi";
 
 /* */
+"Carbs Required:" = "Carbs Required:";
+
+/* */
+"Sounds" = "Sounds";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hypoglycemia";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Hyperglycemia";
+
+/* Sound for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Sound for descending glucose */
+"Descending" = "Descending";
+
+/* Silent sound option */
+"Silent" = "Silent";
+
+/* Option for no sound */
+"Silent" = "Silent";
+
+/* */
 "Carbs required: %d g" = "Kulhydrater påkrævet: %d g";
 
 /* */
