@@ -136,6 +136,29 @@ extension NotificationsConfig {
                     }
                 }
 
+                Section(header: Text("Sounds")) {
+                    Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+                }
+                
                 Section(
                     header: Text("Live Activity"),
                     footer: Text(liveActivityFooterText()),
@@ -157,45 +180,6 @@ extension NotificationsConfig {
                 ).onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
                     self.systemLiveActivitySetting = $0
                 })
-
-                Section(header: Text("Sounds")) {
-                    Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
-
-                    Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
-
-                    /* TO DO
-                     Picker(selection: $state.ascending, label: Text("Ascending:")) {
-                         Text("Silent").tag("Silent")
-                         ForEach(soundManager.infos, id: \.self.name) { i in
-                             self.buttonView(name: i.name)
-                         }
-                     }.pickerStyle(.navigationLink)
-
-                     Picker(selection: $state.descending, label: Text("Descending:")) {
-                         Text("Silent").tag("Silent")
-                         ForEach(soundManager.infos, id: \.self.name) { i in
-                             self.buttonView(name: i.name)
-                         }
-                     }.pickerStyle(.navigationLink)
-                     */
-
-                    Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
-                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
