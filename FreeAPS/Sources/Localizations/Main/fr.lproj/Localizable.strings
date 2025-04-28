@@ -2926,6 +2926,12 @@ Enact a temp Basal or a temp target */
 "Display Temp Targets Button" = "Afficher le bouton de cible temporaire";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
+
+/* UI/UX option */
 "Home View Button Panel " = "Panneau des boutons sur la vue d'accueil ";
 
 /* UI/UX title */

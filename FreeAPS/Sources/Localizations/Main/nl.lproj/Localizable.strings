@@ -2931,6 +2931,12 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Temp Targets Button" = "Toon tijdelijke doelen knop";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
+
+/* UI/UX option */
 "Home View Button Panel " = "Beginscherm knoppaneel ";
 
 /* UI/UX title */

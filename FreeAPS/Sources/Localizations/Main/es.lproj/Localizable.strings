@@ -3043,6 +3043,12 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 "Display Temp Targets Button" = "Mostrar botón de objetivos temporales";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
+
+/* UI/UX option */
 "Home View Button Panel " = "Botones principales";
 
 /* UI/UX title */

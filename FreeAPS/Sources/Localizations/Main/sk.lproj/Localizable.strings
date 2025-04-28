@@ -2927,6 +2927,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Display Temp Targets Button" = "Zobraziť dočasné cieľové tlačidlo";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
+
+/* UI/UX option */
 "Home View Button Panel " = "Panel tlačidiel zobrazenia Domov ";
 
 /* UI/UX title */
