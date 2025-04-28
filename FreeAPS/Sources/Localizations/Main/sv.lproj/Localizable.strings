@@ -2926,10 +2926,10 @@ Enact a temp Basal or a temp target */
 "Display Temp Targets Button" = "Visa knapp för tillfälligt målvärde";
 
 /* UI/UX option */
-"Display Profile Override Button" = "Display Profile Override Button";
+"Display Profile Override Button" = "Visa profilknapp";
 
 /* UI/UX option */
-"Display Meal Button" = "Display Meal Button";
+"Display Meal Button" = "Visa måltidsknapp";
 
 /* UI/UX option */
 "Home View Button Panel " = "Knappar på hemskärmen ";
