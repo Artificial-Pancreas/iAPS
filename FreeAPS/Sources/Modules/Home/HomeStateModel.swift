@@ -79,6 +79,8 @@ extension Home {
         @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
         @Published var anubis: Bool = false
+        @Published var carbButton: Bool = true
+        @Published var profileButton: Bool = true
 
         // Chart data
         var data = ChartModel(
@@ -109,7 +111,8 @@ extension Home {
             maxBolusValue: 1,
             useInsulinBars: true,
             screenHours: 6,
-            fpus: true
+            fpus: true,
+            fpuAmounts: false
         )
 
         override func subscribe() {
@@ -159,6 +162,7 @@ extension Home {
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus
+            data.fpuAmounts = settingsManager.settings.fpuAmounts
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
             extended = settingsManager.settings.extendHomeView
@@ -170,6 +174,8 @@ extension Home {
             cgm = settingsManager.settings.cgm
             sensorDays = settingsManager.settings.sensorDays
             anubis = settingsManager.settings.anubis
+            carbButton = settingsManager.settings.carbButton
+            profileButton = settingsManager.settings.profileButton
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -650,6 +656,7 @@ extension Home.StateModel:
         data.maxBolus = settingsManager.pumpSettings.maxBolus
         data.useInsulinBars = settingsManager.settings.useInsulinBars
         data.fpus = settingsManager.settings.fpus
+        data.fpuAmounts = settingsManager.settings.fpuAmounts
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
         displayDelta = settingsManager.settings.displayDelta
         extended = settingsManager.settings.extendHomeView
@@ -661,6 +668,8 @@ extension Home.StateModel:
         cgm = settingsManager.settings.cgm
         sensorDays = settingsManager.settings.sensorDays
         anubis = settingsManager.settings.anubis
+        carbButton = settingsManager.settings.carbButton
+        profileButton = settingsManager.settings.profileButton
         setupGlucose()
         setupOverrideHistory()
         setupData()

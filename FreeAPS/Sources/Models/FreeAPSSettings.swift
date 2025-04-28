@@ -83,6 +83,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var sensorDays: Double = 10
     var anubis: Bool = false
     var fpus: Bool = true
+    var fpuAmounts: Bool = false
+    var carbButton: Bool = true
+    var profileButton: Bool = true
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -155,6 +158,10 @@ extension FreeAPSSettings: Decodable {
 
         if let fpus = try? container.decode(Bool.self, forKey: .fpus) {
             settings.fpus = fpus
+        }
+
+        if let fpuAmounts = try? container.decode(Bool.self, forKey: .fpuAmounts) {
+            settings.fpuAmounts = fpuAmounts
         }
 
         if let insulinReqPercentage = try? container.decode(Decimal.self, forKey: .insulinReqPercentage) {
@@ -249,6 +256,14 @@ extension FreeAPSSettings: Decodable {
 
         if let useAlarmSound = try? container.decode(Bool.self, forKey: .useAlarmSound) {
             settings.useAlarmSound = useAlarmSound
+        }
+
+        if let carbButton = try? container.decode(Bool.self, forKey: .carbButton) {
+            settings.carbButton = carbButton
+        }
+
+        if let profileButton = try? container.decode(Bool.self, forKey: .profileButton) {
+            settings.profileButton = profileButton
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(

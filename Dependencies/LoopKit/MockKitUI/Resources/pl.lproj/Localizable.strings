@@ -1,35 +1,19 @@
-/* No comment provided by engineer. */
-"%@ has been unable to communicate with the Simulator Pump since %@.\n\nWithout communication, the app cannot continue to send commands for insulin delivery or display accurate, recent information about your active insulin or the insulin being delivered." = "%1$@ nie może komunikować się z symulatorem pompy od %2$@ . \n\nBez komunikacji aplikacja nie może wysyłać poleceń podawania insuliny ani wyświetlać aktualnych informacji o aktywnej lub podawanej insulinie.";
+/* 
+  Localizable.strings
+  LoopKit
 
+  Created by Pete Schwamb on 3/19/23.
+  Copyright © 2023 LoopKit Authors. All rights reserved.
+*/
 /* Appends a full-stop to a statement */
+
 "%@." = "%@.";
 
 /* String format for value with units (1: value, 2: separator, 3: units) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
-/* Alert content body for recurring software update alert */
-"A software update is recommended to continue using the %1$@ app.\n\nGo to %2$@ Settings > Software Update to install the latest version." = "Aby nadal korzystać z aplikacji %1$@ , zalecamy aktualizację oprogramowania. \n\n Przejdź do %2$@ Ustawienia > Aktualizacja oprogramowania, aby zainstalować najnowszą wersję.";
-
-/* Confirmation message for deleting a service */
-"Are you sure you want to delete this service?" = "Czy na pewno chcesz usunąć tę usługę?";
-
-/* Back button text on DeliveryUncertaintyRecoveryView */
-"Back" = "Powrót";
-
 /* The title of the cancel action in an action sheet */
 "Cancel" = "Anuluj";
-
-/* Title for CGM simulator settings */
-"CGM Settings" = "Ustawienia CGM";
-
-/* No comment provided by engineer. */
-"Clear Last Version Check Alert Date" = "Wyczyść ostatni odczytany alarm";
-
-/* No comment provided by engineer. */
-"Comms Recovery" = "Odzyskiwanie komunikacji";
-
-/* Button title to delete a service */
-"Delete Service" = "Usuń usługę";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Błąd wznawiania";
@@ -37,38 +21,96 @@
 /* The alert title for a suspend error */
 "Error Suspending" = "Błąd wstrzymywania";
 
-/* Caption for History
-   History Caption */
-"History" = "Historia";
-
-/* No comment provided by engineer. */
-"How should the simulator respond to a version check?" = "Jak symulator powinien zareagować na sprawdzenie wersji?";
-
-/* Controller title for insulin type selection screen */
-"Insulin Type" = "Rodzaj insuliny";
-
-/* No comment provided by engineer. */
-"Mock Version Check %@" = "Pozorowana kontrola wersji %@";
-
 /* Button title to acknowledge error
    Default acknowledgement */
 "OK" = "OK";
 
-/* Title for Pump simulator settings */
-"Pump Settings" = "Ustawienia pompy";
+/* The title of the temp basal error toggle */
+"Error on Temp Basal" = "Error on Temp Basal";
 
-/* Button title recovering comms */
-"Recover Simulator" = "Odzyskaj komunikat";
+/* The title of the battery remaining setting */
+"Battery Remaining" = "Battery Remaining";
 
-/* Caption for Source */
-"Source" = "Źródło";
+/* The title of the custom deliverable increments setting */
+"Custom" = "Dostosuj";
 
-/* Recurring software update alert title */
-"Update Reminder" = "Przypomnienie o aktualizacji";
+/* Title for Insulin Pump Simulator settings */
+"Pump Settings" = "Pump Settings";
 
-/* No comment provided by engineer. */
-"Version Check Response" = "Odpowiedź na sprawdzenie wersji";
+/* The title of the current basal rate setting */
+"Current Basal Rate" = "Current Basal Rate";
 
-/* Alert content body for first software update alert (1: app name)(2: app name) */
-"Your %1$@ app is out of date. It will continue to work, but we recommend updating to the latest version.\n\nGo to %2$@ Settings > Software Update to complete." = "Twoja aplikacja %1$@ jest nieaktualna. Będzie nadal działać, ale zalecamy aktualizację do najnowszej wersji. \n\n Przejdź do %2$@ Ustawienia > Aktualizacja oprogramowania, aby dokonać aktualizacji.";
+/* The title of the resolve occlusion action */
+"Resolve Occlusion" = "Resolve Occlusion";
 
+/* The title of the detect occlusion action */
+"Detect Occlusion" = "Detect Occlusion";
+
+/* The title of the resolve pump error action */
+"Resolve Pump Error" = "Resolve Pump Error";
+
+/* The title of the cause pump error action */
+"Cause Pump Error" = "Cause Pump Error";
+
+/* The title of the basal rates setting */
+"Basal Rates" = "Dawka Podstawowa (Baza)";
+
+/* The title of the bolus volumes setting */
+"Bolus Volumes" = "Bolus Volumes";
+
+/* The title of the insulin type setting */
+"Insulin Type" = "Insulin Type";
+
+/* The title of the reservoir remaining setting */
+"Reservoir Remaining" = "Reservoir Remaining";
+
+/* The title of the bolus error toggle */
+"Error on Bolus" = "Error on Bolus";
+
+/* The title of the bolus cancel error toggle */
+"Error on Cancel Bolus" = "Error on Cancel Bolus";
+
+/* The title of the suspend error toggle */
+"Error on Suspend" = "Error on Suspend";
+
+/* The title of the resume error toggle */
+"Error on Resume" = "Error on Resume";
+
+/* The title of the uncertain delivery error toggle */
+"Next Delivery Command Uncertain" = "Next Delivery Command Uncertain";
+
+/* The title of the last reconciliation date setting */
+"Last Reconciliation Date" = "Last Reconciliation Date";
+
+/* The title of the percent complete setting */
+"Percent Complete" = "Percent Complete";
+
+/* The title of the warning threshold setting */
+"Warning Threshold" = "Warning Threshold";
+
+/* The title of the critical threshold setting */
+"Critical Threshold" = "Critical Threshold";
+
+/* The title of the delete pump action */
+"Delete Pump" = "Usuń pompę";
+
+/* Controller title for supported basal rates selection screen */
+"Supported Basal Rates" = "Supported Basal Rates";
+
+/* Controller title for supported bolus volumes selection screen */
+"Supported Bolus Volumes" = "Supported Bolus Volumes";
+
+/* Confirmation message for pump deletion */
+"Are you sure you want to delete this pump?" = "Are you sure you want to delete this pump?";
+
+/* Warning message for changing supported pump basal rates values */
+"Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)" = "Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)";
+
+/* The title of the minimum value setting for basal rates */
+"Minimum Value" = "Minimum Value";
+
+/* The title of the maximum value setting for basal rates */
+"Maximum Value" = "Maximum Value";
+
+/* The title of the step size setting for basal rates */
+"Step Size" = "Step Size";

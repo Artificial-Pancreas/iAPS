@@ -161,10 +161,10 @@
 "Override" = "Перевизначити";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Немає Помпи";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Відкрита";
 
 /*  */
 "Amount Carbs" = "Кількість Вуглеводів";
@@ -718,7 +718,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Лікування";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "За замовчуванням 📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Жоден";
@@ -1468,7 +1468,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = "Ручна ТБШ ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/день";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Всього";
@@ -2535,6 +2535,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Max IOB Threshold Percent" = "Максимальний пороговий відсоток IOB";
 
+/* Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
+
 /* */
 "Auto ISF" = "Авто ISF";
 
@@ -2977,6 +2980,9 @@ Enact a temp Basal or a temp target */
 "Display carb equivalents" = "Показати еквіваленти вуглеводів";
 
 /* UI/UX option */
+"Display carb equivalent amount" = "Показати еквівалентну кількість вуглеводів";
+
+/* UI/UX option */
 "Display Sensor Time Remaining" = "Відображати час Сенсору що залишився.";
 
 /* UI/UX option */
@@ -3058,7 +3064,7 @@ Enact a temp Basal or a temp target */
 "Adjustment Factor" = "Коефіцієнт Регулювання";
 
 /* Apple Watch Overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Перевизначити";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Cancel Override";
+"Cancel Override" = "Скасувати перевизначення";
