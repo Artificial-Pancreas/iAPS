@@ -2927,6 +2927,12 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display Temp Targets Button" = "Mostra Pulsante target temporaneo(Temp)";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
+
+/* UI/UX option */
 "Home View Button Panel " = "Pannello Pulsante Visualizzazione Home ";
 
 /* UI/UX title */
