@@ -1259,16 +1259,16 @@ Enact a temp Basal or a temp target */
 "Sounds" = "Sounds";
 
 /* Sound for Hypo alert */
-"Hypo Sound:" = "Hypo Sound:";
+"Hypoglycemia" = "Hypoglycemia";
 
 /* Sound for Hyper alert */
-"Hyper Sound:" = "Hyper Sound:";
+"Hyperglycemia" = "Hyperglycemia";
 
 /* Sound for ascending glucose */
-"Ascending:" = "Ascending:";
+"Ascending" = "Ascending";
 
 /* Sound for descending glucose */
-"Descending:" = "Descending:";
+"Descending" = "Descending";
 
 /* Silent sound option */
 "Silent" = "Silent";

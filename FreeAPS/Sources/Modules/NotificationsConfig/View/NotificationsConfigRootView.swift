@@ -159,14 +159,14 @@ extension NotificationsConfig {
                 })
 
                 Section(header: Text("Sounds")) {
-                    Picker(selection: $state.hypoSound, label: Text("Hypo Sound:")) {
+                    Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
                         Text("Silent").tag("Silent")
                         ForEach(soundManager.infos, id: \.self.name) { i in
                             buttonView(name: i.name)
                         }
                     }.pickerStyle(.navigationLink)
 
-                    Picker(selection: $state.hyperSound, label: Text("Hyper Sound:")) {
+                    Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
                         Text("Silent").tag("Silent")
                         ForEach(soundManager.infos, id: \.self.name) { i in
                             buttonView(name: i.name)
@@ -189,7 +189,7 @@ extension NotificationsConfig {
                      }.pickerStyle(.navigationLink)
                      */
 
-                    Picker(selection: $state.carbSound, label: Text("Carbs Required:")) {
+                    Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
                         Text("Silent").tag("Silent")
                         ForEach(soundManager.infos, id: \.self.name) { i in
                             buttonView(name: i.name)
