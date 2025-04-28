@@ -203,6 +203,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             switch self.glucoseStorage.alarm {
             case .none:
                 titles.append(NSLocalizedString("Glucose", comment: "Glucose"))
+                sound = "Silent"
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
                 sound = self.settingsManager.settings.hypoSound

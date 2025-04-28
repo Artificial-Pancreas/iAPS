@@ -11,6 +11,7 @@ extension NotificationsConfig {
         @State private var currentSoundID: SystemSoundID = 1336
         @State private var isPlay = false
         @State private var currentName: String = ""
+        @State private var active = false
 
         let soundManager = SystemSoundsManager()
 
@@ -49,7 +50,7 @@ extension NotificationsConfig {
             return footer
         }
 
-        func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
+        private func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
             guard state.alarmSound != "Silent" else { return }
 
             if sStop != nil {
@@ -68,42 +69,40 @@ extension NotificationsConfig {
         }
 
         private func buttonView(name: String) -> some View {
-            HStack {
-                Text(
-                    name
-                        .replacingOccurrences(of: ".caf", with: "")
-                        .replacingOccurrences(of: "New/", with: "")
-                        .replacingOccurrences(of: "Modern/", with: "")
-                        .replacingOccurrences(of: "nano/", with: "")
-                        .replacingOccurrences(of: "_", with: " ")
-                )
-                Spacer()
-
-                Button(
-                    action: {
-                        currentName = name
-
-                        if isPlay {
-                            self.playSound(name, currentSoundID) {
-                                isPlay = false
-                                currentName = ""
-                            }
-                        } else {
-                            self.playSound(name) {
-                                isPlay = false
-                                currentName = ""
-                            }
-                        }
-                        isPlay = true
-
-                    },
-
-                    label: {
-                        isPlay && currentName == name ? Image(systemName: "pause") :
-                            !isPlay ? Image(systemName: "play") : nil
-                    }
-                )
+            HStack(spacing: 20) {
+                soundView(name: name)
+                Text(cut(name))
             }
+        }
+
+        private func cut(_ name: String) -> String {
+            name
+                .replacingOccurrences(of: ".caf", with: "")
+                .replacingOccurrences(of: "New/", with: "")
+                .replacingOccurrences(of: "Modern/", with: "")
+                .replacingOccurrences(of: "nano/", with: "")
+                .replacingOccurrences(of: "_", with: " ")
+        }
+
+        private func soundView(name: String) -> some View {
+            Image(systemName: "playpause.fill")
+                .foregroundStyle(.blue)
+                .onTapGesture {
+                    currentName = name
+
+                    if isPlay {
+                        playSound(name, currentSoundID) {
+                            isPlay = false
+                            currentName = ""
+                        }
+                    } else {
+                        playSound(name) {
+                            isPlay = false
+                            currentName = ""
+                        }
+                    }
+                    isPlay = true
+                }
         }
 
         var body: some View {
@@ -164,35 +163,37 @@ extension NotificationsConfig {
                     Picker(selection: $state.hypoSound, label: Text("Hypo Sound:")) {
                         Text("Silent").tag("Silent")
                         ForEach(soundManager.infos, id: \.self.name) { i in
-                            self.buttonView(name: i.name)
+                            buttonView(name: i.name)
                         }
                     }.pickerStyle(.navigationLink)
 
                     Picker(selection: $state.hyperSound, label: Text("Hyper Sound:")) {
                         Text("Silent").tag("Silent")
                         ForEach(soundManager.infos, id: \.self.name) { i in
-                            self.buttonView(name: i.name)
+                            buttonView(name: i.name)
                         }
                     }.pickerStyle(.navigationLink)
 
-                    Picker(selection: $state.ascending, label: Text("Ascending:")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            self.buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
+                    /* TO DO
+                     Picker(selection: $state.ascending, label: Text("Ascending:")) {
+                         Text("Silent").tag("Silent")
+                         ForEach(soundManager.infos, id: \.self.name) { i in
+                             self.buttonView(name: i.name)
+                         }
+                     }.pickerStyle(.navigationLink)
 
-                    Picker(selection: $state.descending, label: Text("Descending:")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            self.buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
+                     Picker(selection: $state.descending, label: Text("Descending:")) {
+                         Text("Silent").tag("Silent")
+                         ForEach(soundManager.infos, id: \.self.name) { i in
+                             self.buttonView(name: i.name)
+                         }
+                     }.pickerStyle(.navigationLink)
+                     */
 
                     Picker(selection: $state.carbSound, label: Text("Carbs Required:")) {
                         Text("Silent").tag("Silent")
                         ForEach(soundManager.infos, id: \.self.name) { i in
-                            self.buttonView(name: i.name)
+                            buttonView(name: i.name)
                         }
                     }.pickerStyle(.navigationLink)
                 }

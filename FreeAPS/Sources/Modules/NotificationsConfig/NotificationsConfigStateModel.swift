@@ -10,6 +10,8 @@ extension NotificationsConfig {
         @Published var highGlucose: Decimal = 0
         @Published var carbsRequiredThreshold: Decimal = 0
         @Published var useLiveActivity = false
+        @Published var liveActivityChart = false
+        @Published var liveActivityChartShowPredictions = true
 
         @Published var hypoSound: String = "New/Anticipalte.caf"
         @Published var hyperSound: String = "New/Anticipalte.caf"
@@ -18,9 +20,6 @@ extension NotificationsConfig {
         @Published var carbSound: String = "New/Anticipalte.caf"
 
         @Published var alarmSound: String = "New/Anticipalte.caf"
-
-        @Published var liveActivityChart = false
-        @Published var liveActivityChartShowPredictions = true
 
         var units: GlucoseUnits = .mmolL
 
