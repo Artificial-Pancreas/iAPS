@@ -1,4 +1,5 @@
 import ActivityKit
+import AVFoundation
 import Combine
 import SwiftUI
 import Swinject
@@ -7,6 +8,11 @@ extension NotificationsConfig {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
+        @State private var currentSoundID: SystemSoundID = 1336
+        @State private var isPlay = false
+        @State private var currentName: String = ""
+
+        let soundManager = SystemSoundsManager()
 
         @State private var systemLiveActivitySetting: Bool = { ActivityAuthorizationInfo().areActivitiesEnabled }()
 
@@ -43,6 +49,61 @@ extension NotificationsConfig {
             return footer
         }
 
+        private func playSound(_ s: String? = nil, _ sStop: SystemSoundID? = nil, _ onCompletion: @escaping () -> Void) {
+            guard state.alarmSound != "Silent" else { return }
+
+            if sStop != nil {
+                AudioServicesDisposeSystemSoundID(sStop!)
+                return
+            }
+            let path = "/System/Library/Audio/UISounds/" + (s ?? state.alarmSound)
+            var theSoundID = SystemSoundID(1336)
+            let soundURL = URL(string: path)
+            AudioServicesCreateSystemSoundID(soundURL! as CFURL, &theSoundID)
+            currentSoundID = theSoundID
+            AudioServicesPlaySystemSoundWithCompletion(theSoundID) {
+                AudioServicesDisposeSystemSoundID(theSoundID)
+                onCompletion()
+            }
+        }
+
+        private func buttonView(name: String) -> some View {
+            HStack(spacing: 20) {
+                soundView(name: name)
+                Text(cut(name))
+            }
+        }
+
+        private func cut(_ name: String) -> String {
+            name
+                .replacingOccurrences(of: ".caf", with: "")
+                .replacingOccurrences(of: "New/", with: "")
+                .replacingOccurrences(of: "Modern/", with: "")
+                .replacingOccurrences(of: "nano/", with: "")
+                .replacingOccurrences(of: "_", with: " ")
+        }
+
+        private func soundView(name: String) -> some View {
+            Image(systemName: "playpause.fill")
+                .foregroundStyle(.blue)
+                .onTapGesture {
+                    currentName = name
+
+                    if isPlay {
+                        playSound(name, currentSoundID) {
+                            isPlay = false
+                            currentName = ""
+                        }
+                    } else {
+                        playSound(name) {
+                            isPlay = false
+                            currentName = ""
+                        }
+                    }
+                    isPlay = true
+                }
+        }
+
         var body: some View {
             Form {
                 Section(header: Text("Glucose")) {
@@ -75,11 +136,32 @@ extension NotificationsConfig {
                     }
                 }
 
+                Section(header: Text("Sounds")) {
+                    Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+
+                    Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
+                        Text("Silent").tag("Silent")
+                        ForEach(soundManager.infos, id: \.self.name) { i in
+                            buttonView(name: i.name)
+                        }
+                    }.pickerStyle(.navigationLink)
+                }
+                
                 Section(
                     header: Text("Live Activity"),
-                    footer: Text(
-                        liveActivityFooterText()
-                    ),
+                    footer: Text(liveActivityFooterText()),
                     content: {
                         if !systemLiveActivitySetting {
                             Button("Open Settings App") {
@@ -95,8 +177,7 @@ extension NotificationsConfig {
                             }
                         }
                     }
-                )
-                .onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
+                ).onReceive(resolver.resolve(LiveActivityBridge.self)!.$systemEnabled, perform: {
                     self.systemLiveActivitySetting = $0
                 })
             }
