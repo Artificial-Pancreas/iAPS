@@ -2927,6 +2927,12 @@ Enact a temp Basal or a temp target */
 "Display Temp Targets Button" = "Показувати кнопку тимчасові цілі";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
+
+/* UI/UX option */
 "Home View Button Panel " = "Панель кнопок домашнього перегляду";
 
 /* UI/UX title */
