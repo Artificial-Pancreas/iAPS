@@ -11,7 +11,6 @@ extension NotificationsConfig {
         @State private var currentSoundID: SystemSoundID = 1336
         @State private var isPlay = false
         @State private var currentName: String = ""
-        @State private var active = false
 
         let soundManager = SystemSoundsManager()
 
