@@ -207,6 +207,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
     }
 
     func isGlucoseNotFlat() -> Bool {
+        guard !settingsManager.settings.disableCGMError else { return true }
         let count = 3 // check last 3 readings
         let lastReadings = Array(recent().suffix(count))
         let filtered = lastReadings.compactMap(\.filtered).filter { $0 != 0 }

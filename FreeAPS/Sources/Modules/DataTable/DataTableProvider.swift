@@ -31,8 +31,8 @@ extension DataTable {
             carbsStorage.recent()
         }
 
-        func deleteCarbs(_ treatement: Treatment) {
-            nightscoutManager.deleteCarbs(treatement, complexMeal: false)
+        func deleteCarbs(_ date: Date) {
+            nightscoutManager.deleteCarbs(date)
         }
 
         func deleteInsulin(_ treatement: Treatment) {

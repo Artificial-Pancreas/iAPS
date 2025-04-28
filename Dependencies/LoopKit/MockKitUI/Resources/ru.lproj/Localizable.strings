@@ -1,32 +1,19 @@
+/* 
+  Localizable.strings
+  LoopKit
+
+  Created by Pete Schwamb on 3/19/23.
+  Copyright © 2023 LoopKit Authors. All rights reserved.
+*/
 /* Appends a full-stop to a statement */
+
 "%@." = "%@.";
 
 /* String format for value with units (1: value, 2: separator, 3: units) */
 "%1$@%2$@%3$@" = "%1$@%2$@%3$@";
 
-/* Alert content body for recurring software update alert */
-"A software update is recommended to continue using the %1$@ app.\n\nGo to %2$@ Settings > Software Update to install the latest version." = "Для продолжения использования приложения %1$@ рекомендуется обновить программное обеспечение.\n\nПерейдите в %2$@ Настройки > Обновление ПО, чтобы установить последнюю версию.";
-
-/* Confirmation message for deleting a service */
-"Are you sure you want to delete this service?" = "Вы уверены, что хотите удалить этот сервис?";
-
-/* Back button text on DeliveryUncertaintyRecoveryView */
-"Back" = "Назад";
-
 /* The title of the cancel action in an action sheet */
 "Cancel" = "Отмена";
-
-/* Title for CGM simulator settings */
-"CGM Settings" = "Настройки CGM";
-
-/* No comment provided by engineer. */
-"Clear Last Version Check Alert Date" = "Очистить последнюю дату проверки версии";
-
-/* No comment provided by engineer. */
-"Comms Recovery" = "Восстановление связи";
-
-/* Button title to delete a service */
-"Delete Service" = "Удалить сервис";
 
 /* The alert title for a resume error */
 "Error Resuming" = "Ошибка возобновления";
@@ -34,35 +21,96 @@
 /* The alert title for a suspend error */
 "Error Suspending" = "Ошибка приостановки";
 
-/* Caption for History
-   History Caption */
-"History" = "История";
-
-/* No comment provided by engineer. */
-"How should the simulator respond to a version check?" = "Как симулятор должен реагировать на проверку версии?";
-
-/* Controller title for insulin type selection screen */
-"Insulin Type" = "Тип инсулина";
-
 /* Button title to acknowledge error
    Default acknowledgement */
-"OK" = "OK";
+"OK" = "ОК";
 
-/* Title for Pump simulator settings */
+/* The title of the temp basal error toggle */
+"Error on Temp Basal" = "Ошибка ВБС";
+
+/* The title of the battery remaining setting */
+"Battery Remaining" = "Батарея";
+
+/* The title of the custom deliverable increments setting */
+"Custom" = "Своя";
+
+/* Title for Insulin Pump Simulator settings */
 "Pump Settings" = "Настройки помпы";
 
-/* Button title recovering comms */
-"Recover Simulator" = "Восстановить симулятор";
+/* The title of the current basal rate setting */
+"Current Basal Rate" = "Текущая ВБС";
 
-/* Caption for Source */
-"Source" = "Источник";
+/* The title of the resolve occlusion action */
+"Resolve Occlusion" = "Устранение окклюзии";
 
-/* Recurring software update alert title */
-"Update Reminder" = "Напоминание об обновлении";
+/* The title of the detect occlusion action */
+"Detect Occlusion" = "Обнаружение окклюзии";
 
-/* No comment provided by engineer. */
-"Version Check Response" = "Ответ на проверку версии";
+/* The title of the resolve pump error action */
+"Resolve Pump Error" = "Устранение ошибки помпы";
 
-/* Alert content body for first software update alert (1: app name)(2: app name) */
-"Your %1$@ app is out of date. It will continue to work, but we recommend updating to the latest version.\n\nGo to %2$@ Settings > Software Update to complete." = "Ваше приложение %1$@ устарело. Оно будет продолжать работать, но мы рекомендуем обновить его до последней версии.\n\nДля завершения обновления перейдите в %2$@ Настройки > Обновление ПО.";
+/* The title of the cause pump error action */
+"Cause Pump Error" = "Ошибка помпы";
 
+/* The title of the basal rates setting */
+"Basal Rates" = "Скорости базала";
+
+/* The title of the bolus volumes setting */
+"Bolus Volumes" = "Объемы болюса";
+
+/* The title of the insulin type setting */
+"Insulin Type" = "Тип инсулина";
+
+/* The title of the reservoir remaining setting */
+"Reservoir Remaining" = "Остаток в резервуаре";
+
+/* The title of the bolus error toggle */
+"Error on Bolus" = "Ошибка болюса";
+
+/* The title of the bolus cancel error toggle */
+"Error on Cancel Bolus" = "Ошибка отмены болюса";
+
+/* The title of the suspend error toggle */
+"Error on Suspend" = "Ошибка приостановки";
+
+/* The title of the resume error toggle */
+"Error on Resume" = "Ошибка возобновления";
+
+/* The title of the uncertain delivery error toggle */
+"Next Delivery Command Uncertain" = "Следующая команда на подачу неопределенна";
+
+/* The title of the last reconciliation date setting */
+"Last Reconciliation Date" = "Дата последней сверки";
+
+/* The title of the percent complete setting */
+"Percent Complete" = "Процент завершения";
+
+/* The title of the warning threshold setting */
+"Warning Threshold" = "Предел предупреждения";
+
+/* The title of the critical threshold setting */
+"Critical Threshold" = "Критический предел";
+
+/* The title of the delete pump action */
+"Delete Pump" = "Удалить помпу";
+
+/* Controller title for supported basal rates selection screen */
+"Supported Basal Rates" = "Поддерживаемые ВБС";
+
+/* Controller title for supported bolus volumes selection screen */
+"Supported Bolus Volumes" = "Поддерживаемые объёмы болюса";
+
+/* Confirmation message for pump deletion */
+"Are you sure you want to delete this pump?" = "Вы уверены, что хотите удалить эту помпу?";
+
+/* Warning message for changing supported pump basal rates values */
+"Changing the supported values of the pump may cause the app to crash. Ensure you are changing them such that the set therapy values are still valid (e.g., basal rate, max bolus, etc.)" = "Изменение поддерживаемых значений помпы может привести к сбою приложения. Убедитесь, что вы изменяете их таким образом, чтобы установленные значения терапии оставались допустимыми (например, базальная скорость, максимальный болюс и т. д.)";
+
+/* The title of the minimum value setting for basal rates */
+"Minimum Value" = "Минимум";
+
+/* The title of the maximum value setting for basal rates */
+"Maximum Value" = "Максимум";
+
+/* The title of the step size setting for basal rates */
+"Step Size" = "Шаг помпы";

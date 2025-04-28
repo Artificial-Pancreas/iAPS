@@ -11,6 +11,10 @@ extension OpenAPS {
         static let profile = "bundle/profile.js"
     }
 
+    enum Test {
+        static let test = "test/test.js"
+    }
+
     enum Prepare {
         static let iob = "prepare/iob.js"
         static let meal = "prepare/meal.js"
@@ -20,10 +24,16 @@ extension OpenAPS {
         static let autosens = "prepare/autosens.js"
         static let profile = "prepare/profile.js"
         static let log = "prepare/log.js"
+        static let string = "prepare/middleware.js"
     }
 
     enum Middleware {
         static let determineBasal = "middleware/determine_basal.js"
+    }
+
+    enum AutoISF {
+        static let getLastGlucose = "autoisf/glucose-get-last-autoisf.js"
+        static let autoisf = "autoisf/autoisf.js"
     }
 
     enum Settings {
@@ -39,6 +49,8 @@ extension OpenAPS {
         static let carbRatios = "settings/carb_ratios.json"
         static let tempTargets = "settings/temptargets.json"
         static let model = "settings/model.json"
+        static let contactTrick = "settings/contact_trick.json"
+        static let autoisf = "settings/autoisf.json"
     }
 
     enum Monitor {
@@ -54,7 +66,7 @@ extension OpenAPS {
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
         static let podAge = "monitor/pod-age.json"
-        static let oref2_variables = "monitor/oref2_variables.json"
+        static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
         static let statistics = "monitor/statistics.json"
     }
@@ -85,10 +97,15 @@ extension OpenAPS {
         static let uploadedCGMState = "upload/uploaded-cgm-state.json"
         static let uploadedPodAge = "upload/uploaded-pod-age.json"
         static let uploadedProfile = "upload/uploaded-profile.json"
+        static let uploadedProfileToDatabase = "upload/uploaded-profile_database.json"
         static let uploadedPreferences = "upload/uploaded-preferences.json"
         static let uploadedSettings = "upload/uploaded-settings.json"
         static let uploadedManualGlucose = "upload/uploaded-manual-readings.json"
         static let notUploadedOverrides = "upload/not-uploaded-overrides.json"
+        static let uploadedPumpSettings = "upload/uploaded-pump_settings.json"
+        static let uploadedTempTargetsDatabase = "upload/uploaded-temptargets_database.json"
+        static let uploadedMealPresets = "upload/uploaded-meal-presets.json"
+        static let uploadedOverridePresets = "upload/uploaded-override-presets.json"
     }
 
     enum FreeAPS {

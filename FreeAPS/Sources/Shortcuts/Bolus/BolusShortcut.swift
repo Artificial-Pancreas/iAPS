@@ -2,7 +2,7 @@ import AppIntents
 import Foundation
 import Intents
 
-@available(iOS 16.0,*) struct BolusIntent: AppIntent {
+struct BolusIntent: AppIntent {
     static var title: LocalizedStringResource = "Bolus"
     static var description = IntentDescription("Allow to send a bolus command to iAPS.")
 
@@ -42,14 +42,14 @@ import Intents
             }
             let bolusAmountString = amount.formatted()
 
-            // if confirmBeforeApplying {
-            let glucoseString = BolusIntentRequest().currentGlucose() // Fetch current glucose
-            try await requestConfirmation(
-                result: .result(
-                    dialog: "Your current glucose is \(glucoseString != nil ? glucoseString! : "not available"). Are you sure you want to bolus \(bolusAmountString) U of insulin?"
+            if confirmBeforeApplying {
+                let glucoseString = BolusIntentRequest().currentGlucose() // Fetch current glucose
+                try await requestConfirmation(
+                    result: .result(
+                        dialog: "Your current glucose is \(glucoseString != nil ? glucoseString! : "not available"). Are you sure you want to bolus \(bolusAmountString) U of insulin?"
+                    )
                 )
-            )
-            // }
+            }
             let finalQuantityBolusDisplay = try BolusIntentRequest().bolus(amount)
             return .result(
                 dialog: IntentDialog(stringLiteral: finalQuantityBolusDisplay)
@@ -61,7 +61,7 @@ import Intents
     }
 }
 
-@available(iOS 16.0,*) final class BolusIntentRequest: BaseIntentsRequest {
+final class BolusIntentRequest: BaseIntentsRequest {
     func bolus(_ bolusAmount: Double) throws -> String {
         guard settingsManager.settings.allowBolusShortcut else {
             return NSLocalizedString("Bolus Shortcuts are disabled in iAPS settings", comment: "")

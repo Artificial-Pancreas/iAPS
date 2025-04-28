@@ -33,21 +33,12 @@ final class BaseCalendarManager: CalendarManager, Injectable {
             switch status {
             case .notDetermined:
                 #if swift(>=5.9)
-                    if #available(iOS 17.0, *) {
-                        EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
-                            if let error = error {
-                                warning(.service, "Calendar access not granted", error: error)
-                            }
-                            promise(.success(granted))
-                        })
-                    } else {
-                        EKEventStore().requestAccess(to: .event) { granted, error in
-                            if let error = error {
-                                warning(.service, "Calendar access not granted", error: error)
-                            }
-                            promise(.success(granted))
+                    EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
+                        if let error = error {
+                            warning(.service, "Calendar access not granted", error: error)
                         }
-                    }
+                        promise(.success(granted))
+                    })
                 #else
                     EKEventStore().requestAccess(to: .event) { granted, error in
                         if let error = error {
@@ -66,15 +57,13 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                 case .fullAccess:
                     promise(.success(true))
                 case .writeOnly:
-                    if #available(iOS 17.0, *) {
-                        EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
-                            if let error = error {
-                                print("Calendar access not upgraded")
-                                warning(.service, "Calendar access not upgraded", error: error)
-                            }
-                            promise(.success(granted))
-                        })
-                    }
+                    EKEventStore().requestFullAccessToEvents(completion: { (granted: Bool, error: Error?) -> Void in
+                        if let error = error {
+                            print("Calendar access not upgraded")
+                            warning(.service, "Calendar access not upgraded", error: error)
+                        }
+                        promise(.success(granted))
+                    })
             #endif
 
             @unknown default:
@@ -106,16 +95,10 @@ final class BaseCalendarManager: CalendarManager, Injectable {
 
         // Latest Loop data (from CoreData)
         var freshLoop: Double = 20
-        var lastLoop = [LastLoop]()
-        if displeyCOBandIOB || displayEmojis {
-            coredataContext.performAndWait {
-                let requestLastLoop = LastLoop.fetchRequest() as NSFetchRequest<LastLoop>
-                let sortLoops = NSSortDescriptor(key: "timestamp", ascending: false)
-                requestLastLoop.sortDescriptors = [sortLoops]
-                requestLastLoop.fetchLimit = 1
-                try? lastLoop = coredataContext.fetch(requestLastLoop)
-            }
-            freshLoop = -1 * (lastLoop.first?.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
+        var lastLoop: LastLoop?
+        if displeyCOBandIOB || displayEmojis, let recentLoop = CoreDataStorage().fetchLastLoop() {
+            lastLoop = recentLoop
+            freshLoop = -1 * (recentLoop.timestamp ?? .distantPast).timeIntervalSinceNow.minutes
         }
 
         var glucoseIcon = "🟢"
@@ -137,8 +120,8 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                     .string(from: Double(settingsManager.settings.units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
             } ?? "--"
 
-        let iobText = iobFormatter.string(from: (lastLoop.first?.iob ?? 0) as NSNumber) ?? ""
-        let cobText = cobFormatter.string(from: (lastLoop.first?.cob ?? 0) as NSNumber) ?? ""
+        let iobText = lastLoop != nil ? (iobFormatter.string(from: (lastLoop?.iob ?? 0) as NSNumber) ?? "") : ""
+        let cobText = lastLoop != nil ? (cobFormatter.string(from: (lastLoop?.cob ?? 0) as NSNumber) ?? "") : ""
 
         var glucoseDisplayText = displayEmojis ? glucoseIcon + " " : ""
         glucoseDisplayText += glucoseText + " " + directionText + " " + deltaText

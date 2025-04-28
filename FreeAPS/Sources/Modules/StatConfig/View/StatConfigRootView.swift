@@ -24,6 +24,13 @@ extension StatConfig {
             return formatter
         }
 
+        private var insulinFormatter: NumberFormatter {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 2
+            return formatter
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -37,7 +44,18 @@ extension StatConfig {
                         DecimalTextField("6", value: $state.hours, formatter: carbsFormatter)
                         Text("hours").foregroundColor(.secondary)
                     }
-                    Toggle("Display Time Interval Setting Button", isOn: $state.timeSettings)
+                    Toggle("Use insulin bars", isOn: $state.useInsulinBars)
+                    HStack {
+                        Text("Hide the bolus amount strings when amount is under")
+                        Spacer()
+                        DecimalTextField("0.2", value: $state.minimumSMB, formatter: insulinFormatter)
+                        Text("U").foregroundColor(.secondary)
+                    }
+                    Toggle("Display carb equivalents", isOn: $state.fpus)
+                    if state.fpus {
+                        Toggle("Display carb equivalent amount", isOn: $state.fpuAmounts)
+                    }
+
                 } header: { Text("Home Chart settings ") }
 
                 Section {
@@ -46,9 +64,16 @@ extension StatConfig {
                 footer: { Text("In case you're using both profiles and temp targets") }
 
                 Section {
+                    Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
+                    Toggle("Display Sensor Time Remaining", isOn: $state.displayExpiration)
+                    Toggle("Display Glucose Delta", isOn: $state.displayDelta)
+                    Toggle("Hide Concentration Badge", isOn: $state.hideInsulinBadge)
                 } header: { Text("Header settings") }
-                footer: { Text("Normally glucose is colored red only when over or under your notification limits for high/low") }
+
+                Section {
+                    Toggle("Display Sensor Age, but not Time Remaining", isOn: $state.anubis)
+                } header: { Text("Anubis") }
 
                 Section {
                     HStack {
@@ -71,6 +96,12 @@ extension StatConfig {
                     Toggle("Skip Bolus screen after carbs", isOn: $state.skipBolusScreenAfterCarbs)
                     Toggle("Display and allow Fat and Protein entries", isOn: $state.useFPUconversion)
                 } header: { Text("Add Meal View settings ") }
+
+                Section {
+                    Toggle(isOn: $state.extendHomeView) {
+                        Text("Display Ratio and a History View button")
+                    }
+                } header: { Text("Auto ISF Home View") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)

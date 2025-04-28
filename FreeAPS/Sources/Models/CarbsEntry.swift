@@ -2,15 +2,14 @@ import Foundation
 
 struct CarbsEntry: JSON, Equatable, Hashable {
     let id: String?
-    let createdAt: Date
+    var createdAt: Date
     let actualDate: Date?
-    let carbs: Decimal
+    var carbs: Decimal
     let fat: Decimal?
     let protein: Decimal?
     let note: String?
     let enteredBy: String?
     let isFPU: Bool?
-    let fpuID: String?
 
     static let manual = "iAPS"
     static let remote = "Nightscout operator"
@@ -36,6 +35,5 @@ extension CarbsEntry {
         case note
         case enteredBy
         case isFPU
-        case fpuID
     }
 }

@@ -81,7 +81,7 @@
 "Disabled" = "Vypnuté";
 
 /* Description for Empty reservoir pod fault */
-"Empty reservoir" = "Prázdna nádrž";
+"Empty reservoir" = "Prázdny zásobník";
 
 /* Error message shown when empty response from pod was received */
 "Empty response from pod" = "Prázdna odpoveď z podu";
@@ -90,7 +90,7 @@
 "Error event logged, shutting down" = "Zaprotokolovaná udalosť chyby, vypína sa";
 
 /* Description for expiration alert */
-"Expiration alert" = "Varovanie o expirácii";
+"Expiration alert" = "Varovanie o exspirácii";
 
 /* Title string for BeepPreference.extended */
 "Extended" = "Rozšírený";
@@ -153,10 +153,10 @@
 "Low Reservoir" = "Nízka hladina v rezervoári";
 
 /* Format string for description for low reservoir advisory (1: reminder units) */
-"Low reservoir advisory (%1$gU)" = "Nízka hladina v rezervoári  (%1$gU)";
+"Low reservoir advisory (%1$gU)" = "Nízka hladina v zásobníku (%1$gU)";
 
 /* Description for low reservoir alarm */
-"Low reservoir advisory alarm" = "Nízka hladina v rezervoári";
+"Low reservoir advisory alarm" = "Nízka hladina v zásobníku";
 
 /* Title for RileyLink low battery alert */
 "Low RileyLink Battery" = "Nízky stav batérie RileyLinku";
@@ -249,16 +249,16 @@
 "Pod already paired" = "Pod je už spárovaný";
 
 /* Error message shown when prime is attempted, but pod is already primed */
-"Pod already primed" = "Pod je už pripravený";
+"Pod already primed" = "Pod je už naplnený";
 
 /* Status highlight message for other alarm. */
 "Pod Error" = "Chyba podu";
 
 /* Description for expiration advisory alarm */
-"Pod expiration advisory alarm" = "Oznámenie o expirácii podu";
+"Pod expiration advisory alarm" = "Oznámenie o exspirácii Podu";
 
 /* The title for pod expiration notification */
-"Pod Expiration Notice" = "Oznámenie o expirácii podu";
+"Pod Expiration Notice" = "Oznámenie o exspirácii Podu";
 
 /* Description for Pod expired pod fault */
 "Pod expired" = "Pod vypršal";
@@ -298,10 +298,10 @@
 
 /* Delivery status when pod is priming
    Pod status when priming */
-"Priming" = "Príprava podu";
+"Priming" = "Plnenie";
 
 /* Pod state when priming completed */
-"Priming completed" = "Príprava podu dokončená";
+"Priming completed" = "Plnenie dokončené";
 
 /* Pod state when ready for basal programming */
 "Ready for basal programming" = "Pripravené na programovanie bazálu";

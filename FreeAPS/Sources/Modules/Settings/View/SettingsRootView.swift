@@ -8,21 +8,49 @@ extension Settings {
         @StateObject var state = StateModel()
         @State private var showShareSheet = false
 
+        @FetchRequest(
+            entity: VNr.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)], predicate: NSPredicate(
+                format: "nr != %@", "" as String
+            )
+        ) var fetchedVersionNumber: FetchedResults<VNr>
+
+        @FetchRequest(
+            entity: OverridePresets.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "name", ascending: true)], predicate: NSPredicate(
+                format: "name != %@", "" as String
+            )
+        ) var fetchedProfiles: FetchedResults<OverridePresets>
+
         var body: some View {
             Form {
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
                 header: {
-                    if let expirationDate = Bundle.main.profileExpiration {
-                        Text(
-                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
-                                "\nBuild Expires: " + expirationDate
-                        ).textCase(nil)
-                    } else {
-                        Text(
-                            "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
-                        )
+                    VStack(alignment: .leading) {
+                        if let expirationDate = Bundle.main.profileExpiration {
+                            Text(
+                                "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
+                                    "\nBuild Expires: " + expirationDate
+                            ).textCase(nil)
+                        } else {
+                            Text(
+                                "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)"
+                            )
+                        }
+
+                        if let latest = fetchedVersionNumber.first,
+                           ((latest.nr ?? "") > state.versionNumber) ||
+                           ((latest.nr ?? "") < state.versionNumber && (latest.dev ?? "") > state.versionNumber)
+                        {
+                            Text(
+                                "Latest version on GitHub: " +
+                                    ((latest.nr ?? "") < state.versionNumber ? (latest.dev ?? "") : (latest.nr ?? "")) + "\n"
+                            )
+                            .foregroundStyle(.orange).bold()
+                            .multilineTextAlignment(.leading)
+                        }
                     }
                 }
 
@@ -42,7 +70,7 @@ extension Settings {
 
                 Section {
                     Text("Pump Settings").navigationLink(to: .pumpSettingsEditor, from: self)
-                    Text("Basal Profile").navigationLink(to: .basalProfileEditor, from: self)
+                    Text("Basal Profile").navigationLink(to: .basalProfileEditor(saveNewConcentration: false), from: self)
                     Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)
                     Text("Carb Ratios").navigationLink(to: .crEditor, from: self)
                     Text("Target Glucose").navigationLink(to: .targetsEditor, from: self)
@@ -58,8 +86,23 @@ extension Settings {
                     Text("App Icons").navigationLink(to: .iconConfig, from: self)
                     Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                     Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
+                    Text("Sharing").navigationLink(to: .sharing, from: self)
+                    Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                     Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
+                    Text("Auto ISF").navigationLink(to: .autoISF, from: self)
                 } header: { Text("Extra Features") }
+
+                Section {
+                    HStack {
+                        Picker("Treatment", selection: $state.profileID) {
+                            Text("Default  📉").tag("Hypo Treatment")
+                            ForEach(fetchedProfiles) { item in
+                                Text(item.name ?? "").tag(item.id?.string ?? "")
+                            }
+                            Text("None").tag("None")
+                        }
+                    }
+                } header: { Text("Hypo Treatment") }
 
                 Section {
                     Toggle("Debug options", isOn: $state.debugOptions)
@@ -72,21 +115,26 @@ extension Settings {
                                     .buttonStyle(.borderedProminent)
                             }
 
+                            // Test code
                             HStack {
                                 Text("Delete All NS Overrides")
                                 Button("Delete") { state.deleteOverrides() }
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .buttonStyle(.borderedProminent)
                                     .tint(.red)
-                            } /*
+                            }
 
-                             HStack {
-                                 Text("Delete latest NS Override")
-                                 Button("Delete") { state.deleteOverride() }
-                                     .frame(maxWidth: .infinity, alignment: .trailing)
-                                     .buttonStyle(.borderedProminent)
-                                     .tint(.red)
-                             } */
+                            HStack {
+                                Toggle("Ignore flat CGM readings", isOn: $state.disableCGMError)
+                            }
+
+                            HStack {
+                                Toggle("Allow diluted insulin concentration settings", isOn: $state.allowDilution)
+                            }
+
+                            HStack {
+                                Toggle("Max Override 400%", isOn: $state.extended_overrides)
+                            }
                         }
                         Group {
                             Text("Preferences")
@@ -97,6 +145,8 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
                             Text("Pump History")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
+                            Text("Temp Basals")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
                             Text("Basal profile")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
                             Text("Targets ranges")
@@ -126,6 +176,11 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
                             Text("Glucose")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
+                        }
+
+                        Group {
+                            Text("Dynamic Variables")
+                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.dynamicVariables), from: self)
                         }
 
                         Group {

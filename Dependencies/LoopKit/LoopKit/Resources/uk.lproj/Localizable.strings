@@ -1,0 +1,31 @@
+/*
+  Localizable.strings
+  LoopKit
+
+  Created by Pete Schwamb on 3/19/23.
+  Copyright © 2023 LoopKit Authors. All rights reserved.
+*/
+/* Description for novolog insulin type */
+
+"NovoLog (insulin aspart) is a rapid-acting insulin made by Novo Nordisk" = "NovoLog (інсулін аспарт) — інсулін швидкої дії, виготовлений компанією Novo Nordisk";
+
+/* Description for humalog insulin type */
+"Humalog (insulin lispro) is a rapid-acting insulin made by Eli Lilly" = "Humalog (інсулін лізпро) — інсулін швидкої дії, виготовлений компанією Eli Lilly";
+
+/* Description for apidra insulin type */
+"Apidra (insulin glulisine) is a rapid-acting insulin made by Sanofi-aventis " = "Apidra (інсулін глулізин) — інсулін швидкої дії, виготовлений компанією Sanofi-aventis";
+
+/* Description for fiasp insulin type */
+"Fiasp is a mealtime insulin aspart formulation with the addition of nicotinamide (vitamin B3) made by Novo Nordisk" = "Fiasp — це препарат інсуліну аспарт під час прийому їжі з додаванням нікотинаміду (вітамін B3), виготовлений компанією Novo Nordisk.";
+
+/* Description for lyumjev insulin type */
+"Lyumjev is a mealtime insulin lispro formulation with the addition of citrate and treprostinil made by Eli Lilly" = "Lyumjev є лікарською формою інсуліну лізпро для прийому їжі з додаванням цитрату і трепростинилу виробництва Eli Lilly.";
+
+/* Description for afrezza insulin type */
+"Afrezza is an ultra rapid-acting mealtime insulin that is breathed in through your lungs using an oral inhaler and made by MannKind" = "Afrezza - це інсулін надшвидкої дії під час їжі, який вдихається через легені за допомогою перорального інгалятора та виробляється MannKind";
+
+/* Title for Unset insulin type */
+"Unset" = "Не встановлено";
+
+/* Description for Unset insulin type */
+"The currently selected fast acting insulin model will be used as a default." = "Вибрана на даний момент модель інсуліну швидкої дії використовуватиметься як стандартна.";

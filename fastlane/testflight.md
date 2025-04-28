@@ -24,7 +24,7 @@ This step is common for all "Browser Builds", and should be done only once. Plea
 
 1. Sign in to the [Apple developer portal page](https://developer.apple.com/account/resources/certificates/list).
 1. Copy the team id from the upper right of the screen. Record this as your `TEAMID`.
-1. Go to the [App Store Connect](https://appstoreconnect.apple.com/access/api) interface, click the "Keys" tab, and create a new key with "Admin" access. Give it a name like "FastLane API Key".
+1. Go to the [App Store Connect](https://appstoreconnect.apple.com/access/integrations/api) interface, click the "Keys" tab, and create a new key with "Admin" access. Give it a name like "FastLane API Key".
 1. Record the key id; this will be used for `FASTLANE_KEY_ID`.
 1. Record the issuer id; this will be used for `FASTLANE_ISSUER_ID`.
 1. Download the API key itself, and open it in a text editor. The contents of this file will be used for `FASTLANE_KEY`. Copy the full text, including the "-----BEGIN PRIVATE KEY-----" and "-----END PRIVATE KEY-----" lines.
@@ -35,23 +35,8 @@ This is also a common step for all "browser builds", do this step only once
 1. Create a [new empty repository](https://github.com/new) titled `Match-Secrets`. It should be private.
 
 ## Setup Github iAPS repository
-1. Fork https://github.com/Artificial-Pancreas/iAPS into your account. If you already have a fork of iAPS in GitHub, you can't make another one. You can continue to work with your existing fork, or delete that from GitHub and then and fork https://github.com/Artificial-Pancreas/iAPS.
 
-If you have previously built Loop or another app using the "browser build" method, you can can re-use your previous personal access token (`GH_PAT`) and skip ahead to `step 2`.
-1. Create a [new personal access token](https://github.com/settings/tokens/new):
-    * Enter a name for your token. Something like "FastLane Access Token".
-    * The default Expiration time is 30 days - but you should select `No Expiration`
-    * Select the `repo` permission scope.
-    * Click "Generate token".
-    * Copy the token and record it. It will be used below as `GH_PAT`.
-1. In the forked iAPS repo, go to Settings -> Secrets -> Actions.
-1. For each of the following secrets, tap on "New repository secret", then add the name of the secret, along with the value you recorded for it:
-    * `TEAMID`
-    * `FASTLANE_KEY_ID`
-    * `FASTLANE_ISSUER_ID`
-    * `FASTLANE_KEY`
-    * `GH_PAT`
-    * `MATCH_PASSWORD` - just make up a password for this
+>    [Click here](docs/github.md)
 
 ## Validate repository secrets
 

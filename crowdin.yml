@@ -50,3 +50,9 @@ files:
     translation: /Dependencies/G7SensorKit/G7SensorKitUI/%osx_locale%.lproj/Localizable.strings
   - source: FreeAPS/Sources/Shortcuts/en.lproj/AppShortcuts.strings
     translation: FreeAPS/Sources/Shortcuts/%osx_locale%.lproj/AppShortcuts.strings
+  - source: /Dependencies/DanaKit/Localization/en.lproj/Localizable.strings
+    translation: /Dependencies/DanaKit/Localization/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/LoopKit/LoopKit/Resources/en.lproj/Localizable.strings
+    translation: /Dependencies/LoopKit/LoopKit/Resources/%osx_locale%.lproj/Localizable.strings
+  - source: /Dependencies/LoopKit/MockKitUI/Resources/en.lproj/Localizable.strings
+    translation: /Dependencies/LoopKit/MockKitUI/Resources/%osx_locale%.lproj/Localizable.strings

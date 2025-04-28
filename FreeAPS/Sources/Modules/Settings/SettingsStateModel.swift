@@ -9,6 +9,10 @@ extension Settings {
         @Published var closedLoop = false
         @Published var debugOptions = false
         @Published var animatedBackground = false
+        @Published var disableCGMError = true
+        @Published var profileID: String = "Hypo Treatment"
+        @Published var allowDilution = false
+        @Published var extended_overrides = false
 
         private(set) var buildNumber = ""
         private(set) var versionNumber = ""
@@ -16,13 +20,16 @@ extension Settings {
         private(set) var copyrightNotice = ""
 
         override func subscribe() {
+            nightscoutManager.fetchVersion()
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
+            subscribeSetting(\.disableCGMError, on: $disableCGMError) { disableCGMError = $0 }
+            subscribeSetting(\.profileID, on: $profileID) { profileID = $0 }
+            subscribeSetting(\.allowDilution, on: $allowDilution) { allowDilution = $0 }
+            subscribeSetting(\.extended_overrides, on: $extended_overrides) { extended_overrides = $0 }
 
             broadcaster.register(SettingsObserver.self, observer: self)
-
             buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-
             versionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
 
             // Read branch information from the branch.txt instead of infoDictionary
@@ -77,10 +84,6 @@ extension Settings {
         func deleteOverrides() {
             nightscoutManager.deleteAllNSoverrrides() // For testing
         }
-
-        /* func deleteOverride() {
-             nightscoutManager.deleteOverride() // For testing
-         } */
     }
 }
 
@@ -88,5 +91,7 @@ extension Settings.StateModel: SettingsObserver {
     func settingsDidChange(_ settings: FreeAPSSettings) {
         closedLoop = settings.closedLoop
         debugOptions = settings.debugOptions
+        disableCGMError = settings.disableCGMError
+        allowDilution = settings.allowDilution
     }
 }
