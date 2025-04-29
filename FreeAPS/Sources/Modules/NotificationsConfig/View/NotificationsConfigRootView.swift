@@ -158,7 +158,7 @@ extension NotificationsConfig {
                         }
                     }.pickerStyle(.navigationLink)
                 }
-                
+
                 Section(
                     header: Text("Live Activity"),
                     footer: Text(liveActivityFooterText()),
