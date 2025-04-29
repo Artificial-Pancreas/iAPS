@@ -1250,10 +1250,10 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Ngưỡng yêu cầu của lượng Carbs";
 
 /* */
-"Carbs Required:" = "Carbs Required:";
+"Carbs Required:" = "Lượng Carbs được yêu cầu:";
 
 /* */
-"Sounds" = "Sounds";
+"Sounds" = "Âm thanh";
 
 /* Sound for Hypo alert */
 "Hypoglycemia" = "Hypoglycemia";
@@ -1262,16 +1262,16 @@ Enact a temp Basal or a temp target */
 "Hyperglycemia" = "Hyperglycemia";
 
 /* Sound for ascending glucose */
-"Ascending" = "Ascending";
+"Ascending" = "Tăng dần";
 
 /* Sound for descending glucose */
-"Descending" = "Descending";
+"Descending" = "Giảm dần";
 
 /* Silent sound option */
-"Silent" = "Silent";
+"Silent" = "Im lặng";
 
 /* Option for no sound */
-"Silent" = "Silent";
+"Silent" = "Im lặng";
 
 /* */
 "Carbs required: %d g" = "Lượng carbs yêu cầu: %d g";
@@ -2950,10 +2950,10 @@ Enact a temp Basal or a temp target */
 "Display Temp Targets Button" = "Hiển thị nút mục tiêu tạm thời";
 
 /* UI/UX option */
-"Display Profile Override Button" = "Display Profile Override Button";
+"Display Profile Override Button" = "Hiển thị nút ghi đè";
 
 /* UI/UX option */
-"Display Meal Button" = "Display Meal Button";
+"Display Meal Button" = "Hiển thị nút bữa ăn";
 
 /* UI/UX option */
 "Home View Button Panel " = "Bảng nút xem trang chủ ";
