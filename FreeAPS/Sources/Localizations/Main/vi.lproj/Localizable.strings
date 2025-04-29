@@ -1250,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Ngưỡng yêu cầu của lượng Carbs";
 
 /* */
-"Carbs Required:" = "Lượng Carbs được yêu cầu:";
+"Carbs Required" = "Carbs Required";
 
 /* */
 "Sounds" = "Âm thanh";
