@@ -1250,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Tröskelvärde för kolhydrater som krävs";
 
 /* */
-"Carbs Required:" = "Kolhydrater krävs";
+"Carbs Required" = "Carbs Required";
 
 /* */
 "Sounds" = "Ljud";
