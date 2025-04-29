@@ -260,7 +260,7 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Mục tiêu cao";
 
 /*  Temp target set for ... minutes */
 "for" = "của";
@@ -1250,16 +1250,16 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Ngưỡng yêu cầu của lượng Carbs";
 
 /* */
-"Carbs Required" = "Carbs Required";
+"Carbs Required" = "Carbs cần thiết";
 
 /* */
 "Sounds" = "Âm thanh";
 
 /* Sound for Hypo alert */
-"Hypoglycemia" = "Hypoglycemia";
+"Hypoglycemia" = "Hạ đường huyết";
 
 /* Sound for Hyper alert */
-"Hyperglycemia" = "Hyperglycemia";
+"Hyperglycemia" = "Tăng đường huyết";
 
 /* Sound for ascending glucose */
 "Ascending" = "Tăng dần";
