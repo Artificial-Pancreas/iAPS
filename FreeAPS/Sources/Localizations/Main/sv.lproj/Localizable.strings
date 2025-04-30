@@ -1262,16 +1262,25 @@ Enact a temp Basal or a temp target */
 "Hyperglycemia" = "Högt blodsocker";
 
 /* Sound for ascending glucose */
-"Ascending" = "Stigande";
+"Rapidly Ascending" = "Snabbt stigande";
 
 /* Sound for descending glucose */
-"Descending" = "Sjunkande";
+"Rapidly Descending" = "Snabbt fallande";
 
 /* Silent sound option */
 "Silent" = "Tyst";
 
 /* Option for no sound */
 "Silent" = "Tyst";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS standardljud";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "SNABBT STIGANDE BLODSOCKER!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "SNABBT FALLANDE BLODSOCKER!";
 
 /* */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";

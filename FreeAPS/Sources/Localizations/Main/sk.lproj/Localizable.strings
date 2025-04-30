@@ -1263,16 +1263,25 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Hyperglycemia" = "Hyperglycemia";
 
 /* Sound for ascending glucose */
-"Ascending" = "Ascending";
+"Rapidly Ascending" = "Rapidly Ascending";
 
 /* Sound for descending glucose */
-"Descending" = "Descending";
+"Rapidly Descending" = "Rapidly Descending";
 
 /* Silent sound option */
 "Silent" = "Silent";
 
 /* Option for no sound */
 "Silent" = "Silent";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS default sound";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
 /* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
