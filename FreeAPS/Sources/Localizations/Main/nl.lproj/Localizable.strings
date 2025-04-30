@@ -1263,16 +1263,25 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Hyperglycemia" = "Hyperglykemie";
 
 /* Sound for ascending glucose */
-"Ascending" = "Oplopende";
+"Rapidly Ascending" = "Rapidly Ascending";
 
 /* Sound for descending glucose */
-"Descending" = "Dalend";
+"Rapidly Descending" = "Rapidly Descending";
 
 /* Silent sound option */
 "Silent" = "Stille modus";
 
 /* Option for no sound */
 "Silent" = "Stille modus";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS default sound";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
 /* */
 "Carbs required: %d g" = "Koolhydraten vereist: %d g";
