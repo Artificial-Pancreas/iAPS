@@ -1262,16 +1262,25 @@ Enact a temp Basal or a temp target */
 "Hyperglycemia" = "Гіперглікемія";
 
 /* Sound for ascending glucose */
-"Ascending" = "Зростаючий";
+"Rapidly Ascending" = "Rapidly Ascending";
 
 /* Sound for descending glucose */
-"Descending" = "Спадання";
+"Rapidly Descending" = "Rapidly Descending";
 
 /* Silent sound option */
 "Silent" = "Без звуку";
 
 /* Option for no sound */
 "Silent" = "Без звуку";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS default sound";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
 /* */
 "Carbs required: %d g" = "Потрібні вуглеводи: %d g";
