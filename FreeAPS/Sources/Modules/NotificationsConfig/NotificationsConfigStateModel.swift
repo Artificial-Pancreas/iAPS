@@ -15,9 +15,11 @@ extension NotificationsConfig {
 
         @Published var hypoSound: String = "New/Anticipalte.caf"
         @Published var hyperSound: String = "New/Anticipalte.caf"
-        @Published var ascending: String = "New/Anticipalte.caf"
-        @Published var descending: String = "New/Anticipalte.caf"
+        @Published var ascending: String = "Silent"
+        @Published var descending: String = "Silent"
         @Published var carbSound: String = "New/Anticipalte.caf"
+        @Published var bolusFailure: String = "Silent"
+        @Published var missingLoops = true
 
         @Published var alarmSound: String = "New/Anticipalte.caf"
 
@@ -63,6 +65,8 @@ extension NotificationsConfig {
             subscribeSetting(\.ascending, on: $ascending) { ascending = $0 }
             subscribeSetting(\.descending, on: $descending) { descending = $0 }
             subscribeSetting(\.carbSound, on: $carbSound) { carbSound = $0 }
+            subscribeSetting(\.bolusFailure, on: $bolusFailure) { bolusFailure = $0 }
+            subscribeSetting(\.missingLoops, on: $missingLoops) { missingLoops = $0 }
         }
     }
 }

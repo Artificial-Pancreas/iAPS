@@ -127,7 +127,7 @@ extension NotificationsConfig {
                     }
                 }
 
-                Section(header: Text("Other")) {
+                Section(header: Text("Carbs required")) {
                     HStack {
                         Text("Carbs Required Threshold")
                         Spacer()
@@ -137,26 +137,56 @@ extension NotificationsConfig {
                 }
 
                 Section(header: Text("Sounds")) {
-                    Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
+                    if !state.useAlarmSound {
+                        Text("Disabled").foregroundStyle(.secondary)
+                    } else {
+                        Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
+                            Text("Silent").tag("Silent")
+                            ForEach(soundManager.infos, id: \.self.name) { i in
+                                buttonView(name: i.name)
+                            }
+                        }.pickerStyle(.navigationLink)
 
-                    Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
+                        Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
+                            Text("Silent").tag("Silent")
+                            ForEach(soundManager.infos, id: \.self.name) { i in
+                                buttonView(name: i.name)
+                            }
+                        }.pickerStyle(.navigationLink)
 
-                    Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
-                        Text("Silent").tag("Silent")
-                        ForEach(soundManager.infos, id: \.self.name) { i in
-                            buttonView(name: i.name)
-                        }
-                    }.pickerStyle(.navigationLink)
+                        Picker(selection: $state.ascending, label: Text("Rapidly Ascending")) {
+                            Text("Silent").tag("Silent")
+                            ForEach(soundManager.infos, id: \.self.name) { i in
+                                buttonView(name: i.name)
+                            }
+                        }.pickerStyle(.navigationLink)
+
+                        Picker(selection: $state.descending, label: Text("Rapidly Descending")) {
+                            Text("Silent").tag("Silent")
+                            ForEach(soundManager.infos, id: \.self.name) { i in
+                                buttonView(name: i.name)
+                            }
+                        }.pickerStyle(.navigationLink)
+
+                        Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
+                            Text("Silent").tag("Silent")
+                            ForEach(soundManager.infos, id: \.self.name) { i in
+                                buttonView(name: i.name)
+                            }
+                        }.pickerStyle(.navigationLink)
+
+                        Picker(selection: $state.bolusFailure, label: Text("Bolus Failure")) {
+                            Text("Silent").tag("Silent")
+                            ForEach(soundManager.infos, id: \.self.name) { i in
+                                buttonView(name: i.name)
+                            }
+                        }.pickerStyle(.navigationLink)
+
+                        Picker(selection: $state.missingLoops, label: Text("Missing Loops")) {
+                            Text("Silent").tag(false)
+                            Text("iOS default sound").tag(true)
+                        }.pickerStyle(.navigationLink)
+                    }
                 }
 
                 Section(

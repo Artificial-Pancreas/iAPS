@@ -237,14 +237,14 @@ public class G7CGMManager: CGMManager {
         return nil
     }
 
-    public func scanForNewSensor(scanAfterDelay: Bool = false) {
+    public func scanForNewSensor() {
         logDeviceCommunication("Forgetting existing sensor and starting scan for new sensor.", type: .connection)
 
         mutateState { state in
             state.sensorID = nil
             state.activatedAt = nil
         }
-        sensor.scanForNewSensor(scanAfterDelay: scanAfterDelay)
+        sensor.scanForNewSensor()
     }
 
     public var device: HKDevice? {
@@ -309,7 +309,7 @@ extension G7CGMManager: G7SensorDelegate {
     public func sensorDisconnected(_ sensor: G7Sensor, suspectedEndOfSession: Bool) {
         logDeviceCommunication("Sensor disconnected: suspectedEndOfSession=\(suspectedEndOfSession)", type: .connection)
         if suspectedEndOfSession {
-            scanForNewSensor(scanAfterDelay: true)
+            scanForNewSensor()
         }
     }
 
