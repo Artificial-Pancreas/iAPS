@@ -1250,6 +1250,39 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Grenzwert für benötigte Kohlenhydrate";
 
 /* */
+"Carbs Required" = "Carbs Required";
+
+/* */
+"Sounds" = "Sounds";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hypoglycemia";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Hyperglycemia";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Rapidly Ascending";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Rapidly Descending";
+
+/* Silent sound option */
+"Silent" = "Silent";
+
+/* Option for no sound */
+"Silent" = "Silent";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS default sound";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+
+/* */
 "Carbs required: %d g" = "Benötigte Kohlenhydrate: %d g";
 
 /* */
@@ -2925,6 +2958,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Temp Zielknopf anzeigen";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
 
 /* UI/UX option */
 "Home View Button Panel " = "Home-Schaltflächenleiste ";

@@ -1250,6 +1250,39 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Tröskelvärde för kolhydrater som krävs";
 
 /* */
+"Carbs Required" = "Kolhydrater krävs";
+
+/* */
+"Sounds" = "Ljud";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Lågt blodsocker";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Högt blodsocker";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Snabbt stigande";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Snabbt fallande";
+
+/* Silent sound option */
+"Silent" = "Tyst";
+
+/* Option for no sound */
+"Silent" = "Tyst";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS standardljud";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "SNABBT STIGANDE BLODSOCKER!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "SNABBT FALLANDE BLODSOCKER!";
+
+/* */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
 
 /* */
@@ -2924,6 +2957,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Visa knapp för tillfälligt målvärde";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Visa profilknapp";
+
+/* UI/UX option */
+"Display Meal Button" = "Visa måltidsknapp";
 
 /* UI/UX option */
 "Home View Button Panel " = "Knappar på hemskärmen ";
