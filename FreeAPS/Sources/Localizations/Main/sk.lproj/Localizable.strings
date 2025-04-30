@@ -1283,6 +1283,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Alert for ascending glucose */
 "RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus Failure";
+
+/* Sound for missing loops */
+"Missing Loops" = "Missing Loops";
+
 /* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
 
