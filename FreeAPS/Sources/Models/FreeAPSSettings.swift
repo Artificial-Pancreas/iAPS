@@ -62,6 +62,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var ascending: String = "New/Anticipalte.caf"
     var descending: String = "New/Anticipalte.caf"
     var carbSound: String = "New/Anticipalte.caf"
+    var bolusFailure = "Silent"
+    var missingLoops = true
     var profilesOrTempTargets: Bool = false
     var allowBolusShortcut: Bool = false
     var allowedRemoteBolusAmount: Decimal = 0.0
@@ -399,6 +401,14 @@ extension FreeAPSSettings: Decodable {
 
         if let carbSound = try? container.decode(String.self, forKey: .carbSound) {
             settings.carbSound = carbSound
+        }
+
+        if let bolusFailure = try? container.decode(String.self, forKey: .bolusFailure) {
+            settings.bolusFailure = bolusFailure
+        }
+
+        if let missingLoops = try? container.decode(Bool.self, forKey: .missingLoops) {
+            settings.missingLoops = missingLoops
         }
 
         if let profilesOrTempTargets = try? container.decode(Bool.self, forKey: .profilesOrTempTargets) {
