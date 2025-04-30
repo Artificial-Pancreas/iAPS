@@ -260,13 +260,14 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
             return .high
         }
 
-        if let direction = glucose.direction, direction == .doubleDown,
+        if let direction = glucose.direction, direction == .doubleDown || direction == .singleDown,
            Decimal(glucoseValue) < settingsManager.settings.highGlucose
         {
             return .descending
         }
 
-        if let direction = glucose.direction, direction == .doubleUp, Decimal(glucoseValue) > settingsManager.settings.lowGlucose,
+        if let direction = glucose.direction, direction == .doubleUp || direction == .singleUp,
+           Decimal(glucoseValue) > settingsManager.settings.lowGlucose,
            Decimal(glucoseValue) < settingsManager.settings.highGlucose
         {
             return .ascending
