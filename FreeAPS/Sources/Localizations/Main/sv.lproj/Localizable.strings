@@ -1283,7 +1283,7 @@ Enact a temp Basal or a temp target */
 "RAPIDLY ASCENDING GLUCOSE!" = "SNABBT FALLANDE BLODSOCKER!";
 
 /* Sound for bolus failure */
-"Bolus Failure" = "Bolus Failure";
+"Bolus Failure" = "Bolus misslyckades";
 
 /* Sound for missing loops */
 "Missing Loops" = "Missing Loops";
