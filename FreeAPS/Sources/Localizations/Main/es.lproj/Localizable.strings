@@ -1283,6 +1283,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Alert for ascending glucose */
 "RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus Failure";
+
+/* Sound for missing loops */
+"Missing Loops" = "Missing Loops";
+
 /* */
 "Carbs required: %d g" = "Carbohidratos necesarios: %d g";
 
