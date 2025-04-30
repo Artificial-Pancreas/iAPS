@@ -13,6 +13,7 @@ extension NotificationsConfig {
         @State private var currentName: String = ""
 
         let soundManager = SystemSoundsManager()
+        let silent = "Silent"
 
         @State private var systemLiveActivitySetting: Bool = { ActivityAuthorizationInfo().areActivitiesEnabled }()
 
@@ -67,13 +68,6 @@ extension NotificationsConfig {
             }
         }
 
-        private func buttonView(name: String) -> some View {
-            HStack(spacing: 20) {
-                soundView(name: name)
-                Text(cut(name))
-            }
-        }
-
         private func cut(_ name: String) -> String {
             name
                 .replacingOccurrences(of: ".caf", with: "")
@@ -88,7 +82,6 @@ extension NotificationsConfig {
                 .foregroundStyle(.blue)
                 .onTapGesture {
                     currentName = name
-
                     if isPlay {
                         playSound(name, currentSoundID) {
                             isPlay = false
@@ -102,6 +95,17 @@ extension NotificationsConfig {
                     }
                     isPlay = true
                 }
+        }
+
+        private func buttonView(name: String) -> some View {
+            HStack(spacing: 20) {
+                soundView(name: name)
+                Text(cut(name))
+            }
+        }
+
+        private var silentView: some View {
+            Text("Silent").padding(.leading, 46)
         }
 
         var body: some View {
@@ -141,49 +145,49 @@ extension NotificationsConfig {
                         Text("Disabled").foregroundStyle(.secondary)
                     } else {
                         Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
-                            Text("Silent").tag("Silent")
+                            silentView.tag(silent)
                             ForEach(soundManager.infos, id: \.self.name) { i in
                                 buttonView(name: i.name)
                             }
                         }.pickerStyle(.navigationLink)
 
                         Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
-                            Text("Silent").tag("Silent")
+                            silentView.tag(silent)
                             ForEach(soundManager.infos, id: \.self.name) { i in
                                 buttonView(name: i.name)
                             }
                         }.pickerStyle(.navigationLink)
 
                         Picker(selection: $state.ascending, label: Text("Rapidly Ascending")) {
-                            Text("Silent").tag("Silent")
+                            silentView.tag(silent)
                             ForEach(soundManager.infos, id: \.self.name) { i in
                                 buttonView(name: i.name)
                             }
                         }.pickerStyle(.navigationLink)
 
                         Picker(selection: $state.descending, label: Text("Rapidly Descending")) {
-                            Text("Silent").tag("Silent")
+                            silentView.tag(silent)
                             ForEach(soundManager.infos, id: \.self.name) { i in
                                 buttonView(name: i.name)
                             }
                         }.pickerStyle(.navigationLink)
 
                         Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
-                            Text("Silent").tag("Silent")
+                            silentView.tag(silent)
                             ForEach(soundManager.infos, id: \.self.name) { i in
                                 buttonView(name: i.name)
                             }
                         }.pickerStyle(.navigationLink)
 
                         Picker(selection: $state.bolusFailure, label: Text("Bolus Failure")) {
-                            Text("Silent").tag("Silent")
+                            silentView.tag(silent)
                             ForEach(soundManager.infos, id: \.self.name) { i in
                                 buttonView(name: i.name)
                             }
                         }.pickerStyle(.navigationLink)
 
                         Picker(selection: $state.missingLoops, label: Text("Missing Loops")) {
-                            Text("Silent").tag(false)
+                            silentView.tag(false)
                             Text("iOS default sound").tag(true)
                         }.pickerStyle(.navigationLink)
                     }
