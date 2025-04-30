@@ -1251,6 +1251,39 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Carbs Required Threshold" = "Koolhydraten vereist drempelwaarde";
 
 /* */
+"Carbs Required" = "Koolhydraten benodigd";
+
+/* */
+"Sounds" = "Geluiden";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hypoglykemie";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Hyperglykemie";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Rapidly Ascending";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Rapidly Descending";
+
+/* Silent sound option */
+"Silent" = "Stille modus";
+
+/* Option for no sound */
+"Silent" = "Stille modus";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS default sound";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+
+/* */
 "Carbs required: %d g" = "Koolhydraten vereist: %d g";
 
 /* */
@@ -2929,6 +2962,12 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Toon tijdelijke doelen knop";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Toon knop profiel overschrijving";
+
+/* UI/UX option */
+"Display Meal Button" = "Maaltijdknop weergeven";
 
 /* UI/UX option */
 "Home View Button Panel " = "Beginscherm knoppaneel ";
