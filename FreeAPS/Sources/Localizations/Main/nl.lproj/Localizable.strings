@@ -1257,10 +1257,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Sounds" = "Geluiden";
 
 /* Sound for Hypo alert */
-"Hypoglycemia" = "Hypoglykemie";
+"Hypoglycemia" = "Hypo(glykemie)";
 
 /* Sound for Hyper alert */
-"Hyperglycemia" = "Hyperglykemie";
+"Hyperglycemia" = "Hyper(glykemie)";
 
 /* Sound for ascending glucose */
 "Rapidly Ascending" = "Snel stijgend";
@@ -1284,7 +1284,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "RAPIDLY ASCENDING GLUCOSE!" = "ZEER SNEL STIJGENDE BG";
 
 /* Sound for bolus failure */
-"Bolus Failure" = "Bolus mislukt";
+"Bolus Failure" = "Bolus fout";
 
 /* Sound for missing loops */
 "Missing Loops" = "Ontbrekende loops";
@@ -2443,13 +2443,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor waarmee je normale basaalstand wordt vermenigvuldigd voor B30. De maximale basaalstand die wordt toegepast, is de maximale basaalinstelling van je pomp. Standaardwaarde is 5.";
 
 /* */
-"Upper Delta limit" = "Maximale toegestane verandering";
+"Upper Delta limit" = "Maximaal toegestane verandering";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 8 mg/dl (0,5 mmol/l).";
 
 /* */
-"Upper BG limit" = "Maximale toegestane glucosewaarde";
+"Upper BG limit" = "Maximaal toegestane glucosewaarde";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 130 mg/dl (7,2 mmol/l).";
