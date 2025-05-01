@@ -1283,10 +1283,10 @@ Enact a temp Basal or a temp target */
 "RAPIDLY ASCENDING GLUCOSE!" = "ШВИДКО ПІДВИЩУЄТЬСЯ РІВЕНЬ ГЛЮКОЗИ!";
 
 /* Sound for bolus failure */
-"Bolus Failure" = "Bolus Failure";
+"Bolus Failure" = "Невдача введення Болюсу";
 
 /* Sound for missing loops */
-"Missing Loops" = "Missing Loops";
+"Missing Loops" = "Відсутні Цикли";
 
 /* */
 "Carbs required: %d g" = "Потрібні вуглеводи: %d g";
