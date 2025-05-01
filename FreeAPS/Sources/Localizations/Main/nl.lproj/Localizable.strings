@@ -1263,10 +1263,10 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Hyperglycemia" = "Hyperglykemie";
 
 /* Sound for ascending glucose */
-"Rapidly Ascending" = "Rapidly Ascending";
+"Rapidly Ascending" = "Snel stijgend";
 
 /* Sound for descending glucose */
-"Rapidly Descending" = "Rapidly Descending";
+"Rapidly Descending" = "Snel dalend";
 
 /* Silent sound option */
 "Silent" = "Stille modus";
@@ -1275,19 +1275,19 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Silent" = "Stille modus";
 
 /* The iOS default sound */
-"iOS default sound" = "iOS default sound";
+"iOS default sound" = "Standaard iOS geluid";
 
 /* Alert for descending glucose */
-"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+"RAPIDLY DESCENDING GLUCOSE!" = "ZEER SNEL DALENDE BG";
 
 /* Alert for ascending glucose */
-"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+"RAPIDLY ASCENDING GLUCOSE!" = "ZEER SNEL STIJGENDE BG";
 
 /* Sound for bolus failure */
-"Bolus Failure" = "Bolus Failure";
+"Bolus Failure" = "Bolus mislukt";
 
 /* Sound for missing loops */
-"Missing Loops" = "Missing Loops";
+"Missing Loops" = "Ontbrekende loops";
 
 /* */
 "Carbs required: %d g" = "Koolhydraten vereist: %d g";
@@ -1302,7 +1302,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Last loop was more than %d min ago" = "Laatste loop was meer dan %d min geleden";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Toon glucosewaarde op de app icoon";
+"Show glucose on the app badge" = "Toon glucosewaarde op de app icon";
 
 /* */
 "Backfill glucose" = "Terugzetten glucose";
