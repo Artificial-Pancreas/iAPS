@@ -26,7 +26,7 @@
 "OK" = "OK";
 
 /* The title of the temp basal error toggle */
-"Error on Temp Basal" = "Fout op tijdelijke basaal";
+"Error on Temp Basal" = "Fout bij tijdelijke basaal";
 
 /* The title of the battery remaining setting */
 "Battery Remaining" = "Resterende batterij";
@@ -38,7 +38,7 @@
 "Pump Settings" = "Pomp instellingen";
 
 /* The title of the current basal rate setting */
-"Current Basal Rate" = "Huidige basaalsnelheid";
+"Current Basal Rate" = "Huidige basaalstand";
 
 /* The title of the resolve occlusion action */
 "Resolve Occlusion" = "Verstopping oplossen";
