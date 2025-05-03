@@ -95,7 +95,10 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private func notifyCarbsRequired(_ carbs: Int) {
-        guard Decimal(carbs) >= settingsManager.settings.carbsRequiredThreshold else { return }
+        guard settingsManager.settings.carbsRequiredAlert,
+              Decimal(carbs) >= settingsManager.settings.carbsRequiredThreshold
+        else { return
+        }
         let sound = settingsManager.settings.carbSound
 
         ensureCanSendNotification {
@@ -199,6 +202,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             var titles: [String] = []
             var notificationAlarm = false
             var sound: String = "New/Anticipalte.caf"
+            var alert = true
 
             switch self.glucoseStorage.alarm {
             case .none:
@@ -208,18 +212,22 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
                 sound = self.settingsManager.settings.hypoSound
                 notificationAlarm = true
+                alert = self.settingsManager.settings.lowAlert
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
                 sound = self.settingsManager.settings.hyperSound
                 notificationAlarm = true
+                alert = self.settingsManager.settings.highAlert
             case .ascending:
                 titles.append(NSLocalizedString("RAPIDLY ASCENDING GLUCOSE!", comment: "RAPIDLY ASCENDING GLUCOSE!"))
                 sound = self.settingsManager.settings.ascending
                 notificationAlarm = true
+                alert = self.settingsManager.settings.ascendingAlert
             case .descending:
                 titles.append(NSLocalizedString("RAPIDLY DESCENDING GLUCOSE!", comment: "RAPIDLY DESCENDING GLUCOSE!"))
                 sound = self.settingsManager.settings.descending
                 notificationAlarm = true
+                alert = self.settingsManager.settings.descendingAlert
             }
 
             let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
@@ -229,7 +237,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
                 notificationAlarm = false
-            } else {
+            } else if alert {
                 titles.append(body)
                 let content = UNMutableNotificationContent()
                 content.title = titles.joined(separator: " ")
