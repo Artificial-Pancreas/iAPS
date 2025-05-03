@@ -1250,43 +1250,43 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Порог необходимых углеводов";
 
 /* */
-"Carbs Required" = "Carbs Required";
+"Carbs Required" = "Требуются углеводы";
 
 /* */
-"Sounds" = "Sounds";
+"Sounds" = "Звуки";
 
 /* Sound for Hypo alert */
-"Hypoglycemia" = "Hypoglycemia";
+"Hypoglycemia" = "Гипогликемия";
 
 /* Sound for Hyper alert */
-"Hyperglycemia" = "Hyperglycemia";
+"Hyperglycemia" = "Гипергликемия";
 
 /* Sound for ascending glucose */
-"Rapidly Ascending" = "Rapidly Ascending";
+"Rapidly Ascending" = "Быстрое повышение";
 
 /* Sound for descending glucose */
-"Rapidly Descending" = "Rapidly Descending";
+"Rapidly Descending" = "Быстрое снижение";
 
 /* Silent sound option */
-"Silent" = "Silent";
+"Silent" = "Без звука";
 
 /* Option for no sound */
-"Silent" = "Silent";
+"Silent" = "Без звука";
 
 /* The iOS default sound */
-"iOS default sound" = "iOS default sound";
+"iOS default sound" = "Звук iOS по умолчанию";
 
 /* Alert for descending glucose */
-"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+"RAPIDLY DESCENDING GLUCOSE!" = "БЫСТРОЕ СНИЖЕНИЕ ГЛЮКОЗЫ!";
 
 /* Alert for ascending glucose */
-"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+"RAPIDLY ASCENDING GLUCOSE!" = "БЫСТРОЕ ПОВЫШЕНИЕ ГЛЮКОЗЫ!";
 
 /* Sound for bolus failure */
-"Bolus Failure" = "Bolus Failure";
+"Bolus Failure" = "Болюс не состоялся";
 
 /* Sound for missing loops */
-"Missing Loops" = "Missing Loops";
+"Missing Loops" = "Пропущенные циклы";
 
 /* */
 "Carbs required: %d g" = "Необходимы углеводы: %d г";
@@ -2965,10 +2965,10 @@ Enact a temp Basal or a temp target */
 "Display Temp Targets Button" = "Отображать кнопку временных целей";
 
 /* UI/UX option */
-"Display Profile Override Button" = "Display Profile Override Button";
+"Display Profile Override Button" = "Отображать кнопку Переопределения Профиля";
 
 /* UI/UX option */
-"Display Meal Button" = "Display Meal Button";
+"Display Meal Button" = "Отображать кнопку Питания";
 
 /* UI/UX option */
 "Home View Button Panel " = "Панель кнопок главного экрана ";
