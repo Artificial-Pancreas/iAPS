@@ -110,12 +110,19 @@ extension NotificationsConfig {
 
         var body: some View {
             Form {
-                Section(header: Text("Glucose")) {
+                Section {
                     Toggle("Show glucose on the app badge", isOn: $state.glucoseBadge)
                     Toggle("Always Notify Glucose", isOn: $state.glucoseNotificationsAlways)
-                    Toggle("Also play alert sound", isOn: $state.useAlarmSound)
                     Toggle("Also add source info", isOn: $state.addSourceInfoToGlucoseNotifications)
+                    Toggle("Low", isOn: $state.lowAlert)
+                    Toggle("High", isOn: $state.highAlert)
+                    Toggle("Ascending", isOn: $state.ascendingAlert)
+                    Toggle("Descending", isOn: $state.descendingAlert)
+                    Toggle("Carbs required", isOn: $state.carbsRequiredAlert)
+                    Toggle("Also play alert sound", isOn: $state.useAlarmSound)
+                } header: { Text("Enable") }
 
+                Section {
                     HStack {
                         Text("Low")
                         Spacer()
@@ -129,18 +136,16 @@ extension NotificationsConfig {
                         DecimalTextField("0", value: $state.highGlucose, formatter: glucoseFormatter)
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
-                }
 
-                Section(header: Text("Carbs required")) {
                     HStack {
                         Text("Carbs Required Threshold")
                         Spacer()
                         DecimalTextField("0", value: $state.carbsRequiredThreshold, formatter: carbsFormatter)
                         Text("g").foregroundColor(.secondary)
                     }
-                }
+                } header: { Text("Thresholds") }
 
-                Section(header: Text("Sounds")) {
+                Section {
                     if !state.useAlarmSound {
                         Text("Disabled").foregroundStyle(.secondary)
                     } else {
@@ -191,7 +196,7 @@ extension NotificationsConfig {
                             Text("iOS default sound").tag(true)
                         }.pickerStyle(.navigationLink)
                     }
-                }
+                } header: { Text("Sounds") }
 
                 Section(
                     header: Text("Live Activity"),

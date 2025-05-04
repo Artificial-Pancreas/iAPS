@@ -21,6 +21,12 @@ extension NotificationsConfig {
         @Published var bolusFailure: String = "Silent"
         @Published var missingLoops = true
 
+        @Published var lowAlert = true
+        @Published var highAlert = true
+        @Published var ascendingAlert = true
+        @Published var descendingAlert = true
+        @Published var carbsRequiredAlert = true
+
         @Published var alarmSound: String = "New/Anticipalte.caf"
 
         var units: GlucoseUnits = .mmolL
@@ -38,7 +44,11 @@ extension NotificationsConfig {
             subscribeSetting(\.liveActivityChart, on: $liveActivityChart) { liveActivityChart = $0 }
             subscribeSetting(\.liveActivityChartShowPredictions, on: $liveActivityChartShowPredictions) {
                 liveActivityChartShowPredictions = $0 }
-
+            subscribeSetting(\.lowAlert, on: $lowAlert) { lowAlert = $0 }
+            subscribeSetting(\.highAlert, on: $highAlert) { highAlert = $0 }
+            subscribeSetting(\.ascendingAlert, on: $ascendingAlert) { ascendingAlert = $0 }
+            subscribeSetting(\.descendingAlert, on: $descendingAlert) { descendingAlert = $0 }
+            subscribeSetting(\.carbsRequiredAlert, on: $carbsRequiredAlert) { carbsRequiredAlert = $0 }
             subscribeSetting(\.lowGlucose, on: $lowGlucose, initial: {
                 let value = max(min($0, 400), 40)
                 lowGlucose = units == .mmolL ? value.asMmolL : value
@@ -65,7 +75,6 @@ extension NotificationsConfig {
             subscribeSetting(\.ascending, on: $ascending) { ascending = $0 }
             subscribeSetting(\.descending, on: $descending) { descending = $0 }
             subscribeSetting(\.carbSound, on: $carbSound) { carbSound = $0 }
-            subscribeSetting(\.bolusFailure, on: $bolusFailure) { bolusFailure = $0 }
             subscribeSetting(\.missingLoops, on: $missingLoops) { missingLoops = $0 }
         }
     }
