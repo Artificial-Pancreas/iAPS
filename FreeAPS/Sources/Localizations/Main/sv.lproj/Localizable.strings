@@ -1295,7 +1295,7 @@ Enact a temp Basal or a temp target */
 "Descending" = "Sjunkande";
 
 /* Thresholds for Alerts */
-"Thresholds" = "Thresholds";
+"Thresholds" = "Tröskelvärden";
 
 /* */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
