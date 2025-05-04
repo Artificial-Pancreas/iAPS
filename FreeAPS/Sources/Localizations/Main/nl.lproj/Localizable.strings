@@ -1295,6 +1295,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Alert for descending glucose */
 "Descending" = "Descending";
 
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
+
 /* */
 "Carbs required: %d g" = "Koolhydraten vereist: %d g";
 
