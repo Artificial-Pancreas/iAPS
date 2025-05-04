@@ -1295,6 +1295,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Alert for descending glucose */
 "Descending" = "Descending";
 
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
+
 /* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
 

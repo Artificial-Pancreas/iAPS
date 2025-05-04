@@ -1294,6 +1294,9 @@ Enact a temp Basal or a temp target */
 /* Alert for descending glucose */
 "Descending" = "Sjunkande";
 
+/* Thresholds for Alerts */
+"Thresholds" = "Tröskelvärden";
+
 /* */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
 

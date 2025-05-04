@@ -1294,6 +1294,9 @@ Enact a temp Basal or a temp target */
 /* Alert for descending glucose */
 "Descending" = "Спадання";
 
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
+
 /* */
 "Carbs required: %d g" = "Потрібні вуглеводи: %d g";
 
