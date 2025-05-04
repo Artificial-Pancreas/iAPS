@@ -1296,6 +1296,9 @@ Połączono z Nightscout!";
 /* Alert for descending glucose */
 "Descending" = "Descending";
 
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
+
 /* */
 "Carbs required: %d g" = "Carbs required: %d g";
 
