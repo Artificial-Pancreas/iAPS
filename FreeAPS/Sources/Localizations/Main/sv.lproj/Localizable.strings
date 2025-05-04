@@ -1289,10 +1289,10 @@ Enact a temp Basal or a temp target */
 "Missing Loops" = "Saknade loopar";
 
 /* Alert for ascending glucose */
-"Ascending" = "Ascending";
+"Ascending" = "Stigande";
 
 /* Alert for descending glucose */
-"Descending" = "Descending";
+"Descending" = "Sjunkande";
 
 /* */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";
