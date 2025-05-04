@@ -1288,6 +1288,12 @@ Enact a temp Basal or a temp target */
 /* Sound for missing loops */
 "Missing Loops" = "Missing Loops";
 
+/* Alert for ascending glucose */
+"Ascending" = "Đang tăng dần";
+
+/* Alert for descending glucose */
+"Descending" = "Đang giảm dần";
+
 /* */
 "Carbs required: %d g" = "Lượng carbs yêu cầu: %d g";
 
@@ -2687,7 +2693,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Mặc định là False. Khi True, hãy luôn bật Super Micro Bolus (trừ khi bị tắt bởi high temptarget).";
 
 /* Headline "Enable SMB After Carbs" */
-"Enable SMB After Carbs" = "Kích hoạt SMB sau Carbs";
+"Enable SMB After Carbs" = "Kích hoạt SMB sau nhập Carbs";
 
 /* "Enable SMB After Carbs" */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật Super Micro Bolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
@@ -2792,7 +2798,7 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa có thể được phân phối dưới dạng một SMB duy nhất không có COB. Điều này mang lại khả năng làm cho SMB trở nên hung hãn hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Không nên đặt giá trị này cao hơn 90 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về liều tạm thời bằng 0 để an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Số phút liều Cơ Bản tối đa của UAM SMB";
+"Max UAM SMB Basal Minutes" = "Số phút liều Cơ Bản tối đa của UAM với SMB";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa mà UAM có thể phân phối dưới dạng một SMB khi IOB vượt quá COB. Điều này mang lại khả năng khiến UAM trở nên hung hãn hơn hoặc ít hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Việc giảm giá trị sẽ khiến UAM giảm liều insulin cho mỗi SMB. Không nên đặt giá trị này cao hơn 60 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về liều tạm thời bằng 0 một cách an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
@@ -3088,7 +3094,7 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Mặc định là 0,2 (20%). Thay đổi phần trăm dương tối đa của cấp độ BG để sử dụng SMB, trên mức đó sẽ vô hiệu hóa SMB. Giới hạn mã hóa cứng là 40%. Đối với UAM vòng kín hoàn toàn nên sử dụng 30%. Quan sát nhật ký và cửa sổ bật lên (maxDelta 27 > 20% BG 100 - vô hiệu hóa SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... When Blood Glucose Is Above:";
+"... When Blood Glucose Is Above:" = "... Khi lượng đường trong máu cao hơn:";
 
 /* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Đặt giá trị \"Kích hoạt SMB với BG cao\" sẽ so sánh để kích hoạt SMB. Nếu BG > giá trị này, SMB sẽ kích hoạt.";

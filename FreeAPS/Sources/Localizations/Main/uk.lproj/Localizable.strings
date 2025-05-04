@@ -1288,6 +1288,12 @@ Enact a temp Basal or a temp target */
 /* Sound for missing loops */
 "Missing Loops" = "Відсутні Цикли";
 
+/* Alert for ascending glucose */
+"Ascending" = "Зростаючий";
+
+/* Alert for descending glucose */
+"Descending" = "Спадання";
+
 /* */
 "Carbs required: %d g" = "Потрібні вуглеводи: %d g";
 
