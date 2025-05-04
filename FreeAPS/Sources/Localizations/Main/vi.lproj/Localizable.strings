@@ -1289,10 +1289,10 @@ Enact a temp Basal or a temp target */
 "Missing Loops" = "Missing Loops";
 
 /* Alert for ascending glucose */
-"Ascending" = "Ascending";
+"Ascending" = "Đang tăng dần";
 
 /* Alert for descending glucose */
-"Descending" = "Descending";
+"Descending" = "Đang giảm dần";
 
 /* */
 "Carbs required: %d g" = "Lượng carbs yêu cầu: %d g";
