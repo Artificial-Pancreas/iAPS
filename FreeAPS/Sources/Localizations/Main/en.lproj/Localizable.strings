@@ -1285,6 +1285,12 @@ Enact a temp Basal or a temp target */
 /* Alert for ascending glucose */
 "RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus Failure";
+
+/* Sound for missing loops */
+"Missing Loops" = "Missing Loops";
+
  /* */
  "Carbs required: %d g" = "Carbs required: %d g";
 
