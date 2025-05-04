@@ -1289,6 +1289,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Sound for missing loops */
 "Missing Loops" = "Missing Loops";
 
+/* Alert for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Alert for descending glucose */
+"Descending" = "Descending";
+
 /* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
 
