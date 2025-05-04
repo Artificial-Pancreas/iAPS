@@ -1288,6 +1288,12 @@ Enact a temp Basal or a temp target */
 /* Sound for missing loops */
 "Missing Loops" = "Cicli falliti";
 
+/* Alert for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Alert for descending glucose */
+"Descending" = "Descending";
+
 /* */
 "Carbs required: %d g" = "Carboidrati necessari %d g";
 
