@@ -1289,6 +1289,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Sound for missing loops */
 "Missing Loops" = "Ontbrekende loops";
 
+/* Alert for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Alert for descending glucose */
+"Descending" = "Descending";
+
 /* */
 "Carbs required: %d g" = "Koolhydraten vereist: %d g";
 
