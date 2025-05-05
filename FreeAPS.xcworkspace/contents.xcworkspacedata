@@ -37,4 +37,7 @@
    <FileRef
       location = "group:Dependencies/MedtrumKit/MedtrumKit.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Dependencies/EversenseKit/EversenseKit.xcodeproj">
+   </FileRef>
 </Workspace>

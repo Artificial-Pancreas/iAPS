@@ -2,3 +2,8 @@
 	path = Dependencies/MedtrumKit
 	url = https://github.com/bastiaanv/MedtrumKit
 	branch = feat/settings-ui
+
+[submodule "Dependencies/EversenseKit"]
+	path = Dependencies/EversenseKit
+	url = https://github.com/bastiaanv/EversenseKit
+	branch = dev
