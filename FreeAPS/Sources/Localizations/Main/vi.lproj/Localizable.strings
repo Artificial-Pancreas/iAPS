@@ -1295,7 +1295,7 @@ Enact a temp Basal or a temp target */
 "Descending" = "Đang giảm dần";
 
 /* Thresholds for Alerts */
-"Thresholds" = "Thresholds";
+"Thresholds" = "Các ngưỡng";
 
 /* */
 "Carbs required: %d g" = "Lượng carbs yêu cầu: %d g";
