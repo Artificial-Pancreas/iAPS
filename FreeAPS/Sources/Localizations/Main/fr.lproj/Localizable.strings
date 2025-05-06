@@ -161,10 +161,10 @@
 "Override" = "Override";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Pas de pompe";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Ouvert";
 
 /*  */
 "Amount Carbs" = "Quantité de Glucides";
@@ -272,7 +272,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Variables dynamiques";
 
 /*  */
 "Basal profile" = "Profil Basal";
@@ -706,19 +706,19 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Traitements";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Ajouter de l'insuline";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Ajouter une glycémie";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Nouvelle glycémie";
 
 /* Hypo Treatment Preset */
 "Treatment" = "Traitement";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Traitement par défaut";
 
 /* Hypo Treatment Default Value */
 "None" = "Aucun";
@@ -946,10 +946,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Infos capteur";
 
 /* */
-"Sensor Life-Span" = "Sensor Life-Span";
+"Sensor Life-Span" = "Durée de vie du capteur";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Lorsque vous utilisez %@, iAPS ne connaît pas le type de capteur utilisé ou la durée de vie du capteur.";
 
 /* */
 "Sensor Age Left" = "Âge restant capteur";
@@ -1141,10 +1141,10 @@ Enact a temp Basal or a temp target */
 "Activates an %@ Override Preset" = "Active un %@ préréglage de remplacement";
 
 /* Suspend/Resume Shortcut */
-"Choose what to do with your pump" = "Choose what to do with your pump";
+"Choose what to do with your pump" = "Choisissez ce que vous voulez faire avec votre pompe";
 
 /* Suspend/Resume Shortcut */
-"Are you sure you want to %@ your pump?" = "Are you sure you want to %@ your pump?";
+"Are you sure you want to %@ your pump?" = "Êtes-vous sûr de vouloir %@ votre pompe ?";
 
 /* Suspend/Resume Shortcut */
 "Pump command" = "Pump command";
@@ -1250,52 +1250,52 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Seuil de glucides requis";
 
 /* */
-"Carbs Required" = "Carbs Required";
+"Carbs Required" = "Glucides requis";
 
 /* */
-"Sounds" = "Sounds";
+"Sounds" = "Sons";
 
 /* Sound for Hypo alert */
-"Hypoglycemia" = "Hypoglycemia";
+"Hypoglycemia" = "Hypoglycémie";
 
 /* Sound for Hyper alert */
-"Hyperglycemia" = "Hyperglycemia";
+"Hyperglycemia" = "Hyperglycémie";
 
 /* Sound for ascending glucose */
-"Rapidly Ascending" = "Rapidly Ascending";
+"Rapidly Ascending" = "Montée rapide";
 
 /* Sound for descending glucose */
-"Rapidly Descending" = "Rapidly Descending";
+"Rapidly Descending" = "Chute rapide";
 
 /* Silent sound option */
-"Silent" = "Silent";
+"Silent" = "Silencieux";
 
 /* Option for no sound */
-"Silent" = "Silent";
+"Silent" = "Silencieux";
 
 /* The iOS default sound */
-"iOS default sound" = "iOS default sound";
+"iOS default sound" = "Son par défaut d'iOS";
 
 /* Alert for descending glucose */
-"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+"RAPIDLY DESCENDING GLUCOSE!" = "GLYCÉMIE EN CHUTE RAPIDE !";
 
 /* Alert for ascending glucose */
-"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+"RAPIDLY ASCENDING GLUCOSE!" = "GLYCÉMIE EN MONTÉE RAPIDE !";
 
 /* Sound for bolus failure */
-"Bolus Failure" = "Bolus Failure";
+"Bolus Failure" = "Échec du bolus";
 
 /* Sound for missing loops */
-"Missing Loops" = "Missing Loops";
+"Missing Loops" = "Boucles manquées";
 
 /* Alert for ascending glucose */
-"Ascending" = "Ascending";
+"Ascending" = "Montante";
 
 /* Alert for descending glucose */
-"Descending" = "Descending";
+"Descending" = "Descendante";
 
 /* Thresholds for Alerts */
-"Thresholds" = "Thresholds";
+"Thresholds" = "Seuils d'alerte";
 
 /* */
 "Carbs required: %d g" = "Glucides requis :%d g";
@@ -1610,7 +1610,7 @@ Enact a temp Basal or a temp target */
 "Profiles" = "Profils";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Réglages avancés";
 
 /* */
 "More options" = "Plus d'options";
