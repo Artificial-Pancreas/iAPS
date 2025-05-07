@@ -1262,10 +1262,10 @@ Enact a temp Basal or a temp target */
 "Hyperglycemia" = "Iperglicemia";
 
 /* Sound for ascending glucose */
-"Rapidly Ascending" = "Rapidly Ascending";
+"Rapidly Ascending" = "Rapidamente Crescente";
 
 /* Sound for descending glucose */
-"Rapidly Descending" = "Rapidly Descending";
+"Rapidly Descending" = "Rapidamente Decrescente";
 
 /* Silent sound option */
 "Silent" = "Modalità silenziosa";
@@ -1274,13 +1274,28 @@ Enact a temp Basal or a temp target */
 "Silent" = "Modalità silenziosa";
 
 /* The iOS default sound */
-"iOS default sound" = "iOS default sound";
+"iOS default sound" = "suono predefinito iOS";
 
 /* Alert for descending glucose */
-"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+"RAPIDLY DESCENDING GLUCOSE!" = "Glicemia in rapida discesa!";
 
 /* Alert for ascending glucose */
-"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+"RAPIDLY ASCENDING GLUCOSE!" = "Glicemia in rapida salita!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolo Fallito";
+
+/* Sound for missing loops */
+"Missing Loops" = "Cicli falliti";
+
+/* Alert for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Alert for descending glucose */
+"Descending" = "Descending";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
 
 /* */
 "Carbs required: %d g" = "Carboidrati necessari %d g";
