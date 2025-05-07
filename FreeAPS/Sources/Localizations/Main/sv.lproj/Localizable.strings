@@ -1277,10 +1277,25 @@ Enact a temp Basal or a temp target */
 "iOS default sound" = "iOS standardljud";
 
 /* Alert for descending glucose */
-"RAPIDLY DESCENDING GLUCOSE!" = "SNABBT STIGANDE BLODSOCKER!";
+"RAPIDLY DESCENDING GLUCOSE!" = "SNABBT FALLANDE BLODSOCKER!";
 
 /* Alert for ascending glucose */
-"RAPIDLY ASCENDING GLUCOSE!" = "SNABBT FALLANDE BLODSOCKER!";
+"RAPIDLY ASCENDING GLUCOSE!" = "SNABBT STIGANDE BLODSOCKER!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus misslyckades";
+
+/* Sound for missing loops */
+"Missing Loops" = "Saknade loopar";
+
+/* Alert for ascending glucose */
+"Ascending" = "Stigande";
+
+/* Alert for descending glucose */
+"Descending" = "Sjunkande";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Tröskelvärden";
 
 /* */
 "Carbs required: %d g" = "Kolhydrater som krävs: %d g";

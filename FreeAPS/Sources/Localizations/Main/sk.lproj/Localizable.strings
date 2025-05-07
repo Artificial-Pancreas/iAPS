@@ -1251,37 +1251,52 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Carbs Required Threshold" = "Prahová hodnota pre pripomenutie sacharidov";
 
 /* */
-"Carbs Required" = "Carbs Required";
+"Carbs Required" = "Potrebné sacharidy";
 
 /* */
-"Sounds" = "Sounds";
+"Sounds" = "Zvuky";
 
 /* Sound for Hypo alert */
-"Hypoglycemia" = "Hypoglycemia";
+"Hypoglycemia" = "Hypoglykémia";
 
 /* Sound for Hyper alert */
-"Hyperglycemia" = "Hyperglycemia";
+"Hyperglycemia" = "Hyperglykémia";
 
 /* Sound for ascending glucose */
-"Rapidly Ascending" = "Rapidly Ascending";
+"Rapidly Ascending" = "Rýchlo stúpajúci";
 
 /* Sound for descending glucose */
-"Rapidly Descending" = "Rapidly Descending";
+"Rapidly Descending" = "Rýchlo klesajúci";
 
 /* Silent sound option */
-"Silent" = "Silent";
+"Silent" = "Tichý";
 
 /* Option for no sound */
-"Silent" = "Silent";
+"Silent" = "Tichý";
 
 /* The iOS default sound */
-"iOS default sound" = "iOS default sound";
+"iOS default sound" = "Predvolený zvuk pre iOS";
 
 /* Alert for descending glucose */
-"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+"RAPIDLY DESCENDING GLUCOSE!" = "RÝCHLO KLESAJÚCA GLYKÉMIA!";
 
 /* Alert for ascending glucose */
-"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+"RAPIDLY ASCENDING GLUCOSE!" = "RÝCHLO STÚPAJÚCA GLYKÉMIA!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Zlyhanie bolusu";
+
+/* Sound for missing loops */
+"Missing Loops" = "Chýbajúce slučky";
+
+/* Alert for ascending glucose */
+"Ascending" = "Vzostupne";
+
+/* Alert for descending glucose */
+"Descending" = "Zostupne";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Prahové hodnoty";
 
 /* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
@@ -1413,7 +1428,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Only Autotune Basal Insulin" = "Iba Autotune bazálneho inzulínu";
 
 /* */
-"Save as your Normal Basal Rates" = "Uložiť ako normálne bazálne sadzby";
+"Save as your Normal Basal Rates" = "Uložiť ako predvolené hodnoty bazálu";
 
 /* */
 "Save on Pump" = "Uložiť do pumpy";
@@ -1502,7 +1517,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " -  Manual Basal ⚠️" = " -  Manuálny bazál ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/day";
+"U/day" = "U/deň";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Spolu";
@@ -2960,10 +2975,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Display Temp Targets Button" = "Zobraziť dočasné cieľové tlačidlo";
 
 /* UI/UX option */
-"Display Profile Override Button" = "Display Profile Override Button";
+"Display Profile Override Button" = "Zobraziť tlačidlo prepísania profilu";
 
 /* UI/UX option */
-"Display Meal Button" = "Display Meal Button";
+"Display Meal Button" = "Zobraziť tlačidlo jedla";
 
 /* UI/UX option */
 "Home View Button Panel " = "Panel tlačidiel zobrazenia Domov ";

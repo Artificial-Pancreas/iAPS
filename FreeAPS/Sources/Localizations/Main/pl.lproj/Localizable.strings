@@ -1284,6 +1284,21 @@ Połączono z Nightscout!";
 /* Alert for ascending glucose */
 "RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus Failure";
+
+/* Sound for missing loops */
+"Missing Loops" = "Missing Loops";
+
+/* Alert for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Alert for descending glucose */
+"Descending" = "Descending";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
+
 /* */
 "Carbs required: %d g" = "Carbs required: %d g";
 
