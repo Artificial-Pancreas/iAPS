@@ -4,7 +4,7 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Zaznamenať inzulínu bez podania bolusu";
+"Add insulin without actually bolusing" = "Zaznamenať inzulín bez podania bolusu";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Pridať %@ bez podania bolusu";
@@ -381,7 +381,7 @@ Enact a temp Basal or a temp target */
 "Local glucose source" = "Lokálny zdroj glykémie";
 
 /* Header */
-"Nightscout Config" = "Konfigurácia Nightscout";
+"Nightscout Config" = "Nightscout nastavenia";
 
 /*  */
 "Port" = "Port";
@@ -417,7 +417,7 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Povoliť vzdialené ovládanie iAPS";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nTeraz dôkladne skontrolujte všetky nové nastavenia:\n\n* Bazálne nastavenia\n * Sacharidové pomery\n * Cieľové hodnoty glykémie\n * Citlivosť na inzulín\n * DIA\n\n v iAPS Nastavenia > Konfigurácia.\n\nZlé alebo neplatné nastavenia profilu by mohli mať škodlivé účinky.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nTeraz dôkladne skontrolujte všetky nové nastavenia:\n\n* Bazálne nastavenia\n * Sacharidové pomery\n * Cieľové hodnoty glykémie\n * Citlivosť na inzulín\n * DIA\n\n v iAPS Nastavenia > Konfigurácia.\n\nZlé alebo neplatné nastavenia profilu by mohli mať fatálne následky.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Týmto sa nahradia niektoré alebo všetky aktuálne nastavenia pumpy. Ste si istí, že chcete importovať nastavenia profilu z programu Nightscout?";
@@ -1263,10 +1263,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Hyperglycemia" = "Hyperglykémia";
 
 /* Sound for ascending glucose */
-"Rapidly Ascending" = "Rýchlo stúpajúci";
+"Rapidly Ascending" = "Stúpajúci trend";
 
 /* Sound for descending glucose */
-"Rapidly Descending" = "Rýchlo klesajúci";
+"Rapidly Descending" = "Klesajúci trend";
 
 /* Silent sound option */
 "Silent" = "Tichý";
@@ -1904,10 +1904,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Unable to set a temporary basal rate: %1$@" = "Nie je možné nastaviť dočasnú dávku bazálu: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Chýba konfigurácia";
+"Missing Config" = "Chýbajúca konfigurácia";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Tento manažér čerpadiel nebol nakonfigurovaný s maximálnou bazálnou rýchlosťou, pretože bol pridaný skôr, ako bola pridaná funkcia manuálneho bazálneho nastavenia. Prejdite do nastavení terapie -> limity dodávok a nastavte novú maximálnu bazálnu rýchlosť.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Tento PumpManager nemá nastavenú maximálnu bazálnu dávku, pretože bol pridaný pred zavedením funkcie manuálneho dočasného bazálu. Prejdite do Nastavenia -> Limity dávkovania a nastavte novú maximálnu bazálnu dávku.";
 
 /* description label for active time pod details row */
 "Active Time" = "Aktívny Čas";
@@ -2143,7 +2143,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "Konfigurácia CGM";
+"CGM Configuration" = "Nastavenie CGM";
 
 "Heartbeat" = "Tlkot srdca";
 
@@ -2584,7 +2584,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Max IOB Threshold Percent" = "Maximálna prahová hodnota IOB v percentách";
 
 /* Description */
-"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percento z maximálneho nastavenia IOB, ktoré sa má použiť pre SMB, ak je zapnuté Auto ISF.\n\nAk je aktuálne IOB pod prahovou hodnotou, množstvo SMB môže prekročiť túto hodnotu o 30 %, nikdy však nie maximálne nastavenie IOB.\n\nPri 100 % je toto nastavenie vypnuté.";
 
 /* */
 "Auto ISF" = "Auto ISF";
