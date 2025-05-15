@@ -96,7 +96,11 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         .store(in: &lifetime)
     }
 
-    private func glucoseStoreAndHeartDecision(syncDate: Date, glucose: [BloodGlucose], glucoseFromHealth: [BloodGlucose] = []) {
+    private func glucoseStoreAndHeartDecision(
+        syncDate: Date,
+        glucose: [BloodGlucose] = [],
+        glucoseFromHealth: [BloodGlucose] = []
+    ) {
         let allGlucose = glucose + glucoseFromHealth
         var filteredByDate: [BloodGlucose] = []
         var filtered: [BloodGlucose] = []
