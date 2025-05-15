@@ -32,22 +32,22 @@
 "${applicationName} Bolus" = "${applicationName} Болюс";
 
 /* iAPS Bolus shortcut description */
-"${applicationName} Enacts a bolus" = "${applicationName} Enacts a bolus";
+"${applicationName} Enacts a bolus" = "${applicationName} Вводить болюс";
 
 /* iAPS Loop Mode shortcut */
-"${applicationName} Loop Mode" = "${applicationName} Loop Mode";
+"${applicationName} Loop Mode" = "Режим Петлі ${applicationName}";
 
 /* iAPS Loop Mode shortcut description */
-"Activates an ${applicationName} Loop Mode" = "Activates an ${applicationName} Loop Mode";
+"Activates an ${applicationName} Loop Mode" = "Активує режим Петлі ${applicationName}";
 
 /* iAPS Basal shortcut */
-"${applicationName} Temp Basal" = "${applicationName} Temp Basal";
+"${applicationName} Temp Basal" = "${applicationName} Тимчасова Базальна Швидкість (ТБШ)";
 
 /* iAPS Basal shortcut description */
-"Enacts an ${applicationName} Temp Basal" = "Enacts an ${applicationName} Temp Basal";
+"Enacts an ${applicationName} Temp Basal" = "Запускає Тимчасову Базальну Швидкість (ТБШ) ${applicationName}";
 
 /* iAPS Suspend/Resume shortcut */
-"${applicationName} Suspend/Resume" = "${applicationName} Suspend/Resume";
+"${applicationName} Suspend/Resume" = "${applicationName} Призупинити/Відновити";
 
 /* iAPS Suspend/Resume  shortcut description */
-"Suspends/Resumes your ${applicationName} pump" = "Suspends/Resumes your ${applicationName} pump";
+"Suspends/Resumes your ${applicationName} pump" = "Призупиняє/відновлює роботу вашої помпи ${applicationName}";
