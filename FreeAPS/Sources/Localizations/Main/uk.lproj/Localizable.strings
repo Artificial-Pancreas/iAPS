@@ -1295,7 +1295,7 @@ Enact a temp Basal or a temp target */
 "Descending" = "Спадання";
 
 /* Thresholds for Alerts */
-"Thresholds" = "Thresholds";
+"Thresholds" = "Межі";
 
 /* */
 "Carbs required: %d g" = "Потрібні вуглеводи: %d g";
