@@ -11,7 +11,7 @@
 "${applicationName} state" = "${applicationName} state";
 
 /* iAPS Add carbs shortcut */
-"Add carbs in ${applicationName}" = "Add carbs in ${applicationName}";
+"Add carbs in ${applicationName}" = "Thêm carbs vào ${applicationName}";
 
 /* iAPS Add carbs shortcut description */
 "${applicationName} allows to add carbs" = "${applicationName} allows to add carbs";
