@@ -35,19 +35,19 @@
 "${applicationName} Enacts a bolus" = "${applicationName} Выполняет болюс";
 
 /* iAPS Loop Mode shortcut */
-"${applicationName} Loop Mode" = "${applicationName} Loop Mode";
+"${applicationName} Loop Mode" = "${applicationName} Режим петли";
 
 /* iAPS Loop Mode shortcut description */
-"Activates an ${applicationName} Loop Mode" = "Activates an ${applicationName} Loop Mode";
+"Activates an ${applicationName} Loop Mode" = "Активирует ${applicationName} режим петли";
 
 /* iAPS Basal shortcut */
-"${applicationName} Temp Basal" = "${applicationName} Temp Basal";
+"${applicationName} Temp Basal" = "${applicationName} Временная базальная скорость";
 
 /* iAPS Basal shortcut description */
-"Enacts an ${applicationName} Temp Basal" = "Enacts an ${applicationName} Temp Basal";
+"Enacts an ${applicationName} Temp Basal" = "Устанавливает временную базальную скорость ${applicationName}";
 
 /* iAPS Suspend/Resume shortcut */
-"${applicationName} Suspend/Resume" = "${applicationName} Suspend/Resume";
+"${applicationName} Suspend/Resume" = "${applicationName} Приостановить/Продолжить";
 
 /* iAPS Suspend/Resume  shortcut description */
-"Suspends/Resumes your ${applicationName} pump" = "Suspends/Resumes your ${applicationName} pump";
+"Suspends/Resumes your ${applicationName} pump" = "Приостанавливает/возобновляет подачу ${applicationName}";
