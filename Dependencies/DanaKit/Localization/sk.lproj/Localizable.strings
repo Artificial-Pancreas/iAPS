@@ -1,5 +1,5 @@
 /* Generic loading text */
-"loading" = "načítanie";
+"loading" = "načítava sa";
 
 /* Generic Continue text */
 "Continue" = "Pokračovať";
@@ -107,7 +107,7 @@
 "Checksum failed. Try again" = "Kontrolný súčet zlyhal. Skúste to znova";
 
 /* Title for delivery speed */
-"Delivery speed" = "Rýchlosť dávok";
+"Delivery speed" = "Rýchlosť dávkovania";
 
 /* Dana bolus speed 12u per min */
 "12 sec/U" = "12 sek/U";
@@ -119,10 +119,10 @@
 "60 sec/U" = "60 sek/U";
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávok. Môžete ju nastaviť tu, ale aj v ponuke nastavení";
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávkovania. Môžete ju nastaviť tu alebo v ponuke nastavení";
 
 /* Text for finish button */
-"Finish" = "Dokončenie";
+"Finish" = "Dokončiť";
 
 /* Dana setup complete p1 */
 "Your " = "Vaša ";
@@ -179,10 +179,10 @@
 "Resume delivery" = "Obnoviť podávanie inzulínu";
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "Pozastavenie dodávky";
+"Suspend delivery" = "Pozastavenie dávkovania";
 
 /* Dana settings stop temp basal */
-"Stop temp basal" = "Zastaviť dočasnú bazálnu dávku";
+"Stop temp basal" = "Zastaviť dočasnú dávku bazálu";
 
 /* Text for confidence reminders navigation link */
 "Insulin Type" = "Typ Inzulínu";
@@ -209,7 +209,7 @@
 "Insulin Remaining" = "Zostávajúci inzulín";
 
 /* Text for Dana pump name */
-"Pump name" = "Názov čerpadla";
+"Pump name" = "Názov pumpy";
 
 /* Text for hardware model */
 "Hardware model" = "Model hardvéru";
@@ -218,22 +218,22 @@
 "Firmware version" = "Verzia firmvéru";
 
 /* DanaKit sync pump */
-"Sync pump data" = "Synchronizácia údajov čerpadla";
+"Sync pump data" = "Synchronizácia údajov pumpy";
 
 /* Text for last sync */
 "Last sync" = "Posledná synchronizácia";
 
 /* Text for pump time */
-"Pump time" = "Čas čerpadla";
+"Pump time" = "Čas pumpy";
 
 /* Text for pump time synced at */
-"Checked at" = "Skontrolované na";
+"Checked at" = "Skontrolované o";
 
 /* Text for Nightly pump time sync */
-"Nightly pump time sync" = "Nočná synchronizácia času čerpadla";
+"Nightly pump time sync" = "Nočná synchronizácia času pumpy";
 
 /* Label for syncing the time on the pump */
-"Manually sync Pump time" = "Ručná synchronizácia času čerpadla";
+"Manually sync Pump time" = "Ručná synchronizácia času pumpy";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
@@ -268,10 +268,10 @@
 "Suspend" = "Pozastavenie";
 
 /* Title for user options */
-"User options" = "Možnosti používateľa";
+"User options" = "Používateľské nastavenia";
 
 /* DanaKit share logs */
-"Share Dana pump logs" = "Zdieľanie protokolov čerpadla Dana";
+"Share Dana pump logs" = "Zdieľanie logov pumpy Dana";
 
 /* Loading */
 "Loading" = "Načítanie";
@@ -484,7 +484,7 @@
 "No, just disconnect" = "Nie, len sa odpojte";
 
 /* Title for reservoir/cannula refill */
-"Reservoir/cannula refill" = "Doplnenie zásobníka/kanvy";
+"Reservoir/cannula refill" = "Plnenie zásobníka/kanyly";
 
 /* Title for reservoir/cannula refill */
 "Cannula refill" = "Doplnenie kanyly";
@@ -523,7 +523,7 @@
 "Yes, disable bolus syncing" = "Áno, vypnite synchronizáciu bolusu";
 
 /* ana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here" = "Čerpadlá Dana podporujú rôzne rýchlosti dodávky. Nastaviť ju môžete tu";
+"The Dana pumps support different delivery speeds. You can set it up here" = "Pumpy Dana podporujú rôzne rýchlosti dávkovania. Môžete si ich nastaviť tu";
 
 /* Text for Basal profile */
 "Basal profile" = "Bazálny profil";
