@@ -364,7 +364,7 @@
 "Empty reservoir" = "Prázdny zásobník";
 
 /* Alert body for emptyReservoir */
-"Reservoir is empty. Replace it now!" = "Nádrž je prázdna. Vymeňte ju teraz!";
+"Reservoir is empty. Replace it now!" = "Zásobník je prázdna. Teraz ho vymeňte!";
 
 /* Alert title for emptyReservoir */
 "Check chaft" = "Kontrola reťaze";
@@ -433,7 +433,7 @@
 "Cannula age" = "Vek kanyly";
 
 /* Text for reservoir age */
-"Reservoir age" = "Vek nádrže";
+"Reservoir age" = "Vek zásobníka";
 
 /* Text for status */
 "Status" = "Stav";
@@ -535,7 +535,7 @@
 "Configuration" = "Nastavenie";
 
 /* Text for low reservoir reminder */
-"Low reservoir reminder" = "Pripomienka nízkej nádrže";
+"Low reservoir reminder" = "Pripomienka nízkej hladiny";
 
 /* refillAmount */
 "Refill amount" = "Množstvo náplne";
@@ -544,7 +544,7 @@
 "U" = "J";
 
 /* Label for first step refill */
-"Step 1: Set reservoir level" = "Krok 1: Nastavenie hladiny v nádrži";
+"Step 1: Set reservoir level" = "Krok 1: Nastavenie objemu v zásobníku";
 
 /* Label for reservoir refilled amount */
 "Reservoir amount" = "Množstvo zásobníka";
