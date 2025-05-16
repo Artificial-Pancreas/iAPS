@@ -1289,13 +1289,13 @@ Enact a temp Basal or a temp target */
 "Missing Loops" = "Пропущенные циклы";
 
 /* Alert for ascending glucose */
-"Ascending" = "Ascending";
+"Ascending" = "Восходящий";
 
 /* Alert for descending glucose */
-"Descending" = "Descending";
+"Descending" = "Нисходящий";
 
 /* Thresholds for Alerts */
-"Thresholds" = "Thresholds";
+"Thresholds" = "Пороги";
 
 /* */
 "Carbs required: %d g" = "Необходимы углеводы: %d г";
