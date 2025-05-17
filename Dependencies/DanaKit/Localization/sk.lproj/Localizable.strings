@@ -1,5 +1,5 @@
 /* Generic loading text */
-"loading" = "načítava sa";
+"loading" = "načítanie";
 
 /* Generic Continue text */
 "Continue" = "Pokračovať";
@@ -119,7 +119,7 @@
 "60 sec/U" = "60 sek/U";
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávkovania. Môžete ju nastaviť tu alebo v ponuke nastavení";
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávok. Môžete ju nastaviť tu, ale aj v ponuke nastavení";
 
 /* Text for finish button */
 "Finish" = "Dokončiť";
@@ -182,7 +182,7 @@
 "Suspend delivery" = "Pozastavenie dávkovania";
 
 /* Dana settings stop temp basal */
-"Stop temp basal" = "Zastaviť dočasnú dávku bazálu";
+"Stop temp basal" = "Zastaviť dočasnú bazálnu dávku";
 
 /* Text for confidence reminders navigation link */
 "Insulin Type" = "Typ Inzulínu";
