@@ -1,0 +1,53 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Aktivovať dočasný cieľ ${applicationName}";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} nastaví dočasný cieľ";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "Zobraziť stav ${applicationName}";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "Stav ${applicationName}";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Pridať sacharidy v ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "Povoliť ${applicationName} zadanie sacharidov";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Aktivovať prepísanie ${applicationName}";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Aktivuје upravený režim ${applicationName}";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Zrušiť ${applicationName} prepísanie";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Zrušiť aktívne ${applicationName} prepísanie";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} bolus";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Enacts a bolus" = "${applicationName} podať bolus";
+
+/* iAPS Loop Mode shortcut */
+"${applicationName} Loop Mode" = "Režim slučky ${applicationName}";
+
+/* iAPS Loop Mode shortcut description */
+"Activates an ${applicationName} Loop Mode" = "Aktivuje ${applicationName} režim slučky";
+
+/* iAPS Basal shortcut */
+"${applicationName} Temp Basal" = "${applicationName} dočasný bazál";
+
+/* iAPS Basal shortcut description */
+"Enacts an ${applicationName} Temp Basal" = "Aktivuje dočasný bazál ${applicationName}";
+
+/* iAPS Suspend/Resume shortcut */
+"${applicationName} Suspend/Resume" = "${applicationName} pozastaviť/obnoviť";
+
+/* iAPS Suspend/Resume  shortcut description */
+"Suspends/Resumes your ${applicationName} pump" = "Pozastaví/Obnoví vašu pumpu ${applicationName}";

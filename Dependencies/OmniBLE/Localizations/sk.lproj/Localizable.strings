@@ -36,10 +36,10 @@
 "Pod expires in %1$@." = "Platnosť Podu skončí o %1$@.";
 
 /* Alert content body for podExpiring pod alert */
-"Change Pod now. Pod has been active for 72 hours." = "Teraz vymeňte Pod. Pod bol aktívny 72 hodín.";
+"Change Pod now. Pod has been active for 72 hours." = "Vymeňte Pod. Pod bol aktívny 72 hodín.";
 
 /* Alert content body for podExpireImminent pod alert */
-"Change Pod now. Insulin delivery will stop in 1 hour." = "Teraz vymeňte Pod. Podávanie inzulínu sa zastaví o 1 hodinu.";
+"Change Pod now. Insulin delivery will stop in 1 hour." = "Vymeňte Pod. Podávanie inzulínu sa zastaví o 1 hodinu.";
 
 /* Format string for alert content body for lowReservoir pod alert. (1: reminder value) */
 "%1$@ insulin or less remaining in Pod. Change Pod soon." = "V Pode zostáva %1$@ inzulínu alebo menej. Čoskoro vymeňte Pod.";
@@ -457,7 +457,7 @@
 "U" = "J";
 
 /* The action string on pod status page when pod expired */
-"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Teraz vymeňte Pod. Podávanie inzulínu sa zastaví 8 hodín po uplynutí platnosti Podu alebo keď nezostane žiadny inzulín.";
+"Change Pod now. Insulin delivery will stop 8 hours after the Pod has expired or when no more insulin remains." = "Vymeňte Pod. Podávanie inzulínu sa zastaví 8 hodín po uplynutí platnosti Podu alebo ak v ňom nezostane žiadny inzulín.";
 
 /* Label text for step 1 of pair pod instructions */
 "Fill a new pod with U-100 Insulin (leave blue Pod needle cap on)." = "Naplňte nový Pod s inzulínom U-100 (na Pode nechajte nasadený modrý uzáver ihly).";
@@ -715,7 +715,7 @@
 "Pod Setup" = "Nastavenie podu";
 
 /* bodyText for PodSetupView */
-"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Teraz začnete proces konfigurácie upozornení, naplnenie Podu inzulínom, párovanie s Vaším zariadením a umiestnením na Vaše telo.";
+"You will now begin the process of configuring your reminders, filling your Pod with insulin, pairing to your device and placing it on your body." = "Teraz začnete proces nastavenia upozornení, naplnenia Podu inzulínom, spárovania so zariadením a umiestnenia na telo.";
 
 /* Cancel button title */
 "Cancel" = "Zrušiť";

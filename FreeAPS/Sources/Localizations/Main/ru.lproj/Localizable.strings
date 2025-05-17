@@ -461,6 +461,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Добавить Omnipod";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Add Dana-i/RS";
+
 /* Add Simulator pump */
 "Add Simulator" = "Добавить Cимулятор";
 
@@ -1289,13 +1292,13 @@ Enact a temp Basal or a temp target */
 "Missing Loops" = "Пропущенные циклы";
 
 /* Alert for ascending glucose */
-"Ascending" = "Ascending";
+"Ascending" = "Восходящий";
 
 /* Alert for descending glucose */
-"Descending" = "Descending";
+"Descending" = "Нисходящий";
 
 /* Thresholds for Alerts */
-"Thresholds" = "Thresholds";
+"Thresholds" = "Пороги";
 
 /* */
 "Carbs required: %d g" = "Необходимы углеводы: %d г";

@@ -362,10 +362,10 @@
 "Suspension time is up. Open the app and resume." = "Čas pozastavenia vypršal. Otvorte aplikáciu a pokračujte.";
 
 /* Pod tank fill completed */
-"Tank fill completed" = "Plnenie nádrže dokončené";
+"Tank fill completed" = "Plnenie zásobníka je dokončené";
 
 /* Pod power to motor activated */
-"Tank power activated" = "Napájanie nádrže je aktivované";
+"Tank power activated" = "Napájanie zásobníka je aktivované";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
 "Temp Basal" = "Dočasný bazál";

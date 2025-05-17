@@ -461,6 +461,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Додати Omnipod";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Додати Dana-i/RS";
+
 /* Add Simulator pump */
 "Add Simulator" = "Додати Симулятор";
 
@@ -1295,7 +1298,7 @@ Enact a temp Basal or a temp target */
 "Descending" = "Спадання";
 
 /* Thresholds for Alerts */
-"Thresholds" = "Thresholds";
+"Thresholds" = "Межі";
 
 /* */
 "Carbs required: %d g" = "Потрібні вуглеводи: %d g";
