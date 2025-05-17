@@ -119,7 +119,7 @@
 "60 sec/U" = "60 sek/U";
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávok. Môžete ju nastaviť tu, ale aj v ponuke nastavení";
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti podania dávky 1 jednotky inzulínu. Môžete ju nastaviť tu, ale aj v ponuke nastavení pumpy";
 
 /* Text for finish button */
 "Finish" = "Dokončiť";
@@ -292,13 +292,13 @@
 "Off" = "Vypnuté";
 
 /* 12h */
-"12h notation" = "Zápis 12h";
+"12h notation" = "12h režim";
 
 /* 24h */
-"24h notation" = "24-hodinový zápis";
+"24h notation" = "24h režim";
 
 /* Text for Scroll function */
-"Scroll function" = "Funkcia posúvania";
+"Scroll function" = "Posúvanie tlačítkom";
 
 /* text for second */
 "sec" = "sek";
@@ -310,7 +310,7 @@
 "Lcd on time" = "Lcd na čas";
 
 /* beepAndAlarm */
-"Alarm beeps" = "Pípanie budíka";
+"Alarm beeps" = "Zvukový signál";
 
 /* beepAndAlarm.sound */
 "Sound" = "Zvuk";
@@ -319,7 +319,7 @@
 "Vibration" = "Vibrácie";
 
 /* beepAndAlarm.both */
-"Both" = "Obe stránky";
+"Both" = "Oboje";
 
 /* Alert title for batteryZeroPercent */
 "Pump battery 0%" = "Batéria čerpadla 0%";
@@ -523,7 +523,7 @@
 "Yes, disable bolus syncing" = "Áno, vypnite synchronizáciu bolusu";
 
 /* ana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here" = "Pumpy Dana podporujú rôzne rýchlosti dávkovania. Môžete si ich nastaviť tu";
+"The Dana pumps support different delivery speeds. You can set it up here" = "Pumpy Dana podporujú rôzne rýchlosti podania dávky 1 jednotky inzulínu. Môžete si ich nastaviť tu";
 
 /* Text for Basal profile */
 "Basal profile" = "Bazálny profil";
