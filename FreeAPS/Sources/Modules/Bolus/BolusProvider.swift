@@ -3,6 +3,7 @@ import Foundation
 extension Bolus {
     final class Provider: BaseProvider, BolusProvider {
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
+        @Injected() var glucoseStorage: GlucoseStorage!
 
         let coreDataStorage = CoreDataStorage()
 
