@@ -462,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Pridať Omnipod";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Pridať Dana-i/RS";
 
 /* Add Simulator pump */
 "Add Simulator" = "Pridať simulátor";
@@ -1416,7 +1416,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "NS Upload Profile and Settings" = "NS odoslať profil a nastavenia";
 
 /* Debug option delete all NS overrides */
-"Delete All NS Overrides" = "Vymazať všetky prepísania NS";
+"Delete All NS Overrides" = "Odstrániť všetky prepísania NS";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Nahraný profil";
@@ -1689,13 +1689,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Statistics and Home View" = "Štatistiky a domovské zobrazenie";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Vymazať ekvivalenty sacharidov?";
+"Delete Carb Equivalents?" = "Odstrániť ekvivalenty sacharidov?";
 
 /* */
 "All FPUs of the meal will be deleted." = "Všetky FPU jedla sa vymažú.";
 
 /* */
-"Delete Glucose?" = "Vymazať glykémiu?";
+"Delete Glucose?" = "Odstrániť glykémiu?";
 
 /* */
 "Meal Presets" = "Predvoľby jedál";
@@ -2154,7 +2154,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "CGM is not used as heartbeat." = "CGM sa nepoužíva ako srdcový tep.";
 
-"Are you sure you want to delete this CGM?" = "Ste si istí, že chcete tento CGM vymazať?";
+"Are you sure you want to delete this CGM?" = "Ste si istí, že chcete odstrániť tento CGM?";
 
 /* New Experimental feature */
 "Experimental" = "Experimentálny";

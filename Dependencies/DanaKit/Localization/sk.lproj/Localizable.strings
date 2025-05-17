@@ -77,10 +77,10 @@
 "Are you sure you want to stop using Dana-i/RS?" = "Ste si istí, že chcete prestať používať Dana-i/RS?";
 
 /* Button text to confirm Dana-i/RS PumpManager deletion */
-"Delete pump" = "Vymazať pumpu";
+"Delete pump" = "Odstrániť pumpu";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Vymazať Pumpu";
+"Delete Pump" = "Odstrániť pumpu";
 
 /* Connection error message */
 "Error while connecting to device" = "Chyba pri pripájaní k zariadeniu";
@@ -538,7 +538,7 @@
 "Low reservoir reminder" = "Pripomienka nízkej hladiny";
 
 /* Description text for low reservoir reminder */
-"The pump reminds you when the amount of insulin in the pump reaches this level" = "The pump reminds you when the amount of insulin in the pump reaches this level";
+"The pump reminds you when the amount of insulin in the pump reaches this level" = "Ak hladina inzulínu dosiahne špecifikovanú úroveň, pumpa Vás upozorní výstražným tónom";
 
 /* refillAmount */
 "Refill amount" = "Množstvo náplne";
