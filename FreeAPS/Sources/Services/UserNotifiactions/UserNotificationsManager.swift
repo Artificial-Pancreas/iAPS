@@ -244,8 +244,10 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 let content = UNMutableNotificationContent()
                 content.title = titles.joined(separator: " ")
                 content.body = body
-                content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
 
+                if sound != "Silent" {
+                    content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
+                }
                 if sound == "Default" {
                     content.sound = .default
                 } else if sound != "Silent" {
