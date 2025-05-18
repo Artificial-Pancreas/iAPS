@@ -1754,7 +1754,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Eventual Glucose" = "Predpokladaná glykémia";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Minimálna predikovaná glykémia";
 
 /* */
 "Please wait" = "Čakajte, prosím";
@@ -2539,7 +2539,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "SMB Delivery Ratio BG Range" = "Pomer dávky SMB v rozsahu glykémie";
 
 /* SMB Delivery Ratio BG Range description */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Predvolená hodnota: 0, rozumné hodnoty sú medzi 40 mg/dL a 120 mg/dL. Lineárne rastúci pomer dodávky SMB je mapovaný na rozsah glykémie [target_bg, target_bg+bg_range]. Pri target_bg je pomer SMB rovný smb_delivery_ratio_min, pri target_bg+bg_range je rovný smb_delivery_ratio_max. Pri hodnote 0 je lineárne rastúci pomer SMB deaktivovaný a používa sa fixný smb_delivery_ratio.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Predvolená hodnota: 0. Rozumný rozsah je medzi 40 mg/dL (2,0 mmol/L) a 120 mg/dL (7,1 mmol/L). Lineárne rastúci pomer SMB dávkovania je mapovaný na rozsah glykémie [cieľová_glykémia, cieľová_glykémia + rozsah_glykémie].
+Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľovej_glykémii + rozsah_glykémie je rovný smb_delivery_ratio_max. Ak je hodnota nastavená na 0, lineárne dávkovanie SMB je deaktivované a používa sa pevne daný smb_delivery_ratio.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "Maximálny pomer dávky SMB";
