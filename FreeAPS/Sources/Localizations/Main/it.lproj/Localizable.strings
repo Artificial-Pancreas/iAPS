@@ -2537,7 +2537,7 @@ Enact a temp Basal or a temp target */
 /* */
 "SMB Delivery Ratio BG Range" = "Range somministrazione SMB somministrazione BG";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Valore predefinito: 0, Sensibile è compreso tra 40 mg/dL e 120 mg/dL. Il rapporto di erogazione di SMB in aumento lineare viene mappato all'intervallo di glucosio [target_bg, target_bg+bg_range]. In target_bg il rapporto SMB è smb_delivery_ratio_min, in target_bg+bg_range è smb_delivery_ratio_max. Con 0 il rapporto SMB in aumento lineare è disabilitato e viene utilizzato il fix smb_delivery_ratio.";
 
 /* */
@@ -2588,7 +2588,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Max IOB Threshold Percent" = "Percentuale Massima Di Soglia IOB";
 
-/* Description */
+/* IOB Threshold Percent Description */
 "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentuale dell'impostazione massima IOB da usare mentre l'Auto ISF è abilitata.\n\nMentre l'attuale IOB è al di sotto della soglia, la quantità SMB può superare la soglia del 30%, tuttavia mai l'impostazione massima IOB.\n\nAl 100% questa impostazione è disabilitata.";
 
 /* */
