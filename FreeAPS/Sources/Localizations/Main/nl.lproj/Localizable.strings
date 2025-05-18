@@ -1754,6 +1754,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Eventual Glucose" = "Voorspelde glucose";
 
 /* */
+"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+
+/* */
 "Please wait" = "Even geduld";
 
 /* */
