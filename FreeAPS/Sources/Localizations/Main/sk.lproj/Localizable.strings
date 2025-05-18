@@ -1754,6 +1754,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Eventual Glucose" = "Predpokladaná glykémia";
 
 /* */
+"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+
+/* */
 "Please wait" = "Čakajte, prosím";
 
 /* */
