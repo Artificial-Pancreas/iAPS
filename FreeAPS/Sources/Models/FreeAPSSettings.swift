@@ -63,7 +63,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var ascending: String = "New/Anticipalte.caf"
     var descending: String = "New/Anticipalte.caf"
     var carbSound: String = "New/Anticipalte.caf"
-    var bolusFailure = "Silent"
+    var bolusFailure: String = "Silent"
     var missingLoops = true
     // Alerts
     var lowAlert: Bool = true
