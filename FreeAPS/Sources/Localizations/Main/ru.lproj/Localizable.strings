@@ -2537,7 +2537,7 @@ Enact a temp Basal or a temp target */
 /* */
 "SMB Delivery Ratio BG Range" = "Диапазон уровня глюкозы в крови для SMB";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Значение по умолчанию: 0. Разумная настройка — от 2 до 6 ммоль/л. (40-120 мг/дл) Линейно увеличивающееся соотношение подачи SMB зависит от настройки диапазона уровня глюкозы в крови и минимальной/максимальной настройки вашего коэффициента SMB. При значении 0 - используется стандартное соотношение подачи SMB.";
 
 /* */
@@ -2588,7 +2588,7 @@ Enact a temp Basal or a temp target */
 /* */
 "Max IOB Threshold Percent" = "Максимальный IOB порог";
 
-/* Description */
+/* IOB Threshold Percent Description */
 "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Процент от максимального уровня IOB, используемый для SMB при включенном Auto ISF.\n\nПока текущий уровень IOB ниже установленного порога, количество SMB может превышать порог на 30%, но никогда не превысит максимальный уровень IOB.\n\nПри значении 100% эта настройка отключается.";
 
 /* */
