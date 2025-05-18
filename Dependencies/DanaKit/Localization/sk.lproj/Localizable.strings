@@ -307,7 +307,7 @@
 "Backlight on time" = "Čas zapnutia podsvietenia";
 
 /* lcdOnTimeInSec */
-"Lcd on time" = "Lcd na čas";
+"Lcd on time" = "Čas zapnutia displeja";
 
 /* beepAndAlarm */
 "Alarm beeps" = "Zvukový signál";
