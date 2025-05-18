@@ -1753,6 +1753,9 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Возможная глюкоза";
 
 /* */
+"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+
+/* */
 "Please wait" = "Подождите";
 
 /* */
