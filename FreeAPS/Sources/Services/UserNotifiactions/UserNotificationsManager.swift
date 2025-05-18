@@ -247,11 +247,11 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
                 if sound != "Silent" {
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
-                }
-                if sound == "Default" {
-                    content.sound = .default
-                } else if sound != "Silent" {
-                    self.playSoundIfNeeded(sound: sound)
+                    if sound == "Default" {
+                        content.sound = .default
+                    } else {
+                        self.playSoundIfNeeded(sound: sound)
+                    }
                 }
 
                 self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
