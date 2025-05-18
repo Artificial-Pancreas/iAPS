@@ -2538,7 +2538,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "SMB Delivery Ratio BG Range" = "Pomer dávky SMB v rozsahu glykémie";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Predvolená hodnota: 0, rozumné hodnoty sú medzi 40 mg/dL a 120 mg/dL. Lineárne rastúci pomer dodávky SMB je mapovaný na rozsah glykémie [target_bg, target_bg+bg_range]. Pri target_bg je pomer SMB rovný smb_delivery_ratio_min, pri target_bg+bg_range je rovný smb_delivery_ratio_max. Pri hodnote 0 je lineárne rastúci pomer SMB deaktivovaný a používa sa fixný smb_delivery_ratio.";
 
 /* */
@@ -2589,7 +2589,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "Max IOB Threshold Percent" = "Maximálna prahová hodnota IOB v percentách";
 
-/* Description */
+/* IOB Threshold Percent Description */
 "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percento z maximálneho nastavenia IOB, ktoré sa má použiť pre SMB, ak je zapnuté Auto ISF.\n\nAk je aktuálne IOB pod prahovou hodnotou, množstvo SMB môže prekročiť túto hodnotu o 30 %, nikdy však nie maximálne nastavenie IOB.\n\nPri 100 % je toto nastavenie vypnuté.";
 
 /* */
