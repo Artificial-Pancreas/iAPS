@@ -462,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Omnipod Eros toevoegen";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Voeg Dana-i/RS toe";
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
@@ -1754,7 +1754,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Eventual Glucose" = "Voorspelde glucose";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Minimale voorspelde glucose is";
 
 /* */
 "Please wait" = "Even geduld";
@@ -3044,7 +3044,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display carb equivalents" = "Toon koolhydraathoeveelheden";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten";
+"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten in gram";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Resterende sensortijd weergeven";
