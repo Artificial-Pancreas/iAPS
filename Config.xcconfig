@@ -9,7 +9,7 @@ APP_GROUP_ID = group.com.$(DEVELOPMENT_TEAM).loopkit.LoopGroup
 //Default App Icon, displayed at first installation.
 APP_ICON = appIcon1
 
-// Require authentification when bolusing.
+// Require authentication when bolusing.
 AUTHENTICATE = true
 
 // iAPS URL in other apps
