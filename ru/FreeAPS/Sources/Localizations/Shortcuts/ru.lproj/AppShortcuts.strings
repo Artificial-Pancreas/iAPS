@@ -1,0 +1,53 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Активировать временную цель ${applicationName}";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} применить временную цель";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "Список состояния ${applicationName}";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "Состояние ${applicationName}";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Добавить углеводы в ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "${applicationName} позволяет добавлять углеводы";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Активировать шаблон переопределения ${applicationName}";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Активирует шаблон переопределения ${applicationName}";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Отменить переопределение ${applicationName}";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Отменяет активное переопределение ${applicationName}";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "${applicationName} Болюс";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Enacts a bolus" = "${applicationName} Выполняет болюс";
+
+/* iAPS Loop Mode shortcut */
+"${applicationName} Loop Mode" = "${applicationName} Режим петли";
+
+/* iAPS Loop Mode shortcut description */
+"Activates an ${applicationName} Loop Mode" = "Активирует ${applicationName} режим петли";
+
+/* iAPS Basal shortcut */
+"${applicationName} Temp Basal" = "${applicationName} Временная базальная скорость";
+
+/* iAPS Basal shortcut description */
+"Enacts an ${applicationName} Temp Basal" = "Устанавливает временную базальную скорость ${applicationName}";
+
+/* iAPS Suspend/Resume shortcut */
+"${applicationName} Suspend/Resume" = "${applicationName} Приостановить/Продолжить";
+
+/* iAPS Suspend/Resume  shortcut description */
+"Suspends/Resumes your ${applicationName} pump" = "Приостанавливает/возобновляет подачу ${applicationName}";
