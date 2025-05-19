@@ -2404,13 +2404,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Vyžaduje špecifický cieľ glykémie pre EatingSoon, ktorý je nastavený prostredníctvom profilového cieľa alebo dočasného cieľa";
 
 /* */
-"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Po zrušení tohto cieľa bude zrušená aj vysoká bazálna dávka B30 (TBR)";
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Po zrušení tohto cieľa sa zruší aj zvýšená dočasná bazálna dávka B30 (TBR)";
 
 /* */
 "In order to activate B30 a minimum manual Bolus needs to be given" = "Na aktiváciu B30 je potrebné podať minimálny manuálny bolus";
 
 /* */
-"You can specify how long B30 run and how high it is" = "Môžete určiť, ako dlho bude B30 bežať a aká vysoká bude jeho bazálna dávka";
+"You can specify how long B30 run and how high it is" = "Môžete určiť, ako dlho bude B30 aktívne a aká vysoká bude jeho dočasná bazálna dávka";
 
 /* */
 "Absolute Safety TBR " = "Absolútne bezpečnostné TBR ";
@@ -2455,7 +2455,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "B30 Basal rate increase factor" = "Faktor zvýšenia bazálnej dávky B30";
 
 /* */
-"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Faktor, ktorý násobí vašu bežnú bazálnu dávku pre B30. Maximálna bazálna dávka, ktorá sa aplikuje, je limitovaná maximálnou bazálnou dávkou nastavenou na vašej pumpe. Predvolená hodnota je 5.";
+"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Faktor, ktorý násobí vašu bežnú bazálnu dávku v režime B30. Výsledná dávka je obmedzená maximálnou bazálnou dávkou nastavenou na vašej pumpe. Predvolená hodnota: 5.";
 
 /* */
 "Upper Delta limit" = "Horný limit Delta";
