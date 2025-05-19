@@ -462,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Добавить Omnipod";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Добавить Dana-i/RS";
 
 /* Add Simulator pump */
 "Add Simulator" = "Добавить Cимулятор";
@@ -1753,7 +1753,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Возможная глюкоза";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Минимальная прогнозируемая глюкоза";
 
 /* */
 "Please wait" = "Подождите";
