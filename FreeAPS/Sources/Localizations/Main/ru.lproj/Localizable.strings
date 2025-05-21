@@ -461,6 +461,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Добавить Omnipod";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Добавить Dana-i/RS";
+
 /* Add Simulator pump */
 "Add Simulator" = "Добавить Cимулятор";
 
@@ -1250,6 +1253,54 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Порог необходимых углеводов";
 
 /* */
+"Carbs Required" = "Требуются углеводы";
+
+/* */
+"Sounds" = "Звуки";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Гипогликемия";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Гипергликемия";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Быстрое повышение";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Быстрое снижение";
+
+/* Silent sound option */
+"Silent" = "Без звука";
+
+/* Option for no sound */
+"Silent" = "Без звука";
+
+/* The iOS default sound */
+"iOS default sound" = "Звук iOS по умолчанию";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "БЫСТРОЕ СНИЖЕНИЕ ГЛЮКОЗЫ!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "БЫСТРОЕ ПОВЫШЕНИЕ ГЛЮКОЗЫ!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Болюс не состоялся";
+
+/* Sound for missing loops */
+"Missing Loops" = "Пропущенные циклы";
+
+/* Alert for ascending glucose */
+"Ascending" = "Восходящий";
+
+/* Alert for descending glucose */
+"Descending" = "Нисходящий";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Пороги";
+
+/* */
 "Carbs required: %d g" = "Необходимы углеводы: %d г";
 
 /* */
@@ -1468,7 +1519,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Ручная ВБС ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/day";
+"U/day" = "Ед/день";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Всего";
@@ -1700,6 +1751,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "Возможная глюкоза";
+
+/* */
+"Minimum Predicted Glucose" = "Минимальная прогнозируемая глюкоза";
 
 /* */
 "Please wait" = "Подождите";
@@ -2486,7 +2540,7 @@ Enact a temp Basal or a temp target */
 /* */
 "SMB Delivery Ratio BG Range" = "Диапазон уровня глюкозы в крови для SMB";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Значение по умолчанию: 0. Разумная настройка — от 2 до 6 ммоль/л. (40-120 мг/дл) Линейно увеличивающееся соотношение подачи SMB зависит от настройки диапазона уровня глюкозы в крови и минимальной/максимальной настройки вашего коэффициента SMB. При значении 0 - используется стандартное соотношение подачи SMB.";
 
 /* */
@@ -2537,8 +2591,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Max IOB Threshold Percent" = "Максимальный IOB порог";
 
-/* Description */
-"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
+/* IOB Threshold Percent Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Процент от максимального уровня IOB, используемый для SMB при включенном Auto ISF.\n\nПока текущий уровень IOB ниже установленного порога, количество SMB может превышать порог на 30%, но никогда не превысит максимальный уровень IOB.\n\nПри значении 100% эта настройка отключается.";
 
 /* */
 "Auto ISF" = "Авто ISF";
@@ -2927,6 +2981,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Отображать кнопку временных целей";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Отображать кнопку Переопределения Профиля";
+
+/* UI/UX option */
+"Display Meal Button" = "Отображать кнопку Питания";
 
 /* UI/UX option */
 "Home View Button Panel " = "Панель кнопок главного экрана ";

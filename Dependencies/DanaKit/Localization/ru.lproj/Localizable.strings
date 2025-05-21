@@ -537,6 +537,9 @@
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Напоминание о низком уровне воды в резервуаре";
 
+/* Description text for low reservoir reminder */
+"The pump reminds you when the amount of insulin in the pump reaches this level" = "Помпа напомнит вам, когда количество инсулина в помпе достигнет этого уровня";
+
 /* refillAmount */
 "Refill amount" = "Количество заправок";
 
