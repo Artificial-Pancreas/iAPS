@@ -1,0 +1,8 @@
+/* Privacy - Health Records Usage Description */
+"NSHealthClinicalHealthRecordsShareUsageDescription" = "Щоб програма iAPS працювала на Apple Watch, переконайтеся, що ви ввімкнули дозволи HealthKit.";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Щоб програма iAPS працювала на Apple Watch, переконайтеся, що ви ввімкнули дозволи HealthKit.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Щоб програма iAPS працювала на Apple Watch, переконайтеся, що ви ввімкнули дозволи HealthKit.";

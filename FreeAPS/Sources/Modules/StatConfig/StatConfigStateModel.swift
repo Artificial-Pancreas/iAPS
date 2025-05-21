@@ -24,6 +24,8 @@ extension StatConfig {
         @Published var anubis: Bool = false
         @Published var fpus: Bool = true
         @Published var fpuAmounts: Bool = false
+        @Published var carbButton: Bool = true
+        @Published var profileButton: Bool = true
 
         var units: GlucoseUnits = .mmolL
 
@@ -49,6 +51,8 @@ extension StatConfig {
             subscribeSetting(\.anubis, on: $anubis) { anubis = $0 }
             subscribeSetting(\.fpus, on: $fpus) { fpus = $0 }
             subscribeSetting(\.fpuAmounts, on: $fpuAmounts) { fpuAmounts = $0 }
+            subscribeSetting(\.carbButton, on: $carbButton) { carbButton = $0 }
+            subscribeSetting(\.profileButton, on: $profileButton) { profileButton = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)

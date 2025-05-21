@@ -461,6 +461,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Додати Omnipod";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Додати Dana-i/RS";
+
 /* Add Simulator pump */
 "Add Simulator" = "Додати Симулятор";
 
@@ -1250,6 +1253,54 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Межа необхідних вуглеводів";
 
 /* */
+"Carbs Required" = "Необхідні вуглеводи";
+
+/* */
+"Sounds" = "Звуки";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Гіпоглікемія";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Гіперглікемія";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Швидко Зростає";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Швидкий Спад";
+
+/* Silent sound option */
+"Silent" = "Без звуку";
+
+/* Option for no sound */
+"Silent" = "Без звуку";
+
+/* The iOS default sound */
+"iOS default sound" = "Звук за замовчуванням для iOS";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "ШВИДКЕ ЗНИЖЕННЯ РІВНЯ ГЛЮКОЗИ!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "ШВИДКО ПІДВИЩУЄТЬСЯ РІВЕНЬ ГЛЮКОЗИ!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Невдача введення Болюсу";
+
+/* Sound for missing loops */
+"Missing Loops" = "Відсутні Цикли";
+
+/* Alert for ascending glucose */
+"Ascending" = "Зростаючий";
+
+/* Alert for descending glucose */
+"Descending" = "Спадання";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Межі";
+
+/* */
 "Carbs required: %d g" = "Потрібні вуглеводи: %d g";
 
 /* */
@@ -1468,7 +1519,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = "Ручна ТБШ ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/day";
+"U/day" = "U/день";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Всього";
@@ -1700,6 +1751,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "Можлива глюкоза";
+
+/* */
+"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
 
 /* */
 "Please wait" = "Будь ласка, зачекайте";
@@ -2487,7 +2541,7 @@ Enact a temp Basal or a temp target */
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Значення за замовчуванням: 0, Sensible – від 40 mg/dL до 120 mg/dL. Лінійно зростаючий коефіцієнт доставки SMB відображається в діапазоні глюкози [target_bg, target_bg+bg_range]. У target_bg коефіцієнт SMB становить smb_delivery_ratio_min, у target_bg+bg_range – smb_delivery_ratio_max. З 0 лінійно зростаючий коефіцієнт SMB вимкнено та використовується виправлення smb_delivery_ratio.";
 
 /* */
@@ -2538,8 +2592,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Max IOB Threshold Percent" = "Максимальний пороговий відсоток IOB";
 
-/* Description */
-"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
+/* IOB Threshold Percent Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Відсоток від максимального рівня IOB, що використовується для SMB при включеному Auto ISF.\n\nПоки поточний рівень IOB нижче встановленого порога, кількість SMB може перевищувати поріг на 30%, але ніколи не перевищить максимальний рівень IOB.\n\nПри значенні 100% це налаштування відключається.";
 
 /* */
 "Auto ISF" = "Авто ISF";
@@ -2928,6 +2982,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Показувати кнопку тимчасові цілі";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Показувати кнопку Перевизначення профілю";
+
+/* UI/UX option */
+"Display Meal Button" = "Кнопка відображення страв";
 
 /* UI/UX option */
 "Home View Button Panel " = "Панель кнопок домашнього перегляду";

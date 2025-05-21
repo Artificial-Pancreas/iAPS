@@ -1,0 +1,8 @@
+/* Privacy - Health Records Usage Description */
+"NSHealthClinicalHealthRecordsShareUsageDescription" = "Чтобы приложение iAPS работало на Apple Watch, пожалуйста, убедитесь, что вы включили разрешение HealthKit.";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Чтобы приложение iAPS работало на Apple Watch, пожалуйста, убедитесь, что вы включили разрешение HealthKit.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Чтобы приложение iAPS работало на Apple Watch, пожалуйста, убедитесь, что вы включили разрешение HealthKit.";

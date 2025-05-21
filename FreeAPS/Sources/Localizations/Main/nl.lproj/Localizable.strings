@@ -461,6 +461,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Omnipod Eros toevoegen";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Voeg Dana-i/RS toe";
+
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
 
@@ -1251,6 +1254,54 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Carbs Required Threshold" = "Koolhydraten vereist drempelwaarde";
 
 /* */
+"Carbs Required" = "Koolhydraten benodigd";
+
+/* */
+"Sounds" = "Geluiden";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hypo(glykemie)";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Hyper(glykemie)";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Snel stijgend";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Snel dalend";
+
+/* Silent sound option */
+"Silent" = "Stille modus";
+
+/* Option for no sound */
+"Silent" = "Stille modus";
+
+/* The iOS default sound */
+"iOS default sound" = "Standaard iOS geluid";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "ZEER SNEL DALENDE BG";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "ZEER SNEL STIJGENDE BG";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus fout";
+
+/* Sound for missing loops */
+"Missing Loops" = "Ontbrekende loops";
+
+/* Alert for ascending glucose */
+"Ascending" = "Oplopend";
+
+/* Alert for descending glucose */
+"Descending" = "Dalend";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Grenswaarden";
+
+/* */
 "Carbs required: %d g" = "Koolhydraten vereist: %d g";
 
 /* */
@@ -1263,7 +1314,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Last loop was more than %d min ago" = "Laatste loop was meer dan %d min geleden";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Toon glucosewaarde op de app icoon";
+"Show glucose on the app badge" = "Toon glucosewaarde op de app icon";
 
 /* */
 "Backfill glucose" = "Terugzetten glucose";
@@ -1701,6 +1752,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Eventual Glucose" = "Voorspelde glucose";
+
+/* */
+"Minimum Predicted Glucose" = "Minimale voorspelde glucose is";
 
 /* */
 "Please wait" = "Even geduld";
@@ -2407,13 +2461,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor waarmee je normale basaalstand wordt vermenigvuldigd voor B30. De maximale basaalstand die wordt toegepast, is de maximale basaalinstelling van je pomp. Standaardwaarde is 5.";
 
 /* */
-"Upper Delta limit" = "Maximale toegestane verandering";
+"Upper Delta limit" = "Maximaal toegestane verandering";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 8 mg/dl (0,5 mmol/l).";
 
 /* */
-"Upper BG limit" = "Maximale toegestane glucosewaarde";
+"Upper BG limit" = "Maximaal toegestane glucosewaarde";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 130 mg/dl (7,2 mmol/l).";
@@ -2487,7 +2541,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "De standaardwaarde is 0, maar een logisch bereik ligt tussen 2,2 mmol/L en 6,7 mmol/L (40-120 mg/dL). De afgifte van SMB's (Smart Micro Boluses) neemt geleidelijk toe naarmate de bloedsuikerspiegel stijgt. Bij de doelwaarde is de SMB-verhouding minimaal, en bij doelwaarde + bg_range is deze maximaal. Als de waarde 0 is, blijft de SMB-verhouding vast en wordt de geleidelijke stijging uitgeschakeld.";
 
 /* */
@@ -2538,7 +2592,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "Max IOB Threshold Percent" = "Max IOB drempelwaarde percentage";
 
-/* Description */
+/* IOB Threshold Percent Description */
 "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage van de maximale IOB-instelling voor SMB’s (Super Micro Bolussen) bij ingeschakelde automatische ISF (insulinegevoeligheid).\n\nZolang de huidige IOB (insuline die nog actief is) onder een bepaalde grens blijft, mag een SMB deze grens met 30% overschrijden — maar nooit meer dan het ingestelde maximum voor IOB.\n\nBij een instelling van 100% is deze beperking uitgeschakeld, dus dan wordt de hele IOB-limiet gebruikt.";
 
 /* */
@@ -2934,6 +2988,12 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display Temp Targets Button" = "Toon tijdelijke doelen knop";
 
 /* UI/UX option */
+"Display Profile Override Button" = "Toon knop profiel overschrijving";
+
+/* UI/UX option */
+"Display Meal Button" = "Maaltijdknop weergeven";
+
+/* UI/UX option */
 "Home View Button Panel " = "Beginscherm knoppaneel ";
 
 /* UI/UX title */
@@ -2987,7 +3047,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display carb equivalents" = "Toon koolhydraathoeveelheden";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten";
+"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten in gram";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Resterende sensortijd weergeven";

@@ -79,6 +79,8 @@ extension Home {
         @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
         @Published var anubis: Bool = false
+        @Published var carbButton: Bool = true
+        @Published var profileButton: Bool = true
 
         // Chart data
         var data = ChartModel(
@@ -172,6 +174,8 @@ extension Home {
             cgm = settingsManager.settings.cgm
             sensorDays = settingsManager.settings.sensorDays
             anubis = settingsManager.settings.anubis
+            carbButton = settingsManager.settings.carbButton
+            profileButton = settingsManager.settings.profileButton
 
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
@@ -664,6 +668,8 @@ extension Home.StateModel:
         cgm = settingsManager.settings.cgm
         sensorDays = settingsManager.settings.sensorDays
         anubis = settingsManager.settings.anubis
+        carbButton = settingsManager.settings.carbButton
+        profileButton = settingsManager.settings.profileButton
         setupGlucose()
         setupOverrideHistory()
         setupData()
