@@ -104,25 +104,25 @@
 "Received invalid hex strings. Try again" = "Заданы недопустимые символы. Попробуйте еще раз";
 
 /* Dana-RS v3 pincode prompt error checksum failed */
-"Checksum failed. Try again" = "Не удалось получить контрольную сумму. Попробуйте еще раз";
+"Checksum failed. Try again" = "Ошибка контрольной суммы. Попробуйте еще раз";
 
 /* Title for delivery speed */
-"Delivery speed" = "Скорость доставки";
+"Delivery speed" = "Скорость подачи";
 
 /* Dana bolus speed 12u per min */
-"12 sec/U" = "12 сек/U";
+"12 sec/U" = "12 сек/ед";
 
 /* Dana bolus speed 30u per min */
-"30 sec/U" = "30 сек/U";
+"30 sec/U" = "30 сек/ед";
 
 /* Dana bolus speed 60u per min */
-"60 sec/U" = "60 сек/U";
+"60 sec/U" = "60 сек/ед";
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Насосы Dana поддерживают разные скорости подачи. Настроить их можно здесь, а также в меню настроек";
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Помпы Dana поддерживают разные скорости подачи. Настроить их можно здесь, а также в меню настроек";
 
 /* Text for finish button */
-"Finish" = "Отделка";
+"Finish" = "Завершить";
 
 /* Dana setup complete p1 */
 "Your " = "Ваш ";
@@ -131,58 +131,58 @@
 " is ready to be used!" = " готов к использованию!";
 
 /* Dana setup SMB setting */
-"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Примечание: Насос Dana имеет специальную настройку, которая позволяет отключить звуковые сигналы насоса Dana. Чтобы включить эту функцию, обратитесь к дистрибьютору Dana.";
+"Note: You Dana pump has a special setting which allows you to silence your Dana pump beeps. To enable this, please contact your Dana distributor" = "Примечание: Помпа Dana имеет специальную настройку, которая позволяет отключить звуковые сигналы. Чтобы включить эту функцию, обратитесь к дистрибьютору Dana";
 
 /* Error description when no dana connected */
 "Failed to make a connection" = "Не удалось установить соединение";
 
 /* Error description when failed temp adjustment */
-"Failed to adjust temp basal" = "Не удалось отрегулировать базальную температуру";
+"Failed to adjust temp basal" = "Не удалось установить временную базальную скорость";
 
 /* Error description when failed suspension adjustment */
-"Failed to adjust suspension" = "Не удалось отрегулировать подвеску";
+"Failed to adjust suspension" = "Не удалось приостановить подачу инсулина";
 
 /* Error description when failed generating basal program */
-"Failed to generate Dana basal program" = "Не удалось сгенерировать программу Dana basal";
+"Failed to generate Dana basal program" = "Не удалось сгенерировать базальную программу Dana";
 
 /* Error description when failed basal adjustment */
-"Failed to adjust basal" = "Не удалось скорректировать базальный уровень";
+"Failed to adjust basal" = "Не удалось установить базальную скорость";
 
 /* Error description when pump time failed to sync */
-"Failed to adjust pump time" = "Не удалось отрегулировать время работы насоса";
+"Failed to adjust pump time" = "Не удалось установить время на помпе";
 
 /* Error description when trying to set temp basal */
-"Setting temp basal is not supported at this time" = "Установка базальной температуры на данный момент не поддерживается";
+"Setting temp basal is not supported at this time" = "Установка временной базальной скорости на данный момент не поддерживается";
 
 /* Error description when pump is suspended */
-"The insulin delivery has been suspend. Action failed" = "Доставка инсулина была приостановлена. Действие не удалось";
+"The insulin delivery has been suspend. Action failed" = "Подача инсулина была приостановлена. Действие не удалось";
 
 /* Error description when pump is busy (with bolussing probably) */
-"Action has been canceled, because the pump is busy" = "Действие было отменено, так как насос занят";
+"Action has been canceled, because the pump is busy" = "Действие было отменено, так как помпа занята";
 
 /* Error description when pump has an active blockage */
-"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Тайм-аут болюса активен. Цикл цикла не может быть завершен до тех пор, пока таймаут не станет неактивным";
+"A bolus timeout is active. The loop cycle cannot be completed till the timeout is inactive" = "Тайм-аут болюса активен. Цикл петли не может быть завершен пока тайм-аут активен";
 
 /* Error description when pump has reached the bolus max */
-"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Максимальный лимит болюса достигнут. Пожалуйста, попробуйте меньшее количество или увеличьте лимит";
+"The max bolus limit is reached. Please try a lower amount or increase the limit" = "Лимит болюса достигнут. Попробуйте задать меньшее количество или увеличьте лимит";
 
 /* Error description when pump has reached the daily max */
-"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Максимальный суточный лимит инсулина достигнут. Пожалуйста, попробуйте использовать меньшее количество или увеличьте лимит";
+"The max daily insulin limit is reached. Please try a lower amount or increase the limit" = "Суточный лимит инсулина достигнут. Попробуйте задать меньшее количество или увеличьте лимит";
 
 /* dana AB limitation warning title */
 "Only Automatic Bolus is supported" = "Поддерживается только автоматический болюс";
 
 /* dana AB limitation warning body */
-"Please consider changing your dosing strategy in the setting menu" = "Пожалуйста, рассмотрите возможность изменения стратегии дозирования в меню настроек";
+"Please consider changing your dosing strategy in the setting menu" = "Пожалуйста, измените стратегию дозирования в меню настроек";
 
 /* Dana settings resume delivery */
 "Resume delivery" = "Возобновить подачу";
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "Приостановить доставку";
+"Suspend delivery" = "Приостановить подачу";
 
 /* Dana settings stop temp basal */
-"Stop temp basal" = "Прекратите базальную температуру";
+"Stop temp basal" = "Остановить временную базальную скорость";
 
 /* Text for confidence reminders navigation link */
 "Insulin Type" = "Тип инсулина";
@@ -209,31 +209,31 @@
 "Insulin Remaining" = "Осталось инсулина";
 
 /* Text for Dana pump name */
-"Pump name" = "Название насоса";
+"Pump name" = "Название помпы";
 
 /* Text for hardware model */
-"Hardware model" = "Аппаратная модель";
+"Hardware model" = "Модель устройства";
 
 /* Text for firmware version */
 "Firmware version" = "Версия прошивки";
 
 /* DanaKit sync pump */
-"Sync pump data" = "Синхронизация данных насоса";
+"Sync pump data" = "Синхронизация данных помпы";
 
 /* Text for last sync */
 "Last sync" = "Последняя синхронизация";
 
 /* Text for pump time */
-"Pump time" = "Время работы насоса";
+"Pump time" = "Время на помпе";
 
 /* Text for pump time synced at */
 "Checked at" = "Проверено в";
 
 /* Text for Nightly pump time sync */
-"Nightly pump time sync" = "Ночная синхронизация времени работы насоса";
+"Nightly pump time sync" = "Ночная синхронизация времени на помпе";
 
 /* Label for syncing the time on the pump */
-"Manually sync Pump time" = "Ручная синхронизация времени работы насоса";
+"Manually sync Pump time" = "Ручная синхронизация времени на помпе";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
@@ -259,7 +259,7 @@
 "Temp Basal" = "Врем. базал";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
-"Basal" = "Базальный";
+"Basal" = "Базал";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
 "Resume" = "Возобновление";
@@ -268,10 +268,10 @@
 "Suspend" = "Остановка";
 
 /* Title for user options */
-"User options" = "Пользовательские опции";
+"User options" = "Настройки пользователя";
 
 /* DanaKit share logs */
-"Share Dana pump logs" = "Поделитесь журналом Насос Dana";
+"Share Dana pump logs" = "Поделиться логами Dana";
 
 /* Loading */
 "Loading" = "Загрузка";
@@ -283,7 +283,7 @@
 "24h display" = "24-часовой дисплей";
 
 /* Description for 24h display */
-"Should time be display in 12h or 24h" = "Время должно отображаться в 12 или 24 часах";
+"Should time be display in 12h or 24h" = "Показывать время в 12ч или 24ч формате";
 
 /* text on */
 "On" = "Включено";
@@ -292,10 +292,10 @@
 "Off" = "Выключено";
 
 /* 12h */
-"12h notation" = "12-часовая нотация";
+"12h notation" = "12ч формат";
 
 /* 24h */
-"24h notation" = "24-часовая нотация";
+"24h notation" = "24ч формат";
 
 /* Text for Scroll function */
 "Scroll function" = "Функция прокрутки";
@@ -304,13 +304,13 @@
 "sec" = "сек";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Верлихтинг в тиждь";
+"Backlight on time" = "Время подсветки экрана";
 
 /* lcdOnTimeInSec */
-"Lcd on time" = "Время включения ЖК-дисплея";
+"Lcd on time" = "Время отображения экрана";
 
 /* beepAndAlarm */
-"Alarm beeps" = "Звуковые сигналы тревоги";
+"Alarm beeps" = "Сигналы тревоги";
 
 /* beepAndAlarm.sound */
 "Sound" = "Звук";
@@ -322,43 +322,43 @@
 "Both" = "Оба";
 
 /* Alert title for batteryZeroPercent */
-"Pump battery 0%" = "Аккумулятор насоса 0%";
+"Pump battery 0%" = "Батарея помпы 0%";
 
 /* Alert body for batteryZeroPercent */
-"Pump battery is empty. Replace it now!" = "Батарея насоса разряжена. Замените его немедленно!";
+"Pump battery is empty. Replace it now!" = "Батарея помпы разряжена. Замените ее немедленно!";
 
 /* Alert title for pumpError */
-"Pump error" = "Ошибка насоса";
+"Pump error" = "Ошибка помпы";
 
 /* Alert body for pumpError */
-"Check the pump and try again" = "Проверьте насос и повторите попытку.";
+"Check the pump and try again" = "Проверьте помпу и повторите попытку";
 
 /* Alert title for occlusion */
-"Occlusion" = "Окклюзия";
+"Occlusion" = "Закупорка";
 
 /* Alert body for occlusion */
-"Check the reservoir and infus and try again" = "Проверьте резервуар, влейте воду и повторите попытку.";
+"Check the reservoir and infus and try again" = "Проверьте резервуар, заполните и повторите попытку";
 
 /* Alert title for lowBattery */
-"Low pump battery" = "Разряженная батарея насоса";
+"Low pump battery" = "Низкий заряд батареи помпы";
 
 /* Alert body for lowBattery */
-"Pump battery needs to be replaced soon" = "Аккумулятор насоса необходимо заменить в ближайшее время";
+"Pump battery needs to be replaced soon" = "Батарею помпы необходимо заменить в ближайшее время";
 
 /* Alert title for shutdown */
-"Pump shutdown" = "Отключение насоса";
+"Pump shutdown" = "Отключение помпы";
 
 /* Alert body for shutdown */
-"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Слишком долго не было никаких взаимодействий с насосом. Либо отключите эту функцию в насосе, либо взаимодействуйте с насосом";
+"There has not been any interactions with the pump for too long. Either disable this function in the pump or interact with the pump" = "Слишком долго не было никаких взаимодействий с помпой. Либо отключите эту функцию в помпе, либо взаимодействуйте с помпой";
 
 /* Alert title for basalCompare */
-"Basal Compare" = "Базальное сравнение";
+"Basal Compare" = "Сравнение Базала";
 
 /* Alert title for bloodSugarMeasure */
 "Blood glucose Measure" = "Измерение уровня глюкозы в крови";
 
 /* Alert title for remainingInsulinLevel */
-"Remaining insulin level" = "Остаточный уровень инсулина";
+"Remaining insulin level" = "Количество оставшегося инсулина";
 
 /* Alert title for emptyReservoir */
 "Empty reservoir" = "Резервуар пуст";
@@ -370,22 +370,22 @@
 "Check chaft" = "Проверьте вал";
 
 /* Alert body for checkShaft */
-"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "Насос обнаружил проблему с валом. Пожалуйста, снимите резервуар, проверьте все и повторите попытку";
+"The pump has detected an issue with its chaft. Please remove the reservoir, check everything and try again" = "Помпа обнаружила проблему с валом. Пожалуйста, снимите резервуар, проверьте все и повторите попытку";
 
 /* Alert title for basalMax */
-"Basal limit reached" = "Базовый предел достигнут";
+"Basal limit reached" = "Достигнут лимит Базала";
 
 /* Alert body for basalMax */
-"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Ваш суточный лимит базала достигнут. Обратитесь к дистрибьютору Dana, чтобы увеличить лимит.";
+"Your daily basal limit has been reached. Please contact your Dana distributer to increase the limit" = "Ваш суточный лимит Базала достигнут. Обратитесь к дистрибьютору Dana, чтобы увеличить лимит";
 
 /* Alert title for dailyMax */
 "Daily limit reached" = "Суточный лимит достигнут";
 
 /* Alert body for basalMax */
-"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Ваш ежедневный лимит инсулина исчерпан. Обратитесь к дистрибьютору компании \"Дана\", чтобы увеличить лимит.";
+"Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Ваш суточный лимит инсулина достигнут. Обратитесь к дистрибьютору Dana, чтобы увеличить лимит";
 
 /* Alert title for bloodSugarCheckMiss */
-"Missed Blood glucose check" = "Пропущенный контроль уровня глюкозы в крови";
+"Missed Blood glucose check" = "Пропущен контроль уровня глюкозы в крови";
 
 /* Alert body for bloodSugarCheckMiss */
 "A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "В вашей помпе установлено и срабатывает напоминание о проверке уровня глюкозы в крови. Пожалуйста, удалите его или сообщите помпе свой уровень глюкозы";
@@ -394,25 +394,25 @@
 "Unknown error" = "Неизвестная ошибка";
 
 /* Alert body for unknown */
-"An unknown error has occurred during processing the alert from the pump. Please report this" = "При обработке оповещения от насоса произошла неизвестная ошибка. Пожалуйста, сообщите об этом";
+"An unknown error has occurred during processing the alert from the pump. Please report this" = "При обработке сигнала от помпы произошла неизвестная ошибка. Пожалуйста, сообщите об этом";
 
 /* The title of the pump information section in DanaKit settings */
-"Pump information" = "Информация о насосе";
+"Pump information" = "Информация о помпе";
 
 /* Title for silent tone action sheet */
-"Toggle silent tone?" = "Тумблер без звука?";
+"Toggle silent tone?" = "Включить фоновый звук?";
 
 /* Button text to cancel silent tone */
 "No, Keep as is" = "Нет, оставить как есть";
 
 /* Button text to disable silent tone */
-"Yes, Disable silent tones" = "Да, отключение беззвучных сигналов";
+"Yes, Disable silent tones" = "Да, отключить фоновый звук";
 
 /* Button text to enable silent tone */
-"Yes, Enable silent tones" = "Да, включение беззвучных сигналов";
+"Yes, Enable silent tones" = "Да, включить фоновый звук";
 
 /* Description for basal profile number */
-"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Установите базальный профиль, который должен использовать насос. Обратите внимание, что при этом профиль, установленный в насосе, будет заменен профилем, установленным в %1$@.";
+"Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Установите базальный профиль, который должна использовать помпа. Обратите внимание, что при этом профиль, установленный в помпе, будет заменен профилем, установленным в %1$@";
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
@@ -427,13 +427,13 @@
 "Signal Loss" = "Сигнал потерян";
 
 /* Text for Day unit */
-"day(s)" = "день(ы)";
+"day(s)" = "день(и)";
 
 /* Text for cannula age */
 "Cannula age" = "Возраст канюли";
 
 /* Text for reservoir age */
-"Reservoir age" = "Возраст водохранилища";
+"Reservoir age" = "Возраст резервуара";
 
 /* Text for status */
 "Status" = "Статус";
