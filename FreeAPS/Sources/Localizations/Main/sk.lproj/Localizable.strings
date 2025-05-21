@@ -4,7 +4,7 @@
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
-"Add insulin without actually bolusing" = "Zaznamenať inzulínu bez podania bolusu";
+"Add insulin without actually bolusing" = "Zaznamenať inzulín bez podania bolusu";
 
 /* Add insulin from source outside of pump */
 "Add %@ without bolusing" = "Pridať %@ bez podania bolusu";
@@ -381,7 +381,7 @@ Enact a temp Basal or a temp target */
 "Local glucose source" = "Lokálny zdroj glykémie";
 
 /* Header */
-"Nightscout Config" = "Konfigurácia Nightscout";
+"Nightscout Config" = "Nightscout nastavenia";
 
 /*  */
 "Port" = "Port";
@@ -417,7 +417,7 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Povoliť vzdialené ovládanie iAPS";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nTeraz dôkladne skontrolujte všetky nové nastavenia:\n\n* Bazálne nastavenia\n * Sacharidové pomery\n * Cieľové hodnoty glykémie\n * Citlivosť na inzulín\n * DIA\n\n v iAPS Nastavenia > Konfigurácia.\n\nZlé alebo neplatné nastavenia profilu by mohli mať škodlivé účinky.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nTeraz dôkladne skontrolujte všetky nové nastavenia:\n\n* Bazálne nastavenia\n * Sacharidové pomery\n * Cieľové hodnoty glykémie\n * Citlivosť na inzulín\n * DIA\n\n v iAPS Nastavenia > Konfigurácia.\n\nZlé alebo neplatné nastavenia profilu by mohli mať fatálne následky.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Týmto sa nahradia niektoré alebo všetky aktuálne nastavenia pumpy. Ste si istí, že chcete importovať nastavenia profilu z programu Nightscout?";
@@ -460,6 +460,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Omnipod pump */
 "Add Omnipod" = "Pridať Omnipod";
+
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Pridať Dana-i/RS";
 
 /* Add Simulator pump */
 "Add Simulator" = "Pridať simulátor";
@@ -1251,6 +1254,54 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Carbs Required Threshold" = "Prahová hodnota pre pripomenutie sacharidov";
 
 /* */
+"Carbs Required" = "Potrebné sacharidy";
+
+/* */
+"Sounds" = "Zvuky";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hypoglykémia";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Hyperglykémia";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Stúpajúci trend";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Klesajúci trend";
+
+/* Silent sound option */
+"Silent" = "Tichý";
+
+/* Option for no sound */
+"Silent" = "Tichý";
+
+/* The iOS default sound */
+"iOS default sound" = "Predvolený zvuk pre iOS";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "RÝCHLO KLESAJÚCA GLYKÉMIA!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "RÝCHLO STÚPAJÚCA GLYKÉMIA!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Zlyhanie bolusu";
+
+/* Sound for missing loops */
+"Missing Loops" = "Chýbajúce slučky";
+
+/* Alert for ascending glucose */
+"Ascending" = "Vzostupne";
+
+/* Alert for descending glucose */
+"Descending" = "Zostupne";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Prahové hodnoty";
+
+/* */
 "Carbs required: %d g" = "Potrebné sacharidy: %d g";
 
 /* */
@@ -1263,7 +1314,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Last loop was more than %d min ago" = "Posledná slučka bola pred viac ako %d min";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Zobraziť glykémiu na odznaku aplikácie";
+"Show glucose on the app badge" = "Zobraziť glykémiu na ikone aplikácie";
 
 /* */
 "Backfill glucose" = "Doplniť glykémie";
@@ -1365,7 +1416,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "NS Upload Profile and Settings" = "NS odoslať profil a nastavenia";
 
 /* Debug option delete all NS overrides */
-"Delete All NS Overrides" = "Vymazať všetky prepísania NS";
+"Delete All NS Overrides" = "Odstrániť všetky prepísania NS";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Nahraný profil";
@@ -1380,7 +1431,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Only Autotune Basal Insulin" = "Iba Autotune bazálneho inzulínu";
 
 /* */
-"Save as your Normal Basal Rates" = "Uložiť ako normálne bazálne sadzby";
+"Save as your Normal Basal Rates" = "Uložiť ako predvolené hodnoty bazálu";
 
 /* */
 "Save on Pump" = "Uložiť do pumpy";
@@ -1469,7 +1520,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " -  Manual Basal ⚠️" = " -  Manuálny bazál ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/day";
+"U/day" = "U/deň";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Spolu";
@@ -1495,7 +1546,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override With A Factor Of " = "Prepísať faktorom ";
 
 /* Description */
-"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Umožňuje prepočítavať tuky a bielkoviny na budúce ekvivalenty sacharidov pomocou Varšavského vzorca kilokalórií delených 10.\n\nTýmto spôsobom sa ekvivalenty sacharidov rozložia na maximálne nastavené trvanie, ktoré možno nakonfigurovať v rozsahu 5-12 hodín.\n\nOneskorenie v minútach je čas odteraz do prvého budúceho zápisu sacharidov.\n\nInterval v minútach je počet minút medzi jednotlivými zápismi. Čím je interval kratší, tým je výsledok plynulejší. 10, 15, 20, 30 alebo 60 sú rozumné možnosti.\n\nPrepísať faktorom je, aký vplyv má tuk a bielkoviny na záznamy. 1,0 je plný účinok (pôvodná Varšavská metóda) a 0,5 je polovičný účinok. Všimnite si, že možno zistíte, že Váš normálny pomer sacharidov sa musí zvýšiť na väčšie číslo, ak začnete pridávať položky tukov a bielkovín. Z tohto dôvodu je najlepšie začať s faktorom približne 0,5, aby ste si to uľahčili.\n\nPredvolené nastavenia: Časový limit: 8 h, Interval: 30 min, Faktor: 0,5, Oneskorenie 60 min";
+"Allows fat and protein to be converted into future carb equivalents using the Warsaw formula of kilocalories divided by 10.\n\nThis spreads the carb equivilants over a maximum duration setting that can be configured from 5-12 hours.\n\nDelay is time from now until the first future carb entry.\n\nInterval in minutes is how many minutes are between entries. The shorter the interval, the smoother the result. 10, 15, 20, 30, or 60 are reasonable choices.\n\nAdjustment factor is how much effect the fat and protein has on the entries. 1.0 is full effect (original Warsaw Method) and 0.5 is half effect. Note that you may find that your normal carb ratio needs to increase to a larger number if you begin adding fat and protein entries. For this reason, it is best to start with a factor of about 0.5 to ease into it.\n\nDefault settings: Time Cap: 8 h, Interval: 30 min, Factor: 0.5, Delay 60 min" = "Umožňuje prepočítavať tuky a bielkoviny na budúce ekvivalenty sacharidov pomocou Varšavského vzorca kilokalórií delených 10.\n\nTýmto spôsobom sa ekvivalenty sacharidov rozložia na maximálne nastavené trvanie, ktoré možno nastaviť v rozsahu 5-12 hodín.\n\nOneskorenie v minútach je čas odteraz do prvého budúceho zápisu sacharidov.\n\nInterval v minútach je počet minút medzi jednotlivými zápismi. Čím je interval kratší, tým je výsledok plynulejší. 10, 15, 20, 30 alebo 60 sú rozumné možnosti.\n\nPrepísať faktorom je, aký vplyv má tuk a bielkoviny na záznamy. 1,0 je plný účinok (pôvodná Varšavská metóda) a 0,5 je polovičný účinok. Všimnite si, že možno zistíte, že Váš normálny pomer sacharidov sa musí zvýšiť na väčšie číslo, ak začnete pridávať položky tukov a bielkovín. Z tohto dôvodu je najlepšie začať s faktorom približne 0,5, aby ste si to uľahčili.\n\nPredvolené nastavenia: Časový limit: 8 h, interval: 30 min, faktor: 0,5, oneskorenie 60 min.";
 
 /* Fat/Protein additional info */
 "\n\nCarb equivalents that get to small (0.6g or under) will be excluded and the equivalents over 0.6 but under 1 will be rounded up to 1. With a higher time interval setting you'll get fewer equivalents with a higher carb amount." = "\n\nSacharidové ekvivalenty, ktoré sú príliš malé (0,6 g alebo menej), budú vylúčené a ekvivalenty nad 0,6 g, ale menej ako 1 g, budú zaokrúhlené na 1 g. Pri vyššom nastavení časového intervalu získate menej ekvivalentov s vyšším množstvom sacharidov.";
@@ -1638,13 +1689,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Statistics and Home View" = "Štatistiky a domovské zobrazenie";
 
 /* Alert text */
-"Delete Carb Equivalents?" = "Vymazať ekvivalenty sacharidov?";
+"Delete Carb Equivalents?" = "Odstrániť ekvivalenty sacharidov?";
 
 /* */
 "All FPUs of the meal will be deleted." = "Všetky FPU jedla sa vymažú.";
 
 /* */
-"Delete Glucose?" = "Vymazať glykémiu?";
+"Delete Glucose?" = "Odstrániť glykémiu?";
 
 /* */
 "Meal Presets" = "Predvoľby jedál";
@@ -1701,6 +1752,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* */
 "Eventual Glucose" = "Predpokladaná glykémia";
+
+/* */
+"Minimum Predicted Glucose" = "Minimálna predikovaná glykémia";
 
 /* */
 "Please wait" = "Čakajte, prosím";
@@ -1856,10 +1910,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Unable to set a temporary basal rate: %1$@" = "Nie je možné nastaviť dočasnú dávku bazálu: %1$@";
 
 /* Alert title for missing temp basal configuration */
-"Missing Config" = "Chýba konfigurácia";
+"Missing Config" = "Chýbajúce nastavenia";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Tento manažér čerpadiel nebol nakonfigurovaný s maximálnou bazálnou rýchlosťou, pretože bol pridaný skôr, ako bola pridaná funkcia manuálneho bazálneho nastavenia. Prejdite do nastavení terapie -> limity dodávok a nastavte novú maximálnu bazálnu rýchlosť.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Tento PumpManager nemá nastavenú maximálnu bazálnu dávku, pretože bol pridaný pred zavedením funkcie manuálneho dočasného bazálu. Prejdite do Nastavenia -> Limity dávkovania a nastavte novú maximálnu bazálnu dávku.";
 
 /* description label for active time pod details row */
 "Active Time" = "Aktívny Čas";
@@ -2095,7 +2149,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
-"CGM Configuration" = "Konfigurácia CGM";
+"CGM Configuration" = "Nastavenia CGM";
 
 "Heartbeat" = "Tlkot srdca";
 
@@ -2103,7 +2157,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 "CGM is not used as heartbeat." = "CGM sa nepoužíva ako srdcový tep.";
 
-"Are you sure you want to delete this CGM?" = "Ste si istí, že chcete tento CGM vymazať?";
+"Are you sure you want to delete this CGM?" = "Ste si istí, že chcete odstrániť tento CGM?";
 
 /* New Experimental feature */
 "Experimental" = "Experimentálny";
@@ -2329,7 +2383,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
 
-"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Pumpa Dana neumožňuje úpravu maximálneho bazálneho a maximálneho bolusu. Nakonfigurujte ich v lekárskych nastaveniach pumpy. Uložením nastavení sa načítajú posledné hodnoty z pumpy";
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Pumpa Dana neumožňuje úpravu maximálneho bazálneho a maximálneho bolusu. Nastavte ich v lekárskych nastaveniach pumpy. Uložením nastavení sa načítajú posledné hodnoty z pumpy";
 
 /* --------- Auto ISF --------- */
 /* */
@@ -2353,13 +2407,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Vyžaduje špecifický cieľ glykémie pre EatingSoon, ktorý je nastavený prostredníctvom profilového cieľa alebo dočasného cieľa";
 
 /* */
-"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Po zrušení tohto cieľa bude zrušená aj vysoká bazálna dávka B30 (TBR)";
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Po zrušení tohto cieľa sa zruší aj zvýšená dočasná bazálna dávka B30 (TBR)";
 
 /* */
 "In order to activate B30 a minimum manual Bolus needs to be given" = "Na aktiváciu B30 je potrebné podať minimálny manuálny bolus";
 
 /* */
-"You can specify how long B30 run and how high it is" = "Môžete určiť, ako dlho bude B30 bežať a aká vysoká bude jeho bazálna dávka";
+"You can specify how long B30 run and how high it is" = "Môžete určiť, ako dlho bude B30 aktívne a aká vysoká bude jeho dočasná bazálna dávka";
 
 /* */
 "Absolute Safety TBR " = "Absolútne bezpečnostné TBR ";
@@ -2389,7 +2443,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Enable Keto Protection" = "Povoliť Keto ochranu";
 
 /* */
-"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Ochrana pred ketoacidózou nastaví malé konfigurovateľné dočasné bazálne dávkovanie (Temp Basal Rate – TBR) vždy alebo pri určitých podmienkach namiesto nulového dočasného bazálu!\nTáto funkcia existuje, pretože v špecifických prípadoch môže nulové bazálne dávkovanie (0 % TBR) viesť ku ketoacidóze. Myšlienka pochádza zo športu – ak bazálna dávka 0 % beží niekoľko hodín, môže to spôsobiť problémy, najmä pre svaly, ktoré by mohli prestať fungovať.\nTáto funkcia umožňuje malý bezpečnostný TBR, aby sa znížilo riziko ketoacidózy. Ak nie je aktivovaná variabilná ochrana, bezpečnostný TBR sa aplikuje vždy.\nPri použití variabilnej ochrany sa bezpečnostný TBR aplikuje iba vtedy, ak súčet bazálneho IOB a bolusového IOB klesne pod hodnotu aktuálnej bazálnej dávky.";
+"Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Ochrana pred ketoacidózou nastaví malé množstvo dočasného bazálu (Temp Basal Rate – TBR) vždy alebo pri určitých podmienkach namiesto nulového dočasného bazálu!\nTáto funkcia existuje, pretože v špecifických prípadoch môže nulová dávka bazálu (0 % TBR) viesť ku ketoacidóze. Myšlienka pochádza zo športu – ak bazálna dávka 0 % beží niekoľko hodín, môže to spôsobiť problémy, najmä pre svaly, ktoré by mohli prestať fungovať.\nTáto funkcia umožňuje malý bezpečnostný TBR, aby sa znížilo riziko ketoacidózy. Ak nie je aktivovaná variabilná ochrana, bezpečnostný TBR sa aplikuje vždy.\nPri použití variabilnej ochrany sa bezpečnostný TBR aplikuje iba vtedy, ak súčet bazálneho IOB a bolusového IOB klesne pod hodnotu aktuálnej bazálnej dávky.";
 
 /* */
 "B30 Settings" = "Nastavenia B30";
@@ -2404,25 +2458,27 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "B30 Basal rate increase factor" = "Faktor zvýšenia bazálnej dávky B30";
 
 /* */
-"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Faktor, ktorý násobí vašu bežnú bazálnu dávku pre B30. Maximálna bazálna dávka, ktorá sa aplikuje, je limitovaná maximálnou bazálnou dávkou nastavenou na vašej pumpe. Predvolená hodnota je 5.";
+"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Faktor, ktorý násobí vašu bežnú bazálnu dávku v režime B30. Výsledná dávka je obmedzená maximálnou bazálnou dávkou nastavenou na vašej pumpe. Predvolená hodnota: 5.";
 
 /* */
 "Upper Delta limit" = "Horný limit Delta";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB budú deaktivované, keď hodnota klesne pod tento limit, pokiaľ je aktívna bazálna dávka B30. Predvolená hodnota je 8 mg/dl (0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB budú deaktivované, ak hodnota klesne pod tento limit počas aktívneho režimu B30.
+Predvolená hodnota: 8 mg/dl (0,5 mmol/L).";
 
 /* */
 "Upper BG limit" = "Horný limit glykémie";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB budú deaktivované, pokiaľ je aktívna bazálna dávka B30 a hodnota klesne pod tento limit. Predvolená hodnota je 130 mg/dl (7,2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB budú deaktivované, ak hodnota klesne pod tento limit počas aktívneho režimu B30.
+Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 
 /* */
 "Target Level for B30 to be enacted" = "Cieľová hladina glykémie pre aktiváciu B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať profil EatingSoon (alebo dočasný cieľ). Aby sa B30 mohlo spustiť, cieľová hodnota musí byť nižšia ako toto nastavenie. Predvolená hodnota: 90 mg/dl. Ak zrušíte tento EatingSoon cieľ, bazálna dávka B30 sa zastaví.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať profil \"Eating Soon\" alebo nastaviť dočasný cieľ. B30 sa spustí len vtedy, ak cieľová hodnota glykémie je nižšia ako táto nastavená hodnota. Predvolená hodnota: 90 mg/dl (5,0 mmol/L). Ak zrušíte profil \"Eating Soon\" alebo dočasný cieľ, bazálna dávka B30 sa ukončí.";
 
 /* */
 "Minimum Start Bolus size" = "Minimálna veľkosť bolusu pre spustenie";
@@ -2479,16 +2535,17 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Predvolená hodnota: 0.0. Toto je váha aplikovaná na polygón, ktorý prispôsobuje ISF, ak je glykémia nad cieľovou hodnotou. S hodnotou 0.0 je tento efekt deaktivovaný.";
 
 /* */
-"Duration Weight" = "Duration Weight";
+"Duration Weight" = "Váha trvania";
 
 /* */
 "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Váha pre dlhodobo zvýšenú glykémiu. Za každú hodinu, počas ktorej zostáva glykémia vysoká, toto nastavenie viac zníži Váš ISF.\n\nVzorec pre Dura ISF úpravu:\n\nDura ISF = 1 + hodiny nad cieľom * váha / cieľ * (priemerná glykémia - cieľová glykémia)";
 
 /* */
-"SMB Delivery Ratio BG Range" = "Pomer dodávky SMB v rozsahu glykémie";
+"SMB Delivery Ratio BG Range" = "Pomer dávky SMB v rozsahu glykémie";
 
-/* */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Predvolená hodnota: 0, rozumné hodnoty sú medzi 40 mg/dL a 120 mg/dL. Lineárne rastúci pomer dodávky SMB je mapovaný na rozsah glykémie [target_bg, target_bg+bg_range]. Pri target_bg je pomer SMB rovný smb_delivery_ratio_min, pri target_bg+bg_range je rovný smb_delivery_ratio_max. Pri hodnote 0 je lineárne rastúci pomer SMB deaktivovaný a používa sa fixný smb_delivery_ratio.";
+/* SMB Delivery Ratio BG Range description */
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Predvolená hodnota: 0. Rozumný rozsah je medzi 40 mg/dL (2,0 mmol/L) a 120 mg/dL (7,1 mmol/L). Lineárne rastúci pomer SMB dávkovania je mapovaný na rozsah glykémie [cieľová_glykémia, cieľová_glykémia + rozsah_glykémie].
+Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľovej_glykémii + rozsah_glykémie je rovný smb_delivery_ratio_max. Ak je hodnota nastavená na 0, lineárne dávkovanie SMB je deaktivované a používa sa pevne daný smb_delivery_ratio.";
 
 /* */
 "SMB Delivery Ratio Maximum" = "Maximálny pomer dávky SMB";
@@ -2538,8 +2595,8 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "Max IOB Threshold Percent" = "Maximálna prahová hodnota IOB v percentách";
 
-/* Description */
-"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
+/* IOB Threshold Percent Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percento z maximálneho nastavenia IOB, ktoré sa má použiť pre SMB, ak je zapnuté Auto ISF.\n\nAk je aktuálne IOB pod prahovou hodnotou, množstvo SMB môže prekročiť túto hodnotu o 30 %, nikdy však nie maximálne nastavenie IOB.\n\nPri 100 % je toto nastavenie vypnuté.";
 
 /* */
 "Auto ISF" = "Auto ISF";
@@ -2928,6 +2985,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Zobraziť dočasné cieľové tlačidlo";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Zobraziť tlačidlo prepísania profilu";
+
+/* UI/UX option */
+"Display Meal Button" = "Zobraziť tlačidlo jedla";
 
 /* UI/UX option */
 "Home View Button Panel " = "Panel tlačidiel zobrazenia Domov ";

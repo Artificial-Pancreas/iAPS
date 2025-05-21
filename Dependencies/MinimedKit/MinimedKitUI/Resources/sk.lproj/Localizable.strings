@@ -63,7 +63,7 @@
 
 /* Button label for removing Pump
    Text to delete pump */
-"Delete Pump" = "Vymazať Pumpu";
+"Delete Pump" = "Odstrániť pumpu";
 
 /* Header for devices section of RileyLinkSetupView */
 "Devices" = "Zariadenia";

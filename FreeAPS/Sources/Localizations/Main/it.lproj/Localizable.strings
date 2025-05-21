@@ -161,10 +161,10 @@
 "Override" = "Override";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Nessuna Pompa";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Apri";
 
 /*  */
 "Amount Carbs" = "Quantità di carboidrati";
@@ -272,7 +272,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Variabili Dinamiche";
 
 /*  */
 "Basal profile" = "Profilo basale";
@@ -461,6 +461,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Aggiungi Omnipod";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Add Dana-i/RS";
+
 /* Add Simulator pump */
 "Add Simulator" = "Aggiungi Simulazione microinfusore";
 
@@ -616,7 +619,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Aggiungi dispositivi";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Pulsante profilo override / Temp Targets";
 
 /* */
 "Glucose Target" = "Obiettivo glicemico";
@@ -706,19 +709,19 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Trattamenti";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Aggiungi insulina";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Aggiungi Glicemia";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Nuova glicemia";
 
 /* Hypo Treatment Preset */
 "Treatment" = "Trattamento";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Predefinito 📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Nessuno";
@@ -946,10 +949,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Info Sensore";
 
 /* */
-"Sensor Life-Span" = "Sensor Life-Span";
+"Sensor Life-Span" = "Durata sensore";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Quando si utilizza %@ iAPS non conosce il tipo di sensore utilizzato o la durata di vita del sensore.";
 
 /* */
 "Sensor Age Left" = "Tempo Rimanente Sensore";
@@ -1250,6 +1253,54 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Soglia carboidrati necessari";
 
 /* */
+"Carbs Required" = "Carboidrati necessari";
+
+/* */
+"Sounds" = "Suoni";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Ipoglicemia";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Iperglicemia";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Rapidamente Crescente";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Rapidamente Decrescente";
+
+/* Silent sound option */
+"Silent" = "Modalità silenziosa";
+
+/* Option for no sound */
+"Silent" = "Modalità silenziosa";
+
+/* The iOS default sound */
+"iOS default sound" = "suono predefinito iOS";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "Glicemia in rapida discesa!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "Glicemia in rapida salita!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolo Fallito";
+
+/* Sound for missing loops */
+"Missing Loops" = "Cicli falliti";
+
+/* Alert for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Alert for descending glucose */
+"Descending" = "Descending";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
+
+/* */
 "Carbs required: %d g" = "Carboidrati necessari %d g";
 
 /* */
@@ -1361,10 +1412,10 @@ Enact a temp Basal or a temp target */
 "Developer" = "Sviluppatore";
 
 /* Debug option view NS Upload Profile */
-"NS Upload Profile and Settings" = "NS Upload Profile and Settings";
+"NS Upload Profile and Settings" = "Profilo e impostazioni di caricamento NS";
 
 /* Debug option delete all NS overrides */
-"Delete All NS Overrides" = "Delete All NS Overrides";
+"Delete All NS Overrides" = "Elimina Tutte Le Overrides Ns";
 
 /* Debug option view NS Uploaded Profile */
 "NS Uploaded Profile" = "NS Profilo caricato";
@@ -1388,10 +1439,10 @@ Enact a temp Basal or a temp target */
 "Pump History" = "Cronologia Micro";
 
 /* Debug option view Temp Basals */
-"Temp Basals" = "Temp Basals";
+"Temp Basals" = "Basale temporanea";
 
 /* Debug option view Target Ranges */
-"Targets ranges" = "Targets ranges";
+"Targets ranges" = "Intervallo target";
 
 /* Debug option view Temp targets */
 "Temp targets" = "Target temporanei";
@@ -1415,7 +1466,7 @@ Enact a temp Basal or a temp target */
 "Enacted announcements" = "Annunci attivati";
 
 /* Debug option view Not Uploaded Overrides */
-"Overrides Not Uploaded" = "Overrides Not Uploaded";
+"Overrides Not Uploaded" = "Override Non impostato";
 
 /* Debug option view Autotune */
 "Autotune" = "Autotune";
@@ -1468,7 +1519,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " - Basale manuale ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/day";
+"U/day" = "U/giorno";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Totale";
@@ -1518,7 +1569,7 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Conversione di grassi e proteine";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Ignore flat CGM readings";
+"Ignore flat CGM readings" = "Ignora letture CGM identiche";
 
 /* Service Section */
 "Profile Override" = "Regolazione Profilo";
@@ -1550,7 +1601,7 @@ Enact a temp Basal or a temp target */
 "Disable SMBs" = "Disabilita SMB";
 
 /* */
-"End the Override with next Meal" = "End the Override with next Meal";
+"End the Override with next Meal" = "Termina l'Override con il prossimo Pasto";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Profilo Normale";
@@ -1562,7 +1613,7 @@ Enact a temp Basal or a temp target */
 "Profiles" = "Profili";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Impostazioni avanzate";
 
 /* */
 "More options" = "Altre opzioni";
@@ -1586,7 +1637,7 @@ Enact a temp Basal or a temp target */
 "UAM SMB Minutes" = "UAM SMB Minuti";
 
 /* */
-"Override Max IOB" = "Override Max IOB";
+"Override Max IOB" = "Override del Massimo IOB";
 
 /* */
 "Start new Profile" = "Avvia nuovo profilo";
@@ -1700,6 +1751,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Eventual Glucose" = "previsione glicemica";
+
+/* */
+"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
 
 /* */
 "Please wait" = "Attendere prego";
@@ -2328,7 +2382,7 @@ Enact a temp Basal or a temp target */
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
 
-"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "La pompa Dana non consente la modifica del massimo bolo e della massima basale. Configura queste nelle impostazioni del medico della pompa. Il salvataggio delle impostazioni recupererà gli ultimi valori dal microinfusore";
 
 /* --------- Auto ISF --------- */
 /* */
@@ -2409,13 +2463,13 @@ Enact a temp Basal or a temp target */
 "Upper Delta limit" = "Limite delta massimo";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "Le SMB saranno disattivate quando sotto questo limite, mentre è in esecuzione una velocità basale B30. Il valore predefinito è 8 mg/dl (0,5 mmol/l).";
 
 /* */
 "Upper BG limit" = "Limite BG massimo";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "Le SMB saranno disattivate quando sotto questo limite, mentre è in esecuzione una velocità basale B30. Il valore predefinito è 130 mg/dl (7.2 mmol/l).";
 
 /* */
 "Target Level for B30 to be enacted" = "Livello obiettivo per attivare B30";
@@ -2442,7 +2496,7 @@ Enact a temp Basal or a temp target */
 "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Questo è il peso applicato mentre il glucosio scende e che indebolisce ISF. Con 0 questo contributo è effettivamente disabilitato. 0.1 potrebbe essere un buon punto di partenza.";
 
 /* */
-"ISF weight while BG accelerates" = "ISF weight while BG accelerates";
+"ISF weight while BG accelerates" = "Aumenta ISF mentre BG cresce";
 
 /* */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Valore predefinito: 0. Questo è il peso applicato mentre il glucosio sale e che rafforza ISF. Con 0 questo contributo è effettivamente disabilitato. 0.02 è un punto di partenza sicuro, da cui spostarsi. Le impostazioni tipiche sono circa 0.15!";
@@ -2466,27 +2520,27 @@ Enact a temp Basal or a temp target */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Valore predefinito: 0.0 Questo è il peso applicato al poligono che adatta delta ISF maggiori. Con 0.0 l'effetto è disabilitato.";
 
 /* */
-"ISF weight for lower BG" = "ISF weight for lower BG";
+"ISF weight for lower BG" = "Peso ISF per BG minore";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Valore predefinito: 0.0\nQuesto è il peso applicato al poligono che adatta ISF se la glicemia è al di sotto del target. \n\nCon 0.0 l'effetto è disattivato.";
 
 /* */
-"ISF weight for higher BG" = "ISF weight for higher BG";
+"ISF weight for higher BG" = "Peso ISF per BG superiore";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Valore predefinito: 0.0\nQuesto è il peso applicato al poligono che adatta ISF se la glicemia è al di sotto del target. \n\nCon 0.0 l'effetto è disattivato.";
 
 /* */
-"Duration Weight" = "Duration Weight";
+"Duration Weight" = "Durata Peso";
 
 /* */
-"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Peso per un elevato contenuto di glucosio prolungato. Per ogni ora che il glucosio rimane alto, questa regolazione abbasserà ulteriormente il tuo ISF.\n\nLa formula per la regolazione Dura ISF è:\n\nDurata ISF = 1 + ore al di sopra dell'obiettivo * peso / obiettivo * (glucosio medio - glucosio bersaglio)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "Range somministrazione SMB somministrazione BG";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Valore predefinito: 0, Sensibile è compreso tra 40 mg/dL e 120 mg/dL. Il rapporto di erogazione di SMB in aumento lineare viene mappato all'intervallo di glucosio [target_bg, target_bg+bg_range]. In target_bg il rapporto SMB è smb_delivery_ratio_min, in target_bg+bg_range è smb_delivery_ratio_max. Con 0 il rapporto SMB in aumento lineare è disabilitato e viene utilizzato il fix smb_delivery_ratio.";
 
 /* */
@@ -2523,7 +2577,7 @@ Enact a temp Basal or a temp target */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Abilita gli adattamenti di accelerazione BG, regolando l'ISF per aumentare/diminuire la glicemia.";
 
 /* */
-"Override Auto ISF" = "Override Auto ISF";
+"Override Auto ISF" = "Override ISF Automatico";
 
 /* */
 "Enable Auto ISF" = "Abilita ISF Automatico";
@@ -2537,8 +2591,8 @@ Enact a temp Basal or a temp target */
 /* */
 "Max IOB Threshold Percent" = "Percentuale Massima Di Soglia IOB";
 
-/* Description */
-"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
+/* IOB Threshold Percent Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentuale dell'impostazione massima IOB da usare mentre l'Auto ISF è abilitata.\n\nMentre l'attuale IOB è al di sotto della soglia, la quantità SMB può superare la soglia del 30%, tuttavia mai l'impostazione massima IOB.\n\nAl 100% questa impostazione è disabilitata.";
 
 /* */
 "Auto ISF" = "Auto ISF";
@@ -2550,16 +2604,16 @@ Enact a temp Basal or a temp target */
 " off" = " spento";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Regola ";
 
 /* History of the adjustments */
-"Final Ratio" = "Final Ratio";
+"Final Ratio" = "Rapporto Finale";
 
 /* History of the adjustments */
-"Adjustments" = "Adjustments";
+"Adjustments" = "Regolazioni";
 
 /* History of the adjustments */
-"Insulin" = "Insulin";
+"Insulin" = "Insulina";
 
 /* ---------------------------------------------------------------------------------------------------------------
   Infotexts from openaps.docs and androidaps.docs
@@ -2888,16 +2942,16 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Use alternate Bolus Calculator" = "Usa calcolatore bolo alternativo";
 
 /* Bolus Calculator Setting */
-"Use Bolus Calculator" = "Use Bolus Calculator";
+"Use Bolus Calculator" = "Usa Calcolatore Bolo";
 
 /* Bolus Calculator Setting */
-"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs.";
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "A seconda delle impostazioni, la calcolatrice Swift bolo utilizza i dati delle previsioni di glucosio OpenAPS e/o IOB, BCO, tendenza del glucosio, gluccosio attuale e glucosio bersaglio. Alla fine del calcolo viene applicato un fattore personalizzato (default 0.8).\n\nPuoi anche avere l'opzione nella calcolatrice del bolo per applicarne un'altra (!) fattore personalizzabile alla fine del calcolo che potrebbe essere utile per i pasti grassi, es. Pizza (predefinito 0.7).\n\nLa calcolatrice in bolo NON utilizza la variabile OpenAPS \"insulinRequired\", realizzata per le SMB.";
 
 /* Bolus Calculator Setting */
-"Adjustment" = "Adjustment";
+"Adjustment" = "Regolazioni";
 
 /* Bolus Calculator Setting */
-"Use OpenAPS glucose predictions" = "Use OpenAPS glucose predictions";
+"Use OpenAPS glucose predictions" = "Usa le previsioni di glucosio OpenAPS";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Pasti Grassi";
@@ -2909,7 +2963,7 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Il nuovo calcolatore alternativo di bolo è un altro approccio al calcolatore di bolo predefinito in iAPS. Se l'interruttore è acceso, si utilizza questa calcolatrice per il bolo e non la calcolatrice iAPS originale. Alla fine del calcolo viene applicato un fattore personalizzato come si suppone che sia quando si utilizza smbs (predefinita 0.8).\n\nPuoi anche aggiungere l'opzione nella calcolatrice del bolo per applicarne un altro (!) fattore personalizzabile al termine del calcolo che potrebbe essere utile per i pasti grassi. es. Pizza (predefinita 0.7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Usare la previsione finale del glucosio OpenAPS per calcolare l’insulina raccomandata. Questa impostazione attiverà la calcolatrice \"vecchia\". Attivata per impostazione predefinita.\n\n2. Utilizzare la previsione di OpenAPS minPredBG come un sistema di protezione di sicurezza complementare, non permettendo che la previsione di glucosio scenda al di sotto della soglia. Questa impostazione può essere utilizzata insieme o senza l'eventuale glucosio.";
 
 /* Settings Section */
 "Extra Features" = "Funzioni aggiuntive";
@@ -2928,6 +2982,12 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Mostra Pulsante target temporaneo(Temp)";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Mostra Il Pulsante Override Del Profilo";
+
+/* UI/UX option */
+"Display Meal Button" = "Mostra tasto Pasto";
 
 /* UI/UX option */
 "Home View Button Panel " = "Pannello Pulsante Visualizzazione Home ";
@@ -2968,7 +3028,7 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Display Glucose Delta" = "Mostra Delta Glicemia";
 
 /* UI/UX option */
-"Display Sensor Age" = "Display Sensor Age";
+"Display Sensor Age" = "Visualizza Età Sensore";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Nascondi Badge Concentrazione";
@@ -2980,22 +3040,22 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Hide the bolus amount strings when amount is under" = "Nascondi le stringhe di quantità del bolo quando la quantità è inferiore";
 
 /* UI/UX option */
-"Display carb equivalents" = "Display carb equivalents";
+"Display carb equivalents" = "Mostra i carboidrati equivalenti";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Display carb equivalent amount";
+"Display carb equivalent amount" = "Mostra i carboidrati equivalenti";
 
 /* UI/UX option */
-"Display Sensor Time Remaining" = "Display Sensor Time Remaining";
+"Display Sensor Time Remaining" = "Mostra Il Tempo Rimanente Del Sensore";
 
 /* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Display Sensor Age, but not Time Remaining";
+"Display Sensor Age, but not Time Remaining" = "Visualizza l'età del sensore, ma non il tempo rimanente";
 
 /* UI/UX option */
-"Display Ratio and a History View button" = "Display Ratio and a History View button";
+"Display Ratio and a History View button" = "Mostra il rapporto e la visualizza lo storico dati";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Auto isf su vista principale";
 
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
@@ -3007,13 +3067,13 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Live Activity" = "Attività in tempo reale";
 
 /* Show Live Activity */
-"Show Live Activity" = "Show Live Activity";
+"Show Live Activity" = "Mostra attività in tempo reale";
 
 /* Display Chart */
-"Display Chart" = "Display Chart";
+"Display Chart" = "Mostra grafico";
 
 /* Show Predictions */
-"Show Predictions" = "Show Predictions";
+"Show Predictions" = "Visualizza previsioni";
 
 /* Notification option */
 "Live activity displays blood glucose live on the lock screen and on the dynamic island (if available)" = "L'attività in tempo reale mostra il glucosio attivo nel sangue sulla schermata di blocco e sulla Dynamic Island(se disponibile)";
@@ -3070,4 +3130,4 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 "Overrides" = "Overrides";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Cancel Override";
+"Cancel Override" = "Annulla override";

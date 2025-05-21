@@ -260,7 +260,7 @@
 "[ -1 ]" = "[ -1 ]";
 
 /* Upper temp target limit */
-"Top target" = "Top target";
+"Top target" = "Mục tiêu cao";
 
 /*  Temp target set for ... minutes */
 "for" = "của";
@@ -299,7 +299,7 @@
 "Add" = "Thêm";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Hồ sơ liều Basal";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -460,6 +460,9 @@ Enact a temp Basal or a temp target */
 
 /* Add Omnipod pump */
 "Add Omnipod" = "Thêm Omnipod";
+
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Add Dana-i/RS";
 
 /* Add Simulator pump */
 "Add Simulator" = "Thêm Bơm mô phỏng";
@@ -1250,6 +1253,54 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Ngưỡng yêu cầu của lượng Carbs";
 
 /* */
+"Carbs Required" = "Carbs cần thiết";
+
+/* */
+"Sounds" = "Âm thanh";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hạ đường huyết";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Tăng đường huyết";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Đang tăng nhanh";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Đang giảm nhanh";
+
+/* Silent sound option */
+"Silent" = "Im lặng";
+
+/* Option for no sound */
+"Silent" = "Im lặng";
+
+/* The iOS default sound */
+"iOS default sound" = "âm thanh mặc định của iOS";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "ĐƯỜNG HUYẾT ĐANG GIẢM NHANH!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "ĐƯỜNG HUYẾT ĐANG TĂNG NHANH!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Liều Bolus thất bại";
+
+/* Sound for missing loops */
+"Missing Loops" = "Missing Loops";
+
+/* Alert for ascending glucose */
+"Ascending" = "Đang tăng dần";
+
+/* Alert for descending glucose */
+"Descending" = "Đang giảm dần";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Các ngưỡng";
+
+/* */
 "Carbs required: %d g" = "Lượng carbs yêu cầu: %d g";
 
 /* */
@@ -1699,7 +1750,10 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nNhấn 'Thêm' để tiếp tục với số lượng đã chọn.";
 
 /* */
-"Eventual Glucose" = "Eventual Glucose";
+"Eventual Glucose" = "Đường huyết đự đoán";
+
+/* */
+"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
 
 /* */
 "Please wait" = "Vui lòng chờ";
@@ -2107,7 +2161,7 @@ Enact a temp Basal or a temp target */
 /* New Experimental feature */
 "Experimental" = "Experimental";
 /* Smoothing of CGM readings */
-"Smooth Glucose Value" = "Làm mịn Glucose";
+"Smooth Glucose Value" = "Làm mịn đường huyết";
 /* ------------------------------------------- Sharing -------------------------------------------------------*/
 /* Setting Title */
 
@@ -2343,10 +2397,10 @@ Enact a temp Basal or a temp target */
 "Default value: 0.8 The lower limit of ISF adjustment" = "Giá trị mặc định: 0,8. Đây là giới hạn giá trị thấp nhất của điều chỉnh ISF";
 
 /* */
-"Auto ISF Max" = "Auto ISF Max";
+"Auto ISF Max" = "Auto ISF Tối đa";
 
 /* */
-"Auto ISF Min" = "Auto ISF Min";
+"Auto ISF Min" = "Auto ISF Tối thiểu";
 
 /* */
 "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Cần Mục tiêu Glucose cụ thể của EatingSoon được thiết lập bằng hồ sơ ghi đè hoặc mục tiêu tạm thời";
@@ -2361,31 +2415,31 @@ Enact a temp Basal or a temp target */
 "You can specify how long B30 run and how high it is" = "Bạn có thể chỉ định B30 chạy trong bao lâu và cao bao nhiêu";
 
 /* */
-"Absolute Safety TBR " = "Absolute Safety TBR ";
+"Absolute Safety TBR " = "Lượng TBR an toàn tuyệt đối ";
 
 /* */
 "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Lượng tính bằng U/giờ của TBR an toàn nhỏ, được dùng để tránh nhiễm toan ceton. Sẽ giới hạn ở mức min = 0U/giờ, max = 2U/giờ!";
 
 /* */
-"Enable Keto protection with pre-defined TBR" = "Enable Keto protection with pre-defined TBR";
+"Enable Keto protection with pre-defined TBR" = "Bật Bảo vệ Keto với TBR được xác định trước";
 
 /* */
 "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Nên chỉ định TBR tuyệt đối trong khoảng từ 0 đến 2 U/giờ thay vì phần trăm BR hiện tại";
 
 /* */
-"Safety TBR in %" = "Safety TBR in %";
+"Safety TBR in %" = "TBR an toàn trong %";
 
 /* */
 "Quantity of the small safety TBR in % of Profile BR, which is given to avoid ketoacidosis. Will be limited to min = 5%, max = 50%!" = "Số lượng TBR an toàn nhỏ theo % của Profile BR, được đưa ra để tránh nhiễm toan ceton. Sẽ giới hạn ở mức tối thiểu = 5%, tối đa = 50%!";
 
 /* */
-"Variable Keto Protection" = "Variable Keto Protection";
+"Variable Keto Protection" = "Biến Bảo vệ Keto";
 
 /* */
 "If activated the small safety TBR kicks in when IOB is in negative range as if no basal insulin has been delivered for one hour. If deactivated and static is enabled every Zero Temp is replaced with the small TBR." = "Nếu được kích hoạt, TBR an toàn nhỏ sẽ kích hoạt khi IOB ở phạm vi âm tính như thể không có insulin cơ bản nào được cung cấp trong một giờ. Nếu bị vô hiệu hóa và tĩnh được bật, mọi Zero Temp đều được thay thế bằng TBR nhỏ.";
 
 /* */
-"Enable Keto Protection" = "Enable Keto Protection";
+"Enable Keto Protection" = "Bật chế độ bảo vệ Keto";
 
 /* */
 "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Bảo vệ chống nhiễm toan ceton sẽ luôn áp dụng Tỷ lệ liều Temp Basal nhỏ có thể cấu hình hoặc nếu một số điều kiện nhất định phát sinh thay vì Zero temp!\nTính năng này tồn tại vì trong những trường hợp đặc biệt, một người có thể bị nhiễm toan ceton từ 0% TBR. Ý tưởng này bắt nguồn từ thể thao. Có thể có vấn đề khi tỷ lệ cơ bản 0% chạy trong nhiều giờ. Đặc biệt, cơ có thể ngừng hoạt động.\nTính năng này cho phép một TBR an toàn nhỏ để giảm nguy cơ nhiễm toan ceton. Nếu không có Bảo vệ biến đổi, TBR an toàn luôn được áp dụng. Ý tưởng đằng sau chiến lược bảo vệ biến đổi là TBR an toàn chỉ được áp dụng nếu tổng của basal-IOB và bolus-IOB bolus giảm xuống dưới giá trị của tỷ lệ cơ bản hiện tại.";
@@ -2394,55 +2448,55 @@ Enact a temp Basal or a temp target */
 "B30 Settings" = "B30 Settings";
 
 /* */
-"Duration of increased B30 basal rate" = "Duration of increased B30 basal rate";
+"Duration of increased B30 basal rate" = "Thời gian tăng tỷ lệ liều cơ bản B30";
 
 /* */
 "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Thời gian tăng tốc độ cơ bản làm bão hòa vị trí truyền bằng insulin. Mặc định là 30 phút, như trong B30. EatingSoon TT cần chạy ít nhất trong khoảng thời gian này, nếu không B30 sẽ dừng sau khi TT hết.";
 
 /* */
-"B30 Basal rate increase factor" = "B30 Basal rate increase factor";
+"B30 Basal rate increase factor" = "B30 Hệ số tăng tỷ lệ liều Cơ bản";
 
 /* */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Hệ số nhân tỷ lệ cơ bản thông thường của bạn đối với B30. Tỷ lệ cơ bản tối đa được ban hành là mức tối đa của cài đặt cơ bản tối đa của máy bơm của bạn. Mặc định là 5.";
 
 /* */
-"Upper Delta limit" = "Upper Delta limit";
+"Upper Delta limit" = "Giới hạn Delta trên";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
 
 /* */
-"Upper BG limit" = "Upper BG limit";
+"Upper BG limit" = "Giới hạn BG trên";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
 
 /* */
-"Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
+"Target Level for B30 to be enacted" = "Mục tiêu để kích hoạt B30";
 
 /* */
 "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Mục tiêu ghi đè EatingSoon (hoặc Mục tiêu tạm thời) cần được kích hoạt để bắt đầu quá trình thích ứng B30. Mục tiêu cần phải thấp hơn hoặc bằng cài đặt này để B30 Aimi bắt đầu. Mặc định là 90 mg/dl. Nếu bạn hủy Mục tiêu EatingSoon này, tỷ lệ cơ bản B30 sẽ dừng lại.";
 
 /* */
-"Minimum Start Bolus size" = "Minimum Start Bolus size";
+"Minimum Start Bolus size" = "Liều Bolus tối thiểu";
 
 /* */
 "Minimum manual bolus to start a B30 adaption." = "Liều bolus thủ công tối thiểu để bắt đầu quá trình thích ứng B30.";
 
 /* */
-"Activate B30" = "Activate B30";
+"Activate B30" = "Kích hoạt B30";
 
 /* */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Cho phép tăng tốc độ cơ bản sau Mục tiêu ghi đè EatingSoon (hoặc Mục tiêu tạm thời) và tiêm thủ công để bão hòa vị trí truyền bằng insulin nhằm tăng khả năng hấp thụ insulin cho SMB sau bữa ăn mà không tính lượng carbohydrate.";
 
 /* */
-"ISF weight while BG decelerates" = "ISF weight while BG decelerates";
+"ISF weight while BG decelerates" = "Lượng ISF trong khi BG Giảm tốc";
 
 /* */
 "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Đây là trọng lượng được áp dụng trong khi glucose giảm tốc và làm suy yếu ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Với 0,1 có thể là điểm khởi đầu tốt.";
 
 /* */
-"ISF weight while BG accelerates" = "ISF weight while BG accelerates";
+"ISF weight while BG accelerates" = "Lượng ISF trong khi BG Tăng tốc";
 
 /* */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Giá trị mặc định: 0. Đây là trọng số được áp dụng khi glucose tăng tốc và làm tăng cường ISF. Với giá trị là 0, sẽ bị vô hiệu hóa. 0,02 là điểm khởi đầu an toàn để tăng lên. Các thiết lập thông thường là khoảng 0,15!";
@@ -2454,25 +2508,25 @@ Enact a temp Basal or a temp target */
 "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Giá trị mặc định: 3. Đây là khoảng thời gian tính bằng giờ, tức là hiệu ứng sẽ có hiệu lực sau bữa ăn bao lâu. Oref sẽ xóa thời gian carb muộn nhất sau 10 giờ bất kể bạn nhập gì.";
 
 /* */
-"ISF weight for postprandial BG rise" = "ISF weight for postprandial BG rise";
+"ISF weight for postprandial BG rise" = "Lượng ISF cho sự gia tăng BG";
 
 /* */
 "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Đây là trọng số được áp dụng cho độ dốc tuyến tính trong khi glucose tăng và điều chỉnh ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Bắt đầu với 0,01 - không vượt quá 0,05!";
 
 /* */
-"ISF weight for higher BG deltas" = "ISF weight for higher BG deltas";
+"ISF weight for higher BG deltas" = "Lượng ISF cho delta BG cao hơn";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh delta cao hơn của ISF. Với 0,0, hiệu ứng sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for lower BG" = "ISF weight for lower BG";
+"ISF weight for lower BG" = "Lượng ISF cho BG thấp hơn";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh ISF nếu glucose thấp hơn mục tiêu. Với 0.0, hiệu ứng sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for higher BG" = "ISF weight for higher BG";
+"ISF weight for higher BG" = "Lượng ISF cho BG cao hơn";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh ISF nếu glucose cao hơn mục tiêu. Với 0,0, hiệu ứng sẽ bị vô hiệu hóa.";
@@ -2484,19 +2538,19 @@ Enact a temp Basal or a temp target */
 "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Tình trạng đường huyết cao kéo dài. Cứ mỗi giờ đường huyết duy trì ở mức cao, việc điều chỉnh này sẽ làm giảm ISF của bạn nhiều hơn.\n\nCông thức điều chỉnh ISF của Dura là:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
 
 /* */
-"SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
+"SMB Delivery Ratio BG Range" = "Tỷ lệ phân phối SMB phạm vi BG";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0. Hợp lý giữa 40mg/dl và 120mg/dl. SMB delivery ratio tăng được ánh xạ tới glucose range [target_bg, target_bg+bg_range]. Tại target_bg SMB ratio là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tăng SMB ratio bị vô hiệu hóa và smb_delivery_ratio được sử dụng.";
 
 /* */
-"SMB Delivery Ratio Maximum" = "SMB Delivery Ratio Maximum";
+"SMB Delivery Ratio Maximum" = "Tỷ lệ phân phối SMB tối đa";
 
 /* */
 "Default value: 0.5 This is the higher end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là mức cao hơn của SMB Delivery Ratio tăng tuyến tính chứ không phải giá trị cố định ở trên trong SMB Delivery Ratio.";
 
 /* */
-"SMB Delivery Ratio Minimum" = "SMB Delivery Ratio Minimum";
+"SMB Delivery Ratio Minimum" = "Tỷ lệ phân phối SMB tối thiểu";
 
 /* */
 "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là giá trị giới hạn thấp của SMB Delivery Ratio tăng tuyến tính chứ không phải là giá trị cố định ở trên trong SMB Delivery Ratio.";
@@ -2517,13 +2571,13 @@ Enact a temp Basal or a temp target */
 "Enable DuraISF even if COB is present not just for UAM." = "Bật DuraISF ngay cả khi có COB, không chỉ dành cho UAM.";
 
 /* */
-"Enable BG acceleration" = "Enable BG acceleration";
+"Enable BG acceleration" = "Cho phép điều chỉnh tốc độ BG";
 
 /* */
 "Enables the BG acceleration adaptions, adjusting ISF for accelerating/decelerating blood glucose." = "Cho phép điều chỉnh tốc độ tăng tốc BG, điều chỉnh ISF để tăng tốc/giảm tốc độ đường huyết.";
 
 /* */
-"Override Auto ISF" = "Override Auto ISF";
+"Override Auto ISF" = "Ghi đè Auto ISF";
 
 /* */
 "Enable Auto ISF" = "Enable Auto ISF";
@@ -2535,9 +2589,9 @@ Enact a temp Basal or a temp target */
 "Keto Protection" = "Keto Protection";
 
 /* */
-"Max IOB Threshold Percent" = "Max IOB Threshold Percent";
+"Max IOB Threshold Percent" = "Phần trăm ngưỡng IOB tối đa";
 
-/* Description */
+/* IOB Threshold Percent Description */
 "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Tỷ lệ phần trăm cài đặt IOB tối đa được sử dụng cho SMB khi bật ISF tự động.\n\nTrong khi IOB hiện tại thấp hơn ngưỡng, lượng SMB có thể vượt ngưỡng 30%, tuy nhiên không bao giờ vượt quá cài đặt IOB tối đa.\n\nỞ mức 100%, cài đặt này sẽ bị vô hiệu hóa.";
 
 /* */
@@ -2651,7 +2705,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Mặc định là False. Khi True, hãy luôn bật Super Micro Bolus (trừ khi bị tắt bởi high temptarget).";
 
 /* Headline "Enable SMB After Carbs" */
-"Enable SMB After Carbs" = "Enable SMB After Carbs";
+"Enable SMB After Carbs" = "Kích hoạt SMB sau nhập Carbs";
 
 /* "Enable SMB After Carbs" */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật Super Micro Bolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
@@ -2756,7 +2810,7 @@ Enact a temp Basal or a temp target */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa có thể được phân phối dưới dạng một SMB duy nhất không có COB. Điều này mang lại khả năng làm cho SMB trở nên hung hãn hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Không nên đặt giá trị này cao hơn 90 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về liều tạm thời bằng 0 để an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Số phút liều Cơ Bản tối đa của UAM SMB";
+"Max UAM SMB Basal Minutes" = "Số phút liều Cơ Bản tối đa của UAM với SMB";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa mà UAM có thể phân phối dưới dạng một SMB khi IOB vượt quá COB. Điều này mang lại khả năng khiến UAM trở nên hung hãn hơn hoặc ít hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Việc giảm giá trị sẽ khiến UAM giảm liều insulin cho mỗi SMB. Không nên đặt giá trị này cao hơn 60 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về liều tạm thời bằng 0 một cách an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
@@ -2845,10 +2899,10 @@ Enact a temp Basal or a temp target */
 "Use a sigmoid function for ISF (and for CR, when enabled), instead of the default Logarithmic formula. Requires the Dynamic ISF setting to be enabled in settings\n\nThe Adjustment setting adjusts the slope of the curve (Y: Dynamic ratio, X: Blood Glucose). A lower value ==> less steep == less aggressive.\n\nThe autosens.min/max settings determines both the max/min limits for the dynamic ratio AND how much the dynamic ratio is adjusted. If AF is the slope of the curve, the autosens.min/max is the height of the graph, the Y-interval, where Y: dynamic ratio. The curve will always have a sigmoid shape, no matter which autosens.min/max settings are used, meaning these settings have big consequences for the outcome of the computed dynamic ISF. Please be careful setting a too high autosens.max value. With a proper profile ISF setting, you will probably never need it to be higher than 1.5\n\nAn Autosens.max limit > 1.5 is not advisable when using the sigmoid function." = "Sử dụng hàm sigmoid cho ISF (và cho CR, khi được bật), thay vì công thức logarit mặc định. Yêu cầu bật cài đặt ISF động trong cài đặt\n\nCài đặt Điều chỉnh điều chỉnh độ dốc của đường cong (Y: Tỷ lệ động, X: Đường huyết). Giá trị thấp hơn ==> ít dốc hơn == ít linh hoạt hơn.\n\nCài đặt autosens.min/max xác định cả giới hạn tối đa/phút cho tỷ lệ động VÀ mức độ điều chỉnh tỷ lệ động. Nếu AF là độ dốc của đường cong thì autosens.min/max là chiều cao của biểu đồ, khoảng Y, trong đó Y: tỷ lệ động. Đường cong sẽ luôn có dạng sigmoid, bất kể cài đặt autosens.min/max nào được sử dụng, nghĩa là những cài đặt này có hậu quả lớn đối với kết quả của ISF động được tính toán. Hãy cẩn thận khi đặt giá trị autosens.max quá cao. Với cài đặt ISF cấu hình phù hợp, bạn có thể sẽ không bao giờ cần nó cao hơn 1,5\n\nGiới hạn Autosens.max > 1,5 là không nên khi sử dụng chức năng sigmoid.";
 
 /* Headline Threshold Setting */
-"Threshold Setting" = "Threshold Setting";
+"Threshold Setting" = "Thiết lập ngưỡng";
 
 /* Dynamic ISF Setting Title */
-"Minimum Threshold Setting" = "Minimum Threshold Setting";
+"Minimum Threshold Setting" = "Thiết lập ngưỡng tối thiểu";
 
 /* Minimum Threshold Setting, Part 1 */
 "This setting lets you choose a level below which no insulin will be given.\n\nThe threshold is using the largest amount of your threshold setting and the computed threshold:\n\nTarget Glucose - (Target Glucose - 40) / 2\n, here using mg/dl as glucose unit.\n\nFor example, if your Target Glucose is " = "Cài đặt này cho phép bạn chọn mức dưới đó sẽ không cung cấp insulin.\n\nNgưỡng này sử dụng lượng lớn nhất trong cài đặt ngưỡng của bạn và ngưỡng được tính toán:\n\nGlucose mục tiêu - (Glucose mục tiêu - 40) ";
@@ -2887,7 +2941,7 @@ Enact a temp Basal or a temp target */
 "Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
 
 /* Bolus Calculator Setting */
-"Use Bolus Calculator" = "Use Bolus Calculator";
+"Use Bolus Calculator" = "Sử dụng tính toán Bolus";
 
 /* Bolus Calculator Setting */
 "Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Tùy thuộc vào cài đặt của bạn, tính toán bolus sẽ sử dụng dữ liệu từ dự đoán đường huyết OpenAPS và/hoặc từ IOB, COB, xu hướng đường huyết, đường huyết hiện tại và đường huyết mục tiêu. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng (mặc định là 0,8).\n\nBạn cũng có thể có tùy chọn trong tính toán bolus của mình để áp dụng một hệ số tùy chỉnh khác (!) vào cuối phép tính, hệ số này có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ như Pizza (mặc định là 0,7).\n\nTính toán bolus KHÔNG sử dụng biến OpenAPS \"insulinRequired\", được tạo cho SMBs.";
@@ -2908,7 +2962,7 @@ Enact a temp Basal or a temp target */
 "The new alternate bolus calculator is another approach to the default bolus calculator in iAPS. If the toggle is on you use this bolus calculator and not the original iAPS calculator. At the end of the calculation a custom factor is applied as it is supposed to be when using smbs (default 0.8).\n\nYou can also add the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7)." = "Công cụ tính bolus thay thế mới là một cách tiếp cận khác với công cụ tính bolus mặc định trong iAPS. Nếu bật nút này, bạn sẽ sử dụng máy tính bolus này chứ không phải máy tính iAPS gốc. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng như lẽ ra phải như vậy khi sử dụng smbs (mặc định là 0,8).\n\nBạn cũng có thể thêm tùy chọn trong máy tính bolus của mình để áp dụng một hệ số tùy chỉnh (!) khác ở cuối phép tính, phép tính có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ: Pizza (mặc định là 0,7).";
 
 /* Bolus Calculator Setting */
-"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Sử dụng dự đoán glucose của OpenAPS để tính toán insulin được khuyến nghị. Thiết lập này sẽ kích hoạt tính toán \"cũ\". Bật theo mặc định.\n\n2. Sử dụng dự đoán minPredBG của OpenAPS như một rào chắn an toàn bổ sung, không cho phép dự đoán đường huyết giảm xuống dưới ngưỡng của bạn. Thiết lập này có thể được sử dụng cùng với hoặc không có đường huyết đự đoán. Bật theo mặc định";
+"1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Sử dụng đường huyết dự đoán của OpenAPS để tính toán insulin được khuyến nghị. Thiết lập này sẽ kích hoạt tính toán \"cũ\". Bật theo mặc định.\n\n2. Sử dụng dự đoán minPredBG của OpenAPS như một rào chắn an toàn bổ sung, không cho phép dự đoán đường huyết giảm xuống dưới ngưỡng của bạn. Thiết lập này có thể được sử dụng cùng với hoặc không có đường huyết đự đoán. Bật theo mặc định";
 
 /* Settings Section */
 "Extra Features" = "Extra Features";
@@ -2927,6 +2981,12 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Hiển thị nút mục tiêu tạm thời";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Hiển thị nút ghi đè";
+
+/* UI/UX option */
+"Display Meal Button" = "Hiển thị nút bữa ăn";
 
 /* UI/UX option */
 "Home View Button Panel " = "Bảng nút xem trang chủ ";
@@ -3027,7 +3087,7 @@ Enact a temp Basal or a temp target */
 "Live activities are turned OFF in system settings. To enable live activities, go to Settings app -> iAPS -> Turn live Activities ON.\n\n" = "Các hoạt động trực tiếp được TẮT trong cài đặt hệ thống. Để bật các hoạt động trực tiếp, hãy đi tới ứng dụng Cài đặt -> iAPS -> BẬT Hoạt động trực tiếp.\n\n";
 
 /* Headline "Weighted Average of TDD. Weight of past 24 hours:" */
-"Weighted Average of TDD. Weight of past 24 hours:" = "Weighted Average of TDD. Weight of past 24 hours:";
+"Weighted Average of TDD. Weight of past 24 hours:" = "Lượng trung bình của TDD. Lượng trong 24 giờ qua:";
 
 /* Weight of past 24 hours of insulin */
 "Has to be > 0 and <= 1.\nDefault is 0.65 (65 %) * TDD. The rest will be from average of total data (up to 14 days) of all TDD calculations (35 %). To only use past 24 hours, set this to 1.\n\nTo avoid sudden fluctuations, for instance after a big meal, an average of the past 2 hours of TDD calculations is used instead of just the current TDD (past 24 hours at this moment)." = "Phải > 0 và <= 1.\nMặc định là 0,65 (65 %) * TDD. Phần còn lại sẽ lấy từ mức trung bình của tổng dữ liệu (tối đa 14 ngày) của tất cả các phép tính TDD (35%). Để chỉ sử dụng 24 giờ qua, hãy đặt giá trị này thành 1.\n\nĐể tránh những biến động đột ngột, chẳng hạn như sau một bữa ăn thịnh soạn, tính toán TDD trung bình trong 2 giờ qua được sử dụng thay vì chỉ TDD hiện tại (24 giờ qua lúc thời điểm này).
@@ -3046,7 +3106,7 @@ Enact a temp Basal or a temp target */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Mặc định là 0,2 (20%). Thay đổi phần trăm dương tối đa của cấp độ BG để sử dụng SMB, trên mức đó sẽ vô hiệu hóa SMB. Giới hạn mã hóa cứng là 40%. Đối với UAM vòng kín hoàn toàn nên sử dụng 30%. Quan sát nhật ký và cửa sổ bật lên (maxDelta 27 > 20% BG 100 - vô hiệu hóa SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... When Blood Glucose Is Above:";
+"... When Blood Glucose Is Above:" = "... Khi lượng đường trong máu cao hơn:";
 
 /* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Đặt giá trị \"Kích hoạt SMB với BG cao\" sẽ so sánh để kích hoạt SMB. Nếu BG > giá trị này, SMB sẽ kích hoạt.";
@@ -3064,7 +3124,7 @@ Enact a temp Basal or a temp target */
 "Insulin curve" = "Chủng loại insulin";
 
 /* Headline "Adjustment Factor" */
-"Adjustment Factor" = "Adjustment Factor";
+"Adjustment Factor" = "Hệ số điều chỉnh";
 
 /* Apple Watch Overrides */
 "Overrides" = "Overrides";

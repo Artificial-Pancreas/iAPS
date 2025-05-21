@@ -32,17 +32,17 @@ public struct G7BackfillMessage: Equatable {
             return nil
         }
 
-        timestamp = data[0..<4].toInt()
+        timestamp = data[0..<3].toInt()
 
         let glucoseBytes = data[4..<6].to(UInt16.self)
 
         if glucoseBytes != 0xffff {
             glucose = glucoseBytes & 0xfff
-            glucoseIsDisplayOnly = (glucoseBytes & 0xf000) > 0
         } else {
             glucose = nil
-            glucoseIsDisplayOnly = false
         }
+
+        glucoseIsDisplayOnly = data[7] & 0x10 != 0
 
         algorithmState = AlgorithmState(rawValue: data[6])
 

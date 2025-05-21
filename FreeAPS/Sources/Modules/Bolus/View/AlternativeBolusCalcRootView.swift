@@ -205,6 +205,9 @@ extension Bolus {
                             keepForNextWiew = true
                             state.save()
                             state.showModal(for: nil)
+                            if state.currentBG == 0, state.manualGlucose != 0 {
+                                state.addManualGlucose()
+                            }
                         }
                         label: {
                             fetch ?
