@@ -442,13 +442,13 @@
 "Disconnecting..." = "Отключение...";
 
 /* DanaKit connecting */
-"Reconnecting..." = "Воссоединение...";
+"Reconnecting..." = "Переподключение...";
 
 /* DanaKit disconnect */
-"Disconnect from pump" = "Отсоедините от насоса";
+"Disconnect from pump" = "Отключить от помпы";
 
 /* DanaKit connect */
-"Reconnect tp pump" = "Снова подключите насос ТП";
+"Reconnect tp pump" = "Переподключиться к помпе";
 
 /* DanaKit disconnected */
 "Disconnected" = "Разъединено";
@@ -457,16 +457,16 @@
 "Connected" = "Подключено";
 
 /* Title disconnect reminder notification */
-"Pump is still disconnected" = "Насос по-прежнему отключен";
+"Pump is still disconnected" = "Помпа по-прежнему отключена";
 
 /* Body disconnect reminder notification" */
-"Your pump is still disconnected after the set period!" = "Ваш насос по-прежнему отключен по истечении заданного периода!";
+"Your pump is still disconnected after the set period!" = "Ваша помпа по-прежнему отключена по истечении заданного периода!";
 
 /* Title disconnect reminder sheet */
-"Set reminder for disconnect" = "Установите напоминание об отключении";
+"Set reminder for disconnect" = "Установить напоминание при отключении";
 
 /* body disconnect reminder sheet */
-"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Хотите ли вы получать уведомление, когда насос отключается на определенное время?";
+"Do you wish to receive a notification when the pump is longer disconnected for a specific time?" = "Хотите ли вы получать уведомление, когда помпа отключена в течение определенного времени?";
 
 /* Button text to 5 min */
 "Yes, 5 minutes" = "Да, 5 минут";
@@ -481,7 +481,7 @@
 "Yes, 1 hour" = "Да, 1 час";
 
 /* Button text to just disconnect */
-"No, just disconnect" = "Нет, просто отсоедините";
+"No, just disconnect" = "Нет, просто отсоединить";
 
 /* Title for reservoir/cannula refill */
 "Reservoir/cannula refill" = "Заправка резервуара/канюли";
@@ -490,7 +490,7 @@
 "Cannula refill" = "Заправка канюли";
 
 /* Title for refill action */
-"Type of refill" = "Тип пополнения";
+"Type of refill" = "Тип заправки";
 
 /* Button text to cannula only */
 "Cannula only" = "Только канюля";
@@ -499,16 +499,16 @@
 "Reservoir and cannula" = "Резервуар и канюля";
 
 /* Title for bluetooth mode action sheet */
-"Toggle Bluetooth mode" = "Bluetooth modus schakelen";
+"Toggle Bluetooth mode" = "Переключить режим Bluetooth";
 
 /* Button text to get help about Continuous mode */
 "What is this?" = "Что это?";
 
 /* Button text to disable continuous mode */
-"Yes, Switch to interactive mode" = "Да, переключение в интерактивный режим";
+"Yes, Switch to interactive mode" = "Да, переключить в интерактивный режим";
 
 /* Button text to enable continuous mode */
-"Yes, Switch to continuous mode" = "Да, переключение в непрерывный режим";
+"Yes, Switch to continuous mode" = "Да, переключить в непрерывный режим";
 
 /* Title for bolus syncing disable action sheet */
 "Disable bolus syncing?" = "Отключить синхронизацию болюсов?";
@@ -517,13 +517,13 @@
 "Re-enable bolus syncing?" = "Повторно включить синхронизацию болюсов?";
 
 /* Button text to re-enable bplus syncing */
-"Yes, re-enable bolus syncing" = "Да, снова включите синхронизацию болюсов";
+"Yes, re-enable bolus syncing" = "Да, включить синхронизацию болюсов";
 
 /* Button text to disable bolus syncing */
-"Yes, disable bolus syncing" = "Да, отключите синхронизацию болюсов";
+"Yes, disable bolus syncing" = "Да, отключить синхронизацию болюсов";
 
 /* ana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here" = "Насосы Dana поддерживают разные скорости подачи. Вы можете настроить его здесь";
+"The Dana pumps support different delivery speeds. You can set it up here" = "Помпы Dana поддерживают разные скорости подачи. Вы можете настроить это здесь";
 
 /* Text for Basal profile */
 "Basal profile" = "Базальный профиль";
@@ -535,46 +535,46 @@
 "Configuration" = "Конфигурация";
 
 /* Text for low reservoir reminder */
-"Low reservoir reminder" = "Напоминание о низком уровне воды в резервуаре";
+"Low reservoir reminder" = "Уведомление о низком уровне инсулина в резервуаре";
 
 /* Description text for low reservoir reminder */
-"The pump reminds you when the amount of insulin in the pump reaches this level" = "Помпа напомнит вам, когда количество инсулина в помпе достигнет этого уровня";
+"The pump reminds you when the amount of insulin in the pump reaches this level" = "Помпа напомнит вам, когда количество инсулина в резервуаре достигнет этого уровня";
 
 /* refillAmount */
-"Refill amount" = "Количество заправок";
+"Refill amount" = "Остаток в резервуаре";
 
 /* Insulin unit */
 "U" = "Ед";
 
 /* Label for first step refill */
-"Step 1: Set reservoir level" = "Шаг 1: Установите уровень резервуара";
+"Step 1: Set reservoir level" = "Шаг 1: Задайте уровень в резервуаре";
 
 /* Label for reservoir refilled amount */
 "Reservoir amount" = "Объем резервуара";
 
 /* Label for second step refill */
-"Step 2: Set tube refill amount" = "Шаг 2: Установите количество пополнения тюбика";
+"Step 2: Set tube refill amount" = "Шаг 2: Задайте объем заполнения трубки";
 
 /* Label for tube refilled amount */
-"Tube refill amount" = "Количество пополнений в тюбике";
+"Tube refill amount" = "Объем заполнения трубки";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Этот способ заправки предназначен только для тех случаев, когда насос не может обеспечить пополнение резервуара или заправки канюли";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Этот способ заправки предназначен только для тех случаев, когда помпа не может обеспечить заполнение резервуара или заправку канюли";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "ПРЕДУПРЕЖДЕНИЕ: ИСПОЛЬЗОВАТЬ С ОСТОРОЖНОСТЬЮ!";
+"WARNING: USE WITH CAUTION!" = "ВНИМАНИЕ: ИСПОЛЬЗОВАТЬ С ОСТОРОЖНОСТЬЮ!";
 
 /* Label for warning refill */
-"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Этот способ заправки предназначен только для тех случаев, когда насос не может обеспечить пополнение резервуара или заправки канюли";
+"This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Этот способ заправки предназначен только для тех случаев, когда помпа не может обеспечить заполнение резервуара или заправку канюли";
 
 /* Title for warning refill */
-"WARNING: USE WITH CAUTION!" = "ПРЕДУПРЕЖДЕНИЕ: ИСПОЛЬЗОВАТЬ С ОСТОРОЖНОСТЬЮ!";
+"WARNING: USE WITH CAUTION!" = "ВНИМАНИЕ: ИСПОЛЬЗОВАТЬ С ОСТОРОЖНОСТЬЮ!";
 
 /* Label for third step refill */
-"Step 1: Prime cannula" = "Шаг 1: заправка канюли";
+"Step 1: Prime cannula" = "Шаг 1: Заправка канюли";
 
 /* Label for error first step refill */
-"Failed to set reservoir amount. Re-sync pump data and try again please" = "Не удалось установить объем резервуара. Пересинхронизируйте данные насоса и повторите попытку, пожалуйста";
+"Failed to set reservoir amount. Re-sync pump data and try again please" = "Не удалось установить объем инсулина в резервуаре. Пересинхронизируйте данные помпы и повторите попытку";
 
 /* Label for error third step refill */
 "Failed to prime the cannula. Please try again later" = "Не удалось заправить канюлю. Повторите попытку позже";
@@ -583,4 +583,4 @@
 "Failed to prime the tube. Please try again later" = "Не удалось заправить трубку. Пожалуйста, повторите попытку позже";
 
 /* Battery age */
-"Battery age" = "Срок батареи";
+"Battery age" = "Возраст батареи";
