@@ -48,6 +48,8 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
 
         let contentController = WKUserContentController()
         contentController.add(self, name: "consoleLog")
+        contentController.add(self, name: "jsBridge")
+        contentController.add(self, name: "scriptError")
 
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
@@ -121,6 +123,9 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
 
     func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
         let joined = arguments.map(\.rawJSON).joined(separator: ",")
+
+        print("[WKWebView]: Calling Javascript function \(function)")
+
         let script = """
         \(body)
 
@@ -128,8 +133,11 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         """
 
         do {
-            return try await evaluateFunction(body: script) as! RawJSON
+            let result = try await evaluateFunction(body: script) as! RawJSON
+            print("[WKWebView]: Received script result for function \"\(function)\": \(result)")
+            return result
         } catch {
+            debug(.openAPS, "[WKWebView]: Received script error for function \"\(function)\": \(error)")
             print(error)
             return ""
         }
@@ -185,21 +193,46 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         }
     }
 
+    var continuations: [String: CheckedContinuation<Any, Error>] = [:]
+
     func evaluateFunction(body: String) async throws -> Any {
+        let requestId = UUID().uuidString
+        // Just a timeout for security reason
+        let timeoutSeconds: TimeInterval = 10
+
         let script = """
-        (function() {
-            \(body)
-        })();
+        setTimeout(() => (async function() {
+            try {
+                var result = await (function() {
+                    \(body)
+                })();
+                window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", value: result });
+            } catch (e) {
+                window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", error: e.toString() });
+            }
+        })(), 0);
         """
 
         return try await withCheckedThrowingContinuation { continuation in
+            continuations[requestId] = continuation
+
             DispatchQueue.main.async {
-                self.webView.evaluateJavaScript(script) { result, error in
+                self.webView.evaluateJavaScript(script) { _, error in
                     if let error = error {
+                        self.continuations.removeValue(forKey: requestId)
+                        print(error)
                         continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume(returning: result!)
                     }
+                }
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeoutSeconds) {
+                if let cont = self.continuations.removeValue(forKey: requestId) {
+                    cont.resume(throwing: NSError(
+                        domain: "WebViewScriptExecutor",
+                        code: 408,
+                        userInfo: [NSLocalizedDescriptionKey: "JavaScript function timed out"]
+                    ))
                 }
             }
         }
@@ -214,6 +247,22 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         }
         if message.name == "scriptError", let logMessage = message.body as? String {
             warning(.openAPS, "JavaScript Error: \(logMessage)")
+        }
+        // Handle responses from evaluateFunction via jsBridge
+        if message.name == "jsBridge", let body = message.body as? [String: Any], let id = body["id"] as? String {
+            print("Received jsBridge response: ", body)
+            if let continuation = continuations.removeValue(forKey: id) {
+                if let value = body["value"] {
+                    continuation.resume(returning: value)
+                } else if let error = body["error"] as? String {
+                    continuation
+                        .resume(throwing: NSError(
+                            domain: "WebViewScriptExecutor",
+                            code: 500,
+                            userInfo: [NSLocalizedDescriptionKey: error]
+                        ))
+                }
+            }
         }
     }
 }
