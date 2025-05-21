@@ -537,6 +537,9 @@
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Herinnering laag reservoir";
 
+/* Description text for low reservoir reminder */
+"The pump reminds you when the amount of insulin in the pump reaches this level" = "iAPS geeft een melding als de hoeveelheid insuline in de Pod dit niveau bereikt";
+
 /* refillAmount */
 "Refill amount" = "Navulhoeveelheid";
 

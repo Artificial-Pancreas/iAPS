@@ -77,10 +77,10 @@
 "Are you sure you want to stop using Dana-i/RS?" = "Ste si istí, že chcete prestať používať Dana-i/RS?";
 
 /* Button text to confirm Dana-i/RS PumpManager deletion */
-"Delete pump" = "Vymazať pumpu";
+"Delete pump" = "Odstrániť pumpu";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Vymazať Pumpu";
+"Delete Pump" = "Odstrániť pumpu";
 
 /* Connection error message */
 "Error while connecting to device" = "Chyba pri pripájaní k zariadeniu";
@@ -107,7 +107,7 @@
 "Checksum failed. Try again" = "Kontrolný súčet zlyhal. Skúste to znova";
 
 /* Title for delivery speed */
-"Delivery speed" = "Rýchlosť dávok";
+"Delivery speed" = "Rýchlosť dávkovania";
 
 /* Dana bolus speed 12u per min */
 "12 sec/U" = "12 sek/U";
@@ -119,10 +119,10 @@
 "60 sec/U" = "60 sek/U";
 
 /* Dana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti dávok. Môžete ju nastaviť tu, ale aj v ponuke nastavení";
+"The Dana pumps support different delivery speeds. You can set it up here, but also in the settings menu" = "Pumpy Dana podporujú rôzne rýchlosti podania dávky 1 jednotky inzulínu. Môžete ju nastaviť tu, ale aj v ponuke nastavení pumpy";
 
 /* Text for finish button */
-"Finish" = "Dokončenie";
+"Finish" = "Dokončiť";
 
 /* Dana setup complete p1 */
 "Your " = "Vaša ";
@@ -179,7 +179,7 @@
 "Resume delivery" = "Obnoviť podávanie inzulínu";
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "Pozastavenie dodávky";
+"Suspend delivery" = "Pozastavenie dávkovania";
 
 /* Dana settings stop temp basal */
 "Stop temp basal" = "Zastaviť dočasnú bazálnu dávku";
@@ -209,7 +209,7 @@
 "Insulin Remaining" = "Zostávajúci inzulín";
 
 /* Text for Dana pump name */
-"Pump name" = "Názov čerpadla";
+"Pump name" = "Názov pumpy";
 
 /* Text for hardware model */
 "Hardware model" = "Model hardvéru";
@@ -218,22 +218,22 @@
 "Firmware version" = "Verzia firmvéru";
 
 /* DanaKit sync pump */
-"Sync pump data" = "Synchronizácia údajov čerpadla";
+"Sync pump data" = "Synchronizácia údajov pumpy";
 
 /* Text for last sync */
 "Last sync" = "Posledná synchronizácia";
 
 /* Text for pump time */
-"Pump time" = "Čas čerpadla";
+"Pump time" = "Čas pumpy";
 
 /* Text for pump time synced at */
-"Checked at" = "Skontrolované na";
+"Checked at" = "Skontrolované o";
 
 /* Text for Nightly pump time sync */
-"Nightly pump time sync" = "Nočná synchronizácia času čerpadla";
+"Nightly pump time sync" = "Nočná synchronizácia času pumpy";
 
 /* Label for syncing the time on the pump */
-"Manually sync Pump time" = "Ručná synchronizácia času čerpadla";
+"Manually sync Pump time" = "Ručná synchronizácia času pumpy";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
@@ -268,10 +268,10 @@
 "Suspend" = "Pozastavenie";
 
 /* Title for user options */
-"User options" = "Možnosti používateľa";
+"User options" = "Používateľské nastavenia";
 
 /* DanaKit share logs */
-"Share Dana pump logs" = "Zdieľanie protokolov čerpadla Dana";
+"Share Dana pump logs" = "Zdieľanie logov pumpy Dana";
 
 /* Loading */
 "Loading" = "Načítanie";
@@ -292,13 +292,13 @@
 "Off" = "Vypnuté";
 
 /* 12h */
-"12h notation" = "Zápis 12h";
+"12h notation" = "12h režim";
 
 /* 24h */
-"24h notation" = "24-hodinový zápis";
+"24h notation" = "24h režim";
 
 /* Text for Scroll function */
-"Scroll function" = "Funkcia posúvania";
+"Scroll function" = "Posúvanie tlačítkom";
 
 /* text for second */
 "sec" = "sek";
@@ -307,10 +307,10 @@
 "Backlight on time" = "Čas zapnutia podsvietenia";
 
 /* lcdOnTimeInSec */
-"Lcd on time" = "Lcd na čas";
+"Lcd on time" = "Čas zapnutia displeja";
 
 /* beepAndAlarm */
-"Alarm beeps" = "Pípanie budíka";
+"Alarm beeps" = "Zvukový signál";
 
 /* beepAndAlarm.sound */
 "Sound" = "Zvuk";
@@ -319,7 +319,7 @@
 "Vibration" = "Vibrácie";
 
 /* beepAndAlarm.both */
-"Both" = "Obe stránky";
+"Both" = "Oboje";
 
 /* Alert title for batteryZeroPercent */
 "Pump battery 0%" = "Batéria čerpadla 0%";
@@ -364,7 +364,7 @@
 "Empty reservoir" = "Prázdny zásobník";
 
 /* Alert body for emptyReservoir */
-"Reservoir is empty. Replace it now!" = "Nádrž je prázdna. Vymeňte ju teraz!";
+"Reservoir is empty. Replace it now!" = "Zásobník je prázdna. Teraz ho vymeňte!";
 
 /* Alert title for emptyReservoir */
 "Check chaft" = "Kontrola reťaze";
@@ -433,7 +433,7 @@
 "Cannula age" = "Vek kanyly";
 
 /* Text for reservoir age */
-"Reservoir age" = "Vek nádrže";
+"Reservoir age" = "Vek zásobníka";
 
 /* Text for status */
 "Status" = "Stav";
@@ -484,7 +484,7 @@
 "No, just disconnect" = "Nie, len sa odpojte";
 
 /* Title for reservoir/cannula refill */
-"Reservoir/cannula refill" = "Doplnenie zásobníka/kanvy";
+"Reservoir/cannula refill" = "Plnenie zásobníka/kanyly";
 
 /* Title for reservoir/cannula refill */
 "Cannula refill" = "Doplnenie kanyly";
@@ -523,7 +523,7 @@
 "Yes, disable bolus syncing" = "Áno, vypnite synchronizáciu bolusu";
 
 /* ana delivery speed body */
-"The Dana pumps support different delivery speeds. You can set it up here" = "Čerpadlá Dana podporujú rôzne rýchlosti dodávky. Nastaviť ju môžete tu";
+"The Dana pumps support different delivery speeds. You can set it up here" = "Pumpy Dana podporujú rôzne rýchlosti podania dávky 1 jednotky inzulínu. Môžete si ich nastaviť tu";
 
 /* Text for Basal profile */
 "Basal profile" = "Bazálny profil";
@@ -535,7 +535,10 @@
 "Configuration" = "Nastavenie";
 
 /* Text for low reservoir reminder */
-"Low reservoir reminder" = "Pripomienka nízkej nádrže";
+"Low reservoir reminder" = "Pripomienka nízkej hladiny";
+
+/* Description text for low reservoir reminder */
+"The pump reminds you when the amount of insulin in the pump reaches this level" = "Ak hladina inzulínu dosiahne špecifikovanú úroveň, pumpa Vás upozorní výstražným tónom";
 
 /* refillAmount */
 "Refill amount" = "Množstvo náplne";
@@ -544,7 +547,7 @@
 "U" = "J";
 
 /* Label for first step refill */
-"Step 1: Set reservoir level" = "Krok 1: Nastavenie hladiny v nádrži";
+"Step 1: Set reservoir level" = "Krok 1: Nastavenie objemu v zásobníku";
 
 /* Label for reservoir refilled amount */
 "Reservoir amount" = "Množstvo zásobníka";

@@ -133,18 +133,18 @@ extension Bolus {
         func getDeltaBG() {
             let glucose = provider.fetchGlucose()
             guard let lastGlucose = glucose.first, glucose.count >= 4 else { return }
+            guard (lastGlucose.date ?? .distantPast).timeIntervalSinceNow > -7.minutes.timeInterval else {
+                currentBG = 0
+                return
+            }
             deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
                 (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
-
-            if currentBG == 0, (lastGlucose.date ?? .distantPast).timeIntervalSinceNow > -5.minutes.timeInterval {
-                currentBG = Decimal(lastGlucose.glucose)
-            }
+            currentBG = Decimal(lastGlucose.glucose)
         }
 
         func calculateInsulin() -> Decimal {
             // The actual glucose threshold
             threshold = max(target - 0.5 * (target - 40 * conversion), threshold * conversion)
-
             // Use either the eventual glucose prediction or just the Swift code
             if eventualBG {
                 if evBG > target {
@@ -152,11 +152,15 @@ extension Bolus {
                     insulin = (evBG - target) / isf
                 } else { insulin = 0 }
             } else if currentBG == 0, manualGlucose > 0 {
-                let targetDifference = manualGlucose * conversion - target
+                let targetDifference = manualGlucose - target
                 targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
+                // print("Current BG: \(manualGlucose), Target: \(target), ISF: \(isf)")
+            } else if currentBG != 0 {
+                let targetDifference = currentBG - (units == .mmolL ? target.asMgdL : target)
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
+                // print("Current BG: \(currentBG), Target: \(target), ISF: \(units == .mmolL ? isf.asMgdL : isf)")
             } else {
-                let targetDifference = currentBG - target
-                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
+                targetDifferenceInsulin = 0
             }
 
             // more or less insulin because of bg trend in the last 15 minutes
@@ -222,10 +226,14 @@ extension Bolus {
             guard let recent = coreDataStorage.recentReason() else { return 0 }
             let timeDifference = (recent.date ?? .distantPast).timeIntervalSinceNow
             if timeDifference <= 0, timeDifference > -30.minutes.timeInterval {
-                return ((recent.iob ?? 0) as Decimal)
+                let recent = ((recent.iob ?? 0) as Decimal)
+                let pumpHistory = history?
+                    .filter({ $0.timestamp.timeIntervalSinceNow > timeDifference && $0.type == .bolus })
+                    .compactMap(\.amount).reduce(0, +) ?? 0
+                return recent + pumpHistory
             } else if let history = history {
                 let total = history
-                    .filter({ $0.timestamp.timeIntervalSinceNow > -90.minutes.timeInterval && $0.type == .bolus })
+                    .filter({ $0.timestamp.timeIntervalSinceNow > -360.minutes.timeInterval && $0.type == .bolus })
                     .compactMap(\.amount).reduce(0, +)
                 return max(total, 0)
             }
@@ -343,6 +351,26 @@ extension Bolus {
 
         var conversion: Decimal {
             units == .mmolL ? 0.0555 : 1
+        }
+
+        func addManualGlucose() {
+            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
+            let now = Date()
+            let id = UUID().uuidString
+
+            let saveToJSON = BloodGlucose(
+                _id: id,
+                sgv: Int(glucose),
+                date: Decimal(now.timeIntervalSince1970) * 1000,
+                dateString: now,
+                glucose: Int(glucose),
+                type: GlucoseType.manual.rawValue
+            )
+            provider.glucoseStorage.storeGlucose([saveToJSON])
+            debug(.default, "Manual Glucose saved to glucose.json")
+            // Save to Health
+            var saveToHealth = [BloodGlucose]()
+            saveToHealth.append(saveToJSON)
         }
 
         private func prepareData() {

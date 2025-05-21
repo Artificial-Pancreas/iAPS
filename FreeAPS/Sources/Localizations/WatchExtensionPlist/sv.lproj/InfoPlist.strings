@@ -1,0 +1,8 @@
+/* Privacy - Health Records Usage Description */
+"NSHealthClinicalHealthRecordsShareUsageDescription" = "För att iAPS-appen ska fungera på Apple Watch, behöver du tillåta vissa HealthKit-behörigheter.";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "För att iAPS-appen ska fungera på Apple Watch, behöver du tillåta vissa HealthKit-behörigheter.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "För att iAPS-appen ska fungera på Apple Watch, behöver du tillåta vissa HealthKit-behörigheter.";

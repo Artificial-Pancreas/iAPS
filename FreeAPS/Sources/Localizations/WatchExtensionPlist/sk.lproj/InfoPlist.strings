@@ -1,0 +1,8 @@
+/* Privacy - Health Records Usage Description */
+"NSHealthClinicalHealthRecordsShareUsageDescription" = "Aby aplikácia iAPS fungovala na Apple Watch, uistite sa, že máte povolený prístup k HealthKit.";
+
+/* Privacy - Health Share Usage Description */
+"NSHealthShareUsageDescription" = "Aby aplikácia iAPS fungovala na Apple Watch, uistite sa, že máte povolený prístup k HealthKit.";
+
+/* Privacy - Health Update Usage Description */
+"NSHealthUpdateUsageDescription" = "Aby aplikácia iAPS fungovala na Apple Watch, uistite sa, že máte povolený prístup k HealthKit.";
