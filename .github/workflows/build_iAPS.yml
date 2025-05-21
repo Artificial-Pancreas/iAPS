@@ -80,7 +80,7 @@ jobs:
 
         # Uncomment to manually select Xcode version
       - name: Select Xcode version
-        run: "sudo xcode-select --switch /Applications/Xcode_15.3.app/Contents/Developer"
+        run: "sudo xcode-select --switch /Applications/Xcode_16.3.app/Contents/Developer"
       
       - name: Checkout Repo for syncing
         if: |
