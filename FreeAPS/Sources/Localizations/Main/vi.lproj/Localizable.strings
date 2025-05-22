@@ -1753,7 +1753,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Đường huyết đự đoán";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Mức đường huyết dự đoán thấp nhất";
 
 /* */
 "Please wait" = "Vui lòng chờ";
