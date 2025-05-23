@@ -462,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Thêm Omnipod";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Thêm Dana-i/RS";
 
 /* Add Simulator pump */
 "Add Simulator" = "Thêm Bơm mô phỏng";
@@ -1753,7 +1753,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Đường huyết đự đoán";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Mức đường huyết dự đoán thấp nhất";
 
 /* */
 "Please wait" = "Vui lòng chờ";
