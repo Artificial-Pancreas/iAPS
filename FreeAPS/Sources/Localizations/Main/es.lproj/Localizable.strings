@@ -1277,6 +1277,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Option for no sound */
 "Silent" = "Silent";
 
+/* Option for default notification sound */
+"Default" = "Default";
+
 /* The iOS default sound */
 "iOS default sound" = "iOS default sound";
 
