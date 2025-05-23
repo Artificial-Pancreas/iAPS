@@ -1277,6 +1277,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Option for no sound */
 "Silent" = "Stille modus";
 
+/* Option for default notification sound */
+"Default" = "Default";
+
 /* The iOS default sound */
 "iOS default sound" = "Standaard iOS geluid";
 

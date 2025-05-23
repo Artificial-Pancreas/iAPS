@@ -1277,6 +1277,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Option for no sound */
 "Silent" = "Tichý";
 
+/* Option for default notification sound */
+"Default" = "Default";
+
 /* The iOS default sound */
 "iOS default sound" = "Predvolený zvuk pre iOS";
 
