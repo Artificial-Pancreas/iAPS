@@ -1190,7 +1190,7 @@ Enact a temp Basal or a temp target */
 "Ascending Glucose Alarm active" = "Stigande blodsockerlarm aktivt";
 
 /* */
-"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+"Descending Glucose Alarm active" = "Fallande blodsockerlarm aktivt";
 
 /* */
 "snoozing until %@" = "snoozar till %@";
