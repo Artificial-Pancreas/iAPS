@@ -1187,10 +1187,10 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Keine Blutzuckeralarm aktiv";
 
 /* */
-"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+"Ascending Glucose Alarm active" = "Aufsteigender Blutzucker-Alarm aktiv";
 
 /* */
-"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+"Descending Glucose Alarm active" = "Absteigender Blutzucker-Alarm aktiv";
 
 /* */
 "snoozing until %@" = "schlummern bis %@";
@@ -1528,7 +1528,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Manuelle Basalrate ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/day";
+"U/day" = "iE/Tag";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Gesamt";
@@ -1622,7 +1622,7 @@ Enact a temp Basal or a temp target */
 "Profiles" = "Profile";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Erweiterte Einstellungen";
 
 /* */
 "More options" = "Mehr Optionen";
@@ -1762,7 +1762,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Prognostizierte Glukose";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Minimaler vorausgesagter Blutzucker";
 
 /* */
 "Please wait" = "Bitte warten";
@@ -2389,7 +2389,7 @@ Enact a temp Basal or a temp target */
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
 
-"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Die Dana Pumpe erlaubt keine Bearbeitung von max. Basal- und max. Bolus. Konfigurieren Sie diese im Arzt-Menü der Pumpe. Das Speichern der Einstellungen wird die letzten Werte von der Pumpe abrufen.";
 
 /* --------- Auto ISF --------- */
 /* */
