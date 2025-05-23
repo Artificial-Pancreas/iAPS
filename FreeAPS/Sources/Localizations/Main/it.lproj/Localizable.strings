@@ -1276,6 +1276,9 @@ Enact a temp Basal or a temp target */
 /* Option for no sound */
 "Silent" = "Modalità silenziosa";
 
+/* Option for default notification sound */
+"Default" = "Default";
+
 /* The iOS default sound */
 "iOS default sound" = "suono predefinito iOS";
 
