@@ -215,7 +215,7 @@ extension NotificationsConfig {
 
         private func soundPicker(
             title: String,
-            selection: Binding<String>,
+            selection: Binding<String>
         ) -> some View {
             Picker(title, selection: selection) {
                 silentView.tag(silent)

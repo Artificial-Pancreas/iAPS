@@ -34,22 +34,17 @@ public class UnfinalizedDose {
         self.automatic = activationType.isAutomatic
     }
     
-    public func toDoseEntry(isMutable: Bool = false) -> DoseEntry? {
-        switch type {
-        case .bolus:
-            return DoseEntry(
-                type: .bolus,
-                startDate: startDate,
-                endDate: endDate,
-                value: value,
-                unit: .units,
-                deliveredUnits: isMutable ? value : deliveredUnits,
-                insulinType: insulinType,
-                automatic: automatic,
-                isMutable: isMutable
-            )
-        default:
-            return nil
-        }
+    public func toDoseEntry(isMutable: Bool = false) -> DoseEntry {
+        return DoseEntry(
+            type: .bolus,
+            startDate: startDate,
+            endDate: endDate,
+            value: value,
+            unit: .units,
+            deliveredUnits: isMutable ? value : deliveredUnits,
+            insulinType: insulinType,
+            automatic: automatic,
+            isMutable: isMutable
+        )
     }
 }

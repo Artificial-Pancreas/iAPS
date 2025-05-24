@@ -1,16 +1,8 @@
-//
-//  DanaUICoordinator.swift
-//  DanaKit
-//
-//  Created by Bastiaan Verhaar on 18/12/2023.
-//  Copyright © 2023 Randall Knutson. All rights reserved.
-//
-
-import UIKit
-import SwiftUI
 import Combine
 import LoopKit
 import LoopKitUI
+import SwiftUI
+import UIKit
 
 enum DanaUIScreen {
     case debugView
@@ -24,7 +16,7 @@ enum DanaUIScreen {
     case deviceScanningScreen
     case setupComplete
     case settings
-    
+
     func next() -> DanaUIScreen? {
         switch self {
         case .debugView:
@@ -59,46 +51,52 @@ protocol DanaUINavigator: AnyObject {
 
 class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, CompletionNotifying, UINavigationControllerDelegate {
     var pumpManagerOnboardingDelegate: PumpManagerOnboardingDelegate?
-    
+
     var completionDelegate: CompletionDelegate?
-    
+
     var screenStack = [DanaUIScreen]()
     var currentScreen: DanaUIScreen {
-        return screenStack.last!
+        screenStack.last!
     }
-    
+
     private let colorPalette: LoopUIColorPalette
 
     private var pumpManager: DanaKitPumpManager?
-    
+
     private var allowedInsulinTypes: [InsulinType]
-    
+
     private var allowDebugFeatures: Bool
-    
-    init(pumpManager: DanaKitPumpManager? = nil, colorPalette: LoopUIColorPalette, pumpManagerSettings: PumpManagerSetupSettings? = nil, allowDebugFeatures: Bool, allowedInsulinTypes: [InsulinType] = [])
+
+    init(
+        pumpManager: DanaKitPumpManager? = nil,
+        colorPalette: LoopUIColorPalette,
+        pumpManagerSettings: PumpManagerSetupSettings? = nil,
+        allowDebugFeatures: Bool,
+        allowedInsulinTypes: [InsulinType] = []
+    )
     {
-        if pumpManager == nil && pumpManagerSettings == nil {
+        if pumpManager == nil, pumpManagerSettings == nil {
             self.pumpManager = DanaKitPumpManager(state: DanaKitPumpManagerState(rawValue: [:]))
-        } else if pumpManager == nil && pumpManagerSettings != nil {
+        } else if pumpManager == nil, pumpManagerSettings != nil {
             let basal = DanaKitPumpManagerState.convertBasal(pumpManagerSettings!.basalSchedule.items)
             self.pumpManager = DanaKitPumpManager(state: DanaKitPumpManagerState(basalSchedule: basal))
         } else {
             self.pumpManager = pumpManager
         }
-        
+
         self.colorPalette = colorPalette
 
         self.allowDebugFeatures = allowDebugFeatures
-        
+
         self.allowedInsulinTypes = allowedInsulinTypes
-        
+
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -115,17 +113,20 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             .environment(\.appName, Bundle.main.bundleDisplayName)
         return DismissibleHostingController(rootView: rootView, colorPalette: colorPalette)
     }
-    
+
     private func viewControllerForScreen(_ screen: DanaUIScreen) -> UIViewController {
-        switch(screen) {
+        switch screen {
         case .debugView:
-            let viewModel = DanaKitDebugViewModel(self.pumpManager)
+            let viewModel = DanaKitDebugViewModel(pumpManager)
             return hostingController(rootView: DanaKitDebugView(viewModel: viewModel))
         case .firstRunScreen:
-            let view = DanaKitSetupView(nextAction: self.goToExplaination, debugAction: { self.navigateTo(.debugView) }) //self.allowDebugFeatures ? { self.navigateTo(.debugView) } : {})
+            let view = DanaKitSetupView(
+                nextAction: goToExplaination,
+                debugAction: { self.navigateTo(.debugView) }
+            ) // self.allowDebugFeatures ? { self.navigateTo(.debugView) } : {})
             return hostingController(rootView: view)
         case .danarsv1Explaination:
-            let view = DanaRSv1Explaination(nextAction: self.stepFinished)
+            let view = DanaRSv1Explaination(nextAction: stepFinished)
             return hostingController(rootView: view)
         case .danarsv1Password:
             let view = DanaRSv1Password(nextAction: { password in
@@ -133,23 +134,27 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                     self.stepFinished()
                     return
                 }
-                
+
                 pumpManager.state.devicePassword = password
                 self.stepFinished()
             })
             return hostingController(rootView: view)
         case .danarsv3Explaination:
-            let view = DanaRSv3Explaination(nextAction: self.stepFinished)
+            let view = DanaRSv3Explaination(nextAction: stepFinished)
             return hostingController(rootView: view)
         case .danaiExplaination:
-            let view = DanaIExplainationView(nextAction: self.stepFinished)
+            let view = DanaIExplainationView(nextAction: stepFinished)
             return hostingController(rootView: view)
         case .insulinConfirmationScreen:
             let confirm: (InsulinType) -> Void = { confirmedType in
                 self.pumpManager?.state.insulinType = confirmedType
                 self.stepFinished()
             }
-            let view = InsulinTypeConfirmation(initialValue: self.allowedInsulinTypes[0], supportedInsulinTypes: self.allowedInsulinTypes, didConfirm: confirm)
+            let view = InsulinTypeConfirmation(
+                initialValue: allowedInsulinTypes[0],
+                supportedInsulinTypes: allowedInsulinTypes,
+                didConfirm: confirm
+            )
             return hostingController(rootView: view)
         case .bolusSpeedScreen:
             let next: (BolusSpeed) -> Void = { bolusSpeed in
@@ -157,14 +162,14 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self.stepFinished()
             }
             let view = DanaKitPumpSpeed(next: next)
-            
+
             return hostingController(rootView: view)
         case .deviceScanningScreen:
-            self.pumpManager?.state.isOnBoarded = true
-            self.pumpManager?.notifyStateDidChange()
-            self.pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: self.pumpManager!)
-            
-            let viewModel = DanaKitScanViewModel(self.pumpManager, nextStep: self.stepFinished)
+            pumpManager?.state.isOnBoarded = true
+            pumpManager?.notifyStateDidChange()
+            pumpManagerOnboardingDelegate?.pumpManagerOnboarding(didOnboardPumpManager: pumpManager!)
+
+            let viewModel = DanaKitScanViewModel(pumpManager, nextStep: stepFinished)
             return hostingController(rootView: DanaKitScanView(viewModel: viewModel))
         case .setupComplete:
             let nextStep: () -> Void = {
@@ -172,14 +177,22 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                 self.stepFinished()
             }
 
-            let view = DanaKitSetupCompleteView(finish: nextStep, friendlyPumpModelName: self.pumpManager?.state.getFriendlyDeviceName() ?? "", imageName: self.pumpManager?.state.getDanaPumpImageName() ?? "danai")
+            let view = DanaKitSetupCompleteView(
+                finish: nextStep,
+                friendlyPumpModelName: pumpManager?.state.getFriendlyDeviceName() ?? "",
+                imageName: pumpManager?.state.getDanaPumpImageName() ?? "danai"
+            )
             return hostingController(rootView: view)
         case .settings:
-            let view = DanaKitSettingsView(viewModel: DanaKitSettingsViewModel(self.pumpManager, self.stepFinished), supportedInsulinTypes: self.allowedInsulinTypes, imageName: self.pumpManager?.state.getDanaPumpImageName() ?? "danai")
+            let view = DanaKitSettingsView(
+                viewModel: DanaKitSettingsViewModel(pumpManager, stepFinished),
+                supportedInsulinTypes: allowedInsulinTypes,
+                imageName: pumpManager?.state.getDanaPumpImageName() ?? "danai"
+            )
             return hostingController(rootView: view)
         }
     }
-    
+
     func stepFinished() {
         if let nextStep = currentScreen.next() {
             navigateTo(nextStep)
@@ -187,25 +200,25 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             completionDelegate?.completionNotifyingDidComplete(self)
         }
     }
-    
+
     func getInitialScreen() -> DanaUIScreen {
         guard let pumpManager = self.pumpManager else {
             return .firstRunScreen
         }
-        
-        if (pumpManager.isOnboarded) {
+
+        if pumpManager.isOnboarded {
             return .settings
         }
-        
-        if (pumpManager.state.insulinType != nil) {
+
+        if pumpManager.state.insulinType != nil {
             return .deviceScanningScreen
         }
-        
+
         return .firstRunScreen
     }
-    
+
     func goToExplaination(_ index: Int) {
-        switch (index) {
+        switch index {
         case 0:
             navigateTo(.danarsv1Explaination)
             return
@@ -226,7 +239,7 @@ extension DanaUICoordinator: DanaUINavigator {
         screenStack.append(screen)
         let viewController = viewControllerForScreen(screen)
         viewController.isModalInPresentation = false
-        self.pushViewController(viewController, animated: true)
+        pushViewController(viewController, animated: true)
         viewController.view.layoutSubviews()
     }
 }
