@@ -462,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Thêm Omnipod";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Thêm Dana-i/RS";
 
 /* Add Simulator pump */
 "Add Simulator" = "Thêm Bơm mô phỏng";
@@ -1187,6 +1187,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Báo động Không có Glucose đang hoạt động";
 
 /* */
+"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+
+/* */
+"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+
+/* */
 "snoozing until %@" = "tạm yên cho đến khi %@";
 
 /* */
@@ -1275,6 +1281,9 @@ Enact a temp Basal or a temp target */
 
 /* Option for no sound */
 "Silent" = "Im lặng";
+
+/* Option for default notification sound */
+"Default" = "Default";
 
 /* The iOS default sound */
 "iOS default sound" = "âm thanh mặc định của iOS";
@@ -1753,7 +1762,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Đường huyết đự đoán";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Mức đường huyết dự đoán thấp nhất";
 
 /* */
 "Please wait" = "Vui lòng chờ";

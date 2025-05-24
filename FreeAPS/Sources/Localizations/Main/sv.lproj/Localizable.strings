@@ -1187,6 +1187,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Inget blodsockerlarm aktivt";
 
 /* */
+"Ascending Glucose Alarm active" = "Stigande blodsockerlarm aktivt";
+
+/* */
+"Descending Glucose Alarm active" = "Fallande blodsockerlarm aktivt";
+
+/* */
 "snoozing until %@" = "snoozar till %@";
 
 /* */
@@ -1275,6 +1281,9 @@ Enact a temp Basal or a temp target */
 
 /* Option for no sound */
 "Silent" = "Tyst";
+
+/* Option for default notification sound */
+"Default" = "Standard";
 
 /* The iOS default sound */
 "iOS default sound" = "iOS standardljud";
