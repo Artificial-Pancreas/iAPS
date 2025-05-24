@@ -35,7 +35,7 @@ class PeripheralManager: NSObject {
     private let WRITE_CHAR_UUID = CBUUID(string: "FFF2")
     private var writeCharacteristic: CBCharacteristic!
     
-    private var writeQueue: Dictionary<UInt8, CheckedContinuation<(any DanaParsePacketProtocol), Error>> = [:]
+    private var writeQueue: [UInt8: AsyncThrowingStream<any DanaParsePacketProtocol, Error>.Continuation] = [:]
     private var writeTimeoutTask: Task<(), Never>?
     private let writeSemaphore = DispatchSemaphore(value: 1)
     
@@ -61,16 +61,29 @@ class PeripheralManager: NSObject {
     deinit {
         self.writeTimeoutTask?.cancel()
         
-        for (opCode, continuation) in self.writeQueue {
-            continuation.resume(throwing: NSError(domain: "PeripheralManager deinit hit... Most likely an encryption issue - opCode: \(opCode)", code: 0, userInfo: nil))
+        for (opCode, stream) in self.writeQueue {
+            stream.finish()
         }
     }
     
     func writeMessage(_ packet: DanaGeneratePacket) async throws -> (any DanaParsePacketProtocol)  {
-        return try await withCheckedThrowingContinuation { continuation in
-            self.writeQueue[packet.opCode] = continuation
+        guard writeQueue[packet.opCode] == nil else {
+            throw NSError(domain: "Command already running", code: 0, userInfo: nil)
+        }
+
+        let stream = AsyncThrowingStream<any DanaParsePacketProtocol, Error> { continuation in
+            writeQueue[packet.opCode] = continuation
             self.write(packet)
         }
+
+        return try await firstValue(from: stream)
+    }
+    
+    private func firstValue(from stream: AsyncThrowingStream<any DanaParsePacketProtocol, Error>) async throws -> (any DanaParsePacketProtocol) {
+        for try await value in stream {
+            return value
+        }
+        throw NSError(domain: "Got no response. Most likely an encryption issue", code: 0, userInfo: nil)
     }
     
     private func write(_ packet: DanaGeneratePacket) {
@@ -109,7 +122,7 @@ class PeripheralManager: NSObject {
         self.writeTimeoutTask = Task {
             do {
                 try await Task.sleep(nanoseconds: UInt64(!isHistoryPacket ? .seconds(4) : .seconds(21)) * 1_000_000_000)
-                guard let queueItem = self.writeQueue[packet.opCode] else {
+                guard let stream = self.writeQueue[packet.opCode] else {
                     // We did what we must, so exist and be happy :)
                     return
                 }
@@ -118,9 +131,9 @@ class PeripheralManager: NSObject {
                 // This means the pump received the message but could decrypt it
                 // We need to reconnect in order to fix the encryption keys
                 self.bluetoothManager.manager.cancelPeripheralConnection(self.connectedDevice)
-                queueItem.resume(throwing: NSError(domain: "Message write timeout. Most likely an encryption issue - opCode: \(packet.opCode)", code: 0, userInfo: nil))
+                stream.finish()
                 
-                self.writeQueue[packet.opCode] = nil
+                self.writeQueue.removeValue(forKey: packet.opCode)
                 self.writeTimeoutTask = nil
                 self.writeSemaphore.signal()
             } catch {
@@ -601,7 +614,7 @@ extension PeripheralManager {
         }
         
         // Message received and dequeueing timeout
-        guard let opCode = message.opCode, let continuation = self.writeQueue[opCode] else {
+        guard let opCode = message.opCode, let stream = self.writeQueue[opCode] else {
             log.error("No continuation token found to send this message back...")
             self.writeSemaphore.signal()
             return
@@ -609,9 +622,10 @@ extension PeripheralManager {
         
         if let data = message.data as? HistoryItem {
             if data.code == HistoryCode.RECORD_TYPE_DONE_UPLOAD {
-                continuation.resume(returning: DanaParsePacket<[HistoryItem]>(success: true, rawData: Data([]), data: self.historyLog.map({ $0 })))
+                stream.yield(DanaParsePacket<[HistoryItem]>(success: true, rawData: Data([]), data: self.historyLog.map({ $0 })))
+                stream.finish()
                 
-                self.writeQueue[opCode] = nil
+                self.writeQueue.removeValue(forKey: opCode)
                 self.writeTimeoutTask?.cancel()
                 self.writeTimeoutTask = nil
                 self.historyLog = []
@@ -623,9 +637,10 @@ extension PeripheralManager {
             return
         }
         
-        continuation.resume(returning: message)
+        stream.yield(message)
+        stream.finish()
         
-        self.writeQueue[opCode] = nil
+        self.writeQueue.removeValue(forKey: opCode)
         self.writeTimeoutTask?.cancel()
         self.writeTimeoutTask = nil
         self.writeSemaphore.signal()
