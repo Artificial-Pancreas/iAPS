@@ -11,7 +11,7 @@
 
 "Bolus" = "Liều bolus";
 
-"Close" = "Đóng";
+"Close" = "Đóng";
 
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Tiếp tục và bỏ qua liều bolus";
@@ -357,7 +357,7 @@ Enact a temp Basal or a temp target */
 "Start" = "Khởi chạy";
 
 /* */
-"Manual Temp Basal" = "Liều cơ bản thủ công";
+"Manual Temp Basal" = "Liều nền tạm thời thủ công";
 
 /* Allow uploads to different services */
 "Allow uploads" = "Cho phép tải lên";
@@ -1190,7 +1190,7 @@ Enact a temp Basal or a temp target */
 "Ascending Glucose Alarm active" = "Cảnh báo đường huyết đang tăng";
 
 /* */
-"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+"Descending Glucose Alarm active" = "Cảnh báo đường huyết đang giảm";
 
 /* */
 "snoozing until %@" = "tạm yên cho đến khi %@";
@@ -1283,7 +1283,7 @@ Enact a temp Basal or a temp target */
 "Silent" = "Im lặng";
 
 /* Option for default notification sound */
-"Default" = "Default";
+"Default" = "Mặc định";
 
 /* The iOS default sound */
 "iOS default sound" = "âm thanh mặc định của iOS";
@@ -1921,7 +1921,7 @@ Enact a temp Basal or a temp target */
 "Missing Config" = "Thiếu cấu hình";
 
 /* Alert format string for missing temp basal configuration. */
-"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Liều nền tối đa chưa được cấu hình. Đề nghị vào Cài đặt-> Cấu hình bơm và cấu hình Liều nền tối đa mới.";
+"This PumpManager has not been configured with a maximum basal rate because it was added before manual temp basal was a feature. Please go to therapy settings -> delivery limits and set a new maximum basal rate." = "Trình quản lý bơm này chưa được cấu hình với tốc độ insulin nền tối đa vì nó được thêm vào trước khi tính năng thiết lập liều nền tạm thời thủ công xuất hiện. Vui lòng vào phần therapy settings -> delivery limits và đặt lại tốc độ insulin nền tối đa mới.";
 
 /* description label for active time pod details row */
 "Active Time" = "Thời gian Hoạt động";
