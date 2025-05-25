@@ -38,7 +38,7 @@
 "Insulin required" = "Liều insulin được yêu cầu";
 
 /* Bolus screen */
-"Recommendation" = "LIỀU KHUYẾN NGHỊ";
+"Recommendation" = "Liều khuyến nghị";
 
 /* Button */
 "Clear" = "Hủy";
@@ -77,7 +77,7 @@
 "A Remote Bolus " = "Một liều Bolus từ xa ";
 
 /* Remote Bolus Alert, Part 2 */
-"was delivered" = "vừa được hoàn thành";
+"was delivered" = "đã thực hiện";
 
 /* Remote Bolus Alert, Part 3 */
 " minutes ago, triggered remotely from Nightscout, by a caregiver or a parent. Do you still want to bolus?\n\nPredicted eventual glucose, if you don't bolus, is: " = " phút trước, được kích hoạt từ xa từ Nightscout, bởi người chăm sóc hoặc phụ huynh. Bạn vẫn muốn bolus?\n\nDự đoán lượng đường cuối cùng, nếu bạn không bolus, là: ";
@@ -113,7 +113,7 @@
 "Fatty Meal" = "Bữa ăn nhiều chất béo";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Chống hạ đường huyết";
 
 /* For the  Bolus View pop-up */
 "Full Bolus" = "Liều bolus đầy đủ";
@@ -131,13 +131,13 @@
 "Result" = "Kết quả";
 
 /* For the  Bolus View pop-up */
-"Your entered amount was limited by your max Bolus setting of %d%@" = "Liều thêm vào bị giới hạn bởi liều \"Liều bolus tối đa\" %d%@";
+"Your entered amount was limited by your max Bolus setting of %d%@" = "Lượng bạn đã nhập bị giới hạn bởi cài đặt liều bolus tối đa của bạn là %d%@";
 
 /* Bolus View Continue Button */
 "Continue" = "Tiếp tục";
 
 /* Home title */
-"Home" = "Trở về";
+"Home" = "Trang chủ";
 
 /* Looping in progress */
 "looping" = "looping";
@@ -158,7 +158,7 @@
 "Add Carbs " = "Thêm Carbs";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "Ghi đè";
 
 /* Home View Message if no pump is connected */
 "No Pump" = "No Pump";
@@ -206,13 +206,13 @@
 "Duration" = "Duration";
 
 /*  */
-"Enact Temp Target" = "Enact Temp Target";
+"Enact Temp Target" = "Kích hoạt mục tiêu tạm thời";
 
 /* */
 "Target" = "Mục tiêu";
 
 /* */
-"Basal Insulin and Sensitivity ratio" = "Tỷ lệ Insulin cơ bản và độ nhạy";
+"Basal Insulin and Sensitivity ratio" = "Liều nền và tỷ lệ độ nhạy Insulin";
 
 /* */
 "A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Cài đặt 'một nửa mục tiêu cơ bản' thấp hơn sẽ giảm mức cơ bản và tăng ISF sớm hơn, ở mức glucose mục tiêu thấp hơn.";
@@ -221,7 +221,7 @@
 " Your setting: " = " Cài đặt của bạn: ";
 
 /* */
-"mg/dl. Autosens.max limits the max endpoint" = "mg/dl. Autosens.max giới hạn tối đa";
+"mg/dl. Autosens.max limits the max endpoint" = "mg/dL. Autosens.max giới hạn điểm kết thúc tối đa";
 
 /*  */
 "Enter preset name" = "Nhập tên";
@@ -275,7 +275,7 @@
 "Dynamic Variables" = "Dynamic Variables";
 
 /*  */
-"Basal profile" = "Hồ sơ liều nền";
+"Basal profile" = "Phác đồ liều nền";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
@@ -299,7 +299,7 @@
 "Add" = "Thêm";
 
 /*  */
-"Basal Profile" = "Hồ sơ liều Basal";
+"Basal Profile" = "Phác đồ liều nền";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -396,7 +396,7 @@ Enact a temp Basal or a temp target */
 "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Điều này cho phép tải số liệu thống kê lên Nightscout mà có thể được sử dụng bởi Dự án Community Statictics và Demographics. \n\nTham gia vào Thống kê Cộng đồng là tùy chọn và yêu cầu đăng ký riêng tại:\n";
 
 /*  */
-"Edit settings json" = "Edit settings json";
+"Edit settings json" = "Chỉnh sửa file cài đặt Json";
 
 /* */
 "Glucose units" = "Đơn vị Glucose";
@@ -405,7 +405,7 @@ Enact a temp Basal or a temp target */
 "Preferences" = "Tùy chỉnh";
 
 /* Recommended Insulin Fraction in preferences */
-"Recommended Insulin Fraction" = "Phần Insulin được đề xuất";
+"Recommended Insulin Fraction" = "Tỷ lệ liều insulin khuyên dùng";
 
 /* Do you want to show bolus screen after added carbs? */
 "Skip Bolus screen after carbs" = "Bỏ qua màn hình bolus sau carbs";
@@ -417,7 +417,7 @@ Enact a temp Basal or a temp target */
 "Allow Remote control of iAPS" = "Cho phép điều khiển iAPS từ xa";
 
 /* Imported Profiles Alert */
-"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n trong iAPS Settings > Configuration.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.\n.";
+"\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\n Bây giờ xin hãy xác minh lại tất cả các cài đặt của bạn kỹ lưỡng:\n\n* Cài đặt liều nền\n * Tỷ lệ Carb\n * Đường huyết mục tiêu\n * Độ nhạy Insulin\n * DIA\n\n trong Cài đặt iAPS > Cấu hình.\n\n Cấu hình không hợp lệ hoặc tồi có thể có tác động thảm họa.\n.";
 
 /* Profile Import Alert */
 "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Việc này có thể thay thế một vài hoặc tất cả những cấu hình bơm hiện tại của bạn. Bạn có chắc bạn muốn nhập cấu hình từ Nightscout?";
@@ -447,7 +447,7 @@ Enact a temp Basal or a temp target */
 "Settings imported" = "Các cài đặt đã được nhập";
 
 /* Import Error */
-"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Đơn vị glucose không khớp trong Cài đặt Nightscout và Pump. Nhập cấu hình bị hủy bỏ.";
+"\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Đơn vị đường huyết không khớp trong Cài đặt Nightscout và Pump. Nhập cấu hình bị hủy bỏ.";
 
 /* Import Error */
 "Can't find the default Nightscout Profile." = "Không thể tìm thấy Hồ sơ Nightscout mặc định.";
@@ -474,7 +474,7 @@ Enact a temp Basal or a temp target */
 "Model" = "Model";
 
 /*  */
-"Pump config" = "Cấu hình bơm Insulin";
+"Pump config" = "Cấu hình Bơm";
 
 /*  */
 "Delivery limits" = "Các giới hạn liều tiêm";
