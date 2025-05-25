@@ -536,9 +536,9 @@ Enact a temp Basal or a temp target */
 /* Label inusulin concentration, units per ml */
 "U10" = "U10";
 /* Debug option, allow U50 and U10 (diluted insulin) */
-"Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
+"Allow diluted insulin concentration settings" = "Cho phép cài đặt nồng độ insulin pha loãng";
 /* Max setting */
-"Max Carbs" = "Khối lượng carbs tối đa";
+"Max Carbs" = "Lượng carbs tối đa";
 
 /* Max carbs description */
 "Maximum amount of carbs (g) you can add each entry" = "Lượng carbs tối đa (g) bạn có thể thêm vào mỗi mục nhập";
@@ -589,7 +589,7 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Closed loop";
+"Closed loop" = "Vòng lặp kín";
 
 /* */
 "Configuration" = "Cấu hình";
@@ -598,13 +598,13 @@ Enact a temp Basal or a temp target */
 "Devices" = "Thiết bị";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Bơm Insulin";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Đồng hồ";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Cấu hình đồng hồ";
 
 /* */
 "Apple Watch" = "Apple Watch";
@@ -619,10 +619,10 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Thêm thiết bị";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Nút Cấu hình Ghi đè/Nút Mục iêu Tạm thời";
 
 /* */
-"Glucose Target" = "Đường Huyết mục tiêu";
+"Glucose Target" = "Đường huyết mục tiêu";
 
 /* */
 "Heart Rate" = "Heart Rate";
@@ -646,10 +646,10 @@ Enact a temp Basal or a temp target */
 "Services" = "Dịch vụ";
 
 /*  */
-"Settings" = "Settings";
+"Settings" = "Các cài đặt";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
+"Recommended Bolus Percentage" = "Tỷ lệ phần trăm Bolus được đề xuất";
 
 /* 2 log files to share */
 "Share logs" = "Chia sẻ nhật ký";
@@ -697,7 +697,7 @@ Enact a temp Basal or a temp target */
 "Updating..." = "Đang cập nhật...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Mục tiêu tạm thời";
 
 /* Delete carbs from data table and Nightscout */
 "Delete Carbs?" = "Xóa Carbs?";
@@ -706,22 +706,22 @@ Enact a temp Basal or a temp target */
 "Delete Insulin?" = "Xóa Insulin?";
 
 /* Treatments list */
-"Treatments" = "Đã xử lý";
+"Treatments" = "Các phương pháp điều trị";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Thêm Insulin";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Thêm Đường huyết";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Đường huyết mới";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Điều trị";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default";
+"Default  📉" = "Mặc định";
 
 /* Hypo Treatment Default Value */
 "None" = "Không";
@@ -739,7 +739,7 @@ Enact a temp Basal or a temp target */
 "Configure Libre Transmitter" = "Cấu hình Libre Transmitter";
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Hiệu chuẩn";
 
 /* */
 "Create Events in Calendar" = "Tạo sự kiện trong Calendar";
@@ -859,7 +859,7 @@ Enact a temp Basal or a temp target */
 "Libre sensor was incorrectly read, CRCs were not valid" = "Cảm biến libre không được đọc đúng, CRCs không hợp lệ";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Đường huyết";
 
 /* LOWALERT! */
 "LOWALERT!" = "CẢNH BÁO THẤP!";
@@ -943,7 +943,7 @@ Enact a temp Basal or a temp target */
 "Last Blood Sugar prediction" = "Dự đoán lượng đường trong máu";
 
 /* */
-"CurrentBG" = "Đường huyết hiện tại";
+"CurrentBG" = "CurrentBG";
 
 /* */
 "Sensor Info" = "Thông tin cảm biến";
@@ -1152,7 +1152,7 @@ Enact a temp Basal or a temp target */
 /* Suspend/Resume Shortcut */
 "Pump command" = "Lệnh của bơm";
 /* Suspend/Resume Shortcut */
-"enacted in iAPS" = "enacted in iAPS";
+"enacted in iAPS" = "đã kích hoạt trong iAPS";
 
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Số lượng Temp Basal tính bằng U/h";
@@ -1229,16 +1229,16 @@ Enact a temp Basal or a temp target */
 "Found devices: %d" = "Tìm thấy thiết bị: %d";
 
 /* */
-"Backfill options" = "Tùy chọn chèn lấp";
+"Backfill options" = "Tùy chọn bổ sung";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Việc chèn lấp theo xu hướng hiện không được Loop hỗ trợ tốt";
+"Backfilling from trend is currently not well supported by Loop" = "Việc bổ sung theo xu hướng hiện không được Loop hỗ trợ tốt";
 
 /* */
-"Backfill from history" = "Chèn lấp từ lịch sử";
+"Backfill from history" = "Bổ sung từ lịch sử";
 
 /* */
-"Backfill from trend" = "Chèn lấp từ xu hướng";
+"Backfill from trend" = "Bổ sung từ xu hướng";
 
 /* */
 "Debug options" = "Tùy chọn gỡ lỗi";
@@ -1298,7 +1298,7 @@ Enact a temp Basal or a temp target */
 "Bolus Failure" = "Liều Bolus thất bại";
 
 /* Sound for missing loops */
-"Missing Loops" = "Missing Loops";
+"Missing Loops" = "Vòng lặp bị thiếu";
 
 /* Alert for ascending glucose */
 "Ascending" = "Đang tăng dần";
@@ -1325,7 +1325,7 @@ Enact a temp Basal or a temp target */
 "Show glucose on the app badge" = "Thể hiện đường huyết lên trên iAPS";
 
 /* */
-"Backfill glucose" = "Bổ sung glucose";
+"Backfill glucose" = "Bổ sung đường huyết";
 
 /* About this source */
 "About this source" = "Thông tin nguồn này";
@@ -1349,7 +1349,7 @@ Enact a temp Basal or a temp target */
 "Temp Basal" = "Temp Basal";
 
 /* */
-"Temp Target" = "Temp Target";
+"Temp Target" = "Top target";
 
 /* */
 "Resume" = "Tiếp tục";
@@ -1445,7 +1445,7 @@ Enact a temp Basal or a temp target */
 "Save on Pump" = "Lưu vào bơm";
 
 /* Debug option view Pump History */
-"Pump History" = "Pump History";
+"Pump History" = "Lịch sử Bơm";
 
 /* Debug option view Temp Basals */
 "Temp Basals" = "Temp Basals";
@@ -1487,7 +1487,7 @@ Enact a temp Basal or a temp target */
 "Loop Cycles" = "Chu kỳ vòng lặp";
 
 /* Debug option view Glucose Data used for statistics */
-"Glucose Data used for statistics" = "Dữ liệu Glucose được sử dụng để thống kê";
+"Glucose Data used for statistics" = "Dữ liệu đường huyết được sử dụng để thống kê";
 
 /* --------------- HealthKit intergration --------------------*/
 /* */
@@ -1587,12 +1587,12 @@ Enact a temp Basal or a temp target */
 "Max Override 400%" = "Max Override 400%";
 
 /* */
-"Override Profiles" = "Override Profiles";
+"Override Profiles" = "Chế độ ghi đè";
 
 /* */
 "Normal " = "Bình thường ";
 
-"Currently no Override active" = "Hiện tại không có Override hoạt động";
+"Currently no Override active" = "Hiện tại không có ghi đè nào hoạt động";
 
 /* */
 "Total Insulin Adjustment" = "Tổng số Insulin được điều chỉnh";
@@ -1616,13 +1616,13 @@ Enact a temp Basal or a temp target */
 "Normal Profile" = "Normal Profile";
 
 /* Custom but unsaved Profile */
-"Custom Profile" = "Custom Profile";
+"Custom Profile" = "Cấu hình tùy chỉnh";
 
 /* */
-"Profiles" = "Profiles";
+"Profiles" = "Cấu hình";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Cài đặt nâng cao";
 
 /* */
 "More options" = "Các lựa chọn khác";
@@ -1646,16 +1646,16 @@ Enact a temp Basal or a temp target */
 "UAM SMB Minutes" = "UAM SMB theo phút";
 
 /* */
-"Override Max IOB" = "Override Max IOB";
+"Override Max IOB" = "Ghi đè mức IOB tối đa";
 
 /* */
 "Start new Profile" = "Bắt đầu profile mới";
 
 /* */
-"Save as Profile" = "Lưu profile";
+"Save as Profile" = "Lưu cấu hình";
 
 /* */
-"Save as preset" = "Save as preset";
+"Save as preset" = "Lưu làm thiết đặt sẵn";
 
 /* Alert */
 "Cancel Profile Override" = "Hủy bỏ ghi đè?";
@@ -1667,7 +1667,7 @@ Enact a temp Basal or a temp target */
 "Return to Normal?" = "Quay lại chế độ bình thường không?";
 
 /* */
-"This will change settings back to your normal profile." = "Việc này sẽ thay đổi cấu hình trở lại profile Normal của bạn.";
+"This will change settings back to your normal profile." = "Việc này sẽ thay đổi cấu hình trở lại cấu hình bình thường của bạn.";
 
 /* Start Profile Alert */
 "Start Profile" = "Bắt đầu profile";
@@ -2362,7 +2362,7 @@ Enact a temp Basal or a temp target */
 "NoneContactValue" = "Không";
 
 /* Contact Image, settings, Glucose (data to display) */
-"GlucoseContactValue" = "Glucose";
+"GlucoseContactValue" = "Đường huyết";
 
 /* Contact Image, settings, Eventual BG (data to display) */
 "EventualBGContactValue" = "Kết quả BG";
