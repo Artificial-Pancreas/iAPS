@@ -1187,7 +1187,7 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Báo động Không có Glucose đang hoạt động";
 
 /* */
-"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+"Ascending Glucose Alarm active" = "Cảnh báo đường huyết đang tăng";
 
 /* */
 "Descending Glucose Alarm active" = "Descending Glucose Alarm active";
