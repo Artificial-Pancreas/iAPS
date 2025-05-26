@@ -1188,6 +1188,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "No Glucose Alarm active" = "No hay alarma de glucosa activa";
 
 /* */
+"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+
+/* */
+"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+
+/* */
 "snoozing until %@" = "posponer hasta %@";
 
 /* */

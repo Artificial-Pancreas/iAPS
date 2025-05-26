@@ -161,7 +161,7 @@
 "Override" = "Override";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Keine Pumpe";
 
 /* Home View Message if open loop is active */
 "Open" = "Open";
@@ -462,7 +462,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Omnipod hinzufügen";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Dana-i/RS hinzufügen";
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator hinzufügen";
@@ -709,10 +709,10 @@ Enact a temp Basal or a temp target */
 "Treatments" = "Behandlungen";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Insulin hinzufügen";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Kohlenhydrate hinzufügen";
 
 /* New Glucose */
 "New Glucose" = "New Glucose";
@@ -721,7 +721,7 @@ Enact a temp Basal or a temp target */
 "Treatment" = "Behandlung";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Standard  📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Keiner";
@@ -949,10 +949,10 @@ Enact a temp Basal or a temp target */
 "Sensor Info" = "Sensor Info";
 
 /* */
-"Sensor Life-Span" = "Sensor Life-Span";
+"Sensor Life-Span" = "Sensor Lebensdauer";
 
 /* */
-"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "When using %@ iAPS doesn't know the type of sensor used or the sensor life-span.";
+"When using %@ iAPS doesn't know the type of sensor used or the sensor life-span." = "Bei der Verwendung von %@ kennt iAPS weder den verwendeten Sensor, noch die Lebensdauer des Sensors.";
 
 /* */
 "Sensor Age Left" = "Sensorlaufzeit übrig";
@@ -1187,6 +1187,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Keine Blutzuckeralarm aktiv";
 
 /* */
+"Ascending Glucose Alarm active" = "Aufsteigender Blutzucker-Alarm aktiv";
+
+/* */
+"Descending Glucose Alarm active" = "Absteigender Blutzucker-Alarm aktiv";
+
+/* */
 "snoozing until %@" = "schlummern bis %@";
 
 /* */
@@ -1253,34 +1259,34 @@ Enact a temp Basal or a temp target */
 "Carbs Required Threshold" = "Grenzwert für benötigte Kohlenhydrate";
 
 /* */
-"Carbs Required" = "Carbs Required";
+"Carbs Required" = "Kohlenhydrate erforderlich";
 
 /* */
-"Sounds" = "Sounds";
+"Sounds" = "Töne";
 
 /* Sound for Hypo alert */
-"Hypoglycemia" = "Hypoglycemia";
+"Hypoglycemia" = "Hypoglykämie";
 
 /* Sound for Hyper alert */
-"Hyperglycemia" = "Hyperglycemia";
+"Hyperglycemia" = "Hyperglykämie";
 
 /* Sound for ascending glucose */
-"Rapidly Ascending" = "Rapidly Ascending";
+"Rapidly Ascending" = "Schnell aufsteigend";
 
 /* Sound for descending glucose */
-"Rapidly Descending" = "Rapidly Descending";
+"Rapidly Descending" = "Schnell absteigend";
 
 /* Silent sound option */
-"Silent" = "Silent";
+"Silent" = "Lautlos";
 
 /* Option for no sound */
-"Silent" = "Silent";
+"Silent" = "Lautlos";
 
 /* Option for default notification sound */
-"Default" = "Default";
+"Default" = "Standard";
 
 /* The iOS default sound */
-"iOS default sound" = "iOS default sound";
+"iOS default sound" = "iOS Standardton";
 
 /* Alert for descending glucose */
 "RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
@@ -1289,16 +1295,16 @@ Enact a temp Basal or a temp target */
 "RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
 
 /* Sound for bolus failure */
-"Bolus Failure" = "Bolus Failure";
+"Bolus Failure" = "Bolusfehler";
 
 /* Sound for missing loops */
-"Missing Loops" = "Missing Loops";
+"Missing Loops" = "Fehlende Loops";
 
 /* Alert for ascending glucose */
-"Ascending" = "Ascending";
+"Ascending" = "Aufsteigend";
 
 /* Alert for descending glucose */
-"Descending" = "Descending";
+"Descending" = "Absteigend";
 
 /* Thresholds for Alerts */
 "Thresholds" = "Thresholds";
@@ -1522,7 +1528,7 @@ Enact a temp Basal or a temp target */
 " -  Manual Basal ⚠️" = " -  Manuelle Basalrate ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/day";
+"U/day" = "iE/Tag";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Gesamt";
@@ -1616,7 +1622,7 @@ Enact a temp Basal or a temp target */
 "Profiles" = "Profile";
 
 /* */
-"Advanced Settings" = "Advanced Settings";
+"Advanced Settings" = "Erweiterte Einstellungen";
 
 /* */
 "More options" = "Mehr Optionen";
@@ -1756,7 +1762,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Prognostizierte Glukose";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Minimaler vorausgesagter Blutzucker";
 
 /* */
 "Please wait" = "Bitte warten";
@@ -2383,7 +2389,7 @@ Enact a temp Basal or a temp target */
 /* --------------------------  Dana Pump  ---------------------- */
 /* Dana footer */
 
-"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump";
+"Dana pump does not allow editing of max basal and max bolus. Configure these in the doctor's settings of the pump. Saving the settings will fetch the lastest values from the pump" = "Die Dana Pumpe erlaubt keine Bearbeitung von max. Basal- und max. Bolus. Konfigurieren Sie diese im Arzt-Menü der Pumpe. Das Speichern der Einstellungen wird die letzten Werte von der Pumpe abrufen.";
 
 /* --------- Auto ISF --------- */
 /* */

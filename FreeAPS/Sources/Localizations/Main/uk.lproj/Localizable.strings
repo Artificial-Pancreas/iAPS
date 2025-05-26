@@ -1187,6 +1187,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Немає активних сигналів Глюкози";
 
 /* */
+"Ascending Glucose Alarm active" = "Сигналізація підвищення рівня Глюкози активна";
+
+/* */
+"Descending Glucose Alarm active" = "Сигналізація зниження рівня Глюкози активна";
+
+/* */
 "snoozing until %@" = "відкладено до %@";
 
 /* */
@@ -1277,7 +1283,7 @@ Enact a temp Basal or a temp target */
 "Silent" = "Без звуку";
 
 /* Option for default notification sound */
-"Default" = "Default";
+"Default" = "Стандартний";
 
 /* The iOS default sound */
 "iOS default sound" = "Звук за замовчуванням для iOS";
@@ -1756,7 +1762,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Можлива глюкоза";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Мінімальна прогнозована Глюкоза";
 
 /* */
 "Please wait" = "Будь ласка, зачекайте";

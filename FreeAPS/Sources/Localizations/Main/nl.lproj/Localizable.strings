@@ -1188,6 +1188,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "No Glucose Alarm active" = "Geen glucose alarm actief";
 
 /* */
+"Ascending Glucose Alarm active" = "Stijgende glucose-alarm actief";
+
+/* */
+"Descending Glucose Alarm active" = "Dalende glucose-alarm actief";
+
+/* */
 "snoozing until %@" = "sluimeren tot %@";
 
 /* */
@@ -1278,7 +1284,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Silent" = "Stille modus";
 
 /* Option for default notification sound */
-"Default" = "Default";
+"Default" = "Standaard";
 
 /* The iOS default sound */
 "iOS default sound" = "Standaard iOS geluid";
