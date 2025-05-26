@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Cancel Temp Target";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Custom";
 
