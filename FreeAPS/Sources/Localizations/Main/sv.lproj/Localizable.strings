@@ -191,7 +191,7 @@
 "Cancel Temp Target" = "Avbryt tillfälligt målvärde";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Avbryt tillfälligt målvärde";
 
 /* Custom temp target */
 "Custom" = "Anpassad";
@@ -2183,7 +2183,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Dela och säkerhetskopiera";
 
 /* Section 1 title */
-"Upload Settings and Statistics" = "Upload Settings and Statistics";
+"Upload Settings and Statistics" = "Ladda upp inställningar och statistik";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Dela och säkerhetskopiera alla dina inställningar och statistik";
