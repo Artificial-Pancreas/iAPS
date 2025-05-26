@@ -151,9 +151,9 @@ extension BasalProfileEditor {
                             .bold()
                             .foregroundColor(.primary)
                         Spacer()
-                        Text(rateFormatter.string(from: state.total as NSNumber) ?? "0")
+                        Text((rateFormatter.string(from: state.total as NSNumber) ?? "0") + " ")
                             .foregroundColor(.primary) +
-                            Text(" U/day")
+                            Text("U/day")
                             .foregroundColor(.secondary)
                     }
                 }
