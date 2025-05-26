@@ -536,7 +536,10 @@
 "Configuration" = "Configuration";
 
 /* Text for low reservoir reminder */
-"Low reservoir reminder" = "Low reservoir reminder";
+"Low reservoir reminder" = "Báo nhắc gần hết thuốc";
+
+/* Description text for low reservoir reminder */
+"The pump reminds you when the amount of insulin in the pump reaches this level" = "Máy bơm sẽ nhắc bạn khi lượng insulin trong bơm chạm đến mức này";
 
 /* refillAmount */
 "Refill amount" = "Refill amount";

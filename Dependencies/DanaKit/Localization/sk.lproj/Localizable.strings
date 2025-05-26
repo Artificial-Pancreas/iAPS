@@ -218,7 +218,7 @@
 "Firmware version" = "Verzia firmvéru";
 
 /* DanaKit sync pump */
-"Sync pump data" = "Synchronizácia údajov čerpadla";
+"Sync pump data" = "Synchronizovať údaje pumpy";
 
 /* Text for last sync */
 "Last sync" = "Posledná synchronizácia";
@@ -271,7 +271,7 @@
 "User options" = "Možnosti používateľa";
 
 /* DanaKit share logs */
-"Share Dana pump logs" = "Zdieľanie protokolov čerpadla Dana";
+"Share Dana pump logs" = "Zdielať logy pumpy Dana";
 
 /* Loading */
 "Loading" = "Načítanie";
@@ -280,7 +280,7 @@
 "Save" = "Uložiť";
 
 /* Text for 24h display */
-"24h display" = "24-hodinový displej";
+"24h display" = "Formát hodín";
 
 /* Description for 24h display */
 "Should time be display in 12h or 24h" = "Či sa má čas zobrazovať v 12h alebo 24h";
@@ -310,7 +310,7 @@
 "Lcd on time" = "Lcd na čas";
 
 /* beepAndAlarm */
-"Alarm beeps" = "Pípanie budíka";
+"Alarm beeps" = "Upozornenia";
 
 /* beepAndAlarm.sound */
 "Sound" = "Zvuk";
