@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Hủy bỏ mục tiêu tạm thời";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Tùy chọn";
 
@@ -1578,7 +1581,7 @@ Enact a temp Basal or a temp target */
 "Fat And Protein Conversion" = "Chuyển đổi Chất Béo và Chất Đạm";
 
 /* Ignore flat CGM readings */
-"Ignore flat CGM readings" = "Bỏ qua các số đọc CGM phẳng";
+"Ignore flat CGM readings" = "Ignore flat CGM readings";
 
 /* Service Section */
 "Profile Override" = "Profile Override";
@@ -1780,7 +1783,7 @@ Enact a temp Basal or a temp target */
 "Insulin Sensitivity" = "Độ nhạy Insulin";
 
 /* Formula displayed in Bolus info pop-up. Make translation short! */
-"(Eventual Glucose - Target) / ISF" = "(Glucose hiện tại - Mục tiêu) / ISF";
+"(Eventual Glucose - Target) / ISF" = "(Đường huyết dự báo - mục tiêu) / độ nhạy";
 
 /* */
 "Formula:" = "Công thức:";
@@ -2084,7 +2087,7 @@ Enact a temp Basal or a temp target */
 "Non-completed Loops" = "Vòng lặp chưa hoàn thành";
 
 /* Average loop interval */
-"Interval" = "Interval";
+"Interval" = "Khoảng thời gian";
 
 /* Median loop interval */
 "Duration" = "Duration";
@@ -2129,7 +2132,7 @@ Enact a temp Basal or a temp target */
 "all" = "Tất cả";
 
 /* Active Insulin View */
-"Active Insulin" = "Insulin Hoạt Động";
+"Active Insulin" = "Lượng Insulin hoạt động";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Thời gian có Insulin âm tính";
@@ -2153,7 +2156,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
 /* Active Carbohydrates View */
-"Active Carbohydrates" = "Carbohydrates Hoạt Động";
+"Active Carbohydrates" = "Lượng Carbohydrates hoạt động";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2180,7 +2183,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Chia sẻ và sao lưu";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Tải lên cài đặt và số liệu thống kê";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Chia sẻ và sao lưu tất cả các thiết lập và số liệu thống kê của bạn";
@@ -2365,7 +2368,7 @@ Enact a temp Basal or a temp target */
 "GlucoseContactValue" = "Đường huyết";
 
 /* Contact Image, settings, Eventual BG (data to display) */
-"EventualBGContactValue" = "Kết quả BG";
+"EventualBGContactValue" = "Đường huyết dự kiến";
 
 /* Contact Image, settings, Delta (data to display) */
 "DeltaContactValue" = "Chênh lệch";
@@ -2374,7 +2377,7 @@ Enact a temp Basal or a temp target */
 "TrendContactValue" = "Xu hướng";
 
 /* Contact Image, settings, Last loop time (data to display) */
-"LastLoopTimeContactValue" = "Thời gian vòng lặp cuối cùng";
+"LastLoopTimeContactValue" = "Vòng lặp gần nhất";
 
 /* Contact Image, settings, COB (data to display) */
 "COBContactValue" = "COB";
@@ -2451,7 +2454,7 @@ Enact a temp Basal or a temp target */
 "Ketoacidosis protection will apply a small configurable Temp Basal Rate always or if certain conditions arise instead of a Zero temp!\nThe feature exists because in special cases a person could get ketoacidosis from 0% TBR. The idea is derived from sport. There could be problems when a basal rate of 0% ran for several hours. Muscles in particular could shut off.\nThis feature enables a small safety TBR to reduce the ketoacidosis risk. Without the Variable Protection that safety TBR is always applied. The idea behind the variable protection strategy is that the safety TBR is only applied if sum of basal-IOB and bolus-IOB falls negatively below the value of the current basal rate." = "Bảo vệ chống nhiễm toan ceton sẽ luôn áp dụng Tỷ lệ liều Temp Basal nhỏ có thể cấu hình hoặc nếu một số điều kiện nhất định phát sinh thay vì Zero temp!\nTính năng này tồn tại vì trong những trường hợp đặc biệt, một người có thể bị nhiễm toan ceton từ 0% TBR. Ý tưởng này bắt nguồn từ thể thao. Có thể có vấn đề khi tỷ lệ cơ bản 0% chạy trong nhiều giờ. Đặc biệt, cơ có thể ngừng hoạt động.\nTính năng này cho phép một TBR an toàn nhỏ để giảm nguy cơ nhiễm toan ceton. Nếu không có Bảo vệ biến đổi, TBR an toàn luôn được áp dụng. Ý tưởng đằng sau chiến lược bảo vệ biến đổi là TBR an toàn chỉ được áp dụng nếu tổng của basal-IOB và bolus-IOB bolus giảm xuống dưới giá trị của tỷ lệ cơ bản hiện tại.";
 
 /* */
-"B30 Settings" = "B30 Settings";
+"B30 Settings" = "Cài đặt B30";
 
 /* */
 "Duration of increased B30 basal rate" = "Thời gian tăng tỷ lệ liều cơ bản B30";

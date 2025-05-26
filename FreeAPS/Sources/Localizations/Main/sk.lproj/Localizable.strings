@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Vlastné";
 
@@ -2181,7 +2184,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Share and Backup" = "Zdieľanie a zálohovanie";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Odoslať nastavenia a štatistiky";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Zdieľať a zálohať nastavenia a štatistiky";

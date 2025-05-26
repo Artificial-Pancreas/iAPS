@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Temporäres Ziel abbrechen";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Benutzerdefiniert";
 
@@ -2181,7 +2184,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Teilen und Backup";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Einstellungen und Statistiken hochladen";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Teilen und sichern Sie alle Ihre Einstellungen und Statistiken";
