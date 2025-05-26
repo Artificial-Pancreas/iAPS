@@ -1211,7 +1211,7 @@ Enact a temp Basal or a temp target */
 "Click to Snooze Alerts" = "Chọn để ẩn các cảnh báo";
 
 /* */
-"Strength" = "Sức mạnh";
+"Strength" = "Độ mạnh";
 
 /* */
 "Hold the top of your iPhone near the sensor to pair" = "Giữ đầu iPhone gần sensor để ghép nối";
@@ -1377,7 +1377,7 @@ Enact a temp Basal or a temp target */
 "OpenAPS other settings" = "Cài đặt khác OpenAPS";
 
 /* Glucose Simulator CGM */
-"Glucose Simulator" = "Glucose mô phỏng";
+"Glucose Simulator" = "Đường huyết mô phỏng";
 
 /* Restored state message */
 "Bluetooth State restored (APS restarted?). Found %d peripherals, and connected to %@ with identifier %@" = "Đã khôi phục trạng thái Bluetooth (APS đã khởi động lại?). Đã tìm thấy %d thiết bị ngoại vi và được kết nối với %@ bằng mã định danh %@";
