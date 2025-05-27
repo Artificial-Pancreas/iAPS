@@ -1532,7 +1532,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " -  Manual Basal ⚠️" = " -  Manuálny bazál ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/deň";
+"U/day" = "J/deň";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Spolu";
