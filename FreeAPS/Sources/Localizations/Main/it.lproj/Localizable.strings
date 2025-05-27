@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Cancella basali temporanee";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Personalizzato";
 
@@ -1187,6 +1190,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Nessuna Allarme Glicemia attiva";
 
 /* */
+"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+
+/* */
+"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+
+/* */
 "snoozing until %@" = "posticipando fino %@";
 
 /* */
@@ -1275,6 +1284,9 @@ Enact a temp Basal or a temp target */
 
 /* Option for no sound */
 "Silent" = "Modalità silenziosa";
+
+/* Option for default notification sound */
+"Default" = "Default";
 
 /* The iOS default sound */
 "iOS default sound" = "suono predefinito iOS";
@@ -2171,7 +2183,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Condivisione e backup";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Carica le impostazioni e le statistiche";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Condividi e salva tutte le tue impostazioni e statistiche";

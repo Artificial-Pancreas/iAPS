@@ -14,6 +14,7 @@ extension NotificationsConfig {
 
         let soundManager = SystemSoundsManager()
         let silent = "Silent"
+        let defaultSound = "Default"
 
         @State private var systemLiveActivitySetting: Bool = { ActivityAuthorizationInfo().areActivitiesEnabled }()
 
@@ -108,6 +109,10 @@ extension NotificationsConfig {
             Text("Silent").padding(.leading, 46)
         }
 
+        private var defaultView: some View {
+            Text("Default").padding(.leading, 46)
+        }
+
         var body: some View {
             Form {
                 Section {
@@ -149,48 +154,30 @@ extension NotificationsConfig {
                     if !state.useAlarmSound {
                         Text("Disabled").foregroundStyle(.secondary)
                     } else {
-                        Picker(selection: $state.hypoSound, label: Text("Hypoglycemia")) {
-                            silentView.tag(silent)
-                            ForEach(soundManager.infos, id: \.self.name) { i in
-                                buttonView(name: i.name)
-                            }
-                        }.pickerStyle(.navigationLink)
-
-                        Picker(selection: $state.hyperSound, label: Text("Hyperglycemia")) {
-                            silentView.tag(silent)
-                            ForEach(soundManager.infos, id: \.self.name) { i in
-                                buttonView(name: i.name)
-                            }
-                        }.pickerStyle(.navigationLink)
-
-                        Picker(selection: $state.ascending, label: Text("Rapidly Ascending")) {
-                            silentView.tag(silent)
-                            ForEach(soundManager.infos, id: \.self.name) { i in
-                                buttonView(name: i.name)
-                            }
-                        }.pickerStyle(.navigationLink)
-
-                        Picker(selection: $state.descending, label: Text("Rapidly Descending")) {
-                            silentView.tag(silent)
-                            ForEach(soundManager.infos, id: \.self.name) { i in
-                                buttonView(name: i.name)
-                            }
-                        }.pickerStyle(.navigationLink)
-
-                        Picker(selection: $state.carbSound, label: Text("Carbs Required")) {
-                            silentView.tag(silent)
-                            ForEach(soundManager.infos, id: \.self.name) { i in
-                                buttonView(name: i.name)
-                            }
-                        }.pickerStyle(.navigationLink)
-
-                        Picker(selection: $state.bolusFailure, label: Text("Bolus Failure")) {
-                            silentView.tag(silent)
-                            ForEach(soundManager.infos, id: \.self.name) { i in
-                                buttonView(name: i.name)
-                            }
-                        }.pickerStyle(.navigationLink)
-
+                        soundPicker(
+                            title: "Hypoglycemia",
+                            selection: $state.hypoSound
+                        )
+                        soundPicker(
+                            title: "Hyperglycemia",
+                            selection: $state.hyperSound
+                        )
+                        soundPicker(
+                            title: "Rapidly Ascending",
+                            selection: $state.ascending
+                        )
+                        soundPicker(
+                            title: "Rapidly Descending",
+                            selection: $state.descending
+                        )
+                        soundPicker(
+                            title: "Carbs Required",
+                            selection: $state.carbSound
+                        )
+                        soundPicker(
+                            title: "Bolus Failure",
+                            selection: $state.bolusFailure
+                        )
                         Picker(selection: $state.missingLoops, label: Text("Missing Loops")) {
                             silentView.tag(false)
                             Text("iOS default sound").tag(true)
@@ -224,6 +211,20 @@ extension NotificationsConfig {
             .onAppear(perform: configureView)
             .navigationBarTitle("Notifications")
             .navigationBarTitleDisplayMode(.automatic)
+        }
+
+        private func soundPicker(
+            title: String,
+            selection: Binding<String>
+        ) -> some View {
+            Picker(title, selection: selection) {
+                silentView.tag(silent)
+                defaultView.tag(defaultSound)
+                ForEach(soundManager.infos, id: \.self.name) { i in
+                    buttonView(name: i.name)
+                }
+            }
+            .pickerStyle(.navigationLink)
         }
     }
 }

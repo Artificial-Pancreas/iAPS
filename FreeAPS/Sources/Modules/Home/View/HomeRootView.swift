@@ -800,8 +800,7 @@ extension Home {
                         buttonPanel(geo)
                     }
                     .background(
-                        colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
-                            .opacity(IAPSconfig.backgroundOpacity * 2)
+                        colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
                     )
                     .ignoresSafeArea(edges: .vertical)
                     .overlay {

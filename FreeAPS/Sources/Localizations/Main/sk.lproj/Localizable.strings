@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
 
+/*  */
+"Cancel Temporary Target" = "Zrušiť dočasný cieľ";
+
 /* Custom temp target */
 "Custom" = "Vlastné";
 
@@ -1188,6 +1191,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "No Glucose Alarm active" = "Nie je aktívny žiaden alarm o glykémii";
 
 /* */
+"Ascending Glucose Alarm active" = "Alarm stúpajúcej glykémie je aktívny";
+
+/* */
+"Descending Glucose Alarm active" = "Alarm klesajúcej glykémie je aktívny";
+
+/* */
 "snoozing until %@" = "stíšené do %@";
 
 /* */
@@ -1276,6 +1285,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* Option for no sound */
 "Silent" = "Tichý";
+
+/* Option for default notification sound */
+"Default" = "Predvolené";
 
 /* The iOS default sound */
 "iOS default sound" = "Predvolený zvuk pre iOS";
@@ -1520,7 +1532,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " -  Manual Basal ⚠️" = " -  Manuálny bazál ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/deň";
+"U/day" = "J/deň";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Spolu";
@@ -2172,7 +2184,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Share and Backup" = "Zdieľanie a zálohovanie";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Odoslať nastavenia a štatistiky";
+"Upload Settings and Statistics" = "Odosielanie nastavení a štatistík";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Zdieľať a zálohať nastavenia a štatistiky";
@@ -2404,13 +2416,13 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Needs an EatingSoon specific Glucose Target set by a profile override or a temp target" = "Vyžaduje špecifický cieľ glykémie pre EatingSoon, ktorý je nastavený prostredníctvom profilového cieľa alebo dočasného cieľa";
 
 /* */
-"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Po zrušení tohto cieľa bude zrušená aj vysoká bazálna dávka B30 (TBR)";
+"Once this Target is cancelled, the B30 high TBR will be cancelled" = "Po zrušení tohto cieľa sa zruší aj zvýšená dočasná bazálna dávka B30 (TBR)";
 
 /* */
 "In order to activate B30 a minimum manual Bolus needs to be given" = "Na aktiváciu B30 je potrebné podať minimálny manuálny bolus";
 
 /* */
-"You can specify how long B30 run and how high it is" = "Môžete určiť, ako dlho bude B30 bežať a aká vysoká bude jeho bazálna dávka";
+"You can specify how long B30 run and how high it is" = "Môžete určiť, ako dlho bude B30 aktívne a aká vysoká bude jeho dočasná bazálna dávka";
 
 /* */
 "Absolute Safety TBR " = "Absolútne bezpečnostné TBR ";
@@ -2455,25 +2467,27 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "B30 Basal rate increase factor" = "Faktor zvýšenia bazálnej dávky B30";
 
 /* */
-"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Faktor, ktorý násobí vašu bežnú bazálnu dávku pre B30. Maximálna bazálna dávka, ktorá sa aplikuje, je limitovaná maximálnou bazálnou dávkou nastavenou na vašej pumpe. Predvolená hodnota je 5.";
+"Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Faktor, ktorý násobí vašu bežnú bazálnu dávku v režime B30. Výsledná dávka je obmedzená maximálnou bazálnou dávkou nastavenou na vašej pumpe. Predvolená hodnota: 5.";
 
 /* */
 "Upper Delta limit" = "Horný limit Delta";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB budú deaktivované, keď hodnota klesne pod tento limit, pokiaľ je aktívna bazálna dávka B30. Predvolená hodnota je 8 mg/dl (0,5 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB budú deaktivované, ak hodnota klesne pod tento limit počas aktívneho režimu B30.
+Predvolená hodnota: 8 mg/dl (0,5 mmol/L).";
 
 /* */
 "Upper BG limit" = "Horný limit glykémie";
 
 /* */
-"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB budú deaktivované, pokiaľ je aktívna bazálna dávka B30 a hodnota klesne pod tento limit. Predvolená hodnota je 130 mg/dl (7,2 mmol/l).";
+"SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB budú deaktivované, ak hodnota klesne pod tento limit počas aktívneho režimu B30.
+Predvolená hodnota: 130 mg/dl (7,2 mmol/L).";
 
 /* */
 "Target Level for B30 to be enacted" = "Cieľová hladina glykémie pre aktiváciu B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať profil EatingSoon (alebo dočasný cieľ). Aby sa B30 mohlo spustiť, cieľová hodnota musí byť nižšia ako toto nastavenie. Predvolená hodnota: 90 mg/dl. Ak zrušíte tento EatingSoon cieľ, bazálna dávka B30 sa zastaví.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Na spustenie adaptácie B30 je potrebné aktivovať profil \"Eating Soon\" alebo nastaviť dočasný cieľ. B30 sa spustí len vtedy, ak cieľová hodnota glykémie je nižšia ako táto nastavená hodnota. Predvolená hodnota: 90 mg/dl (5,0 mmol/L). Ak zrušíte profil \"Eating Soon\" alebo dočasný cieľ, bazálna dávka B30 sa ukončí.";
 
 /* */
 "Minimum Start Bolus size" = "Minimálna veľkosť bolusu pre spustenie";

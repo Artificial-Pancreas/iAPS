@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Відмінити Тимчасову ціль";
 
+/*  */
+"Cancel Temporary Target" = "Скасувати Тимчасову Ціль";
+
 /* Custom temp target */
 "Custom" = "Своя";
 
@@ -1187,6 +1190,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Немає активних сигналів Глюкози";
 
 /* */
+"Ascending Glucose Alarm active" = "Сигналізація підвищення рівня Глюкози активна";
+
+/* */
+"Descending Glucose Alarm active" = "Сигналізація зниження рівня Глюкози активна";
+
+/* */
 "snoozing until %@" = "відкладено до %@";
 
 /* */
@@ -1275,6 +1284,9 @@ Enact a temp Basal or a temp target */
 
 /* Option for no sound */
 "Silent" = "Без звуку";
+
+/* Option for default notification sound */
+"Default" = "Стандартний";
 
 /* The iOS default sound */
 "iOS default sound" = "Звук за замовчуванням для iOS";
@@ -1753,7 +1765,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Можлива глюкоза";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Мінімальна прогнозована Глюкоза";
 
 /* */
 "Please wait" = "Будь ласка, зачекайте";
@@ -2171,7 +2183,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Поділитися та створити Резервну копію";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Звантажити налаштування та статистику";
+"Upload Settings and Statistics" = "Звантажити Налаштування та Статистику";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Поділитись та зробити Резервну копію всіх ваших Налаштувань та Статистики";

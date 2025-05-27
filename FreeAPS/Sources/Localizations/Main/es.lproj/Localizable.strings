@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Cancelar objetivo temporal";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Personalizado";
 
@@ -1188,6 +1191,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "No Glucose Alarm active" = "No hay alarma de glucosa activa";
 
 /* */
+"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+
+/* */
+"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+
+/* */
 "snoozing until %@" = "posponer hasta %@";
 
 /* */
@@ -1276,6 +1285,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* Option for no sound */
 "Silent" = "Silent";
+
+/* Option for default notification sound */
+"Default" = "Default";
 
 /* The iOS default sound */
 "iOS default sound" = "iOS default sound";
@@ -2182,7 +2194,7 @@ Ajustes predeterminados:\n
 "Share and Backup" = "Share and Backup";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";

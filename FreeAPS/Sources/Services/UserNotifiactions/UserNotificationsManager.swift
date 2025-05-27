@@ -109,7 +109,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else {
-                self.playSoundIfNeeded(sound: sound)
+                if sound == "Default" {
+                    if self.settingsManager.settings.useAlarmSound {
+                        content.sound = .default
+                    }
+                } else if sound != "Silent" {
+                    self.playSoundIfNeeded(sound: sound)
+                }
             }
 
             titles.append(String(format: NSLocalizedString("Carbs required: %d g", comment: "Carbs required"), carbs))
@@ -176,7 +182,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = body
-            self.playSoundWithoutSnooze(sound)
+            if sound == "Default" {
+                if self.settingsManager.settings.useAlarmSound {
+                    content.sound = .default
+                }
+            } else if sound != "Silent" {
+                self.playSoundIfNeeded(sound: sound)
+            }
 
             self.addRequest(
                 identifier: .bolusFailedNotification,
@@ -200,7 +212,6 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         ensureCanSendNotification {
             var titles: [String] = []
-            var notificationAlarm = false
             var sound: String = "New/Anticipalte.caf"
             var alert = true
 
@@ -211,22 +222,18 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
                 sound = self.settingsManager.settings.hypoSound
-                notificationAlarm = true
                 alert = self.settingsManager.settings.lowAlert
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
                 sound = self.settingsManager.settings.hyperSound
-                notificationAlarm = true
                 alert = self.settingsManager.settings.highAlert
             case .ascending:
                 titles.append(NSLocalizedString("RAPIDLY ASCENDING GLUCOSE!", comment: "RAPIDLY ASCENDING GLUCOSE!"))
                 sound = self.settingsManager.settings.ascending
-                notificationAlarm = true
                 alert = self.settingsManager.settings.ascendingAlert
             case .descending:
                 titles.append(NSLocalizedString("RAPIDLY DESCENDING GLUCOSE!", comment: "RAPIDLY DESCENDING GLUCOSE!"))
                 sound = self.settingsManager.settings.descending
-                notificationAlarm = true
                 alert = self.settingsManager.settings.descendingAlert
             }
 
@@ -236,16 +243,19 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
-                notificationAlarm = false
             } else if alert {
                 titles.append(body)
                 let content = UNMutableNotificationContent()
                 content.title = titles.joined(separator: " ")
                 content.body = body
 
-                if notificationAlarm {
-                    self.playSoundIfNeeded(sound: sound)
+                if sound != "Silent", self.settingsManager.settings.useAlarmSound {
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
+                    if sound == "Default" {
+                        content.sound = .default
+                    } else {
+                        self.playSoundIfNeeded(sound: sound)
+                    }
                 }
 
                 self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)

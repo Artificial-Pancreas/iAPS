@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Anuluj tymczasowy cel";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Dostosuj";
 
@@ -1189,6 +1192,12 @@ Połączono z Nightscout!";
 "No Glucose Alarm active" = "No Glucose Alarm active";
 
 /* */
+"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+
+/* */
+"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+
+/* */
 "snoozing until %@" = "snoozing until %@";
 
 /* */
@@ -1277,6 +1286,9 @@ Połączono z Nightscout!";
 
 /* Option for no sound */
 "Silent" = "Silent";
+
+/* Option for default notification sound */
+"Default" = "Default";
 
 /* The iOS default sound */
 "iOS default sound" = "iOS default sound";
@@ -2173,7 +2185,7 @@ Połączono z Nightscout!";
 "Share and Backup" = "Share and Backup";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";

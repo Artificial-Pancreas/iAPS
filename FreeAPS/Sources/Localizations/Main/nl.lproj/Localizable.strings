@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Annuleer tijdelijk doel";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Aangepast";
 
@@ -462,7 +465,7 @@ Enact a temp Basal or a temp target */
 "Add Omnipod" = "Omnipod Eros toevoegen";
 
 /* Add Dana-i/RS pump */
-"Add Dana-i/RS" = "Add Dana-i/RS";
+"Add Dana-i/RS" = "Voeg Dana-i/RS toe";
 
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
@@ -1188,6 +1191,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "No Glucose Alarm active" = "Geen glucose alarm actief";
 
 /* */
+"Ascending Glucose Alarm active" = "Stijgende glucose-alarm actief";
+
+/* */
+"Descending Glucose Alarm active" = "Dalende glucose-alarm actief";
+
+/* */
 "snoozing until %@" = "sluimeren tot %@";
 
 /* */
@@ -1276,6 +1285,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* Option for no sound */
 "Silent" = "Stille modus";
+
+/* Option for default notification sound */
+"Default" = "Standaard";
 
 /* The iOS default sound */
 "iOS default sound" = "Standaard iOS geluid";
@@ -1754,7 +1766,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Eventual Glucose" = "Voorspelde glucose";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Minimale voorspelde glucose is";
 
 /* */
 "Please wait" = "Even geduld";
@@ -2172,7 +2184,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Share and Backup" = "Delen en back-up";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload instellingen en statistieken";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Deel en back-up al uw instellingen en statistieken";
@@ -3044,7 +3056,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display carb equivalents" = "Toon koolhydraathoeveelheden";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten";
+"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten in gram";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Resterende sensortijd weergeven";

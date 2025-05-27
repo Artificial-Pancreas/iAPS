@@ -28,6 +28,15 @@ public enum IAPSconfig {
     static let newVersion = "iAPS.newVersion"
     static let inBolusView = "iAPS.inBolusView"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
+    /// Colors
+    static let headerBackgroundLight: Color = .gray.opacity(IAPSconfig.backgroundOpacity)
+    static let headerBackgroundDark = Color.header2.opacity(1)
+    static let chartBackgroundLight = Color.white
+    static let chartBackgroundDark = Color.black
+    static let previewBackgroundLight = Color.white
+    static let previewBackgroundDark = Color.black
+    static let homeViewBackgroundLight: Color = .gray.opacity(IAPSconfig.backgroundOpacity * 2)
+    static let homeViewBackgrundDark: Color = .white.opacity(IAPSconfig.backgroundOpacity * 2)
 }
 
 extension Font {
