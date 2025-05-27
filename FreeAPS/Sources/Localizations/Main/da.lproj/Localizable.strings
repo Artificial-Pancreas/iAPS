@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Annuller Midlertidigt Mål";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Brugerdefineret";
 
@@ -2180,7 +2183,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Share and Backup";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";

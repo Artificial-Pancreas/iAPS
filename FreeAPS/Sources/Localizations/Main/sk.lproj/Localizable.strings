@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
 
+/*  */
+"Cancel Temporary Target" = "Zrušiť dočasný cieľ";
+
 /* Custom temp target */
 "Custom" = "Vlastné";
 
@@ -1188,10 +1191,10 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "No Glucose Alarm active" = "Nie je aktívny žiaden alarm o glykémii";
 
 /* */
-"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+"Ascending Glucose Alarm active" = "Alarm stúpajúcej glykémie je aktívny";
 
 /* */
-"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+"Descending Glucose Alarm active" = "Alarm klesajúcej glykémie je aktívny";
 
 /* */
 "snoozing until %@" = "stíšené do %@";
@@ -1284,7 +1287,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Silent" = "Tichý";
 
 /* Option for default notification sound */
-"Default" = "Default";
+"Default" = "Predvolené";
 
 /* The iOS default sound */
 "iOS default sound" = "Predvolený zvuk pre iOS";
@@ -1529,7 +1532,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " -  Manual Basal ⚠️" = " -  Manuálny bazál ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/deň";
+"U/day" = "J/deň";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Spolu";
@@ -2181,7 +2184,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Share and Backup" = "Zdieľanie a zálohovanie";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Odoslať nastavenia a štatistiky";
+"Upload Settings and Statistics" = "Odosielanie nastavení a štatistík";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Zdieľať a zálohať nastavenia a štatistiky";

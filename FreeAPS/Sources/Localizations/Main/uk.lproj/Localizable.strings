@@ -190,6 +190,9 @@
 /*  */
 "Cancel Temp Target" = "Відмінити Тимчасову ціль";
 
+/*  */
+"Cancel Temporary Target" = "Скасувати Тимчасову Ціль";
+
 /* Custom temp target */
 "Custom" = "Своя";
 
@@ -2180,7 +2183,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Поділитися та створити Резервну копію";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Звантажити налаштування та статистику";
+"Upload Settings and Statistics" = "Звантажити Налаштування та Статистику";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Поділитись та зробити Резервну копію всіх ваших Налаштувань та Статистики";

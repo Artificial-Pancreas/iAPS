@@ -247,7 +247,7 @@
 "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Čas na vašej pumpe sa líši od aktuálneho času. Čas vašej pumpy riadi nastavenia plánovanej terapie. Prejdite na riadok Čas na pumpe, aby ste skontrolovali časový rozdiel a nakonfigurovali svoju pumpu.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Áno, synchronizácia s aktuálnym časom";
+"Yes, Sync to Current Time" = "Áno, zosynchronizovať s aktuálnym časom";
 
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "Nie, nechajte čerpadlo tak, ako je";
@@ -283,7 +283,7 @@
 "24h display" = "Formát hodín";
 
 /* Description for 24h display */
-"Should time be display in 12h or 24h" = "Či sa má čas zobrazovať v 12h alebo 24h";
+"Should time be display in 12h or 24h" = "12 hodinový alebo 24 hodinový režim zobrazovania času";
 
 /* text on */
 "On" = "Na stránke";
@@ -397,7 +397,7 @@
 "An unknown error has occurred during processing the alert from the pump. Please report this" = "Počas spracovania upozornenia z čerpadla došlo k neznámej chybe. Nahláste to, prosím";
 
 /* The title of the pump information section in DanaKit settings */
-"Pump information" = "Informácie o čerpadle";
+"Pump information" = "Informácie o pumpe";
 
 /* Title for silent tone action sheet */
 "Toggle silent tone?" = "Prepínač tichého tónu?";
@@ -539,7 +539,7 @@
 "Low reservoir reminder" = "Pripomienka nízkej nádrže";
 
 /* refillAmount */
-"Refill amount" = "Množstvo náplne";
+"Refill amount" = "Zostatok inzulínu";
 
 /* Insulin unit */
 "U" = "U";
