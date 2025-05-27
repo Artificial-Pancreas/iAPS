@@ -131,8 +131,8 @@ struct ColouredRoundedBackground: View {
     var body: some View {
         Rectangle()
             .fill(
-                colorScheme == .dark ? .black :
-                    Color.white
+                colorScheme == .dark ? IAPSconfig.previewBackgroundDark :
+                    IAPSconfig.previewBackgroundLight
             )
     }
 }
@@ -142,8 +142,8 @@ struct ColouredBackground: View {
     var body: some View {
         Rectangle()
             .fill(
-                colorScheme == .dark ? .black :
-                    Color.white
+                colorScheme == .dark ? IAPSconfig.chartBackgroundDark :
+                    IAPSconfig.chartBackgroundLight
             )
     }
 }
@@ -204,7 +204,7 @@ struct HeaderBackground: View {
     var body: some View {
         Rectangle()
             .fill(
-                colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity) : Color.header2.opacity(1)
+                colorScheme == .light ? IAPSconfig.headerBackgroundLight : IAPSconfig.headerBackgroundDark
             )
     }
 }
