@@ -278,11 +278,10 @@ extension BluetoothManager {
         if let error = error {
             log.error("Failed to disconnect: \(error.localizedDescription)")
             logDeviceCommunication("Dana - FAILED TO DISCONNECT: \(error.localizedDescription)", type: .connection)
-            return
+        } else {
+            logDeviceCommunication("Dana - Disconnected", type: .connection)
+            log.info("Device disconnected, name: \(peripheral.name ?? "<NO_NAME>")")
         }
-
-        logDeviceCommunication("Dana - Disconnected", type: .connection)
-        log.info("Device disconnected, name: \(peripheral.name ?? "<NO_NAME>")")
 
         pumpManagerDelegate?.state.isConnected = false
         pumpManagerDelegate?.notifyStateDidChange()

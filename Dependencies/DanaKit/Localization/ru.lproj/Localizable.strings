@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Настройка DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "При сопряжении помпа DanaRS v3 запросит подтверждение, а iPhone покажет два кода. На помпе нажмите OK и введите эти коды на iPhone. После этого %1$@ будет готов к взаимодействию с DanaRS v3";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Во время процесса сопряжения на экране DanaRS v3 появится запрос на сопряжение, а на экране iPhone - запрос на два кода сопряжения. На своем насосе выберите OK и введите два кода на iPhone. После этого Loop будет готов к обмену данными с DanaRS v3.";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Настройка Dana-i";
@@ -53,7 +53,7 @@
 "ERROR: Failed to pair device" = "ОШИБКА: Не удалось выполнить сопряжение устройства";
 
 /* Dana-i oke invalid ble5 keys */
-"OK" = "ОК";
+"OK" = "OK";
 
 /* Cancel button title */
 "Cancel" = "Отмена";
@@ -71,7 +71,7 @@
 "Select the type of insulin that you will be using in this pump" = "Выберите тип инсулина, который вы будете использовать в этой помпе";
 
 /* Title for Dana-i/RS PumpManager deletion action sheet. */
-"Remove Pump" = "Снимите Под";
+"Remove Pump" = "Снимите насос";
 
 /* Message for Dana-i/RS PumpManager deletion action sheet */
 "Are you sure you want to stop using Dana-i/RS?" = "Вы уверены, что хотите прекратить использование Dana-i/RS?";
@@ -80,7 +80,7 @@
 "Delete pump" = "Удалить помпу";
 
 /* Label for PumpManager deletion button */
-"Delete Pump" = "Удалить помпу";
+"Delete Pump" = "Удалить насос";
 
 /* Connection error message */
 "Error while connecting to device" = "Ошибка при подключении к устройству";
@@ -176,7 +176,7 @@
 "Please consider changing your dosing strategy in the setting menu" = "Пожалуйста, измените стратегию дозирования в меню настроек";
 
 /* Dana settings resume delivery */
-"Resume delivery" = "Возобновить подачу";
+"Resume delivery" = "Доставка резюме";
 
 /* Dana settings suspend delivery */
 "Suspend delivery" = "Приостановить подачу";
@@ -191,22 +191,22 @@
 "Select insulin Type" = "Выберите тип инсулина";
 
 /* Title of insulin delivery section */
-"Scheduled Basal" = "Запланированный Базал";
+"Scheduled Basal" = "Плановая базальная";
 
 /* Title of insulin delivery section */
-"Insulin Delivery" = "Подача инсулина";
+"Insulin Delivery" = "Доставка инсулина";
 
 /* Text shown in insulin delivery space when insulin suspended */
-"Insulin\nSuspended" = "Подача\nПриостановлена";
+"Insulin\nSuspended" = "Инсулин\nприостановлен";
 
 /* Text shown in basal rate space when delivery status is unknown */
-"Unknown" = "Неизвестно";
+"Unknown" = "Неизвестный";
 
 /* Units for showing temp basal rate */
-"U/hr" = "Ед/ч";
+"U/hr" = "у/час";
 
 /* Header for insulin remaining on pod settings screen */
-"Insulin Remaining" = "Осталось инсулина";
+"Insulin Remaining" = "Остаток инсулина";
 
 /* Text for Dana pump name */
 "Pump name" = "Название помпы";
@@ -241,31 +241,31 @@
 "Time Change Detected" = "Обнаружено изменение времени";
 
 /* Message for pod sync time action sheet */
-"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Время на помпе отличается от текущего времени. Обновить время на помпе до текущего времени?";
+"The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Время на вашем насосе отличается от текущего времени. Вы хотите обновить время на вашем насосе до текущего времени?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Время на помпе отличается от текущего времени. Время вашей помпы контролирует ваши запланированные настройки терапии. Прокрутите вниз до строки времени помпы, чтобы просмотреть разницу во времени и настроить помпу.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "Время на вашей помпе отличается от текущего времени. Время на помпе контролирует настройки запланированной терапии. Прокрутите вниз до строки \"Время на помпе\", чтобы просмотреть разницу во времени и настроить свою помпу.";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Да, синхронизировать с текущим временем";
+"Yes, Sync to Current Time" = "Да, синхронизация с текущим временем";
 
 /* Button text to cancel pump time sync */
-"No, Keep Pump As Is" = "Нет, оставить как есть";
+"No, Keep Pump As Is" = "Нет, храните насос как есть";
 
 /* Pump Event title for UnfinalizedDose with doseType of .bolus */
 "Bolus" = "Болюс";
 
 /* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
-"Temp Basal" = "Врем. базал";
+"Temp Basal" = "Базальная температура";
 
 /* Pump Event title for UnfinalizedDose with doseType of .basal */
 "Basal" = "Базал";
 
 /* Pump Event title for UnfinalizedDose with doseType of .resume */
-"Resume" = "Возобновление";
+"Resume" = "Резюме";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Остановка";
+"Suspend" = "Приостановить";
 
 /* Title for user options */
 "User options" = "Настройки пользователя";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Показывать время в 12ч или 24ч формате";
 
 /* text on */
-"On" = "Включено";
+"On" = "На сайте";
 
 /* text off */
-"Off" = "Выключено";
+"Off" = "С сайта";
 
 /* 12h */
 "12h notation" = "12ч формат";
@@ -361,7 +361,7 @@
 "Remaining insulin level" = "Количество оставшегося инсулина";
 
 /* Alert title for emptyReservoir */
-"Empty reservoir" = "Резервуар пуст";
+"Empty reservoir" = "Пустой резервуар";
 
 /* Alert body for emptyReservoir */
 "Reservoir is empty. Replace it now!" = "Резервуар пуст. Замените его немедленно!";
@@ -414,17 +414,18 @@
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Установите базальный профиль, который должна использовать помпа. Обратите внимание, что при этом профиль, установленный в помпе, будет заменен профилем, установленным в %1$@";
 
+
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
-"No Insulin" = "Нет инсулина";
+"No Insulin" = "Без инсулина";
 
 /* Status highlight that insulin delivery was suspended. */
-"Insulin Suspended" = "Подача приостановлена";
+"Insulin Suspended" = "Инсулин приостановлен";
 
 /* Error message for reservoir view during general pod fault
    Status highlight when communications with the pod haven't happened recently. */
-"Signal Loss" = "Сигнал потерян";
+"Signal Loss" = "Потеря сигнала";
 
 /* Text for Day unit */
 "day(s)" = "день(и)";
@@ -451,7 +452,7 @@
 "Reconnect tp pump" = "Переподключиться к помпе";
 
 /* DanaKit disconnected */
-"Disconnected" = "Разъединено";
+"Disconnected" = "Отключено";
 
 /* DanaKit connected */
 "Connected" = "Подключено";
@@ -529,7 +530,7 @@
 "Basal profile" = "Базальный профиль";
 
 /* Text for Battery level */
-"Battery level" = "Уровень заряда";
+"Battery level" = "Уровень заряда батареи";
 
 /* The title of the configuration section in DanaKit settings */
 "Configuration" = "Конфигурация";
@@ -544,7 +545,7 @@
 "Refill amount" = "Остаток в резервуаре";
 
 /* Insulin unit */
-"U" = "Ед";
+"U" = "U";
 
 /* Label for first step refill */
 "Step 1: Set reservoir level" = "Шаг 1: Задайте уровень в резервуаре";
@@ -584,3 +585,6 @@
 
 /* Battery age */
 "Battery age" = "Возраст батареи";
+
+/* advertise contact DanaRS v1 */
+"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "ПРИМЕЧАНИЕ: Насос DanaRS v1 не поддерживается (пока). Если у вас есть насос DanaRS v1, доступный для тестирования, пожалуйста, свяжитесь с Бастианом Верхааром!";
