@@ -182,7 +182,7 @@
 "Suspend delivery" = "Pozastavenie dávkovania";
 
 /* Dana settings stop temp basal */
-"Stop temp basal" = "Zastaviť dočasnú bazálnu dávku";
+"Stop temp basal" = "Zastaviť dočasnú dávku bazálu";
 
 /* Text for confidence reminders navigation link */
 "Insulin Type" = "Typ Inzulínu";
@@ -233,7 +233,7 @@
 "Nightly pump time sync" = "Nočná synchronizácia času pumpy";
 
 /* Label for syncing the time on the pump */
-"Manually sync Pump time" = "Ručná synchronizácia času čerpadla";
+"Manually sync Pump time" = "Zosynchronizovať čas pumpy";
 
 /* Alert content title for timeOffsetChangeDetected pod alert
    Title for pod sync time action sheet.
@@ -319,7 +319,7 @@
 "Vibration" = "Vibrácie";
 
 /* beepAndAlarm.both */
-"Both" = "Oboje";
+"Both" = "Zvuk a vibrácie";
 
 /* Alert title for batteryZeroPercent */
 "Pump battery 0%" = "Batéria čerpadla 0%";
