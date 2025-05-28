@@ -1004,7 +1004,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Delete CGM" = "Verwijder CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Weet je zeker dat je deze CGM uit de lijst wilt verwijderen?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Ongedaan maken is niet mogelijk";
@@ -1236,7 +1236,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Backfill options" = "Terugzet opties";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Terugzetten van trend wordt momenteel niet goed ondersteund door Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Terugzetten van geschiedenis";
@@ -1905,7 +1905,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "%1$@ for %2$@" = "%1$@ voor %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS zal niet automatisch veranderingen aanbrengen in de hoeveelheid insuline die je krijgt, totdat de tijdelijke basaalstand is gestopt of geannuleerd.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Tijdelijke basaal instellen";
 
