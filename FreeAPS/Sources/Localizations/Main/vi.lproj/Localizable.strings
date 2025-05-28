@@ -2499,16 +2499,16 @@ Enact a temp Basal or a temp target */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Cho phép tăng tốc độ cơ bản sau Mục tiêu ghi đè EatingSoon (hoặc Mục tiêu tạm thời) và tiêm thủ công để bão hòa vị trí truyền bằng insulin nhằm tăng khả năng hấp thụ insulin cho SMB sau bữa ăn mà không tính lượng carbohydrate.";
 
 /* */
-"ISF weight while BG decelerates" = "Lượng ISF trong khi BG Giảm tốc";
+"ISF weight while BG decelerates" = "Trọng số ISF khi đường huyết giảm";
 
 /* */
-"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Đây là trọng lượng được áp dụng trong khi glucose giảm tốc và làm suy yếu ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Với 0,1 có thể là điểm khởi đầu tốt.";
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Đây là trọng số được áp dụng khi đường huyết đang giảm tốc và làm yếu đi hệ số độ nhạy insulin (ISF). Nếu đặt là 0 sẽ bị vô hiệu hóa. Giá trị 0.1 có thể là một điểm khởi đầu phù hợp.";
 
 /* */
-"ISF weight while BG accelerates" = "Lượng ISF trong khi BG Tăng tốc";
+"ISF weight while BG accelerates" = "Trọng số ISF khi đường huyết tăng tốc";
 
 /* */
-"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Giá trị mặc định: 0. Đây là trọng số được áp dụng khi glucose tăng tốc và làm tăng cường ISF. Với giá trị là 0, sẽ bị vô hiệu hóa. 0,02 là điểm khởi đầu an toàn để tăng lên. Các thiết lập thông thường là khoảng 0,15!";
+"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Giá trị mặc định: 0. Đây là trọng số được áp dụng khi đường huyết tăng tốc và làm tăng cường ISF. Với giá trị là 0, sẽ bị vô hiệu hóa. 0,02 là điểm khởi đầu an toàn để tăng lên. Các thiết lập thông thường là khoảng 0,15!";
 
 /* */
 "Duration ISF postprandial adaption" = "Thời gian điều chỉnh ISF sau bữa ăn";
@@ -2520,7 +2520,7 @@ Enact a temp Basal or a temp target */
 "ISF weight for postprandial BG rise" = "Trọng số ISF cho sự tăng BG sau ăn";
 
 /* */
-"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Đây là trọng số được áp dụng cho độ dốc tuyến tính trong khi glucose tăng và điều chỉnh ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Bắt đầu với 0,01 - không vượt quá 0,05!";
+"This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Đây là trọng số được áp dụng cho độ dốc tuyến tính trong khi đường huyết tăng và điều chỉnh ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Bắt đầu với 0,01 - không vượt quá 0,05!";
 
 /* */
 "ISF weight for higher BG deltas" = "Trọng số ISF cho độ lệch đường huyết cao";
@@ -2530,28 +2530,29 @@ Enact a temp Basal or a temp target */
 Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi có các mức chênh lệch đường huyết cao. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for lower BG" = "Lượng ISF cho BG thấp hơn";
+"ISF weight for lower BG" = "Trọng số ISF cho mức đường huyết thấp";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh ISF nếu glucose thấp hơn mục tiêu. Với 0.0, hiệu ứng sẽ bị vô hiệu hóa.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0
+Đây là hệ số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết thấp hơn mức mục tiêu. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for higher BG" = "Lượng ISF cho BG cao hơn";
+"ISF weight for higher BG" = "Trọng số ISF cho mức đường huyết cao";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh ISF nếu glucose cao hơn mục tiêu. Với 0,0, hiệu ứng sẽ bị vô hiệu hóa.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0 Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết cao hơn mức mục tiêu. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
-"Duration Weight" = "Duration Weight";
+"Duration Weight" = "Thời gian trọng số";
 
 /* */
 "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Tình trạng đường huyết cao kéo dài. Cứ mỗi giờ đường huyết duy trì ở mức cao, việc điều chỉnh này sẽ làm giảm ISF của bạn nhiều hơn.\n\nCông thức điều chỉnh ISF của Dura là:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
 
 /* */
-"SMB Delivery Ratio BG Range" = "Tỷ lệ phân phối SMB phạm vi BG";
+"SMB Delivery Ratio BG Range" = "Khoảng BG cho tỷ lệ phân phối SMB";
 
 /* SMB Delivery Ratio BG Range description */
-"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0. Hợp lý giữa 40mg/dl và 120mg/dl. SMB delivery ratio tăng được ánh xạ tới glucose range [target_bg, target_bg+bg_range]. Tại target_bg SMB ratio là smb_delivery_ratio_min, tại target_bg+bg_range là smb_delivery_ratio_max. Với giá trị 0 tăng SMB ratio bị vô hiệu hóa và smb_delivery_ratio được sử dụng.";
+"Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Giá trị mặc định: 0. Giá trị hợp lý nằm trong khoảng từ 40 mg/dL đến 120 mg/dL. Tỷ lệ phân phối SMB sẽ tăng tuyến tính theo mức đường huyết trong khoảng [target_bg, target_bg + bg_range]. Tại mức đường huyết target_bg, tỷ lệ SMB là smb_delivery_ratio_min; tại target_bg + bg_range, tỷ lệ SMB là smb_delivery_ratio_max. Nếu đặt là 0, cơ chế tăng tuyến tính của tỷ lệ SMB sẽ bị vô hiệu hóa và hệ thống sẽ sử dụng một tỷ lệ SMB cố định (smb_delivery_ratio).";
 
 /* */
 "SMB Delivery Ratio Maximum" = "Tỷ lệ phân phối SMB tối đa";
@@ -2566,19 +2567,19 @@ Enact a temp Basal or a temp target */
 "Default value: 0.5 This is the lower end of a linearly increasing SMB Delivery Ratio rather than the fix value in OpenAP SMB Delivery Ratio." = "Giá trị mặc định: 0,5 Đây là giá trị giới hạn thấp của SMB Delivery Ratio tăng tuyến tính chứ không phải là giá trị cố định ở trên trong SMB Delivery Ratio.";
 
 /* */
-"Toggles" = "Toggles";
+"Toggles" = "Chuyển đổi";
 
 /* */
-"Enable postprandial ISF adaption always" = "Enable postprandial ISF adaption always";
+"Enable postprandial ISF adaption always" = "Luôn bật tính năng điều chỉnh ISF sau ăn";
 
 /* */
-"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Luôn bật chế độ thích ứng ISF sau bữa ăn bất kể bữa ăn cuối cùng là khi nào.";
+"Enable the postprandial ISF adaptation all the time regardless of when the last meal was taken." = "Luôn bật tính năng điều chỉnh ISF sau ăn, bất kể thời gian bữa ăn cuối cùng được dùng là khi nào.";
 
 /* */
-"Enable DuraISF effect even with COB" = "Enable DuraISF effect even with COB";
+"Enable DuraISF effect even with COB" = "Bật hiệu ứng DuraISF ngay cả với COB";
 
 /* */
-"Enable DuraISF even if COB is present not just for UAM." = "Bật DuraISF ngay cả khi có COB, không chỉ dành cho UAM.";
+"Enable DuraISF even if COB is present not just for UAM." = "Bật DuraISF ngay cả khi còn carbohydrate chưa tiêu hóa (COB), không chỉ áp dụng cho UAM.";
 
 /* */
 "Enable BG acceleration" = "Cho phép điều chỉnh tốc độ BG";
@@ -2590,19 +2591,19 @@ Enact a temp Basal or a temp target */
 "Override Auto ISF" = "Ghi đè Auto ISF";
 
 /* */
-"Enable Auto ISF" = "Enable Auto ISF";
+"Enable Auto ISF" = "Bật Auto ISF";
 
 /* */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Bật Auto ISF. Điều này sẽ vô hiệu hóa bất kỳ cài đặt ISF/CR Dynamic nào";
 
 /* */
-"Keto Protection" = "Keto Protection";
+"Keto Protection" = "Bảo vệ chống nhiễm toan ceton";
 
 /* */
-"Max IOB Threshold Percent" = "Phần trăm ngưỡng IOB tối đa";
+"Max IOB Threshold Percent" = "Ngưỡng phần trăm IOB tối đa";
 
 /* IOB Threshold Percent Description */
-"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Tỷ lệ phần trăm cài đặt IOB tối đa được sử dụng cho SMB khi bật ISF tự động.\n\nTrong khi IOB hiện tại thấp hơn ngưỡng, lượng SMB có thể vượt ngưỡng 30%, tuy nhiên không bao giờ vượt quá cài đặt IOB tối đa.\n\nỞ mức 100%, cài đặt này sẽ bị vô hiệu hóa.";
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Phần trăm của thiết lập IOB tối đa được sử dụng cho các liều SMB khi tính năng Auto ISF được bật.\n\nKhi lượng IOB hiện tại thấp hơn ngưỡng này, liều SMB có thể vượt ngưỡng lên đến 30%, nhưng không bao giờ vượt quá mức IOB tối đa đã thiết lập.\n\nKhi đặt giá trị 100%, tính năng này sẽ bị vô hiệu hóa.";
 
 /* */
 "Auto ISF" = "Auto ISF";
@@ -2614,13 +2615,13 @@ Enact a temp Basal or a temp target */
 " off" = " off";
 
 /* Override adjustment of ISF, CR and Basal */
-"Adjust " = "Adjust ";
+"Adjust " = "Hiệu chỉnh ";
 
 /* History of the adjustments */
-"Final Ratio" = "Final Ratio";
+"Final Ratio" = "Tỷ lệ cuối";
 
 /* History of the adjustments */
-"Adjustments" = "Adjustments";
+"Adjustments" = "Điều chỉnh";
 
 /* History of the adjustments */
 "Insulin" = "Insulin";
@@ -2655,10 +2656,10 @@ Enact a temp Basal or a temp target */
 "When true, raises BG target when autosens detects sensitivity" = "Khi True, tăng mục tiêu BG khi cảm biến tự động phát hiện độ nhạy";
 
 /* Headline ”Resistance Lowers Target" */
-"Resistance Lowers Target" = "Chống mục tiêu thấp";
+"Resistance Lowers Target" = "Kháng insulin làm giảm mục tiêu";
 
 /* ”Resistance Lowers Target" */
-"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là False. Khi True, sẽ hạ mục tiêu BG khi cảm biến tự động phát hiện trở kháng";
+"Defaults to false. When true, will lower BG target when autosens detects resistance" = "Mặc định là false (không bật). Khi được bật (true), sẽ hạ mức mục tiêu đường huyết khi tính năng autosens phát hiện tình trạng kháng insulin.";
 
 /* Headline ”Advanced Target Adjustments" */
 "Advanced Target Adjustments" = "Điều chỉnh mục tiêu nâng cao";
