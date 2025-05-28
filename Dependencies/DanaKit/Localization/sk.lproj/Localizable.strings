@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Nastavenie systému DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Počas procesu párovania sa na displeji DanaRS v1 zobrazí výzva na spárovanie, zatiaľ čo na displeji iPhone sa zobrazí výzva na zadanie párovacieho kódu. Na čerpadle vyberte OK a zadajte kód na iPhone. Potom je zariadenie Loop pripravené na komunikáciu s vaším zariadením DanaRS v1";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Pred začatím procesu párovania sa odporúča skontrolovať a v prípade potreby aktualizovať heslo čerpadla. Môžete to urobiť v nastaveniach čerpadla -> nastavenia používateľa -> heslo. Predvolené heslo je 1234, ak je to vaše heslo, zvážte jeho zmenu";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Nastavenie systému DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Počas procesu párovania sa na displeji DanaRS v3 zobrazí výzva na spárovanie, zatiaľ čo na displeji iPhonu sa zobrazí výzva na zadanie dvoch párovacích kódov. Na čerpadle vyberte OK a zadajte dva kódy na iPhone. Potom je zariadenie Loop pripravené na komunikáciu s vaším zariadením DanaRS v3";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Nastavenie aplikácie Dana-i";
