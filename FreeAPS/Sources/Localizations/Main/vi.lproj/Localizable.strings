@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Xóa CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Bạn có chắc muốn xóa CGM này khỏi Loop không?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Không thể hoàn tác";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Tùy chọn bổ sung";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Việc bổ sung theo xu hướng hiện không được Loop hỗ trợ tốt";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Bổ sung từ lịch sử";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ cho %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop sẽ không tự động điều chỉnh liều insulin đến khi liều nền tạm thời thực hiện xong hoặc bị hủy bỏ.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Cài đặt liều nền tạm thời";
 
