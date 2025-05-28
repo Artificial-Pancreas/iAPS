@@ -14,6 +14,7 @@ final class BaseUnlockManager: UnlockManager {
         Future { promise in
             let context = LAContext()
             var error: NSError?
+            var defaultOn = true
 
             let handler: (Bool, Error?) -> Void = { success, error in
                 if success {
@@ -25,7 +26,12 @@ final class BaseUnlockManager: UnlockManager {
 
             let reason = "We need to make sure you are the owner of the device."
 
-            if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+            // If overridden in ConfigOverride.xcconfig or Config.xcconfig
+            if let override: Bool = try? Configuration.value(for: "AUTHENTICATE") {
+                defaultOn = override
+            }
+
+            if defaultOn, context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
                 context.evaluatePolicy(
                     .deviceOwnerAuthentication,
                     localizedReason: reason,

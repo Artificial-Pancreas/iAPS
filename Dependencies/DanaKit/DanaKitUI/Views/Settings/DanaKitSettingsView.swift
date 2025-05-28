@@ -73,8 +73,7 @@ struct DanaKitSettingsView: View {
                                 message: Text(LocalizedString("WARNING: Please don't use this until you've read the documentation", comment: "Warning message continuous mode")),
                     buttons: [
                         .default(Text(LocalizedString("What is this?", comment: "Button text to get help about Continuous mode"))) {
-                            // TODO: Switch to official docs once PR is live
-                            openURL(URL(string: "https://bastiaanv.github.io/loopdocs/troubleshooting/dana-heartbeat/")!)
+                            openURL(URL(string: "https://loopkit.github.io/loopdocs/troubleshooting/dana-faq/")!)
                         },
                         .default(Text(viewModel.isUsingContinuousMode ?
                                       LocalizedString("Yes, Switch to interactive mode", comment: "Button text to disable continuous mode") :
