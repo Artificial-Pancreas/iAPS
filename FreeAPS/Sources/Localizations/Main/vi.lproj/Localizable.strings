@@ -1718,7 +1718,7 @@ Enact a temp Basal or a temp target */
 "Search" = "Tìm kiếm";
 
 /* Placeholder for name of dish when adding a new food preset */
-"New" = "New";
+"New" = "Mới";
 
 /* */
 "Empty" = "Trống rỗng";
@@ -1762,7 +1762,7 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nNhấn 'Thêm' để tiếp tục với số lượng đã chọn.";
 
 /* */
-"Eventual Glucose" = "Đường huyết đự đoán";
+"Eventual Glucose" = "Đường huyết dự đoán";
 
 /* */
 "Minimum Predicted Glucose" = "Mức đường huyết dự đoán thấp nhất";
@@ -1795,25 +1795,25 @@ Enact a temp Basal or a temp target */
 "Hide" = "Ẩn";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Đường huyết dự đoán> Đường huyết mục tiêu, nhưng đường huyết được dự đoán trước tiên sẽ giảm xuống ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "nằm dưới Ngưỡng của bạn (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose tăng chậm hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Đường huyết dự đoán > Đường huyết mục tiêu, nhưng đường huyết tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Đang tăng lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Đường huyết dự đoán > Đường huyết mục tiêu, nhưng Đường huyết đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Đang giảm xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Đường huyết dự đoán > Đường huyết mục tiêu, nhưng đường huyết đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Đang thay đổi: ";
