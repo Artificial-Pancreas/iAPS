@@ -73,6 +73,7 @@ struct MainChartView: View {
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
+    @State private var activityDots: [CGPoint] = []
     @State private var manualGlucoseDots: [CGRect] = []
     @State private var announcementDots: [AnnouncementDot] = []
     @State private var announcementPath = Path()
@@ -326,6 +327,7 @@ struct MainChartView: View {
                     if data.smooth { unSmoothedGlucoseView(fullSize: fullSize) }
                     else { connectingGlucoseLinesView(fullSize: fullSize) }
                     glucoseView(fullSize: fullSize)
+                    activityView(fullSize: fullSize)
                     manualGlucoseView(fullSize: fullSize)
                     manualGlucoseCenterView(fullSize: fullSize)
                     announcementView(fullSize: fullSize)
@@ -399,6 +401,29 @@ struct MainChartView: View {
         }
         .fill(Color.darkGreen)
         .onChange(of: data.glucose) {
+            update(fullSize: fullSize)
+        }
+        .onChange(of: didAppearTrigger) {
+            update(fullSize: fullSize)
+        }
+        .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            update(fullSize: fullSize)
+        }
+    }
+
+    private func activityView(fullSize: CGSize) -> some View {
+        Path { path in
+            guard activityDots.count >= 2 else { return }
+            path.move(to: activityDots[0])
+            for point in activityDots.dropFirst() {
+                path.addLine(to: point)
+            }
+        }
+        .stroke(
+            colorScheme == .dark ? Color.white : Color.black,
+            style: StrokeStyle(lineWidth: 0.8)
+        )
+        .onChange(of: data.activity) {
             update(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) {
@@ -695,6 +720,7 @@ extension MainChartView {
         calculatePredictionDots(fullSize: fullSize, type: .zt)
         calculatePredictionDots(fullSize: fullSize, type: .uam)
         calculateGlucoseDots(fullSize: fullSize)
+        calculateActivityDots(fullSize: fullSize)
         calculateManualGlucoseDots(fullSize: fullSize)
         calculateManualGlucoseDotsCenter(fullSize: fullSize)
         calculateAnnouncementDots(fullSize: fullSize)
@@ -706,6 +732,17 @@ extension MainChartView {
         calculateOverridesRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
         calculateSuspensions(fullSize: fullSize)
+    }
+
+    private func calculateActivityDots(fullSize: CGSize) {
+        calculationQueue.async {
+            let dots = data.activity.concurrentMap { value -> CGPoint in
+                activityToCoordinate(value, fullSize: fullSize)
+            }
+            DispatchQueue.main.async {
+                activityDots = dots
+            }
+        }
     }
 
     private func calculateGlucoseDots(fullSize: CGSize) {
@@ -1283,6 +1320,13 @@ extension MainChartView {
         data.tempTargets.map { $0.targetBottom ?? 0 }.filter { $0 > 0 }.min().map(Int.init)
     }
 
+    private func activityToCoordinate(_ activityEntry: InsulinActivity, fullSize: CGSize) -> CGPoint {
+        let x = timeToXCoordinate(activityEntry.date!.timeIntervalSince1970, fullSize: fullSize)
+        let y = activityToYCoordinate((activityEntry.activity ?? 0) as Decimal, fullSize: fullSize)
+
+        return CGPoint(x: x, y: y)
+    }
+
     private func glucoseToCoordinate(_ glucoseEntry: BloodGlucose, fullSize: CGSize) -> CGPoint {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
         let y = glucoseToYCoordinate(glucoseEntry.glucose ?? 0, fullSize: fullSize)
@@ -1324,6 +1368,16 @@ extension MainChartView {
         let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomYPadding
+        return y
+    }
+
+    private func activityToYCoordinate(_ activityValue: Decimal, fullSize: CGSize) -> CGFloat {
+        let topYPaddint = Config.topYPadding + Config.basalHeight
+        let bottomYPadding = Config.bottomYPadding
+        let (minValue, maxValue) = (-0.005, 0.02)
+        let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
+        let yOffset = CGFloat(minValue) * stepYFraction
+        let y = fullSize.height - CGFloat(activityValue) * stepYFraction + yOffset - bottomYPadding
         return y
     }
 

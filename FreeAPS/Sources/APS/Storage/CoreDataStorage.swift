@@ -20,6 +20,49 @@ final class CoreDataStorage {
         return fetchGlucose
     }
 
+    func fetchInsulinData(interval: NSDate) -> [InsulinActivity] {
+        var fetchTicks = [InsulinActivity]()
+        coredataContext.performAndWait {
+            let requestTicks = InsulinActivity.fetchRequest()
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestTicks.sortDescriptors = [sort]
+            requestTicks.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? fetchTicks = self.coredataContext.fetch(requestTicks)
+        }
+        return fetchTicks
+    }
+
+    func saveInsulinData(iobEntries: [IOBTick0]) {
+        coredataContext.perform {
+            guard let firstDate = iobEntries.map(\.time).min() else { return }
+
+            let deleteRequest = InsulinActivity.fetchRequest()
+            deleteRequest.predicate = NSPredicate(
+                format: "date >= %@ OR date < %@",
+                firstDate as NSDate,
+                firstDate.addingTimeInterval(-86400) as NSDate
+            )
+
+            do {
+                let recordsToDelete = try self.coredataContext.fetch(deleteRequest)
+                for record in recordsToDelete {
+                    self.coredataContext.delete(record)
+                }
+            } catch { return }
+
+            for iobEntry in iobEntries {
+                let record = InsulinActivity(context: self.coredataContext)
+                record.date = iobEntry.time
+                record.iob = NSDecimalNumber(decimal: iobEntry.iob)
+                record.activity = NSDecimalNumber(decimal: iobEntry.activity)
+            }
+
+            try? self.coredataContext.save()
+        }
+    }
+
     func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
         var fetchLoopStats = [LoopStatRecord]()
         coredataContext.performAndWait {

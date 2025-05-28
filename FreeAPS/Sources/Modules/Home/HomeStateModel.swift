@@ -86,6 +86,7 @@ extension Home {
         var data = ChartModel(
             suggestion: nil,
             glucose: [],
+            activity: [],
             isManual: [],
             tempBasals: [],
             boluses: [],
@@ -119,6 +120,8 @@ extension Home {
             setupGlucose()
             setupBasals()
             setupBoluses()
+            print("setting up activity...")
+            setupActivity()
             setupSuspensions()
             setupPumpSettings()
             setupBasalProfile()
@@ -429,6 +432,14 @@ extension Home {
             }
         }
 
+        private func setupActivity() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.data.activity = CoreDataStorage().fetchInsulinData(interval: DateFilter().day)
+                print("fetched insulinActivity: \(self.data.activity)")
+            }
+        }
+
         private func setupPumpSettings() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -632,6 +643,7 @@ extension Home.StateModel:
         setupOverrideHistory()
         setupLoopStats()
         setupData()
+        setupActivity()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {

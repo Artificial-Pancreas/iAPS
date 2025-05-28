@@ -70,6 +70,12 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens
                 )
                 self.storage.save(iob, as: Monitor.iob)
+
+                if let iobEntries = IOBTick0.parseArrayFromJSON(from: iob) {
+                    let cd = CoreDataStorage()
+                    cd.saveInsulinData(iobEntries: iobEntries)
+                }
+
                 print("Time for IOB module \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)")
 
                 // determine-basal
