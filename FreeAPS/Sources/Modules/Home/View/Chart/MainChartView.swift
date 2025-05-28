@@ -74,6 +74,7 @@ struct MainChartView: View {
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var activityDots: [CGPoint] = []
+    @State private var activityZeroPoint: CGPoint? = nil
     @State private var manualGlucoseDots: [CGRect] = []
     @State private var announcementDots: [AnnouncementDot] = []
     @State private var announcementPath = Path()
@@ -414,14 +415,30 @@ struct MainChartView: View {
     private func activityView(fullSize: CGSize) -> some View {
         Path { path in
             guard activityDots.count >= 2 else { return }
+            guard let zeroPoint = self.activityZeroPoint else { return }
+
+            let firstPoint = activityDots[0]
+            let lastPoint = activityDots.last!
+
+            let zeroY = zeroPoint.y
+
+            path.move(to: CGPoint(x: firstPoint.x, y: zeroY)) // move to y="zero" first
+            path.addLine(to: firstPoint)
+
             path.move(to: activityDots[0])
             for point in activityDots.dropFirst() {
                 path.addLine(to: point)
             }
+
+            path.addLine(to: CGPoint(x: lastPoint.x, y: zeroY)) // move back to y="zero" again
+            path.closeSubpath()
         }
         .stroke(
             colorScheme == .dark ? Color.white : Color.black,
             style: StrokeStyle(lineWidth: 0.8)
+        )
+        .fill(
+            colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1),
         )
         .onChange(of: data.activity) {
             update(fullSize: fullSize)
@@ -737,10 +754,15 @@ extension MainChartView {
     private func calculateActivityDots(fullSize: CGSize) {
         calculationQueue.async {
             let dots = data.activity.concurrentMap { value -> CGPoint in
-                activityToCoordinate(value, fullSize: fullSize)
+                activityToCoordinate(date: value.date!, activity: (value.activity ?? 0) as Decimal, fullSize: fullSize)
+            }
+            var zeroPoint: CGPoint?
+            if let firstActivity = data.activity.first {
+                zeroPoint = activityToCoordinate(date: firstActivity.date!, activity: 0, fullSize: fullSize)
             }
             DispatchQueue.main.async {
                 activityDots = dots
+                activityZeroPoint = zeroPoint
             }
         }
     }
@@ -1320,9 +1342,9 @@ extension MainChartView {
         data.tempTargets.map { $0.targetBottom ?? 0 }.filter { $0 > 0 }.min().map(Int.init)
     }
 
-    private func activityToCoordinate(_ activityEntry: InsulinActivity, fullSize: CGSize) -> CGPoint {
-        let x = timeToXCoordinate(activityEntry.date!.timeIntervalSince1970, fullSize: fullSize)
-        let y = activityToYCoordinate((activityEntry.activity ?? 0) as Decimal, fullSize: fullSize)
+    private func activityToCoordinate(date: Date, activity: Decimal, fullSize: CGSize) -> CGPoint {
+        let x = timeToXCoordinate(date.timeIntervalSince1970, fullSize: fullSize)
+        let y = activityToYCoordinate(activity, fullSize: fullSize)
 
         return CGPoint(x: x, y: y)
     }
