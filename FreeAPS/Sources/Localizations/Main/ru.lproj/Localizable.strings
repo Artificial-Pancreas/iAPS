@@ -191,7 +191,7 @@
 "Cancel Temp Target" = "Отменить временную цель";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Отменить временную цель";
 
 /* Custom temp target */
 "Custom" = "Своя";
@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Удалить CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Вы уверены, что хотите удалить этот CGM?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Это нельзя отменить!";
@@ -1190,10 +1190,10 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Тревога неактивна";
 
 /* */
-"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+"Ascending Glucose Alarm active" = "Сигнал высокого сахара активен";
 
 /* */
-"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+"Descending Glucose Alarm active" = "Сигнал низкого сахара активен";
 
 /* */
 "snoozing until %@" = "отложена до %@";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Опции заполнения";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Заполнение из тренда в настоящее время не поддерживается в Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Заполнять из истории";
@@ -1286,7 +1286,7 @@ Enact a temp Basal or a temp target */
 "Silent" = "Без звука";
 
 /* Option for default notification sound */
-"Default" = "Default";
+"Default" = "По умолчанию";
 
 /* The iOS default sound */
 "iOS default sound" = "Звук iOS по умолчанию";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ на %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Петля не будет автоматически изменять подачу инсулина, пока Временная Базальная Скорость не завершится, либо не будет отменена пользователем.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Установить Временный Базал";
 
@@ -2183,7 +2183,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Общий доступ и резервирование";
 
 /* Section 1 title */
-"Upload Settings and Statistics" = "Upload Settings and Statistics";
+"Upload Settings and Statistics" = "Выгружать настройки и статистику";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Делиться и резервно копировать все настройки и статистику";
