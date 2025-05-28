@@ -108,6 +108,8 @@ extension Home {
             thresholdLines: true,
             overrideHistory: [],
             minimumSMB: 0,
+            insulinDIA: 7,
+            insulinPeak: 75,
             maxBolus: 0,
             maxBolusValue: 1,
             useInsulinBars: true,
@@ -162,6 +164,10 @@ extension Home {
             alwaysUseColors = settingsManager.settings.alwaysUseColors
             useCalc = settingsManager.settings.useCalc
             data.minimumSMB = settingsManager.settings.minimumSMB
+            data.insulinDIA = settingsManager.pumpSettings.insulinActionCurve
+            data.insulinPeak = settingsManager.preferences.useCustomPeakTime ? settingsManager.preferences.insulinPeakTime :
+                (settingsManager.preferences.curve == .ultraRapid ? 55 : 75)
+
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus

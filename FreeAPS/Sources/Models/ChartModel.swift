@@ -25,6 +25,8 @@ class ChartModel: ObservableObject {
     @Published var thresholdLines: Bool
     @Published var overrideHistory: [OverrideHistory]
     @Published var minimumSMB: Decimal
+    @Published var insulinDIA: Decimal
+    @Published var insulinPeak: Decimal
     @Published var maxBolus: Decimal
     @Published var maxBolusValue: Decimal
     @Published var useInsulinBars: Bool
@@ -57,6 +59,8 @@ class ChartModel: ObservableObject {
         thresholdLines: Bool,
         overrideHistory: [OverrideHistory],
         minimumSMB: Decimal,
+        insulinDIA: Decimal,
+        insulinPeak: Decimal,
         maxBolus: Decimal,
         maxBolusValue: Decimal,
         useInsulinBars: Bool,
@@ -88,6 +92,8 @@ class ChartModel: ObservableObject {
         self.thresholdLines = thresholdLines
         self.overrideHistory = overrideHistory
         self.minimumSMB = minimumSMB
+        self.insulinDIA = insulinDIA
+        self.insulinPeak = insulinPeak
         self.maxBolus = maxBolus
         self.maxBolusValue = maxBolusValue
         self.useInsulinBars = useInsulinBars

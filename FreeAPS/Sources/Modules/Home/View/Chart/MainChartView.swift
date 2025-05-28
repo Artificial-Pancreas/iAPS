@@ -36,7 +36,9 @@ struct MainChartView: View {
         static let endID = "End"
         static let basalHeight: CGFloat = 60
         static let topYPadding: CGFloat = 75
-        static let bottomYPadding: CGFloat = 20
+        static let bottomYPadding: CGFloat = 120
+        static let topYPaddingActivity: CGFloat = 10 // gap between main chart and activity chart
+        static let bottomYPaddingActivity: CGFloat = 30
         static let minAdditionalWidth: CGFloat = 150
         static let maxGlucose = 270
         static let minGlucose = 0 // 45
@@ -270,6 +272,14 @@ struct MainChartView: View {
                         path.addLine(to: CGPoint(x: fullSize.width, y: yrange.minY + bottomstep))
                     }.stroke(Color.loopRed, lineWidth: 0.5)
                 }
+            }
+            ForEach([Decimal(1.0), data.maxBolus], id: \.self) { bolus in
+                let activity = maxInsulinActivity(forBolus: Double(bolus))
+                let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: yCoord))
+                    path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                }.stroke(Color.brown, lineWidth: 0.5)
             }
         }
     }
@@ -1460,13 +1470,44 @@ extension MainChartView {
     }
 
     private func activityToYCoordinate(_ activityValue: Decimal, fullSize: CGSize) -> CGFloat {
-        let topYPaddint = Config.topYPadding + Config.basalHeight
-        let bottomYPadding = Config.bottomYPadding
-        let (minValue, maxValue) = (-0.005, 0.02)
-        let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
+        let topYPadding = fullSize.height - Config.bottomYPadding + Config.topYPaddingActivity
+        let bottomYPadding = Config.bottomYPaddingActivity
+        let minValue = -maxInsulinActivity(forBolus: 1)
+        let maxValue = maxInsulinActivity(forBolus: Double(data.maxBolus) * 1.5)
+        let stepYFraction = (fullSize.height - topYPadding - bottomYPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = fullSize.height - CGFloat(activityValue) * stepYFraction + yOffset - bottomYPadding
         return y
+    }
+
+    // function to calculate the maximum insulin activity for a given bolus size
+    // used to scale the activity chart
+    private func maxInsulinActivity(forBolus: Double) -> Double {
+        let peak = Double(data.insulinPeak)
+        let dia = Double(data.insulinDIA)
+        let end = dia * 60.0
+
+        // Calculate tau
+        let peakOverEnd = peak / end
+        let tauNumerator = peak * (1.0 - peakOverEnd)
+        let tauDenominator = 1.0 - 2.0 * peakOverEnd
+        guard tauDenominator != 0 else {
+            return 0.1
+        }
+        let tau = tauNumerator / tauDenominator
+
+        // Calculate a
+        let a = 2.0 * tau / end
+
+        // Calculate S
+        let expNegEndOverTau = exp(-end / tau)
+        let S = 1.0 / (1.0 - a + (1.0 + a) * expNegEndOverTau)
+
+        // Calculate activity at peak time
+        let t = peak
+        let activity = forBolus * (S / pow(tau, 2)) * t * (1.0 - t / end) * exp(-t / tau)
+
+        return activity
     }
 
     private func timeToInterpolatedPoint(_ time: TimeInterval, fullSize: CGSize) -> CGPoint {
