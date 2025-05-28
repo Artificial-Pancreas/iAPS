@@ -1718,7 +1718,7 @@ Enact a temp Basal or a temp target */
 "Search" = "Tìm kiếm";
 
 /* Placeholder for name of dish when adding a new food preset */
-"New" = "New";
+"New" = "Mới";
 
 /* */
 "Empty" = "Trống rỗng";
@@ -1762,7 +1762,7 @@ Enact a temp Basal or a temp target */
 "\n\nTap 'Add' to continue with selected amount." = "\n\nNhấn 'Thêm' để tiếp tục với số lượng đã chọn.";
 
 /* */
-"Eventual Glucose" = "Đường huyết đự đoán";
+"Eventual Glucose" = "Đường huyết dự đoán";
 
 /* */
 "Minimum Predicted Glucose" = "Mức đường huyết dự đoán thấp nhất";
@@ -1795,25 +1795,25 @@ Enact a temp Basal or a temp target */
 "Hide" = "Ẩn";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose được dự đoán trước tiên sẽ giảm xuống ";
+"Eventual Glucose > Target Glucose, but glucose is predicted to drop down to " = "Đường huyết dự đoán> Đường huyết mục tiêu, nhưng đường huyết được dự đoán trước tiên sẽ giảm xuống ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 "which is below your Threshold (" = "nằm dưới Ngưỡng của bạn (";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose tăng chậm hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is climbing slower than expected. Expected: " = "Đường huyết dự đoán > Đường huyết mục tiêu, nhưng đường huyết tăng chậm hơn dự kiến. Hy vọng: ";
 
 //* Bolus pop-up / Alert string. Make translations concise! */
 ". Climbing: " = ". Đang tăng lên: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang giảm nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is falling faster than expected. Expected: " = "Đường huyết dự đoán > Đường huyết mục tiêu, nhưng Đường huyết đang giảm nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Falling: " = ". Đang giảm xuống: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
-"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Glucose hiện tại > Glucose mục tiêu, nhưng glucose đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
+"Eventual Glucose > Target Glucose, but glucose is changing faster than expected. Expected: " = "Đường huyết dự đoán > Đường huyết mục tiêu, nhưng đường huyết đang thay đổi nhanh hơn dự kiến. Hy vọng: ";
 
 /* Bolus pop-up / Alert string. Make translations concise! */
 ". Changing: " = ". Đang thay đổi: ";
@@ -2132,7 +2132,7 @@ Enact a temp Basal or a temp target */
 "all" = "Tất cả";
 
 /* Active Insulin View */
-"Active Insulin" = "Lượng Insulin hoạt động";
+"Active Insulin" = "Hoạt động của Insulin";
 
 /* Active Insulin View */
 "Time with negative insulin" = "Thời gian có Insulin âm tính";
@@ -2156,7 +2156,7 @@ Enact a temp Basal or a temp target */
 "TDD 3 days ago" = "Tổng liều 3 ngày trước";
 
 /* Active Carbohydrates View */
-"Active Carbohydrates" = "Lượng Carbohydrates hoạt động";
+"Active Carbohydrates" = "Hoạt động của Carbohydrates";
 
 /* --------------------------------------------------------  Dexcom G7 --------------------------------------*/
 
@@ -2469,13 +2469,13 @@ Enact a temp Basal or a temp target */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Hệ số nhân tỷ lệ cơ bản thông thường của bạn đối với B30. Tỷ lệ cơ bản tối đa được ban hành là mức tối đa của cài đặt cơ bản tối đa của máy bơm của bạn. Mặc định là 5.";
 
 /* */
-"Upper Delta limit" = "Giới hạn Delta trên";
+"Upper Delta limit" = "Giới hạn chênh lệch tối đa";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ lều cơ bản B30 đang chạy. Mặc định là 8 mg/dl (~0,5 mmol/l).";
 
 /* */
-"Upper BG limit" = "Giới hạn BG trên";
+"Upper BG limit" = "Mức đường huyết tối đa";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB sẽ bị vô hiệu hóa khi ở dưới giới hạn này, trong khi Tỷ lệ cơ bản B30 đang chạy. Mặc định là 130 mg/dl (7,2 mmol/l).";
@@ -2511,22 +2511,23 @@ Enact a temp Basal or a temp target */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Giá trị mặc định: 0. Đây là trọng số được áp dụng khi glucose tăng tốc và làm tăng cường ISF. Với giá trị là 0, sẽ bị vô hiệu hóa. 0,02 là điểm khởi đầu an toàn để tăng lên. Các thiết lập thông thường là khoảng 0,15!";
 
 /* */
-"Duration ISF postprandial adaption" = "Duration ISF postprandial adaption";
+"Duration ISF postprandial adaption" = "Thời gian điều chỉnh ISF sau bữa ăn";
 
 /* */
 "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Giá trị mặc định: 3. Đây là khoảng thời gian tính bằng giờ, tức là hiệu ứng sẽ có hiệu lực sau bữa ăn bao lâu. Oref sẽ xóa thời gian carb muộn nhất sau 10 giờ bất kể bạn nhập gì.";
 
 /* */
-"ISF weight for postprandial BG rise" = "Lượng ISF cho sự gia tăng BG";
+"ISF weight for postprandial BG rise" = "Trọng số ISF cho sự tăng BG sau ăn";
 
 /* */
 "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Đây là trọng số được áp dụng cho độ dốc tuyến tính trong khi glucose tăng và điều chỉnh ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Bắt đầu với 0,01 - không vượt quá 0,05!";
 
 /* */
-"ISF weight for higher BG deltas" = "Lượng ISF cho delta BG cao hơn";
+"ISF weight for higher BG deltas" = "Trọng số ISF cho độ lệch đường huyết cao";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác để điều chỉnh delta cao hơn của ISF. Với 0,0, hiệu ứng sẽ bị vô hiệu hóa.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0
+Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi có các mức chênh lệch đường huyết cao. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
 "ISF weight for lower BG" = "Lượng ISF cho BG thấp hơn";
