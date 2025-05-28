@@ -413,33 +413,19 @@ struct MainChartView: View {
     }
 
     private func activityView(fullSize: CGSize) -> some View {
-        Path { path in
-            guard activityDots.count >= 2 else { return }
-            guard let zeroPoint = self.activityZeroPoint else { return }
+        ZStack {
+            positiveActivityFillPath(fullSize: fullSize)
+                .fill(Color.blue.opacity(0.3))
 
-            let firstPoint = activityDots[0]
-            let lastPoint = activityDots.last!
+            negativeActivityFillPath(fullSize: fullSize)
+                .fill(Color.red.opacity(0.3))
 
-            let zeroY = zeroPoint.y
-
-            path.move(to: CGPoint(x: firstPoint.x, y: zeroY)) // move to y="zero" first
-            path.addLine(to: firstPoint)
-
-            path.move(to: activityDots[0])
-            for point in activityDots.dropFirst() {
-                path.addLine(to: point)
-            }
-
-            path.addLine(to: CGPoint(x: lastPoint.x, y: zeroY)) // move back to y="zero" again
-            path.closeSubpath()
+            activityStrokePath()
+                .stroke(
+                    colorScheme == .dark ? Color.white.opacity(0.5) : Color.black.opacity(0.5),
+                    style: StrokeStyle(lineWidth: 0.5)
+                )
         }
-        .stroke(
-            colorScheme == .dark ? Color.white : Color.black,
-            style: StrokeStyle(lineWidth: 0.8)
-        )
-        .fill(
-            colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.1),
-        )
         .onChange(of: data.activity) {
             update(fullSize: fullSize)
         }
@@ -448,6 +434,86 @@ struct MainChartView: View {
         }
         .onReceive(Foundation.NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
             update(fullSize: fullSize)
+        }
+    }
+
+    private func positiveActivityFillPath(fullSize _: CGSize) -> Path {
+        Path { path in
+            guard activityDots.count >= 2 else { return }
+            guard let zeroPoint = self.activityZeroPoint else { return }
+
+            let zeroY = zeroPoint.y
+            var hasPositiveValues = false
+
+            for i in 0 ..< activityDots.count {
+                let point = activityDots[i]
+
+                if point.y < zeroY {
+                    if !hasPositiveValues {
+                        // Start a new positive section
+                        path.move(to: CGPoint(x: point.x, y: zeroY))
+                        hasPositiveValues = true
+                    }
+                    path.addLine(to: point)
+                } else if hasPositiveValues {
+                    // End the positive section
+                    path.addLine(to: CGPoint(x: point.x, y: zeroY))
+                    path.closeSubpath()
+                    hasPositiveValues = false
+                }
+            }
+
+            // Close final positive section if needed
+            if hasPositiveValues {
+                let lastPoint = activityDots.last!
+                path.addLine(to: CGPoint(x: lastPoint.x, y: zeroY))
+                path.closeSubpath()
+            }
+        }
+    }
+
+    private func negativeActivityFillPath(fullSize _: CGSize) -> Path {
+        Path { path in
+            guard activityDots.count >= 2 else { return }
+            guard let zeroPoint = self.activityZeroPoint else { return }
+
+            let zeroY = zeroPoint.y
+            var hasNegativeValues = false
+
+            for i in 0 ..< activityDots.count {
+                let point = activityDots[i]
+
+                if point.y > zeroY {
+                    if !hasNegativeValues {
+                        // Start a new negative section
+                        path.move(to: CGPoint(x: point.x, y: zeroY))
+                        hasNegativeValues = true
+                    }
+                    path.addLine(to: point)
+                } else if hasNegativeValues {
+                    // End the negative section
+                    path.addLine(to: CGPoint(x: point.x, y: zeroY))
+                    path.closeSubpath()
+                    hasNegativeValues = false
+                }
+            }
+
+            // Close final negative section if needed
+            if hasNegativeValues {
+                let lastPoint = activityDots.last!
+                path.addLine(to: CGPoint(x: lastPoint.x, y: zeroY))
+                path.closeSubpath()
+            }
+        }
+    }
+
+    private func activityStrokePath() -> Path {
+        Path { path in
+            guard activityDots.count >= 2 else { return }
+            path.move(to: activityDots[0])
+            for point in activityDots.dropFirst() {
+                path.addLine(to: point)
+            }
         }
     }
 
