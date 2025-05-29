@@ -2865,22 +2865,22 @@ Enact a temp Basal or a temp target */
 // Dynamic ISF + CR Settings:
 /* Headline "Adjust Dynamic ISF constant" */
 
-"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
+"Adjust Dynamic ISF constant" = "Điều chỉnh hằng số Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số ISF động";
 
 /* Enable Dynamic ISF, Headline */
-"Enable Dynamic ISF" = "Enable Dynamic ISF";
+"Enable Dynamic ISF" = "Kích hoạt Dynamic ISF";
 
 /* Headline "Enable Dynamic ISF" */
-"Enable Dynamic ISF" = "Enable Dynamic ISF";
+"Enable Dynamic ISF" = "Kích hoạt Dynamic ISF";
 
 /* Enable Dynamic ISF */
 "Calculate a new Insulin Sensitivity Setting (ISF) upon every loop cycle. The new ISF will be based on your current Glucose, total daily dose of insulin (TDD, past 24 hours of all delivered insulin) and an individual Adjustment Factor (recommendation to start with is 0.5 if using Sigmoid Function and 0.8 if not).\n\nAll of the Dynamic ISF and CR adjustments will be limited by your autosens.min/max limits." = "Tính toán Cài đặt độ nhạy Insulin (ISF) mới sau mỗi chu kỳ vòng lặp. ISF mới sẽ dựa trên Glucose hiện tại của bạn, tổng liều insulin hàng ngày (TDD: tổng lượng insulin được cung cấp trong 24 giờ qua) và Hệ số Điều chỉnh riêng lẻ (khuyến nghị bắt đầu là 0,5 nếu sử dụng Chức năng Sigmoid và 0,8 nếu không sử dụng).\\ n\nTất cả các điều chỉnh ISF động và CR sẽ bị giới hạn bởi autosens.min của bạn.";
 
 /* Headline Enable Dynamic CR */
-"Enable Dynamic CR" = "Enable Dynamic CR";
+"Enable Dynamic CR" = "Kích hoạt Dynamic CR";
 
 /* Enable Dynamic CR */
 "Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Sử dụng CR động. Tỷ lệ động sẽ được sử dụng cho CR như sau:\n\n Khi tỷ lệ > 1: dynCR = (newRatio - 1) / 2 + 1.\nKhi tỷ lệ < 1: dynCR = CR/dynCR.\n\nKhông sử dụng cùng với Tỷ lệ Insulin cao (> 2)";
@@ -2892,7 +2892,7 @@ Enact a temp Basal or a temp target */
 "Activate Dynamic Carb Ratio (CR)" = "Kích hoạt Tỷ lệ Carb động (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
-"Adjust Dynamic ISF constant" = "Adjust Dynamic ISF constant";
+"Adjust Dynamic ISF constant" = "Điều chỉnh hằng số Dynamic ISF";
 
 /* Adjust Dynamic ISF constant */
 "Individual adjustment of the computed dynamic ratios. Default is 0.5. The higher the value, the larger the correction of your ISF/CR will be for a high or a low blood glucose. Maximum/minumum correction is determined by the Autosens min/max settings.\n\nFor Sigmoid function an adjustment factor of 0.4 - 0.5 is recommended to begin with.\n\nFor the logaritmic formula there is less consensus, but starting around 0.8 is probably appropiate for most adult users. For younger users it's recommended to start even lower when using logaritmic formula, to avoid overly aggressive treatment." = "Điều chỉnh riêng các tỷ lệ động được tính toán. Mặc định là 0,5. Giá trị càng cao thì mức điều chỉnh ISF/CR của bạn đối với mức đường huyết cao hay thấp càng lớn. Hiệu chỉnh tối đa/tối thiểu được xác định bởi cài đặt tối thiểu/tối đa của Autosens.\n\nĐối với hàm Sigmoid, hệ số điều chỉnh được khuyến nghị là 0,4 - 0,5 để bắt đầu.\n\nĐối với công thức logarit, có ít sự đồng thuận hơn, nhưng bắt đầu từ khoảng 0,8 là có lẽ phù hợp với hầu hết người dùng trưởng thành. Đối với người dùng trẻ tuổi, nên bắt đầu ở mức thấp hơn nữa khi sử dụng công thức logarit để tránh điều trị quá tích cực.";
@@ -2946,22 +2946,22 @@ Enact a temp Basal or a temp target */
 "ISF: Insulin Sensitivity, CR: Carb Ratio,\nCSF: Carb Sensitivity = ISF/CR" = "ISF: Độ nhạy insulin, CR: Tỷ lệ carbohydrate,\nCSF: Độ nhạy carbohydrate = ISF";
 
 /* Header */
-"Calculator settings" = "Cài đặt tính toán";
+"Calculator settings" = "Cài đặt công cụ tính toán";
 
 /* Bolus Calculator Setting */
-"Use alternate Bolus Calculator" = "Use alternate Bolus Calculator";
+"Use alternate Bolus Calculator" = "Sử dụng tính toán liều bolus thay thế";
 
 /* Bolus Calculator Setting */
-"Use Bolus Calculator" = "Sử dụng tính toán Bolus";
+"Use Bolus Calculator" = "Sử dụng tính toán liều Bolus";
 
 /* Bolus Calculator Setting */
-"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Tùy thuộc vào cài đặt của bạn, tính toán bolus sẽ sử dụng dữ liệu từ dự đoán đường huyết OpenAPS và/hoặc từ IOB, COB, xu hướng đường huyết, đường huyết hiện tại và đường huyết mục tiêu. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng (mặc định là 0,8).\n\nBạn cũng có thể có tùy chọn trong tính toán bolus của mình để áp dụng một hệ số tùy chỉnh khác (!) vào cuối phép tính, hệ số này có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ như Pizza (mặc định là 0,7).\n\nTính toán bolus KHÔNG sử dụng biến OpenAPS \"insulinRequired\", được tạo cho SMBs.";
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Tùy thuộc vào cài đặt của bạn, tính toán liều bolus sẽ sử dụng dữ liệu từ dự đoán đường huyết OpenAPS và/hoặc từ IOB, COB, xu hướng đường huyết, đường huyết hiện tại và đường huyết mục tiêu. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng (mặc định là 0,8).\n\nBạn cũng có thể có tùy chọn trong tính toán bolus của mình để áp dụng một hệ số tùy chỉnh khác (!) vào cuối phép tính, hệ số này có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ như Pizza (mặc định là 0,7).\n\nTính toán bolus KHÔNG sử dụng biến OpenAPS \"insulinRequired\", được tạo cho SMBs.";
 
 /* Bolus Calculator Setting */
-"Adjustment" = "Adjustment";
+"Adjustment" = "Điều chỉnh";
 
 /* Bolus Calculator Setting */
-"Use OpenAPS glucose predictions" = "Sử dụng dự đoán glucose OpenAPS";
+"Use OpenAPS glucose predictions" = "Sử dụng dự đoán dường huyết của OpenAPS";
 
 /* Bolus Calculator Setting */
 "Fatty Meals" = "Bữa ăn nhiều chất béo";
@@ -2988,13 +2988,13 @@ Enact a temp Basal or a temp target */
 "Display and allow Fat and Protein entries" = "Hiển thị và cho phép nhập các mục Chất béo và chất đạm";
 
 /* UI/UX option */
-"Add Meal View settings " = "Thêm cài đặt Chế độ xem bữa ăn ";
+"Add Meal View settings " = "Thêm cài đặt chế độ xem bữa ăn ";
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Hiển thị nút mục tiêu tạm thời";
 
 /* UI/UX option */
-"Display Profile Override Button" = "Hiển thị nút ghi đè";
+"Display Profile Override Button" = "Hiển thị nút cấu hình ghi đè";
 
 /* UI/UX option */
 "Display Meal Button" = "Hiển thị nút bữa ăn";
@@ -3012,7 +3012,7 @@ Enact a temp Basal or a temp target */
 "Override HbA1c Unit" = "Override HbA1c Unit";
 
 /* UI/UX option */
-"In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả hồ sơ và mục tiêu tạm thời";
+"In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả cấu hình và mục tiêu tạm thời";
 
 /* UI/UX option */
 "Always Color Glucose Value (green, yellow etc)" = "Luôn tô màu Giá trị Glucose (xanh, vàng, v. v.)";
@@ -3023,49 +3023,49 @@ Enact a temp Basal or a temp target */
 "Normally glucose is colored red only when over or under your notification limits for high/low" = "Thông thường glucose chỉ có màu đỏ khi vượt quá hoặc dưới giới hạn thông báo của bạn về mức cao";
 
 /* UI/UX option */
-"Horizontal Scroll View Visible hours" = "Chế độ xem cuộn ngang Giờ hiển thị";
+"Horizontal Scroll View Visible hours" = "Số giờ hiển thị trong chế độ cuộn ngang";
 
 /* UI/UX option */
-"Display Time Interval Setting Button" = "Hiển thị khoảng thời gian nút cài đặt";
+"Display Time Interval Setting Button" = "Hiển thị nút cài đặt khoảng thời gian";
 
 /* UI/UX option */
 "Never display the small glucose chart when scrolling" = "Không bao giờ hiển thị biểu đồ glucose nhỏ khi cuộn";
 
 /* UI/UX option */
-"Disable Hypo Treatments" = "Disable Hypo Treatments";
+"Disable Hypo Treatments" = "Vô hiệu hóa điều trị đường huyết";
 
 /* UI/UX option */
-"Display Glucose Delta" = "Hiển thị Glucose Delta";
+"Display Glucose Delta" = "Hiển thị thay đổi đường huyết";
 
 /* UI/UX option */
-"Display Sensor Age" = "Hiển thị thời gian Sensor đã sử dụng";
+"Display Sensor Age" = "Hiển thị thời gian đã sử dụng cảm biến";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Ẩn nhãn nồng độ Insulin";
 
 /* UI/UX option */
-"Use insulin bars" = "Sử dụng thanh Insulin";
+"Use insulin bars" = "Sử dụng thanh hiển thị insulin";
 
 /* UI/UX option */
-"Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi số lượng dưới";
+"Hide the bolus amount strings when amount is under" = "Ẩn số lượng bolus khi ở dưới mức";
 
 /* UI/UX option */
-"Display carb equivalents" = "Hiển thị carb tương đương";
+"Display carb equivalents" = "Hiển thị lượng carb quy đổi";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Hiển thị lượng carb tương đương";
+"Display carb equivalent amount" = "Hiển thị số lượng carb quy đổi";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Hiển thị thời gian còn lại của cảm biến";
 
 /* UI/UX option */
-"Display Sensor Age, but not Time Remaining" = "Hiển thị Sensor Age, nhưng không hiển thị thời gian còn lại";
+"Display Sensor Age, but not Time Remaining" = "Hiển thị tuổi cảm biến, không hiển thị thời gian còn lại";
 
 /* UI/UX option */
 "Display Ratio and a History View button" = "Hiển thị tỷ lệ và nút Xem lịch sử";
 
 /* UI/UX option */
-"Auto ISF Home View" = "Auto ISF Home View";
+"Auto ISF Home View" = "Xem trang chủ Auto ISF";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";
@@ -3077,10 +3077,10 @@ Enact a temp Basal or a temp target */
 "Live Activity" = "Hoạt động trực tiếp";
 
 /* Show Live Activity */
-"Show Live Activity" = "Show Live Activity";
+"Show Live Activity" = "Hiển thị hoạt động trực tiếp";
 
 /* Display Chart */
-"Display Chart" = "Hiễn thị các biểu đồ";
+"Display Chart" = "Hiễn thị biểu đồ";
 
 /* Show Predictions */
 "Show Predictions" = "Hiển thị dự đoán";
@@ -3111,13 +3111,13 @@ Enact a temp Basal or a temp target */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Cho phép điều chỉnh mức cơ bản dựa trên tỷ lệ TDD hiện tại/TDD trung bình 7 ngày";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Ngưỡng Delta-BG SMB tối đa";
+"Max Delta-BG Threshold SMB" = "Ngưỡng tối đa thay đổi đường huyết để kích hoạt SMB";
 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Mặc định là 0,2 (20%). Thay đổi phần trăm dương tối đa của cấp độ BG để sử dụng SMB, trên mức đó sẽ vô hiệu hóa SMB. Giới hạn mã hóa cứng là 40%. Đối với UAM vòng kín hoàn toàn nên sử dụng 30%. Quan sát nhật ký và cửa sổ bật lên (maxDelta 27 > 20% BG 100 - vô hiệu hóa SMB!).";
 
 /* Headline "... When Blood Glucose Is Above:" */
-"... When Blood Glucose Is Above:" = "... Khi lượng đường trong máu cao hơn:";
+"... When Blood Glucose Is Above:" = "... Khi đường huyết vượt trên:";
 
 /* ... When Blood Glucose Is Above: */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Đặt giá trị \"Kích hoạt SMB với BG cao\" sẽ so sánh để kích hoạt SMB. Nếu BG > giá trị này, SMB sẽ kích hoạt.";
@@ -3129,7 +3129,7 @@ Enact a temp Basal or a temp target */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Kích hoạt SMB khi phát hiện BG cao, dựa trên mục tiêu BG cao (đã điều chỉnh hoặc cấu hình)";
 
 /* Headline "Dynamic settings" */
-"Dynamic settings" = "Dynamic Settings";
+"Dynamic settings" = "Cài đặt Dynamic";
 
 /* Insulin curve */
 "Insulin curve" = "Chủng loại insulin";
@@ -3141,4 +3141,4 @@ Enact a temp Basal or a temp target */
 "Overrides" = "Overrides";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Cancel Override";
+"Cancel Override" = "Huỷ bỏ Override";
