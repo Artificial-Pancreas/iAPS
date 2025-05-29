@@ -191,7 +191,7 @@
 "Cancel Temp Target" = "Annuleer tijdelijk doel";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Annuleer tijdelijk doel";
 
 /* Custom temp target */
 "Custom" = "Aangepast";
@@ -1004,7 +1004,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Delete CGM" = "Verwijder CGM";
 
 /* */
-"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
+"Are you sure you want to remove this cgm from iAPS?" = "Weet je zeker dat je deze CGM uit de lijst wilt verwijderen?";
 
 /* */
 "There is no undo" = "Ongedaan maken is niet mogelijk";
@@ -1236,7 +1236,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Backfill options" = "Terugzet opties";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
+"Backfilling from trend is currently not well supported by iAPS" = "Achteraf aanvullen op basis van trendgegevens wordt momenteel niet goed ondersteund door iAPS";
 
 /* */
 "Backfill from history" = "Terugzetten van geschiedenis";
@@ -1905,7 +1905,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "%1$@ for %2$@" = "%1$@ voor %2$@";
 
 /* Description text on manual temp basal action sheet */
-"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS past je insulineafgifte niet automatisch aan zolang de tijdelijke basaalstand nog actief is of niet is geannuleerd.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Tijdelijke basaal instellen";
 
@@ -2184,7 +2184,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Share and Backup" = "Delen en back-up";
 
 /* Section 1 title */
-"Upload Settings and Statistics" = "Upload Settings and Statistics";
+"Upload Settings and Statistics" = "Upload instellingen en statistieken";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Deel en back-up al uw instellingen en statistieken";
