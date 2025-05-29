@@ -125,7 +125,7 @@
 "Fatty Meal Factor" = "Chỉ số bữa ăn nhiều chất béo";
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs và insulin trước đó được đưa vào dự đoán lượng đường cuối cùng.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Lượng carbs và insulin trước đó đều ảnh hưởng đến dự đoán đường huyết tương lai.";
 
 /* For the  Bolus View pop-up */
 "Result" = "Kết quả";
@@ -290,7 +290,7 @@
 "Run now" = "Chạy ngay";
 
 /*  */
-"Last run" = "Lần chạy cuối";
+"Last run" = "Lần chạy gần nhất";
 
 /*  */
 "Sensitivity" = "Độ nhạy";
@@ -302,7 +302,7 @@
 "Add" = "Thêm";
 
 /*  */
-"Basal Profile" = "Phác đồ liều nền";
+"Basal Profile" = "Basal Profile";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -399,7 +399,7 @@ Enact a temp Basal or a temp target */
 "This enables uploading of statistics.json to Nightscout, which can be used by the Community Statistics and Demographics Project.\n\nParticipation in Community Statistics is opt-in, and requires separate registration at:\n" = "Điều này cho phép tải số liệu thống kê lên Nightscout mà có thể được sử dụng bởi Dự án Community Statictics và Demographics. \n\nTham gia vào Thống kê Cộng đồng là tùy chọn và yêu cầu đăng ký riêng tại:\n";
 
 /*  */
-"Edit settings json" = "Chỉnh sửa file cài đặt Json";
+"Edit settings json" = "Edit settings json";
 
 /* */
 "Glucose units" = "Đơn vị Glucose";
