@@ -1211,7 +1211,7 @@ Enact a temp Basal or a temp target */
 "will snooze for %@ until %@" = "sẽ tạm ẩn cho %@ đến khi %@";
 
 /* */
-"Click to Snooze Alerts" = "Chọn để ẩn các cảnh báo";
+"Click to Snooze Alerts" = "Nhấn để tạm hoãn cảnh báo";
 
 /* */
 "Strength" = "Độ mạnh";
