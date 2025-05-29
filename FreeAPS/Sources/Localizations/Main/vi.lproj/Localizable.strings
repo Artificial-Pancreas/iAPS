@@ -453,7 +453,7 @@ Enact a temp Basal or a temp target */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\n Đơn vị đường huyết không khớp trong Cài đặt Nightscout và Pump. Nhập cấu hình bị hủy bỏ.";
 
 /* Import Error */
-"Can't find the default Nightscout Profile." = "Không thể tìm thấy Hồ sơ Nightscout mặc định.";
+"Can't find the default Nightscout Profile." = "Không thể tìm thấy cấu hình Nightscout mặc định.";
 
 /* Add Blood Glucose Test, header */
 "Blood Glucose Test" = "Kiểm tra đường huyết";
@@ -541,7 +541,7 @@ Enact a temp Basal or a temp target */
 /* Debug option, allow U50 and U10 (diluted insulin) */
 "Allow diluted insulin concentration settings" = "Cho phép cài đặt nồng độ insulin pha loãng";
 /* Max setting */
-"Max Carbs" = "Lượng carbs tối đa";
+"Max Carbs" = "Carbs tối đa";
 
 /* Max carbs description */
 "Maximum amount of carbs (g) you can add each entry" = "Lượng carbs tối đa (g) bạn có thể thêm vào mỗi mục nhập";
@@ -649,7 +649,7 @@ Enact a temp Basal or a temp target */
 "Services" = "Dịch vụ";
 
 /*  */
-"Settings" = "Các cài đặt";
+"Settings" = "Cài đặt";
 
 /* Recommendation for a Manual Bolus */
 "Recommended Bolus Percentage" = "Tỷ lệ phần trăm Bolus được đề xuất";
@@ -658,16 +658,16 @@ Enact a temp Basal or a temp target */
 "Share logs" = "Chia sẻ nhật ký";
 
 /* Upper target */
-"High target" = "Mục tiêu cao";
+"High target" = "Mục tiêu đường huyết cao";
 
 /* Lower target */
-"Low target" = "Mục tiêu thấp";
+"Low target" = "Mục tiêu đường huyết thấp";
 
 /* When bolusing */
 "Bolusing" = "Đang bolus";
 
 /* */
-"Pump suspended" = "Bơm đã tạm ngưng";
+"Pump suspended" = "Bơm đã tạm dừng";
 
 /* */
 "Middleware" = "Middleware";
@@ -709,7 +709,7 @@ Enact a temp Basal or a temp target */
 "Delete Insulin?" = "Xóa Insulin?";
 
 /* Treatments list */
-"Treatments" = "Các phương pháp điều trị";
+"Treatments" = "Phương pháp điều trị";
 
 /* Add Insulin */
 "Add Insulin" = "Thêm Insulin";
@@ -1069,16 +1069,16 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Đơn vị ghi đè";
 
 /* */
-"Low" = "Low";
+"Low" = "Thấp";
 
 /* */
-"High" = "High";
+"High" = "Cao";
 
 /* TIR Chart */
-"Very High" = "Very High";
+"Very High" = "Quá cao";
 
 /* TIR Chart */
-"Very Low" = "Very Low";
+"Very Low" = "Quá thấp";
 
 /* */
 "glucose" = "đường huyết";
@@ -1087,13 +1087,13 @@ Enact a temp Basal or a temp target */
 "Enter a Bolus Amount" = "Nhập số lượng Bolus";
 
 /* Bolus shortcut */
-"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Glucose hiện tại của bạn là %@. Bạn có chắc chắn muốn tiêm %@U insulin không?";
+"Your current glucose is %@. Are you sure you want to bolus %@ U of insulin?" = "Đường huyết hiện tại của bạn là %@. Bạn có chắc chắn muốn tiêm %@U insulin không?";
 
 /* Bolus shortcut */
 "A bolus command of " = "Một lệnh bolus của ";
 
 /* Bolus shortcut */
-" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U insulin đã được gửi đến iAPS. Xác minh trong ứng dụng iAPS hoặc trong Nightscout xem bolus đã được phân phối hay chưa.";
+" U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U insulin đã gửi đến iAPS. Vui lòng kiểm tra trong ứng dụng iAPS hoặc trên Nightscout để xác minh liệu bolus đã được thực hiện hay chưa.";
 
 /* Bolus shortcut. Error */
 "too small bolus amount" = "lượng bolus quá nhỏ";
@@ -1132,7 +1132,7 @@ Enact a temp Basal or a temp target */
 "Are you sure you want to activate the Override Preset %@?" = "Bạn có chắc chắn muốn kích hoạt Ghi đè cài sẵn %@ không?";
 
 /* Override Shortcut */
-"The Profile Override" = "Hồ sơ ghi đè";
+"The Profile Override" = "Cấu hình ghi đè";
 
 /* Override Shortcut */
 "is now activated" = "hiện đã được kích hoạt";
@@ -1985,10 +1985,10 @@ Enact a temp Basal or a temp target */
 "Allow Upload of Statistics to NS" = "Cho phép tải số liệu thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Low";
+"Low" = "Thấp";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "High";
+"High" = "Cao";
 
 /* In Range */
 "In Range" = "In Range";
