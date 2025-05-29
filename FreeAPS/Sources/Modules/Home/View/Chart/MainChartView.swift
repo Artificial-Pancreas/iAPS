@@ -279,7 +279,7 @@ struct MainChartView: View {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: yCoord))
                     path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                }.stroke(Color.brown, lineWidth: 0.5)
+                }.stroke(Color.secondary, lineWidth: 0.25)
             }
         }
     }
