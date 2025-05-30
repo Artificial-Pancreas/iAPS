@@ -2653,7 +2653,7 @@ Enact a temp Basal or a temp target */
 "Sensitivity Raises Target" = "Độ nhạy làm tăng mục tiêu";
 
 /* ”Sensitivity Raises Target" */
-"When true, raises BG target when autosens detects sensitivity" = "Khi True, tăng mục tiêu BG khi cảm biến tự động phát hiện độ nhạy";
+"When true, raises BG target when autosens detects sensitivity" = "Khi được bật, sẽ tăng mục tiêu đường huyết khi autosens phát hiện tăng độ nhạy insulin";
 
 /* Headline ”Resistance Lowers Target" */
 "Resistance Lowers Target" = "Kháng insulin làm giảm mục tiêu";
