@@ -1616,7 +1616,7 @@ Enact a temp Basal or a temp target */
 "End the Override with next Meal" = "Kết thúc Override bằng bữa ăn tiếp theo";
 
 /* Your normal Profile. Use a short string */
-"Normal Profile" = "Normal Profile";
+"Normal Profile" = "Cấu hình mặc định";
 
 /* Custom but unsaved Profile */
 "Custom Profile" = "Cấu hình tùy chỉnh";
@@ -1673,7 +1673,7 @@ Enact a temp Basal or a temp target */
 "This will change settings back to your normal profile." = "Việc này sẽ thay đổi cấu hình trở lại cấu hình bình thường của bạn.";
 
 /* Start Profile Alert */
-"Start Profile" = "Bắt đầu profile";
+"Start Profile" = "Khởi động cấu hình";
 
 /* */
 "Your profile basal insulin will be adjusted with the override percentage and your profile ISF and CR will be inversly adjusted with the percentage." = "Liều basal sẽ được điều chỉnh theo tỷ lệ phần trăm ghi đè trong khi ISF và CR sẽ được điều chỉnh ngược lại.";
@@ -1709,7 +1709,7 @@ Enact a temp Basal or a temp target */
 "Delete Glucose?" = "Xóa Glucose không?";
 
 /* */
-"Meal Presets" = "Trước bữa ăn";
+"Meal Presets" = "Thiết lập sẵn cho bữa ăn";
 
 /* Back button */
 "Back" = "Quay Lại";
@@ -1724,10 +1724,10 @@ Enact a temp Basal or a temp target */
 "Empty" = "Trống rỗng";
 
 /* */
-"Delete Selected Preset" = "Xóa mẫu cài đặt trước đã chọn";
+"Delete Selected Preset" = "Xóa thiết lập đã chọn";
 
 /* */
-"Enter Meal Preset Name" = "Nhập tên trước bữa ăn";
+"Enter Meal Preset Name" = "Nhập tên bữa ăn mẫu";
 
 /* */
 "Name Of Dish" = "Tên món ăn";
@@ -1824,7 +1824,7 @@ Enact a temp Basal or a temp target */
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Gắn Pod";
 
 "Deactivate Pod" = "Hủy kích hoạt Pod";
 
@@ -1906,10 +1906,10 @@ Enact a temp Basal or a temp target */
 /* Description text on manual temp basal action sheet */
 "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS sẽ không tự động điều chỉnh lượng insulin cung cấp cho bạn cho đến khi tỷ lệ cơ bản tạm thời kết thúc hoặc bị hủy.";
 /* Button text for setting manual temporary basal rate*/
-"Set Temporary Basal" = "Cài đặt liều nền tạm thời";
+"Set Temporary Basal" = "Thiết lập liều nền tạm thời";
 
 /* Navigation Title for ManualTempBasalEntryView */
-"Temporary Basal" = "Liều Basal tạm thời";
+"Temporary Basal" = "Liều nền tạm thời";
 
 /* Alert title for a failure to set temporary basal */
 "Temporary Basal Failed" = "Liều nền tạm thời thất bại";
@@ -2006,10 +2006,10 @@ Enact a temp Basal or a temp target */
 "Display Chart Threshold lines for Low and High" = "Hiển thị các đường hiển thị Thấp và Cao";
 
 /* */
-"Standing / Laying TIR Chart" = "Đứng/nằm biểu đồ TIR";
+"Standing / Laying TIR Chart" = "Biểu đồ TIR Đứng/Nằm";
 
 /* */
-"Hours X-Axis (6 default)" = "Giờ trục X (mặc định 6)";
+"Hours X-Axis (6 default)" = "Trục X theo giờ (mặc định 6 giờ)";
 
 /* */
 "2 hours" = "2 giờ";
@@ -2030,7 +2030,7 @@ Enact a temp Basal or a temp target */
 "Average" = "Average";
 
 /* TIR Preview Headline */
-"Time In Range" = "Trong phạm vi mục tiêu";
+"Time In Range" = "Thời gian trong phạm vi kiểm soát";
 
 /* Average Loop Interval in minutes */
 "Average Interval" = "Average Interval";
@@ -2225,7 +2225,7 @@ Enact a temp Basal or a temp target */
 "Tap to display" = "Chạm để hiển thị";
 
 /* Token copy button */
-"Long press to copy" = "Nhấn và giữ để sao chép";
+"Long press to copy" = "Nhấn giữ để sao chép";
 
 /* Link to statistics button */
 "View Personal Statistics" = "Xem Thống kê cá nhân";
@@ -2597,7 +2597,7 @@ Enact a temp Basal or a temp target */
 "Enables Auto ISF. This will disable any eventual dynamic ISF/CR setting" = "Bật Auto ISF. Điều này sẽ vô hiệu hóa bất kỳ cài đặt ISF/CR Dynamic nào";
 
 /* */
-"Keto Protection" = "Bảo vệ chống nhiễm toan ceton";
+"Keto Protection" = "Chống nhiễm toan ceton";
 
 /* */
 "Max IOB Threshold Percent" = "Ngưỡng phần trăm IOB tối đa";
