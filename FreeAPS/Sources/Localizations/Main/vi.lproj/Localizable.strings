@@ -2499,13 +2499,13 @@ Enact a temp Basal or a temp target */
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Cho phép tăng tốc độ cơ bản sau Mục tiêu ghi đè EatingSoon (hoặc Mục tiêu tạm thời) và tiêm thủ công để bão hòa vị trí truyền bằng insulin nhằm tăng khả năng hấp thụ insulin cho SMB sau bữa ăn mà không tính lượng carbohydrate.";
 
 /* */
-"ISF weight while BG decelerates" = "Trọng số ISF khi đường huyết giảm";
+"ISF weight while BG decelerates" = "ISF weight while BG decelerates";
 
 /* */
 "This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Đây là trọng số được áp dụng khi đường huyết đang giảm tốc và làm yếu đi hệ số độ nhạy insulin (ISF). Nếu đặt là 0 sẽ bị vô hiệu hóa. Giá trị 0.1 có thể là một điểm khởi đầu phù hợp.";
 
 /* */
-"ISF weight while BG accelerates" = "Trọng số ISF khi đường huyết tăng tốc";
+"ISF weight while BG accelerates" = "ISF weight while BG accelerates";
 
 /* */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Giá trị mặc định: 0. Đây là trọng số được áp dụng khi đường huyết tăng tốc và làm tăng cường ISF. Với giá trị là 0, sẽ bị vô hiệu hóa. 0,02 là điểm khởi đầu an toàn để tăng lên. Các thiết lập thông thường là khoảng 0,15!";
@@ -2517,33 +2517,33 @@ Enact a temp Basal or a temp target */
 "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Giá trị mặc định: 3. Đây là khoảng thời gian tính bằng giờ, tức là hiệu ứng sẽ có hiệu lực sau bữa ăn bao lâu. Oref sẽ xóa thời gian carb muộn nhất sau 10 giờ bất kể bạn nhập gì.";
 
 /* */
-"ISF weight for postprandial BG rise" = "Trọng số ISF cho sự tăng BG sau ăn";
+"ISF weight for postprandial BG rise" = "ISF weight for postprandial BG rise";
 
 /* */
 "This is the weight applied to the linear slope while glucose rises and  which adapts ISF. With 0 this contribution is effectively disabled. Start with 0.01 - it hardly goes beyond 0.05!" = "Đây là trọng số được áp dụng cho độ dốc tuyến tính trong khi đường huyết tăng và điều chỉnh ISF. Với giá trị 0 sẽ bị vô hiệu hóa. Bắt đầu với 0,01 - không vượt quá 0,05!";
 
 /* */
-"ISF weight for higher BG deltas" = "Trọng số ISF cho độ lệch đường huyết cao";
+"ISF weight for higher BG deltas" = "ISF weight for higher BG deltas";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0
 Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi có các mức chênh lệch đường huyết cao. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for lower BG" = "Trọng số ISF cho mức đường huyết thấp";
+"ISF weight for lower BG" = "ISF weight for lower BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0
 Đây là hệ số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết thấp hơn mức mục tiêu. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
-"ISF weight for higher BG" = "Trọng số ISF cho mức đường huyết cao";
+"ISF weight for higher BG" = "ISF weight for higher BG";
 
 /* */
 "Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is above target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0 Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết cao hơn mức mục tiêu. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
-"Duration Weight" = "Thời gian trọng số";
+"Duration Weight" = "Duration Weight";
 
 /* */
 "Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Tình trạng đường huyết cao kéo dài. Cứ mỗi giờ đường huyết duy trì ở mức cao, việc điều chỉnh này sẽ làm giảm ISF của bạn nhiều hơn.\n\nCông thức điều chỉnh ISF của Dura là:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)";
