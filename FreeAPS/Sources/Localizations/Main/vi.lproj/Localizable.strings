@@ -1358,7 +1358,7 @@ Enact a temp Basal or a temp target */
 "Resume" = "Tiếp tục";
 
 /* */
-"Suspend" = "Đã tạm ngưng";
+"Suspend" = "Đã tạm dừng";
 
 /* */
 "Animated Background" = "Nền màn hình động";
@@ -1371,7 +1371,7 @@ Enact a temp Basal or a temp target */
 
 
 /* Headers for settings ----------------------- */
-"OpenAPS main settings" = "Cài đặt chính OpenAPS";
+"OpenAPS main settings" = "Cài đặt chính của OpenAPS";
 
 "OpenAPS SMB settings" = "Cài đặt SMB OpenAPS";
 
@@ -1407,16 +1407,16 @@ Enact a temp Basal or a temp target */
 "Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Kết nối trực tiếp với bộ phát Libre 1 hoặc cảm biến Libre 2 của Châu Âu";
 
 /* Online or internal server */
-"Online or internal server" = "Trực tuyến hoặc máy chủ nội bộ";
+"Online or internal server" = "Máy chủ trực tuyến hoặc nội bộ";
 
 /* Pump Error Message */
-"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Không thể thực hiện đề xuất chu kỳ vòng lặp mới vì đang tiến hành một đợt Bolus. Đợi chu kỳ vòng lặp tiếp theo";
+"Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Không thể thực hiện khuyến nghị trong chu kỳ vòng lặp mới vì bolus đang được tiêm. Vui lòng đợi đến chu kỳ vòng lặp tiếp theo";
 
 /* Pump Error */
 "Pump is Busy." = "Bơm đang bận.";
 
 /* Alert when bolus is already in progress (tapping the bolus button) */
-"Bolus already in Progress!" = "Liều bolus đang được thực hiện!";
+"Bolus already in Progress!" = "Đang tiêm liều bolus!";
 
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
@@ -1439,7 +1439,7 @@ Enact a temp Basal or a temp target */
 "Dynamic Sensitivity" = "Độ nhạy động";
 
 /* Autotune config */
-"Only Autotune Basal Insulin" = "Chỉ Autotune Insulin liều nền";
+"Only Autotune Basal Insulin" = "Chỉ sử dụng Autotune cho insulin nền";
 
 /* */
 "Save as your Normal Basal Rates" = "Lưu như liều nền của bạn";
