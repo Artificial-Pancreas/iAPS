@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Odstrániť senzor";
 
 /* */
-"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
+"Are you sure you want to remove this cgm from iAPS?" = "Si si istý, že chceš odstrániť tento CGM zo systému iAPS?";
 
 /* */
 "There is no undo" = "Nie je možné vrátiť späť";
@@ -1236,7 +1236,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Backfill options" = "Možnosti doplnenia";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
+"Backfilling from trend is currently not well supported by iAPS" = "Spätné dopĺňanie z trendových údajov nie je momentálne v iAPS dobre podporované";
 
 /* */
 "Backfill from history" = "Doplniť z histórie";
@@ -1905,7 +1905,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "%1$@ for %2$@" = "%1$@ pre %2$@";
 
 /* Description text on manual temp basal action sheet */
-"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS automaticky neupraví podávanie inzulínu, kým sa dočasná bazálna dávka neskončí alebo nie je zrušená.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Nastaviť dočasný bazál";
 
