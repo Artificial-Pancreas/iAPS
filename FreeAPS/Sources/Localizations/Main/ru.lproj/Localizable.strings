@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Удалить CGM";
 
 /* */
-"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
+"Are you sure you want to remove this cgm from iAPS?" = "Вы уверены, что хотите удалить этот CGM из iAPS?";
 
 /* */
 "There is no undo" = "Это нельзя отменить!";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Опции заполнения";
 
 /* */
-"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
+"Backfilling from trend is currently not well supported by iAPS" = "Обратное заполнение данных на основе трендов в настоящее время не полностью поддерживается iAPS";
 
 /* */
 "Backfill from history" = "Заполнять из истории";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ на %2$@";
 
 /* Description text on manual temp basal action sheet */
-"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS не будет автоматически корректировать подачу инсулина, пока не завершится временная базальная скорость или она не будет отменена.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Установить Временный Базал";
 
