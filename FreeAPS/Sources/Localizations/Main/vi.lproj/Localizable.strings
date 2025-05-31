@@ -2219,7 +2219,7 @@ Enact a temp Basal or a temp target */
 "Every bit of information you choose to share is uploaded anonymously. To prevent duplicate uploads, the data is identified with a unique random string saved on your phone, the recovery token." = "Mọi thông tin bạn chọn chia sẻ đều được tải lên ẩn danh. Để ngăn chặn việc tải lên trùng lặp, dữ liệu được xác định bằng một chuỗi ngẫu nhiên duy nhất được lưu trên điện thoại của bạn, mã thông báo khôi phục.";
 
 /* Token section title */
-"Your recovery token" = "Mã thông báo khôi phục của bạn";
+"Your recovery token" = "Mã khôi phục của bạn";
 
 /* Token display button */
 "Tap to display" = "Chạm để hiển thị";
@@ -2260,10 +2260,10 @@ Enact a temp Basal or a temp target */
 "Access to contacts is restricted (parental control?)" = "Quyền truy cập vào danh bạ bị hạn chế (kiểm soát của phụ huynh?)";
 
 /* Contact Image, settings, message when access to contacts is in unknown state */
-"Access to contacts - unknown state" = "Trạng thái không xác định - Quyền truy cập vào danh bạ";
+"Access to contacts - unknown state" = "Quyền truy cập danh bạ - Trạng thái không xác định";
 
 /* Contact Image, settings, short description of the feature */
-"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Bạn có thể sử dụng Hình ảnh liên hệ để nhận các bản cập nhật trực tiếp từ iAPS cho tổ hợp Danh bạ trên Apple Watch và/hoặc tiện ích Danh bạ trên iPhone của bạn.";
+"A Contact Image can be used to get live updates from iAPS to your Apple Watch Contact complication and/or your iPhone Contact widget." = "Hình ảnh Liên hệ có thể được sử dụng để nhận cập nhật trực tiếp từ iAPS trên mục Liên hệ của Apple Watch và/hoặc tiện ích Liên hệ trên iPhone.";
 
 /* Contact Image, settings, main header */
 "Contact Image" = "Contact Image";
@@ -2526,15 +2526,13 @@ Enact a temp Basal or a temp target */
 "ISF weight for higher BG deltas" = "ISF weight for higher BG deltas";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0
-Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi có các mức chênh lệch đường huyết cao. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF higher deltas. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi có các mức chênh lệch đường huyết cao. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
 "ISF weight for lower BG" = "ISF weight for lower BG";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0
-Đây là hệ số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết thấp hơn mức mục tiêu. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là hệ số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết thấp hơn mức mục tiêu. Nếu đặt bằng 0,0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
 "ISF weight for higher BG" = "ISF weight for higher BG";
