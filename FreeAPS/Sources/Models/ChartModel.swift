@@ -3,7 +3,7 @@ import Foundation
 class ChartModel: ObservableObject {
     @Published var suggestion: Suggestion?
     @Published var glucose: [BloodGlucose]
-    @Published var activity: [InsulinActivity]
+    @Published var activity: [IOBTick0]
     @Published var isManual: [BloodGlucose]
     @Published var tempBasals: [PumpHistoryEvent]
     @Published var boluses: [PumpHistoryEvent]
@@ -37,7 +37,7 @@ class ChartModel: ObservableObject {
     init(
         suggestion: Suggestion?,
         glucose: [BloodGlucose],
-        activity: [InsulinActivity],
+        activity: [IOBTick0],
         isManual: [BloodGlucose],
         tempBasals: [PumpHistoryEvent],
         boluses: [PumpHistoryEvent],

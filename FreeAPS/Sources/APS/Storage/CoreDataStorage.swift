@@ -20,18 +20,28 @@ final class CoreDataStorage {
         return fetchGlucose
     }
 
-    func fetchInsulinData(interval: NSDate) -> [InsulinActivity] {
+    func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
         var fetchTicks = [InsulinActivity]()
         coredataContext.performAndWait {
             let requestTicks = InsulinActivity.fetchRequest()
-            let sort = NSSortDescriptor(key: "date", ascending: false)
+            let sort = NSSortDescriptor(key: "date", ascending: true)
             requestTicks.sortDescriptors = [sort]
             requestTicks.predicate = NSPredicate(
                 format: "date > %@", interval
             )
             try? fetchTicks = self.coredataContext.fetch(requestTicks)
         }
-        return fetchTicks
+        let result = fetchTicks.compactMap { tick -> IOBTick0? in
+            guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
+                return nil
+            }
+            return IOBTick0(
+                time: date,
+                iob: iob as Decimal,
+                activity: activity as Decimal
+            )
+        }
+        return result
     }
 
     func saveInsulinData(iobEntries: [IOBTick0]) {
@@ -41,8 +51,8 @@ final class CoreDataStorage {
             let deleteRequest = InsulinActivity.fetchRequest()
             deleteRequest.predicate = NSPredicate(
                 format: "date >= %@ OR date < %@",
-                firstDate as NSDate,
-                firstDate.addingTimeInterval(-86400) as NSDate
+                firstDate.addingTimeInterval(-60) as NSDate, // delete previous "future" entries
+                firstDate.addingTimeInterval(-86400) as NSDate // delete entries older than 1 day
             )
 
             do {

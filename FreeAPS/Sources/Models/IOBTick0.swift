@@ -1,10 +1,10 @@
 import Foundation
 
 // "0" for oref0
-struct IOBTick0: JSON {
+struct IOBTick0: JSON, Equatable {
+    let time: Date
     let iob: Decimal
     let activity: Decimal
-    var time: Date
 }
 
 extension JSONDecoder.DateDecodingStrategy {

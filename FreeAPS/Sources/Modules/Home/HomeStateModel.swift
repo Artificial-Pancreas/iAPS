@@ -442,7 +442,6 @@ extension Home {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
                 self.data.activity = CoreDataStorage().fetchInsulinData(interval: DateFilter().day)
-                print("fetched insulinActivity: \(self.data.activity)")
             }
         }
 

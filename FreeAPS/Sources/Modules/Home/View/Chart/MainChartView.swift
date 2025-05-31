@@ -76,7 +76,7 @@ struct MainChartView: View {
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
     @State private var activityDots: [CGPoint] = []
-    @State private var activityZeroPoint: CGPoint? = nil
+    @State private var activityZeroPointY: CGFloat? = nil
     @State private var manualGlucoseDots: [CGRect] = []
     @State private var announcementDots: [AnnouncementDot] = []
     @State private var announcementPath = Path()
@@ -450,9 +450,8 @@ struct MainChartView: View {
     private func positiveActivityFillPath(fullSize _: CGSize) -> Path {
         Path { path in
             guard activityDots.count >= 2 else { return }
-            guard let zeroPoint = self.activityZeroPoint else { return }
+            guard let zeroY = self.activityZeroPointY else { return }
 
-            let zeroY = zeroPoint.y
             var hasPositiveValues = false
 
             for i in 0 ..< activityDots.count {
@@ -485,9 +484,8 @@ struct MainChartView: View {
     private func negativeActivityFillPath(fullSize _: CGSize) -> Path {
         Path { path in
             guard activityDots.count >= 2 else { return }
-            guard let zeroPoint = self.activityZeroPoint else { return }
+            guard let zeroY = self.activityZeroPointY else { return }
 
-            let zeroY = zeroPoint.y
             var hasNegativeValues = false
 
             for i in 0 ..< activityDots.count {
@@ -829,23 +827,24 @@ extension MainChartView {
 
     private func calculateActivityDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = data.activity.concurrentMap { value -> CGPoint in
-                activityToCoordinate(date: value.date!, activity: (value.activity ?? 0) as Decimal, fullSize: fullSize)
+            let dots = data.activity.map { value -> CGPoint in
+                activityToCoordinate(date: value.time, activity: value.activity, fullSize: fullSize)
             }
-            var zeroPoint: CGPoint?
-            if let firstActivity = data.activity.first {
-                zeroPoint = activityToCoordinate(date: firstActivity.date!, activity: 0, fullSize: fullSize)
-            }
+            let zeroPointY: CGFloat = activityToCoordinate(
+                date: Date(), // only y-coordinate matters
+                activity: 0,
+                fullSize: fullSize
+            ).y
             DispatchQueue.main.async {
                 activityDots = dots
-                activityZeroPoint = zeroPoint
+                activityZeroPointY = zeroPointY
             }
         }
     }
 
     private func calculateGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = data.glucose.concurrentMap { value -> CGRect in
+            let dots = data.glucose.map { value -> CGRect in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
                 return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: Config.glucoseSize)
             }
@@ -861,7 +860,7 @@ extension MainChartView {
 
     private func calculateManualGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = data.isManual.concurrentMap { value -> CGRect in
+            let dots = data.isManual.map { value -> CGRect in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
                 return CGRect(x: position.x - 6, y: position.y - 6, width: 14, height: 14)
             }
@@ -877,7 +876,7 @@ extension MainChartView {
 
     private func calculateManualGlucoseDotsCenter(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = data.isManual.concurrentMap { value -> CGRect in
+            let dots = data.isManual.map { value -> CGRect in
                 let position = glucoseToCoordinate(value, fullSize: fullSize)
                 return CGRect(x: position.x - 4, y: position.y - 4, width: 10, height: 10)
             }
@@ -917,7 +916,7 @@ extension MainChartView {
 
     private func calculateUnSmoothedGlucoseDots(fullSize: CGSize) {
         calculationQueue.async {
-            let dots = data.glucose.concurrentMap { value -> CGRect in
+            let dots = data.glucose.map { value -> CGRect in
                 let position = UnSmoothedGlucoseToCoordinate(value, fullSize: fullSize)
                 return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
             }
