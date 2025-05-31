@@ -302,7 +302,7 @@
 "Add" = "Thêm";
 
 /*  */
-"Basal Profile" = "Basal Profile";
+"Basal Profile" = "Phác đồ liều nền";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -685,7 +685,7 @@ Enact a temp Basal or a temp target */
 "Type" = "Loại cảm biến";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "Cảm biến đường huyết";
 
 /* CGM Transmitter ID */
 "Transmitter ID" = "Số ID của Transmitter";
@@ -2421,16 +2421,16 @@ Enact a temp Basal or a temp target */
 "In order to activate B30 a minimum manual Bolus needs to be given" = "Để kích hoạt B30, cần phải cung cấp một lượng Bolus thủ công tối thiểu";
 
 /* */
-"You can specify how long B30 run and how high it is" = "Bạn có thể chỉ định B30 chạy trong bao lâu và cao bao nhiêu";
+"You can specify how long B30 run and how high it is" = "Bạn có thể chỉ định B30 chạy trong bao lâu và mức tăng của nó là bao nhiêu";
 
 /* */
-"Absolute Safety TBR " = "Lượng TBR an toàn tuyệt đối ";
+"Absolute Safety TBR " = "Lượng TBR an toàn ";
 
 /* */
 "Amount in U/hr of the small safety TBR, which is given to avoid ketoacidosis. Will be limited to min = 0U/hr, max = 2U/hr!" = "Lượng tính bằng U/giờ của TBR an toàn nhỏ, được dùng để tránh nhiễm toan ceton. Sẽ giới hạn ở mức min = 0U/giờ, max = 2U/giờ!";
 
 /* */
-"Enable Keto protection with pre-defined TBR" = "Bật Bảo vệ Keto với TBR được xác định trước";
+"Enable Keto protection with pre-defined TBR" = "Bật bảo vệ Keto với TBR định trước";
 
 /* */
 "Should an absolute TBR between 0 and 2 U/hr be specified instead of percentage of current BR" = "Nên chỉ định TBR tuyệt đối trong khoảng từ 0 đến 2 U/giờ thay vì phần trăm BR hiện tại";
@@ -2457,13 +2457,13 @@ Enact a temp Basal or a temp target */
 "B30 Settings" = "Cài đặt B30";
 
 /* */
-"Duration of increased B30 basal rate" = "Thời gian tăng tỷ lệ liều cơ bản B30";
+"Duration of increased B30 basal rate" = "Thời lượng liều cơ bản B30 tăng cao";
 
 /* */
 "Duration of increased basal rate that saturates the infusion site with insulin. Default 30 minutes, as in B30. The EatingSoon TT needs to be running at least for this duration, otherthise B30 will stopp after the TT runs out." = "Thời gian tăng tốc độ cơ bản làm bão hòa vị trí truyền bằng insulin. Mặc định là 30 phút, như trong B30. EatingSoon TT cần chạy ít nhất trong khoảng thời gian này, nếu không B30 sẽ dừng sau khi TT hết.";
 
 /* */
-"B30 Basal rate increase factor" = "B30 Hệ số tăng tỷ lệ liều Cơ bản";
+"B30 Basal rate increase factor" = "Hệ số tăng của liều cơ bản B30";
 
 /* */
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Hệ số nhân tỷ lệ cơ bản thông thường của bạn đối với B30. Tỷ lệ cơ bản tối đa được ban hành là mức tối đa của cài đặt cơ bản tối đa của máy bơm của bạn. Mặc định là 5.";
