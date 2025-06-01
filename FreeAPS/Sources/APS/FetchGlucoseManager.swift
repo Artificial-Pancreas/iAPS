@@ -30,6 +30,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private lazy var dexcomSourceG5 = DexcomSourceG5(glucoseStorage: glucoseStorage, glucoseManager: self)
     private lazy var dexcomSourceG6 = DexcomSourceG6(glucoseStorage: glucoseStorage, glucoseManager: self)
     private lazy var dexcomSourceG7 = DexcomSourceG7(glucoseStorage: glucoseStorage, glucoseManager: self)
+    private lazy var eversenseSource = EversenseSource(glucoseStorage: glucoseStorage, glucoseManager: self)
     private lazy var simulatorSource = GlucoseSimulatorSource()
 
     init(resolver: Resolver) {
@@ -56,6 +57,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
             glucoseSource = simulatorSource
         case .libreTransmitter:
             glucoseSource = libreTransmitter
+        case .eversense:
+            glucoseSource = eversenseSource
         case .glucoseDirect:
             glucoseSource = AppGroupSource(from: "GlucoseDirect", cgmType: .glucoseDirect)
         case .enlite:

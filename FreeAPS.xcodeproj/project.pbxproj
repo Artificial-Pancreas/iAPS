@@ -306,6 +306,9 @@
 		38FEF408273B011A00574A46 /* LibreTransmitterSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF407273B011A00574A46 /* LibreTransmitterSource.swift */; };
 		38FEF413273B317A00574A46 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF412273B317A00574A46 /* HKUnit.swift */; };
 		3E07E9FF2DAED9DE006A6BD1 /* MedtrumPumpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E07E9FE2DAED9DE006A6BD1 /* MedtrumPumpManager.swift */; };
+		3E417D672DECDE8D00D2BFB8 /* EversenseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E417D662DECDE8900D2BFB8 /* EversenseSource.swift */; };
+		3E417D692DECDF1B00D2BFB8 /* EversenseKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E417D682DECDF1B00D2BFB8 /* EversenseKit.framework */; };
+		3E417D6A2DECDF1B00D2BFB8 /* EversenseKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3E417D682DECDF1B00D2BFB8 /* EversenseKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3E6516E42DA2BEF5002FDC39 /* MedtrumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6516E32DA2BEF5002FDC39 /* MedtrumKit.framework */; };
 		3E6516E52DA2BEF5002FDC39 /* MedtrumKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3E6516E32DA2BEF5002FDC39 /* MedtrumKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A965332F237348B119FB858 /* PreferencesEditorRootView.swift */; };
@@ -539,6 +542,7 @@
 				3E6516E52DA2BEF5002FDC39 /* MedtrumKit.framework in Embed Frameworks */,
 				CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */,
 				3818AA6B274C26A500843DB3 /* RileyLinkBLEKit.framework in Embed Frameworks */,
+				3E417D6A2DECDF1B00D2BFB8 /* EversenseKit.framework in Embed Frameworks */,
 				3818AA59274C26A300843DB3 /* LoopKit.framework in Embed Frameworks */,
 				B8CB7F112B5EF22C00614051 /* DanaKit.framework in Embed Frameworks */,
 				3818AA5B274C26A300843DB3 /* LoopKitUI.framework in Embed Frameworks */,
@@ -923,6 +927,8 @@
 		3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorProvider.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
 		3E07E9FE2DAED9DE006A6BD1 /* MedtrumPumpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumPumpManager.swift; sourceTree = "<group>"; };
+		3E417D662DECDE8900D2BFB8 /* EversenseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EversenseSource.swift; sourceTree = "<group>"; };
+		3E417D682DECDF1B00D2BFB8 /* EversenseKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EversenseKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E6516E32DA2BEF5002FDC39 /* MedtrumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MedtrumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F60E97100041040446F44E7 /* PumpConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigStateModel.swift; sourceTree = "<group>"; };
 		3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorDataFlow.swift; sourceTree = "<group>"; };
@@ -1111,6 +1117,7 @@
 				CE51DD1C2A01970900F163F7 /* ConnectIQ 2.xcframework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
 				3818AA5C274C26A300843DB3 /* MockKit.framework in Frameworks */,
+				3E417D692DECDF1B00D2BFB8 /* EversenseKit.framework in Frameworks */,
 				3818AA6A274C26A500843DB3 /* RileyLinkBLEKit.framework in Frameworks */,
 				3818AA6C274C26A500843DB3 /* RileyLinkKit.framework in Frameworks */,
 				3818AA5E274C26A300843DB3 /* MockKitUI.framework in Frameworks */,
@@ -1790,6 +1797,7 @@
 		3818AA48274C267000843DB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E417D682DECDF1B00D2BFB8 /* EversenseKit.framework */,
 				3E6516E32DA2BEF5002FDC39 /* MedtrumKit.framework */,
 				CE51DD1B2A01970800F163F7 /* ConnectIQ 2.xcframework */,
 				CE94597929E9DF7B0047C9C6 /* ConnectIQ.framework */,
@@ -1850,6 +1858,7 @@
 		3856933F270B57A00002C50D /* CGM */ = {
 			isa = PBXGroup;
 			children = (
+				3E417D662DECDE8900D2BFB8 /* EversenseSource.swift */,
 				CE398D15297C9D1D00DF218F /* dexcomSourceG7.swift */,
 				F816825F28DB441800054060 /* BluetoothTransmitter.swift */,
 				F816825D28DB441200054060 /* HeartBeatManager.swift */,
@@ -3247,6 +3256,7 @@
 				389ECDFE2601061500D86C4F /* View+Snapshot.swift in Sources */,
 				38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */,
 				38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */,
+				3E417D672DECDE8D00D2BFB8 /* EversenseSource.swift in Sources */,
 				F90692D1274B99B60037068D /* HealthKitProvider.swift in Sources */,
 				19F95FF729F10FEE00314DDC /* StatStateModel.swift in Sources */,
 				385CEAC125F2EA52002D6D5B /* Announcement.swift in Sources */,

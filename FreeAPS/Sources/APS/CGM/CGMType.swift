@@ -10,6 +10,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     case dexcomG7
     case simulator
     case libreTransmitter
+    case eversense
     case glucoseDirect
     case enlite
 
@@ -27,6 +28,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return "Dexcom G6"
         case .dexcomG7:
             return "Dexcom G7"
+        case .eversense:
+            return "Eversense CGM"
         case .simulator:
             return NSLocalizedString("Glucose Simulator", comment: "Glucose Simulator CGM type")
         case .libreTransmitter:
@@ -39,6 +42,7 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
     var appURL: URL? {
         switch self {
         case .enlite,
+             .eversense,
              .nightscout:
             return nil
         case .xdrip:
@@ -90,6 +94,11 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
                 "Direct connection with Libre 1 transmitters or European Libre 2 sensors",
                 comment: "Direct connection with Libre 1 transmitters or European Libre 2 sensors"
             )
+        case .eversense:
+            return NSLocalizedString(
+                "Direct connection with the Eversense (normal, XL, or 365)",
+                comment: "Direct connection with the Eversense (normal, XL, or 365)"
+            )
         case .glucoseDirect:
             return NSLocalizedString(
                 "Using shared app group with external CGM app GlucoseDirect",
@@ -111,6 +120,8 @@ enum CGMType: String, JSON, CaseIterable, Identifiable {
             return 14 * secondsOfDay
         case .enlite:
             return 6 * secondsOfDay
+        case .eversense:
+            return 365 * secondsOfDay
         default:
             return 10 * secondsOfDay
         }

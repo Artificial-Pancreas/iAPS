@@ -35,7 +35,7 @@ extension CGM {
                             }
                         }
                     }
-                    if [.dexcomG5, .dexcomG6, .dexcomG7].contains(state.cgm) {
+                    if [.dexcomG5, .dexcomG6, .dexcomG7, .eversense].contains(state.cgm) {
                         Section {
                             Button("CGM Configuration") {
                                 setupCGM.toggle()

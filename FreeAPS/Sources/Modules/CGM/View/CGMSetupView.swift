@@ -1,5 +1,6 @@
 import CGMBLEKit
 import CGMBLEKitUI
+import EversenseKit
 import G7SensorKit
 import G7SensorKitUI
 import LoopKit
@@ -52,6 +53,13 @@ extension CGM {
                         colorPalette: .default,
                         allowDebugFeatures: false
                     )
+            case .eversense:
+                setupViewController = EversenseCGMManager.setupViewController(
+                    bluetoothProvider: bluetoothManager,
+                    displayGlucoseUnitObservable: displayGlucoseUnitObservable,
+                    colorPalette: .default,
+                    allowDebugFeatures: false
+                )
             default:
                 break
             }
