@@ -2984,6 +2984,9 @@ Połączono z Nightscout!";
 /* Settings Section */
 "Extra Features" = "Extra Features";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Display Predictions";
 
