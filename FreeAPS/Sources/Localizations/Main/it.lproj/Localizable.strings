@@ -2983,6 +2983,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 /* Settings Section */
 "Extra Features" = "Funzioni aggiuntive";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Mostra Previsioni";
 
