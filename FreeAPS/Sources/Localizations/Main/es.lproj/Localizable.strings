@@ -2026,10 +2026,16 @@ Ajustes predeterminados:\n
 "2 hours" = "2 horas";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 horas";
 
 /* */
 "6 hours" = "6 horas";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 horas";
