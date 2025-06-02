@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 timmar";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 timmar";
 
 /* */
 "6 hours" = "6 timmar";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 timmar";
