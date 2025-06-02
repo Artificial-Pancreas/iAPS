@@ -3099,6 +3099,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 /* Settings Section */
 "Extra Features" = "Funciones adicionales";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Mostrar predicciones";
 
