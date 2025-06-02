@@ -2982,6 +2982,9 @@ Enact a temp Basal or a temp target */
 /* Settings Section */
 "Extra Features" = "Ekstra funktioner";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Vis Forudsigelser";
 
