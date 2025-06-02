@@ -2986,6 +2986,9 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* Settings Section */
 "Extra Features" = "Ďalšie funkcie";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";
 
