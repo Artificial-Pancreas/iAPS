@@ -2987,6 +2987,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* Settings Section */
 "Extra Features" = "Extra functionaliteiten";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";
 
