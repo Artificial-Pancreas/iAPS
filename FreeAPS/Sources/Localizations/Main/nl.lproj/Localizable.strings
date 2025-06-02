@@ -2016,10 +2016,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "2 hours" = "2 uur";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 uur";
 
 /* */
 "6 hours" = "6 uur";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 uur";
