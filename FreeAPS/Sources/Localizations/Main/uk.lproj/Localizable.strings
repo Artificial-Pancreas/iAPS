@@ -2983,6 +2983,9 @@ Enact a temp Basal or a temp target */
 /* Settings Section */
 "Extra Features" = "Додаткові функції";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Показати передбачення";
 
