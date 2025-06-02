@@ -2016,10 +2016,16 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "2 hours" = "2 hodiny";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 hodiny";
 
 /* */
 "6 hours" = "6 hodín";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 hodín";
@@ -2979,6 +2985,9 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Settings Section */
 "Extra Features" = "Ďalšie funkcie";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";

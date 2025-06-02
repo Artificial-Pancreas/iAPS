@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 ore";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 ore";
 
 /* */
 "6 hours" = "6 ore";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 ore";
@@ -2976,6 +2982,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* Settings Section */
 "Extra Features" = "Funzioni aggiuntive";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Mostra Previsioni";

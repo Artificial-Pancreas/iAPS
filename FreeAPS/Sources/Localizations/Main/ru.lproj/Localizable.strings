@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 часа";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 часа";
 
 /* */
 "6 hours" = "6 часов";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 часов";
@@ -2975,6 +2981,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Дополнительные функции";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Отображать прогнозы";

@@ -265,7 +265,7 @@
 "Resume" = "Tiếp tục";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Đã tạm ngưng";
+"Suspend" = "Đã tạm dừng";
 
 /* Title for user options */
 "User options" = "User options";

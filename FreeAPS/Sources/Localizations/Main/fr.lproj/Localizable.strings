@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 heures";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 heures";
 
 /* */
 "6 hours" = "6 heures";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 heures";
@@ -2975,6 +2981,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Fonctionnalités supplémentaires";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Afficher les prédictions";
