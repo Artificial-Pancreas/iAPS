@@ -726,6 +726,23 @@ final class OpenAPS {
                         )
                     }
                 }
+                
+                // End with new glucose trending up, when applicable
+                if useOverride, overrideArray.first?.glucoseOverrideThresholdActive ?? false, let g = cd.fetchRecentGlucose(),
+                   Decimal(g.glucose) > ((overrideArray.first?.glucoseOverrideThreshold ?? 100) as NSDecimalNumber) as Decimal,
+                   g.direction ?? BloodGlucose.Direction.fortyFiveDown.symbol == BloodGlucose.Direction.fortyFiveUp.symbol || g
+                   .direction ?? BloodGlucose
+                   .Direction.singleDown.symbol == BloodGlucose.Direction.singleUp.symbol || g.direction ?? BloodGlucose
+                   .Direction.doubleDown.symbol == BloodGlucose.Direction.doubleUp.symbol
+                {
+                    useOverride = false
+                    if OverrideStorage().cancelProfile() != nil {
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
+                        )
+                    }
+                }
             }
 
             if !useOverride {

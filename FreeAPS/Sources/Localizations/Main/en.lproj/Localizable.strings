@@ -1619,6 +1619,12 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "End the Override with next Meal";
 
+/* */
+"End when Glucose is Trending Up" = "End when Glucose is Trending Up";
+
+/* */
+"End the Override when Glucose is trending up and is higher than" = "End the Override when Glucose is trending up and is higher than";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profile";
 
