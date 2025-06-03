@@ -2016,7 +2016,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "2 hours" = "2 uur";
 
 /* */
-"3 hours" = "3 hours";
+"3 hours" = "3 uur";
 
 /* */
 "4 hours" = "4 uur";
@@ -2025,7 +2025,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "6 hours" = "6 uur";
 
 /* */
-"9 hours" = "9 hours";
+"9 hours" = "9 uur";
 
 /* */
 "12 hours" = "12 uur";
@@ -2988,7 +2988,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Extra Features" = "Extra functionaliteiten";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "UI/UX instellingen";
 
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";
