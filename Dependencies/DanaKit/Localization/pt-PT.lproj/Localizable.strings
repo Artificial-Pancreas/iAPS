@@ -56,7 +56,7 @@
 "OK" = "OK";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Found Dana-i/RS pumps";
@@ -277,7 +277,7 @@
 "Loading" = "Loading";
 
 /* Text for save button */
-"Save" = "Save";
+"Save" = "Salvar";
 
 /* Text for 24h display */
 "24h display" = "24h display";
@@ -527,13 +527,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "The Dana pumps support different delivery speeds. You can set it up here";
 
 /* Text for Basal profile */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Perfil Basal";
 
 /* Text for Battery level */
 "Battery level" = "Battery level";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Configuration";
+"Configuration" = "Ajustes";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Low reservoir reminder";

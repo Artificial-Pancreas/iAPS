@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "CGM löschen";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Sind Sie sicher, dass Sie diesen CGM aus dem Loop löschen wollen?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Rücknahme nicht möglich";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Auffüllen-Optionen";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Auffüllen der Werte aus dem Trend wird derzeit von Loop nicht gut unterstützt";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Auffüllen aus dem Verlauf";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ für %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop passt deine Insulinabgabe nicht automatisch an, bis die temporäre Basalrate beendet oder abgebrochen wird.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Temporäre Basalrate festlegen";
 
@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 Stunden";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 Stunden";
 
 /* */
 "6 hours" = "6 Stunden";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 Stunden";
@@ -2976,6 +2982,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Zusätzliche Funktionen";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Prognosen anzeigen";

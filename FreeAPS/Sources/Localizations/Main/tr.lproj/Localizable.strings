@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "CGM'i Sil";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Bu CGM'i iAPS'den kaldırmak istediğinizden emin misiniz?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Geri çekme yok";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Geri doldurma seçenekleri";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Trendden yapılan dolgu şu anda Loop tarafından iyi desteklenmiyor";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Geçmiş geri doldurma";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%2$@ için %1$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Döngü, geçici bazal oran bitene veya iptal edilene kadar insülin iletiminizi otomatik olarak ayarlamaz.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Geçici Bazalı Ayarla";
 
@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 saat";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 hours";
 
 /* */
 "6 hours" = "6 hours";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 hours";
@@ -2975,6 +2981,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Extra Features";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Display Predictions";
