@@ -17,6 +17,15 @@
 "Continue without bolus" = "Continue without bolus";
 
 /* History View */
+"No data." = "No data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+
+/* Bolus View */
+"Missing Glucose" = "Missing Glucose"; 
+
+/* History View */
 "No data." = "No data."
 
 /* Bolus View */
