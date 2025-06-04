@@ -1004,7 +1004,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Delete CGM" = "Eliminar MCG";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "¿Estás seguro de que deseas eliminar esta MCG del lazo cerrado?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "No se puede deshacer";
@@ -1236,7 +1236,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Backfill options" = "Opciones de relleno";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "El relleno de las tendencias no está bien soportado por Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Rellenar valores desde historial";
@@ -1915,7 +1915,7 @@ Ajustes predeterminados:\n
 "%1$@ for %2$@" = "%1$@ para %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS no ajustará automáticamente su administración de insulina hasta que el actual ratio de insulina basal temporal finalice o sea cancelado.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Establecer basal temporal";
 
@@ -2026,10 +2026,16 @@ Ajustes predeterminados:\n
 "2 hours" = "2 horas";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 horas";
 
 /* */
 "6 hours" = "6 horas";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 horas";
@@ -3092,6 +3098,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* Settings Section */
 "Extra Features" = "Funciones adicionales";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Mostrar predicciones";

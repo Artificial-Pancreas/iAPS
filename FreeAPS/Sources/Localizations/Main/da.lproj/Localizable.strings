@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Slet CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Er du sikker på at du vil fjerne denne CGM fra iAPS?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Der er ingen fortryd";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Valgmuligheder for tilbagefyldning";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Tilbagefyldning fra trend er i øjeblikket ikke godt understøttet af Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Tilbagefyldning fra historik";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS justerer ikke automatisk din insulindosering, før den midlertidige basalrate er afsluttet eller annulleret.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Sæt Midlertidig Basal";
 
@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 timer";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 timer";
 
 /* */
 "6 hours" = "6 timer";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 timer";
@@ -2975,6 +2981,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Ekstra funktioner";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Vis Forudsigelser";

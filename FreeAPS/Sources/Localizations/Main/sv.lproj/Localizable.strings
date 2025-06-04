@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Radera CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Är du säker på att du vill ta bort denna CGM från iAPS?";
+"Are you sure you want to remove this cgm from iAPS?" = "Är du säker på att du vill ta bort denna CGM från iAPS?";
 
 /* */
 "There is no undo" = "Det går inte att ångra!";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Alternativ för återfyllnad";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Återfyllning från trend stöds för närvarande inte bra av Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Återfyllning från trend stöds för närvarande inte bra av iAPS";
 
 /* */
 "Backfill from history" = "Återfyll från historik";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Ställ in temporaär basal";
 
@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 timmar";
 
 /* */
+"3 hours" = "3 timmar";
+
+/* */
 "4 hours" = "4 timmar";
 
 /* */
 "6 hours" = "6 timmar";
+
+/* */
+"9 hours" = "9 timmar";
 
 /* */
 "12 hours" = "12 timmar";
@@ -2975,6 +2981,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Extra";
+
+/* Header */
+"UI/UX Settings" = "UI/UX-inställningar";
 
 /* UI/UX option */
 "Display Predictions" = "Visa prognoser";

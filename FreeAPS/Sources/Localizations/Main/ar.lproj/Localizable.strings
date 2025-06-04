@@ -1004,7 +1004,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "حذف المستشعر";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "هل أنت متأكد من أنك تريد إزالة هذا المستشعر من لووب؟";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "لا يوجد تراجع!";
@@ -1236,7 +1236,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "خيارات الإملاء العكسية";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Backfilling from trend is currently not well supported by Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Backfill from history";
@@ -1905,7 +1905,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ for %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Set Temporary Basal";
 
@@ -2016,10 +2016,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "ساعتان";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 hours";
 
 /* */
 "6 hours" = "6 hours";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 hours";
@@ -2976,6 +2982,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Extra Features";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Display Predictions";

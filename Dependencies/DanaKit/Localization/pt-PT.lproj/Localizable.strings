@@ -56,7 +56,7 @@
 "OK" = "OK";
 
 /* Cancel button title */
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 
 /* Title for DanaKitScanView */
 "Found Dana-i/RS pumps" = "Found Dana-i/RS pumps";
@@ -65,7 +65,7 @@
 "Scanning" = "Scanning";
 
 /* Dana-i/RS connecting alert title */
-"Connecting" = "מתחבר";
+"Connecting" = "Connecting";
 
 /* Title text for insulin type confirmation page */
 "Select the type of insulin that you will be using in this pump" = "Select the type of insulin that you will be using in this pump";
@@ -244,7 +244,7 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?";
 
 /* description for time change detected notice */
-"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "השעה במשאבה שלך שונה מהשעה הנוכחית. הגדרות הטיפול נקבעות לפי השעה במשאבה.  יש לבדוק את הפרשי הזמן ולעדכן את השעה במשאבה.";
+"The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump." = "The time on your pump is different from the current time. Your pump’s time controls your scheduled therapy settings. Scroll down to Pump Time row to review the time difference and configure your pump.";
 
 /* Button text to confirm pump time sync */
 "Yes, Sync to Current Time" = "Yes, Sync to Current Time";
@@ -277,7 +277,7 @@
 "Loading" = "Loading";
 
 /* Text for save button */
-"Save" = "Save";
+"Save" = "Salvar";
 
 /* Text for 24h display */
 "24h display" = "24h display";
@@ -286,10 +286,10 @@
 "Should time be display in 12h or 24h" = "Should time be display in 12h or 24h";
 
 /* text on */
-"On" = "דולק";
+"On" = "On";
 
 /* text off */
-"Off" = "כבוי";
+"Off" = "Off";
 
 /* 12h */
 "12h notation" = "12h notation";
@@ -452,10 +452,10 @@
 "Reconnect tp pump" = "Reconnect tp pump";
 
 /* DanaKit disconnected */
-"Disconnected" = "מנותק";
+"Disconnected" = "Disconnected";
 
 /* DanaKit connected */
-"Connected" = "מחובר";
+"Connected" = "Connected";
 
 /* Title disconnect reminder notification */
 "Pump is still disconnected" = "Pump is still disconnected";
@@ -527,13 +527,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "The Dana pumps support different delivery speeds. You can set it up here";
 
 /* Text for Basal profile */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Perfil Basal";
 
 /* Text for Battery level */
-"Battery level" = "מצב הסוללה";
+"Battery level" = "Battery level";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Configuration";
+"Configuration" = "Ajustes";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Low reservoir reminder";

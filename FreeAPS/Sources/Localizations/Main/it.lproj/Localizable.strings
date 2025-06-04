@@ -191,7 +191,7 @@
 "Cancel Temp Target" = "Cancella basali temporanee";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Cancella basali temporanee";
 
 /* Custom temp target */
 "Custom" = "Personalizzato";
@@ -1003,7 +1003,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Cancella CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Sei sicuro di voler rimuovere questo cgm dal ciclo?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Impossibile annullare";
@@ -1235,7 +1235,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Opzioni di riempimento";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Il riempimento dalla tendenza non è attualmente ben supportato da Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Riempi dalla cronologia";
@@ -1904,7 +1904,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ per %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Loop non regolerà automaticamente l'erogazione d'insulina fino a quando l'impostazione della basale temporanea non sarà terminata o cancellata.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Imposta basale temporanea";
 
@@ -2015,10 +2015,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 ore";
 
 /* */
+"3 hours" = "3 ore";
+
+/* */
 "4 hours" = "4 ore";
 
 /* */
 "6 hours" = "6 ore";
+
+/* */
+"9 hours" = "9 ore";
 
 /* */
 "12 hours" = "12 ore";
@@ -2976,6 +2982,9 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 
 /* Settings Section */
 "Extra Features" = "Funzioni aggiuntive";
+
+/* Header */
+"UI/UX Settings" = "Impostazioni UI/UX";
 
 /* UI/UX option */
 "Display Predictions" = "Mostra Previsioni";
