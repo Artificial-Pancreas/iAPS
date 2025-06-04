@@ -1507,7 +1507,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Pripojte Apple Health";
+"Connect to Apple Health" = "Pripojiť k Apple Health";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Ak chcete zapisovať údaje do aplikácie Apple Health, musíte udeliť oprávnenia v ponuke Nastavenia > Zdravie > Prístup k údajom";
@@ -3029,7 +3029,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Statistics settings " = "Nastavenia štatistík ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Prepísanie jednotky HbA1c";
+"Override HbA1c Unit" = "Prepísať jednotky HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "V prípade, že používate profily aj dočasný cieľ";
