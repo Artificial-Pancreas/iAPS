@@ -43,9 +43,13 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         ], function: "generate", variable: "iaps_autoisf")
     ]
 
-    init(frame: CGRect = .zero) {
+    init(frame _: CGRect = .zero) {
         super.init()
 
+        webView = createWebView()
+    }
+
+    private func createWebView() -> WKWebView {
         let contentController = WKUserContentController()
         contentController.add(self, name: "consoleLog")
         contentController.add(self, name: "jsBridge")
@@ -54,13 +58,15 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
 
-        webView = WKWebView(frame: frame, configuration: config)
+        let webView = WKWebView(frame: .zero, configuration: config)
 
-        injectConsoleLogHandler()
-        loadScripts()
+        injectConsoleLogHandler(webView: webView)
+        loadScripts(webView: webView)
+
+        return webView
     }
 
-    private func injectConsoleLogHandler() {
+    private func injectConsoleLogHandler(webView: WKWebView) {
         let consoleScript = """
         var _consoleLog = function (message) {
             window.webkit.messageHandlers.consoleLog.postMessage(message.join(" "));
@@ -71,7 +77,7 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
 
         """
         DispatchQueue.main.async {
-            self.webView.evaluateJavaScript(consoleScript, completionHandler: nil)
+            webView.evaluateJavaScript(consoleScript, completionHandler: nil)
         }
     }
 
@@ -79,23 +85,23 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         scripts.filter { $0.name == name }.first
     }
 
-    private func loadScripts() {
+    private func loadScripts(webView: WKWebView) {
         DispatchQueue.main.async {
             for script in self.scripts {
-                self.includeScript(script: script)
+                self.includeScript(webView: webView, script: script)
             }
 
-            self.includeScript(script: Script(name: OpenAPS.Prepare.log))
+            self.includeScript(webView: webView, script: Script(name: OpenAPS.Prepare.log))
         }
     }
 
-    func includeScript(script: FunctionScript) {
-        includeScript(script: Script(name: "Script", body: script.body))
+    func includeScript(webView: WKWebView, script: FunctionScript) {
+        includeScript(webView: webView, script: Script(name: "Script", body: script.body))
     }
 
-    func includeScript(script: Script) {
+    func includeScript(webView: WKWebView, script: Script) {
         DispatchQueue.main.async {
-            self.webView.evaluateJavaScript(script.body)
+            webView.evaluateJavaScript(script.body)
         }
     }
 
@@ -124,8 +130,6 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
     func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
         let joined = arguments.map(\.rawJSON).joined(separator: ",")
 
-        print("[WKWebView]: Calling Javascript function \(function)")
-
         let script = """
         \(body)
 
@@ -134,10 +138,8 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
 
         do {
             let result = try await evaluateFunction(body: script) as! RawJSON
-            print("[WKWebView]: Received script result for function \"\(function)\": \(result)")
             return result
         } catch {
-            debug(.openAPS, "[WKWebView]: Received script error for function \"\(function)\": \(error)")
             print(error)
             return ""
         }
@@ -195,13 +197,12 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
 
     var continuations: [String: CheckedContinuation<Any, Error>] = [:]
 
-    func evaluateFunction(body: String) async throws -> Any {
+    func evaluateFunction(body: String, attempts: Int = 0) async throws -> Any {
+        let maxAttempts = 3
         let requestId = UUID().uuidString
-        // Just a timeout for security reason
-        let timeoutSeconds: TimeInterval = 10
 
         let script = """
-        setTimeout(() => (async function() {
+        (async function () {
             try {
                 var result = await (function() {
                     \(body)
@@ -210,30 +211,32 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
             } catch (e) {
                 window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", error: e.toString() });
             }
-        })(), 0);
+        })();
         """
 
-        return try await withCheckedThrowingContinuation { continuation in
-            continuations[requestId] = continuation
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                continuations[requestId] = continuation
 
-            DispatchQueue.main.async {
-                self.webView.evaluateJavaScript(script) { _, error in
-                    if let error = error {
-                        self.continuations.removeValue(forKey: requestId)
-                        print(error)
-                        continuation.resume(throwing: error)
+                DispatchQueue.main.async {
+                    self.webView.evaluateJavaScript(script) { _, error in
+                        if let error = error {
+                            if let removedContinuation = self.continuations.removeValue(forKey: requestId) {
+                                removedContinuation.resume(throwing: error)
+                            }
+                        }
                     }
                 }
             }
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + timeoutSeconds) {
-                if let cont = self.continuations.removeValue(forKey: requestId) {
-                    cont.resume(throwing: NSError(
-                        domain: "WebViewScriptExecutor",
-                        code: 408,
-                        userInfo: [NSLocalizedDescriptionKey: "JavaScript function timed out"]
-                    ))
+        } catch {
+            print("Javascript function (\(requestId)) attempt \(attempts + 1) failed with error: \(error)")
+            if attempts <= maxAttempts {
+                DispatchQueue.main.sync {
+                    self.webView = self.createWebView()
                 }
+                return try await evaluateFunction(body: body, attempts: attempts + 1)
+            } else {
+                throw error
             }
         }
     }
@@ -250,7 +253,6 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         }
         // Handle responses from evaluateFunction via jsBridge
         if message.name == "jsBridge", let body = message.body as? [String: Any], let id = body["id"] as? String {
-            print("Received jsBridge response: ", body)
             if let continuation = continuations.removeValue(forKey: id) {
                 if let value = body["value"] {
                     continuation.resume(returning: value)
