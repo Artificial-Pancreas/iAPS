@@ -179,7 +179,7 @@
 "Resume delivery" = "Obnoviť podávanie inzulínu";
 
 /* Dana settings suspend delivery */
-"Suspend delivery" = "Pozastavenie dávkovania";
+"Suspend delivery" = "Pozastaviť dávkovanie";
 
 /* Dana settings stop temp basal */
 "Stop temp basal" = "Zastaviť dočasnú dávku bazálu";
@@ -539,7 +539,7 @@
 "Low reservoir reminder" = "Pripomienka nízkej hladiny";
 
 /* refillAmount */
-"Refill amount" = "Zostatok inzulínu";
+"Refill amount" = "Zostávajúci inzulín";
 
 /* Insulin unit */
 "U" = "J";
