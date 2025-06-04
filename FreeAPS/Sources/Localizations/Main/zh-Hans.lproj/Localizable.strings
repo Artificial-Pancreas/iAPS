@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "不输注胰岛素并继续";
 
+/* History View */
+"No data." = "No data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+
+/* Bolus View */
+"Missing Glucose" = "Missing Glucose";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Save Meal without bolus";
 
