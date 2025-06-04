@@ -698,7 +698,7 @@ extension Home {
                     Button(label, action: { state.hours = value })
                 }
 
-                Button(NSLocalizedString("UI/UX Settings", comment: ""), action: {
+                Button("UI/UX Settings", action: {
                     state.showModal(for: .statisticsConfig)
                 })
             }
