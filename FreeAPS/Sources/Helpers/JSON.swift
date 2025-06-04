@@ -1,6 +1,6 @@
 import Foundation
 
-@dynamicMemberLookup protocol JSON: Codable {
+@dynamicMemberLookup protocol JSON: Codable, Sendable {
     var rawJSON: String { get }
     init?(from: String)
 }

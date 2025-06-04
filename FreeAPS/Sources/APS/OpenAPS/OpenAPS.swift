@@ -94,7 +94,7 @@ final class OpenAPS {
 
                     // The Middleware layer.
                     now = Date.now
-                    let alteredProfile = self.middleware(
+                    let alteredProfile = await self.middleware(
                         glucose: glucose,
                         currentTemp: tempBasal,
                         iob: iob,
@@ -109,7 +109,7 @@ final class OpenAPS {
                     // Auto ISF Layer
                     if let freeAPSSettings = settings, freeAPSSettings.autoisf {
                         now = Date.now
-                        profile = self.autosisf(
+                        profile = await self.autosisf(
                             glucose: glucose,
                             iob: iob,
                             profile: alteredProfile,
@@ -123,7 +123,7 @@ final class OpenAPS {
 
                     now = Date.now
                     // The OpenAPS layer
-                    let suggested = self.determineBasal(
+                    let suggested = await self.determineBasal(
                         glucose: glucose,
                         currentTemp: tempBasal,
                         iob: iob,
@@ -192,22 +192,25 @@ final class OpenAPS {
                 let profile = self.loadFileFromStorage(name: Settings.profile)
                 let basalProfile = self.loadFileFromStorage(name: Settings.basalProfile)
                 let tempTargets = self.loadFileFromStorage(name: Settings.tempTargets)
-                let autosensResult = self.autosense(
-                    glucose: glucose,
-                    pumpHistory: pumpHistory,
-                    basalprofile: basalProfile,
-                    profile: profile,
-                    carbs: carbs,
-                    temptargets: tempTargets
-                )
 
-                debug(.openAPS, "AUTOSENS: \(autosensResult)")
-                if var autosens = Autosens(from: autosensResult) {
-                    autosens.timestamp = Date()
-                    self.storage.save(autosens, as: Settings.autosense)
-                    promise(.success(autosens))
-                } else {
-                    promise(.success(nil))
+                Task {
+                    let autosensResult = await self.autosense(
+                        glucose: glucose,
+                        pumpHistory: pumpHistory,
+                        basalprofile: basalProfile,
+                        profile: profile,
+                        carbs: carbs,
+                        temptargets: tempTargets
+                    )
+
+                    debug(.openAPS, "AUTOSENS: \(autosensResult)")
+                    if var autosens = Autosens(from: autosensResult) {
+                        autosens.timestamp = Date()
+                        self.storage.save(autosens, as: Settings.autosense)
+                        promise(.success(autosens))
+                    } else {
+                        promise(.success(nil))
+                    }
                 }
             }
         }
@@ -223,32 +226,34 @@ final class OpenAPS {
                 let pumpProfile = self.loadFileFromStorage(name: Settings.pumpProfile)
                 let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
 
-                let autotunePreppedGlucose = self.autotunePrepare(
-                    pumphistory: pumpHistory,
-                    profile: profile,
-                    glucose: glucose,
-                    pumpprofile: pumpProfile,
-                    carbs: carbs,
-                    categorizeUamAsBasal: categorizeUamAsBasal,
-                    tuneInsulinCurve: tuneInsulinCurve
-                )
-                debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
+                Task {
+                    let autotunePreppedGlucose = await self.autotunePrepare(
+                        pumphistory: pumpHistory,
+                        profile: profile,
+                        glucose: glucose,
+                        pumpprofile: pumpProfile,
+                        carbs: carbs,
+                        categorizeUamAsBasal: categorizeUamAsBasal,
+                        tuneInsulinCurve: tuneInsulinCurve
+                    )
+                    debug(.openAPS, "AUTOTUNE PREP: \(autotunePreppedGlucose)")
 
-                let previousAutotune = self.storage.retrieve(Settings.autotune, as: RawJSON.self)
+                    let previousAutotune = self.storage.retrieve(Settings.autotune, as: RawJSON.self)
 
-                let autotuneResult = self.autotuneRun(
-                    autotunePreparedData: autotunePreppedGlucose,
-                    previousAutotuneResult: previousAutotune ?? profile,
-                    pumpProfile: pumpProfile
-                )
+                    let autotuneResult = await self.autotuneRun(
+                        autotunePreparedData: autotunePreppedGlucose,
+                        previousAutotuneResult: previousAutotune ?? profile,
+                        pumpProfile: pumpProfile
+                    )
 
-                debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
+                    debug(.openAPS, "AUTOTUNE RESULT: \(autotuneResult)")
 
-                if let autotune = Autotune(from: autotuneResult) {
-                    self.storage.save(autotuneResult, as: Settings.autotune)
-                    promise(.success(autotune))
-                } else {
-                    promise(.success(nil))
+                    if let autotune = Autotune(from: autotuneResult) {
+                        self.storage.save(autotuneResult, as: Settings.autotune)
+                        promise(.success(autotune))
+                    } else {
+                        promise(.success(nil))
+                    }
                 }
             }
         }
@@ -990,7 +995,7 @@ final class OpenAPS {
 
     private func iob(pumphistory: JSON, profile: JSON, clock: JSON, autosens: JSON) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.callAsync(name: OpenAPS.Prepare.iob, with: [
+        await scriptExecutor.call(name: OpenAPS.Prepare.iob, with: [
             pumphistory,
             profile,
             clock,
@@ -1007,7 +1012,7 @@ final class OpenAPS {
         glucose: JSON,
         temporary: TemporaryData
     ) async -> RawJSON {
-        await scriptExecutor.callAsync(name: OpenAPS.Prepare.meal, with: [
+        await scriptExecutor.call(name: OpenAPS.Prepare.meal, with: [
             pumphistory,
             profile,
             clock,
@@ -1026,9 +1031,9 @@ final class OpenAPS {
         carbs: JSON,
         categorizeUamAsBasal: Bool,
         tuneInsulinCurve: Bool
-    ) -> RawJSON {
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
-        scriptExecutor.call(name: OpenAPS.Prepare.autotunePrep, with: [
+        await scriptExecutor.call(name: OpenAPS.Prepare.autotunePrep, with: [
             pumphistory,
             profile,
             glucose,
@@ -1043,9 +1048,9 @@ final class OpenAPS {
         autotunePreparedData: JSON,
         previousAutotuneResult: JSON,
         pumpProfile: JSON
-    ) -> RawJSON {
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
-        scriptExecutor.call(name: OpenAPS.Prepare.autotuneCore, with: [
+        await scriptExecutor.call(name: OpenAPS.Prepare.autotuneCore, with: [
             autotunePreparedData,
             previousAutotuneResult,
             pumpProfile
@@ -1062,10 +1067,10 @@ final class OpenAPS {
         microBolusAllowed: Bool,
         reservoir: JSON,
         pumpHistory: JSON
-    ) -> RawJSON {
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
 
-        scriptExecutor.call(
+        await scriptExecutor.call(
             name: OpenAPS.Prepare.determineBasal,
             with: [
                 iob,
@@ -1089,9 +1094,9 @@ final class OpenAPS {
         profile: JSON,
         carbs: JSON,
         temptargets: JSON
-    ) -> RawJSON {
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
-        scriptExecutor.call(
+        await scriptExecutor.call(
             name: OpenAPS.Prepare.autosens,
             with: [
                 glucose,
@@ -1128,9 +1133,9 @@ final class OpenAPS {
         freeaps: JSON,
         dynamicVariables: DynamicVariables,
         settings: JSON
-    ) -> RawJSON {
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
-        scriptExecutor.call(
+        await scriptExecutor.call(
             name: OpenAPS.Prepare.profile,
             with: [
                 pumpSettings,
@@ -1164,7 +1169,7 @@ final class OpenAPS {
         settings: JSON
     ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
-        await scriptExecutor.callAsync(
+        await scriptExecutor.call(
             name: OpenAPS.Prepare.profile,
             with: [
                 pumpSettings,
@@ -1192,12 +1197,12 @@ final class OpenAPS {
         meal: JSON,
         microBolusAllowed: Bool,
         reservoir: JSON
-    ) -> RawJSON {
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
 
         let script = middlewareScript(name: OpenAPS.Middleware.determineBasal)
 
-        return scriptExecutor.call(
+        return await scriptExecutor.call(
             name: OpenAPS.Prepare.string,
             with: [
                 "middleware",
@@ -1221,10 +1226,10 @@ final class OpenAPS {
         profile: JSON,
         autosens: JSON,
         pumpHistory: JSON
-    ) -> RawJSON {
+    ) async -> RawJSON {
         // dispatchPrecondition(condition: .onQueue(processQueue))
 
-        scriptExecutor.call(
+        await scriptExecutor.call(
             name: OpenAPS.AutoISF.autoisf,
             with: [
                 iob,
