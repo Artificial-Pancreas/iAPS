@@ -59,7 +59,7 @@
 "Confirm Bolus Faster" = "Rýchlejšie potvrdenie bolusu";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "Rozhranie";
 
 /*  */
 "Wait please" = "Počkajte, prosím";
@@ -2987,7 +2987,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Extra Features" = "Ďalšie funkcie";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "Nastavenie rozhrania";
 
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";
