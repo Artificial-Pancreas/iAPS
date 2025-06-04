@@ -248,17 +248,17 @@ extension AddCarbs {
                     HStack {
                         Text("Carbs").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter, liveEditing: true)
                     }
                     HStack {
                         Text("Fat").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter, liveEditing: true)
                     }
                     HStack {
                         Text("Protein").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter, liveEditing: true)
                     }
                 } header: { Text("Saved Food") }
 
