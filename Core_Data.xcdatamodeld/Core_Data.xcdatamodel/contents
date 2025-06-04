@@ -112,6 +112,8 @@
         <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="glucoseOverrideThreshold" optional="YES" attributeType="Decimal" defaultValueString="100"/>
         <attribute name="glucoseOverrideThresholdActive" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdActiveDown" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdDown" optional="YES" attributeType="Decimal" defaultValueString="90"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -145,6 +147,8 @@
         <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="glucoseOverrideThreshold" optional="YES" attributeType="Decimal" defaultValueString="100"/>
         <attribute name="glucoseOverrideThresholdActive" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdActiveDown" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdDown" optional="YES" attributeType="Decimal" defaultValueString="90"/>
         <attribute name="id" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>

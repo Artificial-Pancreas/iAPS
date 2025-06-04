@@ -291,6 +291,25 @@ extension OverrideProfilesConfig {
                                 )
                             }
                         }
+
+                        HStack {
+                            Toggle(isOn: $state.glucoseOverrideThresholdActiveDown) {
+                                Text("End the Override when Glucose is Trending Down")
+                            }
+                        }
+
+                        if state.glucoseOverrideThresholdActiveDown {
+                            HStack {
+                                Text("And when Glucose is lower than")
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.glucoseOverrideThresholdDown,
+                                    units: $state.units,
+                                    isDisabled: false,
+                                    liveEditing: true
+                                )
+                            }
+                        }
                     }
                 } header: { Text("Advanced Settings") }
 
@@ -698,7 +717,7 @@ extension OverrideProfilesConfig {
                             bool(bool: aisf.autoisf, setting: state.currentSettings.autoisf, label: "Auto ISF")
                         }
 
-                        if preset.glucoseOverrideThresholdActive {
+                        if preset.glucoseOverrideThresholdActive || preset.glucoseOverrideThresholdActiveDown {
                             Image(systemName: "drop.fill").foregroundStyle(.red)
                         }
                     }
@@ -916,6 +935,11 @@ extension OverrideProfilesConfig {
             saveOverride.glucoseOverrideThresholdActive = state.glucoseOverrideThresholdActive
             if state.glucoseOverrideThresholdActive {
                 saveOverride.glucoseOverrideThreshold = state.glucoseOverrideThreshold as NSDecimalNumber
+            }
+
+            saveOverride.glucoseOverrideThresholdActiveDown = state.glucoseOverrideThresholdActiveDown
+            if state.glucoseOverrideThresholdActiveDown {
+                saveOverride.glucoseOverrideThresholdDown = state.glucoseOverrideThresholdDown as NSDecimalNumber
             }
 
             saveOverride.date = Date.now

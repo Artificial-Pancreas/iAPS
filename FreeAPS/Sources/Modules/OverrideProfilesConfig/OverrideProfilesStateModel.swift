@@ -36,6 +36,9 @@ extension OverrideProfilesConfig {
         @Published var overrideAutoISF: Bool = false
         @Published var glucoseOverrideThresholdActive: Bool = false
         @Published var glucoseOverrideThreshold: Decimal = 100
+        @Published var glucoseOverrideThresholdActiveDown: Bool = false
+        @Published var glucoseOverrideThresholdDown: Decimal = 100
+
         @Published var currentSettings = AutoISFsettings()
 
         @Published var autoISFsettings = AutoISFsettings()
@@ -118,6 +121,10 @@ extension OverrideProfilesConfig {
                     if glucoseOverrideThresholdActive {
                         saveOverride.glucoseOverrideThreshold = glucoseOverrideThreshold as NSDecimalNumber
                     }
+                    saveOverride.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
+                    if glucoseOverrideThresholdActiveDown {
+                        saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
+                    }
                 }
 
                 if overrideAutoISF {
@@ -163,6 +170,11 @@ extension OverrideProfilesConfig {
                 if glucoseOverrideThresholdActive {
                     saveOverride.glucoseOverrideThresholdActive = glucoseOverrideThresholdActive
                     saveOverride.glucoseOverrideThreshold = glucoseOverrideThreshold as NSDecimalNumber
+                }
+
+                if glucoseOverrideThresholdActiveDown {
+                    saveOverride.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
+                    saveOverride.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown as NSDecimalNumber
                 }
 
                 if smbIsAlwaysOff {
@@ -246,6 +258,11 @@ extension OverrideProfilesConfig {
                 saveOverride.glucoseOverrideThreshold = (profile.glucoseOverrideThreshold ?? 100) as NSDecimalNumber
             }
 
+            if glucoseOverrideThresholdActiveDown {
+                saveOverride.glucoseOverrideThresholdActiveDown = true
+                saveOverride.glucoseOverrideThresholdDown = (profile.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber
+            }
+
             // Saves
             coredataContext.perform { try? self.coredataContext.save() }
 
@@ -284,10 +301,17 @@ extension OverrideProfilesConfig {
             endWIthNewCarbs = !edit ? overrideArray!.endWIthNewCarbs : presetArray?.endWIthNewCarbs ?? false
             glucoseOverrideThresholdActive = !edit ? overrideArray!.glucoseOverrideThresholdActive : presetArray?
                 .glucoseOverrideThresholdActive ?? false
+            glucoseOverrideThresholdActiveDown = !edit ? overrideArray!.glucoseOverrideThresholdActiveDown : presetArray?
+                .glucoseOverrideThresholdActiveDown ?? false
 
             if glucoseOverrideThresholdActive {
                 glucoseOverrideThreshold = !edit ? (overrideArray?.glucoseOverrideThreshold ?? 100) as Decimal :
                     (presetArray?.glucoseOverrideThreshold ?? 100) as Decimal
+            }
+
+            if glucoseOverrideThresholdActiveDown {
+                glucoseOverrideThresholdDown = !edit ? (overrideArray?.glucoseOverrideThresholdDown ?? 100) as Decimal :
+                    (presetArray?.glucoseOverrideThresholdDown ?? 100) as Decimal
             }
 
             isf = !edit ? overrideArray!.isf : presetArray?.isf ?? true
@@ -378,6 +402,8 @@ extension OverrideProfilesConfig {
             endWIthNewCarbs = false
             glucoseOverrideThresholdActive = false
             glucoseOverrideThreshold = 100
+            glucoseOverrideThresholdActiveDown = false
+            glucoseOverrideThresholdDown = 90
 
             autoISFsettings = currentSettings
         }
