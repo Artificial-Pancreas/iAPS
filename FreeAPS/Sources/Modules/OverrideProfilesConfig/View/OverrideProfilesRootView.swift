@@ -697,6 +697,10 @@ extension OverrideProfilesConfig {
                         if let aisf = autoisfSettings, preset.overrideAutoISF {
                             bool(bool: aisf.autoisf, setting: state.currentSettings.autoisf, label: "Auto ISF")
                         }
+
+                        if preset.glucoseOverrideThresholdActive {
+                            Image(systemName: "drop.fill").foregroundStyle(.red)
+                        }
                     }
                     .font(.caption)
 
