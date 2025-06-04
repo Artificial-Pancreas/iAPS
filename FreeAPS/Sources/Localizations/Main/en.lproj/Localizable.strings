@@ -1620,7 +1620,7 @@ Enact a temp Basal or a temp target */
 "End the Override with next Meal" = "End the Override with next Meal";
 
 /* */
-"End when Glucose is Trending Up" = "End when Glucose is Trending Up";
+"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
 
 /* */
 "And when Glucose is higher than" = "And when Glucose is higher than";

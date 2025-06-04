@@ -202,12 +202,6 @@ extension OverrideProfilesConfig {
                         }
 
                         HStack {
-                            Toggle(isOn: $state.endWIthNewCarbs) {
-                                Text("End the Override with next Meal")
-                            }
-                        }
-
-                        HStack {
                             Toggle(isOn: $state.isfAndCr) {
                                 Text("Change ISF and CR and Basal")
                             }
@@ -270,9 +264,18 @@ extension OverrideProfilesConfig {
                             }
                         }
 
+                        // Blank Divider()
+                        HStack {}
+
+                        HStack {
+                            Toggle(isOn: $state.endWIthNewCarbs) {
+                                Text("End the Override with next Meal")
+                            }
+                        }
+
                         HStack {
                             Toggle(isOn: $state.glucoseOverrideThresholdActive) {
-                                Text("End when Glucose is Trending Up")
+                                Text("End the Override when Glucose is Trending Up")
                             }
                         }
 
