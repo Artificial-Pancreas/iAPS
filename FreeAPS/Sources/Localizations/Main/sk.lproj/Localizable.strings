@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Pokračovať bez bolusu";
 
+/* History View */
+"No data." = "No data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+
+/* Bolus View */
+"Missing Glucose" = "Missing Glucose";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Uložiť jedlo bez bolusu";
 
@@ -59,7 +68,7 @@
 "Confirm Bolus Faster" = "Rýchlejšie potvrdenie bolusu";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "Rozhranie";
 
 /*  */
 "Wait please" = "Počkajte, prosím";
@@ -1498,7 +1507,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Pripojte Apple Health";
+"Connect to Apple Health" = "Pripojiť k Apple Health";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Ak chcete zapisovať údaje do aplikácie Apple Health, musíte udeliť oprávnenia v ponuke Nastavenia > Zdravie > Prístup k údajom";
@@ -2016,7 +2025,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "2 hours" = "2 hodiny";
 
 /* */
-"3 hours" = "3 hours";
+"3 hours" = "3 hodiny";
 
 /* */
 "4 hours" = "4 hodiny";
@@ -2025,7 +2034,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "6 hours" = "6 hodín";
 
 /* */
-"9 hours" = "9 hours";
+"9 hours" = "9 hodín";
 
 /* */
 "12 hours" = "12 hodín";
@@ -2987,7 +2996,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Extra Features" = "Ďalšie funkcie";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "Nastavenie rozhrania";
 
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";
@@ -3020,7 +3029,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Statistics settings " = "Nastavenia štatistík ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Prepísanie jednotky HbA1c";
+"Override HbA1c Unit" = "Prepísať jednotky HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "V prípade, že používate profily aj dočasný cieľ";

@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
+/* History View */
+"No data." = "Ingen data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "Inga blodsockerprognoser. Misslyckad loop.";
+
+/* Bolus View */
+"Missing Glucose" = "Blodsocker saknas";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Spara måltid utan bolus";
 
