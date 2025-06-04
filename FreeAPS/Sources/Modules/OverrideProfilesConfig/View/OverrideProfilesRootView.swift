@@ -278,7 +278,7 @@ extension OverrideProfilesConfig {
 
                         if state.glucoseOverrideThresholdActive {
                             HStack {
-                                Text("End the Override when Glucose is trending up and is higher than")
+                                Text("End the Override when Glucose is trending up and higher than")
                                 BGTextField(
                                     "0",
                                     mgdlValue: $state.glucoseOverrideThreshold,
