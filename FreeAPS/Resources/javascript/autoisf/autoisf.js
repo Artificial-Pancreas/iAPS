@@ -14,15 +14,15 @@ function generate(iob, profile, autosens, glucose, clock, pumpHistory) {
           }
         }
         profile.iaps = overrides;
-
-        if (!profile.iaps.autoisf) {
-            console.log("Auto ISF Disabled by Override");
-            profile.autoISFreasons = "Auto ISF Disabled by Override"
-            profile.iaps.autoisf = false;
-            return profile
-        }
     }
-    
+
+    if (!profile.iaps.autoisf) {
+        console.log("Auto ISF Disabled (by override or middleware)");
+        profile.autoISFreasons = "Auto ISF Disabled"
+        profile.iaps.autoisf = false;
+        return profile
+    }
+
     // Auto ISF
     const glucose_status = getLastGlucose(glucose);
     aisf(iob, profile, autosens_data, dynamicVariables, glucose_status, clock, pumpHistory);
