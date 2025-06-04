@@ -726,7 +726,7 @@ final class OpenAPS {
                         )
                     }
                 }
-                
+
                 // End with new glucose trending up, when applicable
                 if useOverride, overrideArray.first?.glucoseOverrideThresholdActive ?? false, let g = cd.fetchRecentGlucose(),
                    Decimal(g.glucose) > ((overrideArray.first?.glucoseOverrideThreshold ?? 100) as NSDecimalNumber) as Decimal,
