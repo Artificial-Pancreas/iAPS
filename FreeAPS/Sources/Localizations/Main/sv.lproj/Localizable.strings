@@ -17,13 +17,13 @@
 "Continue without bolus" = "Fortsätt utan bolus";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Ingen data.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Inga blodsockerprognoser. Misslyckad loop.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Blodsocker saknas";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Spara måltid utan bolus";
