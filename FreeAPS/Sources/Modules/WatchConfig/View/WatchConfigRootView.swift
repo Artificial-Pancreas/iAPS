@@ -25,7 +25,7 @@ extension WatchConfig {
 
                 Section {
                     Toggle("Profile Overrides Button / Temp Targets Button", isOn: $state.profilesOrTempTargets)
-                } header: { Text("Display either Overides or Temp Targets") }
+                } header: { Text("Display either Overrides or Temp Targets") }
 
                 Section(header: Text("Garmin Watch")) {
                     List {
