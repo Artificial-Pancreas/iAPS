@@ -322,6 +322,9 @@
 /*  */
 "Schedule" = "Schedule";
 
+/* */
+"(standard units / hour)" = "(standard units / hour)";
+
 /*  */
 "starts at" = "starts at";
 
