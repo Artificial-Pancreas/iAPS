@@ -322,6 +322,9 @@
 /*  */
 "Schedule" = "Schedule";
 
+/* */
+"(standard units / hour)" = "(standard units / hour)";
+
 /*  */
 "starts at" = "starts at";
 
@@ -625,6 +628,9 @@ Połączono z Nightscout!";
 
 /* */
 "Display on Watch" = "Display on Watch";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
