@@ -322,6 +322,9 @@
 /*  */
 "Schedule" = "Розклад";
 
+/* */
+"(standard units / hour)" = "(standard units / hour)";
+
 /*  */
 "starts at" = "Починається з";
 
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Відображати на Годиннику";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "GARMIN WATCH";
