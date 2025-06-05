@@ -744,13 +744,10 @@ final class OpenAPS {
                     }
                 }
 
-                // End with new glucose trending down, when applicable
+                // End with new glucose when lower than setting, when applicable
                 if useOverride, overrideArray.first?.glucoseOverrideThresholdActiveDown ?? false, let g = cd.fetchRecentGlucose(),
-                   Decimal(g.glucose) < ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal,
-                   g.direction ?? BloodGlucose.Direction.fortyFiveUp.symbol == BloodGlucose.Direction.fortyFiveDown.symbol || g
-                   .direction ?? BloodGlucose
-                   .Direction.singleDown.symbol == BloodGlucose.Direction.singleDown.symbol || g.direction ?? BloodGlucose
-                   .Direction.doubleUp.symbol == BloodGlucose.Direction.doubleDown.symbol
+                   Decimal(g.glucose) <
+                   ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
                 {
                     useOverride = false
                     if OverrideStorage().cancelProfile() != nil {

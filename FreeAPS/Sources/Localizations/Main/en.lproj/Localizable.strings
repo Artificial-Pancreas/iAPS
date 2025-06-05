@@ -1626,10 +1626,10 @@ Enact a temp Basal or a temp target */
 "And when Glucose is higher than" = "And when Glucose is higher than";
 
 /* */
-"End the Override when Glucose is Trending Down" = "End the Override when Glucose is Trending Down";
+"End the Override when Glucose is lower ..." = "End the Override when Glucose is lower ...";
 
 /* */
-"And when Glucose is lower than" = "And when Glucose is lower than";
+"... than" = "... than";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profile";
