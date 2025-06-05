@@ -322,6 +322,9 @@
 /*  */
 "Schedule" = "Tidsplan";
 
+/* */
+"(standard units / hour)" = "(standard units / hour)";
+
 /*  */
 "starts at" = "starter kl.";
 
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Vis på klokke";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Garmin Watch";

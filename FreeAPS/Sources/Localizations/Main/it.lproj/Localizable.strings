@@ -322,6 +322,9 @@
 /*  */
 "Schedule" = "Programmazione";
 
+/* */
+"(standard units / hour)" = "(standard units / hour)";
+
 /*  */
 "starts at" = "inizia a";
 
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Mostra sull'orologio";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Orologio Garmin";

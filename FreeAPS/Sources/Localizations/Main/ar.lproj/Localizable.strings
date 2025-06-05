@@ -323,6 +323,9 @@
 /*  */
 "Schedule" = "الجدول";
 
+/* */
+"(standard units / hour)" = "(standard units / hour)";
+
 /*  */
 "starts at" = "يبدأ عند";
 
@@ -624,6 +627,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "عرض على الساعة";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "ساعة جارمين";
