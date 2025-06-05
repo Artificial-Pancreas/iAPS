@@ -17,13 +17,13 @@
 "Continue without bolus" = "Verdergaan zonder bolus";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Geen gegevens.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Geen voorspellingen. Mislukte loop suggestie.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Ontbrekende glucose";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Maaltijd opslaan zonder bolus";

@@ -2638,7 +2638,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Final Ratio" = "Výsledný pomer";
 
 /* History of the adjustments */
-"Adjustments" = "Úpravy";
+"Adjustments" = "Výpočet";
 
 /* History of the adjustments */
 "Insulin" = "Inzulín";

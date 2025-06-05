@@ -17,13 +17,13 @@
 "Continue without bolus" = "Продовжити без болюсу";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Немає даних.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Немає прогнозів. Невдала пропозиція циклу.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Відсутність Глюкози";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Зберегти Їжу без болюсу";
@@ -2024,7 +2024,7 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 години";
 
 /* */
-"3 hours" = "3 hours";
+"3 hours" = "3 години";
 
 /* */
 "4 hours" = "4 години";
@@ -2033,7 +2033,7 @@ Enact a temp Basal or a temp target */
 "6 hours" = "6 годин";
 
 /* */
-"9 hours" = "9 hours";
+"9 hours" = "9 годин";
 
 /* */
 "12 hours" = "12 годин";
@@ -2993,7 +2993,7 @@ Enact a temp Basal or a temp target */
 "Extra Features" = "Додаткові функції";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "Налаштування UI/UX";
 
 /* UI/UX option */
 "Display Predictions" = "Показати передбачення";
