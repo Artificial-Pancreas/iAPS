@@ -322,6 +322,9 @@
 /*  */
 "Schedule" = "Ütemezés";
 
+/* */
+"(standard units / hour)" = "(standard units / hour)";
+
 /*  */
 "starts at" = "kezdődik";
 
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Megjelenítés az órán";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Garmin Óra";
