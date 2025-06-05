@@ -323,7 +323,7 @@
 "Schedule" = "Schema";
 
 /* */
-"(standard units / hour)" = "(standard units / hour)";
+"(standard units / hour)" = "(standardenheter / timme)";
 
 /*  */
 "starts at" = "startar kl";
@@ -628,7 +628,7 @@ Enact a temp Basal or a temp target */
 "Display on Watch" = "Visa på klocka";
 
 /* */
-"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
+"Display either Overrides or Temp Targets" = "Visa antingen knapp för profiler eller knapp för tillfälliga målvärden";
 
 /* */
 "Garmin Watch" = "Garmin - klocka";
