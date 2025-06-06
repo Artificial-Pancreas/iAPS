@@ -166,8 +166,7 @@ extension Home {
             useCalc = settingsManager.settings.useCalc
             data.minimumSMB = settingsManager.settings.minimumSMB
             data.insulinDIA = settingsManager.pumpSettings.insulinActionCurve
-            data.insulinPeak = settingsManager.preferences.useCustomPeakTime ? settingsManager.preferences.insulinPeakTime :
-                (settingsManager.preferences.curve == .ultraRapid ? 55 : 75)
+            data.insulinPeak = settingsManager.preferences.effectiveInsulinPeakTime()
 
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.maxIOB = settingsManager.preferences.maxIOB

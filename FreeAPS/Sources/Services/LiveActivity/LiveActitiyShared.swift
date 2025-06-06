@@ -14,6 +14,9 @@ struct LiveActivityAttributes: ActivityAttributes {
         let mmol: Bool
         let readings: ValueSeries?
         let predictions: ActivityPredictions?
+        let activity: InsulinActivitySeries?
+        let activity1U: Double?
+        let activityMax: Double?
         let showChart: Bool
         let chartLowThreshold: Int16
         let chartHighThreshold: Int16
@@ -31,6 +34,9 @@ struct LiveActivityAttributes: ActivityAttributes {
                 mmol: mmol,
                 readings: readings,
                 predictions: nil,
+                activity: activity,
+                activity1U: activity1U,
+                activityMax: activityMax,
                 showChart: showChart,
                 chartLowThreshold: chartLowThreshold,
                 chartHighThreshold: chartHighThreshold
@@ -41,6 +47,11 @@ struct LiveActivityAttributes: ActivityAttributes {
     struct ValueSeries: Codable, Hashable {
         let dates: [Date]
         let values: [Int16]
+    }
+
+    struct InsulinActivitySeries: Codable, Hashable {
+        let dates: [Date]
+        let values: [Double]
     }
 
     struct ActivityPredictions: Codable, Hashable {

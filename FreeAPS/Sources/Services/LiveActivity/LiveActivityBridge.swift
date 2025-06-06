@@ -43,6 +43,9 @@ extension LiveActivityAttributes.ContentState {
         loopDate: Date,
         readings: [Readings]?,
         predictions: Predictions?,
+        activity: [IOBTick0]?,
+        activity1U: Double?,
+        activityMax: Double?,
         showChart: Bool,
         chartLowThreshold: Int,
         chartHighThreshold: Int
@@ -98,6 +101,15 @@ extension LiveActivityAttributes.ContentState {
             return LiveActivityAttributes.ValueSeries(dates: dates, values: values)
         }()
 
+        let preparedActivity: LiveActivityAttributes.InsulinActivitySeries? = {
+            guard let activity: [IOBTick0] = activity else { return nil }
+
+            let dates = activity.map(\.time)
+            let values = activity.map { Double($0.activity) }
+
+            return LiveActivityAttributes.InsulinActivitySeries(dates: dates, values: values)
+        }()
+
         self.init(
             bg: formattedBG,
             direction: trendString,
@@ -110,6 +122,9 @@ extension LiveActivityAttributes.ContentState {
             mmol: mmol,
             readings: preparedReadings,
             predictions: activityPredictions,
+            activity: preparedActivity,
+            activity1U: activity1U,
+            activityMax: activityMax,
             showChart: showChart,
             chartLowThreshold: Int16(clamping: chartLowThreshold),
             chartHighThreshold: Int16(clamping: chartHighThreshold)
@@ -151,12 +166,21 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
         settingsManager.settings
     }
 
+    private var preferences: Preferences {
+        settingsManager.preferences
+    }
+
+    private var pumpSettings: PumpSettings {
+        settingsManager.pumpSettings
+    }
+
     private var knownSettings: FreeAPSSettings?
 
     private var currentActivity: ActiveActivity?
     private var latestGlucose: Readings?
     private var loopDate: Date?
     private var suggestion: Suggestion?
+    private var iobTicks: [IOBTick0]?
 
     init(resolver: Resolver) {
         systemEnabled = activityAuthorizationInfo.areActivitiesEnabled
@@ -292,6 +316,9 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
                         loopDate: Date.now, eventual: "--", mmol: false,
                         readings: nil,
                         predictions: nil,
+                        activity: nil,
+                        activity1U: nil,
+                        activityMax: nil,
                         showChart: settings.liveActivityChart,
                         chartLowThreshold: Int16(clamping: (settings.low as NSDecimalNumber).intValue),
                         chartHighThreshold: Int16(clamping: (settings.high as NSDecimalNumber).intValue)
@@ -341,7 +368,11 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             }
             return
         }
+
+        let iobTicks = CoreDataStorage().fetchInsulinData(interval: DateFilter().threeHours)
+
         defer { self.suggestion = suggestion }
+        defer { self.iobTicks = iobTicks }
 
         let cd = CoreDataStorage()
         let glucose = cd.fetchGlucose(interval: DateFilter().threeHours)
@@ -356,6 +387,17 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
                 (cd.fetchLastLoop()?.timestamp ?? .distantPast),
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
+            activity: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? iobTicks : nil,
+            activity1U: InsulinCalculations.peakInsulinActivity(
+                forBolus: 1,
+                peak: Double(preferences.effectiveInsulinPeakTime()),
+                dia: Double(pumpSettings.insulinActionCurve)
+            ),
+            activityMax: InsulinCalculations.peakInsulinActivity(
+                forBolus: Double(preferences.maxIOB) * 0.7,
+                peak: Double(preferences.effectiveInsulinPeakTime()),
+                dia: Double(pumpSettings.insulinActionCurve)
+            ),
             showChart: settings.liveActivityChart,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)
@@ -379,7 +421,10 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             }
             return
         }
+        let iobTicks = CoreDataStorage().fetchInsulinData(interval: DateFilter().threeHours)
+
         defer { self.suggestion = suggestion }
+        defer { self.iobTicks = iobTicks }
 
         let cd = CoreDataStorage()
         let glucose = cd.fetchGlucose(interval: DateFilter().threeHours)
@@ -394,6 +439,17 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
                 .timestamp ?? .distantPast,
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
+            activity: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? iobTicks : nil,
+            activity1U: InsulinCalculations.peakInsulinActivity(
+                forBolus: 1,
+                peak: Double(preferences.effectiveInsulinPeakTime()),
+                dia: Double(pumpSettings.insulinActionCurve)
+            ),
+            activityMax: InsulinCalculations.peakInsulinActivity(
+                forBolus: Double(preferences.maxIOB) * 0.7,
+                peak: Double(preferences.effectiveInsulinPeakTime()),
+                dia: Double(pumpSettings.insulinActionCurve)
+            ),
             showChart: settings.liveActivityChart,
             chartLowThreshold: Int(settings.low),
             chartHighThreshold: Int(settings.high)

@@ -280,7 +280,11 @@ struct MainChartView: View {
             }
 
             ForEach([Decimal(0.0), Decimal(1.0), data.maxBolus], id: \.self) { bolus in
-                let activity = maxInsulinActivity(forBolus: Double(bolus))
+                let activity = InsulinCalculations.peakInsulinActivity(
+                    forBolus: Double(bolus),
+                    peak: Double(data.insulinPeak),
+                    dia: Double(data.insulinDIA)
+                )
                 let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: yCoord))
@@ -307,7 +311,11 @@ struct MainChartView: View {
 
     private func activityLabelsView(fullSize: CGSize) -> some View {
         ForEach([Decimal(1.0), data.maxBolus], id: \.self) { bolus in
-            let activity = maxInsulinActivity(forBolus: Double(bolus))
+            let activity = InsulinCalculations.peakInsulinActivity(
+                forBolus: Double(bolus),
+                peak: Double(data.insulinPeak),
+                dia: Double(data.insulinDIA)
+            )
             let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
 
             let value = bolus
@@ -1503,47 +1511,25 @@ extension MainChartView {
 
     private func calculateActivityChartMinMax() {
         let maxActivityInData = data.activity.map { e in e.activity }.max()
-        let maxIOBPeakActivity = maxInsulinActivity(forBolus: Double(data.maxIOB) * 0.5)
-        let maxBolusPeakActivity = maxInsulinActivity(forBolus: Double(data.maxBolus) * 1.1)
+        let maxIOBPeakActivity = InsulinCalculations.peakInsulinActivity(
+            forBolus: Double(data.maxIOB) * 0.5,
+            peak: Double(data.insulinPeak),
+            dia: Double(data.insulinDIA)
+        )
+        let maxBolusPeakActivity = InsulinCalculations.peakInsulinActivity(
+            forBolus: Double(data.maxBolus) * 1.1,
+            peak: Double(data.insulinPeak),
+            dia: Double(data.insulinDIA)
+        )
         let maxValue = max(
             maxIOBPeakActivity,
             maxBolusPeakActivity,
             Double(maxActivityInData ?? Decimal(0))
         )
         activityChartMinMax = (
-            -maxInsulinActivity(forBolus: 1),
+            -InsulinCalculations.peakInsulinActivity(forBolus: 1, peak: Double(data.insulinPeak), dia: Double(data.insulinDIA)),
             maxValue
         )
-    }
-
-    // function to calculate the maximum insulin activity for a given bolus size
-    // used to scale the activity chart
-    private func maxInsulinActivity(forBolus: Double) -> Double {
-        let peak = Double(data.insulinPeak)
-        let dia = Double(data.insulinDIA)
-        let end = dia * 60.0
-
-        // Calculate tau
-        let peakOverEnd = peak / end
-        let tauNumerator = peak * (1.0 - peakOverEnd)
-        let tauDenominator = 1.0 - 2.0 * peakOverEnd
-        guard tauDenominator != 0 else {
-            return 0.1
-        }
-        let tau = tauNumerator / tauDenominator
-
-        // Calculate a
-        let a = 2.0 * tau / end
-
-        // Calculate S
-        let expNegEndOverTau = exp(-end / tau)
-        let S = 1.0 / (1.0 - a + (1.0 + a) * expNegEndOverTau)
-
-        // Calculate activity at peak time
-        let t = peak
-        let activity = forBolus * (S / pow(tau, 2)) * t * (1.0 - t / end) * exp(-t / tau)
-
-        return activity
     }
 
     private func timeToInterpolatedPoint(_ time: TimeInterval, fullSize: CGSize) -> CGPoint {

@@ -267,6 +267,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: nil,
             predictions: nil,
+            activity: nil,
+            activity1U: nil,
+            activityMax: nil,
             showChart: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -284,6 +287,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: nil,
             predictions: nil,
+            activity: nil,
+            activity1U: nil,
+            activityMax: nil,
             showChart: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -301,6 +307,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: nil,
             predictions: nil,
+            activity: nil,
+            activity1U: nil,
+            activityMax: nil,
             showChart: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -319,6 +328,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: nil,
             predictions: nil,
+            activity: nil,
+            activity1U: nil,
+            activityMax: nil,
             showChart: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -336,6 +348,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: nil,
             predictions: nil,
+            activity: nil,
+            activity1U: nil,
+            activityMax: nil,
             showChart: false,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -354,6 +369,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
+            activity: sampleData.sampleActivity,
+            activity1U: sampleData.activity1U,
+            activityMax: sampleData.activityMax,
             showChart: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -372,6 +390,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: nil,
+            activity: sampleData.sampleActivity,
+            activity1U: sampleData.activity1U,
+            activityMax: sampleData.activityMax,
             showChart: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -390,6 +411,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: nil,
+            activity: sampleData.sampleActivity,
+            activity1U: sampleData.activity1U,
+            activityMax: sampleData.activityMax,
             showChart: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -408,6 +432,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
+            activity: sampleData.sampleActivity,
+            activity1U: sampleData.activity1U,
+            activityMax: sampleData.activityMax,
             showChart: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -426,6 +453,9 @@ private extension LiveActivityAttributes.ContentState {
             loopDate: Date.now, eventual: "12.7", mmol: true,
             readings: sampleData.sampleReadings,
             predictions: sampleData.samplePredictions,
+            activity: sampleData.sampleActivity,
+            activity1U: sampleData.activity1U,
+            activityMax: sampleData.activityMax,
             showChart: true,
             chartLowThreshold: 75,
             chartHighThreshold: 200
@@ -436,6 +466,10 @@ private extension LiveActivityAttributes.ContentState {
 struct SampleData {
     let sampleReadings: LiveActivityAttributes.ValueSeries
     let samplePredictions: LiveActivityAttributes.ActivityPredictions
+
+    let sampleActivity: LiveActivityAttributes.InsulinActivitySeries
+    let activity1U: Double
+    let activityMax: Double
 
     init() {
         let calendar = Calendar.current
@@ -504,6 +538,42 @@ struct SampleData {
             })
         }
 
+        func generateActivityCurve(
+            startValue: Double
+        ) -> (sampleActivity: LiveActivityAttributes.InsulinActivitySeries, activity1U: Double, activityMax: Double) {
+            var values: [Double] = []
+            var currentValue = startValue
+            let lastDate = readingDates.first!
+            let numberOfPoints = 2 * 60 / 5 + readingValues.count // 2 hours with 5-minute steps + readings
+
+            let midpoint = Double(numberOfPoints) / 2
+
+            for i in 0 ..< numberOfPoints {
+                let noise = Double.random(in: -0.001 ... 0.001)
+                let distance = abs(Double(i) - midpoint)
+                let trend = distance < midpoint / 2 || currentValue > 0.015 ? -1.0 : 1.0
+                let delta = Double.random(in: 0.001 ... 0.001)
+                currentValue += delta * trend + noise
+                currentValue = max(-0.001, min(currentValue, 0.02))
+                values.append(currentValue)
+            }
+
+            let dates = values.enumerated().map { index, _ in
+                lastDate.addingTimeInterval(TimeInterval((index + 1) * 5 * 60))
+            }
+
+            let activitySeries = LiveActivityAttributes.InsulinActivitySeries(
+                dates: dates,
+                values: values
+            )
+
+            return (
+                sampleActivity: activitySeries,
+                activity1U: 0.0015,
+                activityMax: 0.01
+            )
+        }
+
         let iob = generateCurve(startValue: lastGlucose, pattern: "down")
         let zt = generateCurve(startValue: lastGlucose, pattern: "stable")
         let cob = generateCurve(startValue: lastGlucose, pattern: "peak")
@@ -515,6 +585,14 @@ struct SampleData {
             cob: cob,
             uam: uam
         )
+
+        let (sampleActivity, activity1U, activityMax) = generateActivityCurve(
+            startValue: 0.001
+        )
+
+        self.sampleActivity = sampleActivity
+        self.activity1U = activity1U
+        self.activityMax = activityMax
     }
 }
 
