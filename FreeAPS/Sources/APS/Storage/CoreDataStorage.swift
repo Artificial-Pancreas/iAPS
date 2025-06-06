@@ -20,15 +20,21 @@ final class CoreDataStorage {
         return fetchGlucose
     }
 
-    func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
+    func fetchInsulinData(interval: NSDate, futureInterval: NSDate? = nil) -> [IOBTick0] {
         var fetchTicks = [InsulinActivity]()
         coredataContext.performAndWait {
             let requestTicks = InsulinActivity.fetchRequest()
             let sort = NSSortDescriptor(key: "date", ascending: true)
             requestTicks.sortDescriptors = [sort]
-            requestTicks.predicate = NSPredicate(
-                format: "date > %@", interval
-            )
+            if let futureInterval = futureInterval {
+                requestTicks.predicate = NSPredicate(
+                    format: "date > %@ AND date < %@", interval, futureInterval
+                )
+            } else {
+                requestTicks.predicate = NSPredicate(
+                    format: "date > %@", interval
+                )
+            }
             try? fetchTicks = self.coredataContext.fetch(requestTicks)
         }
         let result = fetchTicks.compactMap { tick -> IOBTick0? in

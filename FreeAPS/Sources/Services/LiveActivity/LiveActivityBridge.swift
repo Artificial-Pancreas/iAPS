@@ -215,7 +215,8 @@ final class LiveActivityBridge: Injectable, ObservableObject, SettingsObserver {
         if let knownSettings = self.knownSettings {
             if newSettings.useLiveActivity != knownSettings.useLiveActivity ||
                 newSettings.liveActivityChart != knownSettings.liveActivityChart ||
-                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions
+                newSettings.liveActivityChartShowPredictions != knownSettings.liveActivityChartShowPredictions ||
+                newSettings.liveActivityChartShowInsulin != knownSettings.liveActivityChartShowInsulin
             {
                 print("live activity settings changed")
                 forceActivityUpdate(force: true)
@@ -369,7 +370,11 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             return
         }
 
-        let iobTicks = CoreDataStorage().fetchInsulinData(interval: DateFilter().threeHours)
+        let iobTicks = CoreDataStorage()
+            .fetchInsulinData(
+                interval: DateFilter().threeHours,
+                futureInterval: Date().addingTimeInterval(2.hours.timeInterval) as NSDate
+            )
 
         defer { self.suggestion = suggestion }
         defer { self.iobTicks = iobTicks }
@@ -387,7 +392,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
                 (cd.fetchLastLoop()?.timestamp ?? .distantPast),
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
-            activity: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? iobTicks : nil,
+            activity: settings.liveActivityChart && settings.liveActivityChartShowInsulin ? iobTicks : nil,
             activity1U: InsulinCalculations.peakInsulinActivity(
                 forBolus: 1,
                 peak: Double(preferences.effectiveInsulinPeakTime()),
@@ -421,7 +426,11 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
             }
             return
         }
-        let iobTicks = CoreDataStorage().fetchInsulinData(interval: DateFilter().threeHours)
+        let iobTicks = CoreDataStorage()
+            .fetchInsulinData(
+                interval: DateFilter().threeHours,
+                futureInterval: Date().addingTimeInterval(2.hours.timeInterval) as NSDate
+            )
 
         defer { self.suggestion = suggestion }
         defer { self.iobTicks = iobTicks }
@@ -439,7 +448,7 @@ extension LiveActivityBridge: SuggestionObserver, EnactedSuggestionObserver {
                 .timestamp ?? .distantPast,
             readings: settings.liveActivityChart ? glucose : nil,
             predictions: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? suggestion.predictions : nil,
-            activity: settings.liveActivityChart && settings.liveActivityChartShowPredictions ? iobTicks : nil,
+            activity: settings.liveActivityChart && settings.liveActivityChartShowInsulin ? iobTicks : nil,
             activity1U: InsulinCalculations.peakInsulinActivity(
                 forBolus: 1,
                 peak: Double(preferences.effectiveInsulinPeakTime()),

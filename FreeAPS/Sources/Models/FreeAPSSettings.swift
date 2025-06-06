@@ -398,6 +398,10 @@ extension FreeAPSSettings: Decodable {
             settings.liveActivityChartShowPredictions = liveActivityChartShowPredictions
         }
 
+        if let liveActivityChartShowInsulin = try? container.decode(Bool.self, forKey: .liveActivityChartShowInsulin) {
+            settings.liveActivityChartShowInsulin = liveActivityChartShowInsulin
+        }
+
         // ----
 
         if let useTargetButton = try? container.decode(Bool.self, forKey: .useTargetButton) {
