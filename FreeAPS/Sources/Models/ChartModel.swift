@@ -29,6 +29,7 @@ class ChartModel: ObservableObject {
     @Published var insulinPeak: Decimal
     @Published var maxBolus: Decimal
     @Published var maxBolusValue: Decimal
+    @Published var maxIOB: Decimal
     @Published var useInsulinBars: Bool
     @Published var screenHours: Int
     @Published var fpus: Bool
@@ -63,6 +64,7 @@ class ChartModel: ObservableObject {
         insulinPeak: Decimal,
         maxBolus: Decimal,
         maxBolusValue: Decimal,
+        maxIOB: Decimal,
         useInsulinBars: Bool,
         screenHours: Int,
         fpus: Bool,
@@ -96,6 +98,7 @@ class ChartModel: ObservableObject {
         self.insulinPeak = insulinPeak
         self.maxBolus = maxBolus
         self.maxBolusValue = maxBolusValue
+        self.maxIOB = maxIOB
         self.useInsulinBars = useInsulinBars
         self.screenHours = screenHours
         self.fpus = fpus

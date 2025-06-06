@@ -36,9 +36,11 @@ struct MainChartView: View {
         static let endID = "End"
         static let basalHeight: CGFloat = 60
         static let topYPadding: CGFloat = 75
-        static let bottomYPadding: CGFloat = 120
-        static let topYPaddingActivity: CGFloat = 10 // gap between main chart and activity chart
-        static let bottomYPaddingActivity: CGFloat = 30
+        static let activityChartBottomPadding: CGFloat = 30
+        static let activityChartHeight: CGFloat = 100
+        static let activityChartTopGap: CGFloat = 20 // gap between main chart and activity chart, with legend inside
+        static let mainChartBottomPadding: CGFloat = activityChartBottomPadding + activityChartHeight + activityChartTopGap
+        static let legendBottomPadding: CGFloat = activityChartBottomPadding + activityChartHeight
         static let minAdditionalWidth: CGFloat = 150
         static let maxGlucose = 270
         static let minGlucose = 0 // 45
@@ -97,6 +99,7 @@ struct MainChartView: View {
     @State private var glucoseYRange: GlucoseYRange = (0, 0, 0, 0)
     @State private var offset: CGFloat = 0
     @State private var cachedMaxBasalRate: Decimal?
+    @State private var activityChartMinMax: (Double, Double) = (0, 1)
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
@@ -154,6 +157,7 @@ struct MainChartView: View {
                 yGridView(fullSize: geo.size)
                 mainScrollView(fullSize: geo.size)
                 glucoseLabelsView(fullSize: geo.size)
+                activityLabelsView(fullSize: geo.size)
             }
             .onChange(of: hSizeClass) {
                 update(fullSize: geo.size)
@@ -201,8 +205,9 @@ struct MainChartView: View {
                         .font(.system(size: 12, weight: .bold)).foregroundColor(.uam)
                 }
             }
-            .padding(.bottom, 8)
         }
+        .frame(height: Config.activityChartTopGap)
+        .padding(.bottom, Config.legendBottomPadding - Config.activityChartTopGap)
     }
 
     private func mainScrollView(fullSize: CGSize) -> some View {
@@ -273,7 +278,8 @@ struct MainChartView: View {
                     }.stroke(Color.loopRed, lineWidth: 0.5)
                 }
             }
-            ForEach([Decimal(1.0), data.maxBolus], id: \.self) { bolus in
+
+            ForEach([Decimal(0.0), Decimal(1.0), data.maxBolus], id: \.self) { bolus in
                 let activity = maxInsulinActivity(forBolus: Double(bolus))
                 let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
                 Path { path in
@@ -296,6 +302,22 @@ struct MainChartView: View {
                 .position(CGPoint(x: fullSize.width - 12, y: range.minY + CGFloat(line) * yStep))
                 .font(.bolusDotFont)
                 .asAny()
+        }
+    }
+
+    private func activityLabelsView(fullSize: CGSize) -> some View {
+        ForEach([Decimal(1.0), data.maxBolus], id: \.self) { bolus in
+            let activity = maxInsulinActivity(forBolus: Double(bolus))
+            let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
+
+            let value = bolus
+
+            return HStack(spacing: 2) {
+                Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.bolusDotFont)
+                Text("U").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
+            }
+            .position(CGPoint(x: fullSize.width - 12, y: yCoord))
+            .asAny()
         }
     }
 
@@ -806,6 +828,7 @@ struct MainChartView: View {
 
 extension MainChartView {
     private func update(fullSize: CGSize) {
+        calculateActivityChartMinMax()
         calculatePredictionDots(fullSize: fullSize, type: .iob)
         calculatePredictionDots(fullSize: fullSize, type: .cob)
         calculatePredictionDots(fullSize: fullSize, type: .zt)
@@ -1459,24 +1482,38 @@ extension MainChartView {
     }
 
     private func glucoseToYCoordinate(_ glucoseValue: Int, fullSize: CGSize) -> CGFloat {
-        let topYPaddint = Config.topYPadding + Config.basalHeight
-        let bottomYPadding = Config.bottomYPadding
+        let topPadding = Config.topYPadding + Config.basalHeight
+        let bottomPadding = Config.mainChartBottomPadding
         let (minValue, maxValue) = minMaxYValues()
-        let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
+        let chartHeight = (fullSize.height - topPadding - bottomPadding)
+        let stepYFraction = chartHeight / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
-        let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomYPadding
+        let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomPadding
         return y
     }
 
     private func activityToYCoordinate(_ activityValue: Decimal, fullSize: CGSize) -> CGFloat {
-        let topYPadding = fullSize.height - Config.bottomYPadding + Config.topYPaddingActivity
-        let bottomYPadding = Config.bottomYPaddingActivity
-        let minValue = -maxInsulinActivity(forBolus: 1)
-        let maxValue = maxInsulinActivity(forBolus: Double(data.maxBolus) * 1.5)
-        let stepYFraction = (fullSize.height - topYPadding - bottomYPadding) / CGFloat(maxValue - minValue)
+        let bottomPadding = fullSize.height - Config.activityChartBottomPadding
+        let (minValue, maxValue) = activityChartMinMax
+        let stepYFraction = Config.activityChartHeight / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
-        let y = fullSize.height - CGFloat(activityValue) * stepYFraction + yOffset - bottomYPadding
+        let y = bottomPadding - CGFloat(activityValue) * stepYFraction + yOffset
         return y
+    }
+
+    private func calculateActivityChartMinMax() {
+        let maxActivityInData = data.activity.map { e in e.activity }.max()
+        let maxIOBPeakActivity = maxInsulinActivity(forBolus: Double(data.maxIOB) * 0.5)
+        let maxBolusPeakActivity = maxInsulinActivity(forBolus: Double(data.maxBolus) * 1.1)
+        let maxValue = max(
+            maxIOBPeakActivity,
+            maxBolusPeakActivity,
+            Double(maxActivityInData ?? Decimal(0))
+        )
+        activityChartMinMax = (
+            -maxInsulinActivity(forBolus: 1),
+            maxValue
+        )
     }
 
     // function to calculate the maximum insulin activity for a given bolus size
@@ -1564,12 +1601,12 @@ extension MainChartView {
 
     private func getGlucoseYRange(fullSize: CGSize) -> GlucoseYRange {
         let topYPaddint = Config.topYPadding + Config.basalHeight
-        let bottomYPadding = Config.bottomYPadding
+        let mainChartBottomPadding = Config.mainChartBottomPadding
         let (minValue, maxValue) = minMaxYValues()
-        let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
+        let stepYFraction = (fullSize.height - topYPaddint - mainChartBottomPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
-        let maxY = fullSize.height - CGFloat(minValue) * stepYFraction + yOffset - bottomYPadding
-        let minY = fullSize.height - CGFloat(maxValue) * stepYFraction + yOffset - bottomYPadding
+        let maxY = fullSize.height - CGFloat(minValue) * stepYFraction + yOffset - mainChartBottomPadding
+        let minY = fullSize.height - CGFloat(maxValue) * stepYFraction + yOffset - mainChartBottomPadding
         return (minValue: minValue, minY: minY, maxValue: maxValue, maxY: maxY)
     }
 

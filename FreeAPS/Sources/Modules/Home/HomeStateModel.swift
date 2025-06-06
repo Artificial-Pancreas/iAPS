@@ -112,6 +112,7 @@ extension Home {
             insulinPeak: 75,
             maxBolus: 0,
             maxBolusValue: 1,
+            maxIOB: 0,
             useInsulinBars: true,
             screenHours: 6,
             fpus: true,
@@ -169,6 +170,7 @@ extension Home {
                 (settingsManager.preferences.curve == .ultraRapid ? 55 : 75)
 
             data.maxBolus = settingsManager.pumpSettings.maxBolus
+            data.maxIOB = settingsManager.preferences.maxIOB
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus
             data.fpuAmounts = settingsManager.settings.fpuAmounts
