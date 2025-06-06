@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Jatka ilman lisäannosta";
 
+/* History View */
+"No data." = "No data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+
+/* Bolus View */
+"Missing Glucose" = "Missing Glucose";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Tallenna ateria ilman bolusta";
 
