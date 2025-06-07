@@ -1631,6 +1631,18 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "End the Override with next Meal" = "Ukončiť upravenie pri nasledujúcom jedle";
 
+/* */
+"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+
+/* */
+"And when Glucose is higher than" = "And when Glucose is higher than";
+
+/* */
+"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+
+/* */
+"... than" = "... than";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
 

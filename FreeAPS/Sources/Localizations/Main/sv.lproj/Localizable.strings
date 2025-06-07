@@ -1630,6 +1630,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Avsluta profilen med nästa måltid";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Avsluta profilen när blodsockret trendar uppåt";
+
+/* */
+"And when Glucose is higher than" = "Och när blodsockret är högre än";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Avsluta profilen när blodsockret är lägre ...";
+
+/* */
+"... than" = "... än";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profil";
 
