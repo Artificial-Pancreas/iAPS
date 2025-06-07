@@ -96,6 +96,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var fpuAmounts: Bool = false
     var carbButton: Bool = true
     var profileButton: Bool = true
+    var glucoseOverrideThreshold: Decimal = 100
+    var glucoseOverrideThresholdActive: Bool = false
+    var glucoseOverrideThresholdActiveDown: Bool = false
+    var glucoseOverrideThresholdDown: Decimal = 100
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -601,6 +605,24 @@ extension FreeAPSSettings: Decodable {
 
         if let autoisf_min = try? container.decode(Decimal.self, forKey: .autoisf_min) {
             settings.autoisf_min = autoisf_min
+        }
+
+        if let glucoseOverrideThreshold = try? container.decode(Decimal.self, forKey: .glucoseOverrideThreshold) {
+            settings.glucoseOverrideThreshold = glucoseOverrideThreshold
+        }
+
+        if let glucoseOverrideThresholdActive = try? container.decode(Bool.self, forKey: .glucoseOverrideThresholdActive) {
+            settings.glucoseOverrideThresholdActive = glucoseOverrideThresholdActive
+        }
+
+        if let glucoseOverrideThresholdDown = try? container.decode(Decimal.self, forKey: .glucoseOverrideThresholdDown) {
+            settings.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown
+        }
+
+        if let glucoseOverrideThresholdActiveDown = try? container
+            .decode(Bool.self, forKey: .glucoseOverrideThresholdActiveDown)
+        {
+            settings.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
         }
 
         // Auto ISF Keto Protection
