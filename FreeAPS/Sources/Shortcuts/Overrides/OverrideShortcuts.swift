@@ -28,12 +28,6 @@ struct ApplyOverrideIntent: AppIntent {
     // Description of the action in the Shortcuts app
     static var description = IntentDescription("Allow to activate an overrride preset.")
 
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
-
     @Parameter(title: "Preset") var preset: OverrideEntity?
 
     @Parameter(
@@ -56,6 +50,7 @@ struct ApplyOverrideIntent: AppIntent {
 
     @MainActor func perform() async throws -> some ProvidesDialog {
         do {
+            let intentRequest = OverrideIntentRequest()
             let presetToApply: OverrideEntity
             if let preset = preset {
                 presetToApply = preset
@@ -93,14 +88,9 @@ struct CancelOverrideIntent: AppIntent {
     static var title: LocalizedStringResource = "Cancel active override"
     static var description = IntentDescription("Cancel active override.")
 
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
-
     @MainActor func perform() async throws -> some ProvidesDialog {
         do {
+            let intentRequest = OverrideIntentRequest()
             try intentRequest.cancelOverride()
             return .result(
                 dialog: IntentDialog(stringLiteral: "Override canceled")
@@ -112,18 +102,14 @@ struct CancelOverrideIntent: AppIntent {
 }
 
 struct OverrideQuery: EntityQuery {
-    internal var intentRequest: OverrideIntentRequest
-
-    init() {
-        intentRequest = OverrideIntentRequest()
-    }
-
     func entities(for identifiers: [OverrideEntity.ID]) async throws -> [OverrideEntity] {
+        let intentRequest = OverrideIntentRequest()
         let presets = intentRequest.fetchIDs(identifiers)
         return presets
     }
 
     func suggestedEntities() async throws -> [OverrideEntity] {
+        let intentRequest = OverrideIntentRequest()
         let presets = try intentRequest.fetchPresets()
         return presets
     }
@@ -205,7 +191,11 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         }
         overrideStorage.overrideFromPreset(overridePreset)
         let currentActiveOveride = overrideStorage.fetchLatestOverride().first
-        nightscoutManager.uploadOverride(preset.name ?? "", Double(preset.duration ?? 0), currentActiveOveride?.date ?? Date.now)
+        nightscoutManager.uploadOverride(
+            preset.name ?? "",
+            Double(truncating: preset.duration ?? 0),
+            currentActiveOveride?.date ?? Date.now
+        )
         return currentActiveOveride
     }
 

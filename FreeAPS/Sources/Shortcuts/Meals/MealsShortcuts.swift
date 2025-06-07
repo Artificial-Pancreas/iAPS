@@ -20,11 +20,6 @@ enum MealPresetIntentError: Error {
 struct ApplyMealPresetIntent: AppIntent {
     static var title: LocalizedStringResource = "iAPS Meal Presets"
     static var description = IntentDescription("Allow to use iAPS Meal Presets")
-    internal var intentRequest: MealPresetIntentRequest
-
-    init() {
-        intentRequest = MealPresetIntentRequest()
-    }
 
     @Parameter(title: "Preset") var preset: MealPresetEntity?
 
@@ -48,6 +43,8 @@ struct ApplyMealPresetIntent: AppIntent {
 
     @MainActor func perform() async throws -> some ProvidesDialog {
         do {
+            let intentRequest = MealPresetIntentRequest()
+
             let presetToApply: MealPresetEntity
             if let preset = preset {
                 presetToApply = preset
@@ -82,18 +79,14 @@ struct ApplyMealPresetIntent: AppIntent {
 }
 
 struct MealPresetQuery: EntityQuery {
-    internal var intentRequest: MealPresetIntentRequest
-
-    init() {
-        intentRequest = MealPresetIntentRequest()
-    }
-
     func entities(for identifiers: [MealPresetEntity.ID]) async throws -> [MealPresetEntity] {
+        let intentRequest = MealPresetIntentRequest()
         let presets = intentRequest.fetchIDs(identifiers)
         return presets
     }
 
     func suggestedEntities() async throws -> [MealPresetEntity] {
+        let intentRequest = MealPresetIntentRequest()
         let presets = try intentRequest.fetchPresets()
         return presets
     }

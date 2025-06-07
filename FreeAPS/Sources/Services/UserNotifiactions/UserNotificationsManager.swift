@@ -461,9 +461,10 @@ extension BaseUserNotificationsManager: pumpNotificationObserver {
 
     func pumpRemoveNotification() {
         let identifier: Identifier = .pumpNotification
+        let center = UNUserNotificationCenter.current()
         DispatchQueue.main.async {
-            self.center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
-            self.center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
+            center.removeDeliveredNotifications(withIdentifiers: [identifier.rawValue])
+            center.removePendingNotificationRequests(withIdentifiers: [identifier.rawValue])
         }
     }
 }
