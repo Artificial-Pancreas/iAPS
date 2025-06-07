@@ -1,24 +1,8 @@
 import WebKit
 
-final class WebViewScriptExecutorAtomic<T> {
-    private var value: T
-    private let lock = DispatchQueue(label: "com.example.atomic.lock")
-
-    init(_ value: T) {
-        self.value = value
-    }
-
-    func get() -> T {
-        lock.sync { value }
-    }
-
-    func set(_ newValue: T) {
-        lock.sync { value = newValue }
-    }
-}
-
-class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
+@MainActor class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
     private var webView: WKWebView!
+    private var continuationStreams = [String: AsyncThrowingStream<RawJSON, Error>.Continuation]()
     private var scripts = [
         FunctionScript(name: OpenAPS.Bundle.autosens, function: "freeaps_autosens"),
         FunctionScript(name: OpenAPS.Bundle.autotuneCore, function: "freeaps_autotuneCore"),
@@ -43,22 +27,30 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         ], function: "generate", variable: "iaps_autoisf")
     ]
 
-    init(frame: CGRect = .zero) {
+    init(frame _: CGRect = .zero) {
         super.init()
 
+        webView = createWebView()
+    }
+
+    private func createWebView() -> WKWebView {
         let contentController = WKUserContentController()
         contentController.add(self, name: "consoleLog")
+        contentController.add(self, name: "jsBridge")
+        contentController.add(self, name: "scriptError")
 
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
 
-        webView = WKWebView(frame: frame, configuration: config)
+        let webView = WKWebView(frame: .zero, configuration: config)
 
-        injectConsoleLogHandler()
-        loadScripts()
+        injectConsoleLogHandler(webView: webView)
+        loadScripts(webView: webView)
+
+        return webView
     }
 
-    private func injectConsoleLogHandler() {
+    private func injectConsoleLogHandler(webView: WKWebView) {
         let consoleScript = """
         var _consoleLog = function (message) {
             window.webkit.messageHandlers.consoleLog.postMessage(message.join(" "));
@@ -68,45 +60,30 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         });
 
         """
-        DispatchQueue.main.async {
-            self.webView.evaluateJavaScript(consoleScript, completionHandler: nil)
-        }
+        webView.evaluateJavaScript(consoleScript, completionHandler: nil)
     }
 
-    func script(for name: String) -> FunctionScript? {
+    private func script(for name: String) -> FunctionScript? {
         scripts.filter { $0.name == name }.first
     }
 
-    private func loadScripts() {
-        DispatchQueue.main.async {
-            for script in self.scripts {
-                self.includeScript(script: script)
-            }
-
-            self.includeScript(script: Script(name: OpenAPS.Prepare.log))
+    private func loadScripts(webView: WKWebView) {
+        for script in scripts {
+            includeScript(webView: webView, script: script)
         }
+
+        includeScript(webView: webView, script: Script(name: OpenAPS.Prepare.log))
     }
 
-    func includeScript(script: FunctionScript) {
-        includeScript(script: Script(name: "Script", body: script.body))
+    private func includeScript(webView: WKWebView, script: FunctionScript) {
+        includeScript(webView: webView, script: Script(name: "Script", body: script.body))
     }
 
-    func includeScript(script: Script) {
-        DispatchQueue.main.async {
-            self.webView.evaluateJavaScript(script.body)
-        }
+    private func includeScript(webView: WKWebView, script: Script) {
+        webView.evaluateJavaScript(script.body)
     }
 
-    func call(name: String, with arguments: [JSON], withBody body: String = "") -> RawJSON {
-        if let script = script(for: name) {
-            return callFunctionSync(function: script, with: arguments, withBody: body)
-        } else {
-            print("No script found for \"\(name)\"")
-            return ""
-        }
-    }
-
-    func callAsync(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+    func call(name: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
         if let script = script(for: name) {
             return await callFunctionAsync(function: script, with: arguments, withBody: body)
         } else {
@@ -115,12 +92,17 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         }
     }
 
-    func callFunctionAsync(function: FunctionScript, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+    private func callFunctionAsync(
+        function: FunctionScript,
+        with arguments: [JSON],
+        withBody body: String = ""
+    ) async -> RawJSON {
         await callFunctionAsync(function: function.variable, with: arguments, withBody: body)
     }
 
-    func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
+    private func callFunctionAsync(function: String, with arguments: [JSON], withBody body: String = "") async -> RawJSON {
         let joined = arguments.map(\.rawJSON).joined(separator: ",")
+
         let script = """
         \(body)
 
@@ -128,79 +110,53 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         """
 
         do {
-            return try await evaluateFunction(body: script) as! RawJSON
-        } catch {
-            print(error)
-            return ""
-        }
-    }
-
-    func callFunctionSync(function: FunctionScript, with arguments: [JSON], withBody body: String = "") -> RawJSON {
-        callFunctionSync(function: function.variable, with: arguments, withBody: body)
-    }
-
-    func callFunctionSync(function: String, with arguments: [JSON], withBody body: String = "") -> RawJSON {
-        let joined = arguments.map(\.rawJSON).joined(separator: ",")
-        let script = """
-        \(body)
-
-        return JSON.stringify(\(function)(\(joined)) ?? "", null, 4);
-        """
-
-        do {
-            return try evaluateFunctionSync(body: script) as! RawJSON
-        } catch {
-            print(error)
-            return ""
-        }
-    }
-
-    func evaluateFunctionSync(body: String) throws -> Any? {
-        let group = DispatchGroup()
-        let asyncResult = WebViewScriptExecutorAtomic<Result<Any, Error>?>(nil)
-
-        group.enter()
-        DispatchQueue.main.async {
-            Task {
-                do {
-                    let result = try await self.evaluateFunction(body: body)
-                    asyncResult.set(.success(result))
-                } catch {
-                    asyncResult.set(.failure(error))
-                }
-                group.leave()
-            }
-        }
-
-        group.wait()
-
-        switch asyncResult.get() {
-        case let .success(result):
+            let result = try await evaluateFunction(body: script)
             return result
-        case let .failure(error):
-            throw error
-        case .none:
-            print("No result from the script")
-            throw NSError(domain: "WebViewScriptExecutor", code: 1, userInfo: nil)
+        } catch {
+            print(error)
+            return ""
         }
     }
 
-    func evaluateFunction(body: String) async throws -> Any {
+    private func evaluateFunction(body: String, attempts: Int = 0) async throws -> RawJSON {
+        let maxAttempts = 2
+        let requestId = UUID().uuidString
+
         let script = """
-        (function() {
-            \(body)
+        (function () {
+            (async function () {
+                try {
+                    var result = await (function() {
+                        \(body)
+                    })();
+                    window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", value: result });
+                } catch (e) {
+                    window.webkit.messageHandlers.jsBridge.postMessage({ id: "\(requestId)", error: e.toString() });
+                }
+            })();
+            return "";
         })();
         """
 
-        return try await withCheckedThrowingContinuation { continuation in
-            DispatchQueue.main.async {
-                self.webView.evaluateJavaScript(script) { result, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume(returning: result!)
-                    }
-                }
+        let stream = AsyncThrowingStream<RawJSON, Error> { continuation in
+            continuationStreams[requestId] = continuation
+        }
+
+        do {
+            try await webView.evaluateJavaScript(script)
+
+            for try await value in stream {
+                return value
+            }
+            throw NSError(domain: "WebViewScriptExecutor", code: 2, userInfo: [NSLocalizedDescriptionKey: "No result emitted"])
+        } catch {
+            print("Javascript function (\(requestId)) attempt \(attempts + 1) failed with error: \(error)")
+            continuationStreams.removeValue(forKey: requestId)
+            if attempts < maxAttempts {
+                webView = createWebView()
+                return try await evaluateFunction(body: body, attempts: attempts + 1)
+            } else {
+                throw error
             }
         }
     }
@@ -214,6 +170,29 @@ class WebViewScriptExecutor: NSObject, WKScriptMessageHandler {
         }
         if message.name == "scriptError", let logMessage = message.body as? String {
             warning(.openAPS, "JavaScript Error: \(logMessage)")
+        }
+        // Handle responses from evaluateFunction via jsBridge
+        if message.name == "jsBridge",
+           let body = message.body as? [String: Any],
+           let id = body["id"] as? String,
+           let continuation = continuationStreams.removeValue(forKey: id)
+        {
+            if let value = body["value"] as? RawJSON {
+                continuation.yield(value)
+                continuation.finish()
+            } else if let error = body["error"] as? String {
+                continuation.finish(throwing: NSError(
+                    domain: "WebViewScriptExecutor",
+                    code: 500,
+                    userInfo: [NSLocalizedDescriptionKey: error]
+                ))
+            } else {
+                continuation.finish(throwing: NSError(
+                    domain: "WebViewScriptExecutor",
+                    code: 500,
+                    userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
+                ))
+            }
         }
     }
 }
