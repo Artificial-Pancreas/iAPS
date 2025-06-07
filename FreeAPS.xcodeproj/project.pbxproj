@@ -103,7 +103,6 @@
 		19F191E02BE4F98F00F6297E /* SharingStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F191DF2BE4F98F00F6297E /* SharingStateModel.swift */; };
 		19F191E22BE4F9BA00F6297E /* SharingRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F191E12BE4F9BA00F6297E /* SharingRootView.swift */; };
 		19F191E42BE686AE00F6297E /* BareMinimum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F191E32BE686AE00F6297E /* BareMinimum.swift */; };
-		19F855C12D6BFE04003BBDFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 19DA487F29CD2B8400EEA1E7 /* Assets.xcassets */; };
 		19F95FF329F10FBC00314DDC /* StatDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F95FF229F10FBC00314DDC /* StatDataFlow.swift */; };
 		19F95FF529F10FCF00314DDC /* StatProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F95FF429F10FCF00314DDC /* StatProvider.swift */; };
 		19F95FF729F10FEE00314DDC /* StatStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F95FF629F10FEE00314DDC /* StatStateModel.swift */; };
@@ -317,8 +316,6 @@
 		448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
-		4CEDB7252D516827008F9A0D /* WebViewScriptExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEDB7242D516827008F9A0D /* WebViewScriptExecutor.swift */; };
-		4CEDB7272D5221A8008F9A0D /* FunctionScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEDB7262D5221A8008F9A0D /* FunctionScript.swift */; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
 		5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */; };
@@ -979,8 +976,6 @@
 		42369F66CF91F30624C0B3A6 /* BasalProfileEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorProvider.swift; sourceTree = "<group>"; };
 		44080E4709E3AE4B73054563 /* ConfigEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorProvider.swift; sourceTree = "<group>"; };
 		47DFCE895C930F784EF11843 /* CalibrationsStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalibrationsStateModel.swift; sourceTree = "<group>"; };
-		4CEDB7242D516827008F9A0D /* WebViewScriptExecutor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewScriptExecutor.swift; sourceTree = "<group>"; };
-		4CEDB7262D5221A8008F9A0D /* FunctionScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionScript.swift; sourceTree = "<group>"; };
 		4DD795BA46B193644D48138C /* TargetsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorRootView.swift; sourceTree = "<group>"; };
 		500371C09F54F89A97D65FDB /* CalibrationsRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CalibrationsRootView.swift; sourceTree = "<group>"; };
 		505E09DC17A0C3D0AF4B66FE /* ISFEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorStateModel.swift; sourceTree = "<group>"; };
@@ -1998,11 +1993,9 @@
 		388E5A5825B6F0070019842D /* OpenAPS */ = {
 			isa = PBXGroup;
 			children = (
-				4CEDB7242D516827008F9A0D /* WebViewScriptExecutor.swift */,
 				388E596B25AD95110019842D /* OpenAPS.swift */,
 				384E803325C385E60086DB71 /* JavaScriptWorker.swift */,
 				384E803725C388640086DB71 /* Script.swift */,
-				4CEDB7262D5221A8008F9A0D /* FunctionScript.swift */,
 				3821ED4B25DD18BA00BC42AD /* Constants.swift */,
 				1924F72B2BA35AE5006644EE /* TotalDailyDose.swift */,
 			);
@@ -2057,7 +2050,6 @@
 				3871F39B25ED892B0013ECB5 /* TempTarget.swift */,
 				3811DE8E25C9D80400A708ED /* User.swift */,
 				191A9D152BED00A500028D48 /* Version.swift */,
-				19389E542D69393900636E49 /* TemporaryData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2919,8 +2911,7 @@
 		388E595025AD948C0019842D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					388E595725AD948C0019842D = {
 						CreatedOnToolsVersion = 12.3;
@@ -3139,7 +3130,6 @@
 				38A0364225ED069400FCBB52 /* TempBasal.swift in Sources */,
 				3811DE1725C9D40400A708ED /* Screen.swift in Sources */,
 				383948DA25CD64D500E91849 /* Glucose.swift in Sources */,
-				4CEDB7272D5221A8008F9A0D /* FunctionScript.swift in Sources */,
 				CE94598029E9E3BD0047C9C6 /* WatchConfigDataFlow.swift in Sources */,
 				388E596C25AD95110019842D /* OpenAPS.swift in Sources */,
 				198CED9D2B2E62940073032D /* OverrideStorage.swift in Sources */,
@@ -3336,7 +3326,6 @@
 				38E98A2425F52C9300C0CED0 /* Logger.swift in Sources */,
 				198F67B62CFCBD5D00E538CB /* AutoISFDataFlow.swift in Sources */,
 				CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */,
-				4CEDB7252D516827008F9A0D /* WebViewScriptExecutor.swift in Sources */,
 				195D80BB2AF6980B00D25097 /* DynamicStateModel.swift in Sources */,
 				E00EEC0327368630002FF094 /* ServiceAssembly.swift in Sources */,
 				38192E07261BA9960094D973 /* FetchTreatmentsManager.swift in Sources */,
@@ -3827,17 +3816,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_STRICT_CONCURRENCY = targeted;
-				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
-				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = NO;
-				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
-				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
-				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
-				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
-				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
-				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = NO;
-				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
-				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -3882,17 +3860,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_STRICT_CONCURRENCY = targeted;
-				SWIFT_UPCOMING_FEATURE_CONCISE_MAGIC_FILE = YES;
-				SWIFT_UPCOMING_FEATURE_DEPRECATE_APPLICATION_MAIN = NO;
-				SWIFT_UPCOMING_FEATURE_FORWARD_TRAILING_CLOSURES = YES;
-				SWIFT_UPCOMING_FEATURE_GLOBAL_CONCURRENCY = YES;
-				SWIFT_UPCOMING_FEATURE_IMPLICIT_OPEN_EXISTENTIALS = YES;
-				SWIFT_UPCOMING_FEATURE_IMPORT_OBJC_FORWARD_DECLS = YES;
-				SWIFT_UPCOMING_FEATURE_INFER_SENDABLE_FROM_CAPTURES = YES;
-				SWIFT_UPCOMING_FEATURE_INTERNAL_IMPORTS_BY_DEFAULT = NO;
-				SWIFT_UPCOMING_FEATURE_ISOLATED_DEFAULT_VALUES = YES;
-				SWIFT_UPCOMING_FEATURE_REGION_BASED_ISOLATION = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -3901,6 +3868,7 @@
 		38E8753E27554D5900975559 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -3935,6 +3903,7 @@
 		38E8753F27554D5900975559 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APP_DISPLAY_NAME = "$(APP_DISPLAY_NAME)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -13,7 +13,7 @@ extension DispatchQueue {
         if isMain {
             return try block()
         } else {
-            return try DispatchQueue.main.sync(flags: .barrier) {
+            return try DispatchQueue.main.sync {
                 try autoreleasepool(invoking: block)
             }
         }
@@ -74,7 +74,7 @@ extension DispatchQueue {
             } else if isCurrentQueue {
                 return try block()
             } else {
-                return try sync(flags: .barrier) {
+                return try sync {
                     try autoreleasepool(invoking: block)
                 }
             }

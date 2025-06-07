@@ -10,7 +10,10 @@ struct AddCarbPresentIntent: AppIntent {
     // Description of the action in the Shortcuts app
     static var description = IntentDescription("Allow to add carbs in iAPS.")
 
+    internal var carbRequest: CarbPresetIntentRequest
+
     init() {
+        carbRequest = CarbPresetIntentRequest()
         dateAdded = Date()
     }
 
@@ -64,8 +67,6 @@ struct AddCarbPresentIntent: AppIntent {
     }
 
     @MainActor func perform() async throws -> some ProvidesDialog {
-        let carbRequest = CarbPresetIntentRequest()
-
         do {
             let quantityCarbs: Double
             if let cq = carbQuantity {
