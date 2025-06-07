@@ -1626,7 +1626,7 @@ Enact a temp Basal or a temp target */
 "And when Glucose is higher than" = "And when Glucose is higher than";
 
 /* */
-"End the Override when Glucose is lower ..." = "End the Override when Glucose is lower ...";
+"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
 
 /* */
 "... than" = "... than";

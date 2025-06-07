@@ -294,7 +294,7 @@ extension OverrideProfilesConfig {
 
                         HStack {
                             Toggle(isOn: $state.glucoseOverrideThresholdActiveDown) {
-                                Text("End the Override when Glucose is lower ...")
+                                Text("End the Override when Glucose is Lower ...")
                             }
                         }
 

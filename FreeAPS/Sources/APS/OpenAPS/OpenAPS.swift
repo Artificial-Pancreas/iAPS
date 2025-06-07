@@ -736,7 +736,13 @@ final class OpenAPS {
                    .Direction.doubleDown.symbol == BloodGlucose.Direction.doubleUp.symbol
                 {
                     useOverride = false
-                    if OverrideStorage().cancelProfile() != nil {
+                    let storage = OverrideStorage()
+                    if let duration = storage.cancelProfile() {
+                        let last_ = storage.fetchLatestOverride().last
+                        let name = storage.isPresetName()
+                        if let last = last_ {
+                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        }
                         debug(
                             .nightscout,
                             "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
@@ -750,7 +756,13 @@ final class OpenAPS {
                    ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
                 {
                     useOverride = false
-                    if OverrideStorage().cancelProfile() != nil {
+                    let storage = OverrideStorage()
+                    if let duration = OverrideStorage().cancelProfile() {
+                        let last_ = storage.fetchLatestOverride().last
+                        let name = storage.isPresetName()
+                        if let last = last_ {
+                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        }
                         debug(
                             .nightscout,
                             "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
