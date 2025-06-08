@@ -323,7 +323,7 @@
 "Schedule" = "Розклад";
 
 /* */
-"(standard units / hour)" = "(standard units / hour)";
+"(standard units / hour)" = "(стандартні одиниці/годину)";
 
 /*  */
 "starts at" = "Починається з";
@@ -628,7 +628,7 @@ Enact a temp Basal or a temp target */
 "Display on Watch" = "Відображати на Годиннику";
 
 /* */
-"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
+"Display either Overrides or Temp Targets" = "Відображати або Перевизначення, або Тимчасові Цілі";
 
 /* */
 "Garmin Watch" = "GARMIN WATCH";
@@ -1631,16 +1631,16 @@ Enact a temp Basal or a temp target */
 "End the Override with next Meal" = "Завершіть перевизначення наступним прийомом Їжі";
 
 /* */
-"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+"End the Override when Glucose is Trending Up" = "Завершіть перевизначення, коли рівень Глюкози має тенденцію до зростання";
 
 /* */
-"And when Glucose is higher than" = "And when Glucose is higher than";
+"And when Glucose is higher than" = "А коли рівень глюкози вищий за";
 
 /* */
-"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+"End the Override when Glucose is Lower ..." = "Завершити перезапис, коли рівень глюкози знизиться ...";
 
 /* */
-"... than" = "... than";
+"... than" = "... ніж";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Звичайний профіль";
@@ -1668,6 +1668,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Змінити CR";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "Хвилини SMB";
