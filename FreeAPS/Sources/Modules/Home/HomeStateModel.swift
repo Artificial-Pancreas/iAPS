@@ -116,14 +116,14 @@ extension Home {
             useInsulinBars: true,
             screenHours: 6,
             fpus: true,
-            fpuAmounts: false
+            fpuAmounts: false,
+            showInsulinActivity: true
         )
 
         override func subscribe() {
             setupGlucose()
             setupBasals()
             setupBoluses()
-            print("setting up activity...")
             setupActivity()
             setupSuspensions()
             setupPumpSettings()
@@ -160,6 +160,7 @@ extension Home {
             data.displayXgridLines = settingsManager.settings.xGridLines
             data.displayYgridLines = settingsManager.settings.yGridLines
             data.thresholdLines = settingsManager.settings.rulerMarks
+            data.showInsulinActivity = settingsManager.settings.showInsulinActivity
             useTargetButton = settingsManager.settings.useTargetButton
             data.screenHours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
@@ -666,6 +667,7 @@ extension Home.StateModel:
         data.displayXgridLines = settingsManager.settings.xGridLines
         data.displayYgridLines = settingsManager.settings.yGridLines
         data.thresholdLines = settingsManager.settings.rulerMarks
+        data.showInsulinActivity = settingsManager.settings.showInsulinActivity
         useTargetButton = settingsManager.settings.useTargetButton
         data.screenHours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors
