@@ -1670,6 +1670,9 @@ Enact a temp Basal or a temp target */
 "Change CR" = "Змінити CR";
 
 /* */
+"Change Basal" = "Change Basal";
+
+/* */
 "SMB Minutes" = "Хвилини SMB";
 
 /* */
