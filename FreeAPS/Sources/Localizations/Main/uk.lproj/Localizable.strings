@@ -1631,7 +1631,7 @@ Enact a temp Basal or a temp target */
 "End the Override with next Meal" = "Завершіть перевизначення наступним прийомом Їжі";
 
 /* */
-"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+"End the Override when Glucose is Trending Up" = "Завершіть перевизначення, коли рівень Глюкози має тенденцію до зростання";
 
 /* */
 "And when Glucose is higher than" = "And when Glucose is higher than";
