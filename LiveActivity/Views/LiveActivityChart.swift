@@ -129,17 +129,17 @@ struct LiveActivityChart: View {
 
         let bgDomainRange: Double = (yDomain.upperBound - yDomain.lowerBound)
         let activityRange: Double = maxActivityValue - minActivityValue
-        let activityZeroPointInBgDomain: Double = yDomain.lowerBound + bgDomainRange * 0.1
+        let activityZeroPointInBgDomain: Double = lowThreshold // yDomain.lowerBound + bgDomainRange * 0.1
 
         // transform activity data into the BG domain
-        // zero is at 10% of the y-range
-        // the activity is squeeze to approx 1/4 of the y-domain
+        // zero is at the bottom of the "green rectangle"
+        // the activity is squeezed to approx 1/3 of the y-domain
         func activityToDomain(_ act: Double) -> Double {
             let res =
                 activityZeroPointInBgDomain +
                 (
                     (act - minActivityValue) / activityRange * bgDomainRange
-                ) / 4.0
+                ) / 3.0
             return res
         }
 
@@ -149,7 +149,7 @@ struct LiveActivityChart: View {
         let readingsSymbolSize = CGFloat(15)
 
         let bgOpacity: Double = 0.7
-        let activityBgOpacity: Double = 0.3
+        let activityBgOpacity: Double = 0.2
         let predictionsOpacity = 0.3
         let predictionsSymbolSize = CGFloat(10)
         let inRangeRectOpacity = 0.1
