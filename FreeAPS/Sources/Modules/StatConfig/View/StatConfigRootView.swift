@@ -37,6 +37,7 @@ extension StatConfig {
                     Toggle("Display Chart X - Grid lines", isOn: $state.xGridLines)
                     Toggle("Display Chart Y - Grid lines", isOn: $state.yGridLines)
                     Toggle("Display Chart Threshold lines for Low and High", isOn: $state.rulerMarks)
+                    Toggle("Display Chart - Insulin Activity", isOn: $state.showInsulinActivity)
                     Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
                     HStack {
                         Text("Horizontal Scroll View Visible hours")
