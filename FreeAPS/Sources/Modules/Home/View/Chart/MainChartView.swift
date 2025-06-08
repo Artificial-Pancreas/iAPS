@@ -298,18 +298,18 @@ struct MainChartView: View {
             }
 
             if data.showInsulinActivity {
-              ForEach([Decimal(0.0), Decimal(1.0), data.maxBolus], id: \.self) { bolus in
-                  let activity = InsulinCalculations.peakInsulinActivity(
-                      forBolus: Double(bolus),
-                      peak: Double(data.insulinPeak),
-                      dia: Double(data.insulinDIA)
-                  )
-                  let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
-                  Path { path in
-                      path.move(to: CGPoint(x: 0, y: yCoord))
-                      path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                  }.stroke(Color.secondary, lineWidth: 0.25)
-              }
+                ForEach([Decimal(0.0), Decimal(1.0), data.maxBolus], id: \.self) { bolus in
+                    let activity = InsulinCalculations.peakInsulinActivity(
+                        forBolus: Double(bolus),
+                        peak: Double(data.insulinPeak),
+                        dia: Double(data.insulinDIA)
+                    )
+                    let yCoord = activityToYCoordinate(Decimal(activity), fullSize: fullSize)
+                    Path { path in
+                        path.move(to: CGPoint(x: 0, y: yCoord))
+                        path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
+                    }.stroke(Color.secondary, lineWidth: 0.25)
+                }
             }
         }
     }
