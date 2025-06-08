@@ -1670,6 +1670,9 @@ Enact a temp Basal or a temp target */
 "Change CR" = "Endre CR";
 
 /* */
+"Change Basal" = "Change Basal";
+
+/* */
 "SMB Minutes" = "SMB minutter";
 
 /* */
