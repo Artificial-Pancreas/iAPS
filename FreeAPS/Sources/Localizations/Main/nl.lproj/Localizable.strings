@@ -1632,16 +1632,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "End the Override with next Meal" = "Beëindig overschrijving bij volgende maaltijd";
 
 /* */
-"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+"End the Override when Glucose is Trending Up" = "Beëindig de overschrijving als BG omhoog gaat ...";
 
 /* */
-"And when Glucose is higher than" = "And when Glucose is higher than";
+"And when Glucose is higher than" = "En als de BG hoger is dan";
 
 /* */
-"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+"End the Override when Glucose is Lower ..." = "Beëindig de overschrijving als BG lager is ...";
 
 /* */
-"... than" = "... than";
+"... than" = "... dan";
 
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normaal profiel";
@@ -1671,7 +1671,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Change CR" = "Wijzig CR";
 
 /* */
-"Change Basal" = "Change Basal";
+"Change Basal" = "Wijzig basaal";
 
 /* */
 "SMB Minutes" = "SMB Minuten";
