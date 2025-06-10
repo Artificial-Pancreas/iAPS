@@ -1670,7 +1670,7 @@ Enact a temp Basal or a temp target */
 "Change CR" = "Thay đổi CR";
 
 /* */
-"Change Basal" = "Change Basal";
+"Change Basal" = "Điều chỉnh liều basal";
 
 /* */
 "SMB Minutes" = "SMB theo phút";
@@ -2045,7 +2045,7 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 giờ";
 
 /* */
-"3 hours" = "3 hours";
+"3 hours" = "3 giờ";
 
 /* */
 "4 hours" = "4 hours";
@@ -2054,7 +2054,7 @@ Enact a temp Basal or a temp target */
 "6 hours" = "6 hours";
 
 /* */
-"9 hours" = "9 hours";
+"9 hours" = "9 giờ";
 
 /* */
 "12 hours" = "12 hours";
@@ -3013,7 +3013,7 @@ Enact a temp Basal or a temp target */
 "Extra Features" = "Tính năng bổ sung";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "Cài đặt Giao diện";
 
 /* UI/UX option */
 "Display Predictions" = "Hiển thị dự đoán";
