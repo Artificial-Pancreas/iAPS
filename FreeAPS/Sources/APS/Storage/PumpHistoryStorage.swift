@@ -50,7 +50,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
 
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
                     if let duplicatedEvent = storedEvents
-                        .first(where: { x in Int(x.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970) })
+                        .first(where: { x in
+                            Int(x.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970) && x.type == .bolus })
                     {
                         return [PumpHistoryEvent(
                             id: duplicatedEvent.id,

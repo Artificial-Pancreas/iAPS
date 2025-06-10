@@ -89,7 +89,7 @@ extension NightscoutAPI {
                 warning(.nightscout, "Glucose fetching error: \(error.localizedDescription)")
                 return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
             }
-            .compactMap { glucose in
+            .map { glucose in
                 glucose
                     .map {
                         var reading = $0

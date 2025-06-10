@@ -1,4 +1,4 @@
-@preconcurrency import LoopKitUI
+import LoopKitUI
 import SwiftUI
 
 extension StateColorPalette {

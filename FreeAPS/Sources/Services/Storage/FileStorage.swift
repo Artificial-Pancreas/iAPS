@@ -4,7 +4,6 @@ protocol FileStorage {
     func save<Value: JSON>(_ value: Value, as name: String)
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value?
     func retrieveRaw(_ name: String) -> RawJSON?
-    func retrieveRawAsync(_ name: String) async -> RawJSON?
     func append<Value: JSON>(_ newValue: Value, to name: String)
     func append<Value: JSON>(_ newValues: [Value], to name: String)
     func append<Value: JSON, T: Equatable>(_ newValue: Value, to name: String, uniqBy keyPath: KeyPath<Value, T>)
@@ -18,28 +17,10 @@ protocol FileStorage {
 }
 
 final class BaseFileStorage: FileStorage, Injectable {
-    private let processQueue = DispatchQueue.markedQueue(
-        label: "BaseFileStorage.processQueue",
-        qos: .utility
-    )
-
-    private var fileQueues: [String: DispatchQueue] = [:]
-    private let queueAccessLock = DispatchQueue(label: "BaseFileStorage.processQueue")
-
-    private func getQueue(for path: String) -> DispatchQueue {
-        queueAccessLock.sync {
-            if let queue = fileQueues[path] {
-                return queue
-            } else {
-                let newQueue = DispatchQueue(label: "BaseFileStorage.processQueue.\(path.hashValue)", qos: .utility)
-                fileQueues[path] = newQueue
-                return newQueue
-            }
-        }
-    }
+    private let processQueue = DispatchQueue.markedQueue(label: "BaseFileStorage.processQueue", qos: .utility)
 
     func save<Value: JSON>(_ value: Value, as name: String) {
-        getQueue(for: name).sync {
+        processQueue.safeSync {
             if let value = value as? RawJSON, let data = value.data(using: .utf8) {
                 try? Disk.save(data, to: .documents, as: name)
             } else {
@@ -49,30 +30,17 @@ final class BaseFileStorage: FileStorage, Injectable {
     }
 
     func retrieve<Value: JSON>(_ name: String, as type: Value.Type) -> Value? {
-        getQueue(for: name).sync {
+        processQueue.safeSync {
             try? Disk.retrieve(name, from: .documents, as: type, decoder: JSONCoding.decoder)
         }
     }
 
     func retrieveRaw(_ name: String) -> RawJSON? {
-        getQueue(for: name).sync {
+        processQueue.safeSync {
             guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
                 return nil
             }
             return String(data: data, encoding: .utf8)
-        }
-    }
-
-    func retrieveRawAsync(_ name: String) async -> RawJSON? {
-        await withCheckedContinuation { continuation in
-            getQueue(for: name).async {
-                guard let data = try? Disk.retrieve(name, from: .documents, as: Data.self) else {
-                    continuation.resume(returning: nil)
-                    return
-                }
-                let result = String(data: data, encoding: .utf8)
-                continuation.resume(returning: result)
-            }
         }
     }
 
@@ -86,13 +54,13 @@ final class BaseFileStorage: FileStorage, Injectable {
     }
 
     func append<Value: JSON>(_ newValue: Value, to name: String) {
-        getQueue(for: name).sync {
+        processQueue.safeSync {
             try? Disk.append(newValue, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
 
     func append<Value: JSON>(_ newValues: [Value], to name: String) {
-        getQueue(for: name).sync {
+        processQueue.safeSync {
             try? Disk.append(newValues, to: name, in: .documents, decoder: JSONCoding.decoder, encoder: JSONCoding.encoder)
         }
     }
@@ -134,13 +102,13 @@ final class BaseFileStorage: FileStorage, Injectable {
     }
 
     func remove(_ name: String) {
-        getQueue(for: name).sync {
+        processQueue.safeSync {
             try? Disk.remove(name, from: .documents)
         }
     }
 
     func rename(_ name: String, to newName: String) {
-        getQueue(for: name).sync {
+        processQueue.safeSync {
             try? Disk.rename(name, in: .documents, to: newName)
         }
     }
