@@ -17,13 +17,13 @@
 "Continue without bolus" = "Ohne Bolusabgabe fortfahren";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Keine Daten.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Keine Vorhersagen vorhanden. Kein Vorschlag für den Loop möglich.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Fehlende Blutzuckerwerte";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Mahlzeit ohne Bolus speichern";
@@ -77,7 +77,7 @@
 "Agree and continue" = "Zustimmen und fortfahren";
 
 /* */
-"Log external insulin" = "Externes Insulin hinzufügen";
+"Log external insulin" = "Externes Insulin aufzeichnen";
 
 /* Bolus progress view */
 "of" = "von";
@@ -167,13 +167,13 @@
 "Add Carbs " = "Kohlenhydrate hinzufügen ";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "Überschreibung";
 
 /* Home View Message if no pump is connected */
 "No Pump" = "Keine Pumpe";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Offen";
 
 /*  */
 "Amount Carbs" = "Kohlenhydratmenge";
@@ -200,7 +200,7 @@
 "Cancel Temp Target" = "Temporäres Ziel abbrechen";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Temporären Zielwert abbrechen";
 
 /* Custom temp target */
 "Custom" = "Benutzerdefiniert";
@@ -284,7 +284,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Dynamische Variablen";
 
 /*  */
 "Basal profile" = "Basal-Profil";
@@ -323,7 +323,7 @@
 "Schedule" = "Zeitplan";
 
 /* */
-"(standard units / hour)" = "(standard units / hour)";
+"(standard units / hour)" = "(Standardeinheit / Stunde)";
 
 /*  */
 "starts at" = "Startet um";
@@ -628,7 +628,7 @@ Enact a temp Basal or a temp target */
 "Display on Watch" = "Anzeige auf der Uhr";
 
 /* */
-"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
+"Display either Overrides or Temp Targets" = "Entweder Überschreibungen oder temporäre Ziele anzeigen";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -637,7 +637,7 @@ Enact a temp Basal or a temp target */
 "Add devices" = "Geräte hinzufügen";
 
 /* */
-"Profile Overrides Button / Temp Targets Button" = "Profile Overrides Button / Temp Targets Button";
+"Profile Overrides Button / Temp Targets Button" = "Button zum Profilüberschreiben / Button für den temporären Zielwert";
 
 /* */
 "Glucose Target" = "Glukosewerte Ziel";
