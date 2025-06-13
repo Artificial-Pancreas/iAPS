@@ -308,8 +308,29 @@ struct MainChartView: View {
                     Path { path in
                         path.move(to: CGPoint(x: 0, y: yCoord))
                         path.addLine(to: CGPoint(x: fullSize.width, y: yCoord))
-                    }.stroke(Color.secondary, lineWidth: 0.25)
+                    }.stroke(Color.secondary, lineWidth: 0.15)
                 }
+
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
+                    path
+                        .addLine(to: CGPoint(
+                            x: fullSize.width,
+                            y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
+                        ))
+                }.stroke(Color.secondary, lineWidth: 0.40)
+
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
+                    path.addLine(to: CGPoint(x: fullSize.width, y: fullSize.height - Config.bottomPadding))
+                    path
+                        .addLine(to: CGPoint(
+                            x: fullSize.width,
+                            y: fullSize.height - Config.bottomPadding - Config.activityChartHeight
+                        ))
+                    path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding - Config.activityChartHeight))
+                    path.addLine(to: CGPoint(x: 0, y: fullSize.height - Config.bottomPadding))
+                }.fill(Color.blue).opacity(0.20)
             }
         }
     }
@@ -344,8 +365,7 @@ struct MainChartView: View {
                 Text(glucoseFormatter.string(from: value as NSNumber) ?? "").font(.bolusDotFont)
                 Text("U").font(.bolusDotFont.smallCaps()) // .foregroundStyle(Color.secondary)
             }
-//            .position(CGPoint(x: fullSize.width - 12, y: yCoord))
-            .position(CGPoint(x: 12, y: yCoord))
+            .position(CGPoint(x: fullSize.width - 12, y: yCoord))
             .asAny()
         }
     }
