@@ -167,7 +167,7 @@
     </entity>
     <entity name="Presets" representedClassName="Presets" syncable="YES" codeGenerationType="class">
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="dish" optional="YES" attributeType="String" defaultValueString=" "/>
+        <attribute name="dish" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
