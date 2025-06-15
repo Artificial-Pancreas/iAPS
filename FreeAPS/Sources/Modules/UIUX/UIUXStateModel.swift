@@ -1,6 +1,6 @@
 import SwiftUI
 
-extension StatConfig {
+extension UIUX {
     final class StateModel: BaseStateModel<Provider> {
         @Published var overrideHbA1cUnit = false
         @Published var low: Decimal = 4 / 0.0555
@@ -26,6 +26,7 @@ extension StatConfig {
         @Published var fpuAmounts: Bool = false
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
+        @Published var lightMode: LightMode = .auto
 
         var units: GlucoseUnits = .mmolL
 
@@ -53,6 +54,7 @@ extension StatConfig {
             subscribeSetting(\.fpuAmounts, on: $fpuAmounts) { fpuAmounts = $0 }
             subscribeSetting(\.carbButton, on: $carbButton) { carbButton = $0 }
             subscribeSetting(\.profileButton, on: $profileButton) { profileButton = $0 }
+            subscribeSetting(\.lightMode, on: $lightMode) { lightMode = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
