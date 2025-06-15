@@ -917,7 +917,7 @@ extension MainChartView {
                 fullSize: fullSize,
                 autotuned: false
             )
-            let tempBasalPoints = firstRegularBasalPoints + data.tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
+            let tempBasalPoints = firstRegularBasalPoints + data.tempBasals.windows(ofCount: 2).map { chunk -> [CGPoint] in
                 let chunk = Array(chunk)
                 guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
                 let timeBegin = chunk[0].timestamp.timeIntervalSince1970
