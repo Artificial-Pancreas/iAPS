@@ -2,7 +2,7 @@ import AppIntents
 import Foundation
 import Intents
 
-struct MealPresetEntity: AppEntity, Identifiable {
+struct MealPresetEntity: AppEntity, Identifiable, Hashable {
     static var defaultQuery = MealPresetQuery()
     var id: String
     var displayRepresentation: DisplayRepresentation {
@@ -31,7 +31,7 @@ struct ApplyMealPresetIntent: AppIntent {
     @Parameter(
         title: "Confirm Before activating",
         description: "If toggled, you will need to confirm before activating",
-        default: true
+        default: false
     ) var confirmBeforeApplying: Bool
 
     static var parameterSummary: some ParameterSummary {
@@ -101,10 +101,11 @@ struct MealPresetQuery: EntityQuery {
 
 final class MealPresetIntentRequest: BaseIntentsRequest {
     func fetchPresets() throws -> ([MealPresetEntity]) {
-        let presets = coreDataStorage.fetchMealPresets().flatMap { preset -> [MealPresetEntity] in
-            [MealPresetEntity(id: preset.dish ?? "")]
-        }
-        return presets
+        let presets = coreDataStorage.fetchMealPresets()
+            .compactMap { preset -> MealPresetEntity in
+                MealPresetEntity(id: preset.dish ?? "Empty")
+            }
+        return presets.filter({ $0.id != "Empty" && $0.id != " " }).removeDublicates()
     }
 
     func findPreset(_ name: String) throws -> Presets {
@@ -116,10 +117,10 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
     func fetchIDs(_: [MealPresetEntity.ID]) -> [MealPresetEntity] {
         let presets = coreDataStorage.fetchMealPresets()
             .map { preset -> MealPresetEntity in
-                let dish = preset.dish ?? ""
+                let dish = preset.dish ?? "Empty"
                 return MealPresetEntity(id: dish)
             }
-        return presets
+        return presets.filter({ $0.id != "Empty" && $0.id != " " })
     }
 
     func enactPreset(_ preset: Presets) throws -> String? {

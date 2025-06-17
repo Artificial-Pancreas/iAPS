@@ -20,9 +20,14 @@ extension AddCarbs {
 
         @FetchRequest(
             entity: Presets.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate: NSPredicate(
-                format: "dish != %@", " " as String
+            sortDescriptors: [NSSortDescriptor(key: "dish", ascending: true)], predicate:
+            NSCompoundPredicate(
+                andPredicateWithSubpredicates: [
+                    NSPredicate(format: "dish != %@", " " as String),
+                    NSPredicate(format: "dish != %@", "Empty" as String)
+                ]
             )
+
         ) var carbPresets: FetchedResults<Presets>
 
         @Environment(\.managedObjectContext) var moc
@@ -248,17 +253,17 @@ extension AddCarbs {
                     HStack {
                         Text("Carbs").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.carbs, formatter: formatter, liveEditing: true)
                     }
                     HStack {
                         Text("Fat").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.fat, formatter: formatter, liveEditing: true)
                     }
                     HStack {
                         Text("Protein").foregroundStyle(.secondary)
                         Spacer()
-                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter)
+                        DecimalTextField("0", value: $newPreset.protein, formatter: formatter, liveEditing: true)
                     }
                 } header: { Text("Saved Food") }
 

@@ -20,6 +20,18 @@ final class CoreDataStorage {
         return fetchGlucose
     }
 
+    func fetchRecentGlucose() -> Readings? {
+        var fetchGlucose = [Readings]()
+        coredataContext.performAndWait {
+            let requestReadings = Readings.fetchRequest() as NSFetchRequest<Readings>
+            let sort = NSSortDescriptor(key: "date", ascending: false)
+            requestReadings.sortDescriptors = [sort]
+            requestReadings.fetchLimit = 1
+            try? fetchGlucose = self.coredataContext.fetch(requestReadings)
+        }
+        return fetchGlucose.first
+    }
+
     func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
         var fetchLoopStats = [LoopStatRecord]()
         coredataContext.performAndWait {

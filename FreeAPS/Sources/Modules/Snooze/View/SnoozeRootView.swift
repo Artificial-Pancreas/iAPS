@@ -62,6 +62,10 @@ extension Snooze {
                 celltext = NSLocalizedString("High Glucose Alarm active", comment: "High Glucose Alarm active")
             case .low:
                 celltext = NSLocalizedString("Low Glucose Alarm active", comment: "Low Glucose Alarm active")
+            case .ascending:
+                celltext = NSLocalizedString("Ascending Glucose Alarm active", comment: "Ascending Glucose Alarm active")
+            case .descending:
+                celltext = NSLocalizedString("Descending Glucose Alarm active", comment: "Descending Glucose Alarm active")
             case .none:
                 celltext = NSLocalizedString("No Glucose Alarm active", comment: "No Glucose Alarm active")
             }

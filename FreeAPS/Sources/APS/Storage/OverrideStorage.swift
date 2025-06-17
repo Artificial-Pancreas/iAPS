@@ -144,6 +144,10 @@ final class OverrideStorage {
             save.overrideMaxIOB = preset.overrideAutoISF
             save.overrideAutoISF = preset.overrideAutoISF
             save.endWIthNewCarbs = preset.endWIthNewCarbs
+            save.glucoseOverrideThresholdActive = preset.glucoseOverrideThresholdActive
+            save.glucoseOverrideThreshold = preset.glucoseOverrideThreshold
+            save.glucoseOverrideThresholdActiveDown = preset.glucoseOverrideThresholdActiveDown
+            save.glucoseOverrideThresholdDown = preset.glucoseOverrideThresholdDown
             try? coredataContext.save()
         }
     }
@@ -244,6 +248,10 @@ final class OverrideStorage {
             save.overrideMaxIOB = override.overrideAutoISF
             save.overrideAutoISF = override.overrideAutoISF
             save.endWIthNewCarbs = override.endWIthNewCarbs
+            save.glucoseOverrideThresholdActive = override.glucoseOverrideThresholdActive
+            save.glucoseOverrideThreshold = override.glucoseOverrideThreshold
+            save.glucoseOverrideThresholdActiveDown = override.glucoseOverrideThresholdActiveDown
+            save.glucoseOverrideThresholdDown = override.glucoseOverrideThresholdDown
             try? coredataContext.save()
         }
     }
@@ -338,6 +346,10 @@ final class OverrideStorage {
                 save.overrideMaxIOB = preset.overrideAutoISF
                 save.overrideAutoISF = preset.overrideAutoISF
                 save.endWIthNewCarbs = preset.endWIthNewCarbs
+                save.glucoseOverrideThresholdActive = preset.glucoseOverrideThresholdActive
+                save.glucoseOverrideThreshold = preset.glucoseOverrideThreshold
+                save.glucoseOverrideThresholdActiveDown = preset.glucoseOverrideThresholdActiveDown
+                save.glucoseOverrideThresholdDown = preset.glucoseOverrideThresholdDown
                 if (preset.target ?? 0) as Decimal > 6 {
                     save.target = preset.target
                 } else { save.target = 6 }

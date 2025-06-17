@@ -260,6 +260,19 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
             return .high
         }
 
+        if let direction = glucose.direction, direction == .doubleDown || direction == .singleDown,
+           Decimal(glucoseValue) < settingsManager.settings.highGlucose
+        {
+            return .descending
+        }
+
+        if let direction = glucose.direction, direction == .doubleUp || direction == .singleUp,
+           Decimal(glucoseValue) > settingsManager.settings.lowGlucose,
+           Decimal(glucoseValue) < settingsManager.settings.highGlucose
+        {
+            return .ascending
+        }
+
         return nil
     }
 }
@@ -271,6 +284,8 @@ protocol GlucoseObserver {
 enum GlucoseAlarm {
     case high
     case low
+    case ascending
+    case descending
 
     var displayName: String {
         switch self {
@@ -278,6 +293,10 @@ enum GlucoseAlarm {
             return NSLocalizedString("LOWALERT!", comment: "LOWALERT!")
         case .low:
             return NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!")
+        case .ascending:
+            return NSLocalizedString("RAPIDLY ASCENDING GLUCOSE!", comment: "RAPIDLY ASCENDING GLUCOSE!")
+        case .descending:
+            return NSLocalizedString("RAPIDLY DESCENDING GLUCOSE!", comment: "RAPIDLY DESCENDING GLUCOSE!")
         }
     }
 }

@@ -691,20 +691,23 @@ extension Home {
         }
 
         var timeSetting: some View {
-            let string = "\(state.hours) " + NSLocalizedString("hours", comment: "") + "   "
-            return Menu(string) {
-                Button("3 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 3 })
-                Button("6 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 6 })
-                Button("9 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 9 })
-                Button("12 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 12 })
-                Button("24 " + NSLocalizedString("hours", comment: ""), action: { state.hours = 24 })
-                Button("UI/UX Settings", action: { state.showModal(for: .statisticsConfig) })
+            let hourLabel = NSLocalizedString("\(state.hours) hours", comment: "") + "   "
+
+            return Menu(hourLabel) {
+                ForEach([3, 6, 9, 12, 24], id: \.self) { value in
+                    let label = NSLocalizedString("\(value) hours", comment: "")
+                    Button(label, action: { state.hours = value })
+                }
+
+                Button("UI/UX Settings", action: {
+                    state.showModal(for: .statisticsConfig)
+                })
             }
             .buttonStyle(.borderless)
             .foregroundStyle(.primary)
             .font(.timeSettingFont)
             .padding(.vertical, 15)
-            .background(TimeEllipse(characters: string.count))
+            .background(TimeEllipse(characters: hourLabel.count))
         }
 
         private var isfView: some View {
@@ -801,8 +804,7 @@ extension Home {
                         buttonPanel(geo)
                     }
                     .background(
-                        colorScheme == .light ? .gray.opacity(IAPSconfig.backgroundOpacity * 2) : .white
-                            .opacity(IAPSconfig.backgroundOpacity * 2)
+                        colorScheme == .light ? IAPSconfig.homeViewBackgroundLight : IAPSconfig.homeViewBackgrundDark
                     )
                     .ignoresSafeArea(edges: .vertical)
                     .overlay {

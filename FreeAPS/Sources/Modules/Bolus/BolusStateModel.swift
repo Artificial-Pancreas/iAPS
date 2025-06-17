@@ -151,14 +151,13 @@ extension Bolus {
                     // Use Oref0 predictions{
                     insulin = (evBG - target) / isf
                 } else { insulin = 0 }
-            } else if currentBG == 0, manualGlucose > 0 {
-                let targetDifference = manualGlucose - target
-                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
-                // print("Current BG: \(manualGlucose), Target: \(target), ISF: \(isf)")
+            } else if manualGlucose > 0 {
+                let targetDifference = manualGlucose - (units == .mmolL ? target.asMgdL : target)
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
             } else if currentBG != 0 {
                 let targetDifference = currentBG - (units == .mmolL ? target.asMgdL : target)
+                print("BG: \(currentBG), target: \(units == .mmolL ? target.asMgdL : target)")
                 targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
-                // print("Current BG: \(currentBG), Target: \(target), ISF: \(units == .mmolL ? isf.asMgdL : isf)")
             } else {
                 targetDifferenceInsulin = 0
             }
