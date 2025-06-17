@@ -26,6 +26,7 @@ extension StatConfig {
         @Published var fpuAmounts: Bool = false
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
+        @Published var showInsulinActivity: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -53,6 +54,7 @@ extension StatConfig {
             subscribeSetting(\.fpuAmounts, on: $fpuAmounts) { fpuAmounts = $0 }
             subscribeSetting(\.carbButton, on: $carbButton) { carbButton = $0 }
             subscribeSetting(\.profileButton, on: $profileButton) { profileButton = $0 }
+            subscribeSetting(\.showInsulinActivity, on: $showInsulinActivity) { showInsulinActivity = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)

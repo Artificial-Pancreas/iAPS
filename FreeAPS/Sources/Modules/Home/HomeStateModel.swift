@@ -86,6 +86,7 @@ extension Home {
         var data = ChartModel(
             suggestion: nil,
             glucose: [],
+            activity: [],
             isManual: [],
             tempBasals: [],
             boluses: [],
@@ -107,18 +108,23 @@ extension Home {
             thresholdLines: true,
             overrideHistory: [],
             minimumSMB: 0,
+            insulinDIA: 7,
+            insulinPeak: 75,
             maxBolus: 0,
             maxBolusValue: 1,
+            maxIOB: 0,
             useInsulinBars: true,
             screenHours: 6,
             fpus: true,
-            fpuAmounts: false
+            fpuAmounts: false,
+            showInsulinActivity: true
         )
 
         override func subscribe() {
             setupGlucose()
             setupBasals()
             setupBoluses()
+            setupActivity()
             setupSuspensions()
             setupPumpSettings()
             setupBasalProfile()
@@ -154,12 +160,18 @@ extension Home {
             data.displayXgridLines = settingsManager.settings.xGridLines
             data.displayYgridLines = settingsManager.settings.yGridLines
             data.thresholdLines = settingsManager.settings.rulerMarks
+            data.showInsulinActivity = settingsManager.settings.showInsulinActivity
             useTargetButton = settingsManager.settings.useTargetButton
             data.screenHours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
             useCalc = settingsManager.settings.useCalc
             data.minimumSMB = settingsManager.settings.minimumSMB
+            data.insulinDIA = settingsManager.pumpSettings.insulinActionCurve
+            data.insulinPeak = settingsManager.preferences.useCustomPeakTime ? settingsManager.preferences.insulinPeakTime :
+                (settingsManager.preferences.curve == .ultraRapid ? 55 : 75)
+
             data.maxBolus = settingsManager.pumpSettings.maxBolus
+            data.maxIOB = settingsManager.preferences.maxIOB
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus
             data.fpuAmounts = settingsManager.settings.fpuAmounts
@@ -429,6 +441,13 @@ extension Home {
             }
         }
 
+        private func setupActivity() {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.data.activity = CoreDataStorage().fetchInsulinData(interval: DateFilter().day)
+            }
+        }
+
         private func setupPumpSettings() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -632,6 +651,7 @@ extension Home.StateModel:
         setupOverrideHistory()
         setupLoopStats()
         setupData()
+        setupActivity()
     }
 
     func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -648,6 +668,7 @@ extension Home.StateModel:
         data.displayXgridLines = settingsManager.settings.xGridLines
         data.displayYgridLines = settingsManager.settings.yGridLines
         data.thresholdLines = settingsManager.settings.rulerMarks
+        data.showInsulinActivity = settingsManager.settings.showInsulinActivity
         useTargetButton = settingsManager.settings.useTargetButton
         data.screenHours = settingsManager.settings.hours
         alwaysUseColors = settingsManager.settings.alwaysUseColors

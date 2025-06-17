@@ -32,6 +32,59 @@ final class CoreDataStorage {
         return fetchGlucose.first
     }
 
+    func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
+        var fetchTicks = [InsulinActivity]()
+        coredataContext.performAndWait {
+            let requestTicks = InsulinActivity.fetchRequest()
+            let sort = NSSortDescriptor(key: "date", ascending: true)
+            requestTicks.sortDescriptors = [sort]
+            requestTicks.predicate = NSPredicate(
+                format: "date > %@", interval
+            )
+            try? fetchTicks = self.coredataContext.fetch(requestTicks)
+        }
+        let result = fetchTicks.compactMap { tick -> IOBTick0? in
+            guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
+                return nil
+            }
+            return IOBTick0(
+                time: date,
+                iob: iob as Decimal,
+                activity: activity as Decimal
+            )
+        }
+        return result
+    }
+
+    func saveInsulinData(iobEntries: [IOBTick0]) {
+        coredataContext.perform {
+            guard let firstDate = iobEntries.map(\.time).min() else { return }
+
+            let deleteRequest = InsulinActivity.fetchRequest()
+            deleteRequest.predicate = NSPredicate(
+                format: "date >= %@ OR date < %@",
+                firstDate.addingTimeInterval(-60) as NSDate, // delete previous "future" entries
+                firstDate.addingTimeInterval(-86400) as NSDate // delete entries older than 1 day
+            )
+
+            do {
+                let recordsToDelete = try self.coredataContext.fetch(deleteRequest)
+                for record in recordsToDelete {
+                    self.coredataContext.delete(record)
+                }
+            } catch { return }
+
+            for iobEntry in iobEntries {
+                let record = InsulinActivity(context: self.coredataContext)
+                record.date = iobEntry.time
+                record.iob = NSDecimalNumber(decimal: iobEntry.iob)
+                record.activity = NSDecimalNumber(decimal: iobEntry.activity)
+            }
+
+            try? self.coredataContext.save()
+        }
+    }
+
     func fetchLoopStats(interval: NSDate) -> [LoopStatRecord] {
         var fetchLoopStats = [LoopStatRecord]()
         coredataContext.performAndWait {

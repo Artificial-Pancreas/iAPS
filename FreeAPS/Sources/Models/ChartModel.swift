@@ -3,6 +3,7 @@ import Foundation
 class ChartModel: ObservableObject {
     @Published var suggestion: Suggestion?
     @Published var glucose: [BloodGlucose]
+    @Published var activity: [IOBTick0]
     @Published var isManual: [BloodGlucose]
     @Published var tempBasals: [PumpHistoryEvent]
     @Published var boluses: [PumpHistoryEvent]
@@ -24,16 +25,21 @@ class ChartModel: ObservableObject {
     @Published var thresholdLines: Bool
     @Published var overrideHistory: [OverrideHistory]
     @Published var minimumSMB: Decimal
+    @Published var insulinDIA: Decimal
+    @Published var insulinPeak: Decimal
     @Published var maxBolus: Decimal
     @Published var maxBolusValue: Decimal
+    @Published var maxIOB: Decimal
     @Published var useInsulinBars: Bool
     @Published var screenHours: Int
     @Published var fpus: Bool
     @Published var fpuAmounts: Bool
+    @Published var showInsulinActivity: Bool
 
     init(
         suggestion: Suggestion?,
         glucose: [BloodGlucose],
+        activity: [IOBTick0],
         isManual: [BloodGlucose],
         tempBasals: [PumpHistoryEvent],
         boluses: [PumpHistoryEvent],
@@ -55,15 +61,20 @@ class ChartModel: ObservableObject {
         thresholdLines: Bool,
         overrideHistory: [OverrideHistory],
         minimumSMB: Decimal,
+        insulinDIA: Decimal,
+        insulinPeak: Decimal,
         maxBolus: Decimal,
         maxBolusValue: Decimal,
+        maxIOB: Decimal,
         useInsulinBars: Bool,
         screenHours: Int,
         fpus: Bool,
-        fpuAmounts: Bool
+        fpuAmounts: Bool,
+        showInsulinActivity: Bool
     ) {
         self.suggestion = suggestion
         self.glucose = glucose
+        self.activity = activity
         self.isManual = isManual
         self.tempBasals = tempBasals
         self.boluses = boluses
@@ -85,11 +96,15 @@ class ChartModel: ObservableObject {
         self.thresholdLines = thresholdLines
         self.overrideHistory = overrideHistory
         self.minimumSMB = minimumSMB
+        self.insulinDIA = insulinDIA
+        self.insulinPeak = insulinPeak
         self.maxBolus = maxBolus
         self.maxBolusValue = maxBolusValue
+        self.maxIOB = maxIOB
         self.useInsulinBars = useInsulinBars
         self.screenHours = screenHours
         self.fpus = fpus
         self.fpuAmounts = fpuAmounts
+        self.showInsulinActivity = showInsulinActivity
     }
 }
