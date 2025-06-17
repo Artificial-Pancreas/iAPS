@@ -17,13 +17,13 @@
 "Continue without bolus" = "Pokračovať bez bolusu";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Žiadné údaje.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Žiadne predpovede. Neúspešný návrh slučky.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Chýbajúca glykémia";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Uložiť jedlo bez bolusu";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Plán";
+
+/* */
+"(standard units / hour)" = "(predvolené jednotky / hodina)";
 
 /*  */
 "starts at" = "začína o";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Zobraziť na hodinkách";
+
+/* */
+"Display either Overrides or Temp Targets" = "Zobraziť tlačidlo upravenia profilu alebo dočasného cieľu";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1625,6 +1631,18 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "End the Override with next Meal" = "Ukončiť upravenie pri nasledujúcom jedle";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Ukončiť profil, ak glykémia stúpa";
+
+/* */
+"And when Glucose is higher than" = "Ak je glykémia vyššia ako";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Ukončiť profil, ak je glykémia nižšia ...";
+
+/* */
+"... than" = "... ako";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
 
@@ -1651,6 +1669,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* */
 "Change CR" = "Zmena CR";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "SMB minúty";
@@ -2638,7 +2659,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Final Ratio" = "Výsledný pomer";
 
 /* History of the adjustments */
-"Adjustments" = "Úpravy";
+"Adjustments" = "Výpočet";
 
 /* History of the adjustments */
 "Insulin" = "Inzulín";

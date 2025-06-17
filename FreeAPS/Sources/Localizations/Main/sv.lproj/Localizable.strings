@@ -322,6 +322,9 @@
 /*  */
 "Schedule" = "Schema";
 
+/* */
+"(standard units / hour)" = "(standardenheter / timme)";
+
 /*  */
 "starts at" = "startar kl";
 
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Visa på klocka";
+
+/* */
+"Display either Overrides or Temp Targets" = "Visa antingen knapp för profiler eller knapp för tillfälliga målvärden";
 
 /* */
 "Garmin Watch" = "Garmin - klocka";
@@ -1624,6 +1630,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Avsluta profilen med nästa måltid";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Avsluta profilen när blodsockret trendar uppåt";
+
+/* */
+"And when Glucose is higher than" = "Och när blodsockret är högre än";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Avsluta profilen när blodsockret är lägre ...";
+
+/* */
+"... than" = "... än";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profil";
 
@@ -1650,6 +1668,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Ändra CR";
+
+/* */
+"Change Basal" = "Ändra basal";
 
 /* */
 "SMB Minutes" = "SMB-minuter";

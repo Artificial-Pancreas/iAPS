@@ -17,13 +17,13 @@
 "Continue without bolus" = "Tiếp tục và bỏ qua liều bolus";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Không có dữ liệu.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Không có dự đoán. Đề xuất vòng lặp thất bại.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Thiếu dữ liệu đường huyết";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Lưu bữa ăn mà không cần bolus";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Lịch trình";
+
+/* */
+"(standard units / hour)" = "(tiêu chuẩn units / hour)";
 
 /*  */
 "starts at" = "bắt đầu lúc";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Hiển thị trên đồng hồ";
+
+/* */
+"Display either Overrides or Temp Targets" = "Hiển thị Ghi đè hoặc Mục tiêu tạm thời";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1624,6 +1630,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Kết thúc Override bằng bữa ăn tiếp theo";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Kết thúc Ghi đè khi đường huyết đang có xu hướng tăng";
+
+/* */
+"And when Glucose is higher than" = "Và khi mức đường huyết cao hơn";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Kết thúc Ghi đè khi đường huyết thấp hơn...";
+
+/* */
+"... than" = "... hơn";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Cấu hình mặc định";
 
@@ -1650,6 +1668,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Thay đổi CR";
+
+/* */
+"Change Basal" = "Điều chỉnh liều basal";
 
 /* */
 "SMB Minutes" = "SMB theo phút";
@@ -2024,7 +2045,7 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 giờ";
 
 /* */
-"3 hours" = "3 hours";
+"3 hours" = "3 giờ";
 
 /* */
 "4 hours" = "4 hours";
@@ -2033,7 +2054,7 @@ Enact a temp Basal or a temp target */
 "6 hours" = "6 hours";
 
 /* */
-"9 hours" = "9 hours";
+"9 hours" = "9 giờ";
 
 /* */
 "12 hours" = "12 hours";
@@ -2992,7 +3013,7 @@ Enact a temp Basal or a temp target */
 "Extra Features" = "Tính năng bổ sung";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "Cài đặt Giao diện";
 
 /* UI/UX option */
 "Display Predictions" = "Hiển thị dự đoán";

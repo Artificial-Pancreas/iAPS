@@ -17,13 +17,13 @@
 "Continue without bolus" = "Продолжить без болюса";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Нет данных.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Нет предсказаний. Неудачное предложение цикла.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Отсутствует глюкоза";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Сохранить прием пищи без болюса";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "График";
+
+/* */
+"(standard units / hour)" = "(стандарт ед/час)";
 
 /*  */
 "starts at" = "начинается в";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Отображать на часах";
+
+/* */
+"Display either Overrides or Temp Targets" = "Переопределения или временные цели";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1624,6 +1630,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Завершить переопределение со следующим приемом пищи";
 
+/* */
+"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+
+/* */
+"And when Glucose is higher than" = "And when Glucose is higher than";
+
+/* */
+"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+
+/* */
+"... than" = "... than";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Нормальный профиль";
 
@@ -1650,6 +1668,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Изменить CR";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "SMB минуты";
@@ -2024,7 +2045,7 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 часа";
 
 /* */
-"3 hours" = "3 hours";
+"3 hours" = "3 часа";
 
 /* */
 "4 hours" = "4 часа";
@@ -2033,7 +2054,7 @@ Enact a temp Basal or a temp target */
 "6 hours" = "6 часов";
 
 /* */
-"9 hours" = "9 hours";
+"9 hours" = "9 часов";
 
 /* */
 "12 hours" = "12 часов";
@@ -2992,7 +3013,7 @@ Enact a temp Basal or a temp target */
 "Extra Features" = "Дополнительные функции";
 
 /* Header */
-"UI/UX Settings" = "UI/UX Settings";
+"UI/UX Settings" = "Настройки UI/UX";
 
 /* UI/UX option */
 "Display Predictions" = "Отображать прогнозы";

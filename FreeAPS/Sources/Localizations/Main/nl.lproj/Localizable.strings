@@ -17,13 +17,13 @@
 "Continue without bolus" = "Verdergaan zonder bolus";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Geen gegevens.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Geen voorspellingen. Mislukte loop suggestie.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"Missing Glucose" = "Ontbrekende glucose";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Schema";
+
+/* */
+"(standard units / hour)" = "(standaard eenheden / uur)";
 
 /*  */
 "starts at" = "Start";
@@ -623,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Weergave op horloge";
+
+/* */
+"Display either Overrides or Temp Targets" = "Toon overschrijvingen of tijdelijke doelen";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1625,6 +1631,18 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "End the Override with next Meal" = "Beëindig overschrijving bij volgende maaltijd";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Beëindig de overschrijving als BG omhoog gaat ...";
+
+/* */
+"And when Glucose is higher than" = "En als de BG hoger is dan";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Beëindig de overschrijving als BG lager is ...";
+
+/* */
+"... than" = "... dan";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normaal profiel";
 
@@ -1651,6 +1669,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Change CR" = "Wijzig CR";
+
+/* */
+"Change Basal" = "Wijzig basaal";
 
 /* */
 "SMB Minutes" = "SMB Minuten";
