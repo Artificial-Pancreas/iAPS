@@ -96,7 +96,7 @@
 "Assigned Address" = "Địa chỉ được chỉ định";
 
 /* Title for Attach Pod screen */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Gắn Pod";
 
 /* Description string above progress indicator while attempting to re-establish communication from an unacknowledged command */
 "Attemping to re-establish communication" = "Đang cố gắng thiết lập lại giao tiếp";

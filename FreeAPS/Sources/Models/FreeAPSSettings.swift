@@ -57,6 +57,21 @@ struct FreeAPSSettings: JSON, Equatable {
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
+    // Sounds
+    var hypoSound: String = "Default"
+    var hyperSound: String = "Default"
+    var ascending: String = "Default"
+    var descending: String = "Default"
+    var carbSound: String = "Default"
+    var bolusFailure: String = "Silent"
+    var missingLoops = true
+    // Alerts
+    var lowAlert: Bool = true
+    var highAlert: Bool = true
+    var ascendingAlert: Bool = true
+    var descendingAlert: Bool = true
+    var carbsRequiredAlert: Bool = true
+    //
     var profilesOrTempTargets: Bool = false
     var allowBolusShortcut: Bool = false
     var allowedRemoteBolusAmount: Decimal = 0.0
@@ -81,6 +96,10 @@ struct FreeAPSSettings: JSON, Equatable {
     var fpuAmounts: Bool = false
     var carbButton: Bool = true
     var profileButton: Bool = true
+    var glucoseOverrideThreshold: Decimal = 100
+    var glucoseOverrideThresholdActive: Bool = false
+    var glucoseOverrideThresholdActiveDown: Bool = false
+    var glucoseOverrideThresholdDown: Decimal = 100
     // Auto ISF
     var autoisf: Bool = false
     var smbDeliveryRatioBGrange: Decimal = 0
@@ -223,6 +242,26 @@ extension FreeAPSSettings: Decodable {
 
         if let fattyMeals = try? container.decode(Bool.self, forKey: .fattyMeals) {
             settings.fattyMeals = fattyMeals
+        }
+
+        if let lowAlert = try? container.decode(Bool.self, forKey: .lowAlert) {
+            settings.lowAlert = lowAlert
+        }
+
+        if let highAlert = try? container.decode(Bool.self, forKey: .highAlert) {
+            settings.highAlert = highAlert
+        }
+
+        if let ascendingAlert = try? container.decode(Bool.self, forKey: .ascendingAlert) {
+            settings.ascendingAlert = ascendingAlert
+        }
+
+        if let descendingAlert = try? container.decode(Bool.self, forKey: .descendingAlert) {
+            settings.descendingAlert = descendingAlert
+        }
+
+        if let carbsRequiredAlert = try? container.decode(Bool.self, forKey: .carbsRequiredAlert) {
+            settings.carbsRequiredAlert = carbsRequiredAlert
         }
 
         if let fattyMealFactor = try? container.decode(Decimal.self, forKey: .fattyMealFactor) {
@@ -374,6 +413,34 @@ extension FreeAPSSettings: Decodable {
 
         if let timeSettings = try? container.decode(Bool.self, forKey: .timeSettings) {
             settings.timeSettings = timeSettings
+        }
+
+        if let hypoSound = try? container.decode(String.self, forKey: .hypoSound) {
+            settings.hypoSound = hypoSound
+        }
+
+        if let hyperSound = try? container.decode(String.self, forKey: .hyperSound) {
+            settings.hyperSound = hyperSound
+        }
+
+        if let ascending = try? container.decode(String.self, forKey: .ascending) {
+            settings.ascending = ascending
+        }
+
+        if let descending = try? container.decode(String.self, forKey: .descending) {
+            settings.descending = descending
+        }
+
+        if let carbSound = try? container.decode(String.self, forKey: .carbSound) {
+            settings.carbSound = carbSound
+        }
+
+        if let bolusFailure = try? container.decode(String.self, forKey: .bolusFailure) {
+            settings.bolusFailure = bolusFailure
+        }
+
+        if let missingLoops = try? container.decode(Bool.self, forKey: .missingLoops) {
+            settings.missingLoops = missingLoops
         }
 
         if let profilesOrTempTargets = try? container.decode(Bool.self, forKey: .profilesOrTempTargets) {
@@ -542,6 +609,24 @@ extension FreeAPSSettings: Decodable {
 
         if let autoisf_min = try? container.decode(Decimal.self, forKey: .autoisf_min) {
             settings.autoisf_min = autoisf_min
+        }
+
+        if let glucoseOverrideThreshold = try? container.decode(Decimal.self, forKey: .glucoseOverrideThreshold) {
+            settings.glucoseOverrideThreshold = glucoseOverrideThreshold
+        }
+
+        if let glucoseOverrideThresholdActive = try? container.decode(Bool.self, forKey: .glucoseOverrideThresholdActive) {
+            settings.glucoseOverrideThresholdActive = glucoseOverrideThresholdActive
+        }
+
+        if let glucoseOverrideThresholdDown = try? container.decode(Decimal.self, forKey: .glucoseOverrideThresholdDown) {
+            settings.glucoseOverrideThresholdDown = glucoseOverrideThresholdDown
+        }
+
+        if let glucoseOverrideThresholdActiveDown = try? container
+            .decode(Bool.self, forKey: .glucoseOverrideThresholdActiveDown)
+        {
+            settings.glucoseOverrideThresholdActiveDown = glucoseOverrideThresholdActiveDown
         }
 
         // Auto ISF Keto Protection

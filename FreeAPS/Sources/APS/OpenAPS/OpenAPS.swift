@@ -730,6 +730,49 @@ final class OpenAPS {
                         )
                     }
                 }
+
+                // End with new glucose trending up, when applicable
+                if useOverride, overrideArray.first?.glucoseOverrideThresholdActive ?? false, let g = cd.fetchRecentGlucose(),
+                   Decimal(g.glucose) > ((overrideArray.first?.glucoseOverrideThreshold ?? 100) as NSDecimalNumber) as Decimal,
+                   g.direction ?? BloodGlucose.Direction.fortyFiveDown.symbol == BloodGlucose.Direction.fortyFiveUp.symbol || g
+                   .direction ?? BloodGlucose
+                   .Direction.singleDown.symbol == BloodGlucose.Direction.singleUp.symbol || g.direction ?? BloodGlucose
+                   .Direction.doubleDown.symbol == BloodGlucose.Direction.doubleUp.symbol
+                {
+                    useOverride = false
+                    let storage = OverrideStorage()
+                    if let duration = storage.cancelProfile() {
+                        let last_ = storage.fetchLatestOverride().last
+                        let name = storage.isPresetName()
+                        if let last = last_ {
+                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        }
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
+                        )
+                    }
+                }
+
+                // End with new glucose when lower than setting, when applicable
+                if useOverride, overrideArray.first?.glucoseOverrideThresholdActiveDown ?? false, let g = cd.fetchRecentGlucose(),
+                   Decimal(g.glucose) <
+                   ((overrideArray.first?.glucoseOverrideThresholdDown ?? 90) as NSDecimalNumber) as Decimal
+                {
+                    useOverride = false
+                    let storage = OverrideStorage()
+                    if let duration = OverrideStorage().cancelProfile() {
+                        let last_ = storage.fetchLatestOverride().last
+                        let name = storage.isPresetName()
+                        if let last = last_ {
+                            nightscout.editOverride(name ?? "", duration, last.date ?? Date.now)
+                        }
+                        debug(
+                            .nightscout,
+                            "Override ended, because of new glucose: \(g.glucose) mg/dl \(g.direction ?? "")"
+                        )
+                    }
+                }
             }
 
             if !useOverride {

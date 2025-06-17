@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES" codeGenerationType="class">
         <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -110,6 +110,10 @@
         <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThreshold" optional="YES" attributeType="Decimal" defaultValueString="100"/>
+        <attribute name="glucoseOverrideThresholdActive" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdActiveDown" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdDown" optional="YES" attributeType="Decimal" defaultValueString="90"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -141,6 +145,10 @@
         <attribute name="emoji" optional="YES" attributeType="String"/>
         <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThreshold" optional="YES" attributeType="Decimal" defaultValueString="100"/>
+        <attribute name="glucoseOverrideThresholdActive" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdActiveDown" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="glucoseOverrideThresholdDown" optional="YES" attributeType="Decimal" defaultValueString="90"/>
         <attribute name="id" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="indefinite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -159,7 +167,7 @@
     </entity>
     <entity name="Presets" representedClassName="Presets" syncable="YES" codeGenerationType="class">
         <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="dish" optional="YES" attributeType="String" defaultValueString=" "/>
+        <attribute name="dish" optional="YES" attributeType="String" defaultValueString="Empty"/>
         <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>

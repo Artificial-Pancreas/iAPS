@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Продовжити без болюсу";
 
+/* History View */
+"No data." = "Немає даних.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "Немає прогнозів. Невдала пропозиція циклу.";
+
+/* Bolus View */
+"New Glucose Missing" = "Відсутність Глюкози";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Зберегти Їжу без болюсу";
 
@@ -190,6 +199,9 @@
 /*  */
 "Cancel Temp Target" = "Відмінити Тимчасову ціль";
 
+/*  */
+"Cancel Temporary Target" = "Скасувати Тимчасову Ціль";
+
 /* Custom temp target */
 "Custom" = "Своя";
 
@@ -309,6 +321,9 @@
 
 /*  */
 "Schedule" = "Розклад";
+
+/* */
+"(standard units / hour)" = "(стандартні одиниці/годину)";
 
 /*  */
 "starts at" = "Починається з";
@@ -611,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Відображати на Годиннику";
+
+/* */
+"Display either Overrides or Temp Targets" = "Відображати або Перевизначення, або Тимчасові Цілі";
 
 /* */
 "Garmin Watch" = "GARMIN WATCH";
@@ -1000,7 +1018,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Видалити CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Ви дійсно бажаєте видалити цей CGM?";
+"Are you sure you want to remove this cgm from iAPS?" = "Ви впевнені, що хочете видалити цей cgm з iAPS?";
 
 /* */
 "There is no undo" = "Цю дію неможливо відмінити!";
@@ -1187,6 +1205,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Немає активних сигналів Глюкози";
 
 /* */
+"Ascending Glucose Alarm active" = "Сигналізація підвищення рівня Глюкози активна";
+
+/* */
+"Descending Glucose Alarm active" = "Сигналізація зниження рівня Глюкози активна";
+
+/* */
 "snoozing until %@" = "відкладено до %@";
 
 /* */
@@ -1226,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Параметри фонового заповнення";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Завантаження трендів в даний час не  підтримується в Петлі";
+"Backfilling from trend is currently not well supported by iAPS" = "Завантаження трендів в даний час не  підтримується в  iAPS";
 
 /* */
 "Backfill from history" = "Резервне копіювання з історії";
@@ -1275,6 +1299,9 @@ Enact a temp Basal or a temp target */
 
 /* Option for no sound */
 "Silent" = "Без звуку";
+
+/* Option for default notification sound */
+"Default" = "Стандартний";
 
 /* The iOS default sound */
 "iOS default sound" = "Звук за замовчуванням для iOS";
@@ -1603,6 +1630,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Завершіть перевизначення наступним прийомом Їжі";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Завершіть перевизначення, коли рівень Глюкози має тенденцію до зростання";
+
+/* */
+"And when Glucose is higher than" = "А коли рівень глюкози вищий за";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Завершити перезапис, коли рівень глюкози знизиться ...";
+
+/* */
+"... than" = "... ніж";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Звичайний профіль";
 
@@ -1629,6 +1668,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Змінити CR";
+
+/* */
+"Change Basal" = "Зміна Базалу";
 
 /* */
 "SMB Minutes" = "Хвилини SMB";
@@ -1753,7 +1795,7 @@ Enact a temp Basal or a temp target */
 "Eventual Glucose" = "Можлива глюкоза";
 
 /* */
-"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
+"Minimum Predicted Glucose" = "Мінімальна прогнозована Глюкоза";
 
 /* */
 "Please wait" = "Будь ласка, зачекайте";
@@ -1892,7 +1934,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ для %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "Петля не автоматично змінюватиме подачу інсуліну, поки Тимчасова Базальна Швидкість не завершиться, або не буде скасована користувачем.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS не налаштовуватиме автоматично введення інсуліну, доки тимчасова базальна доза не завершиться або не буде скасована.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Встановіть Тимчасову Базальну Швидкість";
 
@@ -2003,10 +2045,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 години";
 
 /* */
+"3 hours" = "3 години";
+
+/* */
 "4 hours" = "4 години";
 
 /* */
 "6 hours" = "6 годин";
+
+/* */
+"9 hours" = "9 годин";
 
 /* */
 "12 hours" = "12 годин";
@@ -2171,7 +2219,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Поділитися та створити Резервну копію";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Звантажити налаштування та статистику";
+"Upload Settings and Statistics" = "Звантажити Налаштування та Статистику";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Поділитись та зробити Резервну копію всіх ваших Налаштувань та Статистики";
@@ -2967,6 +3015,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Додаткові функції";
+
+/* Header */
+"UI/UX Settings" = "Налаштування UI/UX";
 
 /* UI/UX option */
 "Display Predictions" = "Показати передбачення";

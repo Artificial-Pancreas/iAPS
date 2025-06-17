@@ -1,41 +1,39 @@
-//
-//  OSLog.swift
-//  DanaKit
-//
-//  Created by Bastiaan Verhaar on 06/12/2023.
-//  Copyright © 2023 Randall Knutson. All rights reserved.
-//
-
-import OSLog
 import Combine
+import OSLog
 
 class DanaLogger {
     private let logger: Logger
     private let fileManager = FileManager.default
-    
-    
+
     init(category: String) {
         logger = Logger(subsystem: "com.randallknutson.DanaKit", category: category)
     }
-    
+
+    public func debug(_ msg: String, file: String = #file, _ function: String = #function, _ line: Int = #line) {
+        #if DANAKIT_DEBUG_LOGGING
+            let message = "\(file.file) - \(function)#\(line): \(msg)"
+            logger.debug("\(message, privacy: .public)")
+        #endif
+    }
+
     public func info(_ msg: String, file: String = #file, _ function: String = #function, _ line: Int = #line) {
         let message = "\(file.file) - \(function)#\(line): \(msg)"
-        self.logger.info("\(message, privacy: .public)")
-        self.writeToFile(message, .info)
+        logger.info("\(message, privacy: .public)")
+        writeToFile(message, .info)
     }
-    
+
     public func warning(_ msg: String, file: String = #file, _ function: String = #function, _ line: Int = #line) {
         let message = "\(file.file) - \(function)#\(line): \(msg)"
-        self.logger.warning("\(message, privacy: .public)")
-        self.writeToFile(message, .notice)
+        logger.warning("\(message, privacy: .public)")
+        writeToFile(message, .notice)
     }
-    
+
     public func error(_ msg: String, file: String = #file, _ function: String = #function, _ line: Int = #line) {
         let message = "\(file.file) - \(function)#\(line): \(msg)"
-        self.logger.error("\(message, privacy: .public)")
-        self.writeToFile(message, .error)
+        logger.error("\(message, privacy: .public)")
+        writeToFile(message, .error)
     }
-    
+
     private func writeToFile(_ msg: String, _ type: OSLogEntryLog.Level) {
         if !fileManager.fileExists(atPath: logDir) {
             try? fileManager.createDirectory(
@@ -48,24 +46,24 @@ class DanaLogger {
         if !fileManager.fileExists(atPath: logFile) {
             createFile(at: startOfDay)
         } else if let attributes = try? fileManager.attributesOfItem(atPath: logFile),
-               let creationDate = attributes[.creationDate] as? Date, creationDate < startOfDay
-            {
-                try? fileManager.removeItem(atPath: logFilePrev)
-                try? fileManager.moveItem(atPath: logFile, toPath: logFilePrev)
-                createFile(at: startOfDay)
+                  let creationDate = attributes[.creationDate] as? Date, creationDate < startOfDay
+        {
+            try? fileManager.removeItem(atPath: logFilePrev)
+            try? fileManager.moveItem(atPath: logFile, toPath: logFilePrev)
+            createFile(at: startOfDay)
         }
-        
+
         let logEntry = "[\(dateFormatter.string(from: Date())) \(getLevel(type))] \(msg)\n"
         let data = logEntry.data(using: .utf8)!
         try? data.append(fileURL: URL(fileURLWithPath: logFile))
     }
-    
+
     private var startOfDay: Date {
         Calendar.current.startOfDay(for: Date())
     }
-    
+
     private var logFile: String {
-        getDocumentsDirectory().appendingPathComponent("danakit/log.txt").path
+        getDocumentsDirectory().appendingPathComponent("danakit/dana_log.txt").path
     }
 
     private var logDir: String {
@@ -73,7 +71,7 @@ class DanaLogger {
     }
 
     private var logFilePrev: String {
-        getDocumentsDirectory().appendingPathComponent("danakit/log_prev.txt").path
+        getDocumentsDirectory().appendingPathComponent("danakit/dana_log_prev.txt").path
     }
 
     private func getDocumentsDirectory() -> URL {
@@ -81,17 +79,17 @@ class DanaLogger {
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
-    
+
     private var dateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         return dateFormatter
     }
-    
+
     private func createFile(at date: Date) {
         fileManager.createFile(atPath: logFile, contents: nil, attributes: [.creationDate: date])
     }
-    
+
     func getDebugLogs() -> [URL] {
         var items: [URL] = []
 
@@ -105,7 +103,7 @@ class DanaLogger {
 
         return items
     }
-    
+
     private func getLevel(_ type: OSLogEntryLog.Level) -> String {
         switch type {
         case .info:
