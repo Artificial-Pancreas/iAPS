@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Žiadne predpovede. Neúspešný návrh slučky.";
 
 /* Bolus View */
-"Missing Glucose" = "Chýbajúca glykémia";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Uložiť jedlo bez bolusu";
