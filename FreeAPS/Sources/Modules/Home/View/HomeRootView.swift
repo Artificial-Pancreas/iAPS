@@ -25,8 +25,8 @@ extension Home {
         let viewPadding: CGFloat = 5
 
         @Environment(\.managedObjectContext) var moc
-        @Environment(\.colorScheme) var colorScheme
         @Environment(\.sizeCategory) private var fontSize
+        @Environment(\.colorScheme) var colorScheme
 
         @FetchRequest(
             entity: Override.entity(),
@@ -463,7 +463,11 @@ extension Home {
             addBackground()
                 .frame(minHeight: 200)
                 .overlay {
-                    PreviewChart(readings: $state.readings, lowLimit: $state.data.lowGlucose, highLimit: $state.data.highGlucose)
+                    PreviewChart(
+                        readings: $state.readings,
+                        lowLimit: $state.data.lowGlucose,
+                        highLimit: $state.data.highGlucose
+                    )
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
@@ -646,8 +650,8 @@ extension Home {
                         }
 
                         Divider()
-
-                    }.padding(.top, geo.safeAreaInsets.top)
+                    }
+                    .padding(.top, geo.safeAreaInsets.top)
                 }
         }
 
@@ -781,8 +785,8 @@ extension Home {
                                 if !state.iobData.isEmpty {
                                     activeIOBView
                                 }
-
-                            }.background {
+                            }
+                            .background {
                                 // Track vertical scroll
                                 GeometryReader { proxy in
                                     let scrollPosition = proxy.frame(in: .named("HomeScrollView")).minY
@@ -833,6 +837,7 @@ extension Home {
             .ignoresSafeArea(.keyboard)
             .sheet(isPresented: $displayAutoHistory) {
                 AutoISFHistoryView(units: state.data.units)
+                    .environment(\.colorScheme, colorScheme)
             }
             .popup(isPresented: state.isStatusPopupPresented, alignment: .bottom, direction: .bottom) {
                 popup
