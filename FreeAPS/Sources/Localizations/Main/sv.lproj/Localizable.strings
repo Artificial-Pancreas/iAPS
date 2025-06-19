@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Inga blodsockerprognoser. Misslyckad loop.";
 
 /* Bolus View */
-"Missing Glucose" = "Blodsocker saknas";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Spara måltid utan bolus";
