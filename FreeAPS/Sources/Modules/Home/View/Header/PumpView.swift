@@ -235,7 +235,8 @@ struct PumpView: View {
 
     private func podInsulinAmount(portion: Double) -> some View {
         ZStack {
-            UIImage(imageLiteralResourceName: "pod_reservoir")
+            let pump = colorScheme == .dark ? "pod_dark" : "pod_light"
+            UIImage(imageLiteralResourceName: pump)
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: portion)
                 .resizable()
                 .aspectRatio(0.72, contentMode: .fit)
@@ -257,7 +258,8 @@ struct PumpView: View {
 
     private func pumpInsulinAmount(portion: Double) -> some View {
         ZStack {
-            UIImage(imageLiteralResourceName: "NonOmniPump")
+            let pump = colorScheme == .dark ? "pump_dark" : "pump_light"
+            UIImage(imageLiteralResourceName: pump)
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
                 .frame(maxWidth: 17, maxHeight: 36)

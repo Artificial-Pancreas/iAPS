@@ -465,6 +465,7 @@ extension AutoISF {
             .navigationBarTitleDisplayMode(.automatic)
             .sheet(isPresented: $presentHistory) {
                 AutoISFHistoryView(units: state.units)
+                    .environment(\.colorScheme, colorScheme)
             }
         }
 
