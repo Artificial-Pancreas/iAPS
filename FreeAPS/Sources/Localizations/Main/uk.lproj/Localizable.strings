@@ -3109,16 +3109,16 @@ Enact a temp Basal or a temp target */
 "Light" = "Світлий";
 
 /* UI/UX option */
-"Dark" = "Dark";
+"Dark" = "Темна";
 
 /* UI/UX option */
 "Auto" = "Авто";
 
 /* UI/UX option */
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Кольорова Схема";
 
 /* UI/UX option */
-"Light / Dark Mode" = "Light / Dark Mode";
+"Light / Dark Mode" = "Світло/Темний Режим";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
