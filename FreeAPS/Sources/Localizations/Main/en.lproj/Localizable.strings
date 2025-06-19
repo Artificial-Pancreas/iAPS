@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose"; 
+"New Glucose Missing" = "New Glucose Missing"; 
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Save Meal without bolus";
@@ -321,6 +321,9 @@
 
 /*  */
 "Schedule" = "Schedule";
+
+/* */
+"(standard units / hour)" = "(standard units / hour)";
 
 /*  */
 "starts at" = "starts at";
@@ -625,6 +628,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Display on Watch";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1666,6 +1672,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Change CR";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "SMB Minutes";
