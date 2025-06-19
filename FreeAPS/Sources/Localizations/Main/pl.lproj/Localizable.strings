@@ -2382,7 +2382,7 @@ Połączono z Nightscout!";
 "WideFontTracking" = "Wide";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Light ";
 
 /* Contact Image, settings, regular font weight */
 "RegularFontWeight" = "Regular";
