@@ -554,7 +554,7 @@ struct SampleData {
                 let trend = distance < midpoint / 2 || currentValue > 0.015 ? -1.0 : 1.0
                 let delta = Double.random(in: 0.001 ... 0.001)
                 currentValue += delta * trend + noise
-                currentValue = max(-0.001, min(currentValue, 0.02))
+                currentValue = max(-0.01, min(currentValue, 0.02))
                 values.append(currentValue)
             }
 
