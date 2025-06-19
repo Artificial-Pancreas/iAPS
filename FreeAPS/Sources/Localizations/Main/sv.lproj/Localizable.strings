@@ -3111,7 +3111,7 @@ Enact a temp Basal or a temp target */
 "Dark" = "Mörk";
 
 /* UI/UX option */
-"Auto" = "Auto";
+"Auto" = "Automatisk";
 
 /* UI/UX option */
 "Color Scheme" = "Färgschema";
