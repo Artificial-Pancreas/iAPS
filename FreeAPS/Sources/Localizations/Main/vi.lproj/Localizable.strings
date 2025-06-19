@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Không có dự đoán. Đề xuất vòng lặp thất bại.";
 
 /* Bolus View */
-"New Glucose Missing" = "Thiếu dữ liệu đường huyết";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Lưu bữa ăn mà không cần bolus";
@@ -3103,6 +3103,21 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Auto ISF Home View" = "Xem trang chủ Auto ISF";
+
+/* UI/UX option */
+"Light" = "Light";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Tự động";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";

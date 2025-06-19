@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Geen voorspellingen. Mislukte loop suggestie.";
 
 /* Bolus View */
-"New Glucose Missing" = "Ontbrekende glucose";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
@@ -3108,6 +3108,21 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Auto ISF Home View" = "Auto ISF Home-weergave";
+
+/* UI/UX option */
+"Light" = "Licht";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Automatisch";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
