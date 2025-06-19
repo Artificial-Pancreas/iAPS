@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Keine Vorhersagen vorhanden. Kein Vorschlag für den Loop möglich.";
 
 /* Bolus View */
-"Missing Glucose" = "Fehlende Blutzuckerwerte";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Mahlzeit ohne Bolus speichern";
