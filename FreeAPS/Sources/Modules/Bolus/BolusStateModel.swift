@@ -139,7 +139,7 @@ extension Bolus {
             }
             deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
                 (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
-            currentBG = Decimal(lastGlucose.glucose)
+            currentBG = Decimal(lastGlucose.glucose) * conversion
         }
 
         func calculateInsulin() -> Decimal {
@@ -155,14 +155,16 @@ extension Bolus {
                 let targetDifference = manualGlucose - (units == .mmolL ? target.asMgdL : target)
                 targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
             } else if currentBG != 0 {
-                let targetDifference = currentBG - (units == .mmolL ? target.asMgdL : target)
-                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
+                let targetDifference = currentBG - target
+                print("BG: \(currentBG), target: \(target), isf: \(isf)")
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
             } else {
                 targetDifferenceInsulin = 0
             }
 
             // more or less insulin because of bg trend in the last 15 minutes
             fifteenMinInsulin = isf == 0 ? 0 : (deltaBG * conversion) / isf
+            print("fifteenMinInsulin isf: \(isf), deltaBG: \(deltaBG * conversion)")
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
             // If failed recent suggestion use recent carb entry
