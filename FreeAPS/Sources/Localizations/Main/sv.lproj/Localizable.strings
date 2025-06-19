@@ -3105,19 +3105,19 @@ Enact a temp Basal or a temp target */
 "Auto ISF Home View" = "Hemskärm Auto ISF";
 
 /* UI/UX option */
-"Light" = "Lätt";
+"Light" = "Ljus";
 
 /* UI/UX option */
-"Dark" = "Dark";
+"Dark" = "Mörk";
 
 /* UI/UX option */
 "Auto" = "Auto";
 
 /* UI/UX option */
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Färgschema";
 
 /* UI/UX option */
-"Light / Dark Mode" = "Light / Dark Mode";
+"Light / Dark Mode" = "Ljust / Mörkt";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
