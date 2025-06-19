@@ -155,8 +155,8 @@ extension Bolus {
                     insulin = (evBG - target) / isf
                 } else { insulin = 0 }
             } else if manualGlucose > 0 {
-                let targetDifference = manualGlucose - (units == .mmolL ? target.asMgdL : target)
-                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
+                let targetDifference = (units == .mmolL ? manualGlucose.asMmolL : manualGlucose) - target
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
             } else if currentBG > 0 {
                 let targetDifference = currentBG - target
                 print("BG: \(currentBG), target: \(target), isf: \(isf)")
@@ -357,7 +357,7 @@ extension Bolus {
         }
 
         func addManualGlucose() {
-            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
+            let glucose = manualGlucose
             let now = Date()
             let id = UUID().uuidString
 
