@@ -23,10 +23,10 @@
 		190141312CDB930400ABD925 /* RestoreStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190141302CDB92FB00ABD925 /* RestoreStateModel.swift */; };
 		190141342CDB931A00ABD925 /* RestoreRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190141332CDB931000ABD925 /* RestoreRootView.swift */; };
 		190141362CDB9D4B00ABD925 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190141352CDB9D4600ABD925 /* Token.swift */; };
-		190EBCC429FF136900BA767D /* StatConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC329FF136900BA767D /* StatConfigDataFlow.swift */; };
-		190EBCC629FF138000BA767D /* StatConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC529FF138000BA767D /* StatConfigProvider.swift */; };
-		190EBCC829FF13AA00BA767D /* StatConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC729FF13AA00BA767D /* StatConfigStateModel.swift */; };
-		190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */; };
+		190EBCC429FF136900BA767D /* UIUXDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC329FF136900BA767D /* UIUXDataFlow.swift */; };
+		190EBCC629FF138000BA767D /* UIUXProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC529FF138000BA767D /* UIUXProvider.swift */; };
+		190EBCC829FF13AA00BA767D /* UIUXStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCC729FF13AA00BA767D /* UIUXStateModel.swift */; };
+		190EBCCB29FF13CB00BA767D /* UIUXRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190EBCCA29FF13CB00BA767D /* UIUXRootView.swift */; };
 		190F8CF72BC6F70800EDB473 /* IllustrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F8CF62BC6F70800EDB473 /* IllustrationView.swift */; };
 		191A9D162BED00A500028D48 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A9D152BED00A500028D48 /* Version.swift */; };
 		191A9D182BED24B000028D48 /* ActiveIOBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191A9D172BED24B000028D48 /* ActiveIOBView.swift */; };
@@ -600,10 +600,10 @@
 		190141302CDB92FB00ABD925 /* RestoreStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreStateModel.swift; sourceTree = "<group>"; };
 		190141332CDB931000ABD925 /* RestoreRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreRootView.swift; sourceTree = "<group>"; };
 		190141352CDB9D4600ABD925 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		190EBCC329FF136900BA767D /* StatConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatConfigDataFlow.swift; sourceTree = "<group>"; };
-		190EBCC529FF138000BA767D /* StatConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatConfigProvider.swift; sourceTree = "<group>"; };
-		190EBCC729FF13AA00BA767D /* StatConfigStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatConfigStateModel.swift; sourceTree = "<group>"; };
-		190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatConfigRootView.swift; sourceTree = "<group>"; };
+		190EBCC329FF136900BA767D /* UIUXDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUXDataFlow.swift; sourceTree = "<group>"; };
+		190EBCC529FF138000BA767D /* UIUXProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUXProvider.swift; sourceTree = "<group>"; };
+		190EBCC729FF13AA00BA767D /* UIUXStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUXStateModel.swift; sourceTree = "<group>"; };
+		190EBCCA29FF13CB00BA767D /* UIUXRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUXRootView.swift; sourceTree = "<group>"; };
 		190F8CF62BC6F70800EDB473 /* IllustrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IllustrationView.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		191A9D152BED00A500028D48 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
@@ -1266,21 +1266,21 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		190EBCC229FF134900BA767D /* StatConfig */ = {
+		190EBCC229FF134900BA767D /* UIUX */ = {
 			isa = PBXGroup;
 			children = (
-				190EBCC329FF136900BA767D /* StatConfigDataFlow.swift */,
-				190EBCC529FF138000BA767D /* StatConfigProvider.swift */,
-				190EBCC729FF13AA00BA767D /* StatConfigStateModel.swift */,
+				190EBCC329FF136900BA767D /* UIUXDataFlow.swift */,
+				190EBCC529FF138000BA767D /* UIUXProvider.swift */,
+				190EBCC729FF13AA00BA767D /* UIUXStateModel.swift */,
 				190EBCC929FF13AF00BA767D /* View */,
 			);
-			path = StatConfig;
+			path = UIUX;
 			sourceTree = "<group>";
 		};
 		190EBCC929FF13AF00BA767D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				190EBCCA29FF13CB00BA767D /* StatConfigRootView.swift */,
+				190EBCCA29FF13CB00BA767D /* UIUXRootView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1563,9 +1563,9 @@
 		3811DE0325C9D31700A708ED /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				198F67B42CFCBD5D00E538CB /* AutoISF */,
 				6DC5D590658EF8B8DF94F9F5 /* AddCarbs */,
 				A9A4C88374496B3C89058A89 /* AddTempTarget */,
+				198F67B42CFCBD5D00E538CB /* AutoISF */,
 				672F63EEAE27400625E14BAD /* AutotuneConfig */,
 				A42F1FEDFFD0DDE00AAD54D3 /* BasalProfileEditor */,
 				3811DE0425C9D32E00A708ED /* Base */,
@@ -1597,8 +1597,8 @@
 				19F191D92BE4F93400F6297E /* Sharing */,
 				29B478DF61BF8D270F7D8954 /* Snooze */,
 				19F95FF129F10F9C00314DDC /* Stat */,
-				190EBCC229FF134900BA767D /* StatConfig */,
 				6517011F19F244F64E1FF14B /* TargetsEditor */,
+				190EBCC229FF134900BA767D /* UIUX */,
 				CE94597C29E9E1CD0047C9C6 /* WatchConfig */,
 			);
 			path = Modules;
@@ -3180,7 +3180,7 @@
 				3811DE1825C9D40400A708ED /* Router.swift in Sources */,
 				CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */,
 				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
-				190EBCC629FF138000BA767D /* StatConfigProvider.swift in Sources */,
+				190EBCC629FF138000BA767D /* UIUXProvider.swift in Sources */,
 				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
 				E00EEC0427368630002FF094 /* SecurityAssembly.swift in Sources */,
 				3811DEE825CA063400A708ED /* Injected.swift in Sources */,
@@ -3217,7 +3217,7 @@
 				BD7DA9A92AE06E9200601B20 /* BolusCalculatorStateModel.swift in Sources */,
 				CEB434E528B8FF5D00B70274 /* UIColor.swift in Sources */,
 				B8CB7F152B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift in Sources */,
-				190EBCCB29FF13CB00BA767D /* StatConfigRootView.swift in Sources */,
+				190EBCCB29FF13CB00BA767D /* UIUXRootView.swift in Sources */,
 				3811DEA925C9D88300A708ED /* AppearanceManager.swift in Sources */,
 				CE7950242997D81700FA576E /* CGMSettingsView.swift in Sources */,
 				38D0B3D925EC07C400CB6E88 /* CarbsEntry.swift in Sources */,
@@ -3234,7 +3234,7 @@
 				198F67B82CFCBD5D00E538CB /* AutoISFStateModel.swift in Sources */,
 				3862CC05273D152B00BF832C /* CalibrationService.swift in Sources */,
 				3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */,
-				190EBCC829FF13AA00BA767D /* StatConfigStateModel.swift in Sources */,
+				190EBCC829FF13AA00BA767D /* UIUXStateModel.swift in Sources */,
 				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
 				38A504A425DD9C4000C5B9E8 /* UserDefaultsExtensions.swift in Sources */,
 				38FE826A25CC82DB001FF17A /* NetworkService.swift in Sources */,
@@ -3252,7 +3252,7 @@
 				38E989DD25F5021400C0CED0 /* PumpStatus.swift in Sources */,
 				BDFD165A2AE40438007F0DDA /* AlternativeBolusCalcRootView.swift in Sources */,
 				38E98A2525F52C9300C0CED0 /* IssueReporter.swift in Sources */,
-				190EBCC429FF136900BA767D /* StatConfigDataFlow.swift in Sources */,
+				190EBCC429FF136900BA767D /* UIUXDataFlow.swift in Sources */,
 				3811DEB025C9D88300A708ED /* BaseKeychain.swift in Sources */,
 				F2159A5B2BA7939C00A0B716 /* ContactPicture.swift in Sources */,
 				3811DE4325C9D4A100A708ED /* SettingsProvider.swift in Sources */,
