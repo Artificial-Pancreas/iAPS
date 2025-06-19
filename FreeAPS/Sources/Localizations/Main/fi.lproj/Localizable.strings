@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
 
 /* Bolus View */
-"Missing Glucose" = "Missing Glucose";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Tallenna ateria ilman bolusta";
