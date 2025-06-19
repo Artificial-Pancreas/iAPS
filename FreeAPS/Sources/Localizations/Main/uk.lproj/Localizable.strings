@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Немає прогнозів. Невдала пропозиція циклу.";
 
 /* Bolus View */
-"Missing Glucose" = "Відсутність Глюкози";
+"New Glucose Missing" = "Відсутність Глюкози";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Зберегти Їжу без болюсу";

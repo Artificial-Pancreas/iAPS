@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Нет предсказаний. Неудачное предложение цикла.";
 
 /* Bolus View */
-"Missing Glucose" = "Отсутствует глюкоза";
+"New Glucose Missing" = "Отсутствует глюкоза";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Сохранить прием пищи без болюса";

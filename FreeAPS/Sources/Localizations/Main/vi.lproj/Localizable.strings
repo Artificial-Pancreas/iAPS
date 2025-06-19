@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Không có dự đoán. Đề xuất vòng lặp thất bại.";
 
 /* Bolus View */
-"Missing Glucose" = "Thiếu dữ liệu đường huyết";
+"New Glucose Missing" = "Thiếu dữ liệu đường huyết";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Lưu bữa ăn mà không cần bolus";
