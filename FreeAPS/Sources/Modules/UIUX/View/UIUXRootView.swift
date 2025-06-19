@@ -1,7 +1,7 @@
 import SwiftUI
 import Swinject
 
-extension StatConfig {
+extension UIUX {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
@@ -103,6 +103,14 @@ extension StatConfig {
                         Text("Display Ratio and a History View button")
                     }
                 } header: { Text("Auto ISF Home View") }
+
+                Section {
+                    Picker(selection: $state.lightMode, label: Text("Color Scheme")) {
+                        ForEach(LightMode.allCases) { item in
+                            Text(NSLocalizedString(item.rawValue, comment: "ColorScheme Selection"))
+                        }
+                    }
+                } header: { Text("Light / Dark Mode") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .onAppear(perform: configureView)
