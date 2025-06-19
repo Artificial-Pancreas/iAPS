@@ -3108,6 +3108,21 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* UI/UX option */
 "Auto ISF Home View" = "Auto ISF domovská obrazovka";
 
+/* UI/UX option */
+"Light" = "Tenké";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Automatická ";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
+
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
 
