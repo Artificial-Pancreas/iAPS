@@ -414,6 +414,7 @@
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Legen Sie das Basalprofil fest, das die Pumpe verwenden soll. Beachten Sie, dass das in der Pumpe gespeicherte Profil mit dem Profil auf %1$@überschrieben wird.";
 
+
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
@@ -537,9 +538,6 @@
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Erinnerung an niedrigen Füllstand";
 
-/* Description text for low reservoir reminder */
-"The pump reminds you when the amount of insulin in the pump reaches this level" = "The pump reminds you when the amount of insulin in the pump reaches this level";
-
 /* refillAmount */
 "Refill amount" = "Nachfüllmenge";
 
@@ -584,3 +582,6 @@
 
 /* Battery age */
 "Battery age" = "Batteriealter";
+
+/* advertise contact DanaRS v1 */
+"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!";

@@ -366,7 +366,7 @@
 "The time on your pump is different from the current time. Do you want to update the time on your pump to the current time?" = "Čas na Vašej pumpe sa líši od aktuálneho času. Chcete aktualizovať čas na vašej pumpe na aktuálny čas?";
 
 /* Button text to confirm pump time sync */
-"Yes, Sync to Current Time" = "Áno, synchronizujte s aktuálnym časom";
+"Yes, Sync to Current Time" = "Áno, zosynchronizovať s aktuálnym časom";
 
 /* Button text to cancel pump time sync */
 "No, Keep Pump As Is" = "Nie, nechajte pumpu tak, ako je";

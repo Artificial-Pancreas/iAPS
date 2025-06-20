@@ -363,7 +363,7 @@ struct MainChartView: View {
                 path.addLine(to: CGPoint(x: x, y: fullSize.height - 20))
             }
             .stroke(
-                colorScheme == .dark ? Color.white : Color.black,
+                colorScheme == .dark ? IAPSconfig.chartBackgroundLight : IAPSconfig.chartBackgroundDark,
                 style: StrokeStyle(lineWidth: 0.5, dash: [5])
             )
         }
@@ -918,7 +918,7 @@ extension MainChartView {
                 fullSize: fullSize,
                 autotuned: false
             )
-            let tempBasalPoints = firstRegularBasalPoints + data.tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
+            let tempBasalPoints = firstRegularBasalPoints + data.tempBasals.windows(ofCount: 2).map { chunk -> [CGPoint] in
                 let chunk = Array(chunk)
                 guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
                 let timeBegin = chunk[0].timestamp.timeIntervalSince1970

@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Pokračovať bez bolusu";
 
+/* History View */
+"No data." = "Žiadné údaje.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "Žiadne predpovede. Neúspešný návrh slučky.";
+
+/* Bolus View */
+"New Glucose Missing" = "Chýbajúca glykémia";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Uložiť jedlo bez bolusu";
 
@@ -59,7 +68,7 @@
 "Confirm Bolus Faster" = "Rýchlejšie potvrdenie bolusu";
 
 /* Setting Section */
-"UI/UX" = "UI/UX";
+"UI/UX" = "Rozhranie";
 
 /*  */
 "Wait please" = "Počkajte, prosím";
@@ -190,6 +199,9 @@
 /*  */
 "Cancel Temp Target" = "Zrušiť dočasný cieľ";
 
+/*  */
+"Cancel Temporary Target" = "Zrušiť dočasný cieľ";
+
 /* Custom temp target */
 "Custom" = "Vlastné";
 
@@ -309,6 +321,9 @@
 
 /*  */
 "Schedule" = "Plán";
+
+/* */
+"(standard units / hour)" = "(predvolené jednotky / hodina)";
 
 /*  */
 "starts at" = "začína o";
@@ -611,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Zobraziť na hodinkách";
+
+/* */
+"Display either Overrides or Temp Targets" = "Zobraziť tlačidlo upravenia profilu alebo dočasného cieľu";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1000,7 +1018,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Odstrániť senzor";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Ste si istí, že chcete tento CGM odstrániť zo slučky?";
+"Are you sure you want to remove this cgm from iAPS?" = "Si si istý, že chceš odstrániť tento CGM zo systému iAPS?";
 
 /* */
 "There is no undo" = "Nie je možné vrátiť späť";
@@ -1188,6 +1206,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "No Glucose Alarm active" = "Nie je aktívny žiaden alarm o glykémii";
 
 /* */
+"Ascending Glucose Alarm active" = "Alarm stúpajúcej glykémie je aktívny";
+
+/* */
+"Descending Glucose Alarm active" = "Alarm klesajúcej glykémie je aktívny";
+
+/* */
 "snoozing until %@" = "stíšené do %@";
 
 /* */
@@ -1227,7 +1251,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Backfill options" = "Možnosti doplnenia";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Spätné zasypávanie z trendu nie je v súčasnosti dostatočne podporované službou Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Spätné dopĺňanie z trendových údajov nie je momentálne v iAPS dobre podporované";
 
 /* */
 "Backfill from history" = "Doplniť z histórie";
@@ -1276,6 +1300,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* Option for no sound */
 "Silent" = "Tichý";
+
+/* Option for default notification sound */
+"Default" = "Predvolené";
 
 /* The iOS default sound */
 "iOS default sound" = "Predvolený zvuk pre iOS";
@@ -1486,7 +1513,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Apple Health" = "Apple Health";
 
 /* */
-"Connect to Apple Health" = "Pripojte Apple Health";
+"Connect to Apple Health" = "Pripojiť k Apple Health";
 
 /* Show when have not permissions for writing to Health */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Ak chcete zapisovať údaje do aplikácie Apple Health, musíte udeliť oprávnenia v ponuke Nastavenia > Zdravie > Prístup k údajom";
@@ -1520,7 +1547,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " -  Manual Basal ⚠️" = " -  Manuálny bazál ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-"U/day" = "U/deň";
+"U/day" = "J/deň";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Spolu";
@@ -1604,6 +1631,18 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* */
 "End the Override with next Meal" = "Ukončiť upravenie pri nasledujúcom jedle";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Ukončiť profil, ak glykémia stúpa";
+
+/* */
+"And when Glucose is higher than" = "Ak je glykémia vyššia ako";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Ukončiť profil, ak je glykémia nižšia ...";
+
+/* */
+"... than" = "... ako";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normálny profil";
 
@@ -1630,6 +1669,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* */
 "Change CR" = "Zmena CR";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "SMB minúty";
@@ -1893,7 +1935,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "%1$@ for %2$@" = "%1$@ pre %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS vám automaticky neupraví dávkovanie inzulínu, kým sa dočasná bazálna rýchlosť neskončí alebo nezruší.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS automaticky neupraví podávanie inzulínu, kým sa dočasná bazálna dávka neskončí alebo nie je zrušená.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Nastaviť dočasný bazál";
 
@@ -2004,10 +2046,16 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "2 hours" = "2 hodiny";
 
 /* */
+"3 hours" = "3 hodiny";
+
+/* */
 "4 hours" = "4 hodiny";
 
 /* */
 "6 hours" = "6 hodín";
+
+/* */
+"9 hours" = "9 hodín";
 
 /* */
 "12 hours" = "12 hodín";
@@ -2172,7 +2220,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Share and Backup" = "Zdieľanie a zálohovanie";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Odoslať nastavenia a štatistiky";
+"Upload Settings and Statistics" = "Odosielanie nastavení a štatistík";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Zdieľať a zálohať nastavenia a štatistiky";
@@ -2614,7 +2662,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Final Ratio" = "Výsledný pomer";
 
 /* History of the adjustments */
-"Adjustments" = "Úpravy";
+"Adjustments" = "Výpočet";
 
 /* History of the adjustments */
 "Insulin" = "Inzulín";
@@ -2971,6 +3019,9 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* Settings Section */
 "Extra Features" = "Ďalšie funkcie";
 
+/* Header */
+"UI/UX Settings" = "Nastavenie rozhrania";
+
 /* UI/UX option */
 "Display Predictions" = "Zobraziť predpovede";
 
@@ -3002,7 +3053,7 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Statistics settings " = "Nastavenia štatistík ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Prepísanie jednotky HbA1c";
+"Override HbA1c Unit" = "Prepísať jednotky HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "V prípade, že používate profily aj dočasný cieľ";

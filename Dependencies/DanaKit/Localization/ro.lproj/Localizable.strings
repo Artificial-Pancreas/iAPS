@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Configurarea DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "În timpul procesului de împerechere, DanaRS v3 va afișa o solicitare de împerechere, în timp ce iPhone-ul va afișa o solicitare pentru un cod de împerechere. Pe pompă, selectați OK și tastați codul de pe iPhone. După aceea, Loop este gata să comunice cu DanaRS v1";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "În timpul procesului de împerechere, DanaRS v3 va afișa o solicitare de împerechere, în timp ce iPhone-ul va afișa o solicitare pentru un cod de împerechere. Pe pompă, selectați OK și tastați codul de pe iPhone. După aceea, Loop este gata să comunice cu DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Înainte de a începe procesul de împerechere, este recomandat să verificați și, dacă este necesar, să actualizați parola pompei. Puteți face acest lucru accesând setările pompei -> setări utilizator -> parolă. Parola implicită este 1234, dacă aceasta este parola dumneavoastră, vă rugăm să luați în considerare schimbarea acesteia";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Configurarea DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "În timpul procesului de împerechere, DanaRS v3 va afișa o solicitare de împerechere, în timp ce iPhone-ul va afișa o solicitare pentru două coduri de împerechere. Pe pompă, selectați OK și tastați cele două coduri pe iPhone. După aceea, Loop este gata să comunice cu DanaRS v3";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "În timpul procesului de împerechere, DanaRS v3 va afișa o solicitare de împerechere, în timp ce iPhone-ul va afișa o solicitare pentru două coduri de împerechere. Pe pompă, selectați OK și tastați cele două coduri pe iPhone. După aceea, Loop este gata să comunice cu DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Configurarea Dana-i";
@@ -413,6 +413,7 @@
 
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Setează profilul bazal pe care pompa ar trebui să îl utilizeze. Rețineți că se va suprascrie profilul care se află în pompă, cu cel din %1$@";
+
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.

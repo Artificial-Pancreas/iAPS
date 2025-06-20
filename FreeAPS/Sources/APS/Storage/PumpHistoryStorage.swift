@@ -31,8 +31,11 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     }
 
     func storePumpEvents(_ events: [NewPumpEvent]) {
+        guard !events.isEmpty else { return }
+
         let insulinConcentration = concentration
         processQueue.async {
+            let storedEvents = self.recent()
             let eventsToStore = events.flatMap { event -> [PumpHistoryEvent] in
                 let id = event.raw.md5String
                 switch event.type {
@@ -46,6 +49,25 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     }
 
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
+                    if let duplicatedEvent = storedEvents
+                        .first(where: { x in
+                            Int(x.timestamp.timeIntervalSince1970) == Int(event.date.timeIntervalSince1970) && x.type == .bolus })
+                    {
+                        return [PumpHistoryEvent(
+                            id: duplicatedEvent.id,
+                            type: .bolus,
+                            timestamp: duplicatedEvent.timestamp,
+                            amount: amount,
+                            duration: minutes,
+                            durationMin: nil,
+                            rate: nil,
+                            temp: nil,
+                            carbInput: nil,
+                            isSMB: dose.automatic,
+                            isExternal: dose.manuallyEntered
+                        )]
+                    }
+
                     return [PumpHistoryEvent(
                         id: id,
                         type: .bolus,

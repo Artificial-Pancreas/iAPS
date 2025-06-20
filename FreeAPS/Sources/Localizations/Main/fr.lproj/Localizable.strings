@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continuer sans bonus";
 
+/* History View */
+"No data." = "No data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+
+/* Bolus View */
+"New Glucose Missing" = "New Glucose Missing";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Enregistrer le repas sans bolus";
 
@@ -190,6 +199,9 @@
 /*  */
 "Cancel Temp Target" = "Annuler la cible temporaire";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Personnalisé";
 
@@ -309,6 +321,9 @@
 
 /*  */
 "Schedule" = "Programme";
+
+/* */
+"(standard units / hour)" = "(standard units / hour)";
 
 /*  */
 "starts at" = "commence à";
@@ -611,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Afficher sur Watch";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1000,7 +1018,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Supprimer CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Êtes-vous sûr de vouloir supprimer ce cgm de la boucle ?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "Cette opération est irréversible";
@@ -1187,6 +1205,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Aucune alarme de glucose active";
 
 /* */
+"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+
+/* */
+"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+
+/* */
 "snoozing until %@" = "reporter jusqu'à %@";
 
 /* */
@@ -1226,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Options rétroactif";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "La gestion des tendances rétroactives n'est actuellement pas bien pris en charge";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Rétroactif de l'historique";
@@ -1275,6 +1299,9 @@ Enact a temp Basal or a temp target */
 
 /* Option for no sound */
 "Silent" = "Silencieux";
+
+/* Option for default notification sound */
+"Default" = "Default";
 
 /* The iOS default sound */
 "iOS default sound" = "Son par défaut d'iOS";
@@ -1603,6 +1630,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "End the Override with next Meal";
 
+/* */
+"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+
+/* */
+"And when Glucose is higher than" = "And when Glucose is higher than";
+
+/* */
+"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+
+/* */
+"... than" = "... than";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Profil normal";
 
@@ -1629,6 +1668,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Changer CR";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "Minutes SMB";
@@ -1892,7 +1934,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ pour %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "La boucle n'ajuste pas automatiquement la distribution d'insuline tant que le débit de basal temporaire n'est pas terminé ou est annulé.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Définir le Basal Temporaire";
 
@@ -2003,10 +2045,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 heures";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 heures";
 
 /* */
 "6 hours" = "6 heures";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 heures";
@@ -2171,7 +2219,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Partage et sauvegarde";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Téléverser vos paramètres et statistiques";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Partager et sauvegarder tous vos paramètres et statistiques";
@@ -2966,6 +3014,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Fonctionnalités supplémentaires";
+
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
 
 /* UI/UX option */
 "Display Predictions" = "Afficher les prédictions";

@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Nastavení systému DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Během procesu párování se na displeji zařízení DanaRS v3 zobrazí výzva ke spárování, zatímco na displeji iPhonu se zobrazí výzva k zadání párovacího kódu. Na pumpě vyberte OK a zadejte kód na iPhonu. Poté je zařízení Loop připraveno ke komunikaci s vaším zařízením DanaRS v1.";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Během procesu párování se na displeji zařízení DanaRS v3 zobrazí výzva ke spárování, zatímco na displeji iPhonu se zobrazí výzva k zadání párovacího kódu. Na pumpě vyberte OK a zadejte kód na iPhonu. Poté je zařízení Loop připraveno ke komunikaci s vaším zařízením DanaRS v1.";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Před zahájením procesu párování doporučujeme zkontrolovat a případně aktualizovat heslo čerpadla. To můžete provést v nastavení čerpadla -> nastavení uživatele -> heslo. Výchozí heslo je 1234, pokud je to vaše heslo, zvažte jeho změnu.";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Nastavení systému DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Během procesu párování se na displeji zařízení DanaRS v3 zobrazí výzva ke spárování, zatímco na displeji iPhonu se zobrazí výzva k zadání dvou párovacích kódů. Na pumpě vyberte OK a zadejte dva kódy na iPhonu. Poté je zařízení Loop připraveno ke komunikaci s vaším zařízením DanaRS v3.";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Během procesu párování se na displeji zařízení DanaRS v3 zobrazí výzva ke spárování, zatímco na displeji iPhonu se zobrazí výzva k zadání dvou párovacích kódů. Na pumpě vyberte OK a zadejte dva kódy na iPhonu. Poté je zařízení Loop připraveno ke komunikaci s vaším zařízením DanaRS v3.";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Nastavení Dana-i";
@@ -413,6 +413,7 @@
 
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Nastavte bazální profil, který má čerpadlo používat. Všimněte si, že se přepíše profil, který je v čerpadle, profilem na %1$@.";
+
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.

@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Configuração do DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "Durante o processo de emparelhamento, o DanaRS v3 mostrará uma solicitação de emparelhamento, enquanto o iPhone mostrará uma solicitação de código de emparelhamento. Em sua bomba, selecione OK e digite o código em seu iPhone. Depois disso, o Loop estará pronto para se comunicar com seu DanaRS v1";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Durante o processo de emparelhamento, o DanaRS v1 mostrará uma solicitação de emparelhamento, enquanto o iPhone mostrará uma solicitação de código de emparelhamento. Em sua bomba, selecione OK e digite o código em seu iPhone. Depois disso, o Loop estará pronto para se comunicar com o DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Antes de iniciar o processo de emparelhamento, é recomendável verificar e, se necessário, atualizar a senha da bomba. Para isso, acesse as configurações da bomba -> configurações do usuário -> senha. A senha padrão é 1234; se essa for sua senha, considere alterá-la";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Configuração do DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "Durante o processo de emparelhamento, o DanaRS v3 mostrará uma solicitação de emparelhamento, enquanto o iPhone mostrará uma solicitação de dois códigos de emparelhamento. Em sua bomba, selecione OK e digite os dois códigos em seu iPhone. Depois disso, o Loop estará pronto para se comunicar com o DanaRS v3";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Durante o processo de emparelhamento, o DanaRS v3 mostrará uma solicitação de emparelhamento, enquanto o iPhone mostrará uma solicitação de dois códigos de emparelhamento. Em sua bomba, selecione OK e digite os dois códigos em seu iPhone. Depois disso, o Loop estará pronto para se comunicar com o DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Configurando a Dana-i";
@@ -304,7 +304,7 @@
 "sec" = "sec";
 
 /* backlightOnTimeInSec */
-"Backlight on time" = "Verificação do tempo";
+"Backlight on time" = "Tempo de ativação da luz de fundo";
 
 /* lcdOnTimeInSec */
 "Lcd on time" = "Tempo de funcionamento do Lcd";
@@ -413,6 +413,7 @@
 
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Defina o perfil basal que a bomba deve usar. Observe que isso substituirá o perfil que está na bomba pelo que está em %1$@";
+
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
@@ -578,3 +579,9 @@
 
 /* Label for error second step refill */
 "Failed to prime the tube. Please try again later" = "Falha ao preparar o tubo. Tente novamente mais tarde";
+
+/* Battery age */
+"Battery age" = "Idade da bateria";
+
+/* advertise contact DanaRS v1 */
+"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "OBSERVAÇÃO: o DanaRS v1 não é compatível (ainda). Se você tiver uma bomba DanaRS v1 disponível para teste, entre em contato com Bastiaan Verhaar!";
