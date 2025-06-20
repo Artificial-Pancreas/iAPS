@@ -1671,7 +1671,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Change CR" = "Zmena CR";
 
 /* */
-"Change Basal" = "Change Basal";
+"Change Basal" = "Upraviť bazál";
 
 /* */
 "SMB Minutes" = "SMB minúty";
@@ -3112,16 +3112,16 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Light" = "Tenké";
 
 /* UI/UX option */
-"Dark" = "Dark";
+"Dark" = "Tmavý";
 
 /* UI/UX option */
 "Auto" = "Automatická ";
 
 /* UI/UX option */
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Farebný režim";
 
 /* UI/UX option */
-"Light / Dark Mode" = "Light / Dark Mode";
+"Light / Dark Mode" = "Svetlý / tmavý režim";
 
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
