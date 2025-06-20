@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Không có dự đoán. Đề xuất vòng lặp thất bại.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "Không có đường huyết mới";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Lưu bữa ăn mà không cần bolus";
@@ -128,7 +128,7 @@
 "Full Bolus" = "Liều bolus đầy đủ";
 
 /* For the  Bolus View pop-up */
-"Fraction" = "Chia cho";
+"Fraction" = "Tỷ lệ (phần)";
 
 /* For the  Bolus View pop-up */
 "Fatty Meal Factor" = "Chỉ số bữa ăn nhiều chất béo";
@@ -173,7 +173,7 @@
 "No Pump" = "Không có Bơm";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Mở";
 
 /*  */
 "Amount Carbs" = "Khối lượng Carbs";
@@ -182,7 +182,7 @@
 "grams" = "grams";
 
 /*  */
-"Carbs required" = "Lượng Carbs được yêu cầu";
+"Carbs required" = "Lượng carb cần nạp";
 
 /* Saved Food Presets */
 "Saved Food" = "Lưu thực phẩm";
@@ -227,7 +227,7 @@
 "Basal Insulin and Sensitivity ratio" = "Liều nền và tỷ lệ độ nhạy Insulin";
 
 /* */
-"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Cài đặt 'một nửa mục tiêu cơ bản' thấp hơn sẽ giảm mức cơ bản và tăng ISF sớm hơn, ở mức glucose mục tiêu thấp hơn.";
+"A lower 'Half Basal Target' setting will reduce the basal and raise the ISF earlier, at a lower target glucose." = "Thiết lập 'Mục tiêu giảm một nửa nền' (Half Basal Target) thấp hơn sẽ làm giảm insulin nền và tăng độ nhạy insulin (ISF) sớm hơn, tại ngưỡng đường huyết mục tiêu thấp hơn.";
 
 /* */
 " Your setting: " = " Cài đặt của bạn: ";
@@ -3108,16 +3108,16 @@ Enact a temp Basal or a temp target */
 "Light" = "Light";
 
 /* UI/UX option */
-"Dark" = "Dark";
+"Dark" = "Tối";
 
 /* UI/UX option */
 "Auto" = "Tự động";
 
 /* UI/UX option */
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Bảng màu";
 
 /* UI/UX option */
-"Light / Dark Mode" = "Light / Dark Mode";
+"Light / Dark Mode" = "Chế độ Sáng/Tối";
 
 /* Setting title */
 "Bolus Calculator" = "Tính toán liều Bolus";
