@@ -173,22 +173,23 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 self.updateGlucoseSource()
                 return self.glucoseSource.fetch(self.timer).eraseToAnyPublisher()
             }
-            .sink { glucose in
+            .receive(on: processQueue)
+            .flatMap { glucose in
                 debug(.nightscout, "FetchGlucoseManager callback sensor")
-                Publishers.CombineLatest3(
+                return Publishers.CombineLatest3(
                     Just(glucose),
                     Just(self.glucoseStorage.syncDate()),
                     self.healthKitManager.fetch(nil)
                 )
                 .eraseToAnyPublisher()
-                .sink { newGlucose, syncDate, glucoseFromHealth in
-                    self.glucoseStoreAndHeartDecision(
-                        syncDate: syncDate,
-                        glucose: newGlucose,
-                        glucoseFromHealth: glucoseFromHealth
-                    )
-                }
-                .store(in: &self.lifetime)
+            }
+            .receive(on: processQueue)
+            .sink { newGlucose, syncDate, glucoseFromHealth in
+                self.glucoseStoreAndHeartDecision(
+                    syncDate: syncDate,
+                    glucose: newGlucose,
+                    glucoseFromHealth: glucoseFromHealth
+                )
             }
             .store(in: &lifetime)
         timer.fire()
