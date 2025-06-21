@@ -2547,7 +2547,7 @@ Enact a temp Basal or a temp target */
 "Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Giá trị mặc định: 0. Đây là trọng số được áp dụng khi đường huyết tăng tốc và làm tăng cường ISF. Với giá trị là 0, sẽ bị vô hiệu hóa. 0,02 là điểm khởi đầu an toàn để tăng lên. Các thiết lập thông thường là khoảng 0,15!";
 
 /* */
-"Duration ISF postprandial adaption" = "Thời gian điều chỉnh ISF sau bữa ăn";
+"Duration ISF postprandial adaption" = "Thời gian điều chỉnh ISF sau ăn";
 
 /* */
 "Default value: 3. This is the duration in hours how long after a meal the effect will be active. Oref will delete carb timing after 10 hours latest no matter what you enter." = "Giá trị mặc định: 3. Đây là khoảng thời gian tính bằng giờ, tức là hiệu ứng sẽ có hiệu lực sau bữa ăn bao lâu. Oref sẽ xóa thời gian carb muộn nhất sau 10 giờ bất kể bạn nhập gì.";
@@ -2819,7 +2819,7 @@ Enact a temp Basal or a temp target */
 "The default of maxCOB is 120. (If someone enters more carbs in one or multiple entries, iAPS will cap COB to maxCOB and keep it at maxCOB until the carbs entered above maxCOB have shown to be absorbed. Essentially, this just limits UAM as a safety cap against weird COB calculations due to fluky data.)" = "Giá trị mặc định của COB tối đa là 120. (Nếu ai đó nạp nhiều carbs hơn vào một hoặc nhiều mục, iAPS sẽ giới hạn COB ở mức COB tối đa và giữ nó ở mức COB tối đa cho đến khi lượng carb nhập vào trên COB tối đa cho thấy đã được hấp thụ. Về cơ bản, điều này chỉ giới hạn UAM như một giới hạn an toàn chống lại các phép tính COB kỳ lạ do dữ liệu không ổn định.)";
 
 /* Headline "Bolus Snooze DIA Divisor" */
-"Bolus Snooze DIA Divisor" = "Ước số DIA trong chế độ hoãn bolus";
+"Bolus Snooze DIA Divisor" = "Hệ số chia DIA khi hoãn bolus";
 
 /* "Bolus Snooze DIA Divisor" */
 "Bolus snooze is enacted after you do a meal bolus, so the loop won’t counteract with low temps when you’ve just eaten. The example here and default is 2; so a 3 hour DIA means that bolus snooze will be gradually phased out over 1.5 hours (3DIA/2)." = "Chế độ báo lại bolus được kích hoạt sau khi bạn thực hiện một bữa ăn nhanh, vì vậy vòng lặp sẽ không phản tác dụng với liều tạm thời thấp khi bạn vừa ăn. Ví dụ ở đây và mặc định là 2; vì vậy DIA 3 giờ có nghĩa là thời gian báo lại bolus sẽ giảm dần trong 1,5 giờ (3DIA/2).";
@@ -2917,7 +2917,7 @@ Enact a temp Basal or a temp target */
 "Enable Dynamic CR" = "Kích hoạt Dynamic CR";
 
 /* Enable Dynamic CR */
-"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Sử dụng CR động. Tỷ lệ động sẽ được sử dụng cho CR như sau:\n\n Khi tỷ lệ > 1: dynCR = (newRatio - 1) / 2 + 1.\nKhi tỷ lệ < 1: dynCR = CR/dynCR.\n\nKhông sử dụng cùng với Tỷ lệ Insulin cao (> 2)";
+"Use Dynamic CR. The dynamic ratio will be used for CR as follows:\n\n When ratio > 1:  dynCR = (newRatio - 1) / 2 + 1.\nWhen ratio < 1: dynCR = CR/dynCR.\n\nDon't use toghether with a high Insulin Fraction (> 2)" = "Sử dụng Tỷ lệ Carb động (Dynamic CR). Tỷ lệ động sẽ được áp dụng cho hệ số chuyển đổi carb (CR) như sau:\n\n Khi tỷ lệ > 1: dynCR = (tỷ lệ mới - 1) / 2 + 1.\n Khi tỷ lệ < 1: dynCR = CR / dynCR.\n\nKhông nên sử dụng cùng lúc với Tỷ lệ Insulin cao (Insulin Fraction > 2)";
 
 /* Enable Dyn ISF */
 "Activate Dynamic Sensitivity (ISF)" = "Kích hoạt độ nhạy động (ISF)";
@@ -3046,7 +3046,7 @@ Enact a temp Basal or a temp target */
 "Statistics settings " = "Cài đặt thống kê ";
 
 /* UI/UX title */
-"Override HbA1c Unit" = "Override HbA1c Unit";
+"Override HbA1c Unit" = "Thay đổi đơn vị HbA1c";
 
 /* UI/UX option */
 "In case you're using both profiles and temp targets" = "Trong trường hợp bạn đang sử dụng cả cấu hình và mục tiêu tạm thời";
@@ -3075,7 +3075,7 @@ Enact a temp Basal or a temp target */
 "Display Glucose Delta" = "Hiển thị thay đổi đường huyết";
 
 /* UI/UX option */
-"Display Sensor Age" = "Hiển thị thời gian đã sử dụng cảm biến";
+"Display Sensor Age" = "Hiển thị thời gian cảm biến";
 
 /* UI/UX option */
 "Hide Concentration Badge" = "Ẩn nhãn nồng độ Insulin";
@@ -3105,7 +3105,7 @@ Enact a temp Basal or a temp target */
 "Auto ISF Home View" = "Xem trang chủ Auto ISF";
 
 /* UI/UX option */
-"Light" = "Light";
+"Light" = "Sáng";
 
 /* UI/UX option */
 "Dark" = "Tối";
@@ -3190,7 +3190,7 @@ Enact a temp Basal or a temp target */
 "Adjustment Factor" = "Hệ số điều chỉnh";
 
 /* Apple Watch Overrides */
-"Overrides" = "Overrides";
+"Overrides" = "Ghi đè";
 
 /* Apple Watch Overrides */
-"Cancel Override" = "Huỷ bỏ Override";
+"Cancel Override" = "Huỷ bỏ ghi đè";
