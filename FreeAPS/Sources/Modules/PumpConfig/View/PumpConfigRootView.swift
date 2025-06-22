@@ -32,6 +32,7 @@ extension PumpConfig {
                             Button("Add Omnipod") { state.addPump(.omnipod) }
                             Button("Add Omnipod Dash") { state.addPump(.omnipodBLE) }
                             Button("Add Dana-i/RS") { state.addPump(.dana) }
+                            Button("Add Medtrum Nano") { state.addPump(.medtrum) }
                             Button("Add Simulator") { state.addPump(.simulator) }
                         }
                     }

@@ -1,6 +1,5 @@
 import CGMBLEKit
 import CGMBLEKitUI
-import EversenseKit
 import G7SensorKit
 import G7SensorKitUI
 import LoopKit

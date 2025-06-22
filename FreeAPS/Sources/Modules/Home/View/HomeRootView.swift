@@ -750,42 +750,6 @@ extension Home {
             ActivityIndicator(isAnimating: .constant(true), style: .large)
         }
 
-        private var isfView: some View {
-            ZStack {
-                HStack {
-                    Image(systemName: "divide").font(.system(size: 16)).foregroundStyle(.teal)
-                    Text("\(state.data.suggestion?.sensitivityRatio ?? 1)").foregroundStyle(.primary)
-                }
-                .font(.timeSettingFont)
-                .background(TimeEllipse(characters: 10))
-                .onTapGesture {
-                    if state.autoisf {
-                        displayAutoHistory.toggle()
-                    }
-                }
-            }.offset(x: 130)
-        }
-
-        private var animateLoopView: Bool {
-            -1 * animateLoop.timeIntervalSinceNow < 1.5
-        }
-
-        private var animateTIRView: Bool {
-            -1 * animateTIR.timeIntervalSinceNow < 1.5
-        }
-
-        private func timeIsNowLoop() {
-            animateLoop = Date.now
-        }
-
-        private func timeIsNowTIR() {
-            animateTIR = Date.now
-        }
-
-        private var animation: any View {
-            ActivityIndicator(isAnimating: .constant(true), style: .large)
-        }
-
         var body: some View {
             GeometryReader { geo in
                 if onboarded.first?.firstRun ?? true, let openAPSSettings = state.openAPSSettings {
