@@ -53,13 +53,6 @@ extension CGM {
                         colorPalette: .default,
                         allowDebugFeatures: false
                     )
-            case .eversense:
-                setupViewController = EversenseCGMManager.setupViewController(
-                    bluetoothProvider: bluetoothManager,
-                    displayGlucoseUnitObservable: displayGlucoseUnitObservable,
-                    colorPalette: .default,
-                    allowDebugFeatures: false
-                )
             default:
                 break
             }
