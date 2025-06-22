@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "DanaRS v1のセットアップ";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, Loop is ready to communicate with your DanaRS v1" = "ペアリング中、DanaRS v3にはペアリングのプロンプトが表示され、iPhoneにはペアリングコードのプロンプトが表示されます。ポンプでOKを選択し、iPhoneにコードを入力します。その後、LoopはDanaRS v1と通信できます。";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "ペアリング中、DanaRS v3にはペアリングのプロンプトが表示され、iPhoneにはペアリングコードのプロンプトが表示されます。ポンプでOKを選択し、iPhoneにコードを入力します。その後、LoopはDanaRS v1と通信できます。";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "ペアリングを開始する前に、ポンプのパスワードを確認し、必要に応じて更新することをお勧めします。これはポンプ設定→ユーザー設定→パスワードで行うことができます。デフォルトのパスワードは1234です。";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "DanaRS v3のセットアップ";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, Loop is ready to communicate with your DanaRS v3" = "ペアリング中、DanaRS v3にはペアリングのプロンプトが表示され、iPhoneには2つのペアリングコードを入力するプロンプトが表示されます。ポンプでOKを選択し、iPhoneに2つのコードを入力します。その後、LoopはDanaRS v3と通信できるようになります。";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "ペアリング中、DanaRS v3にはペアリングのプロンプトが表示され、iPhoneには2つのペアリングコードを入力するプロンプトが表示されます。ポンプでOKを選択し、iPhoneに2つのコードを入力します。その後、LoopはDanaRS v3と通信できるようになります。";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "ダナアイの設定";
@@ -413,6 +413,7 @@
 
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "ポンプが使用する基礎プロフィールを設定する。ポンプに内蔵されているプロファイルを、 %1$@のプロファイルで上書きすることに注意してください。";
+
 
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.

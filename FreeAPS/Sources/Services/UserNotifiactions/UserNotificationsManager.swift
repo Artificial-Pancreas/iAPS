@@ -95,7 +95,11 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private func notifyCarbsRequired(_ carbs: Int) {
-        guard Decimal(carbs) >= settingsManager.settings.carbsRequiredThreshold else { return }
+        guard settingsManager.settings.carbsRequiredAlert,
+              Decimal(carbs) >= settingsManager.settings.carbsRequiredThreshold
+        else { return
+        }
+        let sound = settingsManager.settings.carbSound
 
         ensureCanSendNotification {
             var titles: [String] = []
@@ -105,8 +109,13 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
             } else {
-                content.sound = .default
-                self.playSoundIfNeeded()
+                if sound == "Default" {
+                    if self.settingsManager.settings.useAlarmSound {
+                        content.sound = .default
+                    }
+                } else if sound != "Silent" {
+                    self.playSoundIfNeeded(sound: sound)
+                }
             }
 
             titles.append(String(format: NSLocalizedString("Carbs required: %d g", comment: "Carbs required"), carbs))
@@ -125,6 +134,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private func scheduleMissingLoopNotifiactions(date _: Date) {
+        let sound = settingsManager.settings.missingLoops
         ensureCanSendNotification {
             let title = NSLocalizedString("iAPS not active", comment: "iAPS not active")
             let body = NSLocalizedString("Last loop was more than %d min ago", comment: "Last loop was more than %d min ago")
@@ -135,12 +145,12 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             let firstContent = UNMutableNotificationContent()
             firstContent.title = title
             firstContent.body = String(format: body, firstInterval)
-            firstContent.sound = .default
+            if sound { firstContent.sound = .default }
 
             let secondContent = UNMutableNotificationContent()
             secondContent.title = title
             secondContent.body = String(format: body, secondInterval)
-            secondContent.sound = .default
+            if sound { secondContent.sound = .default }
 
             let firstTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(firstInterval), repeats: false)
             let secondTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(secondInterval), repeats: false)
@@ -161,6 +171,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private func notifyBolusFailure() {
+        let sound = settingsManager.settings.bolusFailure
         ensureCanSendNotification {
             let title = NSLocalizedString("Bolus failed", comment: "Bolus failed")
             let body = NSLocalizedString(
@@ -171,13 +182,18 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             let content = UNMutableNotificationContent()
             content.title = title
             content.body = body
-            content.sound = .default
+            if sound == "Default" {
+                if self.settingsManager.settings.useAlarmSound {
+                    content.sound = .default
+                }
+            } else if sound != "Silent" {
+                self.playSoundIfNeeded(sound: sound)
+            }
 
             self.addRequest(
-                identifier: .noLoopFirstNotification,
+                identifier: .bolusFailedNotification,
                 content: content,
-                deleteOld: true,
-                trigger: nil
+                deleteOld: true
             )
         }
     }
@@ -196,17 +212,29 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
         ensureCanSendNotification {
             var titles: [String] = []
-            var notificationAlarm = false
+            var sound: String = "New/Anticipalte.caf"
+            var alert = true
 
             switch self.glucoseStorage.alarm {
             case .none:
                 titles.append(NSLocalizedString("Glucose", comment: "Glucose"))
+                sound = "Silent"
             case .low:
                 titles.append(NSLocalizedString("LOWALERT!", comment: "LOWALERT!"))
-                notificationAlarm = true
+                sound = self.settingsManager.settings.hypoSound
+                alert = self.settingsManager.settings.lowAlert
             case .high:
                 titles.append(NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!"))
-                notificationAlarm = true
+                sound = self.settingsManager.settings.hyperSound
+                alert = self.settingsManager.settings.highAlert
+            case .ascending:
+                titles.append(NSLocalizedString("RAPIDLY ASCENDING GLUCOSE!", comment: "RAPIDLY ASCENDING GLUCOSE!"))
+                sound = self.settingsManager.settings.ascending
+                alert = self.settingsManager.settings.ascendingAlert
+            case .descending:
+                titles.append(NSLocalizedString("RAPIDLY DESCENDING GLUCOSE!", comment: "RAPIDLY DESCENDING GLUCOSE!"))
+                sound = self.settingsManager.settings.descending
+                alert = self.settingsManager.settings.descendingAlert
             }
 
             let delta = glucose.count >= 2 ? glucoseValue - (glucose[glucose.count - 2].glucose ?? 0) : nil
@@ -215,17 +243,19 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
             if self.snoozeUntilDate > Date() {
                 titles.append(NSLocalizedString("(Snoozed)", comment: "(Snoozed)"))
-                notificationAlarm = false
-            } else {
+            } else if alert {
                 titles.append(body)
                 let content = UNMutableNotificationContent()
                 content.title = titles.joined(separator: " ")
                 content.body = body
 
-                if notificationAlarm {
-                    self.playSoundIfNeeded()
-                    content.sound = .default
+                if sound != "Silent", self.settingsManager.settings.useAlarmSound {
                     content.userInfo[NotificationAction.key] = NotificationAction.snooze.rawValue
+                    if sound == "Default" {
+                        content.sound = .default
+                    } else {
+                        self.playSoundIfNeeded(sound: sound)
+                    }
                 }
 
                 self.addRequest(identifier: .glucocoseNotification, content: content, deleteOld: true)
@@ -349,22 +379,35 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         }
     }
 
-    private func playSoundIfNeeded() {
+    private func playSoundIfNeeded(sound: String) {
         guard settingsManager.settings.useAlarmSound, snoozeUntilDate < Date() else { return }
+        guard sound != "Silent" else { return }
+
         Self.stopPlaying = false
-        playSound()
+        playSound(sound: sound)
     }
 
-    static let soundID: UInt32 = 1336
+    private func playSoundWithoutSnooze(_ sound: String) {
+        guard settingsManager.settings.useAlarmSound else { return }
+        guard sound != "Silent" else { return }
+
+        Self.stopPlaying = false
+        playSound(sound: sound)
+    }
+
+    static var soundID: UInt32 = 1336
     private static var stopPlaying = false
 
-    private func playSound(times: Int = 1) {
+    private func playSound(times: Int = 1, sound: String) {
         guard times > 0, !Self.stopPlaying else {
             return
         }
+        let path = "/System/Library/Audio/UISounds/" + sound
+        let soundURL = URL(string: path)
+        AudioServicesCreateSystemSoundID(soundURL! as CFURL, &Self.soundID)
 
-        AudioServicesPlaySystemSoundWithCompletion(Self.soundID) {
-            self.playSound(times: times - 1)
+        AudioServicesPlaySystemSoundWithCompletion(SystemSoundID(Self.soundID)) {
+            self.playSound(times: times - 1, sound: sound)
         }
     }
 

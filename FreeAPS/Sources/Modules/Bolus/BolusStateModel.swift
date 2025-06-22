@@ -76,6 +76,7 @@ extension Bolus {
         @Published var history: [PumpHistoryEvent]?
 
         let loopReminder: CGFloat = 4
+        let oldGlucose: TimeInterval = -8
         let coreDataStorage = CoreDataStorage()
 
         private var loopFormatter: NumberFormatter {
@@ -132,14 +133,16 @@ extension Bolus {
 
         func getDeltaBG() {
             let glucose = provider.fetchGlucose()
-            guard let lastGlucose = glucose.first, glucose.count >= 4 else { return }
-            guard (lastGlucose.date ?? .distantPast).timeIntervalSinceNow > -7.minutes.timeInterval else {
+            guard let lastGlucose = glucose.first else { return }
+            guard (lastGlucose.date ?? .distantPast).timeIntervalSinceNow.minutes > oldGlucose else {
                 currentBG = 0
+                print("BG time ago: \((lastGlucose.date ?? .distantPast).timeIntervalSinceNow.minutes)")
                 return
             }
+            currentBG = Decimal(lastGlucose.glucose) * conversion
+            guard glucose.count >= 4 else { return }
             deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
                 (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
-            currentBG = Decimal(lastGlucose.glucose)
         }
 
         func calculateInsulin() -> Decimal {
@@ -151,20 +154,21 @@ extension Bolus {
                     // Use Oref0 predictions{
                     insulin = (evBG - target) / isf
                 } else { insulin = 0 }
-            } else if currentBG == 0, manualGlucose > 0 {
-                let targetDifference = manualGlucose - target
+            } else if manualGlucose > 0 {
+                let targetDifference = (units == .mmolL ? manualGlucose.asMmolL : manualGlucose) - target
                 targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
-                // print("Current BG: \(manualGlucose), Target: \(target), ISF: \(isf)")
-            } else if currentBG != 0 {
-                let targetDifference = currentBG - (units == .mmolL ? target.asMgdL : target)
-                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
-                // print("Current BG: \(currentBG), Target: \(target), ISF: \(units == .mmolL ? isf.asMgdL : isf)")
+            } else if currentBG > 0 {
+                let targetDifference = currentBG - target
+                print("BG: \(currentBG), target: \(target), isf: \(isf)")
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
             } else {
                 targetDifferenceInsulin = 0
+                print("BG: \(currentBG), target: \(target), isf: \(isf)")
             }
 
             // more or less insulin because of bg trend in the last 15 minutes
             fifteenMinInsulin = isf == 0 ? 0 : (deltaBG * conversion) / isf
+            print("fifteenMinInsulin isf: \(isf), deltaBG: \(deltaBG * conversion)")
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
             // If failed recent suggestion use recent carb entry
@@ -276,7 +280,6 @@ extension Bolus {
                     self.insulinRequired = suggestion.insulinReq ?? 0
                     self.evBG = Decimal(suggestion.eventualBG ?? 0) * conversion
                     self.iob = suggestion.iob ?? 0
-                    self.currentBG = (suggestion.bg ?? 0) * conversion
                     self.cob = suggestion.cob ?? 0
                 }
                 // Unwrap. We can't have NaN values.
@@ -354,7 +357,7 @@ extension Bolus {
         }
 
         func addManualGlucose() {
-            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
+            let glucose = manualGlucose
             let now = Date()
             let id = UUID().uuidString
 

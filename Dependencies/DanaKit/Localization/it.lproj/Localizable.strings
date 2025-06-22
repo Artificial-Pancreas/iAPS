@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Impostazione di DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Durante il processo di accoppiamento, il DanaRS v3 mostrerà una richiesta di accoppiamento, mentre l'iPhone mostrerà una richiesta di codice di accoppiamento. Sulla pompa, selezionare OK e digitare il codice sull'iPhone. Dopodiché, %1$@, Loop è pronto a comunicare con il DanaRS v1.";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Prima di iniziare il processo di accoppiamento, si consiglia di controllare e, se necessario, aggiornare la password del microinfusore. È possibile farlo accedendo alle impostazioni del microinfusore -> impostazioni utente -> password. La password predefinita è 1234; se questa è la vostra password, prendete in considerazione la possibilità di cambiarla.";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Impostazione di DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Durante il processo di accoppiamento, il DanaRS v3 mostrerà una richiesta di accoppiamento, mentre l'iPhone mostrerà una richiesta di due codici di accoppiamento. Sulla pompa, selezionare OK e digitare i due codici sull'iPhone. Dopodiché, %1$@ è pronto a comunicare con il DanaRS v3.";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Impostazione di Dana-i";
@@ -414,6 +414,7 @@
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Imposta il profilo basale che il microinfusore deve utilizzare. Si noti che il profilo presente nel microinfusore verrà sovrascritto con quello presente in %1$@.";
 
+
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */
@@ -537,9 +538,6 @@
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Segnalazione del serbatoio basso";
 
-/* Description text for low reservoir reminder */
-"The pump reminds you when the amount of insulin in the pump reaches this level" = "The pump reminds you when the amount of insulin in the pump reaches this level";
-
 /* refillAmount */
 "Refill amount" = "Quantità di ricarica";
 
@@ -584,3 +582,6 @@
 
 /* Battery age */
 "Battery age" = "Durata Batteria";
+
+/* advertise contact DanaRS v1 */
+"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!";

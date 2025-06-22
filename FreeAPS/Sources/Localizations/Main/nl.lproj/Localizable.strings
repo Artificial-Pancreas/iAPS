@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Verdergaan zonder bolus";
 
+/* History View */
+"No data." = "Geen gegevens.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "Geen voorspellingen. Mislukte loop suggestie.";
+
+/* Bolus View */
+"New Glucose Missing" = "Ontbrekende glucose";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
 
@@ -190,6 +199,9 @@
 /*  */
 "Cancel Temp Target" = "Annuleer tijdelijk doel";
 
+/*  */
+"Cancel Temporary Target" = "Annuleer tijdelijk doel";
+
 /* Custom temp target */
 "Custom" = "Aangepast";
 
@@ -309,6 +321,9 @@
 
 /*  */
 "Schedule" = "Schema";
+
+/* */
+"(standard units / hour)" = "(standaard eenheden / uur)";
 
 /*  */
 "starts at" = "Start";
@@ -611,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Weergave op horloge";
+
+/* */
+"Display either Overrides or Temp Targets" = "Toon overschrijvingen of tijdelijke doelen";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -1001,7 +1019,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Delete CGM" = "Verwijder CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Weet je zeker dat je deze CGM uit de lijst wilt verwijderen?";
+"Are you sure you want to remove this cgm from iAPS?" = "Weet je zeker dat je deze CGM uit de lijst wilt verwijderen?";
 
 /* */
 "There is no undo" = "Ongedaan maken is niet mogelijk";
@@ -1188,6 +1206,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "No Glucose Alarm active" = "Geen glucose alarm actief";
 
 /* */
+"Ascending Glucose Alarm active" = "Stijgende glucose-alarm actief";
+
+/* */
+"Descending Glucose Alarm active" = "Dalende glucose-alarm actief";
+
+/* */
 "snoozing until %@" = "sluimeren tot %@";
 
 /* */
@@ -1227,7 +1251,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Backfill options" = "Terugzet opties";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Terugzetten van trend wordt momenteel niet goed ondersteund door Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Achteraf aanvullen op basis van trendgegevens wordt momenteel niet goed ondersteund door iAPS";
 
 /* */
 "Backfill from history" = "Terugzetten van geschiedenis";
@@ -1276,6 +1300,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* Option for no sound */
 "Silent" = "Stille modus";
+
+/* Option for default notification sound */
+"Default" = "Standaard";
 
 /* The iOS default sound */
 "iOS default sound" = "Standaard iOS geluid";
@@ -1604,6 +1631,18 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "End the Override with next Meal" = "Beëindig overschrijving bij volgende maaltijd";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Beëindig de overschrijving als BG omhoog gaat ...";
+
+/* */
+"And when Glucose is higher than" = "En als de BG hoger is dan";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Beëindig de overschrijving als BG lager is ...";
+
+/* */
+"... than" = "... dan";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normaal profiel";
 
@@ -1630,6 +1669,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Change CR" = "Wijzig CR";
+
+/* */
+"Change Basal" = "Wijzig basaal";
 
 /* */
 "SMB Minutes" = "SMB Minuten";
@@ -1893,7 +1935,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "%1$@ for %2$@" = "%1$@ voor %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS zal niet automatisch veranderingen aanbrengen in de hoeveelheid insuline die je krijgt, totdat de tijdelijke basaalstand is gestopt of geannuleerd.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS past je insulineafgifte niet automatisch aan zolang de tijdelijke basaalstand nog actief is of niet is geannuleerd.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Tijdelijke basaal instellen";
 
@@ -2004,10 +2046,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "2 hours" = "2 uur";
 
 /* */
+"3 hours" = "3 uur";
+
+/* */
 "4 hours" = "4 uur";
 
 /* */
 "6 hours" = "6 uur";
+
+/* */
+"9 hours" = "9 uur";
 
 /* */
 "12 hours" = "12 uur";
@@ -2172,7 +2220,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Share and Backup" = "Delen en back-up";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload instellingen en statistieken";
+"Upload Settings and Statistics" = "Upload instellingen en statistieken";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Deel en back-up al uw instellingen en statistieken";
@@ -2971,6 +3019,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Settings Section */
 "Extra Features" = "Extra functionaliteiten";
+
+/* Header */
+"UI/UX Settings" = "UI/UX instellingen";
 
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";

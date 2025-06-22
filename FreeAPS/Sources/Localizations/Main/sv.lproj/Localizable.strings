@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Fortsätt utan bolus";
 
+/* History View */
+"No data." = "Ingen data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "Inga blodsockerprognoser. Misslyckad loop.";
+
+/* Bolus View */
+"New Glucose Missing" = "Blodsocker saknas";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Spara måltid utan bolus";
 
@@ -190,6 +199,9 @@
 /*  */
 "Cancel Temp Target" = "Avbryt tillfälligt målvärde";
 
+/*  */
+"Cancel Temporary Target" = "Avbryt tillfälligt målvärde";
+
 /* Custom temp target */
 "Custom" = "Anpassad";
 
@@ -309,6 +321,9 @@
 
 /*  */
 "Schedule" = "Schema";
+
+/* */
+"(standard units / hour)" = "(standardenheter / timme)";
 
 /*  */
 "starts at" = "startar kl";
@@ -611,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Visa på klocka";
+
+/* */
+"Display either Overrides or Temp Targets" = "Visa antingen knapp för profiler eller knapp för tillfälliga målvärden";
 
 /* */
 "Garmin Watch" = "Garmin - klocka";
@@ -1000,7 +1018,7 @@ Enact a temp Basal or a temp target */
 "Delete CGM" = "Radera CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Är du säker på att du vill ta bort denna CGM från iAPS?";
+"Are you sure you want to remove this cgm from iAPS?" = "Är du säker på att du vill ta bort denna CGM från iAPS?";
 
 /* */
 "There is no undo" = "Det går inte att ångra!";
@@ -1187,6 +1205,12 @@ Enact a temp Basal or a temp target */
 "No Glucose Alarm active" = "Inget blodsockerlarm aktivt";
 
 /* */
+"Ascending Glucose Alarm active" = "Stigande blodsockerlarm aktivt";
+
+/* */
+"Descending Glucose Alarm active" = "Fallande blodsockerlarm aktivt";
+
+/* */
 "snoozing until %@" = "snoozar till %@";
 
 /* */
@@ -1226,7 +1250,7 @@ Enact a temp Basal or a temp target */
 "Backfill options" = "Alternativ för återfyllnad";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Återfyllning från trend stöds för närvarande inte bra av Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Återfyllning från trend stöds för närvarande inte bra av iAPS";
 
 /* */
 "Backfill from history" = "Återfyll från historik";
@@ -1275,6 +1299,9 @@ Enact a temp Basal or a temp target */
 
 /* Option for no sound */
 "Silent" = "Tyst";
+
+/* Option for default notification sound */
+"Default" = "Standard";
 
 /* The iOS default sound */
 "iOS default sound" = "iOS standardljud";
@@ -1603,6 +1630,18 @@ Enact a temp Basal or a temp target */
 /* */
 "End the Override with next Meal" = "Avsluta profilen med nästa måltid";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Avsluta profilen när blodsockret trendar uppåt";
+
+/* */
+"And when Glucose is higher than" = "Och när blodsockret är högre än";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Avsluta profilen när blodsockret är lägre ...";
+
+/* */
+"... than" = "... än";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normal Profil";
 
@@ -1629,6 +1668,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Change CR" = "Ändra CR";
+
+/* */
+"Change Basal" = "Ändra basal";
 
 /* */
 "SMB Minutes" = "SMB-minuter";
@@ -1892,7 +1934,7 @@ Enact a temp Basal or a temp target */
 "%1$@ for %2$@" = "%1$@ i %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS kommer inte automatiskt att justera dina insulindoser förrän den temporära basalen är färdig eller har avbrytits.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Ställ in temporaär basal";
 
@@ -2003,10 +2045,16 @@ Enact a temp Basal or a temp target */
 "2 hours" = "2 timmar";
 
 /* */
+"3 hours" = "3 timmar";
+
+/* */
 "4 hours" = "4 timmar";
 
 /* */
 "6 hours" = "6 timmar";
+
+/* */
+"9 hours" = "9 timmar";
 
 /* */
 "12 hours" = "12 timmar";
@@ -2171,7 +2219,7 @@ Enact a temp Basal or a temp target */
 "Share and Backup" = "Dela och säkerhetskopiera";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Ladda upp inställningar och statistik";
+"Upload Settings and Statistics" = "Ladda upp inställningar och statistik";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Dela och säkerhetskopiera alla dina inställningar och statistik";
@@ -2966,6 +3014,9 @@ Enact a temp Basal or a temp target */
 
 /* Settings Section */
 "Extra Features" = "Extra";
+
+/* Header */
+"UI/UX Settings" = "UI/UX-inställningar";
 
 /* UI/UX option */
 "Display Predictions" = "Visa prognoser";

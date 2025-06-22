@@ -2079,7 +2079,6 @@
 				FE66D16A291F74F8005D6F77 /* Bundle+Extensions.swift */,
 				FEFFA7A12929FE49007B8193 /* UIDevice+Extensions.swift */,
 				CEA4F62229BE10F70011ADF7 /* SavitzkyGolayFilter.swift */,
-				19C14F432C29807C009A7E07 /* ScrollOffset.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
