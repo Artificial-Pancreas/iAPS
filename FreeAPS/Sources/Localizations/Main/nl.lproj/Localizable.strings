@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Geen voorspellingen. Mislukte loop suggestie.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "Nieuwe glucose ontbreekt";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
@@ -3113,16 +3113,16 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Light" = "Licht";
 
 /* UI/UX option */
-"Dark" = "Dark";
+"Dark" = "Donker";
 
 /* UI/UX option */
 "Auto" = "Automatisch";
 
 /* UI/UX option */
-"Color Scheme" = "Color Scheme";
+"Color Scheme" = "Kleurenthema";
 
 /* UI/UX option */
-"Light / Dark Mode" = "Light / Dark Mode";
+"Light / Dark Mode" = "Lichte / Donkere modus";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus calculator";
