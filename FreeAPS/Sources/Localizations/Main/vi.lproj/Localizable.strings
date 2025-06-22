@@ -3022,7 +3022,7 @@ Enact a temp Basal or a temp target */
 "Smaller iPhone Screens" = "Màn hình iPhone nhỏ hơn";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Hiển thị và cho phép nhập các mục Chất béo và chất đạm";
+"Display and allow Fat and Protein entries" = "Hiển thị và cho phép nhập chất béo và chất đạm";
 
 /* UI/UX option */
 "Add Meal View settings " = "Thêm cài đặt chế độ xem bữa ăn ";
@@ -3163,7 +3163,7 @@ Enact a temp Basal or a temp target */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Cho phép điều chỉnh mức cơ bản dựa trên tỷ lệ TDD hiện tại/TDD trung bình 7 ngày";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Ngưỡng tối đa thay đổi đường huyết để kích hoạt SMB";
+"Max Delta-BG Threshold SMB" = "Ngưỡng Delta-BG tối đa cho phép SMB";
 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Mặc định là 0,2 (20%). Thay đổi phần trăm dương tối đa của cấp độ BG để sử dụng SMB, trên mức đó sẽ vô hiệu hóa SMB. Giới hạn mã hóa cứng là 40%. Đối với UAM vòng kín hoàn toàn nên sử dụng 30%. Quan sát nhật ký và cửa sổ bật lên (maxDelta 27 > 20% BG 100 - vô hiệu hóa SMB!).";
