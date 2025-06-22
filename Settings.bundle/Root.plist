@@ -10,9 +10,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Caregiver Mode</string>
+			<string>Hide Settings</string>
 			<key>Key</key>
-			<string>caregiver_mode</string>
+			<string>hide_settings_toggle</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
