@@ -83,7 +83,7 @@ struct CurrentGlucoseView: View {
     private var remainingTimeFormatterDays: DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day]
-        formatter.unitsStyle = .short
+        formatter.unitsStyle = .abbreviated
         return formatter
     }
 

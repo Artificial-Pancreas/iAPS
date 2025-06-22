@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Continuar sin administrar bolo";
 
+/* History View */
+"No data." = "No data.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+
+/* Bolus View */
+"New Glucose Missing" = "New Glucose Missing";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Guardar comida sin bolo";
 
@@ -190,6 +199,9 @@
 /*  */
 "Cancel Temp Target" = "Cancelar objetivo temporal";
 
+/*  */
+"Cancel Temporary Target" = "Cancel Temporary Target";
+
 /* Custom temp target */
 "Custom" = "Personalizado";
 
@@ -309,6 +321,9 @@
 
 /*  */
 "Schedule" = "Programación";
+
+/* */
+"(standard units / hour)" = "(standard units / hour)";
 
 /*  */
 "starts at" = "desde las";
@@ -461,6 +476,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Añadir Omnipod";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Add Dana-i/RS";
+
 /* Add Simulator pump */
 "Add Simulator" = "Añadir simulador";
 
@@ -608,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Mostrar en reloj";
+
+/* */
+"Display either Overrides or Temp Targets" = "Display either Overrides or Temp Targets";
 
 /* */
 "Garmin Watch" = "Reloj Garmin";
@@ -998,7 +1019,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Delete CGM" = "Eliminar MCG";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "¿Estás seguro de que deseas eliminar esta MCG del lazo cerrado?";
+"Are you sure you want to remove this cgm from iAPS?" = "Are you sure you want to remove this cgm from iAPS?";
 
 /* */
 "There is no undo" = "No se puede deshacer";
@@ -1185,6 +1206,12 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "No Glucose Alarm active" = "No hay alarma de glucosa activa";
 
 /* */
+"Ascending Glucose Alarm active" = "Ascending Glucose Alarm active";
+
+/* */
+"Descending Glucose Alarm active" = "Descending Glucose Alarm active";
+
+/* */
 "snoozing until %@" = "posponer hasta %@";
 
 /* */
@@ -1224,7 +1251,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 "Backfill options" = "Opciones de relleno";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "El relleno de las tendencias no está bien soportado por Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Backfilling from trend is currently not well supported by iAPS";
 
 /* */
 "Backfill from history" = "Rellenar valores desde historial";
@@ -1249,6 +1276,57 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 
 /* */
 "Carbs Required Threshold" = "Umbral de carbohidratos requeridos";
+
+/* */
+"Carbs Required" = "Carbs Required";
+
+/* */
+"Sounds" = "Sounds";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hypoglycemia";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Hyperglycemia";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Rapidly Ascending";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Rapidly Descending";
+
+/* Silent sound option */
+"Silent" = "Silent";
+
+/* Option for no sound */
+"Silent" = "Silent";
+
+/* Option for default notification sound */
+"Default" = "Default";
+
+/* The iOS default sound */
+"iOS default sound" = "iOS default sound";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "RAPIDLY DESCENDING GLUCOSE!";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "RAPIDLY ASCENDING GLUCOSE!";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus Failure";
+
+/* Sound for missing loops */
+"Missing Loops" = "Missing Loops";
+
+/* Alert for ascending glucose */
+"Ascending" = "Ascending";
+
+/* Alert for descending glucose */
+"Descending" = "Descending";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Thresholds";
 
 /* */
 "Carbs required: %d g" = "Carbohidratos necesarios: %d g";
@@ -1469,7 +1547,7 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 " -  Manual Basal ⚠️" = " -  Basal temporal manual ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " U/día";
+"U/day" = "U/day";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Total";
@@ -1563,6 +1641,18 @@ Ajustes predeterminados:\n
 /* */
 "End the Override with next Meal" = "End the Override with next Meal";
 
+/* */
+"End the Override when Glucose is Trending Up" = "End the Override when Glucose is Trending Up";
+
+/* */
+"And when Glucose is higher than" = "And when Glucose is higher than";
+
+/* */
+"End the Override when Glucose is Lower ..." = "End the Override when Glucose is Lower ...";
+
+/* */
+"... than" = "... than";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Perfil normal";
 
@@ -1589,6 +1679,9 @@ Ajustes predeterminados:\n
 
 /* */
 "Change CR" = "Cambiar Factor de Carbohidratos (CR)";
+
+/* */
+"Change Basal" = "Change Basal";
 
 /* */
 "SMB Minutes" = "Minutos de SMB";
@@ -1711,6 +1804,9 @@ Ajustes predeterminados:\n
 
 /* */
 "Eventual Glucose" = "Glucosa eventual";
+
+/* */
+"Minimum Predicted Glucose" = "Minimum Predicted Glucose";
 
 /* */
 "Please wait" = "Por favor, espere";
@@ -1849,7 +1945,7 @@ Ajustes predeterminados:\n
 "%1$@ for %2$@" = "%1$@ para %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS no ajustará automáticamente su administración de insulina hasta que el actual ratio de insulina basal temporal finalice o sea cancelado.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Establecer basal temporal";
 
@@ -1960,10 +2056,16 @@ Ajustes predeterminados:\n
 "2 hours" = "2 horas";
 
 /* */
+"3 hours" = "3 hours";
+
+/* */
 "4 hours" = "4 horas";
 
 /* */
 "6 hours" = "6 horas";
+
+/* */
+"9 hours" = "9 hours";
 
 /* */
 "12 hours" = "12 horas";
@@ -2128,7 +2230,7 @@ Ajustes predeterminados:\n
 "Share and Backup" = "Share and Backup";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload settings and statistics";
+"Upload Settings and Statistics" = "Upload Settings and Statistics";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Share and Backup all of your Settings and Statistics";
@@ -2180,9 +2282,6 @@ Ajustes predeterminados:\n
 
 /* */
 "Share your data anonymously" = "Comparta sus datos anónimamente";
-
-/* Setting Title */
-"Sharing" = "Compartir";
 
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
@@ -2497,7 +2596,7 @@ Ajustes predeterminados:\n
 /* */
 "SMB Delivery Ratio BG Range" = "SMB Delivery Ratio BG Range";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used.";
 
 /* */
@@ -2547,6 +2646,9 @@ Ajustes predeterminados:\n
 
 /* */
 "Max IOB Threshold Percent" = "Max IOB Threshold Percent";
+
+/* IOB Threshold Percent Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.";
 
 /* */
 "Auto ISF" = "Auto ISF";
@@ -3027,6 +3129,9 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 /* Settings Section */
 "Extra Features" = "Funciones adicionales";
 
+/* Header */
+"UI/UX Settings" = "UI/UX Settings";
+
 /* UI/UX option */
 "Display Predictions" = "Mostrar predicciones";
 
@@ -3041,6 +3146,12 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Mostrar botón de objetivos temporales";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Display Profile Override Button";
+
+/* UI/UX option */
+"Display Meal Button" = "Display Meal Button";
 
 /* UI/UX option */
 "Home View Button Panel " = "Botones principales";

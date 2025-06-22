@@ -37,7 +37,6 @@ private let staticPumpManagers: [PumpManagerUI.Type] = [
     OmnipodPumpManager.self,
     OmniBLEPumpManager.self,
     DanaKitPumpManager.self,
-    MedtrumPumpManager.self,
     MockPumpManager.self
 ]
 
@@ -46,7 +45,6 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
     OmnipodPumpManager.managerIdentifier: OmnipodPumpManager.self,
     OmniBLEPumpManager.managerIdentifier: OmniBLEPumpManager.self,
     DanaKitPumpManager.managerIdentifier: DanaKitPumpManager.self,
-    MedtrumPumpManager.managerIdentifier: MedtrumPumpManager.self,
     MockPumpManager.managerIdentifier: MockPumpManager.self
 ]
 

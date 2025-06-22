@@ -1,12 +1,20 @@
 APP_DISPLAY_NAME = iAPS
-APP_VERSION = 6.4.6
+APP_VERSION = 6.5.6
 APP_BUILD_NUMBER = 1
 COPYRIGHT_NOTICE =
 DEVELOPER_TEAM = ##TEAM_ID##
 BUNDLE_IDENTIFIER = ru.artpancreas.$(DEVELOPMENT_TEAM).FreeAPS
 APP_GROUP_ID = group.com.$(DEVELOPMENT_TEAM).loopkit.LoopGroup
-APP_ICON = pod_colorful
+
+//Default App Icon, displayed at first installation.
+APP_ICON = appIcon1
+
+// Require authentication when bolusing.
+AUTHENTICATE = true
+
+// iAPS URL in other apps
 APP_URL_SCHEME = freeaps-x
 
+// Include file for overriding configuration
 #include? "ConfigOverride.xcconfig"
 //#include? "../../ConfigOverride.xcconfig"

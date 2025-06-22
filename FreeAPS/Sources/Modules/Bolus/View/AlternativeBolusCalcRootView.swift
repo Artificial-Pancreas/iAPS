@@ -68,7 +68,7 @@ extension Bolus {
                     }
                 }
 
-                if state.predictions == nil {
+                if state.predictions == nil || state.currentBG == 0 {
                     if state.currentBG == 0 {
                         Section {
                             HStack {
@@ -84,7 +84,7 @@ extension Bolus {
                             }.onChange(of: state.manualGlucose) {
                                 state.insulinCalculated = state.calculateInsulin()
                             }
-                        } header: { Text("Missing Glucose") }
+                        } header: { Text("New Glucose Missing") }
                     }
                 }
 
@@ -205,6 +205,9 @@ extension Bolus {
                             keepForNextWiew = true
                             state.save()
                             state.showModal(for: nil)
+                            if state.currentBG == 0, state.manualGlucose != 0 {
+                                state.addManualGlucose()
+                            }
                         }
                         label: {
                             fetch ?

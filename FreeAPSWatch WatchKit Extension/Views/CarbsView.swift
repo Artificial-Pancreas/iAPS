@@ -14,7 +14,7 @@ struct CarbsView: View {
     @State var carbAmount = 0.0
     @State var fatAmount = 0.0
     @State var proteinAmount = 0.0
-    @State var colorOfselection: Color = .darkGray
+    @State var colorOfselection: Color = .darkerGray
     // @State var displayPresets: Bool = false
 
     var numberFormatter: NumberFormatter {

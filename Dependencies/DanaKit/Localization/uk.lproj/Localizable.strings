@@ -581,3 +581,6 @@
 
 /* Battery age */
 "Battery age" = "Час використовування батареї";
+
+/* advertise contact DanaRS v1 */
+"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "ПРИМІТКА: DanaRS v1 (поки що) не підтримується. Якщо у вас є помпа DanaRS v1 для тестування, зверніться до Бастіана Верхаара!";

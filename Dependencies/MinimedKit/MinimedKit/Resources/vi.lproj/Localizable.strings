@@ -62,10 +62,10 @@
 "Pump Error" = "Lỗi bơm";
 
 /* No comment provided by engineer. */
-"Pump is suspended" = "Bơm đã tạm ngưng";
+"Pump is suspended" = "Bơm đã tạm dừng";
 
 /* No comment provided by engineer. */
-"Pump responded unexpectedly" = "Bơm phản ứng bất ngờ";
+"Pump responded unexpectedly" = "Bơm phản hồi không như dự kiến";
 
 /* The format string describing a pump message. (1: The packet type)(2: The message type)(3: The message address)(4: The message data */
 "PumpMessage(%1$@, %2$@, %3$@, %4$@)" = "PumpMessage(%1$@, %2$@, %3$@, %4$@)";
@@ -86,13 +86,13 @@
 "Temporary Basal: %1$d%%" = "Liều Basal tạm thời: %1$d%%";
 
 /* The format string description of an unknown pump error code. (1: The specific error code raw value) */
-"Unknown pump error code: %1$@" = "Không xác định lỗi của bơm: %1$@";
+"Unknown pump error code: %1$@" = "Mã lỗi bơm không xác định: %1$@";
 
 /* No comment provided by engineer. */
-"Unknown pump model: %@" = "Không xác định mẫu bơm: %@";
+"Unknown pump model: %@" = "Không xác định được loại bơm %@";
 
 /* Format string for an unknown response. (1: The operation being performed) (2: The response data) */
-"Unknown response during %1$@: %2$@" = "Phản hồi không xác định trong %1$@: %2$@";
+"Unknown response during %1$@: %2$@" = "Phản hồi không xác định trong lúc %1$@: %2$@";
 
 /* Describing the worldwide pump region */
 "World-Wide" = "World-Wide";

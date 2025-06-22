@@ -202,12 +202,6 @@ extension OverrideProfilesConfig {
                         }
 
                         HStack {
-                            Toggle(isOn: $state.endWIthNewCarbs) {
-                                Text("End the Override with next Meal")
-                            }
-                        }
-
-                        HStack {
                             Toggle(isOn: $state.isfAndCr) {
                                 Text("Change ISF and CR and Basal")
                             }
@@ -266,6 +260,53 @@ extension OverrideProfilesConfig {
                                     liveEditing: true
                                 )
                                 Text("U").foregroundColor(.secondary)
+                            }
+                        }
+
+                        // Blank Divider()
+                        HStack {}
+
+                        HStack {
+                            Toggle(isOn: $state.endWIthNewCarbs) {
+                                Text("End the Override with next Meal")
+                            }
+                        }
+
+                        HStack {
+                            Toggle(isOn: $state.glucoseOverrideThresholdActive) {
+                                Text("End the Override when Glucose is Trending Up")
+                            }
+                        }
+
+                        if state.glucoseOverrideThresholdActive {
+                            HStack {
+                                Text("And when Glucose is higher than")
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.glucoseOverrideThreshold,
+                                    units: $state.units,
+                                    isDisabled: false,
+                                    liveEditing: true
+                                )
+                            }
+                        }
+
+                        HStack {
+                            Toggle(isOn: $state.glucoseOverrideThresholdActiveDown) {
+                                Text("End the Override when Glucose is Lower ...")
+                            }
+                        }
+
+                        if state.glucoseOverrideThresholdActiveDown {
+                            HStack {
+                                Text("... than")
+                                BGTextField(
+                                    "0",
+                                    mgdlValue: $state.glucoseOverrideThresholdDown,
+                                    units: $state.units,
+                                    isDisabled: false,
+                                    liveEditing: true
+                                )
                             }
                         }
                     }
@@ -674,6 +715,10 @@ extension OverrideProfilesConfig {
                         if let aisf = autoisfSettings, preset.overrideAutoISF {
                             bool(bool: aisf.autoisf, setting: state.currentSettings.autoisf, label: "Auto ISF")
                         }
+
+                        if preset.glucoseOverrideThresholdActive || preset.glucoseOverrideThresholdActiveDown {
+                            Image(systemName: "drop.fill").foregroundStyle(.red)
+                        }
                     }
                     .font(.caption)
 
@@ -787,9 +832,10 @@ extension OverrideProfilesConfig {
             let smbMinutesUnchanged = state.smbMinutes == state.defaultSmbMinutes
             let uamMinutesUnchanged = state.uamMinutes == state.defaultUamMinutes
             let autoISFUnchanged = !state.overrideAutoISF
+            let glucoseOverrideUnchanged = !state.glucoseOverrideThresholdActive
 
             return percentUnchanged && targetUnchanged && smbUnchanged && maxIOBUnchanged && smbMinutesUnchanged &&
-                uamMinutesUnchanged && autoISFUnchanged
+                uamMinutesUnchanged && autoISFUnchanged && glucoseOverrideUnchanged
         }
 
         private func decimal(decimal: NSDecimalNumber?, setting: Decimal, label: String) -> Text? {
@@ -884,6 +930,17 @@ extension OverrideProfilesConfig {
             if state.overrideMaxIOB {
                 saveOverride.maxIOB = state.maxIOB as NSDecimalNumber
             }
+
+            saveOverride.glucoseOverrideThresholdActive = state.glucoseOverrideThresholdActive
+            if state.glucoseOverrideThresholdActive {
+                saveOverride.glucoseOverrideThreshold = state.glucoseOverrideThreshold as NSDecimalNumber
+            }
+
+            saveOverride.glucoseOverrideThresholdActiveDown = state.glucoseOverrideThresholdActiveDown
+            if state.glucoseOverrideThresholdActiveDown {
+                saveOverride.glucoseOverrideThresholdDown = state.glucoseOverrideThresholdDown as NSDecimalNumber
+            }
+
             saveOverride.date = Date.now
 
             if state.overrideAutoISF {

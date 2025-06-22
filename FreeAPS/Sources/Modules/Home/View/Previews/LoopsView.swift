@@ -72,14 +72,6 @@ struct LoopsView: View {
                         topTrailingRadius: 4
                     )
                 )
-                .clipShape(
-                    UnevenRoundedRectangle(
-                        topLeadingRadius: 4,
-                        bottomLeadingRadius: 4,
-                        bottomTrailingRadius: 4,
-                        topTrailingRadius: 4
-                    )
-                )
                 .annotation(position: .overlay) {
                     Text(percentage.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " %")
                         .font(.loopFont)

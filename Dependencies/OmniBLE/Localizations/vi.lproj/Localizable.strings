@@ -496,7 +496,7 @@
 "Continue" = "Tiếp tục";
 
 /* */
-"Attach Pod" = "Attach Pod";
+"Attach Pod" = "Gắn Pod";
 
 /* Alert title for confirm pod attachment */
 "Confirm Pod Attachment" = "Xác nhận pod đã gắn chặt";

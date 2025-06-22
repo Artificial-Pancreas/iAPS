@@ -63,7 +63,7 @@ extension Color {
     static let loopPink = Color("LoopPink")
     static let lemon = Color("Lemon")
     static let minus = Color("minus")
-    static let darkGray = Color("darkGray")
+    static let darkerGray = Color("darkerGray")
     static let darkRed = Color("DarkRed")
     static let darkGreen = Color("DarkGreen")
     static let blueComplicationBackground = Color(red: 0.1176470588, green: 0.2352941176, blue: 0.3725490196)

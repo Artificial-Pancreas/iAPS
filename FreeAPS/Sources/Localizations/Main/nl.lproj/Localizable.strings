@@ -16,6 +16,15 @@
 /* Continue after added carbs without bolus */
 "Continue without bolus" = "Verdergaan zonder bolus";
 
+/* History View */
+"No data." = "Geen gegevens.";
+
+/* Bolus View */
+"No Predictions. Failed loop suggestion." = "Geen voorspellingen. Mislukte loop suggestie.";
+
+/* Bolus View */
+"New Glucose Missing" = "Ontbrekende glucose";
+
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Maaltijd opslaan zonder bolus";
 
@@ -190,6 +199,9 @@
 /*  */
 "Cancel Temp Target" = "Annuleer tijdelijk doel";
 
+/*  */
+"Cancel Temporary Target" = "Annuleer tijdelijk doel";
+
 /* Custom temp target */
 "Custom" = "Aangepast";
 
@@ -309,6 +321,9 @@
 
 /*  */
 "Schedule" = "Schema";
+
+/* */
+"(standard units / hour)" = "(standaard eenheden / uur)";
 
 /*  */
 "starts at" = "Start";
@@ -461,6 +476,9 @@ Enact a temp Basal or a temp target */
 /* Add Omnipod pump */
 "Add Omnipod" = "Omnipod Eros toevoegen";
 
+/* Add Dana-i/RS pump */
+"Add Dana-i/RS" = "Voeg Dana-i/RS toe";
+
 /* Add Simulator pump */
 "Add Simulator" = "Simulator toevoegen";
 
@@ -608,6 +626,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Display on Watch" = "Weergave op horloge";
+
+/* */
+"Display either Overrides or Temp Targets" = "Toon overschrijvingen of tijdelijke doelen";
 
 /* */
 "Garmin Watch" = "Garmin Watch";
@@ -998,7 +1019,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Delete CGM" = "Verwijder CGM";
 
 /* */
-"Are you sure you want to remove this cgm from loop?" = "Weet je zeker dat je deze CGM uit de lijst wilt verwijderen?";
+"Are you sure you want to remove this cgm from iAPS?" = "Weet je zeker dat je deze CGM uit de lijst wilt verwijderen?";
 
 /* */
 "There is no undo" = "Ongedaan maken is niet mogelijk";
@@ -1185,6 +1206,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "No Glucose Alarm active" = "Geen glucose alarm actief";
 
 /* */
+"Ascending Glucose Alarm active" = "Stijgende glucose-alarm actief";
+
+/* */
+"Descending Glucose Alarm active" = "Dalende glucose-alarm actief";
+
+/* */
 "snoozing until %@" = "sluimeren tot %@";
 
 /* */
@@ -1224,7 +1251,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Backfill options" = "Terugzet opties";
 
 /* */
-"Backfilling from trend is currently not well supported by Loop" = "Terugzetten van trend wordt momenteel niet goed ondersteund door Loop";
+"Backfilling from trend is currently not well supported by iAPS" = "Achteraf aanvullen op basis van trendgegevens wordt momenteel niet goed ondersteund door iAPS";
 
 /* */
 "Backfill from history" = "Terugzetten van geschiedenis";
@@ -1251,6 +1278,57 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Carbs Required Threshold" = "Koolhydraten vereist drempelwaarde";
 
 /* */
+"Carbs Required" = "Koolhydraten benodigd";
+
+/* */
+"Sounds" = "Geluiden";
+
+/* Sound for Hypo alert */
+"Hypoglycemia" = "Hypo(glykemie)";
+
+/* Sound for Hyper alert */
+"Hyperglycemia" = "Hyper(glykemie)";
+
+/* Sound for ascending glucose */
+"Rapidly Ascending" = "Snel stijgend";
+
+/* Sound for descending glucose */
+"Rapidly Descending" = "Snel dalend";
+
+/* Silent sound option */
+"Silent" = "Stille modus";
+
+/* Option for no sound */
+"Silent" = "Stille modus";
+
+/* Option for default notification sound */
+"Default" = "Standaard";
+
+/* The iOS default sound */
+"iOS default sound" = "Standaard iOS geluid";
+
+/* Alert for descending glucose */
+"RAPIDLY DESCENDING GLUCOSE!" = "ZEER SNEL DALENDE BG";
+
+/* Alert for ascending glucose */
+"RAPIDLY ASCENDING GLUCOSE!" = "ZEER SNEL STIJGENDE BG";
+
+/* Sound for bolus failure */
+"Bolus Failure" = "Bolus fout";
+
+/* Sound for missing loops */
+"Missing Loops" = "Ontbrekende loops";
+
+/* Alert for ascending glucose */
+"Ascending" = "Oplopend";
+
+/* Alert for descending glucose */
+"Descending" = "Dalend";
+
+/* Thresholds for Alerts */
+"Thresholds" = "Grenswaarden";
+
+/* */
 "Carbs required: %d g" = "Koolhydraten vereist: %d g";
 
 /* */
@@ -1263,7 +1341,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Last loop was more than %d min ago" = "Laatste loop was meer dan %d min geleden";
 
 /* Glucose badge */
-"Show glucose on the app badge" = "Toon glucosewaarde op de app icoon";
+"Show glucose on the app badge" = "Toon glucosewaarde op de app icon";
 
 /* */
 "Backfill glucose" = "Terugzetten glucose";
@@ -1469,7 +1547,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 " -  Manual Basal ⚠️" = " -  Handmatige tijdelijke basaal ⚠️";
 
 /* Total AT / Scheduled basal insulin */
-" U/day" = " E/dag";
+"U/day" = "E/dag";
 
 /* Total AT / Scheduled basal insulin */
 "Total" = "Totaal";
@@ -1553,6 +1631,18 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "End the Override with next Meal" = "Beëindig overschrijving bij volgende maaltijd";
 
+/* */
+"End the Override when Glucose is Trending Up" = "Beëindig de overschrijving als BG omhoog gaat ...";
+
+/* */
+"And when Glucose is higher than" = "En als de BG hoger is dan";
+
+/* */
+"End the Override when Glucose is Lower ..." = "Beëindig de overschrijving als BG lager is ...";
+
+/* */
+"... than" = "... dan";
+
 /* Your normal Profile. Use a short string */
 "Normal Profile" = "Normaal profiel";
 
@@ -1579,6 +1669,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Change CR" = "Wijzig CR";
+
+/* */
+"Change Basal" = "Wijzig basaal";
 
 /* */
 "SMB Minutes" = "SMB Minuten";
@@ -1701,6 +1794,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Eventual Glucose" = "Voorspelde glucose";
+
+/* */
+"Minimum Predicted Glucose" = "Minimale voorspelde glucose is";
 
 /* */
 "Please wait" = "Even geduld";
@@ -1839,7 +1935,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "%1$@ for %2$@" = "%1$@ voor %2$@";
 
 /* Description text on manual temp basal action sheet */
-"Loop will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS zal niet automatisch veranderingen aanbrengen in de hoeveelheid insuline die je krijgt, totdat de tijdelijke basaalstand is gestopt of geannuleerd.";
+"iAPS will not automatically adjust your insulin delivery until the temporary basal rate finishes or is canceled." = "iAPS past je insulineafgifte niet automatisch aan zolang de tijdelijke basaalstand nog actief is of niet is geannuleerd.";
 /* Button text for setting manual temporary basal rate*/
 "Set Temporary Basal" = "Tijdelijke basaal instellen";
 
@@ -1871,7 +1967,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Add Omnipod Dash" = "Omnipod Dash toevoegen";
 
 /* */
-"Insert Cannula" = "Plaats canulle";
+"Insert Cannula" = "Plaats canule";
 
 /* */
 "Check Cannula" = "Check canule";
@@ -1950,10 +2046,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "2 hours" = "2 uur";
 
 /* */
+"3 hours" = "3 uur";
+
+/* */
 "4 hours" = "4 uur";
 
 /* */
 "6 hours" = "6 uur";
+
+/* */
+"9 hours" = "9 uur";
 
 /* */
 "12 hours" = "12 uur";
@@ -2118,7 +2220,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Share and Backup" = "Delen en back-up";
 
 /* Section 1 title */
-"Upload settings and statistics" = "Upload instellingen en statistieken";
+"Upload Settings and Statistics" = "Upload instellingen en statistieken";
 
 /* On-off toggle */
 "Share and Backup all of your Settings and Statistics" = "Deel en back-up al uw instellingen en statistieken";
@@ -2407,13 +2509,13 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Factor that multiplies your normal regular basal rate for B30. Max Basal rate enacted is the max of your pump max Basal setting. Default is 5." = "Factor waarmee je normale basaalstand wordt vermenigvuldigd voor B30. De maximale basaalstand die wordt toegepast, is de maximale basaalinstelling van je pomp. Standaardwaarde is 5.";
 
 /* */
-"Upper Delta limit" = "Bovenste Delta-limiet";
+"Upper Delta limit" = "Maximaal toegestane verandering";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 8 mg/dl (0.5 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 8 mg/dl (0,5 mmol/l).";
 
 /* */
-"Upper BG limit" = "Bovenste BG limiet";
+"Upper BG limit" = "Maximaal toegestane glucosewaarde";
 
 /* */
 "SMBs will be disabled when under this limit, while a B30 Basal rate is running. Default is 130 mg/dl (7.2 mmol/l)." = "SMB's worden uitgeschakeld als de waarde onder deze limiet komt en er een B30 Basale snelheid actief is. De standaardlimiet is 130 mg/dl (7,2 mmol/l).";
@@ -2437,16 +2539,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Enables an increased basal rate after an EatingSoon Override Target (or Temp Target) and a manual bolus to saturate the infusion site with insulin to increase insulin absorption for SMB's following a meal with no carb counting." = "Hiermee wordt een verhoogde basaalstand ingeschakeld na een EatingSoon Override Target (of een tijdelijke doelwaarde) en een handmatige bolus. Dit helpt de infusieplaats te verzadigen met insuline, waardoor de insulineabsorptie verbetert en SMB’s (Smart Micro Boluses) na een maaltijd zonder koolhydraten tellen effectiever worden.";
 
 /* */
-"ISF weight while BG decelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
+"ISF weight while BG decelerates" = "ISF-waarde terwijl de bloedglucose langzamer verandert";
 
 /* */
-"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Dit is de waarde die wordt toegepast terwijl je glucose verlaagt en ISF verzwakt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.1 kan een goed uitgangspunt zijn.";
+"This is the weight applied while glucose decelerates and which weakens ISF. With 0 this contribution is effectively disabled. 0.1 might be a good starting point." = "Dit is de waarde die wordt gebruikt wanneer je bloedglucose daalt en de ISF minder effect heeft. De standaardwaarde is 0. Bij 0 is dit effect uitgeschakeld. Een goed startpunt is 0,1 — van daaruit kun je voorzichtig bijstellen wat voor jou werkt.";
 
 /* */
-"ISF weight while BG accelerates" = "ISF-waarde terwijl de bloedsuikerspiegel vertraagt";
+"ISF weight while BG accelerates" = "ISF-waarde terwijl de bloedglucose sneller verandert";
 
 /* */
-"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Standaard waarde: 0. Dit is de waarde die wordt toegepast tijdens het versnellen van glucose en dat ISF versterkt. Met 0 is deze bijdrage effectief uitgeschakeld. 0.02 is een veilig beginpunt, van waaruit je kunt bewegen. Gebruikelijke instellingen zijn ongeveer 0.15!";
+"Default value: 0. This is the weight applied while glucose accelerates and which strengthens ISF. With 0 this contribution is effectively disabled. 0.02 is a safe starting point, from which to move up. Typical settings are around 0.15!" = "Deze waarde wordt gebruikt bij het versnellen van glucose en versterkt het effect van de ISF. Bij 0 is dit effect uitgeschakeld. Een veilige startwaarde is 0,02 — van daaruit kun je rustig aanpassen. Veel gebruikte waarden liggen rond de 0,15!";
 
 /* */
 "Duration ISF postprandial adaption" = "Duur van de ISF-aanpassing na de maaltijd (postprandiale aanpassing). Dit bepaalt hoe lang de insulinegevoeligheidsfactor (ISF) wordt aangepast na een maaltijd";
@@ -2482,12 +2584,12 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Duration Weight" = "Duur hoeveelheid";
 
 /* */
-"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Hoeeveelheid voor een langdurig hoge glucose. Voor elk uur dat de glucose hoog blijft, zal deze aanpassing je ISF verder verlagen.\n\nDe formule voor de Dura ISF-aanpassing is:\n\nDura ISF = 1 + uren boven doel * hoeveelheid / doel * (gemiddelde glucose - doelglucose)";
+"Weight for a prolonged high glucose. For every hour the glucose stays high this adjustment will lower your ISF more.\n\nThe formula for Dura ISF adjustment is:\n\nDura ISF = 1 + hours above target * weight / target * (average glucose - target glucose)" = "Hoeveelheid voor een langdurig hoge glucose. Voor elk uur dat de glucose hoog blijft, zal deze aanpassing je ISF verder verlagen.\n\nDe formule voor de Dura ISF-aanpassing is:\n\nDura ISF = 1 + uren boven doel * hoeveelheid / doel * (gemiddelde glucose - doelglucose)";
 
 /* */
 "SMB Delivery Ratio BG Range" = "SMB-afgifteverhouding voor bloedsuikerbereik";
 
-/* */
+/* SMB Delivery Ratio BG Range description */
 "Default value: 0, Sensible is between 40 mg/dL and 120 mg/dL. The linearly increasing SMB delivery ratio is mapped to the glucose range [target_bg, target_bg+bg_range]. At target_bg the SMB ratio is smb_delivery_ratio_min, at target_bg+bg_range it is smb_delivery_ratio_max. With 0 the linearly increasing SMB ratio is disabled and the fix smb_delivery_ratio is used." = "De standaardwaarde is 0, maar een logisch bereik ligt tussen 2,2 mmol/L en 6,7 mmol/L (40-120 mg/dL). De afgifte van SMB's (Smart Micro Boluses) neemt geleidelijk toe naarmate de bloedsuikerspiegel stijgt. Bij de doelwaarde is de SMB-verhouding minimaal, en bij doelwaarde + bg_range is deze maximaal. Als de waarde 0 is, blijft de SMB-verhouding vast en wordt de geleidelijke stijging uitgeschakeld.";
 
 /* */
@@ -2537,6 +2639,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 /* */
 "Max IOB Threshold Percent" = "Max IOB drempelwaarde percentage";
+
+/* IOB Threshold Percent Description */
+"Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled." = "Percentage van de maximale IOB-instelling voor SMB’s (Super Micro Bolussen) bij ingeschakelde automatische ISF (insulinegevoeligheid).\n\nZolang de huidige IOB (insuline die nog actief is) onder een bepaalde grens blijft, mag een SMB deze grens met 30% overschrijden — maar nooit meer dan het ingestelde maximum voor IOB.\n\nBij een instelling van 100% is deze beperking uitgeschakeld, dus dan wordt de hele IOB-limiet gebruikt.";
 
 /* */
 "Auto ISF" = "Auto ISF";
@@ -2915,6 +3020,9 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 /* Settings Section */
 "Extra Features" = "Extra functionaliteiten";
 
+/* Header */
+"UI/UX Settings" = "UI/UX instellingen";
+
 /* UI/UX option */
 "Display Predictions" = "Geef voorspellingen weer";
 
@@ -2929,6 +3037,12 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* UI/UX option */
 "Display Temp Targets Button" = "Toon tijdelijke doelen knop";
+
+/* UI/UX option */
+"Display Profile Override Button" = "Toon knop profiel overschrijving";
+
+/* UI/UX option */
+"Display Meal Button" = "Maaltijdknop weergeven";
 
 /* UI/UX option */
 "Home View Button Panel " = "Beginscherm knoppaneel ";
@@ -2984,7 +3098,7 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Display carb equivalents" = "Toon koolhydraathoeveelheden";
 
 /* UI/UX option */
-"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten";
+"Display carb equivalent amount" = "Toon hoeveelheid koolhydraten in gram";
 
 /* UI/UX option */
 "Display Sensor Time Remaining" = "Resterende sensortijd weergeven";

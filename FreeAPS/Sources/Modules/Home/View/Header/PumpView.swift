@@ -134,7 +134,7 @@ struct PumpView: View {
             }
 
             // MDT and Dana
-            if let battery = battery, !state.pumpName.contains("Omni"), !state.pumpName.contains("Medtrum") {
+            if let battery = battery, !state.pumpName.contains("Omni") {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
                     (battery.percent ?? 100) >
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
@@ -235,7 +235,8 @@ struct PumpView: View {
 
     private func podInsulinAmount(portion: Double) -> some View {
         ZStack {
-            UIImage(imageLiteralResourceName: "pod_reservoir")
+            let pump = colorScheme == .dark ? "pod_dark" : "pod_light"
+            UIImage(imageLiteralResourceName: pump)
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: portion)
                 .resizable()
                 .aspectRatio(0.72, contentMode: .fit)
@@ -257,7 +258,8 @@ struct PumpView: View {
 
     private func pumpInsulinAmount(portion: Double) -> some View {
         ZStack {
-            UIImage(imageLiteralResourceName: "NonOmniPump")
+            let pump = colorScheme == .dark ? "pump_dark" : "pump_light"
+            UIImage(imageLiteralResourceName: pump)
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
                 .frame(maxWidth: 17, maxHeight: 36)

@@ -1,237 +1,353 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23G93" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES" codeGenerationType="class">
-        <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0"
+    lastSavedToolsVersion="23788.4" systemVersion="24F74" minimumToolsVersion="Automatic"
+    sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="ActiveProfile" representedClassName="ActiveProfile" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="active" optional="YES" attributeType="Boolean" usesScalarValueType="YES" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="name" optional="YES" attributeType="String" />
     </entity>
-    <entity name="Auto_ISF" representedClassName="Auto_ISF" syncable="YES" codeGenerationType="class">
-        <attribute name="autoisf" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="autoisf_max" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="autoisf_min" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="autoISFhourlyChange" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="b30_duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="b30factor" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="b30targetLevel" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="b30upperdelta" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="b30upperLimit" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="bgAccelISFweight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="bgBrakeISFweight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="enableBGacceleration" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="higherISFrangeWeight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="iobThresholdPercent" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="iTime_Start_Bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="iTime_target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="ketoProtect" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="ketoProtectAbsolut" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="ketoProtectBasalAbsolut" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="ketoProtectBasalPercent" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="lowerISFrangeWeight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="postMealISFweight" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="smbDeliveryRatioBGrange" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="smbDeliveryRatioMax" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="smbDeliveryRatioMin" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="use_B30" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="variableKetoProtect" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="overrides" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Override" inverseName="autoISF" inverseEntity="Override"/>
+    <entity name="Auto_ISF" representedClassName="Auto_ISF" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="autoisf" optional="YES" attributeType="Boolean" usesScalarValueType="YES" />
+        <attribute name="autoisf_max" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="autoisf_min" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="autoISFhourlyChange" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="b30_duration" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="b30factor" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="b30targetLevel" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="b30upperdelta" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="b30upperLimit" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="bgAccelISFweight" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="bgBrakeISFweight" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="enableBGacceleration" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="higherISFrangeWeight" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="id" optional="YES" attributeType="String" />
+        <attribute name="iobThresholdPercent" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="iTime_Start_Bolus" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="iTime_target" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="ketoProtect" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="ketoProtectAbsolut" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="ketoProtectBasalAbsolut" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="ketoProtectBasalPercent" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="lowerISFrangeWeight" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="postMealISFweight" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="smbDeliveryRatioBGrange" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="smbDeliveryRatioMax" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="smbDeliveryRatioMin" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="use_B30" optional="YES" attributeType="Boolean" usesScalarValueType="YES" />
+        <attribute name="variableKetoProtect" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <relationship name="overrides" optional="YES" toMany="YES" deletionRule="Nullify"
+            destinationEntity="Override" inverseName="autoISF" inverseEntity="Override" />
     </entity>
-    <entity name="Carbohydrates" representedClassName="Carbohydrates" syncable="YES" codeGenerationType="class">
-        <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="enteredBy" optional="YES" attributeType="String"/>
-        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="note" optional="YES" attributeType="String" defaultValueString="Empty"/>
-        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0"/>
+    <entity name="Carbohydrates" representedClassName="Carbohydrates" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="enteredBy" optional="YES" attributeType="String" />
+        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="id" optional="YES" attributeType="String" />
+        <attribute name="note" optional="YES" attributeType="String" defaultValueString="Empty" />
+        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0" />
     </entity>
     <entity name="Fat" representedClassName="Fat" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="enteredBy" optional="YES" attributeType="String"/>
-        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="enteredBy" optional="YES" attributeType="String" />
+        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
     </entity>
-    <entity name="Identifier" representedClassName="Identifier" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String"/>
+    <entity name="Identifier" representedClassName="Identifier" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="String" />
     </entity>
-    <entity name="ImportError" representedClassName="ImportError" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="error" optional="YES" attributeType="String"/>
+    <entity name="ImportError" representedClassName="ImportError" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="error" optional="YES" attributeType="String" />
     </entity>
-    <entity name="InsulinConcentration" representedClassName="InsulinConcentration" syncable="YES" codeGenerationType="class">
-        <attribute name="concentration" optional="YES" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="752259840" usesScalarValueType="NO"/>
-        <attribute name="incrementSetting" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    <entity name="InsulinConcentration" representedClassName="InsulinConcentration" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="concentration" optional="YES" attributeType="Double" defaultValueString="1"
+            usesScalarValueType="YES" />
+        <attribute name="date" optional="YES" attributeType="Date"
+            defaultDateTimeInterval="752259840" usesScalarValueType="NO" />
+        <attribute name="incrementSetting" optional="YES" attributeType="Double"
+            defaultValueString="0.0" usesScalarValueType="YES" />
     </entity>
-    <entity name="InsulinDistribution" representedClassName="InsulinDistribution" syncable="YES" codeGenerationType="class">
-        <attribute name="bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="scheduledBasal" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="tempBasal" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+    <entity name="InsulinDistribution" representedClassName="InsulinDistribution" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="bolus" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="scheduledBasal" optional="YES" attributeType="Decimal"
+            defaultValueString="0.0" />
+        <attribute name="tempBasal" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
     </entity>
-    <entity name="LastLoop" representedClassName="LastLoop" syncable="YES" codeGenerationType="class">
-        <attribute name="cob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    <entity name="LastLoop" representedClassName="LastLoop" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="cob" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" />
     </entity>
-    <entity name="LoopStatRecord" representedClassName="LoopStatRecord" syncable="YES" codeGenerationType="class">
-        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="error" optional="YES" attributeType="String"/>
-        <attribute name="interval" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="loopStatus" optional="YES" attributeType="String"/>
-        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    <entity name="LoopStatRecord" representedClassName="LoopStatRecord" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="error" optional="YES" attributeType="String" />
+        <attribute name="interval" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="loopStatus" optional="YES" attributeType="String" />
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO" />
     </entity>
     <entity name="Meals" representedClassName="Meals" syncable="YES" codeGenerationType="class">
-        <attribute name="actualDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="carbs" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="fat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="fpuID" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="note" optional="YES" attributeType="String"/>
-        <attribute name="protein" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="actualDate" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="carbs" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="fat" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="fpuID" optional="YES" attributeType="String" />
+        <attribute name="id" optional="YES" attributeType="String" />
+        <attribute name="note" optional="YES" attributeType="String" />
+        <attribute name="protein" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
     </entity>
-    <entity name="NotUploaded" representedClassName="NotUploaded" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    <entity name="NotUploaded" representedClassName="NotUploaded" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="number" optional="YES" attributeType="Integer 16" defaultValueString="0"
+            usesScalarValueType="YES" />
     </entity>
-    <entity name="Onboarding" representedClassName="Onboarding" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="firstRun" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+    <entity name="Onboarding" representedClassName="Onboarding" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="firstRun" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
     </entity>
-    <entity name="Override" representedClassName="Override" syncable="YES" codeGenerationType="class">
-        <attribute name="advancedSettings" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="basal" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="cr" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="indefinite" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="isfAndCr" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="isPreset" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="maxIOB" optional="YES" attributeType="Decimal" defaultValueString="0"/>
-        <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="100" usesScalarValueType="YES"/>
-        <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="smbIsOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="smbMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
-        <attribute name="start" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="100"/>
-        <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
-        <relationship name="autoISF" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Auto_ISF" inverseName="overrides" inverseEntity="Auto_ISF"/>
+    <entity name="Override" representedClassName="Override" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="advancedSettings" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="basal" optional="YES" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
+        <attribute name="cr" optional="YES" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
+        <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="glucoseOverrideThreshold" optional="YES" attributeType="Decimal"
+            defaultValueString="100" />
+        <attribute name="glucoseOverrideThresholdActive" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="glucoseOverrideThresholdActiveDown" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="glucoseOverrideThresholdDown" optional="YES" attributeType="Decimal"
+            defaultValueString="90" />
+        <attribute name="id" optional="YES" attributeType="String" />
+        <attribute name="indefinite" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
+        <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
+        <attribute name="isfAndCr" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
+        <attribute name="isPreset" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
+        <attribute name="maxIOB" optional="YES" attributeType="Decimal" defaultValueString="0" />
+        <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="100"
+            usesScalarValueType="YES" />
+        <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="smbIsOff" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
+        <attribute name="smbMinutes" optional="YES" attributeType="Decimal" defaultValueString="30" />
+        <attribute name="start" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="100" />
+        <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30" />
+        <relationship name="autoISF" optional="YES" toMany="YES" deletionRule="Nullify"
+            destinationEntity="Auto_ISF" inverseName="overrides" inverseEntity="Auto_ISF" />
     </entity>
-    <entity name="OverrideHistory" representedClassName="OverrideHistory" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="duration" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="target" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    <entity name="OverrideHistory" representedClassName="OverrideHistory" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="duration" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="target" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
     </entity>
-    <entity name="OverridePresets" representedClassName="OverridePresets" syncable="YES" codeGenerationType="class">
-        <attribute name="advancedSettings" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="basal" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="cr" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="emoji" optional="YES" attributeType="String"/>
-        <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" defaultValueString="Empty"/>
-        <attribute name="indefinite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="isfAndCr" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="maxIOB" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="smbIsOff" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="smbMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
-        <attribute name="start" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30"/>
+    <entity name="OverridePresets" representedClassName="OverridePresets" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="advancedSettings" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="basal" optional="YES" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
+        <attribute name="cr" optional="YES" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="emoji" optional="YES" attributeType="String" />
+        <attribute name="end" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="endWIthNewCarbs" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="glucoseOverrideThreshold" optional="YES" attributeType="Decimal"
+            defaultValueString="100" />
+        <attribute name="glucoseOverrideThresholdActive" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="glucoseOverrideThresholdActiveDown" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="glucoseOverrideThresholdDown" optional="YES" attributeType="Decimal"
+            defaultValueString="90" />
+        <attribute name="id" optional="YES" attributeType="String" defaultValueString="Empty" />
+        <attribute name="indefinite" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="isf" optional="YES" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
+        <attribute name="isfAndCr" optional="YES" attributeType="Boolean" defaultValueString="YES"
+            usesScalarValueType="YES" />
+        <attribute name="maxIOB" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="name" optional="YES" attributeType="String" />
+        <attribute name="overrideAutoISF" optional="YES" attributeType="Boolean"
+            usesScalarValueType="YES" />
+        <attribute name="overrideMaxIOB" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="percentage" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="smbIsAlwaysOff" optional="YES" attributeType="Boolean"
+            defaultValueString="NO" usesScalarValueType="YES" />
+        <attribute name="smbIsOff" optional="YES" attributeType="Boolean" usesScalarValueType="YES" />
+        <attribute name="smbMinutes" optional="YES" attributeType="Decimal" defaultValueString="30" />
+        <attribute name="start" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="uamMinutes" optional="YES" attributeType="Decimal" defaultValueString="30" />
     </entity>
     <entity name="Presets" representedClassName="Presets" syncable="YES" codeGenerationType="class">
-        <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="dish" optional="YES" attributeType="String" defaultValueString=" "/>
-        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="carbs" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="dish" optional="YES" attributeType="String" defaultValueString="Empty" />
+        <attribute name="fat" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
     </entity>
-    <entity name="Profiles" representedClassName="Profiles" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="uploaded" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    <entity name="Profiles" representedClassName="Profiles" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="name" optional="YES" attributeType="String" />
+        <attribute name="uploaded" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
     </entity>
     <entity name="Protein" representedClassName="Protein" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="enteredBy" optional="YES" attributeType="String"/>
-        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="enteredBy" optional="YES" attributeType="String" />
+        <attribute name="protein" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
     </entity>
     <entity name="Pump" representedClassName="Pump" syncable="YES" codeGenerationType="class">
-        <attribute name="basal" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="bolus" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="basal" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="bolus" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
     </entity>
-    <entity name="Readings" representedClassName="Readings" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="direction" optional="YES" attributeType="String"/>
-        <attribute name="glucose" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
+    <entity name="Readings" representedClassName="Readings" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="direction" optional="YES" attributeType="String" />
+        <attribute name="glucose" optional="YES" attributeType="Integer 16" defaultValueString="0"
+            usesScalarValueType="YES" />
+        <attribute name="id" optional="YES" attributeType="String" />
     </entity>
     <entity name="Reasons" representedClassName="Reasons" syncable="YES" codeGenerationType="class">
-        <attribute name="cob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="cr" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="737559660" usesScalarValueType="NO"/>
-        <attribute name="eventualBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="glucose" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="insulinReq" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="mmol" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="ratio" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="reasons" optional="YES" attributeType="String" defaultValueString="empty"/>
-        <attribute name="smb" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="cob" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="cr" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="date" optional="YES" attributeType="Date"
+            defaultDateTimeInterval="737559660" usesScalarValueType="NO" />
+        <attribute name="eventualBG" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="glucose" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="insulinReq" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="isf" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="minPredBG" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="mmol" optional="YES" attributeType="Boolean" usesScalarValueType="YES" />
+        <attribute name="rate" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="ratio" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="reasons" optional="YES" attributeType="String" defaultValueString="empty" />
+        <attribute name="smb" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
     </entity>
-    <entity name="StatsData" representedClassName="StatsData" syncable="YES" codeGenerationType="class">
-        <attribute name="lastrun" attributeType="Date" defaultDateTimeInterval="704497620" usesScalarValueType="NO"/>
+    <entity name="StatsData" representedClassName="StatsData" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="lastrun" attributeType="Date" defaultDateTimeInterval="704497620"
+            usesScalarValueType="NO" />
     </entity>
     <entity name="TDD" representedClassName="TDD" syncable="YES" codeGenerationType="class">
-        <attribute name="tdd" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="tdd" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO" />
     </entity>
-    <entity name="TempTargets" representedClassName="TempTargets" syncable="YES" codeGenerationType="class">
-        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="hbt" optional="YES" attributeType="Double" defaultValueString="160" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    <entity name="TempTargets" representedClassName="TempTargets" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="hbt" optional="YES" attributeType="Double" defaultValueString="160"
+            usesScalarValueType="YES" />
+        <attribute name="id" optional="YES" attributeType="String" />
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" />
     </entity>
-    <entity name="TempTargetsSlider" representedClassName="TempTargetsSlider" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="defaultHBT" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="100" usesScalarValueType="YES"/>
-        <attribute name="hbt" optional="YES" attributeType="Double" defaultValueString="160" usesScalarValueType="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" defaultValueString="empy"/>
-        <attribute name="isPreset" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    <entity name="TempTargetsSlider" representedClassName="TempTargetsSlider" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="defaultHBT" optional="YES" attributeType="Double" defaultValueString="0.0"
+            usesScalarValueType="YES" />
+        <attribute name="duration" optional="YES" attributeType="Decimal" defaultValueString="0.0" />
+        <attribute name="enabled" optional="YES" attributeType="Boolean" defaultValueString="100"
+            usesScalarValueType="YES" />
+        <attribute name="hbt" optional="YES" attributeType="Double" defaultValueString="160"
+            usesScalarValueType="YES" />
+        <attribute name="id" optional="YES" attributeType="String" defaultValueString="empy" />
+        <attribute name="isPreset" optional="YES" attributeType="Boolean" defaultValueString="NO"
+            usesScalarValueType="YES" />
     </entity>
-    <entity name="UXSettings" representedClassName="UXSettings" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="722095800" usesScalarValueType="NO"/>
-        <attribute name="hours" optional="YES" attributeType="Integer 16" defaultValueString="6" usesScalarValueType="YES"/>
+    <entity name="UXSettings" representedClassName="UXSettings" syncable="YES"
+        codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date"
+            defaultDateTimeInterval="722095800" usesScalarValueType="NO" />
+        <attribute name="hours" optional="YES" attributeType="Integer 16" defaultValueString="6"
+            usesScalarValueType="YES" />
     </entity>
     <entity name="VNr" representedClassName="VNr" syncable="YES" codeGenerationType="class">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="dev" optional="YES" attributeType="String"/>
-        <attribute name="nr" optional="YES" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" />
+        <attribute name="dev" optional="YES" attributeType="String" />
+        <attribute name="nr" optional="YES" attributeType="String" />
     </entity>
 </model>

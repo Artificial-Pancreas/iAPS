@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Thiết lập DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Trong quá trình ghép nối, DanaRS v1 của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép nối. Trên máy bơm của bạn, hãy chọn OK và nhập mã trên iPhone của bạn. Sau đó, %1$@ đã sẵn sàng giao tiếp với DanaRS v1 của bạn";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Trong quá trình ghép đôi, DanaRS v1 của bạn sẽ hiển thị lời nhắc ghép đôi, trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép đôi. Trên bơm, hãy chọn OK và nhập mã đó trên iPhone của bạn. Sau đó, %1$@ đã sẵn sàng để giao tiếp với DanaRS v1 của bạn";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Trước khi bắt đầu quá trình ghép nối, bạn nên kiểm tra và nếu cần hãy cập nhật mật khẩu máy bơm. Bạn có thể thực hiện việc này bằng cách vào pump settings -> user settings -> password. Mật khẩu mặc định là 1234, nếu đây là mật khẩu của bạn, vui lòng cân nhắc thay đổi mật khẩu";
@@ -38,7 +38,7 @@
 "Setting up DanaRS v3" = "Thiết lập DanaRS v3";
 
 /* Subtext for danars v3 */
-"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Trong quá trình ghép nối, DanaRS v3 của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép nối. Trên máy bơm của bạn, hãy chọn OK và nhập mã trên iPhone của bạn. Sau đó, %1$@ đã sẵn sàng giao tiếp với DanaRS v3 của bạn";
+"During the pairing process, your DanaRS v3 will show a pairing prompt while you iPhone will show a prompt for two pairing codes. On your pump, select OK and type the two codes on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v3" = "Trong quá trình ghép đôi, DanaRS v3 của bạn sẽ hiển thị lời nhắc ghép đôi, trong khi iPhone của bạn sẽ hiển thị lời nhắc yêu cầu nhập hai mã ghép đôi. Trên bơm, hãy chọn OK và nhập hai mã đó trên iPhone của bạn. Sau đó, %1$@ đã sẵn sàng để giao tiếp với DanaRS v3 của bạn";
 
 /* Title for dana-i explaination */
 "Setting up Dana-i" = "Thiết lập Dana-i";
@@ -265,7 +265,7 @@
 "Resume" = "Tiếp tục";
 
 /* Pump Event title for UnfinalizedDose with doseType of .suspend */
-"Suspend" = "Đã tạm ngưng";
+"Suspend" = "Đã tạm dừng";
 
 /* Title for user options */
 "User options" = "User options";
@@ -385,7 +385,7 @@
 "Your daily insulin limit has been reached. Please contact your Dana distributer to increase the limit" = "Đã đạt giới hạn insulin hàng ngày của bạn. Vui lòng liên hệ với nhà phân phối Dana của bạn để tăng giới hạn";
 
 /* Alert title for bloodSugarCheckMiss */
-"Missed Blood glucose check" = "Missed Blood glucose check";
+"Missed Blood glucose check" = "Không thấy kiểm tra đường huyết";
 
 /* Alert body for bloodSugarCheckMiss */
 "A blood glucose check reminder has been setup in your pump and is triggered. Please remove it or give your glucose level to the pump" = "Lời nhắc kiểm tra lượng đường trong máu đã được thiết lập trong máy bơm của bạn và được kích hoạt. Vui lòng tháo nó ra hoặc đưa mức đường huyết của bạn vào máy bơm";
@@ -484,19 +484,19 @@
 "No, just disconnect" = "Không, chỉ cần ngắt kết nối";
 
 /* Title for reservoir/cannula refill */
-"Reservoir/cannula refill" = "Reservoir/cannula refill";
+"Reservoir/cannula refill" = "Nạp lại Reservoir/cannula";
 
 /* Title for reservoir/cannula refill */
-"Cannula refill" = "Cannula refill";
+"Cannula refill" = "Nạp Cannula";
 
 /* Title for refill action */
-"Type of refill" = "Type of refill";
+"Type of refill" = "Kiểu nạp lại";
 
 /* Button text to cannula only */
-"Cannula only" = "Cannula only";
+"Cannula only" = "Chỉ Cannula";
 
 /* Button text to Reservoir and cannula */
-"Reservoir and cannula" = "Reservoir and cannula";
+"Reservoir and cannula" = "Reservoir và cannula";
 
 /* Title for bluetooth mode action sheet */
 "Toggle Bluetooth mode" = "Chuyển đổi chế độ Bluetooth";
@@ -526,13 +526,13 @@
 "The Dana pumps support different delivery speeds. You can set it up here" = "Máy bơm Dana hỗ trợ nhiều tốc độ phân phối khác nhau. Bạn có thể thiết lập ở đây";
 
 /* Text for Basal profile */
-"Basal profile" = "Basal profile";
+"Basal profile" = "Phác đồ liều nền";
 
 /* Text for Battery level */
 "Battery level" = "Mức pin";
 
 /* The title of the configuration section in DanaKit settings */
-"Configuration" = "Configuration";
+"Configuration" = "Cấu hình";
 
 /* Text for low reservoir reminder */
 "Low reservoir reminder" = "Báo nhắc gần hết thuốc";
@@ -544,16 +544,16 @@
 "U" = "U";
 
 /* Label for first step refill */
-"Step 1: Set reservoir level" = "Step 1: Set reservoir level";
+"Step 1: Set reservoir level" = "Bước 1: Đặt mức Reservoir";
 
 /* Label for reservoir refilled amount */
-"Reservoir amount" = "Reservoir amount";
+"Reservoir amount" = "Lượng bình chứa";
 
 /* Label for second step refill */
-"Step 2: Set tube refill amount" = "Step 2: Set tube refill amount";
+"Step 2: Set tube refill amount" = "Bước 2: Đặt lượng ống nạp lại";
 
 /* Label for tube refilled amount */
-"Tube refill amount" = "Tube refill amount";
+"Tube refill amount" = "Lượng ống nạp lại";
 
 /* Label for warning refill */
 "This method of refilling is only intended for when the pump cannot provide a way to refill the reservoir or prime the cannula" = "Phương pháp nạp lại này chỉ dành cho trường hợp máy bơm không thể nạp lại bình chứa hoặc mồi ống thông";
@@ -581,3 +581,6 @@
 
 /* Battery age */
 "Battery age" = "Battery age";
+
+/* advertise contact DanaRS v1 */
+"NOTE: The DanaRS v1 is not supported (yet). If you have a DanaRS v1 pump available for testing, please contact Bastiaan Verhaar!" = "LƯU Ý: DanaRS v1 hiện chưa được hỗ trợ. Nếu bạn có sẵn một bơm DanaRS v1 để thử nghiệm, vui lòng liên hệ với Bastiaan Verhaar!";

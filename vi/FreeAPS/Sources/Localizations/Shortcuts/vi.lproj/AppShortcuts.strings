@@ -1,0 +1,53 @@
+/* iAPS Temporary Target shortcut*/
+"Activate ${applicationName} temporary target" = "Kích hoạt mục tiêu tạm thời của ${applicationName}";
+
+/* iAPS Temporary Target shortcut Description */
+"${applicationName} apply a temporary target" = "${applicationName} áp dụng mục tiêu tạm thời";
+
+/* iAPS Status shortcut */
+"List ${applicationName} state" = "Liệt kê trạng thái của ${applicationName}";
+
+/* iAPS Status shortcut Description*/
+"${applicationName} state" = "Trạng thái của ${applicationName}";
+
+/* iAPS Add carbs shortcut */
+"Add carbs in ${applicationName}" = "Thêm carbs vào ${applicationName}";
+
+/* iAPS Add carbs shortcut description */
+"${applicationName} allows to add carbs" = "${applicationName} cho phép thêm lượng carb";
+
+/* iAPS Override shortcut */
+"Activate an ${applicationName} Override Preset" = "Kích hoạt cấu hình ghi đè trong ${applicationName}";
+
+/* iAPS Override shortcut description */
+"Activates an ${applicationName} Override Preset" = "Kích hoạt một thiết lập ghi đè trong ${applicationName}";
+
+/* iAPS Cancel Override shortcut */
+"Cancel ${applicationName} Overide" = "Hủy thiết lập ghi đè trong ${applicationName}";
+
+/* iAPS Cancel Override shortcut description */
+"Cancels an active ${applicationName} override" = "Hủy bỏ thiết lập ghi đè đang hoạt động trong ${applicationName}";
+
+/* iAPS Bolus shortcut */
+"${applicationName} Bolus" = "Liều bolus trong ${applicationName}";
+
+/* iAPS Bolus shortcut description */
+"${applicationName} Enacts a bolus" = "${applicationName} thực hiện một liều bolus";
+
+/* iAPS Loop Mode shortcut */
+"${applicationName} Loop Mode" = "Chế độ vòng lặp trong ${applicationName}";
+
+/* iAPS Loop Mode shortcut description */
+"Activates an ${applicationName} Loop Mode" = "Kích hoạt chế độ Vòng lặp của ${applicationName}";
+
+/* iAPS Basal shortcut */
+"${applicationName} Temp Basal" = "Chế độ liều nền tạm thời trong ${applicationName}";
+
+/* iAPS Basal shortcut description */
+"Enacts an ${applicationName} Temp Basal" = "${applicationName} thực hiện liều nền tạm thời";
+
+/* iAPS Suspend/Resume shortcut */
+"${applicationName} Suspend/Resume" = "Tạm dừng/Tiếp tục của ${applicationName}";
+
+/* iAPS Suspend/Resume  shortcut description */
+"Suspends/Resumes your ${applicationName} pump" = "Tạm dừng hoặc tiếp tục bơm insulin của bạn qua ${applicationName}";

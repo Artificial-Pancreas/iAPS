@@ -247,7 +247,7 @@ extension AutoISF {
                                 .onTapGesture {
                                     info(
                                         header: "Max IOB Threshold Percent",
-                                        body: "Percent of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.",
+                                        body: "Percentage of the max IOB setting to use for SMBs while Auto ISF is enabled.\n\nWhile current IOB is below the threshold, the SMB amount can exceed the threshold by 30%, however never the max IOB setting.\n\nAt 100% this setting is disabled.",
                                         useGraphics: nil
                                     )
                                 }
@@ -465,6 +465,7 @@ extension AutoISF {
             .navigationBarTitleDisplayMode(.automatic)
             .sheet(isPresented: $presentHistory) {
                 AutoISFHistoryView(units: state.units)
+                    .environment(\.colorScheme, colorScheme)
             }
         }
 
@@ -533,7 +534,7 @@ extension AutoISF {
             }
 
             .padding(.all, 20)
-            .foregroundStyle(colorScheme == .dark ? Color.white : Color.black)
+            .foregroundStyle(colorScheme == .dark ? IAPSconfig.previewBackgroundLight : IAPSconfig.previewBackgroundDark)
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(colorScheme == .dark ? Color(.black).opacity(0.3) : Color(.white))

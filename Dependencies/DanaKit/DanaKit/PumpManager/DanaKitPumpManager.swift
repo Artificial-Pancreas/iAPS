@@ -241,6 +241,10 @@ extension DanaKitPumpManager: PumpManager {
         supportedBolusVolumes.last(where: { $0 <= units }) ?? 0
     }
 
+    public func roundToSupportedBasalRate(unitsPerHour: Double) -> Double {
+        supportedBasalRates.last(where: { $0 <= unitsPerHour }) ?? 0
+    }
+
     public var pumpManagerDelegate: LoopKit.PumpManagerDelegate? {
         get {
             pumpDelegate.delegate
@@ -645,19 +649,43 @@ extension DanaKitPumpManager: PumpManager {
                         self.state.lastStatusPumpDateTime = await self.fetchPumpTime() ?? Date.now
                         self.state.lastStatusDate = Date.now
 
-                        self.doseEntry = UnfinalizedDose(
+                        let doseEntry = UnfinalizedDose(
                             units: units,
                             duration: duration,
                             activationType: activationType,
                             insulinType: insulinType
                         )
+                        self.doseEntry = doseEntry
                         self.doseReporter = DanaKitDoseProgressReporter(total: units)
                         self.state.bolusState = .inProgress
+
+                        if !self.isPriming {
+                            let dose = doseEntry.toDoseEntry(isMutable: true)
+                            await withCheckedContinuation { continuation in
+                                self.pumpDelegate.notify { delegate in
+                                    delegate?.pumpManager(
+                                        self,
+                                        hasNewPumpEvents: [
+                                            NewPumpEvent
+                                                .bolus(
+                                                    dose: dose,
+                                                    units: dose.programmedUnits,
+                                                    date: dose.startDate
+                                                )
+                                        ],
+                                        lastReconciliation: Date.now,
+                                        completion: { _ in
+                                            continuation.resume()
+                                        }
+                                    )
+                                }
+                            }
+                        }
+
                         self.notifyStateDidChange()
 
                         await withCheckedContinuation { continuation in
                             self.bolusCallback = continuation
-                            
                             completion(nil)
                         }
                     } catch {
@@ -762,24 +790,7 @@ extension DanaKitPumpManager: PumpManager {
             self.doseEntry = nil
             doseReporter = nil
 
-            guard let dose = dose else {
-                completion(.success(nil))
-                return
-            }
-
-            DispatchQueue.main.async {
-                self.pumpDelegate.notify { delegate in
-                    delegate?.pumpManager(
-                        self,
-                        hasNewPumpEvents: [NewPumpEvent.bolus(dose: dose, units: dose.deliveredUnits ?? 0, date: dose.startDate)],
-                        lastReconciliation: Date.now,
-                        completion: { _ in }
-                    )
-                }
-
-                self.notifyStateDidChange()
-            }
-
+            sendCancelEvent(dose)
             completion(.success(nil))
         } catch {
             state.bolusState = oldBolusState
@@ -788,6 +799,21 @@ extension DanaKitPumpManager: PumpManager {
 
             log.error("Failed to cancel bolus. Error: \(error.localizedDescription)")
             completion(.failure(PumpManagerError.communication(DanaKitPumpManagerError.unknown(error.localizedDescription))))
+        }
+    }
+
+    private func sendCancelEvent(_ dose: DoseEntry) {
+        DispatchQueue.main.async {
+            self.pumpDelegate.notify { delegate in
+                delegate?.pumpManager(
+                    self,
+                    hasNewPumpEvents: [NewPumpEvent.bolus(dose: dose, units: dose.deliveredUnits ?? 0, date: dose.startDate)],
+                    lastReconciliation: Date.now,
+                    completion: { _ in }
+                )
+            }
+
+            self.notifyStateDidChange()
         }
     }
 
@@ -955,7 +981,8 @@ extension DanaKitPumpManager: PumpManager {
                                 delegate?.pumpManager(
                                     self,
                                     hasNewPumpEvents: [
-                                        NewPumpEvent.tempBasal(dose: dose, units: unitsPerHour, duration: duration)
+                                        NewPumpEvent
+                                            .tempBasal(dose: dose, units: unitsPerHour, duration: duration)
                                     ],
                                     lastReconciliation: Date.now,
                                     completion: { _ in }
@@ -1093,6 +1120,12 @@ extension DanaKitPumpManager: PumpManager {
                         let packet = generatePacketBasalSetSuspendOn()
                         let result = try await self.bluetooth.writeMessage(packet)
 
+                        let pumpTime = await self.fetchPumpTime()
+                        if let pumpTime = pumpTime {
+                            self.state.pumpTimeSyncedAt = Date.now
+                            self.state.pumpTime = pumpTime
+                        }
+
                         self.disconnect()
 
                         guard result.success else {
@@ -1101,6 +1134,8 @@ extension DanaKitPumpManager: PumpManager {
                             return
                         }
 
+                        self.state.lastStatusPumpDateTime = pumpTime ?? Date.now
+                        self.state.lastStatusDate = Date.now
                         self.state.isPumpSuspended = true
                         self.state.basalDeliveryOrdinal = .suspended
                         self.state.basalDeliveryDate = Date.now
@@ -1108,11 +1143,7 @@ extension DanaKitPumpManager: PumpManager {
 
                         let dose = DoseEntry.suspend()
                         self.pumpDelegate.notify { delegate in
-                            guard let delegate = delegate else {
-                                preconditionFailure("pumpManagerDelegate cannot be nil")
-                            }
-
-                            delegate.pumpManager(
+                            delegate?.pumpManager(
                                 self,
                                 hasNewPumpEvents: [NewPumpEvent.suspend(dose: dose)],
                                 lastReconciliation: self.state.lastStatusDate,
@@ -1147,6 +1178,12 @@ extension DanaKitPumpManager: PumpManager {
                         let packet = generatePacketBasalSetSuspendOff()
                         let result = try await self.bluetooth.writeMessage(packet)
 
+                        let pumpTime = await self.fetchPumpTime()
+                        if let pumpTime = pumpTime {
+                            self.state.pumpTimeSyncedAt = Date.now
+                            self.state.pumpTime = pumpTime
+                        }
+
                         self.disconnect()
 
                         guard result.success else {
@@ -1155,6 +1192,8 @@ extension DanaKitPumpManager: PumpManager {
                             return
                         }
 
+                        self.state.lastStatusPumpDateTime = pumpTime ?? Date.now
+                        self.state.lastStatusDate = Date.now
                         self.state.isPumpSuspended = false
                         self.state.basalDeliveryOrdinal = .active
                         self.state.basalDeliveryDate = Date.now
@@ -1648,7 +1687,7 @@ public extension DanaKitPumpManager {
             self.doseEntry = nil
             self.doseReporter = nil
 
-            guard let dose = dose, !self.isPriming else {
+            guard !self.isPriming else {
                 return
             }
 

@@ -66,14 +66,6 @@ extension PumpConfig {
                     allowDebugFeatures: false,
                     allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
                 )
-            case .medtrum:
-                setupViewController = MedtrumPumpManager.setupViewController(
-                    initialSettings: initialSettings,
-                    bluetoothProvider: bluetoothManager,
-                    colorPalette: .default,
-                    allowDebugFeatures: false,
-                    allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
-                )
             case .simulator:
                 setupViewController = MockPumpManager.setupViewController(
                     initialSettings: initialSettings,
