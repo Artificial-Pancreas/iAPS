@@ -2720,7 +2720,7 @@ Enact a temp Basal or a temp target */
 "Defaults to false, so that iAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means iAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "Mặc định là False, do đó iAPS sẽ đặt liều tạm thời bất cứ khi nào có thể, do đó, sẽ dễ dàng hơn để xem hệ thống có hoạt động hay không, ngay cả khi bạn ngoại tuyến. Điều này có nghĩa là OpenAPS sẽ đặt Liều tạm thời “trung tính” (giống như Liều tạm thời cơ bản mặc định của bạn) nếu không cần điều chỉnh. Đây là cài đặt cũ để OpenAPS có các tùy chọn giảm thiểu âm thanh và thông báo từ 'rig' có thể đánh thức bạn vào ban đêm. ";
 
 /* Headline "Unsuspend If No Temp” */
-"Unsuspend If No Temp" = "Khôi phục tạm dừng nếu không có liều tạm thời";
+"Unsuspend If No Temp" = "Hủy tạm dừng nếu không có liều tạm thời";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Nhiều người thỉnh thoảng quên tiếp tục/hủy tạm dừng máy bơm sau khi kết nối lại. Nếu bạn là một trong số họ và sẵn sàng đặt liều tạm thời cơ bản bằng 0 một cách đáng tin cậy bất cứ khi nào tạm dừng và ngắt kết nối máy bơm của mình, thì tính năng này sẽ hỗ trợ bạn. Nếu được bật, nó sẽ tự động tiếp tục/hủy tạm dừng máy bơm nếu bạn quên làm như vậy trước khi hết tạm thời 0. Miễn là tạm thời bằng 0 vẫn đang chạy, nó sẽ khiến máy bơm bị treo.";
@@ -2756,10 +2756,10 @@ Enact a temp Basal or a temp target */
 "Defaults to false. When true, enables supermicrobolus (SMB) for 6h after carbs, even with 0 carbs on board (COB)." = "Mặc định là False. Khi True, hãy bật Super Micro Bolus (SMB) trong 6 giờ sau khi nạp carbs, ngay cả khi không có carbs (COB).";
 
 /* Enable "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Cho phép SMB với Mục Tiêu Tạm Thời cao";
+"Allow SMB With High Temptarget" = "Bật SMB với mục tiêu tạm cao";
 
 /* Headline "Allow SMB With High Temptarget" */
-"Allow SMB With High Temptarget" = "Cho phép SMB với Mục Tiêu Tạm Thời cao";
+"Allow SMB With High Temptarget" = "Bật SMB với mục tiêu tạm cao";
 
 /* "Allow SMB With High Temptarget" */
 "Defaults to false. When true, allows supermicrobolus (if otherwise enabled) even with high temp targets (> 100 mg/dl)." = "Mặc định là False. Khi True, cho phép Super Micro Bolus (nếu được kích hoạt khác) ngay cả với mục tiêu tạm thời cao (> 100 mg/dl).";
@@ -2783,13 +2783,13 @@ Enact a temp Basal or a temp target */
 "Max IOB is the maximum amount of insulin on board from all sources – both basal (or SMB correction) and bolus insulin – that your loop is allowed to accumulate to treat higher-than-target BG. Unlike the other two OpenAPS safety settings (max_daily_safety_multiplier and current_basal_safety_multiplier), max_iob is set as a fixed number of units of insulin. As of now manual boluses are NOT limited by this setting. \n\n To test your basal rates during nighttime, you can modify the Max IOB setting to zero while in Closed Loop. This will enable low glucose suspend mode while testing your basal rates settings\n\n(Tip from https://www.loopandlearn.org/freeaps-x/#open-loop)." = "IOB Max là lượng insulin tối đa được cung cấp từ tất cả các nguồn – cả insulin cơ bản (hoặc hiệu chỉnh SMB) và insulin bolus – mà vòng lặp của bạn được phép tích lũy để điều trị BG cao hơn mục tiêu. Không giống như hai cài đặt an toàn OpenAPS khác (Hệ số tối đa an toàn hàng ngày và Hệ số an toàn cơ bản hiện tại), Tối đa IOB được đặt thành số lượng đơn vị insulin cố định. Tính đến thời điểm hiện tại, việc tiêm liều thủ công KHÔNG bị giới hạn bởi cài đặt này. \n\n Để kiểm tra liều cơ bản của bạn vào ban đêm, bạn có thể sửa đổi cài đặt IOB tối đa thành 0 khi ở Vòng kín. Điều này sẽ kích hoạt chế độ tạm ngưng lượng glucose thấp trong khi kiểm tra cài đặt tốc độ cơ bản của bạn\n\n(Mẹo từ https://www.loopandlearn.org/freeaps-x/#open-loop).";
 
 /* Headline "Max Daily Safety Multiplier" */
-"Max Daily Safety Multiplier" = "Hệ số tối đa an toàn hàng ngày";
+"Max Daily Safety Multiplier" = "Hệ số an toàn tối đa trong ngày";
 
 /* "Max Daily Safety Multiplier" */
 "This is an important OpenAPS safety limit. The default setting (which is unlikely to need adjusting) is 3. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 3x the highest hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Đây là giới hạn an toàn quan trọng của OpenAPS. Cài đặt mặc định (có thể không cần điều chỉnh) là 3. Điều này có nghĩa là OpenAPS sẽ không bao giờ được phép đặt tốc độ cơ bản tạm thời cao hơn 3 lần tốc độ cơ bản hàng giờ cao nhất được lập trình trong máy bơm của người dùng hoặc, nếu được bật, sẽ được xác định bằng autotune.";
 
 /* Headline "Current Basal Safety Multiplier" */
-"Current Basal Safety Multiplier" = "Hệ số an toàn liều cơ bản hiện tại";
+"Current Basal Safety Multiplier" = "Hệ số an toàn liều nền hiện tại";
 
 /* "Current Basal Safety Multiplier" */
 "This is another important OpenAPS safety limit. The default setting (which is also unlikely to need adjusting) is 4. This means that OpenAPS will never be allowed to set a temporary basal rate that is more than 4x the current hourly basal rate programmed in a user’s pump, or, if enabled, determined by autotune." = "Đây là một giới hạn an toàn quan trọng khác của OpenAPS. Cài đặt mặc định (cũng khó có thể cần điều chỉnh) là 4. Điều này có nghĩa là OpenAPS sẽ không bao giờ được phép đặt tốc độ cơ bản tạm thời cao hơn 4 lần tốc độ cơ bản hàng giờ hiện tại được lập trình trong máy bơm của người dùng hoặc, nếu được bật, được xác định bằng autotune.";
@@ -2807,7 +2807,7 @@ Enact a temp Basal or a temp target */
 "The other side of the autosens safety limits, putting a cap on how low autosens can adjust basals, and how high it can adjust ISF and BG targets." = "Mặt khác của các giới hạn an toàn của autosens, đặt giới hạn về mức độ tự động thấp có thể điều chỉnh mức cơ bản và mức độ có thể điều chỉnh các mục tiêu ISF và BG.";
 
 /* Headline "Half Basal Exercise Target" */
-"Half Basal Exercise Target" = "Mục tiêu vận động với basal giảm một nửa";
+"Half Basal Exercise Target" = "Mục tiêu tập luyện với 50% liều nền";
 
 /* "Half Basal Exercise Target" */
 "Set to a number, e.g. 160, which means when temp target is 160 mg/dL and exercise_mode=true, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes." = "Đặt thành một số, ví dụ: 160, có nghĩa là khi mục tiêu tạm thời là 160 mg/dL và tập exercise_mode=true, hãy chạy 50% liều cơ bản ở mức này (120 = 75%; 140 = 60%). Điều này có thể được điều chỉnh để giúp bạn kiểm soát nhiều hơn các chế độ tập luyện của mình.";
@@ -2849,19 +2849,19 @@ Enact a temp Basal or a temp target */
 "This is the amount of the maximum number of carbs we’ll assume will absorb over 4h if we don’t yet see carb absorption." = "Đây là lượng carb tối đa mà chúng tôi cho rằng sẽ hấp thụ trong 4 giờ nếu chúng tôi chưa thấy khả năng hấp thụ carb.";
 
 /* Headline ”Max SMB Basal Minutes" */
-"Max SMB Basal Minutes" = "Thời gian tối đa cho basal qua SMB";
+"Max SMB Basal Minutes" = "Giới hạn liều nền qua SMB";
 
 /* ”Max SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered as a single SMB with uncovered COB. This gives the ability to make SMB more aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. It is not recommended to set this value higher than 90 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa có thể được phân phối dưới dạng một SMB duy nhất không có COB. Điều này mang lại khả năng làm cho SMB trở nên hung hãn hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Không nên đặt giá trị này cao hơn 90 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về liều tạm thời bằng 0 để an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "Max UAM SMB Basal Minutes" */
-"Max UAM SMB Basal Minutes" = "Thời gian tối đa của Basal SMB trong UAM";
+"Max UAM SMB Basal Minutes" = "Giới hạn liều nền qua SMB theo UAM";
 
 /* "Max UAM SMB Basal Minutes" */
 "Defaults to start at 30. This is the maximum minutes of basal that can be delivered by UAM as a single SMB when IOB exceeds COB. This gives the ability to make UAM more or less aggressive if you choose. It is recommended that the value is set to start at 30, in line with the default, and if you choose to increase this value, do so in no more than 15 minute increments, keeping a close eye on the effects of the changes. Reducing the value will cause UAM to dose less insulin for each SMB. It is not recommended to set this value higher than 60 mins, as this may affect the ability for the algorithm to safely zero temp. It is also recommended that pushover is used when setting the value to be greater than default, so that alerts are generated for any predicted lows or highs." = "Mặc định bắt đầu từ 30. Đây là số phút cơ bản tối đa mà UAM có thể phân phối dưới dạng một SMB khi IOB vượt quá COB. Điều này mang lại khả năng khiến UAM trở nên hung hãn hơn hoặc ít hơn nếu bạn chọn. Bạn nên đặt giá trị này để bắt đầu ở mức 30, phù hợp với giá trị mặc định và nếu bạn chọn tăng giá trị này, hãy thực hiện với khoảng tăng không quá 15 phút, đồng thời theo dõi chặt chẽ tác động của các thay đổi. Việc giảm giá trị sẽ khiến UAM giảm liều insulin cho mỗi SMB. Không nên đặt giá trị này cao hơn 60 phút vì điều này có thể ảnh hưởng đến khả năng thuật toán về liều tạm thời bằng 0 một cách an toàn. Chúng tôi cũng khuyên bạn nên sử dụng tính năng đẩy khi đặt giá trị lớn hơn giá trị mặc định để cảnh báo được tạo ra cho bất kỳ mức thấp hoặc mức cao được dự đoán nào.";
 
 /* Headline "SMB Interval" */
-"SMB Interval" = "Khoảng thời gian SMB";
+"SMB Interval" = "Chu kỳ SMB";
 
 /* "SMB Interval" */
 "Minimum duration in minutes for new SMB since last SMB or manual bolus" = "Thời lượng tối thiểu tính bằng phút cho SMB mới kể từ SMB cuối cùng hoặc liều Bolus thủ công";
@@ -3022,7 +3022,7 @@ Enact a temp Basal or a temp target */
 "Smaller iPhone Screens" = "Màn hình iPhone nhỏ hơn";
 
 /* UI/UX option */
-"Display and allow Fat and Protein entries" = "Hiển thị và cho phép nhập các mục Chất béo và chất đạm";
+"Display and allow Fat and Protein entries" = "Hiển thị và cho phép nhập chất béo và chất đạm";
 
 /* UI/UX option */
 "Add Meal View settings " = "Thêm cài đặt chế độ xem bữa ăn ";
@@ -3163,7 +3163,7 @@ Enact a temp Basal or a temp target */
 "Enable adjustment of basal based on the ratio of current TDD / 7 day average TDD" = "Cho phép điều chỉnh mức cơ bản dựa trên tỷ lệ TDD hiện tại/TDD trung bình 7 ngày";
 
 /* Headline "Max Delta-BG Threshold SMB" */
-"Max Delta-BG Threshold SMB" = "Ngưỡng tối đa thay đổi đường huyết để kích hoạt SMB";
+"Max Delta-BG Threshold SMB" = "Ngưỡng Delta-BG tối đa cho phép SMB";
 
 /* Max Delta-BG Threshold SMB */
 "Defaults to 0.2 (20%). Maximum positive percentual change of BG level to use SMB, above that will disable SMB. Hardcoded cap of 40%. For UAM fully-closed-loop 30% is advisable. Observe in log and popup (maxDelta 27 > 20% of BG 100 - disabling SMB!)." = "Mặc định là 0,2 (20%). Thay đổi phần trăm dương tối đa của cấp độ BG để sử dụng SMB, trên mức đó sẽ vô hiệu hóa SMB. Giới hạn mã hóa cứng là 40%. Đối với UAM vòng kín hoàn toàn nên sử dụng 30%. Quan sát nhật ký và cửa sổ bật lên (maxDelta 27 > 20% BG 100 - vô hiệu hóa SMB!).";
