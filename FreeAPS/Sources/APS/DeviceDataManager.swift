@@ -104,6 +104,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                     }
                     pumpExpiresAtDate.send(endTime)
                 }
+                if let medtrumKit = pumpManager as? MedtrumPumpManager {
+                    guard let endTime = medtrumKit.state.patchExpiresAt else {
+                        pumpExpiresAtDate.send(nil)
+                        return
+                    }
+                    pumpExpiresAtDate.send(endTime)
+                }
             } else {
                 pumpDisplayState.value = nil
                 pumpExpiresAtDate.send(nil)

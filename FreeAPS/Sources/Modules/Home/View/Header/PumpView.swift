@@ -134,7 +134,7 @@ struct PumpView: View {
             }
 
             // MDT and Dana
-            if let battery = battery, !state.pumpName.contains("Omni") {
+            if let battery = battery, !state.pumpName.contains("Omni"), !state.pumpName.contains("Medtrum") {
                 let percent = (battery.percent ?? 100) > 80 ? 100 : (battery.percent ?? 100) < 81 &&
                     (battery.percent ?? 100) >
                     60 ? 75 : (battery.percent ?? 100) < 61 && (battery.percent ?? 100) > 40 ? 50 : 25
