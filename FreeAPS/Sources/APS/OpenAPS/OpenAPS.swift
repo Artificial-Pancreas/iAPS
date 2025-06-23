@@ -314,6 +314,7 @@ final class OpenAPS {
         var reasonString = reason
         let startIndex = reasonString.startIndex
         var aisf = false
+        var totalDailyDose: Decimal?
 
         // Autosens.ratio / Dynamic Ratios
         if let isf = suggestion.sensitivityRatio {
@@ -321,6 +322,7 @@ final class OpenAPS {
             var tddString = ""
             if let tdd = tdd {
                 let total = ((tdd.bolus ?? 0) as Decimal) + ((tdd.tempBasal ?? 0) as Decimal)
+                totalDailyDose = total
                 let round = round(Double(total * 10)) / 10
                 let bolus = Int(((tdd.bolus ?? 0) as Decimal) * 100 / (total != 0 ? total : 1))
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
@@ -442,6 +444,7 @@ final class OpenAPS {
                 let saveSuggestion = Reasons(context: coredataContext)
                 saveSuggestion.isf = isf as NSDecimalNumber
                 saveSuggestion.cr = cr as NSDecimalNumber
+                saveSuggestion.tdd = totalDailyDose as NSDecimalNumber?
                 saveSuggestion.iob = iob as NSDecimalNumber
                 saveSuggestion.iob = iob as NSDecimalNumber
                 saveSuggestion.cob = cob as NSDecimalNumber
