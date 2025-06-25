@@ -20,6 +20,7 @@ extension Home {
         @State var animateTIR = Date.distantPast
         @State var showBolusActiveAlert = false
         @State var displayAutoHistory = false
+        @State var displayDynamicHistory = false
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
         let viewPadding: CGFloat = 5
@@ -724,6 +725,8 @@ extension Home {
                 .onTapGesture {
                     if state.autoisf {
                         displayAutoHistory.toggle()
+                    } else {
+                        displayDynamicHistory.toggle()
                     }
                 }
             }.offset(x: 130)
@@ -836,6 +839,10 @@ extension Home {
             .ignoresSafeArea(.keyboard)
             .sheet(isPresented: $displayAutoHistory) {
                 AutoISFHistoryView(units: state.data.units)
+                    .environment(\.colorScheme, colorScheme)
+            }
+            .sheet(isPresented: $displayDynamicHistory) {
+                DynamicHistoryView(units: state.data.units)
                     .environment(\.colorScheme, colorScheme)
             }
             .popup(isPresented: state.isStatusPopupPresented, alignment: .bottom, direction: .bottom) {

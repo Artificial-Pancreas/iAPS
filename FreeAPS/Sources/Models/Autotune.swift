@@ -2,7 +2,7 @@ import Foundation
 
 struct Autotune: JSON, Equatable {
     var createdAt: Date?
-    let basalProfile: [BasalProfileEntry]
+    var basalProfile: [BasalProfileEntry]
     let sensitivity: Decimal
     let carbRatio: Decimal
 }

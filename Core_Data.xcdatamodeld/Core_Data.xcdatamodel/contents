@@ -208,6 +208,7 @@
         <attribute name="reasons" optional="YES" attributeType="String" defaultValueString="empty"/>
         <attribute name="smb" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="tdd" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
     </entity>
     <entity name="StatsData" representedClassName="StatsData" syncable="YES" codeGenerationType="class">
         <attribute name="lastrun" attributeType="Date" defaultDateTimeInterval="704497620" usesScalarValueType="NO"/>

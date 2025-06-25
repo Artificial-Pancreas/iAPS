@@ -85,7 +85,17 @@ extension AutotuneConfig {
                     label: { Text("Run now") }
                 }
 
-                if let autotune = state.autotune {
+                Section {
+                    if state.running {
+                        HStack {
+                            Text("Wait please").foregroundColor(.secondary)
+                            Spacer()
+                            ActivityIndicator(isAnimating: .constant(true), style: .medium) // fix iOS 15 bug
+                        }
+                    }
+                }
+
+                if let autotune = state.autotune, !state.running {
                     if !state.onlyAutotuneBasals {
                         Section {
                             HStack {
@@ -128,7 +138,10 @@ extension AutotuneConfig {
                                         Text("")
                                     }
 
-                                    Text(rateFormatter.string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0")
+                                    Text(
+                                        rateFormatter
+                                            .string(from: autotune.basalProfile[index].rate as NSNumber) ?? "0"
+                                    )
                                     Text("U/hr").foregroundColor(.secondary)
                                 }
                                 .padding(.vertical, 4)
@@ -147,7 +160,7 @@ extension AutotuneConfig {
 
                                 Text(
                                     rateFormatter
-                                        .string(from: autotune.basalProfile.reduce(0) { $0 + $1.rate } as NSNumber) ?? "0"
+                                        .string(from: autotune.basalProfile.reduce(0) { ($0 + $1.rate) } as NSNumber) ?? "0"
                                 )
                                 .foregroundColor(.primary)
 

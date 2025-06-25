@@ -1,44 +1,47 @@
-## Setup Github iAPS repository
 
-### Generate Personal Access Token
+## Set Up Your iAPS GitHub Repository
 
->    If you have previously created a Personal Access Token ( PAT ), you can re-use it,
->    and skip this step.
->
->    **NOTE:** GitHub doesn't provide a means to view a previously created token, it only 
->    allows you to regenerate it.  Regenerating the token invalidates the old one, so
->    if you already have one in use and do not know what it is, create a new one.
->
->    * Enter a name for your token. Something like "FastLane Access Token".
->    * The default Expiration time is 30 days - but you should select `No Expiration`
->    * Select the `repo` permission scope.
->    * Click "Generate token".
->    * Copy the token and record it. It will be used below as `GH_PAT`.
+### Generate a Personal Access Token (PAT)
 
-### Fork iAPS Repository
+If you've already got a **Personal Access Token (PAT)**, feel free to skip this step and reuse it. Keep in mind that GitHub doesn't let you view existing tokens; you can only regenerate them. Regenerating a token makes the old one invalid, so if you're using an existing token and don't know its value, it's best to create a new one.
 
->   **NOTE:** If you already have a fork of iAPS in GitHub, you can't make another one. You can continue to work with your existing fork, or delete that from GitHub and fork a new >   copy.
->
->   1. Fork https://github.com/Artificial-Pancreas/iAPS into your account.
->   2. In the forked iAPS repo, go to Settings -> Secrets and Variables -> Actions
->   3. For each of the following secrets, tap on "New repository secret", then add the name of the secret, along with the value you recorded for it:
->      * `TEAMID`
->      * `FASTLANE_KEY_ID`
->      * `FASTLANE_ISSUER_ID`
->      * `FASTLANE_KEY`
->      * `GH_PAT`
->      * `MATCH_PASSWORD` - just make up a password for this
->     
+To generate a new PAT:
 
-### Keep Fork Up to Date
+* Give your token a recognizable name, like "FastLane Access Token."
+* Change the expiration time from the default 30 days to **No Expiration**.
+* Select the **`repo`** permission scope.
+* Click **"Generate token."**
+* **Copy the generated token immediately and save it somewhere safe.** You'll need this value as `GH_PAT` later.
 
->   1. Click on the "Actions" tab of your iAPS repository.
->   2. Select "5. Sync Upstream".
->   3. Click "Run Workflow", Select Branch to Maintain, and tap the green button.
->
->   Although most people will only need to sync one branch, the above can be repeated
->   on any branch where these workflows are available.
->
->   Currently the Action is scheduled to run at midnight daily, but can be manually
->   triggered at any time.
+---
 
+### Fork the iAPS Repository
+
+**Important:** You can only have one fork of the iAPS repository in your GitHub account. If you already have a fork, you can either continue using it or delete it and create a new one.
+
+Follow these steps to fork the repository:
+
+1.  **Fork** `https://github.com/Artificial-Pancreas/iAPS` into your GitHub account.
+2.  In your newly forked iAPS repository, navigate to **Settings > Secrets and Variables > Actions**.
+3.  Add the following secrets by clicking **"New repository secret"** for each one. Enter the secret name and its corresponding value:
+    * `TEAMID`
+    * `FASTLANE_KEY_ID`
+    * `FASTLANE_ISSUER_ID`
+    * `FASTLANE_KEY`
+    * `GH_PAT` (This is the token you generated earlier)
+    * `MATCH_PASSWORD` (Just create a new, strong password for this)
+4.  Under the **Variables** tab (also within Secrets and Variables), set the following two variables:
+    * `APP_IDENTIFIER`: This defaults to `ru.artpancreas.#{TEAMID}.FreeAPS` if you don't set it.
+    * `BUILD_GROUP`: This variable is typically left blank unless you're labeling a distribution or build shared by multiple users.
+
+---
+
+### Keep Your Fork Up to Date
+
+To synchronize your forked repository with the original iAPS repository:
+
+1.  Go to the **"Actions"** tab in your iAPS repository.
+2.  Select the **"5. Sync Upstream"** workflow.
+3.  Click **"Run Workflow,"** choose the branch you want to maintain, and then tap the green button.
+
+While most users will only need to sync one branch, you can repeat this process for any branch where these workflows are available. This action is currently scheduled to run daily at midnight, but you can trigger it manually anytime.
