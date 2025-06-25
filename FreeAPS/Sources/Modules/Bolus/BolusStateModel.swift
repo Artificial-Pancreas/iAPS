@@ -76,7 +76,7 @@ extension Bolus {
         @Published var history: [PumpHistoryEvent]?
 
         let loopReminder: CGFloat = 4
-        let oldGlucose: TimeInterval = -8
+        let oldGlucose: TimeInterval = -15
         let coreDataStorage = CoreDataStorage()
 
         private var loopFormatter: NumberFormatter {
