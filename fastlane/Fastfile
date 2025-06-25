@@ -24,7 +24,7 @@ DEVICE_ID = ENV["DEVICE_ID"]
 ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
 BUILD_GROUP = ENV.fetch('BUILD_GROUP') { "" }
-APP_IDENTIFIER = ENV.fetch('APP_IDENTIFIER') { "com.jon.#{TEAMID}.aps" }
+APP_IDENTIFIER = ENV.fetch('APP_IDENTIFIER') { "ru.artpancreas.#{TEAMID}.FreeAPS" }
 
 if #{BUILD_GROUP} != ""
   File.write('../ConfigOverride.xcconfig', "COPYRIGHT_NOTICE = #{BUILD_GROUP}", mode: 'a')
