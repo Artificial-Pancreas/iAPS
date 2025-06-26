@@ -70,6 +70,11 @@ public class MedtrumPumpManager: DeviceManager {
             pumpDelegate.queue = newValue
         }
     }
+    
+    public func roundToSupportedBolusVolume(units: Double) -> Double {
+        // We do support rounding down to 0.00u
+        supportedBolusVolumes.last(where: { $0 <= units }) ?? 0
+    }
 
     public var supportedBasalRates: [Double] {
         guard !state.pumpSN.isEmpty else {

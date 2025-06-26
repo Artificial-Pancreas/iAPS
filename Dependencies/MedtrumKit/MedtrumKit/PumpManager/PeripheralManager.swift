@@ -61,7 +61,7 @@ class PeripheralManager: NSObject {
 
             self.writeTimeoutTask = Task {
                 do {
-                    try await Task.sleep(nanoseconds: UInt64(.seconds(5)) * 1_000_000_000)
+                    try await Task.sleep(nanoseconds: UInt64(.seconds(30)) * 1_000_000_000)
                     guard let queueItem = self.writeQueue[packet.commandType] else {
                         // We did what we must!
                         return
