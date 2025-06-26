@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Inga blodsockerprognoser. Misslyckad loop.";
 
 /* Bolus View */
-"New Glucose Missing" = "Blodsocker saknas";
+"New Glucose Missing" = "Nytt blodsocker saknas";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Spara måltid utan bolus";
@@ -3103,6 +3103,21 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Auto ISF Home View" = "Hemskärm Auto ISF";
+
+/* UI/UX option */
+"Light" = "Ljus";
+
+/* UI/UX option */
+"Dark" = "Mörk";
+
+/* UI/UX option */
+"Auto" = "Automatisk";
+
+/* UI/UX option */
+"Color Scheme" = "Färgschema";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Ljust / Mörkt";
 
 /* Setting title */
 "Bolus Calculator" = "Boluskalkylator";
