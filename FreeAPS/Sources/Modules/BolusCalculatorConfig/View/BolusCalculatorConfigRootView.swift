@@ -100,13 +100,12 @@ extension BolusCalculatorConfig {
                             "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments."
                         )
                     }
-
-                    Section {
-                        if !state.eventualBG {
+                    if !state.eventualBG {
+                        Section {
                             Toggle(isOn: $state.disable15MinTrend) {
-                                Text("Don't use 15 min trend")
+                                Text("Don't Use 15 min Trend")
                             }
-                        }
+                        } footer: { Text("Don't adjust for past 15 minutes glucose trend.") }
                     }
                 }
 

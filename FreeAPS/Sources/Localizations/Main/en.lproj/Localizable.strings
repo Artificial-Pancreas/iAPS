@@ -1865,7 +1865,10 @@ Enact a temp Basal or a temp target */
 "Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
 
 /* */
-"Don't use 15 min trend" = "Don't use 15 min trend";
+"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
