@@ -89,7 +89,27 @@ extension BolusCalculatorConfig {
                             "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default"
                         )
                     }
+
+                    Section {
+                        Toggle(isOn: $state.normalRatios) {
+                            Text("Use Normal ISF and CR")
+                        }
+                    }
+                    footer: {
+                        Text(
+                            "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments."
+                        )
+                    }
+
+                    Section {
+                        if !state.eventualBG {
+                            Toggle(isOn: $state.disable15MinTrend) {
+                                Text("Don't use 15 min trend")
+                            }
+                        }
+                    }
                 }
+
                 Section {
                     HStack {
                         Toggle(isOn: $state.allowBolusShortcut) {

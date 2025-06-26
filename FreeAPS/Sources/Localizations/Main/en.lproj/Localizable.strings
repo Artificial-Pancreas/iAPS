@@ -1855,6 +1855,18 @@ Enact a temp Basal or a temp target */
 /* Add insulin without bolusing alert */
 " without bolusing" = " without bolusing";
 
+/* */
+"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
+
+/* */
+"Use Normal ISF and CR" = "Use Normal ISF and CR";
+
+/* */
+"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
+
+/* */
+"Don't use 15 min trend" = "Don't use 15 min trend";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
