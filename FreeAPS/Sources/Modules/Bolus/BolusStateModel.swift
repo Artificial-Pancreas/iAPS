@@ -74,9 +74,11 @@ extension Bolus {
         @Published var bolus: Decimal = 0
         @Published var carbToStore = [CarbsEntry]()
         @Published var history: [PumpHistoryEvent]?
+        @Published var normalRatios: Bool = false
+        @Published var disable15MinTrend: Bool = false
 
         let loopReminder: CGFloat = 4
-        let oldGlucose: TimeInterval = -8
+        let oldGlucose: TimeInterval = -15
         let coreDataStorage = CoreDataStorage()
 
         private var loopFormatter: NumberFormatter {
@@ -103,6 +105,8 @@ extension Bolus {
             bolusIncrement = settings.preferences.bolusIncrement
             closedLoop = settings.settings.closedLoop
             loopDate = apsManager.lastLoopDate
+            normalRatios = settings.settings.normalRatios
+            disable15MinTrend = settings.settings.disable15MinTrend
 
             if waitForSuggestionInitial {
                 if waitForCarbs {
@@ -155,8 +159,8 @@ extension Bolus {
                     insulin = (evBG - target) / isf
                 } else { insulin = 0 }
             } else if manualGlucose > 0 {
-                let targetDifference = manualGlucose - (units == .mmolL ? target.asMgdL : target)
-                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / (units == .mmolL ? isf.asMgdL : isf)
+                let targetDifference = (units == .mmolL ? manualGlucose.asMmolL : manualGlucose) - target
+                targetDifferenceInsulin = isf == 0 ? 0 : targetDifference / isf
             } else if currentBG > 0 {
                 let targetDifference = currentBG - target
                 print("BG: \(currentBG), target: \(target), isf: \(isf)")
@@ -167,7 +171,7 @@ extension Bolus {
             }
 
             // more or less insulin because of bg trend in the last 15 minutes
-            fifteenMinInsulin = isf == 0 ? 0 : (deltaBG * conversion) / isf
+            fifteenMinInsulin = (isf == 0 || disable15MinTrend) ? 0 : (deltaBG * conversion) / isf
             print("fifteenMinInsulin isf: \(isf), deltaBG: \(deltaBG * conversion)")
 
             // determine whole COB for which we want to dose insulin for and then determine insulin for wholeCOB
@@ -287,8 +291,15 @@ extension Bolus {
                    let carbRatio = reasons.cr, let minPredBG = reasons.minPredBG
                 {
                     self.target = target as Decimal
-                    self.isf = isf as Decimal
-                    self.carbRatio = carbRatio as Decimal
+
+                    if let ratio = reasons.ratio, self.normalRatios {
+                        self.isf = isf as Decimal * (ratio as Decimal)
+                        self.carbRatio = carbRatio as Decimal * (ratio as Decimal)
+                    } else {
+                        self.isf = isf as Decimal
+                        self.carbRatio = carbRatio as Decimal
+                    }
+
                     self.minPredBG = minPredBG as Decimal
                 }
 
@@ -357,7 +368,7 @@ extension Bolus {
         }
 
         func addManualGlucose() {
-            let glucose = units == .mmolL ? manualGlucose.asMgdL : manualGlucose
+            let glucose = manualGlucose
             let now = Date()
             let id = UUID().uuidString
 
@@ -378,18 +389,25 @@ extension Bolus {
 
         private func prepareData() {
             if !eventualBG {
-                var prepareData = [
+                var prepareData = !disable15MinTrend ? [
                     InsulinRequired(agent: NSLocalizedString("Carbs", comment: ""), amount: wholeCobInsulin),
                     InsulinRequired(agent: NSLocalizedString("IOB", comment: ""), amount: iobInsulinReduction),
                     InsulinRequired(agent: NSLocalizedString("Glucose", comment: ""), amount: targetDifferenceInsulin),
                     InsulinRequired(agent: NSLocalizedString("Trend", comment: ""), amount: fifteenMinInsulin),
                     InsulinRequired(agent: NSLocalizedString("Factors", comment: ""), amount: 0),
                     InsulinRequired(agent: NSLocalizedString("Amount", comment: ""), amount: insulinCalculated)
-                ]
+                ] :
+                    [
+                        InsulinRequired(agent: NSLocalizedString("Carbs", comment: ""), amount: wholeCobInsulin),
+                        InsulinRequired(agent: NSLocalizedString("IOB", comment: ""), amount: iobInsulinReduction),
+                        InsulinRequired(agent: NSLocalizedString("Glucose", comment: ""), amount: targetDifferenceInsulin),
+                        InsulinRequired(agent: NSLocalizedString("Factors", comment: ""), amount: 0),
+                        InsulinRequired(agent: NSLocalizedString("Amount", comment: ""), amount: insulinCalculated)
+                    ]
                 let total = prepareData.dropLast().map(\.amount).reduce(0, +)
                 if total > 0 {
                     let factor = -1 * (total - insulinCalculated)
-                    prepareData[4].amount = abs(factor) >= bolusIncrement ? factor : 0
+                    prepareData[!disable15MinTrend ? 4 : 3].amount = abs(factor) >= bolusIncrement ? factor : 0
                 }
                 data = prepareData
             }
