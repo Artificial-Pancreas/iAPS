@@ -1852,19 +1852,19 @@ Enact a temp Basal or a temp target */
 " without bolusing" = " utan att ge insulin";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
+"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Negligera alla undantag, tillfälliga målvärden, Auto ISF - och dynamiska justeringar.";
 
 /* */
-"Use Normal ISF and CR" = "Use Normal ISF and CR";
+"Use Normal ISF and CR" = "Använd normal ISF och CR";
 
 /* */
-"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
+"Use Scheduled ISF and CR" = "Använd schemalagd ISF och CR";
 
 /* */
-"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+"Don't Use 15 min Trend" = "Använd inte 15 min - trend";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+"Don't adjust for past 15 minutes glucose trend." = "Justera inte för de senaste 15 minuternas glukostrend.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3210,4 +3210,4 @@ Enact a temp Basal or a temp target */
 "Cancel Override" = "Avbryt Undantag";
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
-"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+"To enable settings, go to the App Config section in iOS Settings App" = "För att aktivera inställningar, gå till iOS instllningar, under Appar/iAPS";
