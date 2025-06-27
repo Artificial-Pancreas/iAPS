@@ -300,7 +300,6 @@ extension Bolus {
         private func illustrationView() -> some View {
             VStack {
                 IllustrationView(data: $state.data)
-
                 // Hide button
                 VStack {
                     Button { showInfo = false }

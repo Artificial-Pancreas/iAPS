@@ -3105,6 +3105,21 @@ Per gli utenti più giovani si consiglia di iniziare con un dosaggio ancora più
 /* UI/UX option */
 "Auto ISF Home View" = "Auto isf su vista principale";
 
+/* UI/UX option */
+"Light" = "Chiaro";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Auto";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
+
 /* Setting title */
 "Bolus Calculator" = "Calcolatore Bolo";
 
