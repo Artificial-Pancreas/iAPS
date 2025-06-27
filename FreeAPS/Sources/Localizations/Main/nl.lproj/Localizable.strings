@@ -1852,6 +1852,21 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Add insulin without bolusing alert */
 " without bolusing" = " Zonder bolus";
 
+/* */
+"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
+
+/* */
+"Use Normal ISF and CR" = "Use Normal ISF and CR";
+
+/* */
+"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
+
+/* */
+"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -3198,3 +3213,6 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Annuleer tijdelijk programma";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
