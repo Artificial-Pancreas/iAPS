@@ -72,14 +72,14 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     }
 
     /// function called when a callback is fired by CGM BLE - no more used
-    public func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) {
+    @MainActor public func updateGlucoseStore(newBloodGlucose: [BloodGlucose]) {
         let syncDate = glucoseStorage.syncDate()
         debug(.deviceManager, "CGM BLE FETCHGLUCOSE  : SyncDate is \(syncDate)")
         glucoseStoreAndHeartDecision(syncDate: syncDate, glucose: newBloodGlucose)
     }
 
     /// function to try to force the refresh of the CGM - generally provide by the pump heartbeat
-    public func refreshCGM() {
+    @MainActor public func refreshCGM() {
         debug(.deviceManager, "refreshCGM by pump")
         updateGlucoseSource()
         Publishers.CombineLatest3(
@@ -96,7 +96,11 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         .store(in: &lifetime)
     }
 
-    private func glucoseStoreAndHeartDecision(syncDate: Date, glucose: [BloodGlucose], glucoseFromHealth: [BloodGlucose] = []) {
+    private func glucoseStoreAndHeartDecision(
+        syncDate: Date,
+        glucose: [BloodGlucose] = [],
+        glucoseFromHealth: [BloodGlucose] = []
+    ) {
         let allGlucose = glucose + glucoseFromHealth
         var filteredByDate: [BloodGlucose] = []
         var filtered: [BloodGlucose] = []
