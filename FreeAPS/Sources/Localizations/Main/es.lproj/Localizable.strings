@@ -1862,6 +1862,21 @@ Ajustes predeterminados:\n
 /* Add insulin without bolusing alert */
 " without bolusing" = " sin bolo";
 
+/* */
+"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
+
+/* */
+"Use Normal ISF and CR" = "Use Normal ISF and CR";
+
+/* */
+"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
+
+/* */
+"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -3327,3 +3342,6 @@ Podrá observar si el evento tuvo lugar pinchando en el pop-up verde del lazo o 
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Cancel Override";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
