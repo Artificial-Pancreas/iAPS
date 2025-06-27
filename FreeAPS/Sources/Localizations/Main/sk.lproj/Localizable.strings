@@ -1852,6 +1852,21 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Add insulin without bolusing alert */
 " without bolusing" = " pridanie bez použitia bolusu";
 
+/* */
+"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
+
+/* */
+"Use Normal ISF and CR" = "Use Normal ISF and CR";
+
+/* */
+"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
+
+/* */
+"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -3197,3 +3212,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Zrušiť profil";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
