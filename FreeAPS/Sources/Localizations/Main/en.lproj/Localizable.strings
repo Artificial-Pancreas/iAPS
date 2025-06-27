@@ -3220,3 +3220,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Cancel Override";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
