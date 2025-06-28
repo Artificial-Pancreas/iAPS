@@ -1862,7 +1862,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
 
 /* */
-"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+"Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
 
 /* */
 "Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
