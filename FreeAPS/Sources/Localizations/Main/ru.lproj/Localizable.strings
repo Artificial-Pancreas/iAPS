@@ -1852,9 +1852,6 @@ Enact a temp Basal or a temp target */
 " without bolusing" = " без введения болюса помпой";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Игнорировать все возможные переопределения, временные цели, автоматическую настройку ISF и динамические корректировки.";
-
-/* */
 "Don't Use 15 min Trend" = "Не использовать 15-минутный тренд";
 
 /* */
