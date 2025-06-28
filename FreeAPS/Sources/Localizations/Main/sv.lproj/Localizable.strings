@@ -1852,9 +1852,6 @@ Enact a temp Basal or a temp target */
 " without bolusing" = " utan att ge insulin";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Negligera alla undantag, tillfälliga målvärden, Auto ISF - och dynamiska justeringar.";
-
-/* */
 "Don't Use 15 min Trend" = "Använd inte 15 min - trend";
 
 /* */
