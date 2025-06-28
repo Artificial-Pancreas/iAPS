@@ -455,6 +455,7 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let pump = pumpManager else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount / concentration.concentration)
+        let standardInsulinAmount = pump.roundToSupportedBolusVolume(units: amount)
 
         debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
 
@@ -475,7 +476,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.determineBasal().sink { _ in }.store(in: &self.lifetime)
                 }
                 self.bolusProgress.send(0)
-                self.bolusAmount.send(Decimal(amount))
+                self.bolusAmount.send(Decimal(standardInsulinAmount))
             }
         } receiveValue: { _ in }
             .store(in: &lifetime)
@@ -605,7 +606,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     )
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     self.bolusProgress.send(0)
-                    self.bolusAmount.send(amount.roundBolus(increment: insulinConcentration.increment))
+                    self.bolusAmount.send(amount.roundBolusIncrements(increment: insulinConcentration.concentration / 0.05))
                 }
             }
         case let .pump(pumpAction):
@@ -747,7 +748,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let setting = concentration
         guard setting.concentration != 1 else { return rate }
 
-        return (rate * Decimal(setting.concentration)).roundBolus(increment: setting.increment)
+        return (rate * Decimal(setting.concentration)).roundBolusIncrements(increment: setting.increment)
     }
 
     private func currentTemp(date: Date) -> TempBasal {
