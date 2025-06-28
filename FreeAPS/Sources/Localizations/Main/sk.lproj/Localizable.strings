@@ -1853,19 +1853,19 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " without bolusing" = " pridanie bez použitia bolusu";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
+"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Ignorovať všetky prípadné profily, dočasné ciele, automatické ISF a dynamické úpravy.";
 
 /* */
-"Use Normal ISF and CR" = "Use Normal ISF and CR";
+"Use Normal ISF and CR" = "Použiť štandardné ISF a CR";
 
 /* */
-"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
+"Use Scheduled ISF and CR" = "Použiť naplánované ISF a CR";
 
 /* */
 "Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+"Don't adjust for past 15 minutes glucose trend." = "Neupravujte vývoj glykémie za posledných 15 minút.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3214,4 +3214,4 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 "Cancel Override" = "Zrušiť profil";
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
-"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+"To enable settings, go to the App Config section in iOS Settings App" = "Na povolenie nastavení prejdite do sekcie Konfigurácia aplikácie v aplikácii Nastavenia iOS";
