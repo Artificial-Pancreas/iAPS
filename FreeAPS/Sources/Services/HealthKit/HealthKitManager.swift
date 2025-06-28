@@ -527,18 +527,12 @@ final class BaseHealthKitManager: HealthKitManager, Injectable, CarbsObserver, P
     var cgmType: CGMType = .nightscout
 
     func fetch(_: DispatchTimer?) -> AnyPublisher<[BloodGlucose], Never> {
-        Future { [weak self] promise in
-            guard let self = self else {
-                promise(.success([]))
-                return
-            }
+        guard settingsManager.settings.useAppleHealth else {
+            return Just([]).eraseToAnyPublisher()
+        }
 
+        return Future { promise in
             self.processQueue.async {
-                guard self.settingsManager.settings.useAppleHealth else {
-                    promise(.success([]))
-                    return
-                }
-
                 // Remove old BGs
                 self.newGlucose = self.newGlucose
                     .filter { $0.dateString >= Date().addingTimeInterval(-1.days.timeInterval) }
