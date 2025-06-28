@@ -1853,9 +1853,6 @@ Enact a temp Basal or a temp target */
 " without bolusing" = " without bolusing";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
-
-/* */
 "Don't Use 15 min Trend" = "Don't Use 15 min Trend";
 
 /* */
