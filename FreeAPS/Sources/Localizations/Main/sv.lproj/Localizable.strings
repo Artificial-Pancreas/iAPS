@@ -1855,12 +1855,6 @@ Enact a temp Basal or a temp target */
 "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Negligera alla undantag, tillfälliga målvärden, Auto ISF - och dynamiska justeringar.";
 
 /* */
-"Use Normal ISF and CR" = "Använd normal ISF och CR";
-
-/* */
-"Use Scheduled ISF and CR" = "Använd schemalagd ISF och CR";
-
-/* */
 "Don't Use 15 min Trend" = "Använd inte 15 min - trend";
 
 /* */
