@@ -1853,9 +1853,6 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 " without bolusing" = " Zonder bolus";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Negeren van alle uiteindelijke overschrijvingen, tijdelijke doelen, Auto ISF en dynamische aanpassingen.";
-
-/* */
 "Don't Use 15 min Trend" = "Gebruik geen 15 min trend";
 
 /* */
