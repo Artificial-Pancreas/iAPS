@@ -1853,9 +1853,6 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 " without bolusing" = " pridanie bez použitia bolusu";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Ignorovať všetky prípadné profily, dočasné ciele, automatické ISF a dynamické úpravy.";
-
-/* */
 "Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
 
 /* */
