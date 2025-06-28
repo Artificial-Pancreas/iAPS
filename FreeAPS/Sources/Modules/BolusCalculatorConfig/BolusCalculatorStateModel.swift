@@ -12,7 +12,6 @@ extension BolusCalculatorConfig {
         @Published var allowedRemoteBolusAmount: Decimal = 0
         @Published var eventualBG: Bool = false
         @Published var minumimPrediction: Bool = false
-        @Published var normalRatios: Bool = false
         @Published var disable15MinTrend: Bool = false
 
         override func subscribe() {
@@ -29,7 +28,6 @@ extension BolusCalculatorConfig {
             subscribeSetting(\.eventualBG, on: $eventualBG) { eventualBG = $0 }
             subscribeSetting(\.minumimPrediction, on: $minumimPrediction) { minumimPrediction = $0 }
             subscribeSetting(\.displayPredictions, on: $displayPredictions) { displayPredictions = $0 }
-            subscribeSetting(\.normalRatios, on: $normalRatios) { normalRatios = $0 }
             subscribeSetting(\.disable15MinTrend, on: $disable15MinTrend) { disable15MinTrend = $0 }
             subscribeSetting(\.fattyMealFactor, on: $fattyMealFactor, initial: {
                 let value = max(min($0, 1.5), 0.1)
