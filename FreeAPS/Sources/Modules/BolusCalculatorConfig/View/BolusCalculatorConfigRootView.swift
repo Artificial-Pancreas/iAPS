@@ -90,16 +90,6 @@ extension BolusCalculatorConfig {
                         )
                     }
 
-                    Section {
-                        Toggle(isOn: $state.normalRatios) {
-                            Text("Use Normal ISF and CR")
-                        }
-                    }
-                    footer: {
-                        Text(
-                            "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments."
-                        )
-                    }
                     if !state.eventualBG {
                         Section {
                             Toggle(isOn: $state.disable15MinTrend) {
