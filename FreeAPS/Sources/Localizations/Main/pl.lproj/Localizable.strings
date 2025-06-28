@@ -1857,12 +1857,6 @@ Połączono z Nightscout!";
 "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
 
 /* */
-"Use Normal ISF and CR" = "Use Normal ISF and CR";
-
-/* */
-"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
-
-/* */
 "Don't Use 15 min Trend" = "Don't Use 15 min Trend";
 
 /* */
