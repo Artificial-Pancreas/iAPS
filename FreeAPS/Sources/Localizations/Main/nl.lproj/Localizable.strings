@@ -1853,19 +1853,19 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 " without bolusing" = " Zonder bolus";
 
 /* */
-"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments.";
+"Neglect all eventual Overrides, Temp targets, Auto ISF and Dynamic adjustments." = "Negeren van alle uiteindelijke overschrijvingen, tijdelijke doelen, Auto ISF en dynamische aanpassingen.";
 
 /* */
-"Use Normal ISF and CR" = "Use Normal ISF and CR";
+"Use Normal ISF and CR" = "Gebruik normale ISF en CR";
 
 /* */
-"Use Scheduled ISF and CR" = "Use Scheduled ISF and CR";
+"Use Scheduled ISF and CR" = "Gebruik geplande ISF en CR";
 
 /* */
-"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+"Don't Use 15 min Trend" = "Gebruik geen 15 min trend";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+"Don't adjust for past 15 minutes glucose trend." = "Niet aanpassen aan de glucose trend van de afgelopen 15 minuten.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3215,4 +3215,4 @@ Eenvoudig gezegd, de Dynamische Carb Ratio past de koolhydraatverhouding aan op 
 "Cancel Override" = "Annuleer tijdelijk programma";
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
-"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+"To enable settings, go to the App Config section in iOS Settings App" = "Om instellingen in te schakelen, ga naar de App Config sectie in de iOS systeemInstellingen App";
