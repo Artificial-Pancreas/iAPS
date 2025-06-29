@@ -335,7 +335,7 @@
 "Calculated Ratio" = "Tỷ lệ được tính toán";
 
 /* Carb Ratios header */
-"Carb Ratios" = "Tỷ lệ Carb";
+"Carb Ratios" = "Carb Ratios";
 
 /*  */
 "Ratio" = "Tỷ lệ";
@@ -417,7 +417,7 @@ Enact a temp Basal or a temp target */
 "Glucose units" = "Đơn vị Glucose";
 
 /*  */
-"Preferences" = "Tùy chỉnh";
+"Preferences" = "Preferences";
 
 /* Recommended Insulin Fraction in preferences */
 "Recommended Insulin Fraction" = "Tỷ lệ liều insulin khuyên dùng";
@@ -604,22 +604,22 @@ Enact a temp Basal or a temp target */
 "m" = "m";
 
 /*  */
-"Closed loop" = "Vòng lặp kín";
+"Closed loop" = "Closed loop";
 
 /* */
-"Configuration" = "Cấu hình";
+"Configuration" = "Configuration";
 
 /* */
-"Devices" = "Thiết bị";
+"Devices" = "Devices";
 
 /*  */
-"Pump" = "Bơm Insulin";
+"Pump" = "Pump";
 
 /* */
-"Watch" = "Đồng hồ";
+"Watch" = "Watch";
 
 /* */
-"Watch Configuration" = "Cấu hình đồng hồ";
+"Watch Configuration" = "Watch Configuration";
 
 /* */
 "Apple Watch" = "Apple Watch";
@@ -661,16 +661,16 @@ Enact a temp Basal or a temp target */
 "Garmin is not available" = "Garmin không có sẵn";
 
 /*  */
-"Services" = "Dịch vụ";
+"Services" = "Services";
 
 /*  */
-"Settings" = "Cài đặt";
+"Settings" = "Settings";
 
 /* Recommendation for a Manual Bolus */
-"Recommended Bolus Percentage" = "Tỷ lệ phần trăm Bolus được đề xuất";
+"Recommended Bolus Percentage" = "Recommended Bolus Percentage";
 
 /* 2 log files to share */
-"Share logs" = "Chia sẻ nhật ký";
+"Share logs" = "Share logs";
 
 /* Upper target */
 "High target" = "Mục tiêu đường huyết cao";
@@ -700,7 +700,7 @@ Enact a temp Basal or a temp target */
 "Type" = "Loại cảm biến";
 
 /* CGM */
-"CGM" = "Cảm biến đường huyết";
+"CGM" = "CGM";
 
 /* CGM Transmitter ID */
 "Transmitter ID" = "Số ID của Transmitter";
@@ -715,7 +715,7 @@ Enact a temp Basal or a temp target */
 "Updating..." = "Đang cập nhật...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Mục tiêu tạm thời";
+"Temp Targets" = "Temp Targets";
 
 /* Delete carbs from data table and Nightscout */
 "Delete Carbs?" = "Xóa Carbs?";
@@ -744,6 +744,24 @@ Enact a temp Basal or a temp target */
 /* Hypo Treatment Default Value */
 "None" = "Không";
 
+/* Add Insulin */
+"Add Insulin" = "Add Insulin";
+
+/* Add Glucose */
+"Add Glucose" = "Add Glucose";
+
+/* New Glucose */
+"New Glucose" = "New Glucose";
+
+/* Hypo Treatment Preset */
+"Treatment" = "Treatment";
+
+/* Hypo Treatment Default Value */
+"Default  📉" = "Default";
+
+/* Hypo Treatment Default Value */
+"None" = "Không";
+
 /* " min" in Treatments list */
 " min" = " min";
 
@@ -757,7 +775,7 @@ Enact a temp Basal or a temp target */
 "Configure Libre Transmitter" = "Cấu hình Libre Transmitter";
 
 /* */
-"Calibrations" = "Hiệu chuẩn";
+"Calibrations" = "Calibrations";
 
 /* */
 "Create Events in Calendar" = "Tạo sự kiện trong Calendar";
@@ -877,7 +895,7 @@ Enact a temp Basal or a temp target */
 "Libre sensor was incorrectly read, CRCs were not valid" = "Cảm biến libre không được đọc đúng, CRCs không hợp lệ";
 
 /* Glucose */
-"Glucose" = "Đường huyết";
+"Glucose" = "Glucose";
 
 /* LOWALERT! */
 "LOWALERT!" = "CẢNH BÁO THẤP!";
@@ -1033,7 +1051,7 @@ Enact a temp Basal or a temp target */
 "Glucose Settings" = "Cài đặt đường huyết";
 
 /* */
-"Notifications" = "Thông báo";
+"Notifications" = "Notifications";
 
 /* */
 "Export logs" = "Kết xuất nhật ký";
@@ -1084,16 +1102,16 @@ Enact a temp Basal or a temp target */
 "Unit override" = "Đơn vị ghi đè";
 
 /* */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* */
-"High" = "Cao";
+"High" = "High";
 
 /* TIR Chart */
-"Very High" = "Quá cao";
+"Very High" = "Very High";
 
 /* TIR Chart */
-"Very Low" = "Quá thấp";
+"Very Low" = "Very Low";
 
 /* */
 "glucose" = "đường huyết";
@@ -1259,7 +1277,7 @@ Enact a temp Basal or a temp target */
 "Backfill from trend" = "Bổ sung từ xu hướng";
 
 /* */
-"Debug options" = "Tùy chọn gỡ lỗi";
+"Debug options" = "Debug options";
 
 /* */
 "Adds a lot of data to the Issue Report " = "Thêm nhiều dữ liệu vào Báo cáo vấn đề ";
@@ -1376,7 +1394,7 @@ Enact a temp Basal or a temp target */
 "Suspend" = "Đã tạm dừng";
 
 /* */
-"Animated Background" = "Nền màn hình động";
+"Animated Background" = "Animated Background";
 
 /* Sensor day(s) */
 " day(s)" = " day(s)";
@@ -1422,7 +1440,7 @@ Enact a temp Basal or a temp target */
 "Direct connection with Libre 1 transmitters or European Libre 2 sensors" = "Kết nối trực tiếp với bộ phát Libre 1 hoặc cảm biến Libre 2 của Châu Âu";
 
 /* Online or internal server */
-"Online or internal server" = "Máy chủ trực tuyến hoặc nội bộ";
+"Online or internal server" = "Trực tuyến hoặc máy chủ nội bộ";
 
 /* Pump Error Message */
 "Can't enact the new loop cycle recommendation, because a Bolus is in progress. Wait for next loop cycle" = "Không thể thực hiện khuyến nghị trong chu kỳ vòng lặp mới vì bolus đang được tiêm. Vui lòng đợi đến chu kỳ vòng lặp tiếp theo";
@@ -1436,7 +1454,7 @@ Enact a temp Basal or a temp target */
 /* -------------- Developer settings ---------------------- */
 /* Debug options */
 
-"Developer" = "Dành cho nhà phát triển";
+"Developer" = "Developer";
 
 /* Debug option view NS Upload Profile */
 "NS Upload Profile and Settings" = "NS Upload Profile and Settings";
@@ -1463,7 +1481,10 @@ Enact a temp Basal or a temp target */
 "Save on Pump" = "Lưu vào bơm";
 
 /* Debug option view Pump History */
-"Pump History" = "Lịch sử Bơm";
+"Pump History" = "Pump History";
+
+/* Debug option view Temp Basals */
+"Temp Basals" = "Temp Basals";
 
 /* Debug option view Temp Basals */
 "Temp Basals" = "Temp Basals";
@@ -1605,12 +1626,12 @@ Enact a temp Basal or a temp target */
 "Max Override 400%" = "Ghi đè tối đa 400%";
 
 /* */
-"Override Profiles" = "Chế độ ghi đè";
+"Override Profiles" = "Override Profiles";
 
 /* */
 "Normal " = "Bình thường ";
 
-"Currently no Override active" = "Hiện tại không có ghi đè nào hoạt động";
+"Currently no Override active" = "Hiện tại không có Override hoạt động";
 
 /* */
 "Total Insulin Adjustment" = "Tổng số Insulin được điều chỉnh";
@@ -1653,6 +1674,9 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Advanced Settings" = "Cài đặt nâng cao";
+
+/* */
+"Advanced Settings" = "Advanced Settings";
 
 /* */
 "More options" = "Các lựa chọn khác";
@@ -1750,6 +1774,15 @@ Enact a temp Basal or a temp target */
 /* Placeholder for name of dish when adding a new food preset */
 "New" = "Mới";
 
+/* Back button */
+"Back" = "Quay Lại";
+
+/* Search Saved Food presets */
+"Search" = "Tìm kiếm";
+
+/* Placeholder for name of dish when adding a new food preset */
+"New" = "New";
+
 /* */
 "Empty" = "Trống rỗng";
 
@@ -1804,7 +1837,7 @@ Enact a temp Basal or a temp target */
 "Glucose, " = "Đường huyết, ";
 
 /* */
-"Target Glucose" = "Đường huyết mục tiêu";
+"Target Glucose" = "Target Glucose";
 
 /* */
 "Percentage setting" = "Cài đặt phần trăm";
@@ -2015,10 +2048,10 @@ Enact a temp Basal or a temp target */
 "Allow Upload of Statistics to NS" = "Cho phép tải số liệu thống kê lên NS";
 
 /* Low Glucose Threshold in Statistics settings */
-"Low" = "Thấp";
+"Low" = "Low";
 
 /* High Glucose Threshold in Statistics settings */
-"High" = "Cao";
+"High" = "High";
 
 /* In Range */
 "In Range" = "In Range";
@@ -2272,6 +2305,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Share your data anonymously" = "Ẩn danh chia sẻ dữ liệu của bạn";
 
+/* Setting Title */
+"Sharing" = "Chia sẻ";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 
@@ -2401,7 +2437,7 @@ Enact a temp Basal or a temp target */
 "NoneContactValue" = "Không";
 
 /* Contact Image, settings, Glucose (data to display) */
-"GlucoseContactValue" = "Đường huyết";
+"GlucoseContactValue" = "Glucose";
 
 /* Contact Image, settings, Eventual BG (data to display) */
 "EventualBGContactValue" = "Đường huyết dự kiến";
@@ -2666,7 +2702,7 @@ Enact a temp Basal or a temp target */
 */
 /* Headline Rewind Resets Autosens */
 
-"Rewind Resets Autosens" = "Rewind sẽ thiết lập lại Autosens";
+"Rewind Resets Autosens" = "Rewind Resets Autosens";
 
 /* ”Rewind Resets Autosens” */
 "This feature, enabled by default, resets the autosens ratio to neutral when you rewind your pump, on the assumption that this corresponds to a probable site change. Autosens will begin learning sensitivity anew from the time of the rewind, which may take up to 6 hours. If you usually rewind your pump independently of site changes, you may want to consider disabling this feature." = "Tính năng này, được bật theo mặc định, sẽ đặt lại autosens ratio về mức trung hoà khi bạn tua lại máy bơm của mình, với giả định rằng điều này tương ứng với một sự thay đổi điểm gắn có thể xảy ra. Autosens sẽ bắt đầu học lại độ nhạy kể từ thời điểm tua lại, quá trình này có thể mất tới 6 giờ. Nếu bạn thường tua lại máy bơm của mình chỉ để thay đổi điểm gắn, bạn có thể cân nhắc việc tắt tính năng này.";
@@ -2726,7 +2762,7 @@ Enact a temp Basal or a temp target */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Nhiều người thỉnh thoảng quên tiếp tục/hủy tạm dừng máy bơm sau khi kết nối lại. Nếu bạn là một trong số họ và sẵn sàng đặt liều tạm thời cơ bản bằng 0 một cách đáng tin cậy bất cứ khi nào tạm dừng và ngắt kết nối máy bơm của mình, thì tính năng này sẽ hỗ trợ bạn. Nếu được bật, nó sẽ tự động tiếp tục/hủy tạm dừng máy bơm nếu bạn quên làm như vậy trước khi hết tạm thời 0. Miễn là tạm thời bằng 0 vẫn đang chạy, nó sẽ khiến máy bơm bị treo.";
 
 /* Headline "Enable UAM" */
-"Enable UAM" = "Kích hoạt UAM";
+"Enable UAM" = "Enable UAM";
 
 /* "Enable UAM" */
 "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell iAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Khi bật tùy chọn này, thuật toán SMB có thể nhận ra các bữa ăn không báo trước. Điều này rất hữu ích nếu bạn quên thông báo cho iAPS về lượng carb của mình hoặc ước tính sai lượng carb của bạn và lượng carb đã nhập sai hoặc nếu một bữa ăn có nhiều chất béo và protein kéo dài hơn dự kiến. Nếu không có bất kỳ lượng carb nào được đưa vào, UAM có thể nhận ra mức tăng đường huyết nhanh chóng do carbs, adrenaline, v. v. gây ra và cố gắng điều chỉnh nó bằng SMB. Điều này cũng hoạt động theo cách ngược lại: nếu lượng glucose giảm nhanh, nó có thể dừng SMB sớm hơn.";
@@ -2744,7 +2780,7 @@ Enact a temp Basal or a temp target */
 "This enables supermicrobolus (SMB) with eating soon / low temp targets. With this feature enabled, any temporary target below 100mg/dL, such as a temp target of 99 (or 80, the typical eating soon target) will enable SMB." = "Điều này cho phép Super Micro Bolus (SMB) đạt được mục tiêu ăn sớm / liều tạm thời thấp. Khi tính năng này được bật, mọi mục tiêu tạm thời dưới 100mg/dL, chẳng hạn như mục tiêu tạm thời là 99 (hoặc 80, mục tiêu ăn sớm thông thường) sẽ kích hoạt SMB.";
 
 /* Headline "Enable SMB Always" */
-"Enable SMB Always" = "Luôn bật SMB";
+"Enable SMB Always" = "Enable SMB Always";
 
 /* "Enable SMB Always" */
 "Defaults to false. When true, always enable supermicrobolus (unless disabled by high temptarget)." = "Mặc định là False. Khi True, hãy luôn bật Super Micro Bolus (trừ khi bị tắt bởi high temptarget).";
@@ -2873,7 +2909,7 @@ Enact a temp Basal or a temp target */
 "Smallest enacted SMB amount. Minimum amount for Omnipod pumps is 0.05 U, whereas for Medtronic pumps it differs for various models, from 0.025 U to 0.10 U. Please check the minimum bolus amount which can be delivered by your pump. The default value is 0.1." = "Số SMB được ban hành nhỏ nhất. Lượng tối thiểu đối với máy bơm Omnipod là 0,05 U, trong khi đối với máy bơm Medtronic, lượng này khác nhau đối với nhiều kiểu máy khác nhau, từ 0,025 U đến 0,10 U. Vui lòng kiểm tra lượng truyền nhanh tối thiểu mà máy bơm của bạn có thể cung cấp. Giá trị mặc định là 0,1.";
 
 /* Headline "Insulin Peak Time" */
-"Insulin Peak Time" = "Thời gian đỉnh của Insulin";
+"Insulin Peak Time" = "Insulin Peak Time";
 
 /* "Insulin Peak Time" */
 "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with iAPS, longer loop calculations and possible red loops." = "Thời gian tác dụng hạ đường huyết tối đa của insulin, tính bằng phút. Lưu ý: Oref giả định đường cong cực nhanh (Lyumjev) và tác dụng nhanh (Fiasp) tối thiểu (35 & 50 phút) và tối đa (100 & 120 phút) áp dụng đỉnh insulin. Việc sử dụng đỉnh insulin tùy chỉnh ngoài các giới hạn này sẽ dẫn đến sự cố với iAPS, tính toán vòng lặp dài hơn và có thể xảy ra vòng lặp màu đỏ.";
@@ -2885,13 +2921,13 @@ Enact a temp Basal or a temp target */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Số gram carbs yêu cầu để kích hoạt quá trình đẩy. Mặc định là 1 (cho 1 gam carbohydrate). Có thể tăng lên nếu bạn chỉ muốn nhận đẩy qua cho carbs yêu cầu ở ngưỡng X.";
 
 /* Headline "Noisy CGM Target Multiplier" */
-"Noisy CGM Target Multiplier" = "Hệ số mục tiêu CGM Noisy";
+"Noisy CGM Target Multiplier" = "Noisy CGM Target Multiplier";
 
 /* "Noisy CGM Target Multiplier" */
 "Defaults to 1.3. Increase target by this amount when looping off raw/noisy CGM data" = "Mặc định là 1.3. Tăng mục tiêu lên số lượng này khi lặp lại dữ liệu CGM raw/noisy";
 
 /* Headline "SMB DeliveryRatio" */
-"SMB DeliveryRatio" = "Tỷ lệ phân phối SMB";
+"SMB DeliveryRatio" = "SMB DeliveryRatio";
 
 /* SMB DeliveryRatio */
 "Default value: 0.5 This is another key OpenAPS safety cap, and specifies what share of the total insulin required can be delivered as SMB. Increase this experimental value slowly and with caution." = "Giá trị mặc định: 0,5 Đây là một giới hạn an toàn quan trọng khác của OpenAPS và chỉ định tỷ lệ trong tổng lượng insulin cần thiết có thể được phân phối dưới dạng SMB. Tăng giá trị thử nghiệm này một cách chậm rãi và thận trọng.";
@@ -2923,7 +2959,7 @@ Enact a temp Basal or a temp target */
 "Activate Dynamic Sensitivity (ISF)" = "Kích hoạt độ nhạy động (ISF)";
 
 /* Enable Dyn CR */
-"Activate Dynamic Carb Ratio (CR)" = "Kích hoạt Tỷ lệ Carb động (CR)";
+"Activate Dynamic Carb Ratio (CR)" = "Activate Dynamic Carb Ratio (CR)";
 
 /* Headline "Adjust Dynamic ISF constant" */
 "Adjust Dynamic ISF constant" = "Điều chỉnh hằng số Dynamic ISF";
@@ -2998,6 +3034,18 @@ Enact a temp Basal or a temp target */
 "Use OpenAPS glucose predictions" = "Sử dụng dự đoán dường huyết của OpenAPS";
 
 /* Bolus Calculator Setting */
+"Use Bolus Calculator" = "Use Bolus Calculator";
+
+/* Bolus Calculator Setting */
+"Depending on your settings the Swift bolus calculator is using data from the OpenAPS glucose predictions and/or from IOB, COB, glucose trend, current gluccose and target glucose. At the end of the calculation a custom factor is applied (default 0.8).\n\nYou can also have the option in your bolus calculator to apply another (!) customizable factor at the end of the calculation which could be useful for fatty meals, e.g Pizza (default 0.7).\n\nThe bolus calculator is NOT using the OpenAPS variable \"insulinRequired\", made for SMBs." = "Tùy thuộc vào cài đặt của bạn, tính toán bolus sẽ sử dụng dữ liệu từ dự đoán đường huyết OpenAPS và/hoặc từ IOB, COB, xu hướng đường huyết, đường huyết hiện tại và đường huyết mục tiêu. Khi kết thúc phép tính, một hệ số tùy chỉnh sẽ được áp dụng (mặc định là 0,8).\n\nBạn cũng có thể có tùy chọn trong tính toán bolus của mình để áp dụng một hệ số tùy chỉnh khác (!) vào cuối phép tính, hệ số này có thể hữu ích cho các bữa ăn nhiều chất béo, ví dụ như Pizza (mặc định là 0,7).\n\nTính toán bolus KHÔNG sử dụng biến OpenAPS \"insulinRequired\", được tạo cho SMBs.";
+
+/* Bolus Calculator Setting */
+"Adjustment" = "Adjustment";
+
+/* Bolus Calculator Setting */
+"Use OpenAPS glucose predictions" = "Sử dụng dự đoán glucose OpenAPS";
+
+/* Bolus Calculator Setting */
 "Fatty Meals" = "Bữa ăn nhiều chất béo";
 
 /* Bolus Calculator Setting */
@@ -3010,7 +3058,7 @@ Enact a temp Basal or a temp target */
 "1. Use the OpenAPS eventual glucose prediction for computing the insulin recommended. This setting will enable the \"old\" calculator. On by default.\n\n2. Use the OpenAPS minPredBG prediction as a complementary safety guard rail, not allowing the glucose prediction to descend below your threshold. This setting can be used together with or without the eventual glucose. On by default" = "1. Sử dụng đường huyết dự đoán của OpenAPS để tính toán insulin được khuyến nghị. Thiết lập này sẽ kích hoạt tính toán \"cũ\". Bật theo mặc định.\n\n2. Sử dụng dự đoán minPredBG của OpenAPS như một rào chắn an toàn bổ sung, không cho phép dự đoán đường huyết giảm xuống dưới ngưỡng của bạn. Thiết lập này có thể được sử dụng cùng với hoặc không có đường huyết đự đoán. Bật theo mặc định";
 
 /* Settings Section */
-"Extra Features" = "Tính năng bổ sung";
+"Extra Features" = "Extra Features";
 
 /* Header */
 "UI/UX Settings" = "Cài đặt Giao diện";
@@ -3175,7 +3223,7 @@ Enact a temp Basal or a temp target */
 "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable." = "Đặt giá trị \"Kích hoạt SMB với BG cao\" sẽ so sánh để kích hoạt SMB. Nếu BG > giá trị này, SMB sẽ kích hoạt.";
 
 /* Headline "Enable SMB With High BG" */
-"Enable SMB With High BG" = "Kích hoạt SMB với BG cao";
+"Enable SMB With High BG" = "Enable SMB With High BG";
 
 /* "Enable SMB With High BG" */
 "Enable SMBs when a high BG is detected, based on the high BG target (adjusted or profile)" = "Kích hoạt SMB khi phát hiện BG cao, dựa trên mục tiêu BG cao (đã điều chỉnh hoặc cấu hình)";

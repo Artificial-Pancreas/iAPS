@@ -11,7 +11,7 @@
 "%1$@ basal schedule entries\n" = "%1$@ Lịch biểu liều nền\n";
 
 /* The format string describing units of insulin remaining: (1: number of units) */
-"%1$@ Units of insulin remaining\n" = "%1$@ Số unit insulin còn lại\n";
+"%1$@ Units of insulin remaining\n" = "%1$@ Số đơn vị insulin còn lại\n";
 
 /* Accessibility format string for (1: localized volume)(2: time) */
 "%1$@ units remaining at %2$@" = "%1$@ units vẫn đang còn lúc %2$@";
@@ -35,7 +35,7 @@
 "Best Frequency" = "Tần số tối ưu";
 
 /* The format string describing pump bolusing state: (1: bolusing) */
-"Bolusing: %1$@\n" = "Đang tiêm liều bolus: %1$@\n";
+"Bolusing: %1$@\n" = "Đang thực hiện bolus %1$@\n";
 
 /* Cancel button title */
 "Cancel" = "Hủy bỏ";

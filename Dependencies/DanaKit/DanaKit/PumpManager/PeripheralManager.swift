@@ -125,13 +125,11 @@ class PeripheralManager: NSObject {
                     // We did what we must, so exist and be happy :)
                     return
                 }
-
                 // We hit a timeout
                 // This means the pump received the message but could decrypt it
                 // We need to reconnect in order to fix the encryption keys
                 self.bluetoothManager.manager.cancelPeripheralConnection(self.connectedDevice)
                 stream.finish()
-
                 self.writeQueue.removeValue(forKey: packet.opCode)
                 self.writeTimeoutTask = nil
                 self.writeSemaphore.signal()
@@ -495,7 +493,6 @@ extension PeripheralManager {
             self.completion = nil
         }
     }
-
     private func promptPincode(_ errorMessage: String?) {
         guard let completion = self.completion else {
             return

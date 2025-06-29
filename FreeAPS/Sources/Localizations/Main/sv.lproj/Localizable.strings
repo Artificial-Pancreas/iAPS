@@ -2272,6 +2272,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Share your data anonymously" = "Dela data anonymt";
 
+/* Setting Title */
+"Sharing" = "Delning";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 

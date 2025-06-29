@@ -25,18 +25,15 @@ class DanaKitSettingsViewModel: ObservableObject {
     @Published var cannulaAge: String? = nil
     @Published var reservoirAge: String? = nil
     @Published var batteryAge: String? = nil
-
     @Published var showPumpTimeSyncWarning: Bool = false
     @Published var pumpTime: Date? = nil
     @Published var pumpTimeSyncedAt: Date? = nil
     @Published var nightlyPumpTimeSync: Bool = false
-
     @Published var reservoirLevelWarning: Double
     @Published var reservoirLevel: Double?
     @Published var isSuspended: Bool = false
     @Published var basalRate: Double?
     @Published var showingReservoirCannulaRefillView: Bool = false
-
     private let log = DanaLogger(category: "SettingsView")
     private(set) var insulinType: InsulinType
     private(set) var pumpManager: DanaKitPumpManager?
@@ -75,13 +72,11 @@ class DanaKitSettingsViewModel: ObservableObject {
         numberFormatter.minimumIntegerDigits = 1
         return numberFormatter
     }()
-
     let reservoirVolumeFormatter: QuantityFormatter = {
         let formatter = QuantityFormatter(for: .internationalUnit())
         formatter.numberFormatter.maximumFractionDigits = 1
         return formatter
     }()
-
     private let dateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .medium
@@ -216,7 +211,6 @@ class DanaKitSettingsViewModel: ObservableObject {
             }
         }
     }
-
     func formatDate(_ date: Date?) -> String {
         guard let date = date else {
             return ""
@@ -250,7 +244,6 @@ class DanaKitSettingsViewModel: ObservableObject {
             }
         }
     }
-
     func updateNightlyPumpTimeSync(_ value: Bool) {
         guard let pumpManager = self.pumpManager else {
             return
@@ -277,7 +270,6 @@ class DanaKitSettingsViewModel: ObservableObject {
         let quantity = HKQuantity(unit: .internationalUnit(), doubleValue: units)
         return reservoirVolumeFormatter.string(from: quantity, for: .internationalUnit()) ?? ""
     }
-
     func toggleSilentTone() {
         guard let pumpManager = self.pumpManager else {
             return
@@ -318,7 +310,6 @@ class DanaKitSettingsViewModel: ObservableObject {
                     self.basalButtonText = self.updateBasalButtonText()
                     self.isUpdatingPumpState = false
                 }
-
                 // Check if action failed, otherwise skip state sync
                 guard error == nil else {
                     self.log.error("\(#function): failed to stop temp basal. Error: \(error!.localizedDescription)")
@@ -359,7 +350,6 @@ class DanaKitSettingsViewModel: ObservableObject {
                 self.basalButtonText = self.updateBasalButtonText()
                 self.isUpdatingPumpState = false
             }
-
             // Check if action failed, otherwise skip state sync
             guard error == nil else {
                 self.log.error("\(#function): failed to suspend delivery. Error: \(error!.localizedDescription)")
@@ -367,7 +357,6 @@ class DanaKitSettingsViewModel: ObservableObject {
             }
         })
     }
-
     private func updateBasalButtonText() -> String {
         guard let pumpManager = self.pumpManager else {
             return LocalizedString("Suspend delivery", comment: "Dana settings suspend delivery")
@@ -398,7 +387,6 @@ class DanaKitSettingsViewModel: ObservableObject {
         if let days = components.day, let hours = components.hour {
             return "\(days)d \(hours)h"
         }
-
         return "?d ?h"
     }
 }

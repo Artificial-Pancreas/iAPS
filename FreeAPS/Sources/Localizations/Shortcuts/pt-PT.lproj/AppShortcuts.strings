@@ -33,3 +33,15 @@
 
 /* iAPS Bolus shortcut description */
 "${applicationName} Enacts a bolus" = "${applicationName} Enacts a bolus";
+
+/* iAPS Override shortcut */
+"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+
+/* iAPS Meal presets shortcut description */
+"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";
+
+/* iAPS Override shortcut */
+"${applicationName} Meal Presets" = "${applicationName} Meal Presets";
+
+/* iAPS Meal presets shortcut description */
+"Uses an ${applicationName} Meal Preset" = "Uses an ${applicationName} Meal Preset";

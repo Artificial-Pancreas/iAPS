@@ -2273,6 +2273,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* */
 "Share your data anonymously" = "Deel je gegevens anoniem";
 
+/* Setting Title */
+"Sharing" = "Delen van statistieken";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 

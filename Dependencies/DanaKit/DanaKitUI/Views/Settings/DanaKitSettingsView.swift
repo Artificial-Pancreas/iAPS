@@ -178,14 +178,12 @@ struct DanaKitSettingsView: View {
                         .frame(height: 200)
                     Spacer()
                 }
-
                 HStack(alignment: .top) {
                     deliveryStatus
                     Spacer()
                     reservoirStatus
                 }
                 .padding(.bottom, 5)
-
                 if viewModel.showPumpTimeSyncWarning {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(LocalizedString("Time Change Detected", comment: "title for time change detected notice"))
@@ -198,7 +196,6 @@ struct DanaKitSettingsView: View {
                     }.padding(.vertical, 8)
                 }
             }
-
             Section {
                 Button(action: {
                     viewModel.suspendResumeButtonPressed()
@@ -240,7 +237,6 @@ struct DanaKitSettingsView: View {
                     }
                 }
                 .disabled(viewModel.isUpdatingPumpState || viewModel.isSyncing)
-
                 if viewModel.isUsingContinuousMode {
                     if !viewModel.isConnected {
                         Button(action: {
@@ -272,7 +268,6 @@ struct DanaKitSettingsView: View {
                             disconnectReminder
                         }
                     }
-
                     HStack {
                         Text(LocalizedString("Status", comment: "Text for status")).foregroundColor(Color.primary)
                         Spacer()
@@ -282,14 +277,12 @@ struct DanaKitSettingsView: View {
                         }
                     }
                 }
-
                 HStack {
                     Text(LocalizedString("Last sync", comment: "Text for last sync")).foregroundColor(Color.primary)
                     Spacer()
                     Text(String(viewModel.formatDate(viewModel.lastSync)))
                         .foregroundColor(.secondary)
                 }
-
                 if let reservoirAge = viewModel.reservoirAge {
                     HStack {
                         Text(LocalizedString("Reservoir age", comment: "Text for reservoir age")).foregroundColor(Color.primary)
@@ -301,7 +294,6 @@ struct DanaKitSettingsView: View {
                         viewModel.updateReservoirAge()
                     })
                 }
-
                 if let cannulaAge = viewModel.cannulaAge {
                     HStack {
                         Text(LocalizedString("Cannula age", comment: "Text for cannula age")).foregroundColor(Color.primary)
@@ -313,7 +305,6 @@ struct DanaKitSettingsView: View {
                         viewModel.updateCannulaAge()
                     })
                 }
-
                 if let batteryAge = viewModel.batteryAge {
                     HStack {
                         Text(LocalizedString("Battery age", comment: "Text for battery age")).foregroundColor(Color.primary)
@@ -505,13 +496,11 @@ struct DanaKitSettingsView: View {
         .navigationBarItems(trailing: doneButton)
         .navigationBarTitle(viewModel.pumpModel)
     }
-
     private var doneButton: some View {
         Button("Done", action: {
             dismiss()
         })
     }
-
     var reservoirStatus: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(LocalizedString("Insulin Remaining", comment: "Header for insulin remaining on pod settings screen"))
@@ -528,7 +517,6 @@ struct DanaKitSettingsView: View {
             }
         }
     }
-
     var deliveryStatus: some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(deliverySectionTitle)
@@ -570,7 +558,6 @@ struct DanaKitSettingsView: View {
             }
         }
     }
-
     var continuousConnectionStatusText: some View {
         if viewModel.isTogglingConnection {
             if viewModel.isConnected {
@@ -604,7 +591,6 @@ struct DanaKitSettingsView: View {
             return LocalizedString("Scheduled Basal", comment: "Title of insulin delivery section")
         }
     }
-
     private func reservoirColor(_ reservoirLevel: Double) -> Color {
         if reservoirLevel > viewModel.reservoirLevelWarning {
             return insulinTintColor

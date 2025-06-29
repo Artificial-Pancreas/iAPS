@@ -2272,6 +2272,9 @@ Enact a temp Basal or a temp target */
 /* */
 "Share your data anonymously" = "Condividi i tuoi dati in modo anonimo";
 
+/* Setting Title */
+"Sharing" = "Condivisione";
+
 /* ——————————Contact Image ————————*/
 /* Contact Image, contacts list - prefix before the contact given name */
 

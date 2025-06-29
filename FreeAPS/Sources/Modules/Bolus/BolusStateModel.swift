@@ -145,6 +145,10 @@ extension Bolus {
             guard glucose.count >= 4 else { return }
             deltaBG = Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
                 (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
+
+            if currentBG == 0, (lastGlucose.date ?? .distantPast).timeIntervalSinceNow > -5.minutes.timeInterval {
+                currentBG = Decimal(lastGlucose.glucose)
+            }
         }
 
         func calculateInsulin() -> Decimal {

@@ -2,7 +2,7 @@ name: 4. Build iAPS
 run-name: Build iAPS (${{ github.ref_name }})
 on:
   workflow_dispatch:
-  
+
   # this will trigger this workflow for any push to any branch that this workflow is
   # active on, *but*, the auto_build_check job will check to see if this branch is
   # enabled *for* being auto built, and short circuit the process if so.
@@ -11,8 +11,8 @@ on:
   # workflow is triggered, but doesn't actually do anything.
   #
   push:
-  
-env:  
+
+env:
   UPSTREAM_REPO: Artificial-Pancreas/iAPS
   UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
   TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (replace with specific branch name if needed)
@@ -51,23 +51,23 @@ jobs:
     needs: [validate]
     runs-on: ubuntu-latest
     name: Check upstream
-    outputs: 
+    outputs:
       NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
-    
+
     steps:
-    - name: Checkout target repo
-      if: |
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-        (vars.SCHEDULED_BUILD != 'false' || vars.SCHEDULED_SYNC != 'false')
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GH_PAT }}
-        ref: alive
-  
+      - name: Checkout target repo
+        if: |
+          needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
+          (vars.SCHEDULED_BUILD != 'false' || vars.SCHEDULED_SYNC != 'false')
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+          ref: alive
+
   # Builds iAPS
   build:
     name: Build
-    needs: [validate,check_latest_from_upstream]
+    needs: [validate, check_latest_from_upstream]
     runs-on: macos-15
     permissions:
       contents: write
@@ -79,16 +79,16 @@ jobs:
           fi
 
       - name: Select Xcode version
-        run: "sudo xcode-select --switch /Applications/Xcode_16.3.app/Contents/Developer"
-      
+        run: 'sudo xcode-select --switch /Applications/Xcode_16.3.app/Contents/Developer'
+
       - name: Checkout Repo for syncing
         if: |
           vars.SCHEDULED_SYNC == 'true'
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
-          ref: ${{ env.TARGET_BRANCH }} 
-      
+          ref: ${{ env.TARGET_BRANCH }}
+
       - name: Sync upstream changes
         if: | # do not run the upstream sync action on the upstream repository
           vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
@@ -100,18 +100,18 @@ jobs:
           target_repo_token: ${{ secrets.GH_PAT }}
           upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
           upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
-      
+
       # Display a sample message based on the sync output var 'has_new_commits'
       - name: New commits found
         if: |
           vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
         run: echo "New commits were found to sync."
-    
+
       - name: No new commits
         if: |
           vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
         run: echo "There were no new commits."
-      
+
       - name: Show value of 'has_new_commits'
         if: |
           vars.SCHEDULED_SYNC == 'true'
@@ -129,7 +129,7 @@ jobs:
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
         run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
-      
+
       # Install project dependencies
       - name: Install project dependencies
         run: bundle install
@@ -140,7 +140,7 @@ jobs:
 
       # Build signed iAPS IPA file
       - name: Fastlane Build & Archive
-        run: bundle exec fastlane build_iAPS        
+        run: bundle exec fastlane build_iAPS
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
@@ -148,7 +148,7 @@ jobs:
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      
+
       # Upload to TestFlight
       - name: Fastlane upload to TestFlight
         run: bundle exec fastlane release

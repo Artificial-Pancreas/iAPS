@@ -16,7 +16,6 @@ enum DanaUIScreen {
     case deviceScanningScreen
     case setupComplete
     case settings
-
     func next() -> DanaUIScreen? {
         switch self {
         case .debugView:
@@ -134,7 +133,6 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
                     self.stepFinished()
                     return
                 }
-
                 pumpManager.state.devicePassword = password
                 self.stepFinished()
             })
@@ -200,7 +198,6 @@ class DanaUICoordinator: UINavigationController, PumpManagerOnboarding, Completi
             completionDelegate?.completionNotifyingDidComplete(self)
         }
     }
-
     func getInitialScreen() -> DanaUIScreen {
         guard let pumpManager = self.pumpManager else {
             return .firstRunScreen

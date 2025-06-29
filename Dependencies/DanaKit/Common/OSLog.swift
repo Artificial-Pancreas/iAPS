@@ -79,7 +79,6 @@ class DanaLogger {
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
-
     private var dateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -103,7 +102,6 @@ class DanaLogger {
 
         return items
     }
-
     private func getLevel(_ type: OSLogEntryLog.Level) -> String {
         switch type {
         case .info:

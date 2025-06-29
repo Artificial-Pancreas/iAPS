@@ -150,6 +150,10 @@ final class OpenAPS {
                     // Save
                     self.storage.save(suggestion, as: Enact.suggested)
 
+                    print(
+                        "Time for updating and saving reasons: \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+                    )
+
                     promise(.success(suggestion))
                 } else {
                     promise(.success(nil))

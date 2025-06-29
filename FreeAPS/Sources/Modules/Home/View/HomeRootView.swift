@@ -620,6 +620,7 @@ extension Home {
                     height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top : height + 10 + geo
                         .safeAreaInsets.top
                 )
+                .clipShape(Rectangle())
                 .overlay {
                     VStack {
                         ZStack {

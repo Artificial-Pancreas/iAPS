@@ -558,7 +558,6 @@ extension DanaKitPumpManager: PumpManager {
             })
                 // Filter nil values
                 .compactMap { $0 }
-
         } catch {
             log.error("Failed to sync history. Error: \(error.localizedDescription)")
             if hasHistoryModeBeenActivate {
@@ -687,7 +686,6 @@ extension DanaKitPumpManager: PumpManager {
 
                         await withCheckedContinuation { continuation in
                             self.bolusCallback = continuation
-
                             completion(nil)
                         }
                     } catch {

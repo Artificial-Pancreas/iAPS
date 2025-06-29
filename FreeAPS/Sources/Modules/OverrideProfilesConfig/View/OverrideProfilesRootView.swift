@@ -206,7 +206,6 @@ extension OverrideProfilesConfig {
                                 Text("Change ISF and CR and Basal")
                             }
                         }
-
                         if !state.isfAndCr {
                             HStack {
                                 Toggle(isOn: $state.isf) {

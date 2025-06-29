@@ -414,7 +414,6 @@
 /* Description for basal profile number */
 "Set the basal profile the pump should use. Note, that it will overwrite the profile that is in the pump, with the one in %1$@" = "Pompanın kullanması gereken bazal profili ayarlayın. Pompada bulunan profilin üzerine %1$@adresinde bulunan profilin yazılacağını unutmayın.";
 
-
 /* Error message for reservoir view when reservoir empty
    Status highlight message for emptyReservoir alarm.
    Status highlight that a pump is out of insulin. */

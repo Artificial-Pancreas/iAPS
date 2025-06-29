@@ -706,6 +706,7 @@ extension MainChartView {
         calculateOverridesRects(fullSize: fullSize)
         calculateBasalPoints(fullSize: fullSize)
         calculateSuspensions(fullSize: fullSize)
+        print("Updating Main Chart")
     }
 
     private func calculateGlucoseDots(fullSize: CGSize) {
