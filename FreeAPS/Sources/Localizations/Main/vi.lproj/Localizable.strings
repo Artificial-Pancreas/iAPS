@@ -1852,10 +1852,10 @@ Enact a temp Basal or a temp target */
 " without bolusing" = " không cần bolus";
 
 /* */
-"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+"Don't Use 15 min Trend" = "Không sử dụng xu hướng 15 phút";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+"Don't adjust for past 15 minutes glucose trend." = "Không điều chỉnh theo xu hướng đường huyết trong 15 phút qua.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -2574,7 +2574,7 @@ Enact a temp Basal or a temp target */
 "ISF weight for lower BG" = "ISF weight for lower BG";
 
 /* */
-"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0,0 Đây là hệ số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết thấp hơn mức mục tiêu. Nếu đặt bằng 0,0, hiệu ứng này sẽ bị vô hiệu hóa.";
+"Default value: 0.0 This is the weight applied to the polygon which adapts ISF if glucose is below target. With 0.0 the effect is effectively disabled." = "Giá trị mặc định: 0.0 Đây là trọng số được áp dụng cho đa giác (polygon) dùng để điều chỉnh ISF khi đường huyết cao hơn mức mục tiêu. Nếu đặt bằng 0.0, hiệu ứng này sẽ bị vô hiệu hóa.";
 
 /* */
 "ISF weight for higher BG" = "ISF weight for higher BG";
@@ -3202,4 +3202,4 @@ Enact a temp Basal or a temp target */
 "Cancel Override" = "Huỷ bỏ ghi đè";
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
-"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+"To enable settings, go to the App Config section in iOS Settings App" = "Để bật các cài đặt, hãy vào phần Cấu hình ứng dụng trong ứng dụng Cài đặt của iOS";
