@@ -48,7 +48,7 @@ Title text for the button to remove a CGM from Loop */
 "Status" = "Tình trạng";
 
 /* Title describing transmitter session age */
-"Transmitter Age" = "Thời gian sử dụng Transmitter";
+"Transmitter Age" = "Transmitter đã sử dụng";
 
 /* The title text for the Dexcom G5/G6 transmitter ID config value */
 "Transmitter ID" = "Số ID của Transmitter";

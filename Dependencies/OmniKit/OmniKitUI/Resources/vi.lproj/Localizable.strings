@@ -21,7 +21,7 @@
 "%@ U of %@ U (%@)" = "%1$@ U of %2$@ U (%3$@)";
 
 /* Format string for temp basal rate. (1: The localized amount) */
-"%@ U/hour" = "%@ U/giờ";
+"%@ U/hour" = "%@ U/hour";
 
 /* Appends a full-stop to a statement */
 "%@." = "%@.";

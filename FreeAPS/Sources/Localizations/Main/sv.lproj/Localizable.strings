@@ -1851,6 +1851,12 @@ Enact a temp Basal or a temp target */
 /* Add insulin without bolusing alert */
 " without bolusing" = " utan att ge insulin";
 
+/* */
+"Don't Use 15 min Trend" = "Använd inte 15 min - trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Justera inte för de senaste 15 minuternas glukostrend.";
+
 /* -------------------------------------------------------------------------------------------
   DASH strings
 */
@@ -2380,7 +2386,7 @@ Enact a temp Basal or a temp target */
 "WideFontTracking" = "Bred";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Lätt";
+"LightFontWeight" = "Ljus";
 
 /* Contact Image, settings, regular font weight */
 "RegularFontWeight" = "Reguljär";
@@ -3193,3 +3199,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Avbryt Undantag";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "För att aktivera inställningar, gå till iOS instllningar, under Appar/iAPS";
