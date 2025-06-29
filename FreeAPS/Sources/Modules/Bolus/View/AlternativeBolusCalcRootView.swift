@@ -277,7 +277,8 @@ extension Bolus {
         }
 
         private var disabled: Bool {
-            state.amount <= 0 || state.amount > state.maxBolus
+            state.amount <= 0 || state.amount > state.maxBolus || state.amount <
+                state.minBolus || state.amount < state.bolusIncrement
         }
 
         var changed: Bool {

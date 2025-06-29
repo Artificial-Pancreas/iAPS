@@ -72,7 +72,7 @@ extension AutotuneConfig {
                             BasalProfileEntry(
                                 start: basal.start,
                                 minutes: basal.minutes,
-                                rate: basal.rate.roundBolus(increment: self.increment)
+                                rate: basal.rate.roundBolusIncrements(increment: self.increment)
                             )
                         }
                         tuned.basalProfile = basal
@@ -102,7 +102,7 @@ extension AutotuneConfig {
                         BasalProfileEntry(
                             start: String(basal.start.prefix(5)),
                             minutes: basal.minutes,
-                            rate: basal.rate.roundBolus(increment: increment)
+                            rate: basal.rate.roundBolusIncrements(increment: increment)
                         )
                     }
                 guard let pump = apsManager.pumpManager else {

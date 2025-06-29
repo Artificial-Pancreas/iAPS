@@ -537,7 +537,7 @@ struct MainChartView: View {
                     let string = bolusFormatter.string(from: info.value as NSNumber) ?? ""
                     let stringLength = CGFloat(string.count) * 2
                     let position = CGPoint(x: info.rect.midX, y: info.rect.minY - (8 + stringLength + Config.pointSizeHeight))
-                    Text(info.value >= data.minimumSMB ? (bolusFormatter.string(from: info.value as NSNumber) ?? "") : "")
+                    Text(info.value >= data.minimumSMB ? string : "")
                         .rotationEffect(Angle(degrees: -90))
                         .font(bolusFont())
                         .position(position)
