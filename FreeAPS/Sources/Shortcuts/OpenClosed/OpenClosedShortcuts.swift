@@ -79,9 +79,9 @@ enum Mode: String {
 }
 
 extension Mode: AppEnum {
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Mode"
+    static let typeDisplayRepresentation: TypeDisplayRepresentation = "Mode"
 
-    static var caseDisplayRepresentations: [Mode: DisplayRepresentation] = [
+    static let caseDisplayRepresentations: [Mode: DisplayRepresentation] = [
         .closed: "Closed",
         .open: "Open"
     ]
