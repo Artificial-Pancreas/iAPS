@@ -1177,6 +1177,9 @@ Połączono z Nightscout!";
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
