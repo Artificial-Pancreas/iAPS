@@ -1175,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "ВБС в Ед/ч";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
