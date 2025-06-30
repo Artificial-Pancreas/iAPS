@@ -1176,6 +1176,9 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Tijdelijk basaal hoeveelheid in E/uur";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
