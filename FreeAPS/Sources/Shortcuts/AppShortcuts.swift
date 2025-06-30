@@ -66,9 +66,9 @@ struct AppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: SuspendResumeIntent(),
             phrases: [
-                "\(.applicationName) Suspend/Resume",
-                "Suspends/Resumes your \(.applicationName) pump"
-            ], shortTitle: "Suspend/Resume", systemImageName: "playpause"
+                "\(.applicationName) Pump",
+                "Suspends/Resumes your \(.applicationName) pump or cancels a temp basal"
+            ], shortTitle: "Pump", systemImageName: "playpause"
         )
     }
 }
