@@ -1176,6 +1176,9 @@ Solamente puedes emparejar una app con el sensor vía bluetooth. A continuación
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
