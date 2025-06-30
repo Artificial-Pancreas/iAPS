@@ -1176,6 +1176,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Dočasné množstvo bazálu v U/h";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
