@@ -1852,10 +1852,10 @@ Enact a temp Basal or a temp target */
 " without bolusing" = " без введення болюса помпою";
 
 /* */
-"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+"Don't Use 15 min Trend" = "Не використовувати 15-хвилинний тренд";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
+"Don't adjust for past 15 minutes glucose trend." = "Не коригувати на основі тренду глюкози протягом останніх 15 хвилин.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3202,4 +3202,4 @@ Enact a temp Basal or a temp target */
 "Cancel Override" = "Скасувати перевизначення";
 
 /* Headline "To enable settings, go to the App Config section in iOS Settings App" */
-"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
+"To enable settings, go to the App Config section in iOS Settings App" = "Щоб увімкнути налаштування, перейдіть до розділу Програми в Налаштуваннях iPhone";
