@@ -1176,7 +1176,7 @@ Enact a temp Basal or a temp target */
 "Temp basal Amount in U/h" = "Temporär basaldos i enheter per timme";
 
 /* */
-"Cancel Temp" = "Cancel Temp";
+"Cancel Temp" = "Avbryt temporär basal";
 
 
 
