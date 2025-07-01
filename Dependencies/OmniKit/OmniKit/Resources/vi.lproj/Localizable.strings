@@ -120,7 +120,7 @@
 "Initialized" = "Đã được khởi tạo";
 
 /* Pod state when inserting cannula */
-"Inserting cannula" = "Gắn Cannula";
+"Inserting cannula" = "Đang gắn Cannula";
 
 /* The default notification body for AlarmCodes */
 "Insulin delivery stopped. Change Pod now." = "Insulin ngừng. Thay Pod ngay.";
@@ -249,7 +249,7 @@
 "Pod already paired" = "Pod đã được ghép đôi";
 
 /* Error message shown when prime is attempted, but pod is already primed */
-"Pod already primed" = "Pod đã được mồi";
+"Pod already primed" = "Pod đã được chuẩn bị sẵn";
 
 /* Status highlight message for other alarm. */
 "Pod Error" = "Lỗi Pod";
@@ -273,7 +273,7 @@
 "Pod is not in a state ready for cannula insertion." = "Pod không sẵn sàng để gắn cannula.";
 
 /* Error message when prime fails because the pod is in an unexpected state */
-"Pod is not in a state ready for priming." = "Pod không sẵn sàng để mồi.";
+"Pod is not in a state ready for priming." = "Pod chưa ở trạng thái sẵn sàng để mồi.";
 
 /* Error message action could not be performed because pod is suspended */
 "Pod is suspended" = "Pod bị tạm ngưng";

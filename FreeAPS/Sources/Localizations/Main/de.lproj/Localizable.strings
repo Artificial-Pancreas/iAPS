@@ -1175,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
@@ -1850,6 +1853,12 @@ Enact a temp Basal or a temp target */
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " Ohne tatsächliche Bolusabgabe";
+
+/* */
+"Don't Use 15 min Trend" = "Don't Use 15 min Trend";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Don't adjust for past 15 minutes glucose trend.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3197,3 +3206,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Cancel Override";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "To enable settings, go to the App Config section in iOS Settings App";
