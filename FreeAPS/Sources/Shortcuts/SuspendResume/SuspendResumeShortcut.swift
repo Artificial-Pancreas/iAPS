@@ -55,7 +55,7 @@ struct SuspendResumeIntent: AppIntent {
     }
 
     func whichMode() -> [PumpMode] {
-        [PumpMode.suspend, PumpMode.resume]
+        [PumpMode.suspend, PumpMode.resume, PumpMode.cancel]
     }
 }
 
