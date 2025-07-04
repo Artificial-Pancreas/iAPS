@@ -248,6 +248,14 @@ extension FreeAPSSettings: Decodable {
             settings.carbsRequiredAlert = carbsRequiredAlert
         }
 
+        if let normalRatios = try? container.decode(Bool.self, forKey: .normalRatios) {
+            settings.normalRatios = normalRatios
+        }
+
+        if let disable15MinTrend = try? container.decode(Bool.self, forKey: .disable15MinTrend) {
+            settings.disable15MinTrend = disable15MinTrend
+        }
+
         if let fattyMealFactor = try? container.decode(Decimal.self, forKey: .fattyMealFactor) {
             settings.fattyMealFactor = fattyMealFactor
         }

@@ -99,5 +99,6 @@
   "anubis": false,
   "fpus": true,
   "fpuAmounts": false,
-  "lightMode": LightMode.auto
+  "lightMode": LightMode.auto,
+  "normalRatios": false
 }
