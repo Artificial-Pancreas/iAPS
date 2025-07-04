@@ -74,7 +74,6 @@ extension Bolus {
         @Published var bolus: Decimal = 0
         @Published var carbToStore = [CarbsEntry]()
         @Published var history: [PumpHistoryEvent]?
-        @Published var normalRatios: Bool = false
         @Published var disable15MinTrend: Bool = false
 
         let loopReminder: CGFloat = 4
@@ -105,7 +104,6 @@ extension Bolus {
             bolusIncrement = settings.preferences.bolusIncrement
             closedLoop = settings.settings.closedLoop
             loopDate = apsManager.lastLoopDate
-            normalRatios = settings.settings.normalRatios
             disable15MinTrend = settings.settings.disable15MinTrend
 
             if waitForSuggestionInitial {
@@ -291,14 +289,8 @@ extension Bolus {
                    let carbRatio = reasons.cr, let minPredBG = reasons.minPredBG
                 {
                     self.target = target as Decimal
-
-                    if let ratio = reasons.ratio, self.normalRatios {
-                        self.isf = isf as Decimal * (ratio as Decimal)
-                        self.carbRatio = carbRatio as Decimal * (ratio as Decimal)
-                    } else {
-                        self.isf = isf as Decimal
-                        self.carbRatio = carbRatio as Decimal
-                    }
+                    self.isf = isf as Decimal
+                    self.carbRatio = carbRatio as Decimal
 
                     self.minPredBG = minPredBG as Decimal
                 }

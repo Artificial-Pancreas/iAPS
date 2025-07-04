@@ -57,6 +57,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var useTargetButton: Bool = false
     var alwaysUseColors: Bool = false
     var timeSettings: Bool = true
+    var disable15MinTrend: Bool = false
     // Alerts
     var lowAlert: Bool = true
     var highAlert: Bool = true
@@ -246,10 +247,6 @@ extension FreeAPSSettings: Decodable {
 
         if let carbsRequiredAlert = try? container.decode(Bool.self, forKey: .carbsRequiredAlert) {
             settings.carbsRequiredAlert = carbsRequiredAlert
-        }
-
-        if let normalRatios = try? container.decode(Bool.self, forKey: .normalRatios) {
-            settings.normalRatios = normalRatios
         }
 
         if let disable15MinTrend = try? container.decode(Bool.self, forKey: .disable15MinTrend) {
