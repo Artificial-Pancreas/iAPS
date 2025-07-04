@@ -3224,6 +3224,21 @@ Un límite Autosens.máx > 1,5 no es recomendable cuando se utiliza la función 
 /* UI/UX option */
 "Auto ISF Home View" = "Auto ISF Home View";
 
+/* UI/UX option */
+"Light" = "Suave";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Automático";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
+
 /* Setting title */
 "Bolus Calculator" = "Calculador de bolo";
 

@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Нет предсказаний. Неудачное предложение цикла.";
 
 /* Bolus View */
-"New Glucose Missing" = "Отсутствует глюкоза";
+"New Glucose Missing" = "New Glucose Missing";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Сохранить прием пищи без болюса";
@@ -3106,6 +3106,21 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Auto ISF Home View" = "Авто ISF на главном экране";
+
+/* UI/UX option */
+"Light" = "Светлый";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Авто";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
 
 /* Setting title */
 "Bolus Calculator" = "Калькулятор болюса";

@@ -2383,7 +2383,7 @@ Enact a temp Basal or a temp target */
 "WideFontTracking" = "Wide";
 
 /* Contact Image, settings, light font weight */
-"LightFontWeight" = "Light";
+"LightFontWeight" = "Light ";
 
 /* Contact Image, settings, regular font weight */
 "RegularFontWeight" = "Regular";
@@ -3106,6 +3106,21 @@ Enact a temp Basal or a temp target */
 
 /* UI/UX option */
 "Auto ISF Home View" = "Auto ISF Home View";
+
+/* UI/UX option */
+"Light" = "Light";
+
+/* UI/UX option */
+"Dark" = "Dark";
+
+/* UI/UX option */
+"Auto" = "Auto";
+
+/* UI/UX option */
+"Color Scheme" = "Color Scheme";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Light / Dark Mode";
 
 /* Setting title */
 "Bolus Calculator" = "Bolus Calculator";
