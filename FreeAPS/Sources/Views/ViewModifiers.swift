@@ -394,24 +394,16 @@ extension UnevenRoundedRectangle {
 }
 
 extension UIImage {
-    /// Code suggested by Mamad Farrahi, but slightly modified.
     func fillImageUpToPortion(color: Color, portion: Double) -> Image {
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(in: rect)
-        let context = UIGraphicsGetCurrentContext()!
-        context.setBlendMode(CGBlendMode.sourceIn)
-        context
-            .setFillColor(
-                color.cgColor ?? UIColor(portion > 0.75 ? .red.opacity(0.8) : .insulin.opacity(portion <= 3 ? 0.8 : 1))
-                    .cgColor
-            )
-        let height: CGFloat = 1 - portion
-        let rectToFill = CGRect(x: 0, y: size.height * portion, width: size.width, height: size.height * height)
-        context.fill(rectToFill)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return Image(uiImage: newImage!)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let image = renderer.image { context in
+            draw(in: rect)
+            let height: CGFloat = 1 - portion
+            let rectToFill = CGRect(x: 0, y: size.height * portion, width: size.width, height: size.height * height)
+            UIColor(color).setFill()
+            context.fill(rectToFill, blendMode: .sourceIn)
+        }
+        return Image(uiImage: image)
     }
 }

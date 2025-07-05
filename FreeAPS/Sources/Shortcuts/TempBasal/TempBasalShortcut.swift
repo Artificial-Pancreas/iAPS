@@ -10,7 +10,7 @@ struct BasalIntent: AppIntent {
         title: "Amount",
         description: "Temp basal Amount in U/h",
         controlStyle: .field,
-        inclusiveRange: (lowerBound: 0.05, upperBound: 10),
+        inclusiveRange: (lowerBound: 0, upperBound: 10),
         requestValueDialog: IntentDialog("What is the numeric value of the basal amount in insulin units")
     ) var basalQuantity: Double?
 

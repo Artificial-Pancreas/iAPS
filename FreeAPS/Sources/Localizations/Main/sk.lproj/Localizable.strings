@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Žiadne predpovede. Neúspešný návrh slučky.";
 
 /* Bolus View */
-"New Glucose Missing" = "Chýbajúca glykémia";
+"New Glucose Missing" = "Chýba nová glykémia";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Uložiť jedlo bez bolusu";
@@ -1176,6 +1176,9 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Dočasné množstvo bazálu v U/h";
 
+/* */
+"Cancel Temp" = "Cancel Temp";
+
 
 
 /* */
@@ -1671,7 +1674,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Change CR" = "Zmena CR";
 
 /* */
-"Change Basal" = "Change Basal";
+"Change Basal" = "Upraviť bazál";
 
 /* */
 "SMB Minutes" = "SMB minúty";
@@ -1851,6 +1854,12 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " pridanie bez použitia bolusu";
+
+/* */
+"Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Neupravujte vývoj glykémie za posledných 15 minút.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3111,6 +3120,21 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 /* UI/UX option */
 "Auto ISF Home View" = "Auto ISF domovská obrazovka";
 
+/* UI/UX option */
+"Light" = "Tenké";
+
+/* UI/UX option */
+"Dark" = "Tmavý";
+
+/* UI/UX option */
+"Auto" = "Automatická ";
+
+/* UI/UX option */
+"Color Scheme" = "Farebný režim";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Svetlý / tmavý režim";
+
 /* Setting title */
 "Bolus Calculator" = "Kalkulátor bolusu";
 
@@ -3185,3 +3209,6 @@ Pri cieľovej_glykémii je pomer SMB rovný smb_delivery_ratio_min, pri cieľove
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Zrušiť profil";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "Na povolenie nastavení prejdite do sekcie Konfigurácia aplikácie v aplikácii Nastavenia iOS";

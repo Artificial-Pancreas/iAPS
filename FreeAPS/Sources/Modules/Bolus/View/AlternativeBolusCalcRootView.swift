@@ -277,7 +277,8 @@ extension Bolus {
         }
 
         private var disabled: Bool {
-            state.amount <= 0 || state.amount > state.maxBolus
+            state.amount <= 0 || state.amount > state.maxBolus || state.amount <
+                state.minBolus || state.amount < state.bolusIncrement
         }
 
         var changed: Bool {
@@ -300,7 +301,6 @@ extension Bolus {
         private func illustrationView() -> some View {
             VStack {
                 IllustrationView(data: $state.data)
-
                 // Hide button
                 VStack {
                     Button { showInfo = false }

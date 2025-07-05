@@ -23,7 +23,7 @@
 "No Predictions. Failed loop suggestion." = "Немає прогнозів. Невдала пропозиція циклу.";
 
 /* Bolus View */
-"New Glucose Missing" = "Відсутність Глюкози";
+"New Glucose Missing" = "Відсутня Нові показники Глюкози";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Зберегти Їжу без болюсу";
@@ -1175,6 +1175,9 @@ Enact a temp Basal or a temp target */
 /* Temp Basal Shortcut */
 "Temp basal Amount in U/h" = "Temp basal Amount in U/h";
 
+/* */
+"Cancel Temp" = "Скасувати тимчасове обмеження";
+
 
 
 /* */
@@ -1850,6 +1853,12 @@ Enact a temp Basal or a temp target */
 
 /* Add insulin without bolusing alert */
 " without bolusing" = " без введення болюса помпою";
+
+/* */
+"Don't Use 15 min Trend" = "Не використовувати 15-хвилинний тренд";
+
+/* */
+"Don't adjust for past 15 minutes glucose trend." = "Не коригувати на основі тренду глюкози протягом останніх 15 хвилин.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
@@ -3108,6 +3117,21 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 "Auto ISF Home View" = "Авто ISF на Головному екрані";
 
+/* UI/UX option */
+"Light" = "Світлий";
+
+/* UI/UX option */
+"Dark" = "Темна";
+
+/* UI/UX option */
+"Auto" = "Авто";
+
+/* UI/UX option */
+"Color Scheme" = "Кольорова Схема";
+
+/* UI/UX option */
+"Light / Dark Mode" = "Світло/Темний Режим";
+
 /* Setting title */
 "Bolus Calculator" = "Калькулятор Болюса";
 
@@ -3182,3 +3206,6 @@ Enact a temp Basal or a temp target */
 
 /* Apple Watch Overrides */
 "Cancel Override" = "Скасувати перевизначення";
+
+/* Headline "To enable settings, go to the App Config section in iOS Settings App" */
+"To enable settings, go to the App Config section in iOS Settings App" = "Щоб увімкнути налаштування, перейдіть до розділу Програми в Налаштуваннях iPhone";

@@ -23,7 +23,7 @@
 "Setting up DanaRS v1" = "Thiết lập DanaRS v1";
 
 /* Subtext for danars v1 */
-"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Trong quá trình ghép đôi, DanaRS v1 của bạn sẽ hiển thị lời nhắc ghép đôi, trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép đôi. Trên bơm, hãy chọn OK và nhập mã đó trên iPhone của bạn. Sau đó, %1$@ đã sẵn sàng để giao tiếp với DanaRS v1 của bạn";
+"During the pairing process, your DanaRS v1 will show a pairing prompt while you iPhone will show a prompt for a pairing code. On your pump, select OK and type the code on your iPhone. After that, %1$@ is ready to communicate with your DanaRS v1" = "Trong quá trình ghép nối, DanaRS v1 của bạn sẽ hiển thị lời nhắc ghép nối trong khi iPhone của bạn sẽ hiển thị lời nhắc nhập mã ghép nối. Trên máy bơm của bạn, hãy chọn OK và nhập mã trên iPhone của bạn. Sau đó, %1$@ đã sẵn sàng giao tiếp với DanaRS v1 của bạn";
 
 /* check password text for danars v1 */
 "Before starting with the pairing process, it is recommended to check, and if needed update, the pump password. You can do this by going to the pump settings -> user settings -> password. The default password is 1234, if this is your password, please consider changing it" = "Trước khi bắt đầu quá trình ghép nối, bạn nên kiểm tra và nếu cần hãy cập nhật mật khẩu máy bơm. Bạn có thể thực hiện việc này bằng cách vào pump settings -> user settings -> password. Mật khẩu mặc định là 1234, nếu đây là mật khẩu của bạn, vui lòng cân nhắc thay đổi mật khẩu";
