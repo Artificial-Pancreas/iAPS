@@ -46,6 +46,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     if insulinConcentration.concentration != 1, var needingAdjustment = amount {
                         needingAdjustment *= Decimal(insulinConcentration.concentration)
                         amount = needingAdjustment
+                            .roundBolusIncrements(increment: insulinConcentration.concentration * 0.05)
                     }
 
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
