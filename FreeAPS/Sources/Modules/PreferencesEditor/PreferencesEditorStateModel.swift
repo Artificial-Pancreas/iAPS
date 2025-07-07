@@ -9,13 +9,11 @@ extension PreferencesEditor {
         @Published var sections: [FieldSection] = []
         @Published var useAlternativeBolusCalc: Bool = false
         @Published var units: GlucoseUnits = .mmolL
-        @Published var maxCarbs: Decimal = 200
 
         override func subscribe() {
             preferences = provider.preferences
             units = settingsManager.settings.units
 
-            subscribeSetting(\.maxCarbs, on: $maxCarbs) { maxCarbs = $0 }
             subscribeSetting(\.units, on: $unitsIndex.map { $0 == 0 ? GlucoseUnits.mgdL : .mmolL }) {
                 unitsIndex = $0 == .mgdL ? 0 : 1
             } didSet: { [weak self] _ in
@@ -148,13 +146,13 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString(
-                        "... When Blood Glucose Is Above:",
-                        comment: "... When Blood Glucose Is Above:"
+                        "... When Blood Glucose Is Over (mg/dl):",
+                        comment: "... When Blood Glucose Is Over (mg/dl):"
                     ),
-                    type: .glucose(keypath: \.enableSMB_high_bg_target),
+                    type: .decimal(keypath: \.enableSMB_high_bg_target),
                     infoText: NSLocalizedString(
                         "Set the value enableSMB_high_bg will compare against to enable SMB. If BG > than this value, SMBs should enable.",
-                        comment: "... When Blood Glucose Is Above:"
+                        comment: "... When Blood Glucose Is Over (mg/dl):"
                     ),
                     settable: self
                 ),
@@ -261,7 +259,7 @@ extension PreferencesEditor {
                 ),
                 Field(
                     displayName: NSLocalizedString("Half Basal Exercise Target", comment: "Half Basal Exercise Target"),
-                    type: .glucose(keypath: \.halfBasalExerciseTarget),
+                    type: .decimal(keypath: \.halfBasalExerciseTarget),
                     infoText: NSLocalizedString(
                         "Set to a number, e.g. 160, which means when temp target is 160 mg/dL, run 50% basal at this level (120 = 75%; 140 = 60%). This can be adjusted, to give you more control over your exercise modes.",
                         comment: "Half Basal Exercise Target"

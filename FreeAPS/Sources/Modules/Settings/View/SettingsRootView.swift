@@ -51,6 +51,13 @@ extension Settings {
                             .foregroundStyle(.orange).bold()
                             .multilineTextAlignment(.leading)
                         }
+                        Spacer()
+
+                        Image("rig22")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .offset(x: 290, y: -65)
                     }
                 }
 
@@ -87,8 +94,8 @@ extension Settings {
                     } header: { Text("OpenAPS") }
 
                     Section {
-                        Text("UI/UX").navigationLink(to: .statisticsConfig, from: self)
-                        Text("App Icons").navigationLink(to: .iconConfig, from: self)
+                        //   Text("UI/UX").navigationLink(to: .statisticsConfig, from: self)
+                        //  Text("App Icons").navigationLink(to: .iconConfig, from: self)
                         Text("Bolus Calculator").navigationLink(to: .bolusCalculatorConfig, from: self)
                         Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
                         Text("Sharing").navigationLink(to: .sharing, from: self)

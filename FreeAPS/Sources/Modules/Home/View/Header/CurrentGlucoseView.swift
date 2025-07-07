@@ -2,60 +2,51 @@ import SwiftUI
 
 struct CurrentGlucoseView: View {
     @Binding var recentGlucose: BloodGlucose?
+    @Binding var timerDate: Date
     @Binding var delta: Int?
     @Binding var units: GlucoseUnits
     @Binding var alarm: GlucoseAlarm?
     @Binding var lowGlucose: Decimal
     @Binding var highGlucose: Decimal
-    @Binding var alwaysUseColors: Bool
+    @Binding var bolusProgress: Double?
     @Binding var displayDelta: Bool
+    @Binding var alwaysUseColors: Bool
     @Binding var scrolling: Bool
     @Binding var displayExpiration: Bool
     @Binding var cgm: CGMType
     @Binding var sensordays: Double
-    @Binding var anubis: Bool
 
-    @Environment(\.colorScheme) var colorScheme
+    // @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) private var fontSize
+
+    @State private var rotationDegrees: Double = 0
+    @State private var bumpEffect: Double = 0
+
+    // var backgroundColor: Color //falls triangel während bolus in backgroundColor gewünscht ist
+
+    // Bedingte Farbauswahl für das Dreieck
+    private var currentTriangleColor: Color {
+        if let progress = bolusProgress, progress < 1.0 {
+            return Color.clear
+        } else {
+            return Color.white
+        }
+    }
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        if units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-            formatter.roundingMode = .halfUp
-        }
+        formatter.maximumFractionDigits = units == .mmolL ? 1 : 0
+        formatter.roundingMode = .halfUp
         return formatter
-    }
-
-    private var manualGlucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        if units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-            formatter.roundingMode = .ceiling
-        }
-        return formatter
-    }
-
-    private var decimalString: String {
-        let formatter = NumberFormatter()
-        return formatter.decimalSeparator
     }
 
     private var deltaFormatter: NumberFormatter {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        if units == .mmolL {
-            formatter.decimalSeparator = "."
-        }
         formatter.maximumFractionDigits = 1
-        formatter.positivePrefix = "+ "
-        formatter.negativePrefix = "- "
+        formatter.positivePrefix = "  +"
+        formatter.negativePrefix = "  -"
         return formatter
     }
 
@@ -63,13 +54,13 @@ struct CurrentGlucoseView: View {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.maximumFractionDigits = 0
-        formatter.negativePrefix = ""
         return formatter
     }
 
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
+    private var daysFormatter: DateComponentsFormatter {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour]
+        formatter.unitsStyle = .abbreviated
         return formatter
     }
 
@@ -83,46 +74,8 @@ struct CurrentGlucoseView: View {
     private var remainingTimeFormatterDays: DateComponentsFormatter {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.day]
-        formatter.unitsStyle = .abbreviated
+        formatter.unitsStyle = .short
         return formatter
-    }
-
-    var body: some View {
-        glucoseView
-            .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.xLarge)
-    }
-
-    var glucoseView: some View {
-        ZStack {
-            if let recent = recentGlucose {
-                if displayDelta, !scrolling, let deltaInt = delta,
-                   !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
-                if displayExpiration || anubis {
-                    sageView
-                }
-                VStack(spacing: 15) {
-                    let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
-                    if let string = recent.glucose.map({
-                        formatter
-                            .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber) ?? "" })
-                    {
-                        glucoseText(string).asAny()
-                            .background { glucoseDrop }
-                        if !scrolling {
-                            let minutesAgo = -1 * recent.dateString.timeIntervalSinceNow / 60
-                            let text = timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
-                            Text(
-                                minutesAgo <= 1 ? NSLocalizedString("Now", comment: "") :
-                                    (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
-                            )
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .offset(x: 1, y: fontSize >= .extraLarge ? -3 : 0)
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private func deltaView(_ deltaInt: Int) -> some View {
@@ -139,31 +92,77 @@ struct CurrentGlucoseView: View {
         .frame(maxHeight: .infinity, alignment: .center).offset(x: 140.5, y: displayExpiration ? -34 : -7)
     }
 
-    private var sageView: some View {
+    var body: some View {
         ZStack {
-            if let date = recentGlucose?.sessionStartDate {
-                let expiration = (cgm == .xdrip || cgm == .glucoseDirect) ? sensordays * 8.64E4 : cgm.expiration
-                let remainingTime: TimeInterval = anubis ? (-1 * date.timeIntervalSinceNow) : expiration -
-                    (-1 * date.timeIntervalSinceNow)
+            // TriangleShape(color: triangleColor)
+            TriangleShape(color: currentTriangleColor)
+                .rotationEffect(.degrees(rotationDegrees + bumpEffect))
+                .animation(.easeInOut(duration: 3.0), value: rotationDegrees)
 
-                Sage(amount: remainingTime, expiration: anubis ? remainingTime : expiration)
-                    .frame(width: 59, height: 26)
-                    .overlay {
-                        HStack {
-                            Text(
-                                remainingTime >= 1 * 8.64E4 ?
-                                    (remainingTimeFormatterDays.string(from: remainingTime) ?? "")
-                                    .replacingOccurrences(of: ",", with: " ") :
-                                    (remainingTimeFormatter.string(from: remainingTime) ?? "")
-                                    .replacingOccurrences(of: ",", with: " ")
-                            )
-                        }
-                    }
+            VStack(alignment: .center) {
+                HStack {
+                    Text(
+                        (recentGlucose?.glucose ?? 100) == 400 ? "HIGH" : recentGlucose?.glucose
+                            .map {
+                                glucoseFormatter
+                                    .string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
+                            } ?? "--"
+                    )
+                    .font(.system(size: 30, weight: .bold))
+                    .foregroundColor(alwaysUseColors ? colourGlucoseText : .white)
+                }
+                HStack {
+                    let elapsedSeconds = -1 * (recentGlucose?.dateString.timeIntervalSinceNow ?? 0)
+                    let elapsedMinutes = elapsedSeconds / 60
+                    let timeText = timaAgoFormatter.string(for: floor(elapsedMinutes)) ?? ""
+
+                    Text(
+                        elapsedSeconds < 60 ? "Now" : "\(timeText) min"
+                    )
+                    .font(.caption2)
+                    .foregroundStyle(Color.white)
+
+                    Text(
+                        delta
+                            .map {
+                                deltaFormatter.string(from: Double(units == .mmolL ? $0.asMmolL : Decimal($0)) as NSNumber)!
+                            } ?? "--"
+                    )
+                    .font(.caption2)
+                    .foregroundStyle(Color.white)
+                }
             }
         }
-        .font(.footnote)
-        .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxHeight: .infinity, alignment: .center).offset(x: 140.5, y: 3)
+        .onChange(of: recentGlucose?.direction) { _, newDirection in
+            switch newDirection {
+            case .doubleUp,
+                 .singleUp,
+                 .tripleUp:
+                rotationDegrees = -90
+            case .fortyFiveUp:
+                rotationDegrees = -45
+            case .flat:
+                rotationDegrees = 0
+            case .fortyFiveDown:
+                rotationDegrees = 45
+            case .doubleDown,
+                 .singleDown,
+                 .tripleDown:
+                rotationDegrees = 90
+            case .none?,
+                 .notComputable,
+                 .rateOutOfRange:
+                rotationDegrees = 0
+            @unknown default:
+                rotationDegrees = 0
+            }
+
+            withAnimation(.interpolatingSpring(stiffness: 100, damping: 5).delay(0.5)) {
+                bumpEffect = 5
+                bumpEffect = 0
+            }
+        }
+        // .frame(width: !scrolling ? 140 : 80, height: !scrolling ? 140 : 80)
     }
 
     private var adjustments: (degree: Double, x: CGFloat, y: CGFloat) {
@@ -210,53 +209,62 @@ struct CurrentGlucoseView: View {
         }
     }
 
-    private func glucoseText(_ string: String) -> any View {
-        ZStack {
-            let decimal = string.components(separatedBy: decimalString)
-            if decimal.count > 1 {
-                HStack(spacing: 0) {
-                    Text(decimal[0]).font(scrolling ? .glucoseSmallFont : .glucoseFont)
-                    Text(decimalString).font(.system(size: !scrolling ? 28 : 14).weight(.semibold)).baselineOffset(-10)
-                    Text(decimal[1]).font(.system(size: !scrolling ? 28 : 18)).baselineOffset(!scrolling ? -10 : -4)
-                }
-                .tracking(-1)
-                .offset(x: -2, y: 14)
-                .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
-            } else {
-                Text(string)
-                    .font(scrolling ? .glucoseSmallFont : .glucoseFontMdDl.width(.condensed)) // .tracking(-2)
-                    .foregroundColor(alwaysUseColors ? colorOfGlucose : alarm == nil ? .primary : .loopRed)
-                    .offset(x: string.count > 2 ? -1 : -1, y: 16)
-            }
-        }
-        .offset(y: scrolling ? 3 : 0)
-    }
-
-    private var glucoseDrop: some View {
-        let adjust = adjustments
-        let degree = adjustments.degree
-        let shadowDirection = direction(degree: degree)
-        return Image("glucoseDrops")
-            .resizable()
-            .frame(width: !scrolling ? 140 : 80, height: !scrolling ? 140 : 80).rotationEffect(.degrees(degree))
-            .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
-            .offset(x: adjust.x, y: adjust.y)
-            .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
-    }
-
-    private var colorOfGlucose: Color {
+    var colourGlucoseText: Color {
         let whichGlucose = recentGlucose?.glucose ?? 0
+        // let defaultColor = Color.white.opacity(1.0)
+        let defaultColor = Color.green.opacity(0.7)
+
         guard lowGlucose < highGlucose else { return .primary }
 
         switch whichGlucose {
         case 0 ..< Int(lowGlucose):
-            return .loopRed
+            return .red
         case Int(lowGlucose) ..< Int(highGlucose):
-            return .loopGreen
+            return defaultColor
         case Int(highGlucose)...:
-            return .loopYellow
+            return .yellow
         default:
-            return .loopYellow
+            return defaultColor
         }
+    }
+}
+
+struct TrendShape: View {
+    let gradient: AngularGradient
+    let color: Color
+
+    var body: some View {
+        HStack(alignment: .center) {
+            ZStack {
+                Group {
+                    TriangleShape(color: color)
+                }
+            }
+        }
+    }
+}
+
+struct TriangleShape: View {
+    let color: Color
+
+    var body: some View {
+        Triangle()
+            .fill(color)
+            .frame(width: 30, height: 30)
+            .rotationEffect(.degrees(90))
+            .offset(x: 70)
+    }
+}
+
+struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY + 15))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY), control: CGPoint(x: rect.midX, y: rect.midY + 10))
+        path.closeSubpath()
+
+        return path
     }
 }

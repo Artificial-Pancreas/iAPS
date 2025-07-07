@@ -141,7 +141,12 @@ final class BaseAPSManager: APSManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
-        openAPS = OpenAPS(storage: storage, nightscout: nightscout, pumpStorage: pumpHistoryStorage)
+        openAPS = OpenAPS(
+            storage: storage,
+            nightscout: nightscout,
+            pumpStorage: pumpHistoryStorage,
+            scriptExecutor: WebViewScriptExecutor()
+        )
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
 

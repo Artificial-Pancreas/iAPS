@@ -72,7 +72,7 @@ struct PumpView: View {
                                 reservoirFormatter
                                     .string(from: (insulin * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
                             )
-                            Text("U").foregroundStyle(.secondary)
+                            Text("U").foregroundStyle(.white)
                         }.offset(x: 6)
                         podInsulinAmount(portion: amountFraction)
                             .padding(.leading, (concentration.last?.concentration ?? 1) != 1 ? 7 : 0)
@@ -93,8 +93,9 @@ struct PumpView: View {
                 remainingTime(time: date.timeIntervalSince(timerDate))
                     .font(.pumpFont)
                     .offset(x: -5, y: 0)
+
             } else if state.pumpName.contains("Omni") {
-                Text("No Pod").font(.statusFont).foregroundStyle(.secondary)
+                Text("No Pod").font(.statusFont).foregroundStyle(.white)
                     .offset(x: 0, y: -4)
             }
             // Other pumps
@@ -116,8 +117,8 @@ struct PumpView: View {
                         Text(
                             reservoirFormatter
                                 .string(from: (reservoir * Decimal(concentration.last?.concentration ?? 1)) as NSNumber) ?? ""
-                        ).font(.statusFont)
-                        Text("U").font(.statusFont).foregroundStyle(.secondary)
+                        ).font(.statusFont).foregroundStyle(Color(.white))
+                        Text("U").font(.statusFont).foregroundStyle(.white)
                     }
                     .offset(y: 7)
                     pumpInsulinAmount(portion: amountFraction)
@@ -129,7 +130,7 @@ struct PumpView: View {
                         }
                 }
             } else {
-                Text("No Pump").font(.statusFont).foregroundStyle(.secondary)
+                Text("No Pump").font(.statusFont).foregroundStyle(.white)
                     .offset(x: 0, y: -4)
             }
 
@@ -141,9 +142,9 @@ struct PumpView: View {
                 Image(systemName: "battery.\(percent)")
                     .resizable()
                     .rotationEffect(.degrees(-90))
-                    .frame(maxWidth: 32, maxHeight: 12)
+                    .frame(maxWidth: 29, maxHeight: 13)
                     .foregroundColor(batteryColor)
-                    .offset(y: -0.5)
+                    .offset(y: -3)
             }
         }
         .offset(x: 0, y: 5)
@@ -160,25 +161,25 @@ struct PumpView: View {
                 if days >= 1 {
                     HStack(spacing: 0) {
                         Text(" \(days)")
-                        Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(.secondary)
+                        Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(.white)
                         if adjustedHours >= 0 {
                             Text(" ")
                             Text("\(adjustedHours)")
                             // spacer
-                            Text(NSLocalizedString("h", comment: "abbreviation for days")).foregroundStyle(.secondary)
+                            Text(NSLocalizedString("h", comment: "abbreviation for days")).foregroundStyle(.white)
                         }
                     }
                 } else if hours >= 1 {
                     HStack(spacing: 0) {
                         Text(" \(hours)")
                         Text(NSLocalizedString("h", comment: "abbreviation for hours"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
+                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .white)
                     }
                 } else {
                     HStack(spacing: 0) {
                         Text(" \(minutes)")
                         Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
+                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .white)
                     }
                 }
             } else {
@@ -262,11 +263,11 @@ struct PumpView: View {
             UIImage(imageLiteralResourceName: pump)
                 .fillImageUpToPortion(color: .insulin.opacity(0.8), portion: max(portion, 0.3))
                 .resizable()
-                .frame(maxWidth: 17, maxHeight: 36)
+                .frame(maxWidth: 17, maxHeight: 34)
                 .symbolRenderingMode(.palette)
                 .shadow(radius: 1, x: 2, y: 2)
                 .foregroundStyle(.white)
-                .padding(.bottom, 5)
+                .padding(.bottom, 4)
         }
     }
 }

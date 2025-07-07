@@ -242,7 +242,6 @@ extension AddCarbs {
                 }
             }
             .sheet(isPresented: $state.edit, content: { editView })
-            .environment(\.colorScheme, colorScheme)
         }
 
         private var editView: some View {
@@ -276,7 +275,7 @@ extension AddCarbs {
                         .tint(.white)
                         .disabled(disabled)
                 }
-            }.environment(\.colorScheme, colorScheme)
+            }
         }
 
         @ViewBuilder private func proteinAndFat() -> some View {

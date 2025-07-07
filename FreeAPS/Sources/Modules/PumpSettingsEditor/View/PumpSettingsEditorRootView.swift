@@ -49,6 +49,14 @@ extension PumpSettingsEditor {
                     }
                 }
 
+                /*    Section {
+                     HStack {
+                         Text("To change the DIA, go to Settings ⇢ Debug Options ⇢ Pump Settings")
+                             .font(.system(size: 14))
+                             .foregroundStyle(Color.orange)
+                     }
+                 }*/
+
                 Section {
                     Text("U " + (formatter.string(from: (concentration.last?.concentration ?? 1) * 100 as NSNumber) ?? ""))
                         .navigationLink(to: .basalProfileEditor(saveNewConcentration: true), from: self)

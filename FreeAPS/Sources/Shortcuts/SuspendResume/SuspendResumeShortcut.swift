@@ -41,7 +41,7 @@ struct SuspendResumeIntent: AppIntent {
             let displayName: String = modeToApply.rawValue
             if confirmBeforeApplying {
                 try await requestConfirmation(
-                    result: .result(dialog: "Are you sure you want to \(displayName)?")
+                    result: .result(dialog: "Are you sure you want to \(displayName) your pump?")
                 )
             }
 
@@ -55,20 +55,18 @@ struct SuspendResumeIntent: AppIntent {
     }
 
     func whichMode() -> [PumpMode] {
-        [PumpMode.suspend, PumpMode.resume, PumpMode.cancel]
+        [PumpMode.suspend, PumpMode.resume]
     }
 }
 
 final class SuspendResumeIntentRequest: BaseIntentsRequest {
     func setMode(_ mode: PumpMode) throws -> String {
         let resultDisplay: String =
-            NSLocalizedString("Pump command", comment: "") + " \(mode) " + NSLocalizedString("enacted in iAPS", comment: "")
+            NSLocalizedString("Pump command", comment: "") + " \(mode)" + NSLocalizedString("enacted in iAPS", comment: "")
         if mode == PumpMode.resume {
             apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:resume"))
         } else if mode == PumpMode.suspend {
             apsManager.enactAnnouncement(Announcement(createdAt: Date(), enteredBy: "remote", notes: "pump:suspend"))
-        } else if mode == PumpMode.cancel {
-            apsManager.enactTempBasal(rate: 0, duration: 0)
         }
         return resultDisplay
     }
@@ -77,15 +75,13 @@ final class SuspendResumeIntentRequest: BaseIntentsRequest {
 enum PumpMode: String {
     case suspend = "Suspend"
     case resume = "Resume"
-    case cancel = "Cancel Temp"
 }
 
 extension PumpMode: AppEnum {
-    static let typeDisplayRepresentation: TypeDisplayRepresentation = "PumpMode"
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "PumpMode"
 
-    static let caseDisplayRepresentations: [PumpMode: DisplayRepresentation] = [
+    static var caseDisplayRepresentations: [PumpMode: DisplayRepresentation] = [
         .suspend: "Suspend",
-        .resume: "Resume",
-        .cancel: "Cancel Temp"
+        .resume: "Resume"
     ]
 }

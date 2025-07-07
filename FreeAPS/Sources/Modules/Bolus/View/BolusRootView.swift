@@ -107,9 +107,6 @@ extension Bolus {
                 if !state.useCalc {
                     state.notActive()
                 }
-                if !state.useCalc {
-                    state.notActive()
-                }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle("Enact Bolus")

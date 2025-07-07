@@ -1,5 +1,6 @@
 import Combine
 import CoreData
+import DanaKit
 import LoopKitUI
 import SwiftDate
 import SwiftUI
@@ -14,7 +15,6 @@ extension Home {
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
-
         @Published var dynamicVariables: DynamicVariables?
         @Published var uploadStats = false
         @Published var enactedSuggestion: Suggestion?
@@ -38,6 +38,7 @@ extension Home {
         @Published var bolusProgress: Decimal?
         @Published var bolusAmount: Decimal?
         @Published var eventualBG: Int?
+        @Published var isf: Decimal?
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var pumpDisplayState: PumpDisplayState?
@@ -56,6 +57,7 @@ extension Home {
         @Published var overrideHistory: [OverrideHistory] = []
         @Published var overrides: [Override] = []
         @Published var alwaysUseColors: Bool = false
+        @Published var openAPSSettings: Preferences?
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []
@@ -70,7 +72,6 @@ extension Home {
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
-        @Published var openAPSSettings: Preferences?
         @Published var extended = true
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
@@ -78,9 +79,50 @@ extension Home {
         @Published var displayExpiration = false
         @Published var cgm: CGMType = .nightscout
         @Published var sensorDays: Double = 10
-        @Published var anubis: Bool = false
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
+        @Published var hideInsulinBadge: Bool = true
+        // Dana UI Toggels
+        @Published var pumpIconRawValue: String = "ic_dana_rs"
+        @Published var danaBar: Bool = false
+        @Published var insulinAgeOption: String = "Drei_Tage"
+        @Published var cannulaAgeOption: String = "Drei_Tage"
+        @Published var legendsSwitch: Bool = false
+        @Published var tempTargetbar: Bool = false
+        @Published var timeSettings: Bool = false
+        @Published var backgroundColorOptionRawValue: String = BackgroundColorOption.darkBlue.rawValue
+        @Published var danaBarOption: String = DanaBarOption.standard.rawValue
+        @Published var chartBackgroundColored: Bool = false
+        @Published var carbInsulinLoopViewOption: Bool = false
+        @Published var button3D: Bool = false
+        @Published var sensorAgeDays: SensorAgeDays = .Fuenfzehn_Tage
+        @Published var sensorStartTime: Date?
+        @Published var remainingSensorDays: Int?
+        @Published var remainingSensorHours: Int?
+        @Published var remainingSensorMinutes: Int?
+        @Published var elapsedMinutes: Int = 0
+        @Published var incidenceOfLight: Bool = false
+        @Published var lightGlowOverlaySelector: String = LightGlowOverlaySelector.atriumview1.rawValue
+        @Published var insulinHours: Double?
+        @Published var insulinAge: String = "--"
+        @Published var batteryHours: Double?
+        @Published var batteryAge: String = "--"
+        @Published var button3DBackground: Bool = false
+        @Published var batteryIconOption: Bool = false
+        // Dana UI Toggels
+        // specialDanaKitFunction
+        @Published var pumpBatteryChargeRemaining: String?
+        @Published var isConnected: Bool = false
+        @Published var bluetooth: Bool = true
+        @Published var cannulaDate: Date?
+        @Published var cannulaAge: String?
+        @Published var cannulaHours: Double?
+        @Published var reservoirDate: Date?
+        @Published var reservoirLevel: Double? = 0
+        @Published var reservoirAge: String?
+        @Published var insulinType: String?
+        @Published var insulinConcentration: Double = 1.0
+        // specialDanaKitFuction
 
         // Chart data
         var data = ChartModel(
@@ -114,6 +156,25 @@ extension Home {
             fpus: true,
             fpuAmounts: false
         )
+        /*  var backgroundColor: Color {
+             BackgroundColorOption(rawValue: backgroundColorOptionRawValue)?.color ?? .clear
+         }*/ // falls das triangel während des bolus progress die backgroundColor annehmen soll
+
+        var selectedBackgroundColor: Color {
+            switch BackgroundColorOption(rawValue: backgroundColorOptionRawValue) {
+            default:
+                return .blue // Standardfarbe, falls keine Übereinstimmung gefunden wird
+            }
+        }
+
+        var elapsedHours: Int {
+            guard let startTime = sensorStartTime else {
+                return 0
+            }
+
+            let hours = Calendar.current.dateComponents([.hour], from: startTime, to: Date()).hour ?? 0
+            return hours
+        }
 
         override func subscribe() {
             setupGlucose()
@@ -157,26 +218,44 @@ extension Home {
             useTargetButton = settingsManager.settings.useTargetButton
             data.screenHours = settingsManager.settings.hours
             alwaysUseColors = settingsManager.settings.alwaysUseColors
-            useCalc = settingsManager.settings.useCalc
             data.minimumSMB = settingsManager.settings.minimumSMB
             data.maxBolus = settingsManager.pumpSettings.maxBolus
             data.useInsulinBars = settingsManager.settings.useInsulinBars
             data.fpus = settingsManager.settings.fpus
             data.fpuAmounts = settingsManager.settings.fpuAmounts
-            skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             displayDelta = settingsManager.settings.displayDelta
+            skipGlucoseChart = settingsManager.settings.skipGlucoseChart
             extended = settingsManager.settings.extendHomeView
             maxIOB = settingsManager.preferences.maxIOB
             maxCOB = settingsManager.preferences.maxCOB
+            useCalc = settingsManager.settings.useCalc
             autoisf = settingsManager.settings.autoisf
             hours = settingsManager.settings.hours
             displayExpiration = settingsManager.settings.displayExpiration
             cgm = settingsManager.settings.cgm
             sensorDays = settingsManager.settings.sensorDays
-            anubis = settingsManager.settings.anubis
             carbButton = settingsManager.settings.carbButton
             profileButton = settingsManager.settings.profileButton
-
+            // Dana UI Toggels
+            danaBar = settingsManager.settings.danaBar
+            hideInsulinBadge = settingsManager.settings.hideInsulinBadge
+            legendsSwitch = settingsManager.settings.legendsSwitch
+            tempTargetbar = settingsManager.settings.tempTargetbar
+            timeSettings = settingsManager.settings.timeSettings
+            backgroundColorOptionRawValue = settingsManager.settings.backgroundColorOptionRawValue
+            danaBarOption = settingsManager.settings.danaBarOption
+            insulinAgeOption = settingsManager.settings.insulinAgeOption
+            cannulaAgeOption = settingsManager.settings.cannulaAgeOption
+            chartBackgroundColored = settingsManager.settings.chartBackgroundColored
+            carbInsulinLoopViewOption = settingsManager.settings.carbInsulinLoopViewOption
+            button3D = settingsManager.settings.button3D
+            sensorAgeDays = settingsManager.settings.sensorAgeDays
+            sensorStartTime = settingsManager.settings.sensorStartTime
+            incidenceOfLight = settingsManager.settings.incidenceOfLight
+            lightGlowOverlaySelector = settingsManager.settings.lightGlowOverlaySelector
+            button3DBackground = settingsManager.settings.button3DBackground
+            batteryIconOption = settingsManager.settings.batteryIconOption
+            // Dana UI Toggels
             broadcaster.register(GlucoseObserver.self, observer: self)
             broadcaster.register(SuggestionObserver.self, observer: self)
             broadcaster.register(SettingsObserver.self, observer: self)
@@ -200,7 +279,6 @@ extension Home {
                 },
                 map: { $0 }
             )
-
             timer.eventHandler = {
                 DispatchQueue.main.async { [weak self] in
                     self?.data.timerDate = Date()
@@ -329,6 +407,88 @@ extension Home {
             setupOverrideHistory()
         }
 
+        // DanaKitspecial Funktions
+
+        func specialDanaKitFunction() {
+            guard let pumpManager = provider.apsManager.pumpManager as? DanaKitPumpManager else {
+                return
+            }
+
+            if let cannulaDate = pumpManager.state.cannulaDate {
+                cannulaHours = -cannulaDate.timeIntervalSinceNow / 3600
+                cannulaAge = String(format: "%.0fh", cannulaHours ?? 0)
+            } else {
+                cannulaHours = nil
+                cannulaAge = "--"
+            }
+
+            updateInsulinAge()
+            reservoirLevel = pumpManager.state.reservoirLevel
+            isConnected = pumpManager.state.isConnected
+            updateBatteryAge()
+
+            let batteryCharge = pumpManager.state.batteryRemaining
+            pumpBatteryChargeRemaining = String(format: "%.0f", batteryCharge)
+        }
+
+        func updateInsulinAge() {
+            guard let pumpManager = provider.apsManager.pumpManager as? DanaKitPumpManager else {
+                return
+            }
+
+            if let reservoirDate = pumpManager.state.reservoirDate {
+                insulinHours = -reservoirDate.timeIntervalSinceNow / 3600 // Speichert den Wert als Double
+                insulinAge = String(format: "%.0fh", insulinHours ?? 0) // Formatierte Anzeige
+            } else {
+                insulinHours = nil
+                insulinAge = "--"
+            }
+        }
+
+        func updateBatteryAge() {
+            guard let pumpManager = provider.apsManager.pumpManager as? DanaKitPumpManager,
+                  let lastBatteryChangeDate = pumpManager.state.batteryAge
+            else {
+                // Fallback, falls keine Pumpe oder kein Datum vorhanden
+                batteryHours = nil
+                batteryAge = "--"
+                return
+            }
+
+            // Stunden seit dem Batteriewechsel berechnen (positiver Wert)
+            let hoursSinceChange = abs(lastBatteryChangeDate.timeIntervalSinceNow) / 3600
+            batteryHours = hoursSinceChange
+
+            // Formatierung: "Xh" oder "XdYh" (wie bei Insulin/Cannula)
+            let totalMinutes = Int(hoursSinceChange * 60)
+            if totalMinutes < 60 {
+                batteryAge = "\(totalMinutes)min"
+            } else {
+                let days = totalMinutes / (24 * 60)
+                let hours = (totalMinutes % (24 * 60)) / 60
+                batteryAge = days > 0 ? "\(days)d\(hours)h" : "\(hours)h"
+            }
+        }
+
+        private func formatToDaysAndHours(_ date: Date) -> String {
+            let secondsInADay: TimeInterval = 86400
+            let secondsInAnHour: TimeInterval = 3600
+
+            // Berechnung der ganzen Tage und verbleibenden Stunden
+            let totalSeconds = -date.timeIntervalSinceNow
+            let days = Int(totalSeconds / secondsInADay)
+            let hours = Int(totalSeconds.truncatingRemainder(dividingBy: secondsInADay) / secondsInAnHour)
+
+            return "\(days)d\(hours)h"
+        }
+
+        private func formatToTotalHours(_ date: Date) -> String {
+            let secondsInAnHour: TimeInterval = 3600
+            let totalHours = -date.timeIntervalSinceNow / secondsInAnHour
+
+            return String(format: "%.0fh", totalHours) // Ganze Stunden
+        }
+
         func cancelTempTarget() {
             storage.storeTempTargets([TempTarget.cancel(at: Date())])
             coredataContext.performAndWait {
@@ -371,8 +531,7 @@ extension Home {
                 if self.data.glucose.count >= 2 {
                     self
                         .glucoseDelta = (self.recentGlucose?.glucose ?? 0) -
-                        (self.data.glucose[self.data.glucose.count - 2].glucose ?? 0)
-                } else {
+                        (self.data.glucose[self.data.glucose.count - 2].glucose ?? 0) } else {
                     self.glucoseDelta = nil
                 }
                 self.alarm = self.provider.glucoseStorage.alarm
@@ -462,7 +621,7 @@ extension Home {
         private func setupOverrideHistory() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.data.overrideHistory = self.provider.overrideHistory()
+                self.overrideHistory = self.provider.overrideHistory()
             }
         }
 
@@ -487,7 +646,7 @@ extension Home {
         private func setupOverrides() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                self.overrides = self.provider.overrides()
+                self.data.overrideHistory = self.provider.overrideHistory()
             }
         }
 
@@ -521,6 +680,7 @@ extension Home {
             }
 
             eventualBG = suggestion.eventualBG
+            // isf = suggestion.isf
         }
 
         private func setupReservoir() {
@@ -551,31 +711,32 @@ extension Home {
         private func setupData() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                if let data = self.provider.reasons() {
+                let reasonData = self.provider.reasons
+                if let data = self.provider.iobData(reasonData) {
                     self.iobData = data
                     self.carbData = data.map(\.cob).reduce(0, +)
                     self.iobs = data.map(\.iob).reduce(0, +)
                     neg = data.filter({ $0.iob < 0 }).count * 5
-                    let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
-                    let yesterday = (tdds.first(where: {
-                        ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
-                    })?.tdd ?? 0) as Decimal
-                    let oneDaysAgo = CoreDataStorage().fetchTDD(interval: DateFilter().today).last
-                    tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
-                    tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
-                    tdd2DaysAgo = (tdds.first(where: {
-                        ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                            .addingTimeInterval(-1.days.timeInterval)
-                    })?.tdd ?? 0) as Decimal
-                    tdd3DaysAgo = (tdds.first(where: {
-                        ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
-                            .addingTimeInterval(-2.days.timeInterval)
-                    })?.tdd ?? 0) as Decimal
+                }
+                let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().tenDays)
+                let yesterday = (tdds.first(where: {
+                    ($0.timestamp ?? .distantFuture) <= Date().addingTimeInterval(-24.hours.timeInterval)
+                })?.tdd ?? 0) as Decimal
+                let oneDaysAgo = CoreDataStorage().fetchTDD(interval: DateFilter().today).last
+                tddChange = ((tdds.first?.tdd ?? 0) as Decimal) - yesterday
+                tddYesterday = (oneDaysAgo?.tdd ?? 0) as Decimal
+                tdd2DaysAgo = (tdds.first(where: {
+                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
+                        .addingTimeInterval(-1.days.timeInterval)
+                })?.tdd ?? 0) as Decimal
+                tdd3DaysAgo = (tdds.first(where: {
+                    ($0.timestamp ?? .distantFuture) <= (oneDaysAgo?.timestamp ?? .distantPast)
+                        .addingTimeInterval(-2.days.timeInterval)
+                })?.tdd ?? 0) as Decimal
 
-                    if let tdds_ = self.provider.dynamicVariables {
-                        tddAverage = ((tdds.first?.tdd ?? 0) as Decimal) - tdds_.average_total_data
-                        tddActualAverage = tdds_.average_total_data
-                    }
+                if let tdds_ = self.provider.dynamicVariables {
+                    tddAverage = ((tdds.first?.tdd ?? 0) as Decimal) - tdds_.average_total_data
+                    tddActualAverage = tdds_.average_total_data
                 }
             }
         }
@@ -634,6 +795,29 @@ extension Home.StateModel:
         setupData()
     }
 
+    func updateRemainingSensorDays() {
+        if let startTime = sensorStartTime {
+            let now = Date()
+            elapsedMinutes = Int(now.timeIntervalSince(startTime) / 60)
+            let totalMinutes = sensorAgeDays.asInt() * 24 * 60
+            let remainingMinutes = max(0, totalMinutes - elapsedMinutes)
+
+            // Immer berechnen:
+            let days = remainingMinutes / (24 * 60)
+            let hours = (remainingMinutes % (24 * 60)) / 60
+            let minutes = remainingMinutes % 60
+
+            remainingSensorDays = days
+            remainingSensorHours = hours
+            remainingSensorMinutes = minutes
+        } else {
+            // Fallback
+            remainingSensorDays = sensorAgeDays.asInt()
+            remainingSensorHours = 0
+            remainingSensorMinutes = 0
+        }
+    }
+
     func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
         uploadStats = settingsManager.settings.uploadStats
@@ -667,12 +851,32 @@ extension Home.StateModel:
         displayExpiration = settingsManager.settings.displayExpiration
         cgm = settingsManager.settings.cgm
         sensorDays = settingsManager.settings.sensorDays
-        anubis = settingsManager.settings.anubis
         carbButton = settingsManager.settings.carbButton
         profileButton = settingsManager.settings.profileButton
+        hideInsulinBadge = settingsManager.settings.hideInsulinBadge
         setupGlucose()
         setupOverrideHistory()
         setupData()
+        // Dana UI Toggels
+        danaBar = settingsManager.settings.danaBar
+        insulinAgeOption = settingsManager.settings.insulinAgeOption
+        cannulaAgeOption = settingsManager.settings.cannulaAgeOption
+        legendsSwitch = settingsManager.settings.legendsSwitch
+        tempTargetbar = settingsManager.settings.tempTargetbar
+        timeSettings = settingsManager.settings.timeSettings
+        backgroundColorOptionRawValue = settingsManager.settings.backgroundColorOptionRawValue
+        danaBarOption = settingsManager.settings.danaBarOption
+        chartBackgroundColored = settingsManager.settings.chartBackgroundColored
+        carbInsulinLoopViewOption = settingsManager.settings.carbInsulinLoopViewOption
+        button3D = settingsManager.settings.button3D
+        sensorAgeDays = settingsManager.settings.sensorAgeDays
+        sensorStartTime = settingsManager.settings.sensorStartTime
+        updateRemainingSensorDays()
+        incidenceOfLight = settingsManager.settings.incidenceOfLight
+        lightGlowOverlaySelector = settingsManager.settings.lightGlowOverlaySelector
+        button3DBackground = settingsManager.settings.button3DBackground
+        batteryIconOption = settingsManager.settings.batteryIconOption
+        // Dana UI Toggels
     }
 
     func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {

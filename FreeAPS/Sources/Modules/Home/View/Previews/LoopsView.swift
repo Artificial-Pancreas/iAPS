@@ -12,65 +12,45 @@ struct LoopsView: View {
             let readings = loopStatistics.1
             let percentage = loopStatistics.2
 
-            Text(NSLocalizedString("Loops", comment: ""))
+            Text(NSLocalizedString("Loops", comment: "") + " / " + NSLocalizedString("Readings", comment: ""))
                 .padding(.bottom, 10).font(.previewHeadline)
-
+                .foregroundStyle(Color.white)
             loopChart(percentage: percentage)
 
             HStack {
                 Text("Average Interval")
                 Text(loopStatistics.3)
-            }.font(.loopFont)
+            }
+            .font(.system(size: 15))
+            .foregroundStyle(Color.white)
 
             HStack {
                 Text("Readings")
                 Text("\(readings)")
-            }.font(.loopFont)
+            }
+            .font(.system(size: 15))
+            .foregroundStyle(Color.white)
 
             HStack {
                 Text("Loops")
                 Text("\(loops)")
-            }.font(.loopFont)
+            }
+            .font(.system(size: 15))
+            .foregroundStyle(Color.white)
         }
+        .padding(.top, 20)
+        .padding(.bottom, 15)
         .dynamicTypeSize(...DynamicTypeSize.xLarge)
     }
 
     func loopChart(percentage: Double) -> some View {
         VStack {
             Chart {
-                // Background chart 100 %
-                if percentage < 100 {
-                    BarMark(
-                        xStart: .value("LoopPercentage", percentage - 4),
-                        xEnd: .value("Full Bar", 100)
-                    )
-                    .foregroundStyle(
-                        Color(.gray).opacity(0.3)
-                    )
-                    .clipShape(
-                        UnevenRoundedRectangle(
-                            topLeadingRadius: 0,
-                            bottomLeadingRadius: 0,
-                            bottomTrailingRadius: 4,
-                            topTrailingRadius: 4
-                        )
-                    )
-                }
-
-                // Loops per readings chart
                 BarMark(
                     x: .value("LoopPercentage", percentage)
                 )
                 .foregroundStyle(
                     percentage >= 90 ? Color(.darkGreen) : percentage >= 75 ? .orange : .red
-                ).opacity(1)
-                .clipShape(
-                    UnevenRoundedRectangle(
-                        topLeadingRadius: 4,
-                        bottomLeadingRadius: 4,
-                        bottomTrailingRadius: 4,
-                        topTrailingRadius: 4
-                    )
                 )
                 .clipShape(
                     UnevenRoundedRectangle(
@@ -82,12 +62,13 @@ struct LoopsView: View {
                 )
                 .annotation(position: .overlay) {
                     Text(percentage.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " %")
-                        .font(.loopFont)
+                        .font(.system(size: 16))
+                        .foregroundStyle(Color.white)
                         .dynamicTypeSize(...DynamicTypeSize.accessibility1)
                 }
             }
             .chartXAxis(.hidden)
-            .frame(maxWidth: 200, maxHeight: 25)
+            .frame(maxWidth: 200, maxHeight: 30)
         }
     }
 }

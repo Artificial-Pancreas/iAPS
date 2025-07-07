@@ -186,9 +186,11 @@ struct AutoISFHistoryView: View {
                         }
                     }
                 }
+                .listRowBackground(colorScheme == .dark ? Color(.black) : Color(.white))
             }
             .font(.system(size: 12))
             .listStyle(.plain)
-        }.background(Color(.systemGray5))
+        }
+        .background(Color(.systemGray6).opacity(colorScheme == .dark ? 1 : 0.7))
     }
 }

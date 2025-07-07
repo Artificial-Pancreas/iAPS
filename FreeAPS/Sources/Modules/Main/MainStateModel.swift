@@ -5,16 +5,12 @@ import Swinject
 
 extension Main {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() var broadcaster: Broadcaster!
         private(set) var modal: Modal?
         @Published var isModalPresented = false
         @Published var isSecondaryModalPresented = false
         @Published var secondaryModalView: AnyView? = nil
-        @Published var lightMode = LightMode.auto
 
         override func subscribe() {
-            lightMode = settingsManager.settings.lightMode
-
             router.mainModalScreen
                 .map { $0?.modal(resolver: self.resolver!) }
                 .removeDuplicates { $0?.id == $1?.id }
@@ -107,8 +103,6 @@ extension Main {
                     self.router.mainSecondaryModalView.send(nil)
                 }
                 .store(in: &lifetime)
-
-            broadcaster.register(SettingsObserver.self, observer: self)
         }
     }
 }
@@ -117,11 +111,5 @@ extension Main.StateModel: CompletionDelegate {
     func completionNotifyingDidComplete(_: CompletionNotifying) {
         // close the window
         router.mainSecondaryModalView.send(nil)
-    }
-}
-
-extension Main.StateModel: SettingsObserver {
-    func settingsDidChange(_: FreeAPSSettings) {
-        lightMode = settingsManager.settings.lightMode
     }
 }

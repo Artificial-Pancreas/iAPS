@@ -15,7 +15,11 @@ extension PumpConfig {
                                 state.setupPump = true
                             } label: {
                                 HStack {
-                                    Image(uiImage: pumpState.image ?? UIImage()).padding()
+                                    Image(uiImage: pumpState.image ?? UIImage())
+                                        .resizable()
+                                        .scaledToFit()
+                                        .padding()
+                                        .frame(maxWidth: 100)
                                     Text(pumpState.name)
                                 }
                             }
@@ -28,6 +32,7 @@ extension PumpConfig {
                             Button("Add Omnipod") { state.addPump(.omnipod) }
                             Button("Add Omnipod Dash") { state.addPump(.omnipodBLE) }
                             Button("Add Dana-i/RS") { state.addPump(.dana) }
+                            Button("Add Medtrum Nano") { state.addPump(.medtrum) }
                             Button("Add Simulator") { state.addPump(.simulator) }
                         }
                     }

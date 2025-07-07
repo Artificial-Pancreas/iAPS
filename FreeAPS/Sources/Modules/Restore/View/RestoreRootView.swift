@@ -1,17 +1,18 @@
+//
+//  RestoreRootView.swift
+//  FreeAPS
+//
+//  Created by Richard on 13.11.24.
+//
 import SwiftUI
 import Swinject
-
 extension Restore {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
-
         var openAPS: Preferences?
-
         @Environment(\.dismiss) private var dismiss
-
         var fetchedVersionNumber = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-
         var GlucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -40,9 +41,7 @@ extension Restore {
                     label: { Text("Yes") }
                         .buttonStyle(.borderless)
                         .padding(.leading, 10)
-
                     Spacer()
-
                     Button {
                         dismiss()
                     }
@@ -56,7 +55,6 @@ extension Restore {
                     Text("Welcome to iAPS, v\(fetchedVersionNumber)!")
                         .font(.previewHeadline).frame(maxWidth: .infinity, alignment: .center)
                         .padding(.bottom, 40)
-
                     Text(
                         "In this new version the OpenAPS settings have been reset to default settings, due to a resolved Type error.\n\nFortunately you have a retrieved backup of your old OpenAPS settings in the cloud (open-iaps.app).\n\nIf you want to use these fetched settings tap \"Yes\""
                     )
