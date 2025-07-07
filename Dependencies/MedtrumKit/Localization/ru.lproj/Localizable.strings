@@ -1,0 +1,278 @@
+/* Generic loading text */
+"loading" = "загрузка";
+
+/* Title for PumpManager deletion action sheet. */
+"Remove Pump" = "Снимите насос";
+
+/* Message for PumpManager deletion action sheet */
+"Are you sure you want to stop using Medtrum TouchCare Nano 200u/300u?" = "Вы уверены, что хотите прекратить использование Medtrum TouchCare Nano 200u/300u?";
+
+/* Button text to confirm PumpManager deletion */
+"Delete pump" = "Удалить насос";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are using a heartbeat mode. This is needed to keep %1$@ running in the background. This might be interesting if your CGM already provides a heartbeat. It is recommended to keep this feature enabled" = "В данный момент вы используете режим heartbeat. Необходимо держать %1$@ в фоновом режиме. Это может быть интересно если ваш CGM уже предоставляет сердечный процесс. Рекомендуется сохранить эту функцию";
+
+/* Message warning heartbeat disable (1: app name) */
+"Currently, you are NOT using a heartbeat mode. A heartbeat is needed to keep %1$@ running in the background. It is recommended to keep enable this feature" = "В данный момент вы НЕ используете режим heartbeat. Для продолжения работы %1$@ в фоновом режиме, необходимо использовать heartbeat. Рекомендуется включить эту функцию";
+
+/* Button text to disable heartbeat mode */
+"Yes, Disable heartbeat mode" = "Да, отключить режим heartbeat";
+
+/* Button text to enable heartbeat mode */
+"Yes, Enable heartbeat mode" = "Да, включить режим heartbeat";
+
+/* Title for toggle heartbeat mode action sheet. */
+"Toggle heartbeat mode" = "Вкл/выкл режим сердца";
+
+/* Button text to cancel actionsheet */
+"No, Keep as is" = "Нет, Держите как это";
+
+/* Text for patch state */
+"Patch state" = "Статус патча";
+
+/* Text for last sync */
+"Last sync" = "Последняя синхронизация";
+
+/* Text for status */
+"Status" = "Статус";
+
+/* disconnect from patch */
+"Disconnect" = "Отключиться";
+
+/* reconnect to patch */
+"Reconnect" = "Переподключить";
+
+/* sync pump */
+"Sync patch data" = "Синхронизировать данные патча";
+
+/* label for activate patch */
+"Activate patch" = "Активировать патч";
+
+/* deactivate patch */
+"Deactivate Patch" = "Отключить патч";
+
+/* Configuration section */
+"Configuration" = "Конфигурация";
+
+/* Text for selecting insulin type */
+"Insulin Type" = "Тип изоляции";
+
+/* Text for patch settings view */
+"Patch settings" = "Настройки патча";
+
+/* The title for patch/pump information */
+"Information" = "Информация";
+
+/* Text for pumpSN */
+"Pump base SN" = "Базовый насос SN";
+
+/* Text for model */
+"Pump base model" = "Базовая модель насоса";
+
+/* Text for patchId */
+"Patch ID" = "ID патча";
+
+/* Text for activatedAt */
+"Patch activated at" = "Патч активирован в";
+
+/* Text for expiresAt */
+"Patch expires at" = "Патч истекает в";
+
+/* Text for battery voltageB */
+"Battery" = "Батарея";
+
+/* label for previous patch details */
+"Previous Patch Details" = "Предыдущие детали патча";
+
+/* Text for deactivatedAt */
+"Deactivated at" = "Отключено в";
+
+/* Share logs */
+"Share Medtrum patch logs" = "Поделиться журналами Medtrum";
+
+/* Label for PumpManager deletion button */
+"Delete Pump" = "Удалить насос";
+
+/* Header for insulin remaining on pod settings screen */
+"Insulin Remaining" = "Оставшиеся инсулины";
+
+/* Text shown in insulin delivery space when insulin suspended */
+"Insulin\nSuspended" = "Инсулин\nприостановлен";
+
+/* Text shown when no patch active */
+"No active patch" = "Нет активного патча";
+
+/* Text shown while patch is active */
+"Age:" = "Возраст:";
+
+/* Unit for singular day */
+"day" = "день";
+
+/* Unit for plural days */
+"days" = "дней";
+
+/* Unit for singular hour */
+"hour" = "час";
+
+/* Unit for plural hours */
+"hours" = "часов";
+
+/* Unit for singular minute */
+"minute" = "минута";
+
+/* Unit for plural minutes */
+"minutes" = "минуты";
+
+/* Text shown when patch expired */
+"Patch expired" = "Истек срок действия патча";
+
+/* Button for closing settings */
+"Done" = "Готово";
+
+/* label for connected */
+"Connected" = "Подключено";
+
+/* label for reconnecting */
+"Reconnecting..." = "Переподключение...";
+
+/* label for disconnected */
+"Disconnected" = "Отключено";
+
+/* Title of insulin delivery section */
+"Scheduled Basal" = "Запланированный Базал";
+
+/* Pump Event title for UnfinalizedDose with doseType of .tempBasal */
+"Temp Basal" = "Временный базал";
+
+/* Title of insulin delivery section */
+"Insulin Delivery" = "Инсулин доставки";
+
+/* Continue */
+"Continue" = "Продолжить";
+
+/* Title for insulin type */
+"Select insulin type" = "Выберите тип инсулина";
+
+/* Title text for insulin type confirmation page */
+"Select the type of insulin that you will be using" = "Выберите тип инсулина который вы будете использовать";
+
+/* Label for maximum hourly insulin delivery */
+"Max hourly insulin" = "Макс. почасовой инсулин";
+
+/* Label for maximum daily insulin delivery */
+"Max daily insulin" = "Максимальное количество инсулинов";
+
+/* Label for alarm settings */
+"Alarm setting" = "Настройка будильника";
+
+/* Label for alarm options: light, vibrate and beep */
+"Light, vibrate and, beep" = "Светлая, вибрация и пчела";
+
+/* Label for alarm options: light and vibrate */
+"Light and vibrate" = "Светлая и вибрация";
+
+/* Label for alarm options: light and beep */
+"Light and beep" = "Светлый и пчеловый";
+
+/* Label for alarm options: light */
+"Light-only" = "Только для света";
+
+/* Label for alarm options: vibrate and beep */
+"Vibrate and beep" = "Вибрация и пчела";
+
+/* Label for alarm options: vibrate */
+"Vibrate-only" = "Только вибрация";
+
+/* Label for alarm options: beep */
+"Beep-only" = "Только пип";
+
+/* Label for alarm options: none */
+"Silence" = "Тишина";
+
+/* Label for expiration alarm */
+"Patch lifetime" = "Время жизни патча";
+
+/* Label for extended lifetime */
+"Use extended lifetime (continue till battery empty)" = "Длительное время службы (продолжайте до тех пор, пока не разрядите аккумулятор)";
+
+/* Label for normal patch lifetime */
+"Use normal lifetime (3d 8h)" = "Использовать нормальное время жизни (3d 8h)";
+
+/* Label for expired patch notification */
+"Notification for expirate patch" = "Уведомление об истечении срока действия патча";
+
+/* Instructions for deactivate patch */
+"When clicking on the button, you will get a Biometrics prompt. Once completed, the patch will be deactivated and you will be prompted to pair a new patch." = "Нажав на кнопку, вы получите запрос на биометрию. После завершения, патч будет деактивирован и вам будет предложено парять новый патч.";
+
+/* Authenticate and deactivate label */
+"Authenticate & deactivate patch" = "Аутентификация и деактивация патча";
+
+/* Header deactivate patch */
+"Deactivate patch" = "Деактивировать патч";
+
+/* Label for serial number */
+"Serial number" = "Серийный номер";
+
+/* Label for checking SN */
+"Make sure the Serial Number is correct before connecting it to the patch." = "Убедитесь, что серийный номер указан верно, прежде чем подключить его к патчу.";
+
+/* Pump base settings header */
+"Pump base settings" = "Базовые настройки насоса";
+
+/* save and continue */
+"Save and continue" = "Сохранить и продолжить";
+
+/* Label for prime step 2.1 */
+"Connect your pump base to the patch." = "Подключите базу насоса к патчу.";
+
+/* Label for prime step 2.2 */
+"Fill the syringe with insulin" = "Заполните шприц инсулином";
+
+/* Label for prime step 2.3 */
+"Place the syringe in the patch and pull out 1 to 2 dashes of air." = "Поместите шприц в патч и вытащите от 1 до 2 дефис воздуха.";
+
+/* Label for prime step 2.4 */
+"Fill the patch with insulin. NOTE: A minimum of 70U is required for activation." = "Заполните патч инсулином. ПРИМЕЧАНИЕ: Для активации требуется не менее 70U.";
+
+/* Label for pressing needle button step 2.5 */
+"Press the needle button and start the priming process." = "Нажимаем на иглу и начинаем привязку.";
+
+/* Label for warning priming */
+"Do not attach the patch to the body yet" = "Не прикрепляйте патч к телу";
+
+/* label for prime start action */
+"Start priming" = "Начать привязку";
+
+/* Priming header */
+"Patch priming" = "Привязка патча";
+
+/* Label for inserting needle step 1 */
+"Remove the safety cover from the patch." = "Удалите крышку безопасности из патча.";
+
+/* Label for inserting needle step 2 */
+"Attach the pump to the body." = "Прикрепите насос к кузову.";
+
+/* Label for inserting needle step 3 */
+"Press the needle button to insert the needle. Click on \"Activate\" to complete the activation process." = "Нажмите на кнопку иглы, чтобы вставить иглу. Нажмите на кнопку \"Активировать\", чтобы завершить процесс активации.";
+
+/* Patch activation header */
+"Patch activation" = "Активация исправлений";
+
+/* welcome header*/
+"Welcome" = "Добро пожаловать";
+
+/* Welcome text for MedtrumKit */
+"You will start by setting up your insulin type & basic patch settings before activating your patch." = "Перед активацией патча вы начнете с установки типа инсулин и базовых настроек патча.";
+
+/* label for go to pump base patch */
+"Go back to pump base" = "Вернитесь на базу насосов";
+
+/* label for go to prime patch */
+"Go back to priming" = "Вернитесь к грунтовке";
+
+/* Title expire reminder notification */
+"Your patch will expire soon!" = "Срок действия вашего патча скоро истечет!";
+
+/* Body expire reminder notification */
+"Your patch has %i hours left" = "У вашего патча осталось %i часов.";

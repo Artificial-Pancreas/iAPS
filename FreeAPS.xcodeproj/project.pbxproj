@@ -313,6 +313,9 @@
 		38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF3FD2738083E00574A46 /* CGMProvider.swift */; };
 		38FEF408273B011A00574A46 /* LibreTransmitterSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF407273B011A00574A46 /* LibreTransmitterSource.swift */; };
 		38FEF413273B317A00574A46 /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FEF412273B317A00574A46 /* HKUnit.swift */; };
+		3EF1521D2E1C4898009C1122 /* MedtrumPumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF1521C2E1C4896009C1122 /* MedtrumPumpManagerExtensions.swift */; };
+		3EF1521F2E1C48AC009C1122 /* MedtrumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF1521E2E1C48AC009C1122 /* MedtrumKit.framework */; };
+		3EF152202E1C48AC009C1122 /* MedtrumKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF1521E2E1C48AC009C1122 /* MedtrumKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A965332F237348B119FB858 /* PreferencesEditorRootView.swift */; };
 		448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
@@ -543,6 +546,7 @@
 				3818AA4B274C267100843DB3 /* CGMBLEKit.framework in Embed Frameworks */,
 				CEB434E028B8F5C400B70274 /* OmniBLE.framework in Embed Frameworks */,
 				CEB434DD28B8F5B900B70274 /* MKRingProgressView.framework in Embed Frameworks */,
+				3EF152202E1C48AC009C1122 /* MedtrumKit.framework in Embed Frameworks */,
 				CEB434FE28B90B8C00B70274 /* SwiftCharts in Embed Frameworks */,
 				3818AA6B274C26A500843DB3 /* RileyLinkBLEKit.framework in Embed Frameworks */,
 				3818AA59274C26A300843DB3 /* LoopKit.framework in Embed Frameworks */,
@@ -975,6 +979,8 @@
 		39E7C997E56DAF8D28D09014 /* AddCarbsStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddCarbsStateModel.swift; sourceTree = "<group>"; };
 		3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorProvider.swift; sourceTree = "<group>"; };
 		3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigProvider.swift; sourceTree = "<group>"; };
+		3EF1521C2E1C4896009C1122 /* MedtrumPumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedtrumPumpManagerExtensions.swift; sourceTree = "<group>"; };
+		3EF1521E2E1C48AC009C1122 /* MedtrumKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MedtrumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F60E97100041040446F44E7 /* PumpConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigStateModel.swift; sourceTree = "<group>"; };
 		3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ConfigEditorDataFlow.swift; sourceTree = "<group>"; };
 		42369F66CF91F30624C0B3A6 /* BasalProfileEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorProvider.swift; sourceTree = "<group>"; };
@@ -1152,6 +1158,7 @@
 				CEC751D229D88257006E9D24 /* OmniKit.framework in Frameworks */,
 				CE79502E29980E4D00FA576E /* ShareClientUI.framework in Frameworks */,
 				CE79502A29980C9F00FA576E /* G7SensorKitUI.framework in Frameworks */,
+				3EF1521F2E1C48AC009C1122 /* MedtrumKit.framework in Frameworks */,
 				CE79502829980C9600FA576E /* CGMBLEKitUI.framework in Frameworks */,
 				CEB434DC28B8F5B900B70274 /* MKRingProgressView.framework in Frameworks */,
 				38E87403274F78C000975559 /* libswiftCoreNFC.tbd in Frameworks */,
@@ -1853,6 +1860,7 @@
 		3818AA48274C267000843DB3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3EF1521E2E1C48AC009C1122 /* MedtrumKit.framework */,
 				CE51DD1B2A01970800F163F7 /* ConnectIQ 2.xcframework */,
 				CE94597929E9DF7B0047C9C6 /* ConnectIQ.framework */,
 				CEC751D529D88262006E9D24 /* MinimedKit.framework */,
@@ -2123,6 +2131,7 @@
 				CE48C86528CA6B48007C0598 /* OmniPodManagerExtensions.swift */,
 				CE2FAD39297D93F0001A872C /* BloodGlucoseExtensions.swift */,
 				B8CB7F142B5F0D8F00614051 /* DanaKitPumpManagerExtensions.swift */,
+				3EF1521C2E1C4896009C1122 /* MedtrumPumpManagerExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3113,6 +3122,7 @@
 				19F191DE2BE4F97F00F6297E /* SharingProvider.swift in Sources */,
 				195D80B72AF697B800D25097 /* DynamicDataFlow.swift in Sources */,
 				3862CC2E2743F9F700BF832C /* CalendarManager.swift in Sources */,
+				3EF1521D2E1C4898009C1122 /* MedtrumPumpManagerExtensions.swift in Sources */,
 				CEA4F62329BE10F70011ADF7 /* SavitzkyGolayFilter.swift in Sources */,
 				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
 				38E4453C274E411700EC9A94 /* Disk+Codable.swift in Sources */,
