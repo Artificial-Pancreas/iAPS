@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "attach_to_body_kr.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

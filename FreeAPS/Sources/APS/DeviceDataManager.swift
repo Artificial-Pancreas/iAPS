@@ -4,6 +4,7 @@ import DanaKit
 import Foundation
 import LoopKit
 import LoopKitUI
+import MedtrumKit
 import MinimedKit
 import MockKit
 import OmniBLE
@@ -36,6 +37,7 @@ private let staticPumpManagers: [PumpManagerUI.Type] = [
     OmnipodPumpManager.self,
     OmniBLEPumpManager.self,
     DanaKitPumpManager.self,
+    MedtrumPumpManager.self,
     MockPumpManager.self
 ]
 
@@ -44,6 +46,7 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = [
     OmnipodPumpManager.managerIdentifier: OmnipodPumpManager.self,
     OmniBLEPumpManager.managerIdentifier: OmniBLEPumpManager.self,
     DanaKitPumpManager.managerIdentifier: DanaKitPumpManager.self,
+    MedtrumPumpManager.managerIdentifier: MedtrumPumpManager.self,
     MockPumpManager.managerIdentifier: MockPumpManager.self
 ]
 
@@ -96,6 +99,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                 }
                 if let omnipodBLE = pumpManager as? OmniBLEPumpManager {
                     guard let endTime = omnipodBLE.state.podState?.expiresAt else {
+                        pumpExpiresAtDate.send(nil)
+                        return
+                    }
+                    pumpExpiresAtDate.send(endTime)
+                }
+                if let medtrumKit = pumpManager as? MedtrumPumpManager {
+                    guard let endTime = medtrumKit.state.patchExpiresAt else {
                         pumpExpiresAtDate.send(nil)
                         return
                     }
@@ -420,6 +430,14 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             if let startTime = omnipodBLE.state.podState?.activatedAt {
                 storage.save(startTime, as: OpenAPS.Monitor.podAge)
             }
+        }
+        if let medtrum = pumpManager as? MedtrumPumpManager {
+            guard let endTime = medtrum.state.patchExpiresAt else {
+                pumpExpiresAtDate.send(nil)
+                return
+            }
+            pumpExpiresAtDate.send(endTime)
+            storage.save(medtrum.state.patchActivatedAt, as: OpenAPS.Monitor.podAge)
         }
     }
 
