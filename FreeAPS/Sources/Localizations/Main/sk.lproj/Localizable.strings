@@ -1859,7 +1859,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Don't Use 15 min Trend" = "Nepoužívať 15-minútový vývoj";
 
 /* */
-"Don't adjust for past 15 minutes glucose trend." = "Neupravujte vývoj glykémie za posledných 15 minút.";
+"Don't adjust for past 15 minutes glucose trend." = "Nezohľadňovať vývoj glykémie za posledných 15 minút.";
 
 /* -------------------------------------------------------------------------------------------
   DASH strings
